@@ -1,0 +1,1798 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index e206b6bea6d..1dc7814c35a 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -3,7 +3,12 @@
+   "generatorName": "fernapi/fern-go-sdk",
+   "generatorVersion": "local",
+   "generatorConfig": {
+-    "enableWireTests": false
++    "enableWireTests": false,
++    "alwaysSendRequiredProperties": false,
++    "inlineFileProperties": false,
++    "inlinePathParameters": false,
++    "useReaderForBytesRequest": false,
++    "union": "v0"
+   },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+diff --git a/bigunion.go b/bigunion.go
+index 61ee1ef45aa..11e3fa970a1 100644
+--- a/bigunion.go
++++ b/bigunion.go
+@@ -214,6 +214,122 @@ type BigUnion struct {
+ 	GaseousRoad        *GaseousRoad
+ }
+ 
++func NewBigUnionFromNormalSweet(value *NormalSweet) *BigUnion {
++	return &BigUnion{Type: "normalSweet", NormalSweet: value}
++}
++
++func NewBigUnionFromThankfulFactor(value *ThankfulFactor) *BigUnion {
++	return &BigUnion{Type: "thankfulFactor", ThankfulFactor: value}
++}
++
++func NewBigUnionFromJumboEnd(value *JumboEnd) *BigUnion {
++	return &BigUnion{Type: "jumboEnd", JumboEnd: value}
++}
++
++func NewBigUnionFromHastyPain(value *HastyPain) *BigUnion {
++	return &BigUnion{Type: "hastyPain", HastyPain: value}
++}
++
++func NewBigUnionFromMistySnow(value *MistySnow) *BigUnion {
++	return &BigUnion{Type: "mistySnow", MistySnow: value}
++}
++
++func NewBigUnionFromDistinctFailure(value *DistinctFailure) *BigUnion {
++	return &BigUnion{Type: "distinctFailure", DistinctFailure: value}
++}
++
++func NewBigUnionFromPracticalPrinciple(value *PracticalPrinciple) *BigUnion {
++	return &BigUnion{Type: "practicalPrinciple", PracticalPrinciple: value}
++}
++
++func NewBigUnionFromLimpingStep(value *LimpingStep) *BigUnion {
++	return &BigUnion{Type: "limpingStep", LimpingStep: value}
++}
++
++func NewBigUnionFromVibrantExcitement(value *VibrantExcitement) *BigUnion {
++	return &BigUnion{Type: "vibrantExcitement", VibrantExcitement: value}
++}
++
++func NewBigUnionFromActiveDiamond(value *ActiveDiamond) *BigUnion {
++	return &BigUnion{Type: "activeDiamond", ActiveDiamond: value}
++}
++
++func NewBigUnionFromPopularLimit(value *PopularLimit) *BigUnion {
++	return &BigUnion{Type: "popularLimit", PopularLimit: value}
++}
++
++func NewBigUnionFromFalseMirror(value *FalseMirror) *BigUnion {
++	return &BigUnion{Type: "falseMirror", FalseMirror: value}
++}
++
++func NewBigUnionFromPrimaryBlock(value *PrimaryBlock) *BigUnion {
++	return &BigUnion{Type: "primaryBlock", PrimaryBlock: value}
++}
++
++func NewBigUnionFromRotatingRatio(value *RotatingRatio) *BigUnion {
++	return &BigUnion{Type: "rotatingRatio", RotatingRatio: value}
++}
++
++func NewBigUnionFromColorfulCover(value *ColorfulCover) *BigUnion {
++	return &BigUnion{Type: "colorfulCover", ColorfulCover: value}
++}
++
++func NewBigUnionFromDisloyalValue(value *DisloyalValue) *BigUnion {
++	return &BigUnion{Type: "disloyalValue", DisloyalValue: value}
++}
++
++func NewBigUnionFromGruesomeCoach(value *GruesomeCoach) *BigUnion {
++	return &BigUnion{Type: "gruesomeCoach", GruesomeCoach: value}
++}
++
++func NewBigUnionFromTotalWork(value *TotalWork) *BigUnion {
++	return &BigUnion{Type: "totalWork", TotalWork: value}
++}
++
++func NewBigUnionFromHarmoniousPlay(value *HarmoniousPlay) *BigUnion {
++	return &BigUnion{Type: "harmoniousPlay", HarmoniousPlay: value}
++}
++
++func NewBigUnionFromUniqueStress(value *UniqueStress) *BigUnion {
++	return &BigUnion{Type: "uniqueStress", UniqueStress: value}
++}
++
++func NewBigUnionFromUnwillingSmoke(value *UnwillingSmoke) *BigUnion {
++	return &BigUnion{Type: "unwillingSmoke", UnwillingSmoke: value}
++}
++
++func NewBigUnionFromFrozenSleep(value *FrozenSleep) *BigUnion {
++	return &BigUnion{Type: "frozenSleep", FrozenSleep: value}
++}
++
++func NewBigUnionFromDiligentDeal(value *DiligentDeal) *BigUnion {
++	return &BigUnion{Type: "diligentDeal", DiligentDeal: value}
++}
++
++func NewBigUnionFromAttractiveScript(value *AttractiveScript) *BigUnion {
++	return &BigUnion{Type: "attractiveScript", AttractiveScript: value}
++}
++
++func NewBigUnionFromHoarseMouse(value *HoarseMouse) *BigUnion {
++	return &BigUnion{Type: "hoarseMouse", HoarseMouse: value}
++}
++
++func NewBigUnionFromCircularCard(value *CircularCard) *BigUnion {
++	return &BigUnion{Type: "circularCard", CircularCard: value}
++}
++
++func NewBigUnionFromPotableBad(value *PotableBad) *BigUnion {
++	return &BigUnion{Type: "potableBad", PotableBad: value}
++}
++
++func NewBigUnionFromTriangularRepair(value *TriangularRepair) *BigUnion {
++	return &BigUnion{Type: "triangularRepair", TriangularRepair: value}
++}
++
++func NewBigUnionFromGaseousRoad(value *GaseousRoad) *BigUnion {
++	return &BigUnion{Type: "gaseousRoad", GaseousRoad: value}
++}
++
+ func (b *BigUnion) GetType() string {
+ 	if b == nil {
+ 		return ""
+@@ -645,94 +761,68 @@ func (b BigUnion) MarshalJSON() ([]byte, error) {
+ 	if err := b.validate(); err != nil {
+ 		return nil, err
+ 	}
+-	if b.NormalSweet != nil {
++	switch b.Type {
++	default:
++		return nil, fmt.Errorf("invalid type %s in %T", b.Type, b)
++	case "normalSweet":
+ 		return internal.MarshalJSONWithExtraProperty(b.NormalSweet, "type", "normalSweet")
+-	}
+-	if b.ThankfulFactor != nil {
++	case "thankfulFactor":
+ 		return internal.MarshalJSONWithExtraProperty(b.ThankfulFactor, "type", "thankfulFactor")
+-	}
+-	if b.JumboEnd != nil {
++	case "jumboEnd":
+ 		return internal.MarshalJSONWithExtraProperty(b.JumboEnd, "type", "jumboEnd")
+-	}
+-	if b.HastyPain != nil {
++	case "hastyPain":
+ 		return internal.MarshalJSONWithExtraProperty(b.HastyPain, "type", "hastyPain")
+-	}
+-	if b.MistySnow != nil {
++	case "mistySnow":
+ 		return internal.MarshalJSONWithExtraProperty(b.MistySnow, "type", "mistySnow")
+-	}
+-	if b.DistinctFailure != nil {
++	case "distinctFailure":
+ 		return internal.MarshalJSONWithExtraProperty(b.DistinctFailure, "type", "distinctFailure")
+-	}
+-	if b.PracticalPrinciple != nil {
++	case "practicalPrinciple":
+ 		return internal.MarshalJSONWithExtraProperty(b.PracticalPrinciple, "type", "practicalPrinciple")
+-	}
+-	if b.LimpingStep != nil {
++	case "limpingStep":
+ 		return internal.MarshalJSONWithExtraProperty(b.LimpingStep, "type", "limpingStep")
+-	}
+-	if b.VibrantExcitement != nil {
++	case "vibrantExcitement":
+ 		return internal.MarshalJSONWithExtraProperty(b.VibrantExcitement, "type", "vibrantExcitement")
+-	}
+-	if b.ActiveDiamond != nil {
++	case "activeDiamond":
+ 		return internal.MarshalJSONWithExtraProperty(b.ActiveDiamond, "type", "activeDiamond")
+-	}
+-	if b.PopularLimit != nil {
++	case "popularLimit":
+ 		return internal.MarshalJSONWithExtraProperty(b.PopularLimit, "type", "popularLimit")
+-	}
+-	if b.FalseMirror != nil {
++	case "falseMirror":
+ 		return internal.MarshalJSONWithExtraProperty(b.FalseMirror, "type", "falseMirror")
+-	}
+-	if b.PrimaryBlock != nil {
++	case "primaryBlock":
+ 		return internal.MarshalJSONWithExtraProperty(b.PrimaryBlock, "type", "primaryBlock")
+-	}
+-	if b.RotatingRatio != nil {
++	case "rotatingRatio":
+ 		return internal.MarshalJSONWithExtraProperty(b.RotatingRatio, "type", "rotatingRatio")
+-	}
+-	if b.ColorfulCover != nil {
++	case "colorfulCover":
+ 		return internal.MarshalJSONWithExtraProperty(b.ColorfulCover, "type", "colorfulCover")
+-	}
+-	if b.DisloyalValue != nil {
++	case "disloyalValue":
+ 		return internal.MarshalJSONWithExtraProperty(b.DisloyalValue, "type", "disloyalValue")
+-	}
+-	if b.GruesomeCoach != nil {
++	case "gruesomeCoach":
+ 		return internal.MarshalJSONWithExtraProperty(b.GruesomeCoach, "type", "gruesomeCoach")
+-	}
+-	if b.TotalWork != nil {
++	case "totalWork":
+ 		return internal.MarshalJSONWithExtraProperty(b.TotalWork, "type", "totalWork")
+-	}
+-	if b.HarmoniousPlay != nil {
++	case "harmoniousPlay":
+ 		return internal.MarshalJSONWithExtraProperty(b.HarmoniousPlay, "type", "harmoniousPlay")
+-	}
+-	if b.UniqueStress != nil {
++	case "uniqueStress":
+ 		return internal.MarshalJSONWithExtraProperty(b.UniqueStress, "type", "uniqueStress")
+-	}
+-	if b.UnwillingSmoke != nil {
++	case "unwillingSmoke":
+ 		return internal.MarshalJSONWithExtraProperty(b.UnwillingSmoke, "type", "unwillingSmoke")
+-	}
+-	if b.FrozenSleep != nil {
++	case "frozenSleep":
+ 		return internal.MarshalJSONWithExtraProperty(b.FrozenSleep, "type", "frozenSleep")
+-	}
+-	if b.DiligentDeal != nil {
++	case "diligentDeal":
+ 		return internal.MarshalJSONWithExtraProperty(b.DiligentDeal, "type", "diligentDeal")
+-	}
+-	if b.AttractiveScript != nil {
++	case "attractiveScript":
+ 		return internal.MarshalJSONWithExtraProperty(b.AttractiveScript, "type", "attractiveScript")
+-	}
+-	if b.HoarseMouse != nil {
++	case "hoarseMouse":
+ 		return internal.MarshalJSONWithExtraProperty(b.HoarseMouse, "type", "hoarseMouse")
+-	}
+-	if b.CircularCard != nil {
++	case "circularCard":
+ 		return internal.MarshalJSONWithExtraProperty(b.CircularCard, "type", "circularCard")
+-	}
+-	if b.PotableBad != nil {
++	case "potableBad":
+ 		return internal.MarshalJSONWithExtraProperty(b.PotableBad, "type", "potableBad")
+-	}
+-	if b.TriangularRepair != nil {
++	case "triangularRepair":
+ 		return internal.MarshalJSONWithExtraProperty(b.TriangularRepair, "type", "triangularRepair")
+-	}
+-	if b.GaseousRoad != nil {
++	case "gaseousRoad":
+ 		return internal.MarshalJSONWithExtraProperty(b.GaseousRoad, "type", "gaseousRoad")
+ 	}
+-	return nil, fmt.Errorf("type %T does not define a non-empty union type", b)
+ }
+ 
+ type BigUnionVisitor interface {
+@@ -768,94 +858,68 @@ type BigUnionVisitor interface {
+ }
+ 
+ func (b *BigUnion) Accept(visitor BigUnionVisitor) error {
+-	if b.NormalSweet != nil {
++	switch b.Type {
++	default:
++		return fmt.Errorf("invalid type %s in %T", b.Type, b)
++	case "normalSweet":
+ 		return visitor.VisitNormalSweet(b.NormalSweet)
+-	}
+-	if b.ThankfulFactor != nil {
++	case "thankfulFactor":
+ 		return visitor.VisitThankfulFactor(b.ThankfulFactor)
+-	}
+-	if b.JumboEnd != nil {
++	case "jumboEnd":
+ 		return visitor.VisitJumboEnd(b.JumboEnd)
+-	}
+-	if b.HastyPain != nil {
++	case "hastyPain":
+ 		return visitor.VisitHastyPain(b.HastyPain)
+-	}
+-	if b.MistySnow != nil {
++	case "mistySnow":
+ 		return visitor.VisitMistySnow(b.MistySnow)
+-	}
+-	if b.DistinctFailure != nil {
++	case "distinctFailure":
+ 		return visitor.VisitDistinctFailure(b.DistinctFailure)
+-	}
+-	if b.PracticalPrinciple != nil {
++	case "practicalPrinciple":
+ 		return visitor.VisitPracticalPrinciple(b.PracticalPrinciple)
+-	}
+-	if b.LimpingStep != nil {
++	case "limpingStep":
+ 		return visitor.VisitLimpingStep(b.LimpingStep)
+-	}
+-	if b.VibrantExcitement != nil {
++	case "vibrantExcitement":
+ 		return visitor.VisitVibrantExcitement(b.VibrantExcitement)
+-	}
+-	if b.ActiveDiamond != nil {
++	case "activeDiamond":
+ 		return visitor.VisitActiveDiamond(b.ActiveDiamond)
+-	}
+-	if b.PopularLimit != nil {
++	case "popularLimit":
+ 		return visitor.VisitPopularLimit(b.PopularLimit)
+-	}
+-	if b.FalseMirror != nil {
++	case "falseMirror":
+ 		return visitor.VisitFalseMirror(b.FalseMirror)
+-	}
+-	if b.PrimaryBlock != nil {
++	case "primaryBlock":
+ 		return visitor.VisitPrimaryBlock(b.PrimaryBlock)
+-	}
+-	if b.RotatingRatio != nil {
++	case "rotatingRatio":
+ 		return visitor.VisitRotatingRatio(b.RotatingRatio)
+-	}
+-	if b.ColorfulCover != nil {
++	case "colorfulCover":
+ 		return visitor.VisitColorfulCover(b.ColorfulCover)
+-	}
+-	if b.DisloyalValue != nil {
++	case "disloyalValue":
+ 		return visitor.VisitDisloyalValue(b.DisloyalValue)
+-	}
+-	if b.GruesomeCoach != nil {
++	case "gruesomeCoach":
+ 		return visitor.VisitGruesomeCoach(b.GruesomeCoach)
+-	}
+-	if b.TotalWork != nil {
++	case "totalWork":
+ 		return visitor.VisitTotalWork(b.TotalWork)
+-	}
+-	if b.HarmoniousPlay != nil {
++	case "harmoniousPlay":
+ 		return visitor.VisitHarmoniousPlay(b.HarmoniousPlay)
+-	}
+-	if b.UniqueStress != nil {
++	case "uniqueStress":
+ 		return visitor.VisitUniqueStress(b.UniqueStress)
+-	}
+-	if b.UnwillingSmoke != nil {
++	case "unwillingSmoke":
+ 		return visitor.VisitUnwillingSmoke(b.UnwillingSmoke)
+-	}
+-	if b.FrozenSleep != nil {
++	case "frozenSleep":
+ 		return visitor.VisitFrozenSleep(b.FrozenSleep)
+-	}
+-	if b.DiligentDeal != nil {
++	case "diligentDeal":
+ 		return visitor.VisitDiligentDeal(b.DiligentDeal)
+-	}
+-	if b.AttractiveScript != nil {
++	case "attractiveScript":
+ 		return visitor.VisitAttractiveScript(b.AttractiveScript)
+-	}
+-	if b.HoarseMouse != nil {
++	case "hoarseMouse":
+ 		return visitor.VisitHoarseMouse(b.HoarseMouse)
+-	}
+-	if b.CircularCard != nil {
++	case "circularCard":
+ 		return visitor.VisitCircularCard(b.CircularCard)
+-	}
+-	if b.PotableBad != nil {
++	case "potableBad":
+ 		return visitor.VisitPotableBad(b.PotableBad)
+-	}
+-	if b.TriangularRepair != nil {
++	case "triangularRepair":
+ 		return visitor.VisitTriangularRepair(b.TriangularRepair)
+-	}
+-	if b.GaseousRoad != nil {
++	case "gaseousRoad":
+ 		return visitor.VisitGaseousRoad(b.GaseousRoad)
+ 	}
+-	return fmt.Errorf("type %T does not define a non-empty union type", b)
+ }
+ 
+ func (b *BigUnion) validate() error {
+diff --git a/snippet.json b/snippet.json
+index a7092799c4a..088c78f58fc 100644
+--- a/snippet.json
++++ b/snippet.json
+@@ -8,7 +8,7 @@
+             },
+             "snippet": {
+                 "type": "go",
+-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/unions/fern\"\n\tfernclient \"github.com/unions/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Bigunion.Update(\n\tcontext.TODO(),\n\t\u0026fern.BigUnion{\n\t\tNormalSweet: \u0026fern.NormalSweet{\n\t\t\tValue: \"value\",\n\t\t},\n\t},\n)\n"
++                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/unions/fern\"\n\tfernclient \"github.com/unions/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Bigunion.Update(\n\tcontext.TODO(),\n\tfern.NewBigUnionFromNormalSweet(\n\t\t\u0026fern.NormalSweet{\n\t\t\tValue: \"value\",\n\t\t},\n\t),\n)\n"
+             }
+         },
+         {
+@@ -19,7 +19,7 @@
+             },
+             "snippet": {
+                 "type": "go",
+-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/unions/fern\"\n\tfernclient \"github.com/unions/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Union.Update(\n\tcontext.TODO(),\n\t\u0026fern.Shape{\n\t\tCircle: \u0026fern.Circle{\n\t\t\tRadius: 1.1,\n\t\t},\n\t},\n)\n"
++                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/unions/fern\"\n\tfernclient \"github.com/unions/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Union.Update(\n\tcontext.TODO(),\n\tfern.NewShapeFromCircle(\n\t\t\u0026fern.Circle{\n\t\t\tRadius: 1.1,\n\t\t},\n\t),\n)\n"
+             }
+         },
+         {
+@@ -30,7 +30,7 @@
+             },
+             "snippet": {
+                 "type": "go",
+-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/unions/fern\"\n\tfernclient \"github.com/unions/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Bigunion.UpdateMany(\n\tcontext.TODO(),\n\t[]*fern.BigUnion{\n\t\t\u0026fern.BigUnion{\n\t\t\tNormalSweet: \u0026fern.NormalSweet{\n\t\t\t\tValue: \"value\",\n\t\t\t},\n\t\t},\n\t\t\u0026fern.BigUnion{\n\t\t\tNormalSweet: \u0026fern.NormalSweet{\n\t\t\t\tValue: \"value\",\n\t\t\t},\n\t\t},\n\t},\n)\n"
++                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/unions/fern\"\n\tfernclient \"github.com/unions/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Bigunion.UpdateMany(\n\tcontext.TODO(),\n\t[]*fern.BigUnion{\n\t\tfern.NewBigUnionFromNormalSweet(\n\t\t\t\u0026fern.NormalSweet{\n\t\t\t\tValue: \"value\",\n\t\t\t},\n\t\t),\n\t\tfern.NewBigUnionFromNormalSweet(\n\t\t\t\u0026fern.NormalSweet{\n\t\t\t\tValue: \"value\",\n\t\t\t},\n\t\t),\n\t},\n)\n"
+             }
+         },
+         {
+diff --git a/types.go b/types.go
+index 5d6863b26db..de5aa6ad0fb 100644
+--- a/types.go
++++ b/types.go
+@@ -471,7 +471,7 @@ var (
+ 
+ type TypeWithOptionalMap struct {
+ 	Key          string             `json:"key" url:"key"`
+-	ColumnValues map[string]*string `json:"columnValues" url:"columnValues"`
++	ColumnValues map[string]*string `json:"columnValues,omitempty" url:"columnValues,omitempty"`
+ 
+ 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+ 	explicitFields *big.Int `json:"-" url:"-"`
+@@ -571,6 +571,14 @@ type Union struct {
+ 	Bar  *Bar
+ }
+ 
++func NewUnionFromFoo(value *Foo) *Union {
++	return &Union{Type: "foo", Foo: value}
++}
++
++func NewUnionFromBar(value *Bar) *Union {
++	return &Union{Type: "bar", Bar: value}
++}
++
+ func (u *Union) GetType() string {
+ 	if u == nil {
+ 		return ""
+@@ -606,7 +614,7 @@ func (u *Union) UnmarshalJSON(data []byte) error {
+ 	switch unmarshaler.Type {
+ 	case "foo":
+ 		var valueUnmarshaler struct {
+-			Foo *Foo `json:"foo"`
++			Foo *Foo `json:"foo,omitempty"`
+ 		}
+ 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
+ 			return err
+@@ -614,7 +622,7 @@ func (u *Union) UnmarshalJSON(data []byte) error {
+ 		u.Foo = valueUnmarshaler.Foo
+ 	case "bar":
+ 		var valueUnmarshaler struct {
+-			Bar *Bar `json:"bar"`
++			Bar *Bar `json:"bar,omitempty"`
+ 		}
+ 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
+ 			return err
+@@ -628,27 +636,28 @@ func (u Union) MarshalJSON() ([]byte, error) {
+ 	if err := u.validate(); err != nil {
+ 		return nil, err
+ 	}
+-	if u.Foo != nil {
++	switch u.Type {
++	default:
++		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
++	case "foo":
+ 		var marshaler = struct {
+ 			Type string `json:"type"`
+-			Foo  *Foo   `json:"foo"`
++			Foo  *Foo   `json:"foo,omitempty"`
+ 		}{
+ 			Type: "foo",
+ 			Foo:  u.Foo,
+ 		}
+ 		return json.Marshal(marshaler)
+-	}
+-	if u.Bar != nil {
++	case "bar":
+ 		var marshaler = struct {
+ 			Type string `json:"type"`
+-			Bar  *Bar   `json:"bar"`
++			Bar  *Bar   `json:"bar,omitempty"`
+ 		}{
+ 			Type: "bar",
+ 			Bar:  u.Bar,
+ 		}
+ 		return json.Marshal(marshaler)
+ 	}
+-	return nil, fmt.Errorf("type %T does not define a non-empty union type", u)
+ }
+ 
+ type UnionVisitor interface {
+@@ -657,13 +666,14 @@ type UnionVisitor interface {
+ }
+ 
+ func (u *Union) Accept(visitor UnionVisitor) error {
+-	if u.Foo != nil {
++	switch u.Type {
++	default:
++		return fmt.Errorf("invalid type %s in %T", u.Type, u)
++	case "foo":
+ 		return visitor.VisitFoo(u.Foo)
+-	}
+-	if u.Bar != nil {
++	case "bar":
+ 		return visitor.VisitBar(u.Bar)
+ 	}
+-	return fmt.Errorf("type %T does not define a non-empty union type", u)
+ }
+ 
+ func (u *Union) validate() error {
+@@ -708,6 +718,18 @@ type UnionWithBaseProperties struct {
+ 	Foo         *Foo
+ }
+ 
++func NewUnionWithBasePropertiesFromInteger(value int) *UnionWithBaseProperties {
++	return &UnionWithBaseProperties{Type: "integer", Integer: value}
++}
++
++func NewUnionWithBasePropertiesFromFieldString(value string) *UnionWithBaseProperties {
++	return &UnionWithBaseProperties{Type: "string", FieldString: value}
++}
++
++func NewUnionWithBasePropertiesFromFoo(value *Foo) *UnionWithBaseProperties {
++	return &UnionWithBaseProperties{Type: "foo", Foo: value}
++}
++
+ func (u *UnionWithBaseProperties) GetType() string {
+ 	if u == nil {
+ 		return ""
+@@ -787,7 +809,10 @@ func (u UnionWithBaseProperties) MarshalJSON() ([]byte, error) {
+ 	if err := u.validate(); err != nil {
+ 		return nil, err
+ 	}
+-	if u.Integer != 0 {
++	switch u.Type {
++	default:
++		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
++	case "integer":
+ 		var marshaler = struct {
+ 			Type    string `json:"type"`
+ 			ID      string `json:"id"`
+@@ -798,8 +823,7 @@ func (u UnionWithBaseProperties) MarshalJSON() ([]byte, error) {
+ 			Integer: u.Integer,
+ 		}
+ 		return json.Marshal(marshaler)
+-	}
+-	if u.FieldString != "" {
++	case "string":
+ 		var marshaler = struct {
+ 			Type        string `json:"type"`
+ 			ID          string `json:"id"`
+@@ -810,11 +834,9 @@ func (u UnionWithBaseProperties) MarshalJSON() ([]byte, error) {
+ 			FieldString: u.FieldString,
+ 		}
+ 		return json.Marshal(marshaler)
+-	}
+-	if u.Foo != nil {
++	case "foo":
+ 		return internal.MarshalJSONWithExtraProperty(u.Foo, "type", "foo")
+ 	}
+-	return nil, fmt.Errorf("type %T does not define a non-empty union type", u)
+ }
+ 
+ type UnionWithBasePropertiesVisitor interface {
+@@ -824,16 +846,16 @@ type UnionWithBasePropertiesVisitor interface {
+ }
+ 
+ func (u *UnionWithBaseProperties) Accept(visitor UnionWithBasePropertiesVisitor) error {
+-	if u.Integer != 0 {
++	switch u.Type {
++	default:
++		return fmt.Errorf("invalid type %s in %T", u.Type, u)
++	case "integer":
+ 		return visitor.VisitInteger(u.Integer)
+-	}
+-	if u.FieldString != "" {
++	case "string":
+ 		return visitor.VisitFieldString(u.FieldString)
+-	}
+-	if u.Foo != nil {
++	case "foo":
+ 		return visitor.VisitFoo(u.Foo)
+ 	}
+-	return fmt.Errorf("type %T does not define a non-empty union type", u)
+ }
+ 
+ func (u *UnionWithBaseProperties) validate() error {
+@@ -880,6 +902,14 @@ type UnionWithDiscriminant struct {
+ 	Bar *Bar
+ }
+ 
++func NewUnionWithDiscriminantFromFoo(value *Foo) *UnionWithDiscriminant {
++	return &UnionWithDiscriminant{Type: "foo", Foo: value}
++}
++
++func NewUnionWithDiscriminantFromBar(value *Bar) *UnionWithDiscriminant {
++	return &UnionWithDiscriminant{Type: "bar", Bar: value}
++}
++
+ func (u *UnionWithDiscriminant) GetType() string {
+ 	if u == nil {
+ 		return ""
+@@ -915,7 +945,7 @@ func (u *UnionWithDiscriminant) UnmarshalJSON(data []byte) error {
+ 	switch unmarshaler.Type {
+ 	case "foo":
+ 		var valueUnmarshaler struct {
+-			Foo *Foo `json:"foo"`
++			Foo *Foo `json:"foo,omitempty"`
+ 		}
+ 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
+ 			return err
+@@ -923,7 +953,7 @@ func (u *UnionWithDiscriminant) UnmarshalJSON(data []byte) error {
+ 		u.Foo = valueUnmarshaler.Foo
+ 	case "bar":
+ 		var valueUnmarshaler struct {
+-			Bar *Bar `json:"bar"`
++			Bar *Bar `json:"bar,omitempty"`
+ 		}
+ 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
+ 			return err
+@@ -937,27 +967,28 @@ func (u UnionWithDiscriminant) MarshalJSON() ([]byte, error) {
+ 	if err := u.validate(); err != nil {
+ 		return nil, err
+ 	}
+-	if u.Foo != nil {
++	switch u.Type {
++	default:
++		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
++	case "foo":
+ 		var marshaler = struct {
+ 			Type string `json:"_type"`
+-			Foo  *Foo   `json:"foo"`
++			Foo  *Foo   `json:"foo,omitempty"`
+ 		}{
+ 			Type: "foo",
+ 			Foo:  u.Foo,
+ 		}
+ 		return json.Marshal(marshaler)
+-	}
+-	if u.Bar != nil {
++	case "bar":
+ 		var marshaler = struct {
+ 			Type string `json:"_type"`
+-			Bar  *Bar   `json:"bar"`
++			Bar  *Bar   `json:"bar,omitempty"`
+ 		}{
+ 			Type: "bar",
+ 			Bar:  u.Bar,
+ 		}
+ 		return json.Marshal(marshaler)
+ 	}
+-	return nil, fmt.Errorf("type %T does not define a non-empty union type", u)
+ }
+ 
+ type UnionWithDiscriminantVisitor interface {
+@@ -966,13 +997,14 @@ type UnionWithDiscriminantVisitor interface {
+ }
+ 
+ func (u *UnionWithDiscriminant) Accept(visitor UnionWithDiscriminantVisitor) error {
+-	if u.Foo != nil {
++	switch u.Type {
++	default:
++		return fmt.Errorf("invalid type %s in %T", u.Type, u)
++	case "foo":
+ 		return visitor.VisitFoo(u.Foo)
+-	}
+-	if u.Bar != nil {
++	case "bar":
+ 		return visitor.VisitBar(u.Bar)
+ 	}
+-	return fmt.Errorf("type %T does not define a non-empty union type", u)
+ }
+ 
+ func (u *UnionWithDiscriminant) validate() error {
+@@ -1017,6 +1049,22 @@ type UnionWithDuplicatePrimitive struct {
+ 	String2  string
+ }
+ 
++func NewUnionWithDuplicatePrimitiveFromInteger1(value int) *UnionWithDuplicatePrimitive {
++	return &UnionWithDuplicatePrimitive{Type: "integer1", Integer1: value}
++}
++
++func NewUnionWithDuplicatePrimitiveFromInteger2(value int) *UnionWithDuplicatePrimitive {
++	return &UnionWithDuplicatePrimitive{Type: "integer2", Integer2: value}
++}
++
++func NewUnionWithDuplicatePrimitiveFromString1(value string) *UnionWithDuplicatePrimitive {
++	return &UnionWithDuplicatePrimitive{Type: "string1", String1: value}
++}
++
++func NewUnionWithDuplicatePrimitiveFromString2(value string) *UnionWithDuplicatePrimitive {
++	return &UnionWithDuplicatePrimitive{Type: "string2", String2: value}
++}
++
+ func (u *UnionWithDuplicatePrimitive) GetType() string {
+ 	if u == nil {
+ 		return ""
+@@ -1104,7 +1152,10 @@ func (u UnionWithDuplicatePrimitive) MarshalJSON() ([]byte, error) {
+ 	if err := u.validate(); err != nil {
+ 		return nil, err
+ 	}
+-	if u.Integer1 != 0 {
++	switch u.Type {
++	default:
++		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
++	case "integer1":
+ 		var marshaler = struct {
+ 			Type     string `json:"type"`
+ 			Integer1 int    `json:"value"`
+@@ -1113,8 +1164,7 @@ func (u UnionWithDuplicatePrimitive) MarshalJSON() ([]byte, error) {
+ 			Integer1: u.Integer1,
+ 		}
+ 		return json.Marshal(marshaler)
+-	}
+-	if u.Integer2 != 0 {
++	case "integer2":
+ 		var marshaler = struct {
+ 			Type     string `json:"type"`
+ 			Integer2 int    `json:"value"`
+@@ -1123,8 +1173,7 @@ func (u UnionWithDuplicatePrimitive) MarshalJSON() ([]byte, error) {
+ 			Integer2: u.Integer2,
+ 		}
+ 		return json.Marshal(marshaler)
+-	}
+-	if u.String1 != "" {
++	case "string1":
+ 		var marshaler = struct {
+ 			Type    string `json:"type"`
+ 			String1 string `json:"value"`
+@@ -1133,8 +1182,7 @@ func (u UnionWithDuplicatePrimitive) MarshalJSON() ([]byte, error) {
+ 			String1: u.String1,
+ 		}
+ 		return json.Marshal(marshaler)
+-	}
+-	if u.String2 != "" {
++	case "string2":
+ 		var marshaler = struct {
+ 			Type    string `json:"type"`
+ 			String2 string `json:"value"`
+@@ -1144,7 +1192,6 @@ func (u UnionWithDuplicatePrimitive) MarshalJSON() ([]byte, error) {
+ 		}
+ 		return json.Marshal(marshaler)
+ 	}
+-	return nil, fmt.Errorf("type %T does not define a non-empty union type", u)
+ }
+ 
+ type UnionWithDuplicatePrimitiveVisitor interface {
+@@ -1155,19 +1202,18 @@ type UnionWithDuplicatePrimitiveVisitor interface {
+ }
+ 
+ func (u *UnionWithDuplicatePrimitive) Accept(visitor UnionWithDuplicatePrimitiveVisitor) error {
+-	if u.Integer1 != 0 {
++	switch u.Type {
++	default:
++		return fmt.Errorf("invalid type %s in %T", u.Type, u)
++	case "integer1":
+ 		return visitor.VisitInteger1(u.Integer1)
+-	}
+-	if u.Integer2 != 0 {
++	case "integer2":
+ 		return visitor.VisitInteger2(u.Integer2)
+-	}
+-	if u.String1 != "" {
++	case "string1":
+ 		return visitor.VisitString1(u.String1)
+-	}
+-	if u.String2 != "" {
++	case "string2":
+ 		return visitor.VisitString2(u.String2)
+ 	}
+-	return fmt.Errorf("type %T does not define a non-empty union type", u)
+ }
+ 
+ func (u *UnionWithDuplicatePrimitive) validate() error {
+@@ -1216,6 +1262,14 @@ type UnionWithDuplicateTypes struct {
+ 	Foo2 *Foo
+ }
+ 
++func NewUnionWithDuplicateTypesFromFoo1(value *Foo) *UnionWithDuplicateTypes {
++	return &UnionWithDuplicateTypes{Type: "foo1", Foo1: value}
++}
++
++func NewUnionWithDuplicateTypesFromFoo2(value *Foo) *UnionWithDuplicateTypes {
++	return &UnionWithDuplicateTypes{Type: "foo2", Foo2: value}
++}
++
+ func (u *UnionWithDuplicateTypes) GetType() string {
+ 	if u == nil {
+ 		return ""
+@@ -1269,13 +1323,14 @@ func (u UnionWithDuplicateTypes) MarshalJSON() ([]byte, error) {
+ 	if err := u.validate(); err != nil {
+ 		return nil, err
+ 	}
+-	if u.Foo1 != nil {
++	switch u.Type {
++	default:
++		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
++	case "foo1":
+ 		return internal.MarshalJSONWithExtraProperty(u.Foo1, "type", "foo1")
+-	}
+-	if u.Foo2 != nil {
++	case "foo2":
+ 		return internal.MarshalJSONWithExtraProperty(u.Foo2, "type", "foo2")
+ 	}
+-	return nil, fmt.Errorf("type %T does not define a non-empty union type", u)
+ }
+ 
+ type UnionWithDuplicateTypesVisitor interface {
+@@ -1284,13 +1339,14 @@ type UnionWithDuplicateTypesVisitor interface {
+ }
+ 
+ func (u *UnionWithDuplicateTypes) Accept(visitor UnionWithDuplicateTypesVisitor) error {
+-	if u.Foo1 != nil {
++	switch u.Type {
++	default:
++		return fmt.Errorf("invalid type %s in %T", u.Type, u)
++	case "foo1":
+ 		return visitor.VisitFoo1(u.Foo1)
+-	}
+-	if u.Foo2 != nil {
++	case "foo2":
+ 		return visitor.VisitFoo2(u.Foo2)
+ 	}
+-	return fmt.Errorf("type %T does not define a non-empty union type", u)
+ }
+ 
+ func (u *UnionWithDuplicateTypes) validate() error {
+@@ -1333,6 +1389,14 @@ type UnionWithDuplicativeDiscriminants struct {
+ 	SecondItemType *SecondItemType
+ }
+ 
++func NewUnionWithDuplicativeDiscriminantsFromFirstItemType(value *FirstItemType) *UnionWithDuplicativeDiscriminants {
++	return &UnionWithDuplicativeDiscriminants{Type: "firstItemType", FirstItemType: value}
++}
++
++func NewUnionWithDuplicativeDiscriminantsFromSecondItemType(value *SecondItemType) *UnionWithDuplicativeDiscriminants {
++	return &UnionWithDuplicativeDiscriminants{Type: "secondItemType", SecondItemType: value}
++}
++
+ func (u *UnionWithDuplicativeDiscriminants) GetType() string {
+ 	if u == nil {
+ 		return ""
+@@ -1386,13 +1450,14 @@ func (u UnionWithDuplicativeDiscriminants) MarshalJSON() ([]byte, error) {
+ 	if err := u.validate(); err != nil {
+ 		return nil, err
+ 	}
+-	if u.FirstItemType != nil {
++	switch u.Type {
++	default:
++		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
++	case "firstItemType":
+ 		return internal.MarshalJSONWithExtraProperty(u.FirstItemType, "type", "firstItemType")
+-	}
+-	if u.SecondItemType != nil {
++	case "secondItemType":
+ 		return internal.MarshalJSONWithExtraProperty(u.SecondItemType, "type", "secondItemType")
+ 	}
+-	return nil, fmt.Errorf("type %T does not define a non-empty union type", u)
+ }
+ 
+ type UnionWithDuplicativeDiscriminantsVisitor interface {
+@@ -1401,13 +1466,14 @@ type UnionWithDuplicativeDiscriminantsVisitor interface {
+ }
+ 
+ func (u *UnionWithDuplicativeDiscriminants) Accept(visitor UnionWithDuplicativeDiscriminantsVisitor) error {
+-	if u.FirstItemType != nil {
++	switch u.Type {
++	default:
++		return fmt.Errorf("invalid type %s in %T", u.Type, u)
++	case "firstItemType":
+ 		return visitor.VisitFirstItemType(u.FirstItemType)
+-	}
+-	if u.SecondItemType != nil {
++	case "secondItemType":
+ 		return visitor.VisitSecondItemType(u.SecondItemType)
+ 	}
+-	return fmt.Errorf("type %T does not define a non-empty union type", u)
+ }
+ 
+ func (u *UnionWithDuplicativeDiscriminants) validate() error {
+@@ -1478,7 +1544,7 @@ func (u *UnionWithLiteral) Fern() string {
+ func (u *UnionWithLiteral) UnmarshalJSON(data []byte) error {
+ 	var unmarshaler struct {
+ 		Type string `json:"type"`
+-		Base string `json:"base"`
++		Base string `json:"base,omitempty"`
+ 	}
+ 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+ 		return err
+@@ -1494,7 +1560,7 @@ func (u *UnionWithLiteral) UnmarshalJSON(data []byte) error {
+ 	switch unmarshaler.Type {
+ 	case "fern":
+ 		var valueUnmarshaler struct {
+-			Fern string `json:"value"`
++			Fern string `json:"value,omitempty"`
+ 		}
+ 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
+ 			return err
+@@ -1511,11 +1577,14 @@ func (u UnionWithLiteral) MarshalJSON() ([]byte, error) {
+ 	if err := u.validate(); err != nil {
+ 		return nil, err
+ 	}
+-	if u.fern != "" {
++	switch u.Type {
++	default:
++		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
++	case "fern":
+ 		var marshaler = struct {
+ 			Type string `json:"type"`
+ 			Base string `json:"base"`
+-			Fern string `json:"value"`
++			Fern string `json:"value,omitempty"`
+ 		}{
+ 			Type: "fern",
+ 			Base: "base",
+@@ -1523,7 +1592,6 @@ func (u UnionWithLiteral) MarshalJSON() ([]byte, error) {
+ 		}
+ 		return json.Marshal(marshaler)
+ 	}
+-	return nil, fmt.Errorf("type %T does not define a non-empty union type", u)
+ }
+ 
+ type UnionWithLiteralVisitor interface {
+@@ -1531,10 +1599,12 @@ type UnionWithLiteralVisitor interface {
+ }
+ 
+ func (u *UnionWithLiteral) Accept(visitor UnionWithLiteralVisitor) error {
+-	if u.fern != "" {
++	switch u.Type {
++	default:
++		return fmt.Errorf("invalid type %s in %T", u.Type, u)
++	case "fern":
+ 		return visitor.VisitFern(u.fern)
+ 	}
+-	return fmt.Errorf("type %T does not define a non-empty union type", u)
+ }
+ 
+ func (u *UnionWithLiteral) validate() error {
+@@ -1575,6 +1645,18 @@ type UnionWithMultipleNoProperties struct {
+ 	Empty2 interface{}
+ }
+ 
++func NewUnionWithMultipleNoPropertiesFromFoo(value *Foo) *UnionWithMultipleNoProperties {
++	return &UnionWithMultipleNoProperties{Type: "foo", Foo: value}
++}
++
++func NewUnionWithMultipleNoPropertiesFromEmpty1(value interface{}) *UnionWithMultipleNoProperties {
++	return &UnionWithMultipleNoProperties{Type: "empty1", Empty1: value}
++}
++
++func NewUnionWithMultipleNoPropertiesFromEmpty2(value interface{}) *UnionWithMultipleNoProperties {
++	return &UnionWithMultipleNoProperties{Type: "empty2", Empty2: value}
++}
++
+ func (u *UnionWithMultipleNoProperties) GetType() string {
+ 	if u == nil {
+ 		return ""
+@@ -1641,10 +1723,12 @@ func (u UnionWithMultipleNoProperties) MarshalJSON() ([]byte, error) {
+ 	if err := u.validate(); err != nil {
+ 		return nil, err
+ 	}
+-	if u.Foo != nil {
++	switch u.Type {
++	default:
++		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
++	case "foo":
+ 		return internal.MarshalJSONWithExtraProperty(u.Foo, "type", "foo")
+-	}
+-	if u.Empty1 != nil {
++	case "empty1":
+ 		var marshaler = struct {
+ 			Type   string      `json:"type"`
+ 			Empty1 interface{} `json:"empty1,omitempty"`
+@@ -1653,8 +1737,7 @@ func (u UnionWithMultipleNoProperties) MarshalJSON() ([]byte, error) {
+ 			Empty1: u.Empty1,
+ 		}
+ 		return json.Marshal(marshaler)
+-	}
+-	if u.Empty2 != nil {
++	case "empty2":
+ 		var marshaler = struct {
+ 			Type   string      `json:"type"`
+ 			Empty2 interface{} `json:"empty2,omitempty"`
+@@ -1664,7 +1747,6 @@ func (u UnionWithMultipleNoProperties) MarshalJSON() ([]byte, error) {
+ 		}
+ 		return json.Marshal(marshaler)
+ 	}
+-	return nil, fmt.Errorf("type %T does not define a non-empty union type", u)
+ }
+ 
+ type UnionWithMultipleNoPropertiesVisitor interface {
+@@ -1674,16 +1756,16 @@ type UnionWithMultipleNoPropertiesVisitor interface {
+ }
+ 
+ func (u *UnionWithMultipleNoProperties) Accept(visitor UnionWithMultipleNoPropertiesVisitor) error {
+-	if u.Foo != nil {
++	switch u.Type {
++	default:
++		return fmt.Errorf("invalid type %s in %T", u.Type, u)
++	case "foo":
+ 		return visitor.VisitFoo(u.Foo)
+-	}
+-	if u.Empty1 != nil {
++	case "empty1":
+ 		return visitor.VisitEmpty1(u.Empty1)
+-	}
+-	if u.Empty2 != nil {
++	case "empty2":
+ 		return visitor.VisitEmpty2(u.Empty2)
+ 	}
+-	return fmt.Errorf("type %T does not define a non-empty union type", u)
+ }
+ 
+ func (u *UnionWithMultipleNoProperties) validate() error {
+@@ -1729,6 +1811,14 @@ type UnionWithNoProperties struct {
+ 	Empty interface{}
+ }
+ 
++func NewUnionWithNoPropertiesFromFoo(value *Foo) *UnionWithNoProperties {
++	return &UnionWithNoProperties{Type: "foo", Foo: value}
++}
++
++func NewUnionWithNoPropertiesFromEmpty(value interface{}) *UnionWithNoProperties {
++	return &UnionWithNoProperties{Type: "empty", Empty: value}
++}
++
+ func (u *UnionWithNoProperties) GetType() string {
+ 	if u == nil {
+ 		return ""
+@@ -1782,10 +1872,12 @@ func (u UnionWithNoProperties) MarshalJSON() ([]byte, error) {
+ 	if err := u.validate(); err != nil {
+ 		return nil, err
+ 	}
+-	if u.Foo != nil {
++	switch u.Type {
++	default:
++		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
++	case "foo":
+ 		return internal.MarshalJSONWithExtraProperty(u.Foo, "type", "foo")
+-	}
+-	if u.Empty != nil {
++	case "empty":
+ 		var marshaler = struct {
+ 			Type  string      `json:"type"`
+ 			Empty interface{} `json:"empty,omitempty"`
+@@ -1795,7 +1887,6 @@ func (u UnionWithNoProperties) MarshalJSON() ([]byte, error) {
+ 		}
+ 		return json.Marshal(marshaler)
+ 	}
+-	return nil, fmt.Errorf("type %T does not define a non-empty union type", u)
+ }
+ 
+ type UnionWithNoPropertiesVisitor interface {
+@@ -1804,13 +1895,14 @@ type UnionWithNoPropertiesVisitor interface {
+ }
+ 
+ func (u *UnionWithNoProperties) Accept(visitor UnionWithNoPropertiesVisitor) error {
+-	if u.Foo != nil {
++	switch u.Type {
++	default:
++		return fmt.Errorf("invalid type %s in %T", u.Type, u)
++	case "foo":
+ 		return visitor.VisitFoo(u.Foo)
+-	}
+-	if u.Empty != nil {
++	case "empty":
+ 		return visitor.VisitEmpty(u.Empty)
+ 	}
+-	return fmt.Errorf("type %T does not define a non-empty union type", u)
+ }
+ 
+ func (u *UnionWithNoProperties) validate() error {
+@@ -1853,6 +1945,14 @@ type UnionWithNullableReference struct {
+ 	Bar  *Bar
+ }
+ 
++func NewUnionWithNullableReferenceFromFoo(value *Foo) *UnionWithNullableReference {
++	return &UnionWithNullableReference{Type: "foo", Foo: value}
++}
++
++func NewUnionWithNullableReferenceFromBar(value *Bar) *UnionWithNullableReference {
++	return &UnionWithNullableReference{Type: "bar", Bar: value}
++}
++
+ func (u *UnionWithNullableReference) GetType() string {
+ 	if u == nil {
+ 		return ""
+@@ -1910,7 +2010,10 @@ func (u UnionWithNullableReference) MarshalJSON() ([]byte, error) {
+ 	if err := u.validate(); err != nil {
+ 		return nil, err
+ 	}
+-	if u.Foo != nil {
++	switch u.Type {
++	default:
++		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
++	case "foo":
+ 		var marshaler = struct {
+ 			Type string `json:"type"`
+ 			Foo  *Foo   `json:"value,omitempty"`
+@@ -1919,8 +2022,7 @@ func (u UnionWithNullableReference) MarshalJSON() ([]byte, error) {
+ 			Foo:  u.Foo,
+ 		}
+ 		return json.Marshal(marshaler)
+-	}
+-	if u.Bar != nil {
++	case "bar":
+ 		var marshaler = struct {
+ 			Type string `json:"type"`
+ 			Bar  *Bar   `json:"value,omitempty"`
+@@ -1930,7 +2032,6 @@ func (u UnionWithNullableReference) MarshalJSON() ([]byte, error) {
+ 		}
+ 		return json.Marshal(marshaler)
+ 	}
+-	return nil, fmt.Errorf("type %T does not define a non-empty union type", u)
+ }
+ 
+ type UnionWithNullableReferenceVisitor interface {
+@@ -1939,13 +2040,14 @@ type UnionWithNullableReferenceVisitor interface {
+ }
+ 
+ func (u *UnionWithNullableReference) Accept(visitor UnionWithNullableReferenceVisitor) error {
+-	if u.Foo != nil {
++	switch u.Type {
++	default:
++		return fmt.Errorf("invalid type %s in %T", u.Type, u)
++	case "foo":
+ 		return visitor.VisitFoo(u.Foo)
+-	}
+-	if u.Bar != nil {
++	case "bar":
+ 		return visitor.VisitBar(u.Bar)
+ 	}
+-	return fmt.Errorf("type %T does not define a non-empty union type", u)
+ }
+ 
+ func (u *UnionWithNullableReference) validate() error {
+@@ -1988,6 +2090,14 @@ type UnionWithOptionalReference struct {
+ 	Bar  *Bar
+ }
+ 
++func NewUnionWithOptionalReferenceFromFoo(value *Foo) *UnionWithOptionalReference {
++	return &UnionWithOptionalReference{Type: "foo", Foo: value}
++}
++
++func NewUnionWithOptionalReferenceFromBar(value *Bar) *UnionWithOptionalReference {
++	return &UnionWithOptionalReference{Type: "bar", Bar: value}
++}
++
+ func (u *UnionWithOptionalReference) GetType() string {
+ 	if u == nil {
+ 		return ""
+@@ -2045,7 +2155,10 @@ func (u UnionWithOptionalReference) MarshalJSON() ([]byte, error) {
+ 	if err := u.validate(); err != nil {
+ 		return nil, err
+ 	}
+-	if u.Foo != nil {
++	switch u.Type {
++	default:
++		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
++	case "foo":
+ 		var marshaler = struct {
+ 			Type string `json:"type"`
+ 			Foo  *Foo   `json:"value,omitempty"`
+@@ -2054,8 +2167,7 @@ func (u UnionWithOptionalReference) MarshalJSON() ([]byte, error) {
+ 			Foo:  u.Foo,
+ 		}
+ 		return json.Marshal(marshaler)
+-	}
+-	if u.Bar != nil {
++	case "bar":
+ 		var marshaler = struct {
+ 			Type string `json:"type"`
+ 			Bar  *Bar   `json:"value,omitempty"`
+@@ -2065,7 +2177,6 @@ func (u UnionWithOptionalReference) MarshalJSON() ([]byte, error) {
+ 		}
+ 		return json.Marshal(marshaler)
+ 	}
+-	return nil, fmt.Errorf("type %T does not define a non-empty union type", u)
+ }
+ 
+ type UnionWithOptionalReferenceVisitor interface {
+@@ -2074,13 +2185,14 @@ type UnionWithOptionalReferenceVisitor interface {
+ }
+ 
+ func (u *UnionWithOptionalReference) Accept(visitor UnionWithOptionalReferenceVisitor) error {
+-	if u.Foo != nil {
++	switch u.Type {
++	default:
++		return fmt.Errorf("invalid type %s in %T", u.Type, u)
++	case "foo":
+ 		return visitor.VisitFoo(u.Foo)
+-	}
+-	if u.Bar != nil {
++	case "bar":
+ 		return visitor.VisitBar(u.Bar)
+ 	}
+-	return fmt.Errorf("type %T does not define a non-empty union type", u)
+ }
+ 
+ func (u *UnionWithOptionalReference) validate() error {
+@@ -2123,6 +2235,14 @@ type UnionWithOptionalTime struct {
+ 	Datetime *time.Time
+ }
+ 
++func NewUnionWithOptionalTimeFromDate(value *time.Time) *UnionWithOptionalTime {
++	return &UnionWithOptionalTime{Type: "date", Date: value}
++}
++
++func NewUnionWithOptionalTimeFromDatetime(value *time.Time) *UnionWithOptionalTime {
++	return &UnionWithOptionalTime{Type: "datetime", Datetime: value}
++}
++
+ func (u *UnionWithOptionalTime) GetType() string {
+ 	if u == nil {
+ 		return ""
+@@ -2180,7 +2300,10 @@ func (u UnionWithOptionalTime) MarshalJSON() ([]byte, error) {
+ 	if err := u.validate(); err != nil {
+ 		return nil, err
+ 	}
+-	if u.Date != nil {
++	switch u.Type {
++	default:
++		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
++	case "date":
+ 		var marshaler = struct {
+ 			Type string         `json:"type"`
+ 			Date *internal.Date `json:"value,omitempty" format:"date"`
+@@ -2189,8 +2312,7 @@ func (u UnionWithOptionalTime) MarshalJSON() ([]byte, error) {
+ 			Date: internal.NewOptionalDate(u.Date),
+ 		}
+ 		return json.Marshal(marshaler)
+-	}
+-	if u.Datetime != nil {
++	case "datetime":
+ 		var marshaler = struct {
+ 			Type     string             `json:"type"`
+ 			Datetime *internal.DateTime `json:"value,omitempty"`
+@@ -2200,7 +2322,6 @@ func (u UnionWithOptionalTime) MarshalJSON() ([]byte, error) {
+ 		}
+ 		return json.Marshal(marshaler)
+ 	}
+-	return nil, fmt.Errorf("type %T does not define a non-empty union type", u)
+ }
+ 
+ type UnionWithOptionalTimeVisitor interface {
+@@ -2209,13 +2330,14 @@ type UnionWithOptionalTimeVisitor interface {
+ }
+ 
+ func (u *UnionWithOptionalTime) Accept(visitor UnionWithOptionalTimeVisitor) error {
+-	if u.Date != nil {
++	switch u.Type {
++	default:
++		return fmt.Errorf("invalid type %s in %T", u.Type, u)
++	case "date":
+ 		return visitor.VisitDate(u.Date)
+-	}
+-	if u.Datetime != nil {
++	case "datetime":
+ 		return visitor.VisitDatetime(u.Datetime)
+ 	}
+-	return fmt.Errorf("type %T does not define a non-empty union type", u)
+ }
+ 
+ func (u *UnionWithOptionalTime) validate() error {
+@@ -2258,6 +2380,14 @@ type UnionWithPrimitive struct {
+ 	FieldString string
+ }
+ 
++func NewUnionWithPrimitiveFromInteger(value int) *UnionWithPrimitive {
++	return &UnionWithPrimitive{Type: "integer", Integer: value}
++}
++
++func NewUnionWithPrimitiveFromFieldString(value string) *UnionWithPrimitive {
++	return &UnionWithPrimitive{Type: "string", FieldString: value}
++}
++
+ func (u *UnionWithPrimitive) GetType() string {
+ 	if u == nil {
+ 		return ""
+@@ -2315,7 +2445,10 @@ func (u UnionWithPrimitive) MarshalJSON() ([]byte, error) {
+ 	if err := u.validate(); err != nil {
+ 		return nil, err
+ 	}
+-	if u.Integer != 0 {
++	switch u.Type {
++	default:
++		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
++	case "integer":
+ 		var marshaler = struct {
+ 			Type    string `json:"type"`
+ 			Integer int    `json:"value"`
+@@ -2324,8 +2457,7 @@ func (u UnionWithPrimitive) MarshalJSON() ([]byte, error) {
+ 			Integer: u.Integer,
+ 		}
+ 		return json.Marshal(marshaler)
+-	}
+-	if u.FieldString != "" {
++	case "string":
+ 		var marshaler = struct {
+ 			Type        string `json:"type"`
+ 			FieldString string `json:"value"`
+@@ -2335,7 +2467,6 @@ func (u UnionWithPrimitive) MarshalJSON() ([]byte, error) {
+ 		}
+ 		return json.Marshal(marshaler)
+ 	}
+-	return nil, fmt.Errorf("type %T does not define a non-empty union type", u)
+ }
+ 
+ type UnionWithPrimitiveVisitor interface {
+@@ -2344,13 +2475,14 @@ type UnionWithPrimitiveVisitor interface {
+ }
+ 
+ func (u *UnionWithPrimitive) Accept(visitor UnionWithPrimitiveVisitor) error {
+-	if u.Integer != 0 {
++	switch u.Type {
++	default:
++		return fmt.Errorf("invalid type %s in %T", u.Type, u)
++	case "integer":
+ 		return visitor.VisitInteger(u.Integer)
+-	}
+-	if u.FieldString != "" {
++	case "string":
+ 		return visitor.VisitFieldString(u.FieldString)
+ 	}
+-	return fmt.Errorf("type %T does not define a non-empty union type", u)
+ }
+ 
+ func (u *UnionWithPrimitive) validate() error {
+@@ -2394,6 +2526,18 @@ type UnionWithSameNumberTypes struct {
+ 	AnyNumber   float64
+ }
+ 
++func NewUnionWithSameNumberTypesFromPositiveInt(value int) *UnionWithSameNumberTypes {
++	return &UnionWithSameNumberTypes{Type: "positiveInt", PositiveInt: value}
++}
++
++func NewUnionWithSameNumberTypesFromNegativeInt(value int) *UnionWithSameNumberTypes {
++	return &UnionWithSameNumberTypes{Type: "negativeInt", NegativeInt: value}
++}
++
++func NewUnionWithSameNumberTypesFromAnyNumber(value float64) *UnionWithSameNumberTypes {
++	return &UnionWithSameNumberTypes{Type: "anyNumber", AnyNumber: value}
++}
++
+ func (u *UnionWithSameNumberTypes) GetType() string {
+ 	if u == nil {
+ 		return ""
+@@ -2466,7 +2610,10 @@ func (u UnionWithSameNumberTypes) MarshalJSON() ([]byte, error) {
+ 	if err := u.validate(); err != nil {
+ 		return nil, err
+ 	}
+-	if u.PositiveInt != 0 {
++	switch u.Type {
++	default:
++		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
++	case "positiveInt":
+ 		var marshaler = struct {
+ 			Type        string `json:"type"`
+ 			PositiveInt int    `json:"value"`
+@@ -2475,8 +2622,7 @@ func (u UnionWithSameNumberTypes) MarshalJSON() ([]byte, error) {
+ 			PositiveInt: u.PositiveInt,
+ 		}
+ 		return json.Marshal(marshaler)
+-	}
+-	if u.NegativeInt != 0 {
++	case "negativeInt":
+ 		var marshaler = struct {
+ 			Type        string `json:"type"`
+ 			NegativeInt int    `json:"value"`
+@@ -2485,8 +2631,7 @@ func (u UnionWithSameNumberTypes) MarshalJSON() ([]byte, error) {
+ 			NegativeInt: u.NegativeInt,
+ 		}
+ 		return json.Marshal(marshaler)
+-	}
+-	if u.AnyNumber != 0 {
++	case "anyNumber":
+ 		var marshaler = struct {
+ 			Type      string  `json:"type"`
+ 			AnyNumber float64 `json:"value"`
+@@ -2496,7 +2641,6 @@ func (u UnionWithSameNumberTypes) MarshalJSON() ([]byte, error) {
+ 		}
+ 		return json.Marshal(marshaler)
+ 	}
+-	return nil, fmt.Errorf("type %T does not define a non-empty union type", u)
+ }
+ 
+ type UnionWithSameNumberTypesVisitor interface {
+@@ -2506,16 +2650,16 @@ type UnionWithSameNumberTypesVisitor interface {
+ }
+ 
+ func (u *UnionWithSameNumberTypes) Accept(visitor UnionWithSameNumberTypesVisitor) error {
+-	if u.PositiveInt != 0 {
++	switch u.Type {
++	default:
++		return fmt.Errorf("invalid type %s in %T", u.Type, u)
++	case "positiveInt":
+ 		return visitor.VisitPositiveInt(u.PositiveInt)
+-	}
+-	if u.NegativeInt != 0 {
++	case "negativeInt":
+ 		return visitor.VisitNegativeInt(u.NegativeInt)
+-	}
+-	if u.AnyNumber != 0 {
++	case "anyNumber":
+ 		return visitor.VisitAnyNumber(u.AnyNumber)
+ 	}
+-	return fmt.Errorf("type %T does not define a non-empty union type", u)
+ }
+ 
+ func (u *UnionWithSameNumberTypes) validate() error {
+@@ -2562,6 +2706,18 @@ type UnionWithSameStringTypes struct {
+ 	PatternString string
+ }
+ 
++func NewUnionWithSameStringTypesFromCustomFormat(value string) *UnionWithSameStringTypes {
++	return &UnionWithSameStringTypes{Type: "customFormat", CustomFormat: value}
++}
++
++func NewUnionWithSameStringTypesFromRegularString(value string) *UnionWithSameStringTypes {
++	return &UnionWithSameStringTypes{Type: "regularString", RegularString: value}
++}
++
++func NewUnionWithSameStringTypesFromPatternString(value string) *UnionWithSameStringTypes {
++	return &UnionWithSameStringTypes{Type: "patternString", PatternString: value}
++}
++
+ func (u *UnionWithSameStringTypes) GetType() string {
+ 	if u == nil {
+ 		return ""
+@@ -2634,7 +2790,10 @@ func (u UnionWithSameStringTypes) MarshalJSON() ([]byte, error) {
+ 	if err := u.validate(); err != nil {
+ 		return nil, err
+ 	}
+-	if u.CustomFormat != "" {
++	switch u.Type {
++	default:
++		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
++	case "customFormat":
+ 		var marshaler = struct {
+ 			Type         string `json:"type"`
+ 			CustomFormat string `json:"value"`
+@@ -2643,8 +2802,7 @@ func (u UnionWithSameStringTypes) MarshalJSON() ([]byte, error) {
+ 			CustomFormat: u.CustomFormat,
+ 		}
+ 		return json.Marshal(marshaler)
+-	}
+-	if u.RegularString != "" {
++	case "regularString":
+ 		var marshaler = struct {
+ 			Type          string `json:"type"`
+ 			RegularString string `json:"value"`
+@@ -2653,8 +2811,7 @@ func (u UnionWithSameStringTypes) MarshalJSON() ([]byte, error) {
+ 			RegularString: u.RegularString,
+ 		}
+ 		return json.Marshal(marshaler)
+-	}
+-	if u.PatternString != "" {
++	case "patternString":
+ 		var marshaler = struct {
+ 			Type          string `json:"type"`
+ 			PatternString string `json:"value"`
+@@ -2664,7 +2821,6 @@ func (u UnionWithSameStringTypes) MarshalJSON() ([]byte, error) {
+ 		}
+ 		return json.Marshal(marshaler)
+ 	}
+-	return nil, fmt.Errorf("type %T does not define a non-empty union type", u)
+ }
+ 
+ type UnionWithSameStringTypesVisitor interface {
+@@ -2674,16 +2830,16 @@ type UnionWithSameStringTypesVisitor interface {
+ }
+ 
+ func (u *UnionWithSameStringTypes) Accept(visitor UnionWithSameStringTypesVisitor) error {
+-	if u.CustomFormat != "" {
++	switch u.Type {
++	default:
++		return fmt.Errorf("invalid type %s in %T", u.Type, u)
++	case "customFormat":
+ 		return visitor.VisitCustomFormat(u.CustomFormat)
+-	}
+-	if u.RegularString != "" {
++	case "regularString":
+ 		return visitor.VisitRegularString(u.RegularString)
+-	}
+-	if u.PatternString != "" {
++	case "patternString":
+ 		return visitor.VisitPatternString(u.PatternString)
+ 	}
+-	return fmt.Errorf("type %T does not define a non-empty union type", u)
+ }
+ 
+ func (u *UnionWithSameStringTypes) validate() error {
+@@ -2728,6 +2884,10 @@ type UnionWithSingleElement struct {
+ 	Foo  *Foo
+ }
+ 
++func NewUnionWithSingleElementFromFoo(value *Foo) *UnionWithSingleElement {
++	return &UnionWithSingleElement{Type: "foo", Foo: value}
++}
++
+ func (u *UnionWithSingleElement) GetType() string {
+ 	if u == nil {
+ 		return ""
+@@ -2768,10 +2928,12 @@ func (u UnionWithSingleElement) MarshalJSON() ([]byte, error) {
+ 	if err := u.validate(); err != nil {
+ 		return nil, err
+ 	}
+-	if u.Foo != nil {
++	switch u.Type {
++	default:
++		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
++	case "foo":
+ 		return internal.MarshalJSONWithExtraProperty(u.Foo, "type", "foo")
+ 	}
+-	return nil, fmt.Errorf("type %T does not define a non-empty union type", u)
+ }
+ 
+ type UnionWithSingleElementVisitor interface {
+@@ -2779,10 +2941,12 @@ type UnionWithSingleElementVisitor interface {
+ }
+ 
+ func (u *UnionWithSingleElement) Accept(visitor UnionWithSingleElementVisitor) error {
+-	if u.Foo != nil {
++	switch u.Type {
++	default:
++		return fmt.Errorf("invalid type %s in %T", u.Type, u)
++	case "foo":
+ 		return visitor.VisitFoo(u.Foo)
+ 	}
+-	return fmt.Errorf("type %T does not define a non-empty union type", u)
+ }
+ 
+ func (u *UnionWithSingleElement) validate() error {
+@@ -2822,6 +2986,14 @@ type UnionWithSubTypes struct {
+ 	FooExtended *FooExtended
+ }
+ 
++func NewUnionWithSubTypesFromFoo(value *Foo) *UnionWithSubTypes {
++	return &UnionWithSubTypes{Type: "foo", Foo: value}
++}
++
++func NewUnionWithSubTypesFromFooExtended(value *FooExtended) *UnionWithSubTypes {
++	return &UnionWithSubTypes{Type: "fooExtended", FooExtended: value}
++}
++
+ func (u *UnionWithSubTypes) GetType() string {
+ 	if u == nil {
+ 		return ""
+@@ -2875,13 +3047,14 @@ func (u UnionWithSubTypes) MarshalJSON() ([]byte, error) {
+ 	if err := u.validate(); err != nil {
+ 		return nil, err
+ 	}
+-	if u.Foo != nil {
++	switch u.Type {
++	default:
++		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
++	case "foo":
+ 		return internal.MarshalJSONWithExtraProperty(u.Foo, "type", "foo")
+-	}
+-	if u.FooExtended != nil {
++	case "fooExtended":
+ 		return internal.MarshalJSONWithExtraProperty(u.FooExtended, "type", "fooExtended")
+ 	}
+-	return nil, fmt.Errorf("type %T does not define a non-empty union type", u)
+ }
+ 
+ type UnionWithSubTypesVisitor interface {
+@@ -2890,13 +3063,14 @@ type UnionWithSubTypesVisitor interface {
+ }
+ 
+ func (u *UnionWithSubTypes) Accept(visitor UnionWithSubTypesVisitor) error {
+-	if u.Foo != nil {
++	switch u.Type {
++	default:
++		return fmt.Errorf("invalid type %s in %T", u.Type, u)
++	case "foo":
+ 		return visitor.VisitFoo(u.Foo)
+-	}
+-	if u.FooExtended != nil {
++	case "fooExtended":
+ 		return visitor.VisitFooExtended(u.FooExtended)
+ 	}
+-	return fmt.Errorf("type %T does not define a non-empty union type", u)
+ }
+ 
+ func (u *UnionWithSubTypes) validate() error {
+@@ -2940,6 +3114,18 @@ type UnionWithTime struct {
+ 	Datetime time.Time
+ }
+ 
++func NewUnionWithTimeFromValue(value int) *UnionWithTime {
++	return &UnionWithTime{Type: "value", Value: value}
++}
++
++func NewUnionWithTimeFromDate(value time.Time) *UnionWithTime {
++	return &UnionWithTime{Type: "date", Date: value}
++}
++
++func NewUnionWithTimeFromDatetime(value time.Time) *UnionWithTime {
++	return &UnionWithTime{Type: "datetime", Datetime: value}
++}
++
+ func (u *UnionWithTime) GetType() string {
+ 	if u == nil {
+ 		return ""
+@@ -3012,7 +3198,10 @@ func (u UnionWithTime) MarshalJSON() ([]byte, error) {
+ 	if err := u.validate(); err != nil {
+ 		return nil, err
+ 	}
+-	if u.Value != 0 {
++	switch u.Type {
++	default:
++		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
++	case "value":
+ 		var marshaler = struct {
+ 			Type  string `json:"type"`
+ 			Value int    `json:"value"`
+@@ -3021,8 +3210,7 @@ func (u UnionWithTime) MarshalJSON() ([]byte, error) {
+ 			Value: u.Value,
+ 		}
+ 		return json.Marshal(marshaler)
+-	}
+-	if !u.Date.IsZero() {
++	case "date":
+ 		var marshaler = struct {
+ 			Type string         `json:"type"`
+ 			Date *internal.Date `json:"value" format:"date"`
+@@ -3031,8 +3219,7 @@ func (u UnionWithTime) MarshalJSON() ([]byte, error) {
+ 			Date: internal.NewDate(u.Date),
+ 		}
+ 		return json.Marshal(marshaler)
+-	}
+-	if !u.Datetime.IsZero() {
++	case "datetime":
+ 		var marshaler = struct {
+ 			Type     string             `json:"type"`
+ 			Datetime *internal.DateTime `json:"value"`
+@@ -3042,7 +3229,6 @@ func (u UnionWithTime) MarshalJSON() ([]byte, error) {
+ 		}
+ 		return json.Marshal(marshaler)
+ 	}
+-	return nil, fmt.Errorf("type %T does not define a non-empty union type", u)
+ }
+ 
+ type UnionWithTimeVisitor interface {
+@@ -3052,16 +3238,16 @@ type UnionWithTimeVisitor interface {
+ }
+ 
+ func (u *UnionWithTime) Accept(visitor UnionWithTimeVisitor) error {
+-	if u.Value != 0 {
++	switch u.Type {
++	default:
++		return fmt.Errorf("invalid type %s in %T", u.Type, u)
++	case "value":
+ 		return visitor.VisitValue(u.Value)
+-	}
+-	if !u.Date.IsZero() {
++	case "date":
+ 		return visitor.VisitDate(u.Date)
+-	}
+-	if !u.Datetime.IsZero() {
++	case "datetime":
+ 		return visitor.VisitDatetime(u.Datetime)
+ 	}
+-	return fmt.Errorf("type %T does not define a non-empty union type", u)
+ }
+ 
+ func (u *UnionWithTime) validate() error {
+@@ -3108,6 +3294,14 @@ type UnionWithoutKey struct {
+ 	Bar *Bar
+ }
+ 
++func NewUnionWithoutKeyFromFoo(value *Foo) *UnionWithoutKey {
++	return &UnionWithoutKey{Type: "foo", Foo: value}
++}
++
++func NewUnionWithoutKeyFromBar(value *Bar) *UnionWithoutKey {
++	return &UnionWithoutKey{Type: "bar", Bar: value}
++}
++
+ func (u *UnionWithoutKey) GetType() string {
+ 	if u == nil {
+ 		return ""
+@@ -3161,13 +3355,14 @@ func (u UnionWithoutKey) MarshalJSON() ([]byte, error) {
+ 	if err := u.validate(); err != nil {
+ 		return nil, err
+ 	}
+-	if u.Foo != nil {
++	switch u.Type {
++	default:
++		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
++	case "foo":
+ 		return internal.MarshalJSONWithExtraProperty(u.Foo, "type", "foo")
+-	}
+-	if u.Bar != nil {
++	case "bar":
+ 		return internal.MarshalJSONWithExtraProperty(u.Bar, "type", "bar")
+ 	}
+-	return nil, fmt.Errorf("type %T does not define a non-empty union type", u)
+ }
+ 
+ type UnionWithoutKeyVisitor interface {
+@@ -3176,13 +3371,14 @@ type UnionWithoutKeyVisitor interface {
+ }
+ 
+ func (u *UnionWithoutKey) Accept(visitor UnionWithoutKeyVisitor) error {
+-	if u.Foo != nil {
++	switch u.Type {
++	default:
++		return fmt.Errorf("invalid type %s in %T", u.Type, u)
++	case "foo":
+ 		return visitor.VisitFoo(u.Foo)
+-	}
+-	if u.Bar != nil {
++	case "bar":
+ 		return visitor.VisitBar(u.Bar)
+ 	}
+-	return fmt.Errorf("type %T does not define a non-empty union type", u)
+ }
+ 
+ func (u *UnionWithoutKey) validate() error {
+diff --git a/union.go b/union.go
+index b153348b02a..4c2b7322200 100644
+--- a/union.go
++++ b/union.go
+@@ -185,6 +185,14 @@ type Shape struct {
+ 	Square *Square
+ }
+ 
++func NewShapeFromCircle(value *Circle) *Shape {
++	return &Shape{Type: "circle", Circle: value}
++}
++
++func NewShapeFromSquare(value *Square) *Shape {
++	return &Shape{Type: "square", Square: value}
++}
++
+ func (s *Shape) GetType() string {
+ 	if s == nil {
+ 		return ""
+@@ -256,13 +264,14 @@ func (s Shape) MarshalJSON() ([]byte, error) {
+ 	if err := s.validate(); err != nil {
+ 		return nil, err
+ 	}
+-	if s.Circle != nil {
++	switch s.Type {
++	default:
++		return nil, fmt.Errorf("invalid type %s in %T", s.Type, s)
++	case "circle":
+ 		return internal.MarshalJSONWithExtraProperty(s.Circle, "type", "circle")
+-	}
+-	if s.Square != nil {
++	case "square":
+ 		return internal.MarshalJSONWithExtraProperty(s.Square, "type", "square")
+ 	}
+-	return nil, fmt.Errorf("type %T does not define a non-empty union type", s)
+ }
+ 
+ type ShapeVisitor interface {
+@@ -271,13 +280,14 @@ type ShapeVisitor interface {
+ }
+ 
+ func (s *Shape) Accept(visitor ShapeVisitor) error {
+-	if s.Circle != nil {
++	switch s.Type {
++	default:
++		return fmt.Errorf("invalid type %s in %T", s.Type, s)
++	case "circle":
+ 		return visitor.VisitCircle(s.Circle)
+-	}
+-	if s.Square != nil {
++	case "square":
+ 		return visitor.VisitSquare(s.Square)
+ 	}
+-	return fmt.Errorf("type %T does not define a non-empty union type", s)
+ }
+ 
+ func (s *Shape) validate() error {

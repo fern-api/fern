@@ -1,0 +1,570 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 5e4188a44b1..7d28b20dd97 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,7 +2,11 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-csharp-sdk",
+   "generatorVersion": "local",
+-  "generatorConfig": {},
++  "generatorConfig": {
++    "use-default-request-parameter-values": true,
++    "experimental-explicit-nullable-optional": true,
++    "use-undiscriminated-unions": true
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "ci",
+diff --git a/reference.md b/reference.md
+index aaddaf38913..72fef960fcd 100644
+--- a/reference.md
++++ b/reference.md
+@@ -99,7 +99,7 @@ await client.User.CreateUsernameWithReferencedTypeAsync(
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.User.<a href="/src/SeedRequestParameters/User/UserClient.cs">CreateUsernameOptionalAsync</a>(CreateUsernameBodyOptionalProperties? { ... })</code></summary>
++<details><summary><code>client.User.<a href="/src/SeedRequestParameters/User/UserClient.cs">CreateUsernameOptionalAsync</a>(Optional&lt;CreateUsernameBodyOptionalProperties?&gt; { ... })</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -127,7 +127,7 @@ await client.User.CreateUsernameOptionalAsync(new CreateUsernameBodyOptionalProp
+ <dl>
+ <dd>
+ 
+-**request:** `CreateUsernameBodyOptionalProperties?` 
++**request:** `Optional<CreateUsernameBodyOptionalProperties?>` 
+     
+ </dd>
+ </dl>
+diff --git a/src/SeedRequestParameters/Core/CollectionItemSerializer.cs b/src/SeedRequestParameters/Core/CollectionItemSerializer.cs
+deleted file mode 100644
+index 8403e4e59df..00000000000
+--- a/src/SeedRequestParameters/Core/CollectionItemSerializer.cs
++++ /dev/null
+@@ -1,91 +0,0 @@
+-using global::System.Text.Json;
+-using global::System.Text.Json.Serialization;
+-
+-namespace SeedRequestParameters.Core;
+-
+-/// <summary>
+-/// Json collection converter.
+-/// </summary>
+-/// <typeparam name="TDatatype">Type of item to convert.</typeparam>
+-/// <typeparam name="TConverterType">Converter to use for individual items.</typeparam>
+-internal class CollectionItemSerializer<TDatatype, TConverterType>
+-    : JsonConverter<IEnumerable<TDatatype>>
+-    where TConverterType : JsonConverter, new()
+-{
+-    private static readonly TConverterType _converter = new TConverterType();
+-
+-    /// <summary>
+-    /// Reads a json string and deserializes it into an object.
+-    /// </summary>
+-    /// <param name="reader">Json reader.</param>
+-    /// <param name="typeToConvert">Type to convert.</param>
+-    /// <param name="options">Serializer options.</param>
+-    /// <returns>Created object.</returns>
+-    public override IEnumerable<TDatatype>? Read(
+-        ref Utf8JsonReader reader,
+-        global::System.Type typeToConvert,
+-        JsonSerializerOptions options
+-    )
+-    {
+-        if (reader.TokenType == JsonTokenType.Null)
+-        {
+-            return default;
+-        }
+-
+-        var jsonSerializerOptions = new JsonSerializerOptions(options);
+-        jsonSerializerOptions.Converters.Clear();
+-        jsonSerializerOptions.Converters.Add(_converter);
+-
+-        var returnValue = new List<TDatatype>();
+-
+-        while (reader.TokenType != JsonTokenType.EndArray)
+-        {
+-            if (reader.TokenType != JsonTokenType.StartArray)
+-            {
+-                var item = (TDatatype)(
+-                    JsonSerializer.Deserialize(ref reader, typeof(TDatatype), jsonSerializerOptions)
+-                    ?? throw new global::System.Exception(
+-                        $"Failed to deserialize collection item of type {typeof(TDatatype)}"
+-                    )
+-                );
+-                returnValue.Add(item);
+-            }
+-
+-            reader.Read();
+-        }
+-
+-        return returnValue;
+-    }
+-
+-    /// <summary>
+-    /// Writes a json string.
+-    /// </summary>
+-    /// <param name="writer">Json writer.</param>
+-    /// <param name="value">Value to write.</param>
+-    /// <param name="options">Serializer options.</param>
+-    public override void Write(
+-        Utf8JsonWriter writer,
+-        IEnumerable<TDatatype>? value,
+-        JsonSerializerOptions options
+-    )
+-    {
+-        if (value is null)
+-        {
+-            writer.WriteNullValue();
+-            return;
+-        }
+-
+-        var jsonSerializerOptions = new JsonSerializerOptions(options);
+-        jsonSerializerOptions.Converters.Clear();
+-        jsonSerializerOptions.Converters.Add(_converter);
+-
+-        writer.WriteStartArray();
+-
+-        foreach (var data in value)
+-        {
+-            JsonSerializer.Serialize(writer, data, jsonSerializerOptions);
+-        }
+-
+-        writer.WriteEndArray();
+-    }
+-}
+diff --git a/src/SeedRequestParameters/Core/JsonConfiguration.cs b/src/SeedRequestParameters/Core/JsonConfiguration.cs
+index ae653bc0240..7202514a60a 100644
+--- a/src/SeedRequestParameters/Core/JsonConfiguration.cs
++++ b/src/SeedRequestParameters/Core/JsonConfiguration.cs
+@@ -16,15 +16,11 @@ internal static partial class JsonOptions
+     {
+         var options = new JsonSerializerOptions
+         {
+-            Converters =
+-            {
+-                new DateTimeSerializer(),
++            Converters = { new DateTimeSerializer(),
+ #if USE_PORTABLE_DATE_ONLY
+                 new DateOnlyConverter(),
+ #endif
+-                new OneOfSerializer(),
+-                new OptionalJsonConverterFactory(),
+-            },
++                new OptionalJsonConverterFactory() },
+ #if DEBUG
+             WriteIndented = true,
+ #endif
+diff --git a/src/SeedRequestParameters/Core/OneOfSerializer.cs b/src/SeedRequestParameters/Core/OneOfSerializer.cs
+deleted file mode 100644
+index a91853df454..00000000000
+--- a/src/SeedRequestParameters/Core/OneOfSerializer.cs
++++ /dev/null
+@@ -1,145 +0,0 @@
+-using global::System.Reflection;
+-using global::System.Text.Json;
+-using global::System.Text.Json.Serialization;
+-using OneOf;
+-
+-namespace SeedRequestParameters.Core;
+-
+-internal class OneOfSerializer : JsonConverter<IOneOf>
+-{
+-    public override IOneOf? Read(
+-        ref Utf8JsonReader reader,
+-        global::System.Type typeToConvert,
+-        JsonSerializerOptions options
+-    )
+-    {
+-        if (reader.TokenType is JsonTokenType.Null)
+-            return default;
+-
+-        foreach (var (type, cast) in GetOneOfTypes(typeToConvert))
+-        {
+-            try
+-            {
+-                var readerCopy = reader;
+-                var result = JsonSerializer.Deserialize(ref readerCopy, type, options);
+-                reader.Skip();
+-                return (IOneOf)cast.Invoke(null, [result])!;
+-            }
+-            catch (JsonException) { }
+-        }
+-
+-        throw new JsonException(
+-            $"Cannot deserialize into one of the supported types for {typeToConvert}"
+-        );
+-    }
+-
+-    public override void Write(Utf8JsonWriter writer, IOneOf value, JsonSerializerOptions options)
+-    {
+-        JsonSerializer.Serialize(writer, value.Value, options);
+-    }
+-
+-    public override IOneOf ReadAsPropertyName(
+-        ref Utf8JsonReader reader,
+-        global::System.Type typeToConvert,
+-        JsonSerializerOptions options
+-    )
+-    {
+-        var stringValue = reader.GetString();
+-        if (stringValue == null)
+-            throw new JsonException("Cannot deserialize null property name into OneOf type");
+-
+-        // Try to deserialize the string value into one of the supported types
+-        foreach (var (type, cast) in GetOneOfTypes(typeToConvert))
+-        {
+-            try
+-            {
+-                // For primitive types, try direct conversion
+-                if (type == typeof(string))
+-                {
+-                    return (IOneOf)cast.Invoke(null, [stringValue])!;
+-                }
+-
+-                // For other types, try to deserialize from JSON string
+-                var result = JsonSerializer.Deserialize($"\"{stringValue}\"", type, options);
+-                if (result != null)
+-                {
+-                    return (IOneOf)cast.Invoke(null, [result])!;
+-                }
+-            }
+-            catch { }
+-        }
+-
+-        // If no type-specific deserialization worked, default to string if available
+-        var stringType = GetOneOfTypes(typeToConvert).FirstOrDefault(t => t.type == typeof(string));
+-        if (stringType != default)
+-        {
+-            return (IOneOf)stringType.cast.Invoke(null, [stringValue])!;
+-        }
+-
+-        throw new JsonException(
+-            $"Cannot deserialize dictionary key '{stringValue}' into one of the supported types for {typeToConvert}"
+-        );
+-    }
+-
+-    public override void WriteAsPropertyName(
+-        Utf8JsonWriter writer,
+-        IOneOf value,
+-        JsonSerializerOptions options
+-    )
+-    {
+-        // Serialize the underlying value to a string suitable for use as a dictionary key
+-        var stringValue = value.Value?.ToString() ?? "null";
+-        writer.WritePropertyName(stringValue);
+-    }
+-
+-    private static (global::System.Type type, MethodInfo cast)[] GetOneOfTypes(
+-        global::System.Type typeToConvert
+-    )
+-    {
+-        var type = typeToConvert;
+-        if (Nullable.GetUnderlyingType(type) is { } underlyingType)
+-        {
+-            type = underlyingType;
+-        }
+-
+-        var casts = type.GetRuntimeMethods()
+-            .Where(m => m.IsSpecialName && m.Name == "op_Implicit")
+-            .ToArray();
+-        while (type is not null)
+-        {
+-            if (
+-                type.IsGenericType
+-                && (type.Name.StartsWith("OneOf`") || type.Name.StartsWith("OneOfBase`"))
+-            )
+-            {
+-                var genericArguments = type.GetGenericArguments();
+-                if (genericArguments.Length == 1)
+-                {
+-                    return [(genericArguments[0], casts[0])];
+-                }
+-
+-                // if object type is present, make sure it is last
+-                var indexOfObjectType = Array.IndexOf(genericArguments, typeof(object));
+-                if (indexOfObjectType != -1 && genericArguments.Length - 1 != indexOfObjectType)
+-                {
+-                    genericArguments = genericArguments
+-                        .OrderBy(t => t == typeof(object) ? 1 : 0)
+-                        .ToArray();
+-                }
+-
+-                return genericArguments
+-                    .Select(t => (t, casts.First(c => c.GetParameters()[0].ParameterType == t)))
+-                    .ToArray();
+-            }
+-
+-            type = type.BaseType;
+-        }
+-
+-        throw new InvalidOperationException($"{type} isn't OneOf or OneOfBase");
+-    }
+-
+-    public override bool CanConvert(global::System.Type typeToConvert)
+-    {
+-        return typeof(IOneOf).IsAssignableFrom(typeToConvert);
+-    }
+-}
+diff --git a/src/SeedRequestParameters/SeedRequestParameters.csproj b/src/SeedRequestParameters/SeedRequestParameters.csproj
+index cf5c9386fa8..2b9272b38f2 100644
+--- a/src/SeedRequestParameters/SeedRequestParameters.csproj
++++ b/src/SeedRequestParameters/SeedRequestParameters.csproj
+@@ -37,13 +37,10 @@
+       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+       <PrivateAssets>all</PrivateAssets>
+     </PackageReference>
+-    <PackageReference Include="OneOf" Version="3.0.271" />
+-    <PackageReference Include="OneOf.Extended" Version="3.0.271" />
+-    <PackageReference Include="System.Net.Http" Version="[4.3.4,)" />
+-    <PackageReference Include="System.Text.RegularExpressions" Version="[4.3.1,)" />
+   </ItemGroup>
+   <ItemGroup Condition="!$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
+     <PackageReference Include="System.Text.Json" Version="9.0.9" />
++    <PackageReference Include="System.Net.Http" Version="[4.3.4,)" />
+   </ItemGroup>
+ 
+   <ItemGroup>
+diff --git a/src/SeedRequestParameters/User/IUserClient.cs b/src/SeedRequestParameters/User/IUserClient.cs
+index 5223e691971..c67dc435fc2 100644
+--- a/src/SeedRequestParameters/User/IUserClient.cs
++++ b/src/SeedRequestParameters/User/IUserClient.cs
+@@ -1,3 +1,5 @@
++using SeedRequestParameters.Core;
++
+ namespace SeedRequestParameters;
+ 
+ public partial interface IUserClient
+@@ -15,7 +17,7 @@ public partial interface IUserClient
+     );
+ 
+     Task CreateUsernameOptionalAsync(
+-        CreateUsernameBodyOptionalProperties? request,
++        Optional<CreateUsernameBodyOptionalProperties?> request,
+         RequestOptions? options = null,
+         CancellationToken cancellationToken = default
+     );
+diff --git a/src/SeedRequestParameters/User/Requests/GetUsersRequest.cs b/src/SeedRequestParameters/User/Requests/GetUsersRequest.cs
+index c63210bb9ec..7c33dd0a0dd 100644
+--- a/src/SeedRequestParameters/User/Requests/GetUsersRequest.cs
++++ b/src/SeedRequestParameters/User/Requests/GetUsersRequest.cs
+@@ -7,7 +7,7 @@ namespace SeedRequestParameters;
+ public record GetUsersRequest
+ {
+     [JsonIgnore]
+-    public required int Limit { get; set; }
++    public int Limit { get; set; } = 10;
+ 
+     [JsonIgnore]
+     public required string Id { get; set; }
+@@ -52,7 +52,7 @@ public record GetUsersRequest
+     public required long LongParam { get; set; }
+ 
+     [JsonIgnore]
+-    public required string BigIntParam { get; set; }
++    public string BigIntParam { get; set; } = "18446744073709551615";
+ 
+     /// <inheritdoc />
+     public override string ToString()
+diff --git a/src/SeedRequestParameters/User/Types/CreateUsernameBodyOptionalProperties.cs b/src/SeedRequestParameters/User/Types/CreateUsernameBodyOptionalProperties.cs
+index 7d40e50ed17..6b0392af2d2 100644
+--- a/src/SeedRequestParameters/User/Types/CreateUsernameBodyOptionalProperties.cs
++++ b/src/SeedRequestParameters/User/Types/CreateUsernameBodyOptionalProperties.cs
+@@ -11,12 +11,15 @@ public record CreateUsernameBodyOptionalProperties : IJsonOnDeserialized
+     private readonly IDictionary<string, JsonElement> _extensionData =
+         new Dictionary<string, JsonElement>();
+ 
++    [Optional]
+     [JsonPropertyName("username")]
+     public string? Username { get; set; }
+ 
++    [Optional]
+     [JsonPropertyName("password")]
+     public string? Password { get; set; }
+ 
++    [Optional]
+     [JsonPropertyName("name")]
+     public string? Name { get; set; }
+ 
+diff --git a/src/SeedRequestParameters/User/UserClient.cs b/src/SeedRequestParameters/User/UserClient.cs
+index 6b26b68e5dc..f0156c3ae7d 100644
+--- a/src/SeedRequestParameters/User/UserClient.cs
++++ b/src/SeedRequestParameters/User/UserClient.cs
+@@ -218,7 +218,7 @@ public partial class UserClient : IUserClient
+     /// await client.User.CreateUsernameOptionalAsync(new CreateUsernameBodyOptionalProperties());
+     /// </code></example>
+     public async Task CreateUsernameOptionalAsync(
+-        CreateUsernameBodyOptionalProperties? request,
++        Optional<CreateUsernameBodyOptionalProperties?> request,
+         RequestOptions? options = null,
+         CancellationToken cancellationToken = default
+     )
+diff --git a/src/SeedRequestParameters.Test/Utils/NUnitExtensions.cs b/src/SeedRequestParameters.Test/Utils/NUnitExtensions.cs
+index 816f4c010e6..f451b2b04e9 100644
+--- a/src/SeedRequestParameters.Test/Utils/NUnitExtensions.cs
++++ b/src/SeedRequestParameters.Test/Utils/NUnitExtensions.cs
+@@ -23,7 +23,6 @@ public static class NUnitExtensions
+             .UsingReadOnlyMemoryComparer<bool>()
+             .UsingReadOnlyMemoryComparer<float>()
+             .UsingReadOnlyMemoryComparer<double>()
+-            .UsingOneOfComparer()
+             .UsingJsonElementComparer()
+             .UsingOptionalComparer()
+             .UsingObjectDictionaryComparer()
+diff --git a/src/SeedRequestParameters.Test/Utils/OneOfComparer.cs b/src/SeedRequestParameters.Test/Utils/OneOfComparer.cs
+deleted file mode 100644
+index 76743917436..00000000000
+--- a/src/SeedRequestParameters.Test/Utils/OneOfComparer.cs
++++ /dev/null
+@@ -1,86 +0,0 @@
+-using NUnit.Framework.Constraints;
+-using OneOf;
+-
+-namespace NUnit.Framework;
+-
+-/// <summary>
+-/// Extensions for EqualConstraint to handle OneOf values.
+-/// </summary>
+-public static class EqualConstraintExtensions
+-{
+-    /// <summary>
+-    /// Modifies the EqualConstraint to handle OneOf instances by comparing their inner values.
+-    /// This works alongside other comparison modifiers like UsingPropertiesComparer.
+-    /// </summary>
+-    /// <param name="constraint">The EqualConstraint to modify.</param>
+-    /// <returns>The same constraint instance for method chaining.</returns>
+-    public static EqualConstraint UsingOneOfComparer(this EqualConstraint constraint)
+-    {
+-        // Register a comparer factory for IOneOf types
+-        constraint.Using<IOneOf>(
+-            (x, y) =>
+-            {
+-                // ReSharper disable ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
+-                if (x.Value is null && y.Value is null)
+-                {
+-                    return true;
+-                }
+-
+-                if (x.Value is null)
+-                {
+-                    return false;
+-                }
+-
+-                var propertiesComparer = new NUnitEqualityComparer();
+-                var tolerance = Tolerance.Default;
+-                propertiesComparer.CompareProperties = true;
+-                // Add OneOf comparer to handle nested OneOf values (e.g., in Lists)
+-                propertiesComparer.ExternalComparers.Add(
+-                    new OneOfEqualityAdapter(propertiesComparer)
+-                );
+-                return propertiesComparer.AreEqual(x.Value, y.Value, ref tolerance);
+-            }
+-        );
+-
+-        return constraint;
+-    }
+-
+-    /// <summary>
+-    /// EqualityAdapter for comparing IOneOf instances within NUnitEqualityComparer.
+-    /// This enables recursive comparison of nested OneOf values.
+-    /// </summary>
+-    private class OneOfEqualityAdapter : EqualityAdapter
+-    {
+-        private readonly NUnitEqualityComparer _comparer;
+-
+-        public OneOfEqualityAdapter(NUnitEqualityComparer comparer)
+-        {
+-            _comparer = comparer;
+-        }
+-
+-        public override bool CanCompare(object? x, object? y)
+-        {
+-            return x is IOneOf && y is IOneOf;
+-        }
+-
+-        public override bool AreEqual(object? x, object? y)
+-        {
+-            var oneOfX = (IOneOf?)x;
+-            var oneOfY = (IOneOf?)y;
+-
+-            // ReSharper disable ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
+-            if (oneOfX?.Value is null && oneOfY?.Value is null)
+-            {
+-                return true;
+-            }
+-
+-            if (oneOfX?.Value is null || oneOfY?.Value is null)
+-            {
+-                return false;
+-            }
+-
+-            var tolerance = Tolerance.Default;
+-            return _comparer.AreEqual(oneOfX.Value, oneOfY.Value, ref tolerance);
+-        }
+-    }
+-}
+diff --git a/src/SeedRequestParameters.Test/Utils/OptionalComparer.cs b/src/SeedRequestParameters.Test/Utils/OptionalComparer.cs
+index d760d807d84..f5aef3d35f8 100644
+--- a/src/SeedRequestParameters.Test/Utils/OptionalComparer.cs
++++ b/src/SeedRequestParameters.Test/Utils/OptionalComparer.cs
+@@ -1,5 +1,4 @@
+ using NUnit.Framework.Constraints;
+-using OneOf;
+ using SeedRequestParameters.Core;
+ 
+ namespace NUnit.Framework;
+@@ -52,53 +51,10 @@ public static class OptionalComparerExtensions
+                 var propertiesComparer = new NUnitEqualityComparer();
+                 var tolerance = Tolerance.Default;
+                 propertiesComparer.CompareProperties = true;
+-                // Add OneOf comparer to handle nested OneOf values (e.g., in Lists within Optional<T>)
+-                propertiesComparer.ExternalComparers.Add(
+-                    new OneOfEqualityAdapter(propertiesComparer)
+-                );
+                 return propertiesComparer.AreEqual(xValue, yValue, ref tolerance);
+             }
+         );
+ 
+         return constraint;
+     }
+-
+-    /// <summary>
+-    /// EqualityAdapter for comparing IOneOf instances within NUnitEqualityComparer.
+-    /// This enables recursive comparison of nested OneOf values within Optional<T> types.
+-    /// </summary>
+-    private class OneOfEqualityAdapter : EqualityAdapter
+-    {
+-        private readonly NUnitEqualityComparer _comparer;
+-
+-        public OneOfEqualityAdapter(NUnitEqualityComparer comparer)
+-        {
+-            _comparer = comparer;
+-        }
+-
+-        public override bool CanCompare(object? x, object? y)
+-        {
+-            return x is IOneOf && y is IOneOf;
+-        }
+-
+-        public override bool AreEqual(object? x, object? y)
+-        {
+-            var oneOfX = (IOneOf?)x;
+-            var oneOfY = (IOneOf?)y;
+-
+-            // ReSharper disable ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
+-            if (oneOfX?.Value is null && oneOfY?.Value is null)
+-            {
+-                return true;
+-            }
+-
+-            if (oneOfX?.Value is null || oneOfY?.Value is null)
+-            {
+-                return false;
+-            }
+-
+-            var tolerance = Tolerance.Default;
+-            return _comparer.AreEqual(oneOfX.Value, oneOfY.Value, ref tolerance);
+-        }
+-    }
+ }

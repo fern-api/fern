@@ -1,0 +1,200 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index d8b7bf00e12..8d96dedb8d8 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,9 @@
+     "cliVersion": "DUMMY",
+     "generatorName": "fernapi/fern-typescript-sdk",
+     "generatorVersion": "local",
++    "generatorConfig": {
++        "generateEndpointMetadata": true
++    },
+     "originGitCommit": "DUMMY",
+     "originGitCommitIsDirty": null,
+     "invokedBy": "ci",
+diff --git a/src/BaseClient.ts b/src/BaseClient.ts
+index ff6355fc15d..a690a68e7dd 100644
+--- a/src/BaseClient.ts
++++ b/src/BaseClient.ts
+@@ -14,7 +14,7 @@ export type BaseClientOptions = {
+     /** Specify a custom URL to connect the client to. */
+     baseUrl?: core.Supplier<string>;
+     /** Additional headers to include in requests. */
+-    headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
++    headers?: Record<string, string | core.EndpointSupplier<string | null | undefined> | null | undefined>;
+     /** The default maximum time to wait for a response in seconds. */
+     timeoutInSeconds?: number;
+     /** The default number of times to retry the request. Defaults to 2. */
+@@ -43,7 +43,7 @@ export interface BaseRequestOptions {
+     /** Additional query string parameters to include in the request. */
+     queryParams?: Record<string, unknown>;
+     /** Additional headers to include in the request. */
+-    headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
++    headers?: Record<string, string | core.EndpointSupplier<string | null | undefined> | null | undefined>;
+ }
+ 
+ export type NormalizedClientOptions<T extends BaseClientOptions = BaseClientOptions> = T & {
+diff --git a/src/api/resources/auth/client/Client.ts b/src/api/resources/auth/client/Client.ts
+index bcf4574a206..0203994ac93 100644
+--- a/src/api/resources/auth/client/Client.ts
++++ b/src/api/resources/auth/client/Client.ts
+@@ -42,6 +42,7 @@ export class AuthClient {
+         request: SeedAnyAuth.GetTokenRequest,
+         requestOptions?: AuthClient.RequestOptions,
+     ): Promise<core.WithRawResponse<SeedAnyAuth.TokenResponse>> {
++        const _metadata: core.EndpointMetadata = { security: undefined };
+         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+         const _response = await core.fetcher({
+             url: core.url.join(
+@@ -58,6 +59,7 @@ export class AuthClient {
+             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+             abortSignal: requestOptions?.abortSignal,
++            endpointMetadata: _metadata,
+             fetchFn: this._options?.fetch,
+             logging: this._options.logging,
+         });
+diff --git a/src/api/resources/user/client/Client.ts b/src/api/resources/user/client/Client.ts
+index 370723e51bc..0b111b84453 100644
+--- a/src/api/resources/user/client/Client.ts
++++ b/src/api/resources/user/client/Client.ts
+@@ -32,7 +32,12 @@ export class UserClient {
+     }
+ 
+     private async __get(requestOptions?: UserClient.RequestOptions): Promise<core.WithRawResponse<SeedAnyAuth.User[]>> {
+-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
++        const _metadata: core.EndpointMetadata = {
++            security: [{ Bearer: [] }, { ApiKey: [] }, { OAuth: [] }, { Basic: [] }, { InferredAuth: [] }],
++        };
++        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest({
++            endpointMetadata: _metadata,
++        });
+         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+             _authRequest.headers,
+             this._options?.headers,
+@@ -50,6 +55,7 @@ export class UserClient {
+             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+             abortSignal: requestOptions?.abortSignal,
++            endpointMetadata: _metadata,
+             fetchFn: this._options?.fetch,
+             logging: this._options.logging,
+         });
+@@ -81,7 +87,10 @@ export class UserClient {
+     private async __getAdmins(
+         requestOptions?: UserClient.RequestOptions,
+     ): Promise<core.WithRawResponse<SeedAnyAuth.User[]>> {
+-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
++        const _metadata: core.EndpointMetadata = { security: [{ OAuth: ["admin"] }] };
++        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest({
++            endpointMetadata: _metadata,
++        });
+         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+             _authRequest.headers,
+             this._options?.headers,
+@@ -99,6 +108,7 @@ export class UserClient {
+             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+             abortSignal: requestOptions?.abortSignal,
++            endpointMetadata: _metadata,
+             fetchFn: this._options?.fetch,
+             logging: this._options.logging,
+         });
+diff --git a/src/auth/BasicAuthProvider.ts b/src/auth/BasicAuthProvider.ts
+index 8a8e1f1d5f5..c01db4dbccf 100644
+--- a/src/auth/BasicAuthProvider.ts
++++ b/src/auth/BasicAuthProvider.ts
+@@ -29,12 +29,14 @@ export class BasicAuthProvider implements core.AuthProvider {
+         endpointMetadata?: core.EndpointMetadata;
+     } = {}): Promise<core.AuthRequest> {
+         const username =
+-            (await core.Supplier.get(this.options[WRAPPER_PROPERTY]?.[USERNAME_PARAM])) ?? process.env?.[ENV_USERNAME];
++            (await core.EndpointSupplier.get(this.options[WRAPPER_PROPERTY]?.[USERNAME_PARAM], { endpointMetadata })) ??
++            process.env?.[ENV_USERNAME];
+         if (username == null) {
+             throw new errors.SeedAnyAuthError({ message: BasicAuthProvider.AUTH_CONFIG_ERROR_MESSAGE_USERNAME });
+         }
+         const password =
+-            (await core.Supplier.get(this.options[WRAPPER_PROPERTY]?.[PASSWORD_PARAM])) ?? process.env?.[ENV_PASSWORD];
++            (await core.EndpointSupplier.get(this.options[WRAPPER_PROPERTY]?.[PASSWORD_PARAM], { endpointMetadata })) ??
++            process.env?.[ENV_PASSWORD];
+         if (password == null) {
+             throw new errors.SeedAnyAuthError({ message: BasicAuthProvider.AUTH_CONFIG_ERROR_MESSAGE_PASSWORD });
+         }
+@@ -61,8 +63,8 @@ export namespace BasicAuthProvider {
+     export type Options = AuthOptions;
+     export type AuthOptions = {
+         [WRAPPER_PROPERTY]?: {
+-            [USERNAME_PARAM]?: core.Supplier<string> | undefined;
+-            [PASSWORD_PARAM]?: core.Supplier<string> | undefined;
++            [USERNAME_PARAM]?: core.EndpointSupplier<string> | undefined;
++            [PASSWORD_PARAM]?: core.EndpointSupplier<string> | undefined;
+         };
+     };
+ 
+diff --git a/src/auth/BearerAuthProvider.ts b/src/auth/BearerAuthProvider.ts
+index 3049e390650..aa0718681f0 100644
+--- a/src/auth/BearerAuthProvider.ts
++++ b/src/auth/BearerAuthProvider.ts
+@@ -24,7 +24,8 @@ export class BearerAuthProvider implements core.AuthProvider {
+         endpointMetadata?: core.EndpointMetadata;
+     } = {}): Promise<core.AuthRequest> {
+         const token =
+-            (await core.Supplier.get(this.options[WRAPPER_PROPERTY]?.[TOKEN_PARAM])) ?? process.env?.[ENV_TOKEN];
++            (await core.EndpointSupplier.get(this.options[WRAPPER_PROPERTY]?.[TOKEN_PARAM], { endpointMetadata })) ??
++            process.env?.[ENV_TOKEN];
+         if (token == null) {
+             throw new errors.SeedAnyAuthError({
+                 message: BearerAuthProvider.AUTH_CONFIG_ERROR_MESSAGE,
+@@ -43,7 +44,7 @@ export namespace BearerAuthProvider {
+         `Please provide '${TOKEN_PARAM}' when initializing the client, or set the '${ENV_TOKEN}' environment variable` as const;
+     export type Options = AuthOptions;
+     export type AuthOptions = {
+-        [WRAPPER_PROPERTY]?: { [TOKEN_PARAM]?: core.Supplier<core.BearerToken> | undefined };
++        [WRAPPER_PROPERTY]?: { [TOKEN_PARAM]?: core.EndpointSupplier<core.BearerToken> | undefined };
+     };
+ 
+     export function createInstance(options: Options): core.AuthProvider {
+diff --git a/src/auth/HeaderAuthProvider.ts b/src/auth/HeaderAuthProvider.ts
+index e92393a05dc..2da4aab1cbd 100644
+--- a/src/auth/HeaderAuthProvider.ts
++++ b/src/auth/HeaderAuthProvider.ts
+@@ -25,7 +25,8 @@ export class HeaderAuthProvider implements core.AuthProvider {
+         endpointMetadata?: core.EndpointMetadata;
+     } = {}): Promise<core.AuthRequest> {
+         const headerValue =
+-            (await core.Supplier.get(this.options[WRAPPER_PROPERTY]?.[PARAM_KEY])) ?? process.env?.[ENV_HEADER_KEY];
++            (await core.EndpointSupplier.get(this.options[WRAPPER_PROPERTY]?.[PARAM_KEY], { endpointMetadata })) ??
++            process.env?.[ENV_HEADER_KEY];
+         if (headerValue == null) {
+             throw new errors.SeedAnyAuthError({
+                 message: HeaderAuthProvider.AUTH_CONFIG_ERROR_MESSAGE,
+@@ -44,7 +45,7 @@ export namespace HeaderAuthProvider {
+         `Please provide '${PARAM_KEY}' when initializing the client, or set the '${ENV_HEADER_KEY}' environment variable` as const;
+     export type Options = AuthOptions;
+     export type AuthOptions = {
+-        [WRAPPER_PROPERTY]?: { [PARAM_KEY]?: core.Supplier<string> | undefined };
++        [WRAPPER_PROPERTY]?: { [PARAM_KEY]?: core.EndpointSupplier<string> | undefined };
+     };
+ 
+     export function createInstance(options: Options): core.AuthProvider {
+diff --git a/src/auth/OAuthAuthProvider.ts b/src/auth/OAuthAuthProvider.ts
+index b40eed20e5a..48ac55c4526 100644
+--- a/src/auth/OAuthAuthProvider.ts
++++ b/src/auth/OAuthAuthProvider.ts
+@@ -163,12 +163,12 @@ export namespace OAuthAuthProvider {
+         `Insufficient options to create OAuthAuthProvider. Please provide either '${CLIENT_ID_PARAM}' or '${ENV_CLIENT_ID}' env var and '${CLIENT_SECRET_PARAM}' or '${ENV_CLIENT_SECRET}' env var, or ${TOKEN_PARAM}.` as const;
+     export type ClientCredentials = {
+         [WRAPPER_PROPERTY]?: {
+-            [CLIENT_ID_PARAM]?: core.Supplier<string> | undefined;
+-            [CLIENT_SECRET_PARAM]?: core.Supplier<string> | undefined;
++            [CLIENT_ID_PARAM]?: core.EndpointSupplier<string> | undefined;
++            [CLIENT_SECRET_PARAM]?: core.EndpointSupplier<string> | undefined;
+         };
+     };
+     export type TokenOverride = {
+-        [WRAPPER_PROPERTY]?: { [TOKEN_PARAM]?: core.Supplier<string> };
++        [WRAPPER_PROPERTY]?: { [TOKEN_PARAM]?: core.EndpointSupplier<string> };
+     };
+     export type AuthOptions = ClientCredentials | TokenOverride;
+     export type Options = BaseClientOptions & AuthOptions;

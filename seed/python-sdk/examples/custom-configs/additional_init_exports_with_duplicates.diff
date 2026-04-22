@@ -1,0 +1,71 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 2ecd82f71ab..db10b49cbb9 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,18 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-python-sdk",
+   "generatorVersion": "local",
++  "generatorConfig": {
++    "additional_init_exports": [
++      {
++        "from": "types.types",
++        "imports": [
++          "Movie",
++          "Actor",
++          "Actress"
++        ]
++      }
++    ]
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "ci",
+diff --git a/src/seed/__init__.py b/src/seed/__init__.py
+index fd048e1ad67..a8f55733c9a 100644
+--- a/src/seed/__init__.py
++++ b/src/seed/__init__.py
+@@ -7,8 +7,6 @@ from importlib import import_module
+ 
+ if typing.TYPE_CHECKING:
+     from .types import (
+-        Actor,
+-        Actress,
+         BasicType,
+         BigEntity,
+         CastMember,
+@@ -29,7 +27,6 @@ if typing.TYPE_CHECKING:
+         Migration,
+         MigrationStatus,
+         Moment,
+-        Movie,
+         MovieId,
+         Node,
+         NotFoundError,
+@@ -45,14 +42,15 @@ if typing.TYPE_CHECKING:
+         Type,
+         TypeWithSingleCharPropertyEqualToTypeStartingLetter,
+     )
++    from .types.types import Actor, Actress, Movie
+     from . import commons, file, health, service, types
+     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
+     from .client import AsyncSeedExamples, SeedExamples
+     from .environment import SeedExamplesEnvironment
+     from .version import __version__
+ _dynamic_imports: typing.Dict[str, str] = {
+-    "Actor": ".types",
+-    "Actress": ".types",
++    "Actor": ".types.types",
++    "Actress": ".types.types",
+     "AsyncSeedExamples": ".client",
+     "BasicType": ".types",
+     "BigEntity": ".types",
+@@ -76,7 +74,7 @@ _dynamic_imports: typing.Dict[str, str] = {
+     "Migration": ".types",
+     "MigrationStatus": ".types",
+     "Moment": ".types",
+-    "Movie": ".types",
++    "Movie": ".types.types",
+     "MovieId": ".types",
+     "Node": ".types",
+     "NotFoundError": ".types",

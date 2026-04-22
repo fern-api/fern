@@ -1,0 +1,321 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 5e4188a44b1..e0368df5f3a 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,7 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-csharp-sdk",
+   "generatorVersion": "local",
+-  "generatorConfig": {},
++  "generatorConfig": {
++    "unified-client-options": true
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "ci",
+diff --git a/README.md b/README.md
+index 45f13b894cd..e7ec01d0cb6 100644
+--- a/README.md
++++ b/README.md
+@@ -41,7 +41,9 @@ Instantiate and use the client with the following:
+ ```csharp
+ using SeedBasicAuth;
+ 
+-var client = new SeedBasicAuthClient("USERNAME", "PASSWORD");
++var client = new SeedBasicAuthClient(
++    clientOptions: new ClientOptions { Username = "USERNAME", Password = "PASSWORD" }
++);
+ await client.BasicAuth.PostWithBasicAuthAsync(
+     new Dictionary<object, object?>() { { "key", "value" } }
+ );
+diff --git a/Snippets/Example0.cs b/Snippets/Example0.cs
+index 0e0b4d96e6c..2013c53fc15 100644
+--- a/Snippets/Example0.cs
++++ b/Snippets/Example0.cs
+@@ -4,9 +4,9 @@ public partial class Examples
+ {
+     public async Task Example0() {
+         var client = new SeedBasicAuthClient(
+-            username: "<username>",
+-            password: "<password>",
+             clientOptions: new ClientOptions {
++                Username = "<username>",
++                Password = "<password>",
+                 BaseUrl = "https://api.fern.com"
+             }
+         );
+diff --git a/Snippets/Example1.cs b/Snippets/Example1.cs
+index 7986a751e73..19e4587cb3f 100644
+--- a/Snippets/Example1.cs
++++ b/Snippets/Example1.cs
+@@ -4,9 +4,9 @@ public partial class Examples
+ {
+     public async Task Example1() {
+         var client = new SeedBasicAuthClient(
+-            username: "<username>",
+-            password: "<password>",
+             clientOptions: new ClientOptions {
++                Username = "<username>",
++                Password = "<password>",
+                 BaseUrl = "https://api.fern.com"
+             }
+         );
+diff --git a/Snippets/Example2.cs b/Snippets/Example2.cs
+index e84078013b0..309a1ac4670 100644
+--- a/Snippets/Example2.cs
++++ b/Snippets/Example2.cs
+@@ -4,9 +4,9 @@ public partial class Examples
+ {
+     public async Task Example2() {
+         var client = new SeedBasicAuthClient(
+-            username: "<username>",
+-            password: "<password>",
+             clientOptions: new ClientOptions {
++                Username = "<username>",
++                Password = "<password>",
+                 BaseUrl = "https://api.fern.com"
+             }
+         );
+diff --git a/Snippets/Example3.cs b/Snippets/Example3.cs
+index 8ac2c9017b9..869cc20f848 100644
+--- a/Snippets/Example3.cs
++++ b/Snippets/Example3.cs
+@@ -4,9 +4,9 @@ public partial class Examples
+ {
+     public async Task Example3() {
+         var client = new SeedBasicAuthClient(
+-            username: "<username>",
+-            password: "<password>",
+             clientOptions: new ClientOptions {
++                Username = "<username>",
++                Password = "<password>",
+                 BaseUrl = "https://api.fern.com"
+             }
+         );
+diff --git a/Snippets/Example4.cs b/Snippets/Example4.cs
+index e0cc91dd690..e33c6596aec 100644
+--- a/Snippets/Example4.cs
++++ b/Snippets/Example4.cs
+@@ -4,9 +4,9 @@ public partial class Examples
+ {
+     public async Task Example4() {
+         var client = new SeedBasicAuthClient(
+-            username: "<username>",
+-            password: "<password>",
+             clientOptions: new ClientOptions {
++                Username = "<username>",
++                Password = "<password>",
+                 BaseUrl = "https://api.fern.com"
+             }
+         );
+diff --git a/Snippets/Example5.cs b/Snippets/Example5.cs
+index de237a3719a..38b1359afa8 100644
+--- a/Snippets/Example5.cs
++++ b/Snippets/Example5.cs
+@@ -4,9 +4,9 @@ public partial class Examples
+ {
+     public async Task Example5() {
+         var client = new SeedBasicAuthClient(
+-            username: "<username>",
+-            password: "<password>",
+             clientOptions: new ClientOptions {
++                Username = "<username>",
++                Password = "<password>",
+                 BaseUrl = "https://api.fern.com"
+             }
+         );
+diff --git a/Snippets/Example6.cs b/Snippets/Example6.cs
+index d2c21e2be4f..b28cd4dab30 100644
+--- a/Snippets/Example6.cs
++++ b/Snippets/Example6.cs
+@@ -4,9 +4,9 @@ public partial class Examples
+ {
+     public async Task Example6() {
+         var client = new SeedBasicAuthClient(
+-            username: "<username>",
+-            password: "<password>",
+             clientOptions: new ClientOptions {
++                Username = "<username>",
++                Password = "<password>",
+                 BaseUrl = "https://api.fern.com"
+             }
+         );
+diff --git a/snippet.json b/snippet.json
+index cc2837ceb1a..30831ed56da 100644
+--- a/snippet.json
++++ b/snippet.json
+@@ -10,7 +10,7 @@
+             },
+             "snippet": {
+                 "type": "csharp",
+-                "client": "using SeedBasicAuth;\n\nvar client = new SeedBasicAuthClient(\"USERNAME\", \"PASSWORD\");\nawait client.BasicAuth.GetWithBasicAuthAsync();\n"
++                "client": "using SeedBasicAuth;\n\nvar client = new SeedBasicAuthClient(\n    clientOptions: new ClientOptions { Username = \"USERNAME\", Password = \"PASSWORD\" }\n);\nawait client.BasicAuth.GetWithBasicAuthAsync();\n"
+             }
+         },
+         {
+@@ -22,7 +22,7 @@
+             },
+             "snippet": {
+                 "type": "csharp",
+-                "client": "using SeedBasicAuth;\n\nvar client = new SeedBasicAuthClient(\"USERNAME\", \"PASSWORD\");\nawait client.BasicAuth.PostWithBasicAuthAsync(\n    new Dictionary<object, object?>() { { \"key\", \"value\" } }\n);\n"
++                "client": "using SeedBasicAuth;\n\nvar client = new SeedBasicAuthClient(\n    clientOptions: new ClientOptions { Username = \"USERNAME\", Password = \"PASSWORD\" }\n);\nawait client.BasicAuth.PostWithBasicAuthAsync(\n    new Dictionary<object, object?>() { { \"key\", \"value\" } }\n);\n"
+             }
+         }
+     ]
+diff --git a/src/SeedBasicAuth/Core/Public/ClientOptions.cs b/src/SeedBasicAuth/Core/Public/ClientOptions.cs
+index 00edbafd7da..fd50e51580a 100644
+--- a/src/SeedBasicAuth/Core/Public/ClientOptions.cs
++++ b/src/SeedBasicAuth/Core/Public/ClientOptions.cs
+@@ -1,3 +1,4 @@
++using global::System.Diagnostics.CodeAnalysis;
+ using SeedBasicAuth.Core;
+ 
+ namespace SeedBasicAuth;
+@@ -5,6 +6,21 @@ namespace SeedBasicAuth;
+ [Serializable]
+ public partial class ClientOptions
+ {
++    public ClientOptions() { }
++
++    [SetsRequiredMembers]
++    internal ClientOptions(ClientOptions other)
++    {
++        BaseUrl = other.BaseUrl;
++        HttpClient = other.HttpClient;
++        MaxRetries = other.MaxRetries;
++        Timeout = other.Timeout;
++        Headers = new Headers(new Dictionary<string, HeaderValue>(other.Headers));
++        AdditionalHeaders = other.AdditionalHeaders;
++        Username = other.Username;
++        Password = other.Password;
++    }
++
+     /// <summary>
+     /// The http headers sent with the request.
+     /// </summary>
+@@ -13,13 +29,13 @@ public partial class ClientOptions
+     /// <summary>
+     /// The Base URL for the API.
+     /// </summary>
+-    public string BaseUrl { get;
++    public required string BaseUrl { get;
+ #if NET5_0_OR_GREATER
+         init;
+ #else
+         set;
+ #endif
+-    } = "";
++    }
+ 
+     /// <summary>
+     /// The http client used to make requests.
+@@ -66,19 +82,33 @@ public partial class ClientOptions
+ #endif
+     } = TimeSpan.FromSeconds(30);
+ 
++    /// <summary>
++    /// The username to use for authentication.
++    /// </summary>
++    public string? Username { get;
++#if NET5_0_OR_GREATER
++        init;
++#else
++        set;
++#endif
++    }
++
++    /// <summary>
++    /// The password to use for authentication.
++    /// </summary>
++    public string? Password { get;
++#if NET5_0_OR_GREATER
++        init;
++#else
++        set;
++#endif
++    }
++
+     /// <summary>
+     /// Clones this and returns a new instance
+     /// </summary>
+     internal ClientOptions Clone()
+     {
+-        return new ClientOptions
+-        {
+-            BaseUrl = BaseUrl,
+-            HttpClient = HttpClient,
+-            MaxRetries = MaxRetries,
+-            Timeout = Timeout,
+-            Headers = new Headers(new Dictionary<string, HeaderValue>(Headers)),
+-            AdditionalHeaders = AdditionalHeaders,
+-        };
++        return new ClientOptions(this);
+     }
+ }
+diff --git a/src/SeedBasicAuth/SeedBasicAuthClient.cs b/src/SeedBasicAuth/SeedBasicAuthClient.cs
+index 5d5be202004..119db847c22 100644
+--- a/src/SeedBasicAuth/SeedBasicAuthClient.cs
++++ b/src/SeedBasicAuth/SeedBasicAuthClient.cs
+@@ -6,13 +6,8 @@ public partial class SeedBasicAuthClient : ISeedBasicAuthClient
+ {
+     private readonly RawClient _client;
+ 
+-    public SeedBasicAuthClient(
+-        string? username = null,
+-        string? password = null,
+-        ClientOptions? clientOptions = null
+-    )
++    public SeedBasicAuthClient(ClientOptions clientOptions)
+     {
+-        clientOptions ??= new ClientOptions();
+         var platformHeaders = new Headers(
+             new Dictionary<string, string>()
+             {
+@@ -31,7 +26,7 @@ public partial class SeedBasicAuthClient : ISeedBasicAuthClient
+         }
+         var clientOptionsWithAuth = clientOptions.Clone();
+         clientOptionsWithAuth.Headers["Authorization"] =
+-            $"Basic {Convert.ToBase64String(global::System.Text.Encoding.UTF8.GetBytes($"{username}:{password}"))}";
++            $"Basic {Convert.ToBase64String(global::System.Text.Encoding.UTF8.GetBytes($"{clientOptions.Username}:{clientOptions.Password}"))}";
+         _client = new RawClient(clientOptionsWithAuth);
+         BasicAuth = new BasicAuthClient(_client);
+     }
+diff --git a/src/SeedBasicAuth.Test/Core/RawClientTests/RetriesTests.cs b/src/SeedBasicAuth.Test/Core/RawClientTests/RetriesTests.cs
+index 5e1926b2ae6..65de320666f 100644
+--- a/src/SeedBasicAuth.Test/Core/RawClientTests/RetriesTests.cs
++++ b/src/SeedBasicAuth.Test/Core/RawClientTests/RetriesTests.cs
+@@ -26,7 +26,12 @@ public class RetriesTests
+         _baseUrl = _server.Url ?? "";
+         _httpClient = new HttpClient { BaseAddress = new Uri(_baseUrl) };
+         _rawClient = new RawClient(
+-            new ClientOptions { HttpClient = _httpClient, MaxRetries = MaxRetries }
++            new ClientOptions
++            {
++                HttpClient = _httpClient,
++                MaxRetries = MaxRetries,
++                BaseUrl = "http://localhost",
++            }
+         )
+         {
+             BaseRetryDelay = 0,
+diff --git a/src/SeedBasicAuth.Test/Unit/MockServer/BaseMockServerTest.cs b/src/SeedBasicAuth.Test/Unit/MockServer/BaseMockServerTest.cs
+index 042331de33e..c502c365d15 100644
+--- a/src/SeedBasicAuth.Test/Unit/MockServer/BaseMockServerTest.cs
++++ b/src/SeedBasicAuth.Test/Unit/MockServer/BaseMockServerTest.cs
+@@ -24,9 +24,13 @@ public class BaseMockServerTest
+ 
+         // Initialize the Client
+         Client = new SeedBasicAuthClient(
+-            "USERNAME",
+-            "PASSWORD",
+-            clientOptions: new ClientOptions { BaseUrl = Server.Urls[0], MaxRetries = 0 }
++            clientOptions: new ClientOptions
++            {
++                Username = "USERNAME",
++                Password = "PASSWORD",
++                BaseUrl = Server.Urls[0],
++                MaxRetries = 0,
++            }
+         );
+     }
+ 

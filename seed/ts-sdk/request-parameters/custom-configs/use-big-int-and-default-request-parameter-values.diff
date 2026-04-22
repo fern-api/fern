@@ -1,0 +1,1287 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index d8b7bf00e12..21e0ecfc17e 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,11 @@
+     "cliVersion": "DUMMY",
+     "generatorName": "fernapi/fern-typescript-sdk",
+     "generatorVersion": "local",
++    "generatorConfig": {
++        "useDefaultRequestParameterValues": true,
++        "useBigInt": true,
++        "testFramework": "jest"
++    },
+     "originGitCommit": "DUMMY",
+     "originGitCommitIsDirty": null,
+     "invokedBy": "ci",
+diff --git a/jest.config.mjs b/jest.config.mjs
+new file mode 100644
+index 00000000000..25ed92b1e5f
+--- /dev/null
++++ b/jest.config.mjs
+@@ -0,0 +1,34 @@
++/** @type {import('jest').Config} */
++export default {
++    preset: "ts-jest",
++    testEnvironment: "node",
++    projects: [
++        {
++            displayName: "unit",
++            preset: "ts-jest",
++            testEnvironment: "node",
++            moduleNameMapper: {
++                "^(\.{1,2}/.*)\.js$": "$1",
++            },
++            roots: ["<rootDir>/tests"],
++            testPathIgnorePatterns: ["/tests/wire/"],
++            setupFilesAfterEnv: ["<rootDir>/tests/setup.ts", "<rootDir>/tests/bigint.setup.ts"],
++        },
++        {
++            displayName: "wire",
++            preset: "ts-jest",
++            testEnvironment: "node",
++            moduleNameMapper: {
++                "^(\.{1,2}/.*)\.js$": "$1",
++            },
++            roots: ["<rootDir>/tests/wire"],
++            setupFilesAfterEnv: [
++                "<rootDir>/tests/setup.ts",
++                "<rootDir>/tests/bigint.setup.ts",
++                "<rootDir>/tests/mock-server/setup.ts",
++            ],
++        },
++    ],
++    workerThreads: true,
++    passWithNoTests: true,
++};
+diff --git a/package.json b/package.json
+index a127bc2495e..f8219e93205 100644
+--- a/package.json
++++ b/package.json
+@@ -51,15 +51,19 @@
+         "build": "pnpm build:cjs && pnpm build:esm",
+         "build:cjs": "tsc --project ./tsconfig.cjs.json",
+         "build:esm": "tsc --project ./tsconfig.esm.json && node scripts/rename-to-esm-files.js dist/esm",
+-        "test": "vitest",
+-        "test:unit": "vitest --project unit",
+-        "test:wire": "vitest --project wire"
++        "test": "jest --config jest.config.mjs",
++        "test:unit": "jest --selectProjects unit",
++        "test:wire": "jest --selectProjects wire"
+     },
+     "dependencies": {},
+     "devDependencies": {
+         "webpack": "^5.105.4",
+         "ts-loader": "^9.5.4",
+-        "vitest": "^4.1.1",
++        "jest": "^29.7.0",
++        "@jest/globals": "^29.7.0",
++        "@types/jest": "^29.5.14",
++        "ts-jest": "^29.3.4",
++        "jest-environment-jsdom": "^29.7.0",
+         "msw": "2.11.2",
+         "@types/node": "^18.19.70",
+         "typescript": "~5.9.3",
+diff --git a/reference.md b/reference.md
+index eec939e1837..390a6c78a9e 100644
+--- a/reference.md
++++ b/reference.md
+@@ -210,8 +210,8 @@ await client.user.getUsername({
+         tags: ["tags", "tags"]
+     },
+     filter: "filter",
+-    longParam: 1000000,
+-    bigIntParam: "1000000"
++    longParam: BigInt("1000000"),
++    bigIntParam: BigInt("1000000")
+ });
+ 
+ ```
+diff --git a/snippet.json b/snippet.json
+index a231c2985ef..f2b9eb1e0d3 100644
+--- a/snippet.json
++++ b/snippet.json
+@@ -42,7 +42,7 @@
+             },
+             "snippet": {
+                 "type": "typescript",
+-                "client": "import { SeedRequestParametersClient } from \"@fern/request-parameters\";\n\nconst client = new SeedRequestParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.getUsername({\n    limit: 1,\n    id: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    date: \"2023-01-15\",\n    deadline: \"2024-01-15T09:30:00Z\",\n    bytes: \"SGVsbG8gd29ybGQh\",\n    user: {\n        name: \"name\",\n        tags: [\"tags\", \"tags\"]\n    },\n    userList: [{\n            name: \"name\",\n            tags: [\"tags\", \"tags\"]\n        }, {\n            name: \"name\",\n            tags: [\"tags\", \"tags\"]\n        }],\n    optionalDeadline: \"2024-01-15T09:30:00Z\",\n    keyValue: {\n        \"keyValue\": \"keyValue\"\n    },\n    optionalString: \"optionalString\",\n    nestedUser: {\n        name: \"name\",\n        user: {\n            name: \"name\",\n            tags: [\"tags\", \"tags\"]\n        }\n    },\n    optionalUser: {\n        name: \"name\",\n        tags: [\"tags\", \"tags\"]\n    },\n    excludeUser: {\n        name: \"name\",\n        tags: [\"tags\", \"tags\"]\n    },\n    filter: \"filter\",\n    longParam: 1000000,\n    bigIntParam: \"1000000\"\n});\n"
++                "client": "import { SeedRequestParametersClient } from \"@fern/request-parameters\";\n\nconst client = new SeedRequestParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.getUsername({\n    limit: 1,\n    id: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    date: \"2023-01-15\",\n    deadline: \"2024-01-15T09:30:00Z\",\n    bytes: \"SGVsbG8gd29ybGQh\",\n    user: {\n        name: \"name\",\n        tags: [\"tags\", \"tags\"]\n    },\n    userList: [{\n            name: \"name\",\n            tags: [\"tags\", \"tags\"]\n        }, {\n            name: \"name\",\n            tags: [\"tags\", \"tags\"]\n        }],\n    optionalDeadline: \"2024-01-15T09:30:00Z\",\n    keyValue: {\n        \"keyValue\": \"keyValue\"\n    },\n    optionalString: \"optionalString\",\n    nestedUser: {\n        name: \"name\",\n        user: {\n            name: \"name\",\n            tags: [\"tags\", \"tags\"]\n        }\n    },\n    optionalUser: {\n        name: \"name\",\n        tags: [\"tags\", \"tags\"]\n    },\n    excludeUser: {\n        name: \"name\",\n        tags: [\"tags\", \"tags\"]\n    },\n    filter: \"filter\",\n    longParam: BigInt(\"1000000\"),\n    bigIntParam: BigInt(\"1000000\")\n});\n"
+             }
+         }
+     ],
+diff --git a/src/api/resources/user/client/Client.ts b/src/api/resources/user/client/Client.ts
+index 9dc47feccd0..62e9c78530d 100644
+--- a/src/api/resources/user/client/Client.ts
++++ b/src/api/resources/user/client/Client.ts
+@@ -251,8 +251,8 @@ export class UserClient {
+      *             tags: ["tags", "tags"]
+      *         },
+      *         filter: "filter",
+-     *         longParam: 1000000,
+-     *         bigIntParam: "1000000"
++     *         longParam: BigInt("1000000"),
++     *         bigIntParam: BigInt("1000000")
+      *     })
+      */
+     public getUsername(
+@@ -267,7 +267,7 @@ export class UserClient {
+         requestOptions?: UserClient.RequestOptions,
+     ): Promise<core.WithRawResponse<SeedRequestParameters.User>> {
+         const {
+-            limit,
++            limit = 10,
+             id,
+             date,
+             deadline,
+@@ -281,8 +281,8 @@ export class UserClient {
+             optionalUser,
+             excludeUser,
+             filter,
+-            longParam,
+-            bigIntParam,
++            longParam = BigInt("9223372036854776000"),
++            bigIntParam = BigInt("18446744073709551615"),
+         } = request;
+         const _queryParams: Record<string, unknown> = {
+             limit,
+diff --git a/src/api/resources/user/client/requests/GetUsersRequest.ts b/src/api/resources/user/client/requests/GetUsersRequest.ts
+index 7f72fbd1d9b..f53fc3e72c0 100644
+--- a/src/api/resources/user/client/requests/GetUsersRequest.ts
++++ b/src/api/resources/user/client/requests/GetUsersRequest.ts
+@@ -42,12 +42,12 @@ import type * as SeedRequestParameters from "../../../../index.js";
+  *             tags: ["tags", "tags"]
+  *         },
+  *         filter: "filter",
+- *         longParam: 1000000,
+- *         bigIntParam: "1000000"
++ *         longParam: BigInt("1000000"),
++ *         bigIntParam: BigInt("1000000")
+  *     }
+  */
+ export interface GetUsersRequest {
+-    limit: number;
++    limit?: number;
+     id: string;
+     date: string;
+     deadline: string;
+@@ -61,6 +61,6 @@ export interface GetUsersRequest {
+     optionalUser?: SeedRequestParameters.User;
+     excludeUser: SeedRequestParameters.User | SeedRequestParameters.User[];
+     filter: string | string[];
+-    longParam: number;
+-    bigIntParam?: string;
++    longParam?: number | bigint;
++    bigIntParam?: number | bigint;
+ }
+diff --git a/src/core/json.ts b/src/core/json.ts
+index c052f3249f4..b8e88f02fa3 100644
+--- a/src/core/json.ts
++++ b/src/core/json.ts
+@@ -1,3 +1,38 @@
++const BIGINT_MARKER = "#bigint#";
++const CC_0 = 0x30,
++    CC_9 = 0x39;
++const CC_SPACE = 0x20,
++    CC_TAB = 0x09,
++    CC_LF = 0x0a,
++    CC_CR = 0x0d;
++const CC_MINUS = 0x2d,
++    CC_PLUS = 0x2b,
++    CC_DOT = 0x2e;
++const CC_QUOTE = 0x22,
++    CC_BACKSLASH = 0x5c;
++const CC_COMMA = 0x2c,
++    CC_COLON = 0x3a;
++const CC_LBRACE = 0x7b,
++    CC_RBRACE = 0x7d;
++const CC_LBRACKET = 0x5b,
++    CC_RBRACKET = 0x5d;
++const CC_E_LOWER = 0x65,
++    CC_E_UPPER = 0x45;
++const CC_T = 0x74,
++    CC_R = 0x72,
++    CC_U = 0x75,
++    CC_E = 0x65; // 'true'
++const CC_F = 0x66,
++    CC_A = 0x61,
++    CC_L = 0x6c,
++    CC_S = 0x73; // 'false'
++const CC_N = 0x6e; // 'null'
++const isWhitespace = (c: number) => c === CC_SPACE || c === CC_TAB || c === CC_LF || c === CC_CR;
++const isDigit = (c: number) => c >= CC_0 && c <= CC_9;
++
++// Cache the regex for better performance
++const BIGINT_REGEX = new RegExp(`"(-?\\d+)${BIGINT_MARKER.replace(/[#]/g, "\\$&")}"`, "g");
++
+ /**
+  * Serialize a value to JSON
+  * @param value A JavaScript value, usually an object or array, to be converted.
+@@ -6,11 +41,27 @@
+  * @returns JSON string
+  */
+ export const toJson = (
+-    value: unknown,
+-    replacer?: (this: unknown, key: string, value: unknown) => unknown,
++    data: unknown,
++    replacer?: (key: string, value: unknown) => unknown,
+     space?: string | number,
+ ): string => {
+-    return JSON.stringify(value, replacer, space);
++    // Use native JSON.stringify with a custom replacer for BigInt
++    const preliminaryJSON = JSON.stringify(
++        data,
++        (key: string, value: unknown) => {
++            if (typeof value === "bigint") {
++                return value.toString() + BIGINT_MARKER;
++            }
++            return replacer ? replacer(key, value) : value;
++        },
++        space,
++    );
++    if (preliminaryJSON == null) {
++        return preliminaryJSON;
++    }
++
++    // Strip quotes around numbers with marker: "123#bigint#" → 123
++    return preliminaryJSON.replace(BIGINT_REGEX, "$1");
+ };
+ 
+ /**
+@@ -19,9 +70,304 @@ export const toJson = (
+  * @param reviver A function that transforms the results. This function is called for each member of the object. If a member contains nested objects, the nested objects are transformed before the parent object is.
+  * @returns Parsed object, array, or other type
+  */
++
+ export function fromJson<T = unknown>(
+-    text: string,
++    json: string,
+     reviver?: (this: unknown, key: string, value: unknown) => unknown,
+ ): T {
+-    return JSON.parse(text, reviver);
++    let i = 0;
++    const len = json.length;
++
++    function skipWhitespace() {
++        while (i < len && isWhitespace(json.charCodeAt(i))) i++;
++    }
++
++    function parseValue(): unknown {
++        skipWhitespace();
++        const c = json.charCodeAt(i);
++
++        if (c === CC_QUOTE) return parseString();
++        if (c === CC_LBRACE) return parseObject();
++        if (c === CC_LBRACKET) return parseArray();
++        if (c === CC_MINUS || isDigit(c)) return parseNumber();
++
++        // Check for true/false/null using character codes
++        if (c === CC_T) {
++            if (json.charCodeAt(i + 1) === CC_R && json.charCodeAt(i + 2) === CC_U && json.charCodeAt(i + 3) === CC_E) {
++                i += 4;
++                return true;
++            }
++        } else if (c === CC_F) {
++            if (
++                json.charCodeAt(i + 1) === CC_A &&
++                json.charCodeAt(i + 2) === CC_L &&
++                json.charCodeAt(i + 3) === CC_S &&
++                json.charCodeAt(i + 4) === CC_E
++            ) {
++                i += 5;
++                return false;
++            }
++        } else if (c === CC_N) {
++            if (json.charCodeAt(i + 1) === CC_U && json.charCodeAt(i + 2) === CC_L && json.charCodeAt(i + 3) === CC_L) {
++                i += 4;
++                return null;
++            }
++        }
++
++        throw new SyntaxError(`Unexpected character at position ${i}: ${json[i]}`);
++    }
++
++    function parseString(): string {
++        i++; // skip opening quote
++        const start = i;
++
++        // Fast path: scan for end quote without escapes
++        while (i < len) {
++            const c = json.charCodeAt(i);
++            if (c === CC_QUOTE) {
++                const result = json.slice(start, i);
++                i++;
++                return result;
++            }
++            if (c === CC_BACKSLASH) {
++                break; // Hit an escape, fall through to slow path
++            }
++            i++;
++        }
++
++        // Slow path: handle escapes using array for better performance
++        const parts = [json.slice(start, i)];
++        while (i < len) {
++            const c = json.charCodeAt(i);
++            if (c === CC_QUOTE) {
++                i++;
++                return parts.join("");
++            }
++            if (c === CC_BACKSLASH) {
++                i++;
++                const next = json.charCodeAt(i);
++                switch (next) {
++                    case CC_QUOTE:
++                        parts.push('"');
++                        break;
++                    case CC_BACKSLASH:
++                        parts.push("\\");
++                        break;
++                    case 0x2f: // '/'
++                        parts.push("/");
++                        break;
++                    case 0x62: // 'b'
++                        parts.push("\b");
++                        break;
++                    case 0x66: // 'f'
++                        parts.push("\f");
++                        break;
++                    case CC_N: // 'n'
++                        parts.push("\n");
++                        break;
++                    case CC_R: // 'r'
++                        parts.push("\r");
++                        break;
++                    case CC_T: // 't'
++                        parts.push("\t");
++                        break;
++                    case CC_U: // 'u'
++                        parts.push(String.fromCharCode(parseInt(json.slice(i + 1, i + 5), 16)));
++                        i += 4;
++                        break;
++                    default:
++                        throw new SyntaxError(`Invalid escape sequence at position ${i}`);
++                }
++                i++;
++            } else {
++                // Accumulate regular characters
++                const chunkStart = i;
++                while (i < len) {
++                    const cc = json.charCodeAt(i);
++                    if (cc === CC_QUOTE || cc === CC_BACKSLASH) break;
++                    i++;
++                }
++                parts.push(json.slice(chunkStart, i));
++            }
++        }
++        throw new SyntaxError("Unterminated string");
++    }
++
++    function parseNumber(): number | bigint {
++        const start = i;
++
++        // Optional minus
++        if (json.charCodeAt(i) === CC_MINUS) i++;
++
++        // Integer part
++        const digitStart = i;
++        if (json.charCodeAt(i) === CC_0) {
++            i++;
++        } else if (isDigit(json.charCodeAt(i))) {
++            while (i < len && isDigit(json.charCodeAt(i))) i++;
++        }
++        const intEnd = i;
++
++        // Fraction part
++        let hasFrac = false;
++        if (json.charCodeAt(i) === CC_DOT) {
++            hasFrac = true;
++            i++;
++            while (i < len && isDigit(json.charCodeAt(i))) i++;
++        }
++
++        // Exponent part
++        let hasExp = false;
++        const c = json.charCodeAt(i);
++        if (c === CC_E_LOWER || c === CC_E_UPPER) {
++            hasExp = true;
++            i++;
++            const sign = json.charCodeAt(i);
++            if (sign === CC_MINUS || sign === CC_PLUS) i++;
++            while (i < len && isDigit(json.charCodeAt(i))) i++;
++        }
++
++        const numStr = json.slice(start, i);
++
++        // If it's a pure integer, check if we should use BigInt
++        if (!hasFrac && !hasExp) {
++            const digitCount = intEnd - digitStart;
++
++            // Quick length check - numbers > 16 digits are definitely unsafe
++            if (digitCount > 16) {
++                return BigInt(numStr);
++            }
++
++            // Numbers < 15 digits are always safe
++            if (digitCount < 15) {
++                return Number(numStr);
++            }
++
++            // For 15-16 digit numbers, convert and check
++            const num = Number(numStr);
++            if (!Number.isSafeInteger(num)) {
++                return BigInt(numStr);
++            }
++            return num;
++        }
++
++        return Number(numStr);
++    }
++
++    function parseObject(): Record<string, unknown> {
++        i++; // skip opening brace
++        skipWhitespace();
++
++        const obj: Record<string, unknown> = {};
++
++        if (json.charCodeAt(i) === CC_RBRACE) {
++            i++;
++            return obj;
++        }
++
++        while (true) {
++            skipWhitespace();
++            const key = parseString();
++            skipWhitespace();
++
++            if (json.charCodeAt(i) !== CC_COLON) {
++                throw new SyntaxError(`Expected ':' at position ${i}`);
++            }
++            i++;
++
++            const value = parseValue();
++            obj[key] = value;
++
++            skipWhitespace();
++            const c = json.charCodeAt(i);
++            if (c === CC_RBRACE) {
++                i++;
++                return obj;
++            }
++            if (c === CC_COMMA) {
++                i++;
++                continue;
++            }
++            throw new SyntaxError(`Expected ',' or '}' at position ${i}`);
++        }
++    }
++
++    function parseArray(): unknown[] {
++        i++; // skip opening bracket
++        skipWhitespace();
++
++        const arr: unknown[] = [];
++
++        if (json.charCodeAt(i) === CC_RBRACKET) {
++            i++;
++            return arr;
++        }
++
++        while (true) {
++            arr.push(parseValue());
++            skipWhitespace();
++
++            const c = json.charCodeAt(i);
++            if (c === CC_RBRACKET) {
++                i++;
++                return arr;
++            }
++            if (c === CC_COMMA) {
++                i++;
++                continue;
++            }
++            throw new SyntaxError(`Expected ',' or ']' at position ${i}`);
++        }
++    }
++
++    const result = parseValue();
++    skipWhitespace();
++
++    if (i < json.length) {
++        throw new SyntaxError(`Unexpected content at position ${i}`);
++    }
++
++    // Apply reviver if provided
++    if (!reviver) return result as T;
++
++    function reviveRecursive(holder: Record<string, unknown> | unknown[], key: string): unknown {
++        let value: unknown;
++        if (Array.isArray(holder)) {
++            const idx = Number(key);
++            if (Number.isInteger(idx)) {
++                value = holder[idx];
++            } else {
++                value = (holder as unknown as Record<string, unknown>)[key];
++            }
++        } else {
++            value = holder[key];
++        }
++
++        if (value && typeof value === "object") {
++            if (Array.isArray(value)) {
++                for (let i = 0; i < value.length; i++) {
++                    const newValue = reviveRecursive(value, String(i));
++                    if (newValue !== undefined) {
++                        value[i] = newValue;
++                    } else {
++                        delete value[i];
++                    }
++                }
++            } else {
++                const obj = value as Record<string, unknown>;
++                for (const k of Object.keys(obj)) {
++                    const newValue = reviveRecursive(obj, k);
++                    if (newValue !== undefined) {
++                        obj[k] = newValue;
++                    } else {
++                        delete obj[k];
++                    }
++                }
++            }
++        }
++
++        return reviver?.call(holder, key, value);
++    }
++
++    return reviveRecursive({ "": result }, "") as T;
+ }
+diff --git a/tests/bigint.setup.ts b/tests/bigint.setup.ts
+new file mode 100644
+index 00000000000..abdfd3edadc
+--- /dev/null
++++ b/tests/bigint.setup.ts
+@@ -0,0 +1,11 @@
++import { expect } from "@jest/globals";
++
++expect.addEqualityTesters([
++    (a: any, b: any) => {
++        if ((typeof a === "bigint" && typeof b === "number") || (typeof a === "number" && typeof b === "bigint")) {
++            return BigInt(a) === BigInt(b);
++        }
++        // Return undefined to let Jest handle other comparisons normally
++        return undefined;
++    },
++]);
+diff --git a/tests/mock-server/setup.ts b/tests/mock-server/setup.ts
+index aeb3a95af7d..c216d6074b2 100644
+--- a/tests/mock-server/setup.ts
++++ b/tests/mock-server/setup.ts
+@@ -1,4 +1,4 @@
+-import { afterAll, beforeAll } from "vitest";
++import { afterAll, beforeAll } from "@jest/globals";
+ 
+ import { mockServerPool } from "./MockServerPool";
+ 
+diff --git a/tests/setup.ts b/tests/setup.ts
+index a5651f81ba1..ef8d53f4cd5 100644
+--- a/tests/setup.ts
++++ b/tests/setup.ts
+@@ -1,16 +1,5 @@
+-import { expect } from "vitest";
+-
+-interface CustomMatchers<R = unknown> {
+-    toContainHeaders(expectedHeaders: Record<string, string>): R;
+-}
+-
+-declare module "vitest" {
+-    interface Assertion<T = any> extends CustomMatchers<T> {}
+-    interface AsymmetricMatchersContaining extends CustomMatchers {}
+-}
+-
+ expect.extend({
+-    toContainHeaders(actual: unknown, expectedHeaders: Record<string, string>) {
++    toContainHeaders(this: jest.MatcherContext, actual: unknown, expectedHeaders: Record<string, string>) {
+         const isHeaders = actual instanceof Headers;
+         const isPlainObject = typeof actual === "object" && actual !== null && !Array.isArray(actual);
+ 
+@@ -25,19 +14,22 @@ expect.extend({
+         const missingHeaders: string[] = [];
+         const mismatchedHeaders: Array<{ key: string; expected: string; actual: string | null }> = [];
+ 
+-        for (const [key, value] of Object.entries(expectedHeaders)) {
+-            let actualValue: string | null = null;
++        // Create a map of lowercase header keys to actual values for case-insensitive lookup
++        const actualHeadersMap = new Map<string, string>();
+ 
+-            if (isHeaders) {
+-                // Headers.get() is already case-insensitive
+-                actualValue = (actual as Headers).get(key);
+-            } else {
+-                // For plain objects, do case-insensitive lookup
+-                const actualObj = actual as Record<string, string>;
+-                const lowerKey = key.toLowerCase();
+-                const foundKey = Object.keys(actualObj).find((k) => k.toLowerCase() === lowerKey);
+-                actualValue = foundKey ? actualObj[foundKey] : null;
++        if (isHeaders) {
++            for (const [key, value] of (actual as Headers).entries()) {
++                actualHeadersMap.set(key.toLowerCase(), value);
++            }
++        } else {
++            for (const [key, value] of Object.entries(actual as Record<string, string>)) {
++                actualHeadersMap.set(key.toLowerCase(), value);
+             }
++        }
++
++        for (const [key, value] of Object.entries(expectedHeaders)) {
++            const lowerKey = key.toLowerCase();
++            const actualValue = actualHeadersMap.get(lowerKey) ?? null;
+ 
+             if (actualValue === null || actualValue === undefined) {
+                 missingHeaders.push(key);
+@@ -47,7 +39,6 @@ expect.extend({
+         }
+ 
+         const pass = missingHeaders.length === 0 && mismatchedHeaders.length === 0;
+-
+         const actualType = isHeaders ? "Headers" : "object";
+ 
+         if (pass) {
+@@ -78,3 +69,19 @@ expect.extend({
+         }
+     },
+ });
++
++declare global {
++    namespace jest {
++        interface Matchers<R> {
++            toContainHeaders(expectedHeaders: Record<string, string>): R;
++        }
++        interface Expect {
++            toContainHeaders(expectedHeaders: Record<string, string>): any;
++        }
++        interface InverseAsymmetricMatchers {
++            toContainHeaders(expectedHeaders: Record<string, string>): any;
++        }
++    }
++}
++
++export {};
+diff --git a/tests/tsconfig.json b/tests/tsconfig.json
+index ac39744de7b..60b2e87d4e3 100644
+--- a/tests/tsconfig.json
++++ b/tests/tsconfig.json
+@@ -2,8 +2,7 @@
+     "extends": "../tsconfig.base.json",
+     "compilerOptions": {
+         "outDir": null,
+-        "rootDir": "..",
+-        "types": ["vitest/globals"]
++        "rootDir": ".."
+     },
+     "include": ["../src", "../tests"],
+     "exclude": []
+diff --git a/tests/unit/fetcher/Fetcher.test.ts b/tests/unit/fetcher/Fetcher.test.ts
+index 6c17624228b..06c0770bb1a 100644
+--- a/tests/unit/fetcher/Fetcher.test.ts
++++ b/tests/unit/fetcher/Fetcher.test.ts
+@@ -17,7 +17,7 @@ describe("Test fetcherImpl", () => {
+             responseType: "json",
+         };
+ 
+-        global.fetch = vi.fn().mockResolvedValue(
++        global.fetch = jest.fn().mockResolvedValue(
+             new Response(JSON.stringify({ data: "test" }), {
+                 status: 200,
+                 statusText: "OK",
+@@ -53,7 +53,7 @@ describe("Test fetcherImpl", () => {
+             body: fs.createReadStream(join(__dirname, "test-file.txt")),
+         };
+ 
+-        global.fetch = vi.fn().mockResolvedValue(
++        global.fetch = jest.fn().mockResolvedValue(
+             new Response(JSON.stringify({ data: "test" }), {
+                 status: 200,
+                 statusText: "OK",
+@@ -86,7 +86,7 @@ describe("Test fetcherImpl", () => {
+             responseType: "binary-response",
+         };
+ 
+-        global.fetch = vi.fn().mockResolvedValue(
++        global.fetch = jest.fn().mockResolvedValue(
+             new Response(
+                 stream.Readable.toWeb(fs.createReadStream(join(__dirname, "test-file.txt"))) as ReadableStream,
+                 {
+@@ -133,7 +133,7 @@ describe("Test fetcherImpl", () => {
+             responseType: "binary-response",
+         };
+ 
+-        global.fetch = vi.fn().mockResolvedValue(
++        global.fetch = jest.fn().mockResolvedValue(
+             new Response(
+                 stream.Readable.toWeb(fs.createReadStream(join(__dirname, "test-file.txt"))) as ReadableStream,
+                 {
+@@ -179,7 +179,7 @@ describe("Test fetcherImpl", () => {
+             responseType: "binary-response",
+         };
+ 
+-        global.fetch = vi.fn().mockResolvedValue(
++        global.fetch = jest.fn().mockResolvedValue(
+             new Response(
+                 stream.Readable.toWeb(fs.createReadStream(join(__dirname, "test-file.txt"))) as ReadableStream,
+                 {
+@@ -223,7 +223,7 @@ describe("Test fetcherImpl", () => {
+             responseType: "binary-response",
+         };
+ 
+-        global.fetch = vi.fn().mockResolvedValue(
++        global.fetch = jest.fn().mockResolvedValue(
+             new Response(
+                 stream.Readable.toWeb(fs.createReadStream(join(__dirname, "test-file.txt"))) as ReadableStream,
+                 {
+diff --git a/tests/unit/fetcher/HttpResponsePromise.test.ts b/tests/unit/fetcher/HttpResponsePromise.test.ts
+index 2ec008e581d..c063b079bc3 100644
+--- a/tests/unit/fetcher/HttpResponsePromise.test.ts
++++ b/tests/unit/fetcher/HttpResponsePromise.test.ts
+@@ -1,4 +1,4 @@
+-import { beforeEach, describe, expect, it, vi } from "vitest";
++import { beforeEach, describe, expect, it, jest } from "@jest/globals";
+ 
+ import { HttpResponsePromise } from "../../../src/core/fetcher/HttpResponsePromise";
+ import type { RawResponse, WithRawResponse } from "../../../src/core/fetcher/RawResponse";
+@@ -20,7 +20,7 @@ describe("HttpResponsePromise", () => {
+ 
+     describe("fromFunction", () => {
+         it("should create an HttpResponsePromise from a function", async () => {
+-            const mockFn = vi
++            const mockFn = jest
+                 .fn<(arg1: string, arg2: string) => Promise<WithRawResponse<typeof mockData>>>()
+                 .mockResolvedValue(mockWithRawResponse);
+ 
+@@ -111,7 +111,7 @@ describe("HttpResponsePromise", () => {
+                 reject(new Error("Test error"));
+             });
+ 
+-            const catchSpy = vi.fn();
++            const catchSpy = jest.fn();
+             await errorResponsePromise.catch(catchSpy);
+ 
+             expect(catchSpy).toHaveBeenCalled();
+@@ -121,7 +121,7 @@ describe("HttpResponsePromise", () => {
+         });
+ 
+         it("should support finally() method", async () => {
+-            const finallySpy = vi.fn();
++            const finallySpy = jest.fn();
+             await responsePromise.finally(finallySpy);
+ 
+             expect(finallySpy).toHaveBeenCalled();
+diff --git a/tests/unit/fetcher/RawResponse.test.ts b/tests/unit/fetcher/RawResponse.test.ts
+index 375ee3f3806..9ccd5e1eb6f 100644
+--- a/tests/unit/fetcher/RawResponse.test.ts
++++ b/tests/unit/fetcher/RawResponse.test.ts
+@@ -1,4 +1,4 @@
+-import { describe, expect, it } from "vitest";
++import { describe, expect, it } from "@jest/globals";
+ 
+ import { toRawResponse } from "../../../src/core/fetcher/RawResponse";
+ 
+diff --git a/tests/unit/fetcher/logging.test.ts b/tests/unit/fetcher/logging.test.ts
+index 366c9b6ced6..267a9abaf40 100644
+--- a/tests/unit/fetcher/logging.test.ts
++++ b/tests/unit/fetcher/logging.test.ts
+@@ -2,15 +2,15 @@ import { fetcherImpl } from "../../../src/core/fetcher/Fetcher";
+ 
+ function createMockLogger() {
+     return {
+-        debug: vi.fn(),
+-        info: vi.fn(),
+-        warn: vi.fn(),
+-        error: vi.fn(),
++        debug: jest.fn(),
++        info: jest.fn(),
++        warn: jest.fn(),
++        error: jest.fn(),
+     };
+ }
+ 
+ function mockSuccessResponse(data: unknown = { data: "test" }, status = 200, statusText = "OK") {
+-    global.fetch = vi.fn().mockResolvedValue(
++    global.fetch = jest.fn().mockResolvedValue(
+         new Response(JSON.stringify(data), {
+             status,
+             statusText,
+@@ -19,7 +19,7 @@ function mockSuccessResponse(data: unknown = { data: "test" }, status = 200, sta
+ }
+ 
+ function mockErrorResponse(data: unknown = { error: "Error" }, status = 404, statusText = "Not Found") {
+-    global.fetch = vi.fn().mockResolvedValue(
++    global.fetch = jest.fn().mockResolvedValue(
+         new Response(JSON.stringify(data), {
+             status,
+             statusText,
+@@ -240,7 +240,7 @@ describe("Fetcher Logging Integration", () => {
+             const abortController = new AbortController();
+             abortController.abort();
+ 
+-            global.fetch = vi.fn().mockRejectedValue(new Error("Aborted"));
++            global.fetch = jest.fn().mockRejectedValue(new Error("Aborted"));
+ 
+             const result = await fetcherImpl({
+                 url: "https://example.com/api",
+@@ -271,7 +271,7 @@ describe("Fetcher Logging Integration", () => {
+             const timeoutError = new Error("Request timeout");
+             timeoutError.name = "AbortError";
+ 
+-            global.fetch = vi.fn().mockRejectedValue(timeoutError);
++            global.fetch = jest.fn().mockRejectedValue(timeoutError);
+ 
+             const result = await fetcherImpl({
+                 url: "https://example.com/api",
+@@ -301,7 +301,7 @@ describe("Fetcher Logging Integration", () => {
+ 
+             const unknownError = new Error("Unknown error");
+ 
+-            global.fetch = vi.fn().mockRejectedValue(unknownError);
++            global.fetch = jest.fn().mockRejectedValue(unknownError);
+ 
+             const result = await fetcherImpl({
+                 url: "https://example.com/api",
+@@ -434,7 +434,7 @@ describe("Fetcher Logging Integration", () => {
+ 
+         it("should log DELETE requests", async () => {
+             const mockLogger = createMockLogger();
+-            global.fetch = vi.fn().mockResolvedValue(
++            global.fetch = jest.fn().mockResolvedValue(
+                 new Response(null, {
+                     status: 200,
+                     statusText: "OK",
+diff --git a/tests/unit/fetcher/makePassthroughRequest.test.ts b/tests/unit/fetcher/makePassthroughRequest.test.ts
+index 1850d1fda95..91e21e0cf6b 100644
+--- a/tests/unit/fetcher/makePassthroughRequest.test.ts
++++ b/tests/unit/fetcher/makePassthroughRequest.test.ts
+@@ -1,11 +1,10 @@
+-import type { Mock } from "vitest";
+ import { makePassthroughRequest } from "../../../src/core/fetcher/makePassthroughRequest";
+ 
+ describe("makePassthroughRequest", () => {
+-    let mockFetch: Mock;
++    let mockFetch: jest.Mock;
+ 
+     beforeEach(() => {
+-        mockFetch = vi.fn();
++        mockFetch = jest.fn();
+         mockFetch.mockResolvedValue(new Response(JSON.stringify({ ok: true }), { status: 200 }));
+     });
+ 
+@@ -247,7 +246,7 @@ describe("makePassthroughRequest", () => {
+ 
+         it("should use requestOptions maxRetries over client maxRetries", async () => {
+             mockFetch.mockResolvedValue(new Response("", { status: 500 }));
+-            vi.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
++            jest.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
+                 process.nextTick(callback);
+                 return null as any;
+             });
+@@ -261,7 +260,7 @@ describe("makePassthroughRequest", () => {
+             // 1 initial + 1 retry = 2 calls
+             expect(mockFetch).toHaveBeenCalledTimes(2);
+ 
+-            vi.restoreAllMocks();
++            jest.restoreAllMocks();
+         });
+     });
+ 
+diff --git a/tests/unit/fetcher/makeRequest.test.ts b/tests/unit/fetcher/makeRequest.test.ts
+index bde194554dd..f6f039a2922 100644
+--- a/tests/unit/fetcher/makeRequest.test.ts
++++ b/tests/unit/fetcher/makeRequest.test.ts
+@@ -1,4 +1,3 @@
+-import type { Mock } from "vitest";
+ import {
+     isCacheNoStoreSupported,
+     makeRequest,
+@@ -11,10 +10,10 @@ describe("Test makeRequest", () => {
+     const mockHeaders = { "Content-Type": "application/json" };
+     const mockBody = JSON.stringify({ key: "value" });
+ 
+-    let mockFetch: Mock;
++    let mockFetch: jest.Mock;
+ 
+     beforeEach(() => {
+-        mockFetch = vi.fn();
++        mockFetch = jest.fn();
+         mockFetch.mockResolvedValue(new Response(JSON.stringify({ test: "successful" }), { status: 200 }));
+         resetCacheNoStoreSupported();
+     });
+diff --git a/tests/unit/fetcher/redacting.test.ts b/tests/unit/fetcher/redacting.test.ts
+index d599376b9bc..884ce4ccc1c 100644
+--- a/tests/unit/fetcher/redacting.test.ts
++++ b/tests/unit/fetcher/redacting.test.ts
+@@ -2,15 +2,15 @@ import { fetcherImpl } from "../../../src/core/fetcher/Fetcher";
+ 
+ function createMockLogger() {
+     return {
+-        debug: vi.fn(),
+-        info: vi.fn(),
+-        warn: vi.fn(),
+-        error: vi.fn(),
++        debug: jest.fn(),
++        info: jest.fn(),
++        warn: jest.fn(),
++        error: jest.fn(),
+     };
+ }
+ 
+ function mockSuccessResponse(data: unknown = { data: "test" }, status = 200, statusText = "OK") {
+-    global.fetch = vi.fn().mockResolvedValue(
++    global.fetch = jest.fn().mockResolvedValue(
+         new Response(JSON.stringify(data), {
+             status,
+             statusText,
+@@ -313,7 +313,7 @@ describe("Redacting Logic", () => {
+             mockHeaders.set("Set-Cookie", "session=abc123; HttpOnly; Secure");
+             mockHeaders.set("Content-Type", "application/json");
+ 
+-            global.fetch = vi.fn().mockResolvedValue(
++            global.fetch = jest.fn().mockResolvedValue(
+                 new Response(JSON.stringify({ data: "test" }), {
+                     status: 200,
+                     statusText: "OK",
+@@ -351,7 +351,7 @@ describe("Redacting Logic", () => {
+             mockHeaders.set("Authorization", "Bearer token-123");
+             mockHeaders.set("Content-Type", "application/json");
+ 
+-            global.fetch = vi.fn().mockResolvedValue(
++            global.fetch = jest.fn().mockResolvedValue(
+                 new Response(JSON.stringify({ data: "test" }), {
+                     status: 200,
+                     statusText: "OK",
+@@ -389,7 +389,7 @@ describe("Redacting Logic", () => {
+             mockHeaders.set("WWW-Authenticate", "Bearer realm=example");
+             mockHeaders.set("Content-Type", "application/json");
+ 
+-            global.fetch = vi.fn().mockResolvedValue(
++            global.fetch = jest.fn().mockResolvedValue(
+                 new Response(JSON.stringify({ error: "Unauthorized" }), {
+                     status: 401,
+                     statusText: "Unauthorized",
+diff --git a/tests/unit/fetcher/requestWithRetries.test.ts b/tests/unit/fetcher/requestWithRetries.test.ts
+index d22661367f4..9c2aaf216dd 100644
+--- a/tests/unit/fetcher/requestWithRetries.test.ts
++++ b/tests/unit/fetcher/requestWithRetries.test.ts
+@@ -1,43 +1,27 @@
+-import type { Mock, MockInstance } from "vitest";
+ import { requestWithRetries } from "../../../src/core/fetcher/requestWithRetries";
+ 
+ describe("requestWithRetries", () => {
+-    let mockFetch: Mock;
++    let mockFetch: jest.Mock;
+     let originalMathRandom: typeof Math.random;
+-    let setTimeoutSpy: MockInstance;
++    let setTimeoutSpy: jest.SpyInstance;
+ 
+     beforeEach(() => {
+-        mockFetch = vi.fn();
++        mockFetch = jest.fn();
+         originalMathRandom = Math.random;
+ 
+-        Math.random = vi.fn(() => 0.5);
+-
+-        vi.useFakeTimers({
+-            toFake: [
+-                "setTimeout",
+-                "clearTimeout",
+-                "setInterval",
+-                "clearInterval",
+-                "setImmediate",
+-                "clearImmediate",
+-                "Date",
+-                "performance",
+-                "requestAnimationFrame",
+-                "cancelAnimationFrame",
+-                "requestIdleCallback",
+-                "cancelIdleCallback",
+-            ],
+-        });
++        Math.random = jest.fn(() => 0.5);
++
++        jest.useFakeTimers({ doNotFake: ["nextTick"] });
+     });
+ 
+     afterEach(() => {
+         Math.random = originalMathRandom;
+-        vi.clearAllMocks();
+-        vi.clearAllTimers();
++        jest.clearAllMocks();
++        jest.clearAllTimers();
+     });
+ 
+     it("should retry on retryable status codes", async () => {
+-        setTimeoutSpy = vi.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
++        setTimeoutSpy = jest.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
+             process.nextTick(callback);
+             return null as any;
+         });
+@@ -53,7 +37,7 @@ describe("requestWithRetries", () => {
+         });
+ 
+         const responsePromise = requestWithRetries(() => mockFetch(), retryableStatuses.length);
+-        await vi.runAllTimersAsync();
++        await jest.runAllTimersAsync();
+         const response = await responsePromise;
+ 
+         expect(mockFetch).toHaveBeenCalledTimes(retryableStatuses.length + 1);
+@@ -61,7 +45,7 @@ describe("requestWithRetries", () => {
+     });
+ 
+     it("should respect maxRetries limit", async () => {
+-        setTimeoutSpy = vi.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
++        setTimeoutSpy = jest.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
+             process.nextTick(callback);
+             return null as any;
+         });
+@@ -70,7 +54,7 @@ describe("requestWithRetries", () => {
+         mockFetch.mockResolvedValue(new Response("", { status: 500 }));
+ 
+         const responsePromise = requestWithRetries(() => mockFetch(), maxRetries);
+-        await vi.runAllTimersAsync();
++        await jest.runAllTimersAsync();
+         const response = await responsePromise;
+ 
+         expect(mockFetch).toHaveBeenCalledTimes(maxRetries + 1);
+@@ -78,7 +62,7 @@ describe("requestWithRetries", () => {
+     });
+ 
+     it("should not retry on success status codes", async () => {
+-        setTimeoutSpy = vi.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
++        setTimeoutSpy = jest.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
+             process.nextTick(callback);
+             return null as any;
+         });
+@@ -91,7 +75,7 @@ describe("requestWithRetries", () => {
+             mockFetch.mockResolvedValueOnce(new Response("", { status }));
+ 
+             const responsePromise = requestWithRetries(() => mockFetch(), 3);
+-            await vi.runAllTimersAsync();
++            await jest.runAllTimersAsync();
+             await responsePromise;
+ 
+             expect(mockFetch).toHaveBeenCalledTimes(1);
+@@ -133,7 +117,7 @@ describe("requestWithRetries", () => {
+ 
+     retryHeaderTests.forEach(({ description, headerName, headerValue, expectedDelayMin, expectedDelayMax }) => {
+         it(description, async () => {
+-            setTimeoutSpy = vi.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
++            setTimeoutSpy = jest.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
+                 process.nextTick(callback);
+                 return null as any;
+             });
+@@ -149,7 +133,7 @@ describe("requestWithRetries", () => {
+                 .mockResolvedValueOnce(new Response("", { status: 200 }));
+ 
+             const responsePromise = requestWithRetries(() => mockFetch(), 1);
+-            await vi.runAllTimersAsync();
++            await jest.runAllTimersAsync();
+             const response = await responsePromise;
+ 
+             expect(setTimeoutSpy).toHaveBeenCalledWith(expect.any(Function), expect.any(Number));
+@@ -161,7 +145,7 @@ describe("requestWithRetries", () => {
+     });
+ 
+     it("should apply correct exponential backoff with jitter", async () => {
+-        setTimeoutSpy = vi.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
++        setTimeoutSpy = jest.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
+             process.nextTick(callback);
+             return null as any;
+         });
+@@ -171,7 +155,7 @@ describe("requestWithRetries", () => {
+         const expectedDelays = [1000, 2000, 4000];
+ 
+         const responsePromise = requestWithRetries(() => mockFetch(), maxRetries);
+-        await vi.runAllTimersAsync();
++        await jest.runAllTimersAsync();
+         await responsePromise;
+ 
+         expect(setTimeoutSpy).toHaveBeenCalledTimes(expectedDelays.length);
+@@ -184,7 +168,7 @@ describe("requestWithRetries", () => {
+     });
+ 
+     it("should handle concurrent retries independently", async () => {
+-        setTimeoutSpy = vi.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
++        setTimeoutSpy = jest.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
+             process.nextTick(callback);
+             return null as any;
+         });
+@@ -198,7 +182,7 @@ describe("requestWithRetries", () => {
+         const promise1 = requestWithRetries(() => mockFetch(), 1);
+         const promise2 = requestWithRetries(() => mockFetch(), 1);
+ 
+-        await vi.runAllTimersAsync();
++        await jest.runAllTimersAsync();
+         const [response1, response2] = await Promise.all([promise1, promise2]);
+ 
+         expect(response1.status).toBe(200);
+@@ -206,7 +190,7 @@ describe("requestWithRetries", () => {
+     });
+ 
+     it("should cap delay at MAX_RETRY_DELAY for large header values", async () => {
+-        setTimeoutSpy = vi.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
++        setTimeoutSpy = jest.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
+             process.nextTick(callback);
+             return null as any;
+         });
+@@ -221,7 +205,7 @@ describe("requestWithRetries", () => {
+             .mockResolvedValueOnce(new Response("", { status: 200 }));
+ 
+         const responsePromise = requestWithRetries(() => mockFetch(), 1);
+-        await vi.runAllTimersAsync();
++        await jest.runAllTimersAsync();
+         const response = await responsePromise;
+ 
+         expect(setTimeoutSpy).toHaveBeenCalledWith(expect.any(Function), 60000);
+diff --git a/tests/unit/fetcher/signals.test.ts b/tests/unit/fetcher/signals.test.ts
+index d7b6d1e63ca..9cabfa07447 100644
+--- a/tests/unit/fetcher/signals.test.ts
++++ b/tests/unit/fetcher/signals.test.ts
+@@ -2,11 +2,11 @@ import { anySignal, getTimeoutSignal } from "../../../src/core/fetcher/signals";
+ 
+ describe("Test getTimeoutSignal", () => {
+     beforeEach(() => {
+-        vi.useFakeTimers();
++        jest.useFakeTimers();
+     });
+ 
+     afterEach(() => {
+-        vi.useRealTimers();
++        jest.useRealTimers();
+     });
+ 
+     it("should return an object with signal and abortId", () => {
+@@ -24,10 +24,10 @@ describe("Test getTimeoutSignal", () => {
+ 
+         expect(signal.aborted).toBe(false);
+ 
+-        vi.advanceTimersByTime(timeoutMs - 1);
++        jest.advanceTimersByTime(timeoutMs - 1);
+         expect(signal.aborted).toBe(false);
+ 
+-        vi.advanceTimersByTime(1);
++        jest.advanceTimersByTime(1);
+         expect(signal.aborted).toBe(true);
+     });
+ });
+diff --git a/tests/unit/logging/logger.test.ts b/tests/unit/logging/logger.test.ts
+index 2e0b5fe5040..70cabc2aa7f 100644
+--- a/tests/unit/logging/logger.test.ts
++++ b/tests/unit/logging/logger.test.ts
+@@ -2,10 +2,10 @@ import { ConsoleLogger, createLogger, Logger, LogLevel } from "../../../src/core
+ 
+ function createMockLogger() {
+     return {
+-        debug: vi.fn(),
+-        info: vi.fn(),
+-        warn: vi.fn(),
+-        error: vi.fn(),
++        debug: jest.fn(),
++        info: jest.fn(),
++        warn: jest.fn(),
++        error: jest.fn(),
+     };
+ }
+ 
+@@ -22,19 +22,19 @@ describe("Logger", () => {
+     describe("ConsoleLogger", () => {
+         let consoleLogger: ConsoleLogger;
+         let consoleSpy: {
+-            debug: ReturnType<typeof vi.spyOn>;
+-            info: ReturnType<typeof vi.spyOn>;
+-            warn: ReturnType<typeof vi.spyOn>;
+-            error: ReturnType<typeof vi.spyOn>;
++            debug: ReturnType<typeof jest.spyOn>;
++            info: ReturnType<typeof jest.spyOn>;
++            warn: ReturnType<typeof jest.spyOn>;
++            error: ReturnType<typeof jest.spyOn>;
+         };
+ 
+         beforeEach(() => {
+             consoleLogger = new ConsoleLogger();
+             consoleSpy = {
+-                debug: vi.spyOn(console, "debug").mockImplementation(() => {}),
+-                info: vi.spyOn(console, "info").mockImplementation(() => {}),
+-                warn: vi.spyOn(console, "warn").mockImplementation(() => {}),
+-                error: vi.spyOn(console, "error").mockImplementation(() => {}),
++                debug: jest.spyOn(console, "debug").mockImplementation(() => {}),
++                info: jest.spyOn(console, "info").mockImplementation(() => {}),
++                warn: jest.spyOn(console, "warn").mockImplementation(() => {}),
++                error: jest.spyOn(console, "error").mockImplementation(() => {}),
+             };
+         });
+ 
+@@ -73,10 +73,10 @@ describe("Logger", () => {
+ 
+     describe("Logger with level filtering", () => {
+         let mockLogger: {
+-            debug: ReturnType<typeof vi.fn>;
+-            info: ReturnType<typeof vi.fn>;
+-            warn: ReturnType<typeof vi.fn>;
+-            error: ReturnType<typeof vi.fn>;
++            debug: ReturnType<typeof jest.fn>;
++            info: ReturnType<typeof jest.fn>;
++            warn: ReturnType<typeof jest.fn>;
++            error: ReturnType<typeof jest.fn>;
+         };
+ 
+         beforeEach(() => {
+diff --git a/tests/wire/user.test.ts b/tests/wire/user.test.ts
+index 941fac43d9b..85b8fc0fef5 100644
+--- a/tests/wire/user.test.ts
++++ b/tests/wire/user.test.ts
+@@ -103,8 +103,8 @@ describe("UserClient", () => {
+                 tags: ["tags", "tags"],
+             },
+             filter: "filter",
+-            longParam: 1000000,
+-            bigIntParam: "1000000",
++            longParam: BigInt("1000000"),
++            bigIntParam: BigInt("1000000"),
+         });
+         expect(response).toEqual(rawResponseBody);
+     });
+diff --git a/vitest.config.mts b/vitest.config.mts
+deleted file mode 100644
+index 0dee5a752d3..00000000000
+--- a/vitest.config.mts
++++ /dev/null
+@@ -1,32 +0,0 @@
+-import { defineConfig } from "vitest/config";
+-export default defineConfig({
+-    test: {
+-        typecheck: {
+-            enabled: true,
+-            tsconfig: "./tests/tsconfig.json",
+-        },
+-        projects: [
+-            {
+-                test: {
+-                    globals: true,
+-                    name: "unit",
+-                    environment: "node",
+-                    root: "./tests",
+-                    include: ["**/*.test.{js,ts,jsx,tsx}"],
+-                    exclude: ["wire/**"],
+-                    setupFiles: ["./setup.ts"],
+-                },
+-            },
+-            {
+-                test: {
+-                    globals: true,
+-                    name: "wire",
+-                    environment: "node",
+-                    root: "./tests/wire",
+-                    setupFiles: ["../setup.ts", "../mock-server/setup.ts"],
+-                },
+-            },
+-        ],
+-        passWithNoTests: true,
+-    },
+-});

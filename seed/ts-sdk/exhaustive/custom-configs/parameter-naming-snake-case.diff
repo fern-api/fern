@@ -1,0 +1,105 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index d8b7bf00e12..1911ec36d95 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,9 @@
+     "cliVersion": "DUMMY",
+     "generatorName": "fernapi/fern-typescript-sdk",
+     "generatorVersion": "local",
++    "generatorConfig": {
++        "parameterNaming": "snakeCase"
++    },
+     "originGitCommit": "DUMMY",
+     "originGitCommitIsDirty": null,
+     "invokedBy": "ci",
+diff --git a/reference.md b/reference.md
+index 925b5375d52..6a9e00d1af1 100644
+--- a/reference.md
++++ b/reference.md
+@@ -3419,8 +3419,8 @@ await client.noReqBody.postWithNoRequestBody();
+ 
+ ```typescript
+ await client.reqWithHeaders.getWithCustomHeader({
+-    "X-TEST-SERVICE-HEADER": "X-TEST-SERVICE-HEADER",
+-    "X-TEST-ENDPOINT-HEADER": "X-TEST-ENDPOINT-HEADER",
++    x_test_service_header: "X-TEST-SERVICE-HEADER",
++    x_test_endpoint_header: "X-TEST-ENDPOINT-HEADER",
+     body: "string"
+ });
+ 
+diff --git a/snippet.json b/snippet.json
+index a0d13554153..3abe4780474 100644
+--- a/snippet.json
++++ b/snippet.json
+@@ -661,7 +661,7 @@
+             },
+             "snippet": {
+                 "type": "typescript",
+-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.reqWithHeaders.getWithCustomHeader({\n    \"X-TEST-SERVICE-HEADER\": \"X-TEST-SERVICE-HEADER\",\n    \"X-TEST-ENDPOINT-HEADER\": \"X-TEST-ENDPOINT-HEADER\",\n    body: \"string\"\n});\n"
++                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.reqWithHeaders.getWithCustomHeader({\n    x_test_service_header: \"X-TEST-SERVICE-HEADER\",\n    x_test_endpoint_header: \"X-TEST-ENDPOINT-HEADER\",\n    body: \"string\"\n});\n"
+             }
+         }
+     ],
+diff --git a/src/api/resources/reqWithHeaders/client/Client.ts b/src/api/resources/reqWithHeaders/client/Client.ts
+index 89eaf1d6814..074eacb3f27 100644
+--- a/src/api/resources/reqWithHeaders/client/Client.ts
++++ b/src/api/resources/reqWithHeaders/client/Client.ts
+@@ -27,8 +27,8 @@ export class ReqWithHeadersClient {
+      *
+      * @example
+      *     await client.reqWithHeaders.getWithCustomHeader({
+-     *         "X-TEST-SERVICE-HEADER": "X-TEST-SERVICE-HEADER",
+-     *         "X-TEST-ENDPOINT-HEADER": "X-TEST-ENDPOINT-HEADER",
++     *         x_test_service_header: "X-TEST-SERVICE-HEADER",
++     *         x_test_endpoint_header: "X-TEST-ENDPOINT-HEADER",
+      *         body: "string"
+      *     })
+      */
+@@ -44,8 +44,8 @@ export class ReqWithHeadersClient {
+         requestOptions?: ReqWithHeadersClient.RequestOptions,
+     ): Promise<core.WithRawResponse<void>> {
+         const {
+-            "X-TEST-SERVICE-HEADER": xTestServiceHeader,
+-            "X-TEST-ENDPOINT-HEADER": xTestEndpointHeader,
++            x_test_service_header: xTestServiceHeader,
++            x_test_endpoint_header: xTestEndpointHeader,
+             body: _body,
+         } = request;
+         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+diff --git a/src/api/resources/reqWithHeaders/client/requests/ReqWithHeaders.ts b/src/api/resources/reqWithHeaders/client/requests/ReqWithHeaders.ts
+index 4b2e6816729..e23228376d8 100644
+--- a/src/api/resources/reqWithHeaders/client/requests/ReqWithHeaders.ts
++++ b/src/api/resources/reqWithHeaders/client/requests/ReqWithHeaders.ts
+@@ -3,13 +3,13 @@
+ /**
+  * @example
+  *     {
+- *         "X-TEST-SERVICE-HEADER": "X-TEST-SERVICE-HEADER",
+- *         "X-TEST-ENDPOINT-HEADER": "X-TEST-ENDPOINT-HEADER",
++ *         x_test_service_header: "X-TEST-SERVICE-HEADER",
++ *         x_test_endpoint_header: "X-TEST-ENDPOINT-HEADER",
+  *         body: "string"
+  *     }
+  */
+ export interface ReqWithHeaders {
+-    "X-TEST-SERVICE-HEADER": string;
+-    "X-TEST-ENDPOINT-HEADER": string;
++    x_test_service_header: string;
++    x_test_endpoint_header: string;
+     body: string;
+ }
+diff --git a/tests/wire/reqWithHeaders.test.ts b/tests/wire/reqWithHeaders.test.ts
+index a2295047e42..5d11acf20c4 100644
+--- a/tests/wire/reqWithHeaders.test.ts
++++ b/tests/wire/reqWithHeaders.test.ts
+@@ -20,8 +20,8 @@ describe("ReqWithHeadersClient", () => {
+             .build();
+ 
+         const response = await client.reqWithHeaders.getWithCustomHeader({
+-            "X-TEST-SERVICE-HEADER": "X-TEST-SERVICE-HEADER",
+-            "X-TEST-ENDPOINT-HEADER": "X-TEST-ENDPOINT-HEADER",
++            x_test_service_header: "X-TEST-SERVICE-HEADER",
++            x_test_endpoint_header: "X-TEST-ENDPOINT-HEADER",
+             body: "string",
+         });
+         expect(response).toEqual(undefined);

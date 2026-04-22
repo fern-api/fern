@@ -1,0 +1,1300 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 5e4188a44b1..da6d18d682e 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,7 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-csharp-sdk",
+   "generatorVersion": "local",
+-  "generatorConfig": {},
++  "generatorConfig": {
++    "include-exception-handler": true
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "ci",
+diff --git a/src/SeedApi/Core/ExceptionHandler.cs b/src/SeedApi/Core/ExceptionHandler.cs
+new file mode 100644
+index 00000000000..880e8698969
+--- /dev/null
++++ b/src/SeedApi/Core/ExceptionHandler.cs
+@@ -0,0 +1,95 @@
++using SystemTask = global::System.Threading.Tasks.Task;
++
++namespace SeedApi.Core;
++
++public interface IExceptionInterceptor
++{
++    Exception Intercept(Exception exception);
++}
++
++internal class ExceptionHandler
++{
++    private readonly IExceptionInterceptor? _interceptor;
++
++    public ExceptionHandler(IExceptionInterceptor? interceptor)
++    {
++        _interceptor = interceptor;
++    }
++
++    internal void TryCatch(Action action)
++    {
++        if (_interceptor is null)
++        {
++            action();
++            return;
++        }
++
++        try
++        {
++            action();
++        }
++        catch (Exception ex)
++        {
++            throw _interceptor.Intercept(ex);
++        }
++    }
++
++    internal T TryCatch<T>(Func<T> func)
++    {
++        if (_interceptor is null)
++        {
++            return func();
++        }
++
++        try
++        {
++            return func();
++        }
++        catch (Exception ex)
++        {
++            throw _interceptor.Intercept(ex);
++        }
++    }
++
++    internal async SystemTask TryCatchAsync(Func<Task> func)
++    {
++        if (_interceptor is null)
++        {
++            await func().ConfigureAwait(false);
++            return;
++        }
++
++        try
++        {
++            await func().ConfigureAwait(false);
++        }
++        catch (Exception ex)
++        {
++            throw _interceptor.Intercept(ex);
++        }
++    }
++
++    internal async Task<T> TryCatchAsync<T>(Func<Task<T>> func)
++    {
++        if (_interceptor is null)
++        {
++            return await func().ConfigureAwait(false);
++        }
++
++        try
++        {
++            return await func().ConfigureAwait(false);
++        }
++        catch (Exception ex)
++        {
++            throw _interceptor.Intercept(ex);
++        }
++    }
++
++    internal void CaptureException(Exception exception)
++    {
++        _interceptor?.Intercept(exception);
++    }
++
++    internal ExceptionHandler Clone() => new ExceptionHandler(_interceptor);
++}
+diff --git a/src/SeedApi/Core/Public/ClientOptions.cs b/src/SeedApi/Core/Public/ClientOptions.cs
+index 6cf621e7bb9..e853d4e435f 100644
+--- a/src/SeedApi/Core/Public/ClientOptions.cs
++++ b/src/SeedApi/Core/Public/ClientOptions.cs
+@@ -11,6 +11,11 @@ public partial class ClientOptions
+     /// </summary>
+     internal Headers Headers { get; init; } = new();
+ 
++    /// <summary>
++    /// A handler that will handle exceptions thrown by the client.
++    /// </summary>
++    internal ExceptionHandler ExceptionHandler { get; set; } = new ExceptionHandler(null);
++
+     /// <summary>
+     /// The Base URL for the API.
+     /// </summary>
+@@ -91,6 +96,7 @@ public partial class ClientOptions
+             Timeout = Timeout,
+             Headers = new Headers(new Dictionary<string, HeaderValue>(Headers)),
+             AdditionalHeaders = AdditionalHeaders,
++            ExceptionHandler = ExceptionHandler.Clone(),
+         };
+     }
+ }
+diff --git a/src/SeedApi/Core/SeedApiExceptionInterceptor.cs b/src/SeedApi/Core/SeedApiExceptionInterceptor.cs
+new file mode 100644
+index 00000000000..bb49a1d081f
+--- /dev/null
++++ b/src/SeedApi/Core/SeedApiExceptionInterceptor.cs
+@@ -0,0 +1,29 @@
++using SeedApi;
++
++namespace SeedApi.Core;
++
++/// <summary>
++/// Custom exception interceptor for the SDK. Implement the Intercept method to capture exceptions for observability (e.g., application monitoring platform, logging, etc.).
++/// </summary>
++public class SeedApiExceptionInterceptor : IExceptionInterceptor
++{
++    private readonly ClientOptions _clientOptions;
++
++    public SeedApiExceptionInterceptor(ClientOptions clientOptions)
++    {
++        _clientOptions = clientOptions;
++    }
++
++    /// <summary>
++    /// Intercepts an exception and returns it after capturing.
++    /// </summary>
++    public Exception Intercept(Exception exception)
++    {
++        // TODO: Implement your exception capturing logic here.
++        // Examples:
++        // - Send to application monitoring platform
++        // - Log to console: Console.Error.WriteLine(exception);
++        // - Send to custom logging service
++        return exception;
++    }
++}
+diff --git a/src/SeedApi/DataService/DataServiceClient.cs b/src/SeedApi/DataService/DataServiceClient.cs
+index 8056ee05488..83f2a8a7030 100644
+--- a/src/SeedApi/DataService/DataServiceClient.cs
++++ b/src/SeedApi/DataService/DataServiceClient.cs
+@@ -14,9 +14,17 @@ public partial class DataServiceClient : IDataServiceClient
+ 
+     internal DataServiceClient(RawClient client)
+     {
+-        _client = client;
+-        _grpc = _client.Grpc;
+-        _dataService = new DataService.DataServiceClient(_grpc.Channel);
++        try
++        {
++            _client = client;
++            _grpc = _client.Grpc;
++            _dataService = new DataService.DataServiceClient(_grpc.Channel);
++        }
++        catch (Exception ex)
++        {
++            client.Options.ExceptionHandler?.CaptureException(ex);
++            throw;
++        }
+     }
+ 
+     /// <example><code>
+@@ -27,56 +35,61 @@ public partial class DataServiceClient : IDataServiceClient
+         CancellationToken cancellationToken = default
+     )
+     {
+-        try
+-        {
+-            var metadata = new global::Grpc.Core.Metadata();
+-            foreach (var header in _client.Options.Headers)
+-            {
+-                var value = await header.Value.ResolveAsync().ConfigureAwait(false);
+-                metadata.Add(header.Key, value);
+-            }
+-            if (_client.Options.AdditionalHeaders != null)
++        return await _client
++            .Options.ExceptionHandler.TryCatchAsync(async () =>
+             {
+-                foreach (var header in _client.Options.AdditionalHeaders)
++                try
+                 {
+-                    if (header.Value != null)
+-                        metadata.Add(header.Key, header.Value);
++                    var metadata = new global::Grpc.Core.Metadata();
++                    foreach (var header in _client.Options.Headers)
++                    {
++                        var value = await header.Value.ResolveAsync().ConfigureAwait(false);
++                        metadata.Add(header.Key, value);
++                    }
++                    if (_client.Options.AdditionalHeaders != null)
++                    {
++                        foreach (var header in _client.Options.AdditionalHeaders)
++                        {
++                            if (header.Value != null)
++                                metadata.Add(header.Key, header.Value);
++                        }
++                    }
++                    if (options?.AdditionalHeaders != null)
++                    {
++                        foreach (var header in options.AdditionalHeaders)
++                        {
++                            if (header.Value != null)
++                                metadata.Add(header.Key, header.Value);
++                        }
++                    }
++
++                    var callOptions = _grpc.CreateCallOptions(
++                        metadata,
++                        options ?? new GrpcRequestOptions(),
++                        cancellationToken
++                    );
++                    var call = _dataService.CheckAsync(
++                        new Google.Protobuf.WellKnownTypes.Empty(),
++                        callOptions
++                    );
++                    var response = await call.ConfigureAwait(false);
++                    return CheckResponse.FromProto(response);
+                 }
+-            }
+-            if (options?.AdditionalHeaders != null)
+-            {
+-                foreach (var header in options.AdditionalHeaders)
++                catch (RpcException rpc)
+                 {
+-                    if (header.Value != null)
+-                        metadata.Add(header.Key, header.Value);
++                    var statusCode = (int)rpc.StatusCode;
++                    throw new SeedApiApiException(
++                        $"Error with gRPC status code {statusCode}",
++                        statusCode,
++                        rpc.Message
++                    );
+                 }
+-            }
+-
+-            var callOptions = _grpc.CreateCallOptions(
+-                metadata,
+-                options ?? new GrpcRequestOptions(),
+-                cancellationToken
+-            );
+-            var call = _dataService.CheckAsync(
+-                new Google.Protobuf.WellKnownTypes.Empty(),
+-                callOptions
+-            );
+-            var response = await call.ConfigureAwait(false);
+-            return CheckResponse.FromProto(response);
+-        }
+-        catch (RpcException rpc)
+-        {
+-            var statusCode = (int)rpc.StatusCode;
+-            throw new SeedApiApiException(
+-                $"Error with gRPC status code {statusCode}",
+-                statusCode,
+-                rpc.Message
+-            );
+-        }
+-        catch (Exception e)
+-        {
+-            throw new SeedApiException("Error", e);
+-        }
++                catch (Exception e)
++                {
++                    throw new SeedApiException("Error", e);
++                }
++            })
++            .ConfigureAwait(false);
+     }
+ 
+     /// <example><code>
+@@ -88,53 +101,58 @@ public partial class DataServiceClient : IDataServiceClient
+         CancellationToken cancellationToken = default
+     )
+     {
+-        try
+-        {
+-            var metadata = new global::Grpc.Core.Metadata();
+-            foreach (var header in _client.Options.Headers)
++        return await _client
++            .Options.ExceptionHandler.TryCatchAsync(async () =>
+             {
+-                var value = await header.Value.ResolveAsync().ConfigureAwait(false);
+-                metadata.Add(header.Key, value);
+-            }
+-            if (_client.Options.AdditionalHeaders != null)
+-            {
+-                foreach (var header in _client.Options.AdditionalHeaders)
++                try
+                 {
+-                    if (header.Value != null)
+-                        metadata.Add(header.Key, header.Value);
++                    var metadata = new global::Grpc.Core.Metadata();
++                    foreach (var header in _client.Options.Headers)
++                    {
++                        var value = await header.Value.ResolveAsync().ConfigureAwait(false);
++                        metadata.Add(header.Key, value);
++                    }
++                    if (_client.Options.AdditionalHeaders != null)
++                    {
++                        foreach (var header in _client.Options.AdditionalHeaders)
++                        {
++                            if (header.Value != null)
++                                metadata.Add(header.Key, header.Value);
++                        }
++                    }
++                    if (options?.AdditionalHeaders != null)
++                    {
++                        foreach (var header in options.AdditionalHeaders)
++                        {
++                            if (header.Value != null)
++                                metadata.Add(header.Key, header.Value);
++                        }
++                    }
++
++                    var callOptions = _grpc.CreateCallOptions(
++                        metadata,
++                        options ?? new GrpcRequestOptions(),
++                        cancellationToken
++                    );
++                    var call = _dataService.CreateAsync(request.ToProto(), callOptions);
++                    var response = await call.ConfigureAwait(false);
++                    return CreateResponse.FromProto(response);
+                 }
+-            }
+-            if (options?.AdditionalHeaders != null)
+-            {
+-                foreach (var header in options.AdditionalHeaders)
++                catch (RpcException rpc)
+                 {
+-                    if (header.Value != null)
+-                        metadata.Add(header.Key, header.Value);
++                    var statusCode = (int)rpc.StatusCode;
++                    throw new SeedApiApiException(
++                        $"Error with gRPC status code {statusCode}",
++                        statusCode,
++                        rpc.Message
++                    );
+                 }
+-            }
+-
+-            var callOptions = _grpc.CreateCallOptions(
+-                metadata,
+-                options ?? new GrpcRequestOptions(),
+-                cancellationToken
+-            );
+-            var call = _dataService.CreateAsync(request.ToProto(), callOptions);
+-            var response = await call.ConfigureAwait(false);
+-            return CreateResponse.FromProto(response);
+-        }
+-        catch (RpcException rpc)
+-        {
+-            var statusCode = (int)rpc.StatusCode;
+-            throw new SeedApiApiException(
+-                $"Error with gRPC status code {statusCode}",
+-                statusCode,
+-                rpc.Message
+-            );
+-        }
+-        catch (Exception e)
+-        {
+-            throw new SeedApiException("Error", e);
+-        }
++                catch (Exception e)
++                {
++                    throw new SeedApiException("Error", e);
++                }
++            })
++            .ConfigureAwait(false);
+     }
+ 
+     /// <example><code>
+@@ -146,53 +164,58 @@ public partial class DataServiceClient : IDataServiceClient
+         CancellationToken cancellationToken = default
+     )
+     {
+-        try
+-        {
+-            var metadata = new global::Grpc.Core.Metadata();
+-            foreach (var header in _client.Options.Headers)
++        return await _client
++            .Options.ExceptionHandler.TryCatchAsync(async () =>
+             {
+-                var value = await header.Value.ResolveAsync().ConfigureAwait(false);
+-                metadata.Add(header.Key, value);
+-            }
+-            if (_client.Options.AdditionalHeaders != null)
+-            {
+-                foreach (var header in _client.Options.AdditionalHeaders)
++                try
+                 {
+-                    if (header.Value != null)
+-                        metadata.Add(header.Key, header.Value);
++                    var metadata = new global::Grpc.Core.Metadata();
++                    foreach (var header in _client.Options.Headers)
++                    {
++                        var value = await header.Value.ResolveAsync().ConfigureAwait(false);
++                        metadata.Add(header.Key, value);
++                    }
++                    if (_client.Options.AdditionalHeaders != null)
++                    {
++                        foreach (var header in _client.Options.AdditionalHeaders)
++                        {
++                            if (header.Value != null)
++                                metadata.Add(header.Key, header.Value);
++                        }
++                    }
++                    if (options?.AdditionalHeaders != null)
++                    {
++                        foreach (var header in options.AdditionalHeaders)
++                        {
++                            if (header.Value != null)
++                                metadata.Add(header.Key, header.Value);
++                        }
++                    }
++
++                    var callOptions = _grpc.CreateCallOptions(
++                        metadata,
++                        options ?? new GrpcRequestOptions(),
++                        cancellationToken
++                    );
++                    var call = _dataService.DeleteAsync(request.ToProto(), callOptions);
++                    var response = await call.ConfigureAwait(false);
++                    return DeleteResponse.FromProto(response);
+                 }
+-            }
+-            if (options?.AdditionalHeaders != null)
+-            {
+-                foreach (var header in options.AdditionalHeaders)
++                catch (RpcException rpc)
+                 {
+-                    if (header.Value != null)
+-                        metadata.Add(header.Key, header.Value);
++                    var statusCode = (int)rpc.StatusCode;
++                    throw new SeedApiApiException(
++                        $"Error with gRPC status code {statusCode}",
++                        statusCode,
++                        rpc.Message
++                    );
+                 }
+-            }
+-
+-            var callOptions = _grpc.CreateCallOptions(
+-                metadata,
+-                options ?? new GrpcRequestOptions(),
+-                cancellationToken
+-            );
+-            var call = _dataService.DeleteAsync(request.ToProto(), callOptions);
+-            var response = await call.ConfigureAwait(false);
+-            return DeleteResponse.FromProto(response);
+-        }
+-        catch (RpcException rpc)
+-        {
+-            var statusCode = (int)rpc.StatusCode;
+-            throw new SeedApiApiException(
+-                $"Error with gRPC status code {statusCode}",
+-                statusCode,
+-                rpc.Message
+-            );
+-        }
+-        catch (Exception e)
+-        {
+-            throw new SeedApiException("Error", e);
+-        }
++                catch (Exception e)
++                {
++                    throw new SeedApiException("Error", e);
++                }
++            })
++            .ConfigureAwait(false);
+     }
+ 
+     /// <example><code>
+@@ -204,53 +227,58 @@ public partial class DataServiceClient : IDataServiceClient
+         CancellationToken cancellationToken = default
+     )
+     {
+-        try
+-        {
+-            var metadata = new global::Grpc.Core.Metadata();
+-            foreach (var header in _client.Options.Headers)
++        return await _client
++            .Options.ExceptionHandler.TryCatchAsync(async () =>
+             {
+-                var value = await header.Value.ResolveAsync().ConfigureAwait(false);
+-                metadata.Add(header.Key, value);
+-            }
+-            if (_client.Options.AdditionalHeaders != null)
+-            {
+-                foreach (var header in _client.Options.AdditionalHeaders)
++                try
+                 {
+-                    if (header.Value != null)
+-                        metadata.Add(header.Key, header.Value);
++                    var metadata = new global::Grpc.Core.Metadata();
++                    foreach (var header in _client.Options.Headers)
++                    {
++                        var value = await header.Value.ResolveAsync().ConfigureAwait(false);
++                        metadata.Add(header.Key, value);
++                    }
++                    if (_client.Options.AdditionalHeaders != null)
++                    {
++                        foreach (var header in _client.Options.AdditionalHeaders)
++                        {
++                            if (header.Value != null)
++                                metadata.Add(header.Key, header.Value);
++                        }
++                    }
++                    if (options?.AdditionalHeaders != null)
++                    {
++                        foreach (var header in options.AdditionalHeaders)
++                        {
++                            if (header.Value != null)
++                                metadata.Add(header.Key, header.Value);
++                        }
++                    }
++
++                    var callOptions = _grpc.CreateCallOptions(
++                        metadata,
++                        options ?? new GrpcRequestOptions(),
++                        cancellationToken
++                    );
++                    var call = _dataService.DescribeAsync(request.ToProto(), callOptions);
++                    var response = await call.ConfigureAwait(false);
++                    return DescribeResponse.FromProto(response);
+                 }
+-            }
+-            if (options?.AdditionalHeaders != null)
+-            {
+-                foreach (var header in options.AdditionalHeaders)
++                catch (RpcException rpc)
+                 {
+-                    if (header.Value != null)
+-                        metadata.Add(header.Key, header.Value);
++                    var statusCode = (int)rpc.StatusCode;
++                    throw new SeedApiApiException(
++                        $"Error with gRPC status code {statusCode}",
++                        statusCode,
++                        rpc.Message
++                    );
+                 }
+-            }
+-
+-            var callOptions = _grpc.CreateCallOptions(
+-                metadata,
+-                options ?? new GrpcRequestOptions(),
+-                cancellationToken
+-            );
+-            var call = _dataService.DescribeAsync(request.ToProto(), callOptions);
+-            var response = await call.ConfigureAwait(false);
+-            return DescribeResponse.FromProto(response);
+-        }
+-        catch (RpcException rpc)
+-        {
+-            var statusCode = (int)rpc.StatusCode;
+-            throw new SeedApiApiException(
+-                $"Error with gRPC status code {statusCode}",
+-                statusCode,
+-                rpc.Message
+-            );
+-        }
+-        catch (Exception e)
+-        {
+-            throw new SeedApiException("Error", e);
+-        }
++                catch (Exception e)
++                {
++                    throw new SeedApiException("Error", e);
++                }
++            })
++            .ConfigureAwait(false);
+     }
+ 
+     /// <example><code>
+@@ -262,53 +290,58 @@ public partial class DataServiceClient : IDataServiceClient
+         CancellationToken cancellationToken = default
+     )
+     {
+-        try
+-        {
+-            var metadata = new global::Grpc.Core.Metadata();
+-            foreach (var header in _client.Options.Headers)
+-            {
+-                var value = await header.Value.ResolveAsync().ConfigureAwait(false);
+-                metadata.Add(header.Key, value);
+-            }
+-            if (_client.Options.AdditionalHeaders != null)
++        return await _client
++            .Options.ExceptionHandler.TryCatchAsync(async () =>
+             {
+-                foreach (var header in _client.Options.AdditionalHeaders)
++                try
++                {
++                    var metadata = new global::Grpc.Core.Metadata();
++                    foreach (var header in _client.Options.Headers)
++                    {
++                        var value = await header.Value.ResolveAsync().ConfigureAwait(false);
++                        metadata.Add(header.Key, value);
++                    }
++                    if (_client.Options.AdditionalHeaders != null)
++                    {
++                        foreach (var header in _client.Options.AdditionalHeaders)
++                        {
++                            if (header.Value != null)
++                                metadata.Add(header.Key, header.Value);
++                        }
++                    }
++                    if (options?.AdditionalHeaders != null)
++                    {
++                        foreach (var header in options.AdditionalHeaders)
++                        {
++                            if (header.Value != null)
++                                metadata.Add(header.Key, header.Value);
++                        }
++                    }
++
++                    var callOptions = _grpc.CreateCallOptions(
++                        metadata,
++                        options ?? new GrpcRequestOptions(),
++                        cancellationToken
++                    );
++                    var call = _dataService.QueryAsync(request.ToProto(), callOptions);
++                    var response = await call.ConfigureAwait(false);
++                    return QueryResponse.FromProto(response);
++                }
++                catch (RpcException rpc)
+                 {
+-                    if (header.Value != null)
+-                        metadata.Add(header.Key, header.Value);
++                    var statusCode = (int)rpc.StatusCode;
++                    throw new SeedApiApiException(
++                        $"Error with gRPC status code {statusCode}",
++                        statusCode,
++                        rpc.Message
++                    );
+                 }
+-            }
+-            if (options?.AdditionalHeaders != null)
+-            {
+-                foreach (var header in options.AdditionalHeaders)
++                catch (Exception e)
+                 {
+-                    if (header.Value != null)
+-                        metadata.Add(header.Key, header.Value);
++                    throw new SeedApiException("Error", e);
+                 }
+-            }
+-
+-            var callOptions = _grpc.CreateCallOptions(
+-                metadata,
+-                options ?? new GrpcRequestOptions(),
+-                cancellationToken
+-            );
+-            var call = _dataService.QueryAsync(request.ToProto(), callOptions);
+-            var response = await call.ConfigureAwait(false);
+-            return QueryResponse.FromProto(response);
+-        }
+-        catch (RpcException rpc)
+-        {
+-            var statusCode = (int)rpc.StatusCode;
+-            throw new SeedApiApiException(
+-                $"Error with gRPC status code {statusCode}",
+-                statusCode,
+-                rpc.Message
+-            );
+-        }
+-        catch (Exception e)
+-        {
+-            throw new SeedApiException("Error", e);
+-        }
++            })
++            .ConfigureAwait(false);
+     }
+ 
+     /// <example><code>
+@@ -332,53 +365,58 @@ public partial class DataServiceClient : IDataServiceClient
+         CancellationToken cancellationToken = default
+     )
+     {
+-        try
+-        {
+-            var metadata = new global::Grpc.Core.Metadata();
+-            foreach (var header in _client.Options.Headers)
+-            {
+-                var value = await header.Value.ResolveAsync().ConfigureAwait(false);
+-                metadata.Add(header.Key, value);
+-            }
+-            if (_client.Options.AdditionalHeaders != null)
++        return await _client
++            .Options.ExceptionHandler.TryCatchAsync(async () =>
+             {
+-                foreach (var header in _client.Options.AdditionalHeaders)
++                try
+                 {
+-                    if (header.Value != null)
+-                        metadata.Add(header.Key, header.Value);
++                    var metadata = new global::Grpc.Core.Metadata();
++                    foreach (var header in _client.Options.Headers)
++                    {
++                        var value = await header.Value.ResolveAsync().ConfigureAwait(false);
++                        metadata.Add(header.Key, value);
++                    }
++                    if (_client.Options.AdditionalHeaders != null)
++                    {
++                        foreach (var header in _client.Options.AdditionalHeaders)
++                        {
++                            if (header.Value != null)
++                                metadata.Add(header.Key, header.Value);
++                        }
++                    }
++                    if (options?.AdditionalHeaders != null)
++                    {
++                        foreach (var header in options.AdditionalHeaders)
++                        {
++                            if (header.Value != null)
++                                metadata.Add(header.Key, header.Value);
++                        }
++                    }
++
++                    var callOptions = _grpc.CreateCallOptions(
++                        metadata,
++                        options ?? new GrpcRequestOptions(),
++                        cancellationToken
++                    );
++                    var call = _dataService.UploadAsync(request.ToProto(), callOptions);
++                    var response = await call.ConfigureAwait(false);
++                    return UploadResponse.FromProto(response);
+                 }
+-            }
+-            if (options?.AdditionalHeaders != null)
+-            {
+-                foreach (var header in options.AdditionalHeaders)
++                catch (RpcException rpc)
+                 {
+-                    if (header.Value != null)
+-                        metadata.Add(header.Key, header.Value);
++                    var statusCode = (int)rpc.StatusCode;
++                    throw new SeedApiApiException(
++                        $"Error with gRPC status code {statusCode}",
++                        statusCode,
++                        rpc.Message
++                    );
+                 }
+-            }
+-
+-            var callOptions = _grpc.CreateCallOptions(
+-                metadata,
+-                options ?? new GrpcRequestOptions(),
+-                cancellationToken
+-            );
+-            var call = _dataService.UploadAsync(request.ToProto(), callOptions);
+-            var response = await call.ConfigureAwait(false);
+-            return UploadResponse.FromProto(response);
+-        }
+-        catch (RpcException rpc)
+-        {
+-            var statusCode = (int)rpc.StatusCode;
+-            throw new SeedApiApiException(
+-                $"Error with gRPC status code {statusCode}",
+-                statusCode,
+-                rpc.Message
+-            );
+-        }
+-        catch (Exception e)
+-        {
+-            throw new SeedApiException("Error", e);
+-        }
++                catch (Exception e)
++                {
++                    throw new SeedApiException("Error", e);
++                }
++            })
++            .ConfigureAwait(false);
+     }
+ 
+     /// <example><code>
+@@ -390,53 +428,58 @@ public partial class DataServiceClient : IDataServiceClient
+         CancellationToken cancellationToken = default
+     )
+     {
+-        try
+-        {
+-            var metadata = new global::Grpc.Core.Metadata();
+-            foreach (var header in _client.Options.Headers)
++        return await _client
++            .Options.ExceptionHandler.TryCatchAsync(async () =>
+             {
+-                var value = await header.Value.ResolveAsync().ConfigureAwait(false);
+-                metadata.Add(header.Key, value);
+-            }
+-            if (_client.Options.AdditionalHeaders != null)
+-            {
+-                foreach (var header in _client.Options.AdditionalHeaders)
++                try
+                 {
+-                    if (header.Value != null)
+-                        metadata.Add(header.Key, header.Value);
++                    var metadata = new global::Grpc.Core.Metadata();
++                    foreach (var header in _client.Options.Headers)
++                    {
++                        var value = await header.Value.ResolveAsync().ConfigureAwait(false);
++                        metadata.Add(header.Key, value);
++                    }
++                    if (_client.Options.AdditionalHeaders != null)
++                    {
++                        foreach (var header in _client.Options.AdditionalHeaders)
++                        {
++                            if (header.Value != null)
++                                metadata.Add(header.Key, header.Value);
++                        }
++                    }
++                    if (options?.AdditionalHeaders != null)
++                    {
++                        foreach (var header in options.AdditionalHeaders)
++                        {
++                            if (header.Value != null)
++                                metadata.Add(header.Key, header.Value);
++                        }
++                    }
++
++                    var callOptions = _grpc.CreateCallOptions(
++                        metadata,
++                        options ?? new GrpcRequestOptions(),
++                        cancellationToken
++                    );
++                    var call = _dataService.FetchAsync(request.ToProto(), callOptions);
++                    var response = await call.ConfigureAwait(false);
++                    return FetchResponse.FromProto(response);
+                 }
+-            }
+-            if (options?.AdditionalHeaders != null)
+-            {
+-                foreach (var header in options.AdditionalHeaders)
++                catch (RpcException rpc)
+                 {
+-                    if (header.Value != null)
+-                        metadata.Add(header.Key, header.Value);
++                    var statusCode = (int)rpc.StatusCode;
++                    throw new SeedApiApiException(
++                        $"Error with gRPC status code {statusCode}",
++                        statusCode,
++                        rpc.Message
++                    );
+                 }
+-            }
+-
+-            var callOptions = _grpc.CreateCallOptions(
+-                metadata,
+-                options ?? new GrpcRequestOptions(),
+-                cancellationToken
+-            );
+-            var call = _dataService.FetchAsync(request.ToProto(), callOptions);
+-            var response = await call.ConfigureAwait(false);
+-            return FetchResponse.FromProto(response);
+-        }
+-        catch (RpcException rpc)
+-        {
+-            var statusCode = (int)rpc.StatusCode;
+-            throw new SeedApiApiException(
+-                $"Error with gRPC status code {statusCode}",
+-                statusCode,
+-                rpc.Message
+-            );
+-        }
+-        catch (Exception e)
+-        {
+-            throw new SeedApiException("Error", e);
+-        }
++                catch (Exception e)
++                {
++                    throw new SeedApiException("Error", e);
++                }
++            })
++            .ConfigureAwait(false);
+     }
+ 
+     /// <example><code>
+@@ -448,53 +491,58 @@ public partial class DataServiceClient : IDataServiceClient
+         CancellationToken cancellationToken = default
+     )
+     {
+-        try
+-        {
+-            var metadata = new global::Grpc.Core.Metadata();
+-            foreach (var header in _client.Options.Headers)
++        return await _client
++            .Options.ExceptionHandler.TryCatchAsync(async () =>
+             {
+-                var value = await header.Value.ResolveAsync().ConfigureAwait(false);
+-                metadata.Add(header.Key, value);
+-            }
+-            if (_client.Options.AdditionalHeaders != null)
+-            {
+-                foreach (var header in _client.Options.AdditionalHeaders)
++                try
+                 {
+-                    if (header.Value != null)
+-                        metadata.Add(header.Key, header.Value);
++                    var metadata = new global::Grpc.Core.Metadata();
++                    foreach (var header in _client.Options.Headers)
++                    {
++                        var value = await header.Value.ResolveAsync().ConfigureAwait(false);
++                        metadata.Add(header.Key, value);
++                    }
++                    if (_client.Options.AdditionalHeaders != null)
++                    {
++                        foreach (var header in _client.Options.AdditionalHeaders)
++                        {
++                            if (header.Value != null)
++                                metadata.Add(header.Key, header.Value);
++                        }
++                    }
++                    if (options?.AdditionalHeaders != null)
++                    {
++                        foreach (var header in options.AdditionalHeaders)
++                        {
++                            if (header.Value != null)
++                                metadata.Add(header.Key, header.Value);
++                        }
++                    }
++
++                    var callOptions = _grpc.CreateCallOptions(
++                        metadata,
++                        options ?? new GrpcRequestOptions(),
++                        cancellationToken
++                    );
++                    var call = _dataService.ListAsync(request.ToProto(), callOptions);
++                    var response = await call.ConfigureAwait(false);
++                    return ListResponse.FromProto(response);
+                 }
+-            }
+-            if (options?.AdditionalHeaders != null)
+-            {
+-                foreach (var header in options.AdditionalHeaders)
++                catch (RpcException rpc)
+                 {
+-                    if (header.Value != null)
+-                        metadata.Add(header.Key, header.Value);
++                    var statusCode = (int)rpc.StatusCode;
++                    throw new SeedApiApiException(
++                        $"Error with gRPC status code {statusCode}",
++                        statusCode,
++                        rpc.Message
++                    );
+                 }
+-            }
+-
+-            var callOptions = _grpc.CreateCallOptions(
+-                metadata,
+-                options ?? new GrpcRequestOptions(),
+-                cancellationToken
+-            );
+-            var call = _dataService.ListAsync(request.ToProto(), callOptions);
+-            var response = await call.ConfigureAwait(false);
+-            return ListResponse.FromProto(response);
+-        }
+-        catch (RpcException rpc)
+-        {
+-            var statusCode = (int)rpc.StatusCode;
+-            throw new SeedApiApiException(
+-                $"Error with gRPC status code {statusCode}",
+-                statusCode,
+-                rpc.Message
+-            );
+-        }
+-        catch (Exception e)
+-        {
+-            throw new SeedApiException("Error", e);
+-        }
++                catch (Exception e)
++                {
++                    throw new SeedApiException("Error", e);
++                }
++            })
++            .ConfigureAwait(false);
+     }
+ 
+     /// <example><code>
+@@ -506,52 +554,57 @@ public partial class DataServiceClient : IDataServiceClient
+         CancellationToken cancellationToken = default
+     )
+     {
+-        try
+-        {
+-            var metadata = new global::Grpc.Core.Metadata();
+-            foreach (var header in _client.Options.Headers)
++        return await _client
++            .Options.ExceptionHandler.TryCatchAsync(async () =>
+             {
+-                var value = await header.Value.ResolveAsync().ConfigureAwait(false);
+-                metadata.Add(header.Key, value);
+-            }
+-            if (_client.Options.AdditionalHeaders != null)
+-            {
+-                foreach (var header in _client.Options.AdditionalHeaders)
++                try
+                 {
+-                    if (header.Value != null)
+-                        metadata.Add(header.Key, header.Value);
++                    var metadata = new global::Grpc.Core.Metadata();
++                    foreach (var header in _client.Options.Headers)
++                    {
++                        var value = await header.Value.ResolveAsync().ConfigureAwait(false);
++                        metadata.Add(header.Key, value);
++                    }
++                    if (_client.Options.AdditionalHeaders != null)
++                    {
++                        foreach (var header in _client.Options.AdditionalHeaders)
++                        {
++                            if (header.Value != null)
++                                metadata.Add(header.Key, header.Value);
++                        }
++                    }
++                    if (options?.AdditionalHeaders != null)
++                    {
++                        foreach (var header in options.AdditionalHeaders)
++                        {
++                            if (header.Value != null)
++                                metadata.Add(header.Key, header.Value);
++                        }
++                    }
++
++                    var callOptions = _grpc.CreateCallOptions(
++                        metadata,
++                        options ?? new GrpcRequestOptions(),
++                        cancellationToken
++                    );
++                    var call = _dataService.UpdateAsync(request.ToProto(), callOptions);
++                    var response = await call.ConfigureAwait(false);
++                    return UpdateResponse.FromProto(response);
+                 }
+-            }
+-            if (options?.AdditionalHeaders != null)
+-            {
+-                foreach (var header in options.AdditionalHeaders)
++                catch (RpcException rpc)
+                 {
+-                    if (header.Value != null)
+-                        metadata.Add(header.Key, header.Value);
++                    var statusCode = (int)rpc.StatusCode;
++                    throw new SeedApiApiException(
++                        $"Error with gRPC status code {statusCode}",
++                        statusCode,
++                        rpc.Message
++                    );
+                 }
+-            }
+-
+-            var callOptions = _grpc.CreateCallOptions(
+-                metadata,
+-                options ?? new GrpcRequestOptions(),
+-                cancellationToken
+-            );
+-            var call = _dataService.UpdateAsync(request.ToProto(), callOptions);
+-            var response = await call.ConfigureAwait(false);
+-            return UpdateResponse.FromProto(response);
+-        }
+-        catch (RpcException rpc)
+-        {
+-            var statusCode = (int)rpc.StatusCode;
+-            throw new SeedApiApiException(
+-                $"Error with gRPC status code {statusCode}",
+-                statusCode,
+-                rpc.Message
+-            );
+-        }
+-        catch (Exception e)
+-        {
+-            throw new SeedApiException("Error", e);
+-        }
++                catch (Exception e)
++                {
++                    throw new SeedApiException("Error", e);
++                }
++            })
++            .ConfigureAwait(false);
+     }
+ }
+diff --git a/src/SeedApi/SeedApiClient.cs b/src/SeedApi/SeedApiClient.cs
+index 489d78e17f5..b325b059f09 100644
+--- a/src/SeedApi/SeedApiClient.cs
++++ b/src/SeedApi/SeedApiClient.cs
+@@ -9,25 +9,37 @@ public partial class SeedApiClient : ISeedApiClient
+ 
+     public SeedApiClient(ClientOptions? clientOptions = null)
+     {
+-        clientOptions ??= new ClientOptions();
+-        var platformHeaders = new Headers(
+-            new Dictionary<string, string>()
+-            {
+-                { "X-Fern-Language", "C#" },
+-                { "X-Fern-SDK-Name", "SeedApi" },
+-                { "X-Fern-SDK-Version", Version.Current },
+-                { "User-Agent", "Ferncsharp-grpc-proto-exhaustive/0.0.1" },
+-            }
+-        );
+-        foreach (var header in platformHeaders)
++        try
+         {
+-            if (!clientOptions.Headers.ContainsKey(header.Key))
++            clientOptions ??= new ClientOptions();
++            clientOptions.ExceptionHandler = new ExceptionHandler(
++                new SeedApiExceptionInterceptor(clientOptions)
++            );
++            var platformHeaders = new Headers(
++                new Dictionary<string, string>()
++                {
++                    { "X-Fern-Language", "C#" },
++                    { "X-Fern-SDK-Name", "SeedApi" },
++                    { "X-Fern-SDK-Version", Version.Current },
++                    { "User-Agent", "Ferncsharp-grpc-proto-exhaustive/0.0.1" },
++                }
++            );
++            foreach (var header in platformHeaders)
+             {
+-                clientOptions.Headers[header.Key] = header.Value;
++                if (!clientOptions.Headers.ContainsKey(header.Key))
++                {
++                    clientOptions.Headers[header.Key] = header.Value;
++                }
+             }
++            _client = new RawClient(clientOptions);
++            DataService = new DataServiceClient(_client);
++        }
++        catch (Exception ex)
++        {
++            var interceptor = new SeedApiExceptionInterceptor(clientOptions);
++            interceptor.Intercept(ex);
++            throw;
+         }
+-        _client = new RawClient(clientOptions);
+-        DataService = new DataServiceClient(_client);
+     }
+ 
+     public IDataServiceClient DataService { get; }
+@@ -37,65 +49,72 @@ public partial class SeedApiClient : ISeedApiClient
+         CancellationToken cancellationToken = default
+     )
+     {
+-        var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
+-            .Add(_client.Options.Headers)
+-            .Add(_client.Options.AdditionalHeaders)
+-            .Add(options?.AdditionalHeaders)
+-            .BuildAsync()
+-            .ConfigureAwait(false);
+-        var response = await _client
+-            .SendRequestAsync(
+-                new JsonRequest
+-                {
+-                    Method = HttpMethod.Post,
+-                    Path = "foo",
+-                    Headers = _headers,
+-                    Options = options,
+-                },
+-                cancellationToken
+-            )
+-            .ConfigureAwait(false);
+-        if (response.StatusCode is >= 200 and < 400)
+-        {
+-            var responseBody = await response
+-                .Raw.Content.ReadAsStringAsync(cancellationToken)
+-                .ConfigureAwait(false);
+-            try
++        return await _client
++            .Options.ExceptionHandler.TryCatchAsync(async () =>
+             {
+-                var responseData = JsonUtils.Deserialize<Dictionary<string, object?>>(
+-                    responseBody
+-                )!;
+-                return new WithRawResponse<Dictionary<string, object?>>()
++                var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
++                    .Add(_client.Options.Headers)
++                    .Add(_client.Options.AdditionalHeaders)
++                    .Add(options?.AdditionalHeaders)
++                    .BuildAsync()
++                    .ConfigureAwait(false);
++                var response = await _client
++                    .SendRequestAsync(
++                        new JsonRequest
++                        {
++                            Method = HttpMethod.Post,
++                            Path = "foo",
++                            Headers = _headers,
++                            Options = options,
++                        },
++                        cancellationToken
++                    )
++                    .ConfigureAwait(false);
++                if (response.StatusCode is >= 200 and < 400)
+                 {
+-                    Data = responseData,
+-                    RawResponse = new RawResponse()
++                    var responseBody = await response
++                        .Raw.Content.ReadAsStringAsync(cancellationToken)
++                        .ConfigureAwait(false);
++                    try
+                     {
+-                        StatusCode = response.Raw.StatusCode,
+-                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+-                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+-                    },
+-                };
+-            }
+-            catch (JsonException e)
+-            {
+-                throw new SeedApiApiException(
+-                    "Failed to deserialize response",
+-                    response.StatusCode,
+-                    responseBody,
+-                    e
+-                );
+-            }
+-        }
+-        {
+-            var responseBody = await response
+-                .Raw.Content.ReadAsStringAsync(cancellationToken)
+-                .ConfigureAwait(false);
+-            throw new SeedApiApiException(
+-                $"Error with status code {response.StatusCode}",
+-                response.StatusCode,
+-                responseBody
+-            );
+-        }
++                        var responseData = JsonUtils.Deserialize<Dictionary<string, object?>>(
++                            responseBody
++                        )!;
++                        return new WithRawResponse<Dictionary<string, object?>>()
++                        {
++                            Data = responseData,
++                            RawResponse = new RawResponse()
++                            {
++                                StatusCode = response.Raw.StatusCode,
++                                Url =
++                                    response.Raw.RequestMessage?.RequestUri
++                                    ?? new Uri("about:blank"),
++                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
++                            },
++                        };
++                    }
++                    catch (JsonException e)
++                    {
++                        throw new SeedApiApiException(
++                            "Failed to deserialize response",
++                            response.StatusCode,
++                            responseBody,
++                            e
++                        );
++                    }
++                }
++                {
++                    var responseBody = await response
++                        .Raw.Content.ReadAsStringAsync(cancellationToken)
++                        .ConfigureAwait(false);
++                    throw new SeedApiApiException(
++                        $"Error with status code {response.StatusCode}",
++                        response.StatusCode,
++                        responseBody
++                    );
++                }
++            })
++            .ConfigureAwait(false);
+     }
+ 
+     /// <example><code>

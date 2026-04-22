@@ -1,0 +1,2929 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 0eba66302dd..e224d10f0ad 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-php-sdk",
+   "generatorVersion": "local",
++  "generatorConfig": {
++    "propertyAccess": "private"
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "ci",
+diff --git a/src/Bigunion/Types/ActiveDiamond.php b/src/Bigunion/Types/ActiveDiamond.php
+index d349a8f8c45..a558b37fc70 100644
+--- a/src/Bigunion/Types/ActiveDiamond.php
++++ b/src/Bigunion/Types/ActiveDiamond.php
+@@ -11,7 +11,7 @@ class ActiveDiamond extends JsonSerializableType
+      * @var string $value
+      */
+     #[JsonProperty('value')]
+-    public string $value;
++    private string $value;
+ 
+     /**
+      * @param array{
+@@ -24,6 +24,24 @@ class ActiveDiamond extends JsonSerializableType
+         $this->value = $values['value'];
+     }
+ 
++    /**
++     * @return string
++     */
++    public function getValue(): string
++    {
++        return $this->value;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setValue(string $value): self
++    {
++        $this->value = $value;
++        $this->_setField('value');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Bigunion/Types/AttractiveScript.php b/src/Bigunion/Types/AttractiveScript.php
+index e4cae475497..b49fce550cb 100644
+--- a/src/Bigunion/Types/AttractiveScript.php
++++ b/src/Bigunion/Types/AttractiveScript.php
+@@ -11,7 +11,7 @@ class AttractiveScript extends JsonSerializableType
+      * @var string $value
+      */
+     #[JsonProperty('value')]
+-    public string $value;
++    private string $value;
+ 
+     /**
+      * @param array{
+@@ -24,6 +24,24 @@ class AttractiveScript extends JsonSerializableType
+         $this->value = $values['value'];
+     }
+ 
++    /**
++     * @return string
++     */
++    public function getValue(): string
++    {
++        return $this->value;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setValue(string $value): self
++    {
++        $this->value = $value;
++        $this->_setField('value');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Bigunion/Types/BigUnion.php b/src/Bigunion/Types/BigUnion.php
+index 146fda428ac..1bc185a90ba 100644
+--- a/src/Bigunion/Types/BigUnion.php
++++ b/src/Bigunion/Types/BigUnion.php
+@@ -15,19 +15,19 @@ class BigUnion extends JsonSerializableType
+      * @var string $id
+      */
+     #[JsonProperty('id')]
+-    public string $id;
++    private string $id;
+ 
+     /**
+      * @var DateTime $createdAt
+      */
+     #[JsonProperty('created-at'), Date(Date::TYPE_DATETIME)]
+-    public DateTime $createdAt;
++    private DateTime $createdAt;
+ 
+     /**
+      * @var ?DateTime $archivedAt
+      */
+     #[JsonProperty('archived-at'), Date(Date::TYPE_DATETIME)]
+-    public ?DateTime $archivedAt;
++    private ?DateTime $archivedAt;
+ 
+     /**
+      * @var (
+@@ -63,7 +63,7 @@ class BigUnion extends JsonSerializableType
+      *   |'_unknown'
+      * ) $type
+      */
+-    public readonly string $type;
++    private readonly string $type;
+ 
+     /**
+      * @var (
+@@ -99,7 +99,7 @@ class BigUnion extends JsonSerializableType
+      *   |mixed
+      * ) $value
+      */
+-    public readonly mixed $value;
++    private readonly mixed $value;
+ 
+     /**
+      * @param array{
+@@ -182,6 +182,138 @@ class BigUnion extends JsonSerializableType
+         $this->value = $values['value'];
+     }
+ 
++    /**
++     * @return string
++     */
++    public function getId(): string
++    {
++        return $this->id;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setId(string $value): self
++    {
++        $this->id = $value;
++        $this->_setField('id');
++        return $this;
++    }
++
++    /**
++     * @return DateTime
++     */
++    public function getCreatedAt(): DateTime
++    {
++        return $this->createdAt;
++    }
++
++    /**
++     * @param DateTime $value
++     */
++    public function setCreatedAt(DateTime $value): self
++    {
++        $this->createdAt = $value;
++        $this->_setField('createdAt');
++        return $this;
++    }
++
++    /**
++     * @return ?DateTime
++     */
++    public function getArchivedAt(): ?DateTime
++    {
++        return $this->archivedAt;
++    }
++
++    /**
++     * @param ?DateTime $value
++     */
++    public function setArchivedAt(?DateTime $value = null): self
++    {
++        $this->archivedAt = $value;
++        $this->_setField('archivedAt');
++        return $this;
++    }
++
++    /**
++     * @return (
++     *    'normalSweet'
++     *   |'thankfulFactor'
++     *   |'jumboEnd'
++     *   |'hastyPain'
++     *   |'mistySnow'
++     *   |'distinctFailure'
++     *   |'practicalPrinciple'
++     *   |'limpingStep'
++     *   |'vibrantExcitement'
++     *   |'activeDiamond'
++     *   |'popularLimit'
++     *   |'falseMirror'
++     *   |'primaryBlock'
++     *   |'rotatingRatio'
++     *   |'colorfulCover'
++     *   |'disloyalValue'
++     *   |'gruesomeCoach'
++     *   |'totalWork'
++     *   |'harmoniousPlay'
++     *   |'uniqueStress'
++     *   |'unwillingSmoke'
++     *   |'frozenSleep'
++     *   |'diligentDeal'
++     *   |'attractiveScript'
++     *   |'hoarseMouse'
++     *   |'circularCard'
++     *   |'potableBad'
++     *   |'triangularRepair'
++     *   |'gaseousRoad'
++     *   |'_unknown'
++     * )
++     */
++    public function getType(): string
++    {
++        return $this->type;
++    }
++
++    /**
++     * @return (
++     *    NormalSweet
++     *   |ThankfulFactor
++     *   |JumboEnd
++     *   |HastyPain
++     *   |MistySnow
++     *   |DistinctFailure
++     *   |PracticalPrinciple
++     *   |LimpingStep
++     *   |VibrantExcitement
++     *   |ActiveDiamond
++     *   |PopularLimit
++     *   |FalseMirror
++     *   |PrimaryBlock
++     *   |RotatingRatio
++     *   |ColorfulCover
++     *   |DisloyalValue
++     *   |GruesomeCoach
++     *   |TotalWork
++     *   |HarmoniousPlay
++     *   |UniqueStress
++     *   |UnwillingSmoke
++     *   |FrozenSleep
++     *   |DiligentDeal
++     *   |AttractiveScript
++     *   |HoarseMouse
++     *   |CircularCard
++     *   |PotableBad
++     *   |TriangularRepair
++     *   |GaseousRoad
++     *   |mixed
++     * )
++     */
++    public function getValue(): mixed
++    {
++        return $this->value;
++    }
++
+     /**
+      * @param string $id
+      * @param DateTime $createdAt
+diff --git a/src/Bigunion/Types/CircularCard.php b/src/Bigunion/Types/CircularCard.php
+index a6af8e90fd0..37edb8a454d 100644
+--- a/src/Bigunion/Types/CircularCard.php
++++ b/src/Bigunion/Types/CircularCard.php
+@@ -11,7 +11,7 @@ class CircularCard extends JsonSerializableType
+      * @var string $value
+      */
+     #[JsonProperty('value')]
+-    public string $value;
++    private string $value;
+ 
+     /**
+      * @param array{
+@@ -24,6 +24,24 @@ class CircularCard extends JsonSerializableType
+         $this->value = $values['value'];
+     }
+ 
++    /**
++     * @return string
++     */
++    public function getValue(): string
++    {
++        return $this->value;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setValue(string $value): self
++    {
++        $this->value = $value;
++        $this->_setField('value');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Bigunion/Types/ColorfulCover.php b/src/Bigunion/Types/ColorfulCover.php
+index 9b5650f9eef..0d54bde7af1 100644
+--- a/src/Bigunion/Types/ColorfulCover.php
++++ b/src/Bigunion/Types/ColorfulCover.php
+@@ -11,7 +11,7 @@ class ColorfulCover extends JsonSerializableType
+      * @var string $value
+      */
+     #[JsonProperty('value')]
+-    public string $value;
++    private string $value;
+ 
+     /**
+      * @param array{
+@@ -24,6 +24,24 @@ class ColorfulCover extends JsonSerializableType
+         $this->value = $values['value'];
+     }
+ 
++    /**
++     * @return string
++     */
++    public function getValue(): string
++    {
++        return $this->value;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setValue(string $value): self
++    {
++        $this->value = $value;
++        $this->_setField('value');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Bigunion/Types/DiligentDeal.php b/src/Bigunion/Types/DiligentDeal.php
+index fff5b37687a..74cf3acfe4e 100644
+--- a/src/Bigunion/Types/DiligentDeal.php
++++ b/src/Bigunion/Types/DiligentDeal.php
+@@ -11,7 +11,7 @@ class DiligentDeal extends JsonSerializableType
+      * @var string $value
+      */
+     #[JsonProperty('value')]
+-    public string $value;
++    private string $value;
+ 
+     /**
+      * @param array{
+@@ -24,6 +24,24 @@ class DiligentDeal extends JsonSerializableType
+         $this->value = $values['value'];
+     }
+ 
++    /**
++     * @return string
++     */
++    public function getValue(): string
++    {
++        return $this->value;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setValue(string $value): self
++    {
++        $this->value = $value;
++        $this->_setField('value');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Bigunion/Types/DisloyalValue.php b/src/Bigunion/Types/DisloyalValue.php
+index 59c4c61d30b..c260f68908c 100644
+--- a/src/Bigunion/Types/DisloyalValue.php
++++ b/src/Bigunion/Types/DisloyalValue.php
+@@ -11,7 +11,7 @@ class DisloyalValue extends JsonSerializableType
+      * @var string $value
+      */
+     #[JsonProperty('value')]
+-    public string $value;
++    private string $value;
+ 
+     /**
+      * @param array{
+@@ -24,6 +24,24 @@ class DisloyalValue extends JsonSerializableType
+         $this->value = $values['value'];
+     }
+ 
++    /**
++     * @return string
++     */
++    public function getValue(): string
++    {
++        return $this->value;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setValue(string $value): self
++    {
++        $this->value = $value;
++        $this->_setField('value');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Bigunion/Types/DistinctFailure.php b/src/Bigunion/Types/DistinctFailure.php
+index f1d57e1f035..9495629a67f 100644
+--- a/src/Bigunion/Types/DistinctFailure.php
++++ b/src/Bigunion/Types/DistinctFailure.php
+@@ -11,7 +11,7 @@ class DistinctFailure extends JsonSerializableType
+      * @var string $value
+      */
+     #[JsonProperty('value')]
+-    public string $value;
++    private string $value;
+ 
+     /**
+      * @param array{
+@@ -24,6 +24,24 @@ class DistinctFailure extends JsonSerializableType
+         $this->value = $values['value'];
+     }
+ 
++    /**
++     * @return string
++     */
++    public function getValue(): string
++    {
++        return $this->value;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setValue(string $value): self
++    {
++        $this->value = $value;
++        $this->_setField('value');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Bigunion/Types/FalseMirror.php b/src/Bigunion/Types/FalseMirror.php
+index 28d94257908..35c879b2397 100644
+--- a/src/Bigunion/Types/FalseMirror.php
++++ b/src/Bigunion/Types/FalseMirror.php
+@@ -11,7 +11,7 @@ class FalseMirror extends JsonSerializableType
+      * @var string $value
+      */
+     #[JsonProperty('value')]
+-    public string $value;
++    private string $value;
+ 
+     /**
+      * @param array{
+@@ -24,6 +24,24 @@ class FalseMirror extends JsonSerializableType
+         $this->value = $values['value'];
+     }
+ 
++    /**
++     * @return string
++     */
++    public function getValue(): string
++    {
++        return $this->value;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setValue(string $value): self
++    {
++        $this->value = $value;
++        $this->_setField('value');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Bigunion/Types/FrozenSleep.php b/src/Bigunion/Types/FrozenSleep.php
+index a3f655d755c..7b20a9bf8a7 100644
+--- a/src/Bigunion/Types/FrozenSleep.php
++++ b/src/Bigunion/Types/FrozenSleep.php
+@@ -11,7 +11,7 @@ class FrozenSleep extends JsonSerializableType
+      * @var string $value
+      */
+     #[JsonProperty('value')]
+-    public string $value;
++    private string $value;
+ 
+     /**
+      * @param array{
+@@ -24,6 +24,24 @@ class FrozenSleep extends JsonSerializableType
+         $this->value = $values['value'];
+     }
+ 
++    /**
++     * @return string
++     */
++    public function getValue(): string
++    {
++        return $this->value;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setValue(string $value): self
++    {
++        $this->value = $value;
++        $this->_setField('value');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Bigunion/Types/GaseousRoad.php b/src/Bigunion/Types/GaseousRoad.php
+index de36b4880d3..8f186f0ef35 100644
+--- a/src/Bigunion/Types/GaseousRoad.php
++++ b/src/Bigunion/Types/GaseousRoad.php
+@@ -11,7 +11,7 @@ class GaseousRoad extends JsonSerializableType
+      * @var string $value
+      */
+     #[JsonProperty('value')]
+-    public string $value;
++    private string $value;
+ 
+     /**
+      * @param array{
+@@ -24,6 +24,24 @@ class GaseousRoad extends JsonSerializableType
+         $this->value = $values['value'];
+     }
+ 
++    /**
++     * @return string
++     */
++    public function getValue(): string
++    {
++        return $this->value;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setValue(string $value): self
++    {
++        $this->value = $value;
++        $this->_setField('value');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Bigunion/Types/GruesomeCoach.php b/src/Bigunion/Types/GruesomeCoach.php
+index 0cb48e1b729..1331a27ddb4 100644
+--- a/src/Bigunion/Types/GruesomeCoach.php
++++ b/src/Bigunion/Types/GruesomeCoach.php
+@@ -11,7 +11,7 @@ class GruesomeCoach extends JsonSerializableType
+      * @var string $value
+      */
+     #[JsonProperty('value')]
+-    public string $value;
++    private string $value;
+ 
+     /**
+      * @param array{
+@@ -24,6 +24,24 @@ class GruesomeCoach extends JsonSerializableType
+         $this->value = $values['value'];
+     }
+ 
++    /**
++     * @return string
++     */
++    public function getValue(): string
++    {
++        return $this->value;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setValue(string $value): self
++    {
++        $this->value = $value;
++        $this->_setField('value');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Bigunion/Types/HarmoniousPlay.php b/src/Bigunion/Types/HarmoniousPlay.php
+index d731330c479..f320b6b6680 100644
+--- a/src/Bigunion/Types/HarmoniousPlay.php
++++ b/src/Bigunion/Types/HarmoniousPlay.php
+@@ -11,7 +11,7 @@ class HarmoniousPlay extends JsonSerializableType
+      * @var string $value
+      */
+     #[JsonProperty('value')]
+-    public string $value;
++    private string $value;
+ 
+     /**
+      * @param array{
+@@ -24,6 +24,24 @@ class HarmoniousPlay extends JsonSerializableType
+         $this->value = $values['value'];
+     }
+ 
++    /**
++     * @return string
++     */
++    public function getValue(): string
++    {
++        return $this->value;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setValue(string $value): self
++    {
++        $this->value = $value;
++        $this->_setField('value');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Bigunion/Types/HastyPain.php b/src/Bigunion/Types/HastyPain.php
+index ffbfb817a3d..d7246f7a520 100644
+--- a/src/Bigunion/Types/HastyPain.php
++++ b/src/Bigunion/Types/HastyPain.php
+@@ -11,7 +11,7 @@ class HastyPain extends JsonSerializableType
+      * @var string $value
+      */
+     #[JsonProperty('value')]
+-    public string $value;
++    private string $value;
+ 
+     /**
+      * @param array{
+@@ -24,6 +24,24 @@ class HastyPain extends JsonSerializableType
+         $this->value = $values['value'];
+     }
+ 
++    /**
++     * @return string
++     */
++    public function getValue(): string
++    {
++        return $this->value;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setValue(string $value): self
++    {
++        $this->value = $value;
++        $this->_setField('value');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Bigunion/Types/HoarseMouse.php b/src/Bigunion/Types/HoarseMouse.php
+index 5aee1829c78..ad2d7ed616a 100644
+--- a/src/Bigunion/Types/HoarseMouse.php
++++ b/src/Bigunion/Types/HoarseMouse.php
+@@ -11,7 +11,7 @@ class HoarseMouse extends JsonSerializableType
+      * @var string $value
+      */
+     #[JsonProperty('value')]
+-    public string $value;
++    private string $value;
+ 
+     /**
+      * @param array{
+@@ -24,6 +24,24 @@ class HoarseMouse extends JsonSerializableType
+         $this->value = $values['value'];
+     }
+ 
++    /**
++     * @return string
++     */
++    public function getValue(): string
++    {
++        return $this->value;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setValue(string $value): self
++    {
++        $this->value = $value;
++        $this->_setField('value');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Bigunion/Types/JumboEnd.php b/src/Bigunion/Types/JumboEnd.php
+index fdb2a7e68e2..f941e9b4e5a 100644
+--- a/src/Bigunion/Types/JumboEnd.php
++++ b/src/Bigunion/Types/JumboEnd.php
+@@ -11,7 +11,7 @@ class JumboEnd extends JsonSerializableType
+      * @var string $value
+      */
+     #[JsonProperty('value')]
+-    public string $value;
++    private string $value;
+ 
+     /**
+      * @param array{
+@@ -24,6 +24,24 @@ class JumboEnd extends JsonSerializableType
+         $this->value = $values['value'];
+     }
+ 
++    /**
++     * @return string
++     */
++    public function getValue(): string
++    {
++        return $this->value;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setValue(string $value): self
++    {
++        $this->value = $value;
++        $this->_setField('value');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Bigunion/Types/LimpingStep.php b/src/Bigunion/Types/LimpingStep.php
+index e401a8a3520..e1990151526 100644
+--- a/src/Bigunion/Types/LimpingStep.php
++++ b/src/Bigunion/Types/LimpingStep.php
+@@ -11,7 +11,7 @@ class LimpingStep extends JsonSerializableType
+      * @var string $value
+      */
+     #[JsonProperty('value')]
+-    public string $value;
++    private string $value;
+ 
+     /**
+      * @param array{
+@@ -24,6 +24,24 @@ class LimpingStep extends JsonSerializableType
+         $this->value = $values['value'];
+     }
+ 
++    /**
++     * @return string
++     */
++    public function getValue(): string
++    {
++        return $this->value;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setValue(string $value): self
++    {
++        $this->value = $value;
++        $this->_setField('value');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Bigunion/Types/MistySnow.php b/src/Bigunion/Types/MistySnow.php
+index c0a0b8decd7..5ccfcc65b1f 100644
+--- a/src/Bigunion/Types/MistySnow.php
++++ b/src/Bigunion/Types/MistySnow.php
+@@ -11,7 +11,7 @@ class MistySnow extends JsonSerializableType
+      * @var string $value
+      */
+     #[JsonProperty('value')]
+-    public string $value;
++    private string $value;
+ 
+     /**
+      * @param array{
+@@ -24,6 +24,24 @@ class MistySnow extends JsonSerializableType
+         $this->value = $values['value'];
+     }
+ 
++    /**
++     * @return string
++     */
++    public function getValue(): string
++    {
++        return $this->value;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setValue(string $value): self
++    {
++        $this->value = $value;
++        $this->_setField('value');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Bigunion/Types/NormalSweet.php b/src/Bigunion/Types/NormalSweet.php
+index f567738a7f6..9a02beb65e9 100644
+--- a/src/Bigunion/Types/NormalSweet.php
++++ b/src/Bigunion/Types/NormalSweet.php
+@@ -11,7 +11,7 @@ class NormalSweet extends JsonSerializableType
+      * @var string $value
+      */
+     #[JsonProperty('value')]
+-    public string $value;
++    private string $value;
+ 
+     /**
+      * @param array{
+@@ -24,6 +24,24 @@ class NormalSweet extends JsonSerializableType
+         $this->value = $values['value'];
+     }
+ 
++    /**
++     * @return string
++     */
++    public function getValue(): string
++    {
++        return $this->value;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setValue(string $value): self
++    {
++        $this->value = $value;
++        $this->_setField('value');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Bigunion/Types/PopularLimit.php b/src/Bigunion/Types/PopularLimit.php
+index 2341a8e2920..f06664d56cb 100644
+--- a/src/Bigunion/Types/PopularLimit.php
++++ b/src/Bigunion/Types/PopularLimit.php
+@@ -11,7 +11,7 @@ class PopularLimit extends JsonSerializableType
+      * @var string $value
+      */
+     #[JsonProperty('value')]
+-    public string $value;
++    private string $value;
+ 
+     /**
+      * @param array{
+@@ -24,6 +24,24 @@ class PopularLimit extends JsonSerializableType
+         $this->value = $values['value'];
+     }
+ 
++    /**
++     * @return string
++     */
++    public function getValue(): string
++    {
++        return $this->value;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setValue(string $value): self
++    {
++        $this->value = $value;
++        $this->_setField('value');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Bigunion/Types/PotableBad.php b/src/Bigunion/Types/PotableBad.php
+index e24feec637b..6c6545e35a6 100644
+--- a/src/Bigunion/Types/PotableBad.php
++++ b/src/Bigunion/Types/PotableBad.php
+@@ -11,7 +11,7 @@ class PotableBad extends JsonSerializableType
+      * @var string $value
+      */
+     #[JsonProperty('value')]
+-    public string $value;
++    private string $value;
+ 
+     /**
+      * @param array{
+@@ -24,6 +24,24 @@ class PotableBad extends JsonSerializableType
+         $this->value = $values['value'];
+     }
+ 
++    /**
++     * @return string
++     */
++    public function getValue(): string
++    {
++        return $this->value;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setValue(string $value): self
++    {
++        $this->value = $value;
++        $this->_setField('value');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Bigunion/Types/PracticalPrinciple.php b/src/Bigunion/Types/PracticalPrinciple.php
+index de4e769d98a..98beba275ba 100644
+--- a/src/Bigunion/Types/PracticalPrinciple.php
++++ b/src/Bigunion/Types/PracticalPrinciple.php
+@@ -11,7 +11,7 @@ class PracticalPrinciple extends JsonSerializableType
+      * @var string $value
+      */
+     #[JsonProperty('value')]
+-    public string $value;
++    private string $value;
+ 
+     /**
+      * @param array{
+@@ -24,6 +24,24 @@ class PracticalPrinciple extends JsonSerializableType
+         $this->value = $values['value'];
+     }
+ 
++    /**
++     * @return string
++     */
++    public function getValue(): string
++    {
++        return $this->value;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setValue(string $value): self
++    {
++        $this->value = $value;
++        $this->_setField('value');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Bigunion/Types/PrimaryBlock.php b/src/Bigunion/Types/PrimaryBlock.php
+index cd65467325d..b606af7feac 100644
+--- a/src/Bigunion/Types/PrimaryBlock.php
++++ b/src/Bigunion/Types/PrimaryBlock.php
+@@ -11,7 +11,7 @@ class PrimaryBlock extends JsonSerializableType
+      * @var string $value
+      */
+     #[JsonProperty('value')]
+-    public string $value;
++    private string $value;
+ 
+     /**
+      * @param array{
+@@ -24,6 +24,24 @@ class PrimaryBlock extends JsonSerializableType
+         $this->value = $values['value'];
+     }
+ 
++    /**
++     * @return string
++     */
++    public function getValue(): string
++    {
++        return $this->value;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setValue(string $value): self
++    {
++        $this->value = $value;
++        $this->_setField('value');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Bigunion/Types/RotatingRatio.php b/src/Bigunion/Types/RotatingRatio.php
+index 03c00e20774..cad8eaf6c73 100644
+--- a/src/Bigunion/Types/RotatingRatio.php
++++ b/src/Bigunion/Types/RotatingRatio.php
+@@ -11,7 +11,7 @@ class RotatingRatio extends JsonSerializableType
+      * @var string $value
+      */
+     #[JsonProperty('value')]
+-    public string $value;
++    private string $value;
+ 
+     /**
+      * @param array{
+@@ -24,6 +24,24 @@ class RotatingRatio extends JsonSerializableType
+         $this->value = $values['value'];
+     }
+ 
++    /**
++     * @return string
++     */
++    public function getValue(): string
++    {
++        return $this->value;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setValue(string $value): self
++    {
++        $this->value = $value;
++        $this->_setField('value');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Bigunion/Types/ThankfulFactor.php b/src/Bigunion/Types/ThankfulFactor.php
+index 9bd8db71f82..f42c369f4f6 100644
+--- a/src/Bigunion/Types/ThankfulFactor.php
++++ b/src/Bigunion/Types/ThankfulFactor.php
+@@ -11,7 +11,7 @@ class ThankfulFactor extends JsonSerializableType
+      * @var string $value
+      */
+     #[JsonProperty('value')]
+-    public string $value;
++    private string $value;
+ 
+     /**
+      * @param array{
+@@ -24,6 +24,24 @@ class ThankfulFactor extends JsonSerializableType
+         $this->value = $values['value'];
+     }
+ 
++    /**
++     * @return string
++     */
++    public function getValue(): string
++    {
++        return $this->value;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setValue(string $value): self
++    {
++        $this->value = $value;
++        $this->_setField('value');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Bigunion/Types/TotalWork.php b/src/Bigunion/Types/TotalWork.php
+index 3fec61db6c7..760503660ad 100644
+--- a/src/Bigunion/Types/TotalWork.php
++++ b/src/Bigunion/Types/TotalWork.php
+@@ -11,7 +11,7 @@ class TotalWork extends JsonSerializableType
+      * @var string $value
+      */
+     #[JsonProperty('value')]
+-    public string $value;
++    private string $value;
+ 
+     /**
+      * @param array{
+@@ -24,6 +24,24 @@ class TotalWork extends JsonSerializableType
+         $this->value = $values['value'];
+     }
+ 
++    /**
++     * @return string
++     */
++    public function getValue(): string
++    {
++        return $this->value;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setValue(string $value): self
++    {
++        $this->value = $value;
++        $this->_setField('value');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Bigunion/Types/TriangularRepair.php b/src/Bigunion/Types/TriangularRepair.php
+index b066e4f0d7c..9ab58085493 100644
+--- a/src/Bigunion/Types/TriangularRepair.php
++++ b/src/Bigunion/Types/TriangularRepair.php
+@@ -11,7 +11,7 @@ class TriangularRepair extends JsonSerializableType
+      * @var string $value
+      */
+     #[JsonProperty('value')]
+-    public string $value;
++    private string $value;
+ 
+     /**
+      * @param array{
+@@ -24,6 +24,24 @@ class TriangularRepair extends JsonSerializableType
+         $this->value = $values['value'];
+     }
+ 
++    /**
++     * @return string
++     */
++    public function getValue(): string
++    {
++        return $this->value;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setValue(string $value): self
++    {
++        $this->value = $value;
++        $this->_setField('value');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Bigunion/Types/UniqueStress.php b/src/Bigunion/Types/UniqueStress.php
+index 756cd9ae616..3ef401a7b14 100644
+--- a/src/Bigunion/Types/UniqueStress.php
++++ b/src/Bigunion/Types/UniqueStress.php
+@@ -11,7 +11,7 @@ class UniqueStress extends JsonSerializableType
+      * @var string $value
+      */
+     #[JsonProperty('value')]
+-    public string $value;
++    private string $value;
+ 
+     /**
+      * @param array{
+@@ -24,6 +24,24 @@ class UniqueStress extends JsonSerializableType
+         $this->value = $values['value'];
+     }
+ 
++    /**
++     * @return string
++     */
++    public function getValue(): string
++    {
++        return $this->value;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setValue(string $value): self
++    {
++        $this->value = $value;
++        $this->_setField('value');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Bigunion/Types/UnwillingSmoke.php b/src/Bigunion/Types/UnwillingSmoke.php
+index 7660031b0a8..4419f8cb6ba 100644
+--- a/src/Bigunion/Types/UnwillingSmoke.php
++++ b/src/Bigunion/Types/UnwillingSmoke.php
+@@ -11,7 +11,7 @@ class UnwillingSmoke extends JsonSerializableType
+      * @var string $value
+      */
+     #[JsonProperty('value')]
+-    public string $value;
++    private string $value;
+ 
+     /**
+      * @param array{
+@@ -24,6 +24,24 @@ class UnwillingSmoke extends JsonSerializableType
+         $this->value = $values['value'];
+     }
+ 
++    /**
++     * @return string
++     */
++    public function getValue(): string
++    {
++        return $this->value;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setValue(string $value): self
++    {
++        $this->value = $value;
++        $this->_setField('value');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Bigunion/Types/VibrantExcitement.php b/src/Bigunion/Types/VibrantExcitement.php
+index 0752343e8d6..301b2f6e2fd 100644
+--- a/src/Bigunion/Types/VibrantExcitement.php
++++ b/src/Bigunion/Types/VibrantExcitement.php
+@@ -11,7 +11,7 @@ class VibrantExcitement extends JsonSerializableType
+      * @var string $value
+      */
+     #[JsonProperty('value')]
+-    public string $value;
++    private string $value;
+ 
+     /**
+      * @param array{
+@@ -24,6 +24,24 @@ class VibrantExcitement extends JsonSerializableType
+         $this->value = $values['value'];
+     }
+ 
++    /**
++     * @return string
++     */
++    public function getValue(): string
++    {
++        return $this->value;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setValue(string $value): self
++    {
++        $this->value = $value;
++        $this->_setField('value');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Types/Traits/Foo.php b/src/Types/Traits/Foo.php
+index 7b400d71eac..5e5321b591f 100644
+--- a/src/Types/Traits/Foo.php
++++ b/src/Types/Traits/Foo.php
+@@ -13,5 +13,23 @@ trait Foo
+      * @var string $name
+      */
+     #[JsonProperty('name')]
+-    public string $name;
++    private string $name;
++
++    /**
++     * @return string
++     */
++    public function getName(): string
++    {
++        return $this->name;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setName(string $value): self
++    {
++        $this->name = $value;
++        $this->_setField('name');
++        return $this;
++    }
+ }
+diff --git a/src/Types/Types/Bar.php b/src/Types/Types/Bar.php
+index 67fb977f3a7..4e121431ed3 100644
+--- a/src/Types/Types/Bar.php
++++ b/src/Types/Types/Bar.php
+@@ -11,7 +11,7 @@ class Bar extends JsonSerializableType
+      * @var string $name
+      */
+     #[JsonProperty('name')]
+-    public string $name;
++    private string $name;
+ 
+     /**
+      * @param array{
+@@ -24,6 +24,24 @@ class Bar extends JsonSerializableType
+         $this->name = $values['name'];
+     }
+ 
++    /**
++     * @return string
++     */
++    public function getName(): string
++    {
++        return $this->name;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setName(string $value): self
++    {
++        $this->name = $value;
++        $this->_setField('name');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Types/Types/FirstItemType.php b/src/Types/Types/FirstItemType.php
+index 809b8bac629..d9cd6399955 100644
+--- a/src/Types/Types/FirstItemType.php
++++ b/src/Types/Types/FirstItemType.php
+@@ -11,13 +11,13 @@ class FirstItemType extends JsonSerializableType
+      * @var ?'firstItemType' $type
+      */
+     #[JsonProperty('type')]
+-    public ?string $type;
++    private ?string $type;
+ 
+     /**
+      * @var string $name
+      */
+     #[JsonProperty('name')]
+-    public string $name;
++    private string $name;
+ 
+     /**
+      * @param array{
+@@ -32,6 +32,42 @@ class FirstItemType extends JsonSerializableType
+         $this->name = $values['name'];
+     }
+ 
++    /**
++     * @return ?'firstItemType'
++     */
++    public function getType(): ?string
++    {
++        return $this->type;
++    }
++
++    /**
++     * @param ?'firstItemType' $value
++     */
++    public function setType(?string $value = null): self
++    {
++        $this->type = $value;
++        $this->_setField('type');
++        return $this;
++    }
++
++    /**
++     * @return string
++     */
++    public function getName(): string
++    {
++        return $this->name;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setName(string $value): self
++    {
++        $this->name = $value;
++        $this->_setField('name');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Types/Types/Foo.php b/src/Types/Types/Foo.php
+index bc35f865d07..c628c916bd0 100644
+--- a/src/Types/Types/Foo.php
++++ b/src/Types/Types/Foo.php
+@@ -11,7 +11,7 @@ class Foo extends JsonSerializableType
+      * @var string $name
+      */
+     #[JsonProperty('name')]
+-    public string $name;
++    private string $name;
+ 
+     /**
+      * @param array{
+@@ -24,6 +24,24 @@ class Foo extends JsonSerializableType
+         $this->name = $values['name'];
+     }
+ 
++    /**
++     * @return string
++     */
++    public function getName(): string
++    {
++        return $this->name;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setName(string $value): self
++    {
++        $this->name = $value;
++        $this->_setField('name');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Types/Types/FooExtended.php b/src/Types/Types/FooExtended.php
+index 870a1a1a72b..6b273494be9 100644
+--- a/src/Types/Types/FooExtended.php
++++ b/src/Types/Types/FooExtended.php
+@@ -14,7 +14,7 @@ class FooExtended extends JsonSerializableType
+      * @var int $age
+      */
+     #[JsonProperty('age')]
+-    public int $age;
++    private int $age;
+ 
+     /**
+      * @param array{
+@@ -29,6 +29,24 @@ class FooExtended extends JsonSerializableType
+         $this->age = $values['age'];
+     }
+ 
++    /**
++     * @return int
++     */
++    public function getAge(): int
++    {
++        return $this->age;
++    }
++
++    /**
++     * @param int $value
++     */
++    public function setAge(int $value): self
++    {
++        $this->age = $value;
++        $this->_setField('age');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Types/Types/SecondItemType.php b/src/Types/Types/SecondItemType.php
+index 393552002d1..f8aefd1efad 100644
+--- a/src/Types/Types/SecondItemType.php
++++ b/src/Types/Types/SecondItemType.php
+@@ -11,13 +11,13 @@ class SecondItemType extends JsonSerializableType
+      * @var ?'secondItemType' $type
+      */
+     #[JsonProperty('type')]
+-    public ?string $type;
++    private ?string $type;
+ 
+     /**
+      * @var string $title
+      */
+     #[JsonProperty('title')]
+-    public string $title;
++    private string $title;
+ 
+     /**
+      * @param array{
+@@ -32,6 +32,42 @@ class SecondItemType extends JsonSerializableType
+         $this->title = $values['title'];
+     }
+ 
++    /**
++     * @return ?'secondItemType'
++     */
++    public function getType(): ?string
++    {
++        return $this->type;
++    }
++
++    /**
++     * @param ?'secondItemType' $value
++     */
++    public function setType(?string $value = null): self
++    {
++        $this->type = $value;
++        $this->_setField('type');
++        return $this;
++    }
++
++    /**
++     * @return string
++     */
++    public function getTitle(): string
++    {
++        return $this->title;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setTitle(string $value): self
++    {
++        $this->title = $value;
++        $this->_setField('title');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Types/Types/TypeWithOptionalMap.php b/src/Types/Types/TypeWithOptionalMap.php
+index 205c97aadbc..09bc51eb9c8 100644
+--- a/src/Types/Types/TypeWithOptionalMap.php
++++ b/src/Types/Types/TypeWithOptionalMap.php
+@@ -13,13 +13,13 @@ class TypeWithOptionalMap extends JsonSerializableType
+      * @var string $key
+      */
+     #[JsonProperty('key')]
+-    public string $key;
++    private string $key;
+ 
+     /**
+      * @var array<string, ?string> $columnValues
+      */
+     #[JsonProperty('columnValues'), ArrayType(['string' => new Union('string', 'null')])]
+-    public array $columnValues;
++    private array $columnValues;
+ 
+     /**
+      * @param array{
+@@ -34,6 +34,42 @@ class TypeWithOptionalMap extends JsonSerializableType
+         $this->columnValues = $values['columnValues'];
+     }
+ 
++    /**
++     * @return string
++     */
++    public function getKey(): string
++    {
++        return $this->key;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setKey(string $value): self
++    {
++        $this->key = $value;
++        $this->_setField('key');
++        return $this;
++    }
++
++    /**
++     * @return array<string, ?string>
++     */
++    public function getColumnValues(): array
++    {
++        return $this->columnValues;
++    }
++
++    /**
++     * @param array<string, ?string> $value
++     */
++    public function setColumnValues(array $value): self
++    {
++        $this->columnValues = $value;
++        $this->_setField('columnValues');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Types/Types/Union.php b/src/Types/Types/Union.php
+index 3e30b4dcf02..972499e9383 100644
+--- a/src/Types/Types/Union.php
++++ b/src/Types/Types/Union.php
+@@ -18,7 +18,7 @@ class Union extends JsonSerializableType
+      *   |'_unknown'
+      * ) $type
+      */
+-    public readonly string $type;
++    private readonly string $type;
+ 
+     /**
+      * @var (
+@@ -27,7 +27,7 @@ class Union extends JsonSerializableType
+      *   |mixed
+      * ) $value
+      */
+-    public readonly mixed $value;
++    private readonly mixed $value;
+ 
+     /**
+      * @param array{
+@@ -50,6 +50,30 @@ class Union extends JsonSerializableType
+         $this->value = $values['value'];
+     }
+ 
++    /**
++     * @return (
++     *    'foo'
++     *   |'bar'
++     *   |'_unknown'
++     * )
++     */
++    public function getType(): string
++    {
++        return $this->type;
++    }
++
++    /**
++     * @return (
++     *    Foo
++     *   |Bar
++     *   |mixed
++     * )
++     */
++    public function getValue(): mixed
++    {
++        return $this->value;
++    }
++
+     /**
+      * @param Foo $foo
+      * @return Union
+diff --git a/src/Types/Types/UnionWithBaseProperties.php b/src/Types/Types/UnionWithBaseProperties.php
+index 545f7d16d42..6c37f118a68 100644
+--- a/src/Types/Types/UnionWithBaseProperties.php
++++ b/src/Types/Types/UnionWithBaseProperties.php
+@@ -13,7 +13,7 @@ class UnionWithBaseProperties extends JsonSerializableType
+      * @var string $id
+      */
+     #[JsonProperty('id')]
+-    public string $id;
++    private string $id;
+ 
+     /**
+      * @var (
+@@ -23,7 +23,7 @@ class UnionWithBaseProperties extends JsonSerializableType
+      *   |'_unknown'
+      * ) $type
+      */
+-    public readonly string $type;
++    private readonly string $type;
+ 
+     /**
+      * @var (
+@@ -33,7 +33,7 @@ class UnionWithBaseProperties extends JsonSerializableType
+      *   |mixed
+      * ) $value
+      */
+-    public readonly mixed $value;
++    private readonly mixed $value;
+ 
+     /**
+      * @param array{
+@@ -60,6 +60,50 @@ class UnionWithBaseProperties extends JsonSerializableType
+         $this->value = $values['value'];
+     }
+ 
++    /**
++     * @return string
++     */
++    public function getId(): string
++    {
++        return $this->id;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setId(string $value): self
++    {
++        $this->id = $value;
++        $this->_setField('id');
++        return $this;
++    }
++
++    /**
++     * @return (
++     *    'integer'
++     *   |'string'
++     *   |'foo'
++     *   |'_unknown'
++     * )
++     */
++    public function getType(): string
++    {
++        return $this->type;
++    }
++
++    /**
++     * @return (
++     *    int
++     *   |string
++     *   |Foo
++     *   |mixed
++     * )
++     */
++    public function getValue(): mixed
++    {
++        return $this->value;
++    }
++
+     /**
+      * @param string $id
+      * @param int $integer
+diff --git a/src/Types/Types/UnionWithDiscriminant.php b/src/Types/Types/UnionWithDiscriminant.php
+index 12a0ec0e6c6..7e99264021e 100644
+--- a/src/Types/Types/UnionWithDiscriminant.php
++++ b/src/Types/Types/UnionWithDiscriminant.php
+@@ -15,7 +15,7 @@ class UnionWithDiscriminant extends JsonSerializableType
+      *   |'_unknown'
+      * ) $type
+      */
+-    public readonly string $type;
++    private readonly string $type;
+ 
+     /**
+      * @var (
+@@ -24,7 +24,7 @@ class UnionWithDiscriminant extends JsonSerializableType
+      *   |mixed
+      * ) $value
+      */
+-    public readonly mixed $value;
++    private readonly mixed $value;
+ 
+     /**
+      * @param array{
+@@ -47,6 +47,30 @@ class UnionWithDiscriminant extends JsonSerializableType
+         $this->value = $values['value'];
+     }
+ 
++    /**
++     * @return (
++     *    'foo'
++     *   |'bar'
++     *   |'_unknown'
++     * )
++     */
++    public function getType(): string
++    {
++        return $this->type;
++    }
++
++    /**
++     * @return (
++     *    Foo
++     *   |Bar
++     *   |mixed
++     * )
++     */
++    public function getValue(): mixed
++    {
++        return $this->value;
++    }
++
+     /**
+      * @param Foo $foo
+      * @return UnionWithDiscriminant
+diff --git a/src/Types/Types/UnionWithDuplicatePrimitive.php b/src/Types/Types/UnionWithDuplicatePrimitive.php
+index 188842b2813..f8eb50c75ad 100644
+--- a/src/Types/Types/UnionWithDuplicatePrimitive.php
++++ b/src/Types/Types/UnionWithDuplicatePrimitive.php
+@@ -17,7 +17,7 @@ class UnionWithDuplicatePrimitive extends JsonSerializableType
+      *   |'_unknown'
+      * ) $type
+      */
+-    public readonly string $type;
++    private readonly string $type;
+ 
+     /**
+      * @var (
+@@ -26,7 +26,7 @@ class UnionWithDuplicatePrimitive extends JsonSerializableType
+      *   |mixed
+      * ) $value
+      */
+-    public readonly mixed $value;
++    private readonly mixed $value;
+ 
+     /**
+      * @param array{
+@@ -51,6 +51,32 @@ class UnionWithDuplicatePrimitive extends JsonSerializableType
+         $this->value = $values['value'];
+     }
+ 
++    /**
++     * @return (
++     *    'integer1'
++     *   |'integer2'
++     *   |'string1'
++     *   |'string2'
++     *   |'_unknown'
++     * )
++     */
++    public function getType(): string
++    {
++        return $this->type;
++    }
++
++    /**
++     * @return (
++     *    int
++     *   |string
++     *   |mixed
++     * )
++     */
++    public function getValue(): mixed
++    {
++        return $this->value;
++    }
++
+     /**
+      * @param int $integer1
+      * @return UnionWithDuplicatePrimitive
+diff --git a/src/Types/Types/UnionWithDuplicateTypes.php b/src/Types/Types/UnionWithDuplicateTypes.php
+index 84dbbf00e1e..3ffc3ab46ca 100644
+--- a/src/Types/Types/UnionWithDuplicateTypes.php
++++ b/src/Types/Types/UnionWithDuplicateTypes.php
+@@ -15,7 +15,7 @@ class UnionWithDuplicateTypes extends JsonSerializableType
+      *   |'_unknown'
+      * ) $type
+      */
+-    public readonly string $type;
++    private readonly string $type;
+ 
+     /**
+      * @var (
+@@ -23,7 +23,7 @@ class UnionWithDuplicateTypes extends JsonSerializableType
+      *   |mixed
+      * ) $value
+      */
+-    public readonly mixed $value;
++    private readonly mixed $value;
+ 
+     /**
+      * @param array{
+@@ -45,6 +45,29 @@ class UnionWithDuplicateTypes extends JsonSerializableType
+         $this->value = $values['value'];
+     }
+ 
++    /**
++     * @return (
++     *    'foo1'
++     *   |'foo2'
++     *   |'_unknown'
++     * )
++     */
++    public function getType(): string
++    {
++        return $this->type;
++    }
++
++    /**
++     * @return (
++     *    Foo
++     *   |mixed
++     * )
++     */
++    public function getValue(): mixed
++    {
++        return $this->value;
++    }
++
+     /**
+      * @param Foo $foo1
+      * @return UnionWithDuplicateTypes
+diff --git a/src/Types/Types/UnionWithDuplicativeDiscriminants.php b/src/Types/Types/UnionWithDuplicativeDiscriminants.php
+index 55cd4f13c1b..7777581a774 100644
+--- a/src/Types/Types/UnionWithDuplicativeDiscriminants.php
++++ b/src/Types/Types/UnionWithDuplicativeDiscriminants.php
+@@ -15,7 +15,7 @@ class UnionWithDuplicativeDiscriminants extends JsonSerializableType
+      *   |'_unknown'
+      * ) $type
+      */
+-    public readonly string $type;
++    private readonly string $type;
+ 
+     /**
+      * @var (
+@@ -24,7 +24,7 @@ class UnionWithDuplicativeDiscriminants extends JsonSerializableType
+      *   |mixed
+      * ) $value
+      */
+-    public readonly mixed $value;
++    private readonly mixed $value;
+ 
+     /**
+      * @param array{
+@@ -47,6 +47,30 @@ class UnionWithDuplicativeDiscriminants extends JsonSerializableType
+         $this->value = $values['value'];
+     }
+ 
++    /**
++     * @return (
++     *    'firstItemType'
++     *   |'secondItemType'
++     *   |'_unknown'
++     * )
++     */
++    public function getType(): string
++    {
++        return $this->type;
++    }
++
++    /**
++     * @return (
++     *    FirstItemType
++     *   |SecondItemType
++     *   |mixed
++     * )
++     */
++    public function getValue(): mixed
++    {
++        return $this->value;
++    }
++
+     /**
+      * @param FirstItemType $firstItemType
+      * @return UnionWithDuplicativeDiscriminants
+diff --git a/src/Types/Types/UnionWithLiteral.php b/src/Types/Types/UnionWithLiteral.php
+index 233c78542c0..1fe5d8f98eb 100644
+--- a/src/Types/Types/UnionWithLiteral.php
++++ b/src/Types/Types/UnionWithLiteral.php
+@@ -13,7 +13,7 @@ class UnionWithLiteral extends JsonSerializableType
+      * @var 'base' $base
+      */
+     #[JsonProperty('base')]
+-    public string $base;
++    private string $base;
+ 
+     /**
+      * @var (
+@@ -21,7 +21,7 @@ class UnionWithLiteral extends JsonSerializableType
+      *   |'_unknown'
+      * ) $type
+      */
+-    public readonly string $type;
++    private readonly string $type;
+ 
+     /**
+      * @var (
+@@ -29,7 +29,7 @@ class UnionWithLiteral extends JsonSerializableType
+      *   |mixed
+      * ) $value
+      */
+-    public readonly mixed $value;
++    private readonly mixed $value;
+ 
+     /**
+      * @param array{
+@@ -52,6 +52,46 @@ class UnionWithLiteral extends JsonSerializableType
+         $this->value = $values['value'];
+     }
+ 
++    /**
++     * @return 'base'
++     */
++    public function getBase(): string
++    {
++        return $this->base;
++    }
++
++    /**
++     * @param 'base' $value
++     */
++    public function setBase(string $value): self
++    {
++        $this->base = $value;
++        $this->_setField('base');
++        return $this;
++    }
++
++    /**
++     * @return (
++     *    'fern'
++     *   |'_unknown'
++     * )
++     */
++    public function getType(): string
++    {
++        return $this->type;
++    }
++
++    /**
++     * @return (
++     *    'fern'
++     *   |mixed
++     * )
++     */
++    public function getValue(): mixed
++    {
++        return $this->value;
++    }
++
+     /**
+      * @param 'base' $base
+      * @param 'fern' $fern
+diff --git a/src/Types/Types/UnionWithMultipleNoProperties.php b/src/Types/Types/UnionWithMultipleNoProperties.php
+index 351b56a90bf..07340e32270 100644
+--- a/src/Types/Types/UnionWithMultipleNoProperties.php
++++ b/src/Types/Types/UnionWithMultipleNoProperties.php
+@@ -16,7 +16,7 @@ class UnionWithMultipleNoProperties extends JsonSerializableType
+      *   |'_unknown'
+      * ) $type
+      */
+-    public readonly string $type;
++    private readonly string $type;
+ 
+     /**
+      * @var (
+@@ -25,7 +25,7 @@ class UnionWithMultipleNoProperties extends JsonSerializableType
+      *   |mixed
+      * ) $value
+      */
+-    public readonly mixed $value;
++    private readonly mixed $value;
+ 
+     /**
+      * @param array{
+@@ -49,6 +49,31 @@ class UnionWithMultipleNoProperties extends JsonSerializableType
+         $this->value = $values['value'];
+     }
+ 
++    /**
++     * @return (
++     *    'foo'
++     *   |'empty1'
++     *   |'empty2'
++     *   |'_unknown'
++     * )
++     */
++    public function getType(): string
++    {
++        return $this->type;
++    }
++
++    /**
++     * @return (
++     *    Foo
++     *   |null
++     *   |mixed
++     * )
++     */
++    public function getValue(): mixed
++    {
++        return $this->value;
++    }
++
+     /**
+      * @param Foo $foo
+      * @return UnionWithMultipleNoProperties
+diff --git a/src/Types/Types/UnionWithNoProperties.php b/src/Types/Types/UnionWithNoProperties.php
+index 025656a3dbb..ca17ccc6985 100644
+--- a/src/Types/Types/UnionWithNoProperties.php
++++ b/src/Types/Types/UnionWithNoProperties.php
+@@ -15,7 +15,7 @@ class UnionWithNoProperties extends JsonSerializableType
+      *   |'_unknown'
+      * ) $type
+      */
+-    public readonly string $type;
++    private readonly string $type;
+ 
+     /**
+      * @var (
+@@ -24,7 +24,7 @@ class UnionWithNoProperties extends JsonSerializableType
+      *   |mixed
+      * ) $value
+      */
+-    public readonly mixed $value;
++    private readonly mixed $value;
+ 
+     /**
+      * @param array{
+@@ -47,6 +47,30 @@ class UnionWithNoProperties extends JsonSerializableType
+         $this->value = $values['value'];
+     }
+ 
++    /**
++     * @return (
++     *    'foo'
++     *   |'empty'
++     *   |'_unknown'
++     * )
++     */
++    public function getType(): string
++    {
++        return $this->type;
++    }
++
++    /**
++     * @return (
++     *    Foo
++     *   |null
++     *   |mixed
++     * )
++     */
++    public function getValue(): mixed
++    {
++        return $this->value;
++    }
++
+     /**
+      * @param Foo $foo
+      * @return UnionWithNoProperties
+diff --git a/src/Types/Types/UnionWithNullableReference.php b/src/Types/Types/UnionWithNullableReference.php
+index ff968b2363c..e96dc143cca 100644
+--- a/src/Types/Types/UnionWithNullableReference.php
++++ b/src/Types/Types/UnionWithNullableReference.php
+@@ -15,7 +15,7 @@ class UnionWithNullableReference extends JsonSerializableType
+      *   |'_unknown'
+      * ) $type
+      */
+-    public readonly string $type;
++    private readonly string $type;
+ 
+     /**
+      * @var (
+@@ -25,7 +25,7 @@ class UnionWithNullableReference extends JsonSerializableType
+      *   |null
+      * ) $value
+      */
+-    public readonly mixed $value;
++    private readonly mixed $value;
+ 
+     /**
+      * @param array{
+@@ -49,6 +49,31 @@ class UnionWithNullableReference extends JsonSerializableType
+         $this->value = $values['value'];
+     }
+ 
++    /**
++     * @return (
++     *    'foo'
++     *   |'bar'
++     *   |'_unknown'
++     * )
++     */
++    public function getType(): string
++    {
++        return $this->type;
++    }
++
++    /**
++     * @return (
++     *    Foo
++     *   |Bar
++     *   |mixed
++     *   |null
++     * )
++     */
++    public function getValue(): mixed
++    {
++        return $this->value;
++    }
++
+     /**
+      * @param ?Foo $foo
+      * @return UnionWithNullableReference
+diff --git a/src/Types/Types/UnionWithOptionalReference.php b/src/Types/Types/UnionWithOptionalReference.php
+index d1c40bf2c01..08c2224e677 100644
+--- a/src/Types/Types/UnionWithOptionalReference.php
++++ b/src/Types/Types/UnionWithOptionalReference.php
+@@ -15,7 +15,7 @@ class UnionWithOptionalReference extends JsonSerializableType
+      *   |'_unknown'
+      * ) $type
+      */
+-    public readonly string $type;
++    private readonly string $type;
+ 
+     /**
+      * @var (
+@@ -25,7 +25,7 @@ class UnionWithOptionalReference extends JsonSerializableType
+      *   |null
+      * ) $value
+      */
+-    public readonly mixed $value;
++    private readonly mixed $value;
+ 
+     /**
+      * @param array{
+@@ -49,6 +49,31 @@ class UnionWithOptionalReference extends JsonSerializableType
+         $this->value = $values['value'];
+     }
+ 
++    /**
++     * @return (
++     *    'foo'
++     *   |'bar'
++     *   |'_unknown'
++     * )
++     */
++    public function getType(): string
++    {
++        return $this->type;
++    }
++
++    /**
++     * @return (
++     *    Foo
++     *   |Bar
++     *   |mixed
++     *   |null
++     * )
++     */
++    public function getValue(): mixed
++    {
++        return $this->value;
++    }
++
+     /**
+      * @param ?Foo $foo
+      * @return UnionWithOptionalReference
+diff --git a/src/Types/Types/UnionWithOptionalTime.php b/src/Types/Types/UnionWithOptionalTime.php
+index 98db6869d00..b883f605e52 100644
+--- a/src/Types/Types/UnionWithOptionalTime.php
++++ b/src/Types/Types/UnionWithOptionalTime.php
+@@ -17,7 +17,7 @@ class UnionWithOptionalTime extends JsonSerializableType
+      *   |'_unknown'
+      * ) $type
+      */
+-    public readonly string $type;
++    private readonly string $type;
+ 
+     /**
+      * @var (
+@@ -26,7 +26,7 @@ class UnionWithOptionalTime extends JsonSerializableType
+      *   |null
+      * ) $value
+      */
+-    public readonly mixed $value;
++    private readonly mixed $value;
+ 
+     /**
+      * @param array{
+@@ -49,6 +49,30 @@ class UnionWithOptionalTime extends JsonSerializableType
+         $this->value = $values['value'];
+     }
+ 
++    /**
++     * @return (
++     *    'date'
++     *   |'datetime'
++     *   |'_unknown'
++     * )
++     */
++    public function getType(): string
++    {
++        return $this->type;
++    }
++
++    /**
++     * @return (
++     *    DateTime
++     *   |mixed
++     *   |null
++     * )
++     */
++    public function getValue(): mixed
++    {
++        return $this->value;
++    }
++
+     /**
+      * @param ?DateTime $date
+      * @return UnionWithOptionalTime
+diff --git a/src/Types/Types/UnionWithPrimitive.php b/src/Types/Types/UnionWithPrimitive.php
+index 29046014923..f65cd71a97a 100644
+--- a/src/Types/Types/UnionWithPrimitive.php
++++ b/src/Types/Types/UnionWithPrimitive.php
+@@ -15,7 +15,7 @@ class UnionWithPrimitive extends JsonSerializableType
+      *   |'_unknown'
+      * ) $type
+      */
+-    public readonly string $type;
++    private readonly string $type;
+ 
+     /**
+      * @var (
+@@ -24,7 +24,7 @@ class UnionWithPrimitive extends JsonSerializableType
+      *   |mixed
+      * ) $value
+      */
+-    public readonly mixed $value;
++    private readonly mixed $value;
+ 
+     /**
+      * @param array{
+@@ -47,6 +47,30 @@ class UnionWithPrimitive extends JsonSerializableType
+         $this->value = $values['value'];
+     }
+ 
++    /**
++     * @return (
++     *    'integer'
++     *   |'string'
++     *   |'_unknown'
++     * )
++     */
++    public function getType(): string
++    {
++        return $this->type;
++    }
++
++    /**
++     * @return (
++     *    int
++     *   |string
++     *   |mixed
++     * )
++     */
++    public function getValue(): mixed
++    {
++        return $this->value;
++    }
++
+     /**
+      * @param int $integer
+      * @return UnionWithPrimitive
+diff --git a/src/Types/Types/UnionWithSameNumberTypes.php b/src/Types/Types/UnionWithSameNumberTypes.php
+index 6deb07c36c1..de4d6c21640 100644
+--- a/src/Types/Types/UnionWithSameNumberTypes.php
++++ b/src/Types/Types/UnionWithSameNumberTypes.php
+@@ -16,7 +16,7 @@ class UnionWithSameNumberTypes extends JsonSerializableType
+      *   |'_unknown'
+      * ) $type
+      */
+-    public readonly string $type;
++    private readonly string $type;
+ 
+     /**
+      * @var (
+@@ -25,7 +25,7 @@ class UnionWithSameNumberTypes extends JsonSerializableType
+      *   |mixed
+      * ) $value
+      */
+-    public readonly mixed $value;
++    private readonly mixed $value;
+ 
+     /**
+      * @param array{
+@@ -49,6 +49,31 @@ class UnionWithSameNumberTypes extends JsonSerializableType
+         $this->value = $values['value'];
+     }
+ 
++    /**
++     * @return (
++     *    'positiveInt'
++     *   |'negativeInt'
++     *   |'anyNumber'
++     *   |'_unknown'
++     * )
++     */
++    public function getType(): string
++    {
++        return $this->type;
++    }
++
++    /**
++     * @return (
++     *    int
++     *   |float
++     *   |mixed
++     * )
++     */
++    public function getValue(): mixed
++    {
++        return $this->value;
++    }
++
+     /**
+      * @param int $positiveInt
+      * @return UnionWithSameNumberTypes
+diff --git a/src/Types/Types/UnionWithSameStringTypes.php b/src/Types/Types/UnionWithSameStringTypes.php
+index 268ca8d3c7e..2edd7246436 100644
+--- a/src/Types/Types/UnionWithSameStringTypes.php
++++ b/src/Types/Types/UnionWithSameStringTypes.php
+@@ -16,7 +16,7 @@ class UnionWithSameStringTypes extends JsonSerializableType
+      *   |'_unknown'
+      * ) $type
+      */
+-    public readonly string $type;
++    private readonly string $type;
+ 
+     /**
+      * @var (
+@@ -24,7 +24,7 @@ class UnionWithSameStringTypes extends JsonSerializableType
+      *   |mixed
+      * ) $value
+      */
+-    public readonly mixed $value;
++    private readonly mixed $value;
+ 
+     /**
+      * @param array{
+@@ -47,6 +47,30 @@ class UnionWithSameStringTypes extends JsonSerializableType
+         $this->value = $values['value'];
+     }
+ 
++    /**
++     * @return (
++     *    'customFormat'
++     *   |'regularString'
++     *   |'patternString'
++     *   |'_unknown'
++     * )
++     */
++    public function getType(): string
++    {
++        return $this->type;
++    }
++
++    /**
++     * @return (
++     *    string
++     *   |mixed
++     * )
++     */
++    public function getValue(): mixed
++    {
++        return $this->value;
++    }
++
+     /**
+      * @param string $customFormat
+      * @return UnionWithSameStringTypes
+diff --git a/src/Types/Types/UnionWithSingleElement.php b/src/Types/Types/UnionWithSingleElement.php
+index 63cb0e427d9..7ad629a4bbe 100644
+--- a/src/Types/Types/UnionWithSingleElement.php
++++ b/src/Types/Types/UnionWithSingleElement.php
+@@ -14,7 +14,7 @@ class UnionWithSingleElement extends JsonSerializableType
+      *   |'_unknown'
+      * ) $type
+      */
+-    public readonly string $type;
++    private readonly string $type;
+ 
+     /**
+      * @var (
+@@ -22,7 +22,7 @@ class UnionWithSingleElement extends JsonSerializableType
+      *   |mixed
+      * ) $value
+      */
+-    public readonly mixed $value;
++    private readonly mixed $value;
+ 
+     /**
+      * @param array{
+@@ -43,6 +43,28 @@ class UnionWithSingleElement extends JsonSerializableType
+         $this->value = $values['value'];
+     }
+ 
++    /**
++     * @return (
++     *    'foo'
++     *   |'_unknown'
++     * )
++     */
++    public function getType(): string
++    {
++        return $this->type;
++    }
++
++    /**
++     * @return (
++     *    Foo
++     *   |mixed
++     * )
++     */
++    public function getValue(): mixed
++    {
++        return $this->value;
++    }
++
+     /**
+      * @param Foo $foo
+      * @return UnionWithSingleElement
+diff --git a/src/Types/Types/UnionWithSubTypes.php b/src/Types/Types/UnionWithSubTypes.php
+index f3b99d8e2bc..8c8f5cd502f 100644
+--- a/src/Types/Types/UnionWithSubTypes.php
++++ b/src/Types/Types/UnionWithSubTypes.php
+@@ -15,7 +15,7 @@ class UnionWithSubTypes extends JsonSerializableType
+      *   |'_unknown'
+      * ) $type
+      */
+-    public readonly string $type;
++    private readonly string $type;
+ 
+     /**
+      * @var (
+@@ -24,7 +24,7 @@ class UnionWithSubTypes extends JsonSerializableType
+      *   |mixed
+      * ) $value
+      */
+-    public readonly mixed $value;
++    private readonly mixed $value;
+ 
+     /**
+      * @param array{
+@@ -47,6 +47,30 @@ class UnionWithSubTypes extends JsonSerializableType
+         $this->value = $values['value'];
+     }
+ 
++    /**
++     * @return (
++     *    'foo'
++     *   |'fooExtended'
++     *   |'_unknown'
++     * )
++     */
++    public function getType(): string
++    {
++        return $this->type;
++    }
++
++    /**
++     * @return (
++     *    Foo
++     *   |FooExtended
++     *   |mixed
++     * )
++     */
++    public function getValue(): mixed
++    {
++        return $this->value;
++    }
++
+     /**
+      * @param Foo $foo
+      * @return UnionWithSubTypes
+diff --git a/src/Types/Types/UnionWithTime.php b/src/Types/Types/UnionWithTime.php
+index 7f6376e4955..83eb95faea5 100644
+--- a/src/Types/Types/UnionWithTime.php
++++ b/src/Types/Types/UnionWithTime.php
+@@ -18,7 +18,7 @@ class UnionWithTime extends JsonSerializableType
+      *   |'_unknown'
+      * ) $type
+      */
+-    public readonly string $type;
++    private readonly string $type;
+ 
+     /**
+      * @var (
+@@ -27,7 +27,7 @@ class UnionWithTime extends JsonSerializableType
+      *   |mixed
+      * ) $value
+      */
+-    public readonly mixed $value;
++    private readonly mixed $value;
+ 
+     /**
+      * @param array{
+@@ -51,6 +51,31 @@ class UnionWithTime extends JsonSerializableType
+         $this->value = $values['value'];
+     }
+ 
++    /**
++     * @return (
++     *    'value'
++     *   |'date'
++     *   |'datetime'
++     *   |'_unknown'
++     * )
++     */
++    public function getType(): string
++    {
++        return $this->type;
++    }
++
++    /**
++     * @return (
++     *    int
++     *   |DateTime
++     *   |mixed
++     * )
++     */
++    public function getValue(): mixed
++    {
++        return $this->value;
++    }
++
+     /**
+      * @param int $value
+      * @return UnionWithTime
+diff --git a/src/Types/Types/UnionWithoutKey.php b/src/Types/Types/UnionWithoutKey.php
+index a91c9824095..4aadfad7511 100644
+--- a/src/Types/Types/UnionWithoutKey.php
++++ b/src/Types/Types/UnionWithoutKey.php
+@@ -15,7 +15,7 @@ class UnionWithoutKey extends JsonSerializableType
+      *   |'_unknown'
+      * ) $type
+      */
+-    public readonly string $type;
++    private readonly string $type;
+ 
+     /**
+      * @var (
+@@ -24,7 +24,7 @@ class UnionWithoutKey extends JsonSerializableType
+      *   |mixed
+      * ) $value
+      */
+-    public readonly mixed $value;
++    private readonly mixed $value;
+ 
+     /**
+      * @param array{
+@@ -47,6 +47,30 @@ class UnionWithoutKey extends JsonSerializableType
+         $this->value = $values['value'];
+     }
+ 
++    /**
++     * @return (
++     *    'foo'
++     *   |'bar'
++     *   |'_unknown'
++     * )
++     */
++    public function getType(): string
++    {
++        return $this->type;
++    }
++
++    /**
++     * @return (
++     *    Foo
++     *   |Bar
++     *   |mixed
++     * )
++     */
++    public function getValue(): mixed
++    {
++        return $this->value;
++    }
++
+     /**
+      * @param Foo $foo
+      * @return UnionWithoutKey
+diff --git a/src/Union/Types/Circle.php b/src/Union/Types/Circle.php
+index ee064d222ca..ba27ebd3ab6 100644
+--- a/src/Union/Types/Circle.php
++++ b/src/Union/Types/Circle.php
+@@ -11,7 +11,7 @@ class Circle extends JsonSerializableType
+      * @var float $radius
+      */
+     #[JsonProperty('radius')]
+-    public float $radius;
++    private float $radius;
+ 
+     /**
+      * @param array{
+@@ -24,6 +24,24 @@ class Circle extends JsonSerializableType
+         $this->radius = $values['radius'];
+     }
+ 
++    /**
++     * @return float
++     */
++    public function getRadius(): float
++    {
++        return $this->radius;
++    }
++
++    /**
++     * @param float $value
++     */
++    public function setRadius(float $value): self
++    {
++        $this->radius = $value;
++        $this->_setField('radius');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Union/Types/GetShapeRequest.php b/src/Union/Types/GetShapeRequest.php
+index 5936f8fc45c..f1a2cee6be0 100644
+--- a/src/Union/Types/GetShapeRequest.php
++++ b/src/Union/Types/GetShapeRequest.php
+@@ -11,7 +11,7 @@ class GetShapeRequest extends JsonSerializableType
+      * @var string $id
+      */
+     #[JsonProperty('id')]
+-    public string $id;
++    private string $id;
+ 
+     /**
+      * @param array{
+@@ -24,6 +24,24 @@ class GetShapeRequest extends JsonSerializableType
+         $this->id = $values['id'];
+     }
+ 
++    /**
++     * @return string
++     */
++    public function getId(): string
++    {
++        return $this->id;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setId(string $value): self
++    {
++        $this->id = $value;
++        $this->_setField('id');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Union/Types/Shape.php b/src/Union/Types/Shape.php
+index b02c6076970..3595959f98c 100644
+--- a/src/Union/Types/Shape.php
++++ b/src/Union/Types/Shape.php
+@@ -13,7 +13,7 @@ class Shape extends JsonSerializableType
+      * @var string $id
+      */
+     #[JsonProperty('id')]
+-    public string $id;
++    private string $id;
+ 
+     /**
+      * @var (
+@@ -22,7 +22,7 @@ class Shape extends JsonSerializableType
+      *   |'_unknown'
+      * ) $type
+      */
+-    public readonly string $type;
++    private readonly string $type;
+ 
+     /**
+      * @var (
+@@ -31,7 +31,7 @@ class Shape extends JsonSerializableType
+      *   |mixed
+      * ) $value
+      */
+-    public readonly mixed $value;
++    private readonly mixed $value;
+ 
+     /**
+      * @param array{
+@@ -56,6 +56,48 @@ class Shape extends JsonSerializableType
+         $this->value = $values['value'];
+     }
+ 
++    /**
++     * @return string
++     */
++    public function getId(): string
++    {
++        return $this->id;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setId(string $value): self
++    {
++        $this->id = $value;
++        $this->_setField('id');
++        return $this;
++    }
++
++    /**
++     * @return (
++     *    'circle'
++     *   |'square'
++     *   |'_unknown'
++     * )
++     */
++    public function getType(): string
++    {
++        return $this->type;
++    }
++
++    /**
++     * @return (
++     *    Circle
++     *   |Square
++     *   |mixed
++     * )
++     */
++    public function getValue(): mixed
++    {
++        return $this->value;
++    }
++
+     /**
+      * @param string $id
+      * @param Circle $circle
+diff --git a/src/Union/Types/Square.php b/src/Union/Types/Square.php
+index 0385f38f014..9dd005d2256 100644
+--- a/src/Union/Types/Square.php
++++ b/src/Union/Types/Square.php
+@@ -11,7 +11,7 @@ class Square extends JsonSerializableType
+      * @var float $length
+      */
+     #[JsonProperty('length')]
+-    public float $length;
++    private float $length;
+ 
+     /**
+      * @param array{
+@@ -24,6 +24,24 @@ class Square extends JsonSerializableType
+         $this->length = $values['length'];
+     }
+ 
++    /**
++     * @return float
++     */
++    public function getLength(): float
++    {
++        return $this->length;
++    }
++
++    /**
++     * @param float $value
++     */
++    public function setLength(float $value): self
++    {
++        $this->length = $value;
++        $this->_setField('length');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Union/Types/WithName.php b/src/Union/Types/WithName.php
+index 109ff5d2952..20c1cefd428 100644
+--- a/src/Union/Types/WithName.php
++++ b/src/Union/Types/WithName.php
+@@ -11,7 +11,7 @@ class WithName extends JsonSerializableType
+      * @var string $name
+      */
+     #[JsonProperty('name')]
+-    public string $name;
++    private string $name;
+ 
+     /**
+      * @param array{
+@@ -24,6 +24,24 @@ class WithName extends JsonSerializableType
+         $this->name = $values['name'];
+     }
+ 
++    /**
++     * @return string
++     */
++    public function getName(): string
++    {
++        return $this->name;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setName(string $value): self
++    {
++        $this->name = $value;
++        $this->_setField('name');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */

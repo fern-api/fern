@@ -1,0 +1,604 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 2ecd82f71ab..3ff8b31119a 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,10 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-python-sdk",
+   "generatorVersion": "local",
++  "generatorConfig": {
++    "exclude_types_from_init_exports": true,
++    "use_typeddict_requests": true
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "ci",
+diff --git a/src/seed/__init__.py b/src/seed/__init__.py
+index 5d61229d7b4..34ebecbc361 100644
+--- a/src/seed/__init__.py
++++ b/src/seed/__init__.py
+@@ -6,22 +6,15 @@ import typing
+ from importlib import import_module
+ 
+ if typing.TYPE_CHECKING:
+-    from .types import Id
+     from . import organization, user
+     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
+     from .client import AsyncSeedMixedFileDirectory, SeedMixedFileDirectory
+-    from .organization import CreateOrganizationRequest, Organization
+-    from .user import User
+     from .version import __version__
+ _dynamic_imports: typing.Dict[str, str] = {
+     "AsyncSeedMixedFileDirectory": ".client",
+-    "CreateOrganizationRequest": ".organization",
+     "DefaultAioHttpClient": "._default_clients",
+     "DefaultAsyncHttpxClient": "._default_clients",
+-    "Id": ".types",
+-    "Organization": ".organization",
+     "SeedMixedFileDirectory": ".client",
+-    "User": ".user",
+     "__version__": ".version",
+     "organization": ".organization",
+     "user": ".user",
+@@ -51,13 +44,9 @@ def __dir__():
+ 
+ __all__ = [
+     "AsyncSeedMixedFileDirectory",
+-    "CreateOrganizationRequest",
+     "DefaultAioHttpClient",
+     "DefaultAsyncHttpxClient",
+-    "Id",
+-    "Organization",
+     "SeedMixedFileDirectory",
+-    "User",
+     "__version__",
+     "organization",
+     "user",
+diff --git a/src/seed/core/__init__.py b/src/seed/core/__init__.py
+index 5bc159a110f..0fb6a372434 100644
+--- a/src/seed/core/__init__.py
++++ b/src/seed/core/__init__.py
+@@ -6,65 +6,8 @@ import typing
+ from importlib import import_module
+ 
+ if typing.TYPE_CHECKING:
+-    from .api_error import ApiError
+-    from .client_wrapper import AsyncClientWrapper, BaseClientWrapper, SyncClientWrapper
+-    from .datetime_utils import Rfc2822DateTime, parse_rfc2822_datetime, serialize_datetime
+-    from .file import File, convert_file_dict_to_httpx_tuples, with_content_type
+-    from .http_client import AsyncHttpClient, HttpClient
+-    from .http_response import AsyncHttpResponse, HttpResponse
+-    from .jsonable_encoder import encode_path_param, jsonable_encoder
+-    from .logging import ConsoleLogger, ILogger, LogConfig, LogLevel, Logger, create_logger
+-    from .parse_error import ParsingError
+-    from .pydantic_utilities import (
+-        IS_PYDANTIC_V2,
+-        UniversalBaseModel,
+-        UniversalRootModel,
+-        parse_obj_as,
+-        universal_field_validator,
+-        universal_root_validator,
+-        update_forward_refs,
+-    )
+-    from .query_encoder import encode_query
+-    from .remove_none_from_dict import remove_none_from_dict
+-    from .request_options import RequestOptions
+-    from .serialization import FieldMetadata, convert_and_respect_annotation_metadata
+-_dynamic_imports: typing.Dict[str, str] = {
+-    "ApiError": ".api_error",
+-    "AsyncClientWrapper": ".client_wrapper",
+-    "AsyncHttpClient": ".http_client",
+-    "AsyncHttpResponse": ".http_response",
+-    "BaseClientWrapper": ".client_wrapper",
+-    "ConsoleLogger": ".logging",
+-    "FieldMetadata": ".serialization",
+-    "File": ".file",
+-    "HttpClient": ".http_client",
+-    "HttpResponse": ".http_response",
+-    "ILogger": ".logging",
+-    "IS_PYDANTIC_V2": ".pydantic_utilities",
+-    "LogConfig": ".logging",
+-    "LogLevel": ".logging",
+-    "Logger": ".logging",
+-    "ParsingError": ".parse_error",
+-    "RequestOptions": ".request_options",
+-    "Rfc2822DateTime": ".datetime_utils",
+-    "SyncClientWrapper": ".client_wrapper",
+-    "UniversalBaseModel": ".pydantic_utilities",
+-    "UniversalRootModel": ".pydantic_utilities",
+-    "convert_and_respect_annotation_metadata": ".serialization",
+-    "convert_file_dict_to_httpx_tuples": ".file",
+-    "create_logger": ".logging",
+-    "encode_path_param": ".jsonable_encoder",
+-    "encode_query": ".query_encoder",
+-    "jsonable_encoder": ".jsonable_encoder",
+-    "parse_obj_as": ".pydantic_utilities",
+-    "parse_rfc2822_datetime": ".datetime_utils",
+-    "remove_none_from_dict": ".remove_none_from_dict",
+-    "serialize_datetime": ".datetime_utils",
+-    "universal_field_validator": ".pydantic_utilities",
+-    "universal_root_validator": ".pydantic_utilities",
+-    "update_forward_refs": ".pydantic_utilities",
+-    "with_content_type": ".file",
+-}
++    from .file import File, with_content_type
++_dynamic_imports: typing.Dict[str, str] = {"File": ".file", "with_content_type": ".file"}
+ 
+ 
+ def __getattr__(attr_name: str) -> typing.Any:
+@@ -88,40 +31,4 @@ def __dir__():
+     return sorted(lazy_attrs)
+ 
+ 
+-__all__ = [
+-    "ApiError",
+-    "AsyncClientWrapper",
+-    "AsyncHttpClient",
+-    "AsyncHttpResponse",
+-    "BaseClientWrapper",
+-    "ConsoleLogger",
+-    "FieldMetadata",
+-    "File",
+-    "HttpClient",
+-    "HttpResponse",
+-    "ILogger",
+-    "IS_PYDANTIC_V2",
+-    "LogConfig",
+-    "LogLevel",
+-    "Logger",
+-    "ParsingError",
+-    "RequestOptions",
+-    "Rfc2822DateTime",
+-    "SyncClientWrapper",
+-    "UniversalBaseModel",
+-    "UniversalRootModel",
+-    "convert_and_respect_annotation_metadata",
+-    "convert_file_dict_to_httpx_tuples",
+-    "create_logger",
+-    "encode_path_param",
+-    "encode_query",
+-    "jsonable_encoder",
+-    "parse_obj_as",
+-    "parse_rfc2822_datetime",
+-    "remove_none_from_dict",
+-    "serialize_datetime",
+-    "universal_field_validator",
+-    "universal_root_validator",
+-    "update_forward_refs",
+-    "with_content_type",
+-]
++__all__ = ["File", "with_content_type"]
+diff --git a/src/seed/organization/__init__.py b/src/seed/organization/__init__.py
+index 7034eb2b873..5cde0202dcf 100644
+--- a/src/seed/organization/__init__.py
++++ b/src/seed/organization/__init__.py
+@@ -2,33 +2,3 @@
+ 
+ # isort: skip_file
+ 
+-import typing
+-from importlib import import_module
+-
+-if typing.TYPE_CHECKING:
+-    from .types import CreateOrganizationRequest, Organization
+-_dynamic_imports: typing.Dict[str, str] = {"CreateOrganizationRequest": ".types", "Organization": ".types"}
+-
+-
+-def __getattr__(attr_name: str) -> typing.Any:
+-    module_name = _dynamic_imports.get(attr_name)
+-    if module_name is None:
+-        raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
+-    try:
+-        module = import_module(module_name, __package__)
+-        if module_name == f".{attr_name}":
+-            return module
+-        else:
+-            return getattr(module, attr_name)
+-    except ImportError as e:
+-        raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
+-    except AttributeError as e:
+-        raise AttributeError(f"Failed to get {attr_name} from {module_name}: {e}") from e
+-
+-
+-def __dir__():
+-    lazy_attrs = list(_dynamic_imports.keys())
+-    return sorted(lazy_attrs)
+-
+-
+-__all__ = ["CreateOrganizationRequest", "Organization"]
+diff --git a/src/seed/organization/requests/__init__.py b/src/seed/organization/requests/__init__.py
+new file mode 100644
+index 00000000000..5cde0202dcf
+--- /dev/null
++++ b/src/seed/organization/requests/__init__.py
+@@ -0,0 +1,4 @@
++# This file was auto-generated by Fern from our API Definition.
++
++# isort: skip_file
++
+diff --git a/src/seed/organization/requests/create_organization_request.py b/src/seed/organization/requests/create_organization_request.py
+new file mode 100644
+index 00000000000..1f852aa8eff
+--- /dev/null
++++ b/src/seed/organization/requests/create_organization_request.py
+@@ -0,0 +1,7 @@
++# This file was auto-generated by Fern from our API Definition.
++
++import typing_extensions
++
++
++class CreateOrganizationRequestParams(typing_extensions.TypedDict):
++    name: str
+diff --git a/src/seed/organization/requests/organization.py b/src/seed/organization/requests/organization.py
+new file mode 100644
+index 00000000000..3e012846d9e
+--- /dev/null
++++ b/src/seed/organization/requests/organization.py
+@@ -0,0 +1,13 @@
++# This file was auto-generated by Fern from our API Definition.
++
++import typing
++
++import typing_extensions
++from ...types.id import Id
++from ...user.requests.user import UserParams
++
++
++class OrganizationParams(typing_extensions.TypedDict):
++    id: Id
++    name: str
++    users: typing.Sequence[UserParams]
+diff --git a/src/seed/organization/types/__init__.py b/src/seed/organization/types/__init__.py
+index 707efbda01a..5cde0202dcf 100644
+--- a/src/seed/organization/types/__init__.py
++++ b/src/seed/organization/types/__init__.py
+@@ -2,37 +2,3 @@
+ 
+ # isort: skip_file
+ 
+-import typing
+-from importlib import import_module
+-
+-if typing.TYPE_CHECKING:
+-    from .create_organization_request import CreateOrganizationRequest
+-    from .organization import Organization
+-_dynamic_imports: typing.Dict[str, str] = {
+-    "CreateOrganizationRequest": ".create_organization_request",
+-    "Organization": ".organization",
+-}
+-
+-
+-def __getattr__(attr_name: str) -> typing.Any:
+-    module_name = _dynamic_imports.get(attr_name)
+-    if module_name is None:
+-        raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
+-    try:
+-        module = import_module(module_name, __package__)
+-        if module_name == f".{attr_name}":
+-            return module
+-        else:
+-            return getattr(module, attr_name)
+-    except ImportError as e:
+-        raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
+-    except AttributeError as e:
+-        raise AttributeError(f"Failed to get {attr_name} from {module_name}: {e}") from e
+-
+-
+-def __dir__():
+-    lazy_attrs = list(_dynamic_imports.keys())
+-    return sorted(lazy_attrs)
+-
+-
+-__all__ = ["CreateOrganizationRequest", "Organization"]
+diff --git a/src/seed/types/__init__.py b/src/seed/types/__init__.py
+index b3a18f52355..5cde0202dcf 100644
+--- a/src/seed/types/__init__.py
++++ b/src/seed/types/__init__.py
+@@ -2,33 +2,3 @@
+ 
+ # isort: skip_file
+ 
+-import typing
+-from importlib import import_module
+-
+-if typing.TYPE_CHECKING:
+-    from .id import Id
+-_dynamic_imports: typing.Dict[str, str] = {"Id": ".id"}
+-
+-
+-def __getattr__(attr_name: str) -> typing.Any:
+-    module_name = _dynamic_imports.get(attr_name)
+-    if module_name is None:
+-        raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
+-    try:
+-        module = import_module(module_name, __package__)
+-        if module_name == f".{attr_name}":
+-            return module
+-        else:
+-            return getattr(module, attr_name)
+-    except ImportError as e:
+-        raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
+-    except AttributeError as e:
+-        raise AttributeError(f"Failed to get {attr_name} from {module_name}: {e}") from e
+-
+-
+-def __dir__():
+-    lazy_attrs = list(_dynamic_imports.keys())
+-    return sorted(lazy_attrs)
+-
+-
+-__all__ = ["Id"]
+diff --git a/src/seed/user/__init__.py b/src/seed/user/__init__.py
+index 17477b02945..bb5f1162845 100644
+--- a/src/seed/user/__init__.py
++++ b/src/seed/user/__init__.py
+@@ -6,10 +6,8 @@ import typing
+ from importlib import import_module
+ 
+ if typing.TYPE_CHECKING:
+-    from .types import User
+     from . import events
+-    from .events import Event
+-_dynamic_imports: typing.Dict[str, str] = {"Event": ".events", "User": ".types", "events": ".events"}
++_dynamic_imports: typing.Dict[str, str] = {"events": ".events"}
+ 
+ 
+ def __getattr__(attr_name: str) -> typing.Any:
+@@ -33,4 +31,4 @@ def __dir__():
+     return sorted(lazy_attrs)
+ 
+ 
+-__all__ = ["Event", "User", "events"]
++__all__ = ["events"]
+diff --git a/src/seed/user/events/__init__.py b/src/seed/user/events/__init__.py
+index 878d86f60c6..619ab453166 100644
+--- a/src/seed/user/events/__init__.py
++++ b/src/seed/user/events/__init__.py
+@@ -6,10 +6,8 @@ import typing
+ from importlib import import_module
+ 
+ if typing.TYPE_CHECKING:
+-    from .types import Event
+     from . import metadata
+-    from .metadata import Metadata
+-_dynamic_imports: typing.Dict[str, str] = {"Event": ".types", "Metadata": ".metadata", "metadata": ".metadata"}
++_dynamic_imports: typing.Dict[str, str] = {"metadata": ".metadata"}
+ 
+ 
+ def __getattr__(attr_name: str) -> typing.Any:
+@@ -33,4 +31,4 @@ def __dir__():
+     return sorted(lazy_attrs)
+ 
+ 
+-__all__ = ["Event", "Metadata", "metadata"]
++__all__ = ["metadata"]
+diff --git a/src/seed/user/events/metadata/__init__.py b/src/seed/user/events/metadata/__init__.py
+index 34cbe6a50cb..5cde0202dcf 100644
+--- a/src/seed/user/events/metadata/__init__.py
++++ b/src/seed/user/events/metadata/__init__.py
+@@ -2,33 +2,3 @@
+ 
+ # isort: skip_file
+ 
+-import typing
+-from importlib import import_module
+-
+-if typing.TYPE_CHECKING:
+-    from .types import Metadata
+-_dynamic_imports: typing.Dict[str, str] = {"Metadata": ".types"}
+-
+-
+-def __getattr__(attr_name: str) -> typing.Any:
+-    module_name = _dynamic_imports.get(attr_name)
+-    if module_name is None:
+-        raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
+-    try:
+-        module = import_module(module_name, __package__)
+-        if module_name == f".{attr_name}":
+-            return module
+-        else:
+-            return getattr(module, attr_name)
+-    except ImportError as e:
+-        raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
+-    except AttributeError as e:
+-        raise AttributeError(f"Failed to get {attr_name} from {module_name}: {e}") from e
+-
+-
+-def __dir__():
+-    lazy_attrs = list(_dynamic_imports.keys())
+-    return sorted(lazy_attrs)
+-
+-
+-__all__ = ["Metadata"]
+diff --git a/src/seed/user/events/metadata/requests/__init__.py b/src/seed/user/events/metadata/requests/__init__.py
+new file mode 100644
+index 00000000000..5cde0202dcf
+--- /dev/null
++++ b/src/seed/user/events/metadata/requests/__init__.py
+@@ -0,0 +1,4 @@
++# This file was auto-generated by Fern from our API Definition.
++
++# isort: skip_file
++
+diff --git a/src/seed/user/events/metadata/requests/metadata.py b/src/seed/user/events/metadata/requests/metadata.py
+new file mode 100644
+index 00000000000..5704f445d1a
+--- /dev/null
++++ b/src/seed/user/events/metadata/requests/metadata.py
+@@ -0,0 +1,11 @@
++# This file was auto-generated by Fern from our API Definition.
++
++import typing
++
++import typing_extensions
++from .....types.id import Id
++
++
++class MetadataParams(typing_extensions.TypedDict):
++    id: Id
++    value: typing.Any
+diff --git a/src/seed/user/events/metadata/types/__init__.py b/src/seed/user/events/metadata/types/__init__.py
+index 2d9b060a762..5cde0202dcf 100644
+--- a/src/seed/user/events/metadata/types/__init__.py
++++ b/src/seed/user/events/metadata/types/__init__.py
+@@ -2,33 +2,3 @@
+ 
+ # isort: skip_file
+ 
+-import typing
+-from importlib import import_module
+-
+-if typing.TYPE_CHECKING:
+-    from .metadata import Metadata
+-_dynamic_imports: typing.Dict[str, str] = {"Metadata": ".metadata"}
+-
+-
+-def __getattr__(attr_name: str) -> typing.Any:
+-    module_name = _dynamic_imports.get(attr_name)
+-    if module_name is None:
+-        raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
+-    try:
+-        module = import_module(module_name, __package__)
+-        if module_name == f".{attr_name}":
+-            return module
+-        else:
+-            return getattr(module, attr_name)
+-    except ImportError as e:
+-        raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
+-    except AttributeError as e:
+-        raise AttributeError(f"Failed to get {attr_name} from {module_name}: {e}") from e
+-
+-
+-def __dir__():
+-    lazy_attrs = list(_dynamic_imports.keys())
+-    return sorted(lazy_attrs)
+-
+-
+-__all__ = ["Metadata"]
+diff --git a/src/seed/user/events/requests/__init__.py b/src/seed/user/events/requests/__init__.py
+new file mode 100644
+index 00000000000..5cde0202dcf
+--- /dev/null
++++ b/src/seed/user/events/requests/__init__.py
+@@ -0,0 +1,4 @@
++# This file was auto-generated by Fern from our API Definition.
++
++# isort: skip_file
++
+diff --git a/src/seed/user/events/requests/event.py b/src/seed/user/events/requests/event.py
+new file mode 100644
+index 00000000000..31e20618a99
+--- /dev/null
++++ b/src/seed/user/events/requests/event.py
+@@ -0,0 +1,9 @@
++# This file was auto-generated by Fern from our API Definition.
++
++import typing_extensions
++from ....types.id import Id
++
++
++class EventParams(typing_extensions.TypedDict):
++    id: Id
++    name: str
+diff --git a/src/seed/user/events/types/__init__.py b/src/seed/user/events/types/__init__.py
+index ed4e92cc16a..5cde0202dcf 100644
+--- a/src/seed/user/events/types/__init__.py
++++ b/src/seed/user/events/types/__init__.py
+@@ -2,33 +2,3 @@
+ 
+ # isort: skip_file
+ 
+-import typing
+-from importlib import import_module
+-
+-if typing.TYPE_CHECKING:
+-    from .event import Event
+-_dynamic_imports: typing.Dict[str, str] = {"Event": ".event"}
+-
+-
+-def __getattr__(attr_name: str) -> typing.Any:
+-    module_name = _dynamic_imports.get(attr_name)
+-    if module_name is None:
+-        raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
+-    try:
+-        module = import_module(module_name, __package__)
+-        if module_name == f".{attr_name}":
+-            return module
+-        else:
+-            return getattr(module, attr_name)
+-    except ImportError as e:
+-        raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
+-    except AttributeError as e:
+-        raise AttributeError(f"Failed to get {attr_name} from {module_name}: {e}") from e
+-
+-
+-def __dir__():
+-    lazy_attrs = list(_dynamic_imports.keys())
+-    return sorted(lazy_attrs)
+-
+-
+-__all__ = ["Event"]
+diff --git a/src/seed/user/requests/__init__.py b/src/seed/user/requests/__init__.py
+new file mode 100644
+index 00000000000..5cde0202dcf
+--- /dev/null
++++ b/src/seed/user/requests/__init__.py
+@@ -0,0 +1,4 @@
++# This file was auto-generated by Fern from our API Definition.
++
++# isort: skip_file
++
+diff --git a/src/seed/user/requests/user.py b/src/seed/user/requests/user.py
+new file mode 100644
+index 00000000000..3dd3b54d2bd
+--- /dev/null
++++ b/src/seed/user/requests/user.py
+@@ -0,0 +1,10 @@
++# This file was auto-generated by Fern from our API Definition.
++
++import typing_extensions
++from ...types.id import Id
++
++
++class UserParams(typing_extensions.TypedDict):
++    id: Id
++    name: str
++    age: int
+diff --git a/src/seed/user/types/__init__.py b/src/seed/user/types/__init__.py
+index 9a15de15fc1..5cde0202dcf 100644
+--- a/src/seed/user/types/__init__.py
++++ b/src/seed/user/types/__init__.py
+@@ -2,33 +2,3 @@
+ 
+ # isort: skip_file
+ 
+-import typing
+-from importlib import import_module
+-
+-if typing.TYPE_CHECKING:
+-    from .user import User
+-_dynamic_imports: typing.Dict[str, str] = {"User": ".user"}
+-
+-
+-def __getattr__(attr_name: str) -> typing.Any:
+-    module_name = _dynamic_imports.get(attr_name)
+-    if module_name is None:
+-        raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
+-    try:
+-        module = import_module(module_name, __package__)
+-        if module_name == f".{attr_name}":
+-            return module
+-        else:
+-            return getattr(module, attr_name)
+-    except ImportError as e:
+-        raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
+-    except AttributeError as e:
+-        raise AttributeError(f"Failed to get {attr_name} from {module_name}: {e}") from e
+-
+-
+-def __dir__():
+-    lazy_attrs = list(_dynamic_imports.keys())
+-    return sorted(lazy_attrs)
+-
+-
+-__all__ = ["User"]

@@ -1,0 +1,59 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 5e4188a44b1..6131ba969b4 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,7 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-csharp-sdk",
+   "generatorVersion": "local",
+-  "generatorConfig": {},
++  "generatorConfig": {
++    "offset-semantics": "page-index"
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "ci",
+diff --git a/src/SeedPagination/InlineUsers/InlineUsers/InlineUsersClient_.cs b/src/SeedPagination/InlineUsers/InlineUsers/InlineUsersClient_.cs
+index ffdb73c3ba6..7b000262357 100644
+--- a/src/SeedPagination/InlineUsers/InlineUsers/InlineUsersClient_.cs
++++ b/src/SeedPagination/InlineUsers/InlineUsers/InlineUsersClient_.cs
+@@ -1358,7 +1358,7 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
+                 {
+                     request.Page = offset;
+                 },
+-                request => request.Limit ?? 0,
++                null,
+                 response => response.Data.Users_?.ToList(),
+                 null,
+                 cancellationToken
+@@ -1407,7 +1407,7 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
+                 {
+                     request.Page = offset;
+                 },
+-                request => request.Limit ?? 0,
++                null,
+                 response => response.Data.Users_?.ToList(),
+                 response => response.HasNextPage,
+                 cancellationToken
+diff --git a/src/SeedPagination/Users/UsersClient.cs b/src/SeedPagination/Users/UsersClient.cs
+index 63ea5a3e385..6b22fa314a8 100644
+--- a/src/SeedPagination/Users/UsersClient.cs
++++ b/src/SeedPagination/Users/UsersClient.cs
+@@ -1755,7 +1755,7 @@ public partial class UsersClient : IUsersClient
+                 {
+                     request.Page = offset;
+                 },
+-                request => request.Limit ?? 0,
++                null,
+                 response => response.Data?.ToList(),
+                 null,
+                 cancellationToken
+@@ -1804,7 +1804,7 @@ public partial class UsersClient : IUsersClient
+                 {
+                     request.Page = offset;
+                 },
+-                request => request.Limit ?? 0,
++                null,
+                 response => response.Data?.ToList(),
+                 response => response.HasNextPage,
+                 cancellationToken

@@ -1,0 +1,3216 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 1bdd1da9041..9a7ab4f0dfc 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,10 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-java-sdk",
+   "generatorVersion": "local",
++  "generatorConfig": {
++    "inline-file-properties": true,
++    "inline-path-parameters": true
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "ci",
+diff --git a/src/main/java/com/seed/fileUpload/resources/service/AsyncRawServiceClient.java b/src/main/java/com/seed/fileUpload/resources/service/AsyncRawServiceClient.java
+index 8a9c30b04bb..cac3db5bc8e 100644
+--- a/src/main/java/com/seed/fileUpload/resources/service/AsyncRawServiceClient.java
++++ b/src/main/java/com/seed/fileUpload/resources/service/AsyncRawServiceClient.java
+@@ -23,11 +23,9 @@ import com.seed.fileUpload.resources.service.requests.OptionalArgsRequest;
+ import com.seed.fileUpload.resources.service.requests.WithContentTypeRequest;
+ import com.seed.fileUpload.resources.service.requests.WithFormEncodingRequest;
+ import com.seed.fileUpload.resources.service.requests.WithJsonPropertyRequest;
+-import java.io.File;
+ import java.io.IOException;
+ import java.io.InputStream;
+ import java.nio.file.Files;
+-import java.util.Optional;
+ import java.util.concurrent.CompletableFuture;
+ import okhttp3.Call;
+ import okhttp3.Callback;
+@@ -49,18 +47,11 @@ public class AsyncRawServiceClient {
+         this.clientOptions = clientOptions;
+     }
+ 
+-    public CompletableFuture<SeedFileUploadHttpResponse<Void>> post(
+-            File file, File fileList, Optional<File> maybeFile, Optional<File> maybeFileList, MyRequest request) {
+-        return post(file, fileList, maybeFile, maybeFileList, request, null);
++    public CompletableFuture<SeedFileUploadHttpResponse<Void>> post(MyRequest request) {
++        return post(request, null);
+     }
+ 
+-    public CompletableFuture<SeedFileUploadHttpResponse<Void>> post(
+-            File file,
+-            File fileList,
+-            Optional<File> maybeFile,
+-            Optional<File> maybeFileList,
+-            MyRequest request,
+-            RequestOptions requestOptions) {
++    public CompletableFuture<SeedFileUploadHttpResponse<Void>> post(MyRequest request, RequestOptions requestOptions) {
+         HttpUrl.Builder httpUrl =
+                 HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder();
+ 
+@@ -76,33 +67,36 @@ public class AsyncRawServiceClient {
+                         "maybe_string", request.getMaybeString().get());
+             }
+             multipartBodyBuilder.addFormDataPart("integer", Integer.toString(request.getInteger()));
+-            String fileMimeType = Files.probeContentType(file.toPath());
++            String fileMimeType = Files.probeContentType(request.getFile().toPath());
+             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
+             multipartBodyBuilder.addFormDataPart(
+-                    "file", file.getName(), RequestBody.create(file, fileMimeTypeMediaType));
+-            String fileListMimeType = Files.probeContentType(fileList.toPath());
++                    "file", request.getFile().getName(), RequestBody.create(request.getFile(), fileMimeTypeMediaType));
++            String fileListMimeType =
++                    Files.probeContentType(request.getFileList().toPath());
+             MediaType fileListMimeTypeMediaType = fileListMimeType != null ? MediaType.parse(fileListMimeType) : null;
+             multipartBodyBuilder.addFormDataPart(
+-                    "file_list", fileList.getName(), RequestBody.create(fileList, fileListMimeTypeMediaType));
+-            if (maybeFile.isPresent()) {
++                    "file_list",
++                    request.getFileList().getName(),
++                    RequestBody.create(request.getFileList(), fileListMimeTypeMediaType));
++            if (request.getMaybeFile().isPresent()) {
+                 String maybeFileMimeType =
+-                        Files.probeContentType(maybeFile.get().toPath());
++                        Files.probeContentType(request.getMaybeFile().get().toPath());
+                 MediaType maybeFileMimeTypeMediaType =
+                         maybeFileMimeType != null ? MediaType.parse(maybeFileMimeType) : null;
+                 multipartBodyBuilder.addFormDataPart(
+                         "maybe_file",
+-                        maybeFile.get().getName(),
+-                        RequestBody.create(maybeFile.get(), maybeFileMimeTypeMediaType));
++                        request.getMaybeFile().get().getName(),
++                        RequestBody.create(request.getMaybeFile().get(), maybeFileMimeTypeMediaType));
+             }
+-            if (maybeFileList.isPresent()) {
++            if (request.getMaybeFileList().isPresent()) {
+                 String maybeFileListMimeType =
+-                        Files.probeContentType(maybeFileList.get().toPath());
++                        Files.probeContentType(request.getMaybeFileList().get().toPath());
+                 MediaType maybeFileListMimeTypeMediaType =
+                         maybeFileListMimeType != null ? MediaType.parse(maybeFileListMimeType) : null;
+                 multipartBodyBuilder.addFormDataPart(
+                         "maybe_file_list",
+-                        maybeFileList.get().getName(),
+-                        RequestBody.create(maybeFileList.get(), maybeFileListMimeTypeMediaType));
++                        request.getMaybeFileList().get().getName(),
++                        RequestBody.create(request.getMaybeFileList().get(), maybeFileListMimeTypeMediaType));
+             }
+             if (request.getMaybeInteger().isPresent()) {
+                 multipartBodyBuilder.addFormDataPart(
+@@ -194,12 +188,12 @@ public class AsyncRawServiceClient {
+         return future;
+     }
+ 
+-    public CompletableFuture<SeedFileUploadHttpResponse<Void>> justFile(File file, JustFileRequest request) {
+-        return justFile(file, request, null);
++    public CompletableFuture<SeedFileUploadHttpResponse<Void>> justFile(JustFileRequest request) {
++        return justFile(request, null);
+     }
+ 
+     public CompletableFuture<SeedFileUploadHttpResponse<Void>> justFile(
+-            File file, JustFileRequest request, RequestOptions requestOptions) {
++            JustFileRequest request, RequestOptions requestOptions) {
+         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                 .newBuilder()
+                 .addPathSegments("just-file");
+@@ -210,10 +204,10 @@ public class AsyncRawServiceClient {
+         }
+         MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+         try {
+-            String fileMimeType = Files.probeContentType(file.toPath());
++            String fileMimeType = Files.probeContentType(request.getFile().toPath());
+             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
+             multipartBodyBuilder.addFormDataPart(
+-                    "file", file.getName(), RequestBody.create(file, fileMimeTypeMediaType));
++                    "file", request.getFile().getName(), RequestBody.create(request.getFile(), fileMimeTypeMediaType));
+         } catch (Exception e) {
+             throw new RuntimeException(e);
+         }
+@@ -442,12 +436,12 @@ public class AsyncRawServiceClient {
+     }
+ 
+     public CompletableFuture<SeedFileUploadHttpResponse<Void>> justFileWithQueryParams(
+-            File file, JustFileWithQueryParamsRequest request) {
+-        return justFileWithQueryParams(file, request, null);
++            JustFileWithQueryParamsRequest request) {
++        return justFileWithQueryParams(request, null);
+     }
+ 
+     public CompletableFuture<SeedFileUploadHttpResponse<Void>> justFileWithQueryParams(
+-            File file, JustFileWithQueryParamsRequest request, RequestOptions requestOptions) {
++            JustFileWithQueryParamsRequest request, RequestOptions requestOptions) {
+         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                 .newBuilder()
+                 .addPathSegments("just-file-with-query-params");
+@@ -475,10 +469,10 @@ public class AsyncRawServiceClient {
+         }
+         MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+         try {
+-            String fileMimeType = Files.probeContentType(file.toPath());
++            String fileMimeType = Files.probeContentType(request.getFile().toPath());
+             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
+             multipartBodyBuilder.addFormDataPart(
+-                    "file", file.getName(), RequestBody.create(file, fileMimeTypeMediaType));
++                    "file", request.getFile().getName(), RequestBody.create(request.getFile(), fileMimeTypeMediaType));
+         } catch (Exception e) {
+             throw new RuntimeException(e);
+         }
+@@ -520,12 +514,12 @@ public class AsyncRawServiceClient {
+     }
+ 
+     public CompletableFuture<SeedFileUploadHttpResponse<Void>> justFileWithOptionalQueryParams(
+-            File file, JustFileWithOptionalQueryParamsRequest request) {
+-        return justFileWithOptionalQueryParams(file, request, null);
++            JustFileWithOptionalQueryParamsRequest request) {
++        return justFileWithOptionalQueryParams(request, null);
+     }
+ 
+     public CompletableFuture<SeedFileUploadHttpResponse<Void>> justFileWithOptionalQueryParams(
+-            File file, JustFileWithOptionalQueryParamsRequest request, RequestOptions requestOptions) {
++            JustFileWithOptionalQueryParamsRequest request, RequestOptions requestOptions) {
+         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                 .newBuilder()
+                 .addPathSegments("just-file-with-optional-query-params");
+@@ -544,10 +538,10 @@ public class AsyncRawServiceClient {
+         }
+         MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+         try {
+-            String fileMimeType = Files.probeContentType(file.toPath());
++            String fileMimeType = Files.probeContentType(request.getFile().toPath());
+             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
+             multipartBodyBuilder.addFormDataPart(
+-                    "file", file.getName(), RequestBody.create(file, fileMimeTypeMediaType));
++                    "file", request.getFile().getName(), RequestBody.create(request.getFile(), fileMimeTypeMediaType));
+         } catch (Exception e) {
+             throw new RuntimeException(e);
+         }
+@@ -588,13 +582,12 @@ public class AsyncRawServiceClient {
+         return future;
+     }
+ 
+-    public CompletableFuture<SeedFileUploadHttpResponse<Void>> withContentType(
+-            File file, WithContentTypeRequest request) {
+-        return withContentType(file, request, null);
++    public CompletableFuture<SeedFileUploadHttpResponse<Void>> withContentType(WithContentTypeRequest request) {
++        return withContentType(request, null);
+     }
+ 
+     public CompletableFuture<SeedFileUploadHttpResponse<Void>> withContentType(
+-            File file, WithContentTypeRequest request, RequestOptions requestOptions) {
++            WithContentTypeRequest request, RequestOptions requestOptions) {
+         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                 .newBuilder()
+                 .addPathSegments("with-content-type");
+@@ -605,10 +598,10 @@ public class AsyncRawServiceClient {
+         }
+         MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+         try {
+-            String fileMimeType = Files.probeContentType(file.toPath());
++            String fileMimeType = Files.probeContentType(request.getFile().toPath());
+             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
+             multipartBodyBuilder.addFormDataPart(
+-                    "file", file.getName(), RequestBody.create(file, fileMimeTypeMediaType));
++                    "file", request.getFile().getName(), RequestBody.create(request.getFile(), fileMimeTypeMediaType));
+             multipartBodyBuilder.addFormDataPart("foo", request.getFoo());
+             multipartBodyBuilder.addFormDataPart("bar", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getBar()));
+             if (request.getFooBar().isPresent()) {
+@@ -844,13 +837,12 @@ public class AsyncRawServiceClient {
+         return future;
+     }
+ 
+-    public CompletableFuture<SeedFileUploadHttpResponse<Void>> withFormEncoding(
+-            File file, WithFormEncodingRequest request) {
+-        return withFormEncoding(file, request, null);
++    public CompletableFuture<SeedFileUploadHttpResponse<Void>> withFormEncoding(WithFormEncodingRequest request) {
++        return withFormEncoding(request, null);
+     }
+ 
+     public CompletableFuture<SeedFileUploadHttpResponse<Void>> withFormEncoding(
+-            File file, WithFormEncodingRequest request, RequestOptions requestOptions) {
++            WithFormEncodingRequest request, RequestOptions requestOptions) {
+         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                 .newBuilder()
+                 .addPathSegments("with-form-encoding");
+@@ -861,10 +853,10 @@ public class AsyncRawServiceClient {
+         }
+         MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+         try {
+-            String fileMimeType = Files.probeContentType(file.toPath());
++            String fileMimeType = Files.probeContentType(request.getFile().toPath());
+             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
+             multipartBodyBuilder.addFormDataPart(
+-                    "file", file.getName(), RequestBody.create(file, fileMimeTypeMediaType));
++                    "file", request.getFile().getName(), RequestBody.create(request.getFile(), fileMimeTypeMediaType));
+             QueryStringMapper.addFormDataPart(multipartBodyBuilder, "foo", request.getFoo(), false);
+             QueryStringMapper.addFormDataPart(multipartBodyBuilder, "bar", request.getBar(), false);
+         } catch (Exception e) {
+@@ -1094,18 +1086,12 @@ public class AsyncRawServiceClient {
+         return future;
+     }
+ 
+-    public CompletableFuture<SeedFileUploadHttpResponse<Void>> withFormEncodedContainers(
+-            File file, File fileList, Optional<File> maybeFile, Optional<File> maybeFileList, MyOtherRequest request) {
+-        return withFormEncodedContainers(file, fileList, maybeFile, maybeFileList, request, null);
++    public CompletableFuture<SeedFileUploadHttpResponse<Void>> withFormEncodedContainers(MyOtherRequest request) {
++        return withFormEncodedContainers(request, null);
+     }
+ 
+     public CompletableFuture<SeedFileUploadHttpResponse<Void>> withFormEncodedContainers(
+-            File file,
+-            File fileList,
+-            Optional<File> maybeFile,
+-            Optional<File> maybeFileList,
+-            MyOtherRequest request,
+-            RequestOptions requestOptions) {
++            MyOtherRequest request, RequestOptions requestOptions) {
+         HttpUrl.Builder httpUrl =
+                 HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder();
+ 
+@@ -1124,33 +1110,36 @@ public class AsyncRawServiceClient {
+                         false);
+             }
+             QueryStringMapper.addFormDataPart(multipartBodyBuilder, "integer", request.getInteger(), false);
+-            String fileMimeType = Files.probeContentType(file.toPath());
++            String fileMimeType = Files.probeContentType(request.getFile().toPath());
+             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
+             multipartBodyBuilder.addFormDataPart(
+-                    "file", file.getName(), RequestBody.create(file, fileMimeTypeMediaType));
+-            String fileListMimeType = Files.probeContentType(fileList.toPath());
++                    "file", request.getFile().getName(), RequestBody.create(request.getFile(), fileMimeTypeMediaType));
++            String fileListMimeType =
++                    Files.probeContentType(request.getFileList().toPath());
+             MediaType fileListMimeTypeMediaType = fileListMimeType != null ? MediaType.parse(fileListMimeType) : null;
+             multipartBodyBuilder.addFormDataPart(
+-                    "file_list", fileList.getName(), RequestBody.create(fileList, fileListMimeTypeMediaType));
+-            if (maybeFile.isPresent()) {
++                    "file_list",
++                    request.getFileList().getName(),
++                    RequestBody.create(request.getFileList(), fileListMimeTypeMediaType));
++            if (request.getMaybeFile().isPresent()) {
+                 String maybeFileMimeType =
+-                        Files.probeContentType(maybeFile.get().toPath());
++                        Files.probeContentType(request.getMaybeFile().get().toPath());
+                 MediaType maybeFileMimeTypeMediaType =
+                         maybeFileMimeType != null ? MediaType.parse(maybeFileMimeType) : null;
+                 multipartBodyBuilder.addFormDataPart(
+                         "maybe_file",
+-                        maybeFile.get().getName(),
+-                        RequestBody.create(maybeFile.get(), maybeFileMimeTypeMediaType));
++                        request.getMaybeFile().get().getName(),
++                        RequestBody.create(request.getMaybeFile().get(), maybeFileMimeTypeMediaType));
+             }
+-            if (maybeFileList.isPresent()) {
++            if (request.getMaybeFileList().isPresent()) {
+                 String maybeFileListMimeType =
+-                        Files.probeContentType(maybeFileList.get().toPath());
++                        Files.probeContentType(request.getMaybeFileList().get().toPath());
+                 MediaType maybeFileListMimeTypeMediaType =
+                         maybeFileListMimeType != null ? MediaType.parse(maybeFileListMimeType) : null;
+                 multipartBodyBuilder.addFormDataPart(
+                         "maybe_file_list",
+-                        maybeFileList.get().getName(),
+-                        RequestBody.create(maybeFileList.get(), maybeFileListMimeTypeMediaType));
++                        request.getMaybeFileList().get().getName(),
++                        RequestBody.create(request.getMaybeFileList().get(), maybeFileListMimeTypeMediaType));
+             }
+             if (request.getMaybeInteger().isPresent()) {
+                 QueryStringMapper.addFormDataPart(
+@@ -1239,22 +1228,20 @@ public class AsyncRawServiceClient {
+         return future;
+     }
+ 
+-    public CompletableFuture<SeedFileUploadHttpResponse<String>> optionalArgs(Optional<File> imageFile) {
+-        return optionalArgs(imageFile, OptionalArgsRequest.builder().build());
++    public CompletableFuture<SeedFileUploadHttpResponse<String>> optionalArgs() {
++        return optionalArgs(OptionalArgsRequest.builder().build());
+     }
+ 
+-    public CompletableFuture<SeedFileUploadHttpResponse<String>> optionalArgs(
+-            Optional<File> imageFile, RequestOptions requestOptions) {
+-        return optionalArgs(imageFile, OptionalArgsRequest.builder().build(), requestOptions);
++    public CompletableFuture<SeedFileUploadHttpResponse<String>> optionalArgs(RequestOptions requestOptions) {
++        return optionalArgs(OptionalArgsRequest.builder().build(), requestOptions);
+     }
+ 
+-    public CompletableFuture<SeedFileUploadHttpResponse<String>> optionalArgs(
+-            Optional<File> imageFile, OptionalArgsRequest request) {
+-        return optionalArgs(imageFile, request, null);
++    public CompletableFuture<SeedFileUploadHttpResponse<String>> optionalArgs(OptionalArgsRequest request) {
++        return optionalArgs(request, null);
+     }
+ 
+     public CompletableFuture<SeedFileUploadHttpResponse<String>> optionalArgs(
+-            Optional<File> imageFile, OptionalArgsRequest request, RequestOptions requestOptions) {
++            OptionalArgsRequest request, RequestOptions requestOptions) {
+         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                 .newBuilder()
+                 .addPathSegments("optional-args");
+@@ -1265,15 +1252,15 @@ public class AsyncRawServiceClient {
+         }
+         MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+         try {
+-            if (imageFile.isPresent()) {
++            if (request.getImageFile().isPresent()) {
+                 String imageFileMimeType =
+-                        Files.probeContentType(imageFile.get().toPath());
++                        Files.probeContentType(request.getImageFile().get().toPath());
+                 MediaType imageFileMimeTypeMediaType =
+                         imageFileMimeType != null ? MediaType.parse(imageFileMimeType) : null;
+                 multipartBodyBuilder.addFormDataPart(
+                         "image_file",
+-                        imageFile.get().getName(),
+-                        RequestBody.create(imageFile.get(), imageFileMimeTypeMediaType));
++                        request.getImageFile().get().getName(),
++                        RequestBody.create(request.getImageFile().get(), imageFileMimeTypeMediaType));
+             }
+             if (request.getRequest().isPresent()) {
+                 multipartBodyBuilder.addFormDataPart(
+@@ -1323,8 +1310,7 @@ public class AsyncRawServiceClient {
+         return future;
+     }
+ 
+-    public CompletableFuture<SeedFileUploadHttpResponse<String>> optionalArgs(
+-            Optional<File> imageFile, InputStream stream, String filename) {
++    public CompletableFuture<SeedFileUploadHttpResponse<String>> optionalArgs(InputStream stream, String filename) {
+         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                 .newBuilder()
+                 .addPathSegments("optional-args");
+@@ -1368,7 +1354,7 @@ public class AsyncRawServiceClient {
+     }
+ 
+     public CompletableFuture<SeedFileUploadHttpResponse<String>> optionalArgs(
+-            Optional<File> imageFile, InputStream stream, String filename, MediaType mediaType) {
++            InputStream stream, String filename, MediaType mediaType) {
+         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                 .newBuilder()
+                 .addPathSegments("optional-args");
+@@ -1412,7 +1398,7 @@ public class AsyncRawServiceClient {
+     }
+ 
+     public CompletableFuture<SeedFileUploadHttpResponse<String>> optionalArgs(
+-            Optional<File> imageFile, InputStream stream, String filename, RequestOptions requestOptions) {
++            InputStream stream, String filename, RequestOptions requestOptions) {
+         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                 .newBuilder()
+                 .addPathSegments("optional-args");
+@@ -1464,11 +1450,7 @@ public class AsyncRawServiceClient {
+     }
+ 
+     public CompletableFuture<SeedFileUploadHttpResponse<String>> optionalArgs(
+-            Optional<File> imageFile,
+-            InputStream stream,
+-            String filename,
+-            MediaType mediaType,
+-            RequestOptions requestOptions) {
++            InputStream stream, String filename, MediaType mediaType, RequestOptions requestOptions) {
+         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                 .newBuilder()
+                 .addPathSegments("optional-args");
+@@ -1519,12 +1501,12 @@ public class AsyncRawServiceClient {
+         return future;
+     }
+ 
+-    public CompletableFuture<SeedFileUploadHttpResponse<String>> withInlineType(File file, InlineTypeRequest request) {
+-        return withInlineType(file, request, null);
++    public CompletableFuture<SeedFileUploadHttpResponse<String>> withInlineType(InlineTypeRequest request) {
++        return withInlineType(request, null);
+     }
+ 
+     public CompletableFuture<SeedFileUploadHttpResponse<String>> withInlineType(
+-            File file, InlineTypeRequest request, RequestOptions requestOptions) {
++            InlineTypeRequest request, RequestOptions requestOptions) {
+         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                 .newBuilder()
+                 .addPathSegments("inline-type");
+@@ -1535,10 +1517,10 @@ public class AsyncRawServiceClient {
+         }
+         MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+         try {
+-            String fileMimeType = Files.probeContentType(file.toPath());
++            String fileMimeType = Files.probeContentType(request.getFile().toPath());
+             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
+             multipartBodyBuilder.addFormDataPart(
+-                    "file", file.getName(), RequestBody.create(file, fileMimeTypeMediaType));
++                    "file", request.getFile().getName(), RequestBody.create(request.getFile(), fileMimeTypeMediaType));
+             multipartBodyBuilder.addFormDataPart(
+                     "request", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getRequest()));
+         } catch (Exception e) {
+@@ -1774,13 +1756,12 @@ public class AsyncRawServiceClient {
+         return future;
+     }
+ 
+-    public CompletableFuture<SeedFileUploadHttpResponse<String>> withJsonProperty(
+-            File file, WithJsonPropertyRequest request) {
+-        return withJsonProperty(file, request, null);
++    public CompletableFuture<SeedFileUploadHttpResponse<String>> withJsonProperty(WithJsonPropertyRequest request) {
++        return withJsonProperty(request, null);
+     }
+ 
+     public CompletableFuture<SeedFileUploadHttpResponse<String>> withJsonProperty(
+-            File file, WithJsonPropertyRequest request, RequestOptions requestOptions) {
++            WithJsonPropertyRequest request, RequestOptions requestOptions) {
+         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                 .newBuilder()
+                 .addPathSegments("with-json-property");
+@@ -1791,10 +1772,10 @@ public class AsyncRawServiceClient {
+         }
+         MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+         try {
+-            String fileMimeType = Files.probeContentType(file.toPath());
++            String fileMimeType = Files.probeContentType(request.getFile().toPath());
+             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
+             multipartBodyBuilder.addFormDataPart(
+-                    "file", file.getName(), RequestBody.create(file, fileMimeTypeMediaType));
++                    "file", request.getFile().getName(), RequestBody.create(request.getFile(), fileMimeTypeMediaType));
+             if (request.getJson().isPresent()) {
+                 multipartBodyBuilder.addFormDataPart(
+                         "json",
+@@ -2084,13 +2065,12 @@ public class AsyncRawServiceClient {
+         return future;
+     }
+ 
+-    public CompletableFuture<SeedFileUploadHttpResponse<String>> withLiteralAndEnumTypes(
+-            File file, LiteralEnumRequest request) {
+-        return withLiteralAndEnumTypes(file, request, null);
++    public CompletableFuture<SeedFileUploadHttpResponse<String>> withLiteralAndEnumTypes(LiteralEnumRequest request) {
++        return withLiteralAndEnumTypes(request, null);
+     }
+ 
+     public CompletableFuture<SeedFileUploadHttpResponse<String>> withLiteralAndEnumTypes(
+-            File file, LiteralEnumRequest request, RequestOptions requestOptions) {
++            LiteralEnumRequest request, RequestOptions requestOptions) {
+         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                 .newBuilder()
+                 .addPathSegments("with-literal-enum");
+@@ -2101,10 +2081,10 @@ public class AsyncRawServiceClient {
+         }
+         MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+         try {
+-            String fileMimeType = Files.probeContentType(file.toPath());
++            String fileMimeType = Files.probeContentType(request.getFile().toPath());
+             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
+             multipartBodyBuilder.addFormDataPart(
+-                    "file", file.getName(), RequestBody.create(file, fileMimeTypeMediaType));
++                    "file", request.getFile().getName(), RequestBody.create(request.getFile(), fileMimeTypeMediaType));
+             if (request.getModelType().isPresent()) {
+                 multipartBodyBuilder.addFormDataPart(
+                         "model_type", request.getModelType().get());
+diff --git a/src/main/java/com/seed/fileUpload/resources/service/AsyncServiceClient.java b/src/main/java/com/seed/fileUpload/resources/service/AsyncServiceClient.java
+index 7838e5a0caf..55689149d6c 100644
+--- a/src/main/java/com/seed/fileUpload/resources/service/AsyncServiceClient.java
++++ b/src/main/java/com/seed/fileUpload/resources/service/AsyncServiceClient.java
+@@ -16,9 +16,7 @@ import com.seed.fileUpload.resources.service.requests.OptionalArgsRequest;
+ import com.seed.fileUpload.resources.service.requests.WithContentTypeRequest;
+ import com.seed.fileUpload.resources.service.requests.WithFormEncodingRequest;
+ import com.seed.fileUpload.resources.service.requests.WithJsonPropertyRequest;
+-import java.io.File;
+ import java.io.InputStream;
+-import java.util.Optional;
+ import java.util.concurrent.CompletableFuture;
+ import okhttp3.MediaType;
+ 
+@@ -39,31 +37,20 @@ public class AsyncServiceClient {
+         return this.rawClient;
+     }
+ 
+-    public CompletableFuture<Void> post(
+-            File file, File fileList, Optional<File> maybeFile, Optional<File> maybeFileList, MyRequest request) {
+-        return this.rawClient
+-                .post(file, fileList, maybeFile, maybeFileList, request)
+-                .thenApply(response -> response.body());
++    public CompletableFuture<Void> post(MyRequest request) {
++        return this.rawClient.post(request).thenApply(response -> response.body());
+     }
+ 
+-    public CompletableFuture<Void> post(
+-            File file,
+-            File fileList,
+-            Optional<File> maybeFile,
+-            Optional<File> maybeFileList,
+-            MyRequest request,
+-            RequestOptions requestOptions) {
+-        return this.rawClient
+-                .post(file, fileList, maybeFile, maybeFileList, request, requestOptions)
+-                .thenApply(response -> response.body());
++    public CompletableFuture<Void> post(MyRequest request, RequestOptions requestOptions) {
++        return this.rawClient.post(request, requestOptions).thenApply(response -> response.body());
+     }
+ 
+-    public CompletableFuture<Void> justFile(File file, JustFileRequest request) {
+-        return this.rawClient.justFile(file, request).thenApply(response -> response.body());
++    public CompletableFuture<Void> justFile(JustFileRequest request) {
++        return this.rawClient.justFile(request).thenApply(response -> response.body());
+     }
+ 
+-    public CompletableFuture<Void> justFile(File file, JustFileRequest request, RequestOptions requestOptions) {
+-        return this.rawClient.justFile(file, request, requestOptions).thenApply(response -> response.body());
++    public CompletableFuture<Void> justFile(JustFileRequest request, RequestOptions requestOptions) {
++        return this.rawClient.justFile(request, requestOptions).thenApply(response -> response.body());
+     }
+ 
+     public CompletableFuture<Void> justFile(InputStream stream, String filename) {
+@@ -85,36 +72,32 @@ public class AsyncServiceClient {
+                 .thenApply(response -> response.body());
+     }
+ 
+-    public CompletableFuture<Void> justFileWithQueryParams(File file, JustFileWithQueryParamsRequest request) {
+-        return this.rawClient.justFileWithQueryParams(file, request).thenApply(response -> response.body());
++    public CompletableFuture<Void> justFileWithQueryParams(JustFileWithQueryParamsRequest request) {
++        return this.rawClient.justFileWithQueryParams(request).thenApply(response -> response.body());
+     }
+ 
+     public CompletableFuture<Void> justFileWithQueryParams(
+-            File file, JustFileWithQueryParamsRequest request, RequestOptions requestOptions) {
+-        return this.rawClient
+-                .justFileWithQueryParams(file, request, requestOptions)
+-                .thenApply(response -> response.body());
++            JustFileWithQueryParamsRequest request, RequestOptions requestOptions) {
++        return this.rawClient.justFileWithQueryParams(request, requestOptions).thenApply(response -> response.body());
+     }
+ 
+-    public CompletableFuture<Void> justFileWithOptionalQueryParams(
+-            File file, JustFileWithOptionalQueryParamsRequest request) {
+-        return this.rawClient.justFileWithOptionalQueryParams(file, request).thenApply(response -> response.body());
++    public CompletableFuture<Void> justFileWithOptionalQueryParams(JustFileWithOptionalQueryParamsRequest request) {
++        return this.rawClient.justFileWithOptionalQueryParams(request).thenApply(response -> response.body());
+     }
+ 
+     public CompletableFuture<Void> justFileWithOptionalQueryParams(
+-            File file, JustFileWithOptionalQueryParamsRequest request, RequestOptions requestOptions) {
++            JustFileWithOptionalQueryParamsRequest request, RequestOptions requestOptions) {
+         return this.rawClient
+-                .justFileWithOptionalQueryParams(file, request, requestOptions)
++                .justFileWithOptionalQueryParams(request, requestOptions)
+                 .thenApply(response -> response.body());
+     }
+ 
+-    public CompletableFuture<Void> withContentType(File file, WithContentTypeRequest request) {
+-        return this.rawClient.withContentType(file, request).thenApply(response -> response.body());
++    public CompletableFuture<Void> withContentType(WithContentTypeRequest request) {
++        return this.rawClient.withContentType(request).thenApply(response -> response.body());
+     }
+ 
+-    public CompletableFuture<Void> withContentType(
+-            File file, WithContentTypeRequest request, RequestOptions requestOptions) {
+-        return this.rawClient.withContentType(file, request, requestOptions).thenApply(response -> response.body());
++    public CompletableFuture<Void> withContentType(WithContentTypeRequest request, RequestOptions requestOptions) {
++        return this.rawClient.withContentType(request, requestOptions).thenApply(response -> response.body());
+     }
+ 
+     public CompletableFuture<Void> withContentType(InputStream stream, String filename) {
+@@ -136,13 +119,12 @@ public class AsyncServiceClient {
+                 .thenApply(response -> response.body());
+     }
+ 
+-    public CompletableFuture<Void> withFormEncoding(File file, WithFormEncodingRequest request) {
+-        return this.rawClient.withFormEncoding(file, request).thenApply(response -> response.body());
++    public CompletableFuture<Void> withFormEncoding(WithFormEncodingRequest request) {
++        return this.rawClient.withFormEncoding(request).thenApply(response -> response.body());
+     }
+ 
+-    public CompletableFuture<Void> withFormEncoding(
+-            File file, WithFormEncodingRequest request, RequestOptions requestOptions) {
+-        return this.rawClient.withFormEncoding(file, request, requestOptions).thenApply(response -> response.body());
++    public CompletableFuture<Void> withFormEncoding(WithFormEncodingRequest request, RequestOptions requestOptions) {
++        return this.rawClient.withFormEncoding(request, requestOptions).thenApply(response -> response.body());
+     }
+ 
+     public CompletableFuture<Void> withFormEncoding(InputStream stream, String filename) {
+@@ -165,78 +147,55 @@ public class AsyncServiceClient {
+                 .thenApply(response -> response.body());
+     }
+ 
+-    public CompletableFuture<Void> withFormEncodedContainers(
+-            File file, File fileList, Optional<File> maybeFile, Optional<File> maybeFileList, MyOtherRequest request) {
+-        return this.rawClient
+-                .withFormEncodedContainers(file, fileList, maybeFile, maybeFileList, request)
+-                .thenApply(response -> response.body());
++    public CompletableFuture<Void> withFormEncodedContainers(MyOtherRequest request) {
++        return this.rawClient.withFormEncodedContainers(request).thenApply(response -> response.body());
+     }
+ 
+-    public CompletableFuture<Void> withFormEncodedContainers(
+-            File file,
+-            File fileList,
+-            Optional<File> maybeFile,
+-            Optional<File> maybeFileList,
+-            MyOtherRequest request,
+-            RequestOptions requestOptions) {
+-        return this.rawClient
+-                .withFormEncodedContainers(file, fileList, maybeFile, maybeFileList, request, requestOptions)
+-                .thenApply(response -> response.body());
++    public CompletableFuture<Void> withFormEncodedContainers(MyOtherRequest request, RequestOptions requestOptions) {
++        return this.rawClient.withFormEncodedContainers(request, requestOptions).thenApply(response -> response.body());
+     }
+ 
+-    public CompletableFuture<String> optionalArgs(Optional<File> imageFile) {
+-        return this.rawClient.optionalArgs(imageFile).thenApply(response -> response.body());
++    public CompletableFuture<String> optionalArgs() {
++        return this.rawClient.optionalArgs().thenApply(response -> response.body());
+     }
+ 
+-    public CompletableFuture<String> optionalArgs(Optional<File> imageFile, RequestOptions requestOptions) {
+-        return this.rawClient.optionalArgs(imageFile, requestOptions).thenApply(response -> response.body());
++    public CompletableFuture<String> optionalArgs(RequestOptions requestOptions) {
++        return this.rawClient.optionalArgs(requestOptions).thenApply(response -> response.body());
+     }
+ 
+-    public CompletableFuture<String> optionalArgs(Optional<File> imageFile, OptionalArgsRequest request) {
+-        return this.rawClient.optionalArgs(imageFile, request).thenApply(response -> response.body());
++    public CompletableFuture<String> optionalArgs(OptionalArgsRequest request) {
++        return this.rawClient.optionalArgs(request).thenApply(response -> response.body());
+     }
+ 
+-    public CompletableFuture<String> optionalArgs(
+-            Optional<File> imageFile, OptionalArgsRequest request, RequestOptions requestOptions) {
+-        return this.rawClient.optionalArgs(imageFile, request, requestOptions).thenApply(response -> response.body());
++    public CompletableFuture<String> optionalArgs(OptionalArgsRequest request, RequestOptions requestOptions) {
++        return this.rawClient.optionalArgs(request, requestOptions).thenApply(response -> response.body());
+     }
+ 
+-    public CompletableFuture<String> optionalArgs(Optional<File> imageFile, InputStream stream, String filename) {
+-        return this.rawClient.optionalArgs(imageFile, stream, filename).thenApply(response -> response.body());
++    public CompletableFuture<String> optionalArgs(InputStream stream, String filename) {
++        return this.rawClient.optionalArgs(stream, filename).thenApply(response -> response.body());
+     }
+ 
+-    public CompletableFuture<String> optionalArgs(
+-            Optional<File> imageFile, InputStream stream, String filename, MediaType mediaType) {
+-        return this.rawClient
+-                .optionalArgs(imageFile, stream, filename, mediaType)
+-                .thenApply(response -> response.body());
++    public CompletableFuture<String> optionalArgs(InputStream stream, String filename, MediaType mediaType) {
++        return this.rawClient.optionalArgs(stream, filename, mediaType).thenApply(response -> response.body());
+     }
+ 
+-    public CompletableFuture<String> optionalArgs(
+-            Optional<File> imageFile, InputStream stream, String filename, RequestOptions requestOptions) {
+-        return this.rawClient
+-                .optionalArgs(imageFile, stream, filename, requestOptions)
+-                .thenApply(response -> response.body());
++    public CompletableFuture<String> optionalArgs(InputStream stream, String filename, RequestOptions requestOptions) {
++        return this.rawClient.optionalArgs(stream, filename, requestOptions).thenApply(response -> response.body());
+     }
+ 
+     public CompletableFuture<String> optionalArgs(
+-            Optional<File> imageFile,
+-            InputStream stream,
+-            String filename,
+-            MediaType mediaType,
+-            RequestOptions requestOptions) {
++            InputStream stream, String filename, MediaType mediaType, RequestOptions requestOptions) {
+         return this.rawClient
+-                .optionalArgs(imageFile, stream, filename, mediaType, requestOptions)
++                .optionalArgs(stream, filename, mediaType, requestOptions)
+                 .thenApply(response -> response.body());
+     }
+ 
+-    public CompletableFuture<String> withInlineType(File file, InlineTypeRequest request) {
+-        return this.rawClient.withInlineType(file, request).thenApply(response -> response.body());
++    public CompletableFuture<String> withInlineType(InlineTypeRequest request) {
++        return this.rawClient.withInlineType(request).thenApply(response -> response.body());
+     }
+ 
+-    public CompletableFuture<String> withInlineType(
+-            File file, InlineTypeRequest request, RequestOptions requestOptions) {
+-        return this.rawClient.withInlineType(file, request, requestOptions).thenApply(response -> response.body());
++    public CompletableFuture<String> withInlineType(InlineTypeRequest request, RequestOptions requestOptions) {
++        return this.rawClient.withInlineType(request, requestOptions).thenApply(response -> response.body());
+     }
+ 
+     public CompletableFuture<String> withInlineType(InputStream stream, String filename) {
+@@ -259,13 +218,12 @@ public class AsyncServiceClient {
+                 .thenApply(response -> response.body());
+     }
+ 
+-    public CompletableFuture<String> withJsonProperty(File file, WithJsonPropertyRequest request) {
+-        return this.rawClient.withJsonProperty(file, request).thenApply(response -> response.body());
++    public CompletableFuture<String> withJsonProperty(WithJsonPropertyRequest request) {
++        return this.rawClient.withJsonProperty(request).thenApply(response -> response.body());
+     }
+ 
+-    public CompletableFuture<String> withJsonProperty(
+-            File file, WithJsonPropertyRequest request, RequestOptions requestOptions) {
+-        return this.rawClient.withJsonProperty(file, request, requestOptions).thenApply(response -> response.body());
++    public CompletableFuture<String> withJsonProperty(WithJsonPropertyRequest request, RequestOptions requestOptions) {
++        return this.rawClient.withJsonProperty(request, requestOptions).thenApply(response -> response.body());
+     }
+ 
+     public CompletableFuture<String> withJsonProperty(InputStream stream, String filename) {
+@@ -296,15 +254,13 @@ public class AsyncServiceClient {
+         return this.rawClient.simple(requestOptions).thenApply(response -> response.body());
+     }
+ 
+-    public CompletableFuture<String> withLiteralAndEnumTypes(File file, LiteralEnumRequest request) {
+-        return this.rawClient.withLiteralAndEnumTypes(file, request).thenApply(response -> response.body());
++    public CompletableFuture<String> withLiteralAndEnumTypes(LiteralEnumRequest request) {
++        return this.rawClient.withLiteralAndEnumTypes(request).thenApply(response -> response.body());
+     }
+ 
+     public CompletableFuture<String> withLiteralAndEnumTypes(
+-            File file, LiteralEnumRequest request, RequestOptions requestOptions) {
+-        return this.rawClient
+-                .withLiteralAndEnumTypes(file, request, requestOptions)
+-                .thenApply(response -> response.body());
++            LiteralEnumRequest request, RequestOptions requestOptions) {
++        return this.rawClient.withLiteralAndEnumTypes(request, requestOptions).thenApply(response -> response.body());
+     }
+ 
+     public CompletableFuture<String> withLiteralAndEnumTypes(InputStream stream, String filename) {
+diff --git a/src/main/java/com/seed/fileUpload/resources/service/RawServiceClient.java b/src/main/java/com/seed/fileUpload/resources/service/RawServiceClient.java
+index 4df74c9e78a..fef65293921 100644
+--- a/src/main/java/com/seed/fileUpload/resources/service/RawServiceClient.java
++++ b/src/main/java/com/seed/fileUpload/resources/service/RawServiceClient.java
+@@ -23,11 +23,9 @@ import com.seed.fileUpload.resources.service.requests.OptionalArgsRequest;
+ import com.seed.fileUpload.resources.service.requests.WithContentTypeRequest;
+ import com.seed.fileUpload.resources.service.requests.WithFormEncodingRequest;
+ import com.seed.fileUpload.resources.service.requests.WithJsonPropertyRequest;
+-import java.io.File;
+ import java.io.IOException;
+ import java.io.InputStream;
+ import java.nio.file.Files;
+-import java.util.Optional;
+ import okhttp3.Headers;
+ import okhttp3.HttpUrl;
+ import okhttp3.MediaType;
+@@ -45,18 +43,11 @@ public class RawServiceClient {
+         this.clientOptions = clientOptions;
+     }
+ 
+-    public SeedFileUploadHttpResponse<Void> post(
+-            File file, File fileList, Optional<File> maybeFile, Optional<File> maybeFileList, MyRequest request) {
+-        return post(file, fileList, maybeFile, maybeFileList, request, null);
++    public SeedFileUploadHttpResponse<Void> post(MyRequest request) {
++        return post(request, null);
+     }
+ 
+-    public SeedFileUploadHttpResponse<Void> post(
+-            File file,
+-            File fileList,
+-            Optional<File> maybeFile,
+-            Optional<File> maybeFileList,
+-            MyRequest request,
+-            RequestOptions requestOptions) {
++    public SeedFileUploadHttpResponse<Void> post(MyRequest request, RequestOptions requestOptions) {
+         HttpUrl.Builder httpUrl =
+                 HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder();
+ 
+@@ -72,33 +63,36 @@ public class RawServiceClient {
+                         "maybe_string", request.getMaybeString().get());
+             }
+             multipartBodyBuilder.addFormDataPart("integer", Integer.toString(request.getInteger()));
+-            String fileMimeType = Files.probeContentType(file.toPath());
++            String fileMimeType = Files.probeContentType(request.getFile().toPath());
+             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
+             multipartBodyBuilder.addFormDataPart(
+-                    "file", file.getName(), RequestBody.create(file, fileMimeTypeMediaType));
+-            String fileListMimeType = Files.probeContentType(fileList.toPath());
++                    "file", request.getFile().getName(), RequestBody.create(request.getFile(), fileMimeTypeMediaType));
++            String fileListMimeType =
++                    Files.probeContentType(request.getFileList().toPath());
+             MediaType fileListMimeTypeMediaType = fileListMimeType != null ? MediaType.parse(fileListMimeType) : null;
+             multipartBodyBuilder.addFormDataPart(
+-                    "file_list", fileList.getName(), RequestBody.create(fileList, fileListMimeTypeMediaType));
+-            if (maybeFile.isPresent()) {
++                    "file_list",
++                    request.getFileList().getName(),
++                    RequestBody.create(request.getFileList(), fileListMimeTypeMediaType));
++            if (request.getMaybeFile().isPresent()) {
+                 String maybeFileMimeType =
+-                        Files.probeContentType(maybeFile.get().toPath());
++                        Files.probeContentType(request.getMaybeFile().get().toPath());
+                 MediaType maybeFileMimeTypeMediaType =
+                         maybeFileMimeType != null ? MediaType.parse(maybeFileMimeType) : null;
+                 multipartBodyBuilder.addFormDataPart(
+                         "maybe_file",
+-                        maybeFile.get().getName(),
+-                        RequestBody.create(maybeFile.get(), maybeFileMimeTypeMediaType));
++                        request.getMaybeFile().get().getName(),
++                        RequestBody.create(request.getMaybeFile().get(), maybeFileMimeTypeMediaType));
+             }
+-            if (maybeFileList.isPresent()) {
++            if (request.getMaybeFileList().isPresent()) {
+                 String maybeFileListMimeType =
+-                        Files.probeContentType(maybeFileList.get().toPath());
++                        Files.probeContentType(request.getMaybeFileList().get().toPath());
+                 MediaType maybeFileListMimeTypeMediaType =
+                         maybeFileListMimeType != null ? MediaType.parse(maybeFileListMimeType) : null;
+                 multipartBodyBuilder.addFormDataPart(
+                         "maybe_file_list",
+-                        maybeFileList.get().getName(),
+-                        RequestBody.create(maybeFileList.get(), maybeFileListMimeTypeMediaType));
++                        request.getMaybeFileList().get().getName(),
++                        RequestBody.create(request.getMaybeFileList().get(), maybeFileListMimeTypeMediaType));
+             }
+             if (request.getMaybeInteger().isPresent()) {
+                 multipartBodyBuilder.addFormDataPart(
+@@ -176,12 +170,11 @@ public class RawServiceClient {
+         }
+     }
+ 
+-    public SeedFileUploadHttpResponse<Void> justFile(File file, JustFileRequest request) {
+-        return justFile(file, request, null);
++    public SeedFileUploadHttpResponse<Void> justFile(JustFileRequest request) {
++        return justFile(request, null);
+     }
+ 
+-    public SeedFileUploadHttpResponse<Void> justFile(
+-            File file, JustFileRequest request, RequestOptions requestOptions) {
++    public SeedFileUploadHttpResponse<Void> justFile(JustFileRequest request, RequestOptions requestOptions) {
+         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                 .newBuilder()
+                 .addPathSegments("just-file");
+@@ -192,10 +185,10 @@ public class RawServiceClient {
+         }
+         MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+         try {
+-            String fileMimeType = Files.probeContentType(file.toPath());
++            String fileMimeType = Files.probeContentType(request.getFile().toPath());
+             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
+             multipartBodyBuilder.addFormDataPart(
+-                    "file", file.getName(), RequestBody.create(file, fileMimeTypeMediaType));
++                    "file", request.getFile().getName(), RequestBody.create(request.getFile(), fileMimeTypeMediaType));
+         } catch (Exception e) {
+             throw new RuntimeException(e);
+         }
+@@ -352,12 +345,12 @@ public class RawServiceClient {
+         }
+     }
+ 
+-    public SeedFileUploadHttpResponse<Void> justFileWithQueryParams(File file, JustFileWithQueryParamsRequest request) {
+-        return justFileWithQueryParams(file, request, null);
++    public SeedFileUploadHttpResponse<Void> justFileWithQueryParams(JustFileWithQueryParamsRequest request) {
++        return justFileWithQueryParams(request, null);
+     }
+ 
+     public SeedFileUploadHttpResponse<Void> justFileWithQueryParams(
+-            File file, JustFileWithQueryParamsRequest request, RequestOptions requestOptions) {
++            JustFileWithQueryParamsRequest request, RequestOptions requestOptions) {
+         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                 .newBuilder()
+                 .addPathSegments("just-file-with-query-params");
+@@ -385,10 +378,10 @@ public class RawServiceClient {
+         }
+         MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+         try {
+-            String fileMimeType = Files.probeContentType(file.toPath());
++            String fileMimeType = Files.probeContentType(request.getFile().toPath());
+             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
+             multipartBodyBuilder.addFormDataPart(
+-                    "file", file.getName(), RequestBody.create(file, fileMimeTypeMediaType));
++                    "file", request.getFile().getName(), RequestBody.create(request.getFile(), fileMimeTypeMediaType));
+         } catch (Exception e) {
+             throw new RuntimeException(e);
+         }
+@@ -416,12 +409,12 @@ public class RawServiceClient {
+     }
+ 
+     public SeedFileUploadHttpResponse<Void> justFileWithOptionalQueryParams(
+-            File file, JustFileWithOptionalQueryParamsRequest request) {
+-        return justFileWithOptionalQueryParams(file, request, null);
++            JustFileWithOptionalQueryParamsRequest request) {
++        return justFileWithOptionalQueryParams(request, null);
+     }
+ 
+     public SeedFileUploadHttpResponse<Void> justFileWithOptionalQueryParams(
+-            File file, JustFileWithOptionalQueryParamsRequest request, RequestOptions requestOptions) {
++            JustFileWithOptionalQueryParamsRequest request, RequestOptions requestOptions) {
+         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                 .newBuilder()
+                 .addPathSegments("just-file-with-optional-query-params");
+@@ -440,10 +433,10 @@ public class RawServiceClient {
+         }
+         MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+         try {
+-            String fileMimeType = Files.probeContentType(file.toPath());
++            String fileMimeType = Files.probeContentType(request.getFile().toPath());
+             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
+             multipartBodyBuilder.addFormDataPart(
+-                    "file", file.getName(), RequestBody.create(file, fileMimeTypeMediaType));
++                    "file", request.getFile().getName(), RequestBody.create(request.getFile(), fileMimeTypeMediaType));
+         } catch (Exception e) {
+             throw new RuntimeException(e);
+         }
+@@ -470,12 +463,12 @@ public class RawServiceClient {
+         }
+     }
+ 
+-    public SeedFileUploadHttpResponse<Void> withContentType(File file, WithContentTypeRequest request) {
+-        return withContentType(file, request, null);
++    public SeedFileUploadHttpResponse<Void> withContentType(WithContentTypeRequest request) {
++        return withContentType(request, null);
+     }
+ 
+     public SeedFileUploadHttpResponse<Void> withContentType(
+-            File file, WithContentTypeRequest request, RequestOptions requestOptions) {
++            WithContentTypeRequest request, RequestOptions requestOptions) {
+         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                 .newBuilder()
+                 .addPathSegments("with-content-type");
+@@ -486,10 +479,10 @@ public class RawServiceClient {
+         }
+         MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+         try {
+-            String fileMimeType = Files.probeContentType(file.toPath());
++            String fileMimeType = Files.probeContentType(request.getFile().toPath());
+             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
+             multipartBodyBuilder.addFormDataPart(
+-                    "file", file.getName(), RequestBody.create(file, fileMimeTypeMediaType));
++                    "file", request.getFile().getName(), RequestBody.create(request.getFile(), fileMimeTypeMediaType));
+             multipartBodyBuilder.addFormDataPart("foo", request.getFoo());
+             multipartBodyBuilder.addFormDataPart("bar", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getBar()));
+             if (request.getFooBar().isPresent()) {
+@@ -654,12 +647,12 @@ public class RawServiceClient {
+         }
+     }
+ 
+-    public SeedFileUploadHttpResponse<Void> withFormEncoding(File file, WithFormEncodingRequest request) {
+-        return withFormEncoding(file, request, null);
++    public SeedFileUploadHttpResponse<Void> withFormEncoding(WithFormEncodingRequest request) {
++        return withFormEncoding(request, null);
+     }
+ 
+     public SeedFileUploadHttpResponse<Void> withFormEncoding(
+-            File file, WithFormEncodingRequest request, RequestOptions requestOptions) {
++            WithFormEncodingRequest request, RequestOptions requestOptions) {
+         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                 .newBuilder()
+                 .addPathSegments("with-form-encoding");
+@@ -670,10 +663,10 @@ public class RawServiceClient {
+         }
+         MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+         try {
+-            String fileMimeType = Files.probeContentType(file.toPath());
++            String fileMimeType = Files.probeContentType(request.getFile().toPath());
+             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
+             multipartBodyBuilder.addFormDataPart(
+-                    "file", file.getName(), RequestBody.create(file, fileMimeTypeMediaType));
++                    "file", request.getFile().getName(), RequestBody.create(request.getFile(), fileMimeTypeMediaType));
+             QueryStringMapper.addFormDataPart(multipartBodyBuilder, "foo", request.getFoo(), false);
+             QueryStringMapper.addFormDataPart(multipartBodyBuilder, "bar", request.getBar(), false);
+         } catch (Exception e) {
+@@ -832,18 +825,12 @@ public class RawServiceClient {
+         }
+     }
+ 
+-    public SeedFileUploadHttpResponse<Void> withFormEncodedContainers(
+-            File file, File fileList, Optional<File> maybeFile, Optional<File> maybeFileList, MyOtherRequest request) {
+-        return withFormEncodedContainers(file, fileList, maybeFile, maybeFileList, request, null);
++    public SeedFileUploadHttpResponse<Void> withFormEncodedContainers(MyOtherRequest request) {
++        return withFormEncodedContainers(request, null);
+     }
+ 
+     public SeedFileUploadHttpResponse<Void> withFormEncodedContainers(
+-            File file,
+-            File fileList,
+-            Optional<File> maybeFile,
+-            Optional<File> maybeFileList,
+-            MyOtherRequest request,
+-            RequestOptions requestOptions) {
++            MyOtherRequest request, RequestOptions requestOptions) {
+         HttpUrl.Builder httpUrl =
+                 HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder();
+ 
+@@ -862,33 +849,36 @@ public class RawServiceClient {
+                         false);
+             }
+             QueryStringMapper.addFormDataPart(multipartBodyBuilder, "integer", request.getInteger(), false);
+-            String fileMimeType = Files.probeContentType(file.toPath());
++            String fileMimeType = Files.probeContentType(request.getFile().toPath());
+             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
+             multipartBodyBuilder.addFormDataPart(
+-                    "file", file.getName(), RequestBody.create(file, fileMimeTypeMediaType));
+-            String fileListMimeType = Files.probeContentType(fileList.toPath());
++                    "file", request.getFile().getName(), RequestBody.create(request.getFile(), fileMimeTypeMediaType));
++            String fileListMimeType =
++                    Files.probeContentType(request.getFileList().toPath());
+             MediaType fileListMimeTypeMediaType = fileListMimeType != null ? MediaType.parse(fileListMimeType) : null;
+             multipartBodyBuilder.addFormDataPart(
+-                    "file_list", fileList.getName(), RequestBody.create(fileList, fileListMimeTypeMediaType));
+-            if (maybeFile.isPresent()) {
++                    "file_list",
++                    request.getFileList().getName(),
++                    RequestBody.create(request.getFileList(), fileListMimeTypeMediaType));
++            if (request.getMaybeFile().isPresent()) {
+                 String maybeFileMimeType =
+-                        Files.probeContentType(maybeFile.get().toPath());
++                        Files.probeContentType(request.getMaybeFile().get().toPath());
+                 MediaType maybeFileMimeTypeMediaType =
+                         maybeFileMimeType != null ? MediaType.parse(maybeFileMimeType) : null;
+                 multipartBodyBuilder.addFormDataPart(
+                         "maybe_file",
+-                        maybeFile.get().getName(),
+-                        RequestBody.create(maybeFile.get(), maybeFileMimeTypeMediaType));
++                        request.getMaybeFile().get().getName(),
++                        RequestBody.create(request.getMaybeFile().get(), maybeFileMimeTypeMediaType));
+             }
+-            if (maybeFileList.isPresent()) {
++            if (request.getMaybeFileList().isPresent()) {
+                 String maybeFileListMimeType =
+-                        Files.probeContentType(maybeFileList.get().toPath());
++                        Files.probeContentType(request.getMaybeFileList().get().toPath());
+                 MediaType maybeFileListMimeTypeMediaType =
+                         maybeFileListMimeType != null ? MediaType.parse(maybeFileListMimeType) : null;
+                 multipartBodyBuilder.addFormDataPart(
+                         "maybe_file_list",
+-                        maybeFileList.get().getName(),
+-                        RequestBody.create(maybeFileList.get(), maybeFileListMimeTypeMediaType));
++                        request.getMaybeFileList().get().getName(),
++                        RequestBody.create(request.getMaybeFileList().get(), maybeFileListMimeTypeMediaType));
+             }
+             if (request.getMaybeInteger().isPresent()) {
+                 QueryStringMapper.addFormDataPart(
+@@ -963,20 +953,19 @@ public class RawServiceClient {
+         }
+     }
+ 
+-    public SeedFileUploadHttpResponse<String> optionalArgs(Optional<File> imageFile) {
+-        return optionalArgs(imageFile, OptionalArgsRequest.builder().build());
++    public SeedFileUploadHttpResponse<String> optionalArgs() {
++        return optionalArgs(OptionalArgsRequest.builder().build());
+     }
+ 
+-    public SeedFileUploadHttpResponse<String> optionalArgs(Optional<File> imageFile, RequestOptions requestOptions) {
+-        return optionalArgs(imageFile, OptionalArgsRequest.builder().build(), requestOptions);
++    public SeedFileUploadHttpResponse<String> optionalArgs(RequestOptions requestOptions) {
++        return optionalArgs(OptionalArgsRequest.builder().build(), requestOptions);
+     }
+ 
+-    public SeedFileUploadHttpResponse<String> optionalArgs(Optional<File> imageFile, OptionalArgsRequest request) {
+-        return optionalArgs(imageFile, request, null);
++    public SeedFileUploadHttpResponse<String> optionalArgs(OptionalArgsRequest request) {
++        return optionalArgs(request, null);
+     }
+ 
+-    public SeedFileUploadHttpResponse<String> optionalArgs(
+-            Optional<File> imageFile, OptionalArgsRequest request, RequestOptions requestOptions) {
++    public SeedFileUploadHttpResponse<String> optionalArgs(OptionalArgsRequest request, RequestOptions requestOptions) {
+         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                 .newBuilder()
+                 .addPathSegments("optional-args");
+@@ -987,15 +976,15 @@ public class RawServiceClient {
+         }
+         MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+         try {
+-            if (imageFile.isPresent()) {
++            if (request.getImageFile().isPresent()) {
+                 String imageFileMimeType =
+-                        Files.probeContentType(imageFile.get().toPath());
++                        Files.probeContentType(request.getImageFile().get().toPath());
+                 MediaType imageFileMimeTypeMediaType =
+                         imageFileMimeType != null ? MediaType.parse(imageFileMimeType) : null;
+                 multipartBodyBuilder.addFormDataPart(
+                         "image_file",
+-                        imageFile.get().getName(),
+-                        RequestBody.create(imageFile.get(), imageFileMimeTypeMediaType));
++                        request.getImageFile().get().getName(),
++                        RequestBody.create(request.getImageFile().get(), imageFileMimeTypeMediaType));
+             }
+             if (request.getRequest().isPresent()) {
+                 multipartBodyBuilder.addFormDataPart(
+@@ -1031,8 +1020,7 @@ public class RawServiceClient {
+         }
+     }
+ 
+-    public SeedFileUploadHttpResponse<String> optionalArgs(
+-            Optional<File> imageFile, InputStream stream, String filename) {
++    public SeedFileUploadHttpResponse<String> optionalArgs(InputStream stream, String filename) {
+         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                 .newBuilder()
+                 .addPathSegments("optional-args");
+@@ -1061,8 +1049,7 @@ public class RawServiceClient {
+         }
+     }
+ 
+-    public SeedFileUploadHttpResponse<String> optionalArgs(
+-            Optional<File> imageFile, InputStream stream, String filename, MediaType mediaType) {
++    public SeedFileUploadHttpResponse<String> optionalArgs(InputStream stream, String filename, MediaType mediaType) {
+         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                 .newBuilder()
+                 .addPathSegments("optional-args");
+@@ -1092,7 +1079,7 @@ public class RawServiceClient {
+     }
+ 
+     public SeedFileUploadHttpResponse<String> optionalArgs(
+-            Optional<File> imageFile, InputStream stream, String filename, RequestOptions requestOptions) {
++            InputStream stream, String filename, RequestOptions requestOptions) {
+         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                 .newBuilder()
+                 .addPathSegments("optional-args");
+@@ -1130,11 +1117,7 @@ public class RawServiceClient {
+     }
+ 
+     public SeedFileUploadHttpResponse<String> optionalArgs(
+-            Optional<File> imageFile,
+-            InputStream stream,
+-            String filename,
+-            MediaType mediaType,
+-            RequestOptions requestOptions) {
++            InputStream stream, String filename, MediaType mediaType, RequestOptions requestOptions) {
+         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                 .newBuilder()
+                 .addPathSegments("optional-args");
+@@ -1171,12 +1154,11 @@ public class RawServiceClient {
+         }
+     }
+ 
+-    public SeedFileUploadHttpResponse<String> withInlineType(File file, InlineTypeRequest request) {
+-        return withInlineType(file, request, null);
++    public SeedFileUploadHttpResponse<String> withInlineType(InlineTypeRequest request) {
++        return withInlineType(request, null);
+     }
+ 
+-    public SeedFileUploadHttpResponse<String> withInlineType(
+-            File file, InlineTypeRequest request, RequestOptions requestOptions) {
++    public SeedFileUploadHttpResponse<String> withInlineType(InlineTypeRequest request, RequestOptions requestOptions) {
+         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                 .newBuilder()
+                 .addPathSegments("inline-type");
+@@ -1187,10 +1169,10 @@ public class RawServiceClient {
+         }
+         MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+         try {
+-            String fileMimeType = Files.probeContentType(file.toPath());
++            String fileMimeType = Files.probeContentType(request.getFile().toPath());
+             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
+             multipartBodyBuilder.addFormDataPart(
+-                    "file", file.getName(), RequestBody.create(file, fileMimeTypeMediaType));
++                    "file", request.getFile().getName(), RequestBody.create(request.getFile(), fileMimeTypeMediaType));
+             multipartBodyBuilder.addFormDataPart(
+                     "request", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getRequest()));
+         } catch (Exception e) {
+@@ -1355,12 +1337,12 @@ public class RawServiceClient {
+         }
+     }
+ 
+-    public SeedFileUploadHttpResponse<String> withJsonProperty(File file, WithJsonPropertyRequest request) {
+-        return withJsonProperty(file, request, null);
++    public SeedFileUploadHttpResponse<String> withJsonProperty(WithJsonPropertyRequest request) {
++        return withJsonProperty(request, null);
+     }
+ 
+     public SeedFileUploadHttpResponse<String> withJsonProperty(
+-            File file, WithJsonPropertyRequest request, RequestOptions requestOptions) {
++            WithJsonPropertyRequest request, RequestOptions requestOptions) {
+         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                 .newBuilder()
+                 .addPathSegments("with-json-property");
+@@ -1371,10 +1353,10 @@ public class RawServiceClient {
+         }
+         MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+         try {
+-            String fileMimeType = Files.probeContentType(file.toPath());
++            String fileMimeType = Files.probeContentType(request.getFile().toPath());
+             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
+             multipartBodyBuilder.addFormDataPart(
+-                    "file", file.getName(), RequestBody.create(file, fileMimeTypeMediaType));
++                    "file", request.getFile().getName(), RequestBody.create(request.getFile(), fileMimeTypeMediaType));
+             if (request.getJson().isPresent()) {
+                 multipartBodyBuilder.addFormDataPart(
+                         "json",
+@@ -1580,12 +1562,12 @@ public class RawServiceClient {
+         }
+     }
+ 
+-    public SeedFileUploadHttpResponse<String> withLiteralAndEnumTypes(File file, LiteralEnumRequest request) {
+-        return withLiteralAndEnumTypes(file, request, null);
++    public SeedFileUploadHttpResponse<String> withLiteralAndEnumTypes(LiteralEnumRequest request) {
++        return withLiteralAndEnumTypes(request, null);
+     }
+ 
+     public SeedFileUploadHttpResponse<String> withLiteralAndEnumTypes(
+-            File file, LiteralEnumRequest request, RequestOptions requestOptions) {
++            LiteralEnumRequest request, RequestOptions requestOptions) {
+         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                 .newBuilder()
+                 .addPathSegments("with-literal-enum");
+@@ -1596,10 +1578,10 @@ public class RawServiceClient {
+         }
+         MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+         try {
+-            String fileMimeType = Files.probeContentType(file.toPath());
++            String fileMimeType = Files.probeContentType(request.getFile().toPath());
+             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
+             multipartBodyBuilder.addFormDataPart(
+-                    "file", file.getName(), RequestBody.create(file, fileMimeTypeMediaType));
++                    "file", request.getFile().getName(), RequestBody.create(request.getFile(), fileMimeTypeMediaType));
+             if (request.getModelType().isPresent()) {
+                 multipartBodyBuilder.addFormDataPart(
+                         "model_type", request.getModelType().get());
+diff --git a/src/main/java/com/seed/fileUpload/resources/service/ServiceClient.java b/src/main/java/com/seed/fileUpload/resources/service/ServiceClient.java
+index dade37cf1a4..054276b2afe 100644
+--- a/src/main/java/com/seed/fileUpload/resources/service/ServiceClient.java
++++ b/src/main/java/com/seed/fileUpload/resources/service/ServiceClient.java
+@@ -16,9 +16,7 @@ import com.seed.fileUpload.resources.service.requests.OptionalArgsRequest;
+ import com.seed.fileUpload.resources.service.requests.WithContentTypeRequest;
+ import com.seed.fileUpload.resources.service.requests.WithFormEncodingRequest;
+ import com.seed.fileUpload.resources.service.requests.WithJsonPropertyRequest;
+-import java.io.File;
+ import java.io.InputStream;
+-import java.util.Optional;
+ import okhttp3.MediaType;
+ 
+ public class ServiceClient {
+@@ -38,29 +36,20 @@ public class ServiceClient {
+         return this.rawClient;
+     }
+ 
+-    public void post(
+-            File file, File fileList, Optional<File> maybeFile, Optional<File> maybeFileList, MyRequest request) {
+-        this.rawClient.post(file, fileList, maybeFile, maybeFileList, request).body();
++    public void post(MyRequest request) {
++        this.rawClient.post(request).body();
+     }
+ 
+-    public void post(
+-            File file,
+-            File fileList,
+-            Optional<File> maybeFile,
+-            Optional<File> maybeFileList,
+-            MyRequest request,
+-            RequestOptions requestOptions) {
+-        this.rawClient
+-                .post(file, fileList, maybeFile, maybeFileList, request, requestOptions)
+-                .body();
++    public void post(MyRequest request, RequestOptions requestOptions) {
++        this.rawClient.post(request, requestOptions).body();
+     }
+ 
+-    public void justFile(File file, JustFileRequest request) {
+-        this.rawClient.justFile(file, request).body();
++    public void justFile(JustFileRequest request) {
++        this.rawClient.justFile(request).body();
+     }
+ 
+-    public void justFile(File file, JustFileRequest request, RequestOptions requestOptions) {
+-        this.rawClient.justFile(file, request, requestOptions).body();
++    public void justFile(JustFileRequest request, RequestOptions requestOptions) {
++        this.rawClient.justFile(request, requestOptions).body();
+     }
+ 
+     public void justFile(InputStream stream, String filename) {
+@@ -79,32 +68,29 @@ public class ServiceClient {
+         this.rawClient.justFile(stream, filename, mediaType, requestOptions).body();
+     }
+ 
+-    public void justFileWithQueryParams(File file, JustFileWithQueryParamsRequest request) {
+-        this.rawClient.justFileWithQueryParams(file, request).body();
++    public void justFileWithQueryParams(JustFileWithQueryParamsRequest request) {
++        this.rawClient.justFileWithQueryParams(request).body();
+     }
+ 
+-    public void justFileWithQueryParams(
+-            File file, JustFileWithQueryParamsRequest request, RequestOptions requestOptions) {
+-        this.rawClient.justFileWithQueryParams(file, request, requestOptions).body();
++    public void justFileWithQueryParams(JustFileWithQueryParamsRequest request, RequestOptions requestOptions) {
++        this.rawClient.justFileWithQueryParams(request, requestOptions).body();
+     }
+ 
+-    public void justFileWithOptionalQueryParams(File file, JustFileWithOptionalQueryParamsRequest request) {
+-        this.rawClient.justFileWithOptionalQueryParams(file, request).body();
++    public void justFileWithOptionalQueryParams(JustFileWithOptionalQueryParamsRequest request) {
++        this.rawClient.justFileWithOptionalQueryParams(request).body();
+     }
+ 
+     public void justFileWithOptionalQueryParams(
+-            File file, JustFileWithOptionalQueryParamsRequest request, RequestOptions requestOptions) {
+-        this.rawClient
+-                .justFileWithOptionalQueryParams(file, request, requestOptions)
+-                .body();
++            JustFileWithOptionalQueryParamsRequest request, RequestOptions requestOptions) {
++        this.rawClient.justFileWithOptionalQueryParams(request, requestOptions).body();
+     }
+ 
+-    public void withContentType(File file, WithContentTypeRequest request) {
+-        this.rawClient.withContentType(file, request).body();
++    public void withContentType(WithContentTypeRequest request) {
++        this.rawClient.withContentType(request).body();
+     }
+ 
+-    public void withContentType(File file, WithContentTypeRequest request, RequestOptions requestOptions) {
+-        this.rawClient.withContentType(file, request, requestOptions).body();
++    public void withContentType(WithContentTypeRequest request, RequestOptions requestOptions) {
++        this.rawClient.withContentType(request, requestOptions).body();
+     }
+ 
+     public void withContentType(InputStream stream, String filename) {
+@@ -126,12 +112,12 @@ public class ServiceClient {
+                 .body();
+     }
+ 
+-    public void withFormEncoding(File file, WithFormEncodingRequest request) {
+-        this.rawClient.withFormEncoding(file, request).body();
++    public void withFormEncoding(WithFormEncodingRequest request) {
++        this.rawClient.withFormEncoding(request).body();
+     }
+ 
+-    public void withFormEncoding(File file, WithFormEncodingRequest request, RequestOptions requestOptions) {
+-        this.rawClient.withFormEncoding(file, request, requestOptions).body();
++    public void withFormEncoding(WithFormEncodingRequest request, RequestOptions requestOptions) {
++        this.rawClient.withFormEncoding(request, requestOptions).body();
+     }
+ 
+     public void withFormEncoding(InputStream stream, String filename) {
+@@ -153,75 +139,55 @@ public class ServiceClient {
+                 .body();
+     }
+ 
+-    public void withFormEncodedContainers(
+-            File file, File fileList, Optional<File> maybeFile, Optional<File> maybeFileList, MyOtherRequest request) {
+-        this.rawClient
+-                .withFormEncodedContainers(file, fileList, maybeFile, maybeFileList, request)
+-                .body();
++    public void withFormEncodedContainers(MyOtherRequest request) {
++        this.rawClient.withFormEncodedContainers(request).body();
+     }
+ 
+-    public void withFormEncodedContainers(
+-            File file,
+-            File fileList,
+-            Optional<File> maybeFile,
+-            Optional<File> maybeFileList,
+-            MyOtherRequest request,
+-            RequestOptions requestOptions) {
+-        this.rawClient
+-                .withFormEncodedContainers(file, fileList, maybeFile, maybeFileList, request, requestOptions)
+-                .body();
++    public void withFormEncodedContainers(MyOtherRequest request, RequestOptions requestOptions) {
++        this.rawClient.withFormEncodedContainers(request, requestOptions).body();
+     }
+ 
+-    public String optionalArgs(Optional<File> imageFile) {
+-        return this.rawClient.optionalArgs(imageFile).body();
++    public String optionalArgs() {
++        return this.rawClient.optionalArgs().body();
+     }
+ 
+-    public String optionalArgs(Optional<File> imageFile, RequestOptions requestOptions) {
+-        return this.rawClient.optionalArgs(imageFile, requestOptions).body();
++    public String optionalArgs(RequestOptions requestOptions) {
++        return this.rawClient.optionalArgs(requestOptions).body();
+     }
+ 
+-    public String optionalArgs(Optional<File> imageFile, OptionalArgsRequest request) {
+-        return this.rawClient.optionalArgs(imageFile, request).body();
++    public String optionalArgs(OptionalArgsRequest request) {
++        return this.rawClient.optionalArgs(request).body();
+     }
+ 
+-    public String optionalArgs(Optional<File> imageFile, OptionalArgsRequest request, RequestOptions requestOptions) {
+-        return this.rawClient.optionalArgs(imageFile, request, requestOptions).body();
++    public String optionalArgs(OptionalArgsRequest request, RequestOptions requestOptions) {
++        return this.rawClient.optionalArgs(request, requestOptions).body();
+     }
+ 
+-    public String optionalArgs(Optional<File> imageFile, InputStream stream, String filename) {
+-        return this.rawClient.optionalArgs(imageFile, stream, filename).body();
++    public String optionalArgs(InputStream stream, String filename) {
++        return this.rawClient.optionalArgs(stream, filename).body();
+     }
+ 
+-    public String optionalArgs(Optional<File> imageFile, InputStream stream, String filename, MediaType mediaType) {
+-        return this.rawClient
+-                .optionalArgs(imageFile, stream, filename, mediaType)
+-                .body();
++    public String optionalArgs(InputStream stream, String filename, MediaType mediaType) {
++        return this.rawClient.optionalArgs(stream, filename, mediaType).body();
+     }
+ 
+-    public String optionalArgs(
+-            Optional<File> imageFile, InputStream stream, String filename, RequestOptions requestOptions) {
+-        return this.rawClient
+-                .optionalArgs(imageFile, stream, filename, requestOptions)
+-                .body();
++    public String optionalArgs(InputStream stream, String filename, RequestOptions requestOptions) {
++        return this.rawClient.optionalArgs(stream, filename, requestOptions).body();
+     }
+ 
+     public String optionalArgs(
+-            Optional<File> imageFile,
+-            InputStream stream,
+-            String filename,
+-            MediaType mediaType,
+-            RequestOptions requestOptions) {
++            InputStream stream, String filename, MediaType mediaType, RequestOptions requestOptions) {
+         return this.rawClient
+-                .optionalArgs(imageFile, stream, filename, mediaType, requestOptions)
++                .optionalArgs(stream, filename, mediaType, requestOptions)
+                 .body();
+     }
+ 
+-    public String withInlineType(File file, InlineTypeRequest request) {
+-        return this.rawClient.withInlineType(file, request).body();
++    public String withInlineType(InlineTypeRequest request) {
++        return this.rawClient.withInlineType(request).body();
+     }
+ 
+-    public String withInlineType(File file, InlineTypeRequest request, RequestOptions requestOptions) {
+-        return this.rawClient.withInlineType(file, request, requestOptions).body();
++    public String withInlineType(InlineTypeRequest request, RequestOptions requestOptions) {
++        return this.rawClient.withInlineType(request, requestOptions).body();
+     }
+ 
+     public String withInlineType(InputStream stream, String filename) {
+@@ -243,12 +209,12 @@ public class ServiceClient {
+                 .body();
+     }
+ 
+-    public String withJsonProperty(File file, WithJsonPropertyRequest request) {
+-        return this.rawClient.withJsonProperty(file, request).body();
++    public String withJsonProperty(WithJsonPropertyRequest request) {
++        return this.rawClient.withJsonProperty(request).body();
+     }
+ 
+-    public String withJsonProperty(File file, WithJsonPropertyRequest request, RequestOptions requestOptions) {
+-        return this.rawClient.withJsonProperty(file, request, requestOptions).body();
++    public String withJsonProperty(WithJsonPropertyRequest request, RequestOptions requestOptions) {
++        return this.rawClient.withJsonProperty(request, requestOptions).body();
+     }
+ 
+     public String withJsonProperty(InputStream stream, String filename) {
+@@ -278,14 +244,12 @@ public class ServiceClient {
+         this.rawClient.simple(requestOptions).body();
+     }
+ 
+-    public String withLiteralAndEnumTypes(File file, LiteralEnumRequest request) {
+-        return this.rawClient.withLiteralAndEnumTypes(file, request).body();
++    public String withLiteralAndEnumTypes(LiteralEnumRequest request) {
++        return this.rawClient.withLiteralAndEnumTypes(request).body();
+     }
+ 
+-    public String withLiteralAndEnumTypes(File file, LiteralEnumRequest request, RequestOptions requestOptions) {
+-        return this.rawClient
+-                .withLiteralAndEnumTypes(file, request, requestOptions)
+-                .body();
++    public String withLiteralAndEnumTypes(LiteralEnumRequest request, RequestOptions requestOptions) {
++        return this.rawClient.withLiteralAndEnumTypes(request, requestOptions).body();
+     }
+ 
+     public String withLiteralAndEnumTypes(InputStream stream, String filename) {
+diff --git a/src/main/java/com/seed/fileUpload/resources/service/requests/InlineTypeRequest.java b/src/main/java/com/seed/fileUpload/resources/service/requests/InlineTypeRequest.java
+index 2e3f2b6783a..cc6ba07514b 100644
+--- a/src/main/java/com/seed/fileUpload/resources/service/requests/InlineTypeRequest.java
++++ b/src/main/java/com/seed/fileUpload/resources/service/requests/InlineTypeRequest.java
+@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
+ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+ import com.seed.fileUpload.core.ObjectMappers;
+ import com.seed.fileUpload.resources.service.types.MyInlineType;
++import java.io.File;
+ import java.util.HashMap;
+ import java.util.Map;
+ import java.util.Objects;
+@@ -20,15 +21,23 @@ import org.jetbrains.annotations.NotNull;
+ @JsonInclude(JsonInclude.Include.NON_ABSENT)
+ @JsonDeserialize(builder = InlineTypeRequest.Builder.class)
+ public final class InlineTypeRequest {
++    private final File file;
++
+     private final MyInlineType request;
+ 
+     private final Map<String, Object> additionalProperties;
+ 
+-    private InlineTypeRequest(MyInlineType request, Map<String, Object> additionalProperties) {
++    private InlineTypeRequest(File file, MyInlineType request, Map<String, Object> additionalProperties) {
++        this.file = file;
+         this.request = request;
+         this.additionalProperties = additionalProperties;
+     }
+ 
++    @JsonProperty("file")
++    public File getFile() {
++        return file;
++    }
++
+     @JsonProperty("request")
+     public MyInlineType getRequest() {
+         return request;
+@@ -46,12 +55,12 @@ public final class InlineTypeRequest {
+     }
+ 
+     private boolean equalTo(InlineTypeRequest other) {
+-        return request.equals(other.request);
++        return file.equals(other.file) && request.equals(other.request);
+     }
+ 
+     @java.lang.Override
+     public int hashCode() {
+-        return Objects.hash(this.request);
++        return Objects.hash(this.file, this.request);
+     }
+ 
+     @java.lang.Override
+@@ -59,16 +68,20 @@ public final class InlineTypeRequest {
+         return ObjectMappers.stringify(this);
+     }
+ 
+-    public static RequestStage builder() {
++    public static FileStage builder() {
+         return new Builder();
+     }
+ 
+-    public interface RequestStage {
+-        _FinalStage request(@NotNull MyInlineType request);
++    public interface FileStage {
++        RequestStage file(@NotNull File file);
+ 
+         Builder from(InlineTypeRequest other);
+     }
+ 
++    public interface RequestStage {
++        _FinalStage request(@NotNull MyInlineType request);
++    }
++
+     public interface _FinalStage {
+         InlineTypeRequest build();
+ 
+@@ -78,7 +91,9 @@ public final class InlineTypeRequest {
+     }
+ 
+     @JsonIgnoreProperties(ignoreUnknown = true)
+-    public static final class Builder implements RequestStage, _FinalStage {
++    public static final class Builder implements FileStage, RequestStage, _FinalStage {
++        private File file;
++
+         private MyInlineType request;
+ 
+         @JsonAnySetter
+@@ -88,10 +103,18 @@ public final class InlineTypeRequest {
+ 
+         @java.lang.Override
+         public Builder from(InlineTypeRequest other) {
++            file(other.getFile());
+             request(other.getRequest());
+             return this;
+         }
+ 
++        @java.lang.Override
++        @JsonSetter("file")
++        public RequestStage file(@NotNull File file) {
++            this.file = Objects.requireNonNull(file, "file must not be null");
++            return this;
++        }
++
+         @java.lang.Override
+         @JsonSetter("request")
+         public _FinalStage request(@NotNull MyInlineType request) {
+@@ -101,7 +124,7 @@ public final class InlineTypeRequest {
+ 
+         @java.lang.Override
+         public InlineTypeRequest build() {
+-            return new InlineTypeRequest(request, additionalProperties);
++            return new InlineTypeRequest(file, request, additionalProperties);
+         }
+ 
+         @java.lang.Override
+diff --git a/src/main/java/com/seed/fileUpload/resources/service/requests/JustFileRequest.java b/src/main/java/com/seed/fileUpload/resources/service/requests/JustFileRequest.java
+index bf51ba8de82..5454ec23445 100644
+--- a/src/main/java/com/seed/fileUpload/resources/service/requests/JustFileRequest.java
++++ b/src/main/java/com/seed/fileUpload/resources/service/requests/JustFileRequest.java
+@@ -7,24 +7,37 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter;
+ import com.fasterxml.jackson.annotation.JsonAnySetter;
+ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+ import com.fasterxml.jackson.annotation.JsonInclude;
++import com.fasterxml.jackson.annotation.JsonProperty;
++import com.fasterxml.jackson.annotation.JsonSetter;
+ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+ import com.seed.fileUpload.core.ObjectMappers;
++import java.io.File;
+ import java.util.HashMap;
+ import java.util.Map;
++import java.util.Objects;
++import org.jetbrains.annotations.NotNull;
+ 
+ @JsonInclude(JsonInclude.Include.NON_ABSENT)
+ @JsonDeserialize(builder = JustFileRequest.Builder.class)
+ public final class JustFileRequest {
++    private final File file;
++
+     private final Map<String, Object> additionalProperties;
+ 
+-    private JustFileRequest(Map<String, Object> additionalProperties) {
++    private JustFileRequest(File file, Map<String, Object> additionalProperties) {
++        this.file = file;
+         this.additionalProperties = additionalProperties;
+     }
+ 
++    @JsonProperty("file")
++    public File getFile() {
++        return file;
++    }
++
+     @java.lang.Override
+     public boolean equals(Object other) {
+         if (this == other) return true;
+-        return other instanceof JustFileRequest;
++        return other instanceof JustFileRequest && equalTo((JustFileRequest) other);
+     }
+ 
+     @JsonAnyGetter
+@@ -32,35 +45,72 @@ public final class JustFileRequest {
+         return this.additionalProperties;
+     }
+ 
++    private boolean equalTo(JustFileRequest other) {
++        return file.equals(other.file);
++    }
++
++    @java.lang.Override
++    public int hashCode() {
++        return Objects.hash(this.file);
++    }
++
+     @java.lang.Override
+     public String toString() {
+         return ObjectMappers.stringify(this);
+     }
+ 
+-    public static Builder builder() {
++    public static FileStage builder() {
+         return new Builder();
+     }
+ 
++    public interface FileStage {
++        _FinalStage file(@NotNull File file);
++
++        Builder from(JustFileRequest other);
++    }
++
++    public interface _FinalStage {
++        JustFileRequest build();
++
++        _FinalStage additionalProperty(String key, Object value);
++
++        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
++    }
++
+     @JsonIgnoreProperties(ignoreUnknown = true)
+-    public static final class Builder {
++    public static final class Builder implements FileStage, _FinalStage {
++        private File file;
++
+         @JsonAnySetter
+         private Map<String, Object> additionalProperties = new HashMap<>();
+ 
+         private Builder() {}
+ 
++        @java.lang.Override
+         public Builder from(JustFileRequest other) {
++            file(other.getFile());
++            return this;
++        }
++
++        @java.lang.Override
++        @JsonSetter("file")
++        public _FinalStage file(@NotNull File file) {
++            this.file = Objects.requireNonNull(file, "file must not be null");
+             return this;
+         }
+ 
++        @java.lang.Override
+         public JustFileRequest build() {
+-            return new JustFileRequest(additionalProperties);
++            return new JustFileRequest(file, additionalProperties);
+         }
+ 
++        @java.lang.Override
+         public Builder additionalProperty(String key, Object value) {
+             this.additionalProperties.put(key, value);
+             return this;
+         }
+ 
++        @java.lang.Override
+         public Builder additionalProperties(Map<String, Object> additionalProperties) {
+             this.additionalProperties.putAll(additionalProperties);
+             return this;
+diff --git a/src/main/java/com/seed/fileUpload/resources/service/requests/JustFileWithOptionalQueryParamsRequest.java b/src/main/java/com/seed/fileUpload/resources/service/requests/JustFileWithOptionalQueryParamsRequest.java
+index bde6d631d1c..88c9cc04613 100644
+--- a/src/main/java/com/seed/fileUpload/resources/service/requests/JustFileWithOptionalQueryParamsRequest.java
++++ b/src/main/java/com/seed/fileUpload/resources/service/requests/JustFileWithOptionalQueryParamsRequest.java
+@@ -8,18 +8,23 @@ import com.fasterxml.jackson.annotation.JsonAnySetter;
+ import com.fasterxml.jackson.annotation.JsonIgnore;
+ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+ import com.fasterxml.jackson.annotation.JsonInclude;
++import com.fasterxml.jackson.annotation.JsonProperty;
+ import com.fasterxml.jackson.annotation.JsonSetter;
+ import com.fasterxml.jackson.annotation.Nulls;
+ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+ import com.seed.fileUpload.core.ObjectMappers;
++import java.io.File;
+ import java.util.HashMap;
+ import java.util.Map;
+ import java.util.Objects;
+ import java.util.Optional;
++import org.jetbrains.annotations.NotNull;
+ 
+ @JsonInclude(JsonInclude.Include.NON_ABSENT)
+ @JsonDeserialize(builder = JustFileWithOptionalQueryParamsRequest.Builder.class)
+ public final class JustFileWithOptionalQueryParamsRequest {
++    private final File file;
++
+     private final Optional<String> maybeString;
+ 
+     private final Optional<Integer> maybeInteger;
+@@ -27,12 +32,21 @@ public final class JustFileWithOptionalQueryParamsRequest {
+     private final Map<String, Object> additionalProperties;
+ 
+     private JustFileWithOptionalQueryParamsRequest(
+-            Optional<String> maybeString, Optional<Integer> maybeInteger, Map<String, Object> additionalProperties) {
++            File file,
++            Optional<String> maybeString,
++            Optional<Integer> maybeInteger,
++            Map<String, Object> additionalProperties) {
++        this.file = file;
+         this.maybeString = maybeString;
+         this.maybeInteger = maybeInteger;
+         this.additionalProperties = additionalProperties;
+     }
+ 
++    @JsonProperty("file")
++    public File getFile() {
++        return file;
++    }
++
+     @JsonIgnore
+     public Optional<String> getMaybeString() {
+         return maybeString;
+@@ -56,12 +70,14 @@ public final class JustFileWithOptionalQueryParamsRequest {
+     }
+ 
+     private boolean equalTo(JustFileWithOptionalQueryParamsRequest other) {
+-        return maybeString.equals(other.maybeString) && maybeInteger.equals(other.maybeInteger);
++        return file.equals(other.file)
++                && maybeString.equals(other.maybeString)
++                && maybeInteger.equals(other.maybeInteger);
+     }
+ 
+     @java.lang.Override
+     public int hashCode() {
+-        return Objects.hash(this.maybeString, this.maybeInteger);
++        return Objects.hash(this.file, this.maybeString, this.maybeInteger);
+     }
+ 
+     @java.lang.Override
+@@ -69,58 +85,98 @@ public final class JustFileWithOptionalQueryParamsRequest {
+         return ObjectMappers.stringify(this);
+     }
+ 
+-    public static Builder builder() {
++    public static FileStage builder() {
+         return new Builder();
+     }
+ 
++    public interface FileStage {
++        _FinalStage file(@NotNull File file);
++
++        Builder from(JustFileWithOptionalQueryParamsRequest other);
++    }
++
++    public interface _FinalStage {
++        JustFileWithOptionalQueryParamsRequest build();
++
++        _FinalStage additionalProperty(String key, Object value);
++
++        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
++
++        _FinalStage maybeString(Optional<String> maybeString);
++
++        _FinalStage maybeString(String maybeString);
++
++        _FinalStage maybeInteger(Optional<Integer> maybeInteger);
++
++        _FinalStage maybeInteger(Integer maybeInteger);
++    }
++
+     @JsonIgnoreProperties(ignoreUnknown = true)
+-    public static final class Builder {
+-        private Optional<String> maybeString = Optional.empty();
++    public static final class Builder implements FileStage, _FinalStage {
++        private File file;
+ 
+         private Optional<Integer> maybeInteger = Optional.empty();
+ 
++        private Optional<String> maybeString = Optional.empty();
++
+         @JsonAnySetter
+         private Map<String, Object> additionalProperties = new HashMap<>();
+ 
+         private Builder() {}
+ 
++        @java.lang.Override
+         public Builder from(JustFileWithOptionalQueryParamsRequest other) {
++            file(other.getFile());
+             maybeString(other.getMaybeString());
+             maybeInteger(other.getMaybeInteger());
+             return this;
+         }
+ 
+-        @JsonSetter(value = "maybeString", nulls = Nulls.SKIP)
+-        public Builder maybeString(Optional<String> maybeString) {
+-            this.maybeString = maybeString;
++        @java.lang.Override
++        @JsonSetter("file")
++        public _FinalStage file(@NotNull File file) {
++            this.file = Objects.requireNonNull(file, "file must not be null");
+             return this;
+         }
+ 
+-        public Builder maybeString(String maybeString) {
+-            this.maybeString = Optional.ofNullable(maybeString);
++        @java.lang.Override
++        public _FinalStage maybeInteger(Integer maybeInteger) {
++            this.maybeInteger = Optional.ofNullable(maybeInteger);
+             return this;
+         }
+ 
++        @java.lang.Override
+         @JsonSetter(value = "maybeInteger", nulls = Nulls.SKIP)
+-        public Builder maybeInteger(Optional<Integer> maybeInteger) {
++        public _FinalStage maybeInteger(Optional<Integer> maybeInteger) {
+             this.maybeInteger = maybeInteger;
+             return this;
+         }
+ 
+-        public Builder maybeInteger(Integer maybeInteger) {
+-            this.maybeInteger = Optional.ofNullable(maybeInteger);
++        @java.lang.Override
++        public _FinalStage maybeString(String maybeString) {
++            this.maybeString = Optional.ofNullable(maybeString);
++            return this;
++        }
++
++        @java.lang.Override
++        @JsonSetter(value = "maybeString", nulls = Nulls.SKIP)
++        public _FinalStage maybeString(Optional<String> maybeString) {
++            this.maybeString = maybeString;
+             return this;
+         }
+ 
++        @java.lang.Override
+         public JustFileWithOptionalQueryParamsRequest build() {
+-            return new JustFileWithOptionalQueryParamsRequest(maybeString, maybeInteger, additionalProperties);
++            return new JustFileWithOptionalQueryParamsRequest(file, maybeString, maybeInteger, additionalProperties);
+         }
+ 
++        @java.lang.Override
+         public Builder additionalProperty(String key, Object value) {
+             this.additionalProperties.put(key, value);
+             return this;
+         }
+ 
++        @java.lang.Override
+         public Builder additionalProperties(Map<String, Object> additionalProperties) {
+             this.additionalProperties.putAll(additionalProperties);
+             return this;
+diff --git a/src/main/java/com/seed/fileUpload/resources/service/requests/JustFileWithQueryParamsRequest.java b/src/main/java/com/seed/fileUpload/resources/service/requests/JustFileWithQueryParamsRequest.java
+index 79a5f76e365..d31fd1eb41a 100644
+--- a/src/main/java/com/seed/fileUpload/resources/service/requests/JustFileWithQueryParamsRequest.java
++++ b/src/main/java/com/seed/fileUpload/resources/service/requests/JustFileWithQueryParamsRequest.java
+@@ -8,10 +8,12 @@ import com.fasterxml.jackson.annotation.JsonAnySetter;
+ import com.fasterxml.jackson.annotation.JsonIgnore;
+ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+ import com.fasterxml.jackson.annotation.JsonInclude;
++import com.fasterxml.jackson.annotation.JsonProperty;
+ import com.fasterxml.jackson.annotation.JsonSetter;
+ import com.fasterxml.jackson.annotation.Nulls;
+ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+ import com.seed.fileUpload.core.ObjectMappers;
++import java.io.File;
+ import java.util.ArrayList;
+ import java.util.Collections;
+ import java.util.HashMap;
+@@ -19,10 +21,13 @@ import java.util.List;
+ import java.util.Map;
+ import java.util.Objects;
+ import java.util.Optional;
++import org.jetbrains.annotations.NotNull;
+ 
+ @JsonInclude(JsonInclude.Include.NON_ABSENT)
+ @JsonDeserialize(builder = JustFileWithQueryParamsRequest.Builder.class)
+ public final class JustFileWithQueryParamsRequest {
++    private final File file;
++
+     private final List<String> listOfStrings;
+ 
+     private final Optional<List<String>> optionalListOfStrings;
+@@ -36,12 +41,14 @@ public final class JustFileWithQueryParamsRequest {
+     private final Map<String, Object> additionalProperties;
+ 
+     private JustFileWithQueryParamsRequest(
++            File file,
+             List<String> listOfStrings,
+             Optional<List<String>> optionalListOfStrings,
+             Optional<String> maybeString,
+             int integer,
+             Optional<Integer> maybeInteger,
+             Map<String, Object> additionalProperties) {
++        this.file = file;
+         this.listOfStrings = listOfStrings;
+         this.optionalListOfStrings = optionalListOfStrings;
+         this.maybeString = maybeString;
+@@ -50,6 +57,11 @@ public final class JustFileWithQueryParamsRequest {
+         this.additionalProperties = additionalProperties;
+     }
+ 
++    @JsonProperty("file")
++    public File getFile() {
++        return file;
++    }
++
+     @JsonIgnore
+     public List<String> getListOfStrings() {
+         return listOfStrings;
+@@ -87,7 +99,8 @@ public final class JustFileWithQueryParamsRequest {
+     }
+ 
+     private boolean equalTo(JustFileWithQueryParamsRequest other) {
+-        return listOfStrings.equals(other.listOfStrings)
++        return file.equals(other.file)
++                && listOfStrings.equals(other.listOfStrings)
+                 && optionalListOfStrings.equals(other.optionalListOfStrings)
+                 && maybeString.equals(other.maybeString)
+                 && integer == other.integer
+@@ -97,7 +110,12 @@ public final class JustFileWithQueryParamsRequest {
+     @java.lang.Override
+     public int hashCode() {
+         return Objects.hash(
+-                this.listOfStrings, this.optionalListOfStrings, this.maybeString, this.integer, this.maybeInteger);
++                this.file,
++                this.listOfStrings,
++                this.optionalListOfStrings,
++                this.maybeString,
++                this.integer,
++                this.maybeInteger);
+     }
+ 
+     @java.lang.Override
+@@ -105,16 +123,20 @@ public final class JustFileWithQueryParamsRequest {
+         return ObjectMappers.stringify(this);
+     }
+ 
+-    public static IntegerStage builder() {
++    public static FileStage builder() {
+         return new Builder();
+     }
+ 
+-    public interface IntegerStage {
+-        _FinalStage integer(int integer);
++    public interface FileStage {
++        IntegerStage file(@NotNull File file);
+ 
+         Builder from(JustFileWithQueryParamsRequest other);
+     }
+ 
++    public interface IntegerStage {
++        _FinalStage integer(int integer);
++    }
++
+     public interface _FinalStage {
+         JustFileWithQueryParamsRequest build();
+ 
+@@ -146,7 +168,9 @@ public final class JustFileWithQueryParamsRequest {
+     }
+ 
+     @JsonIgnoreProperties(ignoreUnknown = true)
+-    public static final class Builder implements IntegerStage, _FinalStage {
++    public static final class Builder implements FileStage, IntegerStage, _FinalStage {
++        private File file;
++
+         private int integer;
+ 
+         private Optional<Integer> maybeInteger = Optional.empty();
+@@ -164,6 +188,7 @@ public final class JustFileWithQueryParamsRequest {
+ 
+         @java.lang.Override
+         public Builder from(JustFileWithQueryParamsRequest other) {
++            file(other.getFile());
+             listOfStrings(other.getListOfStrings());
+             optionalListOfStrings(other.getOptionalListOfStrings());
+             maybeString(other.getMaybeString());
+@@ -172,6 +197,13 @@ public final class JustFileWithQueryParamsRequest {
+             return this;
+         }
+ 
++        @java.lang.Override
++        @JsonSetter("file")
++        public IntegerStage file(@NotNull File file) {
++            this.file = Objects.requireNonNull(file, "file must not be null");
++            return this;
++        }
++
+         @java.lang.Override
+         @JsonSetter("integer")
+         public _FinalStage integer(int integer) {
+@@ -257,7 +289,13 @@ public final class JustFileWithQueryParamsRequest {
+         @java.lang.Override
+         public JustFileWithQueryParamsRequest build() {
+             return new JustFileWithQueryParamsRequest(
+-                    listOfStrings, optionalListOfStrings, maybeString, integer, maybeInteger, additionalProperties);
++                    file,
++                    listOfStrings,
++                    optionalListOfStrings,
++                    maybeString,
++                    integer,
++                    maybeInteger,
++                    additionalProperties);
+         }
+ 
+         @java.lang.Override
+diff --git a/src/main/java/com/seed/fileUpload/resources/service/requests/LiteralEnumRequest.java b/src/main/java/com/seed/fileUpload/resources/service/requests/LiteralEnumRequest.java
+index 4716d45d141..176f2fbc6da 100644
+--- a/src/main/java/com/seed/fileUpload/resources/service/requests/LiteralEnumRequest.java
++++ b/src/main/java/com/seed/fileUpload/resources/service/requests/LiteralEnumRequest.java
+@@ -13,14 +13,18 @@ import com.fasterxml.jackson.annotation.Nulls;
+ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+ import com.seed.fileUpload.core.ObjectMappers;
+ import com.seed.fileUpload.resources.service.types.OpenEnumType;
++import java.io.File;
+ import java.util.HashMap;
+ import java.util.Map;
+ import java.util.Objects;
+ import java.util.Optional;
++import org.jetbrains.annotations.NotNull;
+ 
+ @JsonInclude(JsonInclude.Include.NON_ABSENT)
+ @JsonDeserialize(builder = LiteralEnumRequest.Builder.class)
+ public final class LiteralEnumRequest {
++    private final File file;
++
+     private final Optional<String> modelType;
+ 
+     private final Optional<OpenEnumType> openEnum;
+@@ -30,16 +34,23 @@ public final class LiteralEnumRequest {
+     private final Map<String, Object> additionalProperties;
+ 
+     private LiteralEnumRequest(
++            File file,
+             Optional<String> modelType,
+             Optional<OpenEnumType> openEnum,
+             Optional<String> maybeName,
+             Map<String, Object> additionalProperties) {
++        this.file = file;
+         this.modelType = modelType;
+         this.openEnum = openEnum;
+         this.maybeName = maybeName;
+         this.additionalProperties = additionalProperties;
+     }
+ 
++    @JsonProperty("file")
++    public File getFile() {
++        return file;
++    }
++
+     @JsonProperty("model_type")
+     public Optional<String> getModelType() {
+         return modelType;
+@@ -67,14 +78,15 @@ public final class LiteralEnumRequest {
+     }
+ 
+     private boolean equalTo(LiteralEnumRequest other) {
+-        return modelType.equals(other.modelType)
++        return file.equals(other.file)
++                && modelType.equals(other.modelType)
+                 && openEnum.equals(other.openEnum)
+                 && maybeName.equals(other.maybeName);
+     }
+ 
+     @java.lang.Override
+     public int hashCode() {
+-        return Objects.hash(this.modelType, this.openEnum, this.maybeName);
++        return Objects.hash(this.file, this.modelType, this.openEnum, this.maybeName);
+     }
+ 
+     @java.lang.Override
+@@ -82,72 +94,118 @@ public final class LiteralEnumRequest {
+         return ObjectMappers.stringify(this);
+     }
+ 
+-    public static Builder builder() {
++    public static FileStage builder() {
+         return new Builder();
+     }
+ 
++    public interface FileStage {
++        _FinalStage file(@NotNull File file);
++
++        Builder from(LiteralEnumRequest other);
++    }
++
++    public interface _FinalStage {
++        LiteralEnumRequest build();
++
++        _FinalStage additionalProperty(String key, Object value);
++
++        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
++
++        _FinalStage modelType(Optional<String> modelType);
++
++        _FinalStage modelType(String modelType);
++
++        _FinalStage openEnum(Optional<OpenEnumType> openEnum);
++
++        _FinalStage openEnum(OpenEnumType openEnum);
++
++        _FinalStage maybeName(Optional<String> maybeName);
++
++        _FinalStage maybeName(String maybeName);
++    }
++
+     @JsonIgnoreProperties(ignoreUnknown = true)
+-    public static final class Builder {
+-        private Optional<String> modelType = Optional.empty();
++    public static final class Builder implements FileStage, _FinalStage {
++        private File file;
++
++        private Optional<String> maybeName = Optional.empty();
+ 
+         private Optional<OpenEnumType> openEnum = Optional.empty();
+ 
+-        private Optional<String> maybeName = Optional.empty();
++        private Optional<String> modelType = Optional.empty();
+ 
+         @JsonAnySetter
+         private Map<String, Object> additionalProperties = new HashMap<>();
+ 
+         private Builder() {}
+ 
++        @java.lang.Override
+         public Builder from(LiteralEnumRequest other) {
++            file(other.getFile());
+             modelType(other.getModelType());
+             openEnum(other.getOpenEnum());
+             maybeName(other.getMaybeName());
+             return this;
+         }
+ 
+-        @JsonSetter(value = "model_type", nulls = Nulls.SKIP)
+-        public Builder modelType(Optional<String> modelType) {
+-            this.modelType = modelType;
++        @java.lang.Override
++        @JsonSetter("file")
++        public _FinalStage file(@NotNull File file) {
++            this.file = Objects.requireNonNull(file, "file must not be null");
+             return this;
+         }
+ 
+-        public Builder modelType(String modelType) {
+-            this.modelType = Optional.ofNullable(modelType);
++        @java.lang.Override
++        public _FinalStage maybeName(String maybeName) {
++            this.maybeName = Optional.ofNullable(maybeName);
+             return this;
+         }
+ 
+-        @JsonSetter(value = "open_enum", nulls = Nulls.SKIP)
+-        public Builder openEnum(Optional<OpenEnumType> openEnum) {
+-            this.openEnum = openEnum;
++        @java.lang.Override
++        @JsonSetter(value = "maybe_name", nulls = Nulls.SKIP)
++        public _FinalStage maybeName(Optional<String> maybeName) {
++            this.maybeName = maybeName;
+             return this;
+         }
+ 
+-        public Builder openEnum(OpenEnumType openEnum) {
++        @java.lang.Override
++        public _FinalStage openEnum(OpenEnumType openEnum) {
+             this.openEnum = Optional.ofNullable(openEnum);
+             return this;
+         }
+ 
+-        @JsonSetter(value = "maybe_name", nulls = Nulls.SKIP)
+-        public Builder maybeName(Optional<String> maybeName) {
+-            this.maybeName = maybeName;
++        @java.lang.Override
++        @JsonSetter(value = "open_enum", nulls = Nulls.SKIP)
++        public _FinalStage openEnum(Optional<OpenEnumType> openEnum) {
++            this.openEnum = openEnum;
+             return this;
+         }
+ 
+-        public Builder maybeName(String maybeName) {
+-            this.maybeName = Optional.ofNullable(maybeName);
++        @java.lang.Override
++        public _FinalStage modelType(String modelType) {
++            this.modelType = Optional.ofNullable(modelType);
++            return this;
++        }
++
++        @java.lang.Override
++        @JsonSetter(value = "model_type", nulls = Nulls.SKIP)
++        public _FinalStage modelType(Optional<String> modelType) {
++            this.modelType = modelType;
+             return this;
+         }
+ 
++        @java.lang.Override
+         public LiteralEnumRequest build() {
+-            return new LiteralEnumRequest(modelType, openEnum, maybeName, additionalProperties);
++            return new LiteralEnumRequest(file, modelType, openEnum, maybeName, additionalProperties);
+         }
+ 
++        @java.lang.Override
+         public Builder additionalProperty(String key, Object value) {
+             this.additionalProperties.put(key, value);
+             return this;
+         }
+ 
++        @java.lang.Override
+         public Builder additionalProperties(Map<String, Object> additionalProperties) {
+             this.additionalProperties.putAll(additionalProperties);
+             return this;
+diff --git a/src/main/java/com/seed/fileUpload/resources/service/requests/MyOtherRequest.java b/src/main/java/com/seed/fileUpload/resources/service/requests/MyOtherRequest.java
+index 50f6b7c3ede..f0a16718ea5 100644
+--- a/src/main/java/com/seed/fileUpload/resources/service/requests/MyOtherRequest.java
++++ b/src/main/java/com/seed/fileUpload/resources/service/requests/MyOtherRequest.java
+@@ -15,6 +15,7 @@ import com.seed.fileUpload.core.ObjectMappers;
+ import com.seed.fileUpload.resources.service.types.MyObject;
+ import com.seed.fileUpload.resources.service.types.MyObjectWithOptional;
+ import com.seed.fileUpload.resources.service.types.ObjectType;
++import java.io.File;
+ import java.util.ArrayList;
+ import java.util.HashMap;
+ import java.util.List;
+@@ -26,6 +27,14 @@ import org.jetbrains.annotations.NotNull;
+ @JsonInclude(JsonInclude.Include.NON_ABSENT)
+ @JsonDeserialize(builder = MyOtherRequest.Builder.class)
+ public final class MyOtherRequest {
++    private final File file;
++
++    private final File fileList;
++
++    private final Optional<File> maybeFile;
++
++    private final Optional<File> maybeFileList;
++
+     private final Optional<String> maybeString;
+ 
+     private final int integer;
+@@ -53,6 +62,10 @@ public final class MyOtherRequest {
+     private final Map<String, Object> additionalProperties;
+ 
+     private MyOtherRequest(
++            File file,
++            File fileList,
++            Optional<File> maybeFile,
++            Optional<File> maybeFileList,
+             Optional<String> maybeString,
+             int integer,
+             Optional<Integer> maybeInteger,
+@@ -66,6 +79,10 @@ public final class MyOtherRequest {
+             List<MyObject> listOfAliasObject,
+             List<MyObject> aliasListOfObject,
+             Map<String, Object> additionalProperties) {
++        this.file = file;
++        this.fileList = fileList;
++        this.maybeFile = maybeFile;
++        this.maybeFileList = maybeFileList;
+         this.maybeString = maybeString;
+         this.integer = integer;
+         this.maybeInteger = maybeInteger;
+@@ -81,6 +98,26 @@ public final class MyOtherRequest {
+         this.additionalProperties = additionalProperties;
+     }
+ 
++    @JsonProperty("file")
++    public File getFile() {
++        return file;
++    }
++
++    @JsonProperty("file_list")
++    public File getFileList() {
++        return fileList;
++    }
++
++    @JsonProperty("maybe_file")
++    public Optional<File> getMaybeFile() {
++        return maybeFile;
++    }
++
++    @JsonProperty("maybe_file_list")
++    public Optional<File> getMaybeFileList() {
++        return maybeFileList;
++    }
++
+     @JsonProperty("maybe_string")
+     public Optional<String> getMaybeString() {
+         return maybeString;
+@@ -153,7 +190,11 @@ public final class MyOtherRequest {
+     }
+ 
+     private boolean equalTo(MyOtherRequest other) {
+-        return maybeString.equals(other.maybeString)
++        return file.equals(other.file)
++                && fileList.equals(other.fileList)
++                && maybeFile.equals(other.maybeFile)
++                && maybeFileList.equals(other.maybeFileList)
++                && maybeString.equals(other.maybeString)
+                 && integer == other.integer
+                 && maybeInteger.equals(other.maybeInteger)
+                 && optionalListOfStrings.equals(other.optionalListOfStrings)
+@@ -170,6 +211,10 @@ public final class MyOtherRequest {
+     @java.lang.Override
+     public int hashCode() {
+         return Objects.hash(
++                this.file,
++                this.fileList,
++                this.maybeFile,
++                this.maybeFileList,
+                 this.maybeString,
+                 this.integer,
+                 this.maybeInteger,
+@@ -189,16 +234,24 @@ public final class MyOtherRequest {
+         return ObjectMappers.stringify(this);
+     }
+ 
+-    public static IntegerStage builder() {
++    public static FileStage builder() {
+         return new Builder();
+     }
+ 
+-    public interface IntegerStage {
+-        AliasObjectStage integer(int integer);
++    public interface FileStage {
++        FileListStage file(@NotNull File file);
+ 
+         Builder from(MyOtherRequest other);
+     }
+ 
++    public interface FileListStage {
++        IntegerStage fileList(@NotNull File fileList);
++    }
++
++    public interface IntegerStage {
++        AliasObjectStage integer(int integer);
++    }
++
+     public interface AliasObjectStage {
+         _FinalStage aliasObject(@NotNull MyObject aliasObject);
+     }
+@@ -210,6 +263,14 @@ public final class MyOtherRequest {
+ 
+         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+ 
++        _FinalStage maybeFile(Optional<File> maybeFile);
++
++        _FinalStage maybeFile(File maybeFile);
++
++        _FinalStage maybeFileList(Optional<File> maybeFileList);
++
++        _FinalStage maybeFileList(File maybeFileList);
++
+         _FinalStage maybeString(Optional<String> maybeString);
+ 
+         _FinalStage maybeString(String maybeString);
+@@ -260,7 +321,11 @@ public final class MyOtherRequest {
+     }
+ 
+     @JsonIgnoreProperties(ignoreUnknown = true)
+-    public static final class Builder implements IntegerStage, AliasObjectStage, _FinalStage {
++    public static final class Builder implements FileStage, FileListStage, IntegerStage, AliasObjectStage, _FinalStage {
++        private File file;
++
++        private File fileList;
++
+         private int integer;
+ 
+         private MyObject aliasObject;
+@@ -285,6 +350,10 @@ public final class MyOtherRequest {
+ 
+         private Optional<String> maybeString = Optional.empty();
+ 
++        private Optional<File> maybeFileList = Optional.empty();
++
++        private Optional<File> maybeFile = Optional.empty();
++
+         @JsonAnySetter
+         private Map<String, Object> additionalProperties = new HashMap<>();
+ 
+@@ -292,6 +361,10 @@ public final class MyOtherRequest {
+ 
+         @java.lang.Override
+         public Builder from(MyOtherRequest other) {
++            file(other.getFile());
++            fileList(other.getFileList());
++            maybeFile(other.getMaybeFile());
++            maybeFileList(other.getMaybeFileList());
+             maybeString(other.getMaybeString());
+             integer(other.getInteger());
+             maybeInteger(other.getMaybeInteger());
+@@ -307,6 +380,20 @@ public final class MyOtherRequest {
+             return this;
+         }
+ 
++        @java.lang.Override
++        @JsonSetter("file")
++        public FileListStage file(@NotNull File file) {
++            this.file = Objects.requireNonNull(file, "file must not be null");
++            return this;
++        }
++
++        @java.lang.Override
++        @JsonSetter("file_list")
++        public IntegerStage fileList(@NotNull File fileList) {
++            this.fileList = Objects.requireNonNull(fileList, "fileList must not be null");
++            return this;
++        }
++
+         @java.lang.Override
+         @JsonSetter("integer")
+         public AliasObjectStage integer(int integer) {
+@@ -495,9 +582,39 @@ public final class MyOtherRequest {
+             return this;
+         }
+ 
++        @java.lang.Override
++        public _FinalStage maybeFileList(File maybeFileList) {
++            this.maybeFileList = Optional.ofNullable(maybeFileList);
++            return this;
++        }
++
++        @java.lang.Override
++        @JsonSetter(value = "maybe_file_list", nulls = Nulls.SKIP)
++        public _FinalStage maybeFileList(Optional<File> maybeFileList) {
++            this.maybeFileList = maybeFileList;
++            return this;
++        }
++
++        @java.lang.Override
++        public _FinalStage maybeFile(File maybeFile) {
++            this.maybeFile = Optional.ofNullable(maybeFile);
++            return this;
++        }
++
++        @java.lang.Override
++        @JsonSetter(value = "maybe_file", nulls = Nulls.SKIP)
++        public _FinalStage maybeFile(Optional<File> maybeFile) {
++            this.maybeFile = maybeFile;
++            return this;
++        }
++
+         @java.lang.Override
+         public MyOtherRequest build() {
+             return new MyOtherRequest(
++                    file,
++                    fileList,
++                    maybeFile,
++                    maybeFileList,
+                     maybeString,
+                     integer,
+                     maybeInteger,
+diff --git a/src/main/java/com/seed/fileUpload/resources/service/requests/MyRequest.java b/src/main/java/com/seed/fileUpload/resources/service/requests/MyRequest.java
+index 78726abdafc..741634db34f 100644
+--- a/src/main/java/com/seed/fileUpload/resources/service/requests/MyRequest.java
++++ b/src/main/java/com/seed/fileUpload/resources/service/requests/MyRequest.java
+@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+ import com.seed.fileUpload.core.ObjectMappers;
+ import com.seed.fileUpload.resources.service.types.MyObject;
+ import com.seed.fileUpload.resources.service.types.ObjectType;
++import java.io.File;
+ import java.util.ArrayList;
+ import java.util.HashMap;
+ import java.util.List;
+@@ -25,6 +26,14 @@ import org.jetbrains.annotations.NotNull;
+ @JsonInclude(JsonInclude.Include.NON_ABSENT)
+ @JsonDeserialize(builder = MyRequest.Builder.class)
+ public final class MyRequest {
++    private final File file;
++
++    private final File fileList;
++
++    private final Optional<File> maybeFile;
++
++    private final Optional<File> maybeFileList;
++
+     private final Optional<String> maybeString;
+ 
+     private final int integer;
+@@ -50,6 +59,10 @@ public final class MyRequest {
+     private final Map<String, Object> additionalProperties;
+ 
+     private MyRequest(
++            File file,
++            File fileList,
++            Optional<File> maybeFile,
++            Optional<File> maybeFileList,
+             Optional<String> maybeString,
+             int integer,
+             Optional<Integer> maybeInteger,
+@@ -62,6 +75,10 @@ public final class MyRequest {
+             List<MyObject> listOfAliasObject,
+             List<MyObject> aliasListOfObject,
+             Map<String, Object> additionalProperties) {
++        this.file = file;
++        this.fileList = fileList;
++        this.maybeFile = maybeFile;
++        this.maybeFileList = maybeFileList;
+         this.maybeString = maybeString;
+         this.integer = integer;
+         this.maybeInteger = maybeInteger;
+@@ -76,6 +93,26 @@ public final class MyRequest {
+         this.additionalProperties = additionalProperties;
+     }
+ 
++    @JsonProperty("file")
++    public File getFile() {
++        return file;
++    }
++
++    @JsonProperty("file_list")
++    public File getFileList() {
++        return fileList;
++    }
++
++    @JsonProperty("maybe_file")
++    public Optional<File> getMaybeFile() {
++        return maybeFile;
++    }
++
++    @JsonProperty("maybe_file_list")
++    public Optional<File> getMaybeFileList() {
++        return maybeFileList;
++    }
++
+     @JsonProperty("maybe_string")
+     public Optional<String> getMaybeString() {
+         return maybeString;
+@@ -143,7 +180,11 @@ public final class MyRequest {
+     }
+ 
+     private boolean equalTo(MyRequest other) {
+-        return maybeString.equals(other.maybeString)
++        return file.equals(other.file)
++                && fileList.equals(other.fileList)
++                && maybeFile.equals(other.maybeFile)
++                && maybeFileList.equals(other.maybeFileList)
++                && maybeString.equals(other.maybeString)
+                 && integer == other.integer
+                 && maybeInteger.equals(other.maybeInteger)
+                 && optionalListOfStrings.equals(other.optionalListOfStrings)
+@@ -159,6 +200,10 @@ public final class MyRequest {
+     @java.lang.Override
+     public int hashCode() {
+         return Objects.hash(
++                this.file,
++                this.fileList,
++                this.maybeFile,
++                this.maybeFileList,
+                 this.maybeString,
+                 this.integer,
+                 this.maybeInteger,
+@@ -177,16 +222,24 @@ public final class MyRequest {
+         return ObjectMappers.stringify(this);
+     }
+ 
+-    public static IntegerStage builder() {
++    public static FileStage builder() {
+         return new Builder();
+     }
+ 
+-    public interface IntegerStage {
+-        AliasObjectStage integer(int integer);
++    public interface FileStage {
++        FileListStage file(@NotNull File file);
+ 
+         Builder from(MyRequest other);
+     }
+ 
++    public interface FileListStage {
++        IntegerStage fileList(@NotNull File fileList);
++    }
++
++    public interface IntegerStage {
++        AliasObjectStage integer(int integer);
++    }
++
+     public interface AliasObjectStage {
+         _FinalStage aliasObject(@NotNull MyObject aliasObject);
+     }
+@@ -198,6 +251,14 @@ public final class MyRequest {
+ 
+         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+ 
++        _FinalStage maybeFile(Optional<File> maybeFile);
++
++        _FinalStage maybeFile(File maybeFile);
++
++        _FinalStage maybeFileList(Optional<File> maybeFileList);
++
++        _FinalStage maybeFileList(File maybeFileList);
++
+         _FinalStage maybeString(Optional<String> maybeString);
+ 
+         _FinalStage maybeString(String maybeString);
+@@ -242,7 +303,11 @@ public final class MyRequest {
+     }
+ 
+     @JsonIgnoreProperties(ignoreUnknown = true)
+-    public static final class Builder implements IntegerStage, AliasObjectStage, _FinalStage {
++    public static final class Builder implements FileStage, FileListStage, IntegerStage, AliasObjectStage, _FinalStage {
++        private File file;
++
++        private File fileList;
++
+         private int integer;
+ 
+         private MyObject aliasObject;
+@@ -265,6 +330,10 @@ public final class MyRequest {
+ 
+         private Optional<String> maybeString = Optional.empty();
+ 
++        private Optional<File> maybeFileList = Optional.empty();
++
++        private Optional<File> maybeFile = Optional.empty();
++
+         @JsonAnySetter
+         private Map<String, Object> additionalProperties = new HashMap<>();
+ 
+@@ -272,6 +341,10 @@ public final class MyRequest {
+ 
+         @java.lang.Override
+         public Builder from(MyRequest other) {
++            file(other.getFile());
++            fileList(other.getFileList());
++            maybeFile(other.getMaybeFile());
++            maybeFileList(other.getMaybeFileList());
+             maybeString(other.getMaybeString());
+             integer(other.getInteger());
+             maybeInteger(other.getMaybeInteger());
+@@ -286,6 +359,20 @@ public final class MyRequest {
+             return this;
+         }
+ 
++        @java.lang.Override
++        @JsonSetter("file")
++        public FileListStage file(@NotNull File file) {
++            this.file = Objects.requireNonNull(file, "file must not be null");
++            return this;
++        }
++
++        @java.lang.Override
++        @JsonSetter("file_list")
++        public IntegerStage fileList(@NotNull File fileList) {
++            this.fileList = Objects.requireNonNull(fileList, "fileList must not be null");
++            return this;
++        }
++
+         @java.lang.Override
+         @JsonSetter("integer")
+         public AliasObjectStage integer(int integer) {
+@@ -450,9 +537,39 @@ public final class MyRequest {
+             return this;
+         }
+ 
++        @java.lang.Override
++        public _FinalStage maybeFileList(File maybeFileList) {
++            this.maybeFileList = Optional.ofNullable(maybeFileList);
++            return this;
++        }
++
++        @java.lang.Override
++        @JsonSetter(value = "maybe_file_list", nulls = Nulls.SKIP)
++        public _FinalStage maybeFileList(Optional<File> maybeFileList) {
++            this.maybeFileList = maybeFileList;
++            return this;
++        }
++
++        @java.lang.Override
++        public _FinalStage maybeFile(File maybeFile) {
++            this.maybeFile = Optional.ofNullable(maybeFile);
++            return this;
++        }
++
++        @java.lang.Override
++        @JsonSetter(value = "maybe_file", nulls = Nulls.SKIP)
++        public _FinalStage maybeFile(Optional<File> maybeFile) {
++            this.maybeFile = maybeFile;
++            return this;
++        }
++
+         @java.lang.Override
+         public MyRequest build() {
+             return new MyRequest(
++                    file,
++                    fileList,
++                    maybeFile,
++                    maybeFileList,
+                     maybeString,
+                     integer,
+                     maybeInteger,
+diff --git a/src/main/java/com/seed/fileUpload/resources/service/requests/OptionalArgsRequest.java b/src/main/java/com/seed/fileUpload/resources/service/requests/OptionalArgsRequest.java
+index 0da4fcf625e..358c911bc1e 100644
+--- a/src/main/java/com/seed/fileUpload/resources/service/requests/OptionalArgsRequest.java
++++ b/src/main/java/com/seed/fileUpload/resources/service/requests/OptionalArgsRequest.java
+@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
+ import com.fasterxml.jackson.annotation.Nulls;
+ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+ import com.seed.fileUpload.core.ObjectMappers;
++import java.io.File;
+ import java.util.HashMap;
+ import java.util.Map;
+ import java.util.Objects;
+@@ -20,15 +21,24 @@ import java.util.Optional;
+ @JsonInclude(JsonInclude.Include.NON_ABSENT)
+ @JsonDeserialize(builder = OptionalArgsRequest.Builder.class)
+ public final class OptionalArgsRequest {
++    private final Optional<File> imageFile;
++
+     private final Optional<Object> request;
+ 
+     private final Map<String, Object> additionalProperties;
+ 
+-    private OptionalArgsRequest(Optional<Object> request, Map<String, Object> additionalProperties) {
++    private OptionalArgsRequest(
++            Optional<File> imageFile, Optional<Object> request, Map<String, Object> additionalProperties) {
++        this.imageFile = imageFile;
+         this.request = request;
+         this.additionalProperties = additionalProperties;
+     }
+ 
++    @JsonProperty("image_file")
++    public Optional<File> getImageFile() {
++        return imageFile;
++    }
++
+     @JsonProperty("request")
+     public Optional<Object> getRequest() {
+         return request;
+@@ -46,12 +56,12 @@ public final class OptionalArgsRequest {
+     }
+ 
+     private boolean equalTo(OptionalArgsRequest other) {
+-        return request.equals(other.request);
++        return imageFile.equals(other.imageFile) && request.equals(other.request);
+     }
+ 
+     @java.lang.Override
+     public int hashCode() {
+-        return Objects.hash(this.request);
++        return Objects.hash(this.imageFile, this.request);
+     }
+ 
+     @java.lang.Override
+@@ -65,6 +75,8 @@ public final class OptionalArgsRequest {
+ 
+     @JsonIgnoreProperties(ignoreUnknown = true)
+     public static final class Builder {
++        private Optional<File> imageFile = Optional.empty();
++
+         private Optional<Object> request = Optional.empty();
+ 
+         @JsonAnySetter
+@@ -73,10 +85,22 @@ public final class OptionalArgsRequest {
+         private Builder() {}
+ 
+         public Builder from(OptionalArgsRequest other) {
++            imageFile(other.getImageFile());
+             request(other.getRequest());
+             return this;
+         }
+ 
++        @JsonSetter(value = "image_file", nulls = Nulls.SKIP)
++        public Builder imageFile(Optional<File> imageFile) {
++            this.imageFile = imageFile;
++            return this;
++        }
++
++        public Builder imageFile(File imageFile) {
++            this.imageFile = Optional.ofNullable(imageFile);
++            return this;
++        }
++
+         @JsonSetter(value = "request", nulls = Nulls.SKIP)
+         public Builder request(Optional<Object> request) {
+             this.request = request;
+@@ -89,7 +113,7 @@ public final class OptionalArgsRequest {
+         }
+ 
+         public OptionalArgsRequest build() {
+-            return new OptionalArgsRequest(request, additionalProperties);
++            return new OptionalArgsRequest(imageFile, request, additionalProperties);
+         }
+ 
+         public Builder additionalProperty(String key, Object value) {
+diff --git a/src/main/java/com/seed/fileUpload/resources/service/requests/WithContentTypeRequest.java b/src/main/java/com/seed/fileUpload/resources/service/requests/WithContentTypeRequest.java
+index df5eca1c479..656fd1356aa 100644
+--- a/src/main/java/com/seed/fileUpload/resources/service/requests/WithContentTypeRequest.java
++++ b/src/main/java/com/seed/fileUpload/resources/service/requests/WithContentTypeRequest.java
+@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.Nulls;
+ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+ import com.seed.fileUpload.core.ObjectMappers;
+ import com.seed.fileUpload.resources.service.types.MyObject;
++import java.io.File;
+ import java.util.HashMap;
+ import java.util.Map;
+ import java.util.Objects;
+@@ -22,6 +23,8 @@ import org.jetbrains.annotations.NotNull;
+ @JsonInclude(JsonInclude.Include.NON_ABSENT)
+ @JsonDeserialize(builder = WithContentTypeRequest.Builder.class)
+ public final class WithContentTypeRequest {
++    private final File file;
++
+     private final String foo;
+ 
+     private final MyObject bar;
+@@ -31,13 +34,19 @@ public final class WithContentTypeRequest {
+     private final Map<String, Object> additionalProperties;
+ 
+     private WithContentTypeRequest(
+-            String foo, MyObject bar, Optional<MyObject> fooBar, Map<String, Object> additionalProperties) {
++            File file, String foo, MyObject bar, Optional<MyObject> fooBar, Map<String, Object> additionalProperties) {
++        this.file = file;
+         this.foo = foo;
+         this.bar = bar;
+         this.fooBar = fooBar;
+         this.additionalProperties = additionalProperties;
+     }
+ 
++    @JsonProperty("file")
++    public File getFile() {
++        return file;
++    }
++
+     @JsonProperty("foo")
+     public String getFoo() {
+         return foo;
+@@ -65,12 +74,12 @@ public final class WithContentTypeRequest {
+     }
+ 
+     private boolean equalTo(WithContentTypeRequest other) {
+-        return foo.equals(other.foo) && bar.equals(other.bar) && fooBar.equals(other.fooBar);
++        return file.equals(other.file) && foo.equals(other.foo) && bar.equals(other.bar) && fooBar.equals(other.fooBar);
+     }
+ 
+     @java.lang.Override
+     public int hashCode() {
+-        return Objects.hash(this.foo, this.bar, this.fooBar);
++        return Objects.hash(this.file, this.foo, this.bar, this.fooBar);
+     }
+ 
+     @java.lang.Override
+@@ -78,16 +87,20 @@ public final class WithContentTypeRequest {
+         return ObjectMappers.stringify(this);
+     }
+ 
+-    public static FooStage builder() {
++    public static FileStage builder() {
+         return new Builder();
+     }
+ 
+-    public interface FooStage {
+-        BarStage foo(@NotNull String foo);
++    public interface FileStage {
++        FooStage file(@NotNull File file);
+ 
+         Builder from(WithContentTypeRequest other);
+     }
+ 
++    public interface FooStage {
++        BarStage foo(@NotNull String foo);
++    }
++
+     public interface BarStage {
+         _FinalStage bar(@NotNull MyObject bar);
+     }
+@@ -105,7 +118,9 @@ public final class WithContentTypeRequest {
+     }
+ 
+     @JsonIgnoreProperties(ignoreUnknown = true)
+-    public static final class Builder implements FooStage, BarStage, _FinalStage {
++    public static final class Builder implements FileStage, FooStage, BarStage, _FinalStage {
++        private File file;
++
+         private String foo;
+ 
+         private MyObject bar;
+@@ -119,12 +134,20 @@ public final class WithContentTypeRequest {
+ 
+         @java.lang.Override
+         public Builder from(WithContentTypeRequest other) {
++            file(other.getFile());
+             foo(other.getFoo());
+             bar(other.getBar());
+             fooBar(other.getFooBar());
+             return this;
+         }
+ 
++        @java.lang.Override
++        @JsonSetter("file")
++        public FooStage file(@NotNull File file) {
++            this.file = Objects.requireNonNull(file, "file must not be null");
++            return this;
++        }
++
+         @java.lang.Override
+         @JsonSetter("foo")
+         public BarStage foo(@NotNull String foo) {
+@@ -154,7 +177,7 @@ public final class WithContentTypeRequest {
+ 
+         @java.lang.Override
+         public WithContentTypeRequest build() {
+-            return new WithContentTypeRequest(foo, bar, fooBar, additionalProperties);
++            return new WithContentTypeRequest(file, foo, bar, fooBar, additionalProperties);
+         }
+ 
+         @java.lang.Override
+diff --git a/src/main/java/com/seed/fileUpload/resources/service/requests/WithFormEncodingRequest.java b/src/main/java/com/seed/fileUpload/resources/service/requests/WithFormEncodingRequest.java
+index 5103114b11c..392a6409e90 100644
+--- a/src/main/java/com/seed/fileUpload/resources/service/requests/WithFormEncodingRequest.java
++++ b/src/main/java/com/seed/fileUpload/resources/service/requests/WithFormEncodingRequest.java
+@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
+ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+ import com.seed.fileUpload.core.ObjectMappers;
+ import com.seed.fileUpload.resources.service.types.MyObject;
++import java.io.File;
+ import java.util.HashMap;
+ import java.util.Map;
+ import java.util.Objects;
+@@ -20,18 +21,26 @@ import org.jetbrains.annotations.NotNull;
+ @JsonInclude(JsonInclude.Include.NON_ABSENT)
+ @JsonDeserialize(builder = WithFormEncodingRequest.Builder.class)
+ public final class WithFormEncodingRequest {
++    private final File file;
++
+     private final String foo;
+ 
+     private final MyObject bar;
+ 
+     private final Map<String, Object> additionalProperties;
+ 
+-    private WithFormEncodingRequest(String foo, MyObject bar, Map<String, Object> additionalProperties) {
++    private WithFormEncodingRequest(File file, String foo, MyObject bar, Map<String, Object> additionalProperties) {
++        this.file = file;
+         this.foo = foo;
+         this.bar = bar;
+         this.additionalProperties = additionalProperties;
+     }
+ 
++    @JsonProperty("file")
++    public File getFile() {
++        return file;
++    }
++
+     @JsonProperty("foo")
+     public String getFoo() {
+         return foo;
+@@ -54,12 +63,12 @@ public final class WithFormEncodingRequest {
+     }
+ 
+     private boolean equalTo(WithFormEncodingRequest other) {
+-        return foo.equals(other.foo) && bar.equals(other.bar);
++        return file.equals(other.file) && foo.equals(other.foo) && bar.equals(other.bar);
+     }
+ 
+     @java.lang.Override
+     public int hashCode() {
+-        return Objects.hash(this.foo, this.bar);
++        return Objects.hash(this.file, this.foo, this.bar);
+     }
+ 
+     @java.lang.Override
+@@ -67,16 +76,20 @@ public final class WithFormEncodingRequest {
+         return ObjectMappers.stringify(this);
+     }
+ 
+-    public static FooStage builder() {
++    public static FileStage builder() {
+         return new Builder();
+     }
+ 
+-    public interface FooStage {
+-        BarStage foo(@NotNull String foo);
++    public interface FileStage {
++        FooStage file(@NotNull File file);
+ 
+         Builder from(WithFormEncodingRequest other);
+     }
+ 
++    public interface FooStage {
++        BarStage foo(@NotNull String foo);
++    }
++
+     public interface BarStage {
+         _FinalStage bar(@NotNull MyObject bar);
+     }
+@@ -90,7 +103,9 @@ public final class WithFormEncodingRequest {
+     }
+ 
+     @JsonIgnoreProperties(ignoreUnknown = true)
+-    public static final class Builder implements FooStage, BarStage, _FinalStage {
++    public static final class Builder implements FileStage, FooStage, BarStage, _FinalStage {
++        private File file;
++
+         private String foo;
+ 
+         private MyObject bar;
+@@ -102,11 +117,19 @@ public final class WithFormEncodingRequest {
+ 
+         @java.lang.Override
+         public Builder from(WithFormEncodingRequest other) {
++            file(other.getFile());
+             foo(other.getFoo());
+             bar(other.getBar());
+             return this;
+         }
+ 
++        @java.lang.Override
++        @JsonSetter("file")
++        public FooStage file(@NotNull File file) {
++            this.file = Objects.requireNonNull(file, "file must not be null");
++            return this;
++        }
++
+         @java.lang.Override
+         @JsonSetter("foo")
+         public BarStage foo(@NotNull String foo) {
+@@ -123,7 +146,7 @@ public final class WithFormEncodingRequest {
+ 
+         @java.lang.Override
+         public WithFormEncodingRequest build() {
+-            return new WithFormEncodingRequest(foo, bar, additionalProperties);
++            return new WithFormEncodingRequest(file, foo, bar, additionalProperties);
+         }
+ 
+         @java.lang.Override
+diff --git a/src/main/java/com/seed/fileUpload/resources/service/requests/WithJsonPropertyRequest.java b/src/main/java/com/seed/fileUpload/resources/service/requests/WithJsonPropertyRequest.java
+index 56e454a729b..be3b03684a5 100644
+--- a/src/main/java/com/seed/fileUpload/resources/service/requests/WithJsonPropertyRequest.java
++++ b/src/main/java/com/seed/fileUpload/resources/service/requests/WithJsonPropertyRequest.java
+@@ -13,23 +13,33 @@ import com.fasterxml.jackson.annotation.Nulls;
+ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+ import com.seed.fileUpload.core.ObjectMappers;
+ import com.seed.fileUpload.resources.service.types.MyObject;
++import java.io.File;
+ import java.util.HashMap;
+ import java.util.Map;
+ import java.util.Objects;
+ import java.util.Optional;
++import org.jetbrains.annotations.NotNull;
+ 
+ @JsonInclude(JsonInclude.Include.NON_ABSENT)
+ @JsonDeserialize(builder = WithJsonPropertyRequest.Builder.class)
+ public final class WithJsonPropertyRequest {
++    private final File file;
++
+     private final Optional<MyObject> json;
+ 
+     private final Map<String, Object> additionalProperties;
+ 
+-    private WithJsonPropertyRequest(Optional<MyObject> json, Map<String, Object> additionalProperties) {
++    private WithJsonPropertyRequest(File file, Optional<MyObject> json, Map<String, Object> additionalProperties) {
++        this.file = file;
+         this.json = json;
+         this.additionalProperties = additionalProperties;
+     }
+ 
++    @JsonProperty("file")
++    public File getFile() {
++        return file;
++    }
++
+     @JsonProperty("json")
+     public Optional<MyObject> getJson() {
+         return json;
+@@ -47,12 +57,12 @@ public final class WithJsonPropertyRequest {
+     }
+ 
+     private boolean equalTo(WithJsonPropertyRequest other) {
+-        return json.equals(other.json);
++        return file.equals(other.file) && json.equals(other.json);
+     }
+ 
+     @java.lang.Override
+     public int hashCode() {
+-        return Objects.hash(this.json);
++        return Objects.hash(this.file, this.json);
+     }
+ 
+     @java.lang.Override
+@@ -60,12 +70,32 @@ public final class WithJsonPropertyRequest {
+         return ObjectMappers.stringify(this);
+     }
+ 
+-    public static Builder builder() {
++    public static FileStage builder() {
+         return new Builder();
+     }
+ 
++    public interface FileStage {
++        _FinalStage file(@NotNull File file);
++
++        Builder from(WithJsonPropertyRequest other);
++    }
++
++    public interface _FinalStage {
++        WithJsonPropertyRequest build();
++
++        _FinalStage additionalProperty(String key, Object value);
++
++        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
++
++        _FinalStage json(Optional<MyObject> json);
++
++        _FinalStage json(MyObject json);
++    }
++
+     @JsonIgnoreProperties(ignoreUnknown = true)
+-    public static final class Builder {
++    public static final class Builder implements FileStage, _FinalStage {
++        private File file;
++
+         private Optional<MyObject> json = Optional.empty();
+ 
+         @JsonAnySetter
+@@ -73,31 +103,45 @@ public final class WithJsonPropertyRequest {
+ 
+         private Builder() {}
+ 
++        @java.lang.Override
+         public Builder from(WithJsonPropertyRequest other) {
++            file(other.getFile());
+             json(other.getJson());
+             return this;
+         }
+ 
+-        @JsonSetter(value = "json", nulls = Nulls.SKIP)
+-        public Builder json(Optional<MyObject> json) {
+-            this.json = json;
++        @java.lang.Override
++        @JsonSetter("file")
++        public _FinalStage file(@NotNull File file) {
++            this.file = Objects.requireNonNull(file, "file must not be null");
+             return this;
+         }
+ 
+-        public Builder json(MyObject json) {
++        @java.lang.Override
++        public _FinalStage json(MyObject json) {
+             this.json = Optional.ofNullable(json);
+             return this;
+         }
+ 
++        @java.lang.Override
++        @JsonSetter(value = "json", nulls = Nulls.SKIP)
++        public _FinalStage json(Optional<MyObject> json) {
++            this.json = json;
++            return this;
++        }
++
++        @java.lang.Override
+         public WithJsonPropertyRequest build() {
+-            return new WithJsonPropertyRequest(json, additionalProperties);
++            return new WithJsonPropertyRequest(file, json, additionalProperties);
+         }
+ 
++        @java.lang.Override
+         public Builder additionalProperty(String key, Object value) {
+             this.additionalProperties.put(key, value);
+             return this;
+         }
+ 
++        @java.lang.Override
+         public Builder additionalProperties(Map<String, Object> additionalProperties) {
+             this.additionalProperties.putAll(additionalProperties);
+             return this;

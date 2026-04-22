@@ -1,0 +1,289 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 0eba66302dd..e224d10f0ad 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-php-sdk",
+   "generatorVersion": "local",
++  "generatorConfig": {
++    "propertyAccess": "private"
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "ci",
+diff --git a/src/Requests/Inlined.php b/src/Requests/Inlined.php
+index d47180ba84b..7d2209f6ad6 100644
+--- a/src/Requests/Inlined.php
++++ b/src/Requests/Inlined.php
+@@ -14,7 +14,7 @@ class Inlined extends JsonSerializableType
+      * @var string $unique
+      */
+     #[JsonProperty('unique')]
+-    public string $unique;
++    private string $unique;
+ 
+     /**
+      * @param array{
+@@ -30,4 +30,22 @@ class Inlined extends JsonSerializableType
+         $this->name = $values['name'];
+         $this->docs = $values['docs'];
+     }
++
++    /**
++     * @return string
++     */
++    public function getUnique(): string
++    {
++        return $this->unique;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setUnique(string $value): self
++    {
++        $this->unique = $value;
++        $this->_setField('unique');
++        return $this;
++    }
+ }
+diff --git a/src/Traits/Docs.php b/src/Traits/Docs.php
+index 6e49e98814b..3e87a0898d7 100644
+--- a/src/Traits/Docs.php
++++ b/src/Traits/Docs.php
+@@ -13,5 +13,23 @@ trait Docs
+      * @var string $docs
+      */
+     #[JsonProperty('docs')]
+-    public string $docs;
++    private string $docs;
++
++    /**
++     * @return string
++     */
++    public function getDocs(): string
++    {
++        return $this->docs;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setDocs(string $value): self
++    {
++        $this->docs = $value;
++        $this->_setField('docs');
++        return $this;
++    }
+ }
+diff --git a/src/Traits/ExampleType.php b/src/Traits/ExampleType.php
+index 503829fdc3b..f58fa2008df 100644
+--- a/src/Traits/ExampleType.php
++++ b/src/Traits/ExampleType.php
+@@ -15,5 +15,23 @@ trait ExampleType
+      * @var string $name
+      */
+     #[JsonProperty('name')]
+-    public string $name;
++    private string $name;
++
++    /**
++     * @return string
++     */
++    public function getName(): string
++    {
++        return $this->name;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setName(string $value): self
++    {
++        $this->name = $value;
++        $this->_setField('name');
++        return $this;
++    }
+ }
+diff --git a/src/Traits/Json.php b/src/Traits/Json.php
+index 4380468c2af..76ab62079ae 100644
+--- a/src/Traits/Json.php
++++ b/src/Traits/Json.php
+@@ -15,5 +15,23 @@ trait Json
+      * @var string $raw
+      */
+     #[JsonProperty('raw')]
+-    public string $raw;
++    private string $raw;
++
++    /**
++     * @return string
++     */
++    public function getRaw(): string
++    {
++        return $this->raw;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setRaw(string $value): self
++    {
++        $this->raw = $value;
++        $this->_setField('raw');
++        return $this;
++    }
+ }
+diff --git a/src/Types/Docs.php b/src/Types/Docs.php
+index bd67650a8fd..f87a8053354 100644
+--- a/src/Types/Docs.php
++++ b/src/Types/Docs.php
+@@ -11,7 +11,7 @@ class Docs extends JsonSerializableType
+      * @var string $docs
+      */
+     #[JsonProperty('docs')]
+-    public string $docs;
++    private string $docs;
+ 
+     /**
+      * @param array{
+@@ -24,6 +24,24 @@ class Docs extends JsonSerializableType
+         $this->docs = $values['docs'];
+     }
+ 
++    /**
++     * @return string
++     */
++    public function getDocs(): string
++    {
++        return $this->docs;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setDocs(string $value): self
++    {
++        $this->docs = $value;
++        $this->_setField('docs');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Types/ExampleType.php b/src/Types/ExampleType.php
+index 3fd1c875a36..4e6d13ed2ad 100644
+--- a/src/Types/ExampleType.php
++++ b/src/Types/ExampleType.php
+@@ -14,7 +14,7 @@ class ExampleType extends JsonSerializableType
+      * @var string $name
+      */
+     #[JsonProperty('name')]
+-    public string $name;
++    private string $name;
+ 
+     /**
+      * @param array{
+@@ -29,6 +29,24 @@ class ExampleType extends JsonSerializableType
+         $this->name = $values['name'];
+     }
+ 
++    /**
++     * @return string
++     */
++    public function getName(): string
++    {
++        return $this->name;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setName(string $value): self
++    {
++        $this->name = $value;
++        $this->_setField('name');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Types/Json.php b/src/Types/Json.php
+index 3f6be188101..581965fba20 100644
+--- a/src/Types/Json.php
++++ b/src/Types/Json.php
+@@ -14,7 +14,7 @@ class Json extends JsonSerializableType
+      * @var string $raw
+      */
+     #[JsonProperty('raw')]
+-    public string $raw;
++    private string $raw;
+ 
+     /**
+      * @param array{
+@@ -29,6 +29,24 @@ class Json extends JsonSerializableType
+         $this->raw = $values['raw'];
+     }
+ 
++    /**
++     * @return string
++     */
++    public function getRaw(): string
++    {
++        return $this->raw;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setRaw(string $value): self
++    {
++        $this->raw = $value;
++        $this->_setField('raw');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Types/NestedType.php b/src/Types/NestedType.php
+index 63b7b9844cd..9e18a41a5bf 100644
+--- a/src/Types/NestedType.php
++++ b/src/Types/NestedType.php
+@@ -14,7 +14,7 @@ class NestedType extends JsonSerializableType
+      * @var string $name
+      */
+     #[JsonProperty('name')]
+-    public string $name;
++    private string $name;
+ 
+     /**
+      * @param array{
+@@ -31,6 +31,24 @@ class NestedType extends JsonSerializableType
+         $this->name = $values['name'];
+     }
+ 
++    /**
++     * @return string
++     */
++    public function getName(): string
++    {
++        return $this->name;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setName(string $value): self
++    {
++        $this->name = $value;
++        $this->_setField('name');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */

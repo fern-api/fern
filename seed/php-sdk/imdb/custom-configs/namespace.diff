@@ -1,0 +1,901 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 0eba66302dd..e9b462e7d8c 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-php-sdk",
+   "generatorVersion": "local",
++  "generatorConfig": {
++    "namespace": "Fern"
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "ci",
+diff --git a/README.md b/README.md
+index f57c693ef3f..1a95e98b580 100644
+--- a/README.md
++++ b/README.md
+@@ -36,8 +36,8 @@ Instantiate and use the client with the following:
+ 
+ namespace Example;
+ 
+-use Seed\SeedClient;
+-use Seed\Imdb\Types\CreateMovieRequest;
++use Fern\SeedClient;
++use Fern\Imdb\Types\CreateMovieRequest;
+ 
+ $client = new SeedClient(
+     token: '<token>',
+@@ -56,8 +56,8 @@ $client->imdb->createMovie(
+ When the API returns a non-success status code (4xx or 5xx response), an exception will be thrown.
+ 
+ ```php
+-use Seed\Exceptions\SeedApiException;
+-use Seed\Exceptions\SeedException;
++use Fern\Exceptions\SeedApiException;
++use Fern\Exceptions\SeedException;
+ 
+ try {
+     $response = $client->imdb->createMovie(...);
+@@ -78,7 +78,7 @@ By default, if no client is provided, the SDK will use `php-http/discovery` to f
+ However, you can pass your own client that adheres to `ClientInterface`:
+ 
+ ```php
+-use Seed\SeedClient;
++use Fern\SeedClient;
+ 
+ // Pass any PSR-18 compatible HTTP client implementation.
+ // For example, using Guzzle:
+diff --git a/composer.json b/composer.json
+index 4b33a660f73..ed8587d94ed 100644
+--- a/composer.json
++++ b/composer.json
+@@ -1,7 +1,7 @@
+ {
+   "name": "seed/seed",
+   "version": "0.0.1",
+-  "description": "Seed PHP Library",
++  "description": "Fern PHP Library",
+   "keywords": [
+     "seed",
+     "api",
+@@ -27,12 +27,12 @@
+   },
+   "autoload": {
+     "psr-4": {
+-      "Seed\\": "src/"
++      "Fern\\": "src/"
+     }
+   },
+   "autoload-dev": {
+     "psr-4": {
+-      "Seed\\Tests\\": "tests/"
++      "Fern\\Tests\\": "tests/"
+     }
+   },
+   "scripts": {
+diff --git a/src/Core/Client/BaseApiRequest.php b/src/Core/Client/BaseApiRequest.php
+index 5e1283e2b6f..194f9d4426e 100644
+--- a/src/Core/Client/BaseApiRequest.php
++++ b/src/Core/Client/BaseApiRequest.php
+@@ -1,6 +1,6 @@
+ <?php
+ 
+-namespace Seed\Core\Client;
++namespace Fern\Core\Client;
+ 
+ abstract class BaseApiRequest
+ {
+diff --git a/src/Core/Client/HttpClientBuilder.php b/src/Core/Client/HttpClientBuilder.php
+index 8ac806af032..3dde763c3c3 100644
+--- a/src/Core/Client/HttpClientBuilder.php
++++ b/src/Core/Client/HttpClientBuilder.php
+@@ -1,6 +1,6 @@
+ <?php
+ 
+-namespace Seed\Core\Client;
++namespace Fern\Core\Client;
+ 
+ use Http\Discovery\Psr17FactoryDiscovery;
+ use Http\Discovery\Psr18ClientDiscovery;
+diff --git a/src/Core/Client/HttpMethod.php b/src/Core/Client/HttpMethod.php
+index b9a3e2d0321..dcd1b08e65b 100644
+--- a/src/Core/Client/HttpMethod.php
++++ b/src/Core/Client/HttpMethod.php
+@@ -1,6 +1,6 @@
+ <?php
+ 
+-namespace Seed\Core\Client;
++namespace Fern\Core\Client;
+ 
+ enum HttpMethod
+ {
+diff --git a/src/Core/Client/MockHttpClient.php b/src/Core/Client/MockHttpClient.php
+index 8d8dfc48883..3df20599004 100644
+--- a/src/Core/Client/MockHttpClient.php
++++ b/src/Core/Client/MockHttpClient.php
+@@ -1,6 +1,6 @@
+ <?php
+ 
+-namespace Seed\Core\Client;
++namespace Fern\Core\Client;
+ 
+ use Psr\Http\Client\ClientInterface;
+ use Psr\Http\Message\RequestInterface;
+diff --git a/src/Core/Client/RawClient.php b/src/Core/Client/RawClient.php
+index 14716c7d678..10eeebdc62f 100644
+--- a/src/Core/Client/RawClient.php
++++ b/src/Core/Client/RawClient.php
+@@ -1,6 +1,6 @@
+ <?php
+ 
+-namespace Seed\Core\Client;
++namespace Fern\Core\Client;
+ 
+ use JsonSerializable;
+ use InvalidArgumentException;
+@@ -12,9 +12,9 @@ use Psr\Http\Message\ResponseInterface;
+ use Http\Message\MultipartStream\MultipartStreamBuilder;
+ use Psr\Http\Message\StreamFactoryInterface;
+ use Psr\Http\Message\StreamInterface;
+-use Seed\Core\Json\JsonApiRequest;
+-use Seed\Core\Json\JsonEncoder;
+-use Seed\Core\Multipart\MultipartApiRequest;
++use Fern\Core\Json\JsonApiRequest;
++use Fern\Core\Json\JsonEncoder;
++use Fern\Core\Multipart\MultipartApiRequest;
+ 
+ class RawClient
+ {
+diff --git a/src/Core/Client/RetryDecoratingClient.php b/src/Core/Client/RetryDecoratingClient.php
+index b16170cf280..f1beb35abf6 100644
+--- a/src/Core/Client/RetryDecoratingClient.php
++++ b/src/Core/Client/RetryDecoratingClient.php
+@@ -1,6 +1,6 @@
+ <?php
+ 
+-namespace Seed\Core\Client;
++namespace Fern\Core\Client;
+ 
+ use Psr\Http\Client\ClientExceptionInterface;
+ use Psr\Http\Client\ClientInterface;
+diff --git a/src/Core/Json/JsonApiRequest.php b/src/Core/Json/JsonApiRequest.php
+index 8fdf493606e..74e2e453cd8 100644
+--- a/src/Core/Json/JsonApiRequest.php
++++ b/src/Core/Json/JsonApiRequest.php
+@@ -1,9 +1,9 @@
+ <?php
+ 
+-namespace Seed\Core\Json;
++namespace Fern\Core\Json;
+ 
+-use Seed\Core\Client\BaseApiRequest;
+-use Seed\Core\Client\HttpMethod;
++use Fern\Core\Client\BaseApiRequest;
++use Fern\Core\Client\HttpMethod;
+ 
+ class JsonApiRequest extends BaseApiRequest
+ {
+diff --git a/src/Core/Json/JsonDecoder.php b/src/Core/Json/JsonDecoder.php
+index 2da34087c64..6054d02965b 100644
+--- a/src/Core/Json/JsonDecoder.php
++++ b/src/Core/Json/JsonDecoder.php
+@@ -1,11 +1,11 @@
+ <?php
+ 
+-namespace Seed\Core\Json;
++namespace Fern\Core\Json;
+ 
+ use DateTime;
+ use Exception;
+ use JsonException;
+-use Seed\Core\Types\Union;
++use Fern\Core\Types\Union;
+ 
+ class JsonDecoder
+ {
+diff --git a/src/Core/Json/JsonDeserializer.php b/src/Core/Json/JsonDeserializer.php
+index 1a250c614e4..f96a40c33df 100644
+--- a/src/Core/Json/JsonDeserializer.php
++++ b/src/Core/Json/JsonDeserializer.php
+@@ -1,12 +1,12 @@
+ <?php
+ 
+-namespace Seed\Core\Json;
++namespace Fern\Core\Json;
+ 
+ use DateTime;
+ use Exception;
+ use JsonException;
+-use Seed\Core\Types\Constant;
+-use Seed\Core\Types\Union;
++use Fern\Core\Types\Constant;
++use Fern\Core\Types\Union;
+ 
+ class JsonDeserializer
+ {
+diff --git a/src/Core/Json/JsonEncoder.php b/src/Core/Json/JsonEncoder.php
+index 0dbf3fcc994..7ecbec899e8 100644
+--- a/src/Core/Json/JsonEncoder.php
++++ b/src/Core/Json/JsonEncoder.php
+@@ -1,6 +1,6 @@
+ <?php
+ 
+-namespace Seed\Core\Json;
++namespace Fern\Core\Json;
+ 
+ use JsonException;
+ 
+diff --git a/src/Core/Json/JsonProperty.php b/src/Core/Json/JsonProperty.php
+index 6ab737fac2a..73c2037adbf 100644
+--- a/src/Core/Json/JsonProperty.php
++++ b/src/Core/Json/JsonProperty.php
+@@ -1,6 +1,6 @@
+ <?php
+ 
+-namespace Seed\Core\Json;
++namespace Fern\Core\Json;
+ 
+ use Attribute;
+ 
+diff --git a/src/Core/Json/JsonSerializableType.php b/src/Core/Json/JsonSerializableType.php
+index e0e507b86b5..0738a8e2407 100644
+--- a/src/Core/Json/JsonSerializableType.php
++++ b/src/Core/Json/JsonSerializableType.php
+@@ -1,15 +1,15 @@
+ <?php
+ 
+-namespace Seed\Core\Json;
++namespace Fern\Core\Json;
+ 
+ use DateTime;
+ use Exception;
+ use JsonException;
+ use ReflectionNamedType;
+ use ReflectionProperty;
+-use Seed\Core\Types\ArrayType;
+-use Seed\Core\Types\Date;
+-use Seed\Core\Types\Union;
++use Fern\Core\Types\ArrayType;
++use Fern\Core\Types\Date;
++use Fern\Core\Types\Union;
+ 
+ /**
+  * Provides generic serialization and deserialization methods.
+diff --git a/src/Core/Json/JsonSerializer.php b/src/Core/Json/JsonSerializer.php
+index f7d80ed5e8f..95899c7ec14 100644
+--- a/src/Core/Json/JsonSerializer.php
++++ b/src/Core/Json/JsonSerializer.php
+@@ -1,13 +1,13 @@
+ <?php
+ 
+-namespace Seed\Core\Json;
++namespace Fern\Core\Json;
+ 
+ use DateTime;
+ use Exception;
+ use JsonException;
+ use JsonSerializable;
+-use Seed\Core\Types\Constant;
+-use Seed\Core\Types\Union;
++use Fern\Core\Types\Constant;
++use Fern\Core\Types\Union;
+ 
+ class JsonSerializer
+ {
+diff --git a/src/Core/Json/Utils.php b/src/Core/Json/Utils.php
+index 4099b825300..d484479c00f 100644
+--- a/src/Core/Json/Utils.php
++++ b/src/Core/Json/Utils.php
+@@ -1,6 +1,6 @@
+ <?php
+ 
+-namespace Seed\Core\Json;
++namespace Fern\Core\Json;
+ 
+ use DateTime;
+ use Exception;
+diff --git a/src/Core/Multipart/MultipartApiRequest.php b/src/Core/Multipart/MultipartApiRequest.php
+index 7760366456c..0e14ea581f5 100644
+--- a/src/Core/Multipart/MultipartApiRequest.php
++++ b/src/Core/Multipart/MultipartApiRequest.php
+@@ -1,9 +1,9 @@
+ <?php
+ 
+-namespace Seed\Core\Multipart;
++namespace Fern\Core\Multipart;
+ 
+-use Seed\Core\Client\BaseApiRequest;
+-use Seed\Core\Client\HttpMethod;
++use Fern\Core\Client\BaseApiRequest;
++use Fern\Core\Client\HttpMethod;
+ 
+ class MultipartApiRequest extends BaseApiRequest
+ {
+diff --git a/src/Core/Multipart/MultipartFormData.php b/src/Core/Multipart/MultipartFormData.php
+index 911a28b6ad6..503d38b19cb 100644
+--- a/src/Core/Multipart/MultipartFormData.php
++++ b/src/Core/Multipart/MultipartFormData.php
+@@ -1,6 +1,6 @@
+ <?php
+ 
+-namespace Seed\Core\Multipart;
++namespace Fern\Core\Multipart;
+ 
+ use Http\Message\MultipartStream\MultipartStreamBuilder;
+ use Psr\Http\Message\StreamInterface;
+diff --git a/src/Core/Multipart/MultipartFormDataPart.php b/src/Core/Multipart/MultipartFormDataPart.php
+index 4db35e58ae3..ad056030f2b 100644
+--- a/src/Core/Multipart/MultipartFormDataPart.php
++++ b/src/Core/Multipart/MultipartFormDataPart.php
+@@ -1,6 +1,6 @@
+ <?php
+ 
+-namespace Seed\Core\Multipart;
++namespace Fern\Core\Multipart;
+ 
+ use Http\Message\MultipartStream\MultipartStreamBuilder;
+ use Psr\Http\Message\StreamInterface;
+diff --git a/src/Core/Types/ArrayType.php b/src/Core/Types/ArrayType.php
+index a26d29008ec..8d97e38328b 100644
+--- a/src/Core/Types/ArrayType.php
++++ b/src/Core/Types/ArrayType.php
+@@ -1,6 +1,6 @@
+ <?php
+ 
+-namespace Seed\Core\Types;
++namespace Fern\Core\Types;
+ 
+ use Attribute;
+ 
+diff --git a/src/Core/Types/Constant.php b/src/Core/Types/Constant.php
+index 5ac4518cc6d..278d7a8490f 100644
+--- a/src/Core/Types/Constant.php
++++ b/src/Core/Types/Constant.php
+@@ -1,6 +1,6 @@
+ <?php
+ 
+-namespace Seed\Core\Types;
++namespace Fern\Core\Types;
+ 
+ use DateTimeInterface;
+ 
+diff --git a/src/Core/Types/Date.php b/src/Core/Types/Date.php
+index ac4684523ad..48302339e3d 100644
+--- a/src/Core/Types/Date.php
++++ b/src/Core/Types/Date.php
+@@ -1,6 +1,6 @@
+ <?php
+ 
+-namespace Seed\Core\Types;
++namespace Fern\Core\Types;
+ 
+ use Attribute;
+ 
+diff --git a/src/Core/Types/Union.php b/src/Core/Types/Union.php
+index d7bacf5921f..38a786dd8f5 100644
+--- a/src/Core/Types/Union.php
++++ b/src/Core/Types/Union.php
+@@ -1,6 +1,6 @@
+ <?php
+ 
+-namespace Seed\Core\Types;
++namespace Fern\Core\Types;
+ 
+ use Attribute;
+ 
+diff --git a/src/Exceptions/SeedApiException.php b/src/Exceptions/SeedApiException.php
+index 6d0bba7c39b..2eb6603e0e7 100644
+--- a/src/Exceptions/SeedApiException.php
++++ b/src/Exceptions/SeedApiException.php
+@@ -1,6 +1,6 @@
+ <?php
+ 
+-namespace Seed\Exceptions;
++namespace Fern\Exceptions;
+ 
+ use Throwable;
+ 
+diff --git a/src/Exceptions/SeedException.php b/src/Exceptions/SeedException.php
+index 45703527673..a3d33748cdf 100644
+--- a/src/Exceptions/SeedException.php
++++ b/src/Exceptions/SeedException.php
+@@ -1,6 +1,6 @@
+ <?php
+ 
+-namespace Seed\Exceptions;
++namespace Fern\Exceptions;
+ 
+ use Exception;
+ 
+diff --git a/src/Imdb/ImdbClient.php b/src/Imdb/ImdbClient.php
+index 4e85929c88f..02d3c8e44cc 100644
+--- a/src/Imdb/ImdbClient.php
++++ b/src/Imdb/ImdbClient.php
+@@ -1,18 +1,18 @@
+ <?php
+ 
+-namespace Seed\Imdb;
++namespace Fern\Imdb;
+ 
+ use Psr\Http\Client\ClientInterface;
+-use Seed\Core\Client\RawClient;
+-use Seed\Imdb\Types\CreateMovieRequest;
+-use Seed\Exceptions\SeedException;
+-use Seed\Exceptions\SeedApiException;
+-use Seed\Core\Json\JsonApiRequest;
+-use Seed\Core\Client\HttpMethod;
+-use Seed\Core\Json\JsonDecoder;
++use Fern\Core\Client\RawClient;
++use Fern\Imdb\Types\CreateMovieRequest;
++use Fern\Exceptions\SeedException;
++use Fern\Exceptions\SeedApiException;
++use Fern\Core\Json\JsonApiRequest;
++use Fern\Core\Client\HttpMethod;
++use Fern\Core\Json\JsonDecoder;
+ use JsonException;
+ use Psr\Http\Client\ClientExceptionInterface;
+-use Seed\Imdb\Types\Movie;
++use Fern\Imdb\Types\Movie;
+ 
+ class ImdbClient
+ {
+diff --git a/src/Imdb/Types/CreateMovieRequest.php b/src/Imdb/Types/CreateMovieRequest.php
+index c2658c3de19..de15158540a 100644
+--- a/src/Imdb/Types/CreateMovieRequest.php
++++ b/src/Imdb/Types/CreateMovieRequest.php
+@@ -1,9 +1,9 @@
+ <?php
+ 
+-namespace Seed\Imdb\Types;
++namespace Fern\Imdb\Types;
+ 
+-use Seed\Core\Json\JsonSerializableType;
+-use Seed\Core\Json\JsonProperty;
++use Fern\Core\Json\JsonSerializableType;
++use Fern\Core\Json\JsonProperty;
+ 
+ class CreateMovieRequest extends JsonSerializableType
+ {
+diff --git a/src/Imdb/Types/Movie.php b/src/Imdb/Types/Movie.php
+index 0a77bc1c88c..4954f7b30c4 100644
+--- a/src/Imdb/Types/Movie.php
++++ b/src/Imdb/Types/Movie.php
+@@ -1,9 +1,9 @@
+ <?php
+ 
+-namespace Seed\Imdb\Types;
++namespace Fern\Imdb\Types;
+ 
+-use Seed\Core\Json\JsonSerializableType;
+-use Seed\Core\Json\JsonProperty;
++use Fern\Core\Json\JsonSerializableType;
++use Fern\Core\Json\JsonProperty;
+ 
+ class Movie extends JsonSerializableType
+ {
+diff --git a/src/SeedClient.php b/src/SeedClient.php
+index 52d0ae46e86..5719f538674 100644
+--- a/src/SeedClient.php
++++ b/src/SeedClient.php
+@@ -1,10 +1,10 @@
+ <?php
+ 
+-namespace Seed;
++namespace Fern;
+ 
+-use Seed\Imdb\ImdbClient;
++use Fern\Imdb\ImdbClient;
+ use Psr\Http\Client\ClientInterface;
+-use Seed\Core\Client\RawClient;
++use Fern\Core\Client\RawClient;
+ 
+ class SeedClient
+ {
+@@ -45,7 +45,7 @@ class SeedClient
+     ) {
+         $defaultHeaders = [
+             'X-Fern-Language' => 'PHP',
+-            'X-Fern-SDK-Name' => 'Seed',
++            'X-Fern-SDK-Name' => 'Fern',
+             'X-Fern-SDK-Version' => '0.0.1',
+             'User-Agent' => 'seed/seed/0.0.1',
+         ];
+diff --git a/src/Utils/File.php b/src/Utils/File.php
+index ee2af27b890..bcecdd3d6d4 100644
+--- a/src/Utils/File.php
++++ b/src/Utils/File.php
+@@ -1,11 +1,11 @@
+ <?php
+ 
+-namespace Seed\Utils;
++namespace Fern\Utils;
+ 
+ use Exception;
+ use Http\Discovery\Psr17FactoryDiscovery;
+ use Psr\Http\Message\StreamInterface;
+-use Seed\Core\Multipart\MultipartFormDataPart;
++use Fern\Core\Multipart\MultipartFormDataPart;
+ 
+ /**
+  * File is a utility class used to transfer files as multipart form data.
+diff --git a/src/dynamic-snippets/example0/snippet.php b/src/dynamic-snippets/example0/snippet.php
+index 2411a957dec..c742628a1e9 100644
+--- a/src/dynamic-snippets/example0/snippet.php
++++ b/src/dynamic-snippets/example0/snippet.php
+@@ -2,8 +2,8 @@
+ 
+ namespace Example;
+ 
+-use Seed\SeedClient;
+-use Seed\Imdb\Types\CreateMovieRequest;
++use Fern\SeedClient;
++use Fern\Imdb\Types\CreateMovieRequest;
+ 
+ $client = new SeedClient(
+     token: '<token>',
+diff --git a/src/dynamic-snippets/example1/snippet.php b/src/dynamic-snippets/example1/snippet.php
+index 26871030699..5b01fc6fca1 100644
+--- a/src/dynamic-snippets/example1/snippet.php
++++ b/src/dynamic-snippets/example1/snippet.php
+@@ -2,7 +2,7 @@
+ 
+ namespace Example;
+ 
+-use Seed\SeedClient;
++use Fern\SeedClient;
+ 
+ $client = new SeedClient(
+     token: '<token>',
+diff --git a/src/dynamic-snippets/example2/snippet.php b/src/dynamic-snippets/example2/snippet.php
+index 26871030699..5b01fc6fca1 100644
+--- a/src/dynamic-snippets/example2/snippet.php
++++ b/src/dynamic-snippets/example2/snippet.php
+@@ -2,7 +2,7 @@
+ 
+ namespace Example;
+ 
+-use Seed\SeedClient;
++use Fern\SeedClient;
+ 
+ $client = new SeedClient(
+     token: '<token>',
+diff --git a/tests/Core/Client/RawClientTest.php b/tests/Core/Client/RawClientTest.php
+index df36dc91889..cb64c893e58 100644
+--- a/tests/Core/Client/RawClientTest.php
++++ b/tests/Core/Client/RawClientTest.php
+@@ -1,23 +1,23 @@
+ <?php
+ 
+-namespace Seed\Tests\Core\Client;
++namespace Fern\Tests\Core\Client;
+ 
+ use PHPUnit\Framework\TestCase;
+ use Psr\Http\Client\ClientExceptionInterface;
+ use Psr\Http\Message\RequestInterface;
+ use Psr\Http\Message\ResponseInterface;
+-use Seed\Core\Client\HttpMethod;
+-use Seed\Core\Client\HttpClientBuilder;
+-use Seed\Core\Client\MockHttpClient;
+-use Seed\Core\Client\RawClient;
+-use Seed\Core\Client\RetryDecoratingClient;
+-use Seed\Core\Json\JsonApiRequest;
+-use Seed\Core\Json\JsonEncoder;
+-use Seed\Core\Json\JsonSerializableType;
+-use Seed\Core\Json\JsonProperty;
+-use Seed\Core\Multipart\MultipartApiRequest;
+-use Seed\Core\Multipart\MultipartFormData;
+-use Seed\Core\Multipart\MultipartFormDataPart;
++use Fern\Core\Client\HttpMethod;
++use Fern\Core\Client\HttpClientBuilder;
++use Fern\Core\Client\MockHttpClient;
++use Fern\Core\Client\RawClient;
++use Fern\Core\Client\RetryDecoratingClient;
++use Fern\Core\Json\JsonApiRequest;
++use Fern\Core\Json\JsonEncoder;
++use Fern\Core\Json\JsonSerializableType;
++use Fern\Core\Json\JsonProperty;
++use Fern\Core\Multipart\MultipartApiRequest;
++use Fern\Core\Multipart\MultipartFormData;
++use Fern\Core\Multipart\MultipartFormDataPart;
+ 
+ class JsonRequest extends JsonSerializableType
+ {
+diff --git a/tests/Core/Json/AdditionalPropertiesTest.php b/tests/Core/Json/AdditionalPropertiesTest.php
+index 2c32002340e..43935ba56fe 100644
+--- a/tests/Core/Json/AdditionalPropertiesTest.php
++++ b/tests/Core/Json/AdditionalPropertiesTest.php
+@@ -1,11 +1,11 @@
+ <?php
+ 
+-namespace Seed\Tests\Core\Json;
++namespace Fern\Tests\Core\Json;
+ 
+ use PHPUnit\Framework\TestCase;
+-use Seed\Core\Json\JsonEncoder;
+-use Seed\Core\Json\JsonProperty;
+-use Seed\Core\Json\JsonSerializableType;
++use Fern\Core\Json\JsonEncoder;
++use Fern\Core\Json\JsonProperty;
++use Fern\Core\Json\JsonSerializableType;
+ 
+ class Person extends JsonSerializableType
+ {
+diff --git a/tests/Core/Json/DateArrayTest.php b/tests/Core/Json/DateArrayTest.php
+index e7794d65243..055962e2228 100644
+--- a/tests/Core/Json/DateArrayTest.php
++++ b/tests/Core/Json/DateArrayTest.php
+@@ -1,13 +1,13 @@
+ <?php
+ 
+-namespace Seed\Tests\Core\Json;
++namespace Fern\Tests\Core\Json;
+ 
+ use DateTime;
+ use PHPUnit\Framework\TestCase;
+-use Seed\Core\Json\JsonEncoder;
+-use Seed\Core\Json\JsonProperty;
+-use Seed\Core\Json\JsonSerializableType;
+-use Seed\Core\Types\ArrayType;
++use Fern\Core\Json\JsonEncoder;
++use Fern\Core\Json\JsonProperty;
++use Fern\Core\Json\JsonSerializableType;
++use Fern\Core\Types\ArrayType;
+ 
+ class DateArray extends JsonSerializableType
+ {
+diff --git a/tests/Core/Json/EmptyArrayTest.php b/tests/Core/Json/EmptyArrayTest.php
+index b5f217e01f7..d09c4121d3f 100644
+--- a/tests/Core/Json/EmptyArrayTest.php
++++ b/tests/Core/Json/EmptyArrayTest.php
+@@ -1,13 +1,13 @@
+ <?php
+ 
+-namespace Seed\Tests\Core\Json;
++namespace Fern\Tests\Core\Json;
+ 
+ use PHPUnit\Framework\TestCase;
+-use Seed\Core\Json\JsonEncoder;
+-use Seed\Core\Json\JsonProperty;
+-use Seed\Core\Json\JsonSerializableType;
+-use Seed\Core\Types\ArrayType;
+-use Seed\Core\Types\Union;
++use Fern\Core\Json\JsonEncoder;
++use Fern\Core\Json\JsonProperty;
++use Fern\Core\Json\JsonSerializableType;
++use Fern\Core\Types\ArrayType;
++use Fern\Core\Types\Union;
+ 
+ class EmptyArray extends JsonSerializableType
+ {
+diff --git a/tests/Core/Json/EnumTest.php b/tests/Core/Json/EnumTest.php
+index 72dc6f2cfa0..f2e4d849a21 100644
+--- a/tests/Core/Json/EnumTest.php
++++ b/tests/Core/Json/EnumTest.php
+@@ -1,13 +1,13 @@
+ <?php
+ 
+-namespace Seed\Tests\Core\Json;
++namespace Fern\Tests\Core\Json;
+ 
+ use JsonSerializable;
+ use PHPUnit\Framework\TestCase;
+-use Seed\Core\Json\JsonEncoder;
+-use Seed\Core\Json\JsonProperty;
+-use Seed\Core\Json\JsonSerializableType;
+-use Seed\Core\Types\ArrayType;
++use Fern\Core\Json\JsonEncoder;
++use Fern\Core\Json\JsonProperty;
++use Fern\Core\Json\JsonSerializableType;
++use Fern\Core\Types\ArrayType;
+ 
+ enum Shape: string implements JsonSerializable
+ {
+diff --git a/tests/Core/Json/ExhaustiveTest.php b/tests/Core/Json/ExhaustiveTest.php
+index 4c288378b48..6000078ac09 100644
+--- a/tests/Core/Json/ExhaustiveTest.php
++++ b/tests/Core/Json/ExhaustiveTest.php
+@@ -1,15 +1,15 @@
+ <?php
+ 
+-namespace Seed\Tests\Core\Json;
++namespace Fern\Tests\Core\Json;
+ 
+ use DateTime;
+ use PHPUnit\Framework\TestCase;
+-use Seed\Core\Json\JsonEncoder;
+-use Seed\Core\Json\JsonProperty;
+-use Seed\Core\Json\JsonSerializableType;
+-use Seed\Core\Types\ArrayType;
+-use Seed\Core\Types\Date;
+-use Seed\Core\Types\Union;
++use Fern\Core\Json\JsonEncoder;
++use Fern\Core\Json\JsonProperty;
++use Fern\Core\Json\JsonSerializableType;
++use Fern\Core\Types\ArrayType;
++use Fern\Core\Types\Date;
++use Fern\Core\Types\Union;
+ 
+ class Nested extends JsonSerializableType
+ {
+diff --git a/tests/Core/Json/InvalidTest.php b/tests/Core/Json/InvalidTest.php
+index 9d845ea113b..7bed4de8e6d 100644
+--- a/tests/Core/Json/InvalidTest.php
++++ b/tests/Core/Json/InvalidTest.php
+@@ -1,11 +1,11 @@
+ <?php
+ 
+-namespace Seed\Tests\Core\Json;
++namespace Fern\Tests\Core\Json;
+ 
+ use PHPUnit\Framework\TestCase;
+-use Seed\Core\Json\JsonEncoder;
+-use Seed\Core\Json\JsonSerializableType;
+-use Seed\Core\Json\JsonProperty;
++use Fern\Core\Json\JsonEncoder;
++use Fern\Core\Json\JsonSerializableType;
++use Fern\Core\Json\JsonProperty;
+ 
+ class Invalid extends JsonSerializableType
+ {
+diff --git a/tests/Core/Json/NestedUnionArrayTest.php b/tests/Core/Json/NestedUnionArrayTest.php
+index 8fbbeb939f0..a9972103641 100644
+--- a/tests/Core/Json/NestedUnionArrayTest.php
++++ b/tests/Core/Json/NestedUnionArrayTest.php
+@@ -1,15 +1,15 @@
+ <?php
+ 
+-namespace Seed\Tests\Core\Json;
++namespace Fern\Tests\Core\Json;
+ 
+ use DateTime;
+ use PHPUnit\Framework\TestCase;
+-use Seed\Core\Json\JsonEncoder;
+-use Seed\Core\Json\JsonProperty;
+-use Seed\Core\Json\JsonSerializableType;
+-use Seed\Core\Types\ArrayType;
+-use Seed\Core\Types\Constant;
+-use Seed\Core\Types\Union;
++use Fern\Core\Json\JsonEncoder;
++use Fern\Core\Json\JsonProperty;
++use Fern\Core\Json\JsonSerializableType;
++use Fern\Core\Types\ArrayType;
++use Fern\Core\Types\Constant;
++use Fern\Core\Types\Union;
+ 
+ class UnionObject extends JsonSerializableType
+ {
+diff --git a/tests/Core/Json/NullPropertyTest.php b/tests/Core/Json/NullPropertyTest.php
+index ce20a244282..3d139cf7145 100644
+--- a/tests/Core/Json/NullPropertyTest.php
++++ b/tests/Core/Json/NullPropertyTest.php
+@@ -1,10 +1,10 @@
+ <?php
+ 
+-namespace Seed\Tests\Core\Json;
++namespace Fern\Tests\Core\Json;
+ 
+ use PHPUnit\Framework\TestCase;
+-use Seed\Core\Json\JsonProperty;
+-use Seed\Core\Json\JsonSerializableType;
++use Fern\Core\Json\JsonProperty;
++use Fern\Core\Json\JsonSerializableType;
+ 
+ class NullProperty extends JsonSerializableType
+ {
+diff --git a/tests/Core/Json/NullableArrayTest.php b/tests/Core/Json/NullableArrayTest.php
+index d1749c434a4..202050e19d0 100644
+--- a/tests/Core/Json/NullableArrayTest.php
++++ b/tests/Core/Json/NullableArrayTest.php
+@@ -1,13 +1,13 @@
+ <?php
+ 
+-namespace Seed\Tests\Core\Json;
++namespace Fern\Tests\Core\Json;
+ 
+ use PHPUnit\Framework\TestCase;
+-use Seed\Core\Json\JsonEncoder;
+-use Seed\Core\Json\JsonProperty;
+-use Seed\Core\Json\JsonSerializableType;
+-use Seed\Core\Types\ArrayType;
+-use Seed\Core\Types\Union;
++use Fern\Core\Json\JsonEncoder;
++use Fern\Core\Json\JsonProperty;
++use Fern\Core\Json\JsonSerializableType;
++use Fern\Core\Types\ArrayType;
++use Fern\Core\Types\Union;
+ 
+ class NullableArray extends JsonSerializableType
+ {
+diff --git a/tests/Core/Json/ScalarTest.php b/tests/Core/Json/ScalarTest.php
+index ad4db0251bb..00480451a0c 100644
+--- a/tests/Core/Json/ScalarTest.php
++++ b/tests/Core/Json/ScalarTest.php
+@@ -1,13 +1,13 @@
+ <?php
+ 
+-namespace Seed\Tests\Core\Json;
++namespace Fern\Tests\Core\Json;
+ 
+ use PHPUnit\Framework\TestCase;
+-use Seed\Core\Json\JsonEncoder;
+-use Seed\Core\Json\JsonProperty;
+-use Seed\Core\Json\JsonSerializableType;
+-use Seed\Core\Types\ArrayType;
+-use Seed\Core\Types\Union;
++use Fern\Core\Json\JsonEncoder;
++use Fern\Core\Json\JsonProperty;
++use Fern\Core\Json\JsonSerializableType;
++use Fern\Core\Types\ArrayType;
++use Fern\Core\Types\Union;
+ 
+ class Scalar extends JsonSerializableType
+ {
+diff --git a/tests/Core/Json/TraitTest.php b/tests/Core/Json/TraitTest.php
+index e18f06d4191..f6f276d8246 100644
+--- a/tests/Core/Json/TraitTest.php
++++ b/tests/Core/Json/TraitTest.php
+@@ -1,11 +1,11 @@
+ <?php
+ 
+-namespace Seed\Tests\Core\Json;
++namespace Fern\Tests\Core\Json;
+ 
+ use PHPUnit\Framework\TestCase;
+-use Seed\Core\Json\JsonEncoder;
+-use Seed\Core\Json\JsonProperty;
+-use Seed\Core\Json\JsonSerializableType;
++use Fern\Core\Json\JsonEncoder;
++use Fern\Core\Json\JsonProperty;
++use Fern\Core\Json\JsonSerializableType;
+ 
+ trait IntegerPropertyTrait
+ {
+diff --git a/tests/Core/Json/UnionArrayTest.php b/tests/Core/Json/UnionArrayTest.php
+index de20cf9fde1..c0d8bbf5850 100644
+--- a/tests/Core/Json/UnionArrayTest.php
++++ b/tests/Core/Json/UnionArrayTest.php
+@@ -1,14 +1,14 @@
+ <?php
+ 
+-namespace Seed\Tests\Core\Json;
++namespace Fern\Tests\Core\Json;
+ 
+ use DateTime;
+ use PHPUnit\Framework\TestCase;
+-use Seed\Core\Json\JsonEncoder;
+-use Seed\Core\Json\JsonProperty;
+-use Seed\Core\Json\JsonSerializableType;
+-use Seed\Core\Types\ArrayType;
+-use Seed\Core\Types\Union;
++use Fern\Core\Json\JsonEncoder;
++use Fern\Core\Json\JsonProperty;
++use Fern\Core\Json\JsonSerializableType;
++use Fern\Core\Types\ArrayType;
++use Fern\Core\Types\Union;
+ 
+ class UnionArray extends JsonSerializableType
+ {
+diff --git a/tests/Core/Json/UnionPropertyTest.php b/tests/Core/Json/UnionPropertyTest.php
+index f733062cfab..58defc9fed6 100644
+--- a/tests/Core/Json/UnionPropertyTest.php
++++ b/tests/Core/Json/UnionPropertyTest.php
+@@ -1,12 +1,12 @@
+ <?php
+ 
+-namespace Seed\Tests\Core\Json;
++namespace Fern\Tests\Core\Json;
+ 
+ use PHPUnit\Framework\TestCase;
+-use Seed\Core\Json\JsonEncoder;
+-use Seed\Core\Json\JsonProperty;
+-use Seed\Core\Json\JsonSerializableType;
+-use Seed\Core\Types\Union;
++use Fern\Core\Json\JsonEncoder;
++use Fern\Core\Json\JsonProperty;
++use Fern\Core\Json\JsonSerializableType;
++use Fern\Core\Types\Union;
+ 
+ class UnionProperty extends JsonSerializableType
+ {

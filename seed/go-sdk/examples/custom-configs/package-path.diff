@@ -1,0 +1,2231 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index e206b6bea6d..2caa8228b7f 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -3,7 +3,8 @@
+   "generatorName": "fernapi/fern-go-sdk",
+   "generatorVersion": "local",
+   "generatorConfig": {
+-    "enableWireTests": false
++    "enableWireTests": false,
++    "packagePath": "pleaseinhere"
+   },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+diff --git a/README.md b/README.md
+index ced998124d3..aab22477199 100644
+--- a/README.md
++++ b/README.md
+@@ -32,8 +32,8 @@ package example
+ import (
+     context "context"
+ 
+-    client "github.com/examples/fern/client"
+-    option "github.com/examples/fern/option"
++    client "github.com/examples/fern/pleaseinhere/client"
++    option "github.com/examples/fern/pleaseinhere/option"
+ )
+ 
+ func do() {
+diff --git a/dynamic-snippets/example0/snippet.go b/dynamic-snippets/example0/snippet.go
+index 4f6c56e3cb2..7b266a7bdb8 100644
+--- a/dynamic-snippets/example0/snippet.go
++++ b/dynamic-snippets/example0/snippet.go
+@@ -3,8 +3,8 @@ package example
+ import (
+     context "context"
+ 
+-    client "github.com/examples/fern/client"
+-    option "github.com/examples/fern/option"
++    client "github.com/examples/fern/pleaseinhere/client"
++    option "github.com/examples/fern/pleaseinhere/option"
+ )
+ 
+ func do() {
+diff --git a/dynamic-snippets/example1/snippet.go b/dynamic-snippets/example1/snippet.go
+index b639dd7acd6..763be04fa41 100644
+--- a/dynamic-snippets/example1/snippet.go
++++ b/dynamic-snippets/example1/snippet.go
+@@ -3,8 +3,8 @@ package example
+ import (
+     context "context"
+ 
+-    client "github.com/examples/fern/client"
+-    option "github.com/examples/fern/option"
++    client "github.com/examples/fern/pleaseinhere/client"
++    option "github.com/examples/fern/pleaseinhere/option"
+ )
+ 
+ func do() {
+diff --git a/dynamic-snippets/example10/snippet.go b/dynamic-snippets/example10/snippet.go
+index b8efe5fac00..06bce6e3847 100644
+--- a/dynamic-snippets/example10/snippet.go
++++ b/dynamic-snippets/example10/snippet.go
+@@ -3,8 +3,8 @@ package example
+ import (
+     context "context"
+ 
+-    client "github.com/examples/fern/client"
+-    option "github.com/examples/fern/option"
++    client "github.com/examples/fern/pleaseinhere/client"
++    option "github.com/examples/fern/pleaseinhere/option"
+ )
+ 
+ func do() {
+diff --git a/dynamic-snippets/example11/snippet.go b/dynamic-snippets/example11/snippet.go
+index c4ddaf01112..9ee501f9a50 100644
+--- a/dynamic-snippets/example11/snippet.go
++++ b/dynamic-snippets/example11/snippet.go
+@@ -3,8 +3,8 @@ package example
+ import (
+     context "context"
+ 
+-    client "github.com/examples/fern/client"
+-    option "github.com/examples/fern/option"
++    client "github.com/examples/fern/pleaseinhere/client"
++    option "github.com/examples/fern/pleaseinhere/option"
+ )
+ 
+ func do() {
+diff --git a/dynamic-snippets/example12/snippet.go b/dynamic-snippets/example12/snippet.go
+index c4ddaf01112..9ee501f9a50 100644
+--- a/dynamic-snippets/example12/snippet.go
++++ b/dynamic-snippets/example12/snippet.go
+@@ -3,8 +3,8 @@ package example
+ import (
+     context "context"
+ 
+-    client "github.com/examples/fern/client"
+-    option "github.com/examples/fern/option"
++    client "github.com/examples/fern/pleaseinhere/client"
++    option "github.com/examples/fern/pleaseinhere/option"
+ )
+ 
+ func do() {
+diff --git a/dynamic-snippets/example13/snippet.go b/dynamic-snippets/example13/snippet.go
+index 1bfd6279e96..156b0db0f05 100644
+--- a/dynamic-snippets/example13/snippet.go
++++ b/dynamic-snippets/example13/snippet.go
+@@ -3,8 +3,8 @@ package example
+ import (
+     context "context"
+ 
+-    client "github.com/examples/fern/client"
+-    option "github.com/examples/fern/option"
++    client "github.com/examples/fern/pleaseinhere/client"
++    option "github.com/examples/fern/pleaseinhere/option"
+ )
+ 
+ func do() {
+diff --git a/dynamic-snippets/example14/snippet.go b/dynamic-snippets/example14/snippet.go
+index 3d6e97c3dfb..f8589292767 100644
+--- a/dynamic-snippets/example14/snippet.go
++++ b/dynamic-snippets/example14/snippet.go
+@@ -3,8 +3,8 @@ package example
+ import (
+     context "context"
+ 
+-    client "github.com/examples/fern/client"
+-    option "github.com/examples/fern/option"
++    client "github.com/examples/fern/pleaseinhere/client"
++    option "github.com/examples/fern/pleaseinhere/option"
+ )
+ 
+ func do() {
+diff --git a/dynamic-snippets/example15/snippet.go b/dynamic-snippets/example15/snippet.go
+index 699312f8a3b..c8d877ed2f3 100644
+--- a/dynamic-snippets/example15/snippet.go
++++ b/dynamic-snippets/example15/snippet.go
+@@ -3,9 +3,9 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/examples/fern"
+-    client "github.com/examples/fern/client"
+-    option "github.com/examples/fern/option"
++    pleaseinhere "github.com/examples/fern/pleaseinhere"
++    client "github.com/examples/fern/pleaseinhere/client"
++    option "github.com/examples/fern/pleaseinhere/option"
+ )
+ 
+ func do() {
+@@ -17,9 +17,9 @@ func do() {
+             "<token>",
+         ),
+     )
+-    request := &fern.Movie{
++    request := &pleaseinhere.Movie{
+         ID: "movie-c06a4ad7",
+-        Prequel: fern.String(
++        Prequel: pleaseinhere.String(
+             "movie-cv9b914f",
+         ),
+         Title: "The Boy and the Heron",
+diff --git a/dynamic-snippets/example16/snippet.go b/dynamic-snippets/example16/snippet.go
+index a773eba5a77..b259b5b5510 100644
+--- a/dynamic-snippets/example16/snippet.go
++++ b/dynamic-snippets/example16/snippet.go
+@@ -3,9 +3,9 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/examples/fern"
+-    client "github.com/examples/fern/client"
+-    option "github.com/examples/fern/option"
++    pleaseinhere "github.com/examples/fern/pleaseinhere"
++    client "github.com/examples/fern/pleaseinhere/client"
++    option "github.com/examples/fern/pleaseinhere/option"
+ )
+ 
+ func do() {
+@@ -17,16 +17,16 @@ func do() {
+             "<token>",
+         ),
+     )
+-    request := &fern.Movie{
++    request := &pleaseinhere.Movie{
+         ID: "id",
+-        Prequel: fern.String(
++        Prequel: pleaseinhere.String(
+             "prequel",
+         ),
+         Title: "title",
+         From: "from",
+         Rating: 1.1,
+         Tag: "tag",
+-        Book: fern.String(
++        Book: pleaseinhere.String(
+             "book",
+         ),
+         Metadata: map[string]any{
+diff --git a/dynamic-snippets/example17/snippet.go b/dynamic-snippets/example17/snippet.go
+index 545e5d76336..90dfa9e1142 100644
+--- a/dynamic-snippets/example17/snippet.go
++++ b/dynamic-snippets/example17/snippet.go
+@@ -3,9 +3,9 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/examples/fern"
+-    client "github.com/examples/fern/client"
+-    option "github.com/examples/fern/option"
++    pleaseinhere "github.com/examples/fern/pleaseinhere"
++    client "github.com/examples/fern/pleaseinhere/client"
++    option "github.com/examples/fern/pleaseinhere/option"
+ )
+ 
+ func do() {
+@@ -17,12 +17,12 @@ func do() {
+             "<token>",
+         ),
+     )
+-    request := &fern.GetMetadataRequest{
+-        Shallow: fern.Bool(
++    request := &pleaseinhere.GetMetadataRequest{
++        Shallow: pleaseinhere.Bool(
+             false,
+         ),
+         Tag: []*string{
+-            fern.String(
++            pleaseinhere.String(
+                 "development",
+             ),
+         },
+diff --git a/dynamic-snippets/example18/snippet.go b/dynamic-snippets/example18/snippet.go
+index e19def9dc24..b4f6324e6f5 100644
+--- a/dynamic-snippets/example18/snippet.go
++++ b/dynamic-snippets/example18/snippet.go
+@@ -3,9 +3,9 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/examples/fern"
+-    client "github.com/examples/fern/client"
+-    option "github.com/examples/fern/option"
++    pleaseinhere "github.com/examples/fern/pleaseinhere"
++    client "github.com/examples/fern/pleaseinhere/client"
++    option "github.com/examples/fern/pleaseinhere/option"
+ )
+ 
+ func do() {
+@@ -17,12 +17,12 @@ func do() {
+             "<token>",
+         ),
+     )
+-    request := &fern.GetMetadataRequest{
+-        Shallow: fern.Bool(
++    request := &pleaseinhere.GetMetadataRequest{
++        Shallow: pleaseinhere.Bool(
+             true,
+         ),
+         Tag: []*string{
+-            fern.String(
++            pleaseinhere.String(
+                 "tag",
+             ),
+         },
+diff --git a/dynamic-snippets/example19/snippet.go b/dynamic-snippets/example19/snippet.go
+index 87abd30f833..e9104852261 100644
+--- a/dynamic-snippets/example19/snippet.go
++++ b/dynamic-snippets/example19/snippet.go
+@@ -3,10 +3,10 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/examples/fern"
+-    client "github.com/examples/fern/client"
+-    commons "github.com/examples/fern/commons"
+-    option "github.com/examples/fern/option"
++    pleaseinhere "github.com/examples/fern/pleaseinhere"
++    client "github.com/examples/fern/pleaseinhere/client"
++    commons "github.com/examples/fern/pleaseinhere/commons"
++    option "github.com/examples/fern/pleaseinhere/option"
+     uuid "github.com/google/uuid"
+ )
+ 
+@@ -19,27 +19,27 @@ func do() {
+             "<token>",
+         ),
+     )
+-    request := &fern.BigEntity{
+-        CastMember: &fern.CastMember{
+-            Actor: &fern.Actor{
++    request := &pleaseinhere.BigEntity{
++        CastMember: &pleaseinhere.CastMember{
++            Actor: &pleaseinhere.Actor{
+                 Name: "name",
+                 ID: "id",
+             },
+         },
+-        ExtendedMovie: &fern.ExtendedMovie{
++        ExtendedMovie: &pleaseinhere.ExtendedMovie{
+             Cast: []string{
+                 "cast",
+                 "cast",
+             },
+             ID: "id",
+-            Prequel: fern.String(
++            Prequel: pleaseinhere.String(
+                 "prequel",
+             ),
+             Title: "title",
+             From: "from",
+             Rating: 1.1,
+             Tag: "tag",
+-            Book: fern.String(
++            Book: pleaseinhere.String(
+                 "book",
+             ),
+             Metadata: map[string]any{
+@@ -49,13 +49,13 @@ func do() {
+             },
+             Revenue: int64(1000000),
+         },
+-        Entity: &fern.Entity{
+-            Type: &fern.Type{
+-                BasicType: fern.BasicTypePrimitive,
++        Entity: &pleaseinhere.Entity{
++            Type: &pleaseinhere.Type{
++                BasicType: pleaseinhere.BasicTypePrimitive,
+             },
+             Name: "name",
+         },
+-        Metadata: &fern.Metadata{
++        Metadata: &pleaseinhere.Metadata{
+             Extra: map[string]string{
+                 "extra": "extra",
+             },
+@@ -68,7 +68,7 @@ func do() {
+             Data: map[string]string{
+                 "data": "data",
+             },
+-            JSONString: fern.String(
++            JSONString: pleaseinhere.String(
+                 "jsonString",
+             ),
+         },
+@@ -78,162 +78,162 @@ func do() {
+                 Data: map[string]string{
+                     "data": "data",
+                 },
+-                JSONString: fern.String(
++                JSONString: pleaseinhere.String(
+                     "jsonString",
+                 ),
+             },
+         },
+         Data: &commons.Data{},
+-        Migration: &fern.Migration{
++        Migration: &pleaseinhere.Migration{
+             Name: "name",
+-            Status: fern.MigrationStatusRunning,
++            Status: pleaseinhere.MigrationStatusRunning,
+         },
+-        Exception: &fern.Exception{
+-            Generic: &fern.ExceptionInfo{
++        Exception: &pleaseinhere.Exception{
++            Generic: &pleaseinhere.ExceptionInfo{
+                 ExceptionType: "exceptionType",
+                 ExceptionMessage: "exceptionMessage",
+                 ExceptionStacktrace: "exceptionStacktrace",
+             },
+         },
+-        Test: &fern.Test{},
+-        Node: &fern.Node{
++        Test: &pleaseinhere.Test{},
++        Node: &pleaseinhere.Node{
+             Name: "name",
+-            Nodes: []*fern.Node{
+-                &fern.Node{
++            Nodes: []*pleaseinhere.Node{
++                &pleaseinhere.Node{
+                     Name: "name",
+-                    Nodes: []*fern.Node{
+-                        &fern.Node{
++                    Nodes: []*pleaseinhere.Node{
++                        &pleaseinhere.Node{
+                             Name: "name",
+                         },
+-                        &fern.Node{
++                        &pleaseinhere.Node{
+                             Name: "name",
+                         },
+                     },
+-                    Trees: []*fern.Tree{
+-                        &fern.Tree{
+-                            Nodes: []*fern.Node{},
++                    Trees: []*pleaseinhere.Tree{
++                        &pleaseinhere.Tree{
++                            Nodes: []*pleaseinhere.Node{},
+                         },
+-                        &fern.Tree{
+-                            Nodes: []*fern.Node{},
++                        &pleaseinhere.Tree{
++                            Nodes: []*pleaseinhere.Node{},
+                         },
+                     },
+                 },
+-                &fern.Node{
++                &pleaseinhere.Node{
+                     Name: "name",
+-                    Nodes: []*fern.Node{
+-                        &fern.Node{
++                    Nodes: []*pleaseinhere.Node{
++                        &pleaseinhere.Node{
+                             Name: "name",
+                         },
+-                        &fern.Node{
++                        &pleaseinhere.Node{
+                             Name: "name",
+                         },
+                     },
+-                    Trees: []*fern.Tree{
+-                        &fern.Tree{
+-                            Nodes: []*fern.Node{},
++                    Trees: []*pleaseinhere.Tree{
++                        &pleaseinhere.Tree{
++                            Nodes: []*pleaseinhere.Node{},
+                         },
+-                        &fern.Tree{
+-                            Nodes: []*fern.Node{},
++                        &pleaseinhere.Tree{
++                            Nodes: []*pleaseinhere.Node{},
+                         },
+                     },
+                 },
+             },
+-            Trees: []*fern.Tree{
+-                &fern.Tree{
+-                    Nodes: []*fern.Node{
+-                        &fern.Node{
++            Trees: []*pleaseinhere.Tree{
++                &pleaseinhere.Tree{
++                    Nodes: []*pleaseinhere.Node{
++                        &pleaseinhere.Node{
+                             Name: "name",
+-                            Nodes: []*fern.Node{},
+-                            Trees: []*fern.Tree{},
++                            Nodes: []*pleaseinhere.Node{},
++                            Trees: []*pleaseinhere.Tree{},
+                         },
+-                        &fern.Node{
++                        &pleaseinhere.Node{
+                             Name: "name",
+-                            Nodes: []*fern.Node{},
+-                            Trees: []*fern.Tree{},
++                            Nodes: []*pleaseinhere.Node{},
++                            Trees: []*pleaseinhere.Tree{},
+                         },
+                     },
+                 },
+-                &fern.Tree{
+-                    Nodes: []*fern.Node{
+-                        &fern.Node{
++                &pleaseinhere.Tree{
++                    Nodes: []*pleaseinhere.Node{
++                        &pleaseinhere.Node{
+                             Name: "name",
+-                            Nodes: []*fern.Node{},
+-                            Trees: []*fern.Tree{},
++                            Nodes: []*pleaseinhere.Node{},
++                            Trees: []*pleaseinhere.Tree{},
+                         },
+-                        &fern.Node{
++                        &pleaseinhere.Node{
+                             Name: "name",
+-                            Nodes: []*fern.Node{},
+-                            Trees: []*fern.Tree{},
++                            Nodes: []*pleaseinhere.Node{},
++                            Trees: []*pleaseinhere.Tree{},
+                         },
+                     },
+                 },
+             },
+         },
+-        Directory: &fern.Directory{
++        Directory: &pleaseinhere.Directory{
+             Name: "name",
+-            Files: []*fern.File{
+-                &fern.File{
++            Files: []*pleaseinhere.File{
++                &pleaseinhere.File{
+                     Name: "name",
+                     Contents: "contents",
+                 },
+-                &fern.File{
++                &pleaseinhere.File{
+                     Name: "name",
+                     Contents: "contents",
+                 },
+             },
+-            Directories: []*fern.Directory{
+-                &fern.Directory{
++            Directories: []*pleaseinhere.Directory{
++                &pleaseinhere.Directory{
+                     Name: "name",
+-                    Files: []*fern.File{
+-                        &fern.File{
++                    Files: []*pleaseinhere.File{
++                        &pleaseinhere.File{
+                             Name: "name",
+                             Contents: "contents",
+                         },
+-                        &fern.File{
++                        &pleaseinhere.File{
+                             Name: "name",
+                             Contents: "contents",
+                         },
+                     },
+-                    Directories: []*fern.Directory{
+-                        &fern.Directory{
++                    Directories: []*pleaseinhere.Directory{
++                        &pleaseinhere.Directory{
+                             Name: "name",
+                         },
+-                        &fern.Directory{
++                        &pleaseinhere.Directory{
+                             Name: "name",
+                         },
+                     },
+                 },
+-                &fern.Directory{
++                &pleaseinhere.Directory{
+                     Name: "name",
+-                    Files: []*fern.File{
+-                        &fern.File{
++                    Files: []*pleaseinhere.File{
++                        &pleaseinhere.File{
+                             Name: "name",
+                             Contents: "contents",
+                         },
+-                        &fern.File{
++                        &pleaseinhere.File{
+                             Name: "name",
+                             Contents: "contents",
+                         },
+                     },
+-                    Directories: []*fern.Directory{
+-                        &fern.Directory{
++                    Directories: []*pleaseinhere.Directory{
++                        &pleaseinhere.Directory{
+                             Name: "name",
+                         },
+-                        &fern.Directory{
++                        &pleaseinhere.Directory{
+                             Name: "name",
+                         },
+                     },
+                 },
+             },
+         },
+-        Moment: &fern.Moment{
++        Moment: &pleaseinhere.Moment{
+             ID: uuid.MustParse(
+                 "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+             ),
+-            Date: fern.MustParseDate(
++            Date: pleaseinhere.MustParseDate(
+                 "2023-01-15",
+             ),
+-            Datetime: fern.MustParseDateTime(
++            Datetime: pleaseinhere.MustParseDateTime(
+                 "2024-01-15T09:30:00Z",
+             ),
+         },
+diff --git a/dynamic-snippets/example2/snippet.go b/dynamic-snippets/example2/snippet.go
+index 11776b565b9..8883e8c3431 100644
+--- a/dynamic-snippets/example2/snippet.go
++++ b/dynamic-snippets/example2/snippet.go
+@@ -3,9 +3,9 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/examples/fern"
+-    client "github.com/examples/fern/client"
+-    option "github.com/examples/fern/option"
++    pleaseinhere "github.com/examples/fern/pleaseinhere"
++    client "github.com/examples/fern/pleaseinhere/client"
++    option "github.com/examples/fern/pleaseinhere/option"
+ )
+ 
+ func do() {
+@@ -17,8 +17,8 @@ func do() {
+             "<token>",
+         ),
+     )
+-    request := &fern.Type{
+-        BasicType: fern.BasicTypePrimitive,
++    request := &pleaseinhere.Type{
++        BasicType: pleaseinhere.BasicTypePrimitive,
+     }
+     client.CreateType(
+         context.TODO(),
+diff --git a/dynamic-snippets/example20/snippet.go b/dynamic-snippets/example20/snippet.go
+index 7e93cbc9f14..5a6de82a6d3 100644
+--- a/dynamic-snippets/example20/snippet.go
++++ b/dynamic-snippets/example20/snippet.go
+@@ -3,8 +3,8 @@ package example
+ import (
+     context "context"
+ 
+-    client "github.com/examples/fern/client"
+-    option "github.com/examples/fern/option"
++    client "github.com/examples/fern/pleaseinhere/client"
++    option "github.com/examples/fern/pleaseinhere/option"
+ )
+ 
+ func do() {
+diff --git a/dynamic-snippets/example21/snippet.go b/dynamic-snippets/example21/snippet.go
+index 8dcf5a330e0..08b4fbb0d5c 100644
+--- a/dynamic-snippets/example21/snippet.go
++++ b/dynamic-snippets/example21/snippet.go
+@@ -3,9 +3,9 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/examples/fern"
+-    client "github.com/examples/fern/client"
+-    option "github.com/examples/fern/option"
++    pleaseinhere "github.com/examples/fern/pleaseinhere"
++    client "github.com/examples/fern/pleaseinhere/client"
++    option "github.com/examples/fern/pleaseinhere/option"
+ )
+ 
+ func do() {
+@@ -17,7 +17,7 @@ func do() {
+             "<token>",
+         ),
+     )
+-    request := &fern.RefreshTokenRequest{
++    request := &pleaseinhere.RefreshTokenRequest{
+         TTL: 420,
+     }
+     client.Service.RefreshToken(
+diff --git a/dynamic-snippets/example22/snippet.go b/dynamic-snippets/example22/snippet.go
+index 90bb6f203df..61c62f37e66 100644
+--- a/dynamic-snippets/example22/snippet.go
++++ b/dynamic-snippets/example22/snippet.go
+@@ -3,9 +3,9 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/examples/fern"
+-    client "github.com/examples/fern/client"
+-    option "github.com/examples/fern/option"
++    pleaseinhere "github.com/examples/fern/pleaseinhere"
++    client "github.com/examples/fern/pleaseinhere/client"
++    option "github.com/examples/fern/pleaseinhere/option"
+ )
+ 
+ func do() {
+@@ -17,7 +17,7 @@ func do() {
+             "<token>",
+         ),
+     )
+-    request := &fern.RefreshTokenRequest{
++    request := &pleaseinhere.RefreshTokenRequest{
+         TTL: 1,
+     }
+     client.Service.RefreshToken(
+diff --git a/dynamic-snippets/example3/snippet.go b/dynamic-snippets/example3/snippet.go
+index 4186ea6f848..cdcc32386c7 100644
+--- a/dynamic-snippets/example3/snippet.go
++++ b/dynamic-snippets/example3/snippet.go
+@@ -3,8 +3,8 @@ package example
+ import (
+     context "context"
+ 
+-    client "github.com/examples/fern/client"
+-    option "github.com/examples/fern/option"
++    client "github.com/examples/fern/pleaseinhere/client"
++    option "github.com/examples/fern/pleaseinhere/option"
+ )
+ 
+ func do() {
+diff --git a/dynamic-snippets/example4/snippet.go b/dynamic-snippets/example4/snippet.go
+index d454fa41a8d..b7c82b359cd 100644
+--- a/dynamic-snippets/example4/snippet.go
++++ b/dynamic-snippets/example4/snippet.go
+@@ -3,8 +3,8 @@ package example
+ import (
+     context "context"
+ 
+-    client "github.com/examples/fern/client"
+-    option "github.com/examples/fern/option"
++    client "github.com/examples/fern/pleaseinhere/client"
++    option "github.com/examples/fern/pleaseinhere/option"
+ )
+ 
+ func do() {
+diff --git a/dynamic-snippets/example5/snippet.go b/dynamic-snippets/example5/snippet.go
+index 6232afc27db..e604ffc300e 100644
+--- a/dynamic-snippets/example5/snippet.go
++++ b/dynamic-snippets/example5/snippet.go
+@@ -3,9 +3,9 @@ package example
+ import (
+     context "context"
+ 
+-    client "github.com/examples/fern/client"
+-    file "github.com/examples/fern/file"
+-    option "github.com/examples/fern/option"
++    client "github.com/examples/fern/pleaseinhere/client"
++    file "github.com/examples/fern/pleaseinhere/file"
++    option "github.com/examples/fern/pleaseinhere/option"
+ )
+ 
+ func do() {
+diff --git a/dynamic-snippets/example6/snippet.go b/dynamic-snippets/example6/snippet.go
+index 0d5f9a4c1f8..688ab89b8cc 100644
+--- a/dynamic-snippets/example6/snippet.go
++++ b/dynamic-snippets/example6/snippet.go
+@@ -3,9 +3,9 @@ package example
+ import (
+     context "context"
+ 
+-    client "github.com/examples/fern/client"
+-    file "github.com/examples/fern/file"
+-    option "github.com/examples/fern/option"
++    client "github.com/examples/fern/pleaseinhere/client"
++    file "github.com/examples/fern/pleaseinhere/file"
++    option "github.com/examples/fern/pleaseinhere/option"
+ )
+ 
+ func do() {
+diff --git a/dynamic-snippets/example7/snippet.go b/dynamic-snippets/example7/snippet.go
+index 0d5f9a4c1f8..688ab89b8cc 100644
+--- a/dynamic-snippets/example7/snippet.go
++++ b/dynamic-snippets/example7/snippet.go
+@@ -3,9 +3,9 @@ package example
+ import (
+     context "context"
+ 
+-    client "github.com/examples/fern/client"
+-    file "github.com/examples/fern/file"
+-    option "github.com/examples/fern/option"
++    client "github.com/examples/fern/pleaseinhere/client"
++    file "github.com/examples/fern/pleaseinhere/file"
++    option "github.com/examples/fern/pleaseinhere/option"
+ )
+ 
+ func do() {
+diff --git a/dynamic-snippets/example8/snippet.go b/dynamic-snippets/example8/snippet.go
+index 07912c41b5d..a4adfc43d4d 100644
+--- a/dynamic-snippets/example8/snippet.go
++++ b/dynamic-snippets/example8/snippet.go
+@@ -3,8 +3,8 @@ package example
+ import (
+     context "context"
+ 
+-    client "github.com/examples/fern/client"
+-    option "github.com/examples/fern/option"
++    client "github.com/examples/fern/pleaseinhere/client"
++    option "github.com/examples/fern/pleaseinhere/option"
+ )
+ 
+ func do() {
+diff --git a/dynamic-snippets/example9/snippet.go b/dynamic-snippets/example9/snippet.go
+index c35f0a9b296..2b1bad1b55d 100644
+--- a/dynamic-snippets/example9/snippet.go
++++ b/dynamic-snippets/example9/snippet.go
+@@ -3,8 +3,8 @@ package example
+ import (
+     context "context"
+ 
+-    client "github.com/examples/fern/client"
+-    option "github.com/examples/fern/option"
++    client "github.com/examples/fern/pleaseinhere/client"
++    option "github.com/examples/fern/pleaseinhere/option"
+ )
+ 
+ func do() {
+diff --git a/client/client.go b/pleaseinhere/client/client.go
+similarity index 73%
+rename from client/client.go
+rename to pleaseinhere/client/client.go
+index ac6cdbd16f8..f8e392d83f1 100644
+--- a/client/client.go
++++ b/pleaseinhere/client/client.go
+@@ -5,13 +5,13 @@ package client
+ import (
+ 	context "context"
+ 
+-	fern "github.com/examples/fern"
+-	core "github.com/examples/fern/core"
+-	client "github.com/examples/fern/file/client"
+-	healthclient "github.com/examples/fern/health/client"
+-	internal "github.com/examples/fern/internal"
+-	option "github.com/examples/fern/option"
+-	service "github.com/examples/fern/service"
++	pleaseinhere "github.com/examples/fern/pleaseinhere"
++	core "github.com/examples/fern/pleaseinhere/core"
++	client "github.com/examples/fern/pleaseinhere/file/client"
++	healthclient "github.com/examples/fern/pleaseinhere/health/client"
++	internal "github.com/examples/fern/pleaseinhere/internal"
++	option "github.com/examples/fern/pleaseinhere/option"
++	service "github.com/examples/fern/pleaseinhere/service"
+ )
+ 
+ type Client struct {
+@@ -61,9 +61,9 @@ func (c *Client) Echo(
+ 
+ func (c *Client) CreateType(
+ 	ctx context.Context,
+-	request *fern.Type,
++	request *pleaseinhere.Type,
+ 	opts ...option.RequestOption,
+-) (*fern.Identifier, error) {
++) (*pleaseinhere.Identifier, error) {
+ 	response, err := c.WithRawResponse.CreateType(
+ 		ctx,
+ 		request,
+diff --git a/client/client_test.go b/pleaseinhere/client/client_test.go
+similarity index 94%
+rename from client/client_test.go
+rename to pleaseinhere/client/client_test.go
+index e0c05ddf652..77271b5aeb6 100644
+--- a/client/client_test.go
++++ b/pleaseinhere/client/client_test.go
+@@ -3,7 +3,7 @@
+ package client
+ 
+ import (
+-	option "github.com/examples/fern/option"
++	option "github.com/examples/fern/pleaseinhere/option"
+ 	assert "github.com/stretchr/testify/assert"
+ 	http "net/http"
+ 	testing "testing"
+diff --git a/client/raw_client.go b/pleaseinhere/client/raw_client.go
+similarity index 85%
+rename from client/raw_client.go
+rename to pleaseinhere/client/raw_client.go
+index b3a97a23852..e84502881bb 100644
+--- a/client/raw_client.go
++++ b/pleaseinhere/client/raw_client.go
+@@ -6,10 +6,10 @@ import (
+ 	context "context"
+ 	http "net/http"
+ 
+-	fern "github.com/examples/fern"
+-	core "github.com/examples/fern/core"
+-	internal "github.com/examples/fern/internal"
+-	option "github.com/examples/fern/option"
++	pleaseinhere "github.com/examples/fern/pleaseinhere"
++	core "github.com/examples/fern/pleaseinhere/core"
++	internal "github.com/examples/fern/pleaseinhere/internal"
++	option "github.com/examples/fern/pleaseinhere/option"
+ )
+ 
+ type RawClient struct {
+@@ -74,9 +74,9 @@ func (r *RawClient) Echo(
+ 
+ func (r *RawClient) CreateType(
+ 	ctx context.Context,
+-	request *fern.Type,
++	request *pleaseinhere.Type,
+ 	opts ...option.RequestOption,
+-) (*core.Response[*fern.Identifier], error) {
++) (*core.Response[*pleaseinhere.Identifier], error) {
+ 	options := core.NewRequestOptions(opts...)
+ 	baseURL := internal.ResolveBaseURL(
+ 		options.BaseURL,
+@@ -88,7 +88,7 @@ func (r *RawClient) CreateType(
+ 		r.options.ToHeader(),
+ 		options.ToHeader(),
+ 	)
+-	var response *fern.Identifier
++	var response *pleaseinhere.Identifier
+ 	raw, err := r.caller.Call(
+ 		ctx,
+ 		&internal.CallParams{
+@@ -106,7 +106,7 @@ func (r *RawClient) CreateType(
+ 	if err != nil {
+ 		return nil, err
+ 	}
+-	return &core.Response[*fern.Identifier]{
++	return &core.Response[*pleaseinhere.Identifier]{
+ 		StatusCode: raw.StatusCode,
+ 		Header:     raw.Header,
+ 		Body:       response,
+diff --git a/commons/types.go b/pleaseinhere/commons/types.go
+similarity index 99%
+rename from commons/types.go
+rename to pleaseinhere/commons/types.go
+index a74508ab4b9..95c1750a7a3 100644
+--- a/commons/types.go
++++ b/pleaseinhere/commons/types.go
+@@ -5,7 +5,7 @@ package commons
+ import (
+ 	json "encoding/json"
+ 	fmt "fmt"
+-	internal "github.com/examples/fern/internal"
++	internal "github.com/examples/fern/pleaseinhere/internal"
+ 	big "math/big"
+ )
+ 
+diff --git a/commons/types_test.go b/pleaseinhere/commons/types_test.go
+similarity index 100%
+rename from commons/types_test.go
+rename to pleaseinhere/commons/types_test.go
+diff --git a/core/api_error.go b/pleaseinhere/core/api_error.go
+similarity index 100%
+rename from core/api_error.go
+rename to pleaseinhere/core/api_error.go
+diff --git a/core/http.go b/pleaseinhere/core/http.go
+similarity index 100%
+rename from core/http.go
+rename to pleaseinhere/core/http.go
+diff --git a/core/request_option.go b/pleaseinhere/core/request_option.go
+similarity index 100%
+rename from core/request_option.go
+rename to pleaseinhere/core/request_option.go
+diff --git a/environments.go b/pleaseinhere/environments.go
+similarity index 100%
+rename from environments.go
+rename to pleaseinhere/environments.go
+diff --git a/error_codes.go b/pleaseinhere/error_codes.go
+similarity index 68%
+rename from error_codes.go
+rename to pleaseinhere/error_codes.go
+index f0fb6b9042f..365f9ffe532 100644
+--- a/error_codes.go
++++ b/pleaseinhere/error_codes.go
+@@ -3,7 +3,7 @@
+ package examples
+ 
+ import (
+-	internal "github.com/examples/fern/internal"
++	internal "github.com/examples/fern/pleaseinhere/internal"
+ )
+ 
+ var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{}
+diff --git a/errors.go b/pleaseinhere/errors.go
+similarity index 90%
+rename from errors.go
+rename to pleaseinhere/errors.go
+index 3c85c07c6e9..f5ed4a5ec0c 100644
+--- a/errors.go
++++ b/pleaseinhere/errors.go
+@@ -4,7 +4,7 @@ package examples
+ 
+ import (
+ 	json "encoding/json"
+-	core "github.com/examples/fern/core"
++	core "github.com/examples/fern/pleaseinhere/core"
+ )
+ 
+ type NotFoundError struct {
+diff --git a/file/client/client.go b/pleaseinhere/file/client/client.go
+similarity index 70%
+rename from file/client/client.go
+rename to pleaseinhere/file/client/client.go
+index 42832486d2a..cadb17e632c 100644
+--- a/file/client/client.go
++++ b/pleaseinhere/file/client/client.go
+@@ -3,10 +3,10 @@
+ package client
+ 
+ import (
+-	core "github.com/examples/fern/core"
+-	client "github.com/examples/fern/file/notification/client"
+-	service "github.com/examples/fern/file/service"
+-	internal "github.com/examples/fern/internal"
++	core "github.com/examples/fern/pleaseinhere/core"
++	client "github.com/examples/fern/pleaseinhere/file/notification/client"
++	service "github.com/examples/fern/pleaseinhere/file/service"
++	internal "github.com/examples/fern/pleaseinhere/internal"
+ )
+ 
+ type Client struct {
+diff --git a/file/error_codes.go b/pleaseinhere/file/error_codes.go
+similarity index 50%
+rename from file/error_codes.go
+rename to pleaseinhere/file/error_codes.go
+index fc598c974b5..f6470cf039e 100644
+--- a/file/error_codes.go
++++ b/pleaseinhere/file/error_codes.go
+@@ -3,14 +3,14 @@
+ package file
+ 
+ import (
+-	fern "github.com/examples/fern"
+-	core "github.com/examples/fern/core"
+-	internal "github.com/examples/fern/internal"
++	pleaseinhere "github.com/examples/fern/pleaseinhere"
++	core "github.com/examples/fern/pleaseinhere/core"
++	internal "github.com/examples/fern/pleaseinhere/internal"
+ )
+ 
+ var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{
+ 	404: func(apiError *core.APIError) error {
+-		return &fern.NotFoundError{
++		return &pleaseinhere.NotFoundError{
+ 			APIError: apiError,
+ 		}
+ 	},
+diff --git a/file/notification/client/client.go b/pleaseinhere/file/notification/client/client.go
+similarity index 72%
+rename from file/notification/client/client.go
+rename to pleaseinhere/file/notification/client/client.go
+index 10ec6c18299..db868322d45 100644
+--- a/file/notification/client/client.go
++++ b/pleaseinhere/file/notification/client/client.go
+@@ -3,9 +3,9 @@
+ package client
+ 
+ import (
+-	core "github.com/examples/fern/core"
+-	service "github.com/examples/fern/file/notification/service"
+-	internal "github.com/examples/fern/internal"
++	core "github.com/examples/fern/pleaseinhere/core"
++	service "github.com/examples/fern/pleaseinhere/file/notification/service"
++	internal "github.com/examples/fern/pleaseinhere/internal"
+ )
+ 
+ type Client struct {
+diff --git a/file/notification/error_codes.go b/pleaseinhere/file/notification/error_codes.go
+similarity index 69%
+rename from file/notification/error_codes.go
+rename to pleaseinhere/file/notification/error_codes.go
+index 1d37ca40bd8..fe5b6e639fe 100644
+--- a/file/notification/error_codes.go
++++ b/pleaseinhere/file/notification/error_codes.go
+@@ -3,7 +3,7 @@
+ package notification
+ 
+ import (
+-	internal "github.com/examples/fern/internal"
++	internal "github.com/examples/fern/pleaseinhere/internal"
+ )
+ 
+ var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{}
+diff --git a/file/notification/service/client.go b/pleaseinhere/file/notification/service/client.go
+similarity index 75%
+rename from file/notification/service/client.go
+rename to pleaseinhere/file/notification/service/client.go
+index 3c42382020d..40a0f674655 100644
+--- a/file/notification/service/client.go
++++ b/pleaseinhere/file/notification/service/client.go
+@@ -5,10 +5,10 @@ package service
+ import (
+ 	context "context"
+ 
+-	fern "github.com/examples/fern"
+-	core "github.com/examples/fern/core"
+-	internal "github.com/examples/fern/internal"
+-	option "github.com/examples/fern/option"
++	pleaseinhere "github.com/examples/fern/pleaseinhere"
++	core "github.com/examples/fern/pleaseinhere/core"
++	internal "github.com/examples/fern/pleaseinhere/internal"
++	option "github.com/examples/fern/pleaseinhere/option"
+ )
+ 
+ type Client struct {
+@@ -37,7 +37,7 @@ func (c *Client) GetException(
+ 	ctx context.Context,
+ 	notificationID string,
+ 	opts ...option.RequestOption,
+-) (*fern.Exception, error) {
++) (*pleaseinhere.Exception, error) {
+ 	response, err := c.WithRawResponse.GetException(
+ 		ctx,
+ 		notificationID,
+diff --git a/file/notification/service/raw_client.go b/pleaseinhere/file/notification/service/raw_client.go
+similarity index 79%
+rename from file/notification/service/raw_client.go
+rename to pleaseinhere/file/notification/service/raw_client.go
+index 13294c89947..9587b09e14e 100644
+--- a/file/notification/service/raw_client.go
++++ b/pleaseinhere/file/notification/service/raw_client.go
+@@ -6,10 +6,10 @@ import (
+ 	context "context"
+ 	http "net/http"
+ 
+-	fern "github.com/examples/fern"
+-	core "github.com/examples/fern/core"
+-	internal "github.com/examples/fern/internal"
+-	option "github.com/examples/fern/option"
++	pleaseinhere "github.com/examples/fern/pleaseinhere"
++	core "github.com/examples/fern/pleaseinhere/core"
++	internal "github.com/examples/fern/pleaseinhere/internal"
++	option "github.com/examples/fern/pleaseinhere/option"
+ )
+ 
+ type RawClient struct {
+@@ -35,7 +35,7 @@ func (r *RawClient) GetException(
+ 	ctx context.Context,
+ 	notificationID string,
+ 	opts ...option.RequestOption,
+-) (*core.Response[*fern.Exception], error) {
++) (*core.Response[*pleaseinhere.Exception], error) {
+ 	options := core.NewRequestOptions(opts...)
+ 	baseURL := internal.ResolveBaseURL(
+ 		options.BaseURL,
+@@ -50,7 +50,7 @@ func (r *RawClient) GetException(
+ 		r.options.ToHeader(),
+ 		options.ToHeader(),
+ 	)
+-	var response *fern.Exception
++	var response *pleaseinhere.Exception
+ 	raw, err := r.caller.Call(
+ 		ctx,
+ 		&internal.CallParams{
+@@ -67,7 +67,7 @@ func (r *RawClient) GetException(
+ 	if err != nil {
+ 		return nil, err
+ 	}
+-	return &core.Response[*fern.Exception]{
++	return &core.Response[*pleaseinhere.Exception]{
+ 		StatusCode: raw.StatusCode,
+ 		Header:     raw.Header,
+ 		Body:       response,
+diff --git a/file/service/client.go b/pleaseinhere/file/service/client.go
+similarity index 74%
+rename from file/service/client.go
+rename to pleaseinhere/file/service/client.go
+index f4e96ef3a8b..f2d39dff371 100644
+--- a/file/service/client.go
++++ b/pleaseinhere/file/service/client.go
+@@ -5,11 +5,11 @@ package service
+ import (
+ 	context "context"
+ 
+-	fern "github.com/examples/fern"
+-	core "github.com/examples/fern/core"
+-	file "github.com/examples/fern/file"
+-	internal "github.com/examples/fern/internal"
+-	option "github.com/examples/fern/option"
++	pleaseinhere "github.com/examples/fern/pleaseinhere"
++	core "github.com/examples/fern/pleaseinhere/core"
++	file "github.com/examples/fern/pleaseinhere/file"
++	internal "github.com/examples/fern/pleaseinhere/internal"
++	option "github.com/examples/fern/pleaseinhere/option"
+ )
+ 
+ type Client struct {
+@@ -41,7 +41,7 @@ func (c *Client) GetFile(
+ 	filename string,
+ 	request *file.GetFileRequest,
+ 	opts ...option.RequestOption,
+-) (*fern.File, error) {
++) (*pleaseinhere.File, error) {
+ 	response, err := c.WithRawResponse.GetFile(
+ 		ctx,
+ 		filename,
+diff --git a/file/service/raw_client.go b/pleaseinhere/file/service/raw_client.go
+similarity index 78%
+rename from file/service/raw_client.go
+rename to pleaseinhere/file/service/raw_client.go
+index 7579a75b6c5..038816969e0 100644
+--- a/file/service/raw_client.go
++++ b/pleaseinhere/file/service/raw_client.go
+@@ -6,11 +6,11 @@ import (
+ 	context "context"
+ 	http "net/http"
+ 
+-	fern "github.com/examples/fern"
+-	core "github.com/examples/fern/core"
+-	file "github.com/examples/fern/file"
+-	internal "github.com/examples/fern/internal"
+-	option "github.com/examples/fern/option"
++	pleaseinhere "github.com/examples/fern/pleaseinhere"
++	core "github.com/examples/fern/pleaseinhere/core"
++	file "github.com/examples/fern/pleaseinhere/file"
++	internal "github.com/examples/fern/pleaseinhere/internal"
++	option "github.com/examples/fern/pleaseinhere/option"
+ )
+ 
+ type RawClient struct {
+@@ -38,7 +38,7 @@ func (r *RawClient) GetFile(
+ 	filename string,
+ 	request *file.GetFileRequest,
+ 	opts ...option.RequestOption,
+-) (*core.Response[*fern.File], error) {
++) (*core.Response[*pleaseinhere.File], error) {
+ 	options := core.NewRequestOptions(opts...)
+ 	baseURL := internal.ResolveBaseURL(
+ 		options.BaseURL,
+@@ -53,7 +53,7 @@ func (r *RawClient) GetFile(
+ 		r.options.ToHeader(),
+ 		options.ToHeader(),
+ 	)
+-	var response *fern.File
++	var response *pleaseinhere.File
+ 	raw, err := r.caller.Call(
+ 		ctx,
+ 		&internal.CallParams{
+@@ -71,7 +71,7 @@ func (r *RawClient) GetFile(
+ 	if err != nil {
+ 		return nil, err
+ 	}
+-	return &core.Response[*fern.File]{
++	return &core.Response[*pleaseinhere.File]{
+ 		StatusCode: raw.StatusCode,
+ 		Header:     raw.Header,
+ 		Body:       response,
+diff --git a/file/service.go b/pleaseinhere/file/service.go
+similarity index 100%
+rename from file/service.go
+rename to pleaseinhere/file/service.go
+diff --git a/file/service_test.go b/pleaseinhere/file/service_test.go
+similarity index 100%
+rename from file/service_test.go
+rename to pleaseinhere/file/service_test.go
+diff --git a/file_param.go b/pleaseinhere/file_param.go
+similarity index 100%
+rename from file_param.go
+rename to pleaseinhere/file_param.go
+diff --git a/health/client/client.go b/pleaseinhere/health/client/client.go
+similarity index 74%
+rename from health/client/client.go
+rename to pleaseinhere/health/client/client.go
+index 482d41011ce..fa0f9890b07 100644
+--- a/health/client/client.go
++++ b/pleaseinhere/health/client/client.go
+@@ -3,9 +3,9 @@
+ package client
+ 
+ import (
+-	core "github.com/examples/fern/core"
+-	service "github.com/examples/fern/health/service"
+-	internal "github.com/examples/fern/internal"
++	core "github.com/examples/fern/pleaseinhere/core"
++	service "github.com/examples/fern/pleaseinhere/health/service"
++	internal "github.com/examples/fern/pleaseinhere/internal"
+ )
+ 
+ type Client struct {
+diff --git a/health/error_codes.go b/pleaseinhere/health/error_codes.go
+similarity index 68%
+rename from health/error_codes.go
+rename to pleaseinhere/health/error_codes.go
+index c66432e7502..f09904d1110 100644
+--- a/health/error_codes.go
++++ b/pleaseinhere/health/error_codes.go
+@@ -3,7 +3,7 @@
+ package health
+ 
+ import (
+-	internal "github.com/examples/fern/internal"
++	internal "github.com/examples/fern/pleaseinhere/internal"
+ )
+ 
+ var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{}
+diff --git a/health/service/client.go b/pleaseinhere/health/service/client.go
+similarity index 86%
+rename from health/service/client.go
+rename to pleaseinhere/health/service/client.go
+index c4b5e35d3fe..563ef1b2dd6 100644
+--- a/health/service/client.go
++++ b/pleaseinhere/health/service/client.go
+@@ -5,9 +5,9 @@ package service
+ import (
+ 	context "context"
+ 
+-	core "github.com/examples/fern/core"
+-	internal "github.com/examples/fern/internal"
+-	option "github.com/examples/fern/option"
++	core "github.com/examples/fern/pleaseinhere/core"
++	internal "github.com/examples/fern/pleaseinhere/internal"
++	option "github.com/examples/fern/pleaseinhere/option"
+ )
+ 
+ type Client struct {
+diff --git a/health/service/raw_client.go b/pleaseinhere/health/service/raw_client.go
+similarity index 93%
+rename from health/service/raw_client.go
+rename to pleaseinhere/health/service/raw_client.go
+index 2b76fed782c..a78e8da0e84 100644
+--- a/health/service/raw_client.go
++++ b/pleaseinhere/health/service/raw_client.go
+@@ -6,9 +6,9 @@ import (
+ 	context "context"
+ 	http "net/http"
+ 
+-	core "github.com/examples/fern/core"
+-	internal "github.com/examples/fern/internal"
+-	option "github.com/examples/fern/option"
++	core "github.com/examples/fern/pleaseinhere/core"
++	internal "github.com/examples/fern/pleaseinhere/internal"
++	option "github.com/examples/fern/pleaseinhere/option"
+ )
+ 
+ type RawClient struct {
+diff --git a/internal/caller.go b/pleaseinhere/internal/caller.go
+similarity index 99%
+rename from internal/caller.go
+rename to pleaseinhere/internal/caller.go
+index 3c082a03229..887e0d346d8 100644
+--- a/internal/caller.go
++++ b/pleaseinhere/internal/caller.go
+@@ -12,7 +12,7 @@ import (
+ 	"reflect"
+ 	"strings"
+ 
+-	"github.com/examples/fern/core"
++	"github.com/examples/fern/pleaseinhere/core"
+ )
+ 
+ const (
+diff --git a/internal/caller_test.go b/pleaseinhere/internal/caller_test.go
+similarity index 99%
+rename from internal/caller_test.go
+rename to pleaseinhere/internal/caller_test.go
+index 44bb6a4ea91..9950baabe28 100644
+--- a/internal/caller_test.go
++++ b/pleaseinhere/internal/caller_test.go
+@@ -14,7 +14,7 @@ import (
+ 	"strings"
+ 	"testing"
+ 
+-	"github.com/examples/fern/core"
++	"github.com/examples/fern/pleaseinhere/core"
+ 	"github.com/stretchr/testify/assert"
+ 	"github.com/stretchr/testify/require"
+ )
+diff --git a/internal/error_decoder.go b/pleaseinhere/internal/error_decoder.go
+similarity index 97%
+rename from internal/error_decoder.go
+rename to pleaseinhere/internal/error_decoder.go
+index 4aee8ed90bc..527d8435405 100644
+--- a/internal/error_decoder.go
++++ b/pleaseinhere/internal/error_decoder.go
+@@ -8,7 +8,7 @@ import (
+ 	"io"
+ 	"net/http"
+ 
+-	"github.com/examples/fern/core"
++	"github.com/examples/fern/pleaseinhere/core"
+ )
+ 
+ // ErrorCodes maps HTTP status codes to error constructors.
+diff --git a/internal/error_decoder_test.go b/pleaseinhere/internal/error_decoder_test.go
+similarity index 97%
+rename from internal/error_decoder_test.go
+rename to pleaseinhere/internal/error_decoder_test.go
+index 03f535894cf..e4ad91fc353 100644
+--- a/internal/error_decoder_test.go
++++ b/pleaseinhere/internal/error_decoder_test.go
+@@ -6,7 +6,7 @@ import (
+ 	"net/http"
+ 	"testing"
+ 
+-	"github.com/examples/fern/core"
++	"github.com/examples/fern/pleaseinhere/core"
+ 	"github.com/stretchr/testify/assert"
+ )
+ 
+diff --git a/internal/explicit_fields.go b/pleaseinhere/internal/explicit_fields.go
+similarity index 100%
+rename from internal/explicit_fields.go
+rename to pleaseinhere/internal/explicit_fields.go
+diff --git a/internal/explicit_fields_test.go b/pleaseinhere/internal/explicit_fields_test.go
+similarity index 100%
+rename from internal/explicit_fields_test.go
+rename to pleaseinhere/internal/explicit_fields_test.go
+diff --git a/internal/extra_properties.go b/pleaseinhere/internal/extra_properties.go
+similarity index 100%
+rename from internal/extra_properties.go
+rename to pleaseinhere/internal/extra_properties.go
+diff --git a/internal/extra_properties_test.go b/pleaseinhere/internal/extra_properties_test.go
+similarity index 100%
+rename from internal/extra_properties_test.go
+rename to pleaseinhere/internal/extra_properties_test.go
+diff --git a/internal/http.go b/pleaseinhere/internal/http.go
+similarity index 100%
+rename from internal/http.go
+rename to pleaseinhere/internal/http.go
+diff --git a/internal/query.go b/pleaseinhere/internal/query.go
+similarity index 100%
+rename from internal/query.go
+rename to pleaseinhere/internal/query.go
+diff --git a/internal/query_test.go b/pleaseinhere/internal/query_test.go
+similarity index 100%
+rename from internal/query_test.go
+rename to pleaseinhere/internal/query_test.go
+diff --git a/internal/retrier.go b/pleaseinhere/internal/retrier.go
+similarity index 100%
+rename from internal/retrier.go
+rename to pleaseinhere/internal/retrier.go
+diff --git a/internal/retrier_test.go b/pleaseinhere/internal/retrier_test.go
+similarity index 99%
+rename from internal/retrier_test.go
+rename to pleaseinhere/internal/retrier_test.go
+index c92f25c16e1..6bb09d5b587 100644
+--- a/internal/retrier_test.go
++++ b/pleaseinhere/internal/retrier_test.go
+@@ -10,7 +10,7 @@ import (
+ 	"testing"
+ 	"time"
+ 
+-	"github.com/examples/fern/core"
++	"github.com/examples/fern/pleaseinhere/core"
+ 	"github.com/stretchr/testify/assert"
+ 	"github.com/stretchr/testify/require"
+ )
+diff --git a/internal/stringer.go b/pleaseinhere/internal/stringer.go
+similarity index 100%
+rename from internal/stringer.go
+rename to pleaseinhere/internal/stringer.go
+diff --git a/internal/time.go b/pleaseinhere/internal/time.go
+similarity index 100%
+rename from internal/time.go
+rename to pleaseinhere/internal/time.go
+diff --git a/option/request_option.go b/pleaseinhere/option/request_option.go
+similarity index 97%
+rename from option/request_option.go
+rename to pleaseinhere/option/request_option.go
+index d237a8de734..50817f46150 100644
+--- a/option/request_option.go
++++ b/pleaseinhere/option/request_option.go
+@@ -3,7 +3,7 @@
+ package option
+ 
+ import (
+-	core "github.com/examples/fern/core"
++	core "github.com/examples/fern/pleaseinhere/core"
+ 	http "net/http"
+ 	url "net/url"
+ )
+diff --git a/pointer.go b/pleaseinhere/pointer.go
+similarity index 100%
+rename from pointer.go
+rename to pleaseinhere/pointer.go
+diff --git a/pointer_test.go b/pleaseinhere/pointer_test.go
+similarity index 100%
+rename from pointer_test.go
+rename to pleaseinhere/pointer_test.go
+diff --git a/service/client.go b/pleaseinhere/service/client.go
+similarity index 75%
+rename from service/client.go
+rename to pleaseinhere/service/client.go
+index f4a6e3f896e..1120d6bc976 100644
+--- a/service/client.go
++++ b/pleaseinhere/service/client.go
+@@ -5,10 +5,10 @@ package service
+ import (
+ 	context "context"
+ 
+-	fern "github.com/examples/fern"
+-	core "github.com/examples/fern/core"
+-	internal "github.com/examples/fern/internal"
+-	option "github.com/examples/fern/option"
++	pleaseinhere "github.com/examples/fern/pleaseinhere"
++	core "github.com/examples/fern/pleaseinhere/core"
++	internal "github.com/examples/fern/pleaseinhere/internal"
++	option "github.com/examples/fern/pleaseinhere/option"
+ )
+ 
+ type Client struct {
+@@ -35,9 +35,9 @@ func NewClient(options *core.RequestOptions) *Client {
+ 
+ func (c *Client) GetMovie(
+ 	ctx context.Context,
+-	movieID fern.MovieID,
++	movieID pleaseinhere.MovieID,
+ 	opts ...option.RequestOption,
+-) (*fern.Movie, error) {
++) (*pleaseinhere.Movie, error) {
+ 	response, err := c.WithRawResponse.GetMovie(
+ 		ctx,
+ 		movieID,
+@@ -51,9 +51,9 @@ func (c *Client) GetMovie(
+ 
+ func (c *Client) CreateMovie(
+ 	ctx context.Context,
+-	request *fern.Movie,
++	request *pleaseinhere.Movie,
+ 	opts ...option.RequestOption,
+-) (fern.MovieID, error) {
++) (pleaseinhere.MovieID, error) {
+ 	response, err := c.WithRawResponse.CreateMovie(
+ 		ctx,
+ 		request,
+@@ -67,9 +67,9 @@ func (c *Client) CreateMovie(
+ 
+ func (c *Client) GetMetadata(
+ 	ctx context.Context,
+-	request *fern.GetMetadataRequest,
++	request *pleaseinhere.GetMetadataRequest,
+ 	opts ...option.RequestOption,
+-) (*fern.Metadata, error) {
++) (*pleaseinhere.Metadata, error) {
+ 	response, err := c.WithRawResponse.GetMetadata(
+ 		ctx,
+ 		request,
+@@ -83,9 +83,9 @@ func (c *Client) GetMetadata(
+ 
+ func (c *Client) CreateBigEntity(
+ 	ctx context.Context,
+-	request *fern.BigEntity,
++	request *pleaseinhere.BigEntity,
+ 	opts ...option.RequestOption,
+-) (*fern.Response, error) {
++) (*pleaseinhere.Response, error) {
+ 	response, err := c.WithRawResponse.CreateBigEntity(
+ 		ctx,
+ 		request,
+@@ -99,7 +99,7 @@ func (c *Client) CreateBigEntity(
+ 
+ func (c *Client) RefreshToken(
+ 	ctx context.Context,
+-	request *fern.RefreshTokenRequest,
++	request *pleaseinhere.RefreshTokenRequest,
+ 	opts ...option.RequestOption,
+ ) error {
+ 	_, err := c.WithRawResponse.RefreshToken(
+diff --git a/service/raw_client.go b/pleaseinhere/service/raw_client.go
+similarity index 84%
+rename from service/raw_client.go
+rename to pleaseinhere/service/raw_client.go
+index f7f9391d2da..2fd6150c288 100644
+--- a/service/raw_client.go
++++ b/pleaseinhere/service/raw_client.go
+@@ -6,10 +6,10 @@ import (
+ 	context "context"
+ 	http "net/http"
+ 
+-	fern "github.com/examples/fern"
+-	core "github.com/examples/fern/core"
+-	internal "github.com/examples/fern/internal"
+-	option "github.com/examples/fern/option"
++	pleaseinhere "github.com/examples/fern/pleaseinhere"
++	core "github.com/examples/fern/pleaseinhere/core"
++	internal "github.com/examples/fern/pleaseinhere/internal"
++	option "github.com/examples/fern/pleaseinhere/option"
+ )
+ 
+ type RawClient struct {
+@@ -33,9 +33,9 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
+ 
+ func (r *RawClient) GetMovie(
+ 	ctx context.Context,
+-	movieID fern.MovieID,
++	movieID pleaseinhere.MovieID,
+ 	opts ...option.RequestOption,
+-) (*core.Response[*fern.Movie], error) {
++) (*core.Response[*pleaseinhere.Movie], error) {
+ 	options := core.NewRequestOptions(opts...)
+ 	baseURL := internal.ResolveBaseURL(
+ 		options.BaseURL,
+@@ -50,7 +50,7 @@ func (r *RawClient) GetMovie(
+ 		r.options.ToHeader(),
+ 		options.ToHeader(),
+ 	)
+-	var response *fern.Movie
++	var response *pleaseinhere.Movie
+ 	raw, err := r.caller.Call(
+ 		ctx,
+ 		&internal.CallParams{
+@@ -67,7 +67,7 @@ func (r *RawClient) GetMovie(
+ 	if err != nil {
+ 		return nil, err
+ 	}
+-	return &core.Response[*fern.Movie]{
++	return &core.Response[*pleaseinhere.Movie]{
+ 		StatusCode: raw.StatusCode,
+ 		Header:     raw.Header,
+ 		Body:       response,
+@@ -76,9 +76,9 @@ func (r *RawClient) GetMovie(
+ 
+ func (r *RawClient) CreateMovie(
+ 	ctx context.Context,
+-	request *fern.Movie,
++	request *pleaseinhere.Movie,
+ 	opts ...option.RequestOption,
+-) (*core.Response[fern.MovieID], error) {
++) (*core.Response[pleaseinhere.MovieID], error) {
+ 	options := core.NewRequestOptions(opts...)
+ 	baseURL := internal.ResolveBaseURL(
+ 		options.BaseURL,
+@@ -90,7 +90,7 @@ func (r *RawClient) CreateMovie(
+ 		r.options.ToHeader(),
+ 		options.ToHeader(),
+ 	)
+-	var response fern.MovieID
++	var response pleaseinhere.MovieID
+ 	raw, err := r.caller.Call(
+ 		ctx,
+ 		&internal.CallParams{
+@@ -108,7 +108,7 @@ func (r *RawClient) CreateMovie(
+ 	if err != nil {
+ 		return nil, err
+ 	}
+-	return &core.Response[fern.MovieID]{
++	return &core.Response[pleaseinhere.MovieID]{
+ 		StatusCode: raw.StatusCode,
+ 		Header:     raw.Header,
+ 		Body:       response,
+@@ -117,9 +117,9 @@ func (r *RawClient) CreateMovie(
+ 
+ func (r *RawClient) GetMetadata(
+ 	ctx context.Context,
+-	request *fern.GetMetadataRequest,
++	request *pleaseinhere.GetMetadataRequest,
+ 	opts ...option.RequestOption,
+-) (*core.Response[*fern.Metadata], error) {
++) (*core.Response[*pleaseinhere.Metadata], error) {
+ 	options := core.NewRequestOptions(opts...)
+ 	baseURL := internal.ResolveBaseURL(
+ 		options.BaseURL,
+@@ -139,7 +139,7 @@ func (r *RawClient) GetMetadata(
+ 		options.ToHeader(),
+ 	)
+ 	headers.Add("X-API-Version", request.XAPIVersion)
+-	var response *fern.Metadata
++	var response *pleaseinhere.Metadata
+ 	raw, err := r.caller.Call(
+ 		ctx,
+ 		&internal.CallParams{
+@@ -156,7 +156,7 @@ func (r *RawClient) GetMetadata(
+ 	if err != nil {
+ 		return nil, err
+ 	}
+-	return &core.Response[*fern.Metadata]{
++	return &core.Response[*pleaseinhere.Metadata]{
+ 		StatusCode: raw.StatusCode,
+ 		Header:     raw.Header,
+ 		Body:       response,
+@@ -165,9 +165,9 @@ func (r *RawClient) GetMetadata(
+ 
+ func (r *RawClient) CreateBigEntity(
+ 	ctx context.Context,
+-	request *fern.BigEntity,
++	request *pleaseinhere.BigEntity,
+ 	opts ...option.RequestOption,
+-) (*core.Response[*fern.Response], error) {
++) (*core.Response[*pleaseinhere.Response], error) {
+ 	options := core.NewRequestOptions(opts...)
+ 	baseURL := internal.ResolveBaseURL(
+ 		options.BaseURL,
+@@ -179,7 +179,7 @@ func (r *RawClient) CreateBigEntity(
+ 		r.options.ToHeader(),
+ 		options.ToHeader(),
+ 	)
+-	var response *fern.Response
++	var response *pleaseinhere.Response
+ 	raw, err := r.caller.Call(
+ 		ctx,
+ 		&internal.CallParams{
+@@ -197,7 +197,7 @@ func (r *RawClient) CreateBigEntity(
+ 	if err != nil {
+ 		return nil, err
+ 	}
+-	return &core.Response[*fern.Response]{
++	return &core.Response[*pleaseinhere.Response]{
+ 		StatusCode: raw.StatusCode,
+ 		Header:     raw.Header,
+ 		Body:       response,
+@@ -206,7 +206,7 @@ func (r *RawClient) CreateBigEntity(
+ 
+ func (r *RawClient) RefreshToken(
+ 	ctx context.Context,
+-	request *fern.RefreshTokenRequest,
++	request *pleaseinhere.RefreshTokenRequest,
+ 	opts ...option.RequestOption,
+ ) (*core.Response[any], error) {
+ 	options := core.NewRequestOptions(opts...)
+diff --git a/service.go b/pleaseinhere/service.go
+similarity index 100%
+rename from service.go
+rename to pleaseinhere/service.go
+diff --git a/service_test.go b/pleaseinhere/service_test.go
+similarity index 100%
+rename from service_test.go
+rename to pleaseinhere/service_test.go
+diff --git a/types.go b/pleaseinhere/types.go
+similarity index 99%
+rename from types.go
+rename to pleaseinhere/types.go
+index 77c85bcfb70..02ce47b73c4 100644
+--- a/types.go
++++ b/pleaseinhere/types.go
+@@ -5,8 +5,8 @@ package examples
+ import (
+ 	json "encoding/json"
+ 	fmt "fmt"
+-	commons "github.com/examples/fern/commons"
+-	internal "github.com/examples/fern/internal"
++	commons "github.com/examples/fern/pleaseinhere/commons"
++	internal "github.com/examples/fern/pleaseinhere/internal"
+ 	uuid "github.com/google/uuid"
+ 	big "math/big"
+ 	time "time"
+diff --git a/types_test.go b/pleaseinhere/types_test.go
+similarity index 99%
+rename from types_test.go
+rename to pleaseinhere/types_test.go
+index 699439ac976..99d540f97fa 100644
+--- a/types_test.go
++++ b/pleaseinhere/types_test.go
+@@ -4,7 +4,7 @@ package examples
+ 
+ import (
+ 	json "encoding/json"
+-	commons "github.com/examples/fern/commons"
++	commons "github.com/examples/fern/pleaseinhere/commons"
+ 	uuid "github.com/google/uuid"
+ 	assert "github.com/stretchr/testify/assert"
+ 	require "github.com/stretchr/testify/require"
+diff --git a/reference.md b/reference.md
+index 7ca93de0e5c..1664f4e43b8 100644
+--- a/reference.md
++++ b/reference.md
+@@ -43,7 +43,7 @@ client.Echo(
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.CreateType(request) -> *fern.Identifier</code></summary>
++<details><summary><code>client.CreateType(request) -> *pleaseinhere.Identifier</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -75,7 +75,7 @@ client.Echo(
+ <dl>
+ <dd>
+ 
+-**request:** `*fern.Type` 
++**request:** `*pleaseinhere.Type` 
+     
+ </dd>
+ </dl>
+@@ -88,7 +88,7 @@ client.Echo(
+ </details>
+ 
+ ## File Notification Service
+-<details><summary><code>client.File.Notification.Service.GetException(NotificationID) -> *fern.Exception</code></summary>
++<details><summary><code>client.File.Notification.Service.GetException(NotificationID) -> *pleaseinhere.Exception</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -133,7 +133,7 @@ client.File.Notification.Service.GetException(
+ </details>
+ 
+ ## File Service
+-<details><summary><code>client.File.Service.GetFile(Filename) -> *fern.File</code></summary>
++<details><summary><code>client.File.Service.GetFile(Filename) -> *pleaseinhere.File</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -297,7 +297,7 @@ client.Health.Service.Ping(
+ </details>
+ 
+ ## Service
+-<details><summary><code>client.Service.GetMovie(MovieID) -> *fern.Movie</code></summary>
++<details><summary><code>client.Service.GetMovie(MovieID) -> *pleaseinhere.Movie</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -329,7 +329,7 @@ client.Service.GetMovie(
+ <dl>
+ <dd>
+ 
+-**movieID:** `fern.MovieID` 
++**movieID:** `pleaseinhere.MovieID` 
+     
+ </dd>
+ </dl>
+@@ -341,7 +341,7 @@ client.Service.GetMovie(
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.Service.CreateMovie(request) -> fern.MovieID</code></summary>
++<details><summary><code>client.Service.CreateMovie(request) -> pleaseinhere.MovieID</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -354,9 +354,9 @@ client.Service.GetMovie(
+ <dd>
+ 
+ ```go
+-request := &fern.Movie{
++request := &pleaseinhere.Movie{
+         ID: "movie-c06a4ad7",
+-        Prequel: fern.String(
++        Prequel: pleaseinhere.String(
+             "movie-cv9b914f",
+         ),
+         Title: "The Boy and the Heron",
+@@ -396,7 +396,7 @@ client.Service.CreateMovie(
+ <dl>
+ <dd>
+ 
+-**request:** `*fern.Movie` 
++**request:** `*pleaseinhere.Movie` 
+     
+ </dd>
+ </dl>
+@@ -408,7 +408,7 @@ client.Service.CreateMovie(
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.Service.GetMetadata() -> *fern.Metadata</code></summary>
++<details><summary><code>client.Service.GetMetadata() -> *pleaseinhere.Metadata</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -421,12 +421,12 @@ client.Service.CreateMovie(
+ <dd>
+ 
+ ```go
+-request := &fern.GetMetadataRequest{
+-        Shallow: fern.Bool(
++request := &pleaseinhere.GetMetadataRequest{
++        Shallow: pleaseinhere.Bool(
+             false,
+         ),
+         Tag: []*string{
+-            fern.String(
++            pleaseinhere.String(
+                 "development",
+             ),
+         },
+@@ -479,7 +479,7 @@ client.Service.GetMetadata(
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.Service.CreateBigEntity(request) -> *fern.Response</code></summary>
++<details><summary><code>client.Service.CreateBigEntity(request) -> *pleaseinhere.Response</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -492,27 +492,27 @@ client.Service.GetMetadata(
+ <dd>
+ 
+ ```go
+-request := &fern.BigEntity{
+-        CastMember: &fern.CastMember{
+-            Actor: &fern.Actor{
++request := &pleaseinhere.BigEntity{
++        CastMember: &pleaseinhere.CastMember{
++            Actor: &pleaseinhere.Actor{
+                 Name: "name",
+                 ID: "id",
+             },
+         },
+-        ExtendedMovie: &fern.ExtendedMovie{
++        ExtendedMovie: &pleaseinhere.ExtendedMovie{
+             Cast: []string{
+                 "cast",
+                 "cast",
+             },
+             ID: "id",
+-            Prequel: fern.String(
++            Prequel: pleaseinhere.String(
+                 "prequel",
+             ),
+             Title: "title",
+             From: "from",
+             Rating: 1.1,
+             Tag: "tag",
+-            Book: fern.String(
++            Book: pleaseinhere.String(
+                 "book",
+             ),
+             Metadata: map[string]any{
+@@ -522,13 +522,13 @@ request := &fern.BigEntity{
+             },
+             Revenue: int64(1000000),
+         },
+-        Entity: &fern.Entity{
+-            Type: &fern.Type{
+-                BasicType: fern.BasicTypePrimitive,
++        Entity: &pleaseinhere.Entity{
++            Type: &pleaseinhere.Type{
++                BasicType: pleaseinhere.BasicTypePrimitive,
+             },
+             Name: "name",
+         },
+-        Metadata: &fern.Metadata{
++        Metadata: &pleaseinhere.Metadata{
+             Extra: map[string]string{
+                 "extra": "extra",
+             },
+@@ -541,7 +541,7 @@ request := &fern.BigEntity{
+             Data: map[string]string{
+                 "data": "data",
+             },
+-            JSONString: fern.String(
++            JSONString: pleaseinhere.String(
+                 "jsonString",
+             ),
+         },
+@@ -551,162 +551,162 @@ request := &fern.BigEntity{
+                 Data: map[string]string{
+                     "data": "data",
+                 },
+-                JSONString: fern.String(
++                JSONString: pleaseinhere.String(
+                     "jsonString",
+                 ),
+             },
+         },
+         Data: &commons.Data{},
+-        Migration: &fern.Migration{
++        Migration: &pleaseinhere.Migration{
+             Name: "name",
+-            Status: fern.MigrationStatusRunning,
++            Status: pleaseinhere.MigrationStatusRunning,
+         },
+-        Exception: &fern.Exception{
+-            Generic: &fern.ExceptionInfo{
++        Exception: &pleaseinhere.Exception{
++            Generic: &pleaseinhere.ExceptionInfo{
+                 ExceptionType: "exceptionType",
+                 ExceptionMessage: "exceptionMessage",
+                 ExceptionStacktrace: "exceptionStacktrace",
+             },
+         },
+-        Test: &fern.Test{},
+-        Node: &fern.Node{
++        Test: &pleaseinhere.Test{},
++        Node: &pleaseinhere.Node{
+             Name: "name",
+-            Nodes: []*fern.Node{
+-                &fern.Node{
++            Nodes: []*pleaseinhere.Node{
++                &pleaseinhere.Node{
+                     Name: "name",
+-                    Nodes: []*fern.Node{
+-                        &fern.Node{
++                    Nodes: []*pleaseinhere.Node{
++                        &pleaseinhere.Node{
+                             Name: "name",
+                         },
+-                        &fern.Node{
++                        &pleaseinhere.Node{
+                             Name: "name",
+                         },
+                     },
+-                    Trees: []*fern.Tree{
+-                        &fern.Tree{
+-                            Nodes: []*fern.Node{},
++                    Trees: []*pleaseinhere.Tree{
++                        &pleaseinhere.Tree{
++                            Nodes: []*pleaseinhere.Node{},
+                         },
+-                        &fern.Tree{
+-                            Nodes: []*fern.Node{},
++                        &pleaseinhere.Tree{
++                            Nodes: []*pleaseinhere.Node{},
+                         },
+                     },
+                 },
+-                &fern.Node{
++                &pleaseinhere.Node{
+                     Name: "name",
+-                    Nodes: []*fern.Node{
+-                        &fern.Node{
++                    Nodes: []*pleaseinhere.Node{
++                        &pleaseinhere.Node{
+                             Name: "name",
+                         },
+-                        &fern.Node{
++                        &pleaseinhere.Node{
+                             Name: "name",
+                         },
+                     },
+-                    Trees: []*fern.Tree{
+-                        &fern.Tree{
+-                            Nodes: []*fern.Node{},
++                    Trees: []*pleaseinhere.Tree{
++                        &pleaseinhere.Tree{
++                            Nodes: []*pleaseinhere.Node{},
+                         },
+-                        &fern.Tree{
+-                            Nodes: []*fern.Node{},
++                        &pleaseinhere.Tree{
++                            Nodes: []*pleaseinhere.Node{},
+                         },
+                     },
+                 },
+             },
+-            Trees: []*fern.Tree{
+-                &fern.Tree{
+-                    Nodes: []*fern.Node{
+-                        &fern.Node{
++            Trees: []*pleaseinhere.Tree{
++                &pleaseinhere.Tree{
++                    Nodes: []*pleaseinhere.Node{
++                        &pleaseinhere.Node{
+                             Name: "name",
+-                            Nodes: []*fern.Node{},
+-                            Trees: []*fern.Tree{},
++                            Nodes: []*pleaseinhere.Node{},
++                            Trees: []*pleaseinhere.Tree{},
+                         },
+-                        &fern.Node{
++                        &pleaseinhere.Node{
+                             Name: "name",
+-                            Nodes: []*fern.Node{},
+-                            Trees: []*fern.Tree{},
++                            Nodes: []*pleaseinhere.Node{},
++                            Trees: []*pleaseinhere.Tree{},
+                         },
+                     },
+                 },
+-                &fern.Tree{
+-                    Nodes: []*fern.Node{
+-                        &fern.Node{
++                &pleaseinhere.Tree{
++                    Nodes: []*pleaseinhere.Node{
++                        &pleaseinhere.Node{
+                             Name: "name",
+-                            Nodes: []*fern.Node{},
+-                            Trees: []*fern.Tree{},
++                            Nodes: []*pleaseinhere.Node{},
++                            Trees: []*pleaseinhere.Tree{},
+                         },
+-                        &fern.Node{
++                        &pleaseinhere.Node{
+                             Name: "name",
+-                            Nodes: []*fern.Node{},
+-                            Trees: []*fern.Tree{},
++                            Nodes: []*pleaseinhere.Node{},
++                            Trees: []*pleaseinhere.Tree{},
+                         },
+                     },
+                 },
+             },
+         },
+-        Directory: &fern.Directory{
++        Directory: &pleaseinhere.Directory{
+             Name: "name",
+-            Files: []*fern.File{
+-                &fern.File{
++            Files: []*pleaseinhere.File{
++                &pleaseinhere.File{
+                     Name: "name",
+                     Contents: "contents",
+                 },
+-                &fern.File{
++                &pleaseinhere.File{
+                     Name: "name",
+                     Contents: "contents",
+                 },
+             },
+-            Directories: []*fern.Directory{
+-                &fern.Directory{
++            Directories: []*pleaseinhere.Directory{
++                &pleaseinhere.Directory{
+                     Name: "name",
+-                    Files: []*fern.File{
+-                        &fern.File{
++                    Files: []*pleaseinhere.File{
++                        &pleaseinhere.File{
+                             Name: "name",
+                             Contents: "contents",
+                         },
+-                        &fern.File{
++                        &pleaseinhere.File{
+                             Name: "name",
+                             Contents: "contents",
+                         },
+                     },
+-                    Directories: []*fern.Directory{
+-                        &fern.Directory{
++                    Directories: []*pleaseinhere.Directory{
++                        &pleaseinhere.Directory{
+                             Name: "name",
+                         },
+-                        &fern.Directory{
++                        &pleaseinhere.Directory{
+                             Name: "name",
+                         },
+                     },
+                 },
+-                &fern.Directory{
++                &pleaseinhere.Directory{
+                     Name: "name",
+-                    Files: []*fern.File{
+-                        &fern.File{
++                    Files: []*pleaseinhere.File{
++                        &pleaseinhere.File{
+                             Name: "name",
+                             Contents: "contents",
+                         },
+-                        &fern.File{
++                        &pleaseinhere.File{
+                             Name: "name",
+                             Contents: "contents",
+                         },
+                     },
+-                    Directories: []*fern.Directory{
+-                        &fern.Directory{
++                    Directories: []*pleaseinhere.Directory{
++                        &pleaseinhere.Directory{
+                             Name: "name",
+                         },
+-                        &fern.Directory{
++                        &pleaseinhere.Directory{
+                             Name: "name",
+                         },
+                     },
+                 },
+             },
+         },
+-        Moment: &fern.Moment{
++        Moment: &pleaseinhere.Moment{
+             ID: uuid.MustParse(
+                 "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+             ),
+-            Date: fern.MustParseDate(
++            Date: pleaseinhere.MustParseDate(
+                 "2023-01-15",
+             ),
+-            Datetime: fern.MustParseDateTime(
++            Datetime: pleaseinhere.MustParseDateTime(
+                 "2024-01-15T09:30:00Z",
+             ),
+         },
+@@ -730,7 +730,7 @@ client.Service.CreateBigEntity(
+ <dl>
+ <dd>
+ 
+-**request:** `*fern.BigEntity` 
++**request:** `*pleaseinhere.BigEntity` 
+     
+ </dd>
+ </dl>
+@@ -774,7 +774,7 @@ client.Service.RefreshToken(
+ <dl>
+ <dd>
+ 
+-**request:** `*fern.RefreshTokenRequest` 
++**request:** `*pleaseinhere.RefreshTokenRequest` 
+     
+ </dd>
+ </dl>
+diff --git a/snippet.json b/snippet.json
+index c0c92610f4d..60ba8216c2a 100644
+--- a/snippet.json
++++ b/snippet.json
+@@ -8,7 +8,7 @@
+             },
+             "snippet": {
+                 "type": "go",
+-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/examples/fern\"\n\tfernclient \"github.com/examples/fern/client\"\n\toption \"github.com/examples/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n\toption.WithBaseURL(\n\t\tfern.Environments.Production,\n\t),\n)\nresponse, err := client.CreateType(\n\tcontext.TODO(),\n\t\u0026fern.Type{\n\t\tBasicType: fern.BasicTypePrimitive,\n\t},\n)\n"
++                "client": "import (\n\tcontext \"context\"\n\toption \"github.com/examples/fern/pleaseinhere/option\"\n\tpleaseinhere \"github.com/examples/fern/pleaseinhere\"\n\tpleaseinhereclient \"github.com/examples/fern/pleaseinhere/client\"\n)\n\nclient := pleaseinhereclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n\toption.WithBaseURL(\n\t\tpleaseinhere.Environments.Production,\n\t),\n)\nresponse, err := client.CreateType(\n\tcontext.TODO(),\n\t\u0026pleaseinhere.Type{\n\t\tBasicType: pleaseinhere.BasicTypePrimitive,\n\t},\n)\n"
+             }
+         },
+         {
+@@ -19,7 +19,7 @@
+             },
+             "snippet": {
+                 "type": "go",
+-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/examples/fern\"\n\tfernclient \"github.com/examples/fern/client\"\n\toption \"github.com/examples/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n\toption.WithBaseURL(\n\t\tfern.Environments.Production,\n\t),\n)\nresponse, err := client.Echo(\n\tcontext.TODO(),\n\t\"Hello world!\\\\n\\\\nwith\\\\n\\\\tnewlines\",\n)\n"
++                "client": "import (\n\tcontext \"context\"\n\toption \"github.com/examples/fern/pleaseinhere/option\"\n\tpleaseinhere \"github.com/examples/fern/pleaseinhere\"\n\tpleaseinhereclient \"github.com/examples/fern/pleaseinhere/client\"\n)\n\nclient := pleaseinhereclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n\toption.WithBaseURL(\n\t\tpleaseinhere.Environments.Production,\n\t),\n)\nresponse, err := client.Echo(\n\tcontext.TODO(),\n\t\"Hello world!\\\\n\\\\nwith\\\\n\\\\tnewlines\",\n)\n"
+             }
+         },
+         {
+@@ -30,7 +30,7 @@
+             },
+             "snippet": {
+                 "type": "go",
+-                "client": "import (\n\tcommons \"github.com/examples/fern/commons\"\n\tcontext \"context\"\n\tfern \"github.com/examples/fern\"\n\tfernclient \"github.com/examples/fern/client\"\n\toption \"github.com/examples/fern/option\"\n\tuuid \"github.com/google/uuid\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n\toption.WithBaseURL(\n\t\tfern.Environments.Production,\n\t),\n)\nresponse, err := client.Service.CreateBigEntity(\n\tcontext.TODO(),\n\t\u0026fern.BigEntity{\n\t\tCastMember: \u0026fern.CastMember{\n\t\t\tActor: \u0026fern.Actor{\n\t\t\t\tName: \"name\",\n\t\t\t\tID:   \"id\",\n\t\t\t},\n\t\t},\n\t\tExtendedMovie: \u0026fern.ExtendedMovie{\n\t\t\tCast: []string{\n\t\t\t\t\"cast\",\n\t\t\t\t\"cast\",\n\t\t\t},\n\t\t\tID: \"id\",\n\t\t\tPrequel: fern.String(\n\t\t\t\t\"prequel\",\n\t\t\t),\n\t\t\tTitle:  \"title\",\n\t\t\tFrom:   \"from\",\n\t\t\tRating: 1.1,\n\t\t\tTag:    \"tag\",\n\t\t\tBook: fern.String(\n\t\t\t\t\"book\",\n\t\t\t),\n\t\t\tMetadata: map[string]any{\n\t\t\t\t\"metadata\": map[string]interface{}{\n\t\t\t\t\t\"key\": \"value\",\n\t\t\t\t},\n\t\t\t},\n\t\t\tRevenue: 1000000,\n\t\t},\n\t\tEntity: \u0026fern.Entity{\n\t\t\tType: \u0026fern.Type{\n\t\t\t\tBasicType: fern.BasicTypePrimitive,\n\t\t\t},\n\t\t\tName: \"name\",\n\t\t},\n\t\tMetadata: \u0026fern.Metadata{\n\t\t\tHTML: \"metadata\",\n\t\t},\n\t\tCommonMetadata: \u0026commons.Metadata{\n\t\t\tID: \"id\",\n\t\t\tData: map[string]string{\n\t\t\t\t\"data\": \"data\",\n\t\t\t},\n\t\t\tJSONString: fern.String(\n\t\t\t\t\"jsonString\",\n\t\t\t),\n\t\t},\n\t\tEventInfo: \u0026commons.EventInfo{\n\t\t\tMetadata: \u0026commons.Metadata{\n\t\t\t\tID: \"id\",\n\t\t\t\tData: map[string]string{\n\t\t\t\t\t\"data\": \"data\",\n\t\t\t\t},\n\t\t\t\tJSONString: fern.String(\n\t\t\t\t\t\"jsonString\",\n\t\t\t\t),\n\t\t\t},\n\t\t},\n\t\tData: \u0026commons.Data{\n\t\t\tFieldString: \"data\",\n\t\t},\n\t\tMigration: \u0026fern.Migration{\n\t\t\tName:   \"name\",\n\t\t\tStatus: fern.MigrationStatusRunning,\n\t\t},\n\t\tException: \u0026fern.Exception{\n\t\t\tGeneric: \u0026fern.ExceptionInfo{\n\t\t\t\tExceptionType:       \"exceptionType\",\n\t\t\t\tExceptionMessage:    \"exceptionMessage\",\n\t\t\t\tExceptionStacktrace: \"exceptionStacktrace\",\n\t\t\t},\n\t\t},\n\t\tTest: \u0026fern.Test{\n\t\t\tAnd: true,\n\t\t},\n\t\tNode: \u0026fern.Node{\n\t\t\tName: \"name\",\n\t\t\tNodes: []*fern.Node{\n\t\t\t\t\u0026fern.Node{\n\t\t\t\t\tName: \"name\",\n\t\t\t\t\tNodes: []*fern.Node{\n\t\t\t\t\t\t\u0026fern.Node{\n\t\t\t\t\t\t\tName: \"name\",\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\u0026fern.Node{\n\t\t\t\t\t\t\tName: \"name\",\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t\tTrees: []*fern.Tree{\n\t\t\t\t\t\t\u0026fern.Tree{},\n\t\t\t\t\t\t\u0026fern.Tree{},\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t\t\u0026fern.Node{\n\t\t\t\t\tName: \"name\",\n\t\t\t\t\tNodes: []*fern.Node{\n\t\t\t\t\t\t\u0026fern.Node{\n\t\t\t\t\t\t\tName: \"name\",\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\u0026fern.Node{\n\t\t\t\t\t\t\tName: \"name\",\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t\tTrees: []*fern.Tree{\n\t\t\t\t\t\t\u0026fern.Tree{},\n\t\t\t\t\t\t\u0026fern.Tree{},\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t},\n\t\t\tTrees: []*fern.Tree{\n\t\t\t\t\u0026fern.Tree{\n\t\t\t\t\tNodes: []*fern.Node{\n\t\t\t\t\t\t\u0026fern.Node{\n\t\t\t\t\t\t\tName: \"name\",\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\u0026fern.Node{\n\t\t\t\t\t\t\tName: \"name\",\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t\t\u0026fern.Tree{\n\t\t\t\t\tNodes: []*fern.Node{\n\t\t\t\t\t\t\u0026fern.Node{\n\t\t\t\t\t\t\tName: \"name\",\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\u0026fern.Node{\n\t\t\t\t\t\t\tName: \"name\",\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t\tDirectory: \u0026fern.Directory{\n\t\t\tName: \"name\",\n\t\t\tFiles: []*fern.File{\n\t\t\t\t\u0026fern.File{\n\t\t\t\t\tName:     \"name\",\n\t\t\t\t\tContents: \"contents\",\n\t\t\t\t},\n\t\t\t\t\u0026fern.File{\n\t\t\t\t\tName:     \"name\",\n\t\t\t\t\tContents: \"contents\",\n\t\t\t\t},\n\t\t\t},\n\t\t\tDirectories: []*fern.Directory{\n\t\t\t\t\u0026fern.Directory{\n\t\t\t\t\tName: \"name\",\n\t\t\t\t\tFiles: []*fern.File{\n\t\t\t\t\t\t\u0026fern.File{\n\t\t\t\t\t\t\tName:     \"name\",\n\t\t\t\t\t\t\tContents: \"contents\",\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\u0026fern.File{\n\t\t\t\t\t\t\tName:     \"name\",\n\t\t\t\t\t\t\tContents: \"contents\",\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t\tDirectories: []*fern.Directory{\n\t\t\t\t\t\t\u0026fern.Directory{\n\t\t\t\t\t\t\tName: \"name\",\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\u0026fern.Directory{\n\t\t\t\t\t\t\tName: \"name\",\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t\t\u0026fern.Directory{\n\t\t\t\t\tName: \"name\",\n\t\t\t\t\tFiles: []*fern.File{\n\t\t\t\t\t\t\u0026fern.File{\n\t\t\t\t\t\t\tName:     \"name\",\n\t\t\t\t\t\t\tContents: \"contents\",\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\u0026fern.File{\n\t\t\t\t\t\t\tName:     \"name\",\n\t\t\t\t\t\t\tContents: \"contents\",\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t\tDirectories: []*fern.Directory{\n\t\t\t\t\t\t\u0026fern.Directory{\n\t\t\t\t\t\t\tName: \"name\",\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\u0026fern.Directory{\n\t\t\t\t\t\t\tName: \"name\",\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t\tMoment: \u0026fern.Moment{\n\t\t\tID: uuid.MustParse(\n\t\t\t\t\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n\t\t\t),\n\t\t\tDate: fern.MustParseDate(\n\t\t\t\t\"2023-01-15\",\n\t\t\t),\n\t\t\tDatetime: fern.MustParseDateTime(\n\t\t\t\t\"2024-01-15T09:30:00Z\",\n\t\t\t),\n\t\t},\n\t},\n)\n"
++                "client": "import (\n\tcommons \"github.com/examples/fern/pleaseinhere/commons\"\n\tcontext \"context\"\n\toption \"github.com/examples/fern/pleaseinhere/option\"\n\tpleaseinhere \"github.com/examples/fern/pleaseinhere\"\n\tpleaseinhereclient \"github.com/examples/fern/pleaseinhere/client\"\n\tuuid \"github.com/google/uuid\"\n)\n\nclient := pleaseinhereclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n\toption.WithBaseURL(\n\t\tpleaseinhere.Environments.Production,\n\t),\n)\nresponse, err := client.Service.CreateBigEntity(\n\tcontext.TODO(),\n\t\u0026pleaseinhere.BigEntity{\n\t\tCastMember: \u0026pleaseinhere.CastMember{\n\t\t\tActor: \u0026pleaseinhere.Actor{\n\t\t\t\tName: \"name\",\n\t\t\t\tID:   \"id\",\n\t\t\t},\n\t\t},\n\t\tExtendedMovie: \u0026pleaseinhere.ExtendedMovie{\n\t\t\tCast: []string{\n\t\t\t\t\"cast\",\n\t\t\t\t\"cast\",\n\t\t\t},\n\t\t\tID: \"id\",\n\t\t\tPrequel: pleaseinhere.String(\n\t\t\t\t\"prequel\",\n\t\t\t),\n\t\t\tTitle:  \"title\",\n\t\t\tFrom:   \"from\",\n\t\t\tRating: 1.1,\n\t\t\tTag:    \"tag\",\n\t\t\tBook: pleaseinhere.String(\n\t\t\t\t\"book\",\n\t\t\t),\n\t\t\tMetadata: map[string]any{\n\t\t\t\t\"metadata\": map[string]interface{}{\n\t\t\t\t\t\"key\": \"value\",\n\t\t\t\t},\n\t\t\t},\n\t\t\tRevenue: 1000000,\n\t\t},\n\t\tEntity: \u0026pleaseinhere.Entity{\n\t\t\tType: \u0026pleaseinhere.Type{\n\t\t\t\tBasicType: pleaseinhere.BasicTypePrimitive,\n\t\t\t},\n\t\t\tName: \"name\",\n\t\t},\n\t\tMetadata: \u0026pleaseinhere.Metadata{\n\t\t\tHTML: \"metadata\",\n\t\t},\n\t\tCommonMetadata: \u0026commons.Metadata{\n\t\t\tID: \"id\",\n\t\t\tData: map[string]string{\n\t\t\t\t\"data\": \"data\",\n\t\t\t},\n\t\t\tJSONString: pleaseinhere.String(\n\t\t\t\t\"jsonString\",\n\t\t\t),\n\t\t},\n\t\tEventInfo: \u0026commons.EventInfo{\n\t\t\tMetadata: \u0026commons.Metadata{\n\t\t\t\tID: \"id\",\n\t\t\t\tData: map[string]string{\n\t\t\t\t\t\"data\": \"data\",\n\t\t\t\t},\n\t\t\t\tJSONString: pleaseinhere.String(\n\t\t\t\t\t\"jsonString\",\n\t\t\t\t),\n\t\t\t},\n\t\t},\n\t\tData: \u0026commons.Data{\n\t\t\tFieldString: \"data\",\n\t\t},\n\t\tMigration: \u0026pleaseinhere.Migration{\n\t\t\tName:   \"name\",\n\t\t\tStatus: pleaseinhere.MigrationStatusRunning,\n\t\t},\n\t\tException: \u0026pleaseinhere.Exception{\n\t\t\tGeneric: \u0026pleaseinhere.ExceptionInfo{\n\t\t\t\tExceptionType:       \"exceptionType\",\n\t\t\t\tExceptionMessage:    \"exceptionMessage\",\n\t\t\t\tExceptionStacktrace: \"exceptionStacktrace\",\n\t\t\t},\n\t\t},\n\t\tTest: \u0026pleaseinhere.Test{\n\t\t\tAnd: true,\n\t\t},\n\t\tNode: \u0026pleaseinhere.Node{\n\t\t\tName: \"name\",\n\t\t\tNodes: []*pleaseinhere.Node{\n\t\t\t\t\u0026pleaseinhere.Node{\n\t\t\t\t\tName: \"name\",\n\t\t\t\t\tNodes: []*pleaseinhere.Node{\n\t\t\t\t\t\t\u0026pleaseinhere.Node{\n\t\t\t\t\t\t\tName: \"name\",\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\u0026pleaseinhere.Node{\n\t\t\t\t\t\t\tName: \"name\",\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t\tTrees: []*pleaseinhere.Tree{\n\t\t\t\t\t\t\u0026pleaseinhere.Tree{},\n\t\t\t\t\t\t\u0026pleaseinhere.Tree{},\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t\t\u0026pleaseinhere.Node{\n\t\t\t\t\tName: \"name\",\n\t\t\t\t\tNodes: []*pleaseinhere.Node{\n\t\t\t\t\t\t\u0026pleaseinhere.Node{\n\t\t\t\t\t\t\tName: \"name\",\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\u0026pleaseinhere.Node{\n\t\t\t\t\t\t\tName: \"name\",\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t\tTrees: []*pleaseinhere.Tree{\n\t\t\t\t\t\t\u0026pleaseinhere.Tree{},\n\t\t\t\t\t\t\u0026pleaseinhere.Tree{},\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t},\n\t\t\tTrees: []*pleaseinhere.Tree{\n\t\t\t\t\u0026pleaseinhere.Tree{\n\t\t\t\t\tNodes: []*pleaseinhere.Node{\n\t\t\t\t\t\t\u0026pleaseinhere.Node{\n\t\t\t\t\t\t\tName: \"name\",\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\u0026pleaseinhere.Node{\n\t\t\t\t\t\t\tName: \"name\",\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t\t\u0026pleaseinhere.Tree{\n\t\t\t\t\tNodes: []*pleaseinhere.Node{\n\t\t\t\t\t\t\u0026pleaseinhere.Node{\n\t\t\t\t\t\t\tName: \"name\",\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\u0026pleaseinhere.Node{\n\t\t\t\t\t\t\tName: \"name\",\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t\tDirectory: \u0026pleaseinhere.Directory{\n\t\t\tName: \"name\",\n\t\t\tFiles: []*pleaseinhere.File{\n\t\t\t\t\u0026pleaseinhere.File{\n\t\t\t\t\tName:     \"name\",\n\t\t\t\t\tContents: \"contents\",\n\t\t\t\t},\n\t\t\t\t\u0026pleaseinhere.File{\n\t\t\t\t\tName:     \"name\",\n\t\t\t\t\tContents: \"contents\",\n\t\t\t\t},\n\t\t\t},\n\t\t\tDirectories: []*pleaseinhere.Directory{\n\t\t\t\t\u0026pleaseinhere.Directory{\n\t\t\t\t\tName: \"name\",\n\t\t\t\t\tFiles: []*pleaseinhere.File{\n\t\t\t\t\t\t\u0026pleaseinhere.File{\n\t\t\t\t\t\t\tName:     \"name\",\n\t\t\t\t\t\t\tContents: \"contents\",\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\u0026pleaseinhere.File{\n\t\t\t\t\t\t\tName:     \"name\",\n\t\t\t\t\t\t\tContents: \"contents\",\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t\tDirectories: []*pleaseinhere.Directory{\n\t\t\t\t\t\t\u0026pleaseinhere.Directory{\n\t\t\t\t\t\t\tName: \"name\",\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\u0026pleaseinhere.Directory{\n\t\t\t\t\t\t\tName: \"name\",\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t\t\u0026pleaseinhere.Directory{\n\t\t\t\t\tName: \"name\",\n\t\t\t\t\tFiles: []*pleaseinhere.File{\n\t\t\t\t\t\t\u0026pleaseinhere.File{\n\t\t\t\t\t\t\tName:     \"name\",\n\t\t\t\t\t\t\tContents: \"contents\",\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\u0026pleaseinhere.File{\n\t\t\t\t\t\t\tName:     \"name\",\n\t\t\t\t\t\t\tContents: \"contents\",\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t\tDirectories: []*pleaseinhere.Directory{\n\t\t\t\t\t\t\u0026pleaseinhere.Directory{\n\t\t\t\t\t\t\tName: \"name\",\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\u0026pleaseinhere.Directory{\n\t\t\t\t\t\t\tName: \"name\",\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t\tMoment: \u0026pleaseinhere.Moment{\n\t\t\tID: uuid.MustParse(\n\t\t\t\t\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n\t\t\t),\n\t\t\tDate: pleaseinhere.MustParseDate(\n\t\t\t\t\"2023-01-15\",\n\t\t\t),\n\t\t\tDatetime: pleaseinhere.MustParseDateTime(\n\t\t\t\t\"2024-01-15T09:30:00Z\",\n\t\t\t),\n\t\t},\n\t},\n)\n"
+             }
+         },
+         {
+@@ -41,7 +41,7 @@
+             },
+             "snippet": {
+                 "type": "go",
+-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/examples/fern\"\n\tfernclient \"github.com/examples/fern/client\"\n\toption \"github.com/examples/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n\toption.WithBaseURL(\n\t\tfern.Environments.Production,\n\t),\n)\nerr := client.Health.Service.Check(\n\tcontext.TODO(),\n\t\"id-2sdx82h\",\n)\n"
++                "client": "import (\n\tcontext \"context\"\n\toption \"github.com/examples/fern/pleaseinhere/option\"\n\tpleaseinhere \"github.com/examples/fern/pleaseinhere\"\n\tpleaseinhereclient \"github.com/examples/fern/pleaseinhere/client\"\n)\n\nclient := pleaseinhereclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n\toption.WithBaseURL(\n\t\tpleaseinhere.Environments.Production,\n\t),\n)\nerr := client.Health.Service.Check(\n\tcontext.TODO(),\n\t\"id-2sdx82h\",\n)\n"
+             }
+         },
+         {
+@@ -52,7 +52,7 @@
+             },
+             "snippet": {
+                 "type": "go",
+-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/examples/fern\"\n\tfernclient \"github.com/examples/fern/client\"\n\toption \"github.com/examples/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n\toption.WithBaseURL(\n\t\tfern.Environments.Production,\n\t),\n)\nresponse, err := client.File.Notification.Service.GetException(\n\tcontext.TODO(),\n\t\"notification-hsy129x\",\n)\n"
++                "client": "import (\n\tcontext \"context\"\n\toption \"github.com/examples/fern/pleaseinhere/option\"\n\tpleaseinhere \"github.com/examples/fern/pleaseinhere\"\n\tpleaseinhereclient \"github.com/examples/fern/pleaseinhere/client\"\n)\n\nclient := pleaseinhereclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n\toption.WithBaseURL(\n\t\tpleaseinhere.Environments.Production,\n\t),\n)\nresponse, err := client.File.Notification.Service.GetException(\n\tcontext.TODO(),\n\t\"notification-hsy129x\",\n)\n"
+             }
+         },
+         {
+@@ -63,7 +63,7 @@
+             },
+             "snippet": {
+                 "type": "go",
+-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/examples/fern\"\n\tfernclient \"github.com/examples/fern/client\"\n\tfile \"github.com/examples/fern/file\"\n\toption \"github.com/examples/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n\toption.WithBaseURL(\n\t\tfern.Environments.Production,\n\t),\n)\nresponse, err := client.File.Service.GetFile(\n\tcontext.TODO(),\n\t\"file.txt\",\n\t\u0026file.GetFileRequest{\n\t\tXFileAPIVersion: \"0.0.2\",\n\t},\n)\n"
++                "client": "import (\n\tcontext \"context\"\n\tfile \"github.com/examples/fern/pleaseinhere/file\"\n\toption \"github.com/examples/fern/pleaseinhere/option\"\n\tpleaseinhere \"github.com/examples/fern/pleaseinhere\"\n\tpleaseinhereclient \"github.com/examples/fern/pleaseinhere/client\"\n)\n\nclient := pleaseinhereclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n\toption.WithBaseURL(\n\t\tpleaseinhere.Environments.Production,\n\t),\n)\nresponse, err := client.File.Service.GetFile(\n\tcontext.TODO(),\n\t\"file.txt\",\n\t\u0026file.GetFileRequest{\n\t\tXFileAPIVersion: \"0.0.2\",\n\t},\n)\n"
+             }
+         },
+         {
+@@ -74,7 +74,7 @@
+             },
+             "snippet": {
+                 "type": "go",
+-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/examples/fern\"\n\tfernclient \"github.com/examples/fern/client\"\n\toption \"github.com/examples/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n\toption.WithBaseURL(\n\t\tfern.Environments.Production,\n\t),\n)\nresponse, err := client.Service.GetMetadata(\n\tcontext.TODO(),\n\t\u0026fern.GetMetadataRequest{\n\t\tXAPIVersion: \"0.0.1\",\n\t\tShallow: fern.Bool(\n\t\t\tfalse,\n\t\t),\n\t\tTag: []*string{\n\t\t\tfern.String(\n\t\t\t\t\"development\",\n\t\t\t),\n\t\t},\n\t},\n)\n"
++                "client": "import (\n\tcontext \"context\"\n\toption \"github.com/examples/fern/pleaseinhere/option\"\n\tpleaseinhere \"github.com/examples/fern/pleaseinhere\"\n\tpleaseinhereclient \"github.com/examples/fern/pleaseinhere/client\"\n)\n\nclient := pleaseinhereclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n\toption.WithBaseURL(\n\t\tpleaseinhere.Environments.Production,\n\t),\n)\nresponse, err := client.Service.GetMetadata(\n\tcontext.TODO(),\n\t\u0026pleaseinhere.GetMetadataRequest{\n\t\tXAPIVersion: \"0.0.1\",\n\t\tShallow: pleaseinhere.Bool(\n\t\t\tfalse,\n\t\t),\n\t\tTag: []*string{\n\t\t\tpleaseinhere.String(\n\t\t\t\t\"development\",\n\t\t\t),\n\t\t},\n\t},\n)\n"
+             }
+         },
+         {
+@@ -85,7 +85,7 @@
+             },
+             "snippet": {
+                 "type": "go",
+-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/examples/fern\"\n\tfernclient \"github.com/examples/fern/client\"\n\toption \"github.com/examples/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n\toption.WithBaseURL(\n\t\tfern.Environments.Production,\n\t),\n)\nresponse, err := client.Service.CreateMovie(\n\tcontext.TODO(),\n\t\u0026fern.Movie{\n\t\tID: \"movie-c06a4ad7\",\n\t\tPrequel: fern.String(\n\t\t\t\"movie-cv9b914f\",\n\t\t),\n\t\tTitle:  \"The Boy and the Heron\",\n\t\tFrom:   \"Hayao Miyazaki\",\n\t\tRating: 8,\n\t\tTag:    \"tag-wf9as23d\",\n\t\tMetadata: map[string]any{\n\t\t\t\"actors\": []interface{}{\n\t\t\t\t\"Christian Bale\",\n\t\t\t\t\"Florence Pugh\",\n\t\t\t\t\"Willem Dafoe\",\n\t\t\t},\n\t\t\t\"releaseDate\": \"2023-12-08\",\n\t\t\t\"ratings\": map[string]interface{}{\n\t\t\t\t\"imdb\":           7.6,\n\t\t\t\t\"rottenTomatoes\": 97,\n\t\t\t},\n\t\t},\n\t\tRevenue: 1000000,\n\t},\n)\n"
++                "client": "import (\n\tcontext \"context\"\n\toption \"github.com/examples/fern/pleaseinhere/option\"\n\tpleaseinhere \"github.com/examples/fern/pleaseinhere\"\n\tpleaseinhereclient \"github.com/examples/fern/pleaseinhere/client\"\n)\n\nclient := pleaseinhereclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n\toption.WithBaseURL(\n\t\tpleaseinhere.Environments.Production,\n\t),\n)\nresponse, err := client.Service.CreateMovie(\n\tcontext.TODO(),\n\t\u0026pleaseinhere.Movie{\n\t\tID: \"movie-c06a4ad7\",\n\t\tPrequel: pleaseinhere.String(\n\t\t\t\"movie-cv9b914f\",\n\t\t),\n\t\tTitle:  \"The Boy and the Heron\",\n\t\tFrom:   \"Hayao Miyazaki\",\n\t\tRating: 8,\n\t\tTag:    \"tag-wf9as23d\",\n\t\tMetadata: map[string]any{\n\t\t\t\"actors\": []interface{}{\n\t\t\t\t\"Christian Bale\",\n\t\t\t\t\"Florence Pugh\",\n\t\t\t\t\"Willem Dafoe\",\n\t\t\t},\n\t\t\t\"releaseDate\": \"2023-12-08\",\n\t\t\t\"ratings\": map[string]interface{}{\n\t\t\t\t\"imdb\":           7.6,\n\t\t\t\t\"rottenTomatoes\": 97,\n\t\t\t},\n\t\t},\n\t\tRevenue: 1000000,\n\t},\n)\n"
+             }
+         },
+         {
+@@ -96,7 +96,7 @@
+             },
+             "snippet": {
+                 "type": "go",
+-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/examples/fern\"\n\tfernclient \"github.com/examples/fern/client\"\n\toption \"github.com/examples/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n\toption.WithBaseURL(\n\t\tfern.Environments.Production,\n\t),\n)\nresponse, err := client.Service.GetMovie(\n\tcontext.TODO(),\n\t\"movie-c06a4ad7\",\n)\n"
++                "client": "import (\n\tcontext \"context\"\n\toption \"github.com/examples/fern/pleaseinhere/option\"\n\tpleaseinhere \"github.com/examples/fern/pleaseinhere\"\n\tpleaseinhereclient \"github.com/examples/fern/pleaseinhere/client\"\n)\n\nclient := pleaseinhereclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n\toption.WithBaseURL(\n\t\tpleaseinhere.Environments.Production,\n\t),\n)\nresponse, err := client.Service.GetMovie(\n\tcontext.TODO(),\n\t\"movie-c06a4ad7\",\n)\n"
+             }
+         },
+         {
+@@ -107,7 +107,7 @@
+             },
+             "snippet": {
+                 "type": "go",
+-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/examples/fern\"\n\tfernclient \"github.com/examples/fern/client\"\n\toption \"github.com/examples/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n\toption.WithBaseURL(\n\t\tfern.Environments.Production,\n\t),\n)\nresponse, err := client.Health.Service.Ping(\n\tcontext.TODO(),\n)\n"
++                "client": "import (\n\tcontext \"context\"\n\toption \"github.com/examples/fern/pleaseinhere/option\"\n\tpleaseinhere \"github.com/examples/fern/pleaseinhere\"\n\tpleaseinhereclient \"github.com/examples/fern/pleaseinhere/client\"\n)\n\nclient := pleaseinhereclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n\toption.WithBaseURL(\n\t\tpleaseinhere.Environments.Production,\n\t),\n)\nresponse, err := client.Health.Service.Ping(\n\tcontext.TODO(),\n)\n"
+             }
+         }
+     ]

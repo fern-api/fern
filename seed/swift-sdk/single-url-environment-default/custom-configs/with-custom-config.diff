@@ -1,0 +1,95 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 7c09e6b3596..d8ff783de0b 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -3,7 +3,7 @@
+   "generatorName": "fernapi/fern-swift-sdk",
+   "generatorVersion": "local",
+   "generatorConfig": {
+-    "maxRetries": 5
++    "environmentEnumName": "MyCustomEnvironment"
+   },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+diff --git a/Sources/SingleUrlEnvironmentDefaultEnvironment.swift b/Sources/MyCustomEnvironment.swift
+similarity index 60%
+rename from Sources/SingleUrlEnvironmentDefaultEnvironment.swift
+rename to Sources/MyCustomEnvironment.swift
+index 6ea3f6f93b0..7c1baa5ce51 100644
+--- a/Sources/SingleUrlEnvironmentDefaultEnvironment.swift
++++ b/Sources/MyCustomEnvironment.swift
+@@ -1,6 +1,6 @@
+ import Foundation
+ 
+-public enum SingleUrlEnvironmentDefaultEnvironment: String, CaseIterable {
++public enum MyCustomEnvironment: String, CaseIterable {
+     case production = "https://production.com/api"
+     case staging = "https://staging.com/api"
+ }
+\ No newline at end of file
+diff --git a/Sources/Public/ClientConfig.swift b/Sources/Public/ClientConfig.swift
+index 50201005f44..01ab9ae13b6 100644
+--- a/Sources/Public/ClientConfig.swift
++++ b/Sources/Public/ClientConfig.swift
+@@ -5,7 +5,7 @@ public final class ClientConfig: Swift.Sendable {
+ 
+     struct Defaults {
+         static let timeout: Swift.Int = 60
+-        static let maxRetries: Swift.Int = 5
++        static let maxRetries: Swift.Int = 2
+     }
+ 
+     struct HeaderAuth {
+diff --git a/Sources/SingleUrlEnvironmentDefaultClient.swift b/Sources/SingleUrlEnvironmentDefaultClient.swift
+index 56e915c2a4b..6049434279f 100644
+--- a/Sources/SingleUrlEnvironmentDefaultClient.swift
++++ b/Sources/SingleUrlEnvironmentDefaultClient.swift
+@@ -11,10 +11,10 @@ public final class SingleUrlEnvironmentDefaultClient: Sendable {
+     /// - Parameter token: Bearer token for authentication. If provided, will be sent as "Bearer {token}" in Authorization header.
+     /// - Parameter headers: Additional headers to send with each request.
+     /// - Parameter timeout: Request timeout in seconds. Defaults to 60 seconds. Ignored if a custom `urlSession` is provided.
+-    /// - Parameter maxRetries: Maximum number of retries for failed requests. Defaults to 5.
++    /// - Parameter maxRetries: Maximum number of retries for failed requests. Defaults to 2.
+     /// - Parameter urlSession: Custom `URLSession` to use for requests. If not provided, a default session will be created with the specified timeout.
+     public convenience init(
+-        baseURL: String = SingleUrlEnvironmentDefaultEnvironment.production.rawValue,
++        baseURL: String = MyCustomEnvironment.production.rawValue,
+         token: String,
+         headers: [String: String]? = nil,
+         timeout: Int? = nil,
+@@ -39,10 +39,10 @@ public final class SingleUrlEnvironmentDefaultClient: Sendable {
+     /// - Parameter token: An async function that returns the bearer token for authentication. If provided, will be sent as "Bearer {token}" in Authorization header.
+     /// - Parameter headers: Additional headers to send with each request.
+     /// - Parameter timeout: Request timeout in seconds. Defaults to 60 seconds. Ignored if a custom `urlSession` is provided.
+-    /// - Parameter maxRetries: Maximum number of retries for failed requests. Defaults to 5.
++    /// - Parameter maxRetries: Maximum number of retries for failed requests. Defaults to 2.
+     /// - Parameter urlSession: Custom `URLSession` to use for requests. If not provided, a default session will be created with the specified timeout.
+     public convenience init(
+-        baseURL: String = SingleUrlEnvironmentDefaultEnvironment.production.rawValue,
++        baseURL: String = MyCustomEnvironment.production.rawValue,
+         token: @escaping ClientConfig.CredentialProvider,
+         headers: [String: String]? = nil,
+         timeout: Int? = nil,
+diff --git a/Tests/Core/ClientRetryTests.swift b/Tests/Core/ClientRetryTests.swift
+index 538847f1d48..62aa1b2a5c9 100644
+--- a/Tests/Core/ClientRetryTests.swift
++++ b/Tests/Core/ClientRetryTests.swift
+@@ -157,9 +157,6 @@ import Testing
+             (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
+             (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
+             (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
+-            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
+-            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
+-            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
+         ])
+ 
+         let client = SingleUrlEnvironmentDefaultClient(
+@@ -173,7 +170,7 @@ import Testing
+ 
+             Issue.record("Expected error to be thrown")
+         } catch {
+-            try #require(stub.getRequestCount() == 6)
++            try #require(stub.getRequestCount() == 3)
+         }
+     }
+ 

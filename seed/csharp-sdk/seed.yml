@@ -6,29 +6,29 @@ changelogLocation: ../../generators/csharp/sdk/versions.yml
 buildScripts:
   preInstallScript:
     commands:
-      - dotnet tool restore
+    - dotnet tool restore
   compileScript:
     commands:
-      - |
-        solution_file="$(find . -maxdepth 4 \( -name '*.slnx' -o -name '*.sln' \) | head -n 1)"
-        if [ -z "$solution_file" ]; then
-          echo "ERROR: No .slnx or .sln file found"
-          exit 1
-        fi
-        dotnet build "$solution_file" -c Release
+    - |
+      solution_file="$(find . -maxdepth 4 \( -name '*.slnx' -o -name '*.sln' \) | head -n 1)"
+      if [ -z "$solution_file" ]; then
+        echo "ERROR: No .slnx or .sln file found"
+        exit 1
+      fi
+      dotnet build "$solution_file" -c Release
   testScript:
     commands:
-      - |
-        solution_file="$(find . -maxdepth 4 \( -name '*.slnx' -o -name '*.sln' \) | head -n 1)"
-        if [ -z "$solution_file" ]; then
-          echo "ERROR: No .slnx or .sln file found"
-          exit 1
-        fi
-        dotnet test "$solution_file"
+    - |
+      solution_file="$(find . -maxdepth 4 \( -name '*.slnx' -o -name '*.sln' \) | head -n 1)"
+      if [ -z "$solution_file" ]; then
+        echo "ERROR: No .slnx or .sln file found"
+        exit 1
+      fi
+      dotnet test "$solution_file"
 
 publish:
   preBuildCommands:
-    - pnpm turbo run dist:cli --filter @fern-api/fern-csharp-sdk
+  - pnpm turbo run dist:cli --filter @fern-api/fern-csharp-sdk
   docker:
     file: ./generators/csharp/sdk/Dockerfile
     image: fernapi/fern-csharp-sdk
@@ -37,7 +37,7 @@ publish:
     name: fern-csharp-sdk
     project: csharp-sdk
     sourceMaps:
-      - dir: generators/csharp/sdk/dist
+    - dir: generators/csharp/sdk/dist
 test:
   docker:
     image: fernapi/fern-csharp-sdk:latest
@@ -48,7 +48,7 @@ test:
   local:
     workingDirectory: generators/csharp
     buildCommand:
-      - pnpm turbo run dist:cli --filter @fern-api/fern-csharp-sdk
+    - pnpm turbo run dist:cli --filter @fern-api/fern-csharp-sdk
     runCommand: node --enable-source-maps sdk/dist/cli.cjs {CONFIG_PATH}
 
 language: csharp
@@ -56,380 +56,329 @@ generatorType: SDK
 defaultOutputMode: github
 defaultCustomConfig: {}
 scripts:
-  - image: fernapi/csharp-seed
-    commands:
-      build:
-        - |
-          # Enforce global:: prefix for System namespace references in generated .cs files.
-          # This prevents compile breaks when customers have namespace conflicts (e.g., a class named "System").
-          #
-          # Fixtures to skip (add fixture directory names here if they are fundamentally
-          # incompatible with global:: enforcement, e.g. dotnet-format post-processing):
-          SKIP_GLOBAL_VALIDATION="fully-qualified-namespaces"
+- image: fernapi/csharp-seed
+  commands:
+    build:
+    - |
+      # Enforce global:: prefix for System namespace references in generated .cs files.
+      # This prevents compile breaks when customers have namespace conflicts (e.g., a class named "System").
+      #
+      # Fixtures to skip (add fixture directory names here if they are fundamentally
+      # incompatible with global:: enforcement, e.g. dotnet-format post-processing):
+      SKIP_GLOBAL_VALIDATION="fully-qualified-namespaces"
 
-          skip=false
-          for pattern in $SKIP_GLOBAL_VALIDATION; do
-            if echo "$(pwd)" | grep -q "$pattern"; then
-              echo "Skipping global:: validation (matched skip-list entry: $pattern)"
-              skip=true
-              break
-            fi
-          done
+      skip=false
+      for pattern in $SKIP_GLOBAL_VALIDATION; do
+        if echo "$(pwd)" | grep -q "$pattern"; then
+          echo "Skipping global:: validation (matched skip-list entry: $pattern)"
+          skip=true
+          break
+        fi
+      done
 
-          if [ "$skip" = false ]; then
-            # Check 1: using directives — e.g. "using System.Linq;"
-            using_violations=$(grep -rn --include='*.cs' -P '^\s*using\s+System[.;]' . | grep -v 'global::System' | grep -v -P ':\s*//' | grep -v 'DynamicSnippets' | grep -v './Snippets/' || true)
-            # Check 2: inline references — e.g. "new System.Exception()", "System.Threading.Tasks.Task"
-            # Excludes using directives (already caught above), comments (// and ///), strings, DynamicSnippets, and Snippets.
-            inline_violations=$(grep -rn --include='*.cs' -P '(?<!using |global::|\.| )System\.(Collections|IO|Linq|Net|Text|Threading|Runtime|Globalization|Diagnostics|Reflection)' . | grep -v 'global::System' | grep -v -P ':\s*//' | grep -v 'DynamicSnippets' | grep -v './Snippets/' | grep -v -P ':\s*using ' | grep -v '".*System\.' || true)
-            violations="${using_violations}${using_violations:+\n}${inline_violations}"
-            # Trim whitespace
-            violations=$(echo "$violations" | sed '/^$/d')
-            if [ -n "$violations" ]; then
-              echo "ERROR: Found unqualified System namespace references. Use 'global::System' instead:"
-              echo "$violations"
-              exit 1
-            fi
-          fi
-        - |
-          # Check for .NET 10
-          # if you are getting an error from this and using docker, run `docker pull fernapi/csharp-seed:latest`
-          # otherwise install .NET 10
-          command -v dotnet >/dev/null 2>&1 && ver=$(dotnet --version) && major=$(echo "$ver" | cut -d. -f1) && [ "$major" -ge 10 ] || { echo "ERROR: .NET SDK 10+ required (found ${ver:-not found})"; false; }
+      if [ "$skip" = false ]; then
+        # Check 1: using directives — e.g. "using System.Linq;"
+        using_violations=$(grep -rn --include='*.cs' -P '^\s*using\s+System[.;]' . | grep -v 'global::System' | grep -v -P ':\s*//' | grep -v 'DynamicSnippets' | grep -v './Snippets/' || true)
+        # Check 2: inline references — e.g. "new System.Exception()", "System.Threading.Tasks.Task"
+        # Excludes using directives (already caught above), comments (// and ///), strings, DynamicSnippets, and Snippets.
+        inline_violations=$(grep -rn --include='*.cs' -P '(?<!using |global::|\.| )System\.(Collections|IO|Linq|Net|Text|Threading|Runtime|Globalization|Diagnostics|Reflection)' . | grep -v 'global::System' | grep -v -P ':\s*//' | grep -v 'DynamicSnippets' | grep -v './Snippets/' | grep -v -P ':\s*using ' | grep -v '".*System\.' || true)
+        violations="${using_violations}${using_violations:+\n}${inline_violations}"
+        # Trim whitespace
+        violations=$(echo "$violations" | sed '/^$/d')
+        if [ -n "$violations" ]; then
+          echo "ERROR: Found unqualified System namespace references. Use 'global::System' instead:"
+          echo "$violations"
+          exit 1
+        fi
+      fi
+    - |
+      # Check for .NET 10
+      # if you are getting an error from this and using docker, run `docker pull fernapi/csharp-seed:latest`
+      # otherwise install .NET 10
+      command -v dotnet >/dev/null 2>&1 && ver=$(dotnet --version) && major=$(echo "$ver" | cut -d. -f1) && [ "$major" -ge 10 ] || { echo "ERROR: .NET SDK 10+ required (found ${ver:-not found})"; false; }
 
-          # Find the solution file (.slnx or .sln)
-          solution_file="$(find . -maxdepth 4 \( -name '*.slnx' -o -name '*.sln' \) | head -n 1)"
-          if [ -z "$solution_file" ]; then
-            echo "ERROR: No .slnx or .sln file found"
-            exit 1
-          fi
+      # Find the solution file (.slnx or .sln)
+      solution_file="$(find . -maxdepth 4 \( -name '*.slnx' -o -name '*.sln' \) | head -n 1)"
+      if [ -z "$solution_file" ]; then
+        echo "ERROR: No .slnx or .sln file found"
+        exit 1
+      fi
 
-          dotnet build "$solution_file" -c Release
-          if [ -f "Snippets/Snippets.csproj" ]; then
-            dotnet build Snippets/Snippets.csproj -c Release
-          else
-            dynamic_snippets="$(find src -maxdepth 2 -name '*DynamicSnippets*.csproj' | head -n 1)"
-            if [ -n "$dynamic_snippets" ]; then
-              dotnet build "$dynamic_snippets" -c Release
-            fi
-          fi
-      test:
-        - |
-          # Find the solution file (.slnx or .sln)
-          solution_file="$(find . -maxdepth 4 \( -name '*.slnx' -o -name '*.sln' \) | head -n 1)"
-          if [ -z "$solution_file" ]; then
-            echo "ERROR: No .slnx or .sln file found"
-            exit 1
-          fi
+      dotnet build "$solution_file" -c Release
+      if [ -f "Snippets/Snippets.csproj" ]; then
+        dotnet build Snippets/Snippets.csproj -c Release
+      else
+        dynamic_snippets="$(find src -maxdepth 2 -name '*DynamicSnippets*.csproj' | head -n 1)"
+        if [ -n "$dynamic_snippets" ]; then
+          dotnet build "$dynamic_snippets" -c Release
+        fi
+      fi
+    test:
+    - |
+      # Find the solution file (.slnx or .sln)
+      solution_file="$(find . -maxdepth 4 \( -name '*.slnx' -o -name '*.sln' \) | head -n 1)"
+      if [ -z "$solution_file" ]; then
+        echo "ERROR: No .slnx or .sln file found"
+        exit 1
+      fi
 
-          dotnet test "$solution_file" --no-restore --no-build -c Release
+      dotnet test "$solution_file" --no-restore --no-build -c Release
 
 fixtures:
   simple-api:
-    - outputFolder: no-custom-config
-      customConfig: null
-    - outputFolder: custom-output-path
-      customConfig:
-        output-path: custom-src
-    - outputFolder: custom-output-path-object
-      customConfig:
-        output-path:
-          library: lib/SeedApi
-          test: test/SeedApi.Test
-          solution: .
-          other: lib/SeedApi
-    - outputFolder: use-sln-format
-      customConfig:
-        sln-format: sln
+  - outputFolder: custom-output-path
+    customConfig:
+      output-path: custom-src
+  - outputFolder: custom-output-path-object
+    customConfig:
+      output-path:
+        library: lib/SeedApi
+        test: test/SeedApi.Test
+        solution: .
+        other: lib/SeedApi
+  - outputFolder: use-sln-format
+    customConfig:
+      sln-format: sln
   literal:
-    - customConfig: null
-      outputFolder: no-custom-config
-    - customConfig:
-        generate-literals: true
-      outputFolder: readonly-constants
+  - customConfig:
+      generate-literals: true
+    outputFolder: readonly-constants
   pagination:
-    - customConfig: null
-      outputFolder: no-custom-config
-    - customConfig:
-        custom-pager-name: MyPager
-      outputFolder: custom-pager
-    - customConfig:
-        custom-pager-name: MyPager
-        include-exception-handler: true
-      outputFolder: custom-pager-with-exception-handler
-    - customConfig:
-        offset-semantics: "page-index"
-      outputFolder: page-index-semantics
+  - customConfig:
+      custom-pager-name: MyPager
+    outputFolder: custom-pager
+  - customConfig:
+      custom-pager-name: MyPager
+      include-exception-handler: true
+    outputFolder: custom-pager-with-exception-handler
+  - customConfig:
+      offset-semantics: "page-index"
+    outputFolder: page-index-semantics
   examples:
-    - customConfig: null
-      outputFolder: no-custom-config
-    - customConfig:
-        custom-readme-sections:
-          - title: "Override Section"
-            content: "Override Content"
-          - title: "Generator Invocation Custom Section"
-            content: "Generator Invocation Custom Content for {{ packageName }}"
-      readmeConfig:
-        apiName: "CustomName"
-        disabledSections:
-          - "contributing"
-        bannerLink: https://www.fernapi.com
-        apiReferenceLink: https://www.docs.fernapi.com
-        defaultEndpoint: POST /movie
-        customSections:
-          - title: "Base Readme Custom Section"
-            language: csharp
-            content: "Base Readme Custom Content for {{ packageName }}"
-          - title: "Override Section"
-            language: csharp
-            content: "Base Content"
-        features:
-          timeouts:
-            - GET /movie/{movieId}
-            - method: POST
-              path: /movie
-      outputFolder: readme-config
+  - customConfig:
+      custom-readme-sections:
+      - title: "Override Section"
+        content: "Override Content"
+      - title: "Generator Invocation Custom Section"
+        content: "Generator Invocation Custom Content for {{ packageName }}"
+    readmeConfig:
+      apiName: "CustomName"
+      disabledSections:
+      - "contributing"
+      bannerLink: https://www.fernapi.com
+      apiReferenceLink: https://www.docs.fernapi.com
+      defaultEndpoint: POST /movie
+      customSections:
+      - title: "Base Readme Custom Section"
+        language: csharp
+        content: "Base Readme Custom Content for {{ packageName }}"
+      - title: "Override Section"
+        language: csharp
+        content: "Base Content"
+      features:
+        timeouts:
+        - GET /movie/{movieId}
+        - method: POST
+          path: /movie
+    outputFolder: readme-config
   imdb:
-    - customConfig: null
-      outputFolder: no-custom-config
-    - customConfig:
-        extra-dependencies:
-          Moq: 4.20.70
-          Moq.Contrib.HttpClient: "1.4.0"
-      outputFolder: extra-dependencies
-    - customConfig:
-        extra-dependencies:
-          PolySharp: "1.14.0"
-      outputFolder: extra-dependencies-override
-    - customConfig:
-        base-api-exception-class-name: CustomApiException
-        base-exception-class-name: CustomException
-      outputFolder: exception-class-names
-    - customConfig:
-        client-class-name: BaseClient
-        exported-client-class-name: CustomClient
-        maxRetries: 5
-      outputFolder: exported-client-class-name
-    - customConfig:
-        include-exception-handler: true
-      outputFolder: include-exception-handler
-    - customConfig:
-        omit-fern-headers: true
-      outputFolder: omit-fern-headers
+  - customConfig:
+      extra-dependencies:
+        Moq: 4.20.70
+        Moq.Contrib.HttpClient: "1.4.0"
+    outputFolder: extra-dependencies
+  - customConfig:
+      extra-dependencies:
+        PolySharp: "1.14.0"
+    outputFolder: extra-dependencies-override
+  - customConfig:
+      base-api-exception-class-name: CustomApiException
+      base-exception-class-name: CustomException
+    outputFolder: exception-class-names
+  - customConfig:
+      client-class-name: BaseClient
+      exported-client-class-name: CustomClient
+      maxRetries: 5
+    outputFolder: exported-client-class-name
+  - customConfig:
+      include-exception-handler: true
+    outputFolder: include-exception-handler
+  - customConfig:
+      omit-fern-headers: true
+    outputFolder: omit-fern-headers
   multi-url-environment:
-    - customConfig:
-        pascal-case-environments: false
-      outputFolder: no-pascal-case-environments
-    - customConfig:
-        environment-class-name: CustomEnvironment
-      outputFolder: environment-class-name
+  - customConfig:
+      pascal-case-environments: false
+    outputFolder: no-pascal-case-environments
+  - customConfig:
+      environment-class-name: CustomEnvironment
+    outputFolder: environment-class-name
   exhaustive:
-    - customConfig:
-        explicit-namespaces: true
-      outputFolder: explicit-namespaces
-    - customConfig:
-        root-namespace-for-core-classes: false
-      outputFolder: no-root-namespace-for-core-classes
-    - customConfig:
-        generate-error-types: false
-      outputFolder: no-generate-error-types
-    - customConfig:
-        include-exception-handler: true
-      outputFolder: include-exception-handler
-    - customConfig:
-        redact-response-body-on-error: true
-      outputFolder: redact-response-body-on-error
-    - customConfig:
-        use-undiscriminated-unions: true
-      outputFolder: use-undiscriminated-unions
+  - customConfig:
+      explicit-namespaces: true
+    outputFolder: explicit-namespaces
+  - customConfig:
+      root-namespace-for-core-classes: false
+    outputFolder: no-root-namespace-for-core-classes
+  - customConfig:
+      generate-error-types: false
+    outputFolder: no-generate-error-types
+  - customConfig:
+      include-exception-handler: true
+    outputFolder: include-exception-handler
+  - customConfig:
+      redact-response-body-on-error: true
+    outputFolder: redact-response-body-on-error
+  - customConfig:
+      use-undiscriminated-unions: true
+    outputFolder: use-undiscriminated-unions
   optional:
-    - customConfig: null
-      outputFolder: no-custom-config
-    - customConfig:
-        simplify-object-dictionaries: true
-      outputFolder: simplify-object-dictionaries
+  - customConfig:
+      simplify-object-dictionaries: true
+    outputFolder: simplify-object-dictionaries
   path-parameters:
-    - customConfig: null
-      outputFolder: no-custom-config
-    - customConfig:
-        inline-path-parameters: false
-      outputFolder: no-inline-path-parameters
-  csharp-grpc-proto:
-    - customConfig: null
-      outputFolder: no-custom-config
-      disableDynamicSnippetTests: true
+  - customConfig:
+      inline-path-parameters: false
+    outputFolder: no-inline-path-parameters
   csharp-grpc-proto-exhaustive:
-    - customConfig: null
-      outputFolder: no-custom-config
-      disableDynamicSnippetTests: true
-    - customConfig:
-        package-id: Seed.Client
-      outputFolder: package-id
-      disableDynamicSnippetTests: true
-    - customConfig:
-        read-only-memory-types:
-          - float
-      outputFolder: read-only-memory
-      disableDynamicSnippetTests: true
-    - customConfig:
-        include-exception-handler: true
-      outputFolder: include-exception-handler
-      disableDynamicSnippetTests: true
+  - customConfig:
+      package-id: Seed.Client
+    outputFolder: package-id
+    disableDynamicSnippetTests: true
+  - customConfig:
+      read-only-memory-types:
+      - float
+    outputFolder: read-only-memory
+    disableDynamicSnippetTests: true
+  - customConfig:
+      include-exception-handler: true
+    outputFolder: include-exception-handler
+    disableDynamicSnippetTests: true
   basic-auth:
-    - customConfig: null
-      outputFolder: no-custom-config
-    - customConfig:
-        unified-client-options: true
-      outputFolder: unified-client-options
-    - customConfig:
-        enable-wire-tests: true
-      outputFolder: wire-tests
+  - customConfig:
+      unified-client-options: true
+    outputFolder: unified-client-options
+  - customConfig:
+      enable-wire-tests: true
+    outputFolder: wire-tests
   oauth-client-credentials-mandatory-auth:
-    - customConfig: null
-      outputFolder: no-custom-config
-    - customConfig:
-        unified-client-options: true
-      outputFolder: unified-client-options
+  - customConfig:
+      unified-client-options: true
+    outputFolder: unified-client-options
   bearer-token-environment-variable:
-    - customConfig: null
-      outputFolder: no-custom-config
-    - customConfig:
-        unified-client-options: true
-      outputFolder: unified-client-options
+  - customConfig:
+      unified-client-options: true
+    outputFolder: unified-client-options
   oauth-client-credentials:
-    - customConfig: null
-      outputFolder: no-custom-config
-    - customConfig:
-        include-exception-handler: true
-      outputFolder: include-exception-handler
-  url-form-encoded:
-    - customConfig: null
-      outputFolder: no-custom-config
+  - customConfig:
+      include-exception-handler: true
+    outputFolder: include-exception-handler
   enum:
-    - customConfig: null
-      outputFolder: forward-compatible-enums
-    - customConfig:
-        enable-forward-compatible-enums: false
-      outputFolder: plain-enums
+  - customConfig:
+    outputFolder: forward-compatible-enums
+  - customConfig:
+      enable-forward-compatible-enums: false
+    outputFolder: plain-enums
   license:
-    - license:
-        type: basic
-        id: MIT
-      outputFolder: mit-license
-    - license:
-        type: custom
-        filename: "../../LICENSE"
-      outputFolder: custom-license
+  - license:
+      type: basic
+      id: MIT
+    outputFolder: mit-license
+  - license:
+      type: custom
+      filename: "../../LICENSE"
+    outputFolder: custom-license
   unions:
-    - customConfig: null
-      outputFolder: no-custom-config
-    - customConfig:
-        use-discriminated-unions: false
-      outputFolder: no-discriminated-unions
+  - customConfig:
+      use-discriminated-unions: false
+    outputFolder: no-discriminated-unions
   csharp-namespace-collision:
-    - customConfig:
-        experimental-fully-qualified-namespaces: true
-        experimental-dotnet-format: true
-      outputFolder: fully-qualified-namespaces
-    - customConfig:
-        namespace: "Contoso.Net"
-        client-class-name: "Contoso"
-        explicit-namespaces: true
-        experimental-fully-qualified-namespaces: true
-      outputFolder: namespace-client-collision
-    - customConfig:
-        namespace: "Contoso.Net"
-        client-class-name: "Contoso"
-        explicit-namespaces: true
-      outputFolder: explicit-namespaces
-    - customConfig:
-        namespace: "Contoso.Net"
-        client-class-name: "ContosoClient"
-        explicit-namespaces: true
-      outputFolder: no-client-namespace-match
+  - customConfig:
+      experimental-fully-qualified-namespaces: true
+      experimental-dotnet-format: true
+    outputFolder: fully-qualified-namespaces
+  - customConfig:
+      namespace: "Contoso.Net"
+      client-class-name: "Contoso"
+      explicit-namespaces: true
+      experimental-fully-qualified-namespaces: true
+    outputFolder: namespace-client-collision
+  - customConfig:
+      namespace: "Contoso.Net"
+      client-class-name: "Contoso"
+      explicit-namespaces: true
+    outputFolder: explicit-namespaces
+  - customConfig:
+      namespace: "Contoso.Net"
+      client-class-name: "ContosoClient"
+      explicit-namespaces: true
+    outputFolder: no-client-namespace-match
   csharp-namespace-conflict:
-    - customConfig:
-        namespace: Seed.CsharpNamespaceConflict
-        client-class-name: Seed
-        experimental-fully-qualified-namespaces: true
-      outputFolder: client-class-name-matches-namespace-root
+  - customConfig:
+      namespace: Seed.CsharpNamespaceConflict
+      client-class-name: Seed
+      experimental-fully-qualified-namespaces: true
+    outputFolder: client-class-name-matches-namespace-root
   csharp-system-collision:
-    - customConfig:
-        client-class-name: System
-      outputFolder: system-client
+  - customConfig:
+      client-class-name: System
+    outputFolder: system-client
   websocket:
-    - customConfig: null
-      outputFolder: no-custom-config
-    - customConfig:
-        generate-literals: true
-        experimental-enable-websockets: true
-      outputFolder: with-websockets
+  - customConfig:
+      generate-literals: true
+      experimental-enable-websockets: true
+    outputFolder: with-websockets
   websocket-multi-url:
-    - customConfig:
-        experimental-enable-websockets: true
-      outputFolder: no-custom-config
-  csharp-xml-entities:
-    - customConfig: null
-      outputFolder: no-custom-config
+  - customConfig:
+      experimental-enable-websockets: true
+    outputFolder: experimental-enable-websockets
   nullable:
-    - customConfig: null
-      outputFolder: no-custom-config
-    - customConfig:
-        experimental-explicit-nullable-optional: true
-      outputFolder: explicit-nullable-optional
+  - customConfig:
+      experimental-explicit-nullable-optional: true
+    outputFolder: explicit-nullable-optional
   nullable-optional:
-    - customConfig: null
-      outputFolder: no-custom-config
-    - customConfig:
-        experimental-explicit-nullable-optional: true
-      outputFolder: explicit-nullable-optional
+  - customConfig:
+      experimental-explicit-nullable-optional: true
+    outputFolder: explicit-nullable-optional
   required-nullable:
-    - customConfig: null
-      outputFolder: no-custom-config
-    - customConfig:
-        experimental-explicit-nullable-optional: true
-      outputFolder: explicit-nullable-optional
+  - customConfig:
+      experimental-explicit-nullable-optional: true
+    outputFolder: explicit-nullable-optional
   request-parameters:
-    - customConfig: null
-      outputFolder: no-custom-config
-    - customConfig:
-        use-default-request-parameter-values: true
-        experimental-explicit-nullable-optional: true
-        use-undiscriminated-unions: true
-      outputFolder: with-defaults
+  - customConfig:
+      use-default-request-parameter-values: true
+      experimental-explicit-nullable-optional: true
+      use-undiscriminated-unions: true
+    outputFolder: with-defaults
   undiscriminated-unions:
-    - customConfig: null
-      outputFolder: no-custom-config
-    - customConfig:
-        use-undiscriminated-unions: true
-      outputFolder: with-undiscriminated-unions
+  - customConfig:
+      use-undiscriminated-unions: true
+    outputFolder: with-undiscriminated-unions
   csharp-inline-types:
-    - customConfig:
-        enable-inline-types: true
-      outputFolder: inline-types
-      disableDynamicSnippetTests: true
+  - customConfig:
+      enable-inline-types: true
+    outputFolder: inline-types
+    disableDynamicSnippetTests: true
   streaming:
-    - customConfig: null
-      outputFolder: no-custom-config
-    - customConfig:
-        redact-response-body-on-error: true
-      outputFolder: redact-response-body-on-error
+  - customConfig:
+      redact-response-body-on-error: true
+    outputFolder: redact-response-body-on-error
 allowedFailures:
-  - allof
-  - allof-inline
-  - enum:forward-compatible-enums
-  - imdb:exported-client-class-name
-  - enum:plain-enums
-  - examples:no-custom-config
-  - examples:readme-config
-  - literal:no-custom-config
-  - literal:readonly-constants
-  - mixed-case
-  - oauth-client-credentials-custom
-  - package-yml
-  - pagination-uri-path
-  - property-access
-  - unions:no-custom-config
-  - unions-with-local-date
-  - server-sent-event-examples
-  - server-sent-events-openapi
+- allof
+- allof-inline
+- enum:forward-compatible-enums
+- imdb:exported-client-class-name
+- enum:plain-enums
+- examples:baseline
+- examples:readme-config
+- literal:baseline
+- literal:readonly-constants
+- mixed-case
+- oauth-client-credentials-custom
+- package-yml
+- pagination-uri-path
+- property-access
+- unions:baseline
+- unions-with-local-date
+- server-sent-event-examples
+- server-sent-events-openapi

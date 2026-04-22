@@ -1,0 +1,26 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 5e4188a44b1..c59c95ed674 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,7 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-csharp-sdk",
+   "generatorVersion": "local",
+-  "generatorConfig": {},
++  "generatorConfig": {
++    "package-id": "Seed.Client"
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "ci",
+diff --git a/src/SeedApi/SeedApi.csproj b/src/SeedApi/SeedApi.csproj
+index a578691685a..9afc1029b55 100644
+--- a/src/SeedApi/SeedApi.csproj
++++ b/src/SeedApi/SeedApi.csproj
+@@ -1,5 +1,6 @@
+ <Project Sdk="Microsoft.NET.Sdk">
+   <PropertyGroup>
++    <PackageId>Seed.Client</PackageId>
+     <TargetFrameworks>net462;net8.0;net9.0;netstandard2.0</TargetFrameworks>
+     <ImplicitUsings>enable</ImplicitUsings>
+     <LangVersion>12</LangVersion>

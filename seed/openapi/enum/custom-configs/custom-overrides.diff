@@ -1,0 +1,12 @@
+diff --git a/openapi.yml b/openapi.yml
+index e961cea1ab4..977b724064d 100644
+--- a/openapi.yml
++++ b/openapi.yml
+@@ -213,7 +213,6 @@ components:
+   schemas:
+     Operand:
+       title: Operand
+-      type: string
+       enum:
+         - '>'
+         - '='

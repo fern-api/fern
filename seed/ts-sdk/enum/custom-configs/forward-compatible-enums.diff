@@ -1,0 +1,86 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index d8b7bf00e12..358ea800b78 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,9 @@
+     "cliVersion": "DUMMY",
+     "generatorName": "fernapi/fern-typescript-sdk",
+     "generatorVersion": "local",
++    "generatorConfig": {
++        "enableForwardCompatibleEnums": true
++    },
+     "originGitCommit": "DUMMY",
+     "originGitCommitIsDirty": null,
+     "invokedBy": "ci",
+diff --git a/src/api/resources/unknown/types/Status.ts b/src/api/resources/unknown/types/Status.ts
+index 51c1ec5fabc..2589ce14b91 100644
+--- a/src/api/resources/unknown/types/Status.ts
++++ b/src/api/resources/unknown/types/Status.ts
+@@ -4,4 +4,4 @@ export const Status = {
+     Known: "Known",
+     Unknown: "Unknown",
+ } as const;
+-export type Status = (typeof Status)[keyof typeof Status];
++export type Status = (typeof Status)[keyof typeof Status] | string;
+diff --git a/src/api/types/Color.ts b/src/api/types/Color.ts
+index ebddaa6b568..779d4243893 100644
+--- a/src/api/types/Color.ts
++++ b/src/api/types/Color.ts
+@@ -8,4 +8,4 @@ export const Color = {
+     Red: "red",
+     Blue: "blue",
+ } as const;
+-export type Color = (typeof Color)[keyof typeof Color];
++export type Color = (typeof Color)[keyof typeof Color] | string;
+diff --git a/src/api/types/EnumWithCustom.ts b/src/api/types/EnumWithCustom.ts
+index 9af03754434..f6617801666 100644
+--- a/src/api/types/EnumWithCustom.ts
++++ b/src/api/types/EnumWithCustom.ts
+@@ -11,4 +11,4 @@ export const EnumWithCustom = {
+     Safe: "safe",
+     Custom: "Custom",
+ } as const;
+-export type EnumWithCustom = (typeof EnumWithCustom)[keyof typeof EnumWithCustom];
++export type EnumWithCustom = (typeof EnumWithCustom)[keyof typeof EnumWithCustom] | string;
+diff --git a/src/api/types/EnumWithSpecialCharacters.ts b/src/api/types/EnumWithSpecialCharacters.ts
+index b213f3a62e0..5c82e33ddc6 100644
+--- a/src/api/types/EnumWithSpecialCharacters.ts
++++ b/src/api/types/EnumWithSpecialCharacters.ts
+@@ -4,4 +4,6 @@ export const EnumWithSpecialCharacters = {
+     Bla: "\\$bla",
+     Yo: "\\$yo",
+ } as const;
+-export type EnumWithSpecialCharacters = (typeof EnumWithSpecialCharacters)[keyof typeof EnumWithSpecialCharacters];
++export type EnumWithSpecialCharacters =
++    | (typeof EnumWithSpecialCharacters)[keyof typeof EnumWithSpecialCharacters]
++    | string;
+diff --git a/src/api/types/ForwardCompatibleEnum.ts b/src/api/types/ForwardCompatibleEnum.ts
+index fa277b50611..bf5d7a491ca 100644
+--- a/src/api/types/ForwardCompatibleEnum.ts
++++ b/src/api/types/ForwardCompatibleEnum.ts
+@@ -14,4 +14,4 @@ export const ForwardCompatibleEnum = {
+     Active: "active",
+     Inactive: "inactive",
+ } as const;
+-export type ForwardCompatibleEnum = (typeof ForwardCompatibleEnum)[keyof typeof ForwardCompatibleEnum];
++export type ForwardCompatibleEnum = (typeof ForwardCompatibleEnum)[keyof typeof ForwardCompatibleEnum] | string;
+diff --git a/src/api/types/Operand.ts b/src/api/types/Operand.ts
+index 5c57c11a7af..8241c06d063 100644
+--- a/src/api/types/Operand.ts
++++ b/src/api/types/Operand.ts
+@@ -18,4 +18,4 @@ export const Operand = {
+      * are similar for less than. */
+     LessThan: "less_than",
+ } as const;
+-export type Operand = (typeof Operand)[keyof typeof Operand];
++export type Operand = (typeof Operand)[keyof typeof Operand] | string;
+diff --git a/src/api/types/SpecialEnum.ts b/src/api/types/SpecialEnum.ts
+index 94288e1fa5e..ed6b1d78c93 100644
+--- a/src/api/types/SpecialEnum.ts
++++ b/src/api/types/SpecialEnum.ts
+@@ -34,4 +34,4 @@ export const SpecialEnum = {
+     Ff: 'transcript[transcriptType="final"]',
+     Gg: "transcript[transcriptType='final']",
+ } as const;
+-export type SpecialEnum = (typeof SpecialEnum)[keyof typeof SpecialEnum];
++export type SpecialEnum = (typeof SpecialEnum)[keyof typeof SpecialEnum] | string;

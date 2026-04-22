@@ -1,0 +1,1145 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 5e4188a44b1..ebb3442062a 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,7 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-csharp-sdk",
+   "generatorVersion": "local",
+-  "generatorConfig": {},
++  "generatorConfig": {
++    "inline-path-parameters": false
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "ci",
+diff --git a/Snippets/Example1.cs b/Snippets/Example1.cs
+index ddd8e05d585..acab5ab9f1a 100644
+--- a/Snippets/Example1.cs
++++ b/Snippets/Example1.cs
+@@ -10,11 +10,10 @@ public partial class Examples
+         );
+ 
+         await client.Organizations.GetOrganizationUserAsync(
+-            new GetOrganizationUserRequest {
+-                TenantId = "tenant_id",
+-                OrganizationId = "organization_id",
+-                UserId = "user_id"
+-            }
++            "tenant_id",
++            "organization_id",
++            "user_id",
++            new GetOrganizationUserRequest()
+         );
+     }
+ 
+diff --git a/Snippets/Example3.cs b/Snippets/Example3.cs
+index c6bf0376bbf..11ad68e18d6 100644
+--- a/Snippets/Example3.cs
++++ b/Snippets/Example3.cs
+@@ -10,10 +10,9 @@ public partial class Examples
+         );
+ 
+         await client.User.GetUserAsync(
+-            new GetUsersRequest {
+-                TenantId = "tenant_id",
+-                UserId = "user_id"
+-            }
++            "tenant_id",
++            "user_id",
++            new GetUsersRequest()
+         );
+     }
+ 
+diff --git a/Snippets/Example5.cs b/Snippets/Example5.cs
+index 5d9ca233297..ad4a37e9f69 100644
+--- a/Snippets/Example5.cs
++++ b/Snippets/Example5.cs
+@@ -10,9 +10,9 @@ public partial class Examples
+         );
+ 
+         await client.User.UpdateUserAsync(
++            "tenant_id",
++            "user_id",
+             new UpdateUserRequest {
+-                TenantId = "tenant_id",
+-                UserId = "user_id",
+                 Body = new User {
+                     Name = "name",
+                     Tags = new List<string>(){
+diff --git a/Snippets/Example6.cs b/Snippets/Example6.cs
+index ecd3a76689f..81efb968a48 100644
+--- a/Snippets/Example6.cs
++++ b/Snippets/Example6.cs
+@@ -10,9 +10,9 @@ public partial class Examples
+         );
+ 
+         await client.User.SearchUsersAsync(
++            "tenant_id",
++            "user_id",
+             new SearchUsersRequest {
+-                TenantId = "tenant_id",
+-                UserId = "user_id",
+                 Limit = 1
+             }
+         );
+diff --git a/Snippets/Example7.cs b/Snippets/Example7.cs
+index 6ac91719269..5662d4fa006 100644
+--- a/Snippets/Example7.cs
++++ b/Snippets/Example7.cs
+@@ -10,11 +10,10 @@ public partial class Examples
+         );
+ 
+         await client.User.GetUserMetadataAsync(
+-            new GetUserMetadataRequest {
+-                TenantId = "tenant_id",
+-                UserId = "user_id",
+-                Version = 1
+-            }
++            "tenant_id",
++            "user_id",
++            1,
++            new GetUserMetadataRequest()
+         );
+     }
+ 
+diff --git a/Snippets/Example8.cs b/Snippets/Example8.cs
+index ca96bab5fa9..10a12f14124 100644
+--- a/Snippets/Example8.cs
++++ b/Snippets/Example8.cs
+@@ -10,12 +10,11 @@ public partial class Examples
+         );
+ 
+         await client.User.GetUserSpecificsAsync(
+-            new GetUserSpecificsRequest {
+-                TenantId = "tenant_id",
+-                UserId = "user_id",
+-                Version = 1,
+-                Thought = "thought"
+-            }
++            "tenant_id",
++            "user_id",
++            1,
++            "thought",
++            new GetUserSpecificsRequest()
+         );
+     }
+ 
+diff --git a/reference.md b/reference.md
+index 7c63cc7f96c..83eea29ef2c 100644
+--- a/reference.md
++++ b/reference.md
+@@ -48,7 +48,7 @@ await client.Organizations.GetOrganizationAsync("tenant_id", "organization_id");
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.Organizations.<a href="/src/SeedPathParameters/Organizations/OrganizationsClient.cs">GetOrganizationUserAsync</a>(GetOrganizationUserRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
++<details><summary><code>client.Organizations.<a href="/src/SeedPathParameters/Organizations/OrganizationsClient.cs">GetOrganizationUserAsync</a>(tenantId, organizationId, userId, GetOrganizationUserRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -62,12 +62,10 @@ await client.Organizations.GetOrganizationAsync("tenant_id", "organization_id");
+ 
+ ```csharp
+ await client.Organizations.GetOrganizationUserAsync(
+-    new GetOrganizationUserRequest
+-    {
+-        TenantId = "tenant_id",
+-        OrganizationId = "organization_id",
+-        UserId = "user_id",
+-    }
++    "tenant_id",
++    "organization_id",
++    "user_id",
++    new GetOrganizationUserRequest()
+ );
+ ```
+ </dd>
+@@ -83,6 +81,30 @@ await client.Organizations.GetOrganizationUserAsync(
+ <dl>
+ <dd>
+ 
++**tenantId:** `string` 
++    
++</dd>
++</dl>
++
++<dl>
++<dd>
++
++**organizationId:** `string` 
++    
++</dd>
++</dl>
++
++<dl>
++<dd>
++
++**userId:** `string` 
++    
++</dd>
++</dl>
++
++<dl>
++<dd>
++
+ **request:** `GetOrganizationUserRequest` 
+     
+ </dd>
+@@ -156,7 +178,7 @@ await client.Organizations.SearchOrganizationsAsync(
+ </details>
+ 
+ ## User
+-<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">GetUserAsync</a>(GetUsersRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
++<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">GetUserAsync</a>(tenantId, userId, GetUsersRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -169,7 +191,7 @@ await client.Organizations.SearchOrganizationsAsync(
+ <dd>
+ 
+ ```csharp
+-await client.User.GetUserAsync(new GetUsersRequest { TenantId = "tenant_id", UserId = "user_id" });
++await client.User.GetUserAsync("tenant_id", "user_id", new GetUsersRequest());
+ ```
+ </dd>
+ </dl>
+@@ -184,6 +206,22 @@ await client.User.GetUserAsync(new GetUsersRequest { TenantId = "tenant_id", Use
+ <dl>
+ <dd>
+ 
++**tenantId:** `string` 
++    
++</dd>
++</dl>
++
++<dl>
++<dd>
++
++**userId:** `string` 
++    
++</dd>
++</dl>
++
++<dl>
++<dd>
++
+ **request:** `GetUsersRequest` 
+     
+ </dd>
+@@ -251,7 +289,7 @@ await client.User.CreateUserAsync(
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">UpdateUserAsync</a>(UpdateUserRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
++<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">UpdateUserAsync</a>(tenantId, userId, UpdateUserRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -265,10 +303,10 @@ await client.User.CreateUserAsync(
+ 
+ ```csharp
+ await client.User.UpdateUserAsync(
++    "tenant_id",
++    "user_id",
+     new UpdateUserRequest
+     {
+-        TenantId = "tenant_id",
+-        UserId = "user_id",
+         Body = new User
+         {
+             Name = "name",
+@@ -290,6 +328,22 @@ await client.User.UpdateUserAsync(
+ <dl>
+ <dd>
+ 
++**tenantId:** `string` 
++    
++</dd>
++</dl>
++
++<dl>
++<dd>
++
++**userId:** `string` 
++    
++</dd>
++</dl>
++
++<dl>
++<dd>
++
+ **request:** `UpdateUserRequest` 
+     
+ </dd>
+@@ -302,7 +356,7 @@ await client.User.UpdateUserAsync(
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">SearchUsersAsync</a>(SearchUsersRequest { ... }) -> WithRawResponseTask&lt;IEnumerable&lt;User&gt;&gt;</code></summary>
++<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">SearchUsersAsync</a>(tenantId, userId, SearchUsersRequest { ... }) -> WithRawResponseTask&lt;IEnumerable&lt;User&gt;&gt;</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -315,14 +369,7 @@ await client.User.UpdateUserAsync(
+ <dd>
+ 
+ ```csharp
+-await client.User.SearchUsersAsync(
+-    new SearchUsersRequest
+-    {
+-        TenantId = "tenant_id",
+-        UserId = "user_id",
+-        Limit = 1,
+-    }
+-);
++await client.User.SearchUsersAsync("tenant_id", "user_id", new SearchUsersRequest { Limit = 1 });
+ ```
+ </dd>
+ </dl>
+@@ -337,6 +384,22 @@ await client.User.SearchUsersAsync(
+ <dl>
+ <dd>
+ 
++**tenantId:** `string` 
++    
++</dd>
++</dl>
++
++<dl>
++<dd>
++
++**userId:** `string` 
++    
++</dd>
++</dl>
++
++<dl>
++<dd>
++
+ **request:** `SearchUsersRequest` 
+     
+ </dd>
+@@ -349,7 +412,7 @@ await client.User.SearchUsersAsync(
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">GetUserMetadataAsync</a>(GetUserMetadataRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
++<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">GetUserMetadataAsync</a>(tenantId, userId, version, GetUserMetadataRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -376,14 +439,7 @@ Test endpoint with path parameter that has a text prefix (v{version})
+ <dd>
+ 
+ ```csharp
+-await client.User.GetUserMetadataAsync(
+-    new GetUserMetadataRequest
+-    {
+-        TenantId = "tenant_id",
+-        UserId = "user_id",
+-        Version = 1,
+-    }
+-);
++await client.User.GetUserMetadataAsync("tenant_id", "user_id", 1, new GetUserMetadataRequest());
+ ```
+ </dd>
+ </dl>
+@@ -398,6 +454,30 @@ await client.User.GetUserMetadataAsync(
+ <dl>
+ <dd>
+ 
++**tenantId:** `string` 
++    
++</dd>
++</dl>
++
++<dl>
++<dd>
++
++**userId:** `string` 
++    
++</dd>
++</dl>
++
++<dl>
++<dd>
++
++**version:** `int` 
++    
++</dd>
++</dl>
++
++<dl>
++<dd>
++
+ **request:** `GetUserMetadataRequest` 
+     
+ </dd>
+@@ -410,7 +490,7 @@ await client.User.GetUserMetadataAsync(
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">GetUserSpecificsAsync</a>(GetUserSpecificsRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
++<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">GetUserSpecificsAsync</a>(tenantId, userId, version, thought, GetUserSpecificsRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -438,13 +518,11 @@ Test endpoint with path parameters listed in different order than found in path
+ 
+ ```csharp
+ await client.User.GetUserSpecificsAsync(
+-    new GetUserSpecificsRequest
+-    {
+-        TenantId = "tenant_id",
+-        UserId = "user_id",
+-        Version = 1,
+-        Thought = "thought",
+-    }
++    "tenant_id",
++    "user_id",
++    1,
++    "thought",
++    new GetUserSpecificsRequest()
+ );
+ ```
+ </dd>
+@@ -460,6 +538,38 @@ await client.User.GetUserSpecificsAsync(
+ <dl>
+ <dd>
+ 
++**tenantId:** `string` 
++    
++</dd>
++</dl>
++
++<dl>
++<dd>
++
++**userId:** `string` 
++    
++</dd>
++</dl>
++
++<dl>
++<dd>
++
++**version:** `int` 
++    
++</dd>
++</dl>
++
++<dl>
++<dd>
++
++**thought:** `string` 
++    
++</dd>
++</dl>
++
++<dl>
++<dd>
++
+ **request:** `GetUserSpecificsRequest` 
+     
+ </dd>
+diff --git a/snippet.json b/snippet.json
+index 6a27650790c..6a6d23df176 100644
+--- a/snippet.json
++++ b/snippet.json
+@@ -22,7 +22,7 @@
+             },
+             "snippet": {
+                 "type": "csharp",
+-                "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.Organizations.GetOrganizationUserAsync(\n    new GetOrganizationUserRequest\n    {\n        TenantId = \"tenant_id\",\n        OrganizationId = \"organization_id\",\n        UserId = \"user_id\",\n    }\n);\n"
++                "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.Organizations.GetOrganizationUserAsync(\n    \"tenant_id\",\n    \"organization_id\",\n    \"user_id\",\n    new GetOrganizationUserRequest()\n);\n"
+             }
+         },
+         {
+@@ -46,7 +46,7 @@
+             },
+             "snippet": {
+                 "type": "csharp",
+-                "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.User.GetUserAsync(new GetUsersRequest { TenantId = \"tenant_id\", UserId = \"user_id\" });\n"
++                "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.User.GetUserAsync(\"tenant_id\", \"user_id\", new GetUsersRequest());\n"
+             }
+         },
+         {
+@@ -70,7 +70,7 @@
+             },
+             "snippet": {
+                 "type": "csharp",
+-                "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.User.UpdateUserAsync(\n    new UpdateUserRequest\n    {\n        TenantId = \"tenant_id\",\n        UserId = \"user_id\",\n        Body = new User\n        {\n            Name = \"name\",\n            Tags = new List<string>() { \"tags\", \"tags\" },\n        },\n    }\n);\n"
++                "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.User.UpdateUserAsync(\n    \"tenant_id\",\n    \"user_id\",\n    new UpdateUserRequest\n    {\n        Body = new User\n        {\n            Name = \"name\",\n            Tags = new List<string>() { \"tags\", \"tags\" },\n        },\n    }\n);\n"
+             }
+         },
+         {
+@@ -82,7 +82,7 @@
+             },
+             "snippet": {
+                 "type": "csharp",
+-                "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.User.SearchUsersAsync(\n    new SearchUsersRequest\n    {\n        TenantId = \"tenant_id\",\n        UserId = \"user_id\",\n        Limit = 1,\n    }\n);\n"
++                "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.User.SearchUsersAsync(\"tenant_id\", \"user_id\", new SearchUsersRequest { Limit = 1 });\n"
+             }
+         },
+         {
+@@ -94,7 +94,7 @@
+             },
+             "snippet": {
+                 "type": "csharp",
+-                "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.User.GetUserMetadataAsync(\n    new GetUserMetadataRequest\n    {\n        TenantId = \"tenant_id\",\n        UserId = \"user_id\",\n        Version = 1,\n    }\n);\n"
++                "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.User.GetUserMetadataAsync(\"tenant_id\", \"user_id\", 1, new GetUserMetadataRequest());\n"
+             }
+         },
+         {
+@@ -106,7 +106,7 @@
+             },
+             "snippet": {
+                 "type": "csharp",
+-                "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.User.GetUserSpecificsAsync(\n    new GetUserSpecificsRequest\n    {\n        TenantId = \"tenant_id\",\n        UserId = \"user_id\",\n        Version = 1,\n        Thought = \"thought\",\n    }\n);\n"
++                "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.User.GetUserSpecificsAsync(\n    \"tenant_id\",\n    \"user_id\",\n    1,\n    \"thought\",\n    new GetUserSpecificsRequest()\n);\n"
+             }
+         }
+     ]
+diff --git a/src/SeedPathParameters/Organizations/IOrganizationsClient.cs b/src/SeedPathParameters/Organizations/IOrganizationsClient.cs
+index b985ec3f47f..aecb2835b11 100644
+--- a/src/SeedPathParameters/Organizations/IOrganizationsClient.cs
++++ b/src/SeedPathParameters/Organizations/IOrganizationsClient.cs
+@@ -10,6 +10,9 @@ public partial interface IOrganizationsClient
+     );
+ 
+     WithRawResponseTask<User> GetOrganizationUserAsync(
++        string tenantId,
++        string organizationId,
++        string userId,
+         GetOrganizationUserRequest request,
+         RequestOptions? options = null,
+         CancellationToken cancellationToken = default
+diff --git a/src/SeedPathParameters/Organizations/OrganizationsClient.cs b/src/SeedPathParameters/Organizations/OrganizationsClient.cs
+index c46356b40e0..0f6a8e2191e 100644
+--- a/src/SeedPathParameters/Organizations/OrganizationsClient.cs
++++ b/src/SeedPathParameters/Organizations/OrganizationsClient.cs
+@@ -83,6 +83,9 @@ public partial class OrganizationsClient : IOrganizationsClient
+     }
+ 
+     private async Task<WithRawResponse<User>> GetOrganizationUserAsyncCore(
++        string tenantId,
++        string organizationId,
++        string userId,
+         GetOrganizationUserRequest request,
+         RequestOptions? options = null,
+         CancellationToken cancellationToken = default
+@@ -101,9 +104,9 @@ public partial class OrganizationsClient : IOrganizationsClient
+                     Method = HttpMethod.Get,
+                     Path = string.Format(
+                         "/{0}/organizations/{1}/users/{2}",
+-                        ValueConvert.ToPathParameterString(request.TenantId),
+-                        ValueConvert.ToPathParameterString(request.OrganizationId),
+-                        ValueConvert.ToPathParameterString(request.UserId)
++                        ValueConvert.ToPathParameterString(tenantId),
++                        ValueConvert.ToPathParameterString(organizationId),
++                        ValueConvert.ToPathParameterString(userId)
+                     ),
+                     Headers = _headers,
+                     Options = options,
+@@ -245,22 +248,30 @@ public partial class OrganizationsClient : IOrganizationsClient
+ 
+     /// <example><code>
+     /// await client.Organizations.GetOrganizationUserAsync(
+-    ///     new GetOrganizationUserRequest
+-    ///     {
+-    ///         TenantId = "tenant_id",
+-    ///         OrganizationId = "organization_id",
+-    ///         UserId = "user_id",
+-    ///     }
++    ///     "tenant_id",
++    ///     "organization_id",
++    ///     "user_id",
++    ///     new GetOrganizationUserRequest()
+     /// );
+     /// </code></example>
+     public WithRawResponseTask<User> GetOrganizationUserAsync(
++        string tenantId,
++        string organizationId,
++        string userId,
+         GetOrganizationUserRequest request,
+         RequestOptions? options = null,
+         CancellationToken cancellationToken = default
+     )
+     {
+         return new WithRawResponseTask<User>(
+-            GetOrganizationUserAsyncCore(request, options, cancellationToken)
++            GetOrganizationUserAsyncCore(
++                tenantId,
++                organizationId,
++                userId,
++                request,
++                options,
++                cancellationToken
++            )
+         );
+     }
+ 
+diff --git a/src/SeedPathParameters/Organizations/Requests/GetOrganizationUserRequest.cs b/src/SeedPathParameters/Organizations/Requests/GetOrganizationUserRequest.cs
+index 14b0f259c35..ed11517dc85 100644
+--- a/src/SeedPathParameters/Organizations/Requests/GetOrganizationUserRequest.cs
++++ b/src/SeedPathParameters/Organizations/Requests/GetOrganizationUserRequest.cs
+@@ -1,4 +1,3 @@
+-using global::System.Text.Json.Serialization;
+ using SeedPathParameters.Core;
+ 
+ namespace SeedPathParameters;
+@@ -6,15 +5,6 @@ namespace SeedPathParameters;
+ [Serializable]
+ public record GetOrganizationUserRequest
+ {
+-    [JsonIgnore]
+-    public required string TenantId { get; set; }
+-
+-    [JsonIgnore]
+-    public required string OrganizationId { get; set; }
+-
+-    [JsonIgnore]
+-    public required string UserId { get; set; }
+-
+     /// <inheritdoc />
+     public override string ToString()
+     {
+diff --git a/src/SeedPathParameters/User/IUserClient.cs b/src/SeedPathParameters/User/IUserClient.cs
+index 97f51cd7b21..0308983c4c5 100644
+--- a/src/SeedPathParameters/User/IUserClient.cs
++++ b/src/SeedPathParameters/User/IUserClient.cs
+@@ -3,6 +3,8 @@ namespace SeedPathParameters;
+ public partial interface IUserClient
+ {
+     WithRawResponseTask<User> GetUserAsync(
++        string tenantId,
++        string userId,
+         GetUsersRequest request,
+         RequestOptions? options = null,
+         CancellationToken cancellationToken = default
+@@ -16,12 +18,16 @@ public partial interface IUserClient
+     );
+ 
+     WithRawResponseTask<User> UpdateUserAsync(
++        string tenantId,
++        string userId,
+         UpdateUserRequest request,
+         RequestOptions? options = null,
+         CancellationToken cancellationToken = default
+     );
+ 
+     WithRawResponseTask<IEnumerable<User>> SearchUsersAsync(
++        string tenantId,
++        string userId,
+         SearchUsersRequest request,
+         RequestOptions? options = null,
+         CancellationToken cancellationToken = default
+@@ -31,6 +37,9 @@ public partial interface IUserClient
+     /// Test endpoint with path parameter that has a text prefix (v{version})
+     /// </summary>
+     WithRawResponseTask<User> GetUserMetadataAsync(
++        string tenantId,
++        string userId,
++        int version,
+         GetUserMetadataRequest request,
+         RequestOptions? options = null,
+         CancellationToken cancellationToken = default
+@@ -40,6 +49,10 @@ public partial interface IUserClient
+     /// Test endpoint with path parameters listed in different order than found in path
+     /// </summary>
+     WithRawResponseTask<User> GetUserSpecificsAsync(
++        string tenantId,
++        string userId,
++        int version,
++        string thought,
+         GetUserSpecificsRequest request,
+         RequestOptions? options = null,
+         CancellationToken cancellationToken = default
+diff --git a/src/SeedPathParameters/User/Requests/GetUserMetadataRequest.cs b/src/SeedPathParameters/User/Requests/GetUserMetadataRequest.cs
+index bfcb5e7bb6f..c4949786dc0 100644
+--- a/src/SeedPathParameters/User/Requests/GetUserMetadataRequest.cs
++++ b/src/SeedPathParameters/User/Requests/GetUserMetadataRequest.cs
+@@ -1,4 +1,3 @@
+-using global::System.Text.Json.Serialization;
+ using SeedPathParameters.Core;
+ 
+ namespace SeedPathParameters;
+@@ -6,15 +5,6 @@ namespace SeedPathParameters;
+ [Serializable]
+ public record GetUserMetadataRequest
+ {
+-    [JsonIgnore]
+-    public required string TenantId { get; set; }
+-
+-    [JsonIgnore]
+-    public required string UserId { get; set; }
+-
+-    [JsonIgnore]
+-    public required int Version { get; set; }
+-
+     /// <inheritdoc />
+     public override string ToString()
+     {
+diff --git a/src/SeedPathParameters/User/Requests/GetUserSpecificsRequest.cs b/src/SeedPathParameters/User/Requests/GetUserSpecificsRequest.cs
+index bf817d77d5f..cbcb629cb48 100644
+--- a/src/SeedPathParameters/User/Requests/GetUserSpecificsRequest.cs
++++ b/src/SeedPathParameters/User/Requests/GetUserSpecificsRequest.cs
+@@ -1,4 +1,3 @@
+-using global::System.Text.Json.Serialization;
+ using SeedPathParameters.Core;
+ 
+ namespace SeedPathParameters;
+@@ -6,18 +5,6 @@ namespace SeedPathParameters;
+ [Serializable]
+ public record GetUserSpecificsRequest
+ {
+-    [JsonIgnore]
+-    public required string TenantId { get; set; }
+-
+-    [JsonIgnore]
+-    public required string UserId { get; set; }
+-
+-    [JsonIgnore]
+-    public required int Version { get; set; }
+-
+-    [JsonIgnore]
+-    public required string Thought { get; set; }
+-
+     /// <inheritdoc />
+     public override string ToString()
+     {
+diff --git a/src/SeedPathParameters/User/Requests/GetUsersRequest.cs b/src/SeedPathParameters/User/Requests/GetUsersRequest.cs
+index 79c7a04fa69..01fc73a96d3 100644
+--- a/src/SeedPathParameters/User/Requests/GetUsersRequest.cs
++++ b/src/SeedPathParameters/User/Requests/GetUsersRequest.cs
+@@ -1,4 +1,3 @@
+-using global::System.Text.Json.Serialization;
+ using SeedPathParameters.Core;
+ 
+ namespace SeedPathParameters;
+@@ -6,12 +5,6 @@ namespace SeedPathParameters;
+ [Serializable]
+ public record GetUsersRequest
+ {
+-    [JsonIgnore]
+-    public required string TenantId { get; set; }
+-
+-    [JsonIgnore]
+-    public required string UserId { get; set; }
+-
+     /// <inheritdoc />
+     public override string ToString()
+     {
+diff --git a/src/SeedPathParameters/User/Requests/SearchUsersRequest.cs b/src/SeedPathParameters/User/Requests/SearchUsersRequest.cs
+index a65842f1e2d..50909382b0c 100644
+--- a/src/SeedPathParameters/User/Requests/SearchUsersRequest.cs
++++ b/src/SeedPathParameters/User/Requests/SearchUsersRequest.cs
+@@ -6,12 +6,6 @@ namespace SeedPathParameters;
+ [Serializable]
+ public record SearchUsersRequest
+ {
+-    [JsonIgnore]
+-    public required string TenantId { get; set; }
+-
+-    [JsonIgnore]
+-    public required string UserId { get; set; }
+-
+     [JsonIgnore]
+     public int? Limit { get; set; }
+ 
+diff --git a/src/SeedPathParameters/User/Requests/UpdateUserRequest.cs b/src/SeedPathParameters/User/Requests/UpdateUserRequest.cs
+index 72daaa1d1c0..fc394b94c7e 100644
+--- a/src/SeedPathParameters/User/Requests/UpdateUserRequest.cs
++++ b/src/SeedPathParameters/User/Requests/UpdateUserRequest.cs
+@@ -6,12 +6,6 @@ namespace SeedPathParameters;
+ [Serializable]
+ public record UpdateUserRequest
+ {
+-    [JsonIgnore]
+-    public required string TenantId { get; set; }
+-
+-    [JsonIgnore]
+-    public required string UserId { get; set; }
+-
+     [JsonIgnore]
+     public required User Body { get; set; }
+ 
+diff --git a/src/SeedPathParameters/User/UserClient.cs b/src/SeedPathParameters/User/UserClient.cs
+index 8d07ffc0692..c3621e889e8 100644
+--- a/src/SeedPathParameters/User/UserClient.cs
++++ b/src/SeedPathParameters/User/UserClient.cs
+@@ -13,6 +13,8 @@ public partial class UserClient : IUserClient
+     }
+ 
+     private async Task<WithRawResponse<User>> GetUserAsyncCore(
++        string tenantId,
++        string userId,
+         GetUsersRequest request,
+         RequestOptions? options = null,
+         CancellationToken cancellationToken = default
+@@ -31,8 +33,8 @@ public partial class UserClient : IUserClient
+                     Method = HttpMethod.Get,
+                     Path = string.Format(
+                         "/{0}/user/{1}",
+-                        ValueConvert.ToPathParameterString(request.TenantId),
+-                        ValueConvert.ToPathParameterString(request.UserId)
++                        ValueConvert.ToPathParameterString(tenantId),
++                        ValueConvert.ToPathParameterString(userId)
+                     ),
+                     Headers = _headers,
+                     Options = options,
+@@ -152,6 +154,8 @@ public partial class UserClient : IUserClient
+     }
+ 
+     private async Task<WithRawResponse<User>> UpdateUserAsyncCore(
++        string tenantId,
++        string userId,
+         UpdateUserRequest request,
+         RequestOptions? options = null,
+         CancellationToken cancellationToken = default
+@@ -170,8 +174,8 @@ public partial class UserClient : IUserClient
+                     Method = HttpMethodExtensions.Patch,
+                     Path = string.Format(
+                         "/{0}/user/{1}",
+-                        ValueConvert.ToPathParameterString(request.TenantId),
+-                        ValueConvert.ToPathParameterString(request.UserId)
++                        ValueConvert.ToPathParameterString(tenantId),
++                        ValueConvert.ToPathParameterString(userId)
+                     ),
+                     Body = request.Body,
+                     Headers = _headers,
+@@ -222,6 +226,8 @@ public partial class UserClient : IUserClient
+     }
+ 
+     private async Task<WithRawResponse<IEnumerable<User>>> SearchUsersAsyncCore(
++        string tenantId,
++        string userId,
+         SearchUsersRequest request,
+         RequestOptions? options = null,
+         CancellationToken cancellationToken = default
+@@ -244,8 +250,8 @@ public partial class UserClient : IUserClient
+                     Method = HttpMethod.Get,
+                     Path = string.Format(
+                         "/{0}/user/{1}/search",
+-                        ValueConvert.ToPathParameterString(request.TenantId),
+-                        ValueConvert.ToPathParameterString(request.UserId)
++                        ValueConvert.ToPathParameterString(tenantId),
++                        ValueConvert.ToPathParameterString(userId)
+                     ),
+                     QueryString = _queryString,
+                     Headers = _headers,
+@@ -296,6 +302,9 @@ public partial class UserClient : IUserClient
+     }
+ 
+     private async Task<WithRawResponse<User>> GetUserMetadataAsyncCore(
++        string tenantId,
++        string userId,
++        int version,
+         GetUserMetadataRequest request,
+         RequestOptions? options = null,
+         CancellationToken cancellationToken = default
+@@ -314,9 +323,9 @@ public partial class UserClient : IUserClient
+                     Method = HttpMethod.Get,
+                     Path = string.Format(
+                         "/{0}/user/{1}/metadata/v{2}",
+-                        ValueConvert.ToPathParameterString(request.TenantId),
+-                        ValueConvert.ToPathParameterString(request.UserId),
+-                        ValueConvert.ToPathParameterString(request.Version)
++                        ValueConvert.ToPathParameterString(tenantId),
++                        ValueConvert.ToPathParameterString(userId),
++                        ValueConvert.ToPathParameterString(version)
+                     ),
+                     Headers = _headers,
+                     Options = options,
+@@ -366,6 +375,10 @@ public partial class UserClient : IUserClient
+     }
+ 
+     private async Task<WithRawResponse<User>> GetUserSpecificsAsyncCore(
++        string tenantId,
++        string userId,
++        int version,
++        string thought,
+         GetUserSpecificsRequest request,
+         RequestOptions? options = null,
+         CancellationToken cancellationToken = default
+@@ -384,10 +397,10 @@ public partial class UserClient : IUserClient
+                     Method = HttpMethod.Get,
+                     Path = string.Format(
+                         "/{0}/user/{1}/specifics/{2}/{3}",
+-                        ValueConvert.ToPathParameterString(request.TenantId),
+-                        ValueConvert.ToPathParameterString(request.UserId),
+-                        ValueConvert.ToPathParameterString(request.Version),
+-                        ValueConvert.ToPathParameterString(request.Thought)
++                        ValueConvert.ToPathParameterString(tenantId),
++                        ValueConvert.ToPathParameterString(userId),
++                        ValueConvert.ToPathParameterString(version),
++                        ValueConvert.ToPathParameterString(thought)
+                     ),
+                     Headers = _headers,
+                     Options = options,
+@@ -437,15 +450,19 @@ public partial class UserClient : IUserClient
+     }
+ 
+     /// <example><code>
+-    /// await client.User.GetUserAsync(new GetUsersRequest { TenantId = "tenant_id", UserId = "user_id" });
++    /// await client.User.GetUserAsync("tenant_id", "user_id", new GetUsersRequest());
+     /// </code></example>
+     public WithRawResponseTask<User> GetUserAsync(
++        string tenantId,
++        string userId,
+         GetUsersRequest request,
+         RequestOptions? options = null,
+         CancellationToken cancellationToken = default
+     )
+     {
+-        return new WithRawResponseTask<User>(GetUserAsyncCore(request, options, cancellationToken));
++        return new WithRawResponseTask<User>(
++            GetUserAsyncCore(tenantId, userId, request, options, cancellationToken)
++        );
+     }
+ 
+     /// <example><code>
+@@ -472,10 +489,10 @@ public partial class UserClient : IUserClient
+ 
+     /// <example><code>
+     /// await client.User.UpdateUserAsync(
++    ///     "tenant_id",
++    ///     "user_id",
+     ///     new UpdateUserRequest
+     ///     {
+-    ///         TenantId = "tenant_id",
+-    ///         UserId = "user_id",
+     ///         Body = new User
+     ///         {
+     ///             Name = "name",
+@@ -485,34 +502,31 @@ public partial class UserClient : IUserClient
+     /// );
+     /// </code></example>
+     public WithRawResponseTask<User> UpdateUserAsync(
++        string tenantId,
++        string userId,
+         UpdateUserRequest request,
+         RequestOptions? options = null,
+         CancellationToken cancellationToken = default
+     )
+     {
+         return new WithRawResponseTask<User>(
+-            UpdateUserAsyncCore(request, options, cancellationToken)
++            UpdateUserAsyncCore(tenantId, userId, request, options, cancellationToken)
+         );
+     }
+ 
+     /// <example><code>
+-    /// await client.User.SearchUsersAsync(
+-    ///     new SearchUsersRequest
+-    ///     {
+-    ///         TenantId = "tenant_id",
+-    ///         UserId = "user_id",
+-    ///         Limit = 1,
+-    ///     }
+-    /// );
++    /// await client.User.SearchUsersAsync("tenant_id", "user_id", new SearchUsersRequest { Limit = 1 });
+     /// </code></example>
+     public WithRawResponseTask<IEnumerable<User>> SearchUsersAsync(
++        string tenantId,
++        string userId,
+         SearchUsersRequest request,
+         RequestOptions? options = null,
+         CancellationToken cancellationToken = default
+     )
+     {
+         return new WithRawResponseTask<IEnumerable<User>>(
+-            SearchUsersAsyncCore(request, options, cancellationToken)
++            SearchUsersAsyncCore(tenantId, userId, request, options, cancellationToken)
+         );
+     }
+ 
+@@ -520,23 +534,19 @@ public partial class UserClient : IUserClient
+     /// Test endpoint with path parameter that has a text prefix (v{version})
+     /// </summary>
+     /// <example><code>
+-    /// await client.User.GetUserMetadataAsync(
+-    ///     new GetUserMetadataRequest
+-    ///     {
+-    ///         TenantId = "tenant_id",
+-    ///         UserId = "user_id",
+-    ///         Version = 1,
+-    ///     }
+-    /// );
++    /// await client.User.GetUserMetadataAsync("tenant_id", "user_id", 1, new GetUserMetadataRequest());
+     /// </code></example>
+     public WithRawResponseTask<User> GetUserMetadataAsync(
++        string tenantId,
++        string userId,
++        int version,
+         GetUserMetadataRequest request,
+         RequestOptions? options = null,
+         CancellationToken cancellationToken = default
+     )
+     {
+         return new WithRawResponseTask<User>(
+-            GetUserMetadataAsyncCore(request, options, cancellationToken)
++            GetUserMetadataAsyncCore(tenantId, userId, version, request, options, cancellationToken)
+         );
+     }
+ 
+@@ -545,23 +555,33 @@ public partial class UserClient : IUserClient
+     /// </summary>
+     /// <example><code>
+     /// await client.User.GetUserSpecificsAsync(
+-    ///     new GetUserSpecificsRequest
+-    ///     {
+-    ///         TenantId = "tenant_id",
+-    ///         UserId = "user_id",
+-    ///         Version = 1,
+-    ///         Thought = "thought",
+-    ///     }
++    ///     "tenant_id",
++    ///     "user_id",
++    ///     1,
++    ///     "thought",
++    ///     new GetUserSpecificsRequest()
+     /// );
+     /// </code></example>
+     public WithRawResponseTask<User> GetUserSpecificsAsync(
++        string tenantId,
++        string userId,
++        int version,
++        string thought,
+         GetUserSpecificsRequest request,
+         RequestOptions? options = null,
+         CancellationToken cancellationToken = default
+     )
+     {
+         return new WithRawResponseTask<User>(
+-            GetUserSpecificsAsyncCore(request, options, cancellationToken)
++            GetUserSpecificsAsyncCore(
++                tenantId,
++                userId,
++                version,
++                thought,
++                request,
++                options,
++                cancellationToken
++            )
+         );
+     }
+ }
+diff --git a/src/SeedPathParameters.Test/Unit/MockServer/Organizations/GetOrganizationUserTest.cs b/src/SeedPathParameters.Test/Unit/MockServer/Organizations/GetOrganizationUserTest.cs
+index 79c84f9af54..88d3ac7fca5 100644
+--- a/src/SeedPathParameters.Test/Unit/MockServer/Organizations/GetOrganizationUserTest.cs
++++ b/src/SeedPathParameters.Test/Unit/MockServer/Organizations/GetOrganizationUserTest.cs
+@@ -37,12 +37,10 @@ public class GetOrganizationUserTest : BaseMockServerTest
+             );
+ 
+         var response = await Client.Organizations.GetOrganizationUserAsync(
+-            new GetOrganizationUserRequest
+-            {
+-                TenantId = "tenant_id",
+-                OrganizationId = "organization_id",
+-                UserId = "user_id",
+-            }
++            "tenant_id",
++            "organization_id",
++            "user_id",
++            new GetOrganizationUserRequest()
+         );
+         JsonAssert.AreEqual(response, mockResponse);
+     }
+diff --git a/src/SeedPathParameters.Test/Unit/MockServer/User/GetUserMetadataTest.cs b/src/SeedPathParameters.Test/Unit/MockServer/User/GetUserMetadataTest.cs
+index d82e4883a36..425d7de6cee 100644
+--- a/src/SeedPathParameters.Test/Unit/MockServer/User/GetUserMetadataTest.cs
++++ b/src/SeedPathParameters.Test/Unit/MockServer/User/GetUserMetadataTest.cs
+@@ -37,12 +37,10 @@ public class GetUserMetadataTest : BaseMockServerTest
+             );
+ 
+         var response = await Client.User.GetUserMetadataAsync(
+-            new GetUserMetadataRequest
+-            {
+-                TenantId = "tenant_id",
+-                UserId = "user_id",
+-                Version = 1,
+-            }
++            "tenant_id",
++            "user_id",
++            1,
++            new GetUserMetadataRequest()
+         );
+         JsonAssert.AreEqual(response, mockResponse);
+     }
+diff --git a/src/SeedPathParameters.Test/Unit/MockServer/User/GetUserSpecificsTest.cs b/src/SeedPathParameters.Test/Unit/MockServer/User/GetUserSpecificsTest.cs
+index 19e212392d5..f3f25f56536 100644
+--- a/src/SeedPathParameters.Test/Unit/MockServer/User/GetUserSpecificsTest.cs
++++ b/src/SeedPathParameters.Test/Unit/MockServer/User/GetUserSpecificsTest.cs
+@@ -37,13 +37,11 @@ public class GetUserSpecificsTest : BaseMockServerTest
+             );
+ 
+         var response = await Client.User.GetUserSpecificsAsync(
+-            new GetUserSpecificsRequest
+-            {
+-                TenantId = "tenant_id",
+-                UserId = "user_id",
+-                Version = 1,
+-                Thought = "thought",
+-            }
++            "tenant_id",
++            "user_id",
++            1,
++            "thought",
++            new GetUserSpecificsRequest()
+         );
+         JsonAssert.AreEqual(response, mockResponse);
+     }
+diff --git a/src/SeedPathParameters.Test/Unit/MockServer/User/GetUserTest.cs b/src/SeedPathParameters.Test/Unit/MockServer/User/GetUserTest.cs
+index db484a4f4b4..bb54efbdd9e 100644
+--- a/src/SeedPathParameters.Test/Unit/MockServer/User/GetUserTest.cs
++++ b/src/SeedPathParameters.Test/Unit/MockServer/User/GetUserTest.cs
+@@ -37,7 +37,9 @@ public class GetUserTest : BaseMockServerTest
+             );
+ 
+         var response = await Client.User.GetUserAsync(
+-            new GetUsersRequest { TenantId = "tenant_id", UserId = "user_id" }
++            "tenant_id",
++            "user_id",
++            new GetUsersRequest()
+         );
+         JsonAssert.AreEqual(response, mockResponse);
+     }
+diff --git a/src/SeedPathParameters.Test/Unit/MockServer/User/SearchUsersTest.cs b/src/SeedPathParameters.Test/Unit/MockServer/User/SearchUsersTest.cs
+index b3efa2ab8c3..004cedb96e7 100644
+--- a/src/SeedPathParameters.Test/Unit/MockServer/User/SearchUsersTest.cs
++++ b/src/SeedPathParameters.Test/Unit/MockServer/User/SearchUsersTest.cs
+@@ -47,12 +47,9 @@ public class SearchUsersTest : BaseMockServerTest
+             );
+ 
+         var response = await Client.User.SearchUsersAsync(
+-            new SearchUsersRequest
+-            {
+-                TenantId = "tenant_id",
+-                UserId = "user_id",
+-                Limit = 1,
+-            }
++            "tenant_id",
++            "user_id",
++            new SearchUsersRequest { Limit = 1 }
+         );
+         JsonAssert.AreEqual(response, mockResponse);
+     }
+diff --git a/src/SeedPathParameters.Test/Unit/MockServer/User/UpdateUserTest.cs b/src/SeedPathParameters.Test/Unit/MockServer/User/UpdateUserTest.cs
+index 8b54f5fba8d..91e58dc7185 100644
+--- a/src/SeedPathParameters.Test/Unit/MockServer/User/UpdateUserTest.cs
++++ b/src/SeedPathParameters.Test/Unit/MockServer/User/UpdateUserTest.cs
+@@ -48,10 +48,10 @@ public class UpdateUserTest : BaseMockServerTest
+             );
+ 
+         var response = await Client.User.UpdateUserAsync(
++            "tenant_id",
++            "user_id",
+             new UpdateUserRequest
+             {
+-                TenantId = "tenant_id",
+-                UserId = "user_id",
+                 Body = new SeedPathParameters.User
+                 {
+                     Name = "name",

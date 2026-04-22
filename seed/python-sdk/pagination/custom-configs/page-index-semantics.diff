@@ -1,0 +1,94 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 2ecd82f71ab..a583db230da 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-python-sdk",
+   "generatorVersion": "local",
++  "generatorConfig": {
++    "offsetSemantics": "page-index"
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "ci",
+diff --git a/src/seed/inline_users/inline_users/raw_client.py b/src/seed/inline_users/inline_users/raw_client.py
+index 9da4f2ffd0b..bfeb44c81a5 100644
+--- a/src/seed/inline_users/inline_users/raw_client.py
++++ b/src/seed/inline_users/inline_users/raw_client.py
+@@ -467,7 +467,7 @@ class RawInlineUsersClient:
+ 
+                 _has_next = True
+                 _get_next = lambda: self.list_with_offset_step_pagination(
+-                    page=page + len(_items or []),
++                    page=page + 1,
+                     limit=limit,
+                     order=order,
+                     request_options=request_options,
+@@ -535,7 +535,7 @@ class RawInlineUsersClient:
+ 
+                 _has_next = True
+                 _get_next = lambda: self.list_with_offset_pagination_has_next_page(
+-                    page=page + len(_items or []),
++                    page=page + 1,
+                     limit=limit,
+                     order=order,
+                     request_options=request_options,
+@@ -1216,7 +1216,7 @@ class AsyncRawInlineUsersClient:
+ 
+                 async def _get_next():
+                     return await self.list_with_offset_step_pagination(
+-                        page=page + len(_items or []),
++                        page=page + 1,
+                         limit=limit,
+                         order=order,
+                         request_options=request_options,
+@@ -1287,7 +1287,7 @@ class AsyncRawInlineUsersClient:
+ 
+                 async def _get_next():
+                     return await self.list_with_offset_pagination_has_next_page(
+-                        page=page + len(_items or []),
++                        page=page + 1,
+                         limit=limit,
+                         order=order,
+                         request_options=request_options,
+diff --git a/src/seed/users/raw_client.py b/src/seed/users/raw_client.py
+index 5181e8e5626..c0ed2bb05a7 100644
+--- a/src/seed/users/raw_client.py
++++ b/src/seed/users/raw_client.py
+@@ -528,7 +528,7 @@ class RawUsersClient:
+                 _items = _parsed_response.data
+                 _has_next = True
+                 _get_next = lambda: self.list_with_offset_step_pagination(
+-                    page=page + len(_items or []),
++                    page=page + 1,
+                     limit=limit,
+                     order=order,
+                     request_options=request_options,
+@@ -595,7 +595,7 @@ class RawUsersClient:
+                 _items = _parsed_response.data
+                 _has_next = True
+                 _get_next = lambda: self.list_with_offset_pagination_has_next_page(
+-                    page=page + len(_items or []),
++                    page=page + 1,
+                     limit=limit,
+                     order=order,
+                     request_options=request_options,
+@@ -1518,7 +1518,7 @@ class AsyncRawUsersClient:
+ 
+                 async def _get_next():
+                     return await self.list_with_offset_step_pagination(
+-                        page=page + len(_items or []),
++                        page=page + 1,
+                         limit=limit,
+                         order=order,
+                         request_options=request_options,
+@@ -1588,7 +1588,7 @@ class AsyncRawUsersClient:
+ 
+                 async def _get_next():
+                     return await self.list_with_offset_pagination_has_next_page(
+-                        page=page + len(_items or []),
++                        page=page + 1,
+                         limit=limit,
+                         order=order,
+                         request_options=request_options,

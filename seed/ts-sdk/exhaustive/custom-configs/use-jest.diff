@@ -1,0 +1,789 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index d8b7bf00e12..2edb27044e5 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,9 @@
+     "cliVersion": "DUMMY",
+     "generatorName": "fernapi/fern-typescript-sdk",
+     "generatorVersion": "local",
++    "generatorConfig": {
++        "testFramework": "jest"
++    },
+     "originGitCommit": "DUMMY",
+     "originGitCommitIsDirty": null,
+     "invokedBy": "ci",
+diff --git a/jest.config.mjs b/jest.config.mjs
+new file mode 100644
+index 00000000000..d72b2f534a5
+--- /dev/null
++++ b/jest.config.mjs
+@@ -0,0 +1,30 @@
++/** @type {import('jest').Config} */
++export default {
++    preset: "ts-jest",
++    testEnvironment: "node",
++    projects: [
++        {
++            displayName: "unit",
++            preset: "ts-jest",
++            testEnvironment: "node",
++            moduleNameMapper: {
++                "^(\.{1,2}/.*)\.js$": "$1",
++            },
++            roots: ["<rootDir>/tests"],
++            testPathIgnorePatterns: ["/tests/wire/"],
++            setupFilesAfterEnv: ["<rootDir>/tests/setup.ts"],
++        },
++        {
++            displayName: "wire",
++            preset: "ts-jest",
++            testEnvironment: "node",
++            moduleNameMapper: {
++                "^(\.{1,2}/.*)\.js$": "$1",
++            },
++            roots: ["<rootDir>/tests/wire"],
++            setupFilesAfterEnv: ["<rootDir>/tests/setup.ts", "<rootDir>/tests/mock-server/setup.ts"],
++        },
++    ],
++    workerThreads: false,
++    passWithNoTests: true,
++};
+diff --git a/package.json b/package.json
+index 36918bca44f..1b52f0f7dbb 100644
+--- a/package.json
++++ b/package.json
+@@ -227,15 +227,19 @@
+         "build": "pnpm build:cjs && pnpm build:esm",
+         "build:cjs": "tsc --project ./tsconfig.cjs.json",
+         "build:esm": "tsc --project ./tsconfig.esm.json && node scripts/rename-to-esm-files.js dist/esm",
+-        "test": "vitest",
+-        "test:unit": "vitest --project unit",
+-        "test:wire": "vitest --project wire"
++        "test": "jest --config jest.config.mjs",
++        "test:unit": "jest --selectProjects unit",
++        "test:wire": "jest --selectProjects wire"
+     },
+     "dependencies": {},
+     "devDependencies": {
+         "webpack": "^5.105.4",
+         "ts-loader": "^9.5.4",
+-        "vitest": "^4.1.1",
++        "jest": "^29.7.0",
++        "@jest/globals": "^29.7.0",
++        "@types/jest": "^29.5.14",
++        "ts-jest": "^29.3.4",
++        "jest-environment-jsdom": "^29.7.0",
+         "msw": "2.11.2",
+         "@types/node": "^18.19.70",
+         "typescript": "~5.9.3",
+diff --git a/tests/mock-server/setup.ts b/tests/mock-server/setup.ts
+index aeb3a95af7d..c216d6074b2 100644
+--- a/tests/mock-server/setup.ts
++++ b/tests/mock-server/setup.ts
+@@ -1,4 +1,4 @@
+-import { afterAll, beforeAll } from "vitest";
++import { afterAll, beforeAll } from "@jest/globals";
+ 
+ import { mockServerPool } from "./MockServerPool";
+ 
+diff --git a/tests/setup.ts b/tests/setup.ts
+index a5651f81ba1..ef8d53f4cd5 100644
+--- a/tests/setup.ts
++++ b/tests/setup.ts
+@@ -1,16 +1,5 @@
+-import { expect } from "vitest";
+-
+-interface CustomMatchers<R = unknown> {
+-    toContainHeaders(expectedHeaders: Record<string, string>): R;
+-}
+-
+-declare module "vitest" {
+-    interface Assertion<T = any> extends CustomMatchers<T> {}
+-    interface AsymmetricMatchersContaining extends CustomMatchers {}
+-}
+-
+ expect.extend({
+-    toContainHeaders(actual: unknown, expectedHeaders: Record<string, string>) {
++    toContainHeaders(this: jest.MatcherContext, actual: unknown, expectedHeaders: Record<string, string>) {
+         const isHeaders = actual instanceof Headers;
+         const isPlainObject = typeof actual === "object" && actual !== null && !Array.isArray(actual);
+ 
+@@ -25,19 +14,22 @@ expect.extend({
+         const missingHeaders: string[] = [];
+         const mismatchedHeaders: Array<{ key: string; expected: string; actual: string | null }> = [];
+ 
+-        for (const [key, value] of Object.entries(expectedHeaders)) {
+-            let actualValue: string | null = null;
++        // Create a map of lowercase header keys to actual values for case-insensitive lookup
++        const actualHeadersMap = new Map<string, string>();
+ 
+-            if (isHeaders) {
+-                // Headers.get() is already case-insensitive
+-                actualValue = (actual as Headers).get(key);
+-            } else {
+-                // For plain objects, do case-insensitive lookup
+-                const actualObj = actual as Record<string, string>;
+-                const lowerKey = key.toLowerCase();
+-                const foundKey = Object.keys(actualObj).find((k) => k.toLowerCase() === lowerKey);
+-                actualValue = foundKey ? actualObj[foundKey] : null;
++        if (isHeaders) {
++            for (const [key, value] of (actual as Headers).entries()) {
++                actualHeadersMap.set(key.toLowerCase(), value);
++            }
++        } else {
++            for (const [key, value] of Object.entries(actual as Record<string, string>)) {
++                actualHeadersMap.set(key.toLowerCase(), value);
+             }
++        }
++
++        for (const [key, value] of Object.entries(expectedHeaders)) {
++            const lowerKey = key.toLowerCase();
++            const actualValue = actualHeadersMap.get(lowerKey) ?? null;
+ 
+             if (actualValue === null || actualValue === undefined) {
+                 missingHeaders.push(key);
+@@ -47,7 +39,6 @@ expect.extend({
+         }
+ 
+         const pass = missingHeaders.length === 0 && mismatchedHeaders.length === 0;
+-
+         const actualType = isHeaders ? "Headers" : "object";
+ 
+         if (pass) {
+@@ -78,3 +69,19 @@ expect.extend({
+         }
+     },
+ });
++
++declare global {
++    namespace jest {
++        interface Matchers<R> {
++            toContainHeaders(expectedHeaders: Record<string, string>): R;
++        }
++        interface Expect {
++            toContainHeaders(expectedHeaders: Record<string, string>): any;
++        }
++        interface InverseAsymmetricMatchers {
++            toContainHeaders(expectedHeaders: Record<string, string>): any;
++        }
++    }
++}
++
++export {};
+diff --git a/tests/tsconfig.json b/tests/tsconfig.json
+index ac39744de7b..60b2e87d4e3 100644
+--- a/tests/tsconfig.json
++++ b/tests/tsconfig.json
+@@ -2,8 +2,7 @@
+     "extends": "../tsconfig.base.json",
+     "compilerOptions": {
+         "outDir": null,
+-        "rootDir": "..",
+-        "types": ["vitest/globals"]
++        "rootDir": ".."
+     },
+     "include": ["../src", "../tests"],
+     "exclude": []
+diff --git a/tests/unit/fetcher/Fetcher.test.ts b/tests/unit/fetcher/Fetcher.test.ts
+index 6c17624228b..06c0770bb1a 100644
+--- a/tests/unit/fetcher/Fetcher.test.ts
++++ b/tests/unit/fetcher/Fetcher.test.ts
+@@ -17,7 +17,7 @@ describe("Test fetcherImpl", () => {
+             responseType: "json",
+         };
+ 
+-        global.fetch = vi.fn().mockResolvedValue(
++        global.fetch = jest.fn().mockResolvedValue(
+             new Response(JSON.stringify({ data: "test" }), {
+                 status: 200,
+                 statusText: "OK",
+@@ -53,7 +53,7 @@ describe("Test fetcherImpl", () => {
+             body: fs.createReadStream(join(__dirname, "test-file.txt")),
+         };
+ 
+-        global.fetch = vi.fn().mockResolvedValue(
++        global.fetch = jest.fn().mockResolvedValue(
+             new Response(JSON.stringify({ data: "test" }), {
+                 status: 200,
+                 statusText: "OK",
+@@ -86,7 +86,7 @@ describe("Test fetcherImpl", () => {
+             responseType: "binary-response",
+         };
+ 
+-        global.fetch = vi.fn().mockResolvedValue(
++        global.fetch = jest.fn().mockResolvedValue(
+             new Response(
+                 stream.Readable.toWeb(fs.createReadStream(join(__dirname, "test-file.txt"))) as ReadableStream,
+                 {
+@@ -133,7 +133,7 @@ describe("Test fetcherImpl", () => {
+             responseType: "binary-response",
+         };
+ 
+-        global.fetch = vi.fn().mockResolvedValue(
++        global.fetch = jest.fn().mockResolvedValue(
+             new Response(
+                 stream.Readable.toWeb(fs.createReadStream(join(__dirname, "test-file.txt"))) as ReadableStream,
+                 {
+@@ -179,7 +179,7 @@ describe("Test fetcherImpl", () => {
+             responseType: "binary-response",
+         };
+ 
+-        global.fetch = vi.fn().mockResolvedValue(
++        global.fetch = jest.fn().mockResolvedValue(
+             new Response(
+                 stream.Readable.toWeb(fs.createReadStream(join(__dirname, "test-file.txt"))) as ReadableStream,
+                 {
+@@ -223,7 +223,7 @@ describe("Test fetcherImpl", () => {
+             responseType: "binary-response",
+         };
+ 
+-        global.fetch = vi.fn().mockResolvedValue(
++        global.fetch = jest.fn().mockResolvedValue(
+             new Response(
+                 stream.Readable.toWeb(fs.createReadStream(join(__dirname, "test-file.txt"))) as ReadableStream,
+                 {
+diff --git a/tests/unit/fetcher/HttpResponsePromise.test.ts b/tests/unit/fetcher/HttpResponsePromise.test.ts
+index 2ec008e581d..c063b079bc3 100644
+--- a/tests/unit/fetcher/HttpResponsePromise.test.ts
++++ b/tests/unit/fetcher/HttpResponsePromise.test.ts
+@@ -1,4 +1,4 @@
+-import { beforeEach, describe, expect, it, vi } from "vitest";
++import { beforeEach, describe, expect, it, jest } from "@jest/globals";
+ 
+ import { HttpResponsePromise } from "../../../src/core/fetcher/HttpResponsePromise";
+ import type { RawResponse, WithRawResponse } from "../../../src/core/fetcher/RawResponse";
+@@ -20,7 +20,7 @@ describe("HttpResponsePromise", () => {
+ 
+     describe("fromFunction", () => {
+         it("should create an HttpResponsePromise from a function", async () => {
+-            const mockFn = vi
++            const mockFn = jest
+                 .fn<(arg1: string, arg2: string) => Promise<WithRawResponse<typeof mockData>>>()
+                 .mockResolvedValue(mockWithRawResponse);
+ 
+@@ -111,7 +111,7 @@ describe("HttpResponsePromise", () => {
+                 reject(new Error("Test error"));
+             });
+ 
+-            const catchSpy = vi.fn();
++            const catchSpy = jest.fn();
+             await errorResponsePromise.catch(catchSpy);
+ 
+             expect(catchSpy).toHaveBeenCalled();
+@@ -121,7 +121,7 @@ describe("HttpResponsePromise", () => {
+         });
+ 
+         it("should support finally() method", async () => {
+-            const finallySpy = vi.fn();
++            const finallySpy = jest.fn();
+             await responsePromise.finally(finallySpy);
+ 
+             expect(finallySpy).toHaveBeenCalled();
+diff --git a/tests/unit/fetcher/RawResponse.test.ts b/tests/unit/fetcher/RawResponse.test.ts
+index 375ee3f3806..9ccd5e1eb6f 100644
+--- a/tests/unit/fetcher/RawResponse.test.ts
++++ b/tests/unit/fetcher/RawResponse.test.ts
+@@ -1,4 +1,4 @@
+-import { describe, expect, it } from "vitest";
++import { describe, expect, it } from "@jest/globals";
+ 
+ import { toRawResponse } from "../../../src/core/fetcher/RawResponse";
+ 
+diff --git a/tests/unit/fetcher/logging.test.ts b/tests/unit/fetcher/logging.test.ts
+index 366c9b6ced6..267a9abaf40 100644
+--- a/tests/unit/fetcher/logging.test.ts
++++ b/tests/unit/fetcher/logging.test.ts
+@@ -2,15 +2,15 @@ import { fetcherImpl } from "../../../src/core/fetcher/Fetcher";
+ 
+ function createMockLogger() {
+     return {
+-        debug: vi.fn(),
+-        info: vi.fn(),
+-        warn: vi.fn(),
+-        error: vi.fn(),
++        debug: jest.fn(),
++        info: jest.fn(),
++        warn: jest.fn(),
++        error: jest.fn(),
+     };
+ }
+ 
+ function mockSuccessResponse(data: unknown = { data: "test" }, status = 200, statusText = "OK") {
+-    global.fetch = vi.fn().mockResolvedValue(
++    global.fetch = jest.fn().mockResolvedValue(
+         new Response(JSON.stringify(data), {
+             status,
+             statusText,
+@@ -19,7 +19,7 @@ function mockSuccessResponse(data: unknown = { data: "test" }, status = 200, sta
+ }
+ 
+ function mockErrorResponse(data: unknown = { error: "Error" }, status = 404, statusText = "Not Found") {
+-    global.fetch = vi.fn().mockResolvedValue(
++    global.fetch = jest.fn().mockResolvedValue(
+         new Response(JSON.stringify(data), {
+             status,
+             statusText,
+@@ -240,7 +240,7 @@ describe("Fetcher Logging Integration", () => {
+             const abortController = new AbortController();
+             abortController.abort();
+ 
+-            global.fetch = vi.fn().mockRejectedValue(new Error("Aborted"));
++            global.fetch = jest.fn().mockRejectedValue(new Error("Aborted"));
+ 
+             const result = await fetcherImpl({
+                 url: "https://example.com/api",
+@@ -271,7 +271,7 @@ describe("Fetcher Logging Integration", () => {
+             const timeoutError = new Error("Request timeout");
+             timeoutError.name = "AbortError";
+ 
+-            global.fetch = vi.fn().mockRejectedValue(timeoutError);
++            global.fetch = jest.fn().mockRejectedValue(timeoutError);
+ 
+             const result = await fetcherImpl({
+                 url: "https://example.com/api",
+@@ -301,7 +301,7 @@ describe("Fetcher Logging Integration", () => {
+ 
+             const unknownError = new Error("Unknown error");
+ 
+-            global.fetch = vi.fn().mockRejectedValue(unknownError);
++            global.fetch = jest.fn().mockRejectedValue(unknownError);
+ 
+             const result = await fetcherImpl({
+                 url: "https://example.com/api",
+@@ -434,7 +434,7 @@ describe("Fetcher Logging Integration", () => {
+ 
+         it("should log DELETE requests", async () => {
+             const mockLogger = createMockLogger();
+-            global.fetch = vi.fn().mockResolvedValue(
++            global.fetch = jest.fn().mockResolvedValue(
+                 new Response(null, {
+                     status: 200,
+                     statusText: "OK",
+diff --git a/tests/unit/fetcher/makePassthroughRequest.test.ts b/tests/unit/fetcher/makePassthroughRequest.test.ts
+index 1850d1fda95..91e21e0cf6b 100644
+--- a/tests/unit/fetcher/makePassthroughRequest.test.ts
++++ b/tests/unit/fetcher/makePassthroughRequest.test.ts
+@@ -1,11 +1,10 @@
+-import type { Mock } from "vitest";
+ import { makePassthroughRequest } from "../../../src/core/fetcher/makePassthroughRequest";
+ 
+ describe("makePassthroughRequest", () => {
+-    let mockFetch: Mock;
++    let mockFetch: jest.Mock;
+ 
+     beforeEach(() => {
+-        mockFetch = vi.fn();
++        mockFetch = jest.fn();
+         mockFetch.mockResolvedValue(new Response(JSON.stringify({ ok: true }), { status: 200 }));
+     });
+ 
+@@ -247,7 +246,7 @@ describe("makePassthroughRequest", () => {
+ 
+         it("should use requestOptions maxRetries over client maxRetries", async () => {
+             mockFetch.mockResolvedValue(new Response("", { status: 500 }));
+-            vi.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
++            jest.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
+                 process.nextTick(callback);
+                 return null as any;
+             });
+@@ -261,7 +260,7 @@ describe("makePassthroughRequest", () => {
+             // 1 initial + 1 retry = 2 calls
+             expect(mockFetch).toHaveBeenCalledTimes(2);
+ 
+-            vi.restoreAllMocks();
++            jest.restoreAllMocks();
+         });
+     });
+ 
+diff --git a/tests/unit/fetcher/makeRequest.test.ts b/tests/unit/fetcher/makeRequest.test.ts
+index bde194554dd..f6f039a2922 100644
+--- a/tests/unit/fetcher/makeRequest.test.ts
++++ b/tests/unit/fetcher/makeRequest.test.ts
+@@ -1,4 +1,3 @@
+-import type { Mock } from "vitest";
+ import {
+     isCacheNoStoreSupported,
+     makeRequest,
+@@ -11,10 +10,10 @@ describe("Test makeRequest", () => {
+     const mockHeaders = { "Content-Type": "application/json" };
+     const mockBody = JSON.stringify({ key: "value" });
+ 
+-    let mockFetch: Mock;
++    let mockFetch: jest.Mock;
+ 
+     beforeEach(() => {
+-        mockFetch = vi.fn();
++        mockFetch = jest.fn();
+         mockFetch.mockResolvedValue(new Response(JSON.stringify({ test: "successful" }), { status: 200 }));
+         resetCacheNoStoreSupported();
+     });
+diff --git a/tests/unit/fetcher/redacting.test.ts b/tests/unit/fetcher/redacting.test.ts
+index d599376b9bc..884ce4ccc1c 100644
+--- a/tests/unit/fetcher/redacting.test.ts
++++ b/tests/unit/fetcher/redacting.test.ts
+@@ -2,15 +2,15 @@ import { fetcherImpl } from "../../../src/core/fetcher/Fetcher";
+ 
+ function createMockLogger() {
+     return {
+-        debug: vi.fn(),
+-        info: vi.fn(),
+-        warn: vi.fn(),
+-        error: vi.fn(),
++        debug: jest.fn(),
++        info: jest.fn(),
++        warn: jest.fn(),
++        error: jest.fn(),
+     };
+ }
+ 
+ function mockSuccessResponse(data: unknown = { data: "test" }, status = 200, statusText = "OK") {
+-    global.fetch = vi.fn().mockResolvedValue(
++    global.fetch = jest.fn().mockResolvedValue(
+         new Response(JSON.stringify(data), {
+             status,
+             statusText,
+@@ -313,7 +313,7 @@ describe("Redacting Logic", () => {
+             mockHeaders.set("Set-Cookie", "session=abc123; HttpOnly; Secure");
+             mockHeaders.set("Content-Type", "application/json");
+ 
+-            global.fetch = vi.fn().mockResolvedValue(
++            global.fetch = jest.fn().mockResolvedValue(
+                 new Response(JSON.stringify({ data: "test" }), {
+                     status: 200,
+                     statusText: "OK",
+@@ -351,7 +351,7 @@ describe("Redacting Logic", () => {
+             mockHeaders.set("Authorization", "Bearer token-123");
+             mockHeaders.set("Content-Type", "application/json");
+ 
+-            global.fetch = vi.fn().mockResolvedValue(
++            global.fetch = jest.fn().mockResolvedValue(
+                 new Response(JSON.stringify({ data: "test" }), {
+                     status: 200,
+                     statusText: "OK",
+@@ -389,7 +389,7 @@ describe("Redacting Logic", () => {
+             mockHeaders.set("WWW-Authenticate", "Bearer realm=example");
+             mockHeaders.set("Content-Type", "application/json");
+ 
+-            global.fetch = vi.fn().mockResolvedValue(
++            global.fetch = jest.fn().mockResolvedValue(
+                 new Response(JSON.stringify({ error: "Unauthorized" }), {
+                     status: 401,
+                     statusText: "Unauthorized",
+diff --git a/tests/unit/fetcher/requestWithRetries.test.ts b/tests/unit/fetcher/requestWithRetries.test.ts
+index d22661367f4..9c2aaf216dd 100644
+--- a/tests/unit/fetcher/requestWithRetries.test.ts
++++ b/tests/unit/fetcher/requestWithRetries.test.ts
+@@ -1,43 +1,27 @@
+-import type { Mock, MockInstance } from "vitest";
+ import { requestWithRetries } from "../../../src/core/fetcher/requestWithRetries";
+ 
+ describe("requestWithRetries", () => {
+-    let mockFetch: Mock;
++    let mockFetch: jest.Mock;
+     let originalMathRandom: typeof Math.random;
+-    let setTimeoutSpy: MockInstance;
++    let setTimeoutSpy: jest.SpyInstance;
+ 
+     beforeEach(() => {
+-        mockFetch = vi.fn();
++        mockFetch = jest.fn();
+         originalMathRandom = Math.random;
+ 
+-        Math.random = vi.fn(() => 0.5);
+-
+-        vi.useFakeTimers({
+-            toFake: [
+-                "setTimeout",
+-                "clearTimeout",
+-                "setInterval",
+-                "clearInterval",
+-                "setImmediate",
+-                "clearImmediate",
+-                "Date",
+-                "performance",
+-                "requestAnimationFrame",
+-                "cancelAnimationFrame",
+-                "requestIdleCallback",
+-                "cancelIdleCallback",
+-            ],
+-        });
++        Math.random = jest.fn(() => 0.5);
++
++        jest.useFakeTimers({ doNotFake: ["nextTick"] });
+     });
+ 
+     afterEach(() => {
+         Math.random = originalMathRandom;
+-        vi.clearAllMocks();
+-        vi.clearAllTimers();
++        jest.clearAllMocks();
++        jest.clearAllTimers();
+     });
+ 
+     it("should retry on retryable status codes", async () => {
+-        setTimeoutSpy = vi.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
++        setTimeoutSpy = jest.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
+             process.nextTick(callback);
+             return null as any;
+         });
+@@ -53,7 +37,7 @@ describe("requestWithRetries", () => {
+         });
+ 
+         const responsePromise = requestWithRetries(() => mockFetch(), retryableStatuses.length);
+-        await vi.runAllTimersAsync();
++        await jest.runAllTimersAsync();
+         const response = await responsePromise;
+ 
+         expect(mockFetch).toHaveBeenCalledTimes(retryableStatuses.length + 1);
+@@ -61,7 +45,7 @@ describe("requestWithRetries", () => {
+     });
+ 
+     it("should respect maxRetries limit", async () => {
+-        setTimeoutSpy = vi.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
++        setTimeoutSpy = jest.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
+             process.nextTick(callback);
+             return null as any;
+         });
+@@ -70,7 +54,7 @@ describe("requestWithRetries", () => {
+         mockFetch.mockResolvedValue(new Response("", { status: 500 }));
+ 
+         const responsePromise = requestWithRetries(() => mockFetch(), maxRetries);
+-        await vi.runAllTimersAsync();
++        await jest.runAllTimersAsync();
+         const response = await responsePromise;
+ 
+         expect(mockFetch).toHaveBeenCalledTimes(maxRetries + 1);
+@@ -78,7 +62,7 @@ describe("requestWithRetries", () => {
+     });
+ 
+     it("should not retry on success status codes", async () => {
+-        setTimeoutSpy = vi.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
++        setTimeoutSpy = jest.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
+             process.nextTick(callback);
+             return null as any;
+         });
+@@ -91,7 +75,7 @@ describe("requestWithRetries", () => {
+             mockFetch.mockResolvedValueOnce(new Response("", { status }));
+ 
+             const responsePromise = requestWithRetries(() => mockFetch(), 3);
+-            await vi.runAllTimersAsync();
++            await jest.runAllTimersAsync();
+             await responsePromise;
+ 
+             expect(mockFetch).toHaveBeenCalledTimes(1);
+@@ -133,7 +117,7 @@ describe("requestWithRetries", () => {
+ 
+     retryHeaderTests.forEach(({ description, headerName, headerValue, expectedDelayMin, expectedDelayMax }) => {
+         it(description, async () => {
+-            setTimeoutSpy = vi.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
++            setTimeoutSpy = jest.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
+                 process.nextTick(callback);
+                 return null as any;
+             });
+@@ -149,7 +133,7 @@ describe("requestWithRetries", () => {
+                 .mockResolvedValueOnce(new Response("", { status: 200 }));
+ 
+             const responsePromise = requestWithRetries(() => mockFetch(), 1);
+-            await vi.runAllTimersAsync();
++            await jest.runAllTimersAsync();
+             const response = await responsePromise;
+ 
+             expect(setTimeoutSpy).toHaveBeenCalledWith(expect.any(Function), expect.any(Number));
+@@ -161,7 +145,7 @@ describe("requestWithRetries", () => {
+     });
+ 
+     it("should apply correct exponential backoff with jitter", async () => {
+-        setTimeoutSpy = vi.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
++        setTimeoutSpy = jest.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
+             process.nextTick(callback);
+             return null as any;
+         });
+@@ -171,7 +155,7 @@ describe("requestWithRetries", () => {
+         const expectedDelays = [1000, 2000, 4000];
+ 
+         const responsePromise = requestWithRetries(() => mockFetch(), maxRetries);
+-        await vi.runAllTimersAsync();
++        await jest.runAllTimersAsync();
+         await responsePromise;
+ 
+         expect(setTimeoutSpy).toHaveBeenCalledTimes(expectedDelays.length);
+@@ -184,7 +168,7 @@ describe("requestWithRetries", () => {
+     });
+ 
+     it("should handle concurrent retries independently", async () => {
+-        setTimeoutSpy = vi.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
++        setTimeoutSpy = jest.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
+             process.nextTick(callback);
+             return null as any;
+         });
+@@ -198,7 +182,7 @@ describe("requestWithRetries", () => {
+         const promise1 = requestWithRetries(() => mockFetch(), 1);
+         const promise2 = requestWithRetries(() => mockFetch(), 1);
+ 
+-        await vi.runAllTimersAsync();
++        await jest.runAllTimersAsync();
+         const [response1, response2] = await Promise.all([promise1, promise2]);
+ 
+         expect(response1.status).toBe(200);
+@@ -206,7 +190,7 @@ describe("requestWithRetries", () => {
+     });
+ 
+     it("should cap delay at MAX_RETRY_DELAY for large header values", async () => {
+-        setTimeoutSpy = vi.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
++        setTimeoutSpy = jest.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
+             process.nextTick(callback);
+             return null as any;
+         });
+@@ -221,7 +205,7 @@ describe("requestWithRetries", () => {
+             .mockResolvedValueOnce(new Response("", { status: 200 }));
+ 
+         const responsePromise = requestWithRetries(() => mockFetch(), 1);
+-        await vi.runAllTimersAsync();
++        await jest.runAllTimersAsync();
+         const response = await responsePromise;
+ 
+         expect(setTimeoutSpy).toHaveBeenCalledWith(expect.any(Function), 60000);
+diff --git a/tests/unit/fetcher/signals.test.ts b/tests/unit/fetcher/signals.test.ts
+index d7b6d1e63ca..9cabfa07447 100644
+--- a/tests/unit/fetcher/signals.test.ts
++++ b/tests/unit/fetcher/signals.test.ts
+@@ -2,11 +2,11 @@ import { anySignal, getTimeoutSignal } from "../../../src/core/fetcher/signals";
+ 
+ describe("Test getTimeoutSignal", () => {
+     beforeEach(() => {
+-        vi.useFakeTimers();
++        jest.useFakeTimers();
+     });
+ 
+     afterEach(() => {
+-        vi.useRealTimers();
++        jest.useRealTimers();
+     });
+ 
+     it("should return an object with signal and abortId", () => {
+@@ -24,10 +24,10 @@ describe("Test getTimeoutSignal", () => {
+ 
+         expect(signal.aborted).toBe(false);
+ 
+-        vi.advanceTimersByTime(timeoutMs - 1);
++        jest.advanceTimersByTime(timeoutMs - 1);
+         expect(signal.aborted).toBe(false);
+ 
+-        vi.advanceTimersByTime(1);
++        jest.advanceTimersByTime(1);
+         expect(signal.aborted).toBe(true);
+     });
+ });
+diff --git a/tests/unit/file/file.test.ts b/tests/unit/file/file.test.ts
+index 6cd6509059b..6acb74de191 100644
+--- a/tests/unit/file/file.test.ts
++++ b/tests/unit/file/file.test.ts
+@@ -8,7 +8,7 @@ describe("toBinaryUploadRequest", () => {
+     const TEST_FILE_SIZE = fs.statSync(TEST_FILE_PATH).size.toString();
+ 
+     beforeEach(() => {
+-        vi.clearAllMocks();
++        jest.clearAllMocks();
+     });
+ 
+     describe("Buffer input", () => {
+diff --git a/tests/unit/logging/logger.test.ts b/tests/unit/logging/logger.test.ts
+index 2e0b5fe5040..70cabc2aa7f 100644
+--- a/tests/unit/logging/logger.test.ts
++++ b/tests/unit/logging/logger.test.ts
+@@ -2,10 +2,10 @@ import { ConsoleLogger, createLogger, Logger, LogLevel } from "../../../src/core
+ 
+ function createMockLogger() {
+     return {
+-        debug: vi.fn(),
+-        info: vi.fn(),
+-        warn: vi.fn(),
+-        error: vi.fn(),
++        debug: jest.fn(),
++        info: jest.fn(),
++        warn: jest.fn(),
++        error: jest.fn(),
+     };
+ }
+ 
+@@ -22,19 +22,19 @@ describe("Logger", () => {
+     describe("ConsoleLogger", () => {
+         let consoleLogger: ConsoleLogger;
+         let consoleSpy: {
+-            debug: ReturnType<typeof vi.spyOn>;
+-            info: ReturnType<typeof vi.spyOn>;
+-            warn: ReturnType<typeof vi.spyOn>;
+-            error: ReturnType<typeof vi.spyOn>;
++            debug: ReturnType<typeof jest.spyOn>;
++            info: ReturnType<typeof jest.spyOn>;
++            warn: ReturnType<typeof jest.spyOn>;
++            error: ReturnType<typeof jest.spyOn>;
+         };
+ 
+         beforeEach(() => {
+             consoleLogger = new ConsoleLogger();
+             consoleSpy = {
+-                debug: vi.spyOn(console, "debug").mockImplementation(() => {}),
+-                info: vi.spyOn(console, "info").mockImplementation(() => {}),
+-                warn: vi.spyOn(console, "warn").mockImplementation(() => {}),
+-                error: vi.spyOn(console, "error").mockImplementation(() => {}),
++                debug: jest.spyOn(console, "debug").mockImplementation(() => {}),
++                info: jest.spyOn(console, "info").mockImplementation(() => {}),
++                warn: jest.spyOn(console, "warn").mockImplementation(() => {}),
++                error: jest.spyOn(console, "error").mockImplementation(() => {}),
+             };
+         });
+ 
+@@ -73,10 +73,10 @@ describe("Logger", () => {
+ 
+     describe("Logger with level filtering", () => {
+         let mockLogger: {
+-            debug: ReturnType<typeof vi.fn>;
+-            info: ReturnType<typeof vi.fn>;
+-            warn: ReturnType<typeof vi.fn>;
+-            error: ReturnType<typeof vi.fn>;
++            debug: ReturnType<typeof jest.fn>;
++            info: ReturnType<typeof jest.fn>;
++            warn: ReturnType<typeof jest.fn>;
++            error: ReturnType<typeof jest.fn>;
+         };
+ 
+         beforeEach(() => {
+diff --git a/vitest.config.mts b/vitest.config.mts
+deleted file mode 100644
+index 0dee5a752d3..00000000000
+--- a/vitest.config.mts
++++ /dev/null
+@@ -1,32 +0,0 @@
+-import { defineConfig } from "vitest/config";
+-export default defineConfig({
+-    test: {
+-        typecheck: {
+-            enabled: true,
+-            tsconfig: "./tests/tsconfig.json",
+-        },
+-        projects: [
+-            {
+-                test: {
+-                    globals: true,
+-                    name: "unit",
+-                    environment: "node",
+-                    root: "./tests",
+-                    include: ["**/*.test.{js,ts,jsx,tsx}"],
+-                    exclude: ["wire/**"],
+-                    setupFiles: ["./setup.ts"],
+-                },
+-            },
+-            {
+-                test: {
+-                    globals: true,
+-                    name: "wire",
+-                    environment: "node",
+-                    root: "./tests/wire",
+-                    setupFiles: ["../setup.ts", "../mock-server/setup.ts"],
+-                },
+-            },
+-        ],
+-        passWithNoTests: true,
+-    },
+-});

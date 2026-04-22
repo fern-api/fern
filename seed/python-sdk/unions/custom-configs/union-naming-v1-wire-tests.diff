@@ -1,0 +1,4459 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 2ecd82f71ab..26e96ed6545 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,13 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-python-sdk",
+   "generatorVersion": "local",
++  "generatorConfig": {
++    "enable_wire_tests": true,
++    "pydantic_config": {
++      "union_naming": "v1"
++    },
++    "use_inheritance_for_extended_models": false
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "ci",
+diff --git a/poetry.lock b/poetry.lock
+index 2a97347e644..1597c9ee2cd 100644
+--- a/poetry.lock
++++ b/poetry.lock
+@@ -242,6 +242,144 @@ files = [
+     {file = "certifi-2026.4.22.tar.gz", hash = "sha256:8d455352a37b71bf76a79caa83a3d6c25afee4a385d632127b6afb3963f1c580"},
+ ]
+ 
++[[package]]
++name = "charset-normalizer"
++version = "3.4.7"
++description = "The Real First Universal Charset Detector. Open, modern and actively maintained alternative to Chardet."
++optional = false
++python-versions = ">=3.7"
++files = [
++    {file = "charset_normalizer-3.4.7-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:cdd68a1fb318e290a2077696b7eb7a21a49163c455979c639bf5a5dcdc46617d"},
++    {file = "charset_normalizer-3.4.7-cp310-cp310-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:e17b8d5d6a8c47c85e68ca8379def1303fd360c3e22093a807cd34a71cd082b8"},
++    {file = "charset_normalizer-3.4.7-cp310-cp310-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl", hash = "sha256:511ef87c8aec0783e08ac18565a16d435372bc1ac25a91e6ac7f5ef2b0bff790"},
++    {file = "charset_normalizer-3.4.7-cp310-cp310-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl", hash = "sha256:007d05ec7321d12a40227aae9e2bc6dca73f3cb21058999a1df9e193555a9dcc"},
++    {file = "charset_normalizer-3.4.7-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:cf29836da5119f3c8a8a70667b0ef5fdca3bb12f80fd06487cfa575b3909b393"},
++    {file = "charset_normalizer-3.4.7-cp310-cp310-manylinux_2_31_armv7l.whl", hash = "sha256:12d8baf840cc7889b37c7c770f478adea7adce3dcb3944d02ec87508e2dcf153"},
++    {file = "charset_normalizer-3.4.7-cp310-cp310-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl", hash = "sha256:d560742f3c0d62afaccf9f41fe485ed69bd7661a241f86a3ef0f0fb8b1a397af"},
++    {file = "charset_normalizer-3.4.7-cp310-cp310-musllinux_1_2_aarch64.whl", hash = "sha256:b14b2d9dac08e28bb8046a1a0434b1750eb221c8f5b87a68f4fa11a6f97b5e34"},
++    {file = "charset_normalizer-3.4.7-cp310-cp310-musllinux_1_2_armv7l.whl", hash = "sha256:bc17a677b21b3502a21f66a8cc64f5bfad4df8a0b8434d661666f8ce90ac3af1"},
++    {file = "charset_normalizer-3.4.7-cp310-cp310-musllinux_1_2_ppc64le.whl", hash = "sha256:750e02e074872a3fad7f233b47734166440af3cdea0add3e95163110816d6752"},
++    {file = "charset_normalizer-3.4.7-cp310-cp310-musllinux_1_2_riscv64.whl", hash = "sha256:4e5163c14bffd570ef2affbfdd77bba66383890797df43dc8b4cc7d6f500bf53"},
++    {file = "charset_normalizer-3.4.7-cp310-cp310-musllinux_1_2_s390x.whl", hash = "sha256:6ed74185b2db44f41ef35fd1617c5888e59792da9bbc9190d6c7300617182616"},
++    {file = "charset_normalizer-3.4.7-cp310-cp310-musllinux_1_2_x86_64.whl", hash = "sha256:94e1885b270625a9a828c9793b4d52a64445299baa1fea5a173bf1d3dd9a1a5a"},
++    {file = "charset_normalizer-3.4.7-cp310-cp310-win32.whl", hash = "sha256:6785f414ae0f3c733c437e0f3929197934f526d19dfaa75e18fdb4f94c6fb374"},
++    {file = "charset_normalizer-3.4.7-cp310-cp310-win_amd64.whl", hash = "sha256:6696b7688f54f5af4462118f0bfa7c1621eeb87154f77fa04b9295ce7a8f2943"},
++    {file = "charset_normalizer-3.4.7-cp310-cp310-win_arm64.whl", hash = "sha256:66671f93accb62ed07da56613636f3641f1a12c13046ce91ffc923721f23c008"},
++    {file = "charset_normalizer-3.4.7-cp311-cp311-macosx_10_9_universal2.whl", hash = "sha256:7641bb8895e77f921102f72833904dcd9901df5d6d72a2ab8f31d04b7e51e4e7"},
++    {file = "charset_normalizer-3.4.7-cp311-cp311-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:202389074300232baeb53ae2569a60901f7efadd4245cf3a3bf0617d60b439d7"},
++    {file = "charset_normalizer-3.4.7-cp311-cp311-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl", hash = "sha256:30b8d1d8c52a48c2c5690e152c169b673487a2a58de1ec7393196753063fcd5e"},
++    {file = "charset_normalizer-3.4.7-cp311-cp311-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl", hash = "sha256:532bc9bf33a68613fd7d65e4b1c71a6a38d7d42604ecf239c77392e9b4e8998c"},
++    {file = "charset_normalizer-3.4.7-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:2fe249cb4651fd12605b7288b24751d8bfd46d35f12a20b1ba33dea122e690df"},
++    {file = "charset_normalizer-3.4.7-cp311-cp311-manylinux_2_31_armv7l.whl", hash = "sha256:65bcd23054beab4d166035cabbc868a09c1a49d1efe458fe8e4361215df40265"},
++    {file = "charset_normalizer-3.4.7-cp311-cp311-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl", hash = "sha256:08e721811161356f97b4059a9ba7bafb23ea5ee2255402c42881c214e173c6b4"},
++    {file = "charset_normalizer-3.4.7-cp311-cp311-musllinux_1_2_aarch64.whl", hash = "sha256:e060d01aec0a910bdccb8be71faf34e7799ce36950f8294c8bf612cba65a2c9e"},
++    {file = "charset_normalizer-3.4.7-cp311-cp311-musllinux_1_2_armv7l.whl", hash = "sha256:38c0109396c4cfc574d502df99742a45c72c08eff0a36158b6f04000043dbf38"},
++    {file = "charset_normalizer-3.4.7-cp311-cp311-musllinux_1_2_ppc64le.whl", hash = "sha256:1c2a768fdd44ee4a9339a9b0b130049139b8ce3c01d2ce09f67f5a68048d477c"},
++    {file = "charset_normalizer-3.4.7-cp311-cp311-musllinux_1_2_riscv64.whl", hash = "sha256:1a87ca9d5df6fe460483d9a5bbf2b18f620cbed41b432e2bddb686228282d10b"},
++    {file = "charset_normalizer-3.4.7-cp311-cp311-musllinux_1_2_s390x.whl", hash = "sha256:d635aab80466bc95771bb78d5370e74d36d1fe31467b6b29b8b57b2a3cd7d22c"},
++    {file = "charset_normalizer-3.4.7-cp311-cp311-musllinux_1_2_x86_64.whl", hash = "sha256:ae196f021b5e7c78e918242d217db021ed2a6ace2bc6ae94c0fc596221c7f58d"},
++    {file = "charset_normalizer-3.4.7-cp311-cp311-win32.whl", hash = "sha256:adb2597b428735679446b46c8badf467b4ca5f5056aae4d51a19f9570301b1ad"},
++    {file = "charset_normalizer-3.4.7-cp311-cp311-win_amd64.whl", hash = "sha256:8e385e4267ab76874ae30db04c627faaaf0b509e1ccc11a95b3fc3e83f855c00"},
++    {file = "charset_normalizer-3.4.7-cp311-cp311-win_arm64.whl", hash = "sha256:d4a48e5b3c2a489fae013b7589308a40146ee081f6f509e047e0e096084ceca1"},
++    {file = "charset_normalizer-3.4.7-cp312-cp312-macosx_10_13_universal2.whl", hash = "sha256:eca9705049ad3c7345d574e3510665cb2cf844c2f2dcfe675332677f081cbd46"},
++    {file = "charset_normalizer-3.4.7-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:6178f72c5508bfc5fd446a5905e698c6212932f25bcdd4b47a757a50605a90e2"},
++    {file = "charset_normalizer-3.4.7-cp312-cp312-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl", hash = "sha256:e1421b502d83040e6d7fb2fb18dff63957f720da3d77b2fbd3187ceb63755d7b"},
++    {file = "charset_normalizer-3.4.7-cp312-cp312-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl", hash = "sha256:edac0f1ab77644605be2cbba52e6b7f630731fc42b34cb0f634be1a6eface56a"},
++    {file = "charset_normalizer-3.4.7-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:5649fd1c7bade02f320a462fdefd0b4bd3ce036065836d4f42e0de958038e116"},
++    {file = "charset_normalizer-3.4.7-cp312-cp312-manylinux_2_31_armv7l.whl", hash = "sha256:203104ed3e428044fd943bc4bf45fa73c0730391f9621e37fe39ecf477b128cb"},
++    {file = "charset_normalizer-3.4.7-cp312-cp312-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl", hash = "sha256:298930cec56029e05497a76988377cbd7457ba864beeea92ad7e844fe74cd1f1"},
++    {file = "charset_normalizer-3.4.7-cp312-cp312-musllinux_1_2_aarch64.whl", hash = "sha256:708838739abf24b2ceb208d0e22403dd018faeef86ddac04319a62ae884c4f15"},
++    {file = "charset_normalizer-3.4.7-cp312-cp312-musllinux_1_2_armv7l.whl", hash = "sha256:0f7eb884681e3938906ed0434f20c63046eacd0111c4ba96f27b76084cd679f5"},
++    {file = "charset_normalizer-3.4.7-cp312-cp312-musllinux_1_2_ppc64le.whl", hash = "sha256:4dc1e73c36828f982bfe79fadf5919923f8a6f4df2860804db9a98c48824ce8d"},
++    {file = "charset_normalizer-3.4.7-cp312-cp312-musllinux_1_2_riscv64.whl", hash = "sha256:aed52fea0513bac0ccde438c188c8a471c4e0f457c2dd20cdbf6ea7a450046c7"},
++    {file = "charset_normalizer-3.4.7-cp312-cp312-musllinux_1_2_s390x.whl", hash = "sha256:fea24543955a6a729c45a73fe90e08c743f0b3334bbf3201e6c4bc1b0c7fa464"},
++    {file = "charset_normalizer-3.4.7-cp312-cp312-musllinux_1_2_x86_64.whl", hash = "sha256:bb6d88045545b26da47aa879dd4a89a71d1dce0f0e549b1abcb31dfe4a8eac49"},
++    {file = "charset_normalizer-3.4.7-cp312-cp312-win32.whl", hash = "sha256:2257141f39fe65a3fdf38aeccae4b953e5f3b3324f4ff0daf9f15b8518666a2c"},
++    {file = "charset_normalizer-3.4.7-cp312-cp312-win_amd64.whl", hash = "sha256:5ed6ab538499c8644b8a3e18debabcd7ce684f3fa91cf867521a7a0279cab2d6"},
++    {file = "charset_normalizer-3.4.7-cp312-cp312-win_arm64.whl", hash = "sha256:56be790f86bfb2c98fb742ce566dfb4816e5a83384616ab59c49e0604d49c51d"},
++    {file = "charset_normalizer-3.4.7-cp313-cp313-macosx_10_13_universal2.whl", hash = "sha256:f496c9c3cc02230093d8330875c4c3cdfc3b73612a5fd921c65d39cbcef08063"},
++    {file = "charset_normalizer-3.4.7-cp313-cp313-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:0ea948db76d31190bf08bd371623927ee1339d5f2a0b4b1b4a4439a65298703c"},
++    {file = "charset_normalizer-3.4.7-cp313-cp313-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl", hash = "sha256:a277ab8928b9f299723bc1a2dabb1265911b1a76341f90a510368ca44ad9ab66"},
++    {file = "charset_normalizer-3.4.7-cp313-cp313-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl", hash = "sha256:3bec022aec2c514d9cf199522a802bd007cd588ab17ab2525f20f9c34d067c18"},
++    {file = "charset_normalizer-3.4.7-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:e044c39e41b92c845bc815e5ae4230804e8e7bc29e399b0437d64222d92809dd"},
++    {file = "charset_normalizer-3.4.7-cp313-cp313-manylinux_2_31_armv7l.whl", hash = "sha256:f495a1652cf3fbab2eb0639776dad966c2fb874d79d87ca07f9d5f059b8bd215"},
++    {file = "charset_normalizer-3.4.7-cp313-cp313-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl", hash = "sha256:e712b419df8ba5e42b226c510472b37bd57b38e897d3eca5e8cfd410a29fa859"},
++    {file = "charset_normalizer-3.4.7-cp313-cp313-musllinux_1_2_aarch64.whl", hash = "sha256:7804338df6fcc08105c7745f1502ba68d900f45fd770d5bdd5288ddccb8a42d8"},
++    {file = "charset_normalizer-3.4.7-cp313-cp313-musllinux_1_2_armv7l.whl", hash = "sha256:481551899c856c704d58119b5025793fa6730adda3571971af568f66d2424bb5"},
++    {file = "charset_normalizer-3.4.7-cp313-cp313-musllinux_1_2_ppc64le.whl", hash = "sha256:f59099f9b66f0d7145115e6f80dd8b1d847176df89b234a5a6b3f00437aa0832"},
++    {file = "charset_normalizer-3.4.7-cp313-cp313-musllinux_1_2_riscv64.whl", hash = "sha256:f59ad4c0e8f6bba240a9bb85504faa1ab438237199d4cce5f622761507b8f6a6"},
++    {file = "charset_normalizer-3.4.7-cp313-cp313-musllinux_1_2_s390x.whl", hash = "sha256:3dedcc22d73ec993f42055eff4fcfed9318d1eeb9a6606c55892a26964964e48"},
++    {file = "charset_normalizer-3.4.7-cp313-cp313-musllinux_1_2_x86_64.whl", hash = "sha256:64f02c6841d7d83f832cd97ccf8eb8a906d06eb95d5276069175c696b024b60a"},
++    {file = "charset_normalizer-3.4.7-cp313-cp313-win32.whl", hash = "sha256:4042d5c8f957e15221d423ba781e85d553722fc4113f523f2feb7b188cc34c5e"},
++    {file = "charset_normalizer-3.4.7-cp313-cp313-win_amd64.whl", hash = "sha256:3946fa46a0cf3e4c8cb1cc52f56bb536310d34f25f01ca9b6c16afa767dab110"},
++    {file = "charset_normalizer-3.4.7-cp313-cp313-win_arm64.whl", hash = "sha256:80d04837f55fc81da168b98de4f4b797ef007fc8a79ab71c6ec9bc4dd662b15b"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314-macosx_10_15_universal2.whl", hash = "sha256:c36c333c39be2dbca264d7803333c896ab8fa7d4d6f0ab7edb7dfd7aea6e98c0"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:1c2aed2e5e41f24ea8ef1590b8e848a79b56f3a5564a65ceec43c9d692dc7d8a"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl", hash = "sha256:54523e136b8948060c0fa0bc7b1b50c32c186f2fceee897a495406bb6e311d2b"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl", hash = "sha256:715479b9a2802ecac752a3b0efa2b0b60285cf962ee38414211abdfccc233b41"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:bd6c2a1c7573c64738d716488d2cdd3c00e340e4835707d8fdb8dc1a66ef164e"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314-manylinux_2_31_armv7l.whl", hash = "sha256:c45e9440fb78f8ddabcf714b68f936737a121355bf59f3907f4e17721b9d1aae"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl", hash = "sha256:3534e7dcbdcf757da6b85a0bbf5b6868786d5982dd959b065e65481644817a18"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314-musllinux_1_2_aarch64.whl", hash = "sha256:e8ac484bf18ce6975760921bb6148041faa8fef0547200386ea0b52b5d27bf7b"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314-musllinux_1_2_armv7l.whl", hash = "sha256:a5fe03b42827c13cdccd08e6c0247b6a6d4b5e3cdc53fd1749f5896adcdc2356"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314-musllinux_1_2_ppc64le.whl", hash = "sha256:2d6eb928e13016cea4f1f21d1e10c1cebd5a421bc57ddf5b1142ae3f86824fab"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314-musllinux_1_2_riscv64.whl", hash = "sha256:e74327fb75de8986940def6e8dee4f127cc9752bee7355bb323cc5b2659b6d46"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314-musllinux_1_2_s390x.whl", hash = "sha256:d6038d37043bced98a66e68d3aa2b6a35505dc01328cd65217cefe82f25def44"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314-musllinux_1_2_x86_64.whl", hash = "sha256:7579e913a5339fb8fa133f6bbcfd8e6749696206cf05acdbdca71a1b436d8e72"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314-win32.whl", hash = "sha256:5b77459df20e08151cd6f8b9ef8ef1f961ef73d85c21a555c7eed5b79410ec10"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314-win_amd64.whl", hash = "sha256:92a0a01ead5e668468e952e4238cccd7c537364eb7d851ab144ab6627dbbe12f"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314-win_arm64.whl", hash = "sha256:67f6279d125ca0046a7fd386d01b311c6363844deac3e5b069b514ba3e63c246"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314t-macosx_10_15_universal2.whl", hash = "sha256:effc3f449787117233702311a1b7d8f59cba9ced946ba727bdc329ec69028e24"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314t-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:fbccdc05410c9ee21bbf16a35f4c1d16123dcdeb8a1d38f33654fa21d0234f79"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314t-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl", hash = "sha256:733784b6d6def852c814bce5f318d25da2ee65dd4839a0718641c696e09a2960"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314t-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl", hash = "sha256:a89c23ef8d2c6b27fd200a42aa4ac72786e7c60d40efdc76e6011260b6e949c4"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314t-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:6c114670c45346afedc0d947faf3c7f701051d2518b943679c8ff88befe14f8e"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314t-manylinux_2_31_armv7l.whl", hash = "sha256:a180c5e59792af262bf263b21a3c49353f25945d8d9f70628e73de370d55e1e1"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314t-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl", hash = "sha256:3c9a494bc5ec77d43cea229c4f6db1e4d8fe7e1bbffa8b6f0f0032430ff8ab44"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314t-musllinux_1_2_aarch64.whl", hash = "sha256:8d828b6667a32a728a1ad1d93957cdf37489c57b97ae6c4de2860fa749b8fc1e"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314t-musllinux_1_2_armv7l.whl", hash = "sha256:cf1493cd8607bec4d8a7b9b004e699fcf8f9103a9284cc94962cb73d20f9d4a3"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314t-musllinux_1_2_ppc64le.whl", hash = "sha256:0c96c3b819b5c3e9e165495db84d41914d6894d55181d2d108cc1a69bfc9cce0"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314t-musllinux_1_2_riscv64.whl", hash = "sha256:752a45dc4a6934060b3b0dab47e04edc3326575f82be64bc4fc293914566503e"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314t-musllinux_1_2_s390x.whl", hash = "sha256:8778f0c7a52e56f75d12dae53ae320fae900a8b9b4164b981b9c5ce059cd1fcb"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314t-musllinux_1_2_x86_64.whl", hash = "sha256:ce3412fbe1e31eb81ea42f4169ed94861c56e643189e1e75f0041f3fe7020abe"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314t-win32.whl", hash = "sha256:c03a41a8784091e67a39648f70c5f97b5b6a37f216896d44d2cdcb82615339a0"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314t-win_amd64.whl", hash = "sha256:03853ed82eeebbce3c2abfdbc98c96dc205f32a79627688ac9a27370ea61a49c"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314t-win_arm64.whl", hash = "sha256:c35abb8bfff0185efac5878da64c45dafd2b37fb0383add1be155a763c1f083d"},
++    {file = "charset_normalizer-3.4.7-cp38-cp38-macosx_10_9_universal2.whl", hash = "sha256:e5f4d355f0a2b1a31bc3edec6795b46324349c9cb25eed068049e4f472fb4259"},
++    {file = "charset_normalizer-3.4.7-cp38-cp38-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:16d971e29578a5e97d7117866d15889a4a07befe0e87e703ed63cd90cb348c01"},
++    {file = "charset_normalizer-3.4.7-cp38-cp38-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl", hash = "sha256:dca4bbc466a95ba9c0234ef56d7dd9509f63da22274589ebd4ed7f1f4d4c54e3"},
++    {file = "charset_normalizer-3.4.7-cp38-cp38-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl", hash = "sha256:e80c8378d8f3d83cd3164da1ad2df9e37a666cdde7b1cb2298ed0b558064be30"},
++    {file = "charset_normalizer-3.4.7-cp38-cp38-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:36836d6ff945a00b88ba1e4572d721e60b5b8c98c155d465f56ad19d68f23734"},
++    {file = "charset_normalizer-3.4.7-cp38-cp38-manylinux_2_31_armv7l.whl", hash = "sha256:bd9b23791fe793e4968dba0c447e12f78e425c59fc0e3b97f6450f4781f3ee60"},
++    {file = "charset_normalizer-3.4.7-cp38-cp38-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl", hash = "sha256:aef65cd602a6d0e0ff6f9930fcb1c8fec60dd2cfcb6facaf4bdb0e5873042db0"},
++    {file = "charset_normalizer-3.4.7-cp38-cp38-musllinux_1_2_aarch64.whl", hash = "sha256:82b271f5137d07749f7bf32f70b17ab6eaabedd297e75dce75081a24f76eb545"},
++    {file = "charset_normalizer-3.4.7-cp38-cp38-musllinux_1_2_armv7l.whl", hash = "sha256:1efde3cae86c8c273f1eb3b287be7d8499420cf2fe7585c41d370d3e790054a5"},
++    {file = "charset_normalizer-3.4.7-cp38-cp38-musllinux_1_2_ppc64le.whl", hash = "sha256:c593052c465475e64bbfe5dbd81680f64a67fdc752c56d7a0ae205dc8aeefe0f"},
++    {file = "charset_normalizer-3.4.7-cp38-cp38-musllinux_1_2_riscv64.whl", hash = "sha256:af21eb4409a119e365397b2adbaca4c9ccab56543a65d5dbd9f920d6ac29f686"},
++    {file = "charset_normalizer-3.4.7-cp38-cp38-musllinux_1_2_s390x.whl", hash = "sha256:84c018e49c3bf790f9c2771c45e9313a08c2c2a6342b162cd650258b57817706"},
++    {file = "charset_normalizer-3.4.7-cp38-cp38-musllinux_1_2_x86_64.whl", hash = "sha256:dd915403e231e6b1809fe9b6d9fc55cf8fb5e02765ac625d9cd623342a7905d7"},
++    {file = "charset_normalizer-3.4.7-cp38-cp38-win32.whl", hash = "sha256:320ade88cfb846b8cd6b4ddf5ee9e80ee0c1f52401f2456b84ae1ae6a1a5f207"},
++    {file = "charset_normalizer-3.4.7-cp38-cp38-win_amd64.whl", hash = "sha256:1dc8b0ea451d6e69735094606991f32867807881400f808a106ee1d963c46a83"},
++    {file = "charset_normalizer-3.4.7-cp39-cp39-macosx_10_9_universal2.whl", hash = "sha256:177a0ba5f0211d488e295aaf82707237e331c24788d8d76c96c5a41594723217"},
++    {file = "charset_normalizer-3.4.7-cp39-cp39-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:6e0d51f618228538a3e8f46bd246f87a6cd030565e015803691603f55e12afb5"},
++    {file = "charset_normalizer-3.4.7-cp39-cp39-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl", hash = "sha256:14265bfe1f09498b9d8ec91e9ec9fa52775edf90fcbde092b25f4a33d444fea9"},
++    {file = "charset_normalizer-3.4.7-cp39-cp39-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl", hash = "sha256:87fad7d9ba98c86bcb41b2dc8dbb326619be2562af1f8ff50776a39e55721c5a"},
++    {file = "charset_normalizer-3.4.7-cp39-cp39-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:f22dec1690b584cea26fade98b2435c132c1b5f68e39f5a0b7627cd7ae31f1dc"},
++    {file = "charset_normalizer-3.4.7-cp39-cp39-manylinux_2_31_armv7l.whl", hash = "sha256:d61f00a0869d77422d9b2aba989e2d24afa6ffd552af442e0e58de4f35ea6d00"},
++    {file = "charset_normalizer-3.4.7-cp39-cp39-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl", hash = "sha256:6370e8686f662e6a3941ee48ed4742317cafbe5707e36406e9df792cdb535776"},
++    {file = "charset_normalizer-3.4.7-cp39-cp39-musllinux_1_2_aarch64.whl", hash = "sha256:a6c5863edfbe888d9eff9c8b8087354e27618d9da76425c119293f11712a6319"},
++    {file = "charset_normalizer-3.4.7-cp39-cp39-musllinux_1_2_armv7l.whl", hash = "sha256:ed065083d0898c9d5b4bbec7b026fd755ff7454e6e8b73a67f8c744b13986e24"},
++    {file = "charset_normalizer-3.4.7-cp39-cp39-musllinux_1_2_ppc64le.whl", hash = "sha256:2cd4a60d0e2fb04537162c62bbbb4182f53541fe0ede35cdf270a1c1e723cc42"},
++    {file = "charset_normalizer-3.4.7-cp39-cp39-musllinux_1_2_riscv64.whl", hash = "sha256:813c0e0132266c08eb87469a642cb30aaff57c5f426255419572aaeceeaa7bf4"},
++    {file = "charset_normalizer-3.4.7-cp39-cp39-musllinux_1_2_s390x.whl", hash = "sha256:07d9e39b01743c3717745f4c530a6349eadbfa043c7577eef86c502c15df2c67"},
++    {file = "charset_normalizer-3.4.7-cp39-cp39-musllinux_1_2_x86_64.whl", hash = "sha256:c0f081d69a6e58272819b70288d3221a6ee64b98df852631c80f293514d3b274"},
++    {file = "charset_normalizer-3.4.7-cp39-cp39-win32.whl", hash = "sha256:8751d2787c9131302398b11e6c8068053dcb55d5a8964e114b6e196cf16cb366"},
++    {file = "charset_normalizer-3.4.7-cp39-cp39-win_amd64.whl", hash = "sha256:12a6fff75f6bc66711b73a2f0addfc4c8c15a20e805146a02d147a318962c444"},
++    {file = "charset_normalizer-3.4.7-cp39-cp39-win_arm64.whl", hash = "sha256:bb8cc7534f51d9a017b93e3e85b260924f909601c3df002bcdb58ddb4dc41a5c"},
++    {file = "charset_normalizer-3.4.7-py3-none-any.whl", hash = "sha256:3dce51d0f5e7951f8bb4900c257dad282f49190fdbebecd4ba99bcc41fef404d"},
++    {file = "charset_normalizer-3.4.7.tar.gz", hash = "sha256:ae89db9e5f98a11a4bf50407d4363e7b09b31e55bc117b4f7d80aab97ba009e5"},
++]
++
+ [[package]]
+ name = "colorama"
+ version = "0.4.6"
+@@ -1143,6 +1281,27 @@ files = [
+ [package.dependencies]
+ six = ">=1.5"
+ 
++[[package]]
++name = "requests"
++version = "2.33.1"
++description = "Python HTTP for Humans."
++optional = false
++python-versions = ">=3.10"
++files = [
++    {file = "requests-2.33.1-py3-none-any.whl", hash = "sha256:4e6d1ef462f3626a1f0a0a9c42dd93c63bad33f9f1c1937509b8c5c8718ab56a"},
++    {file = "requests-2.33.1.tar.gz", hash = "sha256:18817f8c57c6263968bc123d237e3b8b08ac046f5456bd1e307ee8f4250d3517"},
++]
++
++[package.dependencies]
++certifi = ">=2023.5.7"
++charset_normalizer = ">=2,<4"
++idna = ">=2.5,<4"
++urllib3 = ">=1.26,<3"
++
++[package.extras]
++socks = ["PySocks (>=1.5.6,!=1.5.7)"]
++use-chardet-on-py3 = ["chardet (>=3.0.2,<8)"]
++
+ [[package]]
+ name = "ruff"
+ version = "0.11.5"
+@@ -1248,6 +1407,20 @@ files = [
+     {file = "types_python_dateutil-2.9.0.20260408.tar.gz", hash = "sha256:8b056ec01568674235f64ecbcef928972a5fac412f5aab09c516dfa2acfbb582"},
+ ]
+ 
++[[package]]
++name = "types-requests"
++version = "2.33.0.20260408"
++description = "Typing stubs for requests"
++optional = false
++python-versions = ">=3.10"
++files = [
++    {file = "types_requests-2.33.0.20260408-py3-none-any.whl", hash = "sha256:81f31d5ea4acb39f03be7bc8bed569ba6d5a9c5d97e89f45ac43d819b68ca50f"},
++    {file = "types_requests-2.33.0.20260408.tar.gz", hash = "sha256:95b9a86376807a216b2fb412b47617b202091c3ea7c078f47cc358d5528ccb7b"},
++]
++
++[package.dependencies]
++urllib3 = ">=2"
++
+ [[package]]
+ name = "typing-extensions"
+ version = "4.15.0"
+@@ -1438,4 +1611,4 @@ aiohttp = ["aiohttp", "httpx-aiohttp"]
+ [metadata]
+ lock-version = "2.0"
+ python-versions = "^3.10"
+-content-hash = "02ee31852ff3143d28cf513ee3fa1b514fe2ba936dcffc8ab6cc98f7c9570c01"
++content-hash = "e2541afd91bc09d4197eeb20ce689552c2fba7835992ac58b76873446bec8411"
+diff --git a/pyproject.toml b/pyproject.toml
+index 18f1906df36..d2c4e486b6c 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -57,6 +57,8 @@ pytest-xdist = "^3.6.1"
+ python-dateutil = "^2.9.0"
+ types-python-dateutil = "^2.9.0.20240316"
+ urllib3 = ">=1.26.19,<2.0.0 || >=2.2.2,<3.0.0"
++requests = "^2.33.0"
++types-requests = "^2.33.0"
+ ruff = "==0.11.5"
+ 
+ [tool.pytest.ini_options]
+diff --git a/reference.md b/reference.md
+index ef52dd4c84c..96836d74d2b 100644
+--- a/reference.md
++++ b/reference.md
+@@ -71,7 +71,7 @@ client.bigunion.get(
+ 
+ ```python
+ from seed import SeedUnions
+-from seed.bigunion import BigUnion_NormalSweet
++from seed.bigunion import NormalSweetBigUnion
+ import datetime
+ 
+ client = SeedUnions(
+@@ -79,7 +79,7 @@ client = SeedUnions(
+ )
+ 
+ client.bigunion.update(
+-    request=BigUnion_NormalSweet(
++    request=NormalSweetBigUnion(
+         id="id",
+         created_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+         archived_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+@@ -135,7 +135,7 @@ client.bigunion.update(
+ 
+ ```python
+ from seed import SeedUnions
+-from seed.bigunion import BigUnion_NormalSweet
++from seed.bigunion import NormalSweetBigUnion
+ import datetime
+ 
+ client = SeedUnions(
+@@ -144,13 +144,13 @@ client = SeedUnions(
+ 
+ client.bigunion.update_many(
+     request=[
+-        BigUnion_NormalSweet(
++        NormalSweetBigUnion(
+             id="id",
+             created_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+             archived_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+             value="value",
+         ),
+-        BigUnion_NormalSweet(
++        NormalSweetBigUnion(
+             id="id",
+             created_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+             archived_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+@@ -265,14 +265,14 @@ client.bigunion.get(
+ 
+ ```python
+ from seed import SeedUnions
+-from seed.union import Shape_Circle
++from seed.union import CircleShape
+ 
+ client = SeedUnions(
+     base_url="https://yourhost.com/path/to/api",
+ )
+ 
+ client.union.update(
+-    request=Shape_Circle(
++    request=CircleShape(
+         id="id",
+         radius=1.1,
+     ),
+diff --git a/snippet.json b/snippet.json
+index f2788097404..bb2c36b07e1 100644
+--- a/snippet.json
++++ b/snippet.json
+@@ -1,27 +1,27 @@
+ {
+     "types": {
+-        "type_bigunion:BigUnion": "from seed.bigunion import BigUnion_NormalSweet\n\nBigUnion_NormalSweet(\n    value=\"example1\",\n)\n",
++        "type_bigunion:BigUnion": "from seed.bigunion import NormalSweetBigUnion\n\nNormalSweetBigUnion(\n    value=\"example1\",\n)\n",
+         "type_bigunion:NormalSweet": "from seed.bigunion import NormalSweet\n\nNormalSweet(\n    value=\"example1\",\n)\n",
+         "type_bigunion:ThankfulFactor": "from seed.bigunion import ThankfulFactor\n\nThankfulFactor(\n    value=\"example1\",\n)\n",
+-        "type_types:UnionWithPrimitive": "from seed.types import UnionWithPrimitive_Integer\n\nUnionWithPrimitive_Integer(value=9)\n",
+-        "type_types:UnionWithDuplicatePrimitive": "from seed.types import UnionWithDuplicatePrimitive_Integer1\n\nUnionWithDuplicatePrimitive_Integer1(value=9)\n",
+-        "type_types:UnionWithoutKey": "from seed.types import UnionWithoutKey_Foo\n\nUnionWithoutKey_Foo(\n    name=\"example1\",\n)\n",
+-        "type_types:UnionWithNoProperties": "from seed.types import UnionWithNoProperties_Foo\n\nUnionWithNoProperties_Foo(\n    name=\"example\",\n)\n",
+-        "type_types:UnionWithMultipleNoProperties": "from seed.types import UnionWithMultipleNoProperties_Foo\n\nUnionWithMultipleNoProperties_Foo(\n    name=\"example\",\n)\n",
+-        "type_types:UnionWithLiteral": "from seed.types import UnionWithLiteral_Fern\n\nUnionWithLiteral_Fern()\n",
+-        "type_types:UnionWithBaseProperties": "from seed.types import UnionWithBaseProperties_Integer\n\nUnionWithBaseProperties_Integer(value=5)\n",
+-        "type_types:UnionWithTime": "from seed.types import UnionWithTime_Value\n\nUnionWithTime_Value(value=5)\n",
+-        "type_types:UnionWithOptionalTime": "import datetime\n\nfrom seed.types import UnionWithOptionalTime_Date\n\nUnionWithOptionalTime_Date(\n    value=datetime.date.fromisoformat(\n        \"1994-01-01\",\n    )\n)\n",
+-        "type_types:UnionWithSingleElement": "from seed.types import UnionWithSingleElement_Foo\n\nUnionWithSingleElement_Foo(\n    name=\"example1\",\n)\n",
+-        "type_types:UnionWithDuplicateTypes": "from seed.types import UnionWithDuplicateTypes_Foo1\n\nUnionWithDuplicateTypes_Foo1(\n    name=\"example1\",\n)\n",
+-        "type_types:UnionWithSubTypes": "from seed.types import UnionWithSubTypes_Foo\n\nUnionWithSubTypes_Foo(\n    name=\"example1\",\n)\n",
++        "type_types:UnionWithPrimitive": "from seed.types import IntegerUnionWithPrimitive\n\nIntegerUnionWithPrimitive(value=9)\n",
++        "type_types:UnionWithDuplicatePrimitive": "from seed.types import Integer1UnionWithDuplicatePrimitive\n\nInteger1UnionWithDuplicatePrimitive(value=9)\n",
++        "type_types:UnionWithoutKey": "from seed.types import FooUnionWithoutKey\n\nFooUnionWithoutKey(\n    name=\"example1\",\n)\n",
++        "type_types:UnionWithNoProperties": "from seed.types import FooUnionWithNoProperties\n\nFooUnionWithNoProperties(\n    name=\"example\",\n)\n",
++        "type_types:UnionWithMultipleNoProperties": "from seed.types import FooUnionWithMultipleNoProperties\n\nFooUnionWithMultipleNoProperties(\n    name=\"example\",\n)\n",
++        "type_types:UnionWithLiteral": "from seed.types import FernUnionWithLiteral\n\nFernUnionWithLiteral()\n",
++        "type_types:UnionWithBaseProperties": "from seed.types import IntegerUnionWithBaseProperties\n\nIntegerUnionWithBaseProperties(value=5)\n",
++        "type_types:UnionWithTime": "from seed.types import ValueUnionWithTime\n\nValueUnionWithTime(value=5)\n",
++        "type_types:UnionWithOptionalTime": "import datetime\n\nfrom seed.types import DateUnionWithOptionalTime\n\nDateUnionWithOptionalTime(\n    value=datetime.date.fromisoformat(\n        \"1994-01-01\",\n    )\n)\n",
++        "type_types:UnionWithSingleElement": "from seed.types import FooUnionWithSingleElement\n\nFooUnionWithSingleElement(\n    name=\"example1\",\n)\n",
++        "type_types:UnionWithDuplicateTypes": "from seed.types import Foo1UnionWithDuplicateTypes\n\nFoo1UnionWithDuplicateTypes(\n    name=\"example1\",\n)\n",
++        "type_types:UnionWithSubTypes": "from seed.types import FooUnionWithSubTypes\n\nFooUnionWithSubTypes(\n    name=\"example1\",\n)\n",
+         "type_types:Foo": "from seed.types import Foo\n\nFoo(\n    name=\"example1\",\n)\n",
+         "type_types:FooExtended": "from seed.types import FooExtended\n\nFooExtended(\n    name=\"example1\",\n    age=5,\n)\n",
+         "type_types:Bar": "from seed.types import Bar\n\nBar(\n    name=\"example1\",\n)\n",
+-        "type_types:UnionWithSameStringTypes": "from seed.types import UnionWithSameStringTypes_CustomFormat\n\nUnionWithSameStringTypes_CustomFormat(value=\"custom-123\")\n",
+-        "type_types:UnionWithSameNumberTypes": "from seed.types import UnionWithSameNumberTypes_PositiveInt\n\nUnionWithSameNumberTypes_PositiveInt(value=100)\n",
++        "type_types:UnionWithSameStringTypes": "from seed.types import CustomFormatUnionWithSameStringTypes\n\nCustomFormatUnionWithSameStringTypes(value=\"custom-123\")\n",
++        "type_types:UnionWithSameNumberTypes": "from seed.types import PositiveIntUnionWithSameNumberTypes\n\nPositiveIntUnionWithSameNumberTypes(value=100)\n",
+         "type_union:GetShapeRequest": "from seed.union import GetShapeRequest\n\nGetShapeRequest(\n    id=\"example\",\n)\n",
+-        "type_union:Shape": "from seed.union import Shape_Circle\n\nShape_Circle(\n    radius=5.0,\n)\n"
++        "type_union:Shape": "from seed.union import CircleShape\n\nCircleShape(\n    radius=5.0,\n)\n"
+     },
+     "endpoints": [
+         {
+@@ -45,8 +45,8 @@
+                 "identifier_override": "endpoint_bigunion.update"
+             },
+             "snippet": {
+-                "sync_client": "from seed import SeedUnions\nfrom seed.bigunion import BigUnion_NormalSweet\n\nclient = SeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.bigunion.update(\n    request=BigUnion_NormalSweet(\n        value=\"value\",\n    ),\n)\n",
+-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedUnions\nfrom seed.bigunion import BigUnion_NormalSweet\n\nclient = AsyncSeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.bigunion.update(\n        request=BigUnion_NormalSweet(\n            value=\"value\",\n        ),\n    )\n\n\nasyncio.run(main())\n",
++                "sync_client": "from seed import SeedUnions\nfrom seed.bigunion import NormalSweetBigUnion\n\nclient = SeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.bigunion.update(\n    request=NormalSweetBigUnion(\n        value=\"value\",\n    ),\n)\n",
++                "async_client": "import asyncio\n\nfrom seed import AsyncSeedUnions\nfrom seed.bigunion import NormalSweetBigUnion\n\nclient = AsyncSeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.bigunion.update(\n        request=NormalSweetBigUnion(\n            value=\"value\",\n        ),\n    )\n\n\nasyncio.run(main())\n",
+                 "type": "python"
+             }
+         },
+@@ -58,8 +58,8 @@
+                 "identifier_override": "endpoint_bigunion.update-many"
+             },
+             "snippet": {
+-                "sync_client": "from seed import SeedUnions\nfrom seed.bigunion import BigUnion_NormalSweet\n\nclient = SeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.bigunion.update_many(\n    request=[\n        BigUnion_NormalSweet(\n            value=\"value\",\n        ),\n        BigUnion_NormalSweet(\n            value=\"value\",\n        ),\n    ],\n)\n",
+-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedUnions\nfrom seed.bigunion import BigUnion_NormalSweet\n\nclient = AsyncSeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.bigunion.update_many(\n        request=[\n            BigUnion_NormalSweet(\n                value=\"value\",\n            ),\n            BigUnion_NormalSweet(\n                value=\"value\",\n            ),\n        ],\n    )\n\n\nasyncio.run(main())\n",
++                "sync_client": "from seed import SeedUnions\nfrom seed.bigunion import NormalSweetBigUnion\n\nclient = SeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.bigunion.update_many(\n    request=[\n        NormalSweetBigUnion(\n            value=\"value\",\n        ),\n        NormalSweetBigUnion(\n            value=\"value\",\n        ),\n    ],\n)\n",
++                "async_client": "import asyncio\n\nfrom seed import AsyncSeedUnions\nfrom seed.bigunion import NormalSweetBigUnion\n\nclient = AsyncSeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.bigunion.update_many(\n        request=[\n            NormalSweetBigUnion(\n                value=\"value\",\n            ),\n            NormalSweetBigUnion(\n                value=\"value\",\n            ),\n        ],\n    )\n\n\nasyncio.run(main())\n",
+                 "type": "python"
+             }
+         },
+@@ -84,8 +84,8 @@
+                 "identifier_override": "endpoint_union.update"
+             },
+             "snippet": {
+-                "sync_client": "from seed import SeedUnions\nfrom seed.union import Shape_Circle\n\nclient = SeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.union.update(\n    request=Shape_Circle(\n        radius=1.1,\n    ),\n)\n",
+-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedUnions\nfrom seed.union import Shape_Circle\n\nclient = AsyncSeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.union.update(\n        request=Shape_Circle(\n            radius=1.1,\n        ),\n    )\n\n\nasyncio.run(main())\n",
++                "sync_client": "from seed import SeedUnions\nfrom seed.union import CircleShape\n\nclient = SeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.union.update(\n    request=CircleShape(\n        radius=1.1,\n    ),\n)\n",
++                "async_client": "import asyncio\n\nfrom seed import AsyncSeedUnions\nfrom seed.union import CircleShape\n\nclient = AsyncSeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.union.update(\n        request=CircleShape(\n            radius=1.1,\n        ),\n    )\n\n\nasyncio.run(main())\n",
+                 "type": "python"
+             }
+         }
+diff --git a/src/seed/__init__.py b/src/seed/__init__.py
+index 3704adab324..cee627c6431 100644
+--- a/src/seed/__init__.py
++++ b/src/seed/__init__.py
+@@ -7,279 +7,279 @@ from importlib import import_module
+ 
+ if typing.TYPE_CHECKING:
+     from .types import (
++        AnyNumberUnionWithSameNumberTypes,
+         Bar,
++        BarUnion,
++        BarUnionWithDiscriminant,
++        BarUnionWithNullableReference,
++        BarUnionWithOptionalReference,
++        BarUnionWithoutKey,
++        CustomFormatUnionWithSameStringTypes,
++        DateUnionWithOptionalTime,
++        DateUnionWithTime,
++        DatetimeUnionWithOptionalTime,
++        DatetimeUnionWithTime,
++        Empty1UnionWithMultipleNoProperties,
++        Empty2UnionWithMultipleNoProperties,
++        EmptyUnionWithNoProperties,
++        FernUnionWithLiteral,
+         FirstItemType,
++        FirstItemTypeUnionWithDuplicativeDiscriminants,
+         Foo,
++        Foo1UnionWithDuplicateTypes,
++        Foo2UnionWithDuplicateTypes,
+         FooExtended,
++        FooExtendedUnionWithSubTypes,
++        FooUnion,
++        FooUnionWithBaseProperties,
++        FooUnionWithDiscriminant,
++        FooUnionWithMultipleNoProperties,
++        FooUnionWithNoProperties,
++        FooUnionWithNullableReference,
++        FooUnionWithOptionalReference,
++        FooUnionWithSingleElement,
++        FooUnionWithSubTypes,
++        FooUnionWithoutKey,
++        Integer1UnionWithDuplicatePrimitive,
++        Integer2UnionWithDuplicatePrimitive,
++        IntegerUnionWithBaseProperties,
++        IntegerUnionWithPrimitive,
++        NegativeIntUnionWithSameNumberTypes,
++        PatternStringUnionWithSameStringTypes,
++        PositiveIntUnionWithSameNumberTypes,
++        RegularStringUnionWithSameStringTypes,
+         SecondItemType,
++        SecondItemTypeUnionWithDuplicativeDiscriminants,
++        String1UnionWithDuplicatePrimitive,
++        String2UnionWithDuplicatePrimitive,
++        StringUnionWithBaseProperties,
++        StringUnionWithPrimitive,
+         TypeWithOptionalMap,
+         Union,
+         UnionWithBaseProperties,
+-        UnionWithBaseProperties_Foo,
+-        UnionWithBaseProperties_Integer,
+-        UnionWithBaseProperties_String,
+         UnionWithDiscriminant,
+-        UnionWithDiscriminant_Bar,
+-        UnionWithDiscriminant_Foo,
+         UnionWithDuplicatePrimitive,
+-        UnionWithDuplicatePrimitive_Integer1,
+-        UnionWithDuplicatePrimitive_Integer2,
+-        UnionWithDuplicatePrimitive_String1,
+-        UnionWithDuplicatePrimitive_String2,
+         UnionWithDuplicateTypes,
+-        UnionWithDuplicateTypes_Foo1,
+-        UnionWithDuplicateTypes_Foo2,
+         UnionWithDuplicativeDiscriminants,
+-        UnionWithDuplicativeDiscriminants_FirstItemType,
+-        UnionWithDuplicativeDiscriminants_SecondItemType,
+         UnionWithLiteral,
+-        UnionWithLiteral_Fern,
+         UnionWithMultipleNoProperties,
+-        UnionWithMultipleNoProperties_Empty1,
+-        UnionWithMultipleNoProperties_Empty2,
+-        UnionWithMultipleNoProperties_Foo,
+         UnionWithNoProperties,
+-        UnionWithNoProperties_Empty,
+-        UnionWithNoProperties_Foo,
+         UnionWithNullableReference,
+-        UnionWithNullableReference_Bar,
+-        UnionWithNullableReference_Foo,
+         UnionWithOptionalReference,
+-        UnionWithOptionalReference_Bar,
+-        UnionWithOptionalReference_Foo,
+         UnionWithOptionalTime,
+-        UnionWithOptionalTime_Date,
+-        UnionWithOptionalTime_Datetime,
+         UnionWithPrimitive,
+-        UnionWithPrimitive_Integer,
+-        UnionWithPrimitive_String,
+         UnionWithSameNumberTypes,
+-        UnionWithSameNumberTypes_AnyNumber,
+-        UnionWithSameNumberTypes_NegativeInt,
+-        UnionWithSameNumberTypes_PositiveInt,
+         UnionWithSameStringTypes,
+-        UnionWithSameStringTypes_CustomFormat,
+-        UnionWithSameStringTypes_PatternString,
+-        UnionWithSameStringTypes_RegularString,
+         UnionWithSingleElement,
+-        UnionWithSingleElement_Foo,
+         UnionWithSubTypes,
+-        UnionWithSubTypes_Foo,
+-        UnionWithSubTypes_FooExtended,
+         UnionWithTime,
+-        UnionWithTime_Date,
+-        UnionWithTime_Datetime,
+-        UnionWithTime_Value,
+         UnionWithoutKey,
+-        UnionWithoutKey_Bar,
+-        UnionWithoutKey_Foo,
+-        Union_Bar,
+-        Union_Foo,
++        ValueUnionWithTime,
+     )
+     from . import bigunion, types, union
+     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
+     from .bigunion import (
+         ActiveDiamond,
++        ActiveDiamondBigUnion,
+         AttractiveScript,
++        AttractiveScriptBigUnion,
+         BigUnion,
+-        BigUnion_ActiveDiamond,
+-        BigUnion_AttractiveScript,
+-        BigUnion_CircularCard,
+-        BigUnion_ColorfulCover,
+-        BigUnion_DiligentDeal,
+-        BigUnion_DisloyalValue,
+-        BigUnion_DistinctFailure,
+-        BigUnion_FalseMirror,
+-        BigUnion_FrozenSleep,
+-        BigUnion_GaseousRoad,
+-        BigUnion_GruesomeCoach,
+-        BigUnion_HarmoniousPlay,
+-        BigUnion_HastyPain,
+-        BigUnion_HoarseMouse,
+-        BigUnion_JumboEnd,
+-        BigUnion_LimpingStep,
+-        BigUnion_MistySnow,
+-        BigUnion_NormalSweet,
+-        BigUnion_PopularLimit,
+-        BigUnion_PotableBad,
+-        BigUnion_PracticalPrinciple,
+-        BigUnion_PrimaryBlock,
+-        BigUnion_RotatingRatio,
+-        BigUnion_ThankfulFactor,
+-        BigUnion_TotalWork,
+-        BigUnion_TriangularRepair,
+-        BigUnion_UniqueStress,
+-        BigUnion_UnwillingSmoke,
+-        BigUnion_VibrantExcitement,
+         CircularCard,
++        CircularCardBigUnion,
+         ColorfulCover,
++        ColorfulCoverBigUnion,
+         DiligentDeal,
++        DiligentDealBigUnion,
+         DisloyalValue,
++        DisloyalValueBigUnion,
+         DistinctFailure,
++        DistinctFailureBigUnion,
+         FalseMirror,
++        FalseMirrorBigUnion,
+         FrozenSleep,
++        FrozenSleepBigUnion,
+         GaseousRoad,
++        GaseousRoadBigUnion,
+         GruesomeCoach,
++        GruesomeCoachBigUnion,
+         HarmoniousPlay,
++        HarmoniousPlayBigUnion,
+         HastyPain,
++        HastyPainBigUnion,
+         HoarseMouse,
++        HoarseMouseBigUnion,
+         JumboEnd,
++        JumboEndBigUnion,
+         LimpingStep,
++        LimpingStepBigUnion,
+         MistySnow,
++        MistySnowBigUnion,
+         NormalSweet,
++        NormalSweetBigUnion,
+         PopularLimit,
++        PopularLimitBigUnion,
+         PotableBad,
++        PotableBadBigUnion,
+         PracticalPrinciple,
++        PracticalPrincipleBigUnion,
+         PrimaryBlock,
++        PrimaryBlockBigUnion,
+         RotatingRatio,
++        RotatingRatioBigUnion,
+         ThankfulFactor,
++        ThankfulFactorBigUnion,
+         TotalWork,
++        TotalWorkBigUnion,
+         TriangularRepair,
++        TriangularRepairBigUnion,
+         UniqueStress,
++        UniqueStressBigUnion,
+         UnwillingSmoke,
++        UnwillingSmokeBigUnion,
+         VibrantExcitement,
++        VibrantExcitementBigUnion,
+     )
+     from .client import AsyncSeedUnions, SeedUnions
+-    from .union import Circle, GetShapeRequest, Shape, Shape_Circle, Shape_Square, Square, WithName
++    from .union import Circle, CircleShape, GetShapeRequest, Shape, Square, SquareShape, WithName
+     from .version import __version__
+ _dynamic_imports: typing.Dict[str, str] = {
+     "ActiveDiamond": ".bigunion",
++    "ActiveDiamondBigUnion": ".bigunion",
++    "AnyNumberUnionWithSameNumberTypes": ".types",
+     "AsyncSeedUnions": ".client",
+     "AttractiveScript": ".bigunion",
++    "AttractiveScriptBigUnion": ".bigunion",
+     "Bar": ".types",
++    "BarUnion": ".types",
++    "BarUnionWithDiscriminant": ".types",
++    "BarUnionWithNullableReference": ".types",
++    "BarUnionWithOptionalReference": ".types",
++    "BarUnionWithoutKey": ".types",
+     "BigUnion": ".bigunion",
+-    "BigUnion_ActiveDiamond": ".bigunion",
+-    "BigUnion_AttractiveScript": ".bigunion",
+-    "BigUnion_CircularCard": ".bigunion",
+-    "BigUnion_ColorfulCover": ".bigunion",
+-    "BigUnion_DiligentDeal": ".bigunion",
+-    "BigUnion_DisloyalValue": ".bigunion",
+-    "BigUnion_DistinctFailure": ".bigunion",
+-    "BigUnion_FalseMirror": ".bigunion",
+-    "BigUnion_FrozenSleep": ".bigunion",
+-    "BigUnion_GaseousRoad": ".bigunion",
+-    "BigUnion_GruesomeCoach": ".bigunion",
+-    "BigUnion_HarmoniousPlay": ".bigunion",
+-    "BigUnion_HastyPain": ".bigunion",
+-    "BigUnion_HoarseMouse": ".bigunion",
+-    "BigUnion_JumboEnd": ".bigunion",
+-    "BigUnion_LimpingStep": ".bigunion",
+-    "BigUnion_MistySnow": ".bigunion",
+-    "BigUnion_NormalSweet": ".bigunion",
+-    "BigUnion_PopularLimit": ".bigunion",
+-    "BigUnion_PotableBad": ".bigunion",
+-    "BigUnion_PracticalPrinciple": ".bigunion",
+-    "BigUnion_PrimaryBlock": ".bigunion",
+-    "BigUnion_RotatingRatio": ".bigunion",
+-    "BigUnion_ThankfulFactor": ".bigunion",
+-    "BigUnion_TotalWork": ".bigunion",
+-    "BigUnion_TriangularRepair": ".bigunion",
+-    "BigUnion_UniqueStress": ".bigunion",
+-    "BigUnion_UnwillingSmoke": ".bigunion",
+-    "BigUnion_VibrantExcitement": ".bigunion",
+     "Circle": ".union",
++    "CircleShape": ".union",
+     "CircularCard": ".bigunion",
++    "CircularCardBigUnion": ".bigunion",
+     "ColorfulCover": ".bigunion",
++    "ColorfulCoverBigUnion": ".bigunion",
++    "CustomFormatUnionWithSameStringTypes": ".types",
++    "DateUnionWithOptionalTime": ".types",
++    "DateUnionWithTime": ".types",
++    "DatetimeUnionWithOptionalTime": ".types",
++    "DatetimeUnionWithTime": ".types",
+     "DefaultAioHttpClient": "._default_clients",
+     "DefaultAsyncHttpxClient": "._default_clients",
+     "DiligentDeal": ".bigunion",
++    "DiligentDealBigUnion": ".bigunion",
+     "DisloyalValue": ".bigunion",
++    "DisloyalValueBigUnion": ".bigunion",
+     "DistinctFailure": ".bigunion",
++    "DistinctFailureBigUnion": ".bigunion",
++    "Empty1UnionWithMultipleNoProperties": ".types",
++    "Empty2UnionWithMultipleNoProperties": ".types",
++    "EmptyUnionWithNoProperties": ".types",
+     "FalseMirror": ".bigunion",
++    "FalseMirrorBigUnion": ".bigunion",
++    "FernUnionWithLiteral": ".types",
+     "FirstItemType": ".types",
++    "FirstItemTypeUnionWithDuplicativeDiscriminants": ".types",
+     "Foo": ".types",
++    "Foo1UnionWithDuplicateTypes": ".types",
++    "Foo2UnionWithDuplicateTypes": ".types",
+     "FooExtended": ".types",
++    "FooExtendedUnionWithSubTypes": ".types",
++    "FooUnion": ".types",
++    "FooUnionWithBaseProperties": ".types",
++    "FooUnionWithDiscriminant": ".types",
++    "FooUnionWithMultipleNoProperties": ".types",
++    "FooUnionWithNoProperties": ".types",
++    "FooUnionWithNullableReference": ".types",
++    "FooUnionWithOptionalReference": ".types",
++    "FooUnionWithSingleElement": ".types",
++    "FooUnionWithSubTypes": ".types",
++    "FooUnionWithoutKey": ".types",
+     "FrozenSleep": ".bigunion",
++    "FrozenSleepBigUnion": ".bigunion",
+     "GaseousRoad": ".bigunion",
++    "GaseousRoadBigUnion": ".bigunion",
+     "GetShapeRequest": ".union",
+     "GruesomeCoach": ".bigunion",
++    "GruesomeCoachBigUnion": ".bigunion",
+     "HarmoniousPlay": ".bigunion",
++    "HarmoniousPlayBigUnion": ".bigunion",
+     "HastyPain": ".bigunion",
++    "HastyPainBigUnion": ".bigunion",
+     "HoarseMouse": ".bigunion",
++    "HoarseMouseBigUnion": ".bigunion",
++    "Integer1UnionWithDuplicatePrimitive": ".types",
++    "Integer2UnionWithDuplicatePrimitive": ".types",
++    "IntegerUnionWithBaseProperties": ".types",
++    "IntegerUnionWithPrimitive": ".types",
+     "JumboEnd": ".bigunion",
++    "JumboEndBigUnion": ".bigunion",
+     "LimpingStep": ".bigunion",
++    "LimpingStepBigUnion": ".bigunion",
+     "MistySnow": ".bigunion",
++    "MistySnowBigUnion": ".bigunion",
++    "NegativeIntUnionWithSameNumberTypes": ".types",
+     "NormalSweet": ".bigunion",
++    "NormalSweetBigUnion": ".bigunion",
++    "PatternStringUnionWithSameStringTypes": ".types",
+     "PopularLimit": ".bigunion",
++    "PopularLimitBigUnion": ".bigunion",
++    "PositiveIntUnionWithSameNumberTypes": ".types",
+     "PotableBad": ".bigunion",
++    "PotableBadBigUnion": ".bigunion",
+     "PracticalPrinciple": ".bigunion",
++    "PracticalPrincipleBigUnion": ".bigunion",
+     "PrimaryBlock": ".bigunion",
++    "PrimaryBlockBigUnion": ".bigunion",
++    "RegularStringUnionWithSameStringTypes": ".types",
+     "RotatingRatio": ".bigunion",
++    "RotatingRatioBigUnion": ".bigunion",
+     "SecondItemType": ".types",
++    "SecondItemTypeUnionWithDuplicativeDiscriminants": ".types",
+     "SeedUnions": ".client",
+     "Shape": ".union",
+-    "Shape_Circle": ".union",
+-    "Shape_Square": ".union",
+     "Square": ".union",
++    "SquareShape": ".union",
++    "String1UnionWithDuplicatePrimitive": ".types",
++    "String2UnionWithDuplicatePrimitive": ".types",
++    "StringUnionWithBaseProperties": ".types",
++    "StringUnionWithPrimitive": ".types",
+     "ThankfulFactor": ".bigunion",
++    "ThankfulFactorBigUnion": ".bigunion",
+     "TotalWork": ".bigunion",
++    "TotalWorkBigUnion": ".bigunion",
+     "TriangularRepair": ".bigunion",
++    "TriangularRepairBigUnion": ".bigunion",
+     "TypeWithOptionalMap": ".types",
+     "Union": ".types",
+     "UnionWithBaseProperties": ".types",
+-    "UnionWithBaseProperties_Foo": ".types",
+-    "UnionWithBaseProperties_Integer": ".types",
+-    "UnionWithBaseProperties_String": ".types",
+     "UnionWithDiscriminant": ".types",
+-    "UnionWithDiscriminant_Bar": ".types",
+-    "UnionWithDiscriminant_Foo": ".types",
+     "UnionWithDuplicatePrimitive": ".types",
+-    "UnionWithDuplicatePrimitive_Integer1": ".types",
+-    "UnionWithDuplicatePrimitive_Integer2": ".types",
+-    "UnionWithDuplicatePrimitive_String1": ".types",
+-    "UnionWithDuplicatePrimitive_String2": ".types",
+     "UnionWithDuplicateTypes": ".types",
+-    "UnionWithDuplicateTypes_Foo1": ".types",
+-    "UnionWithDuplicateTypes_Foo2": ".types",
+     "UnionWithDuplicativeDiscriminants": ".types",
+-    "UnionWithDuplicativeDiscriminants_FirstItemType": ".types",
+-    "UnionWithDuplicativeDiscriminants_SecondItemType": ".types",
+     "UnionWithLiteral": ".types",
+-    "UnionWithLiteral_Fern": ".types",
+     "UnionWithMultipleNoProperties": ".types",
+-    "UnionWithMultipleNoProperties_Empty1": ".types",
+-    "UnionWithMultipleNoProperties_Empty2": ".types",
+-    "UnionWithMultipleNoProperties_Foo": ".types",
+     "UnionWithNoProperties": ".types",
+-    "UnionWithNoProperties_Empty": ".types",
+-    "UnionWithNoProperties_Foo": ".types",
+     "UnionWithNullableReference": ".types",
+-    "UnionWithNullableReference_Bar": ".types",
+-    "UnionWithNullableReference_Foo": ".types",
+     "UnionWithOptionalReference": ".types",
+-    "UnionWithOptionalReference_Bar": ".types",
+-    "UnionWithOptionalReference_Foo": ".types",
+     "UnionWithOptionalTime": ".types",
+-    "UnionWithOptionalTime_Date": ".types",
+-    "UnionWithOptionalTime_Datetime": ".types",
+     "UnionWithPrimitive": ".types",
+-    "UnionWithPrimitive_Integer": ".types",
+-    "UnionWithPrimitive_String": ".types",
+     "UnionWithSameNumberTypes": ".types",
+-    "UnionWithSameNumberTypes_AnyNumber": ".types",
+-    "UnionWithSameNumberTypes_NegativeInt": ".types",
+-    "UnionWithSameNumberTypes_PositiveInt": ".types",
+     "UnionWithSameStringTypes": ".types",
+-    "UnionWithSameStringTypes_CustomFormat": ".types",
+-    "UnionWithSameStringTypes_PatternString": ".types",
+-    "UnionWithSameStringTypes_RegularString": ".types",
+     "UnionWithSingleElement": ".types",
+-    "UnionWithSingleElement_Foo": ".types",
+     "UnionWithSubTypes": ".types",
+-    "UnionWithSubTypes_Foo": ".types",
+-    "UnionWithSubTypes_FooExtended": ".types",
+     "UnionWithTime": ".types",
+-    "UnionWithTime_Date": ".types",
+-    "UnionWithTime_Datetime": ".types",
+-    "UnionWithTime_Value": ".types",
+     "UnionWithoutKey": ".types",
+-    "UnionWithoutKey_Bar": ".types",
+-    "UnionWithoutKey_Foo": ".types",
+-    "Union_Bar": ".types",
+-    "Union_Foo": ".types",
+     "UniqueStress": ".bigunion",
++    "UniqueStressBigUnion": ".bigunion",
+     "UnwillingSmoke": ".bigunion",
++    "UnwillingSmokeBigUnion": ".bigunion",
++    "ValueUnionWithTime": ".types",
+     "VibrantExcitement": ".bigunion",
++    "VibrantExcitementBigUnion": ".bigunion",
+     "WithName": ".union",
+     "__version__": ".version",
+     "bigunion": ".bigunion",
+@@ -311,142 +311,142 @@ def __dir__():
+ 
+ __all__ = [
+     "ActiveDiamond",
++    "ActiveDiamondBigUnion",
++    "AnyNumberUnionWithSameNumberTypes",
+     "AsyncSeedUnions",
+     "AttractiveScript",
++    "AttractiveScriptBigUnion",
+     "Bar",
++    "BarUnion",
++    "BarUnionWithDiscriminant",
++    "BarUnionWithNullableReference",
++    "BarUnionWithOptionalReference",
++    "BarUnionWithoutKey",
+     "BigUnion",
+-    "BigUnion_ActiveDiamond",
+-    "BigUnion_AttractiveScript",
+-    "BigUnion_CircularCard",
+-    "BigUnion_ColorfulCover",
+-    "BigUnion_DiligentDeal",
+-    "BigUnion_DisloyalValue",
+-    "BigUnion_DistinctFailure",
+-    "BigUnion_FalseMirror",
+-    "BigUnion_FrozenSleep",
+-    "BigUnion_GaseousRoad",
+-    "BigUnion_GruesomeCoach",
+-    "BigUnion_HarmoniousPlay",
+-    "BigUnion_HastyPain",
+-    "BigUnion_HoarseMouse",
+-    "BigUnion_JumboEnd",
+-    "BigUnion_LimpingStep",
+-    "BigUnion_MistySnow",
+-    "BigUnion_NormalSweet",
+-    "BigUnion_PopularLimit",
+-    "BigUnion_PotableBad",
+-    "BigUnion_PracticalPrinciple",
+-    "BigUnion_PrimaryBlock",
+-    "BigUnion_RotatingRatio",
+-    "BigUnion_ThankfulFactor",
+-    "BigUnion_TotalWork",
+-    "BigUnion_TriangularRepair",
+-    "BigUnion_UniqueStress",
+-    "BigUnion_UnwillingSmoke",
+-    "BigUnion_VibrantExcitement",
+     "Circle",
++    "CircleShape",
+     "CircularCard",
++    "CircularCardBigUnion",
+     "ColorfulCover",
++    "ColorfulCoverBigUnion",
++    "CustomFormatUnionWithSameStringTypes",
++    "DateUnionWithOptionalTime",
++    "DateUnionWithTime",
++    "DatetimeUnionWithOptionalTime",
++    "DatetimeUnionWithTime",
+     "DefaultAioHttpClient",
+     "DefaultAsyncHttpxClient",
+     "DiligentDeal",
++    "DiligentDealBigUnion",
+     "DisloyalValue",
++    "DisloyalValueBigUnion",
+     "DistinctFailure",
++    "DistinctFailureBigUnion",
++    "Empty1UnionWithMultipleNoProperties",
++    "Empty2UnionWithMultipleNoProperties",
++    "EmptyUnionWithNoProperties",
+     "FalseMirror",
++    "FalseMirrorBigUnion",
++    "FernUnionWithLiteral",
+     "FirstItemType",
++    "FirstItemTypeUnionWithDuplicativeDiscriminants",
+     "Foo",
++    "Foo1UnionWithDuplicateTypes",
++    "Foo2UnionWithDuplicateTypes",
+     "FooExtended",
++    "FooExtendedUnionWithSubTypes",
++    "FooUnion",
++    "FooUnionWithBaseProperties",
++    "FooUnionWithDiscriminant",
++    "FooUnionWithMultipleNoProperties",
++    "FooUnionWithNoProperties",
++    "FooUnionWithNullableReference",
++    "FooUnionWithOptionalReference",
++    "FooUnionWithSingleElement",
++    "FooUnionWithSubTypes",
++    "FooUnionWithoutKey",
+     "FrozenSleep",
++    "FrozenSleepBigUnion",
+     "GaseousRoad",
++    "GaseousRoadBigUnion",
+     "GetShapeRequest",
+     "GruesomeCoach",
++    "GruesomeCoachBigUnion",
+     "HarmoniousPlay",
++    "HarmoniousPlayBigUnion",
+     "HastyPain",
++    "HastyPainBigUnion",
+     "HoarseMouse",
++    "HoarseMouseBigUnion",
++    "Integer1UnionWithDuplicatePrimitive",
++    "Integer2UnionWithDuplicatePrimitive",
++    "IntegerUnionWithBaseProperties",
++    "IntegerUnionWithPrimitive",
+     "JumboEnd",
++    "JumboEndBigUnion",
+     "LimpingStep",
++    "LimpingStepBigUnion",
+     "MistySnow",
++    "MistySnowBigUnion",
++    "NegativeIntUnionWithSameNumberTypes",
+     "NormalSweet",
++    "NormalSweetBigUnion",
++    "PatternStringUnionWithSameStringTypes",
+     "PopularLimit",
++    "PopularLimitBigUnion",
++    "PositiveIntUnionWithSameNumberTypes",
+     "PotableBad",
++    "PotableBadBigUnion",
+     "PracticalPrinciple",
++    "PracticalPrincipleBigUnion",
+     "PrimaryBlock",
++    "PrimaryBlockBigUnion",
++    "RegularStringUnionWithSameStringTypes",
+     "RotatingRatio",
++    "RotatingRatioBigUnion",
+     "SecondItemType",
++    "SecondItemTypeUnionWithDuplicativeDiscriminants",
+     "SeedUnions",
+     "Shape",
+-    "Shape_Circle",
+-    "Shape_Square",
+     "Square",
++    "SquareShape",
++    "String1UnionWithDuplicatePrimitive",
++    "String2UnionWithDuplicatePrimitive",
++    "StringUnionWithBaseProperties",
++    "StringUnionWithPrimitive",
+     "ThankfulFactor",
++    "ThankfulFactorBigUnion",
+     "TotalWork",
++    "TotalWorkBigUnion",
+     "TriangularRepair",
++    "TriangularRepairBigUnion",
+     "TypeWithOptionalMap",
+     "Union",
+     "UnionWithBaseProperties",
+-    "UnionWithBaseProperties_Foo",
+-    "UnionWithBaseProperties_Integer",
+-    "UnionWithBaseProperties_String",
+     "UnionWithDiscriminant",
+-    "UnionWithDiscriminant_Bar",
+-    "UnionWithDiscriminant_Foo",
+     "UnionWithDuplicatePrimitive",
+-    "UnionWithDuplicatePrimitive_Integer1",
+-    "UnionWithDuplicatePrimitive_Integer2",
+-    "UnionWithDuplicatePrimitive_String1",
+-    "UnionWithDuplicatePrimitive_String2",
+     "UnionWithDuplicateTypes",
+-    "UnionWithDuplicateTypes_Foo1",
+-    "UnionWithDuplicateTypes_Foo2",
+     "UnionWithDuplicativeDiscriminants",
+-    "UnionWithDuplicativeDiscriminants_FirstItemType",
+-    "UnionWithDuplicativeDiscriminants_SecondItemType",
+     "UnionWithLiteral",
+-    "UnionWithLiteral_Fern",
+     "UnionWithMultipleNoProperties",
+-    "UnionWithMultipleNoProperties_Empty1",
+-    "UnionWithMultipleNoProperties_Empty2",
+-    "UnionWithMultipleNoProperties_Foo",
+     "UnionWithNoProperties",
+-    "UnionWithNoProperties_Empty",
+-    "UnionWithNoProperties_Foo",
+     "UnionWithNullableReference",
+-    "UnionWithNullableReference_Bar",
+-    "UnionWithNullableReference_Foo",
+     "UnionWithOptionalReference",
+-    "UnionWithOptionalReference_Bar",
+-    "UnionWithOptionalReference_Foo",
+     "UnionWithOptionalTime",
+-    "UnionWithOptionalTime_Date",
+-    "UnionWithOptionalTime_Datetime",
+     "UnionWithPrimitive",
+-    "UnionWithPrimitive_Integer",
+-    "UnionWithPrimitive_String",
+     "UnionWithSameNumberTypes",
+-    "UnionWithSameNumberTypes_AnyNumber",
+-    "UnionWithSameNumberTypes_NegativeInt",
+-    "UnionWithSameNumberTypes_PositiveInt",
+     "UnionWithSameStringTypes",
+-    "UnionWithSameStringTypes_CustomFormat",
+-    "UnionWithSameStringTypes_PatternString",
+-    "UnionWithSameStringTypes_RegularString",
+     "UnionWithSingleElement",
+-    "UnionWithSingleElement_Foo",
+     "UnionWithSubTypes",
+-    "UnionWithSubTypes_Foo",
+-    "UnionWithSubTypes_FooExtended",
+     "UnionWithTime",
+-    "UnionWithTime_Date",
+-    "UnionWithTime_Datetime",
+-    "UnionWithTime_Value",
+     "UnionWithoutKey",
+-    "UnionWithoutKey_Bar",
+-    "UnionWithoutKey_Foo",
+-    "Union_Bar",
+-    "Union_Foo",
+     "UniqueStress",
++    "UniqueStressBigUnion",
+     "UnwillingSmoke",
++    "UnwillingSmokeBigUnion",
++    "ValueUnionWithTime",
+     "VibrantExcitement",
++    "VibrantExcitementBigUnion",
+     "WithName",
+     "__version__",
+     "bigunion",
+diff --git a/src/seed/bigunion/__init__.py b/src/seed/bigunion/__init__.py
+index d46c0d52fd3..e918bbd31d2 100644
+--- a/src/seed/bigunion/__init__.py
++++ b/src/seed/bigunion/__init__.py
+@@ -8,125 +8,125 @@ from importlib import import_module
+ if typing.TYPE_CHECKING:
+     from .types import (
+         ActiveDiamond,
++        ActiveDiamondBigUnion,
+         AttractiveScript,
++        AttractiveScriptBigUnion,
+         BigUnion,
+-        BigUnion_ActiveDiamond,
+-        BigUnion_AttractiveScript,
+-        BigUnion_CircularCard,
+-        BigUnion_ColorfulCover,
+-        BigUnion_DiligentDeal,
+-        BigUnion_DisloyalValue,
+-        BigUnion_DistinctFailure,
+-        BigUnion_FalseMirror,
+-        BigUnion_FrozenSleep,
+-        BigUnion_GaseousRoad,
+-        BigUnion_GruesomeCoach,
+-        BigUnion_HarmoniousPlay,
+-        BigUnion_HastyPain,
+-        BigUnion_HoarseMouse,
+-        BigUnion_JumboEnd,
+-        BigUnion_LimpingStep,
+-        BigUnion_MistySnow,
+-        BigUnion_NormalSweet,
+-        BigUnion_PopularLimit,
+-        BigUnion_PotableBad,
+-        BigUnion_PracticalPrinciple,
+-        BigUnion_PrimaryBlock,
+-        BigUnion_RotatingRatio,
+-        BigUnion_ThankfulFactor,
+-        BigUnion_TotalWork,
+-        BigUnion_TriangularRepair,
+-        BigUnion_UniqueStress,
+-        BigUnion_UnwillingSmoke,
+-        BigUnion_VibrantExcitement,
+         CircularCard,
++        CircularCardBigUnion,
+         ColorfulCover,
++        ColorfulCoverBigUnion,
+         DiligentDeal,
++        DiligentDealBigUnion,
+         DisloyalValue,
++        DisloyalValueBigUnion,
+         DistinctFailure,
++        DistinctFailureBigUnion,
+         FalseMirror,
++        FalseMirrorBigUnion,
+         FrozenSleep,
++        FrozenSleepBigUnion,
+         GaseousRoad,
++        GaseousRoadBigUnion,
+         GruesomeCoach,
++        GruesomeCoachBigUnion,
+         HarmoniousPlay,
++        HarmoniousPlayBigUnion,
+         HastyPain,
++        HastyPainBigUnion,
+         HoarseMouse,
++        HoarseMouseBigUnion,
+         JumboEnd,
++        JumboEndBigUnion,
+         LimpingStep,
++        LimpingStepBigUnion,
+         MistySnow,
++        MistySnowBigUnion,
+         NormalSweet,
++        NormalSweetBigUnion,
+         PopularLimit,
++        PopularLimitBigUnion,
+         PotableBad,
++        PotableBadBigUnion,
+         PracticalPrinciple,
++        PracticalPrincipleBigUnion,
+         PrimaryBlock,
++        PrimaryBlockBigUnion,
+         RotatingRatio,
++        RotatingRatioBigUnion,
+         ThankfulFactor,
++        ThankfulFactorBigUnion,
+         TotalWork,
++        TotalWorkBigUnion,
+         TriangularRepair,
++        TriangularRepairBigUnion,
+         UniqueStress,
++        UniqueStressBigUnion,
+         UnwillingSmoke,
++        UnwillingSmokeBigUnion,
+         VibrantExcitement,
++        VibrantExcitementBigUnion,
+     )
+ _dynamic_imports: typing.Dict[str, str] = {
+     "ActiveDiamond": ".types",
++    "ActiveDiamondBigUnion": ".types",
+     "AttractiveScript": ".types",
++    "AttractiveScriptBigUnion": ".types",
+     "BigUnion": ".types",
+-    "BigUnion_ActiveDiamond": ".types",
+-    "BigUnion_AttractiveScript": ".types",
+-    "BigUnion_CircularCard": ".types",
+-    "BigUnion_ColorfulCover": ".types",
+-    "BigUnion_DiligentDeal": ".types",
+-    "BigUnion_DisloyalValue": ".types",
+-    "BigUnion_DistinctFailure": ".types",
+-    "BigUnion_FalseMirror": ".types",
+-    "BigUnion_FrozenSleep": ".types",
+-    "BigUnion_GaseousRoad": ".types",
+-    "BigUnion_GruesomeCoach": ".types",
+-    "BigUnion_HarmoniousPlay": ".types",
+-    "BigUnion_HastyPain": ".types",
+-    "BigUnion_HoarseMouse": ".types",
+-    "BigUnion_JumboEnd": ".types",
+-    "BigUnion_LimpingStep": ".types",
+-    "BigUnion_MistySnow": ".types",
+-    "BigUnion_NormalSweet": ".types",
+-    "BigUnion_PopularLimit": ".types",
+-    "BigUnion_PotableBad": ".types",
+-    "BigUnion_PracticalPrinciple": ".types",
+-    "BigUnion_PrimaryBlock": ".types",
+-    "BigUnion_RotatingRatio": ".types",
+-    "BigUnion_ThankfulFactor": ".types",
+-    "BigUnion_TotalWork": ".types",
+-    "BigUnion_TriangularRepair": ".types",
+-    "BigUnion_UniqueStress": ".types",
+-    "BigUnion_UnwillingSmoke": ".types",
+-    "BigUnion_VibrantExcitement": ".types",
+     "CircularCard": ".types",
++    "CircularCardBigUnion": ".types",
+     "ColorfulCover": ".types",
++    "ColorfulCoverBigUnion": ".types",
+     "DiligentDeal": ".types",
++    "DiligentDealBigUnion": ".types",
+     "DisloyalValue": ".types",
++    "DisloyalValueBigUnion": ".types",
+     "DistinctFailure": ".types",
++    "DistinctFailureBigUnion": ".types",
+     "FalseMirror": ".types",
++    "FalseMirrorBigUnion": ".types",
+     "FrozenSleep": ".types",
++    "FrozenSleepBigUnion": ".types",
+     "GaseousRoad": ".types",
++    "GaseousRoadBigUnion": ".types",
+     "GruesomeCoach": ".types",
++    "GruesomeCoachBigUnion": ".types",
+     "HarmoniousPlay": ".types",
++    "HarmoniousPlayBigUnion": ".types",
+     "HastyPain": ".types",
++    "HastyPainBigUnion": ".types",
+     "HoarseMouse": ".types",
++    "HoarseMouseBigUnion": ".types",
+     "JumboEnd": ".types",
++    "JumboEndBigUnion": ".types",
+     "LimpingStep": ".types",
++    "LimpingStepBigUnion": ".types",
+     "MistySnow": ".types",
++    "MistySnowBigUnion": ".types",
+     "NormalSweet": ".types",
++    "NormalSweetBigUnion": ".types",
+     "PopularLimit": ".types",
++    "PopularLimitBigUnion": ".types",
+     "PotableBad": ".types",
++    "PotableBadBigUnion": ".types",
+     "PracticalPrinciple": ".types",
++    "PracticalPrincipleBigUnion": ".types",
+     "PrimaryBlock": ".types",
++    "PrimaryBlockBigUnion": ".types",
+     "RotatingRatio": ".types",
++    "RotatingRatioBigUnion": ".types",
+     "ThankfulFactor": ".types",
++    "ThankfulFactorBigUnion": ".types",
+     "TotalWork": ".types",
++    "TotalWorkBigUnion": ".types",
+     "TriangularRepair": ".types",
++    "TriangularRepairBigUnion": ".types",
+     "UniqueStress": ".types",
++    "UniqueStressBigUnion": ".types",
+     "UnwillingSmoke": ".types",
++    "UnwillingSmokeBigUnion": ".types",
+     "VibrantExcitement": ".types",
++    "VibrantExcitementBigUnion": ".types",
+ }
+ 
+ 
+@@ -153,62 +153,62 @@ def __dir__():
+ 
+ __all__ = [
+     "ActiveDiamond",
++    "ActiveDiamondBigUnion",
+     "AttractiveScript",
++    "AttractiveScriptBigUnion",
+     "BigUnion",
+-    "BigUnion_ActiveDiamond",
+-    "BigUnion_AttractiveScript",
+-    "BigUnion_CircularCard",
+-    "BigUnion_ColorfulCover",
+-    "BigUnion_DiligentDeal",
+-    "BigUnion_DisloyalValue",
+-    "BigUnion_DistinctFailure",
+-    "BigUnion_FalseMirror",
+-    "BigUnion_FrozenSleep",
+-    "BigUnion_GaseousRoad",
+-    "BigUnion_GruesomeCoach",
+-    "BigUnion_HarmoniousPlay",
+-    "BigUnion_HastyPain",
+-    "BigUnion_HoarseMouse",
+-    "BigUnion_JumboEnd",
+-    "BigUnion_LimpingStep",
+-    "BigUnion_MistySnow",
+-    "BigUnion_NormalSweet",
+-    "BigUnion_PopularLimit",
+-    "BigUnion_PotableBad",
+-    "BigUnion_PracticalPrinciple",
+-    "BigUnion_PrimaryBlock",
+-    "BigUnion_RotatingRatio",
+-    "BigUnion_ThankfulFactor",
+-    "BigUnion_TotalWork",
+-    "BigUnion_TriangularRepair",
+-    "BigUnion_UniqueStress",
+-    "BigUnion_UnwillingSmoke",
+-    "BigUnion_VibrantExcitement",
+     "CircularCard",
++    "CircularCardBigUnion",
+     "ColorfulCover",
++    "ColorfulCoverBigUnion",
+     "DiligentDeal",
++    "DiligentDealBigUnion",
+     "DisloyalValue",
++    "DisloyalValueBigUnion",
+     "DistinctFailure",
++    "DistinctFailureBigUnion",
+     "FalseMirror",
++    "FalseMirrorBigUnion",
+     "FrozenSleep",
++    "FrozenSleepBigUnion",
+     "GaseousRoad",
++    "GaseousRoadBigUnion",
+     "GruesomeCoach",
++    "GruesomeCoachBigUnion",
+     "HarmoniousPlay",
++    "HarmoniousPlayBigUnion",
+     "HastyPain",
++    "HastyPainBigUnion",
+     "HoarseMouse",
++    "HoarseMouseBigUnion",
+     "JumboEnd",
++    "JumboEndBigUnion",
+     "LimpingStep",
++    "LimpingStepBigUnion",
+     "MistySnow",
++    "MistySnowBigUnion",
+     "NormalSweet",
++    "NormalSweetBigUnion",
+     "PopularLimit",
++    "PopularLimitBigUnion",
+     "PotableBad",
++    "PotableBadBigUnion",
+     "PracticalPrinciple",
++    "PracticalPrincipleBigUnion",
+     "PrimaryBlock",
++    "PrimaryBlockBigUnion",
+     "RotatingRatio",
++    "RotatingRatioBigUnion",
+     "ThankfulFactor",
++    "ThankfulFactorBigUnion",
+     "TotalWork",
++    "TotalWorkBigUnion",
+     "TriangularRepair",
++    "TriangularRepairBigUnion",
+     "UniqueStress",
++    "UniqueStressBigUnion",
+     "UnwillingSmoke",
++    "UnwillingSmokeBigUnion",
+     "VibrantExcitement",
++    "VibrantExcitementBigUnion",
+ ]
+diff --git a/src/seed/bigunion/client.py b/src/seed/bigunion/client.py
+index f3000c6f11e..4134e30de3b 100644
+--- a/src/seed/bigunion/client.py
++++ b/src/seed/bigunion/client.py
+@@ -69,13 +69,13 @@ class BigunionClient:
+         Examples
+         --------
+         from seed import SeedUnions
+-        from seed.bigunion import BigUnion_NormalSweet
++        from seed.bigunion import NormalSweetBigUnion
+ 
+         client = SeedUnions(
+             base_url="https://yourhost.com/path/to/api",
+         )
+         client.bigunion.update(
+-            request=BigUnion_NormalSweet(
++            request=NormalSweetBigUnion(
+                 value="value",
+             ),
+         )
+@@ -101,17 +101,17 @@ class BigunionClient:
+         Examples
+         --------
+         from seed import SeedUnions
+-        from seed.bigunion import BigUnion_NormalSweet
++        from seed.bigunion import NormalSweetBigUnion
+ 
+         client = SeedUnions(
+             base_url="https://yourhost.com/path/to/api",
+         )
+         client.bigunion.update_many(
+             request=[
+-                BigUnion_NormalSweet(
++                NormalSweetBigUnion(
+                     value="value",
+                 ),
+-                BigUnion_NormalSweet(
++                NormalSweetBigUnion(
+                     value="value",
+                 ),
+             ],
+@@ -189,7 +189,7 @@ class AsyncBigunionClient:
+         import asyncio
+ 
+         from seed import AsyncSeedUnions
+-        from seed.bigunion import BigUnion_NormalSweet
++        from seed.bigunion import NormalSweetBigUnion
+ 
+         client = AsyncSeedUnions(
+             base_url="https://yourhost.com/path/to/api",
+@@ -198,7 +198,7 @@ class AsyncBigunionClient:
+ 
+         async def main() -> None:
+             await client.bigunion.update(
+-                request=BigUnion_NormalSweet(
++                request=NormalSweetBigUnion(
+                     value="value",
+                 ),
+             )
+@@ -229,7 +229,7 @@ class AsyncBigunionClient:
+         import asyncio
+ 
+         from seed import AsyncSeedUnions
+-        from seed.bigunion import BigUnion_NormalSweet
++        from seed.bigunion import NormalSweetBigUnion
+ 
+         client = AsyncSeedUnions(
+             base_url="https://yourhost.com/path/to/api",
+@@ -239,10 +239,10 @@ class AsyncBigunionClient:
+         async def main() -> None:
+             await client.bigunion.update_many(
+                 request=[
+-                    BigUnion_NormalSweet(
++                    NormalSweetBigUnion(
+                         value="value",
+                     ),
+-                    BigUnion_NormalSweet(
++                    NormalSweetBigUnion(
+                         value="value",
+                     ),
+                 ],
+diff --git a/src/seed/bigunion/types/__init__.py b/src/seed/bigunion/types/__init__.py
+index 85c3a6a9b2d..afaf4ad0990 100644
+--- a/src/seed/bigunion/types/__init__.py
++++ b/src/seed/bigunion/types/__init__.py
+@@ -9,36 +9,36 @@ if typing.TYPE_CHECKING:
+     from .active_diamond import ActiveDiamond
+     from .attractive_script import AttractiveScript
+     from .big_union import (
++        ActiveDiamondBigUnion,
++        AttractiveScriptBigUnion,
+         BigUnion,
+-        BigUnion_ActiveDiamond,
+-        BigUnion_AttractiveScript,
+-        BigUnion_CircularCard,
+-        BigUnion_ColorfulCover,
+-        BigUnion_DiligentDeal,
+-        BigUnion_DisloyalValue,
+-        BigUnion_DistinctFailure,
+-        BigUnion_FalseMirror,
+-        BigUnion_FrozenSleep,
+-        BigUnion_GaseousRoad,
+-        BigUnion_GruesomeCoach,
+-        BigUnion_HarmoniousPlay,
+-        BigUnion_HastyPain,
+-        BigUnion_HoarseMouse,
+-        BigUnion_JumboEnd,
+-        BigUnion_LimpingStep,
+-        BigUnion_MistySnow,
+-        BigUnion_NormalSweet,
+-        BigUnion_PopularLimit,
+-        BigUnion_PotableBad,
+-        BigUnion_PracticalPrinciple,
+-        BigUnion_PrimaryBlock,
+-        BigUnion_RotatingRatio,
+-        BigUnion_ThankfulFactor,
+-        BigUnion_TotalWork,
+-        BigUnion_TriangularRepair,
+-        BigUnion_UniqueStress,
+-        BigUnion_UnwillingSmoke,
+-        BigUnion_VibrantExcitement,
++        CircularCardBigUnion,
++        ColorfulCoverBigUnion,
++        DiligentDealBigUnion,
++        DisloyalValueBigUnion,
++        DistinctFailureBigUnion,
++        FalseMirrorBigUnion,
++        FrozenSleepBigUnion,
++        GaseousRoadBigUnion,
++        GruesomeCoachBigUnion,
++        HarmoniousPlayBigUnion,
++        HastyPainBigUnion,
++        HoarseMouseBigUnion,
++        JumboEndBigUnion,
++        LimpingStepBigUnion,
++        MistySnowBigUnion,
++        NormalSweetBigUnion,
++        PopularLimitBigUnion,
++        PotableBadBigUnion,
++        PracticalPrincipleBigUnion,
++        PrimaryBlockBigUnion,
++        RotatingRatioBigUnion,
++        ThankfulFactorBigUnion,
++        TotalWorkBigUnion,
++        TriangularRepairBigUnion,
++        UniqueStressBigUnion,
++        UnwillingSmokeBigUnion,
++        VibrantExcitementBigUnion,
+     )
+     from .circular_card import CircularCard
+     from .colorful_cover import ColorfulCover
+@@ -69,64 +69,64 @@ if typing.TYPE_CHECKING:
+     from .vibrant_excitement import VibrantExcitement
+ _dynamic_imports: typing.Dict[str, str] = {
+     "ActiveDiamond": ".active_diamond",
++    "ActiveDiamondBigUnion": ".big_union",
+     "AttractiveScript": ".attractive_script",
++    "AttractiveScriptBigUnion": ".big_union",
+     "BigUnion": ".big_union",
+-    "BigUnion_ActiveDiamond": ".big_union",
+-    "BigUnion_AttractiveScript": ".big_union",
+-    "BigUnion_CircularCard": ".big_union",
+-    "BigUnion_ColorfulCover": ".big_union",
+-    "BigUnion_DiligentDeal": ".big_union",
+-    "BigUnion_DisloyalValue": ".big_union",
+-    "BigUnion_DistinctFailure": ".big_union",
+-    "BigUnion_FalseMirror": ".big_union",
+-    "BigUnion_FrozenSleep": ".big_union",
+-    "BigUnion_GaseousRoad": ".big_union",
+-    "BigUnion_GruesomeCoach": ".big_union",
+-    "BigUnion_HarmoniousPlay": ".big_union",
+-    "BigUnion_HastyPain": ".big_union",
+-    "BigUnion_HoarseMouse": ".big_union",
+-    "BigUnion_JumboEnd": ".big_union",
+-    "BigUnion_LimpingStep": ".big_union",
+-    "BigUnion_MistySnow": ".big_union",
+-    "BigUnion_NormalSweet": ".big_union",
+-    "BigUnion_PopularLimit": ".big_union",
+-    "BigUnion_PotableBad": ".big_union",
+-    "BigUnion_PracticalPrinciple": ".big_union",
+-    "BigUnion_PrimaryBlock": ".big_union",
+-    "BigUnion_RotatingRatio": ".big_union",
+-    "BigUnion_ThankfulFactor": ".big_union",
+-    "BigUnion_TotalWork": ".big_union",
+-    "BigUnion_TriangularRepair": ".big_union",
+-    "BigUnion_UniqueStress": ".big_union",
+-    "BigUnion_UnwillingSmoke": ".big_union",
+-    "BigUnion_VibrantExcitement": ".big_union",
+     "CircularCard": ".circular_card",
++    "CircularCardBigUnion": ".big_union",
+     "ColorfulCover": ".colorful_cover",
++    "ColorfulCoverBigUnion": ".big_union",
+     "DiligentDeal": ".diligent_deal",
++    "DiligentDealBigUnion": ".big_union",
+     "DisloyalValue": ".disloyal_value",
++    "DisloyalValueBigUnion": ".big_union",
+     "DistinctFailure": ".distinct_failure",
++    "DistinctFailureBigUnion": ".big_union",
+     "FalseMirror": ".false_mirror",
++    "FalseMirrorBigUnion": ".big_union",
+     "FrozenSleep": ".frozen_sleep",
++    "FrozenSleepBigUnion": ".big_union",
+     "GaseousRoad": ".gaseous_road",
++    "GaseousRoadBigUnion": ".big_union",
+     "GruesomeCoach": ".gruesome_coach",
++    "GruesomeCoachBigUnion": ".big_union",
+     "HarmoniousPlay": ".harmonious_play",
++    "HarmoniousPlayBigUnion": ".big_union",
+     "HastyPain": ".hasty_pain",
++    "HastyPainBigUnion": ".big_union",
+     "HoarseMouse": ".hoarse_mouse",
++    "HoarseMouseBigUnion": ".big_union",
+     "JumboEnd": ".jumbo_end",
++    "JumboEndBigUnion": ".big_union",
+     "LimpingStep": ".limping_step",
++    "LimpingStepBigUnion": ".big_union",
+     "MistySnow": ".misty_snow",
++    "MistySnowBigUnion": ".big_union",
+     "NormalSweet": ".normal_sweet",
++    "NormalSweetBigUnion": ".big_union",
+     "PopularLimit": ".popular_limit",
++    "PopularLimitBigUnion": ".big_union",
+     "PotableBad": ".potable_bad",
++    "PotableBadBigUnion": ".big_union",
+     "PracticalPrinciple": ".practical_principle",
++    "PracticalPrincipleBigUnion": ".big_union",
+     "PrimaryBlock": ".primary_block",
++    "PrimaryBlockBigUnion": ".big_union",
+     "RotatingRatio": ".rotating_ratio",
++    "RotatingRatioBigUnion": ".big_union",
+     "ThankfulFactor": ".thankful_factor",
++    "ThankfulFactorBigUnion": ".big_union",
+     "TotalWork": ".total_work",
++    "TotalWorkBigUnion": ".big_union",
+     "TriangularRepair": ".triangular_repair",
++    "TriangularRepairBigUnion": ".big_union",
+     "UniqueStress": ".unique_stress",
++    "UniqueStressBigUnion": ".big_union",
+     "UnwillingSmoke": ".unwilling_smoke",
++    "UnwillingSmokeBigUnion": ".big_union",
+     "VibrantExcitement": ".vibrant_excitement",
++    "VibrantExcitementBigUnion": ".big_union",
+ }
+ 
+ 
+@@ -153,62 +153,62 @@ def __dir__():
+ 
+ __all__ = [
+     "ActiveDiamond",
++    "ActiveDiamondBigUnion",
+     "AttractiveScript",
++    "AttractiveScriptBigUnion",
+     "BigUnion",
+-    "BigUnion_ActiveDiamond",
+-    "BigUnion_AttractiveScript",
+-    "BigUnion_CircularCard",
+-    "BigUnion_ColorfulCover",
+-    "BigUnion_DiligentDeal",
+-    "BigUnion_DisloyalValue",
+-    "BigUnion_DistinctFailure",
+-    "BigUnion_FalseMirror",
+-    "BigUnion_FrozenSleep",
+-    "BigUnion_GaseousRoad",
+-    "BigUnion_GruesomeCoach",
+-    "BigUnion_HarmoniousPlay",
+-    "BigUnion_HastyPain",
+-    "BigUnion_HoarseMouse",
+-    "BigUnion_JumboEnd",
+-    "BigUnion_LimpingStep",
+-    "BigUnion_MistySnow",
+-    "BigUnion_NormalSweet",
+-    "BigUnion_PopularLimit",
+-    "BigUnion_PotableBad",
+-    "BigUnion_PracticalPrinciple",
+-    "BigUnion_PrimaryBlock",
+-    "BigUnion_RotatingRatio",
+-    "BigUnion_ThankfulFactor",
+-    "BigUnion_TotalWork",
+-    "BigUnion_TriangularRepair",
+-    "BigUnion_UniqueStress",
+-    "BigUnion_UnwillingSmoke",
+-    "BigUnion_VibrantExcitement",
+     "CircularCard",
++    "CircularCardBigUnion",
+     "ColorfulCover",
++    "ColorfulCoverBigUnion",
+     "DiligentDeal",
++    "DiligentDealBigUnion",
+     "DisloyalValue",
++    "DisloyalValueBigUnion",
+     "DistinctFailure",
++    "DistinctFailureBigUnion",
+     "FalseMirror",
++    "FalseMirrorBigUnion",
+     "FrozenSleep",
++    "FrozenSleepBigUnion",
+     "GaseousRoad",
++    "GaseousRoadBigUnion",
+     "GruesomeCoach",
++    "GruesomeCoachBigUnion",
+     "HarmoniousPlay",
++    "HarmoniousPlayBigUnion",
+     "HastyPain",
++    "HastyPainBigUnion",
+     "HoarseMouse",
++    "HoarseMouseBigUnion",
+     "JumboEnd",
++    "JumboEndBigUnion",
+     "LimpingStep",
++    "LimpingStepBigUnion",
+     "MistySnow",
++    "MistySnowBigUnion",
+     "NormalSweet",
++    "NormalSweetBigUnion",
+     "PopularLimit",
++    "PopularLimitBigUnion",
+     "PotableBad",
++    "PotableBadBigUnion",
+     "PracticalPrinciple",
++    "PracticalPrincipleBigUnion",
+     "PrimaryBlock",
++    "PrimaryBlockBigUnion",
+     "RotatingRatio",
++    "RotatingRatioBigUnion",
+     "ThankfulFactor",
++    "ThankfulFactorBigUnion",
+     "TotalWork",
++    "TotalWorkBigUnion",
+     "TriangularRepair",
++    "TriangularRepairBigUnion",
+     "UniqueStress",
++    "UniqueStressBigUnion",
+     "UnwillingSmoke",
++    "UnwillingSmokeBigUnion",
+     "VibrantExcitement",
++    "VibrantExcitementBigUnion",
+ ]
+diff --git a/src/seed/bigunion/types/big_union.py b/src/seed/bigunion/types/big_union.py
+index d2cad30ab97..97dbc873615 100644
+--- a/src/seed/bigunion/types/big_union.py
++++ b/src/seed/bigunion/types/big_union.py
+@@ -15,9 +15,9 @@ class Base(UniversalBaseModel):
+     """
+     Examples
+     --------
+-    from seed.bigunion import BigUnion_NormalSweet
++    from seed.bigunion import NormalSweetBigUnion
+ 
+-    BigUnion_NormalSweet(
++    NormalSweetBigUnion(
+         value="example1",
+     )
+     """
+@@ -40,13 +40,13 @@ class Base(UniversalBaseModel):
+             extra = pydantic.Extra.allow
+ 
+ 
+-class BigUnion_NormalSweet(Base):
++class NormalSweetBigUnion(Base):
+     """
+     Examples
+     --------
+-    from seed.bigunion import BigUnion_NormalSweet
++    from seed.bigunion import NormalSweetBigUnion
+ 
+-    BigUnion_NormalSweet(
++    NormalSweetBigUnion(
+         value="example1",
+     )
+     """
+@@ -64,13 +64,13 @@ class BigUnion_NormalSweet(Base):
+             extra = pydantic.Extra.allow
+ 
+ 
+-class BigUnion_ThankfulFactor(Base):
++class ThankfulFactorBigUnion(Base):
+     """
+     Examples
+     --------
+-    from seed.bigunion import BigUnion_NormalSweet
++    from seed.bigunion import NormalSweetBigUnion
+ 
+-    BigUnion_NormalSweet(
++    NormalSweetBigUnion(
+         value="example1",
+     )
+     """
+@@ -88,13 +88,13 @@ class BigUnion_ThankfulFactor(Base):
+             extra = pydantic.Extra.allow
+ 
+ 
+-class BigUnion_JumboEnd(Base):
++class JumboEndBigUnion(Base):
+     """
+     Examples
+     --------
+-    from seed.bigunion import BigUnion_NormalSweet
++    from seed.bigunion import NormalSweetBigUnion
+ 
+-    BigUnion_NormalSweet(
++    NormalSweetBigUnion(
+         value="example1",
+     )
+     """
+@@ -112,13 +112,13 @@ class BigUnion_JumboEnd(Base):
+             extra = pydantic.Extra.allow
+ 
+ 
+-class BigUnion_HastyPain(Base):
++class HastyPainBigUnion(Base):
+     """
+     Examples
+     --------
+-    from seed.bigunion import BigUnion_NormalSweet
++    from seed.bigunion import NormalSweetBigUnion
+ 
+-    BigUnion_NormalSweet(
++    NormalSweetBigUnion(
+         value="example1",
+     )
+     """
+@@ -136,13 +136,13 @@ class BigUnion_HastyPain(Base):
+             extra = pydantic.Extra.allow
+ 
+ 
+-class BigUnion_MistySnow(Base):
++class MistySnowBigUnion(Base):
+     """
+     Examples
+     --------
+-    from seed.bigunion import BigUnion_NormalSweet
++    from seed.bigunion import NormalSweetBigUnion
+ 
+-    BigUnion_NormalSweet(
++    NormalSweetBigUnion(
+         value="example1",
+     )
+     """
+@@ -160,13 +160,13 @@ class BigUnion_MistySnow(Base):
+             extra = pydantic.Extra.allow
+ 
+ 
+-class BigUnion_DistinctFailure(Base):
++class DistinctFailureBigUnion(Base):
+     """
+     Examples
+     --------
+-    from seed.bigunion import BigUnion_NormalSweet
++    from seed.bigunion import NormalSweetBigUnion
+ 
+-    BigUnion_NormalSweet(
++    NormalSweetBigUnion(
+         value="example1",
+     )
+     """
+@@ -184,13 +184,13 @@ class BigUnion_DistinctFailure(Base):
+             extra = pydantic.Extra.allow
+ 
+ 
+-class BigUnion_PracticalPrinciple(Base):
++class PracticalPrincipleBigUnion(Base):
+     """
+     Examples
+     --------
+-    from seed.bigunion import BigUnion_NormalSweet
++    from seed.bigunion import NormalSweetBigUnion
+ 
+-    BigUnion_NormalSweet(
++    NormalSweetBigUnion(
+         value="example1",
+     )
+     """
+@@ -208,13 +208,13 @@ class BigUnion_PracticalPrinciple(Base):
+             extra = pydantic.Extra.allow
+ 
+ 
+-class BigUnion_LimpingStep(Base):
++class LimpingStepBigUnion(Base):
+     """
+     Examples
+     --------
+-    from seed.bigunion import BigUnion_NormalSweet
++    from seed.bigunion import NormalSweetBigUnion
+ 
+-    BigUnion_NormalSweet(
++    NormalSweetBigUnion(
+         value="example1",
+     )
+     """
+@@ -232,13 +232,13 @@ class BigUnion_LimpingStep(Base):
+             extra = pydantic.Extra.allow
+ 
+ 
+-class BigUnion_VibrantExcitement(Base):
++class VibrantExcitementBigUnion(Base):
+     """
+     Examples
+     --------
+-    from seed.bigunion import BigUnion_NormalSweet
++    from seed.bigunion import NormalSweetBigUnion
+ 
+-    BigUnion_NormalSweet(
++    NormalSweetBigUnion(
+         value="example1",
+     )
+     """
+@@ -256,13 +256,13 @@ class BigUnion_VibrantExcitement(Base):
+             extra = pydantic.Extra.allow
+ 
+ 
+-class BigUnion_ActiveDiamond(Base):
++class ActiveDiamondBigUnion(Base):
+     """
+     Examples
+     --------
+-    from seed.bigunion import BigUnion_NormalSweet
++    from seed.bigunion import NormalSweetBigUnion
+ 
+-    BigUnion_NormalSweet(
++    NormalSweetBigUnion(
+         value="example1",
+     )
+     """
+@@ -280,13 +280,13 @@ class BigUnion_ActiveDiamond(Base):
+             extra = pydantic.Extra.allow
+ 
+ 
+-class BigUnion_PopularLimit(Base):
++class PopularLimitBigUnion(Base):
+     """
+     Examples
+     --------
+-    from seed.bigunion import BigUnion_NormalSweet
++    from seed.bigunion import NormalSweetBigUnion
+ 
+-    BigUnion_NormalSweet(
++    NormalSweetBigUnion(
+         value="example1",
+     )
+     """
+@@ -304,13 +304,13 @@ class BigUnion_PopularLimit(Base):
+             extra = pydantic.Extra.allow
+ 
+ 
+-class BigUnion_FalseMirror(Base):
++class FalseMirrorBigUnion(Base):
+     """
+     Examples
+     --------
+-    from seed.bigunion import BigUnion_NormalSweet
++    from seed.bigunion import NormalSweetBigUnion
+ 
+-    BigUnion_NormalSweet(
++    NormalSweetBigUnion(
+         value="example1",
+     )
+     """
+@@ -328,13 +328,13 @@ class BigUnion_FalseMirror(Base):
+             extra = pydantic.Extra.allow
+ 
+ 
+-class BigUnion_PrimaryBlock(Base):
++class PrimaryBlockBigUnion(Base):
+     """
+     Examples
+     --------
+-    from seed.bigunion import BigUnion_NormalSweet
++    from seed.bigunion import NormalSweetBigUnion
+ 
+-    BigUnion_NormalSweet(
++    NormalSweetBigUnion(
+         value="example1",
+     )
+     """
+@@ -352,13 +352,13 @@ class BigUnion_PrimaryBlock(Base):
+             extra = pydantic.Extra.allow
+ 
+ 
+-class BigUnion_RotatingRatio(Base):
++class RotatingRatioBigUnion(Base):
+     """
+     Examples
+     --------
+-    from seed.bigunion import BigUnion_NormalSweet
++    from seed.bigunion import NormalSweetBigUnion
+ 
+-    BigUnion_NormalSweet(
++    NormalSweetBigUnion(
+         value="example1",
+     )
+     """
+@@ -376,13 +376,13 @@ class BigUnion_RotatingRatio(Base):
+             extra = pydantic.Extra.allow
+ 
+ 
+-class BigUnion_ColorfulCover(Base):
++class ColorfulCoverBigUnion(Base):
+     """
+     Examples
+     --------
+-    from seed.bigunion import BigUnion_NormalSweet
++    from seed.bigunion import NormalSweetBigUnion
+ 
+-    BigUnion_NormalSweet(
++    NormalSweetBigUnion(
+         value="example1",
+     )
+     """
+@@ -400,13 +400,13 @@ class BigUnion_ColorfulCover(Base):
+             extra = pydantic.Extra.allow
+ 
+ 
+-class BigUnion_DisloyalValue(Base):
++class DisloyalValueBigUnion(Base):
+     """
+     Examples
+     --------
+-    from seed.bigunion import BigUnion_NormalSweet
++    from seed.bigunion import NormalSweetBigUnion
+ 
+-    BigUnion_NormalSweet(
++    NormalSweetBigUnion(
+         value="example1",
+     )
+     """
+@@ -424,13 +424,13 @@ class BigUnion_DisloyalValue(Base):
+             extra = pydantic.Extra.allow
+ 
+ 
+-class BigUnion_GruesomeCoach(Base):
++class GruesomeCoachBigUnion(Base):
+     """
+     Examples
+     --------
+-    from seed.bigunion import BigUnion_NormalSweet
++    from seed.bigunion import NormalSweetBigUnion
+ 
+-    BigUnion_NormalSweet(
++    NormalSweetBigUnion(
+         value="example1",
+     )
+     """
+@@ -448,13 +448,13 @@ class BigUnion_GruesomeCoach(Base):
+             extra = pydantic.Extra.allow
+ 
+ 
+-class BigUnion_TotalWork(Base):
++class TotalWorkBigUnion(Base):
+     """
+     Examples
+     --------
+-    from seed.bigunion import BigUnion_NormalSweet
++    from seed.bigunion import NormalSweetBigUnion
+ 
+-    BigUnion_NormalSweet(
++    NormalSweetBigUnion(
+         value="example1",
+     )
+     """
+@@ -472,13 +472,13 @@ class BigUnion_TotalWork(Base):
+             extra = pydantic.Extra.allow
+ 
+ 
+-class BigUnion_HarmoniousPlay(Base):
++class HarmoniousPlayBigUnion(Base):
+     """
+     Examples
+     --------
+-    from seed.bigunion import BigUnion_NormalSweet
++    from seed.bigunion import NormalSweetBigUnion
+ 
+-    BigUnion_NormalSweet(
++    NormalSweetBigUnion(
+         value="example1",
+     )
+     """
+@@ -496,13 +496,13 @@ class BigUnion_HarmoniousPlay(Base):
+             extra = pydantic.Extra.allow
+ 
+ 
+-class BigUnion_UniqueStress(Base):
++class UniqueStressBigUnion(Base):
+     """
+     Examples
+     --------
+-    from seed.bigunion import BigUnion_NormalSweet
++    from seed.bigunion import NormalSweetBigUnion
+ 
+-    BigUnion_NormalSweet(
++    NormalSweetBigUnion(
+         value="example1",
+     )
+     """
+@@ -520,13 +520,13 @@ class BigUnion_UniqueStress(Base):
+             extra = pydantic.Extra.allow
+ 
+ 
+-class BigUnion_UnwillingSmoke(Base):
++class UnwillingSmokeBigUnion(Base):
+     """
+     Examples
+     --------
+-    from seed.bigunion import BigUnion_NormalSweet
++    from seed.bigunion import NormalSweetBigUnion
+ 
+-    BigUnion_NormalSweet(
++    NormalSweetBigUnion(
+         value="example1",
+     )
+     """
+@@ -544,13 +544,13 @@ class BigUnion_UnwillingSmoke(Base):
+             extra = pydantic.Extra.allow
+ 
+ 
+-class BigUnion_FrozenSleep(Base):
++class FrozenSleepBigUnion(Base):
+     """
+     Examples
+     --------
+-    from seed.bigunion import BigUnion_NormalSweet
++    from seed.bigunion import NormalSweetBigUnion
+ 
+-    BigUnion_NormalSweet(
++    NormalSweetBigUnion(
+         value="example1",
+     )
+     """
+@@ -568,13 +568,13 @@ class BigUnion_FrozenSleep(Base):
+             extra = pydantic.Extra.allow
+ 
+ 
+-class BigUnion_DiligentDeal(Base):
++class DiligentDealBigUnion(Base):
+     """
+     Examples
+     --------
+-    from seed.bigunion import BigUnion_NormalSweet
++    from seed.bigunion import NormalSweetBigUnion
+ 
+-    BigUnion_NormalSweet(
++    NormalSweetBigUnion(
+         value="example1",
+     )
+     """
+@@ -592,13 +592,13 @@ class BigUnion_DiligentDeal(Base):
+             extra = pydantic.Extra.allow
+ 
+ 
+-class BigUnion_AttractiveScript(Base):
++class AttractiveScriptBigUnion(Base):
+     """
+     Examples
+     --------
+-    from seed.bigunion import BigUnion_NormalSweet
++    from seed.bigunion import NormalSweetBigUnion
+ 
+-    BigUnion_NormalSweet(
++    NormalSweetBigUnion(
+         value="example1",
+     )
+     """
+@@ -616,13 +616,13 @@ class BigUnion_AttractiveScript(Base):
+             extra = pydantic.Extra.allow
+ 
+ 
+-class BigUnion_HoarseMouse(Base):
++class HoarseMouseBigUnion(Base):
+     """
+     Examples
+     --------
+-    from seed.bigunion import BigUnion_NormalSweet
++    from seed.bigunion import NormalSweetBigUnion
+ 
+-    BigUnion_NormalSweet(
++    NormalSweetBigUnion(
+         value="example1",
+     )
+     """
+@@ -640,13 +640,13 @@ class BigUnion_HoarseMouse(Base):
+             extra = pydantic.Extra.allow
+ 
+ 
+-class BigUnion_CircularCard(Base):
++class CircularCardBigUnion(Base):
+     """
+     Examples
+     --------
+-    from seed.bigunion import BigUnion_NormalSweet
++    from seed.bigunion import NormalSweetBigUnion
+ 
+-    BigUnion_NormalSweet(
++    NormalSweetBigUnion(
+         value="example1",
+     )
+     """
+@@ -664,13 +664,13 @@ class BigUnion_CircularCard(Base):
+             extra = pydantic.Extra.allow
+ 
+ 
+-class BigUnion_PotableBad(Base):
++class PotableBadBigUnion(Base):
+     """
+     Examples
+     --------
+-    from seed.bigunion import BigUnion_NormalSweet
++    from seed.bigunion import NormalSweetBigUnion
+ 
+-    BigUnion_NormalSweet(
++    NormalSweetBigUnion(
+         value="example1",
+     )
+     """
+@@ -688,13 +688,13 @@ class BigUnion_PotableBad(Base):
+             extra = pydantic.Extra.allow
+ 
+ 
+-class BigUnion_TriangularRepair(Base):
++class TriangularRepairBigUnion(Base):
+     """
+     Examples
+     --------
+-    from seed.bigunion import BigUnion_NormalSweet
++    from seed.bigunion import NormalSweetBigUnion
+ 
+-    BigUnion_NormalSweet(
++    NormalSweetBigUnion(
+         value="example1",
+     )
+     """
+@@ -712,13 +712,13 @@ class BigUnion_TriangularRepair(Base):
+             extra = pydantic.Extra.allow
+ 
+ 
+-class BigUnion_GaseousRoad(Base):
++class GaseousRoadBigUnion(Base):
+     """
+     Examples
+     --------
+-    from seed.bigunion import BigUnion_NormalSweet
++    from seed.bigunion import NormalSweetBigUnion
+ 
+-    BigUnion_NormalSweet(
++    NormalSweetBigUnion(
+         value="example1",
+     )
+     """
+@@ -737,43 +737,43 @@ class BigUnion_GaseousRoad(Base):
+ 
+ 
+ """
+-from seed.bigunion import BigUnion_NormalSweet
++from seed.bigunion import NormalSweetBigUnion
+ 
+-BigUnion_NormalSweet(
++NormalSweetBigUnion(
+     value="example1",
+ )
+ """
+ BigUnion = typing_extensions.Annotated[
+     typing.Union[
+-        BigUnion_NormalSweet,
+-        BigUnion_ThankfulFactor,
+-        BigUnion_JumboEnd,
+-        BigUnion_HastyPain,
+-        BigUnion_MistySnow,
+-        BigUnion_DistinctFailure,
+-        BigUnion_PracticalPrinciple,
+-        BigUnion_LimpingStep,
+-        BigUnion_VibrantExcitement,
+-        BigUnion_ActiveDiamond,
+-        BigUnion_PopularLimit,
+-        BigUnion_FalseMirror,
+-        BigUnion_PrimaryBlock,
+-        BigUnion_RotatingRatio,
+-        BigUnion_ColorfulCover,
+-        BigUnion_DisloyalValue,
+-        BigUnion_GruesomeCoach,
+-        BigUnion_TotalWork,
+-        BigUnion_HarmoniousPlay,
+-        BigUnion_UniqueStress,
+-        BigUnion_UnwillingSmoke,
+-        BigUnion_FrozenSleep,
+-        BigUnion_DiligentDeal,
+-        BigUnion_AttractiveScript,
+-        BigUnion_HoarseMouse,
+-        BigUnion_CircularCard,
+-        BigUnion_PotableBad,
+-        BigUnion_TriangularRepair,
+-        BigUnion_GaseousRoad,
++        NormalSweetBigUnion,
++        ThankfulFactorBigUnion,
++        JumboEndBigUnion,
++        HastyPainBigUnion,
++        MistySnowBigUnion,
++        DistinctFailureBigUnion,
++        PracticalPrincipleBigUnion,
++        LimpingStepBigUnion,
++        VibrantExcitementBigUnion,
++        ActiveDiamondBigUnion,
++        PopularLimitBigUnion,
++        FalseMirrorBigUnion,
++        PrimaryBlockBigUnion,
++        RotatingRatioBigUnion,
++        ColorfulCoverBigUnion,
++        DisloyalValueBigUnion,
++        GruesomeCoachBigUnion,
++        TotalWorkBigUnion,
++        HarmoniousPlayBigUnion,
++        UniqueStressBigUnion,
++        UnwillingSmokeBigUnion,
++        FrozenSleepBigUnion,
++        DiligentDealBigUnion,
++        AttractiveScriptBigUnion,
++        HoarseMouseBigUnion,
++        CircularCardBigUnion,
++        PotableBadBigUnion,
++        TriangularRepairBigUnion,
++        GaseousRoadBigUnion,
+     ],
+     pydantic.Field(discriminator="type"),
+ ]
+diff --git a/src/seed/types/__init__.py b/src/seed/types/__init__.py
+index 9540bffae63..3c33147d88a 100644
+--- a/src/seed/types/__init__.py
++++ b/src/seed/types/__init__.py
+@@ -7,144 +7,144 @@ from importlib import import_module
+ 
+ if typing.TYPE_CHECKING:
+     from .types import (
++        AnyNumberUnionWithSameNumberTypes,
+         Bar,
++        BarUnion,
++        BarUnionWithDiscriminant,
++        BarUnionWithNullableReference,
++        BarUnionWithOptionalReference,
++        BarUnionWithoutKey,
++        CustomFormatUnionWithSameStringTypes,
++        DateUnionWithOptionalTime,
++        DateUnionWithTime,
++        DatetimeUnionWithOptionalTime,
++        DatetimeUnionWithTime,
++        Empty1UnionWithMultipleNoProperties,
++        Empty2UnionWithMultipleNoProperties,
++        EmptyUnionWithNoProperties,
++        FernUnionWithLiteral,
+         FirstItemType,
++        FirstItemTypeUnionWithDuplicativeDiscriminants,
+         Foo,
++        Foo1UnionWithDuplicateTypes,
++        Foo2UnionWithDuplicateTypes,
+         FooExtended,
++        FooExtendedUnionWithSubTypes,
++        FooUnion,
++        FooUnionWithBaseProperties,
++        FooUnionWithDiscriminant,
++        FooUnionWithMultipleNoProperties,
++        FooUnionWithNoProperties,
++        FooUnionWithNullableReference,
++        FooUnionWithOptionalReference,
++        FooUnionWithSingleElement,
++        FooUnionWithSubTypes,
++        FooUnionWithoutKey,
++        Integer1UnionWithDuplicatePrimitive,
++        Integer2UnionWithDuplicatePrimitive,
++        IntegerUnionWithBaseProperties,
++        IntegerUnionWithPrimitive,
++        NegativeIntUnionWithSameNumberTypes,
++        PatternStringUnionWithSameStringTypes,
++        PositiveIntUnionWithSameNumberTypes,
++        RegularStringUnionWithSameStringTypes,
+         SecondItemType,
++        SecondItemTypeUnionWithDuplicativeDiscriminants,
++        String1UnionWithDuplicatePrimitive,
++        String2UnionWithDuplicatePrimitive,
++        StringUnionWithBaseProperties,
++        StringUnionWithPrimitive,
+         TypeWithOptionalMap,
+         Union,
+         UnionWithBaseProperties,
+-        UnionWithBaseProperties_Foo,
+-        UnionWithBaseProperties_Integer,
+-        UnionWithBaseProperties_String,
+         UnionWithDiscriminant,
+-        UnionWithDiscriminant_Bar,
+-        UnionWithDiscriminant_Foo,
+         UnionWithDuplicatePrimitive,
+-        UnionWithDuplicatePrimitive_Integer1,
+-        UnionWithDuplicatePrimitive_Integer2,
+-        UnionWithDuplicatePrimitive_String1,
+-        UnionWithDuplicatePrimitive_String2,
+         UnionWithDuplicateTypes,
+-        UnionWithDuplicateTypes_Foo1,
+-        UnionWithDuplicateTypes_Foo2,
+         UnionWithDuplicativeDiscriminants,
+-        UnionWithDuplicativeDiscriminants_FirstItemType,
+-        UnionWithDuplicativeDiscriminants_SecondItemType,
+         UnionWithLiteral,
+-        UnionWithLiteral_Fern,
+         UnionWithMultipleNoProperties,
+-        UnionWithMultipleNoProperties_Empty1,
+-        UnionWithMultipleNoProperties_Empty2,
+-        UnionWithMultipleNoProperties_Foo,
+         UnionWithNoProperties,
+-        UnionWithNoProperties_Empty,
+-        UnionWithNoProperties_Foo,
+         UnionWithNullableReference,
+-        UnionWithNullableReference_Bar,
+-        UnionWithNullableReference_Foo,
+         UnionWithOptionalReference,
+-        UnionWithOptionalReference_Bar,
+-        UnionWithOptionalReference_Foo,
+         UnionWithOptionalTime,
+-        UnionWithOptionalTime_Date,
+-        UnionWithOptionalTime_Datetime,
+         UnionWithPrimitive,
+-        UnionWithPrimitive_Integer,
+-        UnionWithPrimitive_String,
+         UnionWithSameNumberTypes,
+-        UnionWithSameNumberTypes_AnyNumber,
+-        UnionWithSameNumberTypes_NegativeInt,
+-        UnionWithSameNumberTypes_PositiveInt,
+         UnionWithSameStringTypes,
+-        UnionWithSameStringTypes_CustomFormat,
+-        UnionWithSameStringTypes_PatternString,
+-        UnionWithSameStringTypes_RegularString,
+         UnionWithSingleElement,
+-        UnionWithSingleElement_Foo,
+         UnionWithSubTypes,
+-        UnionWithSubTypes_Foo,
+-        UnionWithSubTypes_FooExtended,
+         UnionWithTime,
+-        UnionWithTime_Date,
+-        UnionWithTime_Datetime,
+-        UnionWithTime_Value,
+         UnionWithoutKey,
+-        UnionWithoutKey_Bar,
+-        UnionWithoutKey_Foo,
+-        Union_Bar,
+-        Union_Foo,
++        ValueUnionWithTime,
+     )
+ _dynamic_imports: typing.Dict[str, str] = {
++    "AnyNumberUnionWithSameNumberTypes": ".types",
+     "Bar": ".types",
++    "BarUnion": ".types",
++    "BarUnionWithDiscriminant": ".types",
++    "BarUnionWithNullableReference": ".types",
++    "BarUnionWithOptionalReference": ".types",
++    "BarUnionWithoutKey": ".types",
++    "CustomFormatUnionWithSameStringTypes": ".types",
++    "DateUnionWithOptionalTime": ".types",
++    "DateUnionWithTime": ".types",
++    "DatetimeUnionWithOptionalTime": ".types",
++    "DatetimeUnionWithTime": ".types",
++    "Empty1UnionWithMultipleNoProperties": ".types",
++    "Empty2UnionWithMultipleNoProperties": ".types",
++    "EmptyUnionWithNoProperties": ".types",
++    "FernUnionWithLiteral": ".types",
+     "FirstItemType": ".types",
++    "FirstItemTypeUnionWithDuplicativeDiscriminants": ".types",
+     "Foo": ".types",
++    "Foo1UnionWithDuplicateTypes": ".types",
++    "Foo2UnionWithDuplicateTypes": ".types",
+     "FooExtended": ".types",
++    "FooExtendedUnionWithSubTypes": ".types",
++    "FooUnion": ".types",
++    "FooUnionWithBaseProperties": ".types",
++    "FooUnionWithDiscriminant": ".types",
++    "FooUnionWithMultipleNoProperties": ".types",
++    "FooUnionWithNoProperties": ".types",
++    "FooUnionWithNullableReference": ".types",
++    "FooUnionWithOptionalReference": ".types",
++    "FooUnionWithSingleElement": ".types",
++    "FooUnionWithSubTypes": ".types",
++    "FooUnionWithoutKey": ".types",
++    "Integer1UnionWithDuplicatePrimitive": ".types",
++    "Integer2UnionWithDuplicatePrimitive": ".types",
++    "IntegerUnionWithBaseProperties": ".types",
++    "IntegerUnionWithPrimitive": ".types",
++    "NegativeIntUnionWithSameNumberTypes": ".types",
++    "PatternStringUnionWithSameStringTypes": ".types",
++    "PositiveIntUnionWithSameNumberTypes": ".types",
++    "RegularStringUnionWithSameStringTypes": ".types",
+     "SecondItemType": ".types",
++    "SecondItemTypeUnionWithDuplicativeDiscriminants": ".types",
++    "String1UnionWithDuplicatePrimitive": ".types",
++    "String2UnionWithDuplicatePrimitive": ".types",
++    "StringUnionWithBaseProperties": ".types",
++    "StringUnionWithPrimitive": ".types",
+     "TypeWithOptionalMap": ".types",
+     "Union": ".types",
+     "UnionWithBaseProperties": ".types",
+-    "UnionWithBaseProperties_Foo": ".types",
+-    "UnionWithBaseProperties_Integer": ".types",
+-    "UnionWithBaseProperties_String": ".types",
+     "UnionWithDiscriminant": ".types",
+-    "UnionWithDiscriminant_Bar": ".types",
+-    "UnionWithDiscriminant_Foo": ".types",
+     "UnionWithDuplicatePrimitive": ".types",
+-    "UnionWithDuplicatePrimitive_Integer1": ".types",
+-    "UnionWithDuplicatePrimitive_Integer2": ".types",
+-    "UnionWithDuplicatePrimitive_String1": ".types",
+-    "UnionWithDuplicatePrimitive_String2": ".types",
+     "UnionWithDuplicateTypes": ".types",
+-    "UnionWithDuplicateTypes_Foo1": ".types",
+-    "UnionWithDuplicateTypes_Foo2": ".types",
+     "UnionWithDuplicativeDiscriminants": ".types",
+-    "UnionWithDuplicativeDiscriminants_FirstItemType": ".types",
+-    "UnionWithDuplicativeDiscriminants_SecondItemType": ".types",
+     "UnionWithLiteral": ".types",
+-    "UnionWithLiteral_Fern": ".types",
+     "UnionWithMultipleNoProperties": ".types",
+-    "UnionWithMultipleNoProperties_Empty1": ".types",
+-    "UnionWithMultipleNoProperties_Empty2": ".types",
+-    "UnionWithMultipleNoProperties_Foo": ".types",
+     "UnionWithNoProperties": ".types",
+-    "UnionWithNoProperties_Empty": ".types",
+-    "UnionWithNoProperties_Foo": ".types",
+     "UnionWithNullableReference": ".types",
+-    "UnionWithNullableReference_Bar": ".types",
+-    "UnionWithNullableReference_Foo": ".types",
+     "UnionWithOptionalReference": ".types",
+-    "UnionWithOptionalReference_Bar": ".types",
+-    "UnionWithOptionalReference_Foo": ".types",
+     "UnionWithOptionalTime": ".types",
+-    "UnionWithOptionalTime_Date": ".types",
+-    "UnionWithOptionalTime_Datetime": ".types",
+     "UnionWithPrimitive": ".types",
+-    "UnionWithPrimitive_Integer": ".types",
+-    "UnionWithPrimitive_String": ".types",
+     "UnionWithSameNumberTypes": ".types",
+-    "UnionWithSameNumberTypes_AnyNumber": ".types",
+-    "UnionWithSameNumberTypes_NegativeInt": ".types",
+-    "UnionWithSameNumberTypes_PositiveInt": ".types",
+     "UnionWithSameStringTypes": ".types",
+-    "UnionWithSameStringTypes_CustomFormat": ".types",
+-    "UnionWithSameStringTypes_PatternString": ".types",
+-    "UnionWithSameStringTypes_RegularString": ".types",
+     "UnionWithSingleElement": ".types",
+-    "UnionWithSingleElement_Foo": ".types",
+     "UnionWithSubTypes": ".types",
+-    "UnionWithSubTypes_Foo": ".types",
+-    "UnionWithSubTypes_FooExtended": ".types",
+     "UnionWithTime": ".types",
+-    "UnionWithTime_Date": ".types",
+-    "UnionWithTime_Datetime": ".types",
+-    "UnionWithTime_Value": ".types",
+     "UnionWithoutKey": ".types",
+-    "UnionWithoutKey_Bar": ".types",
+-    "UnionWithoutKey_Foo": ".types",
+-    "Union_Bar": ".types",
+-    "Union_Foo": ".types",
++    "ValueUnionWithTime": ".types",
+ }
+ 
+ 
+@@ -170,72 +170,72 @@ def __dir__():
+ 
+ 
+ __all__ = [
++    "AnyNumberUnionWithSameNumberTypes",
+     "Bar",
++    "BarUnion",
++    "BarUnionWithDiscriminant",
++    "BarUnionWithNullableReference",
++    "BarUnionWithOptionalReference",
++    "BarUnionWithoutKey",
++    "CustomFormatUnionWithSameStringTypes",
++    "DateUnionWithOptionalTime",
++    "DateUnionWithTime",
++    "DatetimeUnionWithOptionalTime",
++    "DatetimeUnionWithTime",
++    "Empty1UnionWithMultipleNoProperties",
++    "Empty2UnionWithMultipleNoProperties",
++    "EmptyUnionWithNoProperties",
++    "FernUnionWithLiteral",
+     "FirstItemType",
++    "FirstItemTypeUnionWithDuplicativeDiscriminants",
+     "Foo",
++    "Foo1UnionWithDuplicateTypes",
++    "Foo2UnionWithDuplicateTypes",
+     "FooExtended",
++    "FooExtendedUnionWithSubTypes",
++    "FooUnion",
++    "FooUnionWithBaseProperties",
++    "FooUnionWithDiscriminant",
++    "FooUnionWithMultipleNoProperties",
++    "FooUnionWithNoProperties",
++    "FooUnionWithNullableReference",
++    "FooUnionWithOptionalReference",
++    "FooUnionWithSingleElement",
++    "FooUnionWithSubTypes",
++    "FooUnionWithoutKey",
++    "Integer1UnionWithDuplicatePrimitive",
++    "Integer2UnionWithDuplicatePrimitive",
++    "IntegerUnionWithBaseProperties",
++    "IntegerUnionWithPrimitive",
++    "NegativeIntUnionWithSameNumberTypes",
++    "PatternStringUnionWithSameStringTypes",
++    "PositiveIntUnionWithSameNumberTypes",
++    "RegularStringUnionWithSameStringTypes",
+     "SecondItemType",
++    "SecondItemTypeUnionWithDuplicativeDiscriminants",
++    "String1UnionWithDuplicatePrimitive",
++    "String2UnionWithDuplicatePrimitive",
++    "StringUnionWithBaseProperties",
++    "StringUnionWithPrimitive",
+     "TypeWithOptionalMap",
+     "Union",
+     "UnionWithBaseProperties",
+-    "UnionWithBaseProperties_Foo",
+-    "UnionWithBaseProperties_Integer",
+-    "UnionWithBaseProperties_String",
+     "UnionWithDiscriminant",
+-    "UnionWithDiscriminant_Bar",
+-    "UnionWithDiscriminant_Foo",
+     "UnionWithDuplicatePrimitive",
+-    "UnionWithDuplicatePrimitive_Integer1",
+-    "UnionWithDuplicatePrimitive_Integer2",
+-    "UnionWithDuplicatePrimitive_String1",
+-    "UnionWithDuplicatePrimitive_String2",
+     "UnionWithDuplicateTypes",
+-    "UnionWithDuplicateTypes_Foo1",
+-    "UnionWithDuplicateTypes_Foo2",
+     "UnionWithDuplicativeDiscriminants",
+-    "UnionWithDuplicativeDiscriminants_FirstItemType",
+-    "UnionWithDuplicativeDiscriminants_SecondItemType",
+     "UnionWithLiteral",
+-    "UnionWithLiteral_Fern",
+     "UnionWithMultipleNoProperties",
+-    "UnionWithMultipleNoProperties_Empty1",
+-    "UnionWithMultipleNoProperties_Empty2",
+-    "UnionWithMultipleNoProperties_Foo",
+     "UnionWithNoProperties",
+-    "UnionWithNoProperties_Empty",
+-    "UnionWithNoProperties_Foo",
+     "UnionWithNullableReference",
+-    "UnionWithNullableReference_Bar",
+-    "UnionWithNullableReference_Foo",
+     "UnionWithOptionalReference",
+-    "UnionWithOptionalReference_Bar",
+-    "UnionWithOptionalReference_Foo",
+     "UnionWithOptionalTime",
+-    "UnionWithOptionalTime_Date",
+-    "UnionWithOptionalTime_Datetime",
+     "UnionWithPrimitive",
+-    "UnionWithPrimitive_Integer",
+-    "UnionWithPrimitive_String",
+     "UnionWithSameNumberTypes",
+-    "UnionWithSameNumberTypes_AnyNumber",
+-    "UnionWithSameNumberTypes_NegativeInt",
+-    "UnionWithSameNumberTypes_PositiveInt",
+     "UnionWithSameStringTypes",
+-    "UnionWithSameStringTypes_CustomFormat",
+-    "UnionWithSameStringTypes_PatternString",
+-    "UnionWithSameStringTypes_RegularString",
+     "UnionWithSingleElement",
+-    "UnionWithSingleElement_Foo",
+     "UnionWithSubTypes",
+-    "UnionWithSubTypes_Foo",
+-    "UnionWithSubTypes_FooExtended",
+     "UnionWithTime",
+-    "UnionWithTime_Date",
+-    "UnionWithTime_Datetime",
+-    "UnionWithTime_Value",
+     "UnionWithoutKey",
+-    "UnionWithoutKey_Bar",
+-    "UnionWithoutKey_Foo",
+-    "Union_Bar",
+-    "Union_Foo",
++    "ValueUnionWithTime",
+ ]
+diff --git a/src/seed/types/types/__init__.py b/src/seed/types/types/__init__.py
+index 330c5aa0df9..db56fd8eb53 100644
+--- a/src/seed/types/types/__init__.py
++++ b/src/seed/types/types/__init__.py
+@@ -12,140 +12,140 @@ if typing.TYPE_CHECKING:
+     from .foo_extended import FooExtended
+     from .second_item_type import SecondItemType
+     from .type_with_optional_map import TypeWithOptionalMap
+-    from .union import Union, Union_Bar, Union_Foo
++    from .union import BarUnion, FooUnion, Union
+     from .union_with_base_properties import (
++        FooUnionWithBaseProperties,
++        IntegerUnionWithBaseProperties,
++        StringUnionWithBaseProperties,
+         UnionWithBaseProperties,
+-        UnionWithBaseProperties_Foo,
+-        UnionWithBaseProperties_Integer,
+-        UnionWithBaseProperties_String,
+     )
+-    from .union_with_discriminant import UnionWithDiscriminant, UnionWithDiscriminant_Bar, UnionWithDiscriminant_Foo
++    from .union_with_discriminant import BarUnionWithDiscriminant, FooUnionWithDiscriminant, UnionWithDiscriminant
+     from .union_with_duplicate_primitive import (
++        Integer1UnionWithDuplicatePrimitive,
++        Integer2UnionWithDuplicatePrimitive,
++        String1UnionWithDuplicatePrimitive,
++        String2UnionWithDuplicatePrimitive,
+         UnionWithDuplicatePrimitive,
+-        UnionWithDuplicatePrimitive_Integer1,
+-        UnionWithDuplicatePrimitive_Integer2,
+-        UnionWithDuplicatePrimitive_String1,
+-        UnionWithDuplicatePrimitive_String2,
+     )
+     from .union_with_duplicate_types import (
++        Foo1UnionWithDuplicateTypes,
++        Foo2UnionWithDuplicateTypes,
+         UnionWithDuplicateTypes,
+-        UnionWithDuplicateTypes_Foo1,
+-        UnionWithDuplicateTypes_Foo2,
+     )
+     from .union_with_duplicative_discriminants import (
++        FirstItemTypeUnionWithDuplicativeDiscriminants,
++        SecondItemTypeUnionWithDuplicativeDiscriminants,
+         UnionWithDuplicativeDiscriminants,
+-        UnionWithDuplicativeDiscriminants_FirstItemType,
+-        UnionWithDuplicativeDiscriminants_SecondItemType,
+     )
+-    from .union_with_literal import UnionWithLiteral, UnionWithLiteral_Fern
++    from .union_with_literal import FernUnionWithLiteral, UnionWithLiteral
+     from .union_with_multiple_no_properties import (
++        Empty1UnionWithMultipleNoProperties,
++        Empty2UnionWithMultipleNoProperties,
++        FooUnionWithMultipleNoProperties,
+         UnionWithMultipleNoProperties,
+-        UnionWithMultipleNoProperties_Empty1,
+-        UnionWithMultipleNoProperties_Empty2,
+-        UnionWithMultipleNoProperties_Foo,
+     )
+-    from .union_with_no_properties import UnionWithNoProperties, UnionWithNoProperties_Empty, UnionWithNoProperties_Foo
++    from .union_with_no_properties import EmptyUnionWithNoProperties, FooUnionWithNoProperties, UnionWithNoProperties
+     from .union_with_nullable_reference import (
++        BarUnionWithNullableReference,
++        FooUnionWithNullableReference,
+         UnionWithNullableReference,
+-        UnionWithNullableReference_Bar,
+-        UnionWithNullableReference_Foo,
+     )
+     from .union_with_optional_reference import (
++        BarUnionWithOptionalReference,
++        FooUnionWithOptionalReference,
+         UnionWithOptionalReference,
+-        UnionWithOptionalReference_Bar,
+-        UnionWithOptionalReference_Foo,
+     )
+     from .union_with_optional_time import (
++        DateUnionWithOptionalTime,
++        DatetimeUnionWithOptionalTime,
+         UnionWithOptionalTime,
+-        UnionWithOptionalTime_Date,
+-        UnionWithOptionalTime_Datetime,
+     )
+-    from .union_with_primitive import UnionWithPrimitive, UnionWithPrimitive_Integer, UnionWithPrimitive_String
++    from .union_with_primitive import IntegerUnionWithPrimitive, StringUnionWithPrimitive, UnionWithPrimitive
+     from .union_with_same_number_types import (
++        AnyNumberUnionWithSameNumberTypes,
++        NegativeIntUnionWithSameNumberTypes,
++        PositiveIntUnionWithSameNumberTypes,
+         UnionWithSameNumberTypes,
+-        UnionWithSameNumberTypes_AnyNumber,
+-        UnionWithSameNumberTypes_NegativeInt,
+-        UnionWithSameNumberTypes_PositiveInt,
+     )
+     from .union_with_same_string_types import (
++        CustomFormatUnionWithSameStringTypes,
++        PatternStringUnionWithSameStringTypes,
++        RegularStringUnionWithSameStringTypes,
+         UnionWithSameStringTypes,
+-        UnionWithSameStringTypes_CustomFormat,
+-        UnionWithSameStringTypes_PatternString,
+-        UnionWithSameStringTypes_RegularString,
+     )
+-    from .union_with_single_element import UnionWithSingleElement, UnionWithSingleElement_Foo
+-    from .union_with_sub_types import UnionWithSubTypes, UnionWithSubTypes_Foo, UnionWithSubTypes_FooExtended
+-    from .union_with_time import UnionWithTime, UnionWithTime_Date, UnionWithTime_Datetime, UnionWithTime_Value
+-    from .union_without_key import UnionWithoutKey, UnionWithoutKey_Bar, UnionWithoutKey_Foo
++    from .union_with_single_element import FooUnionWithSingleElement, UnionWithSingleElement
++    from .union_with_sub_types import FooExtendedUnionWithSubTypes, FooUnionWithSubTypes, UnionWithSubTypes
++    from .union_with_time import DateUnionWithTime, DatetimeUnionWithTime, UnionWithTime, ValueUnionWithTime
++    from .union_without_key import BarUnionWithoutKey, FooUnionWithoutKey, UnionWithoutKey
+ _dynamic_imports: typing.Dict[str, str] = {
++    "AnyNumberUnionWithSameNumberTypes": ".union_with_same_number_types",
+     "Bar": ".bar",
++    "BarUnion": ".union",
++    "BarUnionWithDiscriminant": ".union_with_discriminant",
++    "BarUnionWithNullableReference": ".union_with_nullable_reference",
++    "BarUnionWithOptionalReference": ".union_with_optional_reference",
++    "BarUnionWithoutKey": ".union_without_key",
++    "CustomFormatUnionWithSameStringTypes": ".union_with_same_string_types",
++    "DateUnionWithOptionalTime": ".union_with_optional_time",
++    "DateUnionWithTime": ".union_with_time",
++    "DatetimeUnionWithOptionalTime": ".union_with_optional_time",
++    "DatetimeUnionWithTime": ".union_with_time",
++    "Empty1UnionWithMultipleNoProperties": ".union_with_multiple_no_properties",
++    "Empty2UnionWithMultipleNoProperties": ".union_with_multiple_no_properties",
++    "EmptyUnionWithNoProperties": ".union_with_no_properties",
++    "FernUnionWithLiteral": ".union_with_literal",
+     "FirstItemType": ".first_item_type",
++    "FirstItemTypeUnionWithDuplicativeDiscriminants": ".union_with_duplicative_discriminants",
+     "Foo": ".foo",
++    "Foo1UnionWithDuplicateTypes": ".union_with_duplicate_types",
++    "Foo2UnionWithDuplicateTypes": ".union_with_duplicate_types",
+     "FooExtended": ".foo_extended",
++    "FooExtendedUnionWithSubTypes": ".union_with_sub_types",
++    "FooUnion": ".union",
++    "FooUnionWithBaseProperties": ".union_with_base_properties",
++    "FooUnionWithDiscriminant": ".union_with_discriminant",
++    "FooUnionWithMultipleNoProperties": ".union_with_multiple_no_properties",
++    "FooUnionWithNoProperties": ".union_with_no_properties",
++    "FooUnionWithNullableReference": ".union_with_nullable_reference",
++    "FooUnionWithOptionalReference": ".union_with_optional_reference",
++    "FooUnionWithSingleElement": ".union_with_single_element",
++    "FooUnionWithSubTypes": ".union_with_sub_types",
++    "FooUnionWithoutKey": ".union_without_key",
++    "Integer1UnionWithDuplicatePrimitive": ".union_with_duplicate_primitive",
++    "Integer2UnionWithDuplicatePrimitive": ".union_with_duplicate_primitive",
++    "IntegerUnionWithBaseProperties": ".union_with_base_properties",
++    "IntegerUnionWithPrimitive": ".union_with_primitive",
++    "NegativeIntUnionWithSameNumberTypes": ".union_with_same_number_types",
++    "PatternStringUnionWithSameStringTypes": ".union_with_same_string_types",
++    "PositiveIntUnionWithSameNumberTypes": ".union_with_same_number_types",
++    "RegularStringUnionWithSameStringTypes": ".union_with_same_string_types",
+     "SecondItemType": ".second_item_type",
++    "SecondItemTypeUnionWithDuplicativeDiscriminants": ".union_with_duplicative_discriminants",
++    "String1UnionWithDuplicatePrimitive": ".union_with_duplicate_primitive",
++    "String2UnionWithDuplicatePrimitive": ".union_with_duplicate_primitive",
++    "StringUnionWithBaseProperties": ".union_with_base_properties",
++    "StringUnionWithPrimitive": ".union_with_primitive",
+     "TypeWithOptionalMap": ".type_with_optional_map",
+     "Union": ".union",
+     "UnionWithBaseProperties": ".union_with_base_properties",
+-    "UnionWithBaseProperties_Foo": ".union_with_base_properties",
+-    "UnionWithBaseProperties_Integer": ".union_with_base_properties",
+-    "UnionWithBaseProperties_String": ".union_with_base_properties",
+     "UnionWithDiscriminant": ".union_with_discriminant",
+-    "UnionWithDiscriminant_Bar": ".union_with_discriminant",
+-    "UnionWithDiscriminant_Foo": ".union_with_discriminant",
+     "UnionWithDuplicatePrimitive": ".union_with_duplicate_primitive",
+-    "UnionWithDuplicatePrimitive_Integer1": ".union_with_duplicate_primitive",
+-    "UnionWithDuplicatePrimitive_Integer2": ".union_with_duplicate_primitive",
+-    "UnionWithDuplicatePrimitive_String1": ".union_with_duplicate_primitive",
+-    "UnionWithDuplicatePrimitive_String2": ".union_with_duplicate_primitive",
+     "UnionWithDuplicateTypes": ".union_with_duplicate_types",
+-    "UnionWithDuplicateTypes_Foo1": ".union_with_duplicate_types",
+-    "UnionWithDuplicateTypes_Foo2": ".union_with_duplicate_types",
+     "UnionWithDuplicativeDiscriminants": ".union_with_duplicative_discriminants",
+-    "UnionWithDuplicativeDiscriminants_FirstItemType": ".union_with_duplicative_discriminants",
+-    "UnionWithDuplicativeDiscriminants_SecondItemType": ".union_with_duplicative_discriminants",
+     "UnionWithLiteral": ".union_with_literal",
+-    "UnionWithLiteral_Fern": ".union_with_literal",
+     "UnionWithMultipleNoProperties": ".union_with_multiple_no_properties",
+-    "UnionWithMultipleNoProperties_Empty1": ".union_with_multiple_no_properties",
+-    "UnionWithMultipleNoProperties_Empty2": ".union_with_multiple_no_properties",
+-    "UnionWithMultipleNoProperties_Foo": ".union_with_multiple_no_properties",
+     "UnionWithNoProperties": ".union_with_no_properties",
+-    "UnionWithNoProperties_Empty": ".union_with_no_properties",
+-    "UnionWithNoProperties_Foo": ".union_with_no_properties",
+     "UnionWithNullableReference": ".union_with_nullable_reference",
+-    "UnionWithNullableReference_Bar": ".union_with_nullable_reference",
+-    "UnionWithNullableReference_Foo": ".union_with_nullable_reference",
+     "UnionWithOptionalReference": ".union_with_optional_reference",
+-    "UnionWithOptionalReference_Bar": ".union_with_optional_reference",
+-    "UnionWithOptionalReference_Foo": ".union_with_optional_reference",
+     "UnionWithOptionalTime": ".union_with_optional_time",
+-    "UnionWithOptionalTime_Date": ".union_with_optional_time",
+-    "UnionWithOptionalTime_Datetime": ".union_with_optional_time",
+     "UnionWithPrimitive": ".union_with_primitive",
+-    "UnionWithPrimitive_Integer": ".union_with_primitive",
+-    "UnionWithPrimitive_String": ".union_with_primitive",
+     "UnionWithSameNumberTypes": ".union_with_same_number_types",
+-    "UnionWithSameNumberTypes_AnyNumber": ".union_with_same_number_types",
+-    "UnionWithSameNumberTypes_NegativeInt": ".union_with_same_number_types",
+-    "UnionWithSameNumberTypes_PositiveInt": ".union_with_same_number_types",
+     "UnionWithSameStringTypes": ".union_with_same_string_types",
+-    "UnionWithSameStringTypes_CustomFormat": ".union_with_same_string_types",
+-    "UnionWithSameStringTypes_PatternString": ".union_with_same_string_types",
+-    "UnionWithSameStringTypes_RegularString": ".union_with_same_string_types",
+     "UnionWithSingleElement": ".union_with_single_element",
+-    "UnionWithSingleElement_Foo": ".union_with_single_element",
+     "UnionWithSubTypes": ".union_with_sub_types",
+-    "UnionWithSubTypes_Foo": ".union_with_sub_types",
+-    "UnionWithSubTypes_FooExtended": ".union_with_sub_types",
+     "UnionWithTime": ".union_with_time",
+-    "UnionWithTime_Date": ".union_with_time",
+-    "UnionWithTime_Datetime": ".union_with_time",
+-    "UnionWithTime_Value": ".union_with_time",
+     "UnionWithoutKey": ".union_without_key",
+-    "UnionWithoutKey_Bar": ".union_without_key",
+-    "UnionWithoutKey_Foo": ".union_without_key",
+-    "Union_Bar": ".union",
+-    "Union_Foo": ".union",
++    "ValueUnionWithTime": ".union_with_time",
+ }
+ 
+ 
+@@ -171,72 +171,72 @@ def __dir__():
+ 
+ 
+ __all__ = [
++    "AnyNumberUnionWithSameNumberTypes",
+     "Bar",
++    "BarUnion",
++    "BarUnionWithDiscriminant",
++    "BarUnionWithNullableReference",
++    "BarUnionWithOptionalReference",
++    "BarUnionWithoutKey",
++    "CustomFormatUnionWithSameStringTypes",
++    "DateUnionWithOptionalTime",
++    "DateUnionWithTime",
++    "DatetimeUnionWithOptionalTime",
++    "DatetimeUnionWithTime",
++    "Empty1UnionWithMultipleNoProperties",
++    "Empty2UnionWithMultipleNoProperties",
++    "EmptyUnionWithNoProperties",
++    "FernUnionWithLiteral",
+     "FirstItemType",
++    "FirstItemTypeUnionWithDuplicativeDiscriminants",
+     "Foo",
++    "Foo1UnionWithDuplicateTypes",
++    "Foo2UnionWithDuplicateTypes",
+     "FooExtended",
++    "FooExtendedUnionWithSubTypes",
++    "FooUnion",
++    "FooUnionWithBaseProperties",
++    "FooUnionWithDiscriminant",
++    "FooUnionWithMultipleNoProperties",
++    "FooUnionWithNoProperties",
++    "FooUnionWithNullableReference",
++    "FooUnionWithOptionalReference",
++    "FooUnionWithSingleElement",
++    "FooUnionWithSubTypes",
++    "FooUnionWithoutKey",
++    "Integer1UnionWithDuplicatePrimitive",
++    "Integer2UnionWithDuplicatePrimitive",
++    "IntegerUnionWithBaseProperties",
++    "IntegerUnionWithPrimitive",
++    "NegativeIntUnionWithSameNumberTypes",
++    "PatternStringUnionWithSameStringTypes",
++    "PositiveIntUnionWithSameNumberTypes",
++    "RegularStringUnionWithSameStringTypes",
+     "SecondItemType",
++    "SecondItemTypeUnionWithDuplicativeDiscriminants",
++    "String1UnionWithDuplicatePrimitive",
++    "String2UnionWithDuplicatePrimitive",
++    "StringUnionWithBaseProperties",
++    "StringUnionWithPrimitive",
+     "TypeWithOptionalMap",
+     "Union",
+     "UnionWithBaseProperties",
+-    "UnionWithBaseProperties_Foo",
+-    "UnionWithBaseProperties_Integer",
+-    "UnionWithBaseProperties_String",
+     "UnionWithDiscriminant",
+-    "UnionWithDiscriminant_Bar",
+-    "UnionWithDiscriminant_Foo",
+     "UnionWithDuplicatePrimitive",
+-    "UnionWithDuplicatePrimitive_Integer1",
+-    "UnionWithDuplicatePrimitive_Integer2",
+-    "UnionWithDuplicatePrimitive_String1",
+-    "UnionWithDuplicatePrimitive_String2",
+     "UnionWithDuplicateTypes",
+-    "UnionWithDuplicateTypes_Foo1",
+-    "UnionWithDuplicateTypes_Foo2",
+     "UnionWithDuplicativeDiscriminants",
+-    "UnionWithDuplicativeDiscriminants_FirstItemType",
+-    "UnionWithDuplicativeDiscriminants_SecondItemType",
+     "UnionWithLiteral",
+-    "UnionWithLiteral_Fern",
+     "UnionWithMultipleNoProperties",
+-    "UnionWithMultipleNoProperties_Empty1",
+-    "UnionWithMultipleNoProperties_Empty2",
+-    "UnionWithMultipleNoProperties_Foo",
+     "UnionWithNoProperties",
+-    "UnionWithNoProperties_Empty",
+-    "UnionWithNoProperties_Foo",
+     "UnionWithNullableReference",
+-    "UnionWithNullableReference_Bar",
+-    "UnionWithNullableReference_Foo",
+     "UnionWithOptionalReference",
+-    "UnionWithOptionalReference_Bar",
+-    "UnionWithOptionalReference_Foo",
+     "UnionWithOptionalTime",
+-    "UnionWithOptionalTime_Date",
+-    "UnionWithOptionalTime_Datetime",
+     "UnionWithPrimitive",
+-    "UnionWithPrimitive_Integer",
+-    "UnionWithPrimitive_String",
+     "UnionWithSameNumberTypes",
+-    "UnionWithSameNumberTypes_AnyNumber",
+-    "UnionWithSameNumberTypes_NegativeInt",
+-    "UnionWithSameNumberTypes_PositiveInt",
+     "UnionWithSameStringTypes",
+-    "UnionWithSameStringTypes_CustomFormat",
+-    "UnionWithSameStringTypes_PatternString",
+-    "UnionWithSameStringTypes_RegularString",
+     "UnionWithSingleElement",
+-    "UnionWithSingleElement_Foo",
+     "UnionWithSubTypes",
+-    "UnionWithSubTypes_Foo",
+-    "UnionWithSubTypes_FooExtended",
+     "UnionWithTime",
+-    "UnionWithTime_Date",
+-    "UnionWithTime_Datetime",
+-    "UnionWithTime_Value",
+     "UnionWithoutKey",
+-    "UnionWithoutKey_Bar",
+-    "UnionWithoutKey_Foo",
+-    "Union_Bar",
+-    "Union_Foo",
++    "ValueUnionWithTime",
+ ]
+diff --git a/src/seed/types/types/foo_extended.py b/src/seed/types/types/foo_extended.py
+index 29e964492c8..93bda09fc53 100644
+--- a/src/seed/types/types/foo_extended.py
++++ b/src/seed/types/types/foo_extended.py
+@@ -3,11 +3,10 @@
+ import typing
+ 
+ import pydantic
+-from ...core.pydantic_utilities import IS_PYDANTIC_V2
+-from .foo import Foo
++from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+ 
+ 
+-class FooExtended(Foo):
++class FooExtended(UniversalBaseModel):
+     """
+     Examples
+     --------
+@@ -20,6 +19,7 @@ class FooExtended(Foo):
+     """
+ 
+     age: int
++    name: str
+ 
+     if IS_PYDANTIC_V2:
+         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+diff --git a/src/seed/types/types/union.py b/src/seed/types/types/union.py
+index b02ef656f42..5dd00a82a31 100644
+--- a/src/seed/types/types/union.py
++++ b/src/seed/types/types/union.py
+@@ -11,7 +11,7 @@ from .bar import Bar
+ from .foo import Foo
+ 
+ 
+-class Union_Foo(UniversalBaseModel):
++class FooUnion(UniversalBaseModel):
+     foo: Foo
+     type: typing.Literal["foo"] = "foo"
+ 
+@@ -24,7 +24,7 @@ class Union_Foo(UniversalBaseModel):
+             smart_union = True
+ 
+ 
+-class Union_Bar(UniversalBaseModel):
++class BarUnion(UniversalBaseModel):
+     bar: Bar
+     type: typing.Literal["bar"] = "bar"
+ 
+@@ -37,4 +37,4 @@ class Union_Bar(UniversalBaseModel):
+             smart_union = True
+ 
+ 
+-Union = typing_extensions.Annotated[typing.Union[Union_Foo, Union_Bar], pydantic.Field(discriminator="type")]
++Union = typing_extensions.Annotated[typing.Union[FooUnion, BarUnion], pydantic.Field(discriminator="type")]
+diff --git a/src/seed/types/types/union_with_base_properties.py b/src/seed/types/types/union_with_base_properties.py
+index 861886cc213..a24785e2c6d 100644
+--- a/src/seed/types/types/union_with_base_properties.py
++++ b/src/seed/types/types/union_with_base_properties.py
+@@ -13,9 +13,9 @@ class Base(UniversalBaseModel):
+     """
+     Examples
+     --------
+-    from seed.types import UnionWithBaseProperties_Integer
++    from seed.types import IntegerUnionWithBaseProperties
+ 
+-    UnionWithBaseProperties_Integer(value=5)
++    IntegerUnionWithBaseProperties(value=5)
+     """
+ 
+     id: str
+@@ -30,7 +30,7 @@ class Base(UniversalBaseModel):
+             extra = pydantic.Extra.allow
+ 
+ 
+-class UnionWithBaseProperties_Integer(Base):
++class IntegerUnionWithBaseProperties(Base):
+     value: int
+     type: typing.Literal["integer"] = "integer"
+ 
+@@ -43,7 +43,7 @@ class UnionWithBaseProperties_Integer(Base):
+             smart_union = True
+ 
+ 
+-class UnionWithBaseProperties_String(Base):
++class StringUnionWithBaseProperties(Base):
+     value: str
+     type: typing.Literal["string"] = "string"
+ 
+@@ -56,13 +56,13 @@ class UnionWithBaseProperties_String(Base):
+             smart_union = True
+ 
+ 
+-class UnionWithBaseProperties_Foo(Base):
++class FooUnionWithBaseProperties(Base):
+     """
+     Examples
+     --------
+-    from seed.types import UnionWithBaseProperties_Integer
++    from seed.types import IntegerUnionWithBaseProperties
+ 
+-    UnionWithBaseProperties_Integer(value=5)
++    IntegerUnionWithBaseProperties(value=5)
+     """
+ 
+     type: typing.Literal["foo"] = "foo"
+@@ -79,11 +79,11 @@ class UnionWithBaseProperties_Foo(Base):
+ 
+ 
+ """
+-from seed.types import UnionWithBaseProperties_Integer
++from seed.types import IntegerUnionWithBaseProperties
+ 
+-UnionWithBaseProperties_Integer(value=5)
++IntegerUnionWithBaseProperties(value=5)
+ """
+ UnionWithBaseProperties = typing_extensions.Annotated[
+-    typing.Union[UnionWithBaseProperties_Integer, UnionWithBaseProperties_String, UnionWithBaseProperties_Foo],
++    typing.Union[IntegerUnionWithBaseProperties, StringUnionWithBaseProperties, FooUnionWithBaseProperties],
+     pydantic.Field(discriminator="type"),
+ ]
+diff --git a/src/seed/types/types/union_with_discriminant.py b/src/seed/types/types/union_with_discriminant.py
+index 711e7ca63de..2ccd5fdb2e1 100644
+--- a/src/seed/types/types/union_with_discriminant.py
++++ b/src/seed/types/types/union_with_discriminant.py
+@@ -12,7 +12,7 @@ from .bar import Bar
+ from .foo import Foo
+ 
+ 
+-class UnionWithDiscriminant_Foo(UniversalBaseModel):
++class FooUnionWithDiscriminant(UniversalBaseModel):
+     foo: Foo
+     type: typing_extensions.Annotated[
+         typing.Literal["foo"], FieldMetadata(alias="_type"), pydantic.Field(alias="_type")
+@@ -27,7 +27,7 @@ class UnionWithDiscriminant_Foo(UniversalBaseModel):
+             smart_union = True
+ 
+ 
+-class UnionWithDiscriminant_Bar(UniversalBaseModel):
++class BarUnionWithDiscriminant(UniversalBaseModel):
+     bar: Bar
+     type: typing_extensions.Annotated[
+         typing.Literal["bar"], FieldMetadata(alias="_type"), pydantic.Field(alias="_type")
+@@ -43,5 +43,5 @@ class UnionWithDiscriminant_Bar(UniversalBaseModel):
+ 
+ 
+ UnionWithDiscriminant = typing_extensions.Annotated[
+-    typing.Union[UnionWithDiscriminant_Foo, UnionWithDiscriminant_Bar], pydantic.Field(discriminator="type")
++    typing.Union[FooUnionWithDiscriminant, BarUnionWithDiscriminant], pydantic.Field(discriminator="type")
+ ]
+diff --git a/src/seed/types/types/union_with_duplicate_primitive.py b/src/seed/types/types/union_with_duplicate_primitive.py
+index 3bdcc892fdc..303bcec3191 100644
+--- a/src/seed/types/types/union_with_duplicate_primitive.py
++++ b/src/seed/types/types/union_with_duplicate_primitive.py
+@@ -9,7 +9,7 @@ import typing_extensions
+ from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+ 
+ 
+-class UnionWithDuplicatePrimitive_Integer1(UniversalBaseModel):
++class Integer1UnionWithDuplicatePrimitive(UniversalBaseModel):
+     value: int
+     type: typing.Literal["integer1"] = "integer1"
+ 
+@@ -22,7 +22,7 @@ class UnionWithDuplicatePrimitive_Integer1(UniversalBaseModel):
+             smart_union = True
+ 
+ 
+-class UnionWithDuplicatePrimitive_Integer2(UniversalBaseModel):
++class Integer2UnionWithDuplicatePrimitive(UniversalBaseModel):
+     value: int
+     type: typing.Literal["integer2"] = "integer2"
+ 
+@@ -35,7 +35,7 @@ class UnionWithDuplicatePrimitive_Integer2(UniversalBaseModel):
+             smart_union = True
+ 
+ 
+-class UnionWithDuplicatePrimitive_String1(UniversalBaseModel):
++class String1UnionWithDuplicatePrimitive(UniversalBaseModel):
+     value: str
+     type: typing.Literal["string1"] = "string1"
+ 
+@@ -48,7 +48,7 @@ class UnionWithDuplicatePrimitive_String1(UniversalBaseModel):
+             smart_union = True
+ 
+ 
+-class UnionWithDuplicatePrimitive_String2(UniversalBaseModel):
++class String2UnionWithDuplicatePrimitive(UniversalBaseModel):
+     value: str
+     type: typing.Literal["string2"] = "string2"
+ 
+@@ -62,16 +62,16 @@ class UnionWithDuplicatePrimitive_String2(UniversalBaseModel):
+ 
+ 
+ """
+-from seed.types import UnionWithDuplicatePrimitive_Integer1
++from seed.types import Integer1UnionWithDuplicatePrimitive
+ 
+-UnionWithDuplicatePrimitive_Integer1(value=9)
++Integer1UnionWithDuplicatePrimitive(value=9)
+ """
+ UnionWithDuplicatePrimitive = typing_extensions.Annotated[
+     typing.Union[
+-        UnionWithDuplicatePrimitive_Integer1,
+-        UnionWithDuplicatePrimitive_Integer2,
+-        UnionWithDuplicatePrimitive_String1,
+-        UnionWithDuplicatePrimitive_String2,
++        Integer1UnionWithDuplicatePrimitive,
++        Integer2UnionWithDuplicatePrimitive,
++        String1UnionWithDuplicatePrimitive,
++        String2UnionWithDuplicatePrimitive,
+     ],
+     pydantic.Field(discriminator="type"),
+ ]
+diff --git a/src/seed/types/types/union_with_duplicate_types.py b/src/seed/types/types/union_with_duplicate_types.py
+index 6a1b25fae34..edafb87d986 100644
+--- a/src/seed/types/types/union_with_duplicate_types.py
++++ b/src/seed/types/types/union_with_duplicate_types.py
+@@ -9,13 +9,13 @@ import typing_extensions
+ from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+ 
+ 
+-class UnionWithDuplicateTypes_Foo1(UniversalBaseModel):
++class Foo1UnionWithDuplicateTypes(UniversalBaseModel):
+     """
+     Examples
+     --------
+-    from seed.types import UnionWithDuplicateTypes_Foo1
++    from seed.types import Foo1UnionWithDuplicateTypes
+ 
+-    UnionWithDuplicateTypes_Foo1(
++    Foo1UnionWithDuplicateTypes(
+         name="example1",
+     )
+     """
+@@ -33,13 +33,13 @@ class UnionWithDuplicateTypes_Foo1(UniversalBaseModel):
+             extra = pydantic.Extra.allow
+ 
+ 
+-class UnionWithDuplicateTypes_Foo2(UniversalBaseModel):
++class Foo2UnionWithDuplicateTypes(UniversalBaseModel):
+     """
+     Examples
+     --------
+-    from seed.types import UnionWithDuplicateTypes_Foo1
++    from seed.types import Foo1UnionWithDuplicateTypes
+ 
+-    UnionWithDuplicateTypes_Foo1(
++    Foo1UnionWithDuplicateTypes(
+         name="example1",
+     )
+     """
+@@ -58,12 +58,12 @@ class UnionWithDuplicateTypes_Foo2(UniversalBaseModel):
+ 
+ 
+ """
+-from seed.types import UnionWithDuplicateTypes_Foo1
++from seed.types import Foo1UnionWithDuplicateTypes
+ 
+-UnionWithDuplicateTypes_Foo1(
++Foo1UnionWithDuplicateTypes(
+     name="example1",
+ )
+ """
+ UnionWithDuplicateTypes = typing_extensions.Annotated[
+-    typing.Union[UnionWithDuplicateTypes_Foo1, UnionWithDuplicateTypes_Foo2], pydantic.Field(discriminator="type")
++    typing.Union[Foo1UnionWithDuplicateTypes, Foo2UnionWithDuplicateTypes], pydantic.Field(discriminator="type")
+ ]
+diff --git a/src/seed/types/types/union_with_duplicative_discriminants.py b/src/seed/types/types/union_with_duplicative_discriminants.py
+index 23eda3e8c37..18c32e903b3 100644
+--- a/src/seed/types/types/union_with_duplicative_discriminants.py
++++ b/src/seed/types/types/union_with_duplicative_discriminants.py
+@@ -9,7 +9,7 @@ import typing_extensions
+ from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+ 
+ 
+-class UnionWithDuplicativeDiscriminants_FirstItemType(UniversalBaseModel):
++class FirstItemTypeUnionWithDuplicativeDiscriminants(UniversalBaseModel):
+     type: typing.Literal["firstItemType"] = "firstItemType"
+     name: str
+ 
+@@ -23,7 +23,7 @@ class UnionWithDuplicativeDiscriminants_FirstItemType(UniversalBaseModel):
+             extra = pydantic.Extra.allow
+ 
+ 
+-class UnionWithDuplicativeDiscriminants_SecondItemType(UniversalBaseModel):
++class SecondItemTypeUnionWithDuplicativeDiscriminants(UniversalBaseModel):
+     type: typing.Literal["secondItemType"] = "secondItemType"
+     title: str
+ 
+@@ -38,6 +38,6 @@ class UnionWithDuplicativeDiscriminants_SecondItemType(UniversalBaseModel):
+ 
+ 
+ UnionWithDuplicativeDiscriminants = typing_extensions.Annotated[
+-    typing.Union[UnionWithDuplicativeDiscriminants_FirstItemType, UnionWithDuplicativeDiscriminants_SecondItemType],
++    typing.Union[FirstItemTypeUnionWithDuplicativeDiscriminants, SecondItemTypeUnionWithDuplicativeDiscriminants],
+     pydantic.Field(discriminator="type"),
+ ]
+diff --git a/src/seed/types/types/union_with_literal.py b/src/seed/types/types/union_with_literal.py
+index 230d7d85c63..ed8b0823e19 100644
+--- a/src/seed/types/types/union_with_literal.py
++++ b/src/seed/types/types/union_with_literal.py
+@@ -12,9 +12,9 @@ class Base(UniversalBaseModel):
+     """
+     Examples
+     --------
+-    from seed.types import UnionWithLiteral_Fern
++    from seed.types import FernUnionWithLiteral
+ 
+-    UnionWithLiteral_Fern()
++    FernUnionWithLiteral()
+     """
+ 
+     base: typing.Literal["base"] = "base"
+@@ -29,7 +29,7 @@ class Base(UniversalBaseModel):
+             extra = pydantic.Extra.allow
+ 
+ 
+-class UnionWithLiteral_Fern(Base):
++class FernUnionWithLiteral(Base):
+     value: typing.Literal["fern"]
+     type: typing.Literal["fern"] = "fern"
+ 
+@@ -43,8 +43,8 @@ class UnionWithLiteral_Fern(Base):
+ 
+ 
+ """
+-from seed.types import UnionWithLiteral_Fern
++from seed.types import FernUnionWithLiteral
+ 
+-UnionWithLiteral_Fern()
++FernUnionWithLiteral()
+ """
+-UnionWithLiteral = UnionWithLiteral_Fern
++UnionWithLiteral = FernUnionWithLiteral
+diff --git a/src/seed/types/types/union_with_multiple_no_properties.py b/src/seed/types/types/union_with_multiple_no_properties.py
+index 04d8b48d16d..b2721f724e5 100644
+--- a/src/seed/types/types/union_with_multiple_no_properties.py
++++ b/src/seed/types/types/union_with_multiple_no_properties.py
+@@ -9,13 +9,13 @@ import typing_extensions
+ from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+ 
+ 
+-class UnionWithMultipleNoProperties_Foo(UniversalBaseModel):
++class FooUnionWithMultipleNoProperties(UniversalBaseModel):
+     """
+     Examples
+     --------
+-    from seed.types import UnionWithMultipleNoProperties_Foo
++    from seed.types import FooUnionWithMultipleNoProperties
+ 
+-    UnionWithMultipleNoProperties_Foo(
++    FooUnionWithMultipleNoProperties(
+         name="example",
+     )
+     """
+@@ -33,13 +33,13 @@ class UnionWithMultipleNoProperties_Foo(UniversalBaseModel):
+             extra = pydantic.Extra.allow
+ 
+ 
+-class UnionWithMultipleNoProperties_Empty1(UniversalBaseModel):
++class Empty1UnionWithMultipleNoProperties(UniversalBaseModel):
+     """
+     Examples
+     --------
+-    from seed.types import UnionWithMultipleNoProperties_Foo
++    from seed.types import FooUnionWithMultipleNoProperties
+ 
+-    UnionWithMultipleNoProperties_Foo(
++    FooUnionWithMultipleNoProperties(
+         name="example",
+     )
+     """
+@@ -56,13 +56,13 @@ class UnionWithMultipleNoProperties_Empty1(UniversalBaseModel):
+             extra = pydantic.Extra.allow
+ 
+ 
+-class UnionWithMultipleNoProperties_Empty2(UniversalBaseModel):
++class Empty2UnionWithMultipleNoProperties(UniversalBaseModel):
+     """
+     Examples
+     --------
+-    from seed.types import UnionWithMultipleNoProperties_Foo
++    from seed.types import FooUnionWithMultipleNoProperties
+ 
+-    UnionWithMultipleNoProperties_Foo(
++    FooUnionWithMultipleNoProperties(
+         name="example",
+     )
+     """
+@@ -80,15 +80,15 @@ class UnionWithMultipleNoProperties_Empty2(UniversalBaseModel):
+ 
+ 
+ """
+-from seed.types import UnionWithMultipleNoProperties_Foo
++from seed.types import FooUnionWithMultipleNoProperties
+ 
+-UnionWithMultipleNoProperties_Foo(
++FooUnionWithMultipleNoProperties(
+     name="example",
+ )
+ """
+ UnionWithMultipleNoProperties = typing_extensions.Annotated[
+     typing.Union[
+-        UnionWithMultipleNoProperties_Foo, UnionWithMultipleNoProperties_Empty1, UnionWithMultipleNoProperties_Empty2
++        FooUnionWithMultipleNoProperties, Empty1UnionWithMultipleNoProperties, Empty2UnionWithMultipleNoProperties
+     ],
+     pydantic.Field(discriminator="type"),
+ ]
+diff --git a/src/seed/types/types/union_with_no_properties.py b/src/seed/types/types/union_with_no_properties.py
+index 16abf2363ff..60729355e85 100644
+--- a/src/seed/types/types/union_with_no_properties.py
++++ b/src/seed/types/types/union_with_no_properties.py
+@@ -9,13 +9,13 @@ import typing_extensions
+ from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+ 
+ 
+-class UnionWithNoProperties_Foo(UniversalBaseModel):
++class FooUnionWithNoProperties(UniversalBaseModel):
+     """
+     Examples
+     --------
+-    from seed.types import UnionWithNoProperties_Foo
++    from seed.types import FooUnionWithNoProperties
+ 
+-    UnionWithNoProperties_Foo(
++    FooUnionWithNoProperties(
+         name="example",
+     )
+     """
+@@ -33,13 +33,13 @@ class UnionWithNoProperties_Foo(UniversalBaseModel):
+             extra = pydantic.Extra.allow
+ 
+ 
+-class UnionWithNoProperties_Empty(UniversalBaseModel):
++class EmptyUnionWithNoProperties(UniversalBaseModel):
+     """
+     Examples
+     --------
+-    from seed.types import UnionWithNoProperties_Foo
++    from seed.types import FooUnionWithNoProperties
+ 
+-    UnionWithNoProperties_Foo(
++    FooUnionWithNoProperties(
+         name="example",
+     )
+     """
+@@ -57,12 +57,12 @@ class UnionWithNoProperties_Empty(UniversalBaseModel):
+ 
+ 
+ """
+-from seed.types import UnionWithNoProperties_Foo
++from seed.types import FooUnionWithNoProperties
+ 
+-UnionWithNoProperties_Foo(
++FooUnionWithNoProperties(
+     name="example",
+ )
+ """
+ UnionWithNoProperties = typing_extensions.Annotated[
+-    typing.Union[UnionWithNoProperties_Foo, UnionWithNoProperties_Empty], pydantic.Field(discriminator="type")
++    typing.Union[FooUnionWithNoProperties, EmptyUnionWithNoProperties], pydantic.Field(discriminator="type")
+ ]
+diff --git a/src/seed/types/types/union_with_nullable_reference.py b/src/seed/types/types/union_with_nullable_reference.py
+index 629bbc6a4b4..facb98a808e 100644
+--- a/src/seed/types/types/union_with_nullable_reference.py
++++ b/src/seed/types/types/union_with_nullable_reference.py
+@@ -11,7 +11,7 @@ from .bar import Bar
+ from .foo import Foo
+ 
+ 
+-class UnionWithNullableReference_Foo(UniversalBaseModel):
++class FooUnionWithNullableReference(UniversalBaseModel):
+     value: typing.Optional[Foo] = None
+     type: typing.Literal["foo"] = "foo"
+ 
+@@ -24,7 +24,7 @@ class UnionWithNullableReference_Foo(UniversalBaseModel):
+             smart_union = True
+ 
+ 
+-class UnionWithNullableReference_Bar(UniversalBaseModel):
++class BarUnionWithNullableReference(UniversalBaseModel):
+     value: typing.Optional[Bar] = None
+     type: typing.Literal["bar"] = "bar"
+ 
+@@ -38,5 +38,5 @@ class UnionWithNullableReference_Bar(UniversalBaseModel):
+ 
+ 
+ UnionWithNullableReference = typing_extensions.Annotated[
+-    typing.Union[UnionWithNullableReference_Foo, UnionWithNullableReference_Bar], pydantic.Field(discriminator="type")
++    typing.Union[FooUnionWithNullableReference, BarUnionWithNullableReference], pydantic.Field(discriminator="type")
+ ]
+diff --git a/src/seed/types/types/union_with_optional_reference.py b/src/seed/types/types/union_with_optional_reference.py
+index 93798dd4b07..999b9ba7536 100644
+--- a/src/seed/types/types/union_with_optional_reference.py
++++ b/src/seed/types/types/union_with_optional_reference.py
+@@ -11,7 +11,7 @@ from .bar import Bar
+ from .foo import Foo
+ 
+ 
+-class UnionWithOptionalReference_Foo(UniversalBaseModel):
++class FooUnionWithOptionalReference(UniversalBaseModel):
+     value: typing.Optional[Foo] = None
+     type: typing.Literal["foo"] = "foo"
+ 
+@@ -24,7 +24,7 @@ class UnionWithOptionalReference_Foo(UniversalBaseModel):
+             smart_union = True
+ 
+ 
+-class UnionWithOptionalReference_Bar(UniversalBaseModel):
++class BarUnionWithOptionalReference(UniversalBaseModel):
+     value: typing.Optional[Bar] = None
+     type: typing.Literal["bar"] = "bar"
+ 
+@@ -38,5 +38,5 @@ class UnionWithOptionalReference_Bar(UniversalBaseModel):
+ 
+ 
+ UnionWithOptionalReference = typing_extensions.Annotated[
+-    typing.Union[UnionWithOptionalReference_Foo, UnionWithOptionalReference_Bar], pydantic.Field(discriminator="type")
++    typing.Union[FooUnionWithOptionalReference, BarUnionWithOptionalReference], pydantic.Field(discriminator="type")
+ ]
+diff --git a/src/seed/types/types/union_with_optional_time.py b/src/seed/types/types/union_with_optional_time.py
+index 4d574343daa..c641c9d2aa0 100644
+--- a/src/seed/types/types/union_with_optional_time.py
++++ b/src/seed/types/types/union_with_optional_time.py
+@@ -10,7 +10,7 @@ import typing_extensions
+ from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+ 
+ 
+-class UnionWithOptionalTime_Date(UniversalBaseModel):
++class DateUnionWithOptionalTime(UniversalBaseModel):
+     value: typing.Optional[dt.date] = None
+     type: typing.Literal["date"] = "date"
+ 
+@@ -23,7 +23,7 @@ class UnionWithOptionalTime_Date(UniversalBaseModel):
+             smart_union = True
+ 
+ 
+-class UnionWithOptionalTime_Datetime(UniversalBaseModel):
++class DatetimeUnionWithOptionalTime(UniversalBaseModel):
+     value: typing.Optional[dt.datetime] = None
+     type: typing.Literal["datetime"] = "datetime"
+ 
+@@ -39,14 +39,14 @@ class UnionWithOptionalTime_Datetime(UniversalBaseModel):
+ """
+ import datetime
+ 
+-from seed.types import UnionWithOptionalTime_Date
++from seed.types import DateUnionWithOptionalTime
+ 
+-UnionWithOptionalTime_Date(
++DateUnionWithOptionalTime(
+     value=datetime.date.fromisoformat(
+         "1994-01-01",
+     )
+ )
+ """
+ UnionWithOptionalTime = typing_extensions.Annotated[
+-    typing.Union[UnionWithOptionalTime_Date, UnionWithOptionalTime_Datetime], pydantic.Field(discriminator="type")
++    typing.Union[DateUnionWithOptionalTime, DatetimeUnionWithOptionalTime], pydantic.Field(discriminator="type")
+ ]
+diff --git a/src/seed/types/types/union_with_primitive.py b/src/seed/types/types/union_with_primitive.py
+index 68e4c7e7050..61b3d7648b4 100644
+--- a/src/seed/types/types/union_with_primitive.py
++++ b/src/seed/types/types/union_with_primitive.py
+@@ -9,7 +9,7 @@ import typing_extensions
+ from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+ 
+ 
+-class UnionWithPrimitive_Integer(UniversalBaseModel):
++class IntegerUnionWithPrimitive(UniversalBaseModel):
+     value: int
+     type: typing.Literal["integer"] = "integer"
+ 
+@@ -22,7 +22,7 @@ class UnionWithPrimitive_Integer(UniversalBaseModel):
+             smart_union = True
+ 
+ 
+-class UnionWithPrimitive_String(UniversalBaseModel):
++class StringUnionWithPrimitive(UniversalBaseModel):
+     value: str
+     type: typing.Literal["string"] = "string"
+ 
+@@ -36,10 +36,10 @@ class UnionWithPrimitive_String(UniversalBaseModel):
+ 
+ 
+ """
+-from seed.types import UnionWithPrimitive_Integer
++from seed.types import IntegerUnionWithPrimitive
+ 
+-UnionWithPrimitive_Integer(value=9)
++IntegerUnionWithPrimitive(value=9)
+ """
+ UnionWithPrimitive = typing_extensions.Annotated[
+-    typing.Union[UnionWithPrimitive_Integer, UnionWithPrimitive_String], pydantic.Field(discriminator="type")
++    typing.Union[IntegerUnionWithPrimitive, StringUnionWithPrimitive], pydantic.Field(discriminator="type")
+ ]
+diff --git a/src/seed/types/types/union_with_same_number_types.py b/src/seed/types/types/union_with_same_number_types.py
+index 347b136cf2f..18ab1202f7f 100644
+--- a/src/seed/types/types/union_with_same_number_types.py
++++ b/src/seed/types/types/union_with_same_number_types.py
+@@ -9,7 +9,7 @@ import typing_extensions
+ from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+ 
+ 
+-class UnionWithSameNumberTypes_PositiveInt(UniversalBaseModel):
++class PositiveIntUnionWithSameNumberTypes(UniversalBaseModel):
+     value: int
+     type: typing.Literal["positiveInt"] = "positiveInt"
+ 
+@@ -22,7 +22,7 @@ class UnionWithSameNumberTypes_PositiveInt(UniversalBaseModel):
+             smart_union = True
+ 
+ 
+-class UnionWithSameNumberTypes_NegativeInt(UniversalBaseModel):
++class NegativeIntUnionWithSameNumberTypes(UniversalBaseModel):
+     value: int
+     type: typing.Literal["negativeInt"] = "negativeInt"
+ 
+@@ -35,7 +35,7 @@ class UnionWithSameNumberTypes_NegativeInt(UniversalBaseModel):
+             smart_union = True
+ 
+ 
+-class UnionWithSameNumberTypes_AnyNumber(UniversalBaseModel):
++class AnyNumberUnionWithSameNumberTypes(UniversalBaseModel):
+     value: float
+     type: typing.Literal["anyNumber"] = "anyNumber"
+ 
+@@ -49,13 +49,13 @@ class UnionWithSameNumberTypes_AnyNumber(UniversalBaseModel):
+ 
+ 
+ """
+-from seed.types import UnionWithSameNumberTypes_PositiveInt
++from seed.types import PositiveIntUnionWithSameNumberTypes
+ 
+-UnionWithSameNumberTypes_PositiveInt(value=100)
++PositiveIntUnionWithSameNumberTypes(value=100)
+ """
+ UnionWithSameNumberTypes = typing_extensions.Annotated[
+     typing.Union[
+-        UnionWithSameNumberTypes_PositiveInt, UnionWithSameNumberTypes_NegativeInt, UnionWithSameNumberTypes_AnyNumber
++        PositiveIntUnionWithSameNumberTypes, NegativeIntUnionWithSameNumberTypes, AnyNumberUnionWithSameNumberTypes
+     ],
+     pydantic.Field(discriminator="type"),
+ ]
+diff --git a/src/seed/types/types/union_with_same_string_types.py b/src/seed/types/types/union_with_same_string_types.py
+index 8409c7905b4..4e15ef4fa7e 100644
+--- a/src/seed/types/types/union_with_same_string_types.py
++++ b/src/seed/types/types/union_with_same_string_types.py
+@@ -9,7 +9,7 @@ import typing_extensions
+ from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+ 
+ 
+-class UnionWithSameStringTypes_CustomFormat(UniversalBaseModel):
++class CustomFormatUnionWithSameStringTypes(UniversalBaseModel):
+     value: str
+     type: typing.Literal["customFormat"] = "customFormat"
+ 
+@@ -22,7 +22,7 @@ class UnionWithSameStringTypes_CustomFormat(UniversalBaseModel):
+             smart_union = True
+ 
+ 
+-class UnionWithSameStringTypes_RegularString(UniversalBaseModel):
++class RegularStringUnionWithSameStringTypes(UniversalBaseModel):
+     value: str
+     type: typing.Literal["regularString"] = "regularString"
+ 
+@@ -35,7 +35,7 @@ class UnionWithSameStringTypes_RegularString(UniversalBaseModel):
+             smart_union = True
+ 
+ 
+-class UnionWithSameStringTypes_PatternString(UniversalBaseModel):
++class PatternStringUnionWithSameStringTypes(UniversalBaseModel):
+     value: str
+     type: typing.Literal["patternString"] = "patternString"
+ 
+@@ -49,15 +49,15 @@ class UnionWithSameStringTypes_PatternString(UniversalBaseModel):
+ 
+ 
+ """
+-from seed.types import UnionWithSameStringTypes_CustomFormat
++from seed.types import CustomFormatUnionWithSameStringTypes
+ 
+-UnionWithSameStringTypes_CustomFormat(value="custom-123")
++CustomFormatUnionWithSameStringTypes(value="custom-123")
+ """
+ UnionWithSameStringTypes = typing_extensions.Annotated[
+     typing.Union[
+-        UnionWithSameStringTypes_CustomFormat,
+-        UnionWithSameStringTypes_RegularString,
+-        UnionWithSameStringTypes_PatternString,
++        CustomFormatUnionWithSameStringTypes,
++        RegularStringUnionWithSameStringTypes,
++        PatternStringUnionWithSameStringTypes,
+     ],
+     pydantic.Field(discriminator="type"),
+ ]
+diff --git a/src/seed/types/types/union_with_single_element.py b/src/seed/types/types/union_with_single_element.py
+index 965bc2969d3..66210d446a7 100644
+--- a/src/seed/types/types/union_with_single_element.py
++++ b/src/seed/types/types/union_with_single_element.py
+@@ -8,13 +8,13 @@ import pydantic
+ from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+ 
+ 
+-class UnionWithSingleElement_Foo(UniversalBaseModel):
++class FooUnionWithSingleElement(UniversalBaseModel):
+     """
+     Examples
+     --------
+-    from seed.types import UnionWithSingleElement_Foo
++    from seed.types import FooUnionWithSingleElement
+ 
+-    UnionWithSingleElement_Foo(
++    FooUnionWithSingleElement(
+         name="example1",
+     )
+     """
+@@ -33,10 +33,10 @@ class UnionWithSingleElement_Foo(UniversalBaseModel):
+ 
+ 
+ """
+-from seed.types import UnionWithSingleElement_Foo
++from seed.types import FooUnionWithSingleElement
+ 
+-UnionWithSingleElement_Foo(
++FooUnionWithSingleElement(
+     name="example1",
+ )
+ """
+-UnionWithSingleElement = UnionWithSingleElement_Foo
++UnionWithSingleElement = FooUnionWithSingleElement
+diff --git a/src/seed/types/types/union_with_sub_types.py b/src/seed/types/types/union_with_sub_types.py
+index a64da43d5ce..24138b37786 100644
+--- a/src/seed/types/types/union_with_sub_types.py
++++ b/src/seed/types/types/union_with_sub_types.py
+@@ -9,13 +9,13 @@ import typing_extensions
+ from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+ 
+ 
+-class UnionWithSubTypes_Foo(UniversalBaseModel):
++class FooUnionWithSubTypes(UniversalBaseModel):
+     """
+     Examples
+     --------
+-    from seed.types import UnionWithSubTypes_Foo
++    from seed.types import FooUnionWithSubTypes
+ 
+-    UnionWithSubTypes_Foo(
++    FooUnionWithSubTypes(
+         name="example1",
+     )
+     """
+@@ -33,13 +33,13 @@ class UnionWithSubTypes_Foo(UniversalBaseModel):
+             extra = pydantic.Extra.allow
+ 
+ 
+-class UnionWithSubTypes_FooExtended(UniversalBaseModel):
++class FooExtendedUnionWithSubTypes(UniversalBaseModel):
+     """
+     Examples
+     --------
+-    from seed.types import UnionWithSubTypes_Foo
++    from seed.types import FooUnionWithSubTypes
+ 
+-    UnionWithSubTypes_Foo(
++    FooUnionWithSubTypes(
+         name="example1",
+     )
+     """
+@@ -59,12 +59,12 @@ class UnionWithSubTypes_FooExtended(UniversalBaseModel):
+ 
+ 
+ """
+-from seed.types import UnionWithSubTypes_Foo
++from seed.types import FooUnionWithSubTypes
+ 
+-UnionWithSubTypes_Foo(
++FooUnionWithSubTypes(
+     name="example1",
+ )
+ """
+ UnionWithSubTypes = typing_extensions.Annotated[
+-    typing.Union[UnionWithSubTypes_Foo, UnionWithSubTypes_FooExtended], pydantic.Field(discriminator="type")
++    typing.Union[FooUnionWithSubTypes, FooExtendedUnionWithSubTypes], pydantic.Field(discriminator="type")
+ ]
+diff --git a/src/seed/types/types/union_with_time.py b/src/seed/types/types/union_with_time.py
+index f7cf90b1902..7255608ad2e 100644
+--- a/src/seed/types/types/union_with_time.py
++++ b/src/seed/types/types/union_with_time.py
+@@ -10,7 +10,7 @@ import typing_extensions
+ from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+ 
+ 
+-class UnionWithTime_Value(UniversalBaseModel):
++class ValueUnionWithTime(UniversalBaseModel):
+     value: int
+     type: typing.Literal["value"] = "value"
+ 
+@@ -23,7 +23,7 @@ class UnionWithTime_Value(UniversalBaseModel):
+             smart_union = True
+ 
+ 
+-class UnionWithTime_Date(UniversalBaseModel):
++class DateUnionWithTime(UniversalBaseModel):
+     value: dt.date
+     type: typing.Literal["date"] = "date"
+ 
+@@ -36,7 +36,7 @@ class UnionWithTime_Date(UniversalBaseModel):
+             smart_union = True
+ 
+ 
+-class UnionWithTime_Datetime(UniversalBaseModel):
++class DatetimeUnionWithTime(UniversalBaseModel):
+     value: dt.datetime
+     type: typing.Literal["datetime"] = "datetime"
+ 
+@@ -50,10 +50,10 @@ class UnionWithTime_Datetime(UniversalBaseModel):
+ 
+ 
+ """
+-from seed.types import UnionWithTime_Value
++from seed.types import ValueUnionWithTime
+ 
+-UnionWithTime_Value(value=5)
++ValueUnionWithTime(value=5)
+ """
+ UnionWithTime = typing_extensions.Annotated[
+-    typing.Union[UnionWithTime_Value, UnionWithTime_Date, UnionWithTime_Datetime], pydantic.Field(discriminator="type")
++    typing.Union[ValueUnionWithTime, DateUnionWithTime, DatetimeUnionWithTime], pydantic.Field(discriminator="type")
+ ]
+diff --git a/src/seed/types/types/union_without_key.py b/src/seed/types/types/union_without_key.py
+index 09ded8a9b63..8708f05b7aa 100644
+--- a/src/seed/types/types/union_without_key.py
++++ b/src/seed/types/types/union_without_key.py
+@@ -9,13 +9,13 @@ import typing_extensions
+ from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+ 
+ 
+-class UnionWithoutKey_Foo(UniversalBaseModel):
++class FooUnionWithoutKey(UniversalBaseModel):
+     """
+     Examples
+     --------
+-    from seed.types import UnionWithoutKey_Foo
++    from seed.types import FooUnionWithoutKey
+ 
+-    UnionWithoutKey_Foo(
++    FooUnionWithoutKey(
+         name="example1",
+     )
+     """
+@@ -33,13 +33,13 @@ class UnionWithoutKey_Foo(UniversalBaseModel):
+             extra = pydantic.Extra.allow
+ 
+ 
+-class UnionWithoutKey_Bar(UniversalBaseModel):
++class BarUnionWithoutKey(UniversalBaseModel):
+     """
+     Examples
+     --------
+-    from seed.types import UnionWithoutKey_Foo
++    from seed.types import FooUnionWithoutKey
+ 
+-    UnionWithoutKey_Foo(
++    FooUnionWithoutKey(
+         name="example1",
+     )
+     """
+@@ -58,12 +58,12 @@ class UnionWithoutKey_Bar(UniversalBaseModel):
+ 
+ 
+ """
+-from seed.types import UnionWithoutKey_Foo
++from seed.types import FooUnionWithoutKey
+ 
+-UnionWithoutKey_Foo(
++FooUnionWithoutKey(
+     name="example1",
+ )
+ """
+ UnionWithoutKey = typing_extensions.Annotated[
+-    typing.Union[UnionWithoutKey_Foo, UnionWithoutKey_Bar], pydantic.Field(discriminator="type")
++    typing.Union[FooUnionWithoutKey, BarUnionWithoutKey], pydantic.Field(discriminator="type")
+ ]
+diff --git a/src/seed/union/__init__.py b/src/seed/union/__init__.py
+index 45d390806f8..40dcfa3a404 100644
+--- a/src/seed/union/__init__.py
++++ b/src/seed/union/__init__.py
+@@ -6,14 +6,14 @@ import typing
+ from importlib import import_module
+ 
+ if typing.TYPE_CHECKING:
+-    from .types import Circle, GetShapeRequest, Shape, Shape_Circle, Shape_Square, Square, WithName
++    from .types import Circle, CircleShape, GetShapeRequest, Shape, Square, SquareShape, WithName
+ _dynamic_imports: typing.Dict[str, str] = {
+     "Circle": ".types",
++    "CircleShape": ".types",
+     "GetShapeRequest": ".types",
+     "Shape": ".types",
+-    "Shape_Circle": ".types",
+-    "Shape_Square": ".types",
+     "Square": ".types",
++    "SquareShape": ".types",
+     "WithName": ".types",
+ }
+ 
+@@ -39,4 +39,4 @@ def __dir__():
+     return sorted(lazy_attrs)
+ 
+ 
+-__all__ = ["Circle", "GetShapeRequest", "Shape", "Shape_Circle", "Shape_Square", "Square", "WithName"]
++__all__ = ["Circle", "CircleShape", "GetShapeRequest", "Shape", "Square", "SquareShape", "WithName"]
+diff --git a/src/seed/union/client.py b/src/seed/union/client.py
+index b7c9aa553f6..ac58a42f3c8 100644
+--- a/src/seed/union/client.py
++++ b/src/seed/union/client.py
+@@ -69,13 +69,13 @@ class UnionClient:
+         Examples
+         --------
+         from seed import SeedUnions
+-        from seed.union import Shape_Circle
++        from seed.union import CircleShape
+ 
+         client = SeedUnions(
+             base_url="https://yourhost.com/path/to/api",
+         )
+         client.union.update(
+-            request=Shape_Circle(
++            request=CircleShape(
+                 radius=1.1,
+             ),
+         )
+@@ -152,7 +152,7 @@ class AsyncUnionClient:
+         import asyncio
+ 
+         from seed import AsyncSeedUnions
+-        from seed.union import Shape_Circle
++        from seed.union import CircleShape
+ 
+         client = AsyncSeedUnions(
+             base_url="https://yourhost.com/path/to/api",
+@@ -161,7 +161,7 @@ class AsyncUnionClient:
+ 
+         async def main() -> None:
+             await client.union.update(
+-                request=Shape_Circle(
++                request=CircleShape(
+                     radius=1.1,
+                 ),
+             )
+diff --git a/src/seed/union/types/__init__.py b/src/seed/union/types/__init__.py
+index 1d32e691ca8..923b0c8d8bb 100644
+--- a/src/seed/union/types/__init__.py
++++ b/src/seed/union/types/__init__.py
+@@ -8,16 +8,16 @@ from importlib import import_module
+ if typing.TYPE_CHECKING:
+     from .circle import Circle
+     from .get_shape_request import GetShapeRequest
+-    from .shape import Shape, Shape_Circle, Shape_Square
++    from .shape import CircleShape, Shape, SquareShape
+     from .square import Square
+     from .with_name import WithName
+ _dynamic_imports: typing.Dict[str, str] = {
+     "Circle": ".circle",
++    "CircleShape": ".shape",
+     "GetShapeRequest": ".get_shape_request",
+     "Shape": ".shape",
+-    "Shape_Circle": ".shape",
+-    "Shape_Square": ".shape",
+     "Square": ".square",
++    "SquareShape": ".shape",
+     "WithName": ".with_name",
+ }
+ 
+@@ -43,4 +43,4 @@ def __dir__():
+     return sorted(lazy_attrs)
+ 
+ 
+-__all__ = ["Circle", "GetShapeRequest", "Shape", "Shape_Circle", "Shape_Square", "Square", "WithName"]
++__all__ = ["Circle", "CircleShape", "GetShapeRequest", "Shape", "Square", "SquareShape", "WithName"]
+diff --git a/src/seed/union/types/shape.py b/src/seed/union/types/shape.py
+index 57cc4775c82..d906fb34a14 100644
+--- a/src/seed/union/types/shape.py
++++ b/src/seed/union/types/shape.py
+@@ -13,9 +13,9 @@ class Base(UniversalBaseModel):
+     """
+     Examples
+     --------
+-    from seed.union import Shape_Circle
++    from seed.union import CircleShape
+ 
+-    Shape_Circle(
++    CircleShape(
+         radius=5.0,
+     )
+     """
+@@ -32,13 +32,13 @@ class Base(UniversalBaseModel):
+             extra = pydantic.Extra.allow
+ 
+ 
+-class Shape_Circle(Base):
++class CircleShape(Base):
+     """
+     Examples
+     --------
+-    from seed.union import Shape_Circle
++    from seed.union import CircleShape
+ 
+-    Shape_Circle(
++    CircleShape(
+         radius=5.0,
+     )
+     """
+@@ -56,13 +56,13 @@ class Shape_Circle(Base):
+             extra = pydantic.Extra.allow
+ 
+ 
+-class Shape_Square(Base):
++class SquareShape(Base):
+     """
+     Examples
+     --------
+-    from seed.union import Shape_Circle
++    from seed.union import CircleShape
+ 
+-    Shape_Circle(
++    CircleShape(
+         radius=5.0,
+     )
+     """
+@@ -81,10 +81,10 @@ class Shape_Square(Base):
+ 
+ 
+ """
+-from seed.union import Shape_Circle
++from seed.union import CircleShape
+ 
+-Shape_Circle(
++CircleShape(
+     radius=5.0,
+ )
+ """
+-Shape = typing_extensions.Annotated[typing.Union[Shape_Circle, Shape_Square], pydantic.Field(discriminator="type")]
++Shape = typing_extensions.Annotated[typing.Union[CircleShape, SquareShape], pydantic.Field(discriminator="type")]
+diff --git a/tests/conftest.py b/tests/conftest.py
+index 25710dbe627..e8a0c6c4757 100644
+--- a/tests/conftest.py
++++ b/tests/conftest.py
+@@ -1,5 +1,101 @@
++"""
++Pytest plugin that manages the WireMock container lifecycle for wire tests.
++
++This plugin is loaded globally for the test suite and is responsible for
++starting and stopping the WireMock container exactly once per test run,
++including when running with pytest-xdist over the entire project.
++
++It lives under tests/ (as tests/conftest.py) and is discovered automatically
++by pytest's normal test collection rules.
++"""
++
++import os
++import subprocess
++
+ import pytest
+ 
++_STARTED: bool = False
++_EXTERNAL: bool = False  # True when using an external WireMock instance (skip container lifecycle)
++_WIREMOCK_URL: str = "http://localhost:8080"  # Default, will be updated after container starts
++_PROJECT_NAME: str = "seed-unions"
++
++# This file lives at tests/conftest.py, so the project root is one level up.
++_PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
++_COMPOSE_FILE = os.path.join(_PROJECT_ROOT, "wiremock", "docker-compose.test.yml")
++
++
++def _get_wiremock_port() -> str:
++    """Gets the dynamically assigned port for the WireMock container."""
++    try:
++        result = subprocess.run(
++            ["docker", "compose", "-f", _COMPOSE_FILE, "-p", _PROJECT_NAME, "port", "wiremock", "8080"],
++            check=True,
++            capture_output=True,
++            text=True,
++        )
++        # Output is like "0.0.0.0:32768" or "[::]:32768"
++        port = result.stdout.strip().split(":")[-1]
++        return port
++    except subprocess.CalledProcessError:
++        return "8080"  # Fallback to default
++
++
++def _start_wiremock() -> None:
++    """Starts the WireMock container using docker-compose."""
++    global _STARTED, _EXTERNAL, _WIREMOCK_URL
++    if _STARTED:
++        return
++
++    # If WIREMOCK_URL is already set (e.g., by CI/CD pipeline), skip container management
++    existing_url = os.environ.get("WIREMOCK_URL")
++    if existing_url:
++        _WIREMOCK_URL = existing_url
++        _EXTERNAL = True
++        _STARTED = True
++        print(f"\nUsing external WireMock at {_WIREMOCK_URL} (container management skipped)")
++        return
++
++    print(f"\nStarting WireMock container (project: {_PROJECT_NAME})...")
++    try:
++        subprocess.run(
++            ["docker", "compose", "-f", _COMPOSE_FILE, "-p", _PROJECT_NAME, "up", "-d", "--wait"],
++            check=True,
++            capture_output=True,
++            text=True,
++        )
++        _WIREMOCK_PORT = _get_wiremock_port()
++        _WIREMOCK_URL = f"http://localhost:{_WIREMOCK_PORT}"
++        os.environ["WIREMOCK_URL"] = _WIREMOCK_URL
++        print(f"WireMock container is ready at {_WIREMOCK_URL}")
++        _STARTED = True
++    except subprocess.CalledProcessError as e:
++        print(f"Failed to start WireMock: {e.stderr}")
++        raise
++
++
++def _stop_wiremock() -> None:
++    """Stops and removes the WireMock container."""
++    if _EXTERNAL:
++        # Container is managed externally; nothing to tear down.
++        return
++
++    print("\nStopping WireMock container...")
++    subprocess.run(
++        ["docker", "compose", "-f", _COMPOSE_FILE, "-p", _PROJECT_NAME, "down", "-v"],
++        check=False,
++        capture_output=True,
++    )
++
++
++def _is_xdist_worker(config: pytest.Config) -> bool:
++    """
++    Determines if the current process is an xdist worker.
++
++    In pytest-xdist, worker processes have a 'workerinput' attribute
++    on the config object, while the controller process does not.
++    """
++    return hasattr(config, "workerinput")
++
+ 
+ def _has_httpx_aiohttp() -> bool:
+     """Check if httpx_aiohttp is importable."""
+@@ -19,3 +115,33 @@ def pytest_collection_modifyitems(config: pytest.Config, items: list) -> None:
+     for item in items:
+         if "aiohttp" in item.keywords:
+             item.add_marker(skip_aiohttp)
++
++
++def pytest_configure(config: pytest.Config) -> None:
++    """
++    Pytest hook that runs during test session setup.
++
++    Starts WireMock container only from the controller process (xdist)
++    or the single process (non-xdist). This ensures only one container
++    is started regardless of the number of worker processes.
++    """
++    if _is_xdist_worker(config):
++        # Workers never manage the container lifecycle.
++        return
++
++    _start_wiremock()
++
++
++def pytest_unconfigure(config: pytest.Config) -> None:
++    """
++    Pytest hook that runs during test session teardown.
++
++    Stops WireMock container only from the controller process (xdist)
++    or the single process (non-xdist). This ensures the container is
++    cleaned up after all workers have finished.
++    """
++    if _is_xdist_worker(config):
++        # Workers never manage the container lifecycle.
++        return
++
++    _stop_wiremock()
+diff --git a/tests/wire/__init__.py b/tests/wire/__init__.py
+new file mode 100644
+index 00000000000..e69de29bb2d
+diff --git a/tests/wire/conftest.py b/tests/wire/conftest.py
+new file mode 100644
+index 00000000000..0b34f7d20ca
+--- /dev/null
++++ b/tests/wire/conftest.py
+@@ -0,0 +1,83 @@
++"""
++Pytest configuration for wire tests.
++
++This module provides helpers for creating a configured client that talks to
++WireMock and for verifying requests in WireMock.
++
++The WireMock container lifecycle itself is managed by a top-level pytest
++plugin (tests/conftest.py) so that the container is started exactly once
++per test run, even when using pytest-xdist.
++"""
++
++import inspect
++import os
++from typing import Any, Dict, Optional
++
++import httpx
++
++from seed.client import SeedUnions
++
++# Check once at import time whether the client constructor accepts a headers kwarg.
++try:
++    _CLIENT_SUPPORTS_HEADERS: bool = "headers" in inspect.signature(SeedUnions).parameters
++except (TypeError, ValueError):
++    _CLIENT_SUPPORTS_HEADERS = False
++
++
++def _get_wiremock_base_url() -> str:
++    """Returns the WireMock base URL from the WIREMOCK_URL environment variable."""
++    return os.environ.get("WIREMOCK_URL", "http://localhost:8080")
++
++
++def get_client(test_id: str) -> SeedUnions:
++    """
++    Creates a configured client instance for wire tests.
++
++    Args:
++        test_id: Unique identifier for the test, used for request tracking.
++
++    Returns:
++        A configured client instance with all required auth parameters.
++    """
++    test_headers = {"X-Test-Id": test_id}
++    base_url = _get_wiremock_base_url()
++
++    if _CLIENT_SUPPORTS_HEADERS:
++        return SeedUnions(
++            base_url=base_url,
++            headers=test_headers,
++        )
++
++    return SeedUnions(
++        base_url=base_url,
++        httpx_client=httpx.Client(headers=test_headers),
++    )
++
++
++def verify_request_count(
++    test_id: str,
++    method: str,
++    url_path: str,
++    query_params: Optional[Dict[str, Any]],
++    expected: int,
++) -> None:
++    """Verifies the number of requests made to WireMock filtered by test ID for concurrency safety."""
++    wiremock_admin_url = f"{_get_wiremock_base_url()}/__admin"
++    request_body: Dict[str, Any] = {
++        "method": method,
++        "urlPath": url_path,
++        "headers": {"X-Test-Id": {"equalTo": test_id}},
++    }
++    if query_params:
++        query_parameters = {}
++        for k, v in query_params.items():
++            if isinstance(v, list):
++                query_parameters[k] = {"hasExactly": [{"equalTo": item} for item in v]}
++            else:
++                query_parameters[k] = {"equalTo": v}
++        request_body["queryParameters"] = query_parameters
++    response = httpx.post(f"{wiremock_admin_url}/requests/find", json=request_body)
++    assert response.status_code == 200, "Failed to query WireMock requests"
++    result = response.json()
++    requests_found = len(result.get("requests", []))
++    assert requests_found == expected, f"Expected {expected} requests, found {requests_found}"
+diff --git a/tests/wire/test_bigunion.py b/tests/wire/test_bigunion.py
+new file mode 100644
+index 00000000000..79b27806033
+--- /dev/null
++++ b/tests/wire/test_bigunion.py
+@@ -0,0 +1,53 @@
++import datetime
++
++from .conftest import get_client, verify_request_count
++
++from seed.bigunion import NormalSweetBigUnion
++
++
++def test_bigunion_get() -> None:
++    """Test get endpoint with WireMock"""
++    test_id = "bigunion.get.0"
++    client = get_client(test_id)
++    client.bigunion.get(
++        id="id",
++    )
++    verify_request_count(test_id, "GET", "/id", None, 1)
++
++
++def test_bigunion_update() -> None:
++    """Test update endpoint with WireMock"""
++    test_id = "bigunion.update.0"
++    client = get_client(test_id)
++    client.bigunion.update(
++        request=NormalSweetBigUnion(
++            id="id",
++            created_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
++            archived_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
++            value="value",
++        ),
++    )
++    verify_request_count(test_id, "PATCH", "/", None, 1)
++
++
++def test_bigunion_update_many() -> None:
++    """Test update-many endpoint with WireMock"""
++    test_id = "bigunion.update_many.0"
++    client = get_client(test_id)
++    client.bigunion.update_many(
++        request=[
++            NormalSweetBigUnion(
++                id="id",
++                created_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
++                archived_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
++                value="value",
++            ),
++            NormalSweetBigUnion(
++                id="id",
++                created_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
++                archived_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
++                value="value",
++            ),
++        ],
++    )
++    verify_request_count(test_id, "PATCH", "/many", None, 1)
+diff --git a/tests/wire/test_union.py b/tests/wire/test_union.py
+new file mode 100644
+index 00000000000..e2ff50960a1
+--- /dev/null
++++ b/tests/wire/test_union.py
+@@ -0,0 +1,26 @@
++from .conftest import get_client, verify_request_count
++
++from seed.union import CircleShape
++
++
++def test_union_get() -> None:
++    """Test get endpoint with WireMock"""
++    test_id = "union.get.0"
++    client = get_client(test_id)
++    client.union.get(
++        id="id",
++    )
++    verify_request_count(test_id, "GET", "/id", None, 1)
++
++
++def test_union_update() -> None:
++    """Test update endpoint with WireMock"""
++    test_id = "union.update.0"
++    client = get_client(test_id)
++    client.union.update(
++        request=CircleShape(
++            id="id",
++            radius=1.1,
++        ),
++    )
++    verify_request_count(test_id, "PATCH", "/", None, 1)
+diff --git a/wiremock/docker-compose.test.yml b/wiremock/docker-compose.test.yml
+new file mode 100644
+index 00000000000..58747d54a46
+--- /dev/null
++++ b/wiremock/docker-compose.test.yml
+@@ -0,0 +1,14 @@
++services:
++  wiremock:
++    image: wiremock/wiremock:3.9.1
++    ports:
++      - "0:8080"  # Use dynamic port to avoid conflicts with concurrent tests
++    volumes:
++      - ./wiremock-mappings.json:/home/wiremock/mappings/wiremock-mappings.json
++    command: ["--global-response-templating", "--verbose"]
++    healthcheck:
++      test: ["CMD", "curl", "-f", "http://localhost:8080/__admin/health"]
++      interval: 2s
++      timeout: 5s
++      retries: 15
++      start_period: 5s
+diff --git a/wiremock/wiremock-mappings.json b/wiremock/wiremock-mappings.json
+new file mode 100644
+index 00000000000..2e8a75f621d
+--- /dev/null
++++ b/wiremock/wiremock-mappings.json
+@@ -0,0 +1,147 @@
++{
++  "mappings": [
++    {
++      "id": "79c47b13-99df-4bee-a249-4ce00eb110db",
++      "name": "get - default",
++      "request": {
++        "urlPathTemplate": "/{id}",
++        "method": "GET",
++        "pathParameters": {
++          "id": {
++            "equalTo": "id"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "{\n  \"type\": \"normalSweet\",\n  \"value\": \"value\",\n  \"id\": \"id\",\n  \"created-at\": \"2024-01-15T09:30:00Z\",\n  \"archived-at\": \"2024-01-15T09:30:00Z\"\n}",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "79c47b13-99df-4bee-a249-4ce00eb110db",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "5f1f346e-183d-4637-acbe-e1b61414f5e4",
++      "name": "update - default",
++      "request": {
++        "urlPathTemplate": "/",
++        "method": "PATCH"
++      },
++      "response": {
++        "status": 200,
++        "body": "true",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "5f1f346e-183d-4637-acbe-e1b61414f5e4",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "4950f13e-46d4-4dd3-9513-62d558c1061b",
++      "name": "update-many - default",
++      "request": {
++        "urlPathTemplate": "/many",
++        "method": "PATCH"
++      },
++      "response": {
++        "status": 200,
++        "body": "{\n  \"string\": true\n}",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "4950f13e-46d4-4dd3-9513-62d558c1061b",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "c355b619-2495-4caf-b85f-77766995a146",
++      "name": "get - default",
++      "request": {
++        "urlPathTemplate": "/{id}",
++        "method": "GET",
++        "pathParameters": {
++          "id": {
++            "equalTo": "id"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "{\n  \"type\": \"circle\",\n  \"radius\": 1.1,\n  \"id\": \"id\"\n}",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "c355b619-2495-4caf-b85f-77766995a146",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "7b5d90dc-ff29-4059-a8d7-e30f4286d795",
++      "name": "update - default",
++      "request": {
++        "urlPathTemplate": "/",
++        "method": "PATCH"
++      },
++      "response": {
++        "status": 200,
++        "body": "true",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "7b5d90dc-ff29-4059-a8d7-e30f4286d795",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    }
++  ],
++  "meta": {
++    "total": 5
++  }
++}
+\ No newline at end of file

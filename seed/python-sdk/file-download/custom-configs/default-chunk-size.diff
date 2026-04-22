@@ -1,0 +1,34 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 1f3ffd33192..592a3a317ef 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -3,6 +3,7 @@
+   "generatorName": "fernapi/fern-python-sdk",
+   "generatorVersion": "local",
+   "generatorConfig": {
++    "default_bytes_stream_chunk_size": 1024,
+     "use_inheritance_for_extended_models": false
+   },
+   "originGitCommit": "DUMMY",
+diff --git a/src/seed/service/raw_client.py b/src/seed/service/raw_client.py
+index 7d33b7447aa..693c82a2a7f 100644
+--- a/src/seed/service/raw_client.py
++++ b/src/seed/service/raw_client.py
+@@ -66,7 +66,7 @@ class RawServiceClient:
+             def _stream() -> HttpResponse[typing.Iterator[bytes]]:
+                 try:
+                     if 200 <= _response.status_code < 300:
+-                        _chunk_size = request_options.get("chunk_size", None) if request_options is not None else None
++                        _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
+                         return HttpResponse(
+                             response=_response, data=(_chunk for _chunk in _response.iter_bytes(chunk_size=_chunk_size))
+                         )
+@@ -142,7 +142,7 @@ class AsyncRawServiceClient:
+             async def _stream() -> AsyncHttpResponse[typing.AsyncIterator[bytes]]:
+                 try:
+                     if 200 <= _response.status_code < 300:
+-                        _chunk_size = request_options.get("chunk_size", None) if request_options is not None else None
++                        _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
+                         return AsyncHttpResponse(
+                             response=_response,
+                             data=(_chunk async for _chunk in _response.aiter_bytes(chunk_size=_chunk_size)),

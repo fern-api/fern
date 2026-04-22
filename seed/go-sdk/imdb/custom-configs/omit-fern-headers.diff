@@ -1,0 +1,46 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index e206b6bea6d..d6609a2a8b1 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -3,7 +3,9 @@
+   "generatorName": "fernapi/fern-go-sdk",
+   "generatorVersion": "local",
+   "generatorConfig": {
+-    "enableWireTests": false
++    "enableWireTests": false,
++    "omitFernHeaders": true,
++    "maxRetries": 5
+   },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+diff --git a/core/request_option.go b/core/request_option.go
+index 3b7104e3fa9..e605eb60022 100644
+--- a/core/request_option.go
++++ b/core/request_option.go
+@@ -54,12 +54,7 @@ func (r *RequestOptions) ToHeader() http.Header {
+ }
+ 
+ func (r *RequestOptions) cloneHeader() http.Header {
+-	headers := r.HTTPHeader.Clone()
+-	headers.Set("X-Fern-Language", "Go")
+-	headers.Set("X-Fern-SDK-Name", "github.com/imdb/fern")
+-	headers.Set("X-Fern-SDK-Version", "v0.0.1")
+-	headers.Set("User-Agent", "github.com/imdb/fern/0.0.1")
+-	return headers
++	return r.HTTPHeader.Clone()
+ }
+ 
+ // BaseURLOption implements the RequestOption interface.
+diff --git a/internal/retrier.go b/internal/retrier.go
+index 02fd1fb7d3f..9cc62d83095 100644
+--- a/internal/retrier.go
++++ b/internal/retrier.go
+@@ -9,7 +9,7 @@ import (
+ )
+ 
+ const (
+-	defaultRetryAttempts = 2
++	defaultRetryAttempts = 6
+ 	minRetryDelay        = 1000 * time.Millisecond
+ 	maxRetryDelay        = 60000 * time.Millisecond
+ )

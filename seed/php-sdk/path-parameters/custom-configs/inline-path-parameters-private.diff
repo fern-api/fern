@@ -1,0 +1,1247 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 0eba66302dd..07a3f957790 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,10 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-php-sdk",
+   "generatorVersion": "local",
++  "generatorConfig": {
++    "inlinePathParameters": true,
++    "propertyAccess": "private"
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "ci",
+diff --git a/reference.md b/reference.md
+index 130f33086cf..de8d3881afd 100644
+--- a/reference.md
++++ b/reference.md
+@@ -51,7 +51,7 @@ $client->organizations->getOrganization(
+ </dl>
+ </details>
+ 
+-<details><summary><code>$client-&gt;organizations-&gt;getOrganizationUser($tenantId, $organizationId, $userId) -> ?User</code></summary>
++<details><summary><code>$client-&gt;organizations-&gt;getOrganizationUser($request) -> ?User</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -65,9 +65,11 @@ $client->organizations->getOrganization(
+ 
+ ```php
+ $client->organizations->getOrganizationUser(
+-    'tenant_id',
+-    'organization_id',
+-    'user_id',
++    new GetOrganizationUserRequest([
++        'tenantId' => 'tenant_id',
++        'organizationId' => 'organization_id',
++        'userId' => 'user_id',
++    ]),
+ );
+ ```
+ </dd>
+@@ -174,7 +176,7 @@ $client->organizations->searchOrganizations(
+ </details>
+ 
+ ## User
+-<details><summary><code>$client-&gt;user-&gt;getUser($tenantId, $userId) -> ?User</code></summary>
++<details><summary><code>$client-&gt;user-&gt;getUser($request) -> ?User</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -188,8 +190,10 @@ $client->organizations->searchOrganizations(
+ 
+ ```php
+ $client->user->getUser(
+-    'tenant_id',
+-    'user_id',
++    new GetUsersRequest([
++        'tenantId' => 'tenant_id',
++        'userId' => 'user_id',
++    ]),
+ );
+ ```
+ </dd>
+@@ -282,7 +286,7 @@ $client->user->createUser(
+ </dl>
+ </details>
+ 
+-<details><summary><code>$client-&gt;user-&gt;updateUser($tenantId, $userId, $request) -> ?User</code></summary>
++<details><summary><code>$client-&gt;user-&gt;updateUser($request) -> ?User</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -296,9 +300,9 @@ $client->user->createUser(
+ 
+ ```php
+ $client->user->updateUser(
+-    'tenant_id',
+-    'user_id',
+     new UpdateUserRequest([
++        'tenantId' => 'tenant_id',
++        'userId' => 'user_id',
+         'body' => new User([
+             'name' => 'name',
+             'tags' => [
+@@ -350,7 +354,7 @@ $client->user->updateUser(
+ </dl>
+ </details>
+ 
+-<details><summary><code>$client-&gt;user-&gt;searchUsers($tenantId, $userId, $request) -> ?array</code></summary>
++<details><summary><code>$client-&gt;user-&gt;searchUsers($request) -> ?array</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -364,9 +368,9 @@ $client->user->updateUser(
+ 
+ ```php
+ $client->user->searchUsers(
+-    'tenant_id',
+-    'user_id',
+     new SearchUsersRequest([
++        'tenantId' => 'tenant_id',
++        'userId' => 'user_id',
+         'limit' => 1,
+     ]),
+ );
+@@ -412,7 +416,7 @@ $client->user->searchUsers(
+ </dl>
+ </details>
+ 
+-<details><summary><code>$client-&gt;user-&gt;getUserMetadata($tenantId, $userId, $version) -> ?User</code></summary>
++<details><summary><code>$client-&gt;user-&gt;getUserMetadata($request) -> ?User</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -440,9 +444,11 @@ Test endpoint with path parameter that has a text prefix (v{version})
+ 
+ ```php
+ $client->user->getUserMetadata(
+-    'tenant_id',
+-    'user_id',
+-    1,
++    new GetUserMetadataRequest([
++        'tenantId' => 'tenant_id',
++        'userId' => 'user_id',
++        'version' => 1,
++    ]),
+ );
+ ```
+ </dd>
+@@ -486,7 +492,7 @@ $client->user->getUserMetadata(
+ </dl>
+ </details>
+ 
+-<details><summary><code>$client-&gt;user-&gt;getUserSpecifics($tenantId, $userId, $version, $thought) -> ?User</code></summary>
++<details><summary><code>$client-&gt;user-&gt;getUserSpecifics($request) -> ?User</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -514,10 +520,12 @@ Test endpoint with path parameters listed in different order than found in path
+ 
+ ```php
+ $client->user->getUserSpecifics(
+-    'tenant_id',
+-    'user_id',
+-    1,
+-    'thought',
++    new GetUserSpecificsRequest([
++        'tenantId' => 'tenant_id',
++        'userId' => 'user_id',
++        'version' => 1,
++        'thought' => 'thought',
++    ]),
+ );
+ ```
+ </dd>
+diff --git a/src/Organizations/OrganizationsClient.php b/src/Organizations/OrganizationsClient.php
+index 32003c18cea..69e0f20d613 100644
+--- a/src/Organizations/OrganizationsClient.php
++++ b/src/Organizations/OrganizationsClient.php
+@@ -11,6 +11,7 @@ use Seed\Core\Json\JsonApiRequest;
+ use Seed\Core\Client\HttpMethod;
+ use JsonException;
+ use Psr\Http\Client\ClientExceptionInterface;
++use Seed\Organizations\Requests\GetOrganizationUserRequest;
+ use Seed\User\Types\User;
+ use Seed\Organizations\Requests\SearchOrganizationsRequest;
+ use Seed\Core\Json\JsonDecoder;
+@@ -99,9 +100,7 @@ class OrganizationsClient
+     }
+ 
+     /**
+-     * @param string $tenantId
+-     * @param string $organizationId
+-     * @param string $userId
++     * @param GetOrganizationUserRequest $request
+      * @param ?array{
+      *   baseUrl?: string,
+      *   maxRetries?: int,
+@@ -114,14 +113,14 @@ class OrganizationsClient
+      * @throws SeedException
+      * @throws SeedApiException
+      */
+-    public function getOrganizationUser(string $tenantId, string $organizationId, string $userId, ?array $options = null): ?User
++    public function getOrganizationUser(GetOrganizationUserRequest $request, ?array $options = null): ?User
+     {
+         $options = array_merge($this->options, $options ?? []);
+         try {
+             $response = $this->client->sendRequest(
+                 new JsonApiRequest(
+                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+-                    path: "/{$tenantId}/organizations/{$organizationId}/users/{$userId}",
++                    path: "/{$request->getTenantId()}/organizations/{$request->getOrganizationId()}/users/{$request->getUserId()}",
+                     method: HttpMethod::GET,
+                 ),
+                 $options,
+@@ -166,8 +165,8 @@ class OrganizationsClient
+     {
+         $options = array_merge($this->options, $options ?? []);
+         $query = [];
+-        if ($request->limit != null) {
+-            $query['limit'] = $request->limit;
++        if ($request->getLimit() != null) {
++            $query['limit'] = $request->getLimit();
+         }
+         try {
+             $response = $this->client->sendRequest(
+diff --git a/src/Organizations/Requests/GetOrganizationUserRequest.php b/src/Organizations/Requests/GetOrganizationUserRequest.php
+new file mode 100644
+index 00000000000..072002413c4
+--- /dev/null
++++ b/src/Organizations/Requests/GetOrganizationUserRequest.php
+@@ -0,0 +1,92 @@
++<?php
++
++namespace Seed\Organizations\Requests;
++
++use Seed\Core\Json\JsonSerializableType;
++
++class GetOrganizationUserRequest extends JsonSerializableType
++{
++    /**
++     * @var string $tenantId
++     */
++    private string $tenantId;
++
++    /**
++     * @var string $organizationId
++     */
++    private string $organizationId;
++
++    /**
++     * @var string $userId
++     */
++    private string $userId;
++
++    /**
++     * @param array{
++     *   tenantId: string,
++     *   organizationId: string,
++     *   userId: string,
++     * } $values
++     */
++    public function __construct(
++        array $values,
++    ) {
++        $this->tenantId = $values['tenantId'];
++        $this->organizationId = $values['organizationId'];
++        $this->userId = $values['userId'];
++    }
++
++    /**
++     * @return string
++     */
++    public function getTenantId(): string
++    {
++        return $this->tenantId;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setTenantId(string $value): self
++    {
++        $this->tenantId = $value;
++        $this->_setField('tenantId');
++        return $this;
++    }
++
++    /**
++     * @return string
++     */
++    public function getOrganizationId(): string
++    {
++        return $this->organizationId;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setOrganizationId(string $value): self
++    {
++        $this->organizationId = $value;
++        $this->_setField('organizationId');
++        return $this;
++    }
++
++    /**
++     * @return string
++     */
++    public function getUserId(): string
++    {
++        return $this->userId;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setUserId(string $value): self
++    {
++        $this->userId = $value;
++        $this->_setField('userId');
++        return $this;
++    }
++}
+diff --git a/src/Organizations/Requests/SearchOrganizationsRequest.php b/src/Organizations/Requests/SearchOrganizationsRequest.php
+index 68d1b5e64d4..eaa32044cc6 100644
+--- a/src/Organizations/Requests/SearchOrganizationsRequest.php
++++ b/src/Organizations/Requests/SearchOrganizationsRequest.php
+@@ -9,7 +9,7 @@ class SearchOrganizationsRequest extends JsonSerializableType
+     /**
+      * @var ?int $limit
+      */
+-    public ?int $limit;
++    private ?int $limit;
+ 
+     /**
+      * @param array{
+@@ -21,4 +21,22 @@ class SearchOrganizationsRequest extends JsonSerializableType
+     ) {
+         $this->limit = $values['limit'] ?? null;
+     }
++
++    /**
++     * @return ?int
++     */
++    public function getLimit(): ?int
++    {
++        return $this->limit;
++    }
++
++    /**
++     * @param ?int $value
++     */
++    public function setLimit(?int $value = null): self
++    {
++        $this->limit = $value;
++        $this->_setField('limit');
++        return $this;
++    }
+ }
+diff --git a/src/Organizations/Types/Organization.php b/src/Organizations/Types/Organization.php
+index 91ee760249c..a910c941022 100644
+--- a/src/Organizations/Types/Organization.php
++++ b/src/Organizations/Types/Organization.php
+@@ -12,13 +12,13 @@ class Organization extends JsonSerializableType
+      * @var string $name
+      */
+     #[JsonProperty('name')]
+-    public string $name;
++    private string $name;
+ 
+     /**
+      * @var array<string> $tags
+      */
+     #[JsonProperty('tags'), ArrayType(['string'])]
+-    public array $tags;
++    private array $tags;
+ 
+     /**
+      * @param array{
+@@ -33,6 +33,42 @@ class Organization extends JsonSerializableType
+         $this->tags = $values['tags'];
+     }
+ 
++    /**
++     * @return string
++     */
++    public function getName(): string
++    {
++        return $this->name;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setName(string $value): self
++    {
++        $this->name = $value;
++        $this->_setField('name');
++        return $this;
++    }
++
++    /**
++     * @return array<string>
++     */
++    public function getTags(): array
++    {
++        return $this->tags;
++    }
++
++    /**
++     * @param array<string> $value
++     */
++    public function setTags(array $value): self
++    {
++        $this->tags = $value;
++        $this->_setField('tags');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/User/Requests/GetUserMetadataRequest.php b/src/User/Requests/GetUserMetadataRequest.php
+new file mode 100644
+index 00000000000..e2d7a807c18
+--- /dev/null
++++ b/src/User/Requests/GetUserMetadataRequest.php
+@@ -0,0 +1,92 @@
++<?php
++
++namespace Seed\User\Requests;
++
++use Seed\Core\Json\JsonSerializableType;
++
++class GetUserMetadataRequest extends JsonSerializableType
++{
++    /**
++     * @var string $tenantId
++     */
++    private string $tenantId;
++
++    /**
++     * @var string $userId
++     */
++    private string $userId;
++
++    /**
++     * @var int $version
++     */
++    private int $version;
++
++    /**
++     * @param array{
++     *   tenantId: string,
++     *   userId: string,
++     *   version: int,
++     * } $values
++     */
++    public function __construct(
++        array $values,
++    ) {
++        $this->tenantId = $values['tenantId'];
++        $this->userId = $values['userId'];
++        $this->version = $values['version'];
++    }
++
++    /**
++     * @return string
++     */
++    public function getTenantId(): string
++    {
++        return $this->tenantId;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setTenantId(string $value): self
++    {
++        $this->tenantId = $value;
++        $this->_setField('tenantId');
++        return $this;
++    }
++
++    /**
++     * @return string
++     */
++    public function getUserId(): string
++    {
++        return $this->userId;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setUserId(string $value): self
++    {
++        $this->userId = $value;
++        $this->_setField('userId');
++        return $this;
++    }
++
++    /**
++     * @return int
++     */
++    public function getVersion(): int
++    {
++        return $this->version;
++    }
++
++    /**
++     * @param int $value
++     */
++    public function setVersion(int $value): self
++    {
++        $this->version = $value;
++        $this->_setField('version');
++        return $this;
++    }
++}
+diff --git a/src/User/Requests/GetUserSpecificsRequest.php b/src/User/Requests/GetUserSpecificsRequest.php
+new file mode 100644
+index 00000000000..a8f9c61d78e
+--- /dev/null
++++ b/src/User/Requests/GetUserSpecificsRequest.php
+@@ -0,0 +1,117 @@
++<?php
++
++namespace Seed\User\Requests;
++
++use Seed\Core\Json\JsonSerializableType;
++
++class GetUserSpecificsRequest extends JsonSerializableType
++{
++    /**
++     * @var string $tenantId
++     */
++    private string $tenantId;
++
++    /**
++     * @var string $userId
++     */
++    private string $userId;
++
++    /**
++     * @var int $version
++     */
++    private int $version;
++
++    /**
++     * @var string $thought
++     */
++    private string $thought;
++
++    /**
++     * @param array{
++     *   tenantId: string,
++     *   userId: string,
++     *   version: int,
++     *   thought: string,
++     * } $values
++     */
++    public function __construct(
++        array $values,
++    ) {
++        $this->tenantId = $values['tenantId'];
++        $this->userId = $values['userId'];
++        $this->version = $values['version'];
++        $this->thought = $values['thought'];
++    }
++
++    /**
++     * @return string
++     */
++    public function getTenantId(): string
++    {
++        return $this->tenantId;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setTenantId(string $value): self
++    {
++        $this->tenantId = $value;
++        $this->_setField('tenantId');
++        return $this;
++    }
++
++    /**
++     * @return string
++     */
++    public function getUserId(): string
++    {
++        return $this->userId;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setUserId(string $value): self
++    {
++        $this->userId = $value;
++        $this->_setField('userId');
++        return $this;
++    }
++
++    /**
++     * @return int
++     */
++    public function getVersion(): int
++    {
++        return $this->version;
++    }
++
++    /**
++     * @param int $value
++     */
++    public function setVersion(int $value): self
++    {
++        $this->version = $value;
++        $this->_setField('version');
++        return $this;
++    }
++
++    /**
++     * @return string
++     */
++    public function getThought(): string
++    {
++        return $this->thought;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setThought(string $value): self
++    {
++        $this->thought = $value;
++        $this->_setField('thought');
++        return $this;
++    }
++}
+diff --git a/src/User/Requests/GetUsersRequest.php b/src/User/Requests/GetUsersRequest.php
+new file mode 100644
+index 00000000000..3dcb1208a2d
+--- /dev/null
++++ b/src/User/Requests/GetUsersRequest.php
+@@ -0,0 +1,67 @@
++<?php
++
++namespace Seed\User\Requests;
++
++use Seed\Core\Json\JsonSerializableType;
++
++class GetUsersRequest extends JsonSerializableType
++{
++    /**
++     * @var string $tenantId
++     */
++    private string $tenantId;
++
++    /**
++     * @var string $userId
++     */
++    private string $userId;
++
++    /**
++     * @param array{
++     *   tenantId: string,
++     *   userId: string,
++     * } $values
++     */
++    public function __construct(
++        array $values,
++    ) {
++        $this->tenantId = $values['tenantId'];
++        $this->userId = $values['userId'];
++    }
++
++    /**
++     * @return string
++     */
++    public function getTenantId(): string
++    {
++        return $this->tenantId;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setTenantId(string $value): self
++    {
++        $this->tenantId = $value;
++        $this->_setField('tenantId');
++        return $this;
++    }
++
++    /**
++     * @return string
++     */
++    public function getUserId(): string
++    {
++        return $this->userId;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setUserId(string $value): self
++    {
++        $this->userId = $value;
++        $this->_setField('userId');
++        return $this;
++    }
++}
+diff --git a/src/User/Requests/SearchUsersRequest.php b/src/User/Requests/SearchUsersRequest.php
+index 64ebcd85bc2..8b507654908 100644
+--- a/src/User/Requests/SearchUsersRequest.php
++++ b/src/User/Requests/SearchUsersRequest.php
+@@ -6,19 +6,87 @@ use Seed\Core\Json\JsonSerializableType;
+ 
+ class SearchUsersRequest extends JsonSerializableType
+ {
++    /**
++     * @var string $tenantId
++     */
++    private string $tenantId;
++
++    /**
++     * @var string $userId
++     */
++    private string $userId;
++
+     /**
+      * @var ?int $limit
+      */
+-    public ?int $limit;
++    private ?int $limit;
+ 
+     /**
+      * @param array{
++     *   tenantId: string,
++     *   userId: string,
+      *   limit?: ?int,
+      * } $values
+      */
+     public function __construct(
+-        array $values = [],
++        array $values,
+     ) {
++        $this->tenantId = $values['tenantId'];
++        $this->userId = $values['userId'];
+         $this->limit = $values['limit'] ?? null;
+     }
++
++    /**
++     * @return string
++     */
++    public function getTenantId(): string
++    {
++        return $this->tenantId;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setTenantId(string $value): self
++    {
++        $this->tenantId = $value;
++        $this->_setField('tenantId');
++        return $this;
++    }
++
++    /**
++     * @return string
++     */
++    public function getUserId(): string
++    {
++        return $this->userId;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setUserId(string $value): self
++    {
++        $this->userId = $value;
++        $this->_setField('userId');
++        return $this;
++    }
++
++    /**
++     * @return ?int
++     */
++    public function getLimit(): ?int
++    {
++        return $this->limit;
++    }
++
++    /**
++     * @param ?int $value
++     */
++    public function setLimit(?int $value = null): self
++    {
++        $this->limit = $value;
++        $this->_setField('limit');
++        return $this;
++    }
+ }
+diff --git a/src/User/Requests/UpdateUserRequest.php b/src/User/Requests/UpdateUserRequest.php
+index 05459119050..2132661f9fd 100644
+--- a/src/User/Requests/UpdateUserRequest.php
++++ b/src/User/Requests/UpdateUserRequest.php
+@@ -7,19 +7,87 @@ use Seed\User\Types\User;
+ 
+ class UpdateUserRequest extends JsonSerializableType
+ {
++    /**
++     * @var string $tenantId
++     */
++    private string $tenantId;
++
++    /**
++     * @var string $userId
++     */
++    private string $userId;
++
+     /**
+      * @var User $body
+      */
+-    public User $body;
++    private User $body;
+ 
+     /**
+      * @param array{
++     *   tenantId: string,
++     *   userId: string,
+      *   body: User,
+      * } $values
+      */
+     public function __construct(
+         array $values,
+     ) {
++        $this->tenantId = $values['tenantId'];
++        $this->userId = $values['userId'];
+         $this->body = $values['body'];
+     }
++
++    /**
++     * @return string
++     */
++    public function getTenantId(): string
++    {
++        return $this->tenantId;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setTenantId(string $value): self
++    {
++        $this->tenantId = $value;
++        $this->_setField('tenantId');
++        return $this;
++    }
++
++    /**
++     * @return string
++     */
++    public function getUserId(): string
++    {
++        return $this->userId;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setUserId(string $value): self
++    {
++        $this->userId = $value;
++        $this->_setField('userId');
++        return $this;
++    }
++
++    /**
++     * @return User
++     */
++    public function getBody(): User
++    {
++        return $this->body;
++    }
++
++    /**
++     * @param User $value
++     */
++    public function setBody(User $value): self
++    {
++        $this->body = $value;
++        $this->_setField('body');
++        return $this;
++    }
+ }
+diff --git a/src/User/Types/User.php b/src/User/Types/User.php
+index c2d2049a60a..ae878d1f068 100644
+--- a/src/User/Types/User.php
++++ b/src/User/Types/User.php
+@@ -12,13 +12,13 @@ class User extends JsonSerializableType
+      * @var string $name
+      */
+     #[JsonProperty('name')]
+-    public string $name;
++    private string $name;
+ 
+     /**
+      * @var array<string> $tags
+      */
+     #[JsonProperty('tags'), ArrayType(['string'])]
+-    public array $tags;
++    private array $tags;
+ 
+     /**
+      * @param array{
+@@ -33,6 +33,42 @@ class User extends JsonSerializableType
+         $this->tags = $values['tags'];
+     }
+ 
++    /**
++     * @return string
++     */
++    public function getName(): string
++    {
++        return $this->name;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setName(string $value): self
++    {
++        $this->name = $value;
++        $this->_setField('name');
++        return $this;
++    }
++
++    /**
++     * @return array<string>
++     */
++    public function getTags(): array
++    {
++        return $this->tags;
++    }
++
++    /**
++     * @param array<string> $value
++     */
++    public function setTags(array $value): self
++    {
++        $this->tags = $value;
++        $this->_setField('tags');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/User/UserClient.php b/src/User/UserClient.php
+index 8352493a071..aa1575acb13 100644
+--- a/src/User/UserClient.php
++++ b/src/User/UserClient.php
+@@ -4,6 +4,7 @@ namespace Seed\User;
+ 
+ use Psr\Http\Client\ClientInterface;
+ use Seed\Core\Client\RawClient;
++use Seed\User\Requests\GetUsersRequest;
+ use Seed\User\Types\User;
+ use Seed\Exceptions\SeedException;
+ use Seed\Exceptions\SeedApiException;
+@@ -14,6 +15,8 @@ use Psr\Http\Client\ClientExceptionInterface;
+ use Seed\User\Requests\UpdateUserRequest;
+ use Seed\User\Requests\SearchUsersRequest;
+ use Seed\Core\Json\JsonDecoder;
++use Seed\User\Requests\GetUserMetadataRequest;
++use Seed\User\Requests\GetUserSpecificsRequest;
+ 
+ class UserClient
+ {
+@@ -52,8 +55,7 @@ class UserClient
+     }
+ 
+     /**
+-     * @param string $tenantId
+-     * @param string $userId
++     * @param GetUsersRequest $request
+      * @param ?array{
+      *   baseUrl?: string,
+      *   maxRetries?: int,
+@@ -66,14 +68,14 @@ class UserClient
+      * @throws SeedException
+      * @throws SeedApiException
+      */
+-    public function getUser(string $tenantId, string $userId, ?array $options = null): ?User
++    public function getUser(GetUsersRequest $request, ?array $options = null): ?User
+     {
+         $options = array_merge($this->options, $options ?? []);
+         try {
+             $response = $this->client->sendRequest(
+                 new JsonApiRequest(
+                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+-                    path: "/{$tenantId}/user/{$userId}",
++                    path: "/{$request->getTenantId()}/user/{$request->getUserId()}",
+                     method: HttpMethod::GET,
+                 ),
+                 $options,
+@@ -147,8 +149,6 @@ class UserClient
+     }
+ 
+     /**
+-     * @param string $tenantId
+-     * @param string $userId
+      * @param UpdateUserRequest $request
+      * @param ?array{
+      *   baseUrl?: string,
+@@ -162,16 +162,16 @@ class UserClient
+      * @throws SeedException
+      * @throws SeedApiException
+      */
+-    public function updateUser(string $tenantId, string $userId, UpdateUserRequest $request, ?array $options = null): ?User
++    public function updateUser(UpdateUserRequest $request, ?array $options = null): ?User
+     {
+         $options = array_merge($this->options, $options ?? []);
+         try {
+             $response = $this->client->sendRequest(
+                 new JsonApiRequest(
+                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+-                    path: "/{$tenantId}/user/{$userId}",
++                    path: "/{$request->getTenantId()}/user/{$request->getUserId()}",
+                     method: HttpMethod::PATCH,
+-                    body: $request->body,
++                    body: $request->getBody(),
+                 ),
+                 $options,
+             );
+@@ -196,8 +196,6 @@ class UserClient
+     }
+ 
+     /**
+-     * @param string $tenantId
+-     * @param string $userId
+      * @param SearchUsersRequest $request
+      * @param ?array{
+      *   baseUrl?: string,
+@@ -211,18 +209,18 @@ class UserClient
+      * @throws SeedException
+      * @throws SeedApiException
+      */
+-    public function searchUsers(string $tenantId, string $userId, SearchUsersRequest $request = new SearchUsersRequest(), ?array $options = null): ?array
++    public function searchUsers(SearchUsersRequest $request, ?array $options = null): ?array
+     {
+         $options = array_merge($this->options, $options ?? []);
+         $query = [];
+-        if ($request->limit != null) {
+-            $query['limit'] = $request->limit;
++        if ($request->getLimit() != null) {
++            $query['limit'] = $request->getLimit();
+         }
+         try {
+             $response = $this->client->sendRequest(
+                 new JsonApiRequest(
+                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+-                    path: "/{$tenantId}/user/{$userId}/search",
++                    path: "/{$request->getTenantId()}/user/{$request->getUserId()}/search",
+                     method: HttpMethod::GET,
+                     query: $query,
+                 ),
+@@ -251,9 +249,7 @@ class UserClient
+     /**
+      * Test endpoint with path parameter that has a text prefix (v{version})
+      *
+-     * @param string $tenantId
+-     * @param string $userId
+-     * @param int $version
++     * @param GetUserMetadataRequest $request
+      * @param ?array{
+      *   baseUrl?: string,
+      *   maxRetries?: int,
+@@ -266,14 +262,14 @@ class UserClient
+      * @throws SeedException
+      * @throws SeedApiException
+      */
+-    public function getUserMetadata(string $tenantId, string $userId, int $version, ?array $options = null): ?User
++    public function getUserMetadata(GetUserMetadataRequest $request, ?array $options = null): ?User
+     {
+         $options = array_merge($this->options, $options ?? []);
+         try {
+             $response = $this->client->sendRequest(
+                 new JsonApiRequest(
+                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+-                    path: "/{$tenantId}/user/{$userId}/metadata/v{$version}",
++                    path: "/{$request->getTenantId()}/user/{$request->getUserId()}/metadata/v{$request->getVersion()}",
+                     method: HttpMethod::GET,
+                 ),
+                 $options,
+@@ -301,10 +297,7 @@ class UserClient
+     /**
+      * Test endpoint with path parameters listed in different order than found in path
+      *
+-     * @param string $tenantId
+-     * @param string $userId
+-     * @param int $version
+-     * @param string $thought
++     * @param GetUserSpecificsRequest $request
+      * @param ?array{
+      *   baseUrl?: string,
+      *   maxRetries?: int,
+@@ -317,14 +310,14 @@ class UserClient
+      * @throws SeedException
+      * @throws SeedApiException
+      */
+-    public function getUserSpecifics(string $tenantId, string $userId, int $version, string $thought, ?array $options = null): ?User
++    public function getUserSpecifics(GetUserSpecificsRequest $request, ?array $options = null): ?User
+     {
+         $options = array_merge($this->options, $options ?? []);
+         try {
+             $response = $this->client->sendRequest(
+                 new JsonApiRequest(
+                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+-                    path: "/{$tenantId}/user/{$userId}/specifics/{$version}/{$thought}",
++                    path: "/{$request->getTenantId()}/user/{$request->getUserId()}/specifics/{$request->getVersion()}/{$request->getThought()}",
+                     method: HttpMethod::GET,
+                 ),
+                 $options,
+diff --git a/src/dynamic-snippets/example1/snippet.php b/src/dynamic-snippets/example1/snippet.php
+index b798b2c6b42..f706609e662 100644
+--- a/src/dynamic-snippets/example1/snippet.php
++++ b/src/dynamic-snippets/example1/snippet.php
+@@ -3,6 +3,7 @@
+ namespace Example;
+ 
+ use Seed\SeedClient;
++use Seed\Organizations\Requests\GetOrganizationUserRequest;
+ 
+ $client = new SeedClient(
+     options: [
+@@ -10,7 +11,9 @@ $client = new SeedClient(
+     ],
+ );
+ $client->organizations->getOrganizationUser(
+-    'tenant_id',
+-    'organization_id',
+-    'user_id',
++    new GetOrganizationUserRequest([
++        'tenantId' => 'tenant_id',
++        'organizationId' => 'organization_id',
++        'userId' => 'user_id',
++    ]),
+ );
+diff --git a/src/dynamic-snippets/example3/snippet.php b/src/dynamic-snippets/example3/snippet.php
+index 2986fbe5491..00dfcf9a187 100644
+--- a/src/dynamic-snippets/example3/snippet.php
++++ b/src/dynamic-snippets/example3/snippet.php
+@@ -3,6 +3,7 @@
+ namespace Example;
+ 
+ use Seed\SeedClient;
++use Seed\User\Requests\GetUsersRequest;
+ 
+ $client = new SeedClient(
+     options: [
+@@ -10,6 +11,8 @@ $client = new SeedClient(
+     ],
+ );
+ $client->user->getUser(
+-    'tenant_id',
+-    'user_id',
++    new GetUsersRequest([
++        'tenantId' => 'tenant_id',
++        'userId' => 'user_id',
++    ]),
+ );
+diff --git a/src/dynamic-snippets/example5/snippet.php b/src/dynamic-snippets/example5/snippet.php
+index fb3ade76988..1b2b65a86f9 100644
+--- a/src/dynamic-snippets/example5/snippet.php
++++ b/src/dynamic-snippets/example5/snippet.php
+@@ -12,9 +12,9 @@ $client = new SeedClient(
+     ],
+ );
+ $client->user->updateUser(
+-    'tenant_id',
+-    'user_id',
+     new UpdateUserRequest([
++        'tenantId' => 'tenant_id',
++        'userId' => 'user_id',
+         'body' => new User([
+             'name' => 'name',
+             'tags' => [
+diff --git a/src/dynamic-snippets/example6/snippet.php b/src/dynamic-snippets/example6/snippet.php
+index cbe6173304c..06367459029 100644
+--- a/src/dynamic-snippets/example6/snippet.php
++++ b/src/dynamic-snippets/example6/snippet.php
+@@ -11,9 +11,9 @@ $client = new SeedClient(
+     ],
+ );
+ $client->user->searchUsers(
+-    'tenant_id',
+-    'user_id',
+     new SearchUsersRequest([
++        'tenantId' => 'tenant_id',
++        'userId' => 'user_id',
+         'limit' => 1,
+     ]),
+ );
+diff --git a/src/dynamic-snippets/example7/snippet.php b/src/dynamic-snippets/example7/snippet.php
+index b5b9ee01ea5..d6f4d8b89e9 100644
+--- a/src/dynamic-snippets/example7/snippet.php
++++ b/src/dynamic-snippets/example7/snippet.php
+@@ -3,6 +3,7 @@
+ namespace Example;
+ 
+ use Seed\SeedClient;
++use Seed\User\Requests\GetUserMetadataRequest;
+ 
+ $client = new SeedClient(
+     options: [
+@@ -10,7 +11,9 @@ $client = new SeedClient(
+     ],
+ );
+ $client->user->getUserMetadata(
+-    'tenant_id',
+-    'user_id',
+-    1,
++    new GetUserMetadataRequest([
++        'tenantId' => 'tenant_id',
++        'userId' => 'user_id',
++        'version' => 1,
++    ]),
+ );
+diff --git a/src/dynamic-snippets/example8/snippet.php b/src/dynamic-snippets/example8/snippet.php
+index a1f2830fedd..d40bfa09ec6 100644
+--- a/src/dynamic-snippets/example8/snippet.php
++++ b/src/dynamic-snippets/example8/snippet.php
+@@ -3,6 +3,7 @@
+ namespace Example;
+ 
+ use Seed\SeedClient;
++use Seed\User\Requests\GetUserSpecificsRequest;
+ 
+ $client = new SeedClient(
+     options: [
+@@ -10,8 +11,10 @@ $client = new SeedClient(
+     ],
+ );
+ $client->user->getUserSpecifics(
+-    'tenant_id',
+-    'user_id',
+-    1,
+-    'thought',
++    new GetUserSpecificsRequest([
++        'tenantId' => 'tenant_id',
++        'userId' => 'user_id',
++        'version' => 1,
++        'thought' => 'thought',
++    ]),
+ );

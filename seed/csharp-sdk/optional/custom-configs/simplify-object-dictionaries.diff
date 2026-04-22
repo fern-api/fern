@@ -1,0 +1,71 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 5e4188a44b1..0d7da553991 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,7 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-csharp-sdk",
+   "generatorVersion": "local",
+-  "generatorConfig": {},
++  "generatorConfig": {
++    "simplify-object-dictionaries": true
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "ci",
+diff --git a/reference.md b/reference.md
+index f9ab8a45152..d6cb17bcfa4 100644
+--- a/reference.md
++++ b/reference.md
+@@ -1,6 +1,6 @@
+ # Reference
+ ## Optional
+-<details><summary><code>client.Optional.<a href="/src/SeedObjectsWithImports/Optional/OptionalClient.cs">SendOptionalBodyAsync</a>(Dictionary&lt;string, object?&gt;? { ... }) -> WithRawResponseTask&lt;string&gt;</code></summary>
++<details><summary><code>client.Optional.<a href="/src/SeedObjectsWithImports/Optional/OptionalClient.cs">SendOptionalBodyAsync</a>(object? { ... }) -> WithRawResponseTask&lt;string&gt;</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -36,7 +36,7 @@ await client.Optional.SendOptionalBodyAsync(
+ <dl>
+ <dd>
+ 
+-**request:** `Dictionary<string, object?>?` 
++**request:** `object?` 
+     
+ </dd>
+ </dl>
+diff --git a/src/SeedObjectsWithImports/Optional/IOptionalClient.cs b/src/SeedObjectsWithImports/Optional/IOptionalClient.cs
+index 202706f2906..389e7871446 100644
+--- a/src/SeedObjectsWithImports/Optional/IOptionalClient.cs
++++ b/src/SeedObjectsWithImports/Optional/IOptionalClient.cs
+@@ -3,7 +3,7 @@ namespace SeedObjectsWithImports;
+ public partial interface IOptionalClient
+ {
+     WithRawResponseTask<string> SendOptionalBodyAsync(
+-        Dictionary<string, object?>? request,
++        object? request,
+         RequestOptions? options = null,
+         CancellationToken cancellationToken = default
+     );
+diff --git a/src/SeedObjectsWithImports/Optional/OptionalClient.cs b/src/SeedObjectsWithImports/Optional/OptionalClient.cs
+index 090de74da1d..aecfc584225 100644
+--- a/src/SeedObjectsWithImports/Optional/OptionalClient.cs
++++ b/src/SeedObjectsWithImports/Optional/OptionalClient.cs
+@@ -13,7 +13,7 @@ public partial class OptionalClient : IOptionalClient
+     }
+ 
+     private async Task<WithRawResponse<string>> SendOptionalBodyAsyncCore(
+-        Dictionary<string, object?>? request,
++        object? request,
+         RequestOptions? options = null,
+         CancellationToken cancellationToken = default
+     )
+@@ -230,7 +230,7 @@ public partial class OptionalClient : IOptionalClient
+     /// );
+     /// </code></example>
+     public WithRawResponseTask<string> SendOptionalBodyAsync(
+-        Dictionary<string, object?>? request,
++        object? request,
+         RequestOptions? options = null,
+         CancellationToken cancellationToken = default
+     )

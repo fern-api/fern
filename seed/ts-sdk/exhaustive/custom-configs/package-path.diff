@@ -1,0 +1,2360 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index d8b7bf00e12..4a46af6674c 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,9 @@
+     "cliVersion": "DUMMY",
+     "generatorName": "fernapi/fern-typescript-sdk",
+     "generatorVersion": "local",
++    "generatorConfig": {
++        "packagePath": "src/test-packagePath"
++    },
+     "originGitCommit": "DUMMY",
+     "originGitCommitIsDirty": null,
+     "invokedBy": "ci",
+diff --git a/package.json b/package.json
+index 36918bca44f..215a55aaceb 100644
+--- a/package.json
++++ b/package.json
+@@ -24,190 +24,190 @@
+         },
+         "./endpoints": {
+             "import": {
+-                "types": "./dist/esm/api/resources/endpoints/exports.d.mts",
+-                "default": "./dist/esm/api/resources/endpoints/exports.mjs"
++                "types": "./dist/esm/test-packagePath/api/resources/endpoints/exports.d.mts",
++                "default": "./dist/esm/test-packagePath/api/resources/endpoints/exports.mjs"
+             },
+             "require": {
+-                "types": "./dist/cjs/api/resources/endpoints/exports.d.ts",
+-                "default": "./dist/cjs/api/resources/endpoints/exports.js"
++                "types": "./dist/cjs/test-packagePath/api/resources/endpoints/exports.d.ts",
++                "default": "./dist/cjs/test-packagePath/api/resources/endpoints/exports.js"
+             },
+-            "default": "./dist/cjs/api/resources/endpoints/exports.js"
++            "default": "./dist/cjs/test-packagePath/api/resources/endpoints/exports.js"
+         },
+         "./endpoints/container": {
+             "import": {
+-                "types": "./dist/esm/api/resources/endpoints/resources/container/exports.d.mts",
+-                "default": "./dist/esm/api/resources/endpoints/resources/container/exports.mjs"
++                "types": "./dist/esm/test-packagePath/api/resources/endpoints/resources/container/exports.d.mts",
++                "default": "./dist/esm/test-packagePath/api/resources/endpoints/resources/container/exports.mjs"
+             },
+             "require": {
+-                "types": "./dist/cjs/api/resources/endpoints/resources/container/exports.d.ts",
+-                "default": "./dist/cjs/api/resources/endpoints/resources/container/exports.js"
++                "types": "./dist/cjs/test-packagePath/api/resources/endpoints/resources/container/exports.d.ts",
++                "default": "./dist/cjs/test-packagePath/api/resources/endpoints/resources/container/exports.js"
+             },
+-            "default": "./dist/cjs/api/resources/endpoints/resources/container/exports.js"
++            "default": "./dist/cjs/test-packagePath/api/resources/endpoints/resources/container/exports.js"
+         },
+         "./endpoints/contentType": {
+             "import": {
+-                "types": "./dist/esm/api/resources/endpoints/resources/contentType/exports.d.mts",
+-                "default": "./dist/esm/api/resources/endpoints/resources/contentType/exports.mjs"
++                "types": "./dist/esm/test-packagePath/api/resources/endpoints/resources/contentType/exports.d.mts",
++                "default": "./dist/esm/test-packagePath/api/resources/endpoints/resources/contentType/exports.mjs"
+             },
+             "require": {
+-                "types": "./dist/cjs/api/resources/endpoints/resources/contentType/exports.d.ts",
+-                "default": "./dist/cjs/api/resources/endpoints/resources/contentType/exports.js"
++                "types": "./dist/cjs/test-packagePath/api/resources/endpoints/resources/contentType/exports.d.ts",
++                "default": "./dist/cjs/test-packagePath/api/resources/endpoints/resources/contentType/exports.js"
+             },
+-            "default": "./dist/cjs/api/resources/endpoints/resources/contentType/exports.js"
++            "default": "./dist/cjs/test-packagePath/api/resources/endpoints/resources/contentType/exports.js"
+         },
+         "./endpoints/enum_": {
+             "import": {
+-                "types": "./dist/esm/api/resources/endpoints/resources/enum/exports.d.mts",
+-                "default": "./dist/esm/api/resources/endpoints/resources/enum/exports.mjs"
++                "types": "./dist/esm/test-packagePath/api/resources/endpoints/resources/enum/exports.d.mts",
++                "default": "./dist/esm/test-packagePath/api/resources/endpoints/resources/enum/exports.mjs"
+             },
+             "require": {
+-                "types": "./dist/cjs/api/resources/endpoints/resources/enum/exports.d.ts",
+-                "default": "./dist/cjs/api/resources/endpoints/resources/enum/exports.js"
++                "types": "./dist/cjs/test-packagePath/api/resources/endpoints/resources/enum/exports.d.ts",
++                "default": "./dist/cjs/test-packagePath/api/resources/endpoints/resources/enum/exports.js"
+             },
+-            "default": "./dist/cjs/api/resources/endpoints/resources/enum/exports.js"
++            "default": "./dist/cjs/test-packagePath/api/resources/endpoints/resources/enum/exports.js"
+         },
+         "./endpoints/httpMethods": {
+             "import": {
+-                "types": "./dist/esm/api/resources/endpoints/resources/httpMethods/exports.d.mts",
+-                "default": "./dist/esm/api/resources/endpoints/resources/httpMethods/exports.mjs"
++                "types": "./dist/esm/test-packagePath/api/resources/endpoints/resources/httpMethods/exports.d.mts",
++                "default": "./dist/esm/test-packagePath/api/resources/endpoints/resources/httpMethods/exports.mjs"
+             },
+             "require": {
+-                "types": "./dist/cjs/api/resources/endpoints/resources/httpMethods/exports.d.ts",
+-                "default": "./dist/cjs/api/resources/endpoints/resources/httpMethods/exports.js"
++                "types": "./dist/cjs/test-packagePath/api/resources/endpoints/resources/httpMethods/exports.d.ts",
++                "default": "./dist/cjs/test-packagePath/api/resources/endpoints/resources/httpMethods/exports.js"
+             },
+-            "default": "./dist/cjs/api/resources/endpoints/resources/httpMethods/exports.js"
++            "default": "./dist/cjs/test-packagePath/api/resources/endpoints/resources/httpMethods/exports.js"
+         },
+         "./endpoints/object": {
+             "import": {
+-                "types": "./dist/esm/api/resources/endpoints/resources/object/exports.d.mts",
+-                "default": "./dist/esm/api/resources/endpoints/resources/object/exports.mjs"
++                "types": "./dist/esm/test-packagePath/api/resources/endpoints/resources/object/exports.d.mts",
++                "default": "./dist/esm/test-packagePath/api/resources/endpoints/resources/object/exports.mjs"
+             },
+             "require": {
+-                "types": "./dist/cjs/api/resources/endpoints/resources/object/exports.d.ts",
+-                "default": "./dist/cjs/api/resources/endpoints/resources/object/exports.js"
++                "types": "./dist/cjs/test-packagePath/api/resources/endpoints/resources/object/exports.d.ts",
++                "default": "./dist/cjs/test-packagePath/api/resources/endpoints/resources/object/exports.js"
+             },
+-            "default": "./dist/cjs/api/resources/endpoints/resources/object/exports.js"
++            "default": "./dist/cjs/test-packagePath/api/resources/endpoints/resources/object/exports.js"
+         },
+         "./endpoints/pagination": {
+             "import": {
+-                "types": "./dist/esm/api/resources/endpoints/resources/pagination/exports.d.mts",
+-                "default": "./dist/esm/api/resources/endpoints/resources/pagination/exports.mjs"
++                "types": "./dist/esm/test-packagePath/api/resources/endpoints/resources/pagination/exports.d.mts",
++                "default": "./dist/esm/test-packagePath/api/resources/endpoints/resources/pagination/exports.mjs"
+             },
+             "require": {
+-                "types": "./dist/cjs/api/resources/endpoints/resources/pagination/exports.d.ts",
+-                "default": "./dist/cjs/api/resources/endpoints/resources/pagination/exports.js"
++                "types": "./dist/cjs/test-packagePath/api/resources/endpoints/resources/pagination/exports.d.ts",
++                "default": "./dist/cjs/test-packagePath/api/resources/endpoints/resources/pagination/exports.js"
+             },
+-            "default": "./dist/cjs/api/resources/endpoints/resources/pagination/exports.js"
++            "default": "./dist/cjs/test-packagePath/api/resources/endpoints/resources/pagination/exports.js"
+         },
+         "./endpoints/params": {
+             "import": {
+-                "types": "./dist/esm/api/resources/endpoints/resources/params/exports.d.mts",
+-                "default": "./dist/esm/api/resources/endpoints/resources/params/exports.mjs"
++                "types": "./dist/esm/test-packagePath/api/resources/endpoints/resources/params/exports.d.mts",
++                "default": "./dist/esm/test-packagePath/api/resources/endpoints/resources/params/exports.mjs"
+             },
+             "require": {
+-                "types": "./dist/cjs/api/resources/endpoints/resources/params/exports.d.ts",
+-                "default": "./dist/cjs/api/resources/endpoints/resources/params/exports.js"
++                "types": "./dist/cjs/test-packagePath/api/resources/endpoints/resources/params/exports.d.ts",
++                "default": "./dist/cjs/test-packagePath/api/resources/endpoints/resources/params/exports.js"
+             },
+-            "default": "./dist/cjs/api/resources/endpoints/resources/params/exports.js"
++            "default": "./dist/cjs/test-packagePath/api/resources/endpoints/resources/params/exports.js"
+         },
+         "./endpoints/primitive": {
+             "import": {
+-                "types": "./dist/esm/api/resources/endpoints/resources/primitive/exports.d.mts",
+-                "default": "./dist/esm/api/resources/endpoints/resources/primitive/exports.mjs"
++                "types": "./dist/esm/test-packagePath/api/resources/endpoints/resources/primitive/exports.d.mts",
++                "default": "./dist/esm/test-packagePath/api/resources/endpoints/resources/primitive/exports.mjs"
+             },
+             "require": {
+-                "types": "./dist/cjs/api/resources/endpoints/resources/primitive/exports.d.ts",
+-                "default": "./dist/cjs/api/resources/endpoints/resources/primitive/exports.js"
++                "types": "./dist/cjs/test-packagePath/api/resources/endpoints/resources/primitive/exports.d.ts",
++                "default": "./dist/cjs/test-packagePath/api/resources/endpoints/resources/primitive/exports.js"
+             },
+-            "default": "./dist/cjs/api/resources/endpoints/resources/primitive/exports.js"
++            "default": "./dist/cjs/test-packagePath/api/resources/endpoints/resources/primitive/exports.js"
+         },
+         "./endpoints/put": {
+             "import": {
+-                "types": "./dist/esm/api/resources/endpoints/resources/put/exports.d.mts",
+-                "default": "./dist/esm/api/resources/endpoints/resources/put/exports.mjs"
++                "types": "./dist/esm/test-packagePath/api/resources/endpoints/resources/put/exports.d.mts",
++                "default": "./dist/esm/test-packagePath/api/resources/endpoints/resources/put/exports.mjs"
+             },
+             "require": {
+-                "types": "./dist/cjs/api/resources/endpoints/resources/put/exports.d.ts",
+-                "default": "./dist/cjs/api/resources/endpoints/resources/put/exports.js"
++                "types": "./dist/cjs/test-packagePath/api/resources/endpoints/resources/put/exports.d.ts",
++                "default": "./dist/cjs/test-packagePath/api/resources/endpoints/resources/put/exports.js"
+             },
+-            "default": "./dist/cjs/api/resources/endpoints/resources/put/exports.js"
++            "default": "./dist/cjs/test-packagePath/api/resources/endpoints/resources/put/exports.js"
+         },
+         "./endpoints/union": {
+             "import": {
+-                "types": "./dist/esm/api/resources/endpoints/resources/union/exports.d.mts",
+-                "default": "./dist/esm/api/resources/endpoints/resources/union/exports.mjs"
++                "types": "./dist/esm/test-packagePath/api/resources/endpoints/resources/union/exports.d.mts",
++                "default": "./dist/esm/test-packagePath/api/resources/endpoints/resources/union/exports.mjs"
+             },
+             "require": {
+-                "types": "./dist/cjs/api/resources/endpoints/resources/union/exports.d.ts",
+-                "default": "./dist/cjs/api/resources/endpoints/resources/union/exports.js"
++                "types": "./dist/cjs/test-packagePath/api/resources/endpoints/resources/union/exports.d.ts",
++                "default": "./dist/cjs/test-packagePath/api/resources/endpoints/resources/union/exports.js"
+             },
+-            "default": "./dist/cjs/api/resources/endpoints/resources/union/exports.js"
++            "default": "./dist/cjs/test-packagePath/api/resources/endpoints/resources/union/exports.js"
+         },
+         "./endpoints/urls": {
+             "import": {
+-                "types": "./dist/esm/api/resources/endpoints/resources/urls/exports.d.mts",
+-                "default": "./dist/esm/api/resources/endpoints/resources/urls/exports.mjs"
++                "types": "./dist/esm/test-packagePath/api/resources/endpoints/resources/urls/exports.d.mts",
++                "default": "./dist/esm/test-packagePath/api/resources/endpoints/resources/urls/exports.mjs"
+             },
+             "require": {
+-                "types": "./dist/cjs/api/resources/endpoints/resources/urls/exports.d.ts",
+-                "default": "./dist/cjs/api/resources/endpoints/resources/urls/exports.js"
++                "types": "./dist/cjs/test-packagePath/api/resources/endpoints/resources/urls/exports.d.ts",
++                "default": "./dist/cjs/test-packagePath/api/resources/endpoints/resources/urls/exports.js"
+             },
+-            "default": "./dist/cjs/api/resources/endpoints/resources/urls/exports.js"
++            "default": "./dist/cjs/test-packagePath/api/resources/endpoints/resources/urls/exports.js"
+         },
+         "./inlinedRequests": {
+             "import": {
+-                "types": "./dist/esm/api/resources/inlinedRequests/exports.d.mts",
+-                "default": "./dist/esm/api/resources/inlinedRequests/exports.mjs"
++                "types": "./dist/esm/test-packagePath/api/resources/inlinedRequests/exports.d.mts",
++                "default": "./dist/esm/test-packagePath/api/resources/inlinedRequests/exports.mjs"
+             },
+             "require": {
+-                "types": "./dist/cjs/api/resources/inlinedRequests/exports.d.ts",
+-                "default": "./dist/cjs/api/resources/inlinedRequests/exports.js"
++                "types": "./dist/cjs/test-packagePath/api/resources/inlinedRequests/exports.d.ts",
++                "default": "./dist/cjs/test-packagePath/api/resources/inlinedRequests/exports.js"
+             },
+-            "default": "./dist/cjs/api/resources/inlinedRequests/exports.js"
++            "default": "./dist/cjs/test-packagePath/api/resources/inlinedRequests/exports.js"
+         },
+         "./noAuth": {
+             "import": {
+-                "types": "./dist/esm/api/resources/noAuth/exports.d.mts",
+-                "default": "./dist/esm/api/resources/noAuth/exports.mjs"
++                "types": "./dist/esm/test-packagePath/api/resources/noAuth/exports.d.mts",
++                "default": "./dist/esm/test-packagePath/api/resources/noAuth/exports.mjs"
+             },
+             "require": {
+-                "types": "./dist/cjs/api/resources/noAuth/exports.d.ts",
+-                "default": "./dist/cjs/api/resources/noAuth/exports.js"
++                "types": "./dist/cjs/test-packagePath/api/resources/noAuth/exports.d.ts",
++                "default": "./dist/cjs/test-packagePath/api/resources/noAuth/exports.js"
+             },
+-            "default": "./dist/cjs/api/resources/noAuth/exports.js"
++            "default": "./dist/cjs/test-packagePath/api/resources/noAuth/exports.js"
+         },
+         "./noReqBody": {
+             "import": {
+-                "types": "./dist/esm/api/resources/noReqBody/exports.d.mts",
+-                "default": "./dist/esm/api/resources/noReqBody/exports.mjs"
++                "types": "./dist/esm/test-packagePath/api/resources/noReqBody/exports.d.mts",
++                "default": "./dist/esm/test-packagePath/api/resources/noReqBody/exports.mjs"
+             },
+             "require": {
+-                "types": "./dist/cjs/api/resources/noReqBody/exports.d.ts",
+-                "default": "./dist/cjs/api/resources/noReqBody/exports.js"
++                "types": "./dist/cjs/test-packagePath/api/resources/noReqBody/exports.d.ts",
++                "default": "./dist/cjs/test-packagePath/api/resources/noReqBody/exports.js"
+             },
+-            "default": "./dist/cjs/api/resources/noReqBody/exports.js"
++            "default": "./dist/cjs/test-packagePath/api/resources/noReqBody/exports.js"
+         },
+         "./reqWithHeaders": {
+             "import": {
+-                "types": "./dist/esm/api/resources/reqWithHeaders/exports.d.mts",
+-                "default": "./dist/esm/api/resources/reqWithHeaders/exports.mjs"
++                "types": "./dist/esm/test-packagePath/api/resources/reqWithHeaders/exports.d.mts",
++                "default": "./dist/esm/test-packagePath/api/resources/reqWithHeaders/exports.mjs"
+             },
+             "require": {
+-                "types": "./dist/cjs/api/resources/reqWithHeaders/exports.d.ts",
+-                "default": "./dist/cjs/api/resources/reqWithHeaders/exports.js"
++                "types": "./dist/cjs/test-packagePath/api/resources/reqWithHeaders/exports.d.ts",
++                "default": "./dist/cjs/test-packagePath/api/resources/reqWithHeaders/exports.js"
+             },
+-            "default": "./dist/cjs/api/resources/reqWithHeaders/exports.js"
++            "default": "./dist/cjs/test-packagePath/api/resources/reqWithHeaders/exports.js"
+         },
+         "./types": {
+             "import": {
+-                "types": "./dist/esm/api/resources/types/exports.d.mts",
+-                "default": "./dist/esm/api/resources/types/exports.mjs"
++                "types": "./dist/esm/test-packagePath/api/resources/types/exports.d.mts",
++                "default": "./dist/esm/test-packagePath/api/resources/types/exports.mjs"
+             },
+             "require": {
+-                "types": "./dist/cjs/api/resources/types/exports.d.ts",
+-                "default": "./dist/cjs/api/resources/types/exports.js"
++                "types": "./dist/cjs/test-packagePath/api/resources/types/exports.d.ts",
++                "default": "./dist/cjs/test-packagePath/api/resources/types/exports.js"
+             },
+-            "default": "./dist/cjs/api/resources/types/exports.js"
++            "default": "./dist/cjs/test-packagePath/api/resources/types/exports.js"
+         },
+         "./package.json": "./package.json"
+     },
+diff --git a/reference.md b/reference.md
+index 925b5375d52..5679469f51a 100644
+--- a/reference.md
++++ b/reference.md
+@@ -1,6 +1,6 @@
+ # Reference
+ ## Endpoints Container
+-<details><summary><code>client.endpoints.container.<a href="/src/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnListOfPrimitives</a>({ ...params }) -> string[]</code></summary>
++<details><summary><code>client.endpoints.container.<a href="/src/test-packagePath/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnListOfPrimitives</a>({ ...params }) -> string[]</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -49,7 +49,7 @@ await client.endpoints.container.getAndReturnListOfPrimitives(["string", "string
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.endpoints.container.<a href="/src/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnListOfObjects</a>({ ...params }) -> SeedExhaustive.ObjectWithRequiredField[]</code></summary>
++<details><summary><code>client.endpoints.container.<a href="/src/test-packagePath/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnListOfObjects</a>({ ...params }) -> SeedExhaustive.ObjectWithRequiredField[]</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -102,7 +102,7 @@ await client.endpoints.container.getAndReturnListOfObjects([{
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.endpoints.container.<a href="/src/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnSetOfPrimitives</a>({ ...params }) -> string[]</code></summary>
++<details><summary><code>client.endpoints.container.<a href="/src/test-packagePath/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnSetOfPrimitives</a>({ ...params }) -> string[]</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -151,7 +151,7 @@ await client.endpoints.container.getAndReturnSetOfPrimitives(["string"]);
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.endpoints.container.<a href="/src/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnSetOfObjects</a>({ ...params }) -> SeedExhaustive.ObjectWithRequiredField[]</code></summary>
++<details><summary><code>client.endpoints.container.<a href="/src/test-packagePath/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnSetOfObjects</a>({ ...params }) -> SeedExhaustive.ObjectWithRequiredField[]</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -202,7 +202,7 @@ await client.endpoints.container.getAndReturnSetOfObjects([{
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.endpoints.container.<a href="/src/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnMapPrimToPrim</a>({ ...params }) -> Record&lt;string, string&gt;</code></summary>
++<details><summary><code>client.endpoints.container.<a href="/src/test-packagePath/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnMapPrimToPrim</a>({ ...params }) -> Record&lt;string, string&gt;</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -253,7 +253,7 @@ await client.endpoints.container.getAndReturnMapPrimToPrim({
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.endpoints.container.<a href="/src/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnMapOfPrimToObject</a>({ ...params }) -> Record&lt;string, SeedExhaustive.ObjectWithRequiredField&gt;</code></summary>
++<details><summary><code>client.endpoints.container.<a href="/src/test-packagePath/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnMapOfPrimToObject</a>({ ...params }) -> Record&lt;string, SeedExhaustive.ObjectWithRequiredField&gt;</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -306,7 +306,7 @@ await client.endpoints.container.getAndReturnMapOfPrimToObject({
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.endpoints.container.<a href="/src/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnMapOfPrimToUndiscriminatedUnion</a>({ ...params }) -> Record&lt;string, SeedExhaustive.MixedType&gt;</code></summary>
++<details><summary><code>client.endpoints.container.<a href="/src/test-packagePath/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnMapOfPrimToUndiscriminatedUnion</a>({ ...params }) -> Record&lt;string, SeedExhaustive.MixedType&gt;</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -357,7 +357,7 @@ await client.endpoints.container.getAndReturnMapOfPrimToUndiscriminatedUnion({
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.endpoints.container.<a href="/src/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnOptional</a>({ ...params }) -> SeedExhaustive.ObjectWithRequiredField | undefined</code></summary>
++<details><summary><code>client.endpoints.container.<a href="/src/test-packagePath/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnOptional</a>({ ...params }) -> SeedExhaustive.ObjectWithRequiredField | undefined</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -409,7 +409,7 @@ await client.endpoints.container.getAndReturnOptional({
+ </details>
+ 
+ ## Endpoints ContentType
+-<details><summary><code>client.endpoints.contentType.<a href="/src/api/resources/endpoints/resources/contentType/client/Client.ts">postJsonPatchContentType</a>({ ...params }) -> void</code></summary>
++<details><summary><code>client.endpoints.contentType.<a href="/src/test-packagePath/api/resources/endpoints/resources/contentType/client/Client.ts">postJsonPatchContentType</a>({ ...params }) -> void</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -474,7 +474,7 @@ await client.endpoints.contentType.postJsonPatchContentType({
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.endpoints.contentType.<a href="/src/api/resources/endpoints/resources/contentType/client/Client.ts">postJsonPatchContentWithCharsetType</a>({ ...params }) -> void</code></summary>
++<details><summary><code>client.endpoints.contentType.<a href="/src/test-packagePath/api/resources/endpoints/resources/contentType/client/Client.ts">postJsonPatchContentWithCharsetType</a>({ ...params }) -> void</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -540,7 +540,7 @@ await client.endpoints.contentType.postJsonPatchContentWithCharsetType({
+ </details>
+ 
+ ## Endpoints Enum
+-<details><summary><code>client.endpoints.enum.<a href="/src/api/resources/endpoints/resources/enum/client/Client.ts">getAndReturnEnum</a>({ ...params }) -> SeedExhaustive.WeatherReport</code></summary>
++<details><summary><code>client.endpoints.enum.<a href="/src/test-packagePath/api/resources/endpoints/resources/enum/client/Client.ts">getAndReturnEnum</a>({ ...params }) -> SeedExhaustive.WeatherReport</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -590,7 +590,7 @@ await client.endpoints.enum.getAndReturnEnum("SUNNY");
+ </details>
+ 
+ ## Endpoints HttpMethods
+-<details><summary><code>client.endpoints.httpMethods.<a href="/src/api/resources/endpoints/resources/httpMethods/client/Client.ts">testGet</a>(id) -> string</code></summary>
++<details><summary><code>client.endpoints.httpMethods.<a href="/src/test-packagePath/api/resources/endpoints/resources/httpMethods/client/Client.ts">testGet</a>(id) -> string</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -639,7 +639,7 @@ await client.endpoints.httpMethods.testGet("id");
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.endpoints.httpMethods.<a href="/src/api/resources/endpoints/resources/httpMethods/client/Client.ts">testPost</a>({ ...params }) -> SeedExhaustive.ObjectWithOptionalField</code></summary>
++<details><summary><code>client.endpoints.httpMethods.<a href="/src/test-packagePath/api/resources/endpoints/resources/httpMethods/client/Client.ts">testPost</a>({ ...params }) -> SeedExhaustive.ObjectWithOptionalField</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -690,7 +690,7 @@ await client.endpoints.httpMethods.testPost({
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.endpoints.httpMethods.<a href="/src/api/resources/endpoints/resources/httpMethods/client/Client.ts">testPut</a>(id, { ...params }) -> SeedExhaustive.ObjectWithOptionalField</code></summary>
++<details><summary><code>client.endpoints.httpMethods.<a href="/src/test-packagePath/api/resources/endpoints/resources/httpMethods/client/Client.ts">testPut</a>(id, { ...params }) -> SeedExhaustive.ObjectWithOptionalField</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -749,7 +749,7 @@ await client.endpoints.httpMethods.testPut("id", {
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.endpoints.httpMethods.<a href="/src/api/resources/endpoints/resources/httpMethods/client/Client.ts">testPatch</a>(id, { ...params }) -> SeedExhaustive.ObjectWithOptionalField</code></summary>
++<details><summary><code>client.endpoints.httpMethods.<a href="/src/test-packagePath/api/resources/endpoints/resources/httpMethods/client/Client.ts">testPatch</a>(id, { ...params }) -> SeedExhaustive.ObjectWithOptionalField</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -822,7 +822,7 @@ await client.endpoints.httpMethods.testPatch("id", {
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.endpoints.httpMethods.<a href="/src/api/resources/endpoints/resources/httpMethods/client/Client.ts">testDelete</a>(id) -> boolean</code></summary>
++<details><summary><code>client.endpoints.httpMethods.<a href="/src/test-packagePath/api/resources/endpoints/resources/httpMethods/client/Client.ts">testDelete</a>(id) -> boolean</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -872,7 +872,7 @@ await client.endpoints.httpMethods.testDelete("id");
+ </details>
+ 
+ ## Endpoints Object
+-<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnWithOptionalField</a>({ ...params }) -> SeedExhaustive.ObjectWithOptionalField</code></summary>
++<details><summary><code>client.endpoints.object.<a href="/src/test-packagePath/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnWithOptionalField</a>({ ...params }) -> SeedExhaustive.ObjectWithOptionalField</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -937,7 +937,7 @@ await client.endpoints.object.getAndReturnWithOptionalField({
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnWithRequiredField</a>({ ...params }) -> SeedExhaustive.ObjectWithRequiredField</code></summary>
++<details><summary><code>client.endpoints.object.<a href="/src/test-packagePath/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnWithRequiredField</a>({ ...params }) -> SeedExhaustive.ObjectWithRequiredField</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -988,7 +988,7 @@ await client.endpoints.object.getAndReturnWithRequiredField({
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnWithMapOfMap</a>({ ...params }) -> SeedExhaustive.ObjectWithMapOfMap</code></summary>
++<details><summary><code>client.endpoints.object.<a href="/src/test-packagePath/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnWithMapOfMap</a>({ ...params }) -> SeedExhaustive.ObjectWithMapOfMap</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -1043,7 +1043,7 @@ await client.endpoints.object.getAndReturnWithMapOfMap({
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnNestedWithOptionalField</a>({ ...params }) -> SeedExhaustive.NestedObjectWithOptionalField</code></summary>
++<details><summary><code>client.endpoints.object.<a href="/src/test-packagePath/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnNestedWithOptionalField</a>({ ...params }) -> SeedExhaustive.NestedObjectWithOptionalField</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -1111,7 +1111,7 @@ await client.endpoints.object.getAndReturnNestedWithOptionalField({
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnNestedWithRequiredField</a>(string, { ...params }) -> SeedExhaustive.NestedObjectWithRequiredField</code></summary>
++<details><summary><code>client.endpoints.object.<a href="/src/test-packagePath/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnNestedWithRequiredField</a>(string, { ...params }) -> SeedExhaustive.NestedObjectWithRequiredField</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -1187,7 +1187,7 @@ await client.endpoints.object.getAndReturnNestedWithRequiredField("string", {
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnNestedWithRequiredFieldAsList</a>({ ...params }) -> SeedExhaustive.NestedObjectWithRequiredField</code></summary>
++<details><summary><code>client.endpoints.object.<a href="/src/test-packagePath/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnNestedWithRequiredFieldAsList</a>({ ...params }) -> SeedExhaustive.NestedObjectWithRequiredField</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -1274,7 +1274,7 @@ await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList([{
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnWithUnknownField</a>({ ...params }) -> SeedExhaustive.ObjectWithUnknownField</code></summary>
++<details><summary><code>client.endpoints.object.<a href="/src/test-packagePath/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnWithUnknownField</a>({ ...params }) -> SeedExhaustive.ObjectWithUnknownField</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -1327,7 +1327,7 @@ await client.endpoints.object.getAndReturnWithUnknownField({
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnWithDocumentedUnknownType</a>({ ...params }) -> SeedExhaustive.ObjectWithDocumentedUnknownType</code></summary>
++<details><summary><code>client.endpoints.object.<a href="/src/test-packagePath/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnWithDocumentedUnknownType</a>({ ...params }) -> SeedExhaustive.ObjectWithDocumentedUnknownType</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -1380,7 +1380,7 @@ await client.endpoints.object.getAndReturnWithDocumentedUnknownType({
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnMapOfDocumentedUnknownType</a>({ ...params }) -> SeedExhaustive.MapOfDocumentedUnknownType</code></summary>
++<details><summary><code>client.endpoints.object.<a href="/src/test-packagePath/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnMapOfDocumentedUnknownType</a>({ ...params }) -> SeedExhaustive.MapOfDocumentedUnknownType</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -1433,7 +1433,7 @@ await client.endpoints.object.getAndReturnMapOfDocumentedUnknownType({
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnWithMixedRequiredAndOptionalFields</a>({ ...params }) -> SeedExhaustive.ObjectWithMixedRequiredAndOptionalFields</code></summary>
++<details><summary><code>client.endpoints.object.<a href="/src/test-packagePath/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnWithMixedRequiredAndOptionalFields</a>({ ...params }) -> SeedExhaustive.ObjectWithMixedRequiredAndOptionalFields</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -1502,7 +1502,7 @@ await client.endpoints.object.getAndReturnWithMixedRequiredAndOptionalFields({
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnWithRequiredNestedObject</a>({ ...params }) -> SeedExhaustive.ObjectWithRequiredNestedObject</code></summary>
++<details><summary><code>client.endpoints.object.<a href="/src/test-packagePath/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnWithRequiredNestedObject</a>({ ...params }) -> SeedExhaustive.ObjectWithRequiredNestedObject</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -1574,7 +1574,7 @@ await client.endpoints.object.getAndReturnWithRequiredNestedObject({
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnWithDatetimeLikeString</a>({ ...params }) -> SeedExhaustive.ObjectWithDatetimeLikeString</code></summary>
++<details><summary><code>client.endpoints.object.<a href="/src/test-packagePath/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnWithDatetimeLikeString</a>({ ...params }) -> SeedExhaustive.ObjectWithDatetimeLikeString</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -1643,7 +1643,7 @@ await client.endpoints.object.getAndReturnWithDatetimeLikeString({
+ </details>
+ 
+ ## Endpoints Pagination
+-<details><summary><code>client.endpoints.pagination.<a href="/src/api/resources/endpoints/resources/pagination/client/Client.ts">listItems</a>({ ...params }) -> core.Page&lt;SeedExhaustive.ObjectWithRequiredField, SeedExhaustive.PaginatedResponse&gt;</code></summary>
++<details><summary><code>client.endpoints.pagination.<a href="/src/test-packagePath/api/resources/endpoints/resources/pagination/client/Client.ts">listItems</a>({ ...params }) -> core.Page&lt;SeedExhaustive.ObjectWithRequiredField, SeedExhaustive.PaginatedResponse&gt;</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -1725,7 +1725,7 @@ const response = page.response;
+ </details>
+ 
+ ## Endpoints Params
+-<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">getWithPath</a>(param) -> string</code></summary>
++<details><summary><code>client.endpoints.params.<a href="/src/test-packagePath/api/resources/endpoints/resources/params/client/Client.ts">getWithPath</a>(param) -> string</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -1788,7 +1788,7 @@ await client.endpoints.params.getWithPath("param");
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">getWithInlinePath</a>({ ...params }) -> string</code></summary>
++<details><summary><code>client.endpoints.params.<a href="/src/test-packagePath/api/resources/endpoints/resources/params/client/Client.ts">getWithInlinePath</a>({ ...params }) -> string</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -1853,7 +1853,7 @@ await client.endpoints.params.getWithInlinePath({
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">getWithQuery</a>({ ...params }) -> void</code></summary>
++<details><summary><code>client.endpoints.params.<a href="/src/test-packagePath/api/resources/endpoints/resources/params/client/Client.ts">getWithQuery</a>({ ...params }) -> void</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -1919,7 +1919,7 @@ await client.endpoints.params.getWithQuery({
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">getWithAllowMultipleQuery</a>({ ...params }) -> void</code></summary>
++<details><summary><code>client.endpoints.params.<a href="/src/test-packagePath/api/resources/endpoints/resources/params/client/Client.ts">getWithAllowMultipleQuery</a>({ ...params }) -> void</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -1985,7 +1985,7 @@ await client.endpoints.params.getWithAllowMultipleQuery({
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">getWithPathAndQuery</a>(param, { ...params }) -> void</code></summary>
++<details><summary><code>client.endpoints.params.<a href="/src/test-packagePath/api/resources/endpoints/resources/params/client/Client.ts">getWithPathAndQuery</a>(param, { ...params }) -> void</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -2058,7 +2058,7 @@ await client.endpoints.params.getWithPathAndQuery("param", {
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">getWithInlinePathAndQuery</a>({ ...params }) -> void</code></summary>
++<details><summary><code>client.endpoints.params.<a href="/src/test-packagePath/api/resources/endpoints/resources/params/client/Client.ts">getWithInlinePathAndQuery</a>({ ...params }) -> void</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -2124,7 +2124,7 @@ await client.endpoints.params.getWithInlinePathAndQuery({
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">modifyWithPath</a>(param, { ...params }) -> string</code></summary>
++<details><summary><code>client.endpoints.params.<a href="/src/test-packagePath/api/resources/endpoints/resources/params/client/Client.ts">modifyWithPath</a>(param, { ...params }) -> string</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -2195,7 +2195,7 @@ await client.endpoints.params.modifyWithPath("param", "string");
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">modifyWithInlinePath</a>({ ...params }) -> string</code></summary>
++<details><summary><code>client.endpoints.params.<a href="/src/test-packagePath/api/resources/endpoints/resources/params/client/Client.ts">modifyWithInlinePath</a>({ ...params }) -> string</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -2261,7 +2261,7 @@ await client.endpoints.params.modifyWithInlinePath({
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">uploadWithPath</a>(uploadable, param) -> SeedExhaustive.ObjectWithRequiredField</code></summary>
++<details><summary><code>client.endpoints.params.<a href="/src/test-packagePath/api/resources/endpoints/resources/params/client/Client.ts">uploadWithPath</a>(uploadable, param) -> SeedExhaustive.ObjectWithRequiredField</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -2332,7 +2332,7 @@ await client.endpoints.params.uploadWithPath(createReadStream("path/to/file"), "
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">getWithBooleanPath</a>(param) -> string</code></summary>
++<details><summary><code>client.endpoints.params.<a href="/src/test-packagePath/api/resources/endpoints/resources/params/client/Client.ts">getWithBooleanPath</a>(param) -> string</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -2395,7 +2395,7 @@ await client.endpoints.params.getWithBooleanPath(true);
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">getWithPathAndErrors</a>(param) -> string</code></summary>
++<details><summary><code>client.endpoints.params.<a href="/src/test-packagePath/api/resources/endpoints/resources/params/client/Client.ts">getWithPathAndErrors</a>(param) -> string</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -2459,7 +2459,7 @@ await client.endpoints.params.getWithPathAndErrors("param");
+ </details>
+ 
+ ## Endpoints Primitive
+-<details><summary><code>client.endpoints.primitive.<a href="/src/api/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnString</a>({ ...params }) -> string</code></summary>
++<details><summary><code>client.endpoints.primitive.<a href="/src/test-packagePath/api/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnString</a>({ ...params }) -> string</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -2508,7 +2508,7 @@ await client.endpoints.primitive.getAndReturnString("string");
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.endpoints.primitive.<a href="/src/api/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnInt</a>({ ...params }) -> number</code></summary>
++<details><summary><code>client.endpoints.primitive.<a href="/src/test-packagePath/api/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnInt</a>({ ...params }) -> number</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -2557,7 +2557,7 @@ await client.endpoints.primitive.getAndReturnInt(1);
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.endpoints.primitive.<a href="/src/api/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnLong</a>({ ...params }) -> number</code></summary>
++<details><summary><code>client.endpoints.primitive.<a href="/src/test-packagePath/api/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnLong</a>({ ...params }) -> number</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -2606,7 +2606,7 @@ await client.endpoints.primitive.getAndReturnLong(1000000);
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.endpoints.primitive.<a href="/src/api/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnDouble</a>({ ...params }) -> number</code></summary>
++<details><summary><code>client.endpoints.primitive.<a href="/src/test-packagePath/api/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnDouble</a>({ ...params }) -> number</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -2655,7 +2655,7 @@ await client.endpoints.primitive.getAndReturnDouble(1.1);
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.endpoints.primitive.<a href="/src/api/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnBool</a>({ ...params }) -> boolean</code></summary>
++<details><summary><code>client.endpoints.primitive.<a href="/src/test-packagePath/api/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnBool</a>({ ...params }) -> boolean</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -2704,7 +2704,7 @@ await client.endpoints.primitive.getAndReturnBool(true);
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.endpoints.primitive.<a href="/src/api/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnDatetime</a>({ ...params }) -> string</code></summary>
++<details><summary><code>client.endpoints.primitive.<a href="/src/test-packagePath/api/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnDatetime</a>({ ...params }) -> string</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -2753,7 +2753,7 @@ await client.endpoints.primitive.getAndReturnDatetime("2024-01-15T09:30:00Z");
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.endpoints.primitive.<a href="/src/api/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnDate</a>({ ...params }) -> string</code></summary>
++<details><summary><code>client.endpoints.primitive.<a href="/src/test-packagePath/api/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnDate</a>({ ...params }) -> string</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -2802,7 +2802,7 @@ await client.endpoints.primitive.getAndReturnDate("2023-01-15");
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.endpoints.primitive.<a href="/src/api/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnUuid</a>({ ...params }) -> string</code></summary>
++<details><summary><code>client.endpoints.primitive.<a href="/src/test-packagePath/api/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnUuid</a>({ ...params }) -> string</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -2851,7 +2851,7 @@ await client.endpoints.primitive.getAndReturnUuid("d5e9c84f-c2b2-4bf4-b4b0-7ffd7
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.endpoints.primitive.<a href="/src/api/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnBase64</a>({ ...params }) -> string</code></summary>
++<details><summary><code>client.endpoints.primitive.<a href="/src/test-packagePath/api/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnBase64</a>({ ...params }) -> string</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -2901,7 +2901,7 @@ await client.endpoints.primitive.getAndReturnBase64("SGVsbG8gd29ybGQh");
+ </details>
+ 
+ ## Endpoints Put
+-<details><summary><code>client.endpoints.put.<a href="/src/api/resources/endpoints/resources/put/client/Client.ts">add</a>({ ...params }) -> SeedExhaustive.PutResponse</code></summary>
++<details><summary><code>client.endpoints.put.<a href="/src/test-packagePath/api/resources/endpoints/resources/put/client/Client.ts">add</a>({ ...params }) -> SeedExhaustive.PutResponse</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -2953,7 +2953,7 @@ await client.endpoints.put.add({
+ </details>
+ 
+ ## Endpoints Union
+-<details><summary><code>client.endpoints.union.<a href="/src/api/resources/endpoints/resources/union/client/Client.ts">getAndReturnUnion</a>({ ...params }) -> SeedExhaustive.Animal</code></summary>
++<details><summary><code>client.endpoints.union.<a href="/src/test-packagePath/api/resources/endpoints/resources/union/client/Client.ts">getAndReturnUnion</a>({ ...params }) -> SeedExhaustive.Animal</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -3007,7 +3007,7 @@ await client.endpoints.union.getAndReturnUnion({
+ </details>
+ 
+ ## Endpoints Urls
+-<details><summary><code>client.endpoints.urls.<a href="/src/api/resources/endpoints/resources/urls/client/Client.ts">withMixedCase</a>() -> string</code></summary>
++<details><summary><code>client.endpoints.urls.<a href="/src/test-packagePath/api/resources/endpoints/resources/urls/client/Client.ts">withMixedCase</a>() -> string</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -3048,7 +3048,7 @@ await client.endpoints.urls.withMixedCase();
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.endpoints.urls.<a href="/src/api/resources/endpoints/resources/urls/client/Client.ts">noEndingSlash</a>() -> string</code></summary>
++<details><summary><code>client.endpoints.urls.<a href="/src/test-packagePath/api/resources/endpoints/resources/urls/client/Client.ts">noEndingSlash</a>() -> string</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -3089,7 +3089,7 @@ await client.endpoints.urls.noEndingSlash();
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.endpoints.urls.<a href="/src/api/resources/endpoints/resources/urls/client/Client.ts">withEndingSlash</a>() -> string</code></summary>
++<details><summary><code>client.endpoints.urls.<a href="/src/test-packagePath/api/resources/endpoints/resources/urls/client/Client.ts">withEndingSlash</a>() -> string</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -3130,7 +3130,7 @@ await client.endpoints.urls.withEndingSlash();
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.endpoints.urls.<a href="/src/api/resources/endpoints/resources/urls/client/Client.ts">withUnderscores</a>() -> string</code></summary>
++<details><summary><code>client.endpoints.urls.<a href="/src/test-packagePath/api/resources/endpoints/resources/urls/client/Client.ts">withUnderscores</a>() -> string</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -3172,7 +3172,7 @@ await client.endpoints.urls.withUnderscores();
+ </details>
+ 
+ ## InlinedRequests
+-<details><summary><code>client.inlinedRequests.<a href="/src/api/resources/inlinedRequests/client/Client.ts">postWithObjectBodyandResponse</a>({ ...params }) -> SeedExhaustive.ObjectWithOptionalField</code></summary>
++<details><summary><code>client.inlinedRequests.<a href="/src/test-packagePath/api/resources/inlinedRequests/client/Client.ts">postWithObjectBodyandResponse</a>({ ...params }) -> SeedExhaustive.ObjectWithOptionalField</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -3256,7 +3256,7 @@ await client.inlinedRequests.postWithObjectBodyandResponse({
+ </details>
+ 
+ ## NoAuth
+-<details><summary><code>client.noAuth.<a href="/src/api/resources/noAuth/client/Client.ts">postWithNoAuth</a>({ ...params }) -> boolean</code></summary>
++<details><summary><code>client.noAuth.<a href="/src/test-packagePath/api/resources/noAuth/client/Client.ts">postWithNoAuth</a>({ ...params }) -> boolean</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -3322,7 +3322,7 @@ await client.noAuth.postWithNoAuth({
+ </details>
+ 
+ ## NoReqBody
+-<details><summary><code>client.noReqBody.<a href="/src/api/resources/noReqBody/client/Client.ts">getWithNoRequestBody</a>() -> SeedExhaustive.ObjectWithOptionalField</code></summary>
++<details><summary><code>client.noReqBody.<a href="/src/test-packagePath/api/resources/noReqBody/client/Client.ts">getWithNoRequestBody</a>() -> SeedExhaustive.ObjectWithOptionalField</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -3363,7 +3363,7 @@ await client.noReqBody.getWithNoRequestBody();
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.noReqBody.<a href="/src/api/resources/noReqBody/client/Client.ts">postWithNoRequestBody</a>() -> string</code></summary>
++<details><summary><code>client.noReqBody.<a href="/src/test-packagePath/api/resources/noReqBody/client/Client.ts">postWithNoRequestBody</a>() -> string</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -3405,7 +3405,7 @@ await client.noReqBody.postWithNoRequestBody();
+ </details>
+ 
+ ## ReqWithHeaders
+-<details><summary><code>client.reqWithHeaders.<a href="/src/api/resources/reqWithHeaders/client/Client.ts">getWithCustomHeader</a>({ ...params }) -> void</code></summary>
++<details><summary><code>client.reqWithHeaders.<a href="/src/test-packagePath/api/resources/reqWithHeaders/client/Client.ts">getWithCustomHeader</a>({ ...params }) -> void</code></summary>
+ <dl>
+ <dd>
+ 
+diff --git a/src/BaseClient.ts b/src/test-packagePath/BaseClient.ts
+similarity index 100%
+rename from src/BaseClient.ts
+rename to src/test-packagePath/BaseClient.ts
+diff --git a/src/Client.ts b/src/test-packagePath/Client.ts
+similarity index 100%
+rename from src/Client.ts
+rename to src/test-packagePath/Client.ts
+diff --git a/src/api/index.ts b/src/test-packagePath/api/index.ts
+similarity index 100%
+rename from src/api/index.ts
+rename to src/test-packagePath/api/index.ts
+diff --git a/src/api/resources/endpoints/client/Client.ts b/src/test-packagePath/api/resources/endpoints/client/Client.ts
+similarity index 100%
+rename from src/api/resources/endpoints/client/Client.ts
+rename to src/test-packagePath/api/resources/endpoints/client/Client.ts
+diff --git a/src/api/resources/endpoints/client/index.ts b/src/test-packagePath/api/resources/endpoints/client/index.ts
+similarity index 100%
+rename from src/api/resources/endpoints/client/index.ts
+rename to src/test-packagePath/api/resources/endpoints/client/index.ts
+diff --git a/src/api/resources/endpoints/exports.ts b/src/test-packagePath/api/resources/endpoints/exports.ts
+similarity index 100%
+rename from src/api/resources/endpoints/exports.ts
+rename to src/test-packagePath/api/resources/endpoints/exports.ts
+diff --git a/src/api/resources/endpoints/index.ts b/src/test-packagePath/api/resources/endpoints/index.ts
+similarity index 100%
+rename from src/api/resources/endpoints/index.ts
+rename to src/test-packagePath/api/resources/endpoints/index.ts
+diff --git a/src/api/resources/endpoints/resources/container/client/Client.ts b/src/test-packagePath/api/resources/endpoints/resources/container/client/Client.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/container/client/Client.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/container/client/Client.ts
+diff --git a/src/api/resources/endpoints/resources/container/client/index.ts b/src/test-packagePath/api/resources/endpoints/resources/container/client/index.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/container/client/index.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/container/client/index.ts
+diff --git a/src/api/resources/endpoints/resources/container/exports.ts b/src/test-packagePath/api/resources/endpoints/resources/container/exports.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/container/exports.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/container/exports.ts
+diff --git a/src/api/resources/endpoints/resources/container/index.ts b/src/test-packagePath/api/resources/endpoints/resources/container/index.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/container/index.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/container/index.ts
+diff --git a/src/api/resources/endpoints/resources/contentType/client/Client.ts b/src/test-packagePath/api/resources/endpoints/resources/contentType/client/Client.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/contentType/client/Client.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/contentType/client/Client.ts
+diff --git a/src/api/resources/endpoints/resources/contentType/client/index.ts b/src/test-packagePath/api/resources/endpoints/resources/contentType/client/index.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/contentType/client/index.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/contentType/client/index.ts
+diff --git a/src/api/resources/endpoints/resources/contentType/exports.ts b/src/test-packagePath/api/resources/endpoints/resources/contentType/exports.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/contentType/exports.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/contentType/exports.ts
+diff --git a/src/api/resources/endpoints/resources/contentType/index.ts b/src/test-packagePath/api/resources/endpoints/resources/contentType/index.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/contentType/index.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/contentType/index.ts
+diff --git a/src/api/resources/endpoints/resources/enum/client/Client.ts b/src/test-packagePath/api/resources/endpoints/resources/enum/client/Client.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/enum/client/Client.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/enum/client/Client.ts
+diff --git a/src/api/resources/endpoints/resources/enum/client/index.ts b/src/test-packagePath/api/resources/endpoints/resources/enum/client/index.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/enum/client/index.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/enum/client/index.ts
+diff --git a/src/api/resources/endpoints/resources/enum/exports.ts b/src/test-packagePath/api/resources/endpoints/resources/enum/exports.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/enum/exports.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/enum/exports.ts
+diff --git a/src/api/resources/endpoints/resources/enum/index.ts b/src/test-packagePath/api/resources/endpoints/resources/enum/index.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/enum/index.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/enum/index.ts
+diff --git a/src/api/resources/endpoints/resources/httpMethods/client/Client.ts b/src/test-packagePath/api/resources/endpoints/resources/httpMethods/client/Client.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/httpMethods/client/Client.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/httpMethods/client/Client.ts
+diff --git a/src/api/resources/endpoints/resources/httpMethods/client/index.ts b/src/test-packagePath/api/resources/endpoints/resources/httpMethods/client/index.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/httpMethods/client/index.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/httpMethods/client/index.ts
+diff --git a/src/api/resources/endpoints/resources/httpMethods/exports.ts b/src/test-packagePath/api/resources/endpoints/resources/httpMethods/exports.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/httpMethods/exports.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/httpMethods/exports.ts
+diff --git a/src/api/resources/endpoints/resources/httpMethods/index.ts b/src/test-packagePath/api/resources/endpoints/resources/httpMethods/index.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/httpMethods/index.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/httpMethods/index.ts
+diff --git a/src/api/resources/endpoints/resources/index.ts b/src/test-packagePath/api/resources/endpoints/resources/index.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/index.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/index.ts
+diff --git a/src/api/resources/endpoints/resources/object/client/Client.ts b/src/test-packagePath/api/resources/endpoints/resources/object/client/Client.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/object/client/Client.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/object/client/Client.ts
+diff --git a/src/api/resources/endpoints/resources/object/client/index.ts b/src/test-packagePath/api/resources/endpoints/resources/object/client/index.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/object/client/index.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/object/client/index.ts
+diff --git a/src/api/resources/endpoints/resources/object/exports.ts b/src/test-packagePath/api/resources/endpoints/resources/object/exports.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/object/exports.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/object/exports.ts
+diff --git a/src/api/resources/endpoints/resources/object/index.ts b/src/test-packagePath/api/resources/endpoints/resources/object/index.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/object/index.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/object/index.ts
+diff --git a/src/api/resources/endpoints/resources/pagination/client/Client.ts b/src/test-packagePath/api/resources/endpoints/resources/pagination/client/Client.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/pagination/client/Client.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/pagination/client/Client.ts
+diff --git a/src/api/resources/endpoints/resources/pagination/client/index.ts b/src/test-packagePath/api/resources/endpoints/resources/pagination/client/index.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/pagination/client/index.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/pagination/client/index.ts
+diff --git a/src/api/resources/endpoints/resources/pagination/client/requests/ListItemsRequest.ts b/src/test-packagePath/api/resources/endpoints/resources/pagination/client/requests/ListItemsRequest.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/pagination/client/requests/ListItemsRequest.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/pagination/client/requests/ListItemsRequest.ts
+diff --git a/src/api/resources/endpoints/resources/pagination/client/requests/index.ts b/src/test-packagePath/api/resources/endpoints/resources/pagination/client/requests/index.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/pagination/client/requests/index.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/pagination/client/requests/index.ts
+diff --git a/src/api/resources/endpoints/resources/pagination/exports.ts b/src/test-packagePath/api/resources/endpoints/resources/pagination/exports.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/pagination/exports.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/pagination/exports.ts
+diff --git a/src/api/resources/endpoints/resources/pagination/index.ts b/src/test-packagePath/api/resources/endpoints/resources/pagination/index.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/pagination/index.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/pagination/index.ts
+diff --git a/src/api/resources/endpoints/resources/pagination/types/PaginatedResponse.ts b/src/test-packagePath/api/resources/endpoints/resources/pagination/types/PaginatedResponse.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/pagination/types/PaginatedResponse.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/pagination/types/PaginatedResponse.ts
+diff --git a/src/api/resources/endpoints/resources/pagination/types/index.ts b/src/test-packagePath/api/resources/endpoints/resources/pagination/types/index.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/pagination/types/index.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/pagination/types/index.ts
+diff --git a/src/api/resources/endpoints/resources/params/client/Client.ts b/src/test-packagePath/api/resources/endpoints/resources/params/client/Client.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/params/client/Client.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/params/client/Client.ts
+diff --git a/src/api/resources/endpoints/resources/params/client/index.ts b/src/test-packagePath/api/resources/endpoints/resources/params/client/index.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/params/client/index.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/params/client/index.ts
+diff --git a/src/api/resources/endpoints/resources/params/client/requests/GetWithInlinePath.ts b/src/test-packagePath/api/resources/endpoints/resources/params/client/requests/GetWithInlinePath.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/params/client/requests/GetWithInlinePath.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/params/client/requests/GetWithInlinePath.ts
+diff --git a/src/api/resources/endpoints/resources/params/client/requests/GetWithInlinePathAndQuery.ts b/src/test-packagePath/api/resources/endpoints/resources/params/client/requests/GetWithInlinePathAndQuery.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/params/client/requests/GetWithInlinePathAndQuery.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/params/client/requests/GetWithInlinePathAndQuery.ts
+diff --git a/src/api/resources/endpoints/resources/params/client/requests/GetWithMultipleQuery.ts b/src/test-packagePath/api/resources/endpoints/resources/params/client/requests/GetWithMultipleQuery.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/params/client/requests/GetWithMultipleQuery.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/params/client/requests/GetWithMultipleQuery.ts
+diff --git a/src/api/resources/endpoints/resources/params/client/requests/GetWithPathAndQuery.ts b/src/test-packagePath/api/resources/endpoints/resources/params/client/requests/GetWithPathAndQuery.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/params/client/requests/GetWithPathAndQuery.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/params/client/requests/GetWithPathAndQuery.ts
+diff --git a/src/api/resources/endpoints/resources/params/client/requests/GetWithQuery.ts b/src/test-packagePath/api/resources/endpoints/resources/params/client/requests/GetWithQuery.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/params/client/requests/GetWithQuery.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/params/client/requests/GetWithQuery.ts
+diff --git a/src/api/resources/endpoints/resources/params/client/requests/ModifyResourceAtInlinedPath.ts b/src/test-packagePath/api/resources/endpoints/resources/params/client/requests/ModifyResourceAtInlinedPath.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/params/client/requests/ModifyResourceAtInlinedPath.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/params/client/requests/ModifyResourceAtInlinedPath.ts
+diff --git a/src/api/resources/endpoints/resources/params/client/requests/index.ts b/src/test-packagePath/api/resources/endpoints/resources/params/client/requests/index.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/params/client/requests/index.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/params/client/requests/index.ts
+diff --git a/src/api/resources/endpoints/resources/params/exports.ts b/src/test-packagePath/api/resources/endpoints/resources/params/exports.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/params/exports.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/params/exports.ts
+diff --git a/src/api/resources/endpoints/resources/params/index.ts b/src/test-packagePath/api/resources/endpoints/resources/params/index.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/params/index.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/params/index.ts
+diff --git a/src/api/resources/endpoints/resources/primitive/client/Client.ts b/src/test-packagePath/api/resources/endpoints/resources/primitive/client/Client.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/primitive/client/Client.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/primitive/client/Client.ts
+diff --git a/src/api/resources/endpoints/resources/primitive/client/index.ts b/src/test-packagePath/api/resources/endpoints/resources/primitive/client/index.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/primitive/client/index.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/primitive/client/index.ts
+diff --git a/src/api/resources/endpoints/resources/primitive/exports.ts b/src/test-packagePath/api/resources/endpoints/resources/primitive/exports.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/primitive/exports.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/primitive/exports.ts
+diff --git a/src/api/resources/endpoints/resources/primitive/index.ts b/src/test-packagePath/api/resources/endpoints/resources/primitive/index.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/primitive/index.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/primitive/index.ts
+diff --git a/src/api/resources/endpoints/resources/put/client/Client.ts b/src/test-packagePath/api/resources/endpoints/resources/put/client/Client.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/put/client/Client.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/put/client/Client.ts
+diff --git a/src/api/resources/endpoints/resources/put/client/index.ts b/src/test-packagePath/api/resources/endpoints/resources/put/client/index.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/put/client/index.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/put/client/index.ts
+diff --git a/src/api/resources/endpoints/resources/put/client/requests/PutRequest.ts b/src/test-packagePath/api/resources/endpoints/resources/put/client/requests/PutRequest.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/put/client/requests/PutRequest.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/put/client/requests/PutRequest.ts
+diff --git a/src/api/resources/endpoints/resources/put/client/requests/index.ts b/src/test-packagePath/api/resources/endpoints/resources/put/client/requests/index.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/put/client/requests/index.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/put/client/requests/index.ts
+diff --git a/src/api/resources/endpoints/resources/put/exports.ts b/src/test-packagePath/api/resources/endpoints/resources/put/exports.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/put/exports.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/put/exports.ts
+diff --git a/src/api/resources/endpoints/resources/put/index.ts b/src/test-packagePath/api/resources/endpoints/resources/put/index.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/put/index.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/put/index.ts
+diff --git a/src/api/resources/endpoints/resources/put/types/ErrorCategory.ts b/src/test-packagePath/api/resources/endpoints/resources/put/types/ErrorCategory.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/put/types/ErrorCategory.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/put/types/ErrorCategory.ts
+diff --git a/src/api/resources/endpoints/resources/put/types/ErrorCode.ts b/src/test-packagePath/api/resources/endpoints/resources/put/types/ErrorCode.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/put/types/ErrorCode.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/put/types/ErrorCode.ts
+diff --git a/src/api/resources/endpoints/resources/put/types/Error_.ts b/src/test-packagePath/api/resources/endpoints/resources/put/types/Error_.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/put/types/Error_.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/put/types/Error_.ts
+diff --git a/src/api/resources/endpoints/resources/put/types/PutResponse.ts b/src/test-packagePath/api/resources/endpoints/resources/put/types/PutResponse.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/put/types/PutResponse.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/put/types/PutResponse.ts
+diff --git a/src/api/resources/endpoints/resources/put/types/index.ts b/src/test-packagePath/api/resources/endpoints/resources/put/types/index.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/put/types/index.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/put/types/index.ts
+diff --git a/src/api/resources/endpoints/resources/union/client/Client.ts b/src/test-packagePath/api/resources/endpoints/resources/union/client/Client.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/union/client/Client.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/union/client/Client.ts
+diff --git a/src/api/resources/endpoints/resources/union/client/index.ts b/src/test-packagePath/api/resources/endpoints/resources/union/client/index.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/union/client/index.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/union/client/index.ts
+diff --git a/src/api/resources/endpoints/resources/union/exports.ts b/src/test-packagePath/api/resources/endpoints/resources/union/exports.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/union/exports.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/union/exports.ts
+diff --git a/src/api/resources/endpoints/resources/union/index.ts b/src/test-packagePath/api/resources/endpoints/resources/union/index.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/union/index.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/union/index.ts
+diff --git a/src/api/resources/endpoints/resources/urls/client/Client.ts b/src/test-packagePath/api/resources/endpoints/resources/urls/client/Client.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/urls/client/Client.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/urls/client/Client.ts
+diff --git a/src/api/resources/endpoints/resources/urls/client/index.ts b/src/test-packagePath/api/resources/endpoints/resources/urls/client/index.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/urls/client/index.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/urls/client/index.ts
+diff --git a/src/api/resources/endpoints/resources/urls/exports.ts b/src/test-packagePath/api/resources/endpoints/resources/urls/exports.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/urls/exports.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/urls/exports.ts
+diff --git a/src/api/resources/endpoints/resources/urls/index.ts b/src/test-packagePath/api/resources/endpoints/resources/urls/index.ts
+similarity index 100%
+rename from src/api/resources/endpoints/resources/urls/index.ts
+rename to src/test-packagePath/api/resources/endpoints/resources/urls/index.ts
+diff --git a/src/api/resources/generalErrors/errors/BadRequestBody.ts b/src/test-packagePath/api/resources/generalErrors/errors/BadRequestBody.ts
+similarity index 100%
+rename from src/api/resources/generalErrors/errors/BadRequestBody.ts
+rename to src/test-packagePath/api/resources/generalErrors/errors/BadRequestBody.ts
+diff --git a/src/api/resources/generalErrors/errors/index.ts b/src/test-packagePath/api/resources/generalErrors/errors/index.ts
+similarity index 100%
+rename from src/api/resources/generalErrors/errors/index.ts
+rename to src/test-packagePath/api/resources/generalErrors/errors/index.ts
+diff --git a/src/api/resources/generalErrors/exports.ts b/src/test-packagePath/api/resources/generalErrors/exports.ts
+similarity index 100%
+rename from src/api/resources/generalErrors/exports.ts
+rename to src/test-packagePath/api/resources/generalErrors/exports.ts
+diff --git a/src/api/resources/generalErrors/index.ts b/src/test-packagePath/api/resources/generalErrors/index.ts
+similarity index 100%
+rename from src/api/resources/generalErrors/index.ts
+rename to src/test-packagePath/api/resources/generalErrors/index.ts
+diff --git a/src/api/resources/generalErrors/types/BadObjectRequestInfo.ts b/src/test-packagePath/api/resources/generalErrors/types/BadObjectRequestInfo.ts
+similarity index 100%
+rename from src/api/resources/generalErrors/types/BadObjectRequestInfo.ts
+rename to src/test-packagePath/api/resources/generalErrors/types/BadObjectRequestInfo.ts
+diff --git a/src/api/resources/generalErrors/types/index.ts b/src/test-packagePath/api/resources/generalErrors/types/index.ts
+similarity index 100%
+rename from src/api/resources/generalErrors/types/index.ts
+rename to src/test-packagePath/api/resources/generalErrors/types/index.ts
+diff --git a/src/api/resources/index.ts b/src/test-packagePath/api/resources/index.ts
+similarity index 100%
+rename from src/api/resources/index.ts
+rename to src/test-packagePath/api/resources/index.ts
+diff --git a/src/api/resources/inlinedRequests/client/Client.ts b/src/test-packagePath/api/resources/inlinedRequests/client/Client.ts
+similarity index 100%
+rename from src/api/resources/inlinedRequests/client/Client.ts
+rename to src/test-packagePath/api/resources/inlinedRequests/client/Client.ts
+diff --git a/src/api/resources/inlinedRequests/client/index.ts b/src/test-packagePath/api/resources/inlinedRequests/client/index.ts
+similarity index 100%
+rename from src/api/resources/inlinedRequests/client/index.ts
+rename to src/test-packagePath/api/resources/inlinedRequests/client/index.ts
+diff --git a/src/api/resources/inlinedRequests/client/requests/PostWithObjectBody.ts b/src/test-packagePath/api/resources/inlinedRequests/client/requests/PostWithObjectBody.ts
+similarity index 100%
+rename from src/api/resources/inlinedRequests/client/requests/PostWithObjectBody.ts
+rename to src/test-packagePath/api/resources/inlinedRequests/client/requests/PostWithObjectBody.ts
+diff --git a/src/api/resources/inlinedRequests/client/requests/index.ts b/src/test-packagePath/api/resources/inlinedRequests/client/requests/index.ts
+similarity index 100%
+rename from src/api/resources/inlinedRequests/client/requests/index.ts
+rename to src/test-packagePath/api/resources/inlinedRequests/client/requests/index.ts
+diff --git a/src/api/resources/inlinedRequests/exports.ts b/src/test-packagePath/api/resources/inlinedRequests/exports.ts
+similarity index 100%
+rename from src/api/resources/inlinedRequests/exports.ts
+rename to src/test-packagePath/api/resources/inlinedRequests/exports.ts
+diff --git a/src/api/resources/inlinedRequests/index.ts b/src/test-packagePath/api/resources/inlinedRequests/index.ts
+similarity index 100%
+rename from src/api/resources/inlinedRequests/index.ts
+rename to src/test-packagePath/api/resources/inlinedRequests/index.ts
+diff --git a/src/api/resources/noAuth/client/Client.ts b/src/test-packagePath/api/resources/noAuth/client/Client.ts
+similarity index 100%
+rename from src/api/resources/noAuth/client/Client.ts
+rename to src/test-packagePath/api/resources/noAuth/client/Client.ts
+diff --git a/src/api/resources/noAuth/client/index.ts b/src/test-packagePath/api/resources/noAuth/client/index.ts
+similarity index 100%
+rename from src/api/resources/noAuth/client/index.ts
+rename to src/test-packagePath/api/resources/noAuth/client/index.ts
+diff --git a/src/api/resources/noAuth/exports.ts b/src/test-packagePath/api/resources/noAuth/exports.ts
+similarity index 100%
+rename from src/api/resources/noAuth/exports.ts
+rename to src/test-packagePath/api/resources/noAuth/exports.ts
+diff --git a/src/api/resources/noAuth/index.ts b/src/test-packagePath/api/resources/noAuth/index.ts
+similarity index 100%
+rename from src/api/resources/noAuth/index.ts
+rename to src/test-packagePath/api/resources/noAuth/index.ts
+diff --git a/src/api/resources/noReqBody/client/Client.ts b/src/test-packagePath/api/resources/noReqBody/client/Client.ts
+similarity index 100%
+rename from src/api/resources/noReqBody/client/Client.ts
+rename to src/test-packagePath/api/resources/noReqBody/client/Client.ts
+diff --git a/src/api/resources/noReqBody/client/index.ts b/src/test-packagePath/api/resources/noReqBody/client/index.ts
+similarity index 100%
+rename from src/api/resources/noReqBody/client/index.ts
+rename to src/test-packagePath/api/resources/noReqBody/client/index.ts
+diff --git a/src/api/resources/noReqBody/exports.ts b/src/test-packagePath/api/resources/noReqBody/exports.ts
+similarity index 100%
+rename from src/api/resources/noReqBody/exports.ts
+rename to src/test-packagePath/api/resources/noReqBody/exports.ts
+diff --git a/src/api/resources/noReqBody/index.ts b/src/test-packagePath/api/resources/noReqBody/index.ts
+similarity index 100%
+rename from src/api/resources/noReqBody/index.ts
+rename to src/test-packagePath/api/resources/noReqBody/index.ts
+diff --git a/src/api/resources/reqWithHeaders/client/Client.ts b/src/test-packagePath/api/resources/reqWithHeaders/client/Client.ts
+similarity index 100%
+rename from src/api/resources/reqWithHeaders/client/Client.ts
+rename to src/test-packagePath/api/resources/reqWithHeaders/client/Client.ts
+diff --git a/src/api/resources/reqWithHeaders/client/index.ts b/src/test-packagePath/api/resources/reqWithHeaders/client/index.ts
+similarity index 100%
+rename from src/api/resources/reqWithHeaders/client/index.ts
+rename to src/test-packagePath/api/resources/reqWithHeaders/client/index.ts
+diff --git a/src/api/resources/reqWithHeaders/client/requests/ReqWithHeaders.ts b/src/test-packagePath/api/resources/reqWithHeaders/client/requests/ReqWithHeaders.ts
+similarity index 100%
+rename from src/api/resources/reqWithHeaders/client/requests/ReqWithHeaders.ts
+rename to src/test-packagePath/api/resources/reqWithHeaders/client/requests/ReqWithHeaders.ts
+diff --git a/src/api/resources/reqWithHeaders/client/requests/index.ts b/src/test-packagePath/api/resources/reqWithHeaders/client/requests/index.ts
+similarity index 100%
+rename from src/api/resources/reqWithHeaders/client/requests/index.ts
+rename to src/test-packagePath/api/resources/reqWithHeaders/client/requests/index.ts
+diff --git a/src/api/resources/reqWithHeaders/exports.ts b/src/test-packagePath/api/resources/reqWithHeaders/exports.ts
+similarity index 100%
+rename from src/api/resources/reqWithHeaders/exports.ts
+rename to src/test-packagePath/api/resources/reqWithHeaders/exports.ts
+diff --git a/src/api/resources/reqWithHeaders/index.ts b/src/test-packagePath/api/resources/reqWithHeaders/index.ts
+similarity index 100%
+rename from src/api/resources/reqWithHeaders/index.ts
+rename to src/test-packagePath/api/resources/reqWithHeaders/index.ts
+diff --git a/src/api/resources/types/exports.ts b/src/test-packagePath/api/resources/types/exports.ts
+similarity index 100%
+rename from src/api/resources/types/exports.ts
+rename to src/test-packagePath/api/resources/types/exports.ts
+diff --git a/src/api/resources/types/index.ts b/src/test-packagePath/api/resources/types/index.ts
+similarity index 100%
+rename from src/api/resources/types/index.ts
+rename to src/test-packagePath/api/resources/types/index.ts
+diff --git a/src/api/resources/types/resources/docs/exports.ts b/src/test-packagePath/api/resources/types/resources/docs/exports.ts
+similarity index 100%
+rename from src/api/resources/types/resources/docs/exports.ts
+rename to src/test-packagePath/api/resources/types/resources/docs/exports.ts
+diff --git a/src/api/resources/types/resources/docs/index.ts b/src/test-packagePath/api/resources/types/resources/docs/index.ts
+similarity index 100%
+rename from src/api/resources/types/resources/docs/index.ts
+rename to src/test-packagePath/api/resources/types/resources/docs/index.ts
+diff --git a/src/api/resources/types/resources/docs/types/ObjectWithDocs.ts b/src/test-packagePath/api/resources/types/resources/docs/types/ObjectWithDocs.ts
+similarity index 100%
+rename from src/api/resources/types/resources/docs/types/ObjectWithDocs.ts
+rename to src/test-packagePath/api/resources/types/resources/docs/types/ObjectWithDocs.ts
+diff --git a/src/api/resources/types/resources/docs/types/index.ts b/src/test-packagePath/api/resources/types/resources/docs/types/index.ts
+similarity index 100%
+rename from src/api/resources/types/resources/docs/types/index.ts
+rename to src/test-packagePath/api/resources/types/resources/docs/types/index.ts
+diff --git a/src/api/resources/types/resources/enum/errors/ErrorWithEnumBody.ts b/src/test-packagePath/api/resources/types/resources/enum/errors/ErrorWithEnumBody.ts
+similarity index 100%
+rename from src/api/resources/types/resources/enum/errors/ErrorWithEnumBody.ts
+rename to src/test-packagePath/api/resources/types/resources/enum/errors/ErrorWithEnumBody.ts
+diff --git a/src/api/resources/types/resources/enum/errors/index.ts b/src/test-packagePath/api/resources/types/resources/enum/errors/index.ts
+similarity index 100%
+rename from src/api/resources/types/resources/enum/errors/index.ts
+rename to src/test-packagePath/api/resources/types/resources/enum/errors/index.ts
+diff --git a/src/api/resources/types/resources/enum/exports.ts b/src/test-packagePath/api/resources/types/resources/enum/exports.ts
+similarity index 100%
+rename from src/api/resources/types/resources/enum/exports.ts
+rename to src/test-packagePath/api/resources/types/resources/enum/exports.ts
+diff --git a/src/api/resources/types/resources/enum/index.ts b/src/test-packagePath/api/resources/types/resources/enum/index.ts
+similarity index 100%
+rename from src/api/resources/types/resources/enum/index.ts
+rename to src/test-packagePath/api/resources/types/resources/enum/index.ts
+diff --git a/src/api/resources/types/resources/enum/types/WeatherReport.ts b/src/test-packagePath/api/resources/types/resources/enum/types/WeatherReport.ts
+similarity index 100%
+rename from src/api/resources/types/resources/enum/types/WeatherReport.ts
+rename to src/test-packagePath/api/resources/types/resources/enum/types/WeatherReport.ts
+diff --git a/src/api/resources/types/resources/enum/types/index.ts b/src/test-packagePath/api/resources/types/resources/enum/types/index.ts
+similarity index 100%
+rename from src/api/resources/types/resources/enum/types/index.ts
+rename to src/test-packagePath/api/resources/types/resources/enum/types/index.ts
+diff --git a/src/api/resources/types/resources/index.ts b/src/test-packagePath/api/resources/types/resources/index.ts
+similarity index 100%
+rename from src/api/resources/types/resources/index.ts
+rename to src/test-packagePath/api/resources/types/resources/index.ts
+diff --git a/src/api/resources/types/resources/object/errors/NestedObjectWithOptionalFieldError.ts b/src/test-packagePath/api/resources/types/resources/object/errors/NestedObjectWithOptionalFieldError.ts
+similarity index 100%
+rename from src/api/resources/types/resources/object/errors/NestedObjectWithOptionalFieldError.ts
+rename to src/test-packagePath/api/resources/types/resources/object/errors/NestedObjectWithOptionalFieldError.ts
+diff --git a/src/api/resources/types/resources/object/errors/NestedObjectWithRequiredFieldError.ts b/src/test-packagePath/api/resources/types/resources/object/errors/NestedObjectWithRequiredFieldError.ts
+similarity index 100%
+rename from src/api/resources/types/resources/object/errors/NestedObjectWithRequiredFieldError.ts
+rename to src/test-packagePath/api/resources/types/resources/object/errors/NestedObjectWithRequiredFieldError.ts
+diff --git a/src/api/resources/types/resources/object/errors/ObjectWithOptionalFieldError.ts b/src/test-packagePath/api/resources/types/resources/object/errors/ObjectWithOptionalFieldError.ts
+similarity index 100%
+rename from src/api/resources/types/resources/object/errors/ObjectWithOptionalFieldError.ts
+rename to src/test-packagePath/api/resources/types/resources/object/errors/ObjectWithOptionalFieldError.ts
+diff --git a/src/api/resources/types/resources/object/errors/ObjectWithRequiredFieldError.ts b/src/test-packagePath/api/resources/types/resources/object/errors/ObjectWithRequiredFieldError.ts
+similarity index 100%
+rename from src/api/resources/types/resources/object/errors/ObjectWithRequiredFieldError.ts
+rename to src/test-packagePath/api/resources/types/resources/object/errors/ObjectWithRequiredFieldError.ts
+diff --git a/src/api/resources/types/resources/object/errors/index.ts b/src/test-packagePath/api/resources/types/resources/object/errors/index.ts
+similarity index 100%
+rename from src/api/resources/types/resources/object/errors/index.ts
+rename to src/test-packagePath/api/resources/types/resources/object/errors/index.ts
+diff --git a/src/api/resources/types/resources/object/exports.ts b/src/test-packagePath/api/resources/types/resources/object/exports.ts
+similarity index 100%
+rename from src/api/resources/types/resources/object/exports.ts
+rename to src/test-packagePath/api/resources/types/resources/object/exports.ts
+diff --git a/src/api/resources/types/resources/object/index.ts b/src/test-packagePath/api/resources/types/resources/object/index.ts
+similarity index 100%
+rename from src/api/resources/types/resources/object/index.ts
+rename to src/test-packagePath/api/resources/types/resources/object/index.ts
+diff --git a/src/api/resources/types/resources/object/types/DocumentedUnknownType.ts b/src/test-packagePath/api/resources/types/resources/object/types/DocumentedUnknownType.ts
+similarity index 100%
+rename from src/api/resources/types/resources/object/types/DocumentedUnknownType.ts
+rename to src/test-packagePath/api/resources/types/resources/object/types/DocumentedUnknownType.ts
+diff --git a/src/api/resources/types/resources/object/types/DoubleOptional.ts b/src/test-packagePath/api/resources/types/resources/object/types/DoubleOptional.ts
+similarity index 100%
+rename from src/api/resources/types/resources/object/types/DoubleOptional.ts
+rename to src/test-packagePath/api/resources/types/resources/object/types/DoubleOptional.ts
+diff --git a/src/api/resources/types/resources/object/types/MapOfDocumentedUnknownType.ts b/src/test-packagePath/api/resources/types/resources/object/types/MapOfDocumentedUnknownType.ts
+similarity index 100%
+rename from src/api/resources/types/resources/object/types/MapOfDocumentedUnknownType.ts
+rename to src/test-packagePath/api/resources/types/resources/object/types/MapOfDocumentedUnknownType.ts
+diff --git a/src/api/resources/types/resources/object/types/NestedObjectWithOptionalField.ts b/src/test-packagePath/api/resources/types/resources/object/types/NestedObjectWithOptionalField.ts
+similarity index 100%
+rename from src/api/resources/types/resources/object/types/NestedObjectWithOptionalField.ts
+rename to src/test-packagePath/api/resources/types/resources/object/types/NestedObjectWithOptionalField.ts
+diff --git a/src/api/resources/types/resources/object/types/NestedObjectWithRequiredField.ts b/src/test-packagePath/api/resources/types/resources/object/types/NestedObjectWithRequiredField.ts
+similarity index 100%
+rename from src/api/resources/types/resources/object/types/NestedObjectWithRequiredField.ts
+rename to src/test-packagePath/api/resources/types/resources/object/types/NestedObjectWithRequiredField.ts
+diff --git a/src/api/resources/types/resources/object/types/ObjectWithDatetimeLikeString.ts b/src/test-packagePath/api/resources/types/resources/object/types/ObjectWithDatetimeLikeString.ts
+similarity index 100%
+rename from src/api/resources/types/resources/object/types/ObjectWithDatetimeLikeString.ts
+rename to src/test-packagePath/api/resources/types/resources/object/types/ObjectWithDatetimeLikeString.ts
+diff --git a/src/api/resources/types/resources/object/types/ObjectWithDocumentedUnknownType.ts b/src/test-packagePath/api/resources/types/resources/object/types/ObjectWithDocumentedUnknownType.ts
+similarity index 100%
+rename from src/api/resources/types/resources/object/types/ObjectWithDocumentedUnknownType.ts
+rename to src/test-packagePath/api/resources/types/resources/object/types/ObjectWithDocumentedUnknownType.ts
+diff --git a/src/api/resources/types/resources/object/types/ObjectWithMapOfMap.ts b/src/test-packagePath/api/resources/types/resources/object/types/ObjectWithMapOfMap.ts
+similarity index 100%
+rename from src/api/resources/types/resources/object/types/ObjectWithMapOfMap.ts
+rename to src/test-packagePath/api/resources/types/resources/object/types/ObjectWithMapOfMap.ts
+diff --git a/src/api/resources/types/resources/object/types/ObjectWithMixedRequiredAndOptionalFields.ts b/src/test-packagePath/api/resources/types/resources/object/types/ObjectWithMixedRequiredAndOptionalFields.ts
+similarity index 100%
+rename from src/api/resources/types/resources/object/types/ObjectWithMixedRequiredAndOptionalFields.ts
+rename to src/test-packagePath/api/resources/types/resources/object/types/ObjectWithMixedRequiredAndOptionalFields.ts
+diff --git a/src/api/resources/types/resources/object/types/ObjectWithOptionalField.ts b/src/test-packagePath/api/resources/types/resources/object/types/ObjectWithOptionalField.ts
+similarity index 100%
+rename from src/api/resources/types/resources/object/types/ObjectWithOptionalField.ts
+rename to src/test-packagePath/api/resources/types/resources/object/types/ObjectWithOptionalField.ts
+diff --git a/src/api/resources/types/resources/object/types/ObjectWithRequiredField.ts b/src/test-packagePath/api/resources/types/resources/object/types/ObjectWithRequiredField.ts
+similarity index 100%
+rename from src/api/resources/types/resources/object/types/ObjectWithRequiredField.ts
+rename to src/test-packagePath/api/resources/types/resources/object/types/ObjectWithRequiredField.ts
+diff --git a/src/api/resources/types/resources/object/types/ObjectWithRequiredNestedObject.ts b/src/test-packagePath/api/resources/types/resources/object/types/ObjectWithRequiredNestedObject.ts
+similarity index 100%
+rename from src/api/resources/types/resources/object/types/ObjectWithRequiredNestedObject.ts
+rename to src/test-packagePath/api/resources/types/resources/object/types/ObjectWithRequiredNestedObject.ts
+diff --git a/src/api/resources/types/resources/object/types/ObjectWithUnknownField.ts b/src/test-packagePath/api/resources/types/resources/object/types/ObjectWithUnknownField.ts
+similarity index 100%
+rename from src/api/resources/types/resources/object/types/ObjectWithUnknownField.ts
+rename to src/test-packagePath/api/resources/types/resources/object/types/ObjectWithUnknownField.ts
+diff --git a/src/api/resources/types/resources/object/types/OptionalAlias.ts b/src/test-packagePath/api/resources/types/resources/object/types/OptionalAlias.ts
+similarity index 100%
+rename from src/api/resources/types/resources/object/types/OptionalAlias.ts
+rename to src/test-packagePath/api/resources/types/resources/object/types/OptionalAlias.ts
+diff --git a/src/api/resources/types/resources/object/types/index.ts b/src/test-packagePath/api/resources/types/resources/object/types/index.ts
+similarity index 100%
+rename from src/api/resources/types/resources/object/types/index.ts
+rename to src/test-packagePath/api/resources/types/resources/object/types/index.ts
+diff --git a/src/api/resources/types/resources/union/errors/ErrorWithUnionBody.ts b/src/test-packagePath/api/resources/types/resources/union/errors/ErrorWithUnionBody.ts
+similarity index 100%
+rename from src/api/resources/types/resources/union/errors/ErrorWithUnionBody.ts
+rename to src/test-packagePath/api/resources/types/resources/union/errors/ErrorWithUnionBody.ts
+diff --git a/src/api/resources/types/resources/union/errors/index.ts b/src/test-packagePath/api/resources/types/resources/union/errors/index.ts
+similarity index 100%
+rename from src/api/resources/types/resources/union/errors/index.ts
+rename to src/test-packagePath/api/resources/types/resources/union/errors/index.ts
+diff --git a/src/api/resources/types/resources/union/exports.ts b/src/test-packagePath/api/resources/types/resources/union/exports.ts
+similarity index 100%
+rename from src/api/resources/types/resources/union/exports.ts
+rename to src/test-packagePath/api/resources/types/resources/union/exports.ts
+diff --git a/src/api/resources/types/resources/union/index.ts b/src/test-packagePath/api/resources/types/resources/union/index.ts
+similarity index 100%
+rename from src/api/resources/types/resources/union/index.ts
+rename to src/test-packagePath/api/resources/types/resources/union/index.ts
+diff --git a/src/api/resources/types/resources/union/types/Animal.ts b/src/test-packagePath/api/resources/types/resources/union/types/Animal.ts
+similarity index 100%
+rename from src/api/resources/types/resources/union/types/Animal.ts
+rename to src/test-packagePath/api/resources/types/resources/union/types/Animal.ts
+diff --git a/src/api/resources/types/resources/union/types/Cat.ts b/src/test-packagePath/api/resources/types/resources/union/types/Cat.ts
+similarity index 100%
+rename from src/api/resources/types/resources/union/types/Cat.ts
+rename to src/test-packagePath/api/resources/types/resources/union/types/Cat.ts
+diff --git a/src/api/resources/types/resources/union/types/Dog.ts b/src/test-packagePath/api/resources/types/resources/union/types/Dog.ts
+similarity index 100%
+rename from src/api/resources/types/resources/union/types/Dog.ts
+rename to src/test-packagePath/api/resources/types/resources/union/types/Dog.ts
+diff --git a/src/api/resources/types/resources/union/types/MixedType.ts b/src/test-packagePath/api/resources/types/resources/union/types/MixedType.ts
+similarity index 100%
+rename from src/api/resources/types/resources/union/types/MixedType.ts
+rename to src/test-packagePath/api/resources/types/resources/union/types/MixedType.ts
+diff --git a/src/api/resources/types/resources/union/types/index.ts b/src/test-packagePath/api/resources/types/resources/union/types/index.ts
+similarity index 100%
+rename from src/api/resources/types/resources/union/types/index.ts
+rename to src/test-packagePath/api/resources/types/resources/union/types/index.ts
+diff --git a/src/auth/BearerAuthProvider.ts b/src/test-packagePath/auth/BearerAuthProvider.ts
+similarity index 100%
+rename from src/auth/BearerAuthProvider.ts
+rename to src/test-packagePath/auth/BearerAuthProvider.ts
+diff --git a/src/auth/index.ts b/src/test-packagePath/auth/index.ts
+similarity index 100%
+rename from src/auth/index.ts
+rename to src/test-packagePath/auth/index.ts
+diff --git a/src/core/auth/AuthProvider.ts b/src/test-packagePath/core/auth/AuthProvider.ts
+similarity index 100%
+rename from src/core/auth/AuthProvider.ts
+rename to src/test-packagePath/core/auth/AuthProvider.ts
+diff --git a/src/core/auth/AuthRequest.ts b/src/test-packagePath/core/auth/AuthRequest.ts
+similarity index 100%
+rename from src/core/auth/AuthRequest.ts
+rename to src/test-packagePath/core/auth/AuthRequest.ts
+diff --git a/src/core/auth/BasicAuth.ts b/src/test-packagePath/core/auth/BasicAuth.ts
+similarity index 100%
+rename from src/core/auth/BasicAuth.ts
+rename to src/test-packagePath/core/auth/BasicAuth.ts
+diff --git a/src/core/auth/BearerToken.ts b/src/test-packagePath/core/auth/BearerToken.ts
+similarity index 100%
+rename from src/core/auth/BearerToken.ts
+rename to src/test-packagePath/core/auth/BearerToken.ts
+diff --git a/src/core/auth/NoOpAuthProvider.ts b/src/test-packagePath/core/auth/NoOpAuthProvider.ts
+similarity index 100%
+rename from src/core/auth/NoOpAuthProvider.ts
+rename to src/test-packagePath/core/auth/NoOpAuthProvider.ts
+diff --git a/src/core/auth/index.ts b/src/test-packagePath/core/auth/index.ts
+similarity index 100%
+rename from src/core/auth/index.ts
+rename to src/test-packagePath/core/auth/index.ts
+diff --git a/src/core/base64.ts b/src/test-packagePath/core/base64.ts
+similarity index 100%
+rename from src/core/base64.ts
+rename to src/test-packagePath/core/base64.ts
+diff --git a/src/core/exports.ts b/src/test-packagePath/core/exports.ts
+similarity index 100%
+rename from src/core/exports.ts
+rename to src/test-packagePath/core/exports.ts
+diff --git a/src/core/fetcher/APIResponse.ts b/src/test-packagePath/core/fetcher/APIResponse.ts
+similarity index 100%
+rename from src/core/fetcher/APIResponse.ts
+rename to src/test-packagePath/core/fetcher/APIResponse.ts
+diff --git a/src/core/fetcher/BinaryResponse.ts b/src/test-packagePath/core/fetcher/BinaryResponse.ts
+similarity index 100%
+rename from src/core/fetcher/BinaryResponse.ts
+rename to src/test-packagePath/core/fetcher/BinaryResponse.ts
+diff --git a/src/core/fetcher/EndpointMetadata.ts b/src/test-packagePath/core/fetcher/EndpointMetadata.ts
+similarity index 100%
+rename from src/core/fetcher/EndpointMetadata.ts
+rename to src/test-packagePath/core/fetcher/EndpointMetadata.ts
+diff --git a/src/core/fetcher/EndpointSupplier.ts b/src/test-packagePath/core/fetcher/EndpointSupplier.ts
+similarity index 100%
+rename from src/core/fetcher/EndpointSupplier.ts
+rename to src/test-packagePath/core/fetcher/EndpointSupplier.ts
+diff --git a/src/core/fetcher/Fetcher.ts b/src/test-packagePath/core/fetcher/Fetcher.ts
+similarity index 100%
+rename from src/core/fetcher/Fetcher.ts
+rename to src/test-packagePath/core/fetcher/Fetcher.ts
+diff --git a/src/core/fetcher/Headers.ts b/src/test-packagePath/core/fetcher/Headers.ts
+similarity index 100%
+rename from src/core/fetcher/Headers.ts
+rename to src/test-packagePath/core/fetcher/Headers.ts
+diff --git a/src/core/fetcher/HttpResponsePromise.ts b/src/test-packagePath/core/fetcher/HttpResponsePromise.ts
+similarity index 100%
+rename from src/core/fetcher/HttpResponsePromise.ts
+rename to src/test-packagePath/core/fetcher/HttpResponsePromise.ts
+diff --git a/src/core/fetcher/RawResponse.ts b/src/test-packagePath/core/fetcher/RawResponse.ts
+similarity index 100%
+rename from src/core/fetcher/RawResponse.ts
+rename to src/test-packagePath/core/fetcher/RawResponse.ts
+diff --git a/src/core/fetcher/Supplier.ts b/src/test-packagePath/core/fetcher/Supplier.ts
+similarity index 100%
+rename from src/core/fetcher/Supplier.ts
+rename to src/test-packagePath/core/fetcher/Supplier.ts
+diff --git a/src/core/fetcher/createRequestUrl.ts b/src/test-packagePath/core/fetcher/createRequestUrl.ts
+similarity index 100%
+rename from src/core/fetcher/createRequestUrl.ts
+rename to src/test-packagePath/core/fetcher/createRequestUrl.ts
+diff --git a/src/core/fetcher/getErrorResponseBody.ts b/src/test-packagePath/core/fetcher/getErrorResponseBody.ts
+similarity index 100%
+rename from src/core/fetcher/getErrorResponseBody.ts
+rename to src/test-packagePath/core/fetcher/getErrorResponseBody.ts
+diff --git a/src/core/fetcher/getFetchFn.ts b/src/test-packagePath/core/fetcher/getFetchFn.ts
+similarity index 100%
+rename from src/core/fetcher/getFetchFn.ts
+rename to src/test-packagePath/core/fetcher/getFetchFn.ts
+diff --git a/src/core/fetcher/getHeader.ts b/src/test-packagePath/core/fetcher/getHeader.ts
+similarity index 100%
+rename from src/core/fetcher/getHeader.ts
+rename to src/test-packagePath/core/fetcher/getHeader.ts
+diff --git a/src/core/fetcher/getRequestBody.ts b/src/test-packagePath/core/fetcher/getRequestBody.ts
+similarity index 100%
+rename from src/core/fetcher/getRequestBody.ts
+rename to src/test-packagePath/core/fetcher/getRequestBody.ts
+diff --git a/src/core/fetcher/getResponseBody.ts b/src/test-packagePath/core/fetcher/getResponseBody.ts
+similarity index 100%
+rename from src/core/fetcher/getResponseBody.ts
+rename to src/test-packagePath/core/fetcher/getResponseBody.ts
+diff --git a/src/core/fetcher/index.ts b/src/test-packagePath/core/fetcher/index.ts
+similarity index 100%
+rename from src/core/fetcher/index.ts
+rename to src/test-packagePath/core/fetcher/index.ts
+diff --git a/src/core/fetcher/makePassthroughRequest.ts b/src/test-packagePath/core/fetcher/makePassthroughRequest.ts
+similarity index 100%
+rename from src/core/fetcher/makePassthroughRequest.ts
+rename to src/test-packagePath/core/fetcher/makePassthroughRequest.ts
+diff --git a/src/core/fetcher/makeRequest.ts b/src/test-packagePath/core/fetcher/makeRequest.ts
+similarity index 100%
+rename from src/core/fetcher/makeRequest.ts
+rename to src/test-packagePath/core/fetcher/makeRequest.ts
+diff --git a/src/core/fetcher/requestWithRetries.ts b/src/test-packagePath/core/fetcher/requestWithRetries.ts
+similarity index 100%
+rename from src/core/fetcher/requestWithRetries.ts
+rename to src/test-packagePath/core/fetcher/requestWithRetries.ts
+diff --git a/src/core/fetcher/signals.ts b/src/test-packagePath/core/fetcher/signals.ts
+similarity index 100%
+rename from src/core/fetcher/signals.ts
+rename to src/test-packagePath/core/fetcher/signals.ts
+diff --git a/src/core/file/exports.ts b/src/test-packagePath/core/file/exports.ts
+similarity index 100%
+rename from src/core/file/exports.ts
+rename to src/test-packagePath/core/file/exports.ts
+diff --git a/src/core/file/file.ts b/src/test-packagePath/core/file/file.ts
+similarity index 100%
+rename from src/core/file/file.ts
+rename to src/test-packagePath/core/file/file.ts
+diff --git a/src/core/file/index.ts b/src/test-packagePath/core/file/index.ts
+similarity index 100%
+rename from src/core/file/index.ts
+rename to src/test-packagePath/core/file/index.ts
+diff --git a/src/core/file/types.ts b/src/test-packagePath/core/file/types.ts
+similarity index 100%
+rename from src/core/file/types.ts
+rename to src/test-packagePath/core/file/types.ts
+diff --git a/src/core/headers.ts b/src/test-packagePath/core/headers.ts
+similarity index 100%
+rename from src/core/headers.ts
+rename to src/test-packagePath/core/headers.ts
+diff --git a/src/core/index.ts b/src/test-packagePath/core/index.ts
+similarity index 100%
+rename from src/core/index.ts
+rename to src/test-packagePath/core/index.ts
+diff --git a/src/core/json.ts b/src/test-packagePath/core/json.ts
+similarity index 100%
+rename from src/core/json.ts
+rename to src/test-packagePath/core/json.ts
+diff --git a/src/core/logging/exports.ts b/src/test-packagePath/core/logging/exports.ts
+similarity index 100%
+rename from src/core/logging/exports.ts
+rename to src/test-packagePath/core/logging/exports.ts
+diff --git a/src/core/logging/index.ts b/src/test-packagePath/core/logging/index.ts
+similarity index 100%
+rename from src/core/logging/index.ts
+rename to src/test-packagePath/core/logging/index.ts
+diff --git a/src/core/logging/logger.ts b/src/test-packagePath/core/logging/logger.ts
+similarity index 100%
+rename from src/core/logging/logger.ts
+rename to src/test-packagePath/core/logging/logger.ts
+diff --git a/src/core/pagination/Page.ts b/src/test-packagePath/core/pagination/Page.ts
+similarity index 100%
+rename from src/core/pagination/Page.ts
+rename to src/test-packagePath/core/pagination/Page.ts
+diff --git a/src/core/pagination/exports.ts b/src/test-packagePath/core/pagination/exports.ts
+similarity index 100%
+rename from src/core/pagination/exports.ts
+rename to src/test-packagePath/core/pagination/exports.ts
+diff --git a/src/core/pagination/index.ts b/src/test-packagePath/core/pagination/index.ts
+similarity index 100%
+rename from src/core/pagination/index.ts
+rename to src/test-packagePath/core/pagination/index.ts
+diff --git a/src/core/runtime/index.ts b/src/test-packagePath/core/runtime/index.ts
+similarity index 100%
+rename from src/core/runtime/index.ts
+rename to src/test-packagePath/core/runtime/index.ts
+diff --git a/src/core/runtime/runtime.ts b/src/test-packagePath/core/runtime/runtime.ts
+similarity index 100%
+rename from src/core/runtime/runtime.ts
+rename to src/test-packagePath/core/runtime/runtime.ts
+diff --git a/src/core/url/QueryStringBuilder.ts b/src/test-packagePath/core/url/QueryStringBuilder.ts
+similarity index 100%
+rename from src/core/url/QueryStringBuilder.ts
+rename to src/test-packagePath/core/url/QueryStringBuilder.ts
+diff --git a/src/core/url/encodePathParam.ts b/src/test-packagePath/core/url/encodePathParam.ts
+similarity index 100%
+rename from src/core/url/encodePathParam.ts
+rename to src/test-packagePath/core/url/encodePathParam.ts
+diff --git a/src/core/url/index.ts b/src/test-packagePath/core/url/index.ts
+similarity index 100%
+rename from src/core/url/index.ts
+rename to src/test-packagePath/core/url/index.ts
+diff --git a/src/core/url/join.ts b/src/test-packagePath/core/url/join.ts
+similarity index 100%
+rename from src/core/url/join.ts
+rename to src/test-packagePath/core/url/join.ts
+diff --git a/src/core/url/qs.ts b/src/test-packagePath/core/url/qs.ts
+similarity index 100%
+rename from src/core/url/qs.ts
+rename to src/test-packagePath/core/url/qs.ts
+diff --git a/src/core/utils/index.ts b/src/test-packagePath/core/utils/index.ts
+similarity index 100%
+rename from src/core/utils/index.ts
+rename to src/test-packagePath/core/utils/index.ts
+diff --git a/src/core/utils/setObjectProperty.ts b/src/test-packagePath/core/utils/setObjectProperty.ts
+similarity index 100%
+rename from src/core/utils/setObjectProperty.ts
+rename to src/test-packagePath/core/utils/setObjectProperty.ts
+diff --git a/src/errors/SeedExhaustiveError.ts b/src/test-packagePath/errors/SeedExhaustiveError.ts
+similarity index 100%
+rename from src/errors/SeedExhaustiveError.ts
+rename to src/test-packagePath/errors/SeedExhaustiveError.ts
+diff --git a/src/errors/SeedExhaustiveTimeoutError.ts b/src/test-packagePath/errors/SeedExhaustiveTimeoutError.ts
+similarity index 100%
+rename from src/errors/SeedExhaustiveTimeoutError.ts
+rename to src/test-packagePath/errors/SeedExhaustiveTimeoutError.ts
+diff --git a/src/errors/handleNonStatusCodeError.ts b/src/test-packagePath/errors/handleNonStatusCodeError.ts
+similarity index 100%
+rename from src/errors/handleNonStatusCodeError.ts
+rename to src/test-packagePath/errors/handleNonStatusCodeError.ts
+diff --git a/src/errors/index.ts b/src/test-packagePath/errors/index.ts
+similarity index 100%
+rename from src/errors/index.ts
+rename to src/test-packagePath/errors/index.ts
+diff --git a/src/exports.ts b/src/test-packagePath/exports.ts
+similarity index 100%
+rename from src/exports.ts
+rename to src/test-packagePath/exports.ts
+diff --git a/src/index.ts b/src/test-packagePath/index.ts
+similarity index 100%
+rename from src/index.ts
+rename to src/test-packagePath/index.ts
+diff --git a/tests/custom.test.ts b/src/test-packagePath/tests/custom.test.ts
+similarity index 100%
+rename from tests/custom.test.ts
+rename to src/test-packagePath/tests/custom.test.ts
+diff --git a/tests/mock-server/MockServer.ts b/src/test-packagePath/tests/mock-server/MockServer.ts
+similarity index 100%
+rename from tests/mock-server/MockServer.ts
+rename to src/test-packagePath/tests/mock-server/MockServer.ts
+diff --git a/tests/mock-server/MockServerPool.ts b/src/test-packagePath/tests/mock-server/MockServerPool.ts
+similarity index 98%
+rename from tests/mock-server/MockServerPool.ts
+rename to src/test-packagePath/tests/mock-server/MockServerPool.ts
+index d7d891a2d80..d48323281df 100644
+--- a/tests/mock-server/MockServerPool.ts
++++ b/src/test-packagePath/tests/mock-server/MockServerPool.ts
+@@ -1,6 +1,6 @@
+ import { setupServer } from "msw/node";
+ 
+-import { fromJson, toJson } from "../../src/core/json";
++import { fromJson, toJson } from "../../core/json";
+ import { MockServer } from "./MockServer";
+ import { randomBaseUrl } from "./randomBaseUrl";
+ 
+diff --git a/tests/mock-server/mockEndpointBuilder.ts b/src/test-packagePath/tests/mock-server/mockEndpointBuilder.ts
+similarity index 98%
+rename from tests/mock-server/mockEndpointBuilder.ts
+rename to src/test-packagePath/tests/mock-server/mockEndpointBuilder.ts
+index 3e8540a3ba5..d374a140406 100644
+--- a/tests/mock-server/mockEndpointBuilder.ts
++++ b/src/test-packagePath/tests/mock-server/mockEndpointBuilder.ts
+@@ -1,7 +1,7 @@
+ import { type DefaultBodyType, type HttpHandler, HttpResponse, type HttpResponseResolver, http } from "msw";
+ 
+-import { url } from "../../src/core";
+-import { toJson } from "../../src/core/json";
++import { url } from "../../core";
++import { toJson } from "../../core/json";
+ import { type WithFormUrlEncodedOptions, withFormUrlEncoded } from "./withFormUrlEncoded";
+ import { withHeaders } from "./withHeaders";
+ import { type WithJsonOptions, withJson } from "./withJson";
+diff --git a/tests/mock-server/randomBaseUrl.ts b/src/test-packagePath/tests/mock-server/randomBaseUrl.ts
+similarity index 100%
+rename from tests/mock-server/randomBaseUrl.ts
+rename to src/test-packagePath/tests/mock-server/randomBaseUrl.ts
+diff --git a/tests/mock-server/setup.ts b/src/test-packagePath/tests/mock-server/setup.ts
+similarity index 100%
+rename from tests/mock-server/setup.ts
+rename to src/test-packagePath/tests/mock-server/setup.ts
+diff --git a/tests/mock-server/withFormUrlEncoded.ts b/src/test-packagePath/tests/mock-server/withFormUrlEncoded.ts
+similarity index 98%
+rename from tests/mock-server/withFormUrlEncoded.ts
+rename to src/test-packagePath/tests/mock-server/withFormUrlEncoded.ts
+index 2b23448e310..a57a1df0a44 100644
+--- a/tests/mock-server/withFormUrlEncoded.ts
++++ b/src/test-packagePath/tests/mock-server/withFormUrlEncoded.ts
+@@ -1,6 +1,6 @@
+ import { type HttpResponseResolver, passthrough } from "msw";
+ 
+-import { toJson } from "../../src/core/json";
++import { toJson } from "../../core/json";
+ 
+ export interface WithFormUrlEncodedOptions {
+     /**
+diff --git a/tests/mock-server/withHeaders.ts b/src/test-packagePath/tests/mock-server/withHeaders.ts
+similarity index 100%
+rename from tests/mock-server/withHeaders.ts
+rename to src/test-packagePath/tests/mock-server/withHeaders.ts
+diff --git a/tests/mock-server/withJson.ts b/src/test-packagePath/tests/mock-server/withJson.ts
+similarity index 99%
+rename from tests/mock-server/withJson.ts
+rename to src/test-packagePath/tests/mock-server/withJson.ts
+index 3e8800a0c37..9047b87e94a 100644
+--- a/tests/mock-server/withJson.ts
++++ b/src/test-packagePath/tests/mock-server/withJson.ts
+@@ -1,6 +1,6 @@
+ import { type HttpResponseResolver, passthrough } from "msw";
+ 
+-import { fromJson, toJson } from "../../src/core/json";
++import { fromJson, toJson } from "../../core/json";
+ 
+ export interface WithJsonOptions {
+     /**
+diff --git a/tests/setup.ts b/src/test-packagePath/tests/setup.ts
+similarity index 100%
+rename from tests/setup.ts
+rename to src/test-packagePath/tests/setup.ts
+diff --git a/tests/tsconfig.json b/src/test-packagePath/tests/tsconfig.json
+similarity index 50%
+rename from tests/tsconfig.json
+rename to src/test-packagePath/tests/tsconfig.json
+index ac39744de7b..aa20b5b1969 100644
+--- a/tests/tsconfig.json
++++ b/src/test-packagePath/tests/tsconfig.json
+@@ -1,10 +1,10 @@
+ {
+-    "extends": "../tsconfig.base.json",
++    "extends": "../../../tsconfig.base.json",
+     "compilerOptions": {
+         "outDir": null,
+         "rootDir": "..",
+         "types": ["vitest/globals"]
+     },
+-    "include": ["../src", "../tests"],
++    "include": ["../../../src/test-packagePath", "../../../src/test-packagePath/tests"],
+     "exclude": []
+ }
+diff --git a/tests/unit/auth/BasicAuth.test.ts b/src/test-packagePath/tests/unit/auth/BasicAuth.test.ts
+similarity index 98%
+rename from tests/unit/auth/BasicAuth.test.ts
+rename to src/test-packagePath/tests/unit/auth/BasicAuth.test.ts
+index 8c82c1b723d..de92500a458 100644
+--- a/tests/unit/auth/BasicAuth.test.ts
++++ b/src/test-packagePath/tests/unit/auth/BasicAuth.test.ts
+@@ -1,4 +1,4 @@
+-import { BasicAuth } from "../../../src/core/auth/BasicAuth";
++import { BasicAuth } from "../../../core/auth/BasicAuth";
+ 
+ describe("BasicAuth", () => {
+     interface ToHeaderTestCase {
+diff --git a/tests/unit/auth/BearerToken.test.ts b/src/test-packagePath/tests/unit/auth/BearerToken.test.ts
+similarity index 87%
+rename from tests/unit/auth/BearerToken.test.ts
+rename to src/test-packagePath/tests/unit/auth/BearerToken.test.ts
+index 7757b87cb97..1b988a76a9a 100644
+--- a/tests/unit/auth/BearerToken.test.ts
++++ b/src/test-packagePath/tests/unit/auth/BearerToken.test.ts
+@@ -1,4 +1,4 @@
+-import { BearerToken } from "../../../src/core/auth/BearerToken";
++import { BearerToken } from "../../../core/auth/BearerToken";
+ 
+ describe("BearerToken", () => {
+     describe("toAuthorizationHeader", () => {
+diff --git a/tests/unit/base64.test.ts b/src/test-packagePath/tests/unit/base64.test.ts
+similarity index 96%
+rename from tests/unit/base64.test.ts
+rename to src/test-packagePath/tests/unit/base64.test.ts
+index 939594ca277..1758cd37565 100644
+--- a/tests/unit/base64.test.ts
++++ b/src/test-packagePath/tests/unit/base64.test.ts
+@@ -1,4 +1,4 @@
+-import { base64Decode, base64Encode } from "../../src/core/base64";
++import { base64Decode, base64Encode } from "../../core/base64";
+ 
+ describe("base64", () => {
+     describe("base64Encode", () => {
+diff --git a/tests/unit/fetcher/Fetcher.test.ts b/src/test-packagePath/tests/unit/fetcher/Fetcher.test.ts
+similarity index 98%
+rename from tests/unit/fetcher/Fetcher.test.ts
+rename to src/test-packagePath/tests/unit/fetcher/Fetcher.test.ts
+index 6c17624228b..cd295b4f2ab 100644
+--- a/tests/unit/fetcher/Fetcher.test.ts
++++ b/src/test-packagePath/tests/unit/fetcher/Fetcher.test.ts
+@@ -1,8 +1,8 @@
+ import fs from "fs";
+ import { join } from "path";
+ import stream from "stream";
+-import type { BinaryResponse } from "../../../src/core";
+-import { type Fetcher, fetcherImpl } from "../../../src/core/fetcher/Fetcher";
++import type { BinaryResponse } from "../../../core";
++import { type Fetcher, fetcherImpl } from "../../../core/fetcher/Fetcher";
+ 
+ describe("Test fetcherImpl", () => {
+     it("should handle successful request", async () => {
+diff --git a/tests/unit/fetcher/HttpResponsePromise.test.ts b/src/test-packagePath/tests/unit/fetcher/HttpResponsePromise.test.ts
+similarity index 96%
+rename from tests/unit/fetcher/HttpResponsePromise.test.ts
+rename to src/test-packagePath/tests/unit/fetcher/HttpResponsePromise.test.ts
+index 2ec008e581d..0c78dceaa9c 100644
+--- a/tests/unit/fetcher/HttpResponsePromise.test.ts
++++ b/src/test-packagePath/tests/unit/fetcher/HttpResponsePromise.test.ts
+@@ -1,7 +1,7 @@
+ import { beforeEach, describe, expect, it, vi } from "vitest";
+ 
+-import { HttpResponsePromise } from "../../../src/core/fetcher/HttpResponsePromise";
+-import type { RawResponse, WithRawResponse } from "../../../src/core/fetcher/RawResponse";
++import { HttpResponsePromise } from "../../../core/fetcher/HttpResponsePromise";
++import type { RawResponse, WithRawResponse } from "../../../core/fetcher/RawResponse";
+ 
+ describe("HttpResponsePromise", () => {
+     const mockRawResponse: RawResponse = {
+diff --git a/tests/unit/fetcher/RawResponse.test.ts b/src/test-packagePath/tests/unit/fetcher/RawResponse.test.ts
+similarity index 94%
+rename from tests/unit/fetcher/RawResponse.test.ts
+rename to src/test-packagePath/tests/unit/fetcher/RawResponse.test.ts
+index 375ee3f3806..ca531eaa562 100644
+--- a/tests/unit/fetcher/RawResponse.test.ts
++++ b/src/test-packagePath/tests/unit/fetcher/RawResponse.test.ts
+@@ -1,6 +1,6 @@
+ import { describe, expect, it } from "vitest";
+ 
+-import { toRawResponse } from "../../../src/core/fetcher/RawResponse";
++import { toRawResponse } from "../../../core/fetcher/RawResponse";
+ 
+ describe("RawResponse", () => {
+     describe("toRawResponse", () => {
+diff --git a/tests/unit/fetcher/createRequestUrl.test.ts b/src/test-packagePath/tests/unit/fetcher/createRequestUrl.test.ts
+similarity index 98%
+rename from tests/unit/fetcher/createRequestUrl.test.ts
+rename to src/test-packagePath/tests/unit/fetcher/createRequestUrl.test.ts
+index f8afeaf0f0c..f6c2b25367e 100644
+--- a/tests/unit/fetcher/createRequestUrl.test.ts
++++ b/src/test-packagePath/tests/unit/fetcher/createRequestUrl.test.ts
+@@ -1,4 +1,4 @@
+-import { createRequestUrl } from "../../../src/core/fetcher/createRequestUrl";
++import { createRequestUrl } from "../../../core/fetcher/createRequestUrl";
+ 
+ describe("Test createRequestUrl", () => {
+     const BASE_URL = "https://api.example.com";
+diff --git a/tests/unit/fetcher/getRequestBody.test.ts b/src/test-packagePath/tests/unit/fetcher/getRequestBody.test.ts
+similarity index 97%
+rename from tests/unit/fetcher/getRequestBody.test.ts
+rename to src/test-packagePath/tests/unit/fetcher/getRequestBody.test.ts
+index 8a6c3a57e21..f54b924ec72 100644
+--- a/tests/unit/fetcher/getRequestBody.test.ts
++++ b/src/test-packagePath/tests/unit/fetcher/getRequestBody.test.ts
+@@ -1,5 +1,5 @@
+-import { getRequestBody } from "../../../src/core/fetcher/getRequestBody";
+-import { RUNTIME } from "../../../src/core/runtime";
++import { getRequestBody } from "../../../core/fetcher/getRequestBody";
++import { RUNTIME } from "../../../core/runtime";
+ 
+ describe("Test getRequestBody", () => {
+     interface TestCase {
+diff --git a/tests/unit/fetcher/getResponseBody.test.ts b/src/test-packagePath/tests/unit/fetcher/getResponseBody.test.ts
+similarity index 96%
+rename from tests/unit/fetcher/getResponseBody.test.ts
+rename to src/test-packagePath/tests/unit/fetcher/getResponseBody.test.ts
+index ad6be7fc2c9..0e09a52c24a 100644
+--- a/tests/unit/fetcher/getResponseBody.test.ts
++++ b/src/test-packagePath/tests/unit/fetcher/getResponseBody.test.ts
+@@ -1,6 +1,6 @@
+-import { getResponseBody } from "../../../src/core/fetcher/getResponseBody";
++import { getResponseBody } from "../../../core/fetcher/getResponseBody";
+ 
+-import { RUNTIME } from "../../../src/core/runtime";
++import { RUNTIME } from "../../../core/runtime";
+ 
+ describe("Test getResponseBody", () => {
+     interface SimpleTestCase {
+diff --git a/tests/unit/fetcher/logging.test.ts b/src/test-packagePath/tests/unit/fetcher/logging.test.ts
+similarity index 99%
+rename from tests/unit/fetcher/logging.test.ts
+rename to src/test-packagePath/tests/unit/fetcher/logging.test.ts
+index 366c9b6ced6..281a4927855 100644
+--- a/tests/unit/fetcher/logging.test.ts
++++ b/src/test-packagePath/tests/unit/fetcher/logging.test.ts
+@@ -1,4 +1,4 @@
+-import { fetcherImpl } from "../../../src/core/fetcher/Fetcher";
++import { fetcherImpl } from "../../../core/fetcher/Fetcher";
+ 
+ function createMockLogger() {
+     return {
+diff --git a/tests/unit/fetcher/makePassthroughRequest.test.ts b/src/test-packagePath/tests/unit/fetcher/makePassthroughRequest.test.ts
+similarity index 99%
+rename from tests/unit/fetcher/makePassthroughRequest.test.ts
+rename to src/test-packagePath/tests/unit/fetcher/makePassthroughRequest.test.ts
+index 1850d1fda95..c9f05964dbe 100644
+--- a/tests/unit/fetcher/makePassthroughRequest.test.ts
++++ b/src/test-packagePath/tests/unit/fetcher/makePassthroughRequest.test.ts
+@@ -1,5 +1,5 @@
+ import type { Mock } from "vitest";
+-import { makePassthroughRequest } from "../../../src/core/fetcher/makePassthroughRequest";
++import { makePassthroughRequest } from "../../../core/fetcher/makePassthroughRequest";
+ 
+ describe("makePassthroughRequest", () => {
+     let mockFetch: Mock;
+diff --git a/tests/unit/fetcher/makeRequest.test.ts b/src/test-packagePath/tests/unit/fetcher/makeRequest.test.ts
+similarity index 97%
+rename from tests/unit/fetcher/makeRequest.test.ts
+rename to src/test-packagePath/tests/unit/fetcher/makeRequest.test.ts
+index bde194554dd..1661d78fcc6 100644
+--- a/tests/unit/fetcher/makeRequest.test.ts
++++ b/src/test-packagePath/tests/unit/fetcher/makeRequest.test.ts
+@@ -1,9 +1,5 @@
+ import type { Mock } from "vitest";
+-import {
+-    isCacheNoStoreSupported,
+-    makeRequest,
+-    resetCacheNoStoreSupported,
+-} from "../../../src/core/fetcher/makeRequest";
++import { isCacheNoStoreSupported, makeRequest, resetCacheNoStoreSupported } from "../../../core/fetcher/makeRequest";
+ 
+ describe("Test makeRequest", () => {
+     const mockPostUrl = "https://httpbin.org/post";
+diff --git a/tests/unit/fetcher/redacting.test.ts b/src/test-packagePath/tests/unit/fetcher/redacting.test.ts
+similarity index 99%
+rename from tests/unit/fetcher/redacting.test.ts
+rename to src/test-packagePath/tests/unit/fetcher/redacting.test.ts
+index d599376b9bc..4adcdff2afc 100644
+--- a/tests/unit/fetcher/redacting.test.ts
++++ b/src/test-packagePath/tests/unit/fetcher/redacting.test.ts
+@@ -1,4 +1,4 @@
+-import { fetcherImpl } from "../../../src/core/fetcher/Fetcher";
++import { fetcherImpl } from "../../../core/fetcher/Fetcher";
+ 
+ function createMockLogger() {
+     return {
+diff --git a/tests/unit/fetcher/requestWithRetries.test.ts b/src/test-packagePath/tests/unit/fetcher/requestWithRetries.test.ts
+similarity index 99%
+rename from tests/unit/fetcher/requestWithRetries.test.ts
+rename to src/test-packagePath/tests/unit/fetcher/requestWithRetries.test.ts
+index d22661367f4..1cb6ae69eac 100644
+--- a/tests/unit/fetcher/requestWithRetries.test.ts
++++ b/src/test-packagePath/tests/unit/fetcher/requestWithRetries.test.ts
+@@ -1,5 +1,5 @@
+ import type { Mock, MockInstance } from "vitest";
+-import { requestWithRetries } from "../../../src/core/fetcher/requestWithRetries";
++import { requestWithRetries } from "../../../core/fetcher/requestWithRetries";
+ 
+ describe("requestWithRetries", () => {
+     let mockFetch: Mock;
+diff --git a/tests/unit/fetcher/signals.test.ts b/src/test-packagePath/tests/unit/fetcher/signals.test.ts
+similarity index 96%
+rename from tests/unit/fetcher/signals.test.ts
+rename to src/test-packagePath/tests/unit/fetcher/signals.test.ts
+index d7b6d1e63ca..39e991d6775 100644
+--- a/tests/unit/fetcher/signals.test.ts
++++ b/src/test-packagePath/tests/unit/fetcher/signals.test.ts
+@@ -1,4 +1,4 @@
+-import { anySignal, getTimeoutSignal } from "../../../src/core/fetcher/signals";
++import { anySignal, getTimeoutSignal } from "../../../core/fetcher/signals";
+ 
+ describe("Test getTimeoutSignal", () => {
+     beforeEach(() => {
+diff --git a/tests/unit/fetcher/test-file.txt b/src/test-packagePath/tests/unit/fetcher/test-file.txt
+similarity index 100%
+rename from tests/unit/fetcher/test-file.txt
+rename to src/test-packagePath/tests/unit/fetcher/test-file.txt
+diff --git a/tests/unit/file/file.test.ts b/src/test-packagePath/tests/unit/file/file.test.ts
+similarity index 99%
+rename from tests/unit/file/file.test.ts
+rename to src/test-packagePath/tests/unit/file/file.test.ts
+index 6cd6509059b..a12f6cd1f5c 100644
+--- a/tests/unit/file/file.test.ts
++++ b/src/test-packagePath/tests/unit/file/file.test.ts
+@@ -1,7 +1,7 @@
+ import fs from "fs";
+ import { join } from "path";
+ import { Readable } from "stream";
+-import { toBinaryUploadRequest, type Uploadable } from "../../../src/core/file/index";
++import { toBinaryUploadRequest, type Uploadable } from "../../../core/file/index";
+ 
+ describe("toBinaryUploadRequest", () => {
+     const TEST_FILE_PATH = join(__dirname, "..", "test-file.txt");
+diff --git a/tests/unit/logging/logger.test.ts b/src/test-packagePath/tests/unit/logging/logger.test.ts
+similarity index 99%
+rename from tests/unit/logging/logger.test.ts
+rename to src/test-packagePath/tests/unit/logging/logger.test.ts
+index 2e0b5fe5040..332bdda67d2 100644
+--- a/tests/unit/logging/logger.test.ts
++++ b/src/test-packagePath/tests/unit/logging/logger.test.ts
+@@ -1,4 +1,4 @@
+-import { ConsoleLogger, createLogger, Logger, LogLevel } from "../../../src/core/logging/logger";
++import { ConsoleLogger, createLogger, Logger, LogLevel } from "../../../core/logging/logger";
+ 
+ function createMockLogger() {
+     return {
+diff --git a/tests/unit/test-file.txt b/src/test-packagePath/tests/unit/test-file.txt
+similarity index 100%
+rename from tests/unit/test-file.txt
+rename to src/test-packagePath/tests/unit/test-file.txt
+diff --git a/tests/unit/url/QueryStringBuilder.test.ts b/src/test-packagePath/tests/unit/url/QueryStringBuilder.test.ts
+similarity index 99%
+rename from tests/unit/url/QueryStringBuilder.test.ts
+rename to src/test-packagePath/tests/unit/url/QueryStringBuilder.test.ts
+index 1afa2d22248..98ef6a0a375 100644
+--- a/tests/unit/url/QueryStringBuilder.test.ts
++++ b/src/test-packagePath/tests/unit/url/QueryStringBuilder.test.ts
+@@ -1,4 +1,4 @@
+-import { queryBuilder } from "../../../src/core/url/QueryStringBuilder";
++import { queryBuilder } from "../../../core/url/QueryStringBuilder";
+ 
+ describe("QueryStringBuilder", () => {
+     describe("add() — default repeat format", () => {
+diff --git a/tests/unit/url/join.test.ts b/src/test-packagePath/tests/unit/url/join.test.ts
+similarity index 99%
+rename from tests/unit/url/join.test.ts
+rename to src/test-packagePath/tests/unit/url/join.test.ts
+index 123488f084e..9f502713379 100644
+--- a/tests/unit/url/join.test.ts
++++ b/src/test-packagePath/tests/unit/url/join.test.ts
+@@ -1,4 +1,4 @@
+-import { join } from "../../../src/core/url/index";
++import { join } from "../../../core/url/index";
+ 
+ describe("join", () => {
+     interface TestCase {
+diff --git a/tests/unit/url/qs.test.ts b/src/test-packagePath/tests/unit/url/qs.test.ts
+similarity index 99%
+rename from tests/unit/url/qs.test.ts
+rename to src/test-packagePath/tests/unit/url/qs.test.ts
+index 1099b954282..3af9e83b4ca 100644
+--- a/tests/unit/url/qs.test.ts
++++ b/src/test-packagePath/tests/unit/url/qs.test.ts
+@@ -1,4 +1,4 @@
+-import { toQueryString } from "../../../src/core/url/index";
++import { toQueryString } from "../../../core/url/index";
+ 
+ describe("Test qs toQueryString", () => {
+     interface BasicTestCase {
+diff --git a/tests/unit/utils/setObjectProperty.test.ts b/src/test-packagePath/tests/unit/utils/setObjectProperty.test.ts
+similarity index 96%
+rename from tests/unit/utils/setObjectProperty.test.ts
+rename to src/test-packagePath/tests/unit/utils/setObjectProperty.test.ts
+index 29f8e638d44..c3b86d86863 100644
+--- a/tests/unit/utils/setObjectProperty.test.ts
++++ b/src/test-packagePath/tests/unit/utils/setObjectProperty.test.ts
+@@ -1,4 +1,4 @@
+-import { setObjectProperty } from "../../../src/core/utils/setObjectProperty";
++import { setObjectProperty } from "../../../core/utils/setObjectProperty";
+ 
+ interface TestCase {
+     description: string;
+diff --git a/tests/wire/.gitkeep b/src/test-packagePath/tests/wire/.gitkeep
+similarity index 100%
+rename from tests/wire/.gitkeep
+rename to src/test-packagePath/tests/wire/.gitkeep
+diff --git a/tests/wire/endpoints/container.test.ts b/src/test-packagePath/tests/wire/endpoints/container.test.ts
+similarity index 99%
+rename from tests/wire/endpoints/container.test.ts
+rename to src/test-packagePath/tests/wire/endpoints/container.test.ts
+index c9e5828af21..744e3d885a0 100644
+--- a/tests/wire/endpoints/container.test.ts
++++ b/src/test-packagePath/tests/wire/endpoints/container.test.ts
+@@ -1,6 +1,6 @@
+ // This file was auto-generated by Fern from our API Definition.
+ 
+-import { SeedExhaustiveClient } from "../../../src/Client";
++import { SeedExhaustiveClient } from "../../../Client";
+ import { mockServerPool } from "../../mock-server/MockServerPool";
+ 
+ describe("ContainerClient", () => {
+diff --git a/tests/wire/endpoints/contentType.test.ts b/src/test-packagePath/tests/wire/endpoints/contentType.test.ts
+similarity index 98%
+rename from tests/wire/endpoints/contentType.test.ts
+rename to src/test-packagePath/tests/wire/endpoints/contentType.test.ts
+index f6336d860bd..9ce9b7ed902 100644
+--- a/tests/wire/endpoints/contentType.test.ts
++++ b/src/test-packagePath/tests/wire/endpoints/contentType.test.ts
+@@ -1,6 +1,6 @@
+ // This file was auto-generated by Fern from our API Definition.
+ 
+-import { SeedExhaustiveClient } from "../../../src/Client";
++import { SeedExhaustiveClient } from "../../../Client";
+ import { mockServerPool } from "../../mock-server/MockServerPool";
+ 
+ describe("ContentTypeClient", () => {
+diff --git a/tests/wire/endpoints/enum.test.ts b/src/test-packagePath/tests/wire/endpoints/enum.test.ts
+similarity index 93%
+rename from tests/wire/endpoints/enum.test.ts
+rename to src/test-packagePath/tests/wire/endpoints/enum.test.ts
+index dd8d82689ba..ab6a055e3f7 100644
+--- a/tests/wire/endpoints/enum.test.ts
++++ b/src/test-packagePath/tests/wire/endpoints/enum.test.ts
+@@ -1,6 +1,6 @@
+ // This file was auto-generated by Fern from our API Definition.
+ 
+-import { SeedExhaustiveClient } from "../../../src/Client";
++import { SeedExhaustiveClient } from "../../../Client";
+ import { mockServerPool } from "../../mock-server/MockServerPool";
+ 
+ describe("EnumClient", () => {
+diff --git a/tests/wire/endpoints/httpMethods.test.ts b/src/test-packagePath/tests/wire/endpoints/httpMethods.test.ts
+similarity index 98%
+rename from tests/wire/endpoints/httpMethods.test.ts
+rename to src/test-packagePath/tests/wire/endpoints/httpMethods.test.ts
+index 8432f5649d3..271f31722a0 100644
+--- a/tests/wire/endpoints/httpMethods.test.ts
++++ b/src/test-packagePath/tests/wire/endpoints/httpMethods.test.ts
+@@ -1,6 +1,6 @@
+ // This file was auto-generated by Fern from our API Definition.
+ 
+-import { SeedExhaustiveClient } from "../../../src/Client";
++import { SeedExhaustiveClient } from "../../../Client";
+ import { mockServerPool } from "../../mock-server/MockServerPool";
+ 
+ describe("HttpMethodsClient", () => {
+diff --git a/tests/wire/endpoints/object.test.ts b/src/test-packagePath/tests/wire/endpoints/object.test.ts
+similarity index 99%
+rename from tests/wire/endpoints/object.test.ts
+rename to src/test-packagePath/tests/wire/endpoints/object.test.ts
+index 6df1bb23f80..76fc636ab35 100644
+--- a/tests/wire/endpoints/object.test.ts
++++ b/src/test-packagePath/tests/wire/endpoints/object.test.ts
+@@ -1,6 +1,6 @@
+ // This file was auto-generated by Fern from our API Definition.
+ 
+-import { SeedExhaustiveClient } from "../../../src/Client";
++import { SeedExhaustiveClient } from "../../../Client";
+ import { mockServerPool } from "../../mock-server/MockServerPool";
+ 
+ describe("ObjectClient", () => {
+diff --git a/tests/wire/endpoints/pagination.test.ts b/src/test-packagePath/tests/wire/endpoints/pagination.test.ts
+similarity index 94%
+rename from tests/wire/endpoints/pagination.test.ts
+rename to src/test-packagePath/tests/wire/endpoints/pagination.test.ts
+index d556b1d447c..56395ff491d 100644
+--- a/tests/wire/endpoints/pagination.test.ts
++++ b/src/test-packagePath/tests/wire/endpoints/pagination.test.ts
+@@ -1,6 +1,6 @@
+ // This file was auto-generated by Fern from our API Definition.
+ 
+-import { SeedExhaustiveClient } from "../../../src/Client";
++import { SeedExhaustiveClient } from "../../../Client";
+ import { mockServerPool } from "../../mock-server/MockServerPool";
+ 
+ describe("PaginationClient", () => {
+diff --git a/tests/wire/endpoints/params.test.ts b/src/test-packagePath/tests/wire/endpoints/params.test.ts
+similarity index 98%
+rename from tests/wire/endpoints/params.test.ts
+rename to src/test-packagePath/tests/wire/endpoints/params.test.ts
+index 4bd811699b7..a1cf4a4cc79 100644
+--- a/tests/wire/endpoints/params.test.ts
++++ b/src/test-packagePath/tests/wire/endpoints/params.test.ts
+@@ -1,7 +1,7 @@
+ // This file was auto-generated by Fern from our API Definition.
+ 
+-import * as SeedExhaustive from "../../../src/api/index";
+-import { SeedExhaustiveClient } from "../../../src/Client";
++import * as SeedExhaustive from "../../../api/index";
++import { SeedExhaustiveClient } from "../../../Client";
+ import { mockServerPool } from "../../mock-server/MockServerPool";
+ 
+ describe("ParamsClient", () => {
+diff --git a/tests/wire/endpoints/primitive.test.ts b/src/test-packagePath/tests/wire/endpoints/primitive.test.ts
+similarity index 99%
+rename from tests/wire/endpoints/primitive.test.ts
+rename to src/test-packagePath/tests/wire/endpoints/primitive.test.ts
+index 4fe9897bfe1..67bebdfdb2b 100644
+--- a/tests/wire/endpoints/primitive.test.ts
++++ b/src/test-packagePath/tests/wire/endpoints/primitive.test.ts
+@@ -1,6 +1,6 @@
+ // This file was auto-generated by Fern from our API Definition.
+ 
+-import { SeedExhaustiveClient } from "../../../src/Client";
++import { SeedExhaustiveClient } from "../../../Client";
+ import { mockServerPool } from "../../mock-server/MockServerPool";
+ 
+ describe("PrimitiveClient", () => {
+diff --git a/tests/wire/endpoints/put.test.ts b/src/test-packagePath/tests/wire/endpoints/put.test.ts
+similarity index 93%
+rename from tests/wire/endpoints/put.test.ts
+rename to src/test-packagePath/tests/wire/endpoints/put.test.ts
+index a7e6dfd8f90..88ccf75347e 100644
+--- a/tests/wire/endpoints/put.test.ts
++++ b/src/test-packagePath/tests/wire/endpoints/put.test.ts
+@@ -1,6 +1,6 @@
+ // This file was auto-generated by Fern from our API Definition.
+ 
+-import { SeedExhaustiveClient } from "../../../src/Client";
++import { SeedExhaustiveClient } from "../../../Client";
+ import { mockServerPool } from "../../mock-server/MockServerPool";
+ 
+ describe("PutClient", () => {
+diff --git a/tests/wire/endpoints/union.test.ts b/src/test-packagePath/tests/wire/endpoints/union.test.ts
+similarity index 94%
+rename from tests/wire/endpoints/union.test.ts
+rename to src/test-packagePath/tests/wire/endpoints/union.test.ts
+index 8558fd288df..86a125510d1 100644
+--- a/tests/wire/endpoints/union.test.ts
++++ b/src/test-packagePath/tests/wire/endpoints/union.test.ts
+@@ -1,6 +1,6 @@
+ // This file was auto-generated by Fern from our API Definition.
+ 
+-import { SeedExhaustiveClient } from "../../../src/Client";
++import { SeedExhaustiveClient } from "../../../Client";
+ import { mockServerPool } from "../../mock-server/MockServerPool";
+ 
+ describe("UnionClient", () => {
+diff --git a/tests/wire/endpoints/urls.test.ts b/src/test-packagePath/tests/wire/endpoints/urls.test.ts
+similarity index 97%
+rename from tests/wire/endpoints/urls.test.ts
+rename to src/test-packagePath/tests/wire/endpoints/urls.test.ts
+index b5bafd142a2..7bafdc69915 100644
+--- a/tests/wire/endpoints/urls.test.ts
++++ b/src/test-packagePath/tests/wire/endpoints/urls.test.ts
+@@ -1,6 +1,6 @@
+ // This file was auto-generated by Fern from our API Definition.
+ 
+-import { SeedExhaustiveClient } from "../../../src/Client";
++import { SeedExhaustiveClient } from "../../../Client";
+ import { mockServerPool } from "../../mock-server/MockServerPool";
+ 
+ describe("UrlsClient", () => {
+diff --git a/tests/wire/inlinedRequests.test.ts b/src/test-packagePath/tests/wire/inlinedRequests.test.ts
+similarity index 97%
+rename from tests/wire/inlinedRequests.test.ts
+rename to src/test-packagePath/tests/wire/inlinedRequests.test.ts
+index de7adfb4410..43cc5c63953 100644
+--- a/tests/wire/inlinedRequests.test.ts
++++ b/src/test-packagePath/tests/wire/inlinedRequests.test.ts
+@@ -1,7 +1,7 @@
+ // This file was auto-generated by Fern from our API Definition.
+ 
+-import * as SeedExhaustive from "../../src/api/index";
+-import { SeedExhaustiveClient } from "../../src/Client";
++import * as SeedExhaustive from "../../api/index";
++import { SeedExhaustiveClient } from "../../Client";
+ import { mockServerPool } from "../mock-server/MockServerPool";
+ 
+ describe("InlinedRequestsClient", () => {
+diff --git a/tests/wire/noAuth.test.ts b/src/test-packagePath/tests/wire/noAuth.test.ts
+similarity index 93%
+rename from tests/wire/noAuth.test.ts
+rename to src/test-packagePath/tests/wire/noAuth.test.ts
+index 6ada23e76bc..e5826e6a948 100644
+--- a/tests/wire/noAuth.test.ts
++++ b/src/test-packagePath/tests/wire/noAuth.test.ts
+@@ -1,7 +1,7 @@
+ // This file was auto-generated by Fern from our API Definition.
+ 
+-import * as SeedExhaustive from "../../src/api/index";
+-import { SeedExhaustiveClient } from "../../src/Client";
++import * as SeedExhaustive from "../../api/index";
++import { SeedExhaustiveClient } from "../../Client";
+ import { mockServerPool } from "../mock-server/MockServerPool";
+ 
+ describe("NoAuthClient", () => {
+diff --git a/tests/wire/noReqBody.test.ts b/src/test-packagePath/tests/wire/noReqBody.test.ts
+similarity index 96%
+rename from tests/wire/noReqBody.test.ts
+rename to src/test-packagePath/tests/wire/noReqBody.test.ts
+index b6a6ab1102a..14299b508bd 100644
+--- a/tests/wire/noReqBody.test.ts
++++ b/src/test-packagePath/tests/wire/noReqBody.test.ts
+@@ -1,6 +1,6 @@
+ // This file was auto-generated by Fern from our API Definition.
+ 
+-import { SeedExhaustiveClient } from "../../src/Client";
++import { SeedExhaustiveClient } from "../../Client";
+ import { mockServerPool } from "../mock-server/MockServerPool";
+ 
+ describe("NoReqBodyClient", () => {
+diff --git a/tests/wire/reqWithHeaders.test.ts b/src/test-packagePath/tests/wire/reqWithHeaders.test.ts
+similarity index 94%
+rename from tests/wire/reqWithHeaders.test.ts
+rename to src/test-packagePath/tests/wire/reqWithHeaders.test.ts
+index a2295047e42..45a3299c2fc 100644
+--- a/tests/wire/reqWithHeaders.test.ts
++++ b/src/test-packagePath/tests/wire/reqWithHeaders.test.ts
+@@ -1,6 +1,6 @@
+ // This file was auto-generated by Fern from our API Definition.
+ 
+-import { SeedExhaustiveClient } from "../../src/Client";
++import { SeedExhaustiveClient } from "../../Client";
+ import { mockServerPool } from "../mock-server/MockServerPool";
+ 
+ describe("ReqWithHeadersClient", () => {
+diff --git a/src/version.ts b/src/test-packagePath/version.ts
+similarity index 100%
+rename from src/version.ts
+rename to src/test-packagePath/version.ts
+diff --git a/tsconfig.base.json b/tsconfig.base.json
+index 93a92c0630b..10d655202f4 100644
+--- a/tsconfig.base.json
++++ b/tsconfig.base.json
+@@ -8,10 +8,10 @@
+         "skipLibCheck": true,
+         "declaration": true,
+         "outDir": "dist",
+-        "rootDir": "src",
++        "rootDir": "src/test-packagePath",
+         "isolatedModules": true,
+         "isolatedDeclarations": true
+     },
+-    "include": ["src"],
+-    "exclude": []
++    "include": ["src/test-packagePath"],
++    "exclude": ["src/test-packagePath/tests"]
+ }
+diff --git a/tsconfig.cjs.json b/tsconfig.cjs.json
+index 5c11446f598..acd291d410e 100644
+--- a/tsconfig.cjs.json
++++ b/tsconfig.cjs.json
+@@ -4,6 +4,6 @@
+         "module": "CommonJS",
+         "outDir": "dist/cjs"
+     },
+-    "include": ["src"],
+-    "exclude": []
++    "include": ["src/test-packagePath"],
++    "exclude": ["src/test-packagePath/tests"]
+ }
+diff --git a/tsconfig.esm.json b/tsconfig.esm.json
+index 6ce909748b2..33939c0d035 100644
+--- a/tsconfig.esm.json
++++ b/tsconfig.esm.json
+@@ -5,6 +5,6 @@
+         "outDir": "dist/esm",
+         "verbatimModuleSyntax": true
+     },
+-    "include": ["src"],
+-    "exclude": []
++    "include": ["src/test-packagePath"],
++    "exclude": ["src/test-packagePath/tests"]
+ }
+diff --git a/vitest.config.mts b/vitest.config.mts
+index 0dee5a752d3..7686e34b88e 100644
+--- a/vitest.config.mts
++++ b/vitest.config.mts
+@@ -3,7 +3,7 @@ export default defineConfig({
+     test: {
+         typecheck: {
+             enabled: true,
+-            tsconfig: "./tests/tsconfig.json",
++            tsconfig: "./src/test-packagePath/tests/tsconfig.json",
+         },
+         projects: [
+             {
+@@ -11,7 +11,7 @@ export default defineConfig({
+                     globals: true,
+                     name: "unit",
+                     environment: "node",
+-                    root: "./tests",
++                    root: "./src/test-packagePath/tests",
+                     include: ["**/*.test.{js,ts,jsx,tsx}"],
+                     exclude: ["wire/**"],
+                     setupFiles: ["./setup.ts"],
+@@ -22,7 +22,7 @@ export default defineConfig({
+                     globals: true,
+                     name: "wire",
+                     environment: "node",
+-                    root: "./tests/wire",
++                    root: "./src/test-packagePath/tests/wire",
+                     setupFiles: ["../setup.ts", "../mock-server/setup.ts"],
+                 },
+             },

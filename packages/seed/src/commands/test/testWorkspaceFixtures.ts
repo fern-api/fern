@@ -5,6 +5,7 @@ import { difference } from "lodash-es";
 import path from "path";
 
 import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces.js";
+import { getBaselineDir } from "../../utils/diffStorage.js";
 import { printTestCases } from "./printTestCases.js";
 import { TestRunner } from "./test-runner/index.js";
 
@@ -27,7 +28,9 @@ export async function testGenerator({
     outputFolder?: string;
     inspect: boolean;
 }): Promise<boolean> {
-    const testCases: Promise<TestRunner.TestResult>[] = [];
+    // Each fixture runs as a group: baseline first, then custom config variants.
+    // Cross-fixture parallelism is preserved.
+    const fixturePromises: Promise<TestRunner.TestResult[]>[] = [];
     const allowedFailuresAsSet = new Set(generator.workspaceConfig.allowedFailures);
     for (const fixture of fixtures) {
         let fixtureName = fixture;
@@ -50,30 +53,61 @@ export async function testGenerator({
             );
             continue;
         }
-        if (config != null) {
-            for (const instance of config) {
-                if (fixtureOutputFolder != null && instance.outputFolder !== fixtureOutputFolder) {
-                    continue;
-                }
-                testCases.push(
-                    runner.run({
+
+        if (config != null && config.length > 0) {
+            // Fixture has custom config entries.
+            // Run baseline first, then all custom config variants in parallel.
+            const baselineDir = getBaselineDir(generator.absolutePathToWorkspace, fixtureName);
+            fixturePromises.push(
+                (async (): Promise<TestRunner.TestResult[]> => {
+                    // Phase 1: Run the implicit baseline (customConfig=null)
+                    const baselineResult = await runner.run({
                         fixture: fixtureName,
-                        configuration: instance,
-                        inspect
-                    })
-                );
-            }
+                        configuration: undefined,
+                        inspect,
+                        isBaseline: true
+                    });
+
+                    // If baseline failed, skip all variants — diffing against
+                    // an incomplete baseline would produce incorrect diffs.
+                    if (baselineResult.type === "failure") {
+                        return [baselineResult];
+                    }
+
+                    // Phase 2: Run all custom config variants in parallel
+                    const variantCases: Promise<TestRunner.TestResult>[] = [];
+                    for (const instance of config) {
+                        if (fixtureOutputFolder != null && instance.outputFolder !== fixtureOutputFolder) {
+                            continue;
+                        }
+                        variantCases.push(
+                            runner.run({
+                                fixture: fixtureName,
+                                configuration: instance,
+                                inspect,
+                                baselineDir
+                            })
+                        );
+                    }
+                    const variantResults = await Promise.all(variantCases);
+                    return [baselineResult, ...variantResults];
+                })()
+            );
         } else {
-            testCases.push(
-                runner.run({
-                    fixture: fixtureName,
-                    configuration: undefined,
-                    inspect
-                })
+            // No custom config entries — just run the baseline
+            fixturePromises.push(
+                runner
+                    .run({
+                        fixture: fixtureName,
+                        configuration: undefined,
+                        inspect,
+                        isBaseline: true
+                    })
+                    .then((result) => [result])
             );
         }
     }
-    const results = await Promise.all(testCases);
+    const results = (await Promise.all(fixturePromises)).flat();
 
     printTestCases(results);
 

@@ -1,0 +1,4231 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 0eba66302dd..aad14007d81 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-php-sdk",
+   "generatorVersion": "local",
++  "generatorConfig": {
++    "enable-wire-tests": true
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "ci",
+diff --git a/phpunit.xml b/phpunit.xml
+index 54630a51163..718cb50ee17 100644
+--- a/phpunit.xml
++++ b/phpunit.xml
+@@ -1,7 +1,7 @@
+-<phpunit bootstrap="vendor/autoload.php">
++<phpunit bootstrap="tests/Wire/bootstrap.php">
+     <testsuites>
+         <testsuite name="Test Suite">
+             <directory suffix="Test.php">tests</directory>
+         </testsuite>
+     </testsuites>
+-</phpunit>
+\ No newline at end of file
++</phpunit>
+diff --git a/tests/Wire/EndpointsContainerWireTest.php b/tests/Wire/EndpointsContainerWireTest.php
+new file mode 100644
+index 00000000000..11d4b1fa4f8
+--- /dev/null
++++ b/tests/Wire/EndpointsContainerWireTest.php
+@@ -0,0 +1,222 @@
++<?php
++
++namespace Seed\Tests;
++
++use Seed\Tests\Wire\WireMockTestCase;
++use Seed\SeedClient;
++use Seed\Types\Object\Types\ObjectWithRequiredField;
++
++class EndpointsContainerWireTest extends WireMockTestCase
++{
++    /**
++     * @var SeedClient $client
++     */
++    private SeedClient $client;
++
++    /**
++     */
++    public function testGetAndReturnListOfPrimitives(): void {
++        $testId = 'endpoints.container.get_and_return_list_of_primitives.0';
++        $this->client->endpoints->container->getAndReturnListOfPrimitives(
++            [
++                'string',
++                'string',
++            ],
++            [
++                'headers' => [
++                    'X-Test-Id' => 'endpoints.container.get_and_return_list_of_primitives.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "POST",
++            "/container/list-of-primitives",
++            null,
++            1
++        );
++    }
++
++    /**
++     */
++    public function testGetAndReturnListOfObjects(): void {
++        $testId = 'endpoints.container.get_and_return_list_of_objects.0';
++        $this->client->endpoints->container->getAndReturnListOfObjects(
++            [
++                new ObjectWithRequiredField([
++                    'string' => 'string',
++                ]),
++                new ObjectWithRequiredField([
++                    'string' => 'string',
++                ]),
++            ],
++            [
++                'headers' => [
++                    'X-Test-Id' => 'endpoints.container.get_and_return_list_of_objects.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "POST",
++            "/container/list-of-objects",
++            null,
++            1
++        );
++    }
++
++    /**
++     */
++    public function testGetAndReturnSetOfPrimitives(): void {
++        $testId = 'endpoints.container.get_and_return_set_of_primitives.0';
++        $this->client->endpoints->container->getAndReturnSetOfPrimitives(
++            [
++                'string',
++            ],
++            [
++                'headers' => [
++                    'X-Test-Id' => 'endpoints.container.get_and_return_set_of_primitives.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "POST",
++            "/container/set-of-primitives",
++            null,
++            1
++        );
++    }
++
++    /**
++     */
++    public function testGetAndReturnSetOfObjects(): void {
++        $testId = 'endpoints.container.get_and_return_set_of_objects.0';
++        $this->client->endpoints->container->getAndReturnSetOfObjects(
++            [
++                new ObjectWithRequiredField([
++                    'string' => 'string',
++                ]),
++            ],
++            [
++                'headers' => [
++                    'X-Test-Id' => 'endpoints.container.get_and_return_set_of_objects.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "POST",
++            "/container/set-of-objects",
++            null,
++            1
++        );
++    }
++
++    /**
++     */
++    public function testGetAndReturnMapPrimToPrim(): void {
++        $testId = 'endpoints.container.get_and_return_map_prim_to_prim.0';
++        $this->client->endpoints->container->getAndReturnMapPrimToPrim(
++            [
++                'string' => 'string',
++            ],
++            [
++                'headers' => [
++                    'X-Test-Id' => 'endpoints.container.get_and_return_map_prim_to_prim.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "POST",
++            "/container/map-prim-to-prim",
++            null,
++            1
++        );
++    }
++
++    /**
++     */
++    public function testGetAndReturnMapOfPrimToObject(): void {
++        $testId = 'endpoints.container.get_and_return_map_of_prim_to_object.0';
++        $this->client->endpoints->container->getAndReturnMapOfPrimToObject(
++            [
++                'string' => new ObjectWithRequiredField([
++                    'string' => 'string',
++                ]),
++            ],
++            [
++                'headers' => [
++                    'X-Test-Id' => 'endpoints.container.get_and_return_map_of_prim_to_object.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "POST",
++            "/container/map-prim-to-object",
++            null,
++            1
++        );
++    }
++
++    /**
++     */
++    public function testGetAndReturnMapOfPrimToUndiscriminatedUnion(): void {
++        $testId = 'endpoints.container.get_and_return_map_of_prim_to_undiscriminated_union.0';
++        $this->client->endpoints->container->getAndReturnMapOfPrimToUndiscriminatedUnion(
++            [
++                'string' => 1.1,
++            ],
++            [
++                'headers' => [
++                    'X-Test-Id' => 'endpoints.container.get_and_return_map_of_prim_to_undiscriminated_union.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "POST",
++            "/container/map-prim-to-union",
++            null,
++            1
++        );
++    }
++
++    /**
++     */
++    public function testGetAndReturnOptional(): void {
++        $testId = 'endpoints.container.get_and_return_optional.0';
++        $this->client->endpoints->container->getAndReturnOptional(
++            new ObjectWithRequiredField([
++                'string' => 'string',
++            ]),
++            [
++                'headers' => [
++                    'X-Test-Id' => 'endpoints.container.get_and_return_optional.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "POST",
++            "/container/opt-objects",
++            null,
++            1
++        );
++    }
++
++    /**
++     */
++    protected function setUp(): void {
++        parent::setUp();
++        $wiremockUrl = getenv('WIREMOCK_URL') ?: 'http://localhost:8080';
++        $this->client = new SeedClient(
++            token: 'test-token',
++        options: [
++            'baseUrl' => $wiremockUrl,
++        ],
++        );
++    }
++}
+diff --git a/tests/Wire/EndpointsContentTypeWireTest.php b/tests/Wire/EndpointsContentTypeWireTest.php
+new file mode 100644
+index 00000000000..649bcdadbc5
+--- /dev/null
++++ b/tests/Wire/EndpointsContentTypeWireTest.php
+@@ -0,0 +1,113 @@
++<?php
++
++namespace Seed\Tests;
++
++use Seed\Tests\Wire\WireMockTestCase;
++use Seed\SeedClient;
++use Seed\Types\Object\Types\ObjectWithOptionalField;
++use DateTime;
++
++class EndpointsContentTypeWireTest extends WireMockTestCase
++{
++    /**
++     * @var SeedClient $client
++     */
++    private SeedClient $client;
++
++    /**
++     */
++    public function testPostJsonPatchContentType(): void {
++        $testId = 'endpoints.content_type.post_json_patch_content_type.0';
++        $this->client->endpoints->contentType->postJsonPatchContentType(
++            new ObjectWithOptionalField([
++                'string' => 'string',
++                'integer' => 1,
++                'long' => 1000000,
++                'double' => 1.1,
++                'bool' => true,
++                'datetime' => new DateTime('2024-01-15T09:30:00Z'),
++                'date' => new DateTime('2023-01-15'),
++                'uuid' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
++                'base64' => 'SGVsbG8gd29ybGQh',
++                'list' => [
++                    'list',
++                    'list',
++                ],
++                'set' => [
++                    'set',
++                ],
++                'map' => [
++                    1 => 'map',
++                ],
++                'bigint' => '1000000',
++            ]),
++            [
++                'headers' => [
++                    'X-Test-Id' => 'endpoints.content_type.post_json_patch_content_type.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "POST",
++            "/foo/bar",
++            null,
++            1
++        );
++    }
++
++    /**
++     */
++    public function testPostJsonPatchContentWithCharsetType(): void {
++        $testId = 'endpoints.content_type.post_json_patch_content_with_charset_type.0';
++        $this->client->endpoints->contentType->postJsonPatchContentWithCharsetType(
++            new ObjectWithOptionalField([
++                'string' => 'string',
++                'integer' => 1,
++                'long' => 1000000,
++                'double' => 1.1,
++                'bool' => true,
++                'datetime' => new DateTime('2024-01-15T09:30:00Z'),
++                'date' => new DateTime('2023-01-15'),
++                'uuid' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
++                'base64' => 'SGVsbG8gd29ybGQh',
++                'list' => [
++                    'list',
++                    'list',
++                ],
++                'set' => [
++                    'set',
++                ],
++                'map' => [
++                    1 => 'map',
++                ],
++                'bigint' => '1000000',
++            ]),
++            [
++                'headers' => [
++                    'X-Test-Id' => 'endpoints.content_type.post_json_patch_content_with_charset_type.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "POST",
++            "/foo/baz",
++            null,
++            1
++        );
++    }
++
++    /**
++     */
++    protected function setUp(): void {
++        parent::setUp();
++        $wiremockUrl = getenv('WIREMOCK_URL') ?: 'http://localhost:8080';
++        $this->client = new SeedClient(
++            token: 'test-token',
++        options: [
++            'baseUrl' => $wiremockUrl,
++        ],
++        );
++    }
++}
+diff --git a/tests/Wire/EndpointsEnumWireTest.php b/tests/Wire/EndpointsEnumWireTest.php
+new file mode 100644
+index 00000000000..036de06706a
+--- /dev/null
++++ b/tests/Wire/EndpointsEnumWireTest.php
+@@ -0,0 +1,49 @@
++<?php
++
++namespace Seed\Tests;
++
++use Seed\Tests\Wire\WireMockTestCase;
++use Seed\SeedClient;
++use Seed\Types\Enum\Types\WeatherReport;
++
++class EndpointsEnumWireTest extends WireMockTestCase
++{
++    /**
++     * @var SeedClient $client
++     */
++    private SeedClient $client;
++
++    /**
++     */
++    public function testGetAndReturnEnum(): void {
++        $testId = 'endpoints.enum.get_and_return_enum.0';
++        $this->client->endpoints->enum->getAndReturnEnum(
++            WeatherReport::Sunny->value,
++            [
++                'headers' => [
++                    'X-Test-Id' => 'endpoints.enum.get_and_return_enum.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "POST",
++            "/enum",
++            null,
++            1
++        );
++    }
++
++    /**
++     */
++    protected function setUp(): void {
++        parent::setUp();
++        $wiremockUrl = getenv('WIREMOCK_URL') ?: 'http://localhost:8080';
++        $this->client = new SeedClient(
++            token: 'test-token',
++        options: [
++            'baseUrl' => $wiremockUrl,
++        ],
++        );
++    }
++}
+diff --git a/tests/Wire/EndpointsHttpMethodsWireTest.php b/tests/Wire/EndpointsHttpMethodsWireTest.php
+new file mode 100644
+index 00000000000..73c9e748be4
+--- /dev/null
++++ b/tests/Wire/EndpointsHttpMethodsWireTest.php
+@@ -0,0 +1,162 @@
++<?php
++
++namespace Seed\Tests;
++
++use Seed\Tests\Wire\WireMockTestCase;
++use Seed\SeedClient;
++use Seed\Types\Object\Types\ObjectWithRequiredField;
++use Seed\Types\Object\Types\ObjectWithOptionalField;
++use DateTime;
++
++class EndpointsHttpMethodsWireTest extends WireMockTestCase
++{
++    /**
++     * @var SeedClient $client
++     */
++    private SeedClient $client;
++
++    /**
++     */
++    public function testTestGet(): void {
++        $testId = 'endpoints.http_methods.test_get.0';
++        $this->client->endpoints->httpMethods->testGet(
++            'id',
++            [
++                'headers' => [
++                    'X-Test-Id' => 'endpoints.http_methods.test_get.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "GET",
++            "/http-methods/id",
++            null,
++            1
++        );
++    }
++
++    /**
++     */
++    public function testTestPost(): void {
++        $testId = 'endpoints.http_methods.test_post.0';
++        $this->client->endpoints->httpMethods->testPost(
++            new ObjectWithRequiredField([
++                'string' => 'string',
++            ]),
++            [
++                'headers' => [
++                    'X-Test-Id' => 'endpoints.http_methods.test_post.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "POST",
++            "/http-methods",
++            null,
++            1
++        );
++    }
++
++    /**
++     */
++    public function testTestPut(): void {
++        $testId = 'endpoints.http_methods.test_put.0';
++        $this->client->endpoints->httpMethods->testPut(
++            'id',
++            new ObjectWithRequiredField([
++                'string' => 'string',
++            ]),
++            [
++                'headers' => [
++                    'X-Test-Id' => 'endpoints.http_methods.test_put.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "PUT",
++            "/http-methods/id",
++            null,
++            1
++        );
++    }
++
++    /**
++     */
++    public function testTestPatch(): void {
++        $testId = 'endpoints.http_methods.test_patch.0';
++        $this->client->endpoints->httpMethods->testPatch(
++            'id',
++            new ObjectWithOptionalField([
++                'string' => 'string',
++                'integer' => 1,
++                'long' => 1000000,
++                'double' => 1.1,
++                'bool' => true,
++                'datetime' => new DateTime('2024-01-15T09:30:00Z'),
++                'date' => new DateTime('2023-01-15'),
++                'uuid' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
++                'base64' => 'SGVsbG8gd29ybGQh',
++                'list' => [
++                    'list',
++                    'list',
++                ],
++                'set' => [
++                    'set',
++                ],
++                'map' => [
++                    1 => 'map',
++                ],
++                'bigint' => '1000000',
++            ]),
++            [
++                'headers' => [
++                    'X-Test-Id' => 'endpoints.http_methods.test_patch.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "PATCH",
++            "/http-methods/id",
++            null,
++            1
++        );
++    }
++
++    /**
++     */
++    public function testTestDelete(): void {
++        $testId = 'endpoints.http_methods.test_delete.0';
++        $this->client->endpoints->httpMethods->testDelete(
++            'id',
++            [
++                'headers' => [
++                    'X-Test-Id' => 'endpoints.http_methods.test_delete.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "DELETE",
++            "/http-methods/id",
++            null,
++            1
++        );
++    }
++
++    /**
++     */
++    protected function setUp(): void {
++        parent::setUp();
++        $wiremockUrl = getenv('WIREMOCK_URL') ?: 'http://localhost:8080';
++        $this->client = new SeedClient(
++            token: 'test-token',
++        options: [
++            'baseUrl' => $wiremockUrl,
++        ],
++        );
++    }
++}
+diff --git a/tests/Wire/EndpointsObjectWireTest.php b/tests/Wire/EndpointsObjectWireTest.php
+new file mode 100644
+index 00000000000..cbb3b66439c
+--- /dev/null
++++ b/tests/Wire/EndpointsObjectWireTest.php
+@@ -0,0 +1,445 @@
++<?php
++
++namespace Seed\Tests;
++
++use Seed\Tests\Wire\WireMockTestCase;
++use Seed\SeedClient;
++use Seed\Types\Object\Types\ObjectWithOptionalField;
++use DateTime;
++use Seed\Types\Object\Types\ObjectWithRequiredField;
++use Seed\Types\Object\Types\ObjectWithMapOfMap;
++use Seed\Types\Object\Types\NestedObjectWithOptionalField;
++use Seed\Types\Object\Types\NestedObjectWithRequiredField;
++use Seed\Types\Object\Types\ObjectWithUnknownField;
++use Seed\Types\Object\Types\ObjectWithDocumentedUnknownType;
++use Seed\Types\Object\Types\ObjectWithMixedRequiredAndOptionalFields;
++use Seed\Types\Object\Types\ObjectWithRequiredNestedObject;
++use Seed\Types\Object\Types\ObjectWithDatetimeLikeString;
++
++class EndpointsObjectWireTest extends WireMockTestCase
++{
++    /**
++     * @var SeedClient $client
++     */
++    private SeedClient $client;
++
++    /**
++     */
++    public function testGetAndReturnWithOptionalField(): void {
++        $testId = 'endpoints.object.get_and_return_with_optional_field.0';
++        $this->client->endpoints->object->getAndReturnWithOptionalField(
++            new ObjectWithOptionalField([
++                'string' => 'string',
++                'integer' => 1,
++                'long' => 1000000,
++                'double' => 1.1,
++                'bool' => true,
++                'datetime' => new DateTime('2024-01-15T09:30:00Z'),
++                'date' => new DateTime('2023-01-15'),
++                'uuid' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
++                'base64' => 'SGVsbG8gd29ybGQh',
++                'list' => [
++                    'list',
++                    'list',
++                ],
++                'set' => [
++                    'set',
++                ],
++                'map' => [
++                    1 => 'map',
++                ],
++                'bigint' => '1000000',
++            ]),
++            [
++                'headers' => [
++                    'X-Test-Id' => 'endpoints.object.get_and_return_with_optional_field.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "POST",
++            "/object/get-and-return-with-optional-field",
++            null,
++            1
++        );
++    }
++
++    /**
++     */
++    public function testGetAndReturnWithRequiredField(): void {
++        $testId = 'endpoints.object.get_and_return_with_required_field.0';
++        $this->client->endpoints->object->getAndReturnWithRequiredField(
++            new ObjectWithRequiredField([
++                'string' => 'string',
++            ]),
++            [
++                'headers' => [
++                    'X-Test-Id' => 'endpoints.object.get_and_return_with_required_field.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "POST",
++            "/object/get-and-return-with-required-field",
++            null,
++            1
++        );
++    }
++
++    /**
++     */
++    public function testGetAndReturnWithMapOfMap(): void {
++        $testId = 'endpoints.object.get_and_return_with_map_of_map.0';
++        $this->client->endpoints->object->getAndReturnWithMapOfMap(
++            new ObjectWithMapOfMap([
++                'map' => [
++                    'map' => [
++                        'map' => 'map',
++                    ],
++                ],
++            ]),
++            [
++                'headers' => [
++                    'X-Test-Id' => 'endpoints.object.get_and_return_with_map_of_map.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "POST",
++            "/object/get-and-return-with-map-of-map",
++            null,
++            1
++        );
++    }
++
++    /**
++     */
++    public function testGetAndReturnNestedWithOptionalField(): void {
++        $testId = 'endpoints.object.get_and_return_nested_with_optional_field.0';
++        $this->client->endpoints->object->getAndReturnNestedWithOptionalField(
++            new NestedObjectWithOptionalField([
++                'string' => 'string',
++                'nestedObject' => new ObjectWithOptionalField([
++                    'string' => 'string',
++                    'integer' => 1,
++                    'long' => 1000000,
++                    'double' => 1.1,
++                    'bool' => true,
++                    'datetime' => new DateTime('2024-01-15T09:30:00Z'),
++                    'date' => new DateTime('2023-01-15'),
++                    'uuid' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
++                    'base64' => 'SGVsbG8gd29ybGQh',
++                    'list' => [
++                        'list',
++                        'list',
++                    ],
++                    'set' => [
++                        'set',
++                    ],
++                    'map' => [
++                        1 => 'map',
++                    ],
++                    'bigint' => '1000000',
++                ]),
++            ]),
++            [
++                'headers' => [
++                    'X-Test-Id' => 'endpoints.object.get_and_return_nested_with_optional_field.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "POST",
++            "/object/get-and-return-nested-with-optional-field",
++            null,
++            1
++        );
++    }
++
++    /**
++     */
++    public function testGetAndReturnNestedWithRequiredField(): void {
++        $testId = 'endpoints.object.get_and_return_nested_with_required_field.0';
++        $this->client->endpoints->object->getAndReturnNestedWithRequiredField(
++            'string',
++            new NestedObjectWithRequiredField([
++                'string' => 'string',
++                'nestedObject' => new ObjectWithOptionalField([
++                    'string' => 'string',
++                    'integer' => 1,
++                    'long' => 1000000,
++                    'double' => 1.1,
++                    'bool' => true,
++                    'datetime' => new DateTime('2024-01-15T09:30:00Z'),
++                    'date' => new DateTime('2023-01-15'),
++                    'uuid' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
++                    'base64' => 'SGVsbG8gd29ybGQh',
++                    'list' => [
++                        'list',
++                        'list',
++                    ],
++                    'set' => [
++                        'set',
++                    ],
++                    'map' => [
++                        1 => 'map',
++                    ],
++                    'bigint' => '1000000',
++                ]),
++            ]),
++            [
++                'headers' => [
++                    'X-Test-Id' => 'endpoints.object.get_and_return_nested_with_required_field.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "POST",
++            "/object/get-and-return-nested-with-required-field/string",
++            null,
++            1
++        );
++    }
++
++    /**
++     */
++    public function testGetAndReturnNestedWithRequiredFieldAsList(): void {
++        $testId = 'endpoints.object.get_and_return_nested_with_required_field_as_list.0';
++        $this->client->endpoints->object->getAndReturnNestedWithRequiredFieldAsList(
++            [
++                new NestedObjectWithRequiredField([
++                    'string' => 'string',
++                    'nestedObject' => new ObjectWithOptionalField([
++                        'string' => 'string',
++                        'integer' => 1,
++                        'long' => 1000000,
++                        'double' => 1.1,
++                        'bool' => true,
++                        'datetime' => new DateTime('2024-01-15T09:30:00Z'),
++                        'date' => new DateTime('2023-01-15'),
++                        'uuid' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
++                        'base64' => 'SGVsbG8gd29ybGQh',
++                        'list' => [
++                            'list',
++                            'list',
++                        ],
++                        'set' => [
++                            'set',
++                        ],
++                        'map' => [
++                            1 => 'map',
++                        ],
++                        'bigint' => '1000000',
++                    ]),
++                ]),
++                new NestedObjectWithRequiredField([
++                    'string' => 'string',
++                    'nestedObject' => new ObjectWithOptionalField([
++                        'string' => 'string',
++                        'integer' => 1,
++                        'long' => 1000000,
++                        'double' => 1.1,
++                        'bool' => true,
++                        'datetime' => new DateTime('2024-01-15T09:30:00Z'),
++                        'date' => new DateTime('2023-01-15'),
++                        'uuid' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
++                        'base64' => 'SGVsbG8gd29ybGQh',
++                        'list' => [
++                            'list',
++                            'list',
++                        ],
++                        'set' => [
++                            'set',
++                        ],
++                        'map' => [
++                            1 => 'map',
++                        ],
++                        'bigint' => '1000000',
++                    ]),
++                ]),
++            ],
++            [
++                'headers' => [
++                    'X-Test-Id' => 'endpoints.object.get_and_return_nested_with_required_field_as_list.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "POST",
++            "/object/get-and-return-nested-with-required-field-list",
++            null,
++            1
++        );
++    }
++
++    /**
++     */
++    public function testGetAndReturnWithUnknownField(): void {
++        $testId = 'endpoints.object.get_and_return_with_unknown_field.0';
++        $this->client->endpoints->object->getAndReturnWithUnknownField(
++            new ObjectWithUnknownField([
++                'unknown' => [
++                    '$ref' => "https://example.com/schema",
++                ],
++            ]),
++            [
++                'headers' => [
++                    'X-Test-Id' => 'endpoints.object.get_and_return_with_unknown_field.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "POST",
++            "/object/get-and-return-with-unknown-field",
++            null,
++            1
++        );
++    }
++
++    /**
++     */
++    public function testGetAndReturnWithDocumentedUnknownType(): void {
++        $testId = 'endpoints.object.get_and_return_with_documented_unknown_type.0';
++        $this->client->endpoints->object->getAndReturnWithDocumentedUnknownType(
++            new ObjectWithDocumentedUnknownType([
++                'documentedUnknownType' => [
++                    'key' => "value",
++                ],
++            ]),
++            [
++                'headers' => [
++                    'X-Test-Id' => 'endpoints.object.get_and_return_with_documented_unknown_type.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "POST",
++            "/object/get-and-return-with-documented-unknown-type",
++            null,
++            1
++        );
++    }
++
++    /**
++     */
++    public function testGetAndReturnMapOfDocumentedUnknownType(): void {
++        $testId = 'endpoints.object.get_and_return_map_of_documented_unknown_type.0';
++        $this->client->endpoints->object->getAndReturnMapOfDocumentedUnknownType(
++            [
++                'string' => [
++                    'key' => "value",
++                ],
++            ],
++            [
++                'headers' => [
++                    'X-Test-Id' => 'endpoints.object.get_and_return_map_of_documented_unknown_type.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "POST",
++            "/object/get-and-return-map-of-documented-unknown-type",
++            null,
++            1
++        );
++    }
++
++    /**
++     */
++    public function testGetAndReturnWithMixedRequiredAndOptionalFields(): void {
++        $testId = 'endpoints.object.get_and_return_with_mixed_required_and_optional_fields.0';
++        $this->client->endpoints->object->getAndReturnWithMixedRequiredAndOptionalFields(
++            new ObjectWithMixedRequiredAndOptionalFields([
++                'requiredString' => 'hello',
++                'requiredInteger' => 0,
++                'optionalString' => 'world',
++                'requiredLong' => 0,
++            ]),
++            [
++                'headers' => [
++                    'X-Test-Id' => 'endpoints.object.get_and_return_with_mixed_required_and_optional_fields.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "POST",
++            "/object/get-and-return-with-mixed-required-and-optional-fields",
++            null,
++            1
++        );
++    }
++
++    /**
++     */
++    public function testGetAndReturnWithRequiredNestedObject(): void {
++        $testId = 'endpoints.object.get_and_return_with_required_nested_object.0';
++        $this->client->endpoints->object->getAndReturnWithRequiredNestedObject(
++            new ObjectWithRequiredNestedObject([
++                'requiredString' => 'hello',
++                'requiredObject' => new NestedObjectWithRequiredField([
++                    'string' => 'nested',
++                    'nestedObject' => new ObjectWithOptionalField([]),
++                ]),
++            ]),
++            [
++                'headers' => [
++                    'X-Test-Id' => 'endpoints.object.get_and_return_with_required_nested_object.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "POST",
++            "/object/get-and-return-with-required-nested-object",
++            null,
++            1
++        );
++    }
++
++    /**
++     */
++    public function testGetAndReturnWithDatetimeLikeString(): void {
++        $testId = 'endpoints.object.get_and_return_with_datetime_like_string.0';
++        $this->client->endpoints->object->getAndReturnWithDatetimeLikeString(
++            new ObjectWithDatetimeLikeString([
++                'datetimeLikeString' => '2023-08-31T14:15:22Z',
++                'actualDatetime' => new DateTime('2023-08-31T14:15:22Z'),
++            ]),
++            [
++                'headers' => [
++                    'X-Test-Id' => 'endpoints.object.get_and_return_with_datetime_like_string.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "POST",
++            "/object/get-and-return-with-datetime-like-string",
++            null,
++            1
++        );
++    }
++
++    /**
++     */
++    protected function setUp(): void {
++        parent::setUp();
++        $wiremockUrl = getenv('WIREMOCK_URL') ?: 'http://localhost:8080';
++        $this->client = new SeedClient(
++            token: 'test-token',
++        options: [
++            'baseUrl' => $wiremockUrl,
++        ],
++        );
++    }
++}
+diff --git a/tests/Wire/EndpointsPaginationWireTest.php b/tests/Wire/EndpointsPaginationWireTest.php
+new file mode 100644
+index 00000000000..5f24cab208a
+--- /dev/null
++++ b/tests/Wire/EndpointsPaginationWireTest.php
+@@ -0,0 +1,55 @@
++<?php
++
++namespace Seed\Tests;
++
++use Seed\Tests\Wire\WireMockTestCase;
++use Seed\SeedClient;
++use Seed\Endpoints\Pagination\Requests\ListItemsRequest;
++
++class EndpointsPaginationWireTest extends WireMockTestCase
++{
++    /**
++     * @var SeedClient $client
++     */
++    private SeedClient $client;
++
++    /**
++     */
++    public function testListItems(): void {
++        $testId = 'endpoints.pagination.list_items.0';
++        $response = $this->client->endpoints->pagination->listItems(
++            new ListItemsRequest([
++                'cursor' => 'cursor',
++                'limit' => 1,
++            ]),
++            [
++                'headers' => [
++                    'X-Test-Id' => 'endpoints.pagination.list_items.0',
++                ],
++            ],
++        );
++        foreach ($response as $item) {
++            break;
++        }
++        $this->verifyRequestCount(
++            $testId,
++            "GET",
++            "/pagination",
++            ['cursor' => 'cursor', 'limit' => '1'],
++            1
++        );
++    }
++
++    /**
++     */
++    protected function setUp(): void {
++        parent::setUp();
++        $wiremockUrl = getenv('WIREMOCK_URL') ?: 'http://localhost:8080';
++        $this->client = new SeedClient(
++            token: 'test-token',
++        options: [
++            'baseUrl' => $wiremockUrl,
++        ],
++        );
++    }
++}
+diff --git a/tests/Wire/EndpointsParamsWireTest.php b/tests/Wire/EndpointsParamsWireTest.php
+new file mode 100644
+index 00000000000..b0b71f9dd0d
+--- /dev/null
++++ b/tests/Wire/EndpointsParamsWireTest.php
+@@ -0,0 +1,275 @@
++<?php
++
++namespace Seed\Tests;
++
++use Seed\Tests\Wire\WireMockTestCase;
++use Seed\SeedClient;
++use Seed\Endpoints\Params\Requests\GetWithQuery;
++use Seed\Endpoints\Params\Requests\GetWithPathAndQuery;
++
++class EndpointsParamsWireTest extends WireMockTestCase
++{
++    /**
++     * @var SeedClient $client
++     */
++    private SeedClient $client;
++
++    /**
++     */
++    public function testGetWithPath(): void {
++        $testId = 'endpoints.params.get_with_path.0';
++        $this->client->endpoints->params->getWithPath(
++            'param',
++            [
++                'headers' => [
++                    'X-Test-Id' => 'endpoints.params.get_with_path.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "GET",
++            "/params/path/param",
++            null,
++            1
++        );
++    }
++
++    /**
++     */
++    public function testGetWithInlinePath(): void {
++        $testId = 'endpoints.params.get_with_inline_path.0';
++        $this->client->endpoints->params->getWithPath(
++            'param',
++            [
++                'headers' => [
++                    'X-Test-Id' => 'endpoints.params.get_with_inline_path.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "GET",
++            "/params/path/param",
++            null,
++            1
++        );
++    }
++
++    /**
++     */
++    public function testGetWithQuery(): void {
++        $testId = 'endpoints.params.get_with_query.0';
++        $this->client->endpoints->params->getWithQuery(
++            new GetWithQuery([
++                'query' => 'query',
++                'number' => 1,
++            ]),
++            [
++                'headers' => [
++                    'X-Test-Id' => 'endpoints.params.get_with_query.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "GET",
++            "/params",
++            ['query' => 'query', 'number' => '1'],
++            1
++        );
++    }
++
++    /**
++     */
++    public function testGetWithAllowMultipleQuery(): void {
++        $testId = 'endpoints.params.get_with_allow_multiple_query.0';
++        $this->client->endpoints->params->getWithQuery(
++            new GetWithQuery([
++                'query' => 'query',
++                'number' => 1,
++            ]),
++            [
++                'headers' => [
++                    'X-Test-Id' => 'endpoints.params.get_with_allow_multiple_query.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "GET",
++            "/params",
++            ['query' => 'query', 'number' => '1'],
++            1
++        );
++    }
++
++    /**
++     */
++    public function testGetWithPathAndQuery(): void {
++        $testId = 'endpoints.params.get_with_path_and_query.0';
++        $this->client->endpoints->params->getWithPathAndQuery(
++            'param',
++            new GetWithPathAndQuery([
++                'query' => 'query',
++            ]),
++            [
++                'headers' => [
++                    'X-Test-Id' => 'endpoints.params.get_with_path_and_query.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "GET",
++            "/params/path-query/param",
++            ['query' => 'query'],
++            1
++        );
++    }
++
++    /**
++     */
++    public function testGetWithInlinePathAndQuery(): void {
++        $testId = 'endpoints.params.get_with_inline_path_and_query.0';
++        $this->client->endpoints->params->getWithPathAndQuery(
++            'param',
++            new GetWithPathAndQuery([
++                'query' => 'query',
++            ]),
++            [
++                'headers' => [
++                    'X-Test-Id' => 'endpoints.params.get_with_inline_path_and_query.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "GET",
++            "/params/path-query/param",
++            ['query' => 'query'],
++            1
++        );
++    }
++
++    /**
++     */
++    public function testModifyWithPath(): void {
++        $testId = 'endpoints.params.modify_with_path.0';
++        $this->client->endpoints->params->modifyWithPath(
++            'param',
++            'string',
++            [
++                'headers' => [
++                    'X-Test-Id' => 'endpoints.params.modify_with_path.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "PUT",
++            "/params/path/param",
++            null,
++            1
++        );
++    }
++
++    /**
++     */
++    public function testModifyWithInlinePath(): void {
++        $testId = 'endpoints.params.modify_with_inline_path.0';
++        $this->client->endpoints->params->modifyWithPath(
++            'param',
++            'string',
++            [
++                'headers' => [
++                    'X-Test-Id' => 'endpoints.params.modify_with_inline_path.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "PUT",
++            "/params/path/param",
++            null,
++            1
++        );
++    }
++
++    /**
++     */
++    public function testUploadWithPath(): void {
++        $testId = 'endpoints.params.upload_with_path.0';
++        $this->client->endpoints->params->uploadWithPath(
++            'upload-path',
++            ,
++            [
++                'headers' => [
++                    'X-Test-Id' => 'endpoints.params.upload_with_path.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "POST",
++            "/params/path/{param}",
++            null,
++            1
++        );
++    }
++
++    /**
++     */
++    public function testGetWithBooleanPath(): void {
++        $testId = 'endpoints.params.get_with_boolean_path.0';
++        $this->client->endpoints->params->getWithBooleanPath(
++            true,
++            [
++                'headers' => [
++                    'X-Test-Id' => 'endpoints.params.get_with_boolean_path.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "GET",
++            "/params/path-bool/true",
++            null,
++            1
++        );
++    }
++
++    /**
++     */
++    public function testGetWithPathAndErrors(): void {
++        $testId = 'endpoints.params.get_with_path_and_errors.0';
++        $this->client->endpoints->params->getWithPath(
++            'param',
++            [
++                'headers' => [
++                    'X-Test-Id' => 'endpoints.params.get_with_path_and_errors.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "GET",
++            "/params/path/param",
++            null,
++            1
++        );
++    }
++
++    /**
++     */
++    protected function setUp(): void {
++        parent::setUp();
++        $wiremockUrl = getenv('WIREMOCK_URL') ?: 'http://localhost:8080';
++        $this->client = new SeedClient(
++            token: 'test-token',
++        options: [
++            'baseUrl' => $wiremockUrl,
++        ],
++        );
++    }
++}
+diff --git a/tests/Wire/EndpointsPrimitiveWireTest.php b/tests/Wire/EndpointsPrimitiveWireTest.php
+new file mode 100644
+index 00000000000..107df3b6caf
+--- /dev/null
++++ b/tests/Wire/EndpointsPrimitiveWireTest.php
+@@ -0,0 +1,217 @@
++<?php
++
++namespace Seed\Tests;
++
++use Seed\Tests\Wire\WireMockTestCase;
++use Seed\SeedClient;
++use DateTime;
++
++class EndpointsPrimitiveWireTest extends WireMockTestCase
++{
++    /**
++     * @var SeedClient $client
++     */
++    private SeedClient $client;
++
++    /**
++     */
++    public function testGetAndReturnString(): void {
++        $testId = 'endpoints.primitive.get_and_return_string.0';
++        $this->client->endpoints->primitive->getAndReturnString(
++            'string',
++            [
++                'headers' => [
++                    'X-Test-Id' => 'endpoints.primitive.get_and_return_string.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "POST",
++            "/primitive/string",
++            null,
++            1
++        );
++    }
++
++    /**
++     */
++    public function testGetAndReturnInt(): void {
++        $testId = 'endpoints.primitive.get_and_return_int.0';
++        $this->client->endpoints->primitive->getAndReturnInt(
++            1,
++            [
++                'headers' => [
++                    'X-Test-Id' => 'endpoints.primitive.get_and_return_int.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "POST",
++            "/primitive/integer",
++            null,
++            1
++        );
++    }
++
++    /**
++     */
++    public function testGetAndReturnLong(): void {
++        $testId = 'endpoints.primitive.get_and_return_long.0';
++        $this->client->endpoints->primitive->getAndReturnLong(
++            1000000,
++            [
++                'headers' => [
++                    'X-Test-Id' => 'endpoints.primitive.get_and_return_long.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "POST",
++            "/primitive/long",
++            null,
++            1
++        );
++    }
++
++    /**
++     */
++    public function testGetAndReturnDouble(): void {
++        $testId = 'endpoints.primitive.get_and_return_double.0';
++        $this->client->endpoints->primitive->getAndReturnDouble(
++            1.1,
++            [
++                'headers' => [
++                    'X-Test-Id' => 'endpoints.primitive.get_and_return_double.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "POST",
++            "/primitive/double",
++            null,
++            1
++        );
++    }
++
++    /**
++     */
++    public function testGetAndReturnBool(): void {
++        $testId = 'endpoints.primitive.get_and_return_bool.0';
++        $this->client->endpoints->primitive->getAndReturnBool(
++            true,
++            [
++                'headers' => [
++                    'X-Test-Id' => 'endpoints.primitive.get_and_return_bool.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "POST",
++            "/primitive/boolean",
++            null,
++            1
++        );
++    }
++
++    /**
++     */
++    public function testGetAndReturnDatetime(): void {
++        $testId = 'endpoints.primitive.get_and_return_datetime.0';
++        $this->client->endpoints->primitive->getAndReturnDatetime(
++            new DateTime('2024-01-15T09:30:00Z'),
++            [
++                'headers' => [
++                    'X-Test-Id' => 'endpoints.primitive.get_and_return_datetime.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "POST",
++            "/primitive/datetime",
++            null,
++            1
++        );
++    }
++
++    /**
++     */
++    public function testGetAndReturnDate(): void {
++        $testId = 'endpoints.primitive.get_and_return_date.0';
++        $this->client->endpoints->primitive->getAndReturnDate(
++            new DateTime('2023-01-15'),
++            [
++                'headers' => [
++                    'X-Test-Id' => 'endpoints.primitive.get_and_return_date.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "POST",
++            "/primitive/date",
++            null,
++            1
++        );
++    }
++
++    /**
++     */
++    public function testGetAndReturnUuid(): void {
++        $testId = 'endpoints.primitive.get_and_return_uuid.0';
++        $this->client->endpoints->primitive->getAndReturnUuid(
++            'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
++            [
++                'headers' => [
++                    'X-Test-Id' => 'endpoints.primitive.get_and_return_uuid.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "POST",
++            "/primitive/uuid",
++            null,
++            1
++        );
++    }
++
++    /**
++     */
++    public function testGetAndReturnBase64(): void {
++        $testId = 'endpoints.primitive.get_and_return_base64.0';
++        $this->client->endpoints->primitive->getAndReturnBase64(
++            'SGVsbG8gd29ybGQh',
++            [
++                'headers' => [
++                    'X-Test-Id' => 'endpoints.primitive.get_and_return_base64.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "POST",
++            "/primitive/base64",
++            null,
++            1
++        );
++    }
++
++    /**
++     */
++    protected function setUp(): void {
++        parent::setUp();
++        $wiremockUrl = getenv('WIREMOCK_URL') ?: 'http://localhost:8080';
++        $this->client = new SeedClient(
++            token: 'test-token',
++        options: [
++            'baseUrl' => $wiremockUrl,
++        ],
++        );
++    }
++}
+diff --git a/tests/Wire/EndpointsPutWireTest.php b/tests/Wire/EndpointsPutWireTest.php
+new file mode 100644
+index 00000000000..8929a00506a
+--- /dev/null
++++ b/tests/Wire/EndpointsPutWireTest.php
+@@ -0,0 +1,48 @@
++<?php
++
++namespace Seed\Tests;
++
++use Seed\Tests\Wire\WireMockTestCase;
++use Seed\SeedClient;
++
++class EndpointsPutWireTest extends WireMockTestCase
++{
++    /**
++     * @var SeedClient $client
++     */
++    private SeedClient $client;
++
++    /**
++     */
++    public function testAdd(): void {
++        $testId = 'endpoints.put.add.0';
++        $this->client->endpoints->put->add(
++            'id',
++            [
++                'headers' => [
++                    'X-Test-Id' => 'endpoints.put.add.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "PUT",
++            "/id",
++            null,
++            1
++        );
++    }
++
++    /**
++     */
++    protected function setUp(): void {
++        parent::setUp();
++        $wiremockUrl = getenv('WIREMOCK_URL') ?: 'http://localhost:8080';
++        $this->client = new SeedClient(
++            token: 'test-token',
++        options: [
++            'baseUrl' => $wiremockUrl,
++        ],
++        );
++    }
++}
+diff --git a/tests/Wire/EndpointsUnionWireTest.php b/tests/Wire/EndpointsUnionWireTest.php
+new file mode 100644
+index 00000000000..bf7b21d129a
+--- /dev/null
++++ b/tests/Wire/EndpointsUnionWireTest.php
+@@ -0,0 +1,53 @@
++<?php
++
++namespace Seed\Tests;
++
++use Seed\Tests\Wire\WireMockTestCase;
++use Seed\SeedClient;
++use Seed\Types\Union\Types\Animal;
++use Seed\Types\Union\Types\Dog;
++
++class EndpointsUnionWireTest extends WireMockTestCase
++{
++    /**
++     * @var SeedClient $client
++     */
++    private SeedClient $client;
++
++    /**
++     */
++    public function testGetAndReturnUnion(): void {
++        $testId = 'endpoints.union.get_and_return_union.0';
++        $this->client->endpoints->union->getAndReturnUnion(
++            Animal::dog(new Dog([
++                'name' => 'name',
++                'likesToWoof' => true,
++            ])),
++            [
++                'headers' => [
++                    'X-Test-Id' => 'endpoints.union.get_and_return_union.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "POST",
++            "/union",
++            null,
++            1
++        );
++    }
++
++    /**
++     */
++    protected function setUp(): void {
++        parent::setUp();
++        $wiremockUrl = getenv('WIREMOCK_URL') ?: 'http://localhost:8080';
++        $this->client = new SeedClient(
++            token: 'test-token',
++        options: [
++            'baseUrl' => $wiremockUrl,
++        ],
++        );
++    }
++}
+diff --git a/tests/Wire/EndpointsUrlsWireTest.php b/tests/Wire/EndpointsUrlsWireTest.php
+new file mode 100644
+index 00000000000..285bc35265c
+--- /dev/null
++++ b/tests/Wire/EndpointsUrlsWireTest.php
+@@ -0,0 +1,107 @@
++<?php
++
++namespace Seed\Tests;
++
++use Seed\Tests\Wire\WireMockTestCase;
++use Seed\SeedClient;
++
++class EndpointsUrlsWireTest extends WireMockTestCase
++{
++    /**
++     * @var SeedClient $client
++     */
++    private SeedClient $client;
++
++    /**
++     */
++    public function testWithMixedCase(): void {
++        $testId = 'endpoints.urls.with_mixed_case.0';
++        $this->client->endpoints->urls->withMixedCase(
++            [
++                'headers' => [
++                    'X-Test-Id' => 'endpoints.urls.with_mixed_case.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "GET",
++            "/urls/MixedCase",
++            null,
++            1
++        );
++    }
++
++    /**
++     */
++    public function testNoEndingSlash(): void {
++        $testId = 'endpoints.urls.no_ending_slash.0';
++        $this->client->endpoints->urls->noEndingSlash(
++            [
++                'headers' => [
++                    'X-Test-Id' => 'endpoints.urls.no_ending_slash.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "GET",
++            "/urls/no-ending-slash",
++            null,
++            1
++        );
++    }
++
++    /**
++     */
++    public function testWithEndingSlash(): void {
++        $testId = 'endpoints.urls.with_ending_slash.0';
++        $this->client->endpoints->urls->withEndingSlash(
++            [
++                'headers' => [
++                    'X-Test-Id' => 'endpoints.urls.with_ending_slash.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "GET",
++            "/urls/with-ending-slash/",
++            null,
++            1
++        );
++    }
++
++    /**
++     */
++    public function testWithUnderscores(): void {
++        $testId = 'endpoints.urls.with_underscores.0';
++        $this->client->endpoints->urls->withUnderscores(
++            [
++                'headers' => [
++                    'X-Test-Id' => 'endpoints.urls.with_underscores.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "GET",
++            "/urls/with_underscores",
++            null,
++            1
++        );
++    }
++
++    /**
++     */
++    protected function setUp(): void {
++        parent::setUp();
++        $wiremockUrl = getenv('WIREMOCK_URL') ?: 'http://localhost:8080';
++        $this->client = new SeedClient(
++            token: 'test-token',
++        options: [
++            'baseUrl' => $wiremockUrl,
++        ],
++        );
++    }
++}
+diff --git a/tests/Wire/InlinedRequestsWireTest.php b/tests/Wire/InlinedRequestsWireTest.php
+new file mode 100644
+index 00000000000..8c4fef1c4d9
+--- /dev/null
++++ b/tests/Wire/InlinedRequestsWireTest.php
+@@ -0,0 +1,76 @@
++<?php
++
++namespace Seed\Tests;
++
++use Seed\Tests\Wire\WireMockTestCase;
++use Seed\SeedClient;
++use Seed\InlinedRequests\Requests\PostWithObjectBody;
++use Seed\Types\Object\Types\ObjectWithOptionalField;
++use DateTime;
++
++class InlinedRequestsWireTest extends WireMockTestCase
++{
++    /**
++     * @var SeedClient $client
++     */
++    private SeedClient $client;
++
++    /**
++     */
++    public function testPostWithObjectBodyandResponse(): void {
++        $testId = 'inlined_requests.post_with_object_bodyand_response.0';
++        $this->client->inlinedRequests->postWithObjectBodyandResponse(
++            new PostWithObjectBody([
++                'string' => 'string',
++                'integer' => 1,
++                'nestedObject' => new ObjectWithOptionalField([
++                    'string' => 'string',
++                    'integer' => 1,
++                    'long' => 1000000,
++                    'double' => 1.1,
++                    'bool' => true,
++                    'datetime' => new DateTime('2024-01-15T09:30:00Z'),
++                    'date' => new DateTime('2023-01-15'),
++                    'uuid' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
++                    'base64' => 'SGVsbG8gd29ybGQh',
++                    'list' => [
++                        'list',
++                        'list',
++                    ],
++                    'set' => [
++                        'set',
++                    ],
++                    'map' => [
++                        1 => 'map',
++                    ],
++                    'bigint' => '1000000',
++                ]),
++            ]),
++            [
++                'headers' => [
++                    'X-Test-Id' => 'inlined_requests.post_with_object_bodyand_response.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "POST",
++            "/req-bodies/object",
++            null,
++            1
++        );
++    }
++
++    /**
++     */
++    protected function setUp(): void {
++        parent::setUp();
++        $wiremockUrl = getenv('WIREMOCK_URL') ?: 'http://localhost:8080';
++        $this->client = new SeedClient(
++            token: 'test-token',
++        options: [
++            'baseUrl' => $wiremockUrl,
++        ],
++        );
++    }
++}
+diff --git a/tests/Wire/NoAuthWireTest.php b/tests/Wire/NoAuthWireTest.php
+new file mode 100644
+index 00000000000..29721bb1086
+--- /dev/null
++++ b/tests/Wire/NoAuthWireTest.php
+@@ -0,0 +1,50 @@
++<?php
++
++namespace Seed\Tests;
++
++use Seed\Tests\Wire\WireMockTestCase;
++use Seed\SeedClient;
++
++class NoAuthWireTest extends WireMockTestCase
++{
++    /**
++     * @var SeedClient $client
++     */
++    private SeedClient $client;
++
++    /**
++     */
++    public function testPostWithNoAuth(): void {
++        $testId = 'no_auth.post_with_no_auth.0';
++        $this->client->noAuth->postWithNoAuth(
++            [
++                'key' => "value",
++            ],
++            [
++                'headers' => [
++                    'X-Test-Id' => 'no_auth.post_with_no_auth.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "POST",
++            "/no-auth",
++            null,
++            1
++        );
++    }
++
++    /**
++     */
++    protected function setUp(): void {
++        parent::setUp();
++        $wiremockUrl = getenv('WIREMOCK_URL') ?: 'http://localhost:8080';
++        $this->client = new SeedClient(
++            token: 'test-token',
++        options: [
++            'baseUrl' => $wiremockUrl,
++        ],
++        );
++    }
++}
+diff --git a/tests/Wire/NoReqBodyWireTest.php b/tests/Wire/NoReqBodyWireTest.php
+new file mode 100644
+index 00000000000..2827d18015a
+--- /dev/null
++++ b/tests/Wire/NoReqBodyWireTest.php
+@@ -0,0 +1,67 @@
++<?php
++
++namespace Seed\Tests;
++
++use Seed\Tests\Wire\WireMockTestCase;
++use Seed\SeedClient;
++
++class NoReqBodyWireTest extends WireMockTestCase
++{
++    /**
++     * @var SeedClient $client
++     */
++    private SeedClient $client;
++
++    /**
++     */
++    public function testGetWithNoRequestBody(): void {
++        $testId = 'no_req_body.get_with_no_request_body.0';
++        $this->client->noReqBody->getWithNoRequestBody(
++            [
++                'headers' => [
++                    'X-Test-Id' => 'no_req_body.get_with_no_request_body.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "GET",
++            "/no-req-body",
++            null,
++            1
++        );
++    }
++
++    /**
++     */
++    public function testPostWithNoRequestBody(): void {
++        $testId = 'no_req_body.post_with_no_request_body.0';
++        $this->client->noReqBody->postWithNoRequestBody(
++            [
++                'headers' => [
++                    'X-Test-Id' => 'no_req_body.post_with_no_request_body.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "POST",
++            "/no-req-body",
++            null,
++            1
++        );
++    }
++
++    /**
++     */
++    protected function setUp(): void {
++        parent::setUp();
++        $wiremockUrl = getenv('WIREMOCK_URL') ?: 'http://localhost:8080';
++        $this->client = new SeedClient(
++            token: 'test-token',
++        options: [
++            'baseUrl' => $wiremockUrl,
++        ],
++        );
++    }
++}
+diff --git a/tests/Wire/ReqWithHeadersWireTest.php b/tests/Wire/ReqWithHeadersWireTest.php
+new file mode 100644
+index 00000000000..25784de5b1a
+--- /dev/null
++++ b/tests/Wire/ReqWithHeadersWireTest.php
+@@ -0,0 +1,53 @@
++<?php
++
++namespace Seed\Tests;
++
++use Seed\Tests\Wire\WireMockTestCase;
++use Seed\SeedClient;
++use Seed\ReqWithHeaders\Requests\ReqWithHeaders;
++
++class ReqWithHeadersWireTest extends WireMockTestCase
++{
++    /**
++     * @var SeedClient $client
++     */
++    private SeedClient $client;
++
++    /**
++     */
++    public function testGetWithCustomHeader(): void {
++        $testId = 'req_with_headers.get_with_custom_header.0';
++        $this->client->reqWithHeaders->getWithCustomHeader(
++            new ReqWithHeaders([
++                'xTestServiceHeader' => 'X-TEST-SERVICE-HEADER',
++                'xTestEndpointHeader' => 'X-TEST-ENDPOINT-HEADER',
++                'body' => 'string',
++            ]),
++            [
++                'headers' => [
++                    'X-Test-Id' => 'req_with_headers.get_with_custom_header.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "POST",
++            "/test-headers/custom-header",
++            null,
++            1
++        );
++    }
++
++    /**
++     */
++    protected function setUp(): void {
++        parent::setUp();
++        $wiremockUrl = getenv('WIREMOCK_URL') ?: 'http://localhost:8080';
++        $this->client = new SeedClient(
++            token: 'test-token',
++        options: [
++            'baseUrl' => $wiremockUrl,
++        ],
++        );
++    }
++}
+diff --git a/tests/Wire/WireMockTestCase.php b/tests/Wire/WireMockTestCase.php
+new file mode 100644
+index 00000000000..995ba76229b
+--- /dev/null
++++ b/tests/Wire/WireMockTestCase.php
+@@ -0,0 +1,88 @@
++<?php
++
++namespace Seed\Tests\Wire;
++
++use Http\Discovery\Psr17FactoryDiscovery;
++use Http\Discovery\Psr18ClientDiscovery;
++use PHPUnit\Framework\TestCase;
++use Seed\Core\Json\JsonEncoder;
++
++/**
++ * Base test case for WireMock-based wire tests.
++ *
++ * The WireMock container lifecycle is managed by the bootstrap file (tests/Wire/bootstrap.php)
++ * which starts the container once before all tests and stops it after all tests complete.
++ */
++abstract class WireMockTestCase extends TestCase
++{
++    /**
++     * Verifies the number of requests made to WireMock filtered by test ID for concurrency safety.
++     *
++     * @param string $testId The test ID used to filter requests
++     * @param string $method The HTTP method (GET, POST, etc.)
++     * @param string $urlPath The URL path to match
++     * @param array<string, string|array<string>>|null $queryParams Query parameters to match
++     * @param int $expected Expected number of requests
++     */
++    protected function verifyRequestCount(
++        string $testId,
++        string $method,
++        string $urlPath,
++        ?array $queryParams,
++        int $expected
++    ): void {
++        $client = Psr18ClientDiscovery::find();
++        $requestFactory = Psr17FactoryDiscovery::findRequestFactory();
++        $streamFactory = Psr17FactoryDiscovery::findStreamFactory();
++
++        $body = [
++            'method' => $method,
++            'urlPath' => $urlPath,
++            'headers' => [
++                'X-Test-Id' => ['equalTo' => $testId],
++            ],
++        ];
++        if ($queryParams !== null && $queryParams !== []) {
++            $body['queryParameters'] = [];
++            foreach ($queryParams as $k => $v) {
++                if (is_array($v)) {
++                    $matchers = [];
++                    foreach ($v as $item) {
++                        $matchers[] = ['equalTo' => (string) $item];
++                    }
++                    $body['queryParameters'][$k] = ['hasExactly' => $matchers];
++                } else {
++                    $body['queryParameters'][$k] = ['equalTo' => (string) $v];
++                }
++            }
++        }
++
++        $wiremockUrl = getenv('WIREMOCK_URL') ?: 'http://localhost:8080';
++        $request = $requestFactory->createRequest('POST', $wiremockUrl . '/__admin/requests/find')
++            ->withHeader('Content-Type', 'application/json')
++            ->withBody($streamFactory->createStream(JsonEncoder::encode($body)));
++        $response = $client->sendRequest($request);
++
++        $this->assertSame(200, $response->getStatusCode(), 'Failed to query WireMock requests');
++
++        $json = json_decode((string) $response->getBody(), true);
++        
++        // Ensure we have an array; otherwise, fail the test.
++        if (!is_array($json)) {
++            $this->fail('Expected WireMock to return a JSON object.');
++        }
++
++        /** @var array<string, mixed> $json */
++        $requests = [];
++        if (isset($json['requests']) && is_array($json['requests'])) {
++            $requests = $json['requests'];
++        }
++
++        /** @var array<int, mixed> $requests */
++        $this->assertCount(
++            $expected,
++            $requests,
++            sprintf('Expected %d requests, found %d', $expected, count($requests))
++        );
++    }
++}
+diff --git a/tests/Wire/bootstrap.php b/tests/Wire/bootstrap.php
+new file mode 100644
+index 00000000000..20026664131
+--- /dev/null
++++ b/tests/Wire/bootstrap.php
+@@ -0,0 +1,55 @@
++<?php
++
++/**
++ * Bootstrap file for wire tests.
++ *
++ * This file is loaded once before any tests run and manages the WireMock
++ * container lifecycle - starting it once at the beginning and stopping it
++ * after all tests complete.
++ */
++
++require_once __DIR__ . '/../../vendor/autoload.php';
++
++$projectRoot = \dirname(__DIR__, 2);
++$dockerComposeFile = $projectRoot . '/wiremock/docker-compose.test.yml';
++
++// If WIREMOCK_URL is already set (external orchestration), skip container management
++if (getenv('WIREMOCK_URL') !== false) {
++    return;
++}
++
++echo "\nStarting WireMock container...\n";
++$cmd = sprintf(
++    'docker compose -f %s up -d --wait 2>&1',
++    escapeshellarg($dockerComposeFile)
++);
++exec($cmd, $output, $exitCode);
++if ($exitCode !== 0) {
++    throw new \RuntimeException("Failed to start WireMock: " . implode("\n", $output));
++}
++
++// Discover the dynamically assigned port
++$portCmd = sprintf(
++    'docker compose -f %s port wiremock 8080 2>&1',
++    escapeshellarg($dockerComposeFile)
++);
++exec($portCmd, $portOutput, $portExitCode);
++if ($portExitCode === 0 && !empty($portOutput[0])) {
++    $parts = explode(':', $portOutput[0]);
++    $port = end($parts);
++    putenv("WIREMOCK_URL=http://localhost:{$port}");
++    echo "WireMock container is ready on port {$port}\n";
++} else {
++    putenv('WIREMOCK_URL=http://localhost:8080');
++    echo "WireMock container is ready (default port 8080)\n";
++}
++
++// Register shutdown function to stop the container after all tests complete
++register_shutdown_function(function () use ($dockerComposeFile) {
++    echo "\nStopping WireMock container...\n";
++    $cmd = sprintf(
++        'docker compose -f %s down -v 2>&1',
++        escapeshellarg($dockerComposeFile)
++    );
++    exec($cmd);
++});
+diff --git a/wiremock/docker-compose.test.yml b/wiremock/docker-compose.test.yml
+new file mode 100644
+index 00000000000..58747d54a46
+--- /dev/null
++++ b/wiremock/docker-compose.test.yml
+@@ -0,0 +1,14 @@
++services:
++  wiremock:
++    image: wiremock/wiremock:3.9.1
++    ports:
++      - "0:8080"  # Use dynamic port to avoid conflicts with concurrent tests
++    volumes:
++      - ./wiremock-mappings.json:/home/wiremock/mappings/wiremock-mappings.json
++    command: ["--global-response-templating", "--verbose"]
++    healthcheck:
++      test: ["CMD", "curl", "-f", "http://localhost:8080/__admin/health"]
++      interval: 2s
++      timeout: 5s
++      retries: 15
++      start_period: 5s
+diff --git a/wiremock/wiremock-mappings.json b/wiremock/wiremock-mappings.json
+new file mode 100644
+index 00000000000..96fdfb6702d
+--- /dev/null
++++ b/wiremock/wiremock-mappings.json
+@@ -0,0 +1,1938 @@
++{
++  "mappings": [
++    {
++      "id": "864d58e6-0c08-4f38-b7e1-2638f8d7fd6d",
++      "name": "getAndReturnListOfPrimitives - default",
++      "request": {
++        "urlPathTemplate": "/container/list-of-primitives",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "[\n  \"string\",\n  \"string\"\n]",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "864d58e6-0c08-4f38-b7e1-2638f8d7fd6d",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "ac1d4c4f-a8a7-4c27-ae64-7fc977cfa122",
++      "name": "getAndReturnListOfObjects - default",
++      "request": {
++        "urlPathTemplate": "/container/list-of-objects",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "[\n  {\n    \"string\": \"string\"\n  },\n  {\n    \"string\": \"string\"\n  }\n]",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "ac1d4c4f-a8a7-4c27-ae64-7fc977cfa122",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "591d5c48-a536-452b-8a2e-ad7c23c38298",
++      "name": "getAndReturnSetOfPrimitives - default",
++      "request": {
++        "urlPathTemplate": "/container/set-of-primitives",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "[\n  \"string\"\n]",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "591d5c48-a536-452b-8a2e-ad7c23c38298",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "e1d5f52b-7a51-464f-ac8f-83c0345a3a35",
++      "name": "getAndReturnSetOfObjects - default",
++      "request": {
++        "urlPathTemplate": "/container/set-of-objects",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "[\n  {\n    \"string\": \"string\"\n  }\n]",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "e1d5f52b-7a51-464f-ac8f-83c0345a3a35",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "4b1d33b3-ca7d-462a-a2e3-23d531ae2922",
++      "name": "getAndReturnMapPrimToPrim - default",
++      "request": {
++        "urlPathTemplate": "/container/map-prim-to-prim",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "{\n  \"string\": \"string\"\n}",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "4b1d33b3-ca7d-462a-a2e3-23d531ae2922",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "b01ac2b9-3470-48aa-badc-57d331bb5a49",
++      "name": "getAndReturnMapOfPrimToObject - default",
++      "request": {
++        "urlPathTemplate": "/container/map-prim-to-object",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "{\n  \"string\": {\n    \"string\": \"string\"\n  }\n}",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "b01ac2b9-3470-48aa-badc-57d331bb5a49",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "eaf9315d-55c4-4434-8004-a70c25af5656",
++      "name": "getAndReturnMapOfPrimToUndiscriminatedUnion - default",
++      "request": {
++        "urlPathTemplate": "/container/map-prim-to-union",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "{\n  \"string\": 1.1\n}",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "eaf9315d-55c4-4434-8004-a70c25af5656",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "e5271904-de0a-425f-940d-d6f6bde34755",
++      "name": "getAndReturnOptional - default",
++      "request": {
++        "urlPathTemplate": "/container/opt-objects",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "{\n  \"string\": \"string\"\n}",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "e5271904-de0a-425f-940d-d6f6bde34755",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "d19e1fbe-79cc-465c-962e-e1866ca2361b",
++      "name": "postJsonPatchContentType - default",
++      "request": {
++        "urlPathTemplate": "/foo/bar",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "\"\"",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "d19e1fbe-79cc-465c-962e-e1866ca2361b",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "4a107cf5-6284-48f8-9ddb-99d944ba989b",
++      "name": "postJsonPatchContentWithCharsetType - default",
++      "request": {
++        "urlPathTemplate": "/foo/baz",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "\"\"",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "4a107cf5-6284-48f8-9ddb-99d944ba989b",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "60fd3c8a-3983-41b9-8178-f42997388900",
++      "name": "getAndReturnEnum - default",
++      "request": {
++        "urlPathTemplate": "/enum",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "\"SUNNY\"",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "60fd3c8a-3983-41b9-8178-f42997388900",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "3d95c052-db6e-4eff-95f2-895666a5af54",
++      "name": "testGet - default",
++      "request": {
++        "urlPathTemplate": "/http-methods/{id}",
++        "method": "GET",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        },
++        "pathParameters": {
++          "id": {
++            "equalTo": "id"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "\"string\"",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "3d95c052-db6e-4eff-95f2-895666a5af54",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "2552873f-9f1d-4557-a6c7-6c6b7a55b566",
++      "name": "testPost - default",
++      "request": {
++        "urlPathTemplate": "/http-methods",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "{\n  \"string\": \"string\",\n  \"integer\": 1,\n  \"long\": 1000000,\n  \"double\": 1.1,\n  \"bool\": true,\n  \"datetime\": \"2024-01-15T09:30:00Z\",\n  \"date\": \"2023-01-15\",\n  \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n  \"base64\": \"SGVsbG8gd29ybGQh\",\n  \"list\": [\n    \"list\",\n    \"list\"\n  ],\n  \"set\": [\n    \"set\"\n  ],\n  \"map\": {\n    \"1\": \"map\"\n  },\n  \"bigint\": \"1000000\"\n}",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "2552873f-9f1d-4557-a6c7-6c6b7a55b566",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "db42fbdf-5426-41b7-b7ea-28ed39a38e82",
++      "name": "testPut - default",
++      "request": {
++        "urlPathTemplate": "/http-methods/{id}",
++        "method": "PUT",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        },
++        "pathParameters": {
++          "id": {
++            "equalTo": "id"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "{\n  \"string\": \"string\",\n  \"integer\": 1,\n  \"long\": 1000000,\n  \"double\": 1.1,\n  \"bool\": true,\n  \"datetime\": \"2024-01-15T09:30:00Z\",\n  \"date\": \"2023-01-15\",\n  \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n  \"base64\": \"SGVsbG8gd29ybGQh\",\n  \"list\": [\n    \"list\",\n    \"list\"\n  ],\n  \"set\": [\n    \"set\"\n  ],\n  \"map\": {\n    \"1\": \"map\"\n  },\n  \"bigint\": \"1000000\"\n}",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "db42fbdf-5426-41b7-b7ea-28ed39a38e82",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "c9def317-32a0-4bc0-b9b6-5efae8ca44a6",
++      "name": "testPatch - default",
++      "request": {
++        "urlPathTemplate": "/http-methods/{id}",
++        "method": "PATCH",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        },
++        "pathParameters": {
++          "id": {
++            "equalTo": "id"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "{\n  \"string\": \"string\",\n  \"integer\": 1,\n  \"long\": 1000000,\n  \"double\": 1.1,\n  \"bool\": true,\n  \"datetime\": \"2024-01-15T09:30:00Z\",\n  \"date\": \"2023-01-15\",\n  \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n  \"base64\": \"SGVsbG8gd29ybGQh\",\n  \"list\": [\n    \"list\",\n    \"list\"\n  ],\n  \"set\": [\n    \"set\"\n  ],\n  \"map\": {\n    \"1\": \"map\"\n  },\n  \"bigint\": \"1000000\"\n}",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "c9def317-32a0-4bc0-b9b6-5efae8ca44a6",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "05333635-c9ce-4c1a-bb6d-95e8a0fb80dc",
++      "name": "testDelete - default",
++      "request": {
++        "urlPathTemplate": "/http-methods/{id}",
++        "method": "DELETE",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        },
++        "pathParameters": {
++          "id": {
++            "equalTo": "id"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "true",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "05333635-c9ce-4c1a-bb6d-95e8a0fb80dc",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "41cdef0e-040f-4d08-8426-87b19e60f7d7",
++      "name": "getAndReturnWithOptionalField - default",
++      "request": {
++        "urlPathTemplate": "/object/get-and-return-with-optional-field",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "{\n  \"string\": \"string\",\n  \"integer\": 1,\n  \"long\": 1000000,\n  \"double\": 1.1,\n  \"bool\": true,\n  \"datetime\": \"2024-01-15T09:30:00Z\",\n  \"date\": \"2023-01-15\",\n  \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n  \"base64\": \"SGVsbG8gd29ybGQh\",\n  \"list\": [\n    \"list\",\n    \"list\"\n  ],\n  \"set\": [\n    \"set\"\n  ],\n  \"map\": {\n    \"1\": \"map\"\n  },\n  \"bigint\": \"1000000\"\n}",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "41cdef0e-040f-4d08-8426-87b19e60f7d7",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "f74df550-df8c-4503-b202-0b9b3165c1a7",
++      "name": "getAndReturnWithRequiredField - default",
++      "request": {
++        "urlPathTemplate": "/object/get-and-return-with-required-field",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "{\n  \"string\": \"string\"\n}",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "f74df550-df8c-4503-b202-0b9b3165c1a7",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "0c904dbb-ce54-48a2-8364-13a4989be7f2",
++      "name": "getAndReturnWithMapOfMap - default",
++      "request": {
++        "urlPathTemplate": "/object/get-and-return-with-map-of-map",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "{\n  \"map\": {\n    \"map\": {\n      \"map\": \"map\"\n    }\n  }\n}",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "0c904dbb-ce54-48a2-8364-13a4989be7f2",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "67e969fc-ff81-4a67-9858-66a29ffc9b72",
++      "name": "getAndReturnNestedWithOptionalField - default",
++      "request": {
++        "urlPathTemplate": "/object/get-and-return-nested-with-optional-field",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "{\n  \"string\": \"string\",\n  \"NestedObject\": {\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n      \"list\",\n      \"list\"\n    ],\n    \"set\": [\n      \"set\"\n    ],\n    \"map\": {\n      \"1\": \"map\"\n    },\n    \"bigint\": \"1000000\"\n  }\n}",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "67e969fc-ff81-4a67-9858-66a29ffc9b72",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "169827d0-4247-4236-8cef-34b94d2659de",
++      "name": "getAndReturnNestedWithRequiredField - default",
++      "request": {
++        "urlPathTemplate": "/object/get-and-return-nested-with-required-field/{string}",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        },
++        "pathParameters": {
++          "string": {
++            "equalTo": "string"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "{\n  \"string\": \"string\",\n  \"NestedObject\": {\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n      \"list\",\n      \"list\"\n    ],\n    \"set\": [\n      \"set\"\n    ],\n    \"map\": {\n      \"1\": \"map\"\n    },\n    \"bigint\": \"1000000\"\n  }\n}",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "169827d0-4247-4236-8cef-34b94d2659de",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "6d9ed308-5724-4bbc-a4f7-28dc264d188f",
++      "name": "getAndReturnNestedWithRequiredFieldAsList - default",
++      "request": {
++        "urlPathTemplate": "/object/get-and-return-nested-with-required-field-list",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "{\n  \"string\": \"string\",\n  \"NestedObject\": {\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n      \"list\",\n      \"list\"\n    ],\n    \"set\": [\n      \"set\"\n    ],\n    \"map\": {\n      \"1\": \"map\"\n    },\n    \"bigint\": \"1000000\"\n  }\n}",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "6d9ed308-5724-4bbc-a4f7-28dc264d188f",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "17b25d66-354e-4190-b305-39b7b33f7da8",
++      "name": "getAndReturnWithUnknownField - BackslashExample",
++      "request": {
++        "urlPathTemplate": "/object/get-and-return-with-unknown-field",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "{\n  \"unknown\": {\n    \"$ref\": \"https://example.com/schema\"\n  }\n}",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "17b25d66-354e-4190-b305-39b7b33f7da8",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "4bc6dad1-b68d-4f0f-bda5-bf9d3730a4c4",
++      "name": "getAndReturnWithDocumentedUnknownType - default",
++      "request": {
++        "urlPathTemplate": "/object/get-and-return-with-documented-unknown-type",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "{\n  \"documentedUnknownType\": {\n    \"key\": \"value\"\n  }\n}",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "4bc6dad1-b68d-4f0f-bda5-bf9d3730a4c4",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "0161c3cd-1ed7-4fa7-8cd2-1ea1d2a8ba1b",
++      "name": "getAndReturnMapOfDocumentedUnknownType - default",
++      "request": {
++        "urlPathTemplate": "/object/get-and-return-map-of-documented-unknown-type",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "{\n  \"string\": {\n    \"key\": \"value\"\n  }\n}",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "0161c3cd-1ed7-4fa7-8cd2-1ea1d2a8ba1b",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "d1d11f31-5ad4-4275-8b59-064ee4a550fb",
++      "name": "getAndReturnWithMixedRequiredAndOptionalFields - PartialRequiredFields",
++      "request": {
++        "urlPathTemplate": "/object/get-and-return-with-mixed-required-and-optional-fields",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "{\n  \"requiredString\": \"hello\",\n  \"requiredInteger\": 0,\n  \"optionalString\": \"world\",\n  \"requiredLong\": 0\n}",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "d1d11f31-5ad4-4275-8b59-064ee4a550fb",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "7b973449-cd5b-4771-80f7-d39dbd6c1429",
++      "name": "getAndReturnWithRequiredNestedObject - NestedObjectMissing",
++      "request": {
++        "urlPathTemplate": "/object/get-and-return-with-required-nested-object",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "{\n  \"requiredString\": \"hello\",\n  \"requiredObject\": {\n    \"string\": \"nested\",\n    \"NestedObject\": {}\n  }\n}",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "7b973449-cd5b-4771-80f7-d39dbd6c1429",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "15cf06f4-31a9-4147-a8d4-88d5ad543d35",
++      "name": "getAndReturnWithDatetimeLikeString - DatetimeLikeStringExample",
++      "request": {
++        "urlPathTemplate": "/object/get-and-return-with-datetime-like-string",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "{\n  \"datetimeLikeString\": \"2023-08-31T14:15:22Z\",\n  \"actualDatetime\": \"2023-08-31T14:15:22Z\"\n}",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "15cf06f4-31a9-4147-a8d4-88d5ad543d35",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "f15b2079-2482-4ed2-951d-d2b5c4de9afd",
++      "name": "listItems - default",
++      "request": {
++        "urlPathTemplate": "/pagination",
++        "method": "GET",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        },
++        "queryParameters": {
++          "cursor": {
++            "equalTo": "cursor"
++          },
++          "limit": {
++            "equalTo": "1"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "{\n  \"items\": [\n    {\n      \"string\": \"string\"\n    },\n    {\n      \"string\": \"string\"\n    }\n  ],\n  \"next\": \"next\"\n}",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "f15b2079-2482-4ed2-951d-d2b5c4de9afd",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      },
++      "postServeActions": []
++    },
++    {
++      "id": "97806fdb-f31f-4f90-84b8-f9cc1713d53d",
++      "name": "getWithPath - default",
++      "request": {
++        "urlPathTemplate": "/params/path/{param}",
++        "method": "GET",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        },
++        "pathParameters": {
++          "param": {
++            "equalTo": "param"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "\"string\"",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "97806fdb-f31f-4f90-84b8-f9cc1713d53d",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "711fc64f-4af9-4084-8c29-1e7a9e58be70",
++      "name": "getWithInlinePath - default",
++      "request": {
++        "urlPathTemplate": "/params/path/{param}",
++        "method": "GET",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        },
++        "pathParameters": {
++          "param": {
++            "equalTo": "param"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "\"string\"",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "711fc64f-4af9-4084-8c29-1e7a9e58be70",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "8e5739b3-d75f-47d7-b6b8-a663d91a66b5",
++      "name": "getWithQuery - default",
++      "request": {
++        "urlPathTemplate": "/params",
++        "method": "GET",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        },
++        "queryParameters": {
++          "query": {
++            "equalTo": "query"
++          },
++          "number": {
++            "equalTo": "1"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "\"\"",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "8e5739b3-d75f-47d7-b6b8-a663d91a66b5",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      },
++      "postServeActions": []
++    },
++    {
++      "id": "4125d349-732b-4ff7-948d-1eeb977ed13b",
++      "name": "getWithAllowMultipleQuery - default",
++      "request": {
++        "urlPathTemplate": "/params",
++        "method": "GET",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        },
++        "queryParameters": {
++          "query": {
++            "equalTo": "query"
++          },
++          "number": {
++            "equalTo": "1"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "\"\"",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "4125d349-732b-4ff7-948d-1eeb977ed13b",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      },
++      "postServeActions": []
++    },
++    {
++      "id": "1933d96a-a1b9-4cf1-85ba-c1e8eff5bd56",
++      "name": "getWithPathAndQuery - default",
++      "request": {
++        "urlPathTemplate": "/params/path-query/{param}",
++        "method": "GET",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        },
++        "pathParameters": {
++          "param": {
++            "equalTo": "param"
++          }
++        },
++        "queryParameters": {
++          "query": {
++            "equalTo": "query"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "\"\"",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "1933d96a-a1b9-4cf1-85ba-c1e8eff5bd56",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "c4f5012a-fb3f-45ac-b695-beedc3353ad8",
++      "name": "getWithInlinePathAndQuery - default",
++      "request": {
++        "urlPathTemplate": "/params/path-query/{param}",
++        "method": "GET",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        },
++        "pathParameters": {
++          "param": {
++            "equalTo": "param"
++          }
++        },
++        "queryParameters": {
++          "query": {
++            "equalTo": "query"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "\"\"",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "c4f5012a-fb3f-45ac-b695-beedc3353ad8",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "046bf7d6-751b-48e9-bfc6-ff74a17e88e1",
++      "name": "modifyWithPath - default",
++      "request": {
++        "urlPathTemplate": "/params/path/{param}",
++        "method": "PUT",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        },
++        "pathParameters": {
++          "param": {
++            "equalTo": "param"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "\"string\"",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "046bf7d6-751b-48e9-bfc6-ff74a17e88e1",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "6bfc7195-b99c-4449-bf47-7c4f74f6f33b",
++      "name": "modifyWithInlinePath - default",
++      "request": {
++        "urlPathTemplate": "/params/path/{param}",
++        "method": "PUT",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        },
++        "pathParameters": {
++          "param": {
++            "equalTo": "param"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "\"string\"",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "6bfc7195-b99c-4449-bf47-7c4f74f6f33b",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "25a5031e-ad21-4379-8965-4732818bb823",
++      "name": "getWithBooleanPath - default",
++      "request": {
++        "urlPathTemplate": "/params/path-bool/{param}",
++        "method": "GET",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        },
++        "pathParameters": {
++          "param": {
++            "equalTo": "true"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "\"string\"",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "25a5031e-ad21-4379-8965-4732818bb823",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "6898aaa2-3e4b-403e-a91f-473b4eb84b93",
++      "name": "getWithPathAndErrors - default",
++      "request": {
++        "urlPathTemplate": "/params/path/{param}",
++        "method": "GET",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        },
++        "pathParameters": {
++          "param": {
++            "equalTo": "param"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "\"string\"",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "6898aaa2-3e4b-403e-a91f-473b4eb84b93",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "0506ae7c-87b7-4cd2-9e50-31d60f81893f",
++      "name": "getAndReturnString - default",
++      "request": {
++        "urlPathTemplate": "/primitive/string",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "\"string\"",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "0506ae7c-87b7-4cd2-9e50-31d60f81893f",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "67f875d1-e19e-440d-8f0c-7e1d24ef2619",
++      "name": "getAndReturnInt - default",
++      "request": {
++        "urlPathTemplate": "/primitive/integer",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "1",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "67f875d1-e19e-440d-8f0c-7e1d24ef2619",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "5fadbebd-86c0-41f9-8be5-864e39eb5924",
++      "name": "getAndReturnLong - default",
++      "request": {
++        "urlPathTemplate": "/primitive/long",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "1000000",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "5fadbebd-86c0-41f9-8be5-864e39eb5924",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "e03872b6-86b1-490b-9195-86e5d3a014f2",
++      "name": "getAndReturnDouble - default",
++      "request": {
++        "urlPathTemplate": "/primitive/double",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "1.1",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "e03872b6-86b1-490b-9195-86e5d3a014f2",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "442e632f-890a-4105-9448-f7015127e3b4",
++      "name": "getAndReturnBool - default",
++      "request": {
++        "urlPathTemplate": "/primitive/boolean",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "true",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "442e632f-890a-4105-9448-f7015127e3b4",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "ad76fa81-1e63-43fd-9a99-1d5e4339d98c",
++      "name": "getAndReturnDatetime - default",
++      "request": {
++        "urlPathTemplate": "/primitive/datetime",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "\"2024-01-15T09:30:00Z\"",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "ad76fa81-1e63-43fd-9a99-1d5e4339d98c",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "afb524b1-54ab-4674-8446-fdd574c368cc",
++      "name": "getAndReturnDate - default",
++      "request": {
++        "urlPathTemplate": "/primitive/date",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "\"2023-01-15\"",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "afb524b1-54ab-4674-8446-fdd574c368cc",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "969c0f3a-218a-45b7-b17f-64b1a9307d43",
++      "name": "getAndReturnUUID - default",
++      "request": {
++        "urlPathTemplate": "/primitive/uuid",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "969c0f3a-218a-45b7-b17f-64b1a9307d43",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "04baa20d-d318-40e6-9784-c40158c16acd",
++      "name": "getAndReturnBase64 - default",
++      "request": {
++        "urlPathTemplate": "/primitive/base64",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "\"SGVsbG8gd29ybGQh\"",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "04baa20d-d318-40e6-9784-c40158c16acd",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "fddd5aaf-ab0d-4ef6-949c-5d329f6d7eb2",
++      "name": "Put - default",
++      "request": {
++        "urlPathTemplate": "/{id}",
++        "method": "PUT",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        },
++        "pathParameters": {
++          "id": {
++            "equalTo": "id"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "{\n  \"errors\": [\n    {\n      \"category\": \"API_ERROR\",\n      \"code\": \"INTERNAL_SERVER_ERROR\",\n      \"detail\": \"detail\",\n      \"field\": \"field\"\n    },\n    {\n      \"category\": \"API_ERROR\",\n      \"code\": \"INTERNAL_SERVER_ERROR\",\n      \"detail\": \"detail\",\n      \"field\": \"field\"\n    }\n  ]\n}",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "fddd5aaf-ab0d-4ef6-949c-5d329f6d7eb2",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "d29330f9-49ff-49c4-9081-7c83dbad315b",
++      "name": "getAndReturnUnion - default",
++      "request": {
++        "urlPathTemplate": "/union",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "{\n  \"animal\": \"dog\",\n  \"name\": \"name\",\n  \"likesToWoof\": true\n}",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "d29330f9-49ff-49c4-9081-7c83dbad315b",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "343f71f3-36ce-4684-b762-d60a086b43a4",
++      "name": "withMixedCase - default",
++      "request": {
++        "urlPathTemplate": "/urls/MixedCase",
++        "method": "GET",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "\"string\"",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "343f71f3-36ce-4684-b762-d60a086b43a4",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      },
++      "postServeActions": []
++    },
++    {
++      "id": "48f36314-b2b7-4910-9e1d-5b05f3346a60",
++      "name": "noEndingSlash - default",
++      "request": {
++        "urlPathTemplate": "/urls/no-ending-slash",
++        "method": "GET",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "\"string\"",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "48f36314-b2b7-4910-9e1d-5b05f3346a60",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      },
++      "postServeActions": []
++    },
++    {
++      "id": "f7b95029-2f25-4f70-8b4c-0855712747d8",
++      "name": "withEndingSlash - default",
++      "request": {
++        "urlPathTemplate": "/urls/with-ending-slash/",
++        "method": "GET",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "\"string\"",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "f7b95029-2f25-4f70-8b4c-0855712747d8",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      },
++      "postServeActions": []
++    },
++    {
++      "id": "2f9671a5-e6da-43a8-be27-d0be0191dcbf",
++      "name": "withUnderscores - default",
++      "request": {
++        "urlPathTemplate": "/urls/with_underscores",
++        "method": "GET",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "\"string\"",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "2f9671a5-e6da-43a8-be27-d0be0191dcbf",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      },
++      "postServeActions": []
++    },
++    {
++      "id": "4a6d0aaa-05f2-47bb-9f40-6e3743b9d2bf",
++      "name": "postWithObjectBodyandResponse - default",
++      "request": {
++        "urlPathTemplate": "/req-bodies/object",
++        "method": "POST"
++      },
++      "response": {
++        "status": 200,
++        "body": "{\n  \"string\": \"string\",\n  \"integer\": 1,\n  \"long\": 1000000,\n  \"double\": 1.1,\n  \"bool\": true,\n  \"datetime\": \"2024-01-15T09:30:00Z\",\n  \"date\": \"2023-01-15\",\n  \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n  \"base64\": \"SGVsbG8gd29ybGQh\",\n  \"list\": [\n    \"list\",\n    \"list\"\n  ],\n  \"set\": [\n    \"set\"\n  ],\n  \"map\": {\n    \"1\": \"map\"\n  },\n  \"bigint\": \"1000000\"\n}",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "4a6d0aaa-05f2-47bb-9f40-6e3743b9d2bf",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "c6e7cc6c-b76f-4860-a9ad-52dc8f55b6e6",
++      "name": "postWithNoAuth - default",
++      "request": {
++        "urlPathTemplate": "/no-auth",
++        "method": "POST"
++      },
++      "response": {
++        "status": 200,
++        "body": "true",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "c6e7cc6c-b76f-4860-a9ad-52dc8f55b6e6",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "8098eeea-bc6b-4068-9601-566c2092f83f",
++      "name": "getWithNoRequestBody - default",
++      "request": {
++        "urlPathTemplate": "/no-req-body",
++        "method": "GET",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "{\n  \"string\": \"string\",\n  \"integer\": 1,\n  \"long\": 1000000,\n  \"double\": 1.1,\n  \"bool\": true,\n  \"datetime\": \"2024-01-15T09:30:00Z\",\n  \"date\": \"2023-01-15\",\n  \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n  \"base64\": \"SGVsbG8gd29ybGQh\",\n  \"list\": [\n    \"list\",\n    \"list\"\n  ],\n  \"set\": [\n    \"set\"\n  ],\n  \"map\": {\n    \"1\": \"map\"\n  },\n  \"bigint\": \"1000000\"\n}",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "8098eeea-bc6b-4068-9601-566c2092f83f",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      },
++      "postServeActions": []
++    },
++    {
++      "id": "7dd9f944-1b35-42e9-a5ed-e48214ac8e91",
++      "name": "postWithNoRequestBody - default",
++      "request": {
++        "urlPathTemplate": "/no-req-body",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "\"string\"",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "7dd9f944-1b35-42e9-a5ed-e48214ac8e91",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "d7b54168-aef4-4d68-a9c5-446e97dee2fc",
++      "name": "getWithCustomHeader - default",
++      "request": {
++        "urlPathTemplate": "/test-headers/custom-header",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "\"\"",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "d7b54168-aef4-4d68-a9c5-446e97dee2fc",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    }
++  ],
++  "meta": {
++    "total": 59
++  }
++}
+\ No newline at end of file

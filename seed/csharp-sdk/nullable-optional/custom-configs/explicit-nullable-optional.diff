@@ -1,0 +1,553 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 5e4188a44b1..0993de70afd 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,7 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-csharp-sdk",
+   "generatorVersion": "local",
+-  "generatorConfig": {},
++  "generatorConfig": {
++    "experimental-explicit-nullable-optional": true
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "ci",
+diff --git a/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs b/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs
+index b66cb683522..0d9e10c70f7 100644
+--- a/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs
++++ b/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs
+@@ -226,7 +226,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
+             .Add("limit", request.Limit)
+             .Add("offset", request.Offset)
+             .Add("includeDeleted", request.IncludeDeleted)
+-            .Add("sortBy", request.SortBy)
++            .Add("sortBy", request.SortBy.IsDefined ? request.SortBy.Value : null)
+             .MergeAdditional(options?.AdditionalQueryParameters)
+             .Build();
+         var _headers = await new SeedNullableOptional.Core.HeadersBuilder.Builder()
+@@ -299,7 +299,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
+             .Add("query", request.Query)
+             .Add("department", request.Department)
+             .Add("role", request.Role)
+-            .Add("isActive", request.IsActive)
++            .Add("isActive", request.IsActive.IsDefined ? request.IsActive.Value : null)
+             .MergeAdditional(options?.AdditionalQueryParameters)
+             .Build();
+         var _headers = await new SeedNullableOptional.Core.HeadersBuilder.Builder()
+@@ -643,7 +643,10 @@ public partial class NullableOptionalClient : INullableOptionalClient
+         var _queryString = new SeedNullableOptional.Core.QueryStringBuilder.Builder(capacity: 3)
+             .Add("role", request.Role)
+             .Add("status", request.Status)
+-            .Add("secondaryRole", request.SecondaryRole)
++            .Add(
++                "secondaryRole",
++                request.SecondaryRole.IsDefined ? request.SecondaryRole.Value : null
++            )
+             .MergeAdditional(options?.AdditionalQueryParameters)
+             .Build();
+         var _headers = await new SeedNullableOptional.Core.HeadersBuilder.Builder()
+diff --git a/src/SeedNullableOptional/NullableOptional/Requests/FilterByRoleRequest.cs b/src/SeedNullableOptional/NullableOptional/Requests/FilterByRoleRequest.cs
+index 3ccaaa19a00..0a5eebfcd05 100644
+--- a/src/SeedNullableOptional/NullableOptional/Requests/FilterByRoleRequest.cs
++++ b/src/SeedNullableOptional/NullableOptional/Requests/FilterByRoleRequest.cs
+@@ -13,7 +13,7 @@ public record FilterByRoleRequest
+     public UserStatus? Status { get; set; }
+ 
+     [JsonIgnore]
+-    public UserRole? SecondaryRole { get; set; }
++    public Optional<UserRole?> SecondaryRole { get; set; }
+ 
+     /// <inheritdoc />
+     public override string ToString()
+diff --git a/src/SeedNullableOptional/NullableOptional/Requests/ListUsersRequest.cs b/src/SeedNullableOptional/NullableOptional/Requests/ListUsersRequest.cs
+index 222838cefb8..a9d9e968486 100644
+--- a/src/SeedNullableOptional/NullableOptional/Requests/ListUsersRequest.cs
++++ b/src/SeedNullableOptional/NullableOptional/Requests/ListUsersRequest.cs
+@@ -16,7 +16,7 @@ public record ListUsersRequest
+     public bool? IncludeDeleted { get; set; }
+ 
+     [JsonIgnore]
+-    public string? SortBy { get; set; }
++    public Optional<string?> SortBy { get; set; }
+ 
+     /// <inheritdoc />
+     public override string ToString()
+diff --git a/src/SeedNullableOptional/NullableOptional/Requests/SearchRequest.cs b/src/SeedNullableOptional/NullableOptional/Requests/SearchRequest.cs
+index 2e47b151dbc..17b7d9cb949 100644
+--- a/src/SeedNullableOptional/NullableOptional/Requests/SearchRequest.cs
++++ b/src/SeedNullableOptional/NullableOptional/Requests/SearchRequest.cs
+@@ -9,9 +9,11 @@ public record SearchRequest
+     [JsonPropertyName("query")]
+     public required string Query { get; set; }
+ 
++    [Optional]
+     [JsonPropertyName("filters")]
+     public Dictionary<string, string?>? Filters { get; set; }
+ 
++    [Nullable]
+     [JsonPropertyName("includeTypes")]
+     public IEnumerable<string>? IncludeTypes { get; set; }
+ 
+diff --git a/src/SeedNullableOptional/NullableOptional/Requests/SearchUsersRequest.cs b/src/SeedNullableOptional/NullableOptional/Requests/SearchUsersRequest.cs
+index caa8dc11195..4fc6b935061 100644
+--- a/src/SeedNullableOptional/NullableOptional/Requests/SearchUsersRequest.cs
++++ b/src/SeedNullableOptional/NullableOptional/Requests/SearchUsersRequest.cs
+@@ -16,7 +16,7 @@ public record SearchUsersRequest
+     public string? Role { get; set; }
+ 
+     [JsonIgnore]
+-    public bool? IsActive { get; set; }
++    public Optional<bool?> IsActive { get; set; }
+ 
+     /// <inheritdoc />
+     public override string ToString()
+diff --git a/src/SeedNullableOptional/NullableOptional/Requests/UpdateComplexProfileRequest.cs b/src/SeedNullableOptional/NullableOptional/Requests/UpdateComplexProfileRequest.cs
+index dca447283be..3f0ecb1cea4 100644
+--- a/src/SeedNullableOptional/NullableOptional/Requests/UpdateComplexProfileRequest.cs
++++ b/src/SeedNullableOptional/NullableOptional/Requests/UpdateComplexProfileRequest.cs
+@@ -6,20 +6,25 @@ namespace SeedNullableOptional;
+ [Serializable]
+ public record UpdateComplexProfileRequest
+ {
++    [Nullable, Optional]
+     [JsonPropertyName("nullableRole")]
+-    public UserRole? NullableRole { get; set; }
++    public Optional<UserRole?> NullableRole { get; set; }
+ 
++    [Nullable, Optional]
+     [JsonPropertyName("nullableStatus")]
+-    public UserStatus? NullableStatus { get; set; }
++    public Optional<UserStatus?> NullableStatus { get; set; }
+ 
++    [Nullable, Optional]
+     [JsonPropertyName("nullableNotification")]
+-    public NotificationMethod? NullableNotification { get; set; }
++    public Optional<NotificationMethod?> NullableNotification { get; set; }
+ 
++    [Nullable, Optional]
+     [JsonPropertyName("nullableSearchResult")]
+-    public SearchResult? NullableSearchResult { get; set; }
++    public Optional<SearchResult?> NullableSearchResult { get; set; }
+ 
++    [Nullable, Optional]
+     [JsonPropertyName("nullableArray")]
+-    public IEnumerable<string>? NullableArray { get; set; }
++    public Optional<IEnumerable<string>?> NullableArray { get; set; }
+ 
+     /// <inheritdoc />
+     public override string ToString()
+diff --git a/src/SeedNullableOptional/NullableOptional/Requests/UpdateTagsRequest.cs b/src/SeedNullableOptional/NullableOptional/Requests/UpdateTagsRequest.cs
+index 35ee1584e9e..a106641058e 100644
+--- a/src/SeedNullableOptional/NullableOptional/Requests/UpdateTagsRequest.cs
++++ b/src/SeedNullableOptional/NullableOptional/Requests/UpdateTagsRequest.cs
+@@ -6,14 +6,17 @@ namespace SeedNullableOptional;
+ [Serializable]
+ public record UpdateTagsRequest
+ {
++    [Nullable]
+     [JsonPropertyName("tags")]
+     public IEnumerable<string>? Tags { get; set; }
+ 
++    [Optional]
+     [JsonPropertyName("categories")]
+     public IEnumerable<string>? Categories { get; set; }
+ 
++    [Nullable, Optional]
+     [JsonPropertyName("labels")]
+-    public IEnumerable<string>? Labels { get; set; }
++    public Optional<IEnumerable<string>?> Labels { get; set; }
+ 
+     /// <inheritdoc />
+     public override string ToString()
+diff --git a/src/SeedNullableOptional/NullableOptional/Types/Address.cs b/src/SeedNullableOptional/NullableOptional/Types/Address.cs
+index 98679e873e6..b11cf14bffb 100644
+--- a/src/SeedNullableOptional/NullableOptional/Types/Address.cs
++++ b/src/SeedNullableOptional/NullableOptional/Types/Address.cs
+@@ -17,21 +17,26 @@ public record Address : IJsonOnDeserialized
+     [JsonPropertyName("street")]
+     public required string Street { get; set; }
+ 
++    [Nullable]
+     [JsonPropertyName("city")]
+     public string? City { get; set; }
+ 
++    [Optional]
+     [JsonPropertyName("state")]
+     public string? State { get; set; }
+ 
+     [JsonPropertyName("zipCode")]
+     public required string ZipCode { get; set; }
+ 
++    [Nullable, Optional]
+     [JsonPropertyName("country")]
+-    public string? Country { get; set; }
++    public Optional<string?> Country { get; set; }
+ 
++    [Nullable]
+     [JsonPropertyName("buildingId")]
+     public string? BuildingId { get; set; }
+ 
++    [Optional]
+     [JsonPropertyName("tenantId")]
+     public string? TenantId { get; set; }
+ 
+diff --git a/src/SeedNullableOptional/NullableOptional/Types/ComplexProfile.cs b/src/SeedNullableOptional/NullableOptional/Types/ComplexProfile.cs
+index b32896d459e..41fac698a43 100644
+--- a/src/SeedNullableOptional/NullableOptional/Types/ComplexProfile.cs
++++ b/src/SeedNullableOptional/NullableOptional/Types/ComplexProfile.cs
+@@ -17,57 +17,75 @@ public record ComplexProfile : IJsonOnDeserialized
+     [JsonPropertyName("id")]
+     public required string Id { get; set; }
+ 
++    [Nullable]
+     [JsonPropertyName("nullableRole")]
+     public UserRole? NullableRole { get; set; }
+ 
++    [Optional]
+     [JsonPropertyName("optionalRole")]
+     public UserRole? OptionalRole { get; set; }
+ 
++    [Nullable, Optional]
+     [JsonPropertyName("optionalNullableRole")]
+-    public UserRole? OptionalNullableRole { get; set; }
++    public Optional<UserRole?> OptionalNullableRole { get; set; }
+ 
++    [Nullable]
+     [JsonPropertyName("nullableStatus")]
+     public UserStatus? NullableStatus { get; set; }
+ 
++    [Optional]
+     [JsonPropertyName("optionalStatus")]
+     public UserStatus? OptionalStatus { get; set; }
+ 
++    [Nullable, Optional]
+     [JsonPropertyName("optionalNullableStatus")]
+-    public UserStatus? OptionalNullableStatus { get; set; }
++    public Optional<UserStatus?> OptionalNullableStatus { get; set; }
+ 
++    [Nullable]
+     [JsonPropertyName("nullableNotification")]
+     public NotificationMethod? NullableNotification { get; set; }
+ 
++    [Optional]
+     [JsonPropertyName("optionalNotification")]
+     public NotificationMethod? OptionalNotification { get; set; }
+ 
++    [Nullable, Optional]
+     [JsonPropertyName("optionalNullableNotification")]
+-    public NotificationMethod? OptionalNullableNotification { get; set; }
++    public Optional<NotificationMethod?> OptionalNullableNotification { get; set; }
+ 
++    [Nullable]
+     [JsonPropertyName("nullableSearchResult")]
+     public SearchResult? NullableSearchResult { get; set; }
+ 
++    [Optional]
+     [JsonPropertyName("optionalSearchResult")]
+     public SearchResult? OptionalSearchResult { get; set; }
+ 
++    [Nullable]
+     [JsonPropertyName("nullableArray")]
+     public IEnumerable<string>? NullableArray { get; set; }
+ 
++    [Optional]
+     [JsonPropertyName("optionalArray")]
+     public IEnumerable<string>? OptionalArray { get; set; }
+ 
++    [Nullable, Optional]
+     [JsonPropertyName("optionalNullableArray")]
+-    public IEnumerable<string>? OptionalNullableArray { get; set; }
++    public Optional<IEnumerable<string>?> OptionalNullableArray { get; set; }
+ 
++    [Nullable]
+     [JsonPropertyName("nullableListOfNullables")]
+     public IEnumerable<string?>? NullableListOfNullables { get; set; }
+ 
++    [Nullable]
+     [JsonPropertyName("nullableMapOfNullables")]
+     public Dictionary<string, Address?>? NullableMapOfNullables { get; set; }
+ 
++    [Nullable]
+     [JsonPropertyName("nullableListOfUnions")]
+     public IEnumerable<NotificationMethod>? NullableListOfUnions { get; set; }
+ 
++    [Optional]
+     [JsonPropertyName("optionalMapOfEnums")]
+     public Dictionary<string, UserRole>? OptionalMapOfEnums { get; set; }
+ 
+diff --git a/src/SeedNullableOptional/NullableOptional/Types/CreateUserRequest.cs b/src/SeedNullableOptional/NullableOptional/Types/CreateUserRequest.cs
+index b954d438a90..c67ddccc1e3 100644
+--- a/src/SeedNullableOptional/NullableOptional/Types/CreateUserRequest.cs
++++ b/src/SeedNullableOptional/NullableOptional/Types/CreateUserRequest.cs
+@@ -14,14 +14,17 @@ public record CreateUserRequest : IJsonOnDeserialized
+     [JsonPropertyName("username")]
+     public required string Username { get; set; }
+ 
++    [Nullable]
+     [JsonPropertyName("email")]
+     public string? Email { get; set; }
+ 
++    [Optional]
+     [JsonPropertyName("phone")]
+     public string? Phone { get; set; }
+ 
++    [Nullable, Optional]
+     [JsonPropertyName("address")]
+-    public Address? Address { get; set; }
++    public Optional<Address?> Address { get; set; }
+ 
+     [JsonIgnore]
+     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+diff --git a/src/SeedNullableOptional/NullableOptional/Types/DeserializationTestRequest.cs b/src/SeedNullableOptional/NullableOptional/Types/DeserializationTestRequest.cs
+index f65dd129761..c585e53cb64 100644
+--- a/src/SeedNullableOptional/NullableOptional/Types/DeserializationTestRequest.cs
++++ b/src/SeedNullableOptional/NullableOptional/Types/DeserializationTestRequest.cs
+@@ -17,36 +17,47 @@ public record DeserializationTestRequest : IJsonOnDeserialized
+     [JsonPropertyName("requiredString")]
+     public required string RequiredString { get; set; }
+ 
++    [Nullable]
+     [JsonPropertyName("nullableString")]
+     public string? NullableString { get; set; }
+ 
++    [Optional]
+     [JsonPropertyName("optionalString")]
+     public string? OptionalString { get; set; }
+ 
++    [Nullable, Optional]
+     [JsonPropertyName("optionalNullableString")]
+-    public string? OptionalNullableString { get; set; }
++    public Optional<string?> OptionalNullableString { get; set; }
+ 
++    [Nullable]
+     [JsonPropertyName("nullableEnum")]
+     public UserRole? NullableEnum { get; set; }
+ 
++    [Optional]
+     [JsonPropertyName("optionalEnum")]
+     public UserStatus? OptionalEnum { get; set; }
+ 
++    [Nullable]
+     [JsonPropertyName("nullableUnion")]
+     public NotificationMethod? NullableUnion { get; set; }
+ 
++    [Optional]
+     [JsonPropertyName("optionalUnion")]
+     public SearchResult? OptionalUnion { get; set; }
+ 
++    [Nullable]
+     [JsonPropertyName("nullableList")]
+     public IEnumerable<string>? NullableList { get; set; }
+ 
++    [Nullable]
+     [JsonPropertyName("nullableMap")]
+     public Dictionary<string, int>? NullableMap { get; set; }
+ 
++    [Nullable]
+     [JsonPropertyName("nullableObject")]
+     public Address? NullableObject { get; set; }
+ 
++    [Optional]
+     [JsonPropertyName("optionalObject")]
+     public Organization? OptionalObject { get; set; }
+ 
+diff --git a/src/SeedNullableOptional/NullableOptional/Types/Document.cs b/src/SeedNullableOptional/NullableOptional/Types/Document.cs
+index 12f24f7abdf..1dd0bed38cb 100644
+--- a/src/SeedNullableOptional/NullableOptional/Types/Document.cs
++++ b/src/SeedNullableOptional/NullableOptional/Types/Document.cs
+@@ -20,9 +20,11 @@ public record Document : IJsonOnDeserialized
+     [JsonPropertyName("content")]
+     public required string Content { get; set; }
+ 
++    [Nullable]
+     [JsonPropertyName("author")]
+     public string? Author { get; set; }
+ 
++    [Optional]
+     [JsonPropertyName("tags")]
+     public IEnumerable<string>? Tags { get; set; }
+ 
+diff --git a/src/SeedNullableOptional/NullableOptional/Types/EmailNotification.cs b/src/SeedNullableOptional/NullableOptional/Types/EmailNotification.cs
+index e81644412b1..c252ac8fa7d 100644
+--- a/src/SeedNullableOptional/NullableOptional/Types/EmailNotification.cs
++++ b/src/SeedNullableOptional/NullableOptional/Types/EmailNotification.cs
+@@ -17,6 +17,7 @@ public record EmailNotification : IJsonOnDeserialized
+     [JsonPropertyName("subject")]
+     public required string Subject { get; set; }
+ 
++    [Optional]
+     [JsonPropertyName("htmlContent")]
+     public string? HtmlContent { get; set; }
+ 
+diff --git a/src/SeedNullableOptional/NullableOptional/Types/Organization.cs b/src/SeedNullableOptional/NullableOptional/Types/Organization.cs
+index d5a0785d5cc..3c15d784ab5 100644
+--- a/src/SeedNullableOptional/NullableOptional/Types/Organization.cs
++++ b/src/SeedNullableOptional/NullableOptional/Types/Organization.cs
+@@ -17,9 +17,11 @@ public record Organization : IJsonOnDeserialized
+     [JsonPropertyName("name")]
+     public required string Name { get; set; }
+ 
++    [Nullable]
+     [JsonPropertyName("domain")]
+     public string? Domain { get; set; }
+ 
++    [Optional]
+     [JsonPropertyName("employeeCount")]
+     public int? EmployeeCount { get; set; }
+ 
+diff --git a/src/SeedNullableOptional/NullableOptional/Types/PushNotification.cs b/src/SeedNullableOptional/NullableOptional/Types/PushNotification.cs
+index 428e1ce5c7e..1ccfc55ad57 100644
+--- a/src/SeedNullableOptional/NullableOptional/Types/PushNotification.cs
++++ b/src/SeedNullableOptional/NullableOptional/Types/PushNotification.cs
+@@ -20,6 +20,7 @@ public record PushNotification : IJsonOnDeserialized
+     [JsonPropertyName("body")]
+     public required string Body { get; set; }
+ 
++    [Optional]
+     [JsonPropertyName("badge")]
+     public int? Badge { get; set; }
+ 
+diff --git a/src/SeedNullableOptional/NullableOptional/Types/SmsNotification.cs b/src/SeedNullableOptional/NullableOptional/Types/SmsNotification.cs
+index 7670c43c621..6358fd01da4 100644
+--- a/src/SeedNullableOptional/NullableOptional/Types/SmsNotification.cs
++++ b/src/SeedNullableOptional/NullableOptional/Types/SmsNotification.cs
+@@ -17,6 +17,7 @@ public record SmsNotification : IJsonOnDeserialized
+     [JsonPropertyName("message")]
+     public required string Message { get; set; }
+ 
++    [Optional]
+     [JsonPropertyName("shortCode")]
+     public string? ShortCode { get; set; }
+ 
+diff --git a/src/SeedNullableOptional/NullableOptional/Types/UpdateUserRequest.cs b/src/SeedNullableOptional/NullableOptional/Types/UpdateUserRequest.cs
+index 6a1d202291e..d785b83569b 100644
+--- a/src/SeedNullableOptional/NullableOptional/Types/UpdateUserRequest.cs
++++ b/src/SeedNullableOptional/NullableOptional/Types/UpdateUserRequest.cs
+@@ -14,17 +14,21 @@ public record UpdateUserRequest : IJsonOnDeserialized
+     private readonly IDictionary<string, JsonElement> _extensionData =
+         new Dictionary<string, JsonElement>();
+ 
++    [Optional]
+     [JsonPropertyName("username")]
+     public string? Username { get; set; }
+ 
++    [Nullable, Optional]
+     [JsonPropertyName("email")]
+-    public string? Email { get; set; }
++    public Optional<string?> Email { get; set; }
+ 
++    [Optional]
+     [JsonPropertyName("phone")]
+     public string? Phone { get; set; }
+ 
++    [Nullable, Optional]
+     [JsonPropertyName("address")]
+-    public Address? Address { get; set; }
++    public Optional<Address?> Address { get; set; }
+ 
+     [JsonIgnore]
+     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+diff --git a/src/SeedNullableOptional/NullableOptional/Types/UserProfile.cs b/src/SeedNullableOptional/NullableOptional/Types/UserProfile.cs
+index 60a80bd1f4a..31ec74145b2 100644
+--- a/src/SeedNullableOptional/NullableOptional/Types/UserProfile.cs
++++ b/src/SeedNullableOptional/NullableOptional/Types/UserProfile.cs
+@@ -20,53 +20,69 @@ public record UserProfile : IJsonOnDeserialized
+     [JsonPropertyName("username")]
+     public required string Username { get; set; }
+ 
++    [Nullable]
+     [JsonPropertyName("nullableString")]
+     public string? NullableString { get; set; }
+ 
++    [Nullable]
+     [JsonPropertyName("nullableInteger")]
+     public int? NullableInteger { get; set; }
+ 
++    [Nullable]
+     [JsonPropertyName("nullableBoolean")]
+     public bool? NullableBoolean { get; set; }
+ 
++    [Nullable]
+     [JsonPropertyName("nullableDate")]
+     public DateTime? NullableDate { get; set; }
+ 
++    [Nullable]
+     [JsonPropertyName("nullableObject")]
+     public Address? NullableObject { get; set; }
+ 
++    [Nullable]
+     [JsonPropertyName("nullableList")]
+     public IEnumerable<string>? NullableList { get; set; }
+ 
++    [Nullable]
+     [JsonPropertyName("nullableMap")]
+     public Dictionary<string, string>? NullableMap { get; set; }
+ 
++    [Optional]
+     [JsonPropertyName("optionalString")]
+     public string? OptionalString { get; set; }
+ 
++    [Optional]
+     [JsonPropertyName("optionalInteger")]
+     public int? OptionalInteger { get; set; }
+ 
++    [Optional]
+     [JsonPropertyName("optionalBoolean")]
+     public bool? OptionalBoolean { get; set; }
+ 
++    [Optional]
+     [JsonPropertyName("optionalDate")]
+     public DateTime? OptionalDate { get; set; }
+ 
++    [Optional]
+     [JsonPropertyName("optionalObject")]
+     public Address? OptionalObject { get; set; }
+ 
++    [Optional]
+     [JsonPropertyName("optionalList")]
+     public IEnumerable<string>? OptionalList { get; set; }
+ 
++    [Optional]
+     [JsonPropertyName("optionalMap")]
+     public Dictionary<string, string>? OptionalMap { get; set; }
+ 
++    [Nullable, Optional]
+     [JsonPropertyName("optionalNullableString")]
+-    public string? OptionalNullableString { get; set; }
++    public Optional<string?> OptionalNullableString { get; set; }
+ 
++    [Nullable, Optional]
+     [JsonPropertyName("optionalNullableObject")]
+-    public Address? OptionalNullableObject { get; set; }
++    public Optional<Address?> OptionalNullableObject { get; set; }
+ 
+     [JsonIgnore]
+     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+diff --git a/src/SeedNullableOptional/NullableOptional/Types/UserResponse.cs b/src/SeedNullableOptional/NullableOptional/Types/UserResponse.cs
+index 1a57708cc31..e7d591a72d4 100644
+--- a/src/SeedNullableOptional/NullableOptional/Types/UserResponse.cs
++++ b/src/SeedNullableOptional/NullableOptional/Types/UserResponse.cs
+@@ -17,18 +17,22 @@ public record UserResponse : IJsonOnDeserialized
+     [JsonPropertyName("username")]
+     public required string Username { get; set; }
+ 
++    [Nullable]
+     [JsonPropertyName("email")]
+     public string? Email { get; set; }
+ 
++    [Optional]
+     [JsonPropertyName("phone")]
+     public string? Phone { get; set; }
+ 
+     [JsonPropertyName("createdAt")]
+     public required DateTime CreatedAt { get; set; }
+ 
++    [Nullable]
+     [JsonPropertyName("updatedAt")]
+     public DateTime? UpdatedAt { get; set; }
+ 
++    [Optional]
+     [JsonPropertyName("address")]
+     public Address? Address { get; set; }
+ 

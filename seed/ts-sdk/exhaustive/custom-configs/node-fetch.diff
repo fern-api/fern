@@ -1,0 +1,105 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index d8b7bf00e12..4ab0d43b128 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,9 @@
+     "cliVersion": "DUMMY",
+     "generatorName": "fernapi/fern-typescript-sdk",
+     "generatorVersion": "local",
++    "generatorConfig": {
++        "fetchSupport": "node-fetch"
++    },
+     "originGitCommit": "DUMMY",
+     "originGitCommitIsDirty": null,
+     "invokedBy": "ci",
+diff --git a/README.md b/README.md
+index c5bd7f8f668..4384c361ebc 100644
+--- a/README.md
++++ b/README.md
+@@ -340,7 +340,8 @@ const data = await response.json();
+ ### Runtime Compatibility
+ 
+ 
+-The SDK works in the following runtimes:
++The SDK defaults to `node-fetch` but will use the global fetch client if present. The SDK works in the following
++runtimes:
+ 
+ 
+ 
+diff --git a/package.json b/package.json
+index 36918bca44f..34d6304d031 100644
+--- a/package.json
++++ b/package.json
+@@ -231,8 +231,11 @@
+         "test:unit": "vitest --project unit",
+         "test:wire": "vitest --project wire"
+     },
+-    "dependencies": {},
++    "dependencies": {
++        "node-fetch": "^2.7.0"
++    },
+     "devDependencies": {
++        "@types/node-fetch": "^2.6.12",
+         "webpack": "^5.105.4",
+         "ts-loader": "^9.5.4",
+         "vitest": "^4.1.1",
+diff --git a/src/core/fetcher/getFetchFn.ts b/src/core/fetcher/getFetchFn.ts
+index 9f845b95639..cc4172b9820 100644
+--- a/src/core/fetcher/getFetchFn.ts
++++ b/src/core/fetcher/getFetchFn.ts
+@@ -1,3 +1,25 @@
+-export async function getFetchFn(): Promise<typeof fetch> {
+-    return fetch;
++import { RUNTIME } from "../runtime/index.js";
++
++/**
++ * Returns a fetch function based on the runtime
++ */
++export async function getFetchFn(): Promise<any> {
++    // In Node.js 18+ environments, use native fetch
++    if (RUNTIME.type === "node" && RUNTIME.parsedVersion != null && RUNTIME.parsedVersion >= 18) {
++        return fetch;
++    }
++
++    // In Node.js 18 or lower environments, the SDK always uses`node-fetch`.
++    if (RUNTIME.type === "node") {
++        return (await import("node-fetch")).default as any;
++    }
++
++    // Otherwise the SDK uses global fetch if available,
++    // and falls back to node-fetch.
++    if (typeof fetch === "function") {
++        return fetch;
++    }
++
++    // Defaults to node `node-fetch` if global fetch isn't available
++    return (await import("node-fetch")).default as any;
+ }
+diff --git a/tests/unit/fetcher/getFetchFn.test.ts b/tests/unit/fetcher/getFetchFn.test.ts
+new file mode 100644
+index 00000000000..ac05ab2fb36
+--- /dev/null
++++ b/tests/unit/fetcher/getFetchFn.test.ts
+@@ -0,0 +1,22 @@
++import { getFetchFn } from "../../../src/core/fetcher/getFetchFn";
++import { RUNTIME } from "../../../src/core/runtime";
++
++describe("Test for getFetchFn", () => {
++    it("should get node-fetch function", async () => {
++        if (RUNTIME.type === "node") {
++            if (RUNTIME.parsedVersion != null && RUNTIME.parsedVersion >= 18) {
++                expect(await getFetchFn()).toBe(fetch);
++            } else {
++                expect(await getFetchFn()).toEqual((await import("node-fetch")).default as any);
++            }
++        }
++    });
++
++    it("should get fetch function", async () => {
++        if (RUNTIME.type === "browser") {
++            const fetchFn = await getFetchFn();
++            expect(typeof fetchFn).toBe("function");
++            expect(fetchFn.name).toBe("fetch");
++        }
++    });
++});

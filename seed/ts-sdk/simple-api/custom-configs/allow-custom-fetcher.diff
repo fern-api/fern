@@ -1,0 +1,72 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index d8b7bf00e12..4437694a7ec 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,9 @@
+     "cliVersion": "DUMMY",
+     "generatorName": "fernapi/fern-typescript-sdk",
+     "generatorVersion": "local",
++    "generatorConfig": {
++        "allowCustomFetcher": true
++    },
+     "originGitCommit": "DUMMY",
+     "originGitCommitIsDirty": null,
+     "invokedBy": "ci",
+diff --git a/README.md b/README.md
+index e5f3d14b95b..971cf09aedd 100644
+--- a/README.md
++++ b/README.md
+@@ -22,6 +22,7 @@ The Seed TypeScript library provides convenient access to the Seed APIs from Typ
+   - [Access Raw Response Data](#access-raw-response-data)
+   - [Logging](#logging)
+   - [Custom Fetch](#custom-fetch)
++  - [Custom Fetcher](#custom-fetcher)
+   - [Runtime Compatibility](#runtime-compatibility)
+ - [Contributing](#contributing)
+ 
+@@ -260,6 +261,20 @@ const response = await client.fetch("/v1/custom/endpoint", {
+ const data = await response.json();
+ ```
+ 
++### Custom Fetcher
++
++The SDK provides a way for you to customize the underlying HTTP client / Fetch function. If you're running in an
++unsupported environment, this provides a way for you to break glass and ensure the SDK works.
++
++```typescript
++import { SeedSimpleApiClient } from "@fern/simple-api";
++
++const client = new SeedSimpleApiClient({
++    ...
++    fetcher: // provide your implementation here
++});
++```
++
+ ### Runtime Compatibility
+ 
+ 
+diff --git a/src/BaseClient.ts b/src/BaseClient.ts
+index 339461e0a49..840e7362ff7 100644
+--- a/src/BaseClient.ts
++++ b/src/BaseClient.ts
+@@ -17,6 +17,7 @@ export type BaseClientOptions = {
+     maxRetries?: number;
+     /** Provide a custom fetch implementation. Useful for platforms that don't have a built-in fetch or need a custom implementation. */
+     fetch?: typeof fetch;
++    fetcher?: core.FetchFunction;
+     /** Configure logging for the client. */
+     logging?: core.logging.LogConfig | core.logging.Logger;
+ } & BearerAuthProvider.AuthOptions;
+diff --git a/src/api/resources/user/client/Client.ts b/src/api/resources/user/client/Client.ts
+index 246f78ffd26..aa002ac4039 100644
+--- a/src/api/resources/user/client/Client.ts
++++ b/src/api/resources/user/client/Client.ts
+@@ -42,7 +42,7 @@ export class UserClient {
+             this._options?.headers,
+             requestOptions?.headers,
+         );
+-        const _response = await core.fetcher({
++        const _response = await (this._options.fetcher ?? core.fetcher)({
+             url: core.url.join(
+                 (await core.Supplier.get(this._options.baseUrl)) ??
+                     (await core.Supplier.get(this._options.environment)),

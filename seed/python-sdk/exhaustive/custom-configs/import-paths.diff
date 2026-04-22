@@ -1,0 +1,3626 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index d7c4eeee2cf..cec91f3ebb8 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -3,7 +3,10 @@
+   "generatorName": "fernapi/fern-python-sdk",
+   "generatorVersion": "local",
+   "generatorConfig": {
+-    "enable_wire_tests": true
++    "import_paths": [
++      "custom_integration",
++      "sentry_integration"
++    ]
+   },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+diff --git a/.fernignore b/.fernignore
+deleted file mode 100644
+index fe580e7c5de..00000000000
+--- a/.fernignore
++++ /dev/null
+@@ -1,2 +0,0 @@
+-tests/test_lazy_loading.py
+-tests/custom/test_discriminated_unions.py
+diff --git a/poetry.lock b/poetry.lock
+index 1597c9ee2cd..2a97347e644 100644
+--- a/poetry.lock
++++ b/poetry.lock
+@@ -242,144 +242,6 @@ files = [
+     {file = "certifi-2026.4.22.tar.gz", hash = "sha256:8d455352a37b71bf76a79caa83a3d6c25afee4a385d632127b6afb3963f1c580"},
+ ]
+ 
+-[[package]]
+-name = "charset-normalizer"
+-version = "3.4.7"
+-description = "The Real First Universal Charset Detector. Open, modern and actively maintained alternative to Chardet."
+-optional = false
+-python-versions = ">=3.7"
+-files = [
+-    {file = "charset_normalizer-3.4.7-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:cdd68a1fb318e290a2077696b7eb7a21a49163c455979c639bf5a5dcdc46617d"},
+-    {file = "charset_normalizer-3.4.7-cp310-cp310-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:e17b8d5d6a8c47c85e68ca8379def1303fd360c3e22093a807cd34a71cd082b8"},
+-    {file = "charset_normalizer-3.4.7-cp310-cp310-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl", hash = "sha256:511ef87c8aec0783e08ac18565a16d435372bc1ac25a91e6ac7f5ef2b0bff790"},
+-    {file = "charset_normalizer-3.4.7-cp310-cp310-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl", hash = "sha256:007d05ec7321d12a40227aae9e2bc6dca73f3cb21058999a1df9e193555a9dcc"},
+-    {file = "charset_normalizer-3.4.7-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:cf29836da5119f3c8a8a70667b0ef5fdca3bb12f80fd06487cfa575b3909b393"},
+-    {file = "charset_normalizer-3.4.7-cp310-cp310-manylinux_2_31_armv7l.whl", hash = "sha256:12d8baf840cc7889b37c7c770f478adea7adce3dcb3944d02ec87508e2dcf153"},
+-    {file = "charset_normalizer-3.4.7-cp310-cp310-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl", hash = "sha256:d560742f3c0d62afaccf9f41fe485ed69bd7661a241f86a3ef0f0fb8b1a397af"},
+-    {file = "charset_normalizer-3.4.7-cp310-cp310-musllinux_1_2_aarch64.whl", hash = "sha256:b14b2d9dac08e28bb8046a1a0434b1750eb221c8f5b87a68f4fa11a6f97b5e34"},
+-    {file = "charset_normalizer-3.4.7-cp310-cp310-musllinux_1_2_armv7l.whl", hash = "sha256:bc17a677b21b3502a21f66a8cc64f5bfad4df8a0b8434d661666f8ce90ac3af1"},
+-    {file = "charset_normalizer-3.4.7-cp310-cp310-musllinux_1_2_ppc64le.whl", hash = "sha256:750e02e074872a3fad7f233b47734166440af3cdea0add3e95163110816d6752"},
+-    {file = "charset_normalizer-3.4.7-cp310-cp310-musllinux_1_2_riscv64.whl", hash = "sha256:4e5163c14bffd570ef2affbfdd77bba66383890797df43dc8b4cc7d6f500bf53"},
+-    {file = "charset_normalizer-3.4.7-cp310-cp310-musllinux_1_2_s390x.whl", hash = "sha256:6ed74185b2db44f41ef35fd1617c5888e59792da9bbc9190d6c7300617182616"},
+-    {file = "charset_normalizer-3.4.7-cp310-cp310-musllinux_1_2_x86_64.whl", hash = "sha256:94e1885b270625a9a828c9793b4d52a64445299baa1fea5a173bf1d3dd9a1a5a"},
+-    {file = "charset_normalizer-3.4.7-cp310-cp310-win32.whl", hash = "sha256:6785f414ae0f3c733c437e0f3929197934f526d19dfaa75e18fdb4f94c6fb374"},
+-    {file = "charset_normalizer-3.4.7-cp310-cp310-win_amd64.whl", hash = "sha256:6696b7688f54f5af4462118f0bfa7c1621eeb87154f77fa04b9295ce7a8f2943"},
+-    {file = "charset_normalizer-3.4.7-cp310-cp310-win_arm64.whl", hash = "sha256:66671f93accb62ed07da56613636f3641f1a12c13046ce91ffc923721f23c008"},
+-    {file = "charset_normalizer-3.4.7-cp311-cp311-macosx_10_9_universal2.whl", hash = "sha256:7641bb8895e77f921102f72833904dcd9901df5d6d72a2ab8f31d04b7e51e4e7"},
+-    {file = "charset_normalizer-3.4.7-cp311-cp311-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:202389074300232baeb53ae2569a60901f7efadd4245cf3a3bf0617d60b439d7"},
+-    {file = "charset_normalizer-3.4.7-cp311-cp311-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl", hash = "sha256:30b8d1d8c52a48c2c5690e152c169b673487a2a58de1ec7393196753063fcd5e"},
+-    {file = "charset_normalizer-3.4.7-cp311-cp311-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl", hash = "sha256:532bc9bf33a68613fd7d65e4b1c71a6a38d7d42604ecf239c77392e9b4e8998c"},
+-    {file = "charset_normalizer-3.4.7-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:2fe249cb4651fd12605b7288b24751d8bfd46d35f12a20b1ba33dea122e690df"},
+-    {file = "charset_normalizer-3.4.7-cp311-cp311-manylinux_2_31_armv7l.whl", hash = "sha256:65bcd23054beab4d166035cabbc868a09c1a49d1efe458fe8e4361215df40265"},
+-    {file = "charset_normalizer-3.4.7-cp311-cp311-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl", hash = "sha256:08e721811161356f97b4059a9ba7bafb23ea5ee2255402c42881c214e173c6b4"},
+-    {file = "charset_normalizer-3.4.7-cp311-cp311-musllinux_1_2_aarch64.whl", hash = "sha256:e060d01aec0a910bdccb8be71faf34e7799ce36950f8294c8bf612cba65a2c9e"},
+-    {file = "charset_normalizer-3.4.7-cp311-cp311-musllinux_1_2_armv7l.whl", hash = "sha256:38c0109396c4cfc574d502df99742a45c72c08eff0a36158b6f04000043dbf38"},
+-    {file = "charset_normalizer-3.4.7-cp311-cp311-musllinux_1_2_ppc64le.whl", hash = "sha256:1c2a768fdd44ee4a9339a9b0b130049139b8ce3c01d2ce09f67f5a68048d477c"},
+-    {file = "charset_normalizer-3.4.7-cp311-cp311-musllinux_1_2_riscv64.whl", hash = "sha256:1a87ca9d5df6fe460483d9a5bbf2b18f620cbed41b432e2bddb686228282d10b"},
+-    {file = "charset_normalizer-3.4.7-cp311-cp311-musllinux_1_2_s390x.whl", hash = "sha256:d635aab80466bc95771bb78d5370e74d36d1fe31467b6b29b8b57b2a3cd7d22c"},
+-    {file = "charset_normalizer-3.4.7-cp311-cp311-musllinux_1_2_x86_64.whl", hash = "sha256:ae196f021b5e7c78e918242d217db021ed2a6ace2bc6ae94c0fc596221c7f58d"},
+-    {file = "charset_normalizer-3.4.7-cp311-cp311-win32.whl", hash = "sha256:adb2597b428735679446b46c8badf467b4ca5f5056aae4d51a19f9570301b1ad"},
+-    {file = "charset_normalizer-3.4.7-cp311-cp311-win_amd64.whl", hash = "sha256:8e385e4267ab76874ae30db04c627faaaf0b509e1ccc11a95b3fc3e83f855c00"},
+-    {file = "charset_normalizer-3.4.7-cp311-cp311-win_arm64.whl", hash = "sha256:d4a48e5b3c2a489fae013b7589308a40146ee081f6f509e047e0e096084ceca1"},
+-    {file = "charset_normalizer-3.4.7-cp312-cp312-macosx_10_13_universal2.whl", hash = "sha256:eca9705049ad3c7345d574e3510665cb2cf844c2f2dcfe675332677f081cbd46"},
+-    {file = "charset_normalizer-3.4.7-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:6178f72c5508bfc5fd446a5905e698c6212932f25bcdd4b47a757a50605a90e2"},
+-    {file = "charset_normalizer-3.4.7-cp312-cp312-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl", hash = "sha256:e1421b502d83040e6d7fb2fb18dff63957f720da3d77b2fbd3187ceb63755d7b"},
+-    {file = "charset_normalizer-3.4.7-cp312-cp312-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl", hash = "sha256:edac0f1ab77644605be2cbba52e6b7f630731fc42b34cb0f634be1a6eface56a"},
+-    {file = "charset_normalizer-3.4.7-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:5649fd1c7bade02f320a462fdefd0b4bd3ce036065836d4f42e0de958038e116"},
+-    {file = "charset_normalizer-3.4.7-cp312-cp312-manylinux_2_31_armv7l.whl", hash = "sha256:203104ed3e428044fd943bc4bf45fa73c0730391f9621e37fe39ecf477b128cb"},
+-    {file = "charset_normalizer-3.4.7-cp312-cp312-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl", hash = "sha256:298930cec56029e05497a76988377cbd7457ba864beeea92ad7e844fe74cd1f1"},
+-    {file = "charset_normalizer-3.4.7-cp312-cp312-musllinux_1_2_aarch64.whl", hash = "sha256:708838739abf24b2ceb208d0e22403dd018faeef86ddac04319a62ae884c4f15"},
+-    {file = "charset_normalizer-3.4.7-cp312-cp312-musllinux_1_2_armv7l.whl", hash = "sha256:0f7eb884681e3938906ed0434f20c63046eacd0111c4ba96f27b76084cd679f5"},
+-    {file = "charset_normalizer-3.4.7-cp312-cp312-musllinux_1_2_ppc64le.whl", hash = "sha256:4dc1e73c36828f982bfe79fadf5919923f8a6f4df2860804db9a98c48824ce8d"},
+-    {file = "charset_normalizer-3.4.7-cp312-cp312-musllinux_1_2_riscv64.whl", hash = "sha256:aed52fea0513bac0ccde438c188c8a471c4e0f457c2dd20cdbf6ea7a450046c7"},
+-    {file = "charset_normalizer-3.4.7-cp312-cp312-musllinux_1_2_s390x.whl", hash = "sha256:fea24543955a6a729c45a73fe90e08c743f0b3334bbf3201e6c4bc1b0c7fa464"},
+-    {file = "charset_normalizer-3.4.7-cp312-cp312-musllinux_1_2_x86_64.whl", hash = "sha256:bb6d88045545b26da47aa879dd4a89a71d1dce0f0e549b1abcb31dfe4a8eac49"},
+-    {file = "charset_normalizer-3.4.7-cp312-cp312-win32.whl", hash = "sha256:2257141f39fe65a3fdf38aeccae4b953e5f3b3324f4ff0daf9f15b8518666a2c"},
+-    {file = "charset_normalizer-3.4.7-cp312-cp312-win_amd64.whl", hash = "sha256:5ed6ab538499c8644b8a3e18debabcd7ce684f3fa91cf867521a7a0279cab2d6"},
+-    {file = "charset_normalizer-3.4.7-cp312-cp312-win_arm64.whl", hash = "sha256:56be790f86bfb2c98fb742ce566dfb4816e5a83384616ab59c49e0604d49c51d"},
+-    {file = "charset_normalizer-3.4.7-cp313-cp313-macosx_10_13_universal2.whl", hash = "sha256:f496c9c3cc02230093d8330875c4c3cdfc3b73612a5fd921c65d39cbcef08063"},
+-    {file = "charset_normalizer-3.4.7-cp313-cp313-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:0ea948db76d31190bf08bd371623927ee1339d5f2a0b4b1b4a4439a65298703c"},
+-    {file = "charset_normalizer-3.4.7-cp313-cp313-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl", hash = "sha256:a277ab8928b9f299723bc1a2dabb1265911b1a76341f90a510368ca44ad9ab66"},
+-    {file = "charset_normalizer-3.4.7-cp313-cp313-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl", hash = "sha256:3bec022aec2c514d9cf199522a802bd007cd588ab17ab2525f20f9c34d067c18"},
+-    {file = "charset_normalizer-3.4.7-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:e044c39e41b92c845bc815e5ae4230804e8e7bc29e399b0437d64222d92809dd"},
+-    {file = "charset_normalizer-3.4.7-cp313-cp313-manylinux_2_31_armv7l.whl", hash = "sha256:f495a1652cf3fbab2eb0639776dad966c2fb874d79d87ca07f9d5f059b8bd215"},
+-    {file = "charset_normalizer-3.4.7-cp313-cp313-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl", hash = "sha256:e712b419df8ba5e42b226c510472b37bd57b38e897d3eca5e8cfd410a29fa859"},
+-    {file = "charset_normalizer-3.4.7-cp313-cp313-musllinux_1_2_aarch64.whl", hash = "sha256:7804338df6fcc08105c7745f1502ba68d900f45fd770d5bdd5288ddccb8a42d8"},
+-    {file = "charset_normalizer-3.4.7-cp313-cp313-musllinux_1_2_armv7l.whl", hash = "sha256:481551899c856c704d58119b5025793fa6730adda3571971af568f66d2424bb5"},
+-    {file = "charset_normalizer-3.4.7-cp313-cp313-musllinux_1_2_ppc64le.whl", hash = "sha256:f59099f9b66f0d7145115e6f80dd8b1d847176df89b234a5a6b3f00437aa0832"},
+-    {file = "charset_normalizer-3.4.7-cp313-cp313-musllinux_1_2_riscv64.whl", hash = "sha256:f59ad4c0e8f6bba240a9bb85504faa1ab438237199d4cce5f622761507b8f6a6"},
+-    {file = "charset_normalizer-3.4.7-cp313-cp313-musllinux_1_2_s390x.whl", hash = "sha256:3dedcc22d73ec993f42055eff4fcfed9318d1eeb9a6606c55892a26964964e48"},
+-    {file = "charset_normalizer-3.4.7-cp313-cp313-musllinux_1_2_x86_64.whl", hash = "sha256:64f02c6841d7d83f832cd97ccf8eb8a906d06eb95d5276069175c696b024b60a"},
+-    {file = "charset_normalizer-3.4.7-cp313-cp313-win32.whl", hash = "sha256:4042d5c8f957e15221d423ba781e85d553722fc4113f523f2feb7b188cc34c5e"},
+-    {file = "charset_normalizer-3.4.7-cp313-cp313-win_amd64.whl", hash = "sha256:3946fa46a0cf3e4c8cb1cc52f56bb536310d34f25f01ca9b6c16afa767dab110"},
+-    {file = "charset_normalizer-3.4.7-cp313-cp313-win_arm64.whl", hash = "sha256:80d04837f55fc81da168b98de4f4b797ef007fc8a79ab71c6ec9bc4dd662b15b"},
+-    {file = "charset_normalizer-3.4.7-cp314-cp314-macosx_10_15_universal2.whl", hash = "sha256:c36c333c39be2dbca264d7803333c896ab8fa7d4d6f0ab7edb7dfd7aea6e98c0"},
+-    {file = "charset_normalizer-3.4.7-cp314-cp314-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:1c2aed2e5e41f24ea8ef1590b8e848a79b56f3a5564a65ceec43c9d692dc7d8a"},
+-    {file = "charset_normalizer-3.4.7-cp314-cp314-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl", hash = "sha256:54523e136b8948060c0fa0bc7b1b50c32c186f2fceee897a495406bb6e311d2b"},
+-    {file = "charset_normalizer-3.4.7-cp314-cp314-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl", hash = "sha256:715479b9a2802ecac752a3b0efa2b0b60285cf962ee38414211abdfccc233b41"},
+-    {file = "charset_normalizer-3.4.7-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:bd6c2a1c7573c64738d716488d2cdd3c00e340e4835707d8fdb8dc1a66ef164e"},
+-    {file = "charset_normalizer-3.4.7-cp314-cp314-manylinux_2_31_armv7l.whl", hash = "sha256:c45e9440fb78f8ddabcf714b68f936737a121355bf59f3907f4e17721b9d1aae"},
+-    {file = "charset_normalizer-3.4.7-cp314-cp314-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl", hash = "sha256:3534e7dcbdcf757da6b85a0bbf5b6868786d5982dd959b065e65481644817a18"},
+-    {file = "charset_normalizer-3.4.7-cp314-cp314-musllinux_1_2_aarch64.whl", hash = "sha256:e8ac484bf18ce6975760921bb6148041faa8fef0547200386ea0b52b5d27bf7b"},
+-    {file = "charset_normalizer-3.4.7-cp314-cp314-musllinux_1_2_armv7l.whl", hash = "sha256:a5fe03b42827c13cdccd08e6c0247b6a6d4b5e3cdc53fd1749f5896adcdc2356"},
+-    {file = "charset_normalizer-3.4.7-cp314-cp314-musllinux_1_2_ppc64le.whl", hash = "sha256:2d6eb928e13016cea4f1f21d1e10c1cebd5a421bc57ddf5b1142ae3f86824fab"},
+-    {file = "charset_normalizer-3.4.7-cp314-cp314-musllinux_1_2_riscv64.whl", hash = "sha256:e74327fb75de8986940def6e8dee4f127cc9752bee7355bb323cc5b2659b6d46"},
+-    {file = "charset_normalizer-3.4.7-cp314-cp314-musllinux_1_2_s390x.whl", hash = "sha256:d6038d37043bced98a66e68d3aa2b6a35505dc01328cd65217cefe82f25def44"},
+-    {file = "charset_normalizer-3.4.7-cp314-cp314-musllinux_1_2_x86_64.whl", hash = "sha256:7579e913a5339fb8fa133f6bbcfd8e6749696206cf05acdbdca71a1b436d8e72"},
+-    {file = "charset_normalizer-3.4.7-cp314-cp314-win32.whl", hash = "sha256:5b77459df20e08151cd6f8b9ef8ef1f961ef73d85c21a555c7eed5b79410ec10"},
+-    {file = "charset_normalizer-3.4.7-cp314-cp314-win_amd64.whl", hash = "sha256:92a0a01ead5e668468e952e4238cccd7c537364eb7d851ab144ab6627dbbe12f"},
+-    {file = "charset_normalizer-3.4.7-cp314-cp314-win_arm64.whl", hash = "sha256:67f6279d125ca0046a7fd386d01b311c6363844deac3e5b069b514ba3e63c246"},
+-    {file = "charset_normalizer-3.4.7-cp314-cp314t-macosx_10_15_universal2.whl", hash = "sha256:effc3f449787117233702311a1b7d8f59cba9ced946ba727bdc329ec69028e24"},
+-    {file = "charset_normalizer-3.4.7-cp314-cp314t-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:fbccdc05410c9ee21bbf16a35f4c1d16123dcdeb8a1d38f33654fa21d0234f79"},
+-    {file = "charset_normalizer-3.4.7-cp314-cp314t-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl", hash = "sha256:733784b6d6def852c814bce5f318d25da2ee65dd4839a0718641c696e09a2960"},
+-    {file = "charset_normalizer-3.4.7-cp314-cp314t-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl", hash = "sha256:a89c23ef8d2c6b27fd200a42aa4ac72786e7c60d40efdc76e6011260b6e949c4"},
+-    {file = "charset_normalizer-3.4.7-cp314-cp314t-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:6c114670c45346afedc0d947faf3c7f701051d2518b943679c8ff88befe14f8e"},
+-    {file = "charset_normalizer-3.4.7-cp314-cp314t-manylinux_2_31_armv7l.whl", hash = "sha256:a180c5e59792af262bf263b21a3c49353f25945d8d9f70628e73de370d55e1e1"},
+-    {file = "charset_normalizer-3.4.7-cp314-cp314t-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl", hash = "sha256:3c9a494bc5ec77d43cea229c4f6db1e4d8fe7e1bbffa8b6f0f0032430ff8ab44"},
+-    {file = "charset_normalizer-3.4.7-cp314-cp314t-musllinux_1_2_aarch64.whl", hash = "sha256:8d828b6667a32a728a1ad1d93957cdf37489c57b97ae6c4de2860fa749b8fc1e"},
+-    {file = "charset_normalizer-3.4.7-cp314-cp314t-musllinux_1_2_armv7l.whl", hash = "sha256:cf1493cd8607bec4d8a7b9b004e699fcf8f9103a9284cc94962cb73d20f9d4a3"},
+-    {file = "charset_normalizer-3.4.7-cp314-cp314t-musllinux_1_2_ppc64le.whl", hash = "sha256:0c96c3b819b5c3e9e165495db84d41914d6894d55181d2d108cc1a69bfc9cce0"},
+-    {file = "charset_normalizer-3.4.7-cp314-cp314t-musllinux_1_2_riscv64.whl", hash = "sha256:752a45dc4a6934060b3b0dab47e04edc3326575f82be64bc4fc293914566503e"},
+-    {file = "charset_normalizer-3.4.7-cp314-cp314t-musllinux_1_2_s390x.whl", hash = "sha256:8778f0c7a52e56f75d12dae53ae320fae900a8b9b4164b981b9c5ce059cd1fcb"},
+-    {file = "charset_normalizer-3.4.7-cp314-cp314t-musllinux_1_2_x86_64.whl", hash = "sha256:ce3412fbe1e31eb81ea42f4169ed94861c56e643189e1e75f0041f3fe7020abe"},
+-    {file = "charset_normalizer-3.4.7-cp314-cp314t-win32.whl", hash = "sha256:c03a41a8784091e67a39648f70c5f97b5b6a37f216896d44d2cdcb82615339a0"},
+-    {file = "charset_normalizer-3.4.7-cp314-cp314t-win_amd64.whl", hash = "sha256:03853ed82eeebbce3c2abfdbc98c96dc205f32a79627688ac9a27370ea61a49c"},
+-    {file = "charset_normalizer-3.4.7-cp314-cp314t-win_arm64.whl", hash = "sha256:c35abb8bfff0185efac5878da64c45dafd2b37fb0383add1be155a763c1f083d"},
+-    {file = "charset_normalizer-3.4.7-cp38-cp38-macosx_10_9_universal2.whl", hash = "sha256:e5f4d355f0a2b1a31bc3edec6795b46324349c9cb25eed068049e4f472fb4259"},
+-    {file = "charset_normalizer-3.4.7-cp38-cp38-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:16d971e29578a5e97d7117866d15889a4a07befe0e87e703ed63cd90cb348c01"},
+-    {file = "charset_normalizer-3.4.7-cp38-cp38-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl", hash = "sha256:dca4bbc466a95ba9c0234ef56d7dd9509f63da22274589ebd4ed7f1f4d4c54e3"},
+-    {file = "charset_normalizer-3.4.7-cp38-cp38-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl", hash = "sha256:e80c8378d8f3d83cd3164da1ad2df9e37a666cdde7b1cb2298ed0b558064be30"},
+-    {file = "charset_normalizer-3.4.7-cp38-cp38-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:36836d6ff945a00b88ba1e4572d721e60b5b8c98c155d465f56ad19d68f23734"},
+-    {file = "charset_normalizer-3.4.7-cp38-cp38-manylinux_2_31_armv7l.whl", hash = "sha256:bd9b23791fe793e4968dba0c447e12f78e425c59fc0e3b97f6450f4781f3ee60"},
+-    {file = "charset_normalizer-3.4.7-cp38-cp38-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl", hash = "sha256:aef65cd602a6d0e0ff6f9930fcb1c8fec60dd2cfcb6facaf4bdb0e5873042db0"},
+-    {file = "charset_normalizer-3.4.7-cp38-cp38-musllinux_1_2_aarch64.whl", hash = "sha256:82b271f5137d07749f7bf32f70b17ab6eaabedd297e75dce75081a24f76eb545"},
+-    {file = "charset_normalizer-3.4.7-cp38-cp38-musllinux_1_2_armv7l.whl", hash = "sha256:1efde3cae86c8c273f1eb3b287be7d8499420cf2fe7585c41d370d3e790054a5"},
+-    {file = "charset_normalizer-3.4.7-cp38-cp38-musllinux_1_2_ppc64le.whl", hash = "sha256:c593052c465475e64bbfe5dbd81680f64a67fdc752c56d7a0ae205dc8aeefe0f"},
+-    {file = "charset_normalizer-3.4.7-cp38-cp38-musllinux_1_2_riscv64.whl", hash = "sha256:af21eb4409a119e365397b2adbaca4c9ccab56543a65d5dbd9f920d6ac29f686"},
+-    {file = "charset_normalizer-3.4.7-cp38-cp38-musllinux_1_2_s390x.whl", hash = "sha256:84c018e49c3bf790f9c2771c45e9313a08c2c2a6342b162cd650258b57817706"},
+-    {file = "charset_normalizer-3.4.7-cp38-cp38-musllinux_1_2_x86_64.whl", hash = "sha256:dd915403e231e6b1809fe9b6d9fc55cf8fb5e02765ac625d9cd623342a7905d7"},
+-    {file = "charset_normalizer-3.4.7-cp38-cp38-win32.whl", hash = "sha256:320ade88cfb846b8cd6b4ddf5ee9e80ee0c1f52401f2456b84ae1ae6a1a5f207"},
+-    {file = "charset_normalizer-3.4.7-cp38-cp38-win_amd64.whl", hash = "sha256:1dc8b0ea451d6e69735094606991f32867807881400f808a106ee1d963c46a83"},
+-    {file = "charset_normalizer-3.4.7-cp39-cp39-macosx_10_9_universal2.whl", hash = "sha256:177a0ba5f0211d488e295aaf82707237e331c24788d8d76c96c5a41594723217"},
+-    {file = "charset_normalizer-3.4.7-cp39-cp39-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:6e0d51f618228538a3e8f46bd246f87a6cd030565e015803691603f55e12afb5"},
+-    {file = "charset_normalizer-3.4.7-cp39-cp39-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl", hash = "sha256:14265bfe1f09498b9d8ec91e9ec9fa52775edf90fcbde092b25f4a33d444fea9"},
+-    {file = "charset_normalizer-3.4.7-cp39-cp39-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl", hash = "sha256:87fad7d9ba98c86bcb41b2dc8dbb326619be2562af1f8ff50776a39e55721c5a"},
+-    {file = "charset_normalizer-3.4.7-cp39-cp39-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:f22dec1690b584cea26fade98b2435c132c1b5f68e39f5a0b7627cd7ae31f1dc"},
+-    {file = "charset_normalizer-3.4.7-cp39-cp39-manylinux_2_31_armv7l.whl", hash = "sha256:d61f00a0869d77422d9b2aba989e2d24afa6ffd552af442e0e58de4f35ea6d00"},
+-    {file = "charset_normalizer-3.4.7-cp39-cp39-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl", hash = "sha256:6370e8686f662e6a3941ee48ed4742317cafbe5707e36406e9df792cdb535776"},
+-    {file = "charset_normalizer-3.4.7-cp39-cp39-musllinux_1_2_aarch64.whl", hash = "sha256:a6c5863edfbe888d9eff9c8b8087354e27618d9da76425c119293f11712a6319"},
+-    {file = "charset_normalizer-3.4.7-cp39-cp39-musllinux_1_2_armv7l.whl", hash = "sha256:ed065083d0898c9d5b4bbec7b026fd755ff7454e6e8b73a67f8c744b13986e24"},
+-    {file = "charset_normalizer-3.4.7-cp39-cp39-musllinux_1_2_ppc64le.whl", hash = "sha256:2cd4a60d0e2fb04537162c62bbbb4182f53541fe0ede35cdf270a1c1e723cc42"},
+-    {file = "charset_normalizer-3.4.7-cp39-cp39-musllinux_1_2_riscv64.whl", hash = "sha256:813c0e0132266c08eb87469a642cb30aaff57c5f426255419572aaeceeaa7bf4"},
+-    {file = "charset_normalizer-3.4.7-cp39-cp39-musllinux_1_2_s390x.whl", hash = "sha256:07d9e39b01743c3717745f4c530a6349eadbfa043c7577eef86c502c15df2c67"},
+-    {file = "charset_normalizer-3.4.7-cp39-cp39-musllinux_1_2_x86_64.whl", hash = "sha256:c0f081d69a6e58272819b70288d3221a6ee64b98df852631c80f293514d3b274"},
+-    {file = "charset_normalizer-3.4.7-cp39-cp39-win32.whl", hash = "sha256:8751d2787c9131302398b11e6c8068053dcb55d5a8964e114b6e196cf16cb366"},
+-    {file = "charset_normalizer-3.4.7-cp39-cp39-win_amd64.whl", hash = "sha256:12a6fff75f6bc66711b73a2f0addfc4c8c15a20e805146a02d147a318962c444"},
+-    {file = "charset_normalizer-3.4.7-cp39-cp39-win_arm64.whl", hash = "sha256:bb8cc7534f51d9a017b93e3e85b260924f909601c3df002bcdb58ddb4dc41a5c"},
+-    {file = "charset_normalizer-3.4.7-py3-none-any.whl", hash = "sha256:3dce51d0f5e7951f8bb4900c257dad282f49190fdbebecd4ba99bcc41fef404d"},
+-    {file = "charset_normalizer-3.4.7.tar.gz", hash = "sha256:ae89db9e5f98a11a4bf50407d4363e7b09b31e55bc117b4f7d80aab97ba009e5"},
+-]
+-
+ [[package]]
+ name = "colorama"
+ version = "0.4.6"
+@@ -1281,27 +1143,6 @@ files = [
+ [package.dependencies]
+ six = ">=1.5"
+ 
+-[[package]]
+-name = "requests"
+-version = "2.33.1"
+-description = "Python HTTP for Humans."
+-optional = false
+-python-versions = ">=3.10"
+-files = [
+-    {file = "requests-2.33.1-py3-none-any.whl", hash = "sha256:4e6d1ef462f3626a1f0a0a9c42dd93c63bad33f9f1c1937509b8c5c8718ab56a"},
+-    {file = "requests-2.33.1.tar.gz", hash = "sha256:18817f8c57c6263968bc123d237e3b8b08ac046f5456bd1e307ee8f4250d3517"},
+-]
+-
+-[package.dependencies]
+-certifi = ">=2023.5.7"
+-charset_normalizer = ">=2,<4"
+-idna = ">=2.5,<4"
+-urllib3 = ">=1.26,<3"
+-
+-[package.extras]
+-socks = ["PySocks (>=1.5.6,!=1.5.7)"]
+-use-chardet-on-py3 = ["chardet (>=3.0.2,<8)"]
+-
+ [[package]]
+ name = "ruff"
+ version = "0.11.5"
+@@ -1407,20 +1248,6 @@ files = [
+     {file = "types_python_dateutil-2.9.0.20260408.tar.gz", hash = "sha256:8b056ec01568674235f64ecbcef928972a5fac412f5aab09c516dfa2acfbb582"},
+ ]
+ 
+-[[package]]
+-name = "types-requests"
+-version = "2.33.0.20260408"
+-description = "Typing stubs for requests"
+-optional = false
+-python-versions = ">=3.10"
+-files = [
+-    {file = "types_requests-2.33.0.20260408-py3-none-any.whl", hash = "sha256:81f31d5ea4acb39f03be7bc8bed569ba6d5a9c5d97e89f45ac43d819b68ca50f"},
+-    {file = "types_requests-2.33.0.20260408.tar.gz", hash = "sha256:95b9a86376807a216b2fb412b47617b202091c3ea7c078f47cc358d5528ccb7b"},
+-]
+-
+-[package.dependencies]
+-urllib3 = ">=2"
+-
+ [[package]]
+ name = "typing-extensions"
+ version = "4.15.0"
+@@ -1611,4 +1438,4 @@ aiohttp = ["aiohttp", "httpx-aiohttp"]
+ [metadata]
+ lock-version = "2.0"
+ python-versions = "^3.10"
+-content-hash = "e2541afd91bc09d4197eeb20ce689552c2fba7835992ac58b76873446bec8411"
++content-hash = "02ee31852ff3143d28cf513ee3fa1b514fe2ba936dcffc8ab6cc98f7c9570c01"
+diff --git a/pyproject.toml b/pyproject.toml
+index 65b8032ac22..5c5322a57b0 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -57,8 +57,6 @@ pytest-xdist = "^3.6.1"
+ python-dateutil = "^2.9.0"
+ types-python-dateutil = "^2.9.0.20240316"
+ urllib3 = ">=1.26.19,<2.0.0 || >=2.2.2,<3.0.0"
+-requests = "^2.33.0"
+-types-requests = "^2.33.0"
+ ruff = "==0.11.5"
+ 
+ [tool.pytest.ini_options]
+diff --git a/src/seed/__init__.py b/src/seed/__init__.py
+index f466b232ffa..b781f755ac4 100644
+--- a/src/seed/__init__.py
++++ b/src/seed/__init__.py
+@@ -66,3 +66,10 @@ __all__ = [
+     "req_with_headers",
+     "types",
+ ]
++# Load user-defined files if present (e.g., for Sentry integration)
++# Files are loaded from seed/ if they exist
++for _path in ["custom_integration", "sentry_integration"]:
++    try:
++        import_module(f".{_path}", "seed")
++    except ImportError:
++        pass
+diff --git a/tests/conftest.py b/tests/conftest.py
+index e7cb61c0f1f..25710dbe627 100644
+--- a/tests/conftest.py
++++ b/tests/conftest.py
+@@ -1,101 +1,5 @@
+-"""
+-Pytest plugin that manages the WireMock container lifecycle for wire tests.
+-
+-This plugin is loaded globally for the test suite and is responsible for
+-starting and stopping the WireMock container exactly once per test run,
+-including when running with pytest-xdist over the entire project.
+-
+-It lives under tests/ (as tests/conftest.py) and is discovered automatically
+-by pytest's normal test collection rules.
+-"""
+-
+-import os
+-import subprocess
+-
+ import pytest
+ 
+-_STARTED: bool = False
+-_EXTERNAL: bool = False  # True when using an external WireMock instance (skip container lifecycle)
+-_WIREMOCK_URL: str = "http://localhost:8080"  # Default, will be updated after container starts
+-_PROJECT_NAME: str = "seed-exhaustive"
+-
+-# This file lives at tests/conftest.py, so the project root is one level up.
+-_PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+-_COMPOSE_FILE = os.path.join(_PROJECT_ROOT, "wiremock", "docker-compose.test.yml")
+-
+-
+-def _get_wiremock_port() -> str:
+-    """Gets the dynamically assigned port for the WireMock container."""
+-    try:
+-        result = subprocess.run(
+-            ["docker", "compose", "-f", _COMPOSE_FILE, "-p", _PROJECT_NAME, "port", "wiremock", "8080"],
+-            check=True,
+-            capture_output=True,
+-            text=True,
+-        )
+-        # Output is like "0.0.0.0:32768" or "[::]:32768"
+-        port = result.stdout.strip().split(":")[-1]
+-        return port
+-    except subprocess.CalledProcessError:
+-        return "8080"  # Fallback to default
+-
+-
+-def _start_wiremock() -> None:
+-    """Starts the WireMock container using docker-compose."""
+-    global _STARTED, _EXTERNAL, _WIREMOCK_URL
+-    if _STARTED:
+-        return
+-
+-    # If WIREMOCK_URL is already set (e.g., by CI/CD pipeline), skip container management
+-    existing_url = os.environ.get("WIREMOCK_URL")
+-    if existing_url:
+-        _WIREMOCK_URL = existing_url
+-        _EXTERNAL = True
+-        _STARTED = True
+-        print(f"\nUsing external WireMock at {_WIREMOCK_URL} (container management skipped)")
+-        return
+-
+-    print(f"\nStarting WireMock container (project: {_PROJECT_NAME})...")
+-    try:
+-        subprocess.run(
+-            ["docker", "compose", "-f", _COMPOSE_FILE, "-p", _PROJECT_NAME, "up", "-d", "--wait"],
+-            check=True,
+-            capture_output=True,
+-            text=True,
+-        )
+-        _WIREMOCK_PORT = _get_wiremock_port()
+-        _WIREMOCK_URL = f"http://localhost:{_WIREMOCK_PORT}"
+-        os.environ["WIREMOCK_URL"] = _WIREMOCK_URL
+-        print(f"WireMock container is ready at {_WIREMOCK_URL}")
+-        _STARTED = True
+-    except subprocess.CalledProcessError as e:
+-        print(f"Failed to start WireMock: {e.stderr}")
+-        raise
+-
+-
+-def _stop_wiremock() -> None:
+-    """Stops and removes the WireMock container."""
+-    if _EXTERNAL:
+-        # Container is managed externally; nothing to tear down.
+-        return
+-
+-    print("\nStopping WireMock container...")
+-    subprocess.run(
+-        ["docker", "compose", "-f", _COMPOSE_FILE, "-p", _PROJECT_NAME, "down", "-v"],
+-        check=False,
+-        capture_output=True,
+-    )
+-
+-
+-def _is_xdist_worker(config: pytest.Config) -> bool:
+-    """
+-    Determines if the current process is an xdist worker.
+-
+-    In pytest-xdist, worker processes have a 'workerinput' attribute
+-    on the config object, while the controller process does not.
+-    """
+-    return hasattr(config, "workerinput")
+-
+ 
+ def _has_httpx_aiohttp() -> bool:
+     """Check if httpx_aiohttp is importable."""
+@@ -115,33 +19,3 @@ def pytest_collection_modifyitems(config: pytest.Config, items: list) -> None:
+     for item in items:
+         if "aiohttp" in item.keywords:
+             item.add_marker(skip_aiohttp)
+-
+-
+-def pytest_configure(config: pytest.Config) -> None:
+-    """
+-    Pytest hook that runs during test session setup.
+-
+-    Starts WireMock container only from the controller process (xdist)
+-    or the single process (non-xdist). This ensures only one container
+-    is started regardless of the number of worker processes.
+-    """
+-    if _is_xdist_worker(config):
+-        # Workers never manage the container lifecycle.
+-        return
+-
+-    _start_wiremock()
+-
+-
+-def pytest_unconfigure(config: pytest.Config) -> None:
+-    """
+-    Pytest hook that runs during test session teardown.
+-
+-    Stops WireMock container only from the controller process (xdist)
+-    or the single process (non-xdist). This ensures the container is
+-    cleaned up after all workers have finished.
+-    """
+-    if _is_xdist_worker(config):
+-        # Workers never manage the container lifecycle.
+-        return
+-
+-    _stop_wiremock()
+diff --git a/tests/custom/test_discriminated_unions.py b/tests/custom/test_discriminated_unions.py
+deleted file mode 100644
+index f3304c6925a..00000000000
+--- a/tests/custom/test_discriminated_unions.py
++++ /dev/null
+@@ -1,149 +0,0 @@
+-"""
+-Comprehensive tests for discriminated union feature.
+-
+-These tests validate that the Python SDK generator correctly emits
+-discriminated unions with Field(discriminator=...) for improved performance.
+-"""
+-
+-import pytest
+-import typing_extensions
+-from typing import get_args, get_origin
+-
+-try:
+-    import pydantic
+-    from pydantic import BaseModel, ValidationError
+-    PYDANTIC_VERSION = int(pydantic.VERSION.split('.')[0])
+-except ImportError:
+-    pytest.skip("Pydantic is not installed", allow_module_level=True)
+-
+-from seed.types.union.types.animal import Animal, Animal_Dog, Animal_Cat
+-
+-
+-class PetOwner(BaseModel):
+-    """Wrapper model to test union parsing in a Pydantic context."""
+-    owner_name: str
+-    pet: Animal
+-
+-
+-class TestDiscriminatedUnionParsing:
+-    """Test that discriminated unions parse correctly from JSON payloads."""
+-    
+-    def test_parse_dog_variant(self):
+-        """Test parsing a valid dog payload."""
+-        payload = {
+-            "owner_name": "Alice",
+-            "pet": {
+-                "animal": "dog",
+-                "name": "Buddy",
+-                "likes_to_woof": True
+-            }
+-        }
+-        
+-        if PYDANTIC_VERSION >= 2:
+-            owner = PetOwner.model_validate(payload)
+-        else:
+-            owner = PetOwner.parse_obj(payload)
+-        
+-        assert owner.owner_name == "Alice"
+-        assert isinstance(owner.pet, Animal_Dog)
+-        assert owner.pet.name == "Buddy"
+-        assert owner.pet.likes_to_woof is True
+-        assert owner.pet.animal == "dog"
+-    
+-    def test_parse_cat_variant(self):
+-        """Test parsing a valid cat payload."""
+-        payload = {
+-            "owner_name": "Bob",
+-            "pet": {
+-                "animal": "cat",
+-                "name": "Whiskers",
+-                "likes_to_meow": True
+-            }
+-        }
+-        
+-        if PYDANTIC_VERSION >= 2:
+-            owner = PetOwner.model_validate(payload)
+-        else:
+-            owner = PetOwner.parse_obj(payload)
+-        
+-        assert owner.owner_name == "Bob"
+-        assert isinstance(owner.pet, Animal_Cat)
+-        assert owner.pet.name == "Whiskers"
+-        assert owner.pet.likes_to_meow is True
+-        assert owner.pet.animal == "cat"
+-
+-
+-class TestDiscriminatedUnionErrors:
+-    """Test that discriminated unions raise appropriate errors for invalid payloads."""
+-    
+-    def test_invalid_discriminator_value(self):
+-        """Test that an invalid discriminator value raises ValidationError mentioning 'discriminator'."""
+-        payload = {
+-            "owner_name": "Charlie",
+-            "pet": {
+-                "animal": "lizard",  # Invalid discriminator value
+-                "name": "Godzilla"
+-            }
+-        }
+-        
+-        with pytest.raises(ValidationError) as exc_info:
+-            if PYDANTIC_VERSION >= 2:
+-                PetOwner.model_validate(payload)
+-            else:
+-                PetOwner.parse_obj(payload)
+-        
+-        error_str = str(exc_info.value).lower()
+-        assert "discriminator" in error_str or "animal" in error_str
+-    
+-    def test_missing_discriminator_field(self):
+-        """Test that a missing discriminator field raises ValidationError."""
+-        payload = {
+-            "owner_name": "Diana",
+-            "pet": {
+-                "name": "Mystery",
+-                "likes_to_woof": True
+-            }
+-        }
+-        
+-        with pytest.raises(ValidationError) as exc_info:
+-            if PYDANTIC_VERSION >= 2:
+-                PetOwner.model_validate(payload)
+-            else:
+-                PetOwner.parse_obj(payload)
+-        
+-        error_str = str(exc_info.value).lower()
+-        assert "animal" in error_str or "discriminator" in error_str
+-
+-
+-class TestDiscriminatedUnionSerialization:
+-    """Test serialization of discriminated unions."""
+-    
+-    def test_serialize_dog(self):
+-        """Test that a Dog can be serialized correctly."""
+-        dog = Animal_Dog(name="Buddy", likes_to_woof=True)
+-        owner = PetOwner(owner_name="Alice", pet=dog)
+-        
+-        if PYDANTIC_VERSION >= 2:
+-            data = owner.model_dump()
+-        else:
+-            data = owner.dict()
+-        
+-        assert data["pet"]["animal"] == "dog"
+-        assert data["pet"]["name"] == "Buddy"
+-        woof_value = data["pet"].get("likes_to_woof", data["pet"].get("likesToWoof"))
+-        assert woof_value is True
+-    
+-    def test_serialize_cat(self):
+-        """Test that a Cat can be serialized correctly."""
+-        cat = Animal_Cat(name="Whiskers", likes_to_meow=True)
+-        owner = PetOwner(owner_name="Bob", pet=cat)
+-        
+-        if PYDANTIC_VERSION >= 2:
+-            data = owner.model_dump()
+-        else:
+-            data = owner.dict()
+-        
+-        assert data["pet"]["animal"] == "cat"
+-        assert data["pet"]["name"] == "Whiskers"
+-        meow_value = data["pet"].get("likes_to_meow", data["pet"].get("likesToMeow"))
+-        assert meow_value is True
+diff --git a/tests/test_lazy_loading.py b/tests/test_lazy_loading.py
+deleted file mode 100644
+index c63d2d9b719..00000000000
+--- a/tests/test_lazy_loading.py
++++ /dev/null
+@@ -1,133 +0,0 @@
+-import pytest
+-from unittest.mock import patch, MagicMock
+-from typing import Union
+-from seed.client import AsyncSeedExhaustive, SeedExhaustive
+-
+-
+-@pytest.mark.parametrize("client", [SeedExhaustive(base_url="foo"), AsyncSeedExhaustive(base_url="foo")])
+-def test_root_client_lazy_loading(client: Union[SeedExhaustive, AsyncSeedExhaustive]):
+-    """Test lazy loading for accounting client resources."""
+-    # Initially all private attributes should be None
+-    assert client._endpoints is None
+-    assert client._inlined_requests is None
+-    assert client._no_auth is None
+-    assert client._no_req_body is None
+-    assert client._req_with_headers is None
+-    
+-    # Accessing properties should trigger lazy loading
+-    endpoints = client.endpoints
+-    assert endpoints is not None
+-    assert client._endpoints is not None
+-    inlined_requests = client.inlined_requests
+-    assert inlined_requests is not None
+-    assert client._inlined_requests is not None
+-    no_auth = client.no_auth
+-    assert no_auth is not None
+-    assert client._no_auth is not None
+-    no_req_body = client.no_req_body
+-    assert no_req_body is not None
+-    assert client._no_req_body is not None
+-    req_body = client.req_with_headers
+-    assert req_body is not None
+-    assert client._req_with_headers is not None
+-
+-@pytest.mark.parametrize("client", [SeedExhaustive(base_url="foo"), AsyncSeedExhaustive(base_url="foo")])
+-def test_nested_client_lazy_loading(client: Union[SeedExhaustive, AsyncSeedExhaustive]):
+-    """Test lazy loading for nested client resources."""
+-
+-    # Initially all private attributes should be None
+-    assert client.endpoints._container is None
+-    assert client.endpoints._content_type is None
+-    assert client.endpoints._enum is None
+-    assert client.endpoints._http_methods is None
+-    assert client.endpoints._object is None
+-    assert client.endpoints._params is None
+-    assert client.endpoints._primitive is None
+-    assert client.endpoints._put is None
+-    assert client.endpoints._union is None
+-    assert client.endpoints._urls is None
+-    
+-    # Accessing properties should trigger lazy loading  
+-    container = client.endpoints.container
+-    assert container is not None
+-    assert client.endpoints._container is not None
+-    content_type = client.endpoints.content_type
+-    assert content_type is not None
+-    assert client.endpoints._content_type is not None
+-    enum = client.endpoints.enum
+-    assert enum is not None
+-    assert client.endpoints._enum is not None
+-    http_methods = client.endpoints.http_methods
+-    assert http_methods is not None
+-    assert client.endpoints._http_methods is not None
+-    object = client.endpoints.object
+-    assert object is not None
+-    assert client.endpoints._object is not None
+-    params = client.endpoints.params
+-    assert params is not None
+-    assert client.endpoints._params is not None
+-    primitive = client.endpoints.primitive
+-    assert primitive is not None
+-    assert client.endpoints._primitive is not None
+-    put = client.endpoints.put
+-    assert put is not None
+-    assert client.endpoints._put is not None
+-    union = client.endpoints.union
+-    assert union is not None
+-    assert client.endpoints._union is not None
+-    urls = client.endpoints.urls
+-    assert urls is not None
+-    assert client.endpoints._urls is not None
+-
+-
+-@patch("seed.endpoints.container.client.ContainerClient")
+-def test_lazy_loading_imports_correct_module(mock_container_client: MagicMock):
+-    """Test that lazy loading imports the correct module."""
+-    client = SeedExhaustive(base_url="foo")
+-    mock_container_client.return_value = MagicMock()
+-    
+-    # Initially the private attribute should be None
+-    assert client.endpoints._container is None
+-    
+-    # Accessing the property should trigger import and instantiation
+-    container = client.endpoints.container
+-    
+-    # Verify that the correct class was imported and instantiated
+-    mock_container_client.assert_called_once()
+-    assert container is mock_container_client.return_value
+-
+-@patch("seed.endpoints.container.client.AsyncContainerClient")
+-def test_lazy_loading_imports_correct_module_async(mock_container_client: MagicMock):
+-    """Test that lazy loading imports the correct module."""
+-    client = AsyncSeedExhaustive(base_url="foo")
+-    mock_container_client.return_value = MagicMock()
+-    
+-    # Initially the private attribute should be None
+-    assert client.endpoints._container is None
+-    
+-    # Accessing the property should trigger import and instantiation
+-    container = client.endpoints.container
+-    
+-    # Verify that the correct class was imported and instantiated
+-    mock_container_client.assert_called_once()
+-    assert container is mock_container_client.return_value
+-
+-@pytest.mark.parametrize("client", [SeedExhaustive(base_url="foo"), AsyncSeedExhaustive(base_url="foo")])
+-def test_cached_instances(client: Union[SeedExhaustive, AsyncSeedExhaustive]):
+-    endpoints1 = client.endpoints
+-    endpoints2 = client.endpoints
+-    assert endpoints1 is endpoints2
+-
+-    container1 = client.endpoints.container
+-    container2 = client.endpoints.container
+-    assert container1 is container2
+-
+-@pytest.mark.parametrize("client", [SeedExhaustive(base_url="foo"), AsyncSeedExhaustive(base_url="foo")])
+-def test_lazy_loading_preserves_client_wrapper(client: Union[SeedExhaustive, AsyncSeedExhaustive]):
+-    endpoints = client.endpoints
+-
+-    assert endpoints._client_wrapper is client._client_wrapper
+-    assert endpoints._raw_client._client_wrapper is client._client_wrapper
+-
+-    container = client.endpoints.container
+-    assert container._raw_client._client_wrapper is endpoints._client_wrapper
+diff --git a/tests/wire/__init__.py b/tests/wire/__init__.py
+deleted file mode 100644
+index e69de29bb2d..00000000000
+diff --git a/tests/wire/conftest.py b/tests/wire/conftest.py
+deleted file mode 100644
+index e00dd0da6c8..00000000000
+--- a/tests/wire/conftest.py
++++ /dev/null
+@@ -1,85 +0,0 @@
+-"""
+-Pytest configuration for wire tests.
+-
+-This module provides helpers for creating a configured client that talks to
+-WireMock and for verifying requests in WireMock.
+-
+-The WireMock container lifecycle itself is managed by a top-level pytest
+-plugin (tests/conftest.py) so that the container is started exactly once
+-per test run, even when using pytest-xdist.
+-"""
+-
+-import inspect
+-import os
+-from typing import Any, Dict, Optional
+-
+-import httpx
+-
+-from seed.client import SeedExhaustive
+-
+-# Check once at import time whether the client constructor accepts a headers kwarg.
+-try:
+-    _CLIENT_SUPPORTS_HEADERS: bool = "headers" in inspect.signature(SeedExhaustive).parameters
+-except (TypeError, ValueError):
+-    _CLIENT_SUPPORTS_HEADERS = False
+-
+-
+-def _get_wiremock_base_url() -> str:
+-    """Returns the WireMock base URL from the WIREMOCK_URL environment variable."""
+-    return os.environ.get("WIREMOCK_URL", "http://localhost:8080")
+-
+-
+-def get_client(test_id: str) -> SeedExhaustive:
+-    """
+-    Creates a configured client instance for wire tests.
+-
+-    Args:
+-        test_id: Unique identifier for the test, used for request tracking.
+-
+-    Returns:
+-        A configured client instance with all required auth parameters.
+-    """
+-    test_headers = {"X-Test-Id": test_id}
+-    base_url = _get_wiremock_base_url()
+-
+-    if _CLIENT_SUPPORTS_HEADERS:
+-        return SeedExhaustive(
+-            base_url=base_url,
+-            headers=test_headers,
+-            token="test_token",
+-        )
+-
+-    return SeedExhaustive(
+-        base_url=base_url,
+-        httpx_client=httpx.Client(headers=test_headers),
+-        token="test_token",
+-    )
+-
+-
+-def verify_request_count(
+-    test_id: str,
+-    method: str,
+-    url_path: str,
+-    query_params: Optional[Dict[str, Any]],
+-    expected: int,
+-) -> None:
+-    """Verifies the number of requests made to WireMock filtered by test ID for concurrency safety."""
+-    wiremock_admin_url = f"{_get_wiremock_base_url()}/__admin"
+-    request_body: Dict[str, Any] = {
+-        "method": method,
+-        "urlPath": url_path,
+-        "headers": {"X-Test-Id": {"equalTo": test_id}},
+-    }
+-    if query_params:
+-        query_parameters = {}
+-        for k, v in query_params.items():
+-            if isinstance(v, list):
+-                query_parameters[k] = {"hasExactly": [{"equalTo": item} for item in v]}
+-            else:
+-                query_parameters[k] = {"equalTo": v}
+-        request_body["queryParameters"] = query_parameters
+-    response = httpx.post(f"{wiremock_admin_url}/requests/find", json=request_body)
+-    assert response.status_code == 200, "Failed to query WireMock requests"
+-    result = response.json()
+-    requests_found = len(result.get("requests", []))
+-    assert requests_found == expected, f"Expected {expected} requests, found {requests_found}"
+diff --git a/tests/wire/test_endpoints_container.py b/tests/wire/test_endpoints_container.py
+deleted file mode 100644
+index 832ee3ea2ca..00000000000
+--- a/tests/wire/test_endpoints_container.py
++++ /dev/null
+@@ -1,100 +0,0 @@
+-from .conftest import get_client, verify_request_count
+-
+-from seed.types.object import ObjectWithRequiredField
+-
+-
+-def test_endpoints_container_get_and_return_list_of_primitives() -> None:
+-    """Test getAndReturnListOfPrimitives endpoint with WireMock"""
+-    test_id = "endpoints.container.get_and_return_list_of_primitives.0"
+-    client = get_client(test_id)
+-    client.endpoints.container.get_and_return_list_of_primitives(
+-        request=["string", "string"],
+-    )
+-    verify_request_count(test_id, "POST", "/container/list-of-primitives", None, 1)
+-
+-
+-def test_endpoints_container_get_and_return_list_of_objects() -> None:
+-    """Test getAndReturnListOfObjects endpoint with WireMock"""
+-    test_id = "endpoints.container.get_and_return_list_of_objects.0"
+-    client = get_client(test_id)
+-    client.endpoints.container.get_and_return_list_of_objects(
+-        request=[
+-            ObjectWithRequiredField(
+-                string="string",
+-            ),
+-            ObjectWithRequiredField(
+-                string="string",
+-            ),
+-        ],
+-    )
+-    verify_request_count(test_id, "POST", "/container/list-of-objects", None, 1)
+-
+-
+-def test_endpoints_container_get_and_return_set_of_primitives() -> None:
+-    """Test getAndReturnSetOfPrimitives endpoint with WireMock"""
+-    test_id = "endpoints.container.get_and_return_set_of_primitives.0"
+-    client = get_client(test_id)
+-    client.endpoints.container.get_and_return_set_of_primitives(
+-        request=["string"],
+-    )
+-    verify_request_count(test_id, "POST", "/container/set-of-primitives", None, 1)
+-
+-
+-def test_endpoints_container_get_and_return_set_of_objects() -> None:
+-    """Test getAndReturnSetOfObjects endpoint with WireMock"""
+-    test_id = "endpoints.container.get_and_return_set_of_objects.0"
+-    client = get_client(test_id)
+-    client.endpoints.container.get_and_return_set_of_objects(
+-        request=[
+-            ObjectWithRequiredField(
+-                string="string",
+-            )
+-        ],
+-    )
+-    verify_request_count(test_id, "POST", "/container/set-of-objects", None, 1)
+-
+-
+-def test_endpoints_container_get_and_return_map_prim_to_prim() -> None:
+-    """Test getAndReturnMapPrimToPrim endpoint with WireMock"""
+-    test_id = "endpoints.container.get_and_return_map_prim_to_prim.0"
+-    client = get_client(test_id)
+-    client.endpoints.container.get_and_return_map_prim_to_prim(
+-        request={"string": "string"},
+-    )
+-    verify_request_count(test_id, "POST", "/container/map-prim-to-prim", None, 1)
+-
+-
+-def test_endpoints_container_get_and_return_map_of_prim_to_object() -> None:
+-    """Test getAndReturnMapOfPrimToObject endpoint with WireMock"""
+-    test_id = "endpoints.container.get_and_return_map_of_prim_to_object.0"
+-    client = get_client(test_id)
+-    client.endpoints.container.get_and_return_map_of_prim_to_object(
+-        request={
+-            "string": ObjectWithRequiredField(
+-                string="string",
+-            )
+-        },
+-    )
+-    verify_request_count(test_id, "POST", "/container/map-prim-to-object", None, 1)
+-
+-
+-def test_endpoints_container_get_and_return_map_of_prim_to_undiscriminated_union() -> None:
+-    """Test getAndReturnMapOfPrimToUndiscriminatedUnion endpoint with WireMock"""
+-    test_id = "endpoints.container.get_and_return_map_of_prim_to_undiscriminated_union.0"
+-    client = get_client(test_id)
+-    client.endpoints.container.get_and_return_map_of_prim_to_undiscriminated_union(
+-        request={"string": 1.1},
+-    )
+-    verify_request_count(test_id, "POST", "/container/map-prim-to-union", None, 1)
+-
+-
+-def test_endpoints_container_get_and_return_optional() -> None:
+-    """Test getAndReturnOptional endpoint with WireMock"""
+-    test_id = "endpoints.container.get_and_return_optional.0"
+-    client = get_client(test_id)
+-    client.endpoints.container.get_and_return_optional(
+-        request=ObjectWithRequiredField(
+-            string="string",
+-        ),
+-    )
+-    verify_request_count(test_id, "POST", "/container/opt-objects", None, 1)
+diff --git a/tests/wire/test_endpoints_contentType.py b/tests/wire/test_endpoints_contentType.py
+deleted file mode 100644
+index f9b27a49614..00000000000
+--- a/tests/wire/test_endpoints_contentType.py
++++ /dev/null
+@@ -1,48 +0,0 @@
+-import datetime
+-import uuid
+-
+-from .conftest import get_client, verify_request_count
+-
+-
+-def test_endpoints_contentType_post_json_patch_content_type() -> None:
+-    """Test postJsonPatchContentType endpoint with WireMock"""
+-    test_id = "endpoints.content_type.post_json_patch_content_type.0"
+-    client = get_client(test_id)
+-    client.endpoints.content_type.post_json_patch_content_type(
+-        string="string",
+-        integer=1,
+-        long_=1000000,
+-        double=1.1,
+-        bool_=True,
+-        datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+-        date=datetime.date.fromisoformat("2023-01-15"),
+-        uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+-        base64="SGVsbG8gd29ybGQh",
+-        list_=["list", "list"],
+-        set_=["set"],
+-        map_={1: "map"},
+-        bigint="1000000",
+-    )
+-    verify_request_count(test_id, "POST", "/foo/bar", None, 1)
+-
+-
+-def test_endpoints_contentType_post_json_patch_content_with_charset_type() -> None:
+-    """Test postJsonPatchContentWithCharsetType endpoint with WireMock"""
+-    test_id = "endpoints.content_type.post_json_patch_content_with_charset_type.0"
+-    client = get_client(test_id)
+-    client.endpoints.content_type.post_json_patch_content_with_charset_type(
+-        string="string",
+-        integer=1,
+-        long_=1000000,
+-        double=1.1,
+-        bool_=True,
+-        datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+-        date=datetime.date.fromisoformat("2023-01-15"),
+-        uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+-        base64="SGVsbG8gd29ybGQh",
+-        list_=["list", "list"],
+-        set_=["set"],
+-        map_={1: "map"},
+-        bigint="1000000",
+-    )
+-    verify_request_count(test_id, "POST", "/foo/baz", None, 1)
+diff --git a/tests/wire/test_endpoints_enum.py b/tests/wire/test_endpoints_enum.py
+deleted file mode 100644
+index 9d31b8abce0..00000000000
+--- a/tests/wire/test_endpoints_enum.py
++++ /dev/null
+@@ -1,11 +0,0 @@
+-from .conftest import get_client, verify_request_count
+-
+-
+-def test_endpoints_enum_get_and_return_enum() -> None:
+-    """Test getAndReturnEnum endpoint with WireMock"""
+-    test_id = "endpoints.enum.get_and_return_enum.0"
+-    client = get_client(test_id)
+-    client.endpoints.enum.get_and_return_enum(
+-        request="SUNNY",
+-    )
+-    verify_request_count(test_id, "POST", "/enum", None, 1)
+diff --git a/tests/wire/test_endpoints_httpMethods.py b/tests/wire/test_endpoints_httpMethods.py
+deleted file mode 100644
+index f51aa2d6ea7..00000000000
+--- a/tests/wire/test_endpoints_httpMethods.py
++++ /dev/null
+@@ -1,68 +0,0 @@
+-import datetime
+-import uuid
+-
+-from .conftest import get_client, verify_request_count
+-
+-
+-def test_endpoints_httpMethods_test_get() -> None:
+-    """Test testGet endpoint with WireMock"""
+-    test_id = "endpoints.http_methods.test_get.0"
+-    client = get_client(test_id)
+-    client.endpoints.http_methods.test_get(
+-        id="id",
+-    )
+-    verify_request_count(test_id, "GET", "/http-methods/id", None, 1)
+-
+-
+-def test_endpoints_httpMethods_test_post() -> None:
+-    """Test testPost endpoint with WireMock"""
+-    test_id = "endpoints.http_methods.test_post.0"
+-    client = get_client(test_id)
+-    client.endpoints.http_methods.test_post(
+-        string="string",
+-    )
+-    verify_request_count(test_id, "POST", "/http-methods", None, 1)
+-
+-
+-def test_endpoints_httpMethods_test_put() -> None:
+-    """Test testPut endpoint with WireMock"""
+-    test_id = "endpoints.http_methods.test_put.0"
+-    client = get_client(test_id)
+-    client.endpoints.http_methods.test_put(
+-        id="id",
+-        string="string",
+-    )
+-    verify_request_count(test_id, "PUT", "/http-methods/id", None, 1)
+-
+-
+-def test_endpoints_httpMethods_test_patch() -> None:
+-    """Test testPatch endpoint with WireMock"""
+-    test_id = "endpoints.http_methods.test_patch.0"
+-    client = get_client(test_id)
+-    client.endpoints.http_methods.test_patch(
+-        id="id",
+-        string="string",
+-        integer=1,
+-        long_=1000000,
+-        double=1.1,
+-        bool_=True,
+-        datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+-        date=datetime.date.fromisoformat("2023-01-15"),
+-        uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+-        base64="SGVsbG8gd29ybGQh",
+-        list_=["list", "list"],
+-        set_=["set"],
+-        map_={1: "map"},
+-        bigint="1000000",
+-    )
+-    verify_request_count(test_id, "PATCH", "/http-methods/id", None, 1)
+-
+-
+-def test_endpoints_httpMethods_test_delete() -> None:
+-    """Test testDelete endpoint with WireMock"""
+-    test_id = "endpoints.http_methods.test_delete.0"
+-    client = get_client(test_id)
+-    client.endpoints.http_methods.test_delete(
+-        id="id",
+-    )
+-    verify_request_count(test_id, "DELETE", "/http-methods/id", None, 1)
+diff --git a/tests/wire/test_endpoints_object.py b/tests/wire/test_endpoints_object.py
+deleted file mode 100644
+index d6f725aca54..00000000000
+--- a/tests/wire/test_endpoints_object.py
++++ /dev/null
+@@ -1,214 +0,0 @@
+-import datetime
+-import uuid
+-
+-from .conftest import get_client, verify_request_count
+-
+-from seed.types.object import NestedObjectWithRequiredField, ObjectWithOptionalField
+-
+-
+-def test_endpoints_object_get_and_return_with_optional_field() -> None:
+-    """Test getAndReturnWithOptionalField endpoint with WireMock"""
+-    test_id = "endpoints.object.get_and_return_with_optional_field.0"
+-    client = get_client(test_id)
+-    client.endpoints.object.get_and_return_with_optional_field(
+-        string="string",
+-        integer=1,
+-        long_=1000000,
+-        double=1.1,
+-        bool_=True,
+-        datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+-        date=datetime.date.fromisoformat("2023-01-15"),
+-        uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+-        base64="SGVsbG8gd29ybGQh",
+-        list_=["list", "list"],
+-        set_=["set"],
+-        map_={1: "map"},
+-        bigint="1000000",
+-    )
+-    verify_request_count(test_id, "POST", "/object/get-and-return-with-optional-field", None, 1)
+-
+-
+-def test_endpoints_object_get_and_return_with_required_field() -> None:
+-    """Test getAndReturnWithRequiredField endpoint with WireMock"""
+-    test_id = "endpoints.object.get_and_return_with_required_field.0"
+-    client = get_client(test_id)
+-    client.endpoints.object.get_and_return_with_required_field(
+-        string="string",
+-    )
+-    verify_request_count(test_id, "POST", "/object/get-and-return-with-required-field", None, 1)
+-
+-
+-def test_endpoints_object_get_and_return_with_map_of_map() -> None:
+-    """Test getAndReturnWithMapOfMap endpoint with WireMock"""
+-    test_id = "endpoints.object.get_and_return_with_map_of_map.0"
+-    client = get_client(test_id)
+-    client.endpoints.object.get_and_return_with_map_of_map(
+-        map_={"map": {"map": "map"}},
+-    )
+-    verify_request_count(test_id, "POST", "/object/get-and-return-with-map-of-map", None, 1)
+-
+-
+-def test_endpoints_object_get_and_return_nested_with_optional_field() -> None:
+-    """Test getAndReturnNestedWithOptionalField endpoint with WireMock"""
+-    test_id = "endpoints.object.get_and_return_nested_with_optional_field.0"
+-    client = get_client(test_id)
+-    client.endpoints.object.get_and_return_nested_with_optional_field(
+-        string="string",
+-        nested_object=ObjectWithOptionalField(
+-            string="string",
+-            integer=1,
+-            long_=1000000,
+-            double=1.1,
+-            bool_=True,
+-            datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+-            date=datetime.date.fromisoformat("2023-01-15"),
+-            uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+-            base64="SGVsbG8gd29ybGQh",
+-            list_=["list", "list"],
+-            set_=["set"],
+-            map_={1: "map"},
+-            bigint="1000000",
+-        ),
+-    )
+-    verify_request_count(test_id, "POST", "/object/get-and-return-nested-with-optional-field", None, 1)
+-
+-
+-def test_endpoints_object_get_and_return_nested_with_required_field() -> None:
+-    """Test getAndReturnNestedWithRequiredField endpoint with WireMock"""
+-    test_id = "endpoints.object.get_and_return_nested_with_required_field.0"
+-    client = get_client(test_id)
+-    client.endpoints.object.get_and_return_nested_with_required_field(
+-        string_="string",
+-        string="string",
+-        nested_object=ObjectWithOptionalField(
+-            string="string",
+-            integer=1,
+-            long_=1000000,
+-            double=1.1,
+-            bool_=True,
+-            datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+-            date=datetime.date.fromisoformat("2023-01-15"),
+-            uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+-            base64="SGVsbG8gd29ybGQh",
+-            list_=["list", "list"],
+-            set_=["set"],
+-            map_={1: "map"},
+-            bigint="1000000",
+-        ),
+-    )
+-    verify_request_count(test_id, "POST", "/object/get-and-return-nested-with-required-field/string", None, 1)
+-
+-
+-def test_endpoints_object_get_and_return_nested_with_required_field_as_list() -> None:
+-    """Test getAndReturnNestedWithRequiredFieldAsList endpoint with WireMock"""
+-    test_id = "endpoints.object.get_and_return_nested_with_required_field_as_list.0"
+-    client = get_client(test_id)
+-    client.endpoints.object.get_and_return_nested_with_required_field_as_list(
+-        request=[
+-            NestedObjectWithRequiredField(
+-                string="string",
+-                nested_object=ObjectWithOptionalField(
+-                    string="string",
+-                    integer=1,
+-                    long_=1000000,
+-                    double=1.1,
+-                    bool_=True,
+-                    datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+-                    date=datetime.date.fromisoformat("2023-01-15"),
+-                    uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+-                    base64="SGVsbG8gd29ybGQh",
+-                    list_=["list", "list"],
+-                    set_=["set"],
+-                    map_={1: "map"},
+-                    bigint="1000000",
+-                ),
+-            ),
+-            NestedObjectWithRequiredField(
+-                string="string",
+-                nested_object=ObjectWithOptionalField(
+-                    string="string",
+-                    integer=1,
+-                    long_=1000000,
+-                    double=1.1,
+-                    bool_=True,
+-                    datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+-                    date=datetime.date.fromisoformat("2023-01-15"),
+-                    uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+-                    base64="SGVsbG8gd29ybGQh",
+-                    list_=["list", "list"],
+-                    set_=["set"],
+-                    map_={1: "map"},
+-                    bigint="1000000",
+-                ),
+-            ),
+-        ],
+-    )
+-    verify_request_count(test_id, "POST", "/object/get-and-return-nested-with-required-field-list", None, 1)
+-
+-
+-def test_endpoints_object_get_and_return_with_unknown_field() -> None:
+-    """Test getAndReturnWithUnknownField endpoint with WireMock"""
+-    test_id = "endpoints.object.get_and_return_with_unknown_field.0"
+-    client = get_client(test_id)
+-    client.endpoints.object.get_and_return_with_unknown_field(
+-        unknown={"$ref": "https://example.com/schema"},
+-    )
+-    verify_request_count(test_id, "POST", "/object/get-and-return-with-unknown-field", None, 1)
+-
+-
+-def test_endpoints_object_get_and_return_with_documented_unknown_type() -> None:
+-    """Test getAndReturnWithDocumentedUnknownType endpoint with WireMock"""
+-    test_id = "endpoints.object.get_and_return_with_documented_unknown_type.0"
+-    client = get_client(test_id)
+-    client.endpoints.object.get_and_return_with_documented_unknown_type(
+-        documented_unknown_type={"key": "value"},
+-    )
+-    verify_request_count(test_id, "POST", "/object/get-and-return-with-documented-unknown-type", None, 1)
+-
+-
+-def test_endpoints_object_get_and_return_map_of_documented_unknown_type() -> None:
+-    """Test getAndReturnMapOfDocumentedUnknownType endpoint with WireMock"""
+-    test_id = "endpoints.object.get_and_return_map_of_documented_unknown_type.0"
+-    client = get_client(test_id)
+-    client.endpoints.object.get_and_return_map_of_documented_unknown_type(
+-        request={"string": {"key": "value"}},
+-    )
+-    verify_request_count(test_id, "POST", "/object/get-and-return-map-of-documented-unknown-type", None, 1)
+-
+-
+-def test_endpoints_object_get_and_return_with_mixed_required_and_optional_fields() -> None:
+-    """Test getAndReturnWithMixedRequiredAndOptionalFields endpoint with WireMock"""
+-    test_id = "endpoints.object.get_and_return_with_mixed_required_and_optional_fields.0"
+-    client = get_client(test_id)
+-    client.endpoints.object.get_and_return_with_mixed_required_and_optional_fields(
+-        required_string="hello",
+-        required_integer=0,
+-        optional_string="world",
+-        required_long=0,
+-    )
+-    verify_request_count(test_id, "POST", "/object/get-and-return-with-mixed-required-and-optional-fields", None, 1)
+-
+-
+-def test_endpoints_object_get_and_return_with_required_nested_object() -> None:
+-    """Test getAndReturnWithRequiredNestedObject endpoint with WireMock"""
+-    test_id = "endpoints.object.get_and_return_with_required_nested_object.0"
+-    client = get_client(test_id)
+-    client.endpoints.object.get_and_return_with_required_nested_object(
+-        required_string="hello",
+-        required_object=NestedObjectWithRequiredField(
+-            string="nested",
+-            nested_object=ObjectWithOptionalField(),
+-        ),
+-    )
+-    verify_request_count(test_id, "POST", "/object/get-and-return-with-required-nested-object", None, 1)
+-
+-
+-def test_endpoints_object_get_and_return_with_datetime_like_string() -> None:
+-    """Test getAndReturnWithDatetimeLikeString endpoint with WireMock"""
+-    test_id = "endpoints.object.get_and_return_with_datetime_like_string.0"
+-    client = get_client(test_id)
+-    client.endpoints.object.get_and_return_with_datetime_like_string(
+-        datetime_like_string="2023-08-31T14:15:22Z",
+-        actual_datetime=datetime.datetime.fromisoformat("2023-08-31T14:15:22+00:00"),
+-    )
+-    verify_request_count(test_id, "POST", "/object/get-and-return-with-datetime-like-string", None, 1)
+diff --git a/tests/wire/test_endpoints_pagination.py b/tests/wire/test_endpoints_pagination.py
+deleted file mode 100644
+index a6bbdb7a408..00000000000
+--- a/tests/wire/test_endpoints_pagination.py
++++ /dev/null
+@@ -1,12 +0,0 @@
+-from .conftest import get_client, verify_request_count
+-
+-
+-def test_endpoints_pagination_list_items() -> None:
+-    """Test listItems endpoint with WireMock"""
+-    test_id = "endpoints.pagination.list_items.0"
+-    client = get_client(test_id)
+-    client.endpoints.pagination.list_items(
+-        cursor="cursor",
+-        limit=1,
+-    )
+-    verify_request_count(test_id, "GET", "/pagination", {"cursor": "cursor", "limit": "1"}, 1)
+diff --git a/tests/wire/test_endpoints_params.py b/tests/wire/test_endpoints_params.py
+deleted file mode 100644
+index 24ed4a022a1..00000000000
+--- a/tests/wire/test_endpoints_params.py
++++ /dev/null
+@@ -1,107 +0,0 @@
+-from .conftest import get_client, verify_request_count
+-
+-
+-def test_endpoints_params_get_with_path() -> None:
+-    """Test getWithPath endpoint with WireMock"""
+-    test_id = "endpoints.params.get_with_path.0"
+-    client = get_client(test_id)
+-    client.endpoints.params.get_with_path(
+-        param="param",
+-    )
+-    verify_request_count(test_id, "GET", "/params/path/param", None, 1)
+-
+-
+-def test_endpoints_params_get_with_inline_path() -> None:
+-    """Test getWithInlinePath endpoint with WireMock"""
+-    test_id = "endpoints.params.get_with_inline_path.0"
+-    client = get_client(test_id)
+-    client.endpoints.params.get_with_inline_path(
+-        param="param",
+-    )
+-    verify_request_count(test_id, "GET", "/params/path/param", None, 1)
+-
+-
+-def test_endpoints_params_get_with_query() -> None:
+-    """Test getWithQuery endpoint with WireMock"""
+-    test_id = "endpoints.params.get_with_query.0"
+-    client = get_client(test_id)
+-    client.endpoints.params.get_with_query(
+-        query="query",
+-        number=1,
+-    )
+-    verify_request_count(test_id, "GET", "/params", {"query": "query", "number": "1"}, 1)
+-
+-
+-def test_endpoints_params_get_with_allow_multiple_query() -> None:
+-    """Test getWithAllowMultipleQuery endpoint with WireMock"""
+-    test_id = "endpoints.params.get_with_allow_multiple_query.0"
+-    client = get_client(test_id)
+-    client.endpoints.params.get_with_allow_multiple_query(
+-        query=["query"],
+-        number=[1],
+-    )
+-    verify_request_count(test_id, "GET", "/params", {"query": "query", "number": "1"}, 1)
+-
+-
+-def test_endpoints_params_get_with_path_and_query() -> None:
+-    """Test getWithPathAndQuery endpoint with WireMock"""
+-    test_id = "endpoints.params.get_with_path_and_query.0"
+-    client = get_client(test_id)
+-    client.endpoints.params.get_with_path_and_query(
+-        param="param",
+-        query="query",
+-    )
+-    verify_request_count(test_id, "GET", "/params/path-query/param", {"query": "query"}, 1)
+-
+-
+-def test_endpoints_params_get_with_inline_path_and_query() -> None:
+-    """Test getWithInlinePathAndQuery endpoint with WireMock"""
+-    test_id = "endpoints.params.get_with_inline_path_and_query.0"
+-    client = get_client(test_id)
+-    client.endpoints.params.get_with_inline_path_and_query(
+-        param="param",
+-        query="query",
+-    )
+-    verify_request_count(test_id, "GET", "/params/path-query/param", {"query": "query"}, 1)
+-
+-
+-def test_endpoints_params_modify_with_path() -> None:
+-    """Test modifyWithPath endpoint with WireMock"""
+-    test_id = "endpoints.params.modify_with_path.0"
+-    client = get_client(test_id)
+-    client.endpoints.params.modify_with_path(
+-        param="param",
+-        request="string",
+-    )
+-    verify_request_count(test_id, "PUT", "/params/path/param", None, 1)
+-
+-
+-def test_endpoints_params_modify_with_inline_path() -> None:
+-    """Test modifyWithInlinePath endpoint with WireMock"""
+-    test_id = "endpoints.params.modify_with_inline_path.0"
+-    client = get_client(test_id)
+-    client.endpoints.params.modify_with_inline_path(
+-        param="param",
+-        request="string",
+-    )
+-    verify_request_count(test_id, "PUT", "/params/path/param", None, 1)
+-
+-
+-def test_endpoints_params_get_with_boolean_path() -> None:
+-    """Test getWithBooleanPath endpoint with WireMock"""
+-    test_id = "endpoints.params.get_with_boolean_path.0"
+-    client = get_client(test_id)
+-    client.endpoints.params.get_with_boolean_path(
+-        param=True,
+-    )
+-    verify_request_count(test_id, "GET", "/params/path-bool/true", None, 1)
+-
+-
+-def test_endpoints_params_get_with_path_and_errors() -> None:
+-    """Test getWithPathAndErrors endpoint with WireMock"""
+-    test_id = "endpoints.params.get_with_path_and_errors.0"
+-    client = get_client(test_id)
+-    client.endpoints.params.get_with_path_and_errors(
+-        param="param",
+-    )
+-    verify_request_count(test_id, "GET", "/params/path/param", None, 1)
+diff --git a/tests/wire/test_endpoints_primitive.py b/tests/wire/test_endpoints_primitive.py
+deleted file mode 100644
+index ef93aa24d5f..00000000000
+--- a/tests/wire/test_endpoints_primitive.py
++++ /dev/null
+@@ -1,94 +0,0 @@
+-import datetime
+-import uuid
+-
+-from .conftest import get_client, verify_request_count
+-
+-
+-def test_endpoints_primitive_get_and_return_string() -> None:
+-    """Test getAndReturnString endpoint with WireMock"""
+-    test_id = "endpoints.primitive.get_and_return_string.0"
+-    client = get_client(test_id)
+-    client.endpoints.primitive.get_and_return_string(
+-        request="string",
+-    )
+-    verify_request_count(test_id, "POST", "/primitive/string", None, 1)
+-
+-
+-def test_endpoints_primitive_get_and_return_int() -> None:
+-    """Test getAndReturnInt endpoint with WireMock"""
+-    test_id = "endpoints.primitive.get_and_return_int.0"
+-    client = get_client(test_id)
+-    client.endpoints.primitive.get_and_return_int(
+-        request=1,
+-    )
+-    verify_request_count(test_id, "POST", "/primitive/integer", None, 1)
+-
+-
+-def test_endpoints_primitive_get_and_return_long() -> None:
+-    """Test getAndReturnLong endpoint with WireMock"""
+-    test_id = "endpoints.primitive.get_and_return_long.0"
+-    client = get_client(test_id)
+-    client.endpoints.primitive.get_and_return_long(
+-        request=1000000,
+-    )
+-    verify_request_count(test_id, "POST", "/primitive/long", None, 1)
+-
+-
+-def test_endpoints_primitive_get_and_return_double() -> None:
+-    """Test getAndReturnDouble endpoint with WireMock"""
+-    test_id = "endpoints.primitive.get_and_return_double.0"
+-    client = get_client(test_id)
+-    client.endpoints.primitive.get_and_return_double(
+-        request=1.1,
+-    )
+-    verify_request_count(test_id, "POST", "/primitive/double", None, 1)
+-
+-
+-def test_endpoints_primitive_get_and_return_bool() -> None:
+-    """Test getAndReturnBool endpoint with WireMock"""
+-    test_id = "endpoints.primitive.get_and_return_bool.0"
+-    client = get_client(test_id)
+-    client.endpoints.primitive.get_and_return_bool(
+-        request=True,
+-    )
+-    verify_request_count(test_id, "POST", "/primitive/boolean", None, 1)
+-
+-
+-def test_endpoints_primitive_get_and_return_datetime() -> None:
+-    """Test getAndReturnDatetime endpoint with WireMock"""
+-    test_id = "endpoints.primitive.get_and_return_datetime.0"
+-    client = get_client(test_id)
+-    client.endpoints.primitive.get_and_return_datetime(
+-        request=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+-    )
+-    verify_request_count(test_id, "POST", "/primitive/datetime", None, 1)
+-
+-
+-def test_endpoints_primitive_get_and_return_date() -> None:
+-    """Test getAndReturnDate endpoint with WireMock"""
+-    test_id = "endpoints.primitive.get_and_return_date.0"
+-    client = get_client(test_id)
+-    client.endpoints.primitive.get_and_return_date(
+-        request=datetime.date.fromisoformat("2023-01-15"),
+-    )
+-    verify_request_count(test_id, "POST", "/primitive/date", None, 1)
+-
+-
+-def test_endpoints_primitive_get_and_return_uuid() -> None:
+-    """Test getAndReturnUUID endpoint with WireMock"""
+-    test_id = "endpoints.primitive.get_and_return_uuid.0"
+-    client = get_client(test_id)
+-    client.endpoints.primitive.get_and_return_uuid(
+-        request=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+-    )
+-    verify_request_count(test_id, "POST", "/primitive/uuid", None, 1)
+-
+-
+-def test_endpoints_primitive_get_and_return_base64() -> None:
+-    """Test getAndReturnBase64 endpoint with WireMock"""
+-    test_id = "endpoints.primitive.get_and_return_base64.0"
+-    client = get_client(test_id)
+-    client.endpoints.primitive.get_and_return_base64(
+-        request="SGVsbG8gd29ybGQh",
+-    )
+-    verify_request_count(test_id, "POST", "/primitive/base64", None, 1)
+diff --git a/tests/wire/test_endpoints_put.py b/tests/wire/test_endpoints_put.py
+deleted file mode 100644
+index 2a24e84aa78..00000000000
+--- a/tests/wire/test_endpoints_put.py
++++ /dev/null
+@@ -1,11 +0,0 @@
+-from .conftest import get_client, verify_request_count
+-
+-
+-def test_endpoints_put_add() -> None:
+-    """Test add endpoint with WireMock"""
+-    test_id = "endpoints.put.add.0"
+-    client = get_client(test_id)
+-    client.endpoints.put.add(
+-        id="id",
+-    )
+-    verify_request_count(test_id, "PUT", "/id", None, 1)
+diff --git a/tests/wire/test_endpoints_union.py b/tests/wire/test_endpoints_union.py
+deleted file mode 100644
+index ec73fb4ff81..00000000000
+--- a/tests/wire/test_endpoints_union.py
++++ /dev/null
+@@ -1,16 +0,0 @@
+-from .conftest import get_client, verify_request_count
+-
+-from seed.types.union import Animal_Dog
+-
+-
+-def test_endpoints_union_get_and_return_union() -> None:
+-    """Test getAndReturnUnion endpoint with WireMock"""
+-    test_id = "endpoints.union.get_and_return_union.0"
+-    client = get_client(test_id)
+-    client.endpoints.union.get_and_return_union(
+-        request=Animal_Dog(
+-            name="name",
+-            likes_to_woof=True,
+-        ),
+-    )
+-    verify_request_count(test_id, "POST", "/union", None, 1)
+diff --git a/tests/wire/test_endpoints_urls.py b/tests/wire/test_endpoints_urls.py
+deleted file mode 100644
+index cd6c568138c..00000000000
+--- a/tests/wire/test_endpoints_urls.py
++++ /dev/null
+@@ -1,33 +0,0 @@
+-from .conftest import get_client, verify_request_count
+-
+-
+-def test_endpoints_urls_with_mixed_case() -> None:
+-    """Test withMixedCase endpoint with WireMock"""
+-    test_id = "endpoints.urls.with_mixed_case.0"
+-    client = get_client(test_id)
+-    client.endpoints.urls.with_mixed_case()
+-    verify_request_count(test_id, "GET", "/urls/MixedCase", None, 1)
+-
+-
+-def test_endpoints_urls_no_ending_slash() -> None:
+-    """Test noEndingSlash endpoint with WireMock"""
+-    test_id = "endpoints.urls.no_ending_slash.0"
+-    client = get_client(test_id)
+-    client.endpoints.urls.no_ending_slash()
+-    verify_request_count(test_id, "GET", "/urls/no-ending-slash", None, 1)
+-
+-
+-def test_endpoints_urls_with_ending_slash() -> None:
+-    """Test withEndingSlash endpoint with WireMock"""
+-    test_id = "endpoints.urls.with_ending_slash.0"
+-    client = get_client(test_id)
+-    client.endpoints.urls.with_ending_slash()
+-    verify_request_count(test_id, "GET", "/urls/with-ending-slash/", None, 1)
+-
+-
+-def test_endpoints_urls_with_underscores() -> None:
+-    """Test withUnderscores endpoint with WireMock"""
+-    test_id = "endpoints.urls.with_underscores.0"
+-    client = get_client(test_id)
+-    client.endpoints.urls.with_underscores()
+-    verify_request_count(test_id, "GET", "/urls/with_underscores", None, 1)
+diff --git a/tests/wire/test_inlinedRequests.py b/tests/wire/test_inlinedRequests.py
+deleted file mode 100644
+index 5a9f74dcedf..00000000000
+--- a/tests/wire/test_inlinedRequests.py
++++ /dev/null
+@@ -1,32 +0,0 @@
+-import datetime
+-import uuid
+-
+-from .conftest import get_client, verify_request_count
+-
+-from seed.types.object import ObjectWithOptionalField
+-
+-
+-def test_inlinedRequests_post_with_object_bodyand_response() -> None:
+-    """Test postWithObjectBodyandResponse endpoint with WireMock"""
+-    test_id = "inlined_requests.post_with_object_bodyand_response.0"
+-    client = get_client(test_id)
+-    client.inlined_requests.post_with_object_bodyand_response(
+-        string="string",
+-        integer=1,
+-        nested_object=ObjectWithOptionalField(
+-            string="string",
+-            integer=1,
+-            long_=1000000,
+-            double=1.1,
+-            bool_=True,
+-            datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+-            date=datetime.date.fromisoformat("2023-01-15"),
+-            uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+-            base64="SGVsbG8gd29ybGQh",
+-            list_=["list", "list"],
+-            set_=["set"],
+-            map_={1: "map"},
+-            bigint="1000000",
+-        ),
+-    )
+-    verify_request_count(test_id, "POST", "/req-bodies/object", None, 1)
+diff --git a/tests/wire/test_noAuth.py b/tests/wire/test_noAuth.py
+deleted file mode 100644
+index 3bd2b442c19..00000000000
+--- a/tests/wire/test_noAuth.py
++++ /dev/null
+@@ -1,11 +0,0 @@
+-from .conftest import get_client, verify_request_count
+-
+-
+-def test_noAuth_post_with_no_auth() -> None:
+-    """Test postWithNoAuth endpoint with WireMock"""
+-    test_id = "no_auth.post_with_no_auth.0"
+-    client = get_client(test_id)
+-    client.no_auth.post_with_no_auth(
+-        request={"key": "value"},
+-    )
+-    verify_request_count(test_id, "POST", "/no-auth", None, 1)
+diff --git a/tests/wire/test_noReqBody.py b/tests/wire/test_noReqBody.py
+deleted file mode 100644
+index 1e4c1e528eb..00000000000
+--- a/tests/wire/test_noReqBody.py
++++ /dev/null
+@@ -1,17 +0,0 @@
+-from .conftest import get_client, verify_request_count
+-
+-
+-def test_noReqBody_get_with_no_request_body() -> None:
+-    """Test getWithNoRequestBody endpoint with WireMock"""
+-    test_id = "no_req_body.get_with_no_request_body.0"
+-    client = get_client(test_id)
+-    client.no_req_body.get_with_no_request_body()
+-    verify_request_count(test_id, "GET", "/no-req-body", None, 1)
+-
+-
+-def test_noReqBody_post_with_no_request_body() -> None:
+-    """Test postWithNoRequestBody endpoint with WireMock"""
+-    test_id = "no_req_body.post_with_no_request_body.0"
+-    client = get_client(test_id)
+-    client.no_req_body.post_with_no_request_body()
+-    verify_request_count(test_id, "POST", "/no-req-body", None, 1)
+diff --git a/tests/wire/test_reqWithHeaders.py b/tests/wire/test_reqWithHeaders.py
+deleted file mode 100644
+index 9916205f6d9..00000000000
+--- a/tests/wire/test_reqWithHeaders.py
++++ /dev/null
+@@ -1,13 +0,0 @@
+-from .conftest import get_client, verify_request_count
+-
+-
+-def test_reqWithHeaders_get_with_custom_header() -> None:
+-    """Test getWithCustomHeader endpoint with WireMock"""
+-    test_id = "req_with_headers.get_with_custom_header.0"
+-    client = get_client(test_id)
+-    client.req_with_headers.get_with_custom_header(
+-        x_test_service_header="X-TEST-SERVICE-HEADER",
+-        x_test_endpoint_header="X-TEST-ENDPOINT-HEADER",
+-        request="string",
+-    )
+-    verify_request_count(test_id, "POST", "/test-headers/custom-header", None, 1)
+diff --git a/wiremock/docker-compose.test.yml b/wiremock/docker-compose.test.yml
+deleted file mode 100644
+index 58747d54a46..00000000000
+--- a/wiremock/docker-compose.test.yml
++++ /dev/null
+@@ -1,14 +0,0 @@
+-services:
+-  wiremock:
+-    image: wiremock/wiremock:3.9.1
+-    ports:
+-      - "0:8080"  # Use dynamic port to avoid conflicts with concurrent tests
+-    volumes:
+-      - ./wiremock-mappings.json:/home/wiremock/mappings/wiremock-mappings.json
+-    command: ["--global-response-templating", "--verbose"]
+-    healthcheck:
+-      test: ["CMD", "curl", "-f", "http://localhost:8080/__admin/health"]
+-      interval: 2s
+-      timeout: 5s
+-      retries: 15
+-      start_period: 5s
+diff --git a/wiremock/wiremock-mappings.json b/wiremock/wiremock-mappings.json
+deleted file mode 100644
+index 96fdfb6702d..00000000000
+--- a/wiremock/wiremock-mappings.json
++++ /dev/null
+@@ -1,1938 +0,0 @@
+-{
+-  "mappings": [
+-    {
+-      "id": "864d58e6-0c08-4f38-b7e1-2638f8d7fd6d",
+-      "name": "getAndReturnListOfPrimitives - default",
+-      "request": {
+-        "urlPathTemplate": "/container/list-of-primitives",
+-        "method": "POST",
+-        "headers": {
+-          "Authorization": {
+-            "matches": "Bearer .+"
+-          }
+-        }
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "[\n  \"string\",\n  \"string\"\n]",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "864d58e6-0c08-4f38-b7e1-2638f8d7fd6d",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      }
+-    },
+-    {
+-      "id": "ac1d4c4f-a8a7-4c27-ae64-7fc977cfa122",
+-      "name": "getAndReturnListOfObjects - default",
+-      "request": {
+-        "urlPathTemplate": "/container/list-of-objects",
+-        "method": "POST",
+-        "headers": {
+-          "Authorization": {
+-            "matches": "Bearer .+"
+-          }
+-        }
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "[\n  {\n    \"string\": \"string\"\n  },\n  {\n    \"string\": \"string\"\n  }\n]",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "ac1d4c4f-a8a7-4c27-ae64-7fc977cfa122",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      }
+-    },
+-    {
+-      "id": "591d5c48-a536-452b-8a2e-ad7c23c38298",
+-      "name": "getAndReturnSetOfPrimitives - default",
+-      "request": {
+-        "urlPathTemplate": "/container/set-of-primitives",
+-        "method": "POST",
+-        "headers": {
+-          "Authorization": {
+-            "matches": "Bearer .+"
+-          }
+-        }
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "[\n  \"string\"\n]",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "591d5c48-a536-452b-8a2e-ad7c23c38298",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      }
+-    },
+-    {
+-      "id": "e1d5f52b-7a51-464f-ac8f-83c0345a3a35",
+-      "name": "getAndReturnSetOfObjects - default",
+-      "request": {
+-        "urlPathTemplate": "/container/set-of-objects",
+-        "method": "POST",
+-        "headers": {
+-          "Authorization": {
+-            "matches": "Bearer .+"
+-          }
+-        }
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "[\n  {\n    \"string\": \"string\"\n  }\n]",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "e1d5f52b-7a51-464f-ac8f-83c0345a3a35",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      }
+-    },
+-    {
+-      "id": "4b1d33b3-ca7d-462a-a2e3-23d531ae2922",
+-      "name": "getAndReturnMapPrimToPrim - default",
+-      "request": {
+-        "urlPathTemplate": "/container/map-prim-to-prim",
+-        "method": "POST",
+-        "headers": {
+-          "Authorization": {
+-            "matches": "Bearer .+"
+-          }
+-        }
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "{\n  \"string\": \"string\"\n}",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "4b1d33b3-ca7d-462a-a2e3-23d531ae2922",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      }
+-    },
+-    {
+-      "id": "b01ac2b9-3470-48aa-badc-57d331bb5a49",
+-      "name": "getAndReturnMapOfPrimToObject - default",
+-      "request": {
+-        "urlPathTemplate": "/container/map-prim-to-object",
+-        "method": "POST",
+-        "headers": {
+-          "Authorization": {
+-            "matches": "Bearer .+"
+-          }
+-        }
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "{\n  \"string\": {\n    \"string\": \"string\"\n  }\n}",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "b01ac2b9-3470-48aa-badc-57d331bb5a49",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      }
+-    },
+-    {
+-      "id": "eaf9315d-55c4-4434-8004-a70c25af5656",
+-      "name": "getAndReturnMapOfPrimToUndiscriminatedUnion - default",
+-      "request": {
+-        "urlPathTemplate": "/container/map-prim-to-union",
+-        "method": "POST",
+-        "headers": {
+-          "Authorization": {
+-            "matches": "Bearer .+"
+-          }
+-        }
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "{\n  \"string\": 1.1\n}",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "eaf9315d-55c4-4434-8004-a70c25af5656",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      }
+-    },
+-    {
+-      "id": "e5271904-de0a-425f-940d-d6f6bde34755",
+-      "name": "getAndReturnOptional - default",
+-      "request": {
+-        "urlPathTemplate": "/container/opt-objects",
+-        "method": "POST",
+-        "headers": {
+-          "Authorization": {
+-            "matches": "Bearer .+"
+-          }
+-        }
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "{\n  \"string\": \"string\"\n}",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "e5271904-de0a-425f-940d-d6f6bde34755",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      }
+-    },
+-    {
+-      "id": "d19e1fbe-79cc-465c-962e-e1866ca2361b",
+-      "name": "postJsonPatchContentType - default",
+-      "request": {
+-        "urlPathTemplate": "/foo/bar",
+-        "method": "POST",
+-        "headers": {
+-          "Authorization": {
+-            "matches": "Bearer .+"
+-          }
+-        }
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "\"\"",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "d19e1fbe-79cc-465c-962e-e1866ca2361b",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      }
+-    },
+-    {
+-      "id": "4a107cf5-6284-48f8-9ddb-99d944ba989b",
+-      "name": "postJsonPatchContentWithCharsetType - default",
+-      "request": {
+-        "urlPathTemplate": "/foo/baz",
+-        "method": "POST",
+-        "headers": {
+-          "Authorization": {
+-            "matches": "Bearer .+"
+-          }
+-        }
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "\"\"",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "4a107cf5-6284-48f8-9ddb-99d944ba989b",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      }
+-    },
+-    {
+-      "id": "60fd3c8a-3983-41b9-8178-f42997388900",
+-      "name": "getAndReturnEnum - default",
+-      "request": {
+-        "urlPathTemplate": "/enum",
+-        "method": "POST",
+-        "headers": {
+-          "Authorization": {
+-            "matches": "Bearer .+"
+-          }
+-        }
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "\"SUNNY\"",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "60fd3c8a-3983-41b9-8178-f42997388900",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      }
+-    },
+-    {
+-      "id": "3d95c052-db6e-4eff-95f2-895666a5af54",
+-      "name": "testGet - default",
+-      "request": {
+-        "urlPathTemplate": "/http-methods/{id}",
+-        "method": "GET",
+-        "headers": {
+-          "Authorization": {
+-            "matches": "Bearer .+"
+-          }
+-        },
+-        "pathParameters": {
+-          "id": {
+-            "equalTo": "id"
+-          }
+-        }
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "\"string\"",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "3d95c052-db6e-4eff-95f2-895666a5af54",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      }
+-    },
+-    {
+-      "id": "2552873f-9f1d-4557-a6c7-6c6b7a55b566",
+-      "name": "testPost - default",
+-      "request": {
+-        "urlPathTemplate": "/http-methods",
+-        "method": "POST",
+-        "headers": {
+-          "Authorization": {
+-            "matches": "Bearer .+"
+-          }
+-        }
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "{\n  \"string\": \"string\",\n  \"integer\": 1,\n  \"long\": 1000000,\n  \"double\": 1.1,\n  \"bool\": true,\n  \"datetime\": \"2024-01-15T09:30:00Z\",\n  \"date\": \"2023-01-15\",\n  \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n  \"base64\": \"SGVsbG8gd29ybGQh\",\n  \"list\": [\n    \"list\",\n    \"list\"\n  ],\n  \"set\": [\n    \"set\"\n  ],\n  \"map\": {\n    \"1\": \"map\"\n  },\n  \"bigint\": \"1000000\"\n}",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "2552873f-9f1d-4557-a6c7-6c6b7a55b566",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      }
+-    },
+-    {
+-      "id": "db42fbdf-5426-41b7-b7ea-28ed39a38e82",
+-      "name": "testPut - default",
+-      "request": {
+-        "urlPathTemplate": "/http-methods/{id}",
+-        "method": "PUT",
+-        "headers": {
+-          "Authorization": {
+-            "matches": "Bearer .+"
+-          }
+-        },
+-        "pathParameters": {
+-          "id": {
+-            "equalTo": "id"
+-          }
+-        }
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "{\n  \"string\": \"string\",\n  \"integer\": 1,\n  \"long\": 1000000,\n  \"double\": 1.1,\n  \"bool\": true,\n  \"datetime\": \"2024-01-15T09:30:00Z\",\n  \"date\": \"2023-01-15\",\n  \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n  \"base64\": \"SGVsbG8gd29ybGQh\",\n  \"list\": [\n    \"list\",\n    \"list\"\n  ],\n  \"set\": [\n    \"set\"\n  ],\n  \"map\": {\n    \"1\": \"map\"\n  },\n  \"bigint\": \"1000000\"\n}",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "db42fbdf-5426-41b7-b7ea-28ed39a38e82",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      }
+-    },
+-    {
+-      "id": "c9def317-32a0-4bc0-b9b6-5efae8ca44a6",
+-      "name": "testPatch - default",
+-      "request": {
+-        "urlPathTemplate": "/http-methods/{id}",
+-        "method": "PATCH",
+-        "headers": {
+-          "Authorization": {
+-            "matches": "Bearer .+"
+-          }
+-        },
+-        "pathParameters": {
+-          "id": {
+-            "equalTo": "id"
+-          }
+-        }
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "{\n  \"string\": \"string\",\n  \"integer\": 1,\n  \"long\": 1000000,\n  \"double\": 1.1,\n  \"bool\": true,\n  \"datetime\": \"2024-01-15T09:30:00Z\",\n  \"date\": \"2023-01-15\",\n  \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n  \"base64\": \"SGVsbG8gd29ybGQh\",\n  \"list\": [\n    \"list\",\n    \"list\"\n  ],\n  \"set\": [\n    \"set\"\n  ],\n  \"map\": {\n    \"1\": \"map\"\n  },\n  \"bigint\": \"1000000\"\n}",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "c9def317-32a0-4bc0-b9b6-5efae8ca44a6",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      }
+-    },
+-    {
+-      "id": "05333635-c9ce-4c1a-bb6d-95e8a0fb80dc",
+-      "name": "testDelete - default",
+-      "request": {
+-        "urlPathTemplate": "/http-methods/{id}",
+-        "method": "DELETE",
+-        "headers": {
+-          "Authorization": {
+-            "matches": "Bearer .+"
+-          }
+-        },
+-        "pathParameters": {
+-          "id": {
+-            "equalTo": "id"
+-          }
+-        }
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "true",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "05333635-c9ce-4c1a-bb6d-95e8a0fb80dc",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      }
+-    },
+-    {
+-      "id": "41cdef0e-040f-4d08-8426-87b19e60f7d7",
+-      "name": "getAndReturnWithOptionalField - default",
+-      "request": {
+-        "urlPathTemplate": "/object/get-and-return-with-optional-field",
+-        "method": "POST",
+-        "headers": {
+-          "Authorization": {
+-            "matches": "Bearer .+"
+-          }
+-        }
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "{\n  \"string\": \"string\",\n  \"integer\": 1,\n  \"long\": 1000000,\n  \"double\": 1.1,\n  \"bool\": true,\n  \"datetime\": \"2024-01-15T09:30:00Z\",\n  \"date\": \"2023-01-15\",\n  \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n  \"base64\": \"SGVsbG8gd29ybGQh\",\n  \"list\": [\n    \"list\",\n    \"list\"\n  ],\n  \"set\": [\n    \"set\"\n  ],\n  \"map\": {\n    \"1\": \"map\"\n  },\n  \"bigint\": \"1000000\"\n}",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "41cdef0e-040f-4d08-8426-87b19e60f7d7",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      }
+-    },
+-    {
+-      "id": "f74df550-df8c-4503-b202-0b9b3165c1a7",
+-      "name": "getAndReturnWithRequiredField - default",
+-      "request": {
+-        "urlPathTemplate": "/object/get-and-return-with-required-field",
+-        "method": "POST",
+-        "headers": {
+-          "Authorization": {
+-            "matches": "Bearer .+"
+-          }
+-        }
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "{\n  \"string\": \"string\"\n}",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "f74df550-df8c-4503-b202-0b9b3165c1a7",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      }
+-    },
+-    {
+-      "id": "0c904dbb-ce54-48a2-8364-13a4989be7f2",
+-      "name": "getAndReturnWithMapOfMap - default",
+-      "request": {
+-        "urlPathTemplate": "/object/get-and-return-with-map-of-map",
+-        "method": "POST",
+-        "headers": {
+-          "Authorization": {
+-            "matches": "Bearer .+"
+-          }
+-        }
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "{\n  \"map\": {\n    \"map\": {\n      \"map\": \"map\"\n    }\n  }\n}",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "0c904dbb-ce54-48a2-8364-13a4989be7f2",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      }
+-    },
+-    {
+-      "id": "67e969fc-ff81-4a67-9858-66a29ffc9b72",
+-      "name": "getAndReturnNestedWithOptionalField - default",
+-      "request": {
+-        "urlPathTemplate": "/object/get-and-return-nested-with-optional-field",
+-        "method": "POST",
+-        "headers": {
+-          "Authorization": {
+-            "matches": "Bearer .+"
+-          }
+-        }
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "{\n  \"string\": \"string\",\n  \"NestedObject\": {\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n      \"list\",\n      \"list\"\n    ],\n    \"set\": [\n      \"set\"\n    ],\n    \"map\": {\n      \"1\": \"map\"\n    },\n    \"bigint\": \"1000000\"\n  }\n}",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "67e969fc-ff81-4a67-9858-66a29ffc9b72",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      }
+-    },
+-    {
+-      "id": "169827d0-4247-4236-8cef-34b94d2659de",
+-      "name": "getAndReturnNestedWithRequiredField - default",
+-      "request": {
+-        "urlPathTemplate": "/object/get-and-return-nested-with-required-field/{string}",
+-        "method": "POST",
+-        "headers": {
+-          "Authorization": {
+-            "matches": "Bearer .+"
+-          }
+-        },
+-        "pathParameters": {
+-          "string": {
+-            "equalTo": "string"
+-          }
+-        }
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "{\n  \"string\": \"string\",\n  \"NestedObject\": {\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n      \"list\",\n      \"list\"\n    ],\n    \"set\": [\n      \"set\"\n    ],\n    \"map\": {\n      \"1\": \"map\"\n    },\n    \"bigint\": \"1000000\"\n  }\n}",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "169827d0-4247-4236-8cef-34b94d2659de",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      }
+-    },
+-    {
+-      "id": "6d9ed308-5724-4bbc-a4f7-28dc264d188f",
+-      "name": "getAndReturnNestedWithRequiredFieldAsList - default",
+-      "request": {
+-        "urlPathTemplate": "/object/get-and-return-nested-with-required-field-list",
+-        "method": "POST",
+-        "headers": {
+-          "Authorization": {
+-            "matches": "Bearer .+"
+-          }
+-        }
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "{\n  \"string\": \"string\",\n  \"NestedObject\": {\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n      \"list\",\n      \"list\"\n    ],\n    \"set\": [\n      \"set\"\n    ],\n    \"map\": {\n      \"1\": \"map\"\n    },\n    \"bigint\": \"1000000\"\n  }\n}",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "6d9ed308-5724-4bbc-a4f7-28dc264d188f",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      }
+-    },
+-    {
+-      "id": "17b25d66-354e-4190-b305-39b7b33f7da8",
+-      "name": "getAndReturnWithUnknownField - BackslashExample",
+-      "request": {
+-        "urlPathTemplate": "/object/get-and-return-with-unknown-field",
+-        "method": "POST",
+-        "headers": {
+-          "Authorization": {
+-            "matches": "Bearer .+"
+-          }
+-        }
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "{\n  \"unknown\": {\n    \"$ref\": \"https://example.com/schema\"\n  }\n}",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "17b25d66-354e-4190-b305-39b7b33f7da8",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      }
+-    },
+-    {
+-      "id": "4bc6dad1-b68d-4f0f-bda5-bf9d3730a4c4",
+-      "name": "getAndReturnWithDocumentedUnknownType - default",
+-      "request": {
+-        "urlPathTemplate": "/object/get-and-return-with-documented-unknown-type",
+-        "method": "POST",
+-        "headers": {
+-          "Authorization": {
+-            "matches": "Bearer .+"
+-          }
+-        }
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "{\n  \"documentedUnknownType\": {\n    \"key\": \"value\"\n  }\n}",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "4bc6dad1-b68d-4f0f-bda5-bf9d3730a4c4",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      }
+-    },
+-    {
+-      "id": "0161c3cd-1ed7-4fa7-8cd2-1ea1d2a8ba1b",
+-      "name": "getAndReturnMapOfDocumentedUnknownType - default",
+-      "request": {
+-        "urlPathTemplate": "/object/get-and-return-map-of-documented-unknown-type",
+-        "method": "POST",
+-        "headers": {
+-          "Authorization": {
+-            "matches": "Bearer .+"
+-          }
+-        }
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "{\n  \"string\": {\n    \"key\": \"value\"\n  }\n}",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "0161c3cd-1ed7-4fa7-8cd2-1ea1d2a8ba1b",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      }
+-    },
+-    {
+-      "id": "d1d11f31-5ad4-4275-8b59-064ee4a550fb",
+-      "name": "getAndReturnWithMixedRequiredAndOptionalFields - PartialRequiredFields",
+-      "request": {
+-        "urlPathTemplate": "/object/get-and-return-with-mixed-required-and-optional-fields",
+-        "method": "POST",
+-        "headers": {
+-          "Authorization": {
+-            "matches": "Bearer .+"
+-          }
+-        }
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "{\n  \"requiredString\": \"hello\",\n  \"requiredInteger\": 0,\n  \"optionalString\": \"world\",\n  \"requiredLong\": 0\n}",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "d1d11f31-5ad4-4275-8b59-064ee4a550fb",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      }
+-    },
+-    {
+-      "id": "7b973449-cd5b-4771-80f7-d39dbd6c1429",
+-      "name": "getAndReturnWithRequiredNestedObject - NestedObjectMissing",
+-      "request": {
+-        "urlPathTemplate": "/object/get-and-return-with-required-nested-object",
+-        "method": "POST",
+-        "headers": {
+-          "Authorization": {
+-            "matches": "Bearer .+"
+-          }
+-        }
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "{\n  \"requiredString\": \"hello\",\n  \"requiredObject\": {\n    \"string\": \"nested\",\n    \"NestedObject\": {}\n  }\n}",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "7b973449-cd5b-4771-80f7-d39dbd6c1429",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      }
+-    },
+-    {
+-      "id": "15cf06f4-31a9-4147-a8d4-88d5ad543d35",
+-      "name": "getAndReturnWithDatetimeLikeString - DatetimeLikeStringExample",
+-      "request": {
+-        "urlPathTemplate": "/object/get-and-return-with-datetime-like-string",
+-        "method": "POST",
+-        "headers": {
+-          "Authorization": {
+-            "matches": "Bearer .+"
+-          }
+-        }
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "{\n  \"datetimeLikeString\": \"2023-08-31T14:15:22Z\",\n  \"actualDatetime\": \"2023-08-31T14:15:22Z\"\n}",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "15cf06f4-31a9-4147-a8d4-88d5ad543d35",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      }
+-    },
+-    {
+-      "id": "f15b2079-2482-4ed2-951d-d2b5c4de9afd",
+-      "name": "listItems - default",
+-      "request": {
+-        "urlPathTemplate": "/pagination",
+-        "method": "GET",
+-        "headers": {
+-          "Authorization": {
+-            "matches": "Bearer .+"
+-          }
+-        },
+-        "queryParameters": {
+-          "cursor": {
+-            "equalTo": "cursor"
+-          },
+-          "limit": {
+-            "equalTo": "1"
+-          }
+-        }
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "{\n  \"items\": [\n    {\n      \"string\": \"string\"\n    },\n    {\n      \"string\": \"string\"\n    }\n  ],\n  \"next\": \"next\"\n}",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "f15b2079-2482-4ed2-951d-d2b5c4de9afd",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      },
+-      "postServeActions": []
+-    },
+-    {
+-      "id": "97806fdb-f31f-4f90-84b8-f9cc1713d53d",
+-      "name": "getWithPath - default",
+-      "request": {
+-        "urlPathTemplate": "/params/path/{param}",
+-        "method": "GET",
+-        "headers": {
+-          "Authorization": {
+-            "matches": "Bearer .+"
+-          }
+-        },
+-        "pathParameters": {
+-          "param": {
+-            "equalTo": "param"
+-          }
+-        }
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "\"string\"",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "97806fdb-f31f-4f90-84b8-f9cc1713d53d",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      }
+-    },
+-    {
+-      "id": "711fc64f-4af9-4084-8c29-1e7a9e58be70",
+-      "name": "getWithInlinePath - default",
+-      "request": {
+-        "urlPathTemplate": "/params/path/{param}",
+-        "method": "GET",
+-        "headers": {
+-          "Authorization": {
+-            "matches": "Bearer .+"
+-          }
+-        },
+-        "pathParameters": {
+-          "param": {
+-            "equalTo": "param"
+-          }
+-        }
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "\"string\"",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "711fc64f-4af9-4084-8c29-1e7a9e58be70",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      }
+-    },
+-    {
+-      "id": "8e5739b3-d75f-47d7-b6b8-a663d91a66b5",
+-      "name": "getWithQuery - default",
+-      "request": {
+-        "urlPathTemplate": "/params",
+-        "method": "GET",
+-        "headers": {
+-          "Authorization": {
+-            "matches": "Bearer .+"
+-          }
+-        },
+-        "queryParameters": {
+-          "query": {
+-            "equalTo": "query"
+-          },
+-          "number": {
+-            "equalTo": "1"
+-          }
+-        }
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "\"\"",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "8e5739b3-d75f-47d7-b6b8-a663d91a66b5",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      },
+-      "postServeActions": []
+-    },
+-    {
+-      "id": "4125d349-732b-4ff7-948d-1eeb977ed13b",
+-      "name": "getWithAllowMultipleQuery - default",
+-      "request": {
+-        "urlPathTemplate": "/params",
+-        "method": "GET",
+-        "headers": {
+-          "Authorization": {
+-            "matches": "Bearer .+"
+-          }
+-        },
+-        "queryParameters": {
+-          "query": {
+-            "equalTo": "query"
+-          },
+-          "number": {
+-            "equalTo": "1"
+-          }
+-        }
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "\"\"",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "4125d349-732b-4ff7-948d-1eeb977ed13b",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      },
+-      "postServeActions": []
+-    },
+-    {
+-      "id": "1933d96a-a1b9-4cf1-85ba-c1e8eff5bd56",
+-      "name": "getWithPathAndQuery - default",
+-      "request": {
+-        "urlPathTemplate": "/params/path-query/{param}",
+-        "method": "GET",
+-        "headers": {
+-          "Authorization": {
+-            "matches": "Bearer .+"
+-          }
+-        },
+-        "pathParameters": {
+-          "param": {
+-            "equalTo": "param"
+-          }
+-        },
+-        "queryParameters": {
+-          "query": {
+-            "equalTo": "query"
+-          }
+-        }
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "\"\"",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "1933d96a-a1b9-4cf1-85ba-c1e8eff5bd56",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      }
+-    },
+-    {
+-      "id": "c4f5012a-fb3f-45ac-b695-beedc3353ad8",
+-      "name": "getWithInlinePathAndQuery - default",
+-      "request": {
+-        "urlPathTemplate": "/params/path-query/{param}",
+-        "method": "GET",
+-        "headers": {
+-          "Authorization": {
+-            "matches": "Bearer .+"
+-          }
+-        },
+-        "pathParameters": {
+-          "param": {
+-            "equalTo": "param"
+-          }
+-        },
+-        "queryParameters": {
+-          "query": {
+-            "equalTo": "query"
+-          }
+-        }
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "\"\"",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "c4f5012a-fb3f-45ac-b695-beedc3353ad8",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      }
+-    },
+-    {
+-      "id": "046bf7d6-751b-48e9-bfc6-ff74a17e88e1",
+-      "name": "modifyWithPath - default",
+-      "request": {
+-        "urlPathTemplate": "/params/path/{param}",
+-        "method": "PUT",
+-        "headers": {
+-          "Authorization": {
+-            "matches": "Bearer .+"
+-          }
+-        },
+-        "pathParameters": {
+-          "param": {
+-            "equalTo": "param"
+-          }
+-        }
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "\"string\"",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "046bf7d6-751b-48e9-bfc6-ff74a17e88e1",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      }
+-    },
+-    {
+-      "id": "6bfc7195-b99c-4449-bf47-7c4f74f6f33b",
+-      "name": "modifyWithInlinePath - default",
+-      "request": {
+-        "urlPathTemplate": "/params/path/{param}",
+-        "method": "PUT",
+-        "headers": {
+-          "Authorization": {
+-            "matches": "Bearer .+"
+-          }
+-        },
+-        "pathParameters": {
+-          "param": {
+-            "equalTo": "param"
+-          }
+-        }
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "\"string\"",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "6bfc7195-b99c-4449-bf47-7c4f74f6f33b",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      }
+-    },
+-    {
+-      "id": "25a5031e-ad21-4379-8965-4732818bb823",
+-      "name": "getWithBooleanPath - default",
+-      "request": {
+-        "urlPathTemplate": "/params/path-bool/{param}",
+-        "method": "GET",
+-        "headers": {
+-          "Authorization": {
+-            "matches": "Bearer .+"
+-          }
+-        },
+-        "pathParameters": {
+-          "param": {
+-            "equalTo": "true"
+-          }
+-        }
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "\"string\"",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "25a5031e-ad21-4379-8965-4732818bb823",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      }
+-    },
+-    {
+-      "id": "6898aaa2-3e4b-403e-a91f-473b4eb84b93",
+-      "name": "getWithPathAndErrors - default",
+-      "request": {
+-        "urlPathTemplate": "/params/path/{param}",
+-        "method": "GET",
+-        "headers": {
+-          "Authorization": {
+-            "matches": "Bearer .+"
+-          }
+-        },
+-        "pathParameters": {
+-          "param": {
+-            "equalTo": "param"
+-          }
+-        }
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "\"string\"",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "6898aaa2-3e4b-403e-a91f-473b4eb84b93",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      }
+-    },
+-    {
+-      "id": "0506ae7c-87b7-4cd2-9e50-31d60f81893f",
+-      "name": "getAndReturnString - default",
+-      "request": {
+-        "urlPathTemplate": "/primitive/string",
+-        "method": "POST",
+-        "headers": {
+-          "Authorization": {
+-            "matches": "Bearer .+"
+-          }
+-        }
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "\"string\"",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "0506ae7c-87b7-4cd2-9e50-31d60f81893f",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      }
+-    },
+-    {
+-      "id": "67f875d1-e19e-440d-8f0c-7e1d24ef2619",
+-      "name": "getAndReturnInt - default",
+-      "request": {
+-        "urlPathTemplate": "/primitive/integer",
+-        "method": "POST",
+-        "headers": {
+-          "Authorization": {
+-            "matches": "Bearer .+"
+-          }
+-        }
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "1",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "67f875d1-e19e-440d-8f0c-7e1d24ef2619",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      }
+-    },
+-    {
+-      "id": "5fadbebd-86c0-41f9-8be5-864e39eb5924",
+-      "name": "getAndReturnLong - default",
+-      "request": {
+-        "urlPathTemplate": "/primitive/long",
+-        "method": "POST",
+-        "headers": {
+-          "Authorization": {
+-            "matches": "Bearer .+"
+-          }
+-        }
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "1000000",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "5fadbebd-86c0-41f9-8be5-864e39eb5924",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      }
+-    },
+-    {
+-      "id": "e03872b6-86b1-490b-9195-86e5d3a014f2",
+-      "name": "getAndReturnDouble - default",
+-      "request": {
+-        "urlPathTemplate": "/primitive/double",
+-        "method": "POST",
+-        "headers": {
+-          "Authorization": {
+-            "matches": "Bearer .+"
+-          }
+-        }
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "1.1",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "e03872b6-86b1-490b-9195-86e5d3a014f2",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      }
+-    },
+-    {
+-      "id": "442e632f-890a-4105-9448-f7015127e3b4",
+-      "name": "getAndReturnBool - default",
+-      "request": {
+-        "urlPathTemplate": "/primitive/boolean",
+-        "method": "POST",
+-        "headers": {
+-          "Authorization": {
+-            "matches": "Bearer .+"
+-          }
+-        }
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "true",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "442e632f-890a-4105-9448-f7015127e3b4",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      }
+-    },
+-    {
+-      "id": "ad76fa81-1e63-43fd-9a99-1d5e4339d98c",
+-      "name": "getAndReturnDatetime - default",
+-      "request": {
+-        "urlPathTemplate": "/primitive/datetime",
+-        "method": "POST",
+-        "headers": {
+-          "Authorization": {
+-            "matches": "Bearer .+"
+-          }
+-        }
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "\"2024-01-15T09:30:00Z\"",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "ad76fa81-1e63-43fd-9a99-1d5e4339d98c",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      }
+-    },
+-    {
+-      "id": "afb524b1-54ab-4674-8446-fdd574c368cc",
+-      "name": "getAndReturnDate - default",
+-      "request": {
+-        "urlPathTemplate": "/primitive/date",
+-        "method": "POST",
+-        "headers": {
+-          "Authorization": {
+-            "matches": "Bearer .+"
+-          }
+-        }
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "\"2023-01-15\"",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "afb524b1-54ab-4674-8446-fdd574c368cc",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      }
+-    },
+-    {
+-      "id": "969c0f3a-218a-45b7-b17f-64b1a9307d43",
+-      "name": "getAndReturnUUID - default",
+-      "request": {
+-        "urlPathTemplate": "/primitive/uuid",
+-        "method": "POST",
+-        "headers": {
+-          "Authorization": {
+-            "matches": "Bearer .+"
+-          }
+-        }
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "969c0f3a-218a-45b7-b17f-64b1a9307d43",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      }
+-    },
+-    {
+-      "id": "04baa20d-d318-40e6-9784-c40158c16acd",
+-      "name": "getAndReturnBase64 - default",
+-      "request": {
+-        "urlPathTemplate": "/primitive/base64",
+-        "method": "POST",
+-        "headers": {
+-          "Authorization": {
+-            "matches": "Bearer .+"
+-          }
+-        }
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "\"SGVsbG8gd29ybGQh\"",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "04baa20d-d318-40e6-9784-c40158c16acd",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      }
+-    },
+-    {
+-      "id": "fddd5aaf-ab0d-4ef6-949c-5d329f6d7eb2",
+-      "name": "Put - default",
+-      "request": {
+-        "urlPathTemplate": "/{id}",
+-        "method": "PUT",
+-        "headers": {
+-          "Authorization": {
+-            "matches": "Bearer .+"
+-          }
+-        },
+-        "pathParameters": {
+-          "id": {
+-            "equalTo": "id"
+-          }
+-        }
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "{\n  \"errors\": [\n    {\n      \"category\": \"API_ERROR\",\n      \"code\": \"INTERNAL_SERVER_ERROR\",\n      \"detail\": \"detail\",\n      \"field\": \"field\"\n    },\n    {\n      \"category\": \"API_ERROR\",\n      \"code\": \"INTERNAL_SERVER_ERROR\",\n      \"detail\": \"detail\",\n      \"field\": \"field\"\n    }\n  ]\n}",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "fddd5aaf-ab0d-4ef6-949c-5d329f6d7eb2",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      }
+-    },
+-    {
+-      "id": "d29330f9-49ff-49c4-9081-7c83dbad315b",
+-      "name": "getAndReturnUnion - default",
+-      "request": {
+-        "urlPathTemplate": "/union",
+-        "method": "POST",
+-        "headers": {
+-          "Authorization": {
+-            "matches": "Bearer .+"
+-          }
+-        }
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "{\n  \"animal\": \"dog\",\n  \"name\": \"name\",\n  \"likesToWoof\": true\n}",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "d29330f9-49ff-49c4-9081-7c83dbad315b",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      }
+-    },
+-    {
+-      "id": "343f71f3-36ce-4684-b762-d60a086b43a4",
+-      "name": "withMixedCase - default",
+-      "request": {
+-        "urlPathTemplate": "/urls/MixedCase",
+-        "method": "GET",
+-        "headers": {
+-          "Authorization": {
+-            "matches": "Bearer .+"
+-          }
+-        }
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "\"string\"",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "343f71f3-36ce-4684-b762-d60a086b43a4",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      },
+-      "postServeActions": []
+-    },
+-    {
+-      "id": "48f36314-b2b7-4910-9e1d-5b05f3346a60",
+-      "name": "noEndingSlash - default",
+-      "request": {
+-        "urlPathTemplate": "/urls/no-ending-slash",
+-        "method": "GET",
+-        "headers": {
+-          "Authorization": {
+-            "matches": "Bearer .+"
+-          }
+-        }
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "\"string\"",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "48f36314-b2b7-4910-9e1d-5b05f3346a60",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      },
+-      "postServeActions": []
+-    },
+-    {
+-      "id": "f7b95029-2f25-4f70-8b4c-0855712747d8",
+-      "name": "withEndingSlash - default",
+-      "request": {
+-        "urlPathTemplate": "/urls/with-ending-slash/",
+-        "method": "GET",
+-        "headers": {
+-          "Authorization": {
+-            "matches": "Bearer .+"
+-          }
+-        }
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "\"string\"",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "f7b95029-2f25-4f70-8b4c-0855712747d8",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      },
+-      "postServeActions": []
+-    },
+-    {
+-      "id": "2f9671a5-e6da-43a8-be27-d0be0191dcbf",
+-      "name": "withUnderscores - default",
+-      "request": {
+-        "urlPathTemplate": "/urls/with_underscores",
+-        "method": "GET",
+-        "headers": {
+-          "Authorization": {
+-            "matches": "Bearer .+"
+-          }
+-        }
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "\"string\"",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "2f9671a5-e6da-43a8-be27-d0be0191dcbf",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      },
+-      "postServeActions": []
+-    },
+-    {
+-      "id": "4a6d0aaa-05f2-47bb-9f40-6e3743b9d2bf",
+-      "name": "postWithObjectBodyandResponse - default",
+-      "request": {
+-        "urlPathTemplate": "/req-bodies/object",
+-        "method": "POST"
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "{\n  \"string\": \"string\",\n  \"integer\": 1,\n  \"long\": 1000000,\n  \"double\": 1.1,\n  \"bool\": true,\n  \"datetime\": \"2024-01-15T09:30:00Z\",\n  \"date\": \"2023-01-15\",\n  \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n  \"base64\": \"SGVsbG8gd29ybGQh\",\n  \"list\": [\n    \"list\",\n    \"list\"\n  ],\n  \"set\": [\n    \"set\"\n  ],\n  \"map\": {\n    \"1\": \"map\"\n  },\n  \"bigint\": \"1000000\"\n}",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "4a6d0aaa-05f2-47bb-9f40-6e3743b9d2bf",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      }
+-    },
+-    {
+-      "id": "c6e7cc6c-b76f-4860-a9ad-52dc8f55b6e6",
+-      "name": "postWithNoAuth - default",
+-      "request": {
+-        "urlPathTemplate": "/no-auth",
+-        "method": "POST"
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "true",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "c6e7cc6c-b76f-4860-a9ad-52dc8f55b6e6",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      }
+-    },
+-    {
+-      "id": "8098eeea-bc6b-4068-9601-566c2092f83f",
+-      "name": "getWithNoRequestBody - default",
+-      "request": {
+-        "urlPathTemplate": "/no-req-body",
+-        "method": "GET",
+-        "headers": {
+-          "Authorization": {
+-            "matches": "Bearer .+"
+-          }
+-        }
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "{\n  \"string\": \"string\",\n  \"integer\": 1,\n  \"long\": 1000000,\n  \"double\": 1.1,\n  \"bool\": true,\n  \"datetime\": \"2024-01-15T09:30:00Z\",\n  \"date\": \"2023-01-15\",\n  \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n  \"base64\": \"SGVsbG8gd29ybGQh\",\n  \"list\": [\n    \"list\",\n    \"list\"\n  ],\n  \"set\": [\n    \"set\"\n  ],\n  \"map\": {\n    \"1\": \"map\"\n  },\n  \"bigint\": \"1000000\"\n}",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "8098eeea-bc6b-4068-9601-566c2092f83f",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      },
+-      "postServeActions": []
+-    },
+-    {
+-      "id": "7dd9f944-1b35-42e9-a5ed-e48214ac8e91",
+-      "name": "postWithNoRequestBody - default",
+-      "request": {
+-        "urlPathTemplate": "/no-req-body",
+-        "method": "POST",
+-        "headers": {
+-          "Authorization": {
+-            "matches": "Bearer .+"
+-          }
+-        }
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "\"string\"",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "7dd9f944-1b35-42e9-a5ed-e48214ac8e91",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      }
+-    },
+-    {
+-      "id": "d7b54168-aef4-4d68-a9c5-446e97dee2fc",
+-      "name": "getWithCustomHeader - default",
+-      "request": {
+-        "urlPathTemplate": "/test-headers/custom-header",
+-        "method": "POST",
+-        "headers": {
+-          "Authorization": {
+-            "matches": "Bearer .+"
+-          }
+-        }
+-      },
+-      "response": {
+-        "status": 200,
+-        "body": "\"\"",
+-        "headers": {
+-          "Content-Type": "application/json"
+-        }
+-      },
+-      "uuid": "d7b54168-aef4-4d68-a9c5-446e97dee2fc",
+-      "persistent": true,
+-      "priority": 3,
+-      "metadata": {
+-        "mocklab": {
+-          "created": {
+-            "at": "2020-01-01T00:00:00.000Z",
+-            "via": "SYSTEM"
+-          }
+-        }
+-      }
+-    }
+-  ],
+-  "meta": {
+-    "total": 59
+-  }
+-}
+\ No newline at end of file

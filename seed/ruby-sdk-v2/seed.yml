@@ -12,10 +12,10 @@ changelogLocation: ../../generators/ruby-v2/sdk/versions.yml
 buildScripts:
   installScript:
     commands:
-      - bundle install
+    - bundle install
   testScript:
     commands:
-      - bundle exec rake test
+    - bundle exec rake test
 
 test:
   docker:
@@ -27,97 +27,93 @@ test:
   local:
     workingDirectory: generators/ruby-v2
     buildCommand:
-      - pnpm turbo run dist:cli --filter @fern-api/ruby-sdk
+    - pnpm turbo run dist:cli --filter @fern-api/ruby-sdk
     runCommand: node --enable-source-maps sdk/dist/cli.cjs {CONFIG_PATH}
 
 publish:
   preBuildCommands:
-    - pnpm turbo run dist:cli --filter @fern-api/ruby-sdk
+  - pnpm turbo run dist:cli --filter @fern-api/ruby-sdk
   docker:
     file: ./generators/ruby-v2/sdk/Dockerfile
     image: fernapi/fern-ruby-sdk
     aliases:
-      - fernapi/fern-ruby-sdk-v2
+    - fernapi/fern-ruby-sdk-v2
     context: .
   sentry:
     name: fern-ruby-sdk-v2
     project: ruby-sdk
     sourceMaps:
-      - dir: generators/ruby-v2/sdk/dist
+    - dir: generators/ruby-v2/sdk/dist
 
 scripts:
-  - image: ruby:3.3
-    commands:
-      build:
-        - bundle install
-      test:
-        - bundle exec rake test
+- image: ruby:3.3
+  commands:
+    build:
+    - bundle install
+    test:
+    - bundle exec rake test
 
 fixtures:
   basic-auth:
-    - outputFolder: wire-tests
-      customConfig:
-        enableWireTests: true
+  - outputFolder: wire-tests
+    customConfig:
+      enableWireTests: true
   basic-auth-pw-omitted:
-    - outputFolder: wire-tests
-      customConfig:
-        enableWireTests: true
+  - outputFolder: wire-tests
+    customConfig:
+      enableWireTests: true
   exhaustive:
-    - outputFolder: wire-tests
-      customConfig:
-        enableWireTests: true
-        clientModuleName: MyClient
-        maxRetries: 5
+  - outputFolder: wire-tests
+    customConfig:
+      enableWireTests: true
+      clientModuleName: MyClient
+      maxRetries: 5
   pagination:
-    - customConfig: null
-      outputFolder: no-custom-config
-    - customConfig:
-        offsetSemantics: "page-index"
-      outputFolder: page-index-semantics
+  - customConfig:
+      offsetSemantics: "page-index"
+    outputFolder: page-index-semantics
   pagination-custom:
-    - customConfig:
-        customPagerName: FooPager
-      outputFolder: .
+  - customConfig:
+      customPagerName: FooPager
+    outputFolder: .
   examples:
-    - outputFolder: no-custom-config
-      customConfig: null
-    - outputFolder: omit-fern-headers
-      customConfig:
-        omitFernHeaders: true
-    - outputFolder: wire-tests
-      customConfig:
-        enableWireTests: true
-    - outputFolder: require-paths
-      customConfig:
-        requirePaths:
-          - custom_integration
-          - sentry_integration
-    - outputFolder: readme-config
-      customConfig:
-        customReadmeSections:
-          - title: "Override Section"
-            content: "Override Content"
-          - title: "Generator Invocation Custom Section"
-            content: "Generator Invocation Custom Content for {{ packageName }}"
-      readmeConfig:
-        apiName: "CustomName"
-        disabledSections:
-          - "contributing"
-        bannerLink: https://www.fernapi.com
-        apiReferenceLink: https://www.docs.fernapi.com
-        defaultEndpoint: POST /big-entity
-        customSections:
-          - title: "Base Readme Custom Section"
-            language: ruby
-            content: "Base Readme Custom Content for {{ packageName }}"
-          - title: "Override Section"
-            language: ruby
-            content: "Base Content"
-        features:
-          timeouts:
-            - GET /movie/{movieId}
-            - method: POST
-              path: /movie
+  - outputFolder: omit-fern-headers
+    customConfig:
+      omitFernHeaders: true
+  - outputFolder: wire-tests
+    customConfig:
+      enableWireTests: true
+  - outputFolder: require-paths
+    customConfig:
+      requirePaths:
+      - custom_integration
+      - sentry_integration
+  - outputFolder: readme-config
+    customConfig:
+      customReadmeSections:
+      - title: "Override Section"
+        content: "Override Content"
+      - title: "Generator Invocation Custom Section"
+        content: "Generator Invocation Custom Content for {{ packageName }}"
+    readmeConfig:
+      apiName: "CustomName"
+      disabledSections:
+      - "contributing"
+      bannerLink: https://www.fernapi.com
+      apiReferenceLink: https://www.docs.fernapi.com
+      defaultEndpoint: POST /big-entity
+      customSections:
+      - title: "Base Readme Custom Section"
+        language: ruby
+        content: "Base Readme Custom Content for {{ packageName }}"
+      - title: "Override Section"
+        language: ruby
+        content: "Base Content"
+      features:
+        timeouts:
+        - GET /movie/{movieId}
+        - method: POST
+          path: /movie
 
 features:
   requestOptions: true
@@ -137,4 +133,4 @@ features:
   whitelabel: false
   apiReferenceGeneration: false
 allowedFailures:
-  - server-sent-events-openapi
+- server-sent-events-openapi

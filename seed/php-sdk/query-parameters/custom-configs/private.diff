@@ -1,0 +1,535 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 0eba66302dd..e224d10f0ad 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-php-sdk",
+   "generatorVersion": "local",
++  "generatorConfig": {
++    "propertyAccess": "private"
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "ci",
+diff --git a/src/User/Requests/GetUsersRequest.php b/src/User/Requests/GetUsersRequest.php
+index 16a13f20058..0409aa55918 100644
+--- a/src/User/Requests/GetUsersRequest.php
++++ b/src/User/Requests/GetUsersRequest.php
+@@ -12,72 +12,72 @@ class GetUsersRequest extends JsonSerializableType
+     /**
+      * @var int $limit
+      */
+-    public int $limit;
++    private int $limit;
+ 
+     /**
+      * @var string $id
+      */
+-    public string $id;
++    private string $id;
+ 
+     /**
+      * @var DateTime $date
+      */
+-    public DateTime $date;
++    private DateTime $date;
+ 
+     /**
+      * @var DateTime $deadline
+      */
+-    public DateTime $deadline;
++    private DateTime $deadline;
+ 
+     /**
+      * @var string $bytes
+      */
+-    public string $bytes;
++    private string $bytes;
+ 
+     /**
+      * @var User $user
+      */
+-    public User $user;
++    private User $user;
+ 
+     /**
+      * @var array<User> $userList
+      */
+-    public array $userList;
++    private array $userList;
+ 
+     /**
+      * @var ?DateTime $optionalDeadline
+      */
+-    public ?DateTime $optionalDeadline;
++    private ?DateTime $optionalDeadline;
+ 
+     /**
+      * @var array<string, string> $keyValue
+      */
+-    public array $keyValue;
++    private array $keyValue;
+ 
+     /**
+      * @var ?string $optionalString
+      */
+-    public ?string $optionalString;
++    private ?string $optionalString;
+ 
+     /**
+      * @var NestedUser $nestedUser
+      */
+-    public NestedUser $nestedUser;
++    private NestedUser $nestedUser;
+ 
+     /**
+      * @var ?User $optionalUser
+      */
+-    public ?User $optionalUser;
++    private ?User $optionalUser;
+ 
+     /**
+      * @var array<User> $excludeUser
+      */
+-    public array $excludeUser;
++    private array $excludeUser;
+ 
+     /**
+      * @var array<string> $filter
+      */
+-    public array $filter;
++    private array $filter;
+ 
+     /**
+      * @param array{
+@@ -115,4 +115,256 @@ class GetUsersRequest extends JsonSerializableType
+         $this->excludeUser = $values['excludeUser'];
+         $this->filter = $values['filter'];
+     }
++
++    /**
++     * @return int
++     */
++    public function getLimit(): int
++    {
++        return $this->limit;
++    }
++
++    /**
++     * @param int $value
++     */
++    public function setLimit(int $value): self
++    {
++        $this->limit = $value;
++        $this->_setField('limit');
++        return $this;
++    }
++
++    /**
++     * @return string
++     */
++    public function getId(): string
++    {
++        return $this->id;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setId(string $value): self
++    {
++        $this->id = $value;
++        $this->_setField('id');
++        return $this;
++    }
++
++    /**
++     * @return DateTime
++     */
++    public function getDate(): DateTime
++    {
++        return $this->date;
++    }
++
++    /**
++     * @param DateTime $value
++     */
++    public function setDate(DateTime $value): self
++    {
++        $this->date = $value;
++        $this->_setField('date');
++        return $this;
++    }
++
++    /**
++     * @return DateTime
++     */
++    public function getDeadline(): DateTime
++    {
++        return $this->deadline;
++    }
++
++    /**
++     * @param DateTime $value
++     */
++    public function setDeadline(DateTime $value): self
++    {
++        $this->deadline = $value;
++        $this->_setField('deadline');
++        return $this;
++    }
++
++    /**
++     * @return string
++     */
++    public function getBytes(): string
++    {
++        return $this->bytes;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setBytes(string $value): self
++    {
++        $this->bytes = $value;
++        $this->_setField('bytes');
++        return $this;
++    }
++
++    /**
++     * @return User
++     */
++    public function getUser(): User
++    {
++        return $this->user;
++    }
++
++    /**
++     * @param User $value
++     */
++    public function setUser(User $value): self
++    {
++        $this->user = $value;
++        $this->_setField('user');
++        return $this;
++    }
++
++    /**
++     * @return array<User>
++     */
++    public function getUserList(): array
++    {
++        return $this->userList;
++    }
++
++    /**
++     * @param array<User> $value
++     */
++    public function setUserList(array $value): self
++    {
++        $this->userList = $value;
++        $this->_setField('userList');
++        return $this;
++    }
++
++    /**
++     * @return ?DateTime
++     */
++    public function getOptionalDeadline(): ?DateTime
++    {
++        return $this->optionalDeadline;
++    }
++
++    /**
++     * @param ?DateTime $value
++     */
++    public function setOptionalDeadline(?DateTime $value = null): self
++    {
++        $this->optionalDeadline = $value;
++        $this->_setField('optionalDeadline');
++        return $this;
++    }
++
++    /**
++     * @return array<string, string>
++     */
++    public function getKeyValue(): array
++    {
++        return $this->keyValue;
++    }
++
++    /**
++     * @param array<string, string> $value
++     */
++    public function setKeyValue(array $value): self
++    {
++        $this->keyValue = $value;
++        $this->_setField('keyValue');
++        return $this;
++    }
++
++    /**
++     * @return ?string
++     */
++    public function getOptionalString(): ?string
++    {
++        return $this->optionalString;
++    }
++
++    /**
++     * @param ?string $value
++     */
++    public function setOptionalString(?string $value = null): self
++    {
++        $this->optionalString = $value;
++        $this->_setField('optionalString');
++        return $this;
++    }
++
++    /**
++     * @return NestedUser
++     */
++    public function getNestedUser(): NestedUser
++    {
++        return $this->nestedUser;
++    }
++
++    /**
++     * @param NestedUser $value
++     */
++    public function setNestedUser(NestedUser $value): self
++    {
++        $this->nestedUser = $value;
++        $this->_setField('nestedUser');
++        return $this;
++    }
++
++    /**
++     * @return ?User
++     */
++    public function getOptionalUser(): ?User
++    {
++        return $this->optionalUser;
++    }
++
++    /**
++     * @param ?User $value
++     */
++    public function setOptionalUser(?User $value = null): self
++    {
++        $this->optionalUser = $value;
++        $this->_setField('optionalUser');
++        return $this;
++    }
++
++    /**
++     * @return array<User>
++     */
++    public function getExcludeUser(): array
++    {
++        return $this->excludeUser;
++    }
++
++    /**
++     * @param array<User> $value
++     */
++    public function setExcludeUser(array $value): self
++    {
++        $this->excludeUser = $value;
++        $this->_setField('excludeUser');
++        return $this;
++    }
++
++    /**
++     * @return array<string>
++     */
++    public function getFilter(): array
++    {
++        return $this->filter;
++    }
++
++    /**
++     * @param array<string> $value
++     */
++    public function setFilter(array $value): self
++    {
++        $this->filter = $value;
++        $this->_setField('filter');
++        return $this;
++    }
+ }
+diff --git a/src/User/Types/NestedUser.php b/src/User/Types/NestedUser.php
+index a4a728f20ee..32855a70327 100644
+--- a/src/User/Types/NestedUser.php
++++ b/src/User/Types/NestedUser.php
+@@ -11,13 +11,13 @@ class NestedUser extends JsonSerializableType
+      * @var string $name
+      */
+     #[JsonProperty('name')]
+-    public string $name;
++    private string $name;
+ 
+     /**
+      * @var User $user
+      */
+     #[JsonProperty('user')]
+-    public User $user;
++    private User $user;
+ 
+     /**
+      * @param array{
+@@ -32,6 +32,42 @@ class NestedUser extends JsonSerializableType
+         $this->user = $values['user'];
+     }
+ 
++    /**
++     * @return string
++     */
++    public function getName(): string
++    {
++        return $this->name;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setName(string $value): self
++    {
++        $this->name = $value;
++        $this->_setField('name');
++        return $this;
++    }
++
++    /**
++     * @return User
++     */
++    public function getUser(): User
++    {
++        return $this->user;
++    }
++
++    /**
++     * @param User $value
++     */
++    public function setUser(User $value): self
++    {
++        $this->user = $value;
++        $this->_setField('user');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/User/Types/User.php b/src/User/Types/User.php
+index c2d2049a60a..ae878d1f068 100644
+--- a/src/User/Types/User.php
++++ b/src/User/Types/User.php
+@@ -12,13 +12,13 @@ class User extends JsonSerializableType
+      * @var string $name
+      */
+     #[JsonProperty('name')]
+-    public string $name;
++    private string $name;
+ 
+     /**
+      * @var array<string> $tags
+      */
+     #[JsonProperty('tags'), ArrayType(['string'])]
+-    public array $tags;
++    private array $tags;
+ 
+     /**
+      * @param array{
+@@ -33,6 +33,42 @@ class User extends JsonSerializableType
+         $this->tags = $values['tags'];
+     }
+ 
++    /**
++     * @return string
++     */
++    public function getName(): string
++    {
++        return $this->name;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setName(string $value): self
++    {
++        $this->name = $value;
++        $this->_setField('name');
++        return $this;
++    }
++
++    /**
++     * @return array<string>
++     */
++    public function getTags(): array
++    {
++        return $this->tags;
++    }
++
++    /**
++     * @param array<string> $value
++     */
++    public function setTags(array $value): self
++    {
++        $this->tags = $value;
++        $this->_setField('tags');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/User/UserClient.php b/src/User/UserClient.php
+index 5b56e6a53d1..3e18c14a5c8 100644
+--- a/src/User/UserClient.php
++++ b/src/User/UserClient.php
+@@ -68,25 +68,25 @@ class UserClient
+     {
+         $options = array_merge($this->options, $options ?? []);
+         $query = [];
+-        $query['limit'] = $request->limit;
+-        $query['id'] = $request->id;
+-        $query['date'] = JsonSerializer::serializeDate($request->date);
+-        $query['deadline'] = JsonSerializer::serializeDateTime($request->deadline);
+-        $query['bytes'] = $request->bytes;
+-        $query['user'] = $request->user;
+-        $query['userList'] = $request->userList;
+-        $query['keyValue'] = $request->keyValue;
+-        $query['nestedUser'] = $request->nestedUser;
+-        $query['excludeUser'] = $request->excludeUser;
+-        $query['filter'] = $request->filter;
+-        if ($request->optionalDeadline != null) {
+-            $query['optionalDeadline'] = JsonSerializer::serializeDateTime($request->optionalDeadline);
++        $query['limit'] = $request->getLimit();
++        $query['id'] = $request->getId();
++        $query['date'] = JsonSerializer::serializeDate($request->getDate());
++        $query['deadline'] = JsonSerializer::serializeDateTime($request->getDeadline());
++        $query['bytes'] = $request->getBytes();
++        $query['user'] = $request->getUser();
++        $query['userList'] = $request->getUserList();
++        $query['keyValue'] = $request->getKeyValue();
++        $query['nestedUser'] = $request->getNestedUser();
++        $query['excludeUser'] = $request->getExcludeUser();
++        $query['filter'] = $request->getFilter();
++        if ($request->getOptionalDeadline() != null) {
++            $query['optionalDeadline'] = JsonSerializer::serializeDateTime($request->getOptionalDeadline());
+         }
+-        if ($request->optionalString != null) {
+-            $query['optionalString'] = $request->optionalString;
++        if ($request->getOptionalString() != null) {
++            $query['optionalString'] = $request->getOptionalString();
+         }
+-        if ($request->optionalUser != null) {
+-            $query['optionalUser'] = $request->optionalUser;
++        if ($request->getOptionalUser() != null) {
++            $query['optionalUser'] = $request->getOptionalUser();
+         }
+         try {
+             $response = $this->client->sendRequest(

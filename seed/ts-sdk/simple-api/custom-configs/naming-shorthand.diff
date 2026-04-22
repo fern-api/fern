@@ -1,0 +1,333 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index d8b7bf00e12..485e4592e76 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,9 @@
+     "cliVersion": "DUMMY",
+     "generatorName": "fernapi/fern-typescript-sdk",
+     "generatorVersion": "local",
++    "generatorConfig": {
++        "naming": "acme"
++    },
+     "originGitCommit": "DUMMY",
+     "originGitCommitIsDirty": null,
+     "invokedBy": "ci",
+diff --git a/README.md b/README.md
+index e5f3d14b95b..4a8407d5505 100644
+--- a/README.md
++++ b/README.md
+@@ -40,9 +40,9 @@ A full reference for this library is available [here](./reference.md).
+ Instantiate and use the client with the following:
+ 
+ ```typescript
+-import { SeedSimpleApiClient, SeedSimpleApiEnvironment } from "@fern/simple-api";
++import { AcmeClient, AcmeEnvironment } from "@fern/simple-api";
+ 
+-const client = new SeedSimpleApiClient({ environment: SeedSimpleApiEnvironment.Production, token: "YOUR_TOKEN" });
++const client = new AcmeClient({ environment: AcmeEnvironment.Production, token: "YOUR_TOKEN" });
+ await client.user.get("id");
+ ```
+ 
+@@ -51,10 +51,10 @@ await client.user.get("id");
+ This SDK allows you to configure different environments for API requests.
+ 
+ ```typescript
+-import { SeedSimpleApiClient, SeedSimpleApiEnvironment } from "@fern/simple-api";
++import { AcmeClient, acmeEnvironment } from "@fern/simple-api";
+ 
+-const client = new SeedSimpleApiClient({
+-    environment: SeedSimpleApiEnvironment.Production,
++const client = new AcmeClient({
++    environment: acmeEnvironment.Production,
+ });
+ ```
+ 
+@@ -64,12 +64,12 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
+ will be thrown.
+ 
+ ```typescript
+-import { SeedSimpleApiError } from "@fern/simple-api";
++import { AcmeError } from "@fern/simple-api";
+ 
+ try {
+     await client.user.get(...);
+ } catch (err) {
+-    if (err instanceof SeedSimpleApiError) {
++    if (err instanceof AcmeError) {
+         console.log(err.statusCode);
+         console.log(err.message);
+         console.log(err.body);
+@@ -95,9 +95,9 @@ const client = new UserClient({...});
+ If you would like to send additional headers as part of the request, use the `headers` request option.
+ 
+ ```typescript
+-import { SeedSimpleApiClient } from "@fern/simple-api";
++import { AcmeClient } from "@fern/simple-api";
+ 
+-const client = new SeedSimpleApiClient({
++const client = new AcmeClient({
+     ...
+     headers: {
+         'X-Custom-Header': 'custom value'
+@@ -182,9 +182,9 @@ console.log(rawResponse.headers['X-My-Header']);
+ The SDK supports logging. You can configure the logger by passing in a `logging` object to the client options.
+ 
+ ```typescript
+-import { SeedSimpleApiClient, logging } from "@fern/simple-api";
++import { AcmeClient, logging } from "@fern/simple-api";
+ 
+-const client = new SeedSimpleApiClient({
++const client = new AcmeClient({
+     ...
+     logging: {
+         level: logging.LogLevel.Debug, // defaults to logging.LogLevel.Info
+diff --git a/reference.md b/reference.md
+index d73128c61a3..a980ad5d8a0 100644
+--- a/reference.md
++++ b/reference.md
+@@ -1,6 +1,6 @@
+ # Reference
+ ## User
+-<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">get</a>(id) -> SeedSimpleApi.User</code></summary>
++<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">get</a>(id) -> acme.User</code></summary>
+ <dl>
+ <dd>
+ 
+diff --git a/snippet.json b/snippet.json
+index a66ba5b7e79..0dbdd557ad4 100644
+--- a/snippet.json
++++ b/snippet.json
+@@ -8,7 +8,7 @@
+             },
+             "snippet": {
+                 "type": "typescript",
+-                "client": "import { SeedSimpleApiClient, SeedSimpleApiEnvironment } from \"@fern/simple-api\";\n\nconst client = new SeedSimpleApiClient({ environment: SeedSimpleApiEnvironment.Production, token: \"YOUR_TOKEN\" });\nawait client.user.get(\"id\");\n"
++                "client": "import { AcmeClient, AcmeEnvironment } from \"@fern/simple-api\";\n\nconst client = new AcmeClient({ environment: AcmeEnvironment.Production, token: \"YOUR_TOKEN\" });\nawait client.user.get(\"id\");\n"
+             }
+         }
+     ],
+diff --git a/src/BaseClient.ts b/src/BaseClient.ts
+index 339461e0a49..0cfc7511851 100644
+--- a/src/BaseClient.ts
++++ b/src/BaseClient.ts
+@@ -6,7 +6,7 @@ import * as core from "./core/index.js";
+ import type * as environments from "./environments.js";
+ 
+ export type BaseClientOptions = {
+-    environment: core.Supplier<environments.SeedSimpleApiEnvironment | string>;
++    environment: core.Supplier<environments.AcmeEnvironment | string>;
+     /** Specify a custom URL to connect the client to. */
+     baseUrl?: core.Supplier<string>;
+     /** Additional headers to include in requests. */
+diff --git a/src/Client.ts b/src/Client.ts
+index 9ed57372443..b14e552c314 100644
+--- a/src/Client.ts
++++ b/src/Client.ts
+@@ -5,17 +5,17 @@ import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
+ import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "./BaseClient.js";
+ import * as core from "./core/index.js";
+ 
+-export declare namespace SeedSimpleApiClient {
++export declare namespace AcmeClient {
+     export type Options = BaseClientOptions;
+ 
+     export interface RequestOptions extends BaseRequestOptions {}
+ }
+ 
+-export class SeedSimpleApiClient {
+-    protected readonly _options: NormalizedClientOptionsWithAuth<SeedSimpleApiClient.Options>;
++export class AcmeClient {
++    protected readonly _options: NormalizedClientOptionsWithAuth<AcmeClient.Options>;
+     protected _user: UserClient | undefined;
+ 
+-    constructor(options: SeedSimpleApiClient.Options) {
++    constructor(options: AcmeClient.Options) {
+         this._options = normalizeClientOptionsWithAuth(options);
+     }
+ 
+diff --git a/src/api/resources/user/client/Client.ts b/src/api/resources/user/client/Client.ts
+index 246f78ffd26..eebe274867c 100644
+--- a/src/api/resources/user/client/Client.ts
++++ b/src/api/resources/user/client/Client.ts
+@@ -6,7 +6,7 @@ import { mergeHeaders } from "../../../../core/headers.js";
+ import * as core from "../../../../core/index.js";
+ import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
+ import * as errors from "../../../../errors/index.js";
+-import type * as SeedSimpleApi from "../../../index.js";
++import type * as acme from "../../../index.js";
+ 
+ export declare namespace UserClient {
+     export type Options = BaseClientOptions;
+@@ -28,14 +28,14 @@ export class UserClient {
+      * @example
+      *     await client.user.get("id")
+      */
+-    public get(id: string, requestOptions?: UserClient.RequestOptions): core.HttpResponsePromise<SeedSimpleApi.User> {
++    public get(id: string, requestOptions?: UserClient.RequestOptions): core.HttpResponsePromise<acme.User> {
+         return core.HttpResponsePromise.fromPromise(this.__get(id, requestOptions));
+     }
+ 
+     private async __get(
+         id: string,
+         requestOptions?: UserClient.RequestOptions,
+-    ): Promise<core.WithRawResponse<SeedSimpleApi.User>> {
++    ): Promise<core.WithRawResponse<acme.User>> {
+         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+             _authRequest.headers,
+@@ -58,11 +58,11 @@ export class UserClient {
+             logging: this._options.logging,
+         });
+         if (_response.ok) {
+-            return { data: _response.body as SeedSimpleApi.User, rawResponse: _response.rawResponse };
++            return { data: _response.body as acme.User, rawResponse: _response.rawResponse };
+         }
+ 
+         if (_response.error.reason === "status-code") {
+-            throw new errors.SeedSimpleApiError({
++            throw new errors.AcmeError({
+                 statusCode: _response.error.statusCode,
+                 body: _response.error.body,
+                 rawResponse: _response.rawResponse,
+diff --git a/src/auth/BearerAuthProvider.ts b/src/auth/BearerAuthProvider.ts
+index 63b42583d7c..1e93a63f835 100644
+--- a/src/auth/BearerAuthProvider.ts
++++ b/src/auth/BearerAuthProvider.ts
+@@ -23,7 +23,7 @@ export class BearerAuthProvider implements core.AuthProvider {
+     } = {}): Promise<core.AuthRequest> {
+         const token = await core.Supplier.get(this.options[TOKEN_PARAM]);
+         if (token == null) {
+-            throw new errors.SeedSimpleApiError({
++            throw new errors.AcmeError({
+                 message: BearerAuthProvider.AUTH_CONFIG_ERROR_MESSAGE,
+             });
+         }
+diff --git a/src/environments.ts b/src/environments.ts
+index 0955c381185..22e5fc36f48 100644
+--- a/src/environments.ts
++++ b/src/environments.ts
+@@ -1,10 +1,8 @@
+ // This file was auto-generated by Fern from our API Definition.
+ 
+-export const SeedSimpleApiEnvironment = {
++export const AcmeEnvironment = {
+     Production: "https://api.example.com",
+     Staging: "https://staging-api.example.com",
+ } as const;
+ 
+-export type SeedSimpleApiEnvironment =
+-    | typeof SeedSimpleApiEnvironment.Production
+-    | typeof SeedSimpleApiEnvironment.Staging;
++export type AcmeEnvironment = typeof AcmeEnvironment.Production | typeof AcmeEnvironment.Staging;
+diff --git a/src/errors/SeedSimpleApiError.ts b/src/errors/AcmeError.ts
+similarity index 96%
+rename from src/errors/SeedSimpleApiError.ts
+rename to src/errors/AcmeError.ts
+index 36e4d16bb4c..15a1d4fcc40 100644
+--- a/src/errors/SeedSimpleApiError.ts
++++ b/src/errors/AcmeError.ts
+@@ -3,7 +3,7 @@
+ import type * as core from "../core/index.js";
+ import { toJson } from "../core/json.js";
+ 
+-export class SeedSimpleApiError extends Error {
++export class AcmeError extends Error {
+     public readonly statusCode?: number;
+     public readonly body?: unknown;
+     public readonly rawResponse?: core.RawResponse;
+diff --git a/src/errors/SeedSimpleApiTimeoutError.ts b/src/errors/AcmeTimeoutError.ts
+similarity index 89%
+rename from src/errors/SeedSimpleApiTimeoutError.ts
+rename to src/errors/AcmeTimeoutError.ts
+index 32c4e3952f3..befaef434ea 100644
+--- a/src/errors/SeedSimpleApiTimeoutError.ts
++++ b/src/errors/AcmeTimeoutError.ts
+@@ -1,6 +1,6 @@
+ // This file was auto-generated by Fern from our API Definition.
+ 
+-export class SeedSimpleApiTimeoutError extends Error {
++export class AcmeTimeoutError extends Error {
+     public readonly cause?: unknown;
+ 
+     constructor(message: string, opts?: { cause?: unknown }) {
+diff --git a/src/errors/handleNonStatusCodeError.ts b/src/errors/handleNonStatusCodeError.ts
+index 378b1282b6c..b1fab704791 100644
+--- a/src/errors/handleNonStatusCodeError.ts
++++ b/src/errors/handleNonStatusCodeError.ts
+@@ -11,28 +11,28 @@ export function handleNonStatusCodeError(
+ ): never {
+     switch (error.reason) {
+         case "non-json":
+-            throw new errors.SeedSimpleApiError({
++            throw new errors.AcmeError({
+                 statusCode: error.statusCode,
+                 body: error.rawBody,
+                 rawResponse: rawResponse,
+             });
+         case "body-is-null":
+-            throw new errors.SeedSimpleApiError({
++            throw new errors.AcmeError({
+                 statusCode: error.statusCode,
+                 rawResponse: rawResponse,
+             });
+         case "timeout":
+-            throw new errors.SeedSimpleApiTimeoutError(`Timeout exceeded when calling ${method} ${path}.`, {
++            throw new errors.AcmeTimeoutError(`Timeout exceeded when calling ${method} ${path}.`, {
+                 cause: error.cause,
+             });
+         case "unknown":
+-            throw new errors.SeedSimpleApiError({
++            throw new errors.AcmeError({
+                 message: error.errorMessage,
+                 rawResponse: rawResponse,
+                 cause: error.cause,
+             });
+         default:
+-            throw new errors.SeedSimpleApiError({
++            throw new errors.AcmeError({
+                 message: "Unknown error",
+                 rawResponse: rawResponse,
+             });
+diff --git a/src/errors/index.ts b/src/errors/index.ts
+index 9045c013be1..2656fb947e0 100644
+--- a/src/errors/index.ts
++++ b/src/errors/index.ts
+@@ -1,2 +1,2 @@
+-export { SeedSimpleApiError } from "./SeedSimpleApiError.js";
+-export { SeedSimpleApiTimeoutError } from "./SeedSimpleApiTimeoutError.js";
++export { AcmeError } from "./AcmeError.js";
++export { AcmeTimeoutError } from "./AcmeTimeoutError.js";
+diff --git a/src/index.ts b/src/index.ts
+index 8ffb3e9d711..fc41a5578c4 100644
+--- a/src/index.ts
++++ b/src/index.ts
+@@ -1,6 +1,6 @@
+-export * as SeedSimpleApi from "./api/index.js";
++export * as acme from "./api/index.js";
+ export type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
+-export { SeedSimpleApiClient } from "./Client.js";
+-export { SeedSimpleApiEnvironment } from "./environments.js";
+-export { SeedSimpleApiError, SeedSimpleApiTimeoutError } from "./errors/index.js";
++export { AcmeClient } from "./Client.js";
++export { AcmeEnvironment } from "./environments.js";
++export { AcmeError, AcmeTimeoutError } from "./errors/index.js";
+ export * from "./exports.js";
+diff --git a/tests/wire/user.test.ts b/tests/wire/user.test.ts
+index dc48354f2aa..e98fcff06ec 100644
+--- a/tests/wire/user.test.ts
++++ b/tests/wire/user.test.ts
+@@ -1,12 +1,12 @@
+ // This file was auto-generated by Fern from our API Definition.
+ 
+-import { SeedSimpleApiClient } from "../../src/Client";
++import { AcmeClient } from "../../src/Client";
+ import { mockServerPool } from "../mock-server/MockServerPool";
+ 
+ describe("UserClient", () => {
+     test("get", async () => {
+         const server = mockServerPool.createServer();
+-        const client = new SeedSimpleApiClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
++        const client = new AcmeClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
+ 
+         const rawResponseBody = { id: "id", name: "name", email: "email" };
+ 

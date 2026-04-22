@@ -1,0 +1,67 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 0eba66302dd..f8d0edbcfbe 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-php-sdk",
+   "generatorVersion": "local",
++  "generatorConfig": {
++    "useDefaultRequestParameterValues": true
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "ci",
+diff --git a/src/User/Requests/GetUsersRequest.php b/src/User/Requests/GetUsersRequest.php
+index 2c043269ba4..94c1faf2177 100644
+--- a/src/User/Requests/GetUsersRequest.php
++++ b/src/User/Requests/GetUsersRequest.php
+@@ -12,7 +12,7 @@ class GetUsersRequest extends JsonSerializableType
+     /**
+      * @var int $limit
+      */
+-    public int $limit;
++    public int $limit = 10;
+ 
+     /**
+      * @var string $id
+@@ -87,11 +87,11 @@ class GetUsersRequest extends JsonSerializableType
+     /**
+      * @var string $bigIntParam
+      */
+-    public string $bigIntParam;
++    public string $bigIntParam = '18446744073709551615';
+ 
+     /**
+      * @param array{
+-     *   limit: int,
++     *   limit?: int,
+      *   id: string,
+      *   date: DateTime,
+      *   deadline: DateTime,
+@@ -103,7 +103,7 @@ class GetUsersRequest extends JsonSerializableType
+      *   excludeUser: array<User>,
+      *   filter: array<string>,
+      *   longParam: int,
+-     *   bigIntParam: string,
++     *   bigIntParam?: string,
+      *   optionalDeadline?: ?DateTime,
+      *   optionalString?: ?string,
+      *   optionalUser?: ?User,
+@@ -112,7 +112,7 @@ class GetUsersRequest extends JsonSerializableType
+     public function __construct(
+         array $values,
+     ) {
+-        $this->limit = $values['limit'];
++        $this->limit = $values['limit'] ?? 10;
+         $this->id = $values['id'];
+         $this->date = $values['date'];
+         $this->deadline = $values['deadline'];
+@@ -127,6 +127,6 @@ class GetUsersRequest extends JsonSerializableType
+         $this->excludeUser = $values['excludeUser'];
+         $this->filter = $values['filter'];
+         $this->longParam = $values['longParam'];
+-        $this->bigIntParam = $values['bigIntParam'];
++        $this->bigIntParam = $values['bigIntParam'] ?? '18446744073709551615';
+     }
+ }

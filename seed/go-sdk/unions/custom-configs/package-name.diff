@@ -1,0 +1,755 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index e206b6bea6d..e787d33f3a0 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -3,7 +3,11 @@
+   "generatorName": "fernapi/fern-go-sdk",
+   "generatorVersion": "local",
+   "generatorConfig": {
+-    "enableWireTests": false
++    "enableWireTests": false,
++    "packageName": "unions",
++    "module": {
++      "path": "github.com/fern-api/unions-go"
++    }
+   },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+diff --git a/README.md b/README.md
+index 317668c70a8..ebdb4a32ce2 100644
+--- a/README.md
++++ b/README.md
+@@ -32,7 +32,7 @@ package example
+ import (
+     context "context"
+ 
+-    client "github.com/unions/fern/client"
++    client "github.com/fern-api/unions-go/client"
+ )
+ 
+ func do() {
+diff --git a/bigunion/client.go b/bigunion/client.go
+index 3b6a3d2f460..b8e1098f86f 100644
+--- a/bigunion/client.go
++++ b/bigunion/client.go
+@@ -5,10 +5,10 @@ package bigunion
+ import (
+ 	context "context"
+ 
+-	fern "github.com/unions/fern"
+-	core "github.com/unions/fern/core"
+-	internal "github.com/unions/fern/internal"
+-	option "github.com/unions/fern/option"
++	unions "github.com/fern-api/unions-go"
++	core "github.com/fern-api/unions-go/core"
++	internal "github.com/fern-api/unions-go/internal"
++	option "github.com/fern-api/unions-go/option"
+ )
+ 
+ type Client struct {
+@@ -37,7 +37,7 @@ func (c *Client) Get(
+ 	ctx context.Context,
+ 	id string,
+ 	opts ...option.RequestOption,
+-) (*fern.BigUnion, error) {
++) (*unions.BigUnion, error) {
+ 	response, err := c.WithRawResponse.Get(
+ 		ctx,
+ 		id,
+@@ -51,7 +51,7 @@ func (c *Client) Get(
+ 
+ func (c *Client) Update(
+ 	ctx context.Context,
+-	request *fern.BigUnion,
++	request *unions.BigUnion,
+ 	opts ...option.RequestOption,
+ ) (bool, error) {
+ 	response, err := c.WithRawResponse.Update(
+@@ -67,7 +67,7 @@ func (c *Client) Update(
+ 
+ func (c *Client) UpdateMany(
+ 	ctx context.Context,
+-	request []*fern.BigUnion,
++	request []*unions.BigUnion,
+ 	opts ...option.RequestOption,
+ ) (map[string]bool, error) {
+ 	response, err := c.WithRawResponse.UpdateMany(
+diff --git a/bigunion/raw_client.go b/bigunion/raw_client.go
+index eb63b90ac20..774d5998ee9 100644
+--- a/bigunion/raw_client.go
++++ b/bigunion/raw_client.go
+@@ -6,10 +6,10 @@ import (
+ 	context "context"
+ 	http "net/http"
+ 
+-	fern "github.com/unions/fern"
+-	core "github.com/unions/fern/core"
+-	internal "github.com/unions/fern/internal"
+-	option "github.com/unions/fern/option"
++	unions "github.com/fern-api/unions-go"
++	core "github.com/fern-api/unions-go/core"
++	internal "github.com/fern-api/unions-go/internal"
++	option "github.com/fern-api/unions-go/option"
+ )
+ 
+ type RawClient struct {
+@@ -35,7 +35,7 @@ func (r *RawClient) Get(
+ 	ctx context.Context,
+ 	id string,
+ 	opts ...option.RequestOption,
+-) (*core.Response[*fern.BigUnion], error) {
++) (*core.Response[*unions.BigUnion], error) {
+ 	options := core.NewRequestOptions(opts...)
+ 	baseURL := internal.ResolveBaseURL(
+ 		options.BaseURL,
+@@ -50,7 +50,7 @@ func (r *RawClient) Get(
+ 		r.options.ToHeader(),
+ 		options.ToHeader(),
+ 	)
+-	var response *fern.BigUnion
++	var response *unions.BigUnion
+ 	raw, err := r.caller.Call(
+ 		ctx,
+ 		&internal.CallParams{
+@@ -67,7 +67,7 @@ func (r *RawClient) Get(
+ 	if err != nil {
+ 		return nil, err
+ 	}
+-	return &core.Response[*fern.BigUnion]{
++	return &core.Response[*unions.BigUnion]{
+ 		StatusCode: raw.StatusCode,
+ 		Header:     raw.Header,
+ 		Body:       response,
+@@ -76,7 +76,7 @@ func (r *RawClient) Get(
+ 
+ func (r *RawClient) Update(
+ 	ctx context.Context,
+-	request *fern.BigUnion,
++	request *unions.BigUnion,
+ 	opts ...option.RequestOption,
+ ) (*core.Response[bool], error) {
+ 	options := core.NewRequestOptions(opts...)
+@@ -117,7 +117,7 @@ func (r *RawClient) Update(
+ 
+ func (r *RawClient) UpdateMany(
+ 	ctx context.Context,
+-	request []*fern.BigUnion,
++	request []*unions.BigUnion,
+ 	opts ...option.RequestOption,
+ ) (*core.Response[map[string]bool], error) {
+ 	options := core.NewRequestOptions(opts...)
+diff --git a/bigunion.go b/bigunion.go
+index 61ee1ef45aa..03699ab2f25 100644
+--- a/bigunion.go
++++ b/bigunion.go
+@@ -5,7 +5,7 @@ package unions
+ import (
+ 	json "encoding/json"
+ 	fmt "fmt"
+-	internal "github.com/unions/fern/internal"
++	internal "github.com/fern-api/unions-go/internal"
+ 	big "math/big"
+ 	time "time"
+ )
+diff --git a/client/client.go b/client/client.go
+index 0fb47835f14..4b22527ab9f 100644
+--- a/client/client.go
++++ b/client/client.go
+@@ -3,11 +3,11 @@
+ package client
+ 
+ import (
+-	bigunion "github.com/unions/fern/bigunion"
+-	core "github.com/unions/fern/core"
+-	internal "github.com/unions/fern/internal"
+-	option "github.com/unions/fern/option"
+-	union "github.com/unions/fern/union"
++	bigunion "github.com/fern-api/unions-go/bigunion"
++	core "github.com/fern-api/unions-go/core"
++	internal "github.com/fern-api/unions-go/internal"
++	option "github.com/fern-api/unions-go/option"
++	union "github.com/fern-api/unions-go/union"
+ )
+ 
+ type Client struct {
+diff --git a/client/client_test.go b/client/client_test.go
+index e0d4247b687..a0b8a8c3f80 100644
+--- a/client/client_test.go
++++ b/client/client_test.go
+@@ -3,8 +3,8 @@
+ package client
+ 
+ import (
++	option "github.com/fern-api/unions-go/option"
+ 	assert "github.com/stretchr/testify/assert"
+-	option "github.com/unions/fern/option"
+ 	http "net/http"
+ 	testing "testing"
+ 	time "time"
+diff --git a/core/request_option.go b/core/request_option.go
+index e45e9d36879..097bb333a5d 100644
+--- a/core/request_option.go
++++ b/core/request_option.go
+@@ -49,7 +49,7 @@ func (r *RequestOptions) ToHeader() http.Header { return r.cloneHeader() }
+ func (r *RequestOptions) cloneHeader() http.Header {
+ 	headers := r.HTTPHeader.Clone()
+ 	headers.Set("X-Fern-Language", "Go")
+-	headers.Set("X-Fern-SDK-Name", "github.com/unions/fern")
++	headers.Set("X-Fern-SDK-Name", "github.com/fern-api/unions-go")
+ 	headers.Set("X-Fern-SDK-Version", "v0.0.1")
+ 	headers.Set("User-Agent", "github.com/unions/fern/0.0.1")
+ 	return headers
+diff --git a/dynamic-snippets/example0/snippet.go b/dynamic-snippets/example0/snippet.go
+index fc54c0d4445..28fedac01e2 100644
+--- a/dynamic-snippets/example0/snippet.go
++++ b/dynamic-snippets/example0/snippet.go
+@@ -3,8 +3,8 @@ package example
+ import (
+     context "context"
+ 
+-    client "github.com/unions/fern/client"
+-    option "github.com/unions/fern/option"
++    client "github.com/fern-api/unions-go/client"
++    option "github.com/fern-api/unions-go/option"
+ )
+ 
+ func do() {
+diff --git a/dynamic-snippets/example1/snippet.go b/dynamic-snippets/example1/snippet.go
+index 08e8aeb23db..7e3a7251a04 100644
+--- a/dynamic-snippets/example1/snippet.go
++++ b/dynamic-snippets/example1/snippet.go
+@@ -3,9 +3,9 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/unions/fern"
+-    client "github.com/unions/fern/client"
+-    option "github.com/unions/fern/option"
++    unions "github.com/fern-api/unions-go"
++    client "github.com/fern-api/unions-go/client"
++    option "github.com/fern-api/unions-go/option"
+ )
+ 
+ func do() {
+@@ -14,16 +14,16 @@ func do() {
+             "https://api.fern.com",
+         ),
+     )
+-    request := &fern.BigUnion{
+-        NormalSweet: &fern.NormalSweet{
++    request := &unions.BigUnion{
++        NormalSweet: &unions.NormalSweet{
+             Value: "value",
+         },
+         ID: "id",
+-        CreatedAt: fern.MustParseDateTime(
++        CreatedAt: unions.MustParseDateTime(
+             "2024-01-15T09:30:00Z",
+         ),
+-        ArchivedAt: fern.Time(
+-            fern.MustParseDateTime(
++        ArchivedAt: unions.Time(
++            unions.MustParseDateTime(
+                 "2024-01-15T09:30:00Z",
+             ),
+         ),
+diff --git a/dynamic-snippets/example2/snippet.go b/dynamic-snippets/example2/snippet.go
+index acd596f368d..b3204a3bba7 100644
+--- a/dynamic-snippets/example2/snippet.go
++++ b/dynamic-snippets/example2/snippet.go
+@@ -3,9 +3,9 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/unions/fern"
+-    client "github.com/unions/fern/client"
+-    option "github.com/unions/fern/option"
++    unions "github.com/fern-api/unions-go"
++    client "github.com/fern-api/unions-go/client"
++    option "github.com/fern-api/unions-go/option"
+ )
+ 
+ func do() {
+@@ -14,31 +14,31 @@ func do() {
+             "https://api.fern.com",
+         ),
+     )
+-    request := []*fern.BigUnion{
+-        &fern.BigUnion{
+-            NormalSweet: &fern.NormalSweet{
++    request := []*unions.BigUnion{
++        &unions.BigUnion{
++            NormalSweet: &unions.NormalSweet{
+                 Value: "value",
+             },
+             ID: "id",
+-            CreatedAt: fern.MustParseDateTime(
++            CreatedAt: unions.MustParseDateTime(
+                 "2024-01-15T09:30:00Z",
+             ),
+-            ArchivedAt: fern.Time(
+-                fern.MustParseDateTime(
++            ArchivedAt: unions.Time(
++                unions.MustParseDateTime(
+                     "2024-01-15T09:30:00Z",
+                 ),
+             ),
+         },
+-        &fern.BigUnion{
+-            NormalSweet: &fern.NormalSweet{
++        &unions.BigUnion{
++            NormalSweet: &unions.NormalSweet{
+                 Value: "value",
+             },
+             ID: "id",
+-            CreatedAt: fern.MustParseDateTime(
++            CreatedAt: unions.MustParseDateTime(
+                 "2024-01-15T09:30:00Z",
+             ),
+-            ArchivedAt: fern.Time(
+-                fern.MustParseDateTime(
++            ArchivedAt: unions.Time(
++                unions.MustParseDateTime(
+                     "2024-01-15T09:30:00Z",
+                 ),
+             ),
+diff --git a/dynamic-snippets/example3/snippet.go b/dynamic-snippets/example3/snippet.go
+index 976173a1ce3..787fea3df7a 100644
+--- a/dynamic-snippets/example3/snippet.go
++++ b/dynamic-snippets/example3/snippet.go
+@@ -3,8 +3,8 @@ package example
+ import (
+     context "context"
+ 
+-    client "github.com/unions/fern/client"
+-    option "github.com/unions/fern/option"
++    client "github.com/fern-api/unions-go/client"
++    option "github.com/fern-api/unions-go/option"
+ )
+ 
+ func do() {
+diff --git a/dynamic-snippets/example4/snippet.go b/dynamic-snippets/example4/snippet.go
+index 6a66e7ce2bb..1ba04c4569b 100644
+--- a/dynamic-snippets/example4/snippet.go
++++ b/dynamic-snippets/example4/snippet.go
+@@ -3,9 +3,9 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/unions/fern"
+-    client "github.com/unions/fern/client"
+-    option "github.com/unions/fern/option"
++    unions "github.com/fern-api/unions-go"
++    client "github.com/fern-api/unions-go/client"
++    option "github.com/fern-api/unions-go/option"
+ )
+ 
+ func do() {
+@@ -14,8 +14,8 @@ func do() {
+             "https://api.fern.com",
+         ),
+     )
+-    request := &fern.Shape{
+-        Circle: &fern.Circle{
++    request := &unions.Shape{
++        Circle: &unions.Circle{
+             Radius: 1.1,
+         },
+         ID: "id",
+diff --git a/error_codes.go b/error_codes.go
+index 77a15faa470..c3817f018b7 100644
+--- a/error_codes.go
++++ b/error_codes.go
+@@ -3,7 +3,7 @@
+ package unions
+ 
+ import (
+-	internal "github.com/unions/fern/internal"
++	internal "github.com/fern-api/unions-go/internal"
+ )
+ 
+ var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{}
+diff --git a/go.mod b/go.mod
+index 97674bd4694..6a6dbcbd453 100644
+--- a/go.mod
++++ b/go.mod
+@@ -1,4 +1,4 @@
+-module github.com/unions/fern
++module github.com/fern-api/unions-go
+ 
+ go 1.21
+ 
+diff --git a/internal/caller.go b/internal/caller.go
+index 6afe9c48ea4..078891e2670 100644
+--- a/internal/caller.go
++++ b/internal/caller.go
+@@ -12,7 +12,7 @@ import (
+ 	"reflect"
+ 	"strings"
+ 
+-	"github.com/unions/fern/core"
++	"github.com/fern-api/unions-go/core"
+ )
+ 
+ const (
+diff --git a/internal/caller_test.go b/internal/caller_test.go
+index a64028771d8..92201a205d8 100644
+--- a/internal/caller_test.go
++++ b/internal/caller_test.go
+@@ -14,9 +14,9 @@ import (
+ 	"strings"
+ 	"testing"
+ 
++	"github.com/fern-api/unions-go/core"
+ 	"github.com/stretchr/testify/assert"
+ 	"github.com/stretchr/testify/require"
+-	"github.com/unions/fern/core"
+ )
+ 
+ // InternalTestCase represents a single test case.
+diff --git a/internal/error_decoder.go b/internal/error_decoder.go
+index 56f0005200f..ccaf08411de 100644
+--- a/internal/error_decoder.go
++++ b/internal/error_decoder.go
+@@ -8,7 +8,7 @@ import (
+ 	"io"
+ 	"net/http"
+ 
+-	"github.com/unions/fern/core"
++	"github.com/fern-api/unions-go/core"
+ )
+ 
+ // ErrorCodes maps HTTP status codes to error constructors.
+diff --git a/internal/error_decoder_test.go b/internal/error_decoder_test.go
+index 944c87df2bc..0948f4c7c1f 100644
+--- a/internal/error_decoder_test.go
++++ b/internal/error_decoder_test.go
+@@ -6,8 +6,8 @@ import (
+ 	"net/http"
+ 	"testing"
+ 
++	"github.com/fern-api/unions-go/core"
+ 	"github.com/stretchr/testify/assert"
+-	"github.com/unions/fern/core"
+ )
+ 
+ func TestErrorDecoder(t *testing.T) {
+diff --git a/internal/retrier_test.go b/internal/retrier_test.go
+index 02e22a04e83..10372c84a7f 100644
+--- a/internal/retrier_test.go
++++ b/internal/retrier_test.go
+@@ -10,9 +10,9 @@ import (
+ 	"testing"
+ 	"time"
+ 
++	"github.com/fern-api/unions-go/core"
+ 	"github.com/stretchr/testify/assert"
+ 	"github.com/stretchr/testify/require"
+-	"github.com/unions/fern/core"
+ )
+ 
+ type RetryTestCase struct {
+diff --git a/option/request_option.go b/option/request_option.go
+index 4215e9e475e..2b9a6210891 100644
+--- a/option/request_option.go
++++ b/option/request_option.go
+@@ -3,7 +3,7 @@
+ package option
+ 
+ import (
+-	core "github.com/unions/fern/core"
++	core "github.com/fern-api/unions-go/core"
+ 	http "net/http"
+ 	url "net/url"
+ )
+diff --git a/reference.md b/reference.md
+index 0714c438bd5..a5d1a8c4709 100644
+--- a/reference.md
++++ b/reference.md
+@@ -1,6 +1,6 @@
+ # Reference
+ ## Bigunion
+-<details><summary><code>client.Bigunion.Get(ID) -> *fern.BigUnion</code></summary>
++<details><summary><code>client.Bigunion.Get(ID) -> *unions.BigUnion</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -57,16 +57,16 @@ client.Bigunion.Get(
+ <dd>
+ 
+ ```go
+-request := &fern.BigUnion{
+-        NormalSweet: &fern.NormalSweet{
++request := &unions.BigUnion{
++        NormalSweet: &unions.NormalSweet{
+             Value: "value",
+         },
+         ID: "id",
+-        CreatedAt: fern.MustParseDateTime(
++        CreatedAt: unions.MustParseDateTime(
+             "2024-01-15T09:30:00Z",
+         ),
+-        ArchivedAt: fern.Time(
+-            fern.MustParseDateTime(
++        ArchivedAt: unions.Time(
++            unions.MustParseDateTime(
+                 "2024-01-15T09:30:00Z",
+             ),
+         ),
+@@ -90,7 +90,7 @@ client.Bigunion.Update(
+ <dl>
+ <dd>
+ 
+-**request:** `*fern.BigUnion` 
++**request:** `*unions.BigUnion` 
+     
+ </dd>
+ </dl>
+@@ -115,31 +115,31 @@ client.Bigunion.Update(
+ <dd>
+ 
+ ```go
+-request := []*fern.BigUnion{
+-        &fern.BigUnion{
+-            NormalSweet: &fern.NormalSweet{
++request := []*unions.BigUnion{
++        &unions.BigUnion{
++            NormalSweet: &unions.NormalSweet{
+                 Value: "value",
+             },
+             ID: "id",
+-            CreatedAt: fern.MustParseDateTime(
++            CreatedAt: unions.MustParseDateTime(
+                 "2024-01-15T09:30:00Z",
+             ),
+-            ArchivedAt: fern.Time(
+-                fern.MustParseDateTime(
++            ArchivedAt: unions.Time(
++                unions.MustParseDateTime(
+                     "2024-01-15T09:30:00Z",
+                 ),
+             ),
+         },
+-        &fern.BigUnion{
+-            NormalSweet: &fern.NormalSweet{
++        &unions.BigUnion{
++            NormalSweet: &unions.NormalSweet{
+                 Value: "value",
+             },
+             ID: "id",
+-            CreatedAt: fern.MustParseDateTime(
++            CreatedAt: unions.MustParseDateTime(
+                 "2024-01-15T09:30:00Z",
+             ),
+-            ArchivedAt: fern.Time(
+-                fern.MustParseDateTime(
++            ArchivedAt: unions.Time(
++                unions.MustParseDateTime(
+                     "2024-01-15T09:30:00Z",
+                 ),
+             ),
+@@ -164,7 +164,7 @@ client.Bigunion.UpdateMany(
+ <dl>
+ <dd>
+ 
+-**request:** `[]*fern.BigUnion` 
++**request:** `[]*unions.BigUnion` 
+     
+ </dd>
+ </dl>
+@@ -177,7 +177,7 @@ client.Bigunion.UpdateMany(
+ </details>
+ 
+ ## Union
+-<details><summary><code>client.Union.Get(ID) -> *fern.Shape</code></summary>
++<details><summary><code>client.Union.Get(ID) -> *unions.Shape</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -234,8 +234,8 @@ client.Bigunion.Get(
+ <dd>
+ 
+ ```go
+-request := &fern.Shape{
+-        Circle: &fern.Circle{
++request := &unions.Shape{
++        Circle: &unions.Circle{
+             Radius: 1.1,
+         },
+         ID: "id",
+@@ -259,7 +259,7 @@ client.Union.Update(
+ <dl>
+ <dd>
+ 
+-**request:** `*fern.Shape` 
++**request:** `*unions.Shape` 
+     
+ </dd>
+ </dl>
+diff --git a/snippet.json b/snippet.json
+index a7092799c4a..7ff64778127 100644
+--- a/snippet.json
++++ b/snippet.json
+@@ -8,7 +8,7 @@
+             },
+             "snippet": {
+                 "type": "go",
+-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/unions/fern\"\n\tfernclient \"github.com/unions/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Bigunion.Update(\n\tcontext.TODO(),\n\t\u0026fern.BigUnion{\n\t\tNormalSweet: \u0026fern.NormalSweet{\n\t\t\tValue: \"value\",\n\t\t},\n\t},\n)\n"
++                "client": "import (\n\tcontext \"context\"\n\tunionsgo \"github.com/fern-api/unions-go\"\n\tunionsgoclient \"github.com/fern-api/unions-go/client\"\n)\n\nclient := unionsgoclient.NewClient()\nresponse, err := client.Bigunion.Update(\n\tcontext.TODO(),\n\t\u0026unionsgo.BigUnion{\n\t\tNormalSweet: \u0026unionsgo.NormalSweet{\n\t\t\tValue: \"value\",\n\t\t},\n\t},\n)\n"
+             }
+         },
+         {
+@@ -19,7 +19,7 @@
+             },
+             "snippet": {
+                 "type": "go",
+-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/unions/fern\"\n\tfernclient \"github.com/unions/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Union.Update(\n\tcontext.TODO(),\n\t\u0026fern.Shape{\n\t\tCircle: \u0026fern.Circle{\n\t\t\tRadius: 1.1,\n\t\t},\n\t},\n)\n"
++                "client": "import (\n\tcontext \"context\"\n\tunionsgo \"github.com/fern-api/unions-go\"\n\tunionsgoclient \"github.com/fern-api/unions-go/client\"\n)\n\nclient := unionsgoclient.NewClient()\nresponse, err := client.Union.Update(\n\tcontext.TODO(),\n\t\u0026unionsgo.Shape{\n\t\tCircle: \u0026unionsgo.Circle{\n\t\t\tRadius: 1.1,\n\t\t},\n\t},\n)\n"
+             }
+         },
+         {
+@@ -30,7 +30,7 @@
+             },
+             "snippet": {
+                 "type": "go",
+-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/unions/fern\"\n\tfernclient \"github.com/unions/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Bigunion.UpdateMany(\n\tcontext.TODO(),\n\t[]*fern.BigUnion{\n\t\t\u0026fern.BigUnion{\n\t\t\tNormalSweet: \u0026fern.NormalSweet{\n\t\t\t\tValue: \"value\",\n\t\t\t},\n\t\t},\n\t\t\u0026fern.BigUnion{\n\t\t\tNormalSweet: \u0026fern.NormalSweet{\n\t\t\t\tValue: \"value\",\n\t\t\t},\n\t\t},\n\t},\n)\n"
++                "client": "import (\n\tcontext \"context\"\n\tunionsgo \"github.com/fern-api/unions-go\"\n\tunionsgoclient \"github.com/fern-api/unions-go/client\"\n)\n\nclient := unionsgoclient.NewClient()\nresponse, err := client.Bigunion.UpdateMany(\n\tcontext.TODO(),\n\t[]*unionsgo.BigUnion{\n\t\t\u0026unionsgo.BigUnion{\n\t\t\tNormalSweet: \u0026unionsgo.NormalSweet{\n\t\t\t\tValue: \"value\",\n\t\t\t},\n\t\t},\n\t\t\u0026unionsgo.BigUnion{\n\t\t\tNormalSweet: \u0026unionsgo.NormalSweet{\n\t\t\t\tValue: \"value\",\n\t\t\t},\n\t\t},\n\t},\n)\n"
+             }
+         },
+         {
+@@ -41,7 +41,7 @@
+             },
+             "snippet": {
+                 "type": "go",
+-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/unions/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Bigunion.Get(\n\tcontext.TODO(),\n\t\"id\",\n)\n"
++                "client": "import (\n\tcontext \"context\"\n\tunionsgoclient \"github.com/fern-api/unions-go/client\"\n)\n\nclient := unionsgoclient.NewClient()\nresponse, err := client.Bigunion.Get(\n\tcontext.TODO(),\n\t\"id\",\n)\n"
+             }
+         },
+         {
+@@ -52,7 +52,7 @@
+             },
+             "snippet": {
+                 "type": "go",
+-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/unions/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Union.Get(\n\tcontext.TODO(),\n\t\"id\",\n)\n"
++                "client": "import (\n\tcontext \"context\"\n\tunionsgoclient \"github.com/fern-api/unions-go/client\"\n)\n\nclient := unionsgoclient.NewClient()\nresponse, err := client.Union.Get(\n\tcontext.TODO(),\n\t\"id\",\n)\n"
+             }
+         }
+     ]
+diff --git a/types.go b/types.go
+index 5d6863b26db..136c0a4bf7a 100644
+--- a/types.go
++++ b/types.go
+@@ -5,7 +5,7 @@ package unions
+ import (
+ 	json "encoding/json"
+ 	fmt "fmt"
+-	internal "github.com/unions/fern/internal"
++	internal "github.com/fern-api/unions-go/internal"
+ 	big "math/big"
+ 	time "time"
+ )
+diff --git a/union/client.go b/union/client.go
+index 82b4759ed95..f49b30c03c7 100644
+--- a/union/client.go
++++ b/union/client.go
+@@ -5,10 +5,10 @@ package union
+ import (
+ 	context "context"
+ 
+-	fern "github.com/unions/fern"
+-	core "github.com/unions/fern/core"
+-	internal "github.com/unions/fern/internal"
+-	option "github.com/unions/fern/option"
++	unions "github.com/fern-api/unions-go"
++	core "github.com/fern-api/unions-go/core"
++	internal "github.com/fern-api/unions-go/internal"
++	option "github.com/fern-api/unions-go/option"
+ )
+ 
+ type Client struct {
+@@ -37,7 +37,7 @@ func (c *Client) Get(
+ 	ctx context.Context,
+ 	id string,
+ 	opts ...option.RequestOption,
+-) (*fern.Shape, error) {
++) (*unions.Shape, error) {
+ 	response, err := c.WithRawResponse.Get(
+ 		ctx,
+ 		id,
+@@ -51,7 +51,7 @@ func (c *Client) Get(
+ 
+ func (c *Client) Update(
+ 	ctx context.Context,
+-	request *fern.Shape,
++	request *unions.Shape,
+ 	opts ...option.RequestOption,
+ ) (bool, error) {
+ 	response, err := c.WithRawResponse.Update(
+diff --git a/union/raw_client.go b/union/raw_client.go
+index 05b1680de79..e56a1c445c2 100644
+--- a/union/raw_client.go
++++ b/union/raw_client.go
+@@ -6,10 +6,10 @@ import (
+ 	context "context"
+ 	http "net/http"
+ 
+-	fern "github.com/unions/fern"
+-	core "github.com/unions/fern/core"
+-	internal "github.com/unions/fern/internal"
+-	option "github.com/unions/fern/option"
++	unions "github.com/fern-api/unions-go"
++	core "github.com/fern-api/unions-go/core"
++	internal "github.com/fern-api/unions-go/internal"
++	option "github.com/fern-api/unions-go/option"
+ )
+ 
+ type RawClient struct {
+@@ -35,7 +35,7 @@ func (r *RawClient) Get(
+ 	ctx context.Context,
+ 	id string,
+ 	opts ...option.RequestOption,
+-) (*core.Response[*fern.Shape], error) {
++) (*core.Response[*unions.Shape], error) {
+ 	options := core.NewRequestOptions(opts...)
+ 	baseURL := internal.ResolveBaseURL(
+ 		options.BaseURL,
+@@ -50,7 +50,7 @@ func (r *RawClient) Get(
+ 		r.options.ToHeader(),
+ 		options.ToHeader(),
+ 	)
+-	var response *fern.Shape
++	var response *unions.Shape
+ 	raw, err := r.caller.Call(
+ 		ctx,
+ 		&internal.CallParams{
+@@ -67,7 +67,7 @@ func (r *RawClient) Get(
+ 	if err != nil {
+ 		return nil, err
+ 	}
+-	return &core.Response[*fern.Shape]{
++	return &core.Response[*unions.Shape]{
+ 		StatusCode: raw.StatusCode,
+ 		Header:     raw.Header,
+ 		Body:       response,
+@@ -76,7 +76,7 @@ func (r *RawClient) Get(
+ 
+ func (r *RawClient) Update(
+ 	ctx context.Context,
+-	request *fern.Shape,
++	request *unions.Shape,
+ 	opts ...option.RequestOption,
+ ) (*core.Response[bool], error) {
+ 	options := core.NewRequestOptions(opts...)
+diff --git a/union.go b/union.go
+index b153348b02a..012a2ba5467 100644
+--- a/union.go
++++ b/union.go
+@@ -5,7 +5,7 @@ package unions
+ import (
+ 	json "encoding/json"
+ 	fmt "fmt"
+-	internal "github.com/unions/fern/internal"
++	internal "github.com/fern-api/unions-go/internal"
+ 	big "math/big"
+ )
+ 

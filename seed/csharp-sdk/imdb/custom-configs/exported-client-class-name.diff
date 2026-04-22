@@ -1,0 +1,260 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 5e4188a44b1..e3d79109f6b 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,7 +2,11 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-csharp-sdk",
+   "generatorVersion": "local",
+-  "generatorConfig": {},
++  "generatorConfig": {
++    "client-class-name": "BaseClient",
++    "exported-client-class-name": "CustomClient",
++    "maxRetries": 5
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "ci",
+diff --git a/README.md b/README.md
+index 708740bb39f..f061fb877cc 100644
+--- a/README.md
++++ b/README.md
+@@ -41,7 +41,7 @@ Instantiate and use the client with the following:
+ ```csharp
+ using SeedApi;
+ 
+-var client = new SeedApiClient("TOKEN");
++var client = new CustomClient("TOKEN");
+ await client.Imdb.CreateMovieAsync(new CreateMovieRequest { Title = "title", Rating = 1.1 });
+ ```
+ 
+@@ -55,7 +55,7 @@ using SeedApi;
+ 
+ try {
+     var response = await client.Imdb.CreateMovieAsync(...);
+-} catch (SeedApiApiException e) {
++} catch (CustomClientApiException e) {
+     System.Console.WriteLine(e.Body);
+     System.Console.WriteLine(e.StatusCode);
+ }
+diff --git a/Snippets/Example0.cs b/Snippets/Example0.cs
+index 2e92bf218e8..a8e9b00ea48 100644
+--- a/Snippets/Example0.cs
++++ b/Snippets/Example0.cs
+@@ -3,7 +3,7 @@ using SeedApi;
+ public partial class Examples
+ {
+     public async Task Example0() {
+-        var client = new SeedApiClient(
++        var client = new CustomClient(
+             token: "<token>",
+             clientOptions: new ClientOptions {
+                 BaseUrl = "https://api.fern.com"
+diff --git a/Snippets/Example1.cs b/Snippets/Example1.cs
+index 61937b64dc8..e17572528a2 100644
+--- a/Snippets/Example1.cs
++++ b/Snippets/Example1.cs
+@@ -3,7 +3,7 @@ using SeedApi;
+ public partial class Examples
+ {
+     public async Task Example1() {
+-        var client = new SeedApiClient(
++        var client = new CustomClient(
+             token: "<token>",
+             clientOptions: new ClientOptions {
+                 BaseUrl = "https://api.fern.com"
+diff --git a/Snippets/Example2.cs b/Snippets/Example2.cs
+index 72625d8b76c..61970cd3008 100644
+--- a/Snippets/Example2.cs
++++ b/Snippets/Example2.cs
+@@ -3,7 +3,7 @@ using SeedApi;
+ public partial class Examples
+ {
+     public async Task Example2() {
+-        var client = new SeedApiClient(
++        var client = new CustomClient(
+             token: "<token>",
+             clientOptions: new ClientOptions {
+                 BaseUrl = "https://api.fern.com"
+diff --git a/snippet.json b/snippet.json
+index 1d9ade8c965..b8fdbd45ba3 100644
+--- a/snippet.json
++++ b/snippet.json
+@@ -10,7 +10,7 @@
+             },
+             "snippet": {
+                 "type": "csharp",
+-                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Imdb.CreateMovieAsync(new CreateMovieRequest { Title = \"title\", Rating = 1.1 });\n"
++                "client": "using SeedApi;\n\nvar client = new CustomClient(\"TOKEN\");\nawait client.Imdb.CreateMovieAsync(new CreateMovieRequest { Title = \"title\", Rating = 1.1 });\n"
+             }
+         },
+         {
+@@ -22,7 +22,7 @@
+             },
+             "snippet": {
+                 "type": "csharp",
+-                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Imdb.GetMovieAsync(\"movieId\");\n"
++                "client": "using SeedApi;\n\nvar client = new CustomClient(\"TOKEN\");\nawait client.Imdb.GetMovieAsync(\"movieId\");\n"
+             }
+         }
+     ]
+diff --git a/src/SeedApi/SeedApiClient.cs b/src/SeedApi/BaseClient.cs
+similarity index 90%
+rename from src/SeedApi/SeedApiClient.cs
+rename to src/SeedApi/BaseClient.cs
+index 0f7549ea591..6fbc80e73e5 100644
+--- a/src/SeedApi/SeedApiClient.cs
++++ b/src/SeedApi/BaseClient.cs
+@@ -2,11 +2,11 @@ using SeedApi.Core;
+ 
+ namespace SeedApi;
+ 
+-public partial class SeedApiClient : ISeedApiClient
++public partial class BaseClient : IBaseClient
+ {
+     private readonly RawClient _client;
+ 
+-    public SeedApiClient(string token, ClientOptions? clientOptions = null)
++    public BaseClient(string token, ClientOptions? clientOptions = null)
+     {
+         clientOptions ??= new ClientOptions();
+         var platformHeaders = new Headers(
+diff --git a/src/SeedApi/Core/Public/ClientOptions.cs b/src/SeedApi/Core/Public/ClientOptions.cs
+index c073e763ca9..8c6c953a4ee 100644
+--- a/src/SeedApi/Core/Public/ClientOptions.cs
++++ b/src/SeedApi/Core/Public/ClientOptions.cs
+@@ -53,7 +53,7 @@ public partial class ClientOptions
+ #else
+         set;
+ #endif
+-    } = 2;
++    } = 5;
+ 
+     /// <summary>
+     /// The timeout for the request.
+diff --git a/src/SeedApi/Core/Public/SeedApiApiException.cs b/src/SeedApi/Core/Public/CustomClientApiException.cs
+similarity index 84%
+rename from src/SeedApi/Core/Public/SeedApiApiException.cs
+rename to src/SeedApi/Core/Public/CustomClientApiException.cs
+index 94afb43fa0a..38339e70c21 100644
+--- a/src/SeedApi/Core/Public/SeedApiApiException.cs
++++ b/src/SeedApi/Core/Public/CustomClientApiException.cs
+@@ -3,12 +3,12 @@ namespace SeedApi;
+ /// <summary>
+ /// This exception type will be thrown for any non-2XX API responses.
+ /// </summary>
+-public class SeedApiApiException(
++public class CustomClientApiException(
+     string message,
+     int statusCode,
+     object body,
+     Exception? innerException = null
+-) : SeedApiException(message, innerException)
++) : CustomClientException(message, innerException)
+ {
+     /// <summary>
+     /// The error code of the response that triggered the exception.
+diff --git a/src/SeedApi/Core/Public/SeedApiException.cs b/src/SeedApi/Core/Public/CustomClientException.cs
+similarity index 64%
+rename from src/SeedApi/Core/Public/SeedApiException.cs
+rename to src/SeedApi/Core/Public/CustomClientException.cs
+index 90e03e71e69..c4b6459af32 100644
+--- a/src/SeedApi/Core/Public/SeedApiException.cs
++++ b/src/SeedApi/Core/Public/CustomClientException.cs
+@@ -3,5 +3,5 @@ namespace SeedApi;
+ /// <summary>
+ /// Base exception class for all exceptions thrown by the SDK.
+ /// </summary>
+-public class SeedApiException(string message, Exception? innerException = null)
++public class CustomClientException(string message, Exception? innerException = null)
+     : Exception(message, innerException);
+diff --git a/src/SeedApi/ISeedApiClient.cs b/src/SeedApi/IBaseClient.cs
+similarity index 60%
+rename from src/SeedApi/ISeedApiClient.cs
+rename to src/SeedApi/IBaseClient.cs
+index 7fb225729a2..10dae087ae2 100644
+--- a/src/SeedApi/ISeedApiClient.cs
++++ b/src/SeedApi/IBaseClient.cs
+@@ -1,6 +1,6 @@
+ namespace SeedApi;
+ 
+-public partial interface ISeedApiClient
++public partial interface IBaseClient
+ {
+     public IImdbClient Imdb { get; }
+ }
+diff --git a/src/SeedApi/Imdb/Exceptions/MovieDoesNotExistError.cs b/src/SeedApi/Imdb/Exceptions/MovieDoesNotExistError.cs
+index 4565ee4c496..f2c2ea0b39a 100644
+--- a/src/SeedApi/Imdb/Exceptions/MovieDoesNotExistError.cs
++++ b/src/SeedApi/Imdb/Exceptions/MovieDoesNotExistError.cs
+@@ -5,7 +5,7 @@ namespace SeedApi;
+ /// </summary>
+ [Serializable]
+ public class MovieDoesNotExistError(string body)
+-    : SeedApiApiException("MovieDoesNotExistError", 404, body)
++    : CustomClientApiException("MovieDoesNotExistError", 404, body)
+ {
+     /// <summary>
+     /// The body of the response that triggered the exception.
+diff --git a/src/SeedApi/Imdb/ImdbClient.cs b/src/SeedApi/Imdb/ImdbClient.cs
+index 27c72e74dec..19fa01d8f85 100644
+--- a/src/SeedApi/Imdb/ImdbClient.cs
++++ b/src/SeedApi/Imdb/ImdbClient.cs
+@@ -58,7 +58,7 @@ public partial class ImdbClient : IImdbClient
+             }
+             catch (JsonException e)
+             {
+-                throw new SeedApiApiException(
++                throw new CustomClientApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+                     responseBody,
+@@ -70,7 +70,7 @@ public partial class ImdbClient : IImdbClient
+             var responseBody = await response
+                 .Raw.Content.ReadAsStringAsync(cancellationToken)
+                 .ConfigureAwait(false);
+-            throw new SeedApiApiException(
++            throw new CustomClientApiException(
+                 $"Error with status code {response.StatusCode}",
+                 response.StatusCode,
+                 responseBody
+@@ -126,7 +126,7 @@ public partial class ImdbClient : IImdbClient
+             }
+             catch (JsonException e)
+             {
+-                throw new SeedApiApiException(
++                throw new CustomClientApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+                     responseBody,
+@@ -152,7 +152,7 @@ public partial class ImdbClient : IImdbClient
+             {
+                 // unable to map error response, throwing generic error
+             }
+-            throw new SeedApiApiException(
++            throw new CustomClientApiException(
+                 $"Error with status code {response.StatusCode}",
+                 response.StatusCode,
+                 responseBody
+diff --git a/src/SeedApi.Test/Unit/MockServer/BaseMockServerTest.cs b/src/SeedApi.Test/Unit/MockServer/BaseMockServerTest.cs
+index a17a1af30c4..5fd40dc1a2d 100644
+--- a/src/SeedApi.Test/Unit/MockServer/BaseMockServerTest.cs
++++ b/src/SeedApi.Test/Unit/MockServer/BaseMockServerTest.cs
+@@ -10,7 +10,7 @@ public class BaseMockServerTest
+ {
+     protected WireMockServer Server { get; set; } = null!;
+ 
+-    protected SeedApiClient Client { get; set; } = null!;
++    protected BaseClient Client { get; set; } = null!;
+ 
+     protected RequestOptions RequestOptions { get; set; } = new();
+ 
+@@ -23,7 +23,7 @@ public class BaseMockServerTest
+         );
+ 
+         // Initialize the Client
+-        Client = new SeedApiClient(
++        Client = new BaseClient(
+             "TOKEN",
+             clientOptions: new ClientOptions { BaseUrl = Server.Urls[0], MaxRetries = 0 }
+         );

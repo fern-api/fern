@@ -1,0 +1,163 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 0eba66302dd..a0041e6228f 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,10 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-php-sdk",
+   "generatorVersion": "local",
++  "generatorConfig": {
++    "clientName": "FernClient",
++    "maxRetries": 5
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "ci",
+diff --git a/README.md b/README.md
+index f57c693ef3f..1dcae3b2cb7 100644
+--- a/README.md
++++ b/README.md
+@@ -36,10 +36,10 @@ Instantiate and use the client with the following:
+ 
+ namespace Example;
+ 
+-use Seed\SeedClient;
++use Seed\FernClient;
+ use Seed\Imdb\Types\CreateMovieRequest;
+ 
+-$client = new SeedClient(
++$client = new FernClient(
+     token: '<token>',
+ );
+ $client->imdb->createMovie(
+@@ -78,7 +78,7 @@ By default, if no client is provided, the SDK will use `php-http/discovery` to f
+ However, you can pass your own client that adheres to `ClientInterface`:
+ 
+ ```php
+-use Seed\SeedClient;
++use Seed\FernClient;
+ 
+ // Pass any PSR-18 compatible HTTP client implementation.
+ // For example, using Guzzle:
+@@ -86,7 +86,7 @@ $customClient = new \GuzzleHttp\Client([
+     'timeout' => 5.0,
+ ]);
+ 
+-$client = new SeedClient(options: [
++$client = new FernClient(options: [
+     'client' => $customClient
+ ]);
+ 
+@@ -94,7 +94,7 @@ $client = new SeedClient(options: [
+ // $customClient = (new \Symfony\Component\HttpClient\Psr18Client())
+ //     ->withOptions(['timeout' => 5.0]);
+ //
+-// $client = new SeedClient(options: [
++// $client = new FernClient(options: [
+ //     'client' => $customClient
+ // ]);
+ ```
+diff --git a/src/Core/Client/HttpClientBuilder.php b/src/Core/Client/HttpClientBuilder.php
+index 8ac806af032..c3d1694a716 100644
+--- a/src/Core/Client/HttpClientBuilder.php
++++ b/src/Core/Client/HttpClientBuilder.php
+@@ -17,7 +17,7 @@ class HttpClientBuilder
+      * @param int $maxRetries
+      * @return RetryDecoratingClient
+      */
+-    public static function build(?ClientInterface $client = null, int $maxRetries = 2): RetryDecoratingClient
++    public static function build(?ClientInterface $client = null, int $maxRetries = 5): RetryDecoratingClient
+     {
+         $client = self::baseClient($client);
+         return new RetryDecoratingClient($client, $maxRetries);
+diff --git a/src/Core/Client/RawClient.php b/src/Core/Client/RawClient.php
+index 14716c7d678..b3676d1a910 100644
+--- a/src/Core/Client/RawClient.php
++++ b/src/Core/Client/RawClient.php
+@@ -58,7 +58,7 @@ class RawClient
+     ) {
+         $this->client = HttpClientBuilder::build(
+             $this->options['client'] ?? null,
+-            $this->options['maxRetries'] ?? 2,
++            $this->options['maxRetries'] ?? 5,
+         );
+         $this->requestFactory = HttpClientBuilder::requestFactory();
+         $this->streamFactory = HttpClientBuilder::streamFactory();
+diff --git a/src/Core/Client/RetryDecoratingClient.php b/src/Core/Client/RetryDecoratingClient.php
+index b16170cf280..0e39edb1cfe 100644
+--- a/src/Core/Client/RetryDecoratingClient.php
++++ b/src/Core/Client/RetryDecoratingClient.php
+@@ -28,7 +28,7 @@ class RetryDecoratingClient implements ClientInterface
+      */
+     public function __construct(
+         ClientInterface $client,
+-        int $maxRetries = 2,
++        int $maxRetries = 5,
+         int $baseDelay = 1000,
+         ?callable $sleepFunction = null,
+     ) {
+diff --git a/src/SeedClient.php b/src/FernClient.php
+similarity index 98%
+rename from src/SeedClient.php
+rename to src/FernClient.php
+index 52d0ae46e86..d1820e1d9c7 100644
+--- a/src/SeedClient.php
++++ b/src/FernClient.php
+@@ -6,7 +6,7 @@ use Seed\Imdb\ImdbClient;
+ use Psr\Http\Client\ClientInterface;
+ use Seed\Core\Client\RawClient;
+ 
+-class SeedClient
++class FernClient
+ {
+     /**
+      * @var ImdbClient $imdb
+diff --git a/src/dynamic-snippets/example0/snippet.php b/src/dynamic-snippets/example0/snippet.php
+index 2411a957dec..b484cd79504 100644
+--- a/src/dynamic-snippets/example0/snippet.php
++++ b/src/dynamic-snippets/example0/snippet.php
+@@ -2,10 +2,10 @@
+ 
+ namespace Example;
+ 
+-use Seed\SeedClient;
++use Seed\FernClient;
+ use Seed\Imdb\Types\CreateMovieRequest;
+ 
+-$client = new SeedClient(
++$client = new FernClient(
+     token: '<token>',
+     options: [
+         'baseUrl' => 'https://api.fern.com',
+diff --git a/src/dynamic-snippets/example1/snippet.php b/src/dynamic-snippets/example1/snippet.php
+index 26871030699..754e7fa160f 100644
+--- a/src/dynamic-snippets/example1/snippet.php
++++ b/src/dynamic-snippets/example1/snippet.php
+@@ -2,9 +2,9 @@
+ 
+ namespace Example;
+ 
+-use Seed\SeedClient;
++use Seed\FernClient;
+ 
+-$client = new SeedClient(
++$client = new FernClient(
+     token: '<token>',
+     options: [
+         'baseUrl' => 'https://api.fern.com',
+diff --git a/src/dynamic-snippets/example2/snippet.php b/src/dynamic-snippets/example2/snippet.php
+index 26871030699..754e7fa160f 100644
+--- a/src/dynamic-snippets/example2/snippet.php
++++ b/src/dynamic-snippets/example2/snippet.php
+@@ -2,9 +2,9 @@
+ 
+ namespace Example;
+ 
+-use Seed\SeedClient;
++use Seed\FernClient;
+ 
+-$client = new SeedClient(
++$client = new FernClient(
+     token: '<token>',
+     options: [
+         'baseUrl' => 'https://api.fern.com',

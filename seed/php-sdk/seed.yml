@@ -4,7 +4,7 @@ image: fernapi/fern-php-sdk
 changelogLocation: ../../generators/php/sdk/versions.yml
 publish:
   preBuildCommands:
-    - pnpm turbo run dist:cli --filter @fern-api/php-sdk
+  - pnpm turbo run dist:cli --filter @fern-api/php-sdk
   docker:
     file: ./generators/php/sdk/Dockerfile
     image: fernapi/fern-php-sdk
@@ -13,7 +13,7 @@ publish:
     name: fern-php-sdk
     project: php-sdk
     sourceMaps:
-      - dir: generators/php/sdk/dist
+    - dir: generators/php/sdk/dist
 test:
   docker:
     image: fernapi/fern-php-sdk:latest
@@ -24,208 +24,184 @@ test:
   local:
     workingDirectory: generators/php
     buildCommand:
-      - pnpm turbo run dist:cli --filter @fern-api/php-sdk
+    - pnpm turbo run dist:cli --filter @fern-api/php-sdk
     runCommand: node --enable-source-maps sdk/dist/cli.cjs {CONFIG_PATH}
 language: php
 generatorType: SDK
 defaultOutputMode: github
 fixtures:
   basic-auth:
-    - outputFolder: wire-tests
-      customConfig:
-        enable-wire-tests: true
+  - outputFolder: wire-tests
+    customConfig:
+      enable-wire-tests: true
   basic-auth-pw-omitted:
-    - outputFolder: wire-tests
-      customConfig:
-        enable-wire-tests: true
+  - outputFolder: wire-tests
+    customConfig:
+      enable-wire-tests: true
   exhaustive:
-    - outputFolder: no-custom-config
-      customConfig: null
-    - outputFolder: wire-tests
-      customConfig:
-        enable-wire-tests: true
+  - outputFolder: wire-tests
+    customConfig:
+      enable-wire-tests: true
   examples:
-    - customConfig: null
-      outputFolder: no-custom-config
-    - customConfig:
-        customReadmeSections:
-          - title: "Override Section"
-            content: "Override Content"
-          - title: "Generator Invocation Custom Section"
-            content: "Generator Invocation Custom Content for {{ packageName }}"
-      readmeConfig:
-        apiName: "CustomName"
-        disabledSections:
-          - "contributing"
-        bannerLink: https://www.fernapi.com
-        apiReferenceLink: https://www.docs.fernapi.com
-        defaultEndpoint: POST /movie
-        customSections:
-          - title: "Base Readme Custom Section"
-            language: php
-            content: "Base Readme Custom Content for {{ packageName }}"
-          - title: "Override Section"
-            language: php
-            content: "Base Content"
-        features:
-          timeouts:
-            - GET /movie/{movieId}
-            - method: POST
-              path: /movie
-      outputFolder: readme-config
+  - customConfig:
+      customReadmeSections:
+      - title: "Override Section"
+        content: "Override Content"
+      - title: "Generator Invocation Custom Section"
+        content: "Generator Invocation Custom Content for {{ packageName }}"
+    readmeConfig:
+      apiName: "CustomName"
+      disabledSections:
+      - "contributing"
+      bannerLink: https://www.fernapi.com
+      apiReferenceLink: https://www.docs.fernapi.com
+      defaultEndpoint: POST /movie
+      customSections:
+      - title: "Base Readme Custom Section"
+        language: php
+        content: "Base Readme Custom Content for {{ packageName }}"
+      - title: "Override Section"
+        language: php
+        content: "Base Content"
+      features:
+        timeouts:
+        - GET /movie/{movieId}
+        - method: POST
+          path: /movie
+    outputFolder: readme-config
   extends:
-    - outputFolder: no-custom-config
-      customConfig: null
-    - outputFolder: private
-      customConfig:
-        propertyAccess: private
+  - outputFolder: private
+    customConfig:
+      propertyAccess: private
   imdb:
-    - outputFolder: no-custom-config
-      customConfig: null
-    - outputFolder: clientName
-      customConfig:
-        clientName: FernClient
-        maxRetries: 5
-    - outputFolder: packageName
-      customConfig:
-        packageName: fern-api/imdb-php
-    - outputFolder: namespace
-      customConfig:
-        namespace: Fern
-    - outputFolder: private
-      customConfig:
-        propertyAccess: private
-    - outputFolder: package-path
-      customConfig:
-        packagePath: Custom/Package/Path
-        namespace: Custom\Package\Path
-    - outputFolder: omit-fern-headers
-      customConfig:
-        omitFernHeaders: true
+  - outputFolder: clientName
+    customConfig:
+      clientName: FernClient
+      maxRetries: 5
+  - outputFolder: packageName
+    customConfig:
+      packageName: fern-api/imdb-php
+  - outputFolder: namespace
+    customConfig:
+      namespace: Fern
+  - outputFolder: private
+    customConfig:
+      propertyAccess: private
+  - outputFolder: package-path
+    customConfig:
+      packagePath: Custom/Package/Path
+      namespace: Custom\Package\Path
+  - outputFolder: omit-fern-headers
+    customConfig:
+      omitFernHeaders: true
   package-yml:
-    - outputFolder: no-custom-config
-      customConfig: null
-    - outputFolder: private
-      customConfig:
-        propertyAccess: private
+  - outputFolder: private
+    customConfig:
+      propertyAccess: private
   folders:
-    - outputFolder: no-custom-config
-      customConfig: null
-    - outputFolder: with-interfaces
-      customConfig:
-        generateClientInterfaces: true
+  - outputFolder: with-interfaces
+    customConfig:
+      generateClientInterfaces: true
   path-parameters:
-    - outputFolder: no-custom-config
-      customConfig: null
-    - outputFolder: inline-path-parameters
-      customConfig:
-        inlinePathParameters: true
-    - outputFolder: inline-path-parameters-private
-      customConfig:
-        inlinePathParameters: true
-        propertyAccess: private
+  - outputFolder: inline-path-parameters
+    customConfig:
+      inlinePathParameters: true
+  - outputFolder: inline-path-parameters-private
+    customConfig:
+      inlinePathParameters: true
+      propertyAccess: private
   request-parameters:
-    - outputFolder: no-custom-config
-      customConfig: null
-    - outputFolder: with-defaults
-      customConfig:
-        useDefaultRequestParameterValues: true
+  - outputFolder: with-defaults
+    customConfig:
+      useDefaultRequestParameterValues: true
   query-parameters:
-    - outputFolder: no-custom-config
-      customConfig: null
-    - outputFolder: private
-      customConfig:
-        propertyAccess: private
+  - outputFolder: private
+    customConfig:
+      propertyAccess: private
   pagination:
-    - outputFolder: no-custom-config
-      customConfig: null
-    - outputFolder: property-accessors
-      customConfig:
-        propertyAccess: private
-    - outputFolder: page-index-semantics
-      customConfig:
-        offsetSemantics: "page-index"
+  - outputFolder: property-accessors
+    customConfig:
+      propertyAccess: private
+  - outputFolder: page-index-semantics
+    customConfig:
+      offsetSemantics: "page-index"
   unions:
-    - outputFolder: no-custom-config
-      customConfig: null
-    - outputFolder: property-accessors
-      customConfig:
-        propertyAccess: private
+  - outputFolder: property-accessors
+    customConfig:
+      propertyAccess: private
   alias:
-    - outputFolder: no-custom-config
-      customConfig: null
-    - outputFolder: composer-json
-      customConfig:
-        composerJson:
-          name: fern/empty
-          version: 1.0.0
-          description: My Empty PHP Library
-          keywords:
-          - empty
-          license:
-          - "LGPL-2.1-only"
-          - "GPL-3.0-or-later"
-          scripts:
-            build:
-            - "@php -l src"
-            - "@php -l tests"
-            analyze: echo skip
-            hello: echo hello
+  - outputFolder: composer-json
+    customConfig:
+      composerJson:
+        name: fern/empty
+        version: 1.0.0
+        description: My Empty PHP Library
+        keywords:
+        - empty
+        license:
+        - "LGPL-2.1-only"
+        - "GPL-3.0-or-later"
+        scripts:
+          build:
+          - "@php -l src"
+          - "@php -l tests"
+          analyze: echo skip
+          hello: echo hello
 scripts:
-  - image: fernapi/php-seed
-    commands:
-      build:
+- image: fernapi/php-seed
+  commands:
+    build:
         # Retry composer install up to 3 times to handle intermittent network failures
-        - for i in 1 2 3; do composer install --no-interaction && break || { echo "Attempt $i failed, retrying..."; sleep 5; }; done
-        - composer build
-        - composer analyze
-      test:
-        - composer test
+    - for i in 1 2 3; do composer install --no-interaction && break || { echo "Attempt $i failed, retrying..."; sleep 5; }; done
+    - composer build
+    - composer analyze
+    test:
+    - composer test
 allowedFailures:
-  - exhaustive:no-custom-config
-  - exhaustive:wire-tests
-  - pagination-custom
-  - endpoint-security-auth
-  - inferred-auth-implicit
-  - inferred-auth-implicit-reference
+- exhaustive:baseline
+- exhaustive:wire-tests
+- pagination-custom
+- endpoint-security-auth
+- inferred-auth-implicit
+- inferred-auth-implicit-reference
   # Dynamic snippets need to add support for global headers included in the client constructor.
-  - header-auth-environment-variable
+- header-auth-environment-variable
   # TODO: Add support for bytes upload.
-  - bytes-upload
+- bytes-upload
   # Basic auth wire-tests are enabled in fixtures section.
   # Generating a union called "Exception" makes our references to Exception throws be escaped incorrectly
-  - examples:no-custom-config
-  - examples:readme-config
-  - trace
-  - circular-references
-  - circular-references-advanced
+- examples:baseline
+- examples:readme-config
+- trace
+- circular-references
+- circular-references-advanced
   # Add support for literals and confirm that string literal examples are being generated.
-  - literal
+- literal
   # Add support for OAuth.
-  - oauth-client-credentials
-  - oauth-client-credentials-custom
-  - oauth-client-credentials-default
-  - oauth-client-credentials-environment-variables
-  - oauth-client-credentials-nested-root
-  - oauth-client-credentials-reference
+- oauth-client-credentials
+- oauth-client-credentials-custom
+- oauth-client-credentials-default
+- oauth-client-credentials-environment-variables
+- oauth-client-credentials-nested-root
+- oauth-client-credentials-reference
   # Pagination example values come through as floats instead of integers (e.g. 1.1 instead of 1).
-  - pagination:no-custom-config
-  - pagination:property-accessors
+- pagination:baseline
+- pagination:property-accessors
   # Fix union dynamic snippets (i.e. BigUnion).
-  - unions:no-custom-config
-  - unions:property-accessors
+- unions:baseline
+- unions:property-accessors
   # Java-specific fixture for LocalDate support
-  - unions-with-local-date
+- unions-with-local-date
   # unknown
-  - file-upload
-  - http-head
-  - oauth-client-credentials-with-variables
-  - variables
+- file-upload
+- http-head
+- oauth-client-credentials-with-variables
+- variables
   # Java-specific fixture for staged builder ordering
-  - java-staged-builder-ordering
-  - server-sent-events-openapi
-  - any-auth
-  - circular-references
-  - file-upload
+- java-staged-builder-ordering
+- server-sent-events-openapi
+- any-auth
+- circular-references
+- file-upload
 
 

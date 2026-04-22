@@ -1,0 +1,4 @@
+diff --git a/openapi.yml b/imdb.yaml
+similarity index 100%
+rename from openapi.yml
+rename to imdb.yaml

@@ -1,0 +1,314 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 2ecd82f71ab..cfbbccf5b82 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-python-sdk",
+   "generatorVersion": "local",
++  "generatorConfig": {
++    "exclude_types_from_init_exports": true
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "ci",
+diff --git a/src/seed/__init__.py b/src/seed/__init__.py
+index a2b5f1cbf8d..bf7988d5e88 100644
+--- a/src/seed/__init__.py
++++ b/src/seed/__init__.py
+@@ -9,31 +9,11 @@ if typing.TYPE_CHECKING:
+     from . import service
+     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
+     from .client import AsyncSeedFileUpload, SeedFileUpload
+-    from .service import (
+-        Id,
+-        ModelType,
+-        MyAliasObject,
+-        MyCollectionAliasObject,
+-        MyInlineType,
+-        MyObject,
+-        MyObjectWithOptional,
+-        ObjectType,
+-        OpenEnumType,
+-    )
+     from .version import __version__
+ _dynamic_imports: typing.Dict[str, str] = {
+     "AsyncSeedFileUpload": ".client",
+     "DefaultAioHttpClient": "._default_clients",
+     "DefaultAsyncHttpxClient": "._default_clients",
+-    "Id": ".service",
+-    "ModelType": ".service",
+-    "MyAliasObject": ".service",
+-    "MyCollectionAliasObject": ".service",
+-    "MyInlineType": ".service",
+-    "MyObject": ".service",
+-    "MyObjectWithOptional": ".service",
+-    "ObjectType": ".service",
+-    "OpenEnumType": ".service",
+     "SeedFileUpload": ".client",
+     "__version__": ".version",
+     "service": ".service",
+@@ -65,15 +45,6 @@ __all__ = [
+     "AsyncSeedFileUpload",
+     "DefaultAioHttpClient",
+     "DefaultAsyncHttpxClient",
+-    "Id",
+-    "ModelType",
+-    "MyAliasObject",
+-    "MyCollectionAliasObject",
+-    "MyInlineType",
+-    "MyObject",
+-    "MyObjectWithOptional",
+-    "ObjectType",
+-    "OpenEnumType",
+     "SeedFileUpload",
+     "__version__",
+     "service",
+diff --git a/src/seed/core/__init__.py b/src/seed/core/__init__.py
+index 5bc159a110f..0fb6a372434 100644
+--- a/src/seed/core/__init__.py
++++ b/src/seed/core/__init__.py
+@@ -6,65 +6,8 @@ import typing
+ from importlib import import_module
+ 
+ if typing.TYPE_CHECKING:
+-    from .api_error import ApiError
+-    from .client_wrapper import AsyncClientWrapper, BaseClientWrapper, SyncClientWrapper
+-    from .datetime_utils import Rfc2822DateTime, parse_rfc2822_datetime, serialize_datetime
+-    from .file import File, convert_file_dict_to_httpx_tuples, with_content_type
+-    from .http_client import AsyncHttpClient, HttpClient
+-    from .http_response import AsyncHttpResponse, HttpResponse
+-    from .jsonable_encoder import encode_path_param, jsonable_encoder
+-    from .logging import ConsoleLogger, ILogger, LogConfig, LogLevel, Logger, create_logger
+-    from .parse_error import ParsingError
+-    from .pydantic_utilities import (
+-        IS_PYDANTIC_V2,
+-        UniversalBaseModel,
+-        UniversalRootModel,
+-        parse_obj_as,
+-        universal_field_validator,
+-        universal_root_validator,
+-        update_forward_refs,
+-    )
+-    from .query_encoder import encode_query
+-    from .remove_none_from_dict import remove_none_from_dict
+-    from .request_options import RequestOptions
+-    from .serialization import FieldMetadata, convert_and_respect_annotation_metadata
+-_dynamic_imports: typing.Dict[str, str] = {
+-    "ApiError": ".api_error",
+-    "AsyncClientWrapper": ".client_wrapper",
+-    "AsyncHttpClient": ".http_client",
+-    "AsyncHttpResponse": ".http_response",
+-    "BaseClientWrapper": ".client_wrapper",
+-    "ConsoleLogger": ".logging",
+-    "FieldMetadata": ".serialization",
+-    "File": ".file",
+-    "HttpClient": ".http_client",
+-    "HttpResponse": ".http_response",
+-    "ILogger": ".logging",
+-    "IS_PYDANTIC_V2": ".pydantic_utilities",
+-    "LogConfig": ".logging",
+-    "LogLevel": ".logging",
+-    "Logger": ".logging",
+-    "ParsingError": ".parse_error",
+-    "RequestOptions": ".request_options",
+-    "Rfc2822DateTime": ".datetime_utils",
+-    "SyncClientWrapper": ".client_wrapper",
+-    "UniversalBaseModel": ".pydantic_utilities",
+-    "UniversalRootModel": ".pydantic_utilities",
+-    "convert_and_respect_annotation_metadata": ".serialization",
+-    "convert_file_dict_to_httpx_tuples": ".file",
+-    "create_logger": ".logging",
+-    "encode_path_param": ".jsonable_encoder",
+-    "encode_query": ".query_encoder",
+-    "jsonable_encoder": ".jsonable_encoder",
+-    "parse_obj_as": ".pydantic_utilities",
+-    "parse_rfc2822_datetime": ".datetime_utils",
+-    "remove_none_from_dict": ".remove_none_from_dict",
+-    "serialize_datetime": ".datetime_utils",
+-    "universal_field_validator": ".pydantic_utilities",
+-    "universal_root_validator": ".pydantic_utilities",
+-    "update_forward_refs": ".pydantic_utilities",
+-    "with_content_type": ".file",
+-}
++    from .file import File, with_content_type
++_dynamic_imports: typing.Dict[str, str] = {"File": ".file", "with_content_type": ".file"}
+ 
+ 
+ def __getattr__(attr_name: str) -> typing.Any:
+@@ -88,40 +31,4 @@ def __dir__():
+     return sorted(lazy_attrs)
+ 
+ 
+-__all__ = [
+-    "ApiError",
+-    "AsyncClientWrapper",
+-    "AsyncHttpClient",
+-    "AsyncHttpResponse",
+-    "BaseClientWrapper",
+-    "ConsoleLogger",
+-    "FieldMetadata",
+-    "File",
+-    "HttpClient",
+-    "HttpResponse",
+-    "ILogger",
+-    "IS_PYDANTIC_V2",
+-    "LogConfig",
+-    "LogLevel",
+-    "Logger",
+-    "ParsingError",
+-    "RequestOptions",
+-    "Rfc2822DateTime",
+-    "SyncClientWrapper",
+-    "UniversalBaseModel",
+-    "UniversalRootModel",
+-    "convert_and_respect_annotation_metadata",
+-    "convert_file_dict_to_httpx_tuples",
+-    "create_logger",
+-    "encode_path_param",
+-    "encode_query",
+-    "jsonable_encoder",
+-    "parse_obj_as",
+-    "parse_rfc2822_datetime",
+-    "remove_none_from_dict",
+-    "serialize_datetime",
+-    "universal_field_validator",
+-    "universal_root_validator",
+-    "update_forward_refs",
+-    "with_content_type",
+-]
++__all__ = ["File", "with_content_type"]
+diff --git a/src/seed/service/__init__.py b/src/seed/service/__init__.py
+index 6aeab7a73be..5cde0202dcf 100644
+--- a/src/seed/service/__init__.py
++++ b/src/seed/service/__init__.py
+@@ -2,63 +2,3 @@
+ 
+ # isort: skip_file
+ 
+-import typing
+-from importlib import import_module
+-
+-if typing.TYPE_CHECKING:
+-    from .types import (
+-        Id,
+-        ModelType,
+-        MyAliasObject,
+-        MyCollectionAliasObject,
+-        MyInlineType,
+-        MyObject,
+-        MyObjectWithOptional,
+-        ObjectType,
+-        OpenEnumType,
+-    )
+-_dynamic_imports: typing.Dict[str, str] = {
+-    "Id": ".types",
+-    "ModelType": ".types",
+-    "MyAliasObject": ".types",
+-    "MyCollectionAliasObject": ".types",
+-    "MyInlineType": ".types",
+-    "MyObject": ".types",
+-    "MyObjectWithOptional": ".types",
+-    "ObjectType": ".types",
+-    "OpenEnumType": ".types",
+-}
+-
+-
+-def __getattr__(attr_name: str) -> typing.Any:
+-    module_name = _dynamic_imports.get(attr_name)
+-    if module_name is None:
+-        raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
+-    try:
+-        module = import_module(module_name, __package__)
+-        if module_name == f".{attr_name}":
+-            return module
+-        else:
+-            return getattr(module, attr_name)
+-    except ImportError as e:
+-        raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
+-    except AttributeError as e:
+-        raise AttributeError(f"Failed to get {attr_name} from {module_name}: {e}") from e
+-
+-
+-def __dir__():
+-    lazy_attrs = list(_dynamic_imports.keys())
+-    return sorted(lazy_attrs)
+-
+-
+-__all__ = [
+-    "Id",
+-    "ModelType",
+-    "MyAliasObject",
+-    "MyCollectionAliasObject",
+-    "MyInlineType",
+-    "MyObject",
+-    "MyObjectWithOptional",
+-    "ObjectType",
+-    "OpenEnumType",
+-]
+diff --git a/src/seed/service/types/__init__.py b/src/seed/service/types/__init__.py
+index b2088d08adf..5cde0202dcf 100644
+--- a/src/seed/service/types/__init__.py
++++ b/src/seed/service/types/__init__.py
+@@ -2,61 +2,3 @@
+ 
+ # isort: skip_file
+ 
+-import typing
+-from importlib import import_module
+-
+-if typing.TYPE_CHECKING:
+-    from .id import Id
+-    from .model_type import ModelType
+-    from .my_alias_object import MyAliasObject
+-    from .my_collection_alias_object import MyCollectionAliasObject
+-    from .my_inline_type import MyInlineType
+-    from .my_object import MyObject
+-    from .my_object_with_optional import MyObjectWithOptional
+-    from .object_type import ObjectType
+-    from .open_enum_type import OpenEnumType
+-_dynamic_imports: typing.Dict[str, str] = {
+-    "Id": ".id",
+-    "ModelType": ".model_type",
+-    "MyAliasObject": ".my_alias_object",
+-    "MyCollectionAliasObject": ".my_collection_alias_object",
+-    "MyInlineType": ".my_inline_type",
+-    "MyObject": ".my_object",
+-    "MyObjectWithOptional": ".my_object_with_optional",
+-    "ObjectType": ".object_type",
+-    "OpenEnumType": ".open_enum_type",
+-}
+-
+-
+-def __getattr__(attr_name: str) -> typing.Any:
+-    module_name = _dynamic_imports.get(attr_name)
+-    if module_name is None:
+-        raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
+-    try:
+-        module = import_module(module_name, __package__)
+-        if module_name == f".{attr_name}":
+-            return module
+-        else:
+-            return getattr(module, attr_name)
+-    except ImportError as e:
+-        raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
+-    except AttributeError as e:
+-        raise AttributeError(f"Failed to get {attr_name} from {module_name}: {e}") from e
+-
+-
+-def __dir__():
+-    lazy_attrs = list(_dynamic_imports.keys())
+-    return sorted(lazy_attrs)
+-
+-
+-__all__ = [
+-    "Id",
+-    "ModelType",
+-    "MyAliasObject",
+-    "MyCollectionAliasObject",
+-    "MyInlineType",
+-    "MyObject",
+-    "MyObjectWithOptional",
+-    "ObjectType",
+-    "OpenEnumType",
+-]

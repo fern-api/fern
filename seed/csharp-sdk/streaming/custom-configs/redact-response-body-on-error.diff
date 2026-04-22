@@ -1,0 +1,67 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 5e4188a44b1..76f322e3d8d 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,7 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-csharp-sdk",
+   "generatorVersion": "local",
+-  "generatorConfig": {},
++  "generatorConfig": {
++    "redact-response-body-on-error": true
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "ci",
+diff --git a/src/SeedStreaming/Core/Public/SeedStreamingApiException.cs b/src/SeedStreaming/Core/Public/SeedStreamingApiException.cs
+index da2d9b9b9a1..5d3cee55dd3 100644
+--- a/src/SeedStreaming/Core/Public/SeedStreamingApiException.cs
++++ b/src/SeedStreaming/Core/Public/SeedStreamingApiException.cs
+@@ -19,4 +19,22 @@ public class SeedStreamingApiException(
+     /// The body of the response that triggered the exception.
+     /// </summary>
+     public object Body => body;
++
++    public override string ToString()
++    {
++        var sb = new System.Text.StringBuilder();
++        sb.Append(GetType().FullName);
++        sb.Append($": {Message}");
++        sb.Append($" (Status Code: {StatusCode})");
++        if (InnerException != null)
++        {
++            sb.Append($"\n ---> {InnerException}");
++            sb.Append("\n --- End of inner exception stack trace ---");
++        }
++        if (StackTrace != null)
++        {
++            sb.Append($"\n{StackTrace}");
++        }
++        return sb.ToString();
++    }
+ }
+diff --git a/src/SeedStreaming/Dummy/DummyClient.cs b/src/SeedStreaming/Dummy/DummyClient.cs
+index 94571caed8b..622fab88dcc 100644
+--- a/src/SeedStreaming/Dummy/DummyClient.cs
++++ b/src/SeedStreaming/Dummy/DummyClient.cs
+@@ -61,7 +61,7 @@ public partial class DummyClient : IDummyClient
+                 throw new SeedStreamingApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+-                    responseBody,
++                    null,
+                     e
+                 );
+             }
+@@ -117,9 +117,9 @@ public partial class DummyClient : IDummyClient
+                 {
+                     result = JsonUtils.Deserialize<StreamResponse>(line);
+                 }
+-                catch (JsonException)
++                catch (JsonException e)
+                 {
+-                    throw new SeedStreamingException($"Unable to deserialize JSON response 'line'");
++                    throw new SeedStreamingException("Failed to deserialize streaming response", e);
+                 }
+             }
+             yield break;

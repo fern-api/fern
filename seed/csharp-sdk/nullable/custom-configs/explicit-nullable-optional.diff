@@ -1,0 +1,140 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 5e4188a44b1..0993de70afd 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,7 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-csharp-sdk",
+   "generatorVersion": "local",
+-  "generatorConfig": {},
++  "generatorConfig": {
++    "experimental-explicit-nullable-optional": true
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "ci",
+diff --git a/src/SeedNullable/Nullable/NullableClient.cs b/src/SeedNullable/Nullable/NullableClient.cs
+index 99069078387..8ad287bf80a 100644
+--- a/src/SeedNullable/Nullable/NullableClient.cs
++++ b/src/SeedNullable/Nullable/NullableClient.cs
+@@ -23,7 +23,7 @@ public partial class NullableClient : INullableClient
+             .Add("avatar", request.Avatar)
+             .Add("activated", request.Activated)
+             .Add("tags", request.Tags)
+-            .Add("extra", request.Extra)
++            .Add("extra", request.Extra.IsDefined ? request.Extra.Value : null)
+             .MergeAdditional(options?.AdditionalQueryParameters)
+             .Build();
+         var _headers = await new SeedNullable.Core.HeadersBuilder.Builder()
+diff --git a/src/SeedNullable/Nullable/Requests/CreateUserRequest.cs b/src/SeedNullable/Nullable/Requests/CreateUserRequest.cs
+index 162338fae3e..22e1dd5d063 100644
+--- a/src/SeedNullable/Nullable/Requests/CreateUserRequest.cs
++++ b/src/SeedNullable/Nullable/Requests/CreateUserRequest.cs
+@@ -9,14 +9,17 @@ public record CreateUserRequest
+     [JsonPropertyName("username")]
+     public required string Username { get; set; }
+ 
++    [Optional]
+     [JsonPropertyName("tags")]
+     public IEnumerable<string>? Tags { get; set; }
+ 
++    [Optional]
+     [JsonPropertyName("metadata")]
+     public Metadata? Metadata { get; set; }
+ 
++    [Nullable, Optional]
+     [JsonPropertyName("avatar")]
+-    public string? Avatar { get; set; }
++    public Optional<string?> Avatar { get; set; }
+ 
+     /// <inheritdoc />
+     public override string ToString()
+diff --git a/src/SeedNullable/Nullable/Requests/DeleteUserRequest.cs b/src/SeedNullable/Nullable/Requests/DeleteUserRequest.cs
+index f4cc5004ec3..c96b3b0865a 100644
+--- a/src/SeedNullable/Nullable/Requests/DeleteUserRequest.cs
++++ b/src/SeedNullable/Nullable/Requests/DeleteUserRequest.cs
+@@ -9,8 +9,9 @@ public record DeleteUserRequest
+     /// <summary>
+     /// The user to delete.
+     /// </summary>
++    [Nullable, Optional]
+     [JsonPropertyName("username")]
+-    public string? Username { get; set; }
++    public Optional<string?> Username { get; set; }
+ 
+     /// <inheritdoc />
+     public override string ToString()
+diff --git a/src/SeedNullable/Nullable/Requests/GetUsersRequest.cs b/src/SeedNullable/Nullable/Requests/GetUsersRequest.cs
+index 89d6de43c7d..89471fc83ea 100644
+--- a/src/SeedNullable/Nullable/Requests/GetUsersRequest.cs
++++ b/src/SeedNullable/Nullable/Requests/GetUsersRequest.cs
+@@ -19,7 +19,7 @@ public record GetUsersRequest
+     public IEnumerable<string?> Tags { get; set; } = new List<string?>();
+ 
+     [JsonIgnore]
+-    public bool? Extra { get; set; }
++    public Optional<bool?> Extra { get; set; }
+ 
+     /// <inheritdoc />
+     public override string ToString()
+diff --git a/src/SeedNullable/Nullable/Types/Metadata.cs b/src/SeedNullable/Nullable/Types/Metadata.cs
+index 00935d68724..cb8600e6d02 100644
+--- a/src/SeedNullable/Nullable/Types/Metadata.cs
++++ b/src/SeedNullable/Nullable/Types/Metadata.cs
+@@ -17,15 +17,18 @@ public record Metadata : IJsonOnDeserialized
+     [JsonPropertyName("updatedAt")]
+     public required DateTime UpdatedAt { get; set; }
+ 
++    [Nullable]
+     [JsonPropertyName("avatar")]
+     public string? Avatar { get; set; }
+ 
++    [Nullable, Optional]
+     [JsonPropertyName("activated")]
+-    public bool? Activated { get; set; }
++    public Optional<bool?> Activated { get; set; }
+ 
+     [JsonPropertyName("status")]
+     public required Status Status { get; set; }
+ 
++    [Optional]
+     [JsonPropertyName("values")]
+     public Dictionary<string, string?>? Values { get; set; }
+ 
+diff --git a/src/SeedNullable/Nullable/Types/User.cs b/src/SeedNullable/Nullable/Types/User.cs
+index 096bd9fafc5..48984c2160d 100644
+--- a/src/SeedNullable/Nullable/Types/User.cs
++++ b/src/SeedNullable/Nullable/Types/User.cs
+@@ -18,23 +18,28 @@ public record User : IJsonOnDeserialized
+     [JsonPropertyName("id")]
+     public required string Id { get; set; }
+ 
++    [Nullable]
+     [JsonPropertyName("tags")]
+     public IEnumerable<string>? Tags { get; set; }
+ 
++    [Nullable, Optional]
+     [JsonPropertyName("metadata")]
+-    public Metadata? Metadata { get; set; }
++    public Optional<Metadata?> Metadata { get; set; }
+ 
++    [Nullable]
+     [JsonPropertyName("email")]
+     public string? Email { get; set; }
+ 
+     [JsonPropertyName("favorite-number")]
+-    public required OneOf<int, float?, string?, double> FavoriteNumber { get; set; }
++    public required OneOf<int, float?, Optional<string?>, double> FavoriteNumber { get; set; }
+ 
++    [Nullable, Optional]
+     [JsonPropertyName("numbers")]
+-    public IEnumerable<int>? Numbers { get; set; }
++    public Optional<IEnumerable<int>?> Numbers { get; set; }
+ 
++    [Nullable, Optional]
+     [JsonPropertyName("strings")]
+-    public Dictionary<string, object?>? Strings { get; set; }
++    public Optional<Dictionary<string, object?>?> Strings { get; set; }
+ 
+     [JsonIgnore]
+     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();

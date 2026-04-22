@@ -1,0 +1,1579 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index e206b6bea6d..1dc7814c35a 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -3,7 +3,12 @@
+   "generatorName": "fernapi/fern-go-sdk",
+   "generatorVersion": "local",
+   "generatorConfig": {
+-    "enableWireTests": false
++    "enableWireTests": false,
++    "alwaysSendRequiredProperties": false,
++    "inlineFileProperties": false,
++    "inlinePathParameters": false,
++    "useReaderForBytesRequest": false,
++    "union": "v0"
+   },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+diff --git a/dynamic-snippets/example1/snippet.go b/dynamic-snippets/example1/snippet.go
+index bb9464be12e..282dfcd679f 100644
+--- a/dynamic-snippets/example1/snippet.go
++++ b/dynamic-snippets/example1/snippet.go
+@@ -3,7 +3,6 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/path-parameters/fern"
+     client "github.com/path-parameters/fern/client"
+     option "github.com/path-parameters/fern/option"
+ )
+@@ -14,13 +13,10 @@ func do() {
+             "https://api.fern.com",
+         ),
+     )
+-    request := &fern.GetOrganizationUserRequest{
+-        TenantID: "tenant_id",
+-        OrganizationID: "organization_id",
+-        UserID: "user_id",
+-    }
+     client.Organizations.GetOrganizationUser(
+         context.TODO(),
+-        request,
++        "tenant_id",
++        "organization_id",
++        "user_id",
+     )
+ }
+diff --git a/dynamic-snippets/example3/snippet.go b/dynamic-snippets/example3/snippet.go
+index b3c7bef42b7..fadd26d7d48 100644
+--- a/dynamic-snippets/example3/snippet.go
++++ b/dynamic-snippets/example3/snippet.go
+@@ -3,7 +3,6 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/path-parameters/fern"
+     client "github.com/path-parameters/fern/client"
+     option "github.com/path-parameters/fern/option"
+ )
+@@ -14,12 +13,9 @@ func do() {
+             "https://api.fern.com",
+         ),
+     )
+-    request := &fern.GetUsersRequest{
+-        TenantID: "tenant_id",
+-        UserID: "user_id",
+-    }
+     client.User.GetUser(
+         context.TODO(),
+-        request,
++        "tenant_id",
++        "user_id",
+     )
+ }
+diff --git a/dynamic-snippets/example5/snippet.go b/dynamic-snippets/example5/snippet.go
+index 223172e371a..24a3db13b7c 100644
+--- a/dynamic-snippets/example5/snippet.go
++++ b/dynamic-snippets/example5/snippet.go
+@@ -15,8 +15,6 @@ func do() {
+         ),
+     )
+     request := &fern.UpdateUserRequest{
+-        TenantID: "tenant_id",
+-        UserID: "user_id",
+         Body: &fern.User{
+             Name: "name",
+             Tags: []string{
+@@ -27,6 +25,8 @@ func do() {
+     }
+     client.User.UpdateUser(
+         context.TODO(),
++        "tenant_id",
++        "user_id",
+         request,
+     )
+ }
+diff --git a/dynamic-snippets/example6/snippet.go b/dynamic-snippets/example6/snippet.go
+index ba9dfb0cb10..8a03b2c6b21 100644
+--- a/dynamic-snippets/example6/snippet.go
++++ b/dynamic-snippets/example6/snippet.go
+@@ -15,14 +15,14 @@ func do() {
+         ),
+     )
+     request := &fern.SearchUsersRequest{
+-        TenantID: "tenant_id",
+-        UserID: "user_id",
+         Limit: fern.Int(
+             1,
+         ),
+     }
+     client.User.SearchUsers(
+         context.TODO(),
++        "tenant_id",
++        "user_id",
+         request,
+     )
+ }
+diff --git a/dynamic-snippets/example7/snippet.go b/dynamic-snippets/example7/snippet.go
+index 82147bf54bb..7f873fa45e7 100644
+--- a/dynamic-snippets/example7/snippet.go
++++ b/dynamic-snippets/example7/snippet.go
+@@ -3,7 +3,6 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/path-parameters/fern"
+     client "github.com/path-parameters/fern/client"
+     option "github.com/path-parameters/fern/option"
+ )
+@@ -14,13 +13,10 @@ func do() {
+             "https://api.fern.com",
+         ),
+     )
+-    request := &fern.GetUserMetadataRequest{
+-        TenantID: "tenant_id",
+-        UserID: "user_id",
+-        Version: 1,
+-    }
+     client.User.GetUserMetadata(
+         context.TODO(),
+-        request,
++        "tenant_id",
++        "user_id",
++        1,
+     )
+ }
+diff --git a/dynamic-snippets/example8/snippet.go b/dynamic-snippets/example8/snippet.go
+index 2b8e8a2b445..950d7c874ed 100644
+--- a/dynamic-snippets/example8/snippet.go
++++ b/dynamic-snippets/example8/snippet.go
+@@ -3,7 +3,6 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/path-parameters/fern"
+     client "github.com/path-parameters/fern/client"
+     option "github.com/path-parameters/fern/option"
+ )
+@@ -14,14 +13,11 @@ func do() {
+             "https://api.fern.com",
+         ),
+     )
+-    request := &fern.GetUserSpecificsRequest{
+-        TenantID: "tenant_id",
+-        UserID: "user_id",
+-        Version: 1,
+-        Thought: "thought",
+-    }
+     client.User.GetUserSpecifics(
+         context.TODO(),
+-        request,
++        "tenant_id",
++        "user_id",
++        1,
++        "thought",
+     )
+ }
+diff --git a/organizations/client.go b/organizations/client.go
+index 117b7e25110..e6a5f9b398d 100644
+--- a/organizations/client.go
++++ b/organizations/client.go
+@@ -53,12 +53,16 @@ func (c *Client) GetOrganization(
+ 
+ func (c *Client) GetOrganizationUser(
+ 	ctx context.Context,
+-	request *fern.GetOrganizationUserRequest,
++	tenantID string,
++	organizationID string,
++	userID string,
+ 	opts ...option.RequestOption,
+ ) (*fern.User, error) {
+ 	response, err := c.WithRawResponse.GetOrganizationUser(
+ 		ctx,
+-		request,
++		tenantID,
++		organizationID,
++		userID,
+ 		opts...,
+ 	)
+ 	if err != nil {
+diff --git a/organizations/raw_client.go b/organizations/raw_client.go
+index 00edb047821..bc93499c029 100644
+--- a/organizations/raw_client.go
++++ b/organizations/raw_client.go
+@@ -78,7 +78,9 @@ func (r *RawClient) GetOrganization(
+ 
+ func (r *RawClient) GetOrganizationUser(
+ 	ctx context.Context,
+-	request *fern.GetOrganizationUserRequest,
++	tenantID string,
++	organizationID string,
++	userID string,
+ 	opts ...option.RequestOption,
+ ) (*core.Response[*fern.User], error) {
+ 	options := core.NewRequestOptions(opts...)
+@@ -89,9 +91,9 @@ func (r *RawClient) GetOrganizationUser(
+ 	)
+ 	endpointURL := internal.EncodeURL(
+ 		baseURL+"/%v/organizations/%v/users/%v",
+-		request.TenantID,
+-		request.OrganizationID,
+-		request.UserID,
++		tenantID,
++		organizationID,
++		userID,
+ 	)
+ 	headers := internal.MergeHeaders(
+ 		r.options.ToHeader(),
+diff --git a/organizations.go b/organizations.go
+index dfd07ce47e6..338d4bc68e0 100644
+--- a/organizations.go
++++ b/organizations.go
+@@ -9,49 +9,6 @@ import (
+ 	big "math/big"
+ )
+ 
+-var (
+-	getOrganizationUserRequestFieldTenantID       = big.NewInt(1 << 0)
+-	getOrganizationUserRequestFieldOrganizationID = big.NewInt(1 << 1)
+-	getOrganizationUserRequestFieldUserID         = big.NewInt(1 << 2)
+-)
+-
+-type GetOrganizationUserRequest struct {
+-	TenantID       string `json:"-" url:"-"`
+-	OrganizationID string `json:"-" url:"-"`
+-	UserID         string `json:"-" url:"-"`
+-
+-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+-	explicitFields *big.Int `json:"-" url:"-"`
+-}
+-
+-func (g *GetOrganizationUserRequest) require(field *big.Int) {
+-	if g.explicitFields == nil {
+-		g.explicitFields = big.NewInt(0)
+-	}
+-	g.explicitFields.Or(g.explicitFields, field)
+-}
+-
+-// SetTenantID sets the TenantID field and marks it as non-optional;
+-// this prevents an empty or null value for this field from being omitted during serialization.
+-func (g *GetOrganizationUserRequest) SetTenantID(tenantID string) {
+-	g.TenantID = tenantID
+-	g.require(getOrganizationUserRequestFieldTenantID)
+-}
+-
+-// SetOrganizationID sets the OrganizationID field and marks it as non-optional;
+-// this prevents an empty or null value for this field from being omitted during serialization.
+-func (g *GetOrganizationUserRequest) SetOrganizationID(organizationID string) {
+-	g.OrganizationID = organizationID
+-	g.require(getOrganizationUserRequestFieldOrganizationID)
+-}
+-
+-// SetUserID sets the UserID field and marks it as non-optional;
+-// this prevents an empty or null value for this field from being omitted during serialization.
+-func (g *GetOrganizationUserRequest) SetUserID(userID string) {
+-	g.UserID = userID
+-	g.require(getOrganizationUserRequestFieldUserID)
+-}
+-
+ var (
+ 	searchOrganizationsRequestFieldLimit = big.NewInt(1 << 0)
+ )
+@@ -84,7 +41,7 @@ var (
+ 
+ type Organization struct {
+ 	Name string   `json:"name" url:"name"`
+-	Tags []string `json:"tags" url:"tags"`
++	Tags []string `json:"tags,omitempty" url:"tags,omitempty"`
+ 
+ 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+ 	explicitFields *big.Int `json:"-" url:"-"`
+diff --git a/organizations_test.go b/organizations_test.go
+index 80caf97c512..498705e8fb3 100644
+--- a/organizations_test.go
++++ b/organizations_test.go
+@@ -9,129 +9,6 @@ import (
+ 	testing "testing"
+ )
+ 
+-func TestSettersGetOrganizationUserRequest(t *testing.T) {
+-	t.Run("SetTenantID", func(t *testing.T) {
+-		obj := &GetOrganizationUserRequest{}
+-		var fernTestValueTenantID string
+-		obj.SetTenantID(fernTestValueTenantID)
+-		assert.Equal(t, fernTestValueTenantID, obj.TenantID)
+-		assert.NotNil(t, obj.explicitFields)
+-	})
+-
+-	t.Run("SetOrganizationID", func(t *testing.T) {
+-		obj := &GetOrganizationUserRequest{}
+-		var fernTestValueOrganizationID string
+-		obj.SetOrganizationID(fernTestValueOrganizationID)
+-		assert.Equal(t, fernTestValueOrganizationID, obj.OrganizationID)
+-		assert.NotNil(t, obj.explicitFields)
+-	})
+-
+-	t.Run("SetUserID", func(t *testing.T) {
+-		obj := &GetOrganizationUserRequest{}
+-		var fernTestValueUserID string
+-		obj.SetUserID(fernTestValueUserID)
+-		assert.Equal(t, fernTestValueUserID, obj.UserID)
+-		assert.NotNil(t, obj.explicitFields)
+-	})
+-
+-}
+-
+-func TestSettersMarkExplicitGetOrganizationUserRequest(t *testing.T) {
+-	t.Run("SetTenantID_MarksExplicit", func(t *testing.T) {
+-		t.Parallel()
+-		// Arrange
+-		obj := &GetOrganizationUserRequest{}
+-		var fernTestValueTenantID string
+-
+-		// Act
+-		obj.SetTenantID(fernTestValueTenantID)
+-
+-		// Assert - object with explicitly set field can be marshaled/unmarshaled
+-		bytes, err := json.Marshal(obj)
+-		require.NoError(t, err, "marshaling should succeed for test setup")
+-
+-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+-		if len(bytes) > 0 && bytes[0] == '{' {
+-			// JSON object - unmarshal into map
+-			var unmarshaled map[string]interface{}
+-			err = json.Unmarshal(bytes, &unmarshaled)
+-			require.NoError(t, err, "unmarshaling should succeed for test verification")
+-		} else {
+-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+-			var unmarshaled interface{}
+-			err = json.Unmarshal(bytes, &unmarshaled)
+-			require.NoError(t, err, "unmarshaling should succeed for test verification")
+-		}
+-
+-		// Note: This does not explicitly assert the presence of a specific JSON field
+-		// It verifies that setting a field via setter allows successful JSON round-trip
+-	})
+-
+-	t.Run("SetOrganizationID_MarksExplicit", func(t *testing.T) {
+-		t.Parallel()
+-		// Arrange
+-		obj := &GetOrganizationUserRequest{}
+-		var fernTestValueOrganizationID string
+-
+-		// Act
+-		obj.SetOrganizationID(fernTestValueOrganizationID)
+-
+-		// Assert - object with explicitly set field can be marshaled/unmarshaled
+-		bytes, err := json.Marshal(obj)
+-		require.NoError(t, err, "marshaling should succeed for test setup")
+-
+-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+-		if len(bytes) > 0 && bytes[0] == '{' {
+-			// JSON object - unmarshal into map
+-			var unmarshaled map[string]interface{}
+-			err = json.Unmarshal(bytes, &unmarshaled)
+-			require.NoError(t, err, "unmarshaling should succeed for test verification")
+-		} else {
+-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+-			var unmarshaled interface{}
+-			err = json.Unmarshal(bytes, &unmarshaled)
+-			require.NoError(t, err, "unmarshaling should succeed for test verification")
+-		}
+-
+-		// Note: This does not explicitly assert the presence of a specific JSON field
+-		// It verifies that setting a field via setter allows successful JSON round-trip
+-	})
+-
+-	t.Run("SetUserID_MarksExplicit", func(t *testing.T) {
+-		t.Parallel()
+-		// Arrange
+-		obj := &GetOrganizationUserRequest{}
+-		var fernTestValueUserID string
+-
+-		// Act
+-		obj.SetUserID(fernTestValueUserID)
+-
+-		// Assert - object with explicitly set field can be marshaled/unmarshaled
+-		bytes, err := json.Marshal(obj)
+-		require.NoError(t, err, "marshaling should succeed for test setup")
+-
+-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+-		if len(bytes) > 0 && bytes[0] == '{' {
+-			// JSON object - unmarshal into map
+-			var unmarshaled map[string]interface{}
+-			err = json.Unmarshal(bytes, &unmarshaled)
+-			require.NoError(t, err, "unmarshaling should succeed for test verification")
+-		} else {
+-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+-			var unmarshaled interface{}
+-			err = json.Unmarshal(bytes, &unmarshaled)
+-			require.NoError(t, err, "unmarshaling should succeed for test verification")
+-		}
+-
+-		// Note: This does not explicitly assert the presence of a specific JSON field
+-		// It verifies that setting a field via setter allows successful JSON round-trip
+-	})
+-
+-}
+-
+ func TestSettersSearchOrganizationsRequest(t *testing.T) {
+ 	t.Run("SetLimit", func(t *testing.T) {
+ 		obj := &SearchOrganizationsRequest{}
+diff --git a/reference.md b/reference.md
+index 2f6da269f98..31b3c3112c4 100644
+--- a/reference.md
++++ b/reference.md
+@@ -66,14 +66,11 @@ client.Organizations.GetOrganization(
+ <dd>
+ 
+ ```go
+-request := &fern.GetOrganizationUserRequest{
+-        TenantID: "tenant_id",
+-        OrganizationID: "organization_id",
+-        UserID: "user_id",
+-    }
+ client.Organizations.GetOrganizationUser(
+         context.TODO(),
+-        request,
++        "tenant_id",
++        "organization_id",
++        "user_id",
+     )
+ }
+ ```
+@@ -199,13 +196,10 @@ client.Organizations.SearchOrganizations(
+ <dd>
+ 
+ ```go
+-request := &fern.GetUsersRequest{
+-        TenantID: "tenant_id",
+-        UserID: "user_id",
+-    }
+ client.User.GetUser(
+         context.TODO(),
+-        request,
++        "tenant_id",
++        "user_id",
+     )
+ }
+ ```
+@@ -316,8 +310,6 @@ client.User.CreateUser(
+ 
+ ```go
+ request := &fern.UpdateUserRequest{
+-        TenantID: "tenant_id",
+-        UserID: "user_id",
+         Body: &fern.User{
+             Name: "name",
+             Tags: []string{
+@@ -328,6 +320,8 @@ request := &fern.UpdateUserRequest{
+     }
+ client.User.UpdateUser(
+         context.TODO(),
++        "tenant_id",
++        "user_id",
+         request,
+     )
+ }
+@@ -387,14 +381,14 @@ client.User.UpdateUser(
+ 
+ ```go
+ request := &fern.SearchUsersRequest{
+-        TenantID: "tenant_id",
+-        UserID: "user_id",
+         Limit: fern.Int(
+             1,
+         ),
+     }
+ client.User.SearchUsers(
+         context.TODO(),
++        "tenant_id",
++        "user_id",
+         request,
+     )
+ }
+@@ -467,14 +461,11 @@ Test endpoint with path parameter that has a text prefix (v{version})
+ <dd>
+ 
+ ```go
+-request := &fern.GetUserMetadataRequest{
+-        TenantID: "tenant_id",
+-        UserID: "user_id",
+-        Version: 1,
+-    }
+ client.User.GetUserMetadata(
+         context.TODO(),
+-        request,
++        "tenant_id",
++        "user_id",
++        1,
+     )
+ }
+ ```
+@@ -546,15 +537,12 @@ Test endpoint with path parameters listed in different order than found in path
+ <dd>
+ 
+ ```go
+-request := &fern.GetUserSpecificsRequest{
+-        TenantID: "tenant_id",
+-        UserID: "user_id",
+-        Version: 1,
+-        Thought: "thought",
+-    }
+ client.User.GetUserSpecifics(
+         context.TODO(),
+-        request,
++        "tenant_id",
++        "user_id",
++        1,
++        "thought",
+     )
+ }
+ ```
+diff --git a/snippet.json b/snippet.json
+index fae1c194dc9..69e7023c124 100644
+--- a/snippet.json
++++ b/snippet.json
+@@ -30,7 +30,7 @@
+             },
+             "snippet": {
+                 "type": "go",
+-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/path-parameters/fern\"\n\tfernclient \"github.com/path-parameters/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Organizations.GetOrganizationUser(\n\tcontext.TODO(),\n\t\u0026fern.GetOrganizationUserRequest{\n\t\tTenantID:       \"tenant_id\",\n\t\tOrganizationID: \"organization_id\",\n\t\tUserID:         \"user_id\",\n\t},\n)\n"
++                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/path-parameters/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Organizations.GetOrganizationUser(\n\tcontext.TODO(),\n\t\"tenant_id\",\n\t\"organization_id\",\n\t\"user_id\",\n)\n"
+             }
+         },
+         {
+@@ -52,7 +52,7 @@
+             },
+             "snippet": {
+                 "type": "go",
+-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/path-parameters/fern\"\n\tfernclient \"github.com/path-parameters/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.User.GetUser(\n\tcontext.TODO(),\n\t\u0026fern.GetUsersRequest{\n\t\tTenantID: \"tenant_id\",\n\t\tUserID:   \"user_id\",\n\t},\n)\n"
++                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/path-parameters/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.User.GetUser(\n\tcontext.TODO(),\n\t\"tenant_id\",\n\t\"user_id\",\n)\n"
+             }
+         },
+         {
+@@ -63,7 +63,7 @@
+             },
+             "snippet": {
+                 "type": "go",
+-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/path-parameters/fern\"\n\tfernclient \"github.com/path-parameters/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.User.UpdateUser(\n\tcontext.TODO(),\n\t\u0026fern.UpdateUserRequest{\n\t\tTenantID: \"tenant_id\",\n\t\tUserID:   \"user_id\",\n\t\tBody: \u0026fern.User{\n\t\t\tName: \"name\",\n\t\t\tTags: []string{\n\t\t\t\t\"tags\",\n\t\t\t\t\"tags\",\n\t\t\t},\n\t\t},\n\t},\n)\n"
++                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/path-parameters/fern\"\n\tfernclient \"github.com/path-parameters/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.User.UpdateUser(\n\tcontext.TODO(),\n\t\"tenant_id\",\n\t\"user_id\",\n\t\u0026fern.UpdateUserRequest{\n\t\tBody: \u0026fern.User{\n\t\t\tName: \"name\",\n\t\t\tTags: []string{\n\t\t\t\t\"tags\",\n\t\t\t\t\"tags\",\n\t\t\t},\n\t\t},\n\t},\n)\n"
+             }
+         },
+         {
+@@ -74,7 +74,7 @@
+             },
+             "snippet": {
+                 "type": "go",
+-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/path-parameters/fern\"\n\tfernclient \"github.com/path-parameters/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.User.GetUserMetadata(\n\tcontext.TODO(),\n\t\u0026fern.GetUserMetadataRequest{\n\t\tTenantID: \"tenant_id\",\n\t\tUserID:   \"user_id\",\n\t\tVersion:  1,\n\t},\n)\n"
++                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/path-parameters/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.User.GetUserMetadata(\n\tcontext.TODO(),\n\t\"tenant_id\",\n\t\"user_id\",\n\t1,\n)\n"
+             }
+         },
+         {
+@@ -85,7 +85,7 @@
+             },
+             "snippet": {
+                 "type": "go",
+-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/path-parameters/fern\"\n\tfernclient \"github.com/path-parameters/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.User.SearchUsers(\n\tcontext.TODO(),\n\t\u0026fern.SearchUsersRequest{\n\t\tTenantID: \"tenant_id\",\n\t\tUserID:   \"user_id\",\n\t\tLimit: fern.Int(\n\t\t\t1,\n\t\t),\n\t},\n)\n"
++                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/path-parameters/fern\"\n\tfernclient \"github.com/path-parameters/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.User.SearchUsers(\n\tcontext.TODO(),\n\t\"tenant_id\",\n\t\"user_id\",\n\t\u0026fern.SearchUsersRequest{\n\t\tLimit: fern.Int(\n\t\t\t1,\n\t\t),\n\t},\n)\n"
+             }
+         },
+         {
+@@ -96,7 +96,7 @@
+             },
+             "snippet": {
+                 "type": "go",
+-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/path-parameters/fern\"\n\tfernclient \"github.com/path-parameters/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.User.GetUserSpecifics(\n\tcontext.TODO(),\n\t\u0026fern.GetUserSpecificsRequest{\n\t\tTenantID: \"tenant_id\",\n\t\tUserID:   \"user_id\",\n\t\tVersion:  1,\n\t\tThought:  \"thought\",\n\t},\n)\n"
++                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/path-parameters/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.User.GetUserSpecifics(\n\tcontext.TODO(),\n\t\"tenant_id\",\n\t\"user_id\",\n\t1,\n\t\"thought\",\n)\n"
+             }
+         }
+     ]
+diff --git a/user/client.go b/user/client.go
+index 898f6f7b287..27185f59edd 100644
+--- a/user/client.go
++++ b/user/client.go
+@@ -35,12 +35,14 @@ func NewClient(options *core.RequestOptions) *Client {
+ 
+ func (c *Client) GetUser(
+ 	ctx context.Context,
+-	request *fern.GetUsersRequest,
++	tenantID string,
++	userID string,
+ 	opts ...option.RequestOption,
+ ) (*fern.User, error) {
+ 	response, err := c.WithRawResponse.GetUser(
+ 		ctx,
+-		request,
++		tenantID,
++		userID,
+ 		opts...,
+ 	)
+ 	if err != nil {
+@@ -69,11 +71,15 @@ func (c *Client) CreateUser(
+ 
+ func (c *Client) UpdateUser(
+ 	ctx context.Context,
++	tenantID string,
++	userID string,
+ 	request *fern.UpdateUserRequest,
+ 	opts ...option.RequestOption,
+ ) (*fern.User, error) {
+ 	response, err := c.WithRawResponse.UpdateUser(
+ 		ctx,
++		tenantID,
++		userID,
+ 		request,
+ 		opts...,
+ 	)
+@@ -85,11 +91,15 @@ func (c *Client) UpdateUser(
+ 
+ func (c *Client) SearchUsers(
+ 	ctx context.Context,
++	tenantID string,
++	userID string,
+ 	request *fern.SearchUsersRequest,
+ 	opts ...option.RequestOption,
+ ) ([]*fern.User, error) {
+ 	response, err := c.WithRawResponse.SearchUsers(
+ 		ctx,
++		tenantID,
++		userID,
+ 		request,
+ 		opts...,
+ 	)
+@@ -102,12 +112,16 @@ func (c *Client) SearchUsers(
+ // Test endpoint with path parameter that has a text prefix (v{version})
+ func (c *Client) GetUserMetadata(
+ 	ctx context.Context,
+-	request *fern.GetUserMetadataRequest,
++	tenantID string,
++	userID string,
++	version int,
+ 	opts ...option.RequestOption,
+ ) (*fern.User, error) {
+ 	response, err := c.WithRawResponse.GetUserMetadata(
+ 		ctx,
+-		request,
++		tenantID,
++		userID,
++		version,
+ 		opts...,
+ 	)
+ 	if err != nil {
+@@ -119,12 +133,18 @@ func (c *Client) GetUserMetadata(
+ // Test endpoint with path parameters listed in different order than found in path
+ func (c *Client) GetUserSpecifics(
+ 	ctx context.Context,
+-	request *fern.GetUserSpecificsRequest,
++	tenantID string,
++	userID string,
++	version int,
++	thought string,
+ 	opts ...option.RequestOption,
+ ) (*fern.User, error) {
+ 	response, err := c.WithRawResponse.GetUserSpecifics(
+ 		ctx,
+-		request,
++		tenantID,
++		userID,
++		version,
++		thought,
+ 		opts...,
+ 	)
+ 	if err != nil {
+diff --git a/user/raw_client.go b/user/raw_client.go
+index fcafc40f077..7c7f9606691 100644
+--- a/user/raw_client.go
++++ b/user/raw_client.go
+@@ -33,7 +33,8 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
+ 
+ func (r *RawClient) GetUser(
+ 	ctx context.Context,
+-	request *fern.GetUsersRequest,
++	tenantID string,
++	userID string,
+ 	opts ...option.RequestOption,
+ ) (*core.Response[*fern.User], error) {
+ 	options := core.NewRequestOptions(opts...)
+@@ -44,8 +45,8 @@ func (r *RawClient) GetUser(
+ 	)
+ 	endpointURL := internal.EncodeURL(
+ 		baseURL+"/%v/user/%v",
+-		request.TenantID,
+-		request.UserID,
++		tenantID,
++		userID,
+ 	)
+ 	headers := internal.MergeHeaders(
+ 		r.options.ToHeader(),
+@@ -122,6 +123,8 @@ func (r *RawClient) CreateUser(
+ 
+ func (r *RawClient) UpdateUser(
+ 	ctx context.Context,
++	tenantID string,
++	userID string,
+ 	request *fern.UpdateUserRequest,
+ 	opts ...option.RequestOption,
+ ) (*core.Response[*fern.User], error) {
+@@ -133,8 +136,8 @@ func (r *RawClient) UpdateUser(
+ 	)
+ 	endpointURL := internal.EncodeURL(
+ 		baseURL+"/%v/user/%v",
+-		request.TenantID,
+-		request.UserID,
++		tenantID,
++		userID,
+ 	)
+ 	headers := internal.MergeHeaders(
+ 		r.options.ToHeader(),
+@@ -167,6 +170,8 @@ func (r *RawClient) UpdateUser(
+ 
+ func (r *RawClient) SearchUsers(
+ 	ctx context.Context,
++	tenantID string,
++	userID string,
+ 	request *fern.SearchUsersRequest,
+ 	opts ...option.RequestOption,
+ ) (*core.Response[[]*fern.User], error) {
+@@ -178,8 +183,8 @@ func (r *RawClient) SearchUsers(
+ 	)
+ 	endpointURL := internal.EncodeURL(
+ 		baseURL+"/%v/user/%v/search",
+-		request.TenantID,
+-		request.UserID,
++		tenantID,
++		userID,
+ 	)
+ 	queryParams, err := internal.QueryValues(request)
+ 	if err != nil {
+@@ -218,7 +223,9 @@ func (r *RawClient) SearchUsers(
+ 
+ func (r *RawClient) GetUserMetadata(
+ 	ctx context.Context,
+-	request *fern.GetUserMetadataRequest,
++	tenantID string,
++	userID string,
++	version int,
+ 	opts ...option.RequestOption,
+ ) (*core.Response[*fern.User], error) {
+ 	options := core.NewRequestOptions(opts...)
+@@ -229,9 +236,9 @@ func (r *RawClient) GetUserMetadata(
+ 	)
+ 	endpointURL := internal.EncodeURL(
+ 		baseURL+"/%v/user/%v/metadata/v%v",
+-		request.TenantID,
+-		request.UserID,
+-		request.Version,
++		tenantID,
++		userID,
++		version,
+ 	)
+ 	headers := internal.MergeHeaders(
+ 		r.options.ToHeader(),
+@@ -263,7 +270,10 @@ func (r *RawClient) GetUserMetadata(
+ 
+ func (r *RawClient) GetUserSpecifics(
+ 	ctx context.Context,
+-	request *fern.GetUserSpecificsRequest,
++	tenantID string,
++	userID string,
++	version int,
++	thought string,
+ 	opts ...option.RequestOption,
+ ) (*core.Response[*fern.User], error) {
+ 	options := core.NewRequestOptions(opts...)
+@@ -274,10 +284,10 @@ func (r *RawClient) GetUserSpecifics(
+ 	)
+ 	endpointURL := internal.EncodeURL(
+ 		baseURL+"/%v/user/%v/specifics/%v/%v",
+-		request.TenantID,
+-		request.UserID,
+-		request.Version,
+-		request.Thought,
++		tenantID,
++		userID,
++		version,
++		thought,
+ 	)
+ 	headers := internal.MergeHeaders(
+ 		r.options.ToHeader(),
+diff --git a/user.go b/user.go
+index bd62caa198c..9564492d66b 100644
+--- a/user.go
++++ b/user.go
+@@ -10,144 +10,11 @@ import (
+ )
+ 
+ var (
+-	getUsersRequestFieldTenantID = big.NewInt(1 << 0)
+-	getUsersRequestFieldUserID   = big.NewInt(1 << 1)
+-)
+-
+-type GetUsersRequest struct {
+-	TenantID string `json:"-" url:"-"`
+-	UserID   string `json:"-" url:"-"`
+-
+-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+-	explicitFields *big.Int `json:"-" url:"-"`
+-}
+-
+-func (g *GetUsersRequest) require(field *big.Int) {
+-	if g.explicitFields == nil {
+-		g.explicitFields = big.NewInt(0)
+-	}
+-	g.explicitFields.Or(g.explicitFields, field)
+-}
+-
+-// SetTenantID sets the TenantID field and marks it as non-optional;
+-// this prevents an empty or null value for this field from being omitted during serialization.
+-func (g *GetUsersRequest) SetTenantID(tenantID string) {
+-	g.TenantID = tenantID
+-	g.require(getUsersRequestFieldTenantID)
+-}
+-
+-// SetUserID sets the UserID field and marks it as non-optional;
+-// this prevents an empty or null value for this field from being omitted during serialization.
+-func (g *GetUsersRequest) SetUserID(userID string) {
+-	g.UserID = userID
+-	g.require(getUsersRequestFieldUserID)
+-}
+-
+-var (
+-	getUserMetadataRequestFieldTenantID = big.NewInt(1 << 0)
+-	getUserMetadataRequestFieldUserID   = big.NewInt(1 << 1)
+-	getUserMetadataRequestFieldVersion  = big.NewInt(1 << 2)
+-)
+-
+-type GetUserMetadataRequest struct {
+-	TenantID string `json:"-" url:"-"`
+-	UserID   string `json:"-" url:"-"`
+-	Version  int    `json:"-" url:"-"`
+-
+-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+-	explicitFields *big.Int `json:"-" url:"-"`
+-}
+-
+-func (g *GetUserMetadataRequest) require(field *big.Int) {
+-	if g.explicitFields == nil {
+-		g.explicitFields = big.NewInt(0)
+-	}
+-	g.explicitFields.Or(g.explicitFields, field)
+-}
+-
+-// SetTenantID sets the TenantID field and marks it as non-optional;
+-// this prevents an empty or null value for this field from being omitted during serialization.
+-func (g *GetUserMetadataRequest) SetTenantID(tenantID string) {
+-	g.TenantID = tenantID
+-	g.require(getUserMetadataRequestFieldTenantID)
+-}
+-
+-// SetUserID sets the UserID field and marks it as non-optional;
+-// this prevents an empty or null value for this field from being omitted during serialization.
+-func (g *GetUserMetadataRequest) SetUserID(userID string) {
+-	g.UserID = userID
+-	g.require(getUserMetadataRequestFieldUserID)
+-}
+-
+-// SetVersion sets the Version field and marks it as non-optional;
+-// this prevents an empty or null value for this field from being omitted during serialization.
+-func (g *GetUserMetadataRequest) SetVersion(version int) {
+-	g.Version = version
+-	g.require(getUserMetadataRequestFieldVersion)
+-}
+-
+-var (
+-	getUserSpecificsRequestFieldTenantID = big.NewInt(1 << 0)
+-	getUserSpecificsRequestFieldUserID   = big.NewInt(1 << 1)
+-	getUserSpecificsRequestFieldVersion  = big.NewInt(1 << 2)
+-	getUserSpecificsRequestFieldThought  = big.NewInt(1 << 3)
+-)
+-
+-type GetUserSpecificsRequest struct {
+-	TenantID string `json:"-" url:"-"`
+-	UserID   string `json:"-" url:"-"`
+-	Version  int    `json:"-" url:"-"`
+-	Thought  string `json:"-" url:"-"`
+-
+-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+-	explicitFields *big.Int `json:"-" url:"-"`
+-}
+-
+-func (g *GetUserSpecificsRequest) require(field *big.Int) {
+-	if g.explicitFields == nil {
+-		g.explicitFields = big.NewInt(0)
+-	}
+-	g.explicitFields.Or(g.explicitFields, field)
+-}
+-
+-// SetTenantID sets the TenantID field and marks it as non-optional;
+-// this prevents an empty or null value for this field from being omitted during serialization.
+-func (g *GetUserSpecificsRequest) SetTenantID(tenantID string) {
+-	g.TenantID = tenantID
+-	g.require(getUserSpecificsRequestFieldTenantID)
+-}
+-
+-// SetUserID sets the UserID field and marks it as non-optional;
+-// this prevents an empty or null value for this field from being omitted during serialization.
+-func (g *GetUserSpecificsRequest) SetUserID(userID string) {
+-	g.UserID = userID
+-	g.require(getUserSpecificsRequestFieldUserID)
+-}
+-
+-// SetVersion sets the Version field and marks it as non-optional;
+-// this prevents an empty or null value for this field from being omitted during serialization.
+-func (g *GetUserSpecificsRequest) SetVersion(version int) {
+-	g.Version = version
+-	g.require(getUserSpecificsRequestFieldVersion)
+-}
+-
+-// SetThought sets the Thought field and marks it as non-optional;
+-// this prevents an empty or null value for this field from being omitted during serialization.
+-func (g *GetUserSpecificsRequest) SetThought(thought string) {
+-	g.Thought = thought
+-	g.require(getUserSpecificsRequestFieldThought)
+-}
+-
+-var (
+-	searchUsersRequestFieldTenantID = big.NewInt(1 << 0)
+-	searchUsersRequestFieldUserID   = big.NewInt(1 << 1)
+-	searchUsersRequestFieldLimit    = big.NewInt(1 << 2)
++	searchUsersRequestFieldLimit = big.NewInt(1 << 0)
+ )
+ 
+ type SearchUsersRequest struct {
+-	TenantID string `json:"-" url:"-"`
+-	UserID   string `json:"-" url:"-"`
+-	Limit    *int   `json:"-" url:"limit,omitempty"`
++	Limit *int `json:"-" url:"limit,omitempty"`
+ 
+ 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+ 	explicitFields *big.Int `json:"-" url:"-"`
+@@ -160,20 +27,6 @@ func (s *SearchUsersRequest) require(field *big.Int) {
+ 	s.explicitFields.Or(s.explicitFields, field)
+ }
+ 
+-// SetTenantID sets the TenantID field and marks it as non-optional;
+-// this prevents an empty or null value for this field from being omitted during serialization.
+-func (s *SearchUsersRequest) SetTenantID(tenantID string) {
+-	s.TenantID = tenantID
+-	s.require(searchUsersRequestFieldTenantID)
+-}
+-
+-// SetUserID sets the UserID field and marks it as non-optional;
+-// this prevents an empty or null value for this field from being omitted during serialization.
+-func (s *SearchUsersRequest) SetUserID(userID string) {
+-	s.UserID = userID
+-	s.require(searchUsersRequestFieldUserID)
+-}
+-
+ // SetLimit sets the Limit field and marks it as non-optional;
+ // this prevents an empty or null value for this field from being omitted during serialization.
+ func (s *SearchUsersRequest) SetLimit(limit *int) {
+@@ -188,7 +41,7 @@ var (
+ 
+ type User struct {
+ 	Name string   `json:"name" url:"name"`
+-	Tags []string `json:"tags" url:"tags"`
++	Tags []string `json:"tags,omitempty" url:"tags,omitempty"`
+ 
+ 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+ 	explicitFields *big.Int `json:"-" url:"-"`
+@@ -281,15 +134,8 @@ func (u *User) String() string {
+ 	return fmt.Sprintf("%#v", u)
+ }
+ 
+-var (
+-	updateUserRequestFieldTenantID = big.NewInt(1 << 0)
+-	updateUserRequestFieldUserID   = big.NewInt(1 << 1)
+-)
+-
+ type UpdateUserRequest struct {
+-	TenantID string `json:"-" url:"-"`
+-	UserID   string `json:"-" url:"-"`
+-	Body     *User  `json:"-" url:"-"`
++	Body *User `json:"-" url:"-"`
+ 
+ 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+ 	explicitFields *big.Int `json:"-" url:"-"`
+@@ -302,20 +148,6 @@ func (u *UpdateUserRequest) require(field *big.Int) {
+ 	u.explicitFields.Or(u.explicitFields, field)
+ }
+ 
+-// SetTenantID sets the TenantID field and marks it as non-optional;
+-// this prevents an empty or null value for this field from being omitted during serialization.
+-func (u *UpdateUserRequest) SetTenantID(tenantID string) {
+-	u.TenantID = tenantID
+-	u.require(updateUserRequestFieldTenantID)
+-}
+-
+-// SetUserID sets the UserID field and marks it as non-optional;
+-// this prevents an empty or null value for this field from being omitted during serialization.
+-func (u *UpdateUserRequest) SetUserID(userID string) {
+-	u.UserID = userID
+-	u.require(updateUserRequestFieldUserID)
+-}
+-
+ func (u *UpdateUserRequest) UnmarshalJSON(data []byte) error {
+ 	body := new(User)
+ 	if err := json.Unmarshal(data, &body); err != nil {
+diff --git a/user_test.go b/user_test.go
+index fa50d2e3cae..032a73f032f 100644
+--- a/user_test.go
++++ b/user_test.go
+@@ -9,392 +9,7 @@ import (
+ 	testing "testing"
+ )
+ 
+-func TestSettersGetUsersRequest(t *testing.T) {
+-	t.Run("SetTenantID", func(t *testing.T) {
+-		obj := &GetUsersRequest{}
+-		var fernTestValueTenantID string
+-		obj.SetTenantID(fernTestValueTenantID)
+-		assert.Equal(t, fernTestValueTenantID, obj.TenantID)
+-		assert.NotNil(t, obj.explicitFields)
+-	})
+-
+-	t.Run("SetUserID", func(t *testing.T) {
+-		obj := &GetUsersRequest{}
+-		var fernTestValueUserID string
+-		obj.SetUserID(fernTestValueUserID)
+-		assert.Equal(t, fernTestValueUserID, obj.UserID)
+-		assert.NotNil(t, obj.explicitFields)
+-	})
+-
+-}
+-
+-func TestSettersMarkExplicitGetUsersRequest(t *testing.T) {
+-	t.Run("SetTenantID_MarksExplicit", func(t *testing.T) {
+-		t.Parallel()
+-		// Arrange
+-		obj := &GetUsersRequest{}
+-		var fernTestValueTenantID string
+-
+-		// Act
+-		obj.SetTenantID(fernTestValueTenantID)
+-
+-		// Assert - object with explicitly set field can be marshaled/unmarshaled
+-		bytes, err := json.Marshal(obj)
+-		require.NoError(t, err, "marshaling should succeed for test setup")
+-
+-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+-		if len(bytes) > 0 && bytes[0] == '{' {
+-			// JSON object - unmarshal into map
+-			var unmarshaled map[string]interface{}
+-			err = json.Unmarshal(bytes, &unmarshaled)
+-			require.NoError(t, err, "unmarshaling should succeed for test verification")
+-		} else {
+-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+-			var unmarshaled interface{}
+-			err = json.Unmarshal(bytes, &unmarshaled)
+-			require.NoError(t, err, "unmarshaling should succeed for test verification")
+-		}
+-
+-		// Note: This does not explicitly assert the presence of a specific JSON field
+-		// It verifies that setting a field via setter allows successful JSON round-trip
+-	})
+-
+-	t.Run("SetUserID_MarksExplicit", func(t *testing.T) {
+-		t.Parallel()
+-		// Arrange
+-		obj := &GetUsersRequest{}
+-		var fernTestValueUserID string
+-
+-		// Act
+-		obj.SetUserID(fernTestValueUserID)
+-
+-		// Assert - object with explicitly set field can be marshaled/unmarshaled
+-		bytes, err := json.Marshal(obj)
+-		require.NoError(t, err, "marshaling should succeed for test setup")
+-
+-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+-		if len(bytes) > 0 && bytes[0] == '{' {
+-			// JSON object - unmarshal into map
+-			var unmarshaled map[string]interface{}
+-			err = json.Unmarshal(bytes, &unmarshaled)
+-			require.NoError(t, err, "unmarshaling should succeed for test verification")
+-		} else {
+-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+-			var unmarshaled interface{}
+-			err = json.Unmarshal(bytes, &unmarshaled)
+-			require.NoError(t, err, "unmarshaling should succeed for test verification")
+-		}
+-
+-		// Note: This does not explicitly assert the presence of a specific JSON field
+-		// It verifies that setting a field via setter allows successful JSON round-trip
+-	})
+-
+-}
+-
+-func TestSettersGetUserMetadataRequest(t *testing.T) {
+-	t.Run("SetTenantID", func(t *testing.T) {
+-		obj := &GetUserMetadataRequest{}
+-		var fernTestValueTenantID string
+-		obj.SetTenantID(fernTestValueTenantID)
+-		assert.Equal(t, fernTestValueTenantID, obj.TenantID)
+-		assert.NotNil(t, obj.explicitFields)
+-	})
+-
+-	t.Run("SetUserID", func(t *testing.T) {
+-		obj := &GetUserMetadataRequest{}
+-		var fernTestValueUserID string
+-		obj.SetUserID(fernTestValueUserID)
+-		assert.Equal(t, fernTestValueUserID, obj.UserID)
+-		assert.NotNil(t, obj.explicitFields)
+-	})
+-
+-	t.Run("SetVersion", func(t *testing.T) {
+-		obj := &GetUserMetadataRequest{}
+-		var fernTestValueVersion int
+-		obj.SetVersion(fernTestValueVersion)
+-		assert.Equal(t, fernTestValueVersion, obj.Version)
+-		assert.NotNil(t, obj.explicitFields)
+-	})
+-
+-}
+-
+-func TestSettersMarkExplicitGetUserMetadataRequest(t *testing.T) {
+-	t.Run("SetTenantID_MarksExplicit", func(t *testing.T) {
+-		t.Parallel()
+-		// Arrange
+-		obj := &GetUserMetadataRequest{}
+-		var fernTestValueTenantID string
+-
+-		// Act
+-		obj.SetTenantID(fernTestValueTenantID)
+-
+-		// Assert - object with explicitly set field can be marshaled/unmarshaled
+-		bytes, err := json.Marshal(obj)
+-		require.NoError(t, err, "marshaling should succeed for test setup")
+-
+-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+-		if len(bytes) > 0 && bytes[0] == '{' {
+-			// JSON object - unmarshal into map
+-			var unmarshaled map[string]interface{}
+-			err = json.Unmarshal(bytes, &unmarshaled)
+-			require.NoError(t, err, "unmarshaling should succeed for test verification")
+-		} else {
+-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+-			var unmarshaled interface{}
+-			err = json.Unmarshal(bytes, &unmarshaled)
+-			require.NoError(t, err, "unmarshaling should succeed for test verification")
+-		}
+-
+-		// Note: This does not explicitly assert the presence of a specific JSON field
+-		// It verifies that setting a field via setter allows successful JSON round-trip
+-	})
+-
+-	t.Run("SetUserID_MarksExplicit", func(t *testing.T) {
+-		t.Parallel()
+-		// Arrange
+-		obj := &GetUserMetadataRequest{}
+-		var fernTestValueUserID string
+-
+-		// Act
+-		obj.SetUserID(fernTestValueUserID)
+-
+-		// Assert - object with explicitly set field can be marshaled/unmarshaled
+-		bytes, err := json.Marshal(obj)
+-		require.NoError(t, err, "marshaling should succeed for test setup")
+-
+-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+-		if len(bytes) > 0 && bytes[0] == '{' {
+-			// JSON object - unmarshal into map
+-			var unmarshaled map[string]interface{}
+-			err = json.Unmarshal(bytes, &unmarshaled)
+-			require.NoError(t, err, "unmarshaling should succeed for test verification")
+-		} else {
+-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+-			var unmarshaled interface{}
+-			err = json.Unmarshal(bytes, &unmarshaled)
+-			require.NoError(t, err, "unmarshaling should succeed for test verification")
+-		}
+-
+-		// Note: This does not explicitly assert the presence of a specific JSON field
+-		// It verifies that setting a field via setter allows successful JSON round-trip
+-	})
+-
+-	t.Run("SetVersion_MarksExplicit", func(t *testing.T) {
+-		t.Parallel()
+-		// Arrange
+-		obj := &GetUserMetadataRequest{}
+-		var fernTestValueVersion int
+-
+-		// Act
+-		obj.SetVersion(fernTestValueVersion)
+-
+-		// Assert - object with explicitly set field can be marshaled/unmarshaled
+-		bytes, err := json.Marshal(obj)
+-		require.NoError(t, err, "marshaling should succeed for test setup")
+-
+-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+-		if len(bytes) > 0 && bytes[0] == '{' {
+-			// JSON object - unmarshal into map
+-			var unmarshaled map[string]interface{}
+-			err = json.Unmarshal(bytes, &unmarshaled)
+-			require.NoError(t, err, "unmarshaling should succeed for test verification")
+-		} else {
+-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+-			var unmarshaled interface{}
+-			err = json.Unmarshal(bytes, &unmarshaled)
+-			require.NoError(t, err, "unmarshaling should succeed for test verification")
+-		}
+-
+-		// Note: This does not explicitly assert the presence of a specific JSON field
+-		// It verifies that setting a field via setter allows successful JSON round-trip
+-	})
+-
+-}
+-
+-func TestSettersGetUserSpecificsRequest(t *testing.T) {
+-	t.Run("SetTenantID", func(t *testing.T) {
+-		obj := &GetUserSpecificsRequest{}
+-		var fernTestValueTenantID string
+-		obj.SetTenantID(fernTestValueTenantID)
+-		assert.Equal(t, fernTestValueTenantID, obj.TenantID)
+-		assert.NotNil(t, obj.explicitFields)
+-	})
+-
+-	t.Run("SetUserID", func(t *testing.T) {
+-		obj := &GetUserSpecificsRequest{}
+-		var fernTestValueUserID string
+-		obj.SetUserID(fernTestValueUserID)
+-		assert.Equal(t, fernTestValueUserID, obj.UserID)
+-		assert.NotNil(t, obj.explicitFields)
+-	})
+-
+-	t.Run("SetVersion", func(t *testing.T) {
+-		obj := &GetUserSpecificsRequest{}
+-		var fernTestValueVersion int
+-		obj.SetVersion(fernTestValueVersion)
+-		assert.Equal(t, fernTestValueVersion, obj.Version)
+-		assert.NotNil(t, obj.explicitFields)
+-	})
+-
+-	t.Run("SetThought", func(t *testing.T) {
+-		obj := &GetUserSpecificsRequest{}
+-		var fernTestValueThought string
+-		obj.SetThought(fernTestValueThought)
+-		assert.Equal(t, fernTestValueThought, obj.Thought)
+-		assert.NotNil(t, obj.explicitFields)
+-	})
+-
+-}
+-
+-func TestSettersMarkExplicitGetUserSpecificsRequest(t *testing.T) {
+-	t.Run("SetTenantID_MarksExplicit", func(t *testing.T) {
+-		t.Parallel()
+-		// Arrange
+-		obj := &GetUserSpecificsRequest{}
+-		var fernTestValueTenantID string
+-
+-		// Act
+-		obj.SetTenantID(fernTestValueTenantID)
+-
+-		// Assert - object with explicitly set field can be marshaled/unmarshaled
+-		bytes, err := json.Marshal(obj)
+-		require.NoError(t, err, "marshaling should succeed for test setup")
+-
+-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+-		if len(bytes) > 0 && bytes[0] == '{' {
+-			// JSON object - unmarshal into map
+-			var unmarshaled map[string]interface{}
+-			err = json.Unmarshal(bytes, &unmarshaled)
+-			require.NoError(t, err, "unmarshaling should succeed for test verification")
+-		} else {
+-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+-			var unmarshaled interface{}
+-			err = json.Unmarshal(bytes, &unmarshaled)
+-			require.NoError(t, err, "unmarshaling should succeed for test verification")
+-		}
+-
+-		// Note: This does not explicitly assert the presence of a specific JSON field
+-		// It verifies that setting a field via setter allows successful JSON round-trip
+-	})
+-
+-	t.Run("SetUserID_MarksExplicit", func(t *testing.T) {
+-		t.Parallel()
+-		// Arrange
+-		obj := &GetUserSpecificsRequest{}
+-		var fernTestValueUserID string
+-
+-		// Act
+-		obj.SetUserID(fernTestValueUserID)
+-
+-		// Assert - object with explicitly set field can be marshaled/unmarshaled
+-		bytes, err := json.Marshal(obj)
+-		require.NoError(t, err, "marshaling should succeed for test setup")
+-
+-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+-		if len(bytes) > 0 && bytes[0] == '{' {
+-			// JSON object - unmarshal into map
+-			var unmarshaled map[string]interface{}
+-			err = json.Unmarshal(bytes, &unmarshaled)
+-			require.NoError(t, err, "unmarshaling should succeed for test verification")
+-		} else {
+-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+-			var unmarshaled interface{}
+-			err = json.Unmarshal(bytes, &unmarshaled)
+-			require.NoError(t, err, "unmarshaling should succeed for test verification")
+-		}
+-
+-		// Note: This does not explicitly assert the presence of a specific JSON field
+-		// It verifies that setting a field via setter allows successful JSON round-trip
+-	})
+-
+-	t.Run("SetVersion_MarksExplicit", func(t *testing.T) {
+-		t.Parallel()
+-		// Arrange
+-		obj := &GetUserSpecificsRequest{}
+-		var fernTestValueVersion int
+-
+-		// Act
+-		obj.SetVersion(fernTestValueVersion)
+-
+-		// Assert - object with explicitly set field can be marshaled/unmarshaled
+-		bytes, err := json.Marshal(obj)
+-		require.NoError(t, err, "marshaling should succeed for test setup")
+-
+-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+-		if len(bytes) > 0 && bytes[0] == '{' {
+-			// JSON object - unmarshal into map
+-			var unmarshaled map[string]interface{}
+-			err = json.Unmarshal(bytes, &unmarshaled)
+-			require.NoError(t, err, "unmarshaling should succeed for test verification")
+-		} else {
+-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+-			var unmarshaled interface{}
+-			err = json.Unmarshal(bytes, &unmarshaled)
+-			require.NoError(t, err, "unmarshaling should succeed for test verification")
+-		}
+-
+-		// Note: This does not explicitly assert the presence of a specific JSON field
+-		// It verifies that setting a field via setter allows successful JSON round-trip
+-	})
+-
+-	t.Run("SetThought_MarksExplicit", func(t *testing.T) {
+-		t.Parallel()
+-		// Arrange
+-		obj := &GetUserSpecificsRequest{}
+-		var fernTestValueThought string
+-
+-		// Act
+-		obj.SetThought(fernTestValueThought)
+-
+-		// Assert - object with explicitly set field can be marshaled/unmarshaled
+-		bytes, err := json.Marshal(obj)
+-		require.NoError(t, err, "marshaling should succeed for test setup")
+-
+-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+-		if len(bytes) > 0 && bytes[0] == '{' {
+-			// JSON object - unmarshal into map
+-			var unmarshaled map[string]interface{}
+-			err = json.Unmarshal(bytes, &unmarshaled)
+-			require.NoError(t, err, "unmarshaling should succeed for test verification")
+-		} else {
+-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+-			var unmarshaled interface{}
+-			err = json.Unmarshal(bytes, &unmarshaled)
+-			require.NoError(t, err, "unmarshaling should succeed for test verification")
+-		}
+-
+-		// Note: This does not explicitly assert the presence of a specific JSON field
+-		// It verifies that setting a field via setter allows successful JSON round-trip
+-	})
+-
+-}
+-
+ func TestSettersSearchUsersRequest(t *testing.T) {
+-	t.Run("SetTenantID", func(t *testing.T) {
+-		obj := &SearchUsersRequest{}
+-		var fernTestValueTenantID string
+-		obj.SetTenantID(fernTestValueTenantID)
+-		assert.Equal(t, fernTestValueTenantID, obj.TenantID)
+-		assert.NotNil(t, obj.explicitFields)
+-	})
+-
+-	t.Run("SetUserID", func(t *testing.T) {
+-		obj := &SearchUsersRequest{}
+-		var fernTestValueUserID string
+-		obj.SetUserID(fernTestValueUserID)
+-		assert.Equal(t, fernTestValueUserID, obj.UserID)
+-		assert.NotNil(t, obj.explicitFields)
+-	})
+-
+ 	t.Run("SetLimit", func(t *testing.T) {
+ 		obj := &SearchUsersRequest{}
+ 		var fernTestValueLimit *int
+@@ -406,68 +21,6 @@ func TestSettersSearchUsersRequest(t *testing.T) {
+ }
+ 
+ func TestSettersMarkExplicitSearchUsersRequest(t *testing.T) {
+-	t.Run("SetTenantID_MarksExplicit", func(t *testing.T) {
+-		t.Parallel()
+-		// Arrange
+-		obj := &SearchUsersRequest{}
+-		var fernTestValueTenantID string
+-
+-		// Act
+-		obj.SetTenantID(fernTestValueTenantID)
+-
+-		// Assert - object with explicitly set field can be marshaled/unmarshaled
+-		bytes, err := json.Marshal(obj)
+-		require.NoError(t, err, "marshaling should succeed for test setup")
+-
+-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+-		if len(bytes) > 0 && bytes[0] == '{' {
+-			// JSON object - unmarshal into map
+-			var unmarshaled map[string]interface{}
+-			err = json.Unmarshal(bytes, &unmarshaled)
+-			require.NoError(t, err, "unmarshaling should succeed for test verification")
+-		} else {
+-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+-			var unmarshaled interface{}
+-			err = json.Unmarshal(bytes, &unmarshaled)
+-			require.NoError(t, err, "unmarshaling should succeed for test verification")
+-		}
+-
+-		// Note: This does not explicitly assert the presence of a specific JSON field
+-		// It verifies that setting a field via setter allows successful JSON round-trip
+-	})
+-
+-	t.Run("SetUserID_MarksExplicit", func(t *testing.T) {
+-		t.Parallel()
+-		// Arrange
+-		obj := &SearchUsersRequest{}
+-		var fernTestValueUserID string
+-
+-		// Act
+-		obj.SetUserID(fernTestValueUserID)
+-
+-		// Assert - object with explicitly set field can be marshaled/unmarshaled
+-		bytes, err := json.Marshal(obj)
+-		require.NoError(t, err, "marshaling should succeed for test setup")
+-
+-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+-		if len(bytes) > 0 && bytes[0] == '{' {
+-			// JSON object - unmarshal into map
+-			var unmarshaled map[string]interface{}
+-			err = json.Unmarshal(bytes, &unmarshaled)
+-			require.NoError(t, err, "unmarshaling should succeed for test verification")
+-		} else {
+-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+-			var unmarshaled interface{}
+-			err = json.Unmarshal(bytes, &unmarshaled)
+-			require.NoError(t, err, "unmarshaling should succeed for test verification")
+-		}
+-
+-		// Note: This does not explicitly assert the presence of a specific JSON field
+-		// It verifies that setting a field via setter allows successful JSON round-trip
+-	})
+-
+ 	t.Run("SetLimit_MarksExplicit", func(t *testing.T) {
+ 		t.Parallel()
+ 		// Arrange
+@@ -644,90 +197,6 @@ func TestSettersMarkExplicitUser(t *testing.T) {
+ 
+ }
+ 
+-func TestSettersUpdateUserRequest(t *testing.T) {
+-	t.Run("SetTenantID", func(t *testing.T) {
+-		obj := &UpdateUserRequest{}
+-		var fernTestValueTenantID string
+-		obj.SetTenantID(fernTestValueTenantID)
+-		assert.Equal(t, fernTestValueTenantID, obj.TenantID)
+-		assert.NotNil(t, obj.explicitFields)
+-	})
+-
+-	t.Run("SetUserID", func(t *testing.T) {
+-		obj := &UpdateUserRequest{}
+-		var fernTestValueUserID string
+-		obj.SetUserID(fernTestValueUserID)
+-		assert.Equal(t, fernTestValueUserID, obj.UserID)
+-		assert.NotNil(t, obj.explicitFields)
+-	})
+-
+-}
+-
+-func TestSettersMarkExplicitUpdateUserRequest(t *testing.T) {
+-	t.Run("SetTenantID_MarksExplicit", func(t *testing.T) {
+-		t.Parallel()
+-		// Arrange
+-		obj := &UpdateUserRequest{}
+-		var fernTestValueTenantID string
+-
+-		// Act
+-		obj.SetTenantID(fernTestValueTenantID)
+-
+-		// Assert - object with explicitly set field can be marshaled/unmarshaled
+-		bytes, err := json.Marshal(obj)
+-		require.NoError(t, err, "marshaling should succeed for test setup")
+-
+-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+-		if len(bytes) > 0 && bytes[0] == '{' {
+-			// JSON object - unmarshal into map
+-			var unmarshaled map[string]interface{}
+-			err = json.Unmarshal(bytes, &unmarshaled)
+-			require.NoError(t, err, "unmarshaling should succeed for test verification")
+-		} else {
+-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+-			var unmarshaled interface{}
+-			err = json.Unmarshal(bytes, &unmarshaled)
+-			require.NoError(t, err, "unmarshaling should succeed for test verification")
+-		}
+-
+-		// Note: This does not explicitly assert the presence of a specific JSON field
+-		// It verifies that setting a field via setter allows successful JSON round-trip
+-	})
+-
+-	t.Run("SetUserID_MarksExplicit", func(t *testing.T) {
+-		t.Parallel()
+-		// Arrange
+-		obj := &UpdateUserRequest{}
+-		var fernTestValueUserID string
+-
+-		// Act
+-		obj.SetUserID(fernTestValueUserID)
+-
+-		// Assert - object with explicitly set field can be marshaled/unmarshaled
+-		bytes, err := json.Marshal(obj)
+-		require.NoError(t, err, "marshaling should succeed for test setup")
+-
+-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+-		if len(bytes) > 0 && bytes[0] == '{' {
+-			// JSON object - unmarshal into map
+-			var unmarshaled map[string]interface{}
+-			err = json.Unmarshal(bytes, &unmarshaled)
+-			require.NoError(t, err, "unmarshaling should succeed for test verification")
+-		} else {
+-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+-			var unmarshaled interface{}
+-			err = json.Unmarshal(bytes, &unmarshaled)
+-			require.NoError(t, err, "unmarshaling should succeed for test verification")
+-		}
+-
+-		// Note: This does not explicitly assert the presence of a specific JSON field
+-		// It verifies that setting a field via setter allows successful JSON round-trip
+-	})
+-
+-}
+-
+ func TestJSONMarshalingUser(t *testing.T) {
+ 	t.Run("MarshalUnmarshal", func(t *testing.T) {
+ 		t.Parallel()

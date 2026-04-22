@@ -1,0 +1,30 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 5e4188a44b1..844023454d8 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,7 +2,11 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-csharp-sdk",
+   "generatorVersion": "local",
+-  "generatorConfig": {},
++  "generatorConfig": {
++    "extra-dependencies": {
++      "PolySharp": "1.14.0"
++    }
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "ci",
+diff --git a/src/SeedApi/SeedApi.csproj b/src/SeedApi/SeedApi.csproj
+index 3400d4b2909..f2dc835da2c 100644
+--- a/src/SeedApi/SeedApi.csproj
++++ b/src/SeedApi/SeedApi.csproj
+@@ -33,7 +33,7 @@
+     <Compile Remove="Core\DateOnlyConverter.cs" />
+   </ItemGroup>
+   <ItemGroup>
+-    <PackageReference Include="PolySharp" Version="1.15.0">
++    <PackageReference Include="PolySharp" Version="1.14.0">
+       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+       <PrivateAssets>all</PrivateAssets>
+     </PackageReference>

@@ -1,0 +1,40 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 2ecd82f71ab..1f3ffd33192 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-python-sdk",
+   "generatorVersion": "local",
++  "generatorConfig": {
++    "use_inheritance_for_extended_models": false
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "ci",
+diff --git a/src/seed/types/child.py b/src/seed/types/child.py
+index f4c7a1cff62..552a5a04b39 100644
+--- a/src/seed/types/child.py
++++ b/src/seed/types/child.py
+@@ -3,11 +3,10 @@
+ import typing
+ 
+ import pydantic
+-from ..core.pydantic_utilities import IS_PYDANTIC_V2
+-from .parent import Parent
++from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+ 
+ 
+-class Child(Parent):
++class Child(UniversalBaseModel):
+     """
+     Examples
+     --------
+@@ -20,6 +19,7 @@ class Child(Parent):
+     """
+ 
+     child: str
++    parent: str
+ 
+     if IS_PYDANTIC_V2:
+         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

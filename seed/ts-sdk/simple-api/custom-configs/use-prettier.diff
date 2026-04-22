@@ -1,0 +1,448 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index d8b7bf00e12..3b6a2cd5734 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,9 @@
+     "cliVersion": "DUMMY",
+     "generatorName": "fernapi/fern-typescript-sdk",
+     "generatorVersion": "local",
++    "generatorConfig": {
++        "formatter": "prettier"
++    },
+     "originGitCommit": "DUMMY",
+     "originGitCommitIsDirty": null,
+     "invokedBy": "ci",
+diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+index 93fba226cb6..13ae6f188cc 100644
+--- a/.github/workflows/ci.yml
++++ b/.github/workflows/ci.yml
+@@ -3,44 +3,44 @@ name: ci
+ on: [push]
+ 
+ concurrency:
+-  group: ${{ github.workflow }}-${{ github.ref }}
+-  cancel-in-progress: false
++    group: ${{ github.workflow }}-${{ github.ref }}
++    cancel-in-progress: false
+ 
+ jobs:
+-  compile:
+-    runs-on: ubuntu-latest
++    compile:
++        runs-on: ubuntu-latest
+ 
+-    steps:
+-      - name: Checkout repo
+-        uses: actions/checkout@v6
++        steps:
++            - name: Checkout repo
++              uses: actions/checkout@v6
+ 
+-      - name: Set up node
+-        uses: actions/setup-node@v6
++            - name: Set up node
++              uses: actions/setup-node@v6
+ 
+-      - name: Install pnpm
+-        uses: pnpm/action-setup@v4
++            - name: Install pnpm
++              uses: pnpm/action-setup@v4
+ 
+-      - name: Install dependencies
+-        run: pnpm install --frozen-lockfile
++            - name: Install dependencies
++              run: pnpm install --frozen-lockfile
+ 
+-      - name: Compile
+-        run: pnpm build
++            - name: Compile
++              run: pnpm build
+ 
+-  test:
+-    runs-on: ubuntu-latest
++    test:
++        runs-on: ubuntu-latest
+ 
+-    steps:
+-      - name: Checkout repo
+-        uses: actions/checkout@v6
++        steps:
++            - name: Checkout repo
++              uses: actions/checkout@v6
+ 
+-      - name: Set up node
+-        uses: actions/setup-node@v6
+-                
+-      - name: Install pnpm
+-        uses: pnpm/action-setup@v4
++            - name: Set up node
++              uses: actions/setup-node@v6
+ 
+-      - name: Install dependencies
+-        run: pnpm install --frozen-lockfile
++            - name: Install pnpm
++              uses: pnpm/action-setup@v4
+ 
+-      - name: Test
+-        run: pnpm test
++            - name: Install dependencies
++              run: pnpm install --frozen-lockfile
++
++            - name: Test
++              run: pnpm test
+diff --git a/.prettierignore b/.prettierignore
+new file mode 100644
+index 00000000000..e4691be4358
+--- /dev/null
++++ b/.prettierignore
+@@ -0,0 +1,9 @@
++dist
++*.tsbuildinfo
++_tmp_*
++*.tmp
++.tmp/
++*.log
++.DS_Store
++Thumbs.db
++            
+\ No newline at end of file
+diff --git a/.prettierrc.yml b/.prettierrc.yml
+new file mode 100644
+index 00000000000..0c06786bf53
+--- /dev/null
++++ b/.prettierrc.yml
+@@ -0,0 +1,2 @@
++tabWidth: 4
++printWidth: 120
+diff --git a/CONTRIBUTING.md b/CONTRIBUTING.md
+index fe5bc2f77e0..ac478f0bb42 100644
+--- a/CONTRIBUTING.md
++++ b/CONTRIBUTING.md
+@@ -34,6 +34,7 @@ pnpm test
+ ```
+ 
+ Run specific test types:
++
+ - `pnpm test:unit` - Run unit tests
+ - `pnpm test:wire` - Run wire/integration tests
+ 
+@@ -66,6 +67,7 @@ pnpm run check:fix
+ ### Generated Files
+ 
+ The following directories contain generated code:
++
+ - `src/api/` - API client classes and types
+ - `src/serialization/` - Serialization/deserialization logic
+ - Most TypeScript files in `src/`
+@@ -96,6 +98,7 @@ If you want to change how code is generated for all users of this SDK:
+ 4. Submit a pull request with your changes to the generator
+ 
+ This approach is best for:
++
+ - Bug fixes in generated code
+ - New features that would benefit all users
+ - Improvements to code generation patterns
+diff --git a/README.md b/README.md
+index e5f3d14b95b..0d6da508323 100644
+--- a/README.md
++++ b/README.md
+@@ -13,16 +13,16 @@ The Seed TypeScript library provides convenient access to the Seed APIs from Typ
+ - [Environments](#environments)
+ - [Exception Handling](#exception-handling)
+ - [Advanced](#advanced)
+-  - [Subpackage Exports](#subpackage-exports)
+-  - [Additional Headers](#additional-headers)
+-  - [Additional Query String Parameters](#additional-query-string-parameters)
+-  - [Retries](#retries)
+-  - [Timeouts](#timeouts)
+-  - [Aborting Requests](#aborting-requests)
+-  - [Access Raw Response Data](#access-raw-response-data)
+-  - [Logging](#logging)
+-  - [Custom Fetch](#custom-fetch)
+-  - [Runtime Compatibility](#runtime-compatibility)
++    - [Subpackage Exports](#subpackage-exports)
++    - [Additional Headers](#additional-headers)
++    - [Additional Query String Parameters](#additional-query-string-parameters)
++    - [Retries](#retries)
++    - [Timeouts](#timeouts)
++    - [Aborting Requests](#aborting-requests)
++    - [Access Raw Response Data](#access-raw-response-data)
++    - [Logging](#logging)
++    - [Custom Fetch](#custom-fetch)
++    - [Runtime Compatibility](#runtime-compatibility)
+ - [Contributing](#contributing)
+ 
+ ## Installation
+@@ -193,12 +193,15 @@ const client = new SeedSimpleApiClient({
+     }
+ });
+ ```
++
+ The `logging` object can have the following properties:
++
+ - `level`: The log level to use. Defaults to `logging.LogLevel.Info`.
+ - `logger`: The logger to use. Defaults to a `logging.ConsoleLogger`.
+ - `silent`: Whether to silence the logger. Defaults to `true`.
+ 
+ The `level` property can be one of the following values:
++
+ - `logging.LogLevel.Debug`
+ - `logging.LogLevel.Info`
+ - `logging.LogLevel.Warn`
+@@ -210,6 +213,7 @@ To provide a custom logger, you can pass in an object that implements the `loggi
+ <summary>Custom logger examples</summary>
+ 
+ Here's an example using the popular `winston` logging library.
++
+ ```ts
+ import winston from 'winston';
+ 
+@@ -237,8 +241,8 @@ const logger: logging.ILogger = {
+   error: (msg, ...args) => pinoLogger.error(args, msg),
+ };
+ ```
+-</details>
+ 
++</details>
+ 
+ ### Custom Fetch
+ 
+@@ -247,26 +251,27 @@ benefiting from SDK-level configuration like authentication, retries, timeouts,
+ This is useful for calling API endpoints not yet supported in the SDK.
+ 
+ ```typescript
+-const response = await client.fetch("/v1/custom/endpoint", {
+-    method: "GET",
+-}, {
+-    timeoutInSeconds: 30,
+-    maxRetries: 3,
+-    headers: {
+-        "X-Custom-Header": "custom-value",
++const response = await client.fetch(
++    "/v1/custom/endpoint",
++    {
++        method: "GET",
+     },
+-});
++    {
++        timeoutInSeconds: 30,
++        maxRetries: 3,
++        headers: {
++            "X-Custom-Header": "custom-value",
++        },
++    },
++);
+ 
+ const data = await response.json();
+ ```
+ 
+ ### Runtime Compatibility
+ 
+-
+ The SDK works in the following runtimes:
+ 
+-
+-
+ - Node.js 18+
+ - Vercel
+ - Cloudflare Workers
+@@ -274,7 +279,6 @@ The SDK works in the following runtimes:
+ - Bun 1.0+
+ - React Native
+ 
+-
+ ## Contributing
+ 
+ While we value open-source contributions to this SDK, this library is generated programmatically.
+diff --git a/package.json b/package.json
+index d0cc3a8b5d8..72a1c8ad0b7 100644
+--- a/package.json
++++ b/package.json
+@@ -42,12 +42,12 @@
+         "LICENSE"
+     ],
+     "scripts": {
+-        "format": "biome format --write --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
+-        "format:check": "biome format --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
++        "format": "prettier . --write --ignore-unknown",
++        "format:check": "prettier . --check --ignore-unknown",
+         "lint": "biome lint --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
+         "lint:fix": "biome lint --fix --unsafe --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
+-        "check": "biome check --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
+-        "check:fix": "biome check --fix --unsafe --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
++        "check": "pnpm format:check && pnpm lint",
++        "check:fix": "pnpm format && pnpm lint:fix",
+         "build": "pnpm build:cjs && pnpm build:esm",
+         "build:cjs": "tsc --project ./tsconfig.cjs.json",
+         "build:esm": "tsc --project ./tsconfig.esm.json && node scripts/rename-to-esm-files.js dist/esm",
+@@ -63,7 +63,8 @@
+         "msw": "2.11.2",
+         "@types/node": "^18.19.70",
+         "typescript": "~5.9.3",
+-        "@biomejs/biome": "2.4.10"
++        "@biomejs/biome": "2.4.10",
++        "prettier": "3.8.1"
+     },
+     "browser": {
+         "fs": false,
+diff --git a/pnpm-workspace.yaml b/pnpm-workspace.yaml
+index 6e4c395107d..339da38e3da 100644
+--- a/pnpm-workspace.yaml
++++ b/pnpm-workspace.yaml
+@@ -1 +1 @@
+-packages: ['.']
+\ No newline at end of file
++packages: ["."]
+diff --git a/reference.md b/reference.md
+index d73128c61a3..d3121dd7b2d 100644
+--- a/reference.md
++++ b/reference.md
+@@ -1,5 +1,7 @@
+ # Reference
++
+ ## User
++
+ <details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">get</a>(id) -> SeedSimpleApi.User</code></summary>
+ <dl>
+ <dd>
+@@ -14,8 +16,8 @@
+ 
+ ```typescript
+ await client.user.get("id");
+-
+ ```
++
+ </dd>
+ </dl>
+ </dd>
+@@ -29,23 +31,21 @@ await client.user.get("id");
+ <dl>
+ <dd>
+ 
+-**id:** `string` 
+-    
++**id:** `string`
++
+ </dd>
+ </dl>
+ 
+ <dl>
+ <dd>
+ 
+-**requestOptions:** `UserClient.RequestOptions` 
+-    
++**requestOptions:** `UserClient.RequestOptions`
++
+ </dd>
+ </dl>
+ </dd>
+ </dl>
+ 
+-
+ </dd>
+ </dl>
+ </details>
+-
+diff --git a/src/BaseClient.ts b/src/BaseClient.ts
+index 339461e0a49..92a7a11f051 100644
+--- a/src/BaseClient.ts
++++ b/src/BaseClient.ts
+@@ -1,8 +1,8 @@
+ // This file was auto-generated by Fern from our API Definition.
+ 
+ import { BearerAuthProvider } from "./auth/BearerAuthProvider.js";
+-import { mergeHeaders } from "./core/headers.js";
+ import * as core from "./core/index.js";
++import { mergeHeaders } from "./core/headers.js";
+ import type * as environments from "./environments.js";
+ 
+ export type BaseClientOptions = {
+diff --git a/src/Client.ts b/src/Client.ts
+index 9ed57372443..dc508a610e2 100644
+--- a/src/Client.ts
++++ b/src/Client.ts
+@@ -2,7 +2,7 @@
+ 
+ import { UserClient } from "./api/resources/user/client/Client.js";
+ import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
+-import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "./BaseClient.js";
++import { normalizeClientOptionsWithAuth, type NormalizedClientOptionsWithAuth } from "./BaseClient.js";
+ import * as core from "./core/index.js";
+ 
+ export declare namespace SeedSimpleApiClient {
+diff --git a/src/api/resources/user/client/Client.ts b/src/api/resources/user/client/Client.ts
+index 246f78ffd26..dd4cd50ede2 100644
+--- a/src/api/resources/user/client/Client.ts
++++ b/src/api/resources/user/client/Client.ts
+@@ -1,9 +1,9 @@
+ // This file was auto-generated by Fern from our API Definition.
+ 
+ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
+-import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../BaseClient.js";
+-import { mergeHeaders } from "../../../../core/headers.js";
++import { normalizeClientOptionsWithAuth, type NormalizedClientOptionsWithAuth } from "../../../../BaseClient.js";
+ import * as core from "../../../../core/index.js";
++import { mergeHeaders } from "../../../../core/headers.js";
+ import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
+ import * as errors from "../../../../errors/index.js";
+ import type * as SeedSimpleApi from "../../../index.js";
+diff --git a/src/core/url/index.ts b/src/core/url/index.ts
+index ca9d4fbd1eb..e47c337434a 100644
+--- a/src/core/url/index.ts
++++ b/src/core/url/index.ts
+@@ -1,4 +1,4 @@
+ export { encodePathParam } from "./encodePathParam.js";
+ export { join } from "./join.js";
+-export { queryBuilder } from "./QueryStringBuilder.js";
+ export { toQueryString } from "./qs.js";
++export { queryBuilder } from "./QueryStringBuilder.js";
+diff --git a/src/index.ts b/src/index.ts
+index 8ffb3e9d711..0d1fc7e114e 100644
+--- a/src/index.ts
++++ b/src/index.ts
+@@ -1,6 +1,6 @@
+-export * as SeedSimpleApi from "./api/index.js";
+ export type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
+ export { SeedSimpleApiClient } from "./Client.js";
+ export { SeedSimpleApiEnvironment } from "./environments.js";
++export * as SeedSimpleApi from "./api/index.js";
+ export { SeedSimpleApiError, SeedSimpleApiTimeoutError } from "./errors/index.js";
+ export * from "./exports.js";
+diff --git a/tests/unit/fetcher/makePassthroughRequest.test.ts b/tests/unit/fetcher/makePassthroughRequest.test.ts
+index 1850d1fda95..aa4fd2ac331 100644
+--- a/tests/unit/fetcher/makePassthroughRequest.test.ts
++++ b/tests/unit/fetcher/makePassthroughRequest.test.ts
+@@ -1,5 +1,5 @@
+-import type { Mock } from "vitest";
+ import { makePassthroughRequest } from "../../../src/core/fetcher/makePassthroughRequest";
++import type { Mock } from "vitest";
+ 
+ describe("makePassthroughRequest", () => {
+     let mockFetch: Mock;
+diff --git a/tests/unit/fetcher/makeRequest.test.ts b/tests/unit/fetcher/makeRequest.test.ts
+index bde194554dd..f814d5aa966 100644
+--- a/tests/unit/fetcher/makeRequest.test.ts
++++ b/tests/unit/fetcher/makeRequest.test.ts
+@@ -1,9 +1,9 @@
+-import type { Mock } from "vitest";
+ import {
+-    isCacheNoStoreSupported,
+     makeRequest,
++    isCacheNoStoreSupported,
+     resetCacheNoStoreSupported,
+ } from "../../../src/core/fetcher/makeRequest";
++import type { Mock } from "vitest";
+ 
+ describe("Test makeRequest", () => {
+     const mockPostUrl = "https://httpbin.org/post";
+diff --git a/tests/unit/fetcher/requestWithRetries.test.ts b/tests/unit/fetcher/requestWithRetries.test.ts
+index d22661367f4..ba577dc3862 100644
+--- a/tests/unit/fetcher/requestWithRetries.test.ts
++++ b/tests/unit/fetcher/requestWithRetries.test.ts
+@@ -1,5 +1,5 @@
+-import type { Mock, MockInstance } from "vitest";
+ import { requestWithRetries } from "../../../src/core/fetcher/requestWithRetries";
++import type { Mock, MockInstance } from "vitest";
+ 
+ describe("requestWithRetries", () => {
+     let mockFetch: Mock;

@@ -1,0 +1,14 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 87f59d207d2..dd6d3c6352b 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -3,7 +3,8 @@
+   "generatorName": "fernapi/fern-go-sdk",
+   "generatorVersion": "local",
+   "generatorConfig": {
+-    "enableWireTests": true
++    "enableWireTests": true,
++    "omitEmptyRequestWrappers": true
+   },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,

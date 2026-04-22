@@ -1,0 +1,1592 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 5e4188a44b1..ab8d2c8eff0 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,7 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-csharp-sdk",
+   "generatorVersion": "local",
+-  "generatorConfig": {},
++  "generatorConfig": {
++    "generate-literals": true
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "ci",
+diff --git a/Snippets/Example0.cs b/Snippets/Example0.cs
+index f6552900eae..0b8d14c59d0 100644
+--- a/Snippets/Example0.cs
++++ b/Snippets/Example0.cs
+@@ -11,8 +11,6 @@ public partial class Examples
+ 
+         await client.Headers.SendAsync(
+             new SendLiteralsInHeadersRequest {
+-                EndpointVersion = "02-12-2024",
+-                Async = true,
+                 Query = "What is the weather today"
+             }
+         );
+diff --git a/Snippets/Example1.cs b/Snippets/Example1.cs
+index 68f52469ce8..9685de7e1f7 100644
+--- a/Snippets/Example1.cs
++++ b/Snippets/Example1.cs
+@@ -11,8 +11,6 @@ public partial class Examples
+ 
+         await client.Headers.SendAsync(
+             new SendLiteralsInHeadersRequest {
+-                EndpointVersion = "02-12-2024",
+-                Async = true,
+                 Query = "query"
+             }
+         );
+diff --git a/Snippets/Example2.cs b/Snippets/Example2.cs
+index 6b4f5fe8d5b..ab98fa86635 100644
+--- a/Snippets/Example2.cs
++++ b/Snippets/Example2.cs
+@@ -12,16 +12,11 @@ public partial class Examples
+         await client.Inlined.SendAsync(
+             new SendLiteralsInlinedRequest {
+                 Temperature = 10.1,
+-                Prompt = "You are a helpful assistant",
+-                Context = "You're super wise",
+-                AliasedContext = "You're super wise",
+-                MaybeContext = "You're super wise",
++                AliasedContext = new SomeAliasedLiteral(),
++                MaybeContext = new SomeAliasedLiteral(),
+                 ObjectWithLiteral = new ATopLevelLiteral {
+-                    NestedLiteral = new ANestedLiteral {
+-                        MyLiteral = "How super cool"
+-                    }
++                    NestedLiteral = new ANestedLiteral()
+                 },
+-                Stream = false,
+                 Query = "What is the weather today"
+             }
+         );
+diff --git a/Snippets/Example3.cs b/Snippets/Example3.cs
+index 2693114a154..3ba9611f0f1 100644
+--- a/Snippets/Example3.cs
++++ b/Snippets/Example3.cs
+@@ -11,17 +11,12 @@ public partial class Examples
+ 
+         await client.Inlined.SendAsync(
+             new SendLiteralsInlinedRequest {
+-                Prompt = "You are a helpful assistant",
+-                Context = "You're super wise",
+                 Query = "query",
+                 Temperature = 1.1,
+-                Stream = false,
+-                AliasedContext = "You're super wise",
+-                MaybeContext = "You're super wise",
++                AliasedContext = new SomeAliasedLiteral(),
++                MaybeContext = new SomeAliasedLiteral(),
+                 ObjectWithLiteral = new ATopLevelLiteral {
+-                    NestedLiteral = new ANestedLiteral {
+-                        MyLiteral = "How super cool"
+-                    }
++                    NestedLiteral = new ANestedLiteral()
+                 }
+             }
+         );
+diff --git a/Snippets/Example4.cs b/Snippets/Example4.cs
+index 9c5fb9993ff..9a1713669f8 100644
+--- a/Snippets/Example4.cs
++++ b/Snippets/Example4.cs
+@@ -10,7 +10,6 @@ public partial class Examples
+         );
+ 
+         await client.Path.SendAsync(
+-            "123"
+         );
+     }
+ 
+diff --git a/Snippets/Example5.cs b/Snippets/Example5.cs
+index 223537e1c6b..aab694e49b4 100644
+--- a/Snippets/Example5.cs
++++ b/Snippets/Example5.cs
+@@ -10,7 +10,6 @@ public partial class Examples
+         );
+ 
+         await client.Path.SendAsync(
+-            "123"
+         );
+     }
+ 
+diff --git a/Snippets/Example6.cs b/Snippets/Example6.cs
+index 5fdff58c88d..6a9e3f5c7d4 100644
+--- a/Snippets/Example6.cs
++++ b/Snippets/Example6.cs
+@@ -11,14 +11,10 @@ public partial class Examples
+ 
+         await client.Query.SendAsync(
+             new SendLiteralsInQueryRequest {
+-                Prompt = "You are a helpful assistant",
+-                OptionalPrompt = "You are a helpful assistant",
+-                AliasPrompt = "You are a helpful assistant",
+-                AliasOptionalPrompt = "You are a helpful assistant",
+-                Stream = false,
+-                OptionalStream = false,
+-                AliasStream = false,
+-                AliasOptionalStream = false,
++                AliasPrompt = new AliasToPrompt(),
++                AliasOptionalPrompt = new AliasToPrompt(),
++                AliasStream = new AliasToStream(),
++                AliasOptionalStream = new AliasToStream(),
+                 Query = "What is the weather today"
+             }
+         );
+diff --git a/Snippets/Example7.cs b/Snippets/Example7.cs
+index defa0d1f34a..821fb82e3bc 100644
+--- a/Snippets/Example7.cs
++++ b/Snippets/Example7.cs
+@@ -11,15 +11,11 @@ public partial class Examples
+ 
+         await client.Query.SendAsync(
+             new SendLiteralsInQueryRequest {
+-                Prompt = "You are a helpful assistant",
+-                OptionalPrompt = "You are a helpful assistant",
+-                AliasPrompt = "You are a helpful assistant",
+-                AliasOptionalPrompt = "You are a helpful assistant",
++                AliasPrompt = new AliasToPrompt(),
++                AliasOptionalPrompt = new AliasToPrompt(),
+                 Query = "query",
+-                Stream = false,
+-                OptionalStream = false,
+-                AliasStream = false,
+-                AliasOptionalStream = false
++                AliasStream = new AliasToStream(),
++                AliasOptionalStream = new AliasToStream()
+             }
+         );
+     }
+diff --git a/Snippets/Example8.cs b/Snippets/Example8.cs
+index c231e58c1e0..ed7f8c9917d 100644
+--- a/Snippets/Example8.cs
++++ b/Snippets/Example8.cs
+@@ -11,21 +11,16 @@ public partial class Examples
+ 
+         await client.Reference.SendAsync(
+             new SendRequest {
+-                Prompt = "You are a helpful assistant",
+-                Stream = false,
+-                Context = "You're super wise",
++                Context = new SomeLiteral(),
+                 Query = "What is the weather today",
+                 ContainerObject = new ContainerObject {
+                     NestedObjects = new List<NestedObjectWithLiterals>(){
+                         new NestedObjectWithLiterals {
+-                            Literal1 = "literal1",
+-                            Literal2 = "literal2",
+                             StrProp = "strProp"
+                         },
+                     }
+ 
+-                },
+-                Ending = "$ending"
++                }
+             }
+         );
+     }
+diff --git a/Snippets/Example9.cs b/Snippets/Example9.cs
+index 5ff777557d3..d7f215e9428 100644
+--- a/Snippets/Example9.cs
++++ b/Snippets/Example9.cs
+@@ -11,22 +11,15 @@ public partial class Examples
+ 
+         await client.Reference.SendAsync(
+             new SendRequest {
+-                Prompt = "You are a helpful assistant",
+                 Query = "query",
+-                Stream = false,
+-                Ending = "$ending",
+-                Context = "You're super wise",
+-                MaybeContext = "You're super wise",
++                Context = new SomeLiteral(),
++                MaybeContext = new SomeLiteral(),
+                 ContainerObject = new ContainerObject {
+                     NestedObjects = new List<NestedObjectWithLiterals>(){
+                         new NestedObjectWithLiterals {
+-                            Literal1 = "literal1",
+-                            Literal2 = "literal2",
+                             StrProp = "strProp"
+                         },
+                         new NestedObjectWithLiterals {
+-                            Literal1 = "literal1",
+-                            Literal2 = "literal2",
+                             StrProp = "strProp"
+                         },
+                     }
+diff --git a/reference.md b/reference.md
+index a80293b34ab..e03ede34ef0 100644
+--- a/reference.md
++++ b/reference.md
+@@ -65,15 +65,9 @@ await client.Inlined.SendAsync(
+     new SendLiteralsInlinedRequest
+     {
+         Temperature = 10.1,
+-        Prompt = "You are a helpful assistant",
+         Context = "You're super wise",
+-        AliasedContext = "You're super wise",
+         MaybeContext = "You're super wise",
+-        ObjectWithLiteral = new ATopLevelLiteral
+-        {
+-            NestedLiteral = new ANestedLiteral { MyLiteral = "How super cool" },
+-        },
+-        Stream = false,
++        ObjectWithLiteral = new ATopLevelLiteral { NestedLiteral = new ANestedLiteral() },
+         Query = "What is the weather today",
+     }
+ );
+@@ -215,20 +209,12 @@ await client.Query.SendAsync(
+ await client.Reference.SendAsync(
+     new SendRequest
+     {
+-        Prompt = "You are a helpful assistant",
+-        Stream = false,
+-        Context = "You're super wise",
+         Query = "What is the weather today",
+         ContainerObject = new ContainerObject
+         {
+             NestedObjects = new List<NestedObjectWithLiterals>()
+             {
+-                new NestedObjectWithLiterals
+-                {
+-                    Literal1 = "literal1",
+-                    Literal2 = "literal2",
+-                    StrProp = "strProp",
+-                },
++                new NestedObjectWithLiterals { StrProp = "strProp" },
+             },
+         },
+     }
+diff --git a/snippet.json b/snippet.json
+index e1f093decee..b5e771cb39f 100644
+--- a/snippet.json
++++ b/snippet.json
+@@ -22,7 +22,7 @@
+             },
+             "snippet": {
+                 "type": "csharp",
+-                "client": "using SeedLiteral;\n\nvar client = new SeedLiteralClient();\nawait client.Inlined.SendAsync(\n    new SendLiteralsInlinedRequest\n    {\n        Temperature = 10.1,\n        Prompt = \"You are a helpful assistant\",\n        Context = \"You're super wise\",\n        AliasedContext = \"You're super wise\",\n        MaybeContext = \"You're super wise\",\n        ObjectWithLiteral = new ATopLevelLiteral\n        {\n            NestedLiteral = new ANestedLiteral { MyLiteral = \"How super cool\" },\n        },\n        Stream = false,\n        Query = \"What is the weather today\",\n    }\n);\n"
++                "client": "using SeedLiteral;\n\nvar client = new SeedLiteralClient();\nawait client.Inlined.SendAsync(\n    new SendLiteralsInlinedRequest\n    {\n        Temperature = 10.1,\n        Context = \"You're super wise\",\n        MaybeContext = \"You're super wise\",\n        ObjectWithLiteral = new ATopLevelLiteral { NestedLiteral = new ANestedLiteral() },\n        Query = \"What is the weather today\",\n    }\n);\n"
+             }
+         },
+         {
+@@ -58,7 +58,7 @@
+             },
+             "snippet": {
+                 "type": "csharp",
+-                "client": "using SeedLiteral;\n\nvar client = new SeedLiteralClient();\nawait client.Reference.SendAsync(\n    new SendRequest\n    {\n        Prompt = \"You are a helpful assistant\",\n        Stream = false,\n        Context = \"You're super wise\",\n        Query = \"What is the weather today\",\n        ContainerObject = new ContainerObject\n        {\n            NestedObjects = new List<NestedObjectWithLiterals>()\n            {\n                new NestedObjectWithLiterals\n                {\n                    Literal1 = \"literal1\",\n                    Literal2 = \"literal2\",\n                    StrProp = \"strProp\",\n                },\n            },\n        },\n    }\n);\n"
++                "client": "using SeedLiteral;\n\nvar client = new SeedLiteralClient();\nawait client.Reference.SendAsync(\n    new SendRequest\n    {\n        Query = \"What is the weather today\",\n        ContainerObject = new ContainerObject\n        {\n            NestedObjects = new List<NestedObjectWithLiterals>()\n            {\n                new NestedObjectWithLiterals { StrProp = \"strProp\" },\n            },\n        },\n    }\n);\n"
+             }
+         }
+     ]
+diff --git a/src/SeedLiteral/Inlined/InlinedClient.cs b/src/SeedLiteral/Inlined/InlinedClient.cs
+index 731d702bc39..738578d13e6 100644
+--- a/src/SeedLiteral/Inlined/InlinedClient.cs
++++ b/src/SeedLiteral/Inlined/InlinedClient.cs
+@@ -83,15 +83,9 @@ public partial class InlinedClient : IInlinedClient
+     ///     new SendLiteralsInlinedRequest
+     ///     {
+     ///         Temperature = 10.1,
+-    ///         Prompt = "You are a helpful assistant",
+     ///         Context = "You're super wise",
+-    ///         AliasedContext = "You're super wise",
+     ///         MaybeContext = "You're super wise",
+-    ///         ObjectWithLiteral = new ATopLevelLiteral
+-    ///         {
+-    ///             NestedLiteral = new ANestedLiteral { MyLiteral = "How super cool" },
+-    ///         },
+-    ///         Stream = false,
++    ///         ObjectWithLiteral = new ATopLevelLiteral { NestedLiteral = new ANestedLiteral() },
+     ///         Query = "What is the weather today",
+     ///     }
+     /// );
+diff --git a/src/SeedLiteral/Inlined/Requests/SendLiteralsInlinedRequest.cs b/src/SeedLiteral/Inlined/Requests/SendLiteralsInlinedRequest.cs
+index aff474ed902..987909917d1 100644
+--- a/src/SeedLiteral/Inlined/Requests/SendLiteralsInlinedRequest.cs
++++ b/src/SeedLiteral/Inlined/Requests/SendLiteralsInlinedRequest.cs
+@@ -1,3 +1,4 @@
++using global::System.Text.Json;
+ using global::System.Text.Json.Serialization;
+ using SeedLiteral.Core;
+ 
+@@ -6,8 +7,15 @@ namespace SeedLiteral;
+ [Serializable]
+ public record SendLiteralsInlinedRequest
+ {
++    [JsonRequired]
+     [JsonPropertyName("prompt")]
+-    public string Prompt { get; set; } = "You are a helpful assistant";
++    public SendLiteralsInlinedRequest.PromptLiteral Prompt { get;
++#if NET5_0_OR_GREATER
++        init;
++#else
++        set;
++#endif
++    } = new();
+ 
+     [JsonPropertyName("context")]
+     public string? Context { get; set; }
+@@ -18,11 +26,25 @@ public record SendLiteralsInlinedRequest
+     [JsonPropertyName("temperature")]
+     public double? Temperature { get; set; }
+ 
++    [JsonRequired]
+     [JsonPropertyName("stream")]
+-    public bool Stream { get; set; } = false;
++    public SendLiteralsInlinedRequest.StreamLiteral Stream { get;
++#if NET5_0_OR_GREATER
++        init;
++#else
++        set;
++#endif
++    } = new();
+ 
++    [JsonRequired]
+     [JsonPropertyName("aliasedContext")]
+-    public string AliasedContext { get; set; } = "You're super wise";
++    public SomeAliasedLiteral AliasedContext { get;
++#if NET5_0_OR_GREATER
++        init;
++#else
++        set;
++#endif
++    } = new();
+ 
+     [JsonPropertyName("maybeContext")]
+     public string? MaybeContext { get; set; }
+@@ -35,4 +57,141 @@ public record SendLiteralsInlinedRequest
+     {
+         return JsonUtils.Serialize(this);
+     }
++
++    [JsonConverter(typeof(PromptLiteralConverter))]
++    public readonly struct PromptLiteral
++    {
++        public const string Value = "You are a helpful assistant";
++
++        public static implicit operator string(PromptLiteral _) => Value;
++
++        public override string ToString() => Value;
++
++        public override int GetHashCode() =>
++            global::System.StringComparer.Ordinal.GetHashCode(Value);
++
++        public override bool Equals(object? obj) => obj is PromptLiteral;
++
++        public static bool operator ==(PromptLiteral _, PromptLiteral __) => true;
++
++        public static bool operator !=(PromptLiteral _, PromptLiteral __) => false;
++
++        internal sealed class PromptLiteralConverter : JsonConverter<PromptLiteral>
++        {
++            public override PromptLiteral Read(
++                ref Utf8JsonReader reader,
++                global::System.Type typeToConvert,
++                JsonSerializerOptions options
++            )
++            {
++                var value = reader.GetString();
++                if (value != PromptLiteral.Value)
++                {
++                    throw new JsonException(
++                        "Expected \""
++                            + PromptLiteral.Value
++                            + "\" for type discriminator but got \""
++                            + value
++                            + "\"."
++                    );
++                }
++                return new PromptLiteral();
++            }
++
++            public override void Write(
++                Utf8JsonWriter writer,
++                PromptLiteral value,
++                JsonSerializerOptions options
++            ) => writer.WriteStringValue(PromptLiteral.Value);
++
++            public override PromptLiteral ReadAsPropertyName(
++                ref Utf8JsonReader reader,
++                global::System.Type typeToConvert,
++                JsonSerializerOptions options
++            )
++            {
++                var value = reader.GetString();
++                if (value != PromptLiteral.Value)
++                {
++                    throw new JsonException(
++                        "Expected \""
++                            + PromptLiteral.Value
++                            + "\" for type discriminator but got \""
++                            + value
++                            + "\"."
++                    );
++                }
++                return new PromptLiteral();
++            }
++
++            public override void WriteAsPropertyName(
++                Utf8JsonWriter writer,
++                PromptLiteral value,
++                JsonSerializerOptions options
++            ) => writer.WritePropertyName(PromptLiteral.Value);
++        }
++    }
++
++    [JsonConverter(typeof(StreamLiteralConverter))]
++    public readonly struct StreamLiteral
++    {
++        public const bool Value = false;
++
++        public static implicit operator bool(StreamLiteral _) => Value;
++
++        public override string ToString() => Value.ToString();
++
++        public override int GetHashCode() => Value.GetHashCode();
++
++        public override bool Equals(object? obj) => obj is StreamLiteral;
++
++        public static bool operator ==(StreamLiteral _, StreamLiteral __) => true;
++
++        public static bool operator !=(StreamLiteral _, StreamLiteral __) => false;
++
++        internal sealed class StreamLiteralConverter : JsonConverter<StreamLiteral>
++        {
++            public override StreamLiteral Read(
++                ref Utf8JsonReader reader,
++                global::System.Type typeToConvert,
++                JsonSerializerOptions options
++            )
++            {
++                var value = reader.GetBoolean();
++                if (value != StreamLiteral.Value)
++                {
++                    throw new JsonException("Expected false for type discriminator but got true.");
++                }
++                return new StreamLiteral();
++            }
++
++            public override void Write(
++                Utf8JsonWriter writer,
++                StreamLiteral value,
++                JsonSerializerOptions options
++            ) => writer.WriteBooleanValue(StreamLiteral.Value);
++
++            public override StreamLiteral ReadAsPropertyName(
++                ref Utf8JsonReader reader,
++                global::System.Type typeToConvert,
++                JsonSerializerOptions options
++            )
++            {
++                var value = reader.GetString();
++                if (!bool.TryParse(value, out var boolValue) || boolValue != StreamLiteral.Value)
++                {
++                    throw new JsonException(
++                        "Expected false for type discriminator but got \"" + value + "\"."
++                    );
++                }
++                return new StreamLiteral();
++            }
++
++            public override void WriteAsPropertyName(
++                Utf8JsonWriter writer,
++                StreamLiteral value,
++                JsonSerializerOptions options
++            ) => writer.WritePropertyName(StreamLiteral.Value.ToString());
++        }
++    }
+ }
+diff --git a/src/SeedLiteral/Inlined/Types/ANestedLiteral.cs b/src/SeedLiteral/Inlined/Types/ANestedLiteral.cs
+index 885170fbfae..a018573efe7 100644
+--- a/src/SeedLiteral/Inlined/Types/ANestedLiteral.cs
++++ b/src/SeedLiteral/Inlined/Types/ANestedLiteral.cs
+@@ -11,8 +11,15 @@ public record ANestedLiteral : IJsonOnDeserialized
+     private readonly IDictionary<string, JsonElement> _extensionData =
+         new Dictionary<string, JsonElement>();
+ 
++    [JsonRequired]
+     [JsonPropertyName("myLiteral")]
+-    public string MyLiteral { get; set; } = "How super cool";
++    public ANestedLiteral.MyLiteralLiteral MyLiteral { get;
++#if NET5_0_OR_GREATER
++        init;
++#else
++        set;
++#endif
++    } = new();
+ 
+     [JsonIgnore]
+     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+@@ -25,4 +32,78 @@ public record ANestedLiteral : IJsonOnDeserialized
+     {
+         return JsonUtils.Serialize(this);
+     }
++
++    [JsonConverter(typeof(MyLiteralLiteralConverter))]
++    public readonly struct MyLiteralLiteral
++    {
++        public const string Value = "How super cool";
++
++        public static implicit operator string(MyLiteralLiteral _) => Value;
++
++        public override string ToString() => Value;
++
++        public override int GetHashCode() =>
++            global::System.StringComparer.Ordinal.GetHashCode(Value);
++
++        public override bool Equals(object? obj) => obj is MyLiteralLiteral;
++
++        public static bool operator ==(MyLiteralLiteral _, MyLiteralLiteral __) => true;
++
++        public static bool operator !=(MyLiteralLiteral _, MyLiteralLiteral __) => false;
++
++        internal sealed class MyLiteralLiteralConverter : JsonConverter<MyLiteralLiteral>
++        {
++            public override MyLiteralLiteral Read(
++                ref Utf8JsonReader reader,
++                global::System.Type typeToConvert,
++                JsonSerializerOptions options
++            )
++            {
++                var value = reader.GetString();
++                if (value != MyLiteralLiteral.Value)
++                {
++                    throw new JsonException(
++                        "Expected \""
++                            + MyLiteralLiteral.Value
++                            + "\" for type discriminator but got \""
++                            + value
++                            + "\"."
++                    );
++                }
++                return new MyLiteralLiteral();
++            }
++
++            public override void Write(
++                Utf8JsonWriter writer,
++                MyLiteralLiteral value,
++                JsonSerializerOptions options
++            ) => writer.WriteStringValue(MyLiteralLiteral.Value);
++
++            public override MyLiteralLiteral ReadAsPropertyName(
++                ref Utf8JsonReader reader,
++                global::System.Type typeToConvert,
++                JsonSerializerOptions options
++            )
++            {
++                var value = reader.GetString();
++                if (value != MyLiteralLiteral.Value)
++                {
++                    throw new JsonException(
++                        "Expected \""
++                            + MyLiteralLiteral.Value
++                            + "\" for type discriminator but got \""
++                            + value
++                            + "\"."
++                    );
++                }
++                return new MyLiteralLiteral();
++            }
++
++            public override void WriteAsPropertyName(
++                Utf8JsonWriter writer,
++                MyLiteralLiteral value,
++                JsonSerializerOptions options
++            ) => writer.WritePropertyName(MyLiteralLiteral.Value);
++        }
++    }
+ }
+diff --git a/src/SeedLiteral/Inlined/Types/SomeAliasedLiteral.cs b/src/SeedLiteral/Inlined/Types/SomeAliasedLiteral.cs
+new file mode 100644
+index 00000000000..7c0b8ba9cfa
+--- /dev/null
++++ b/src/SeedLiteral/Inlined/Types/SomeAliasedLiteral.cs
+@@ -0,0 +1,77 @@
++using global::System.Text.Json;
++using global::System.Text.Json.Serialization;
++
++namespace SeedLiteral;
++
++[JsonConverter(typeof(SomeAliasedLiteralConverter))]
++public readonly struct SomeAliasedLiteral
++{
++    public const string Value = "You're super wise";
++
++    public static implicit operator string(SomeAliasedLiteral _) => Value;
++
++    public override string ToString() => Value;
++
++    public override int GetHashCode() => global::System.StringComparer.Ordinal.GetHashCode(Value);
++
++    public override bool Equals(object? obj) => obj is SomeAliasedLiteral;
++
++    public static bool operator ==(SomeAliasedLiteral _, SomeAliasedLiteral __) => true;
++
++    public static bool operator !=(SomeAliasedLiteral _, SomeAliasedLiteral __) => false;
++
++    internal sealed class SomeAliasedLiteralConverter : JsonConverter<SomeAliasedLiteral>
++    {
++        public override SomeAliasedLiteral Read(
++            ref Utf8JsonReader reader,
++            global::System.Type typeToConvert,
++            JsonSerializerOptions options
++        )
++        {
++            var value = reader.GetString();
++            if (value != SomeAliasedLiteral.Value)
++            {
++                throw new JsonException(
++                    "Expected \""
++                        + SomeAliasedLiteral.Value
++                        + "\" for type discriminator but got \""
++                        + value
++                        + "\"."
++                );
++            }
++            return new SomeAliasedLiteral();
++        }
++
++        public override void Write(
++            Utf8JsonWriter writer,
++            SomeAliasedLiteral value,
++            JsonSerializerOptions options
++        ) => writer.WriteStringValue(SomeAliasedLiteral.Value);
++
++        public override SomeAliasedLiteral ReadAsPropertyName(
++            ref Utf8JsonReader reader,
++            global::System.Type typeToConvert,
++            JsonSerializerOptions options
++        )
++        {
++            var value = reader.GetString();
++            if (value != SomeAliasedLiteral.Value)
++            {
++                throw new JsonException(
++                    "Expected \""
++                        + SomeAliasedLiteral.Value
++                        + "\" for type discriminator but got \""
++                        + value
++                        + "\"."
++                );
++            }
++            return new SomeAliasedLiteral();
++        }
++
++        public override void WriteAsPropertyName(
++            Utf8JsonWriter writer,
++            SomeAliasedLiteral value,
++            JsonSerializerOptions options
++        ) => writer.WritePropertyName(SomeAliasedLiteral.Value);
++    }
++}
+diff --git a/src/SeedLiteral/Query/Types/AliasToPrompt.cs b/src/SeedLiteral/Query/Types/AliasToPrompt.cs
+new file mode 100644
+index 00000000000..cb192a176d2
+--- /dev/null
++++ b/src/SeedLiteral/Query/Types/AliasToPrompt.cs
+@@ -0,0 +1,77 @@
++using global::System.Text.Json;
++using global::System.Text.Json.Serialization;
++
++namespace SeedLiteral;
++
++[JsonConverter(typeof(AliasToPromptConverter))]
++public readonly struct AliasToPrompt
++{
++    public const string Value = "You are a helpful assistant";
++
++    public static implicit operator string(AliasToPrompt _) => Value;
++
++    public override string ToString() => Value;
++
++    public override int GetHashCode() => global::System.StringComparer.Ordinal.GetHashCode(Value);
++
++    public override bool Equals(object? obj) => obj is AliasToPrompt;
++
++    public static bool operator ==(AliasToPrompt _, AliasToPrompt __) => true;
++
++    public static bool operator !=(AliasToPrompt _, AliasToPrompt __) => false;
++
++    internal sealed class AliasToPromptConverter : JsonConverter<AliasToPrompt>
++    {
++        public override AliasToPrompt Read(
++            ref Utf8JsonReader reader,
++            global::System.Type typeToConvert,
++            JsonSerializerOptions options
++        )
++        {
++            var value = reader.GetString();
++            if (value != AliasToPrompt.Value)
++            {
++                throw new JsonException(
++                    "Expected \""
++                        + AliasToPrompt.Value
++                        + "\" for type discriminator but got \""
++                        + value
++                        + "\"."
++                );
++            }
++            return new AliasToPrompt();
++        }
++
++        public override void Write(
++            Utf8JsonWriter writer,
++            AliasToPrompt value,
++            JsonSerializerOptions options
++        ) => writer.WriteStringValue(AliasToPrompt.Value);
++
++        public override AliasToPrompt ReadAsPropertyName(
++            ref Utf8JsonReader reader,
++            global::System.Type typeToConvert,
++            JsonSerializerOptions options
++        )
++        {
++            var value = reader.GetString();
++            if (value != AliasToPrompt.Value)
++            {
++                throw new JsonException(
++                    "Expected \""
++                        + AliasToPrompt.Value
++                        + "\" for type discriminator but got \""
++                        + value
++                        + "\"."
++                );
++            }
++            return new AliasToPrompt();
++        }
++
++        public override void WriteAsPropertyName(
++            Utf8JsonWriter writer,
++            AliasToPrompt value,
++            JsonSerializerOptions options
++        ) => writer.WritePropertyName(AliasToPrompt.Value);
++    }
++}
+diff --git a/src/SeedLiteral/Query/Types/AliasToStream.cs b/src/SeedLiteral/Query/Types/AliasToStream.cs
+new file mode 100644
+index 00000000000..34eb5e2cb9f
+--- /dev/null
++++ b/src/SeedLiteral/Query/Types/AliasToStream.cs
+@@ -0,0 +1,67 @@
++using global::System.Text.Json;
++using global::System.Text.Json.Serialization;
++
++namespace SeedLiteral;
++
++[JsonConverter(typeof(AliasToStreamConverter))]
++public readonly struct AliasToStream
++{
++    public const bool Value = false;
++
++    public static implicit operator bool(AliasToStream _) => Value;
++
++    public override string ToString() => Value.ToString();
++
++    public override int GetHashCode() => Value.GetHashCode();
++
++    public override bool Equals(object? obj) => obj is AliasToStream;
++
++    public static bool operator ==(AliasToStream _, AliasToStream __) => true;
++
++    public static bool operator !=(AliasToStream _, AliasToStream __) => false;
++
++    internal sealed class AliasToStreamConverter : JsonConverter<AliasToStream>
++    {
++        public override AliasToStream Read(
++            ref Utf8JsonReader reader,
++            global::System.Type typeToConvert,
++            JsonSerializerOptions options
++        )
++        {
++            var value = reader.GetBoolean();
++            if (value != AliasToStream.Value)
++            {
++                throw new JsonException("Expected false for type discriminator but got true.");
++            }
++            return new AliasToStream();
++        }
++
++        public override void Write(
++            Utf8JsonWriter writer,
++            AliasToStream value,
++            JsonSerializerOptions options
++        ) => writer.WriteBooleanValue(AliasToStream.Value);
++
++        public override AliasToStream ReadAsPropertyName(
++            ref Utf8JsonReader reader,
++            global::System.Type typeToConvert,
++            JsonSerializerOptions options
++        )
++        {
++            var value = reader.GetString();
++            if (!bool.TryParse(value, out var boolValue) || boolValue != AliasToStream.Value)
++            {
++                throw new JsonException(
++                    "Expected false for type discriminator but got \"" + value + "\"."
++                );
++            }
++            return new AliasToStream();
++        }
++
++        public override void WriteAsPropertyName(
++            Utf8JsonWriter writer,
++            AliasToStream value,
++            JsonSerializerOptions options
++        ) => writer.WritePropertyName(AliasToStream.Value.ToString());
++    }
++}
+diff --git a/src/SeedLiteral/Reference/ReferenceClient.cs b/src/SeedLiteral/Reference/ReferenceClient.cs
+index 5e357685f3f..8a2e3cbebe5 100644
+--- a/src/SeedLiteral/Reference/ReferenceClient.cs
++++ b/src/SeedLiteral/Reference/ReferenceClient.cs
+@@ -82,20 +82,12 @@ public partial class ReferenceClient : IReferenceClient
+     /// await client.Reference.SendAsync(
+     ///     new SendRequest
+     ///     {
+-    ///         Prompt = "You are a helpful assistant",
+-    ///         Stream = false,
+-    ///         Context = "You're super wise",
+     ///         Query = "What is the weather today",
+     ///         ContainerObject = new ContainerObject
+     ///         {
+     ///             NestedObjects = new List&lt;NestedObjectWithLiterals&gt;()
+     ///             {
+-    ///                 new NestedObjectWithLiterals
+-    ///                 {
+-    ///                     Literal1 = "literal1",
+-    ///                     Literal2 = "literal2",
+-    ///                     StrProp = "strProp",
+-    ///                 },
++    ///                 new NestedObjectWithLiterals { StrProp = "strProp" },
+     ///             },
+     ///         },
+     ///     }
+diff --git a/src/SeedLiteral/Reference/Types/NestedObjectWithLiterals.cs b/src/SeedLiteral/Reference/Types/NestedObjectWithLiterals.cs
+index 2389bf74a73..cd592f8f26e 100644
+--- a/src/SeedLiteral/Reference/Types/NestedObjectWithLiterals.cs
++++ b/src/SeedLiteral/Reference/Types/NestedObjectWithLiterals.cs
+@@ -11,11 +11,25 @@ public record NestedObjectWithLiterals : IJsonOnDeserialized
+     private readonly IDictionary<string, JsonElement> _extensionData =
+         new Dictionary<string, JsonElement>();
+ 
++    [JsonRequired]
+     [JsonPropertyName("literal1")]
+-    public string Literal1 { get; set; } = "literal1";
++    public NestedObjectWithLiterals.Literal1Literal Literal1 { get;
++#if NET5_0_OR_GREATER
++        init;
++#else
++        set;
++#endif
++    } = new();
+ 
++    [JsonRequired]
+     [JsonPropertyName("literal2")]
+-    public string Literal2 { get; set; } = "literal2";
++    public NestedObjectWithLiterals.Literal2Literal Literal2 { get;
++#if NET5_0_OR_GREATER
++        init;
++#else
++        set;
++#endif
++    } = new();
+ 
+     [JsonPropertyName("strProp")]
+     public required string StrProp { get; set; }
+@@ -31,4 +45,152 @@ public record NestedObjectWithLiterals : IJsonOnDeserialized
+     {
+         return JsonUtils.Serialize(this);
+     }
++
++    [JsonConverter(typeof(Literal1LiteralConverter))]
++    public readonly struct Literal1Literal
++    {
++        public const string Value = "literal1";
++
++        public static implicit operator string(Literal1Literal _) => Value;
++
++        public override string ToString() => Value;
++
++        public override int GetHashCode() =>
++            global::System.StringComparer.Ordinal.GetHashCode(Value);
++
++        public override bool Equals(object? obj) => obj is Literal1Literal;
++
++        public static bool operator ==(Literal1Literal _, Literal1Literal __) => true;
++
++        public static bool operator !=(Literal1Literal _, Literal1Literal __) => false;
++
++        internal sealed class Literal1LiteralConverter : JsonConverter<Literal1Literal>
++        {
++            public override Literal1Literal Read(
++                ref Utf8JsonReader reader,
++                global::System.Type typeToConvert,
++                JsonSerializerOptions options
++            )
++            {
++                var value = reader.GetString();
++                if (value != Literal1Literal.Value)
++                {
++                    throw new JsonException(
++                        "Expected \""
++                            + Literal1Literal.Value
++                            + "\" for type discriminator but got \""
++                            + value
++                            + "\"."
++                    );
++                }
++                return new Literal1Literal();
++            }
++
++            public override void Write(
++                Utf8JsonWriter writer,
++                Literal1Literal value,
++                JsonSerializerOptions options
++            ) => writer.WriteStringValue(Literal1Literal.Value);
++
++            public override Literal1Literal ReadAsPropertyName(
++                ref Utf8JsonReader reader,
++                global::System.Type typeToConvert,
++                JsonSerializerOptions options
++            )
++            {
++                var value = reader.GetString();
++                if (value != Literal1Literal.Value)
++                {
++                    throw new JsonException(
++                        "Expected \""
++                            + Literal1Literal.Value
++                            + "\" for type discriminator but got \""
++                            + value
++                            + "\"."
++                    );
++                }
++                return new Literal1Literal();
++            }
++
++            public override void WriteAsPropertyName(
++                Utf8JsonWriter writer,
++                Literal1Literal value,
++                JsonSerializerOptions options
++            ) => writer.WritePropertyName(Literal1Literal.Value);
++        }
++    }
++
++    [JsonConverter(typeof(Literal2LiteralConverter))]
++    public readonly struct Literal2Literal
++    {
++        public const string Value = "literal2";
++
++        public static implicit operator string(Literal2Literal _) => Value;
++
++        public override string ToString() => Value;
++
++        public override int GetHashCode() =>
++            global::System.StringComparer.Ordinal.GetHashCode(Value);
++
++        public override bool Equals(object? obj) => obj is Literal2Literal;
++
++        public static bool operator ==(Literal2Literal _, Literal2Literal __) => true;
++
++        public static bool operator !=(Literal2Literal _, Literal2Literal __) => false;
++
++        internal sealed class Literal2LiteralConverter : JsonConverter<Literal2Literal>
++        {
++            public override Literal2Literal Read(
++                ref Utf8JsonReader reader,
++                global::System.Type typeToConvert,
++                JsonSerializerOptions options
++            )
++            {
++                var value = reader.GetString();
++                if (value != Literal2Literal.Value)
++                {
++                    throw new JsonException(
++                        "Expected \""
++                            + Literal2Literal.Value
++                            + "\" for type discriminator but got \""
++                            + value
++                            + "\"."
++                    );
++                }
++                return new Literal2Literal();
++            }
++
++            public override void Write(
++                Utf8JsonWriter writer,
++                Literal2Literal value,
++                JsonSerializerOptions options
++            ) => writer.WriteStringValue(Literal2Literal.Value);
++
++            public override Literal2Literal ReadAsPropertyName(
++                ref Utf8JsonReader reader,
++                global::System.Type typeToConvert,
++                JsonSerializerOptions options
++            )
++            {
++                var value = reader.GetString();
++                if (value != Literal2Literal.Value)
++                {
++                    throw new JsonException(
++                        "Expected \""
++                            + Literal2Literal.Value
++                            + "\" for type discriminator but got \""
++                            + value
++                            + "\"."
++                    );
++                }
++                return new Literal2Literal();
++            }
++
++            public override void WriteAsPropertyName(
++                Utf8JsonWriter writer,
++                Literal2Literal value,
++                JsonSerializerOptions options
++            ) => writer.WritePropertyName(Literal2Literal.Value);
++        }
++    }
+ }
+diff --git a/src/SeedLiteral/Reference/Types/SendRequest.cs b/src/SeedLiteral/Reference/Types/SendRequest.cs
+index 5dbd4936e16..b93e8ed5e53 100644
+--- a/src/SeedLiteral/Reference/Types/SendRequest.cs
++++ b/src/SeedLiteral/Reference/Types/SendRequest.cs
+@@ -11,20 +11,48 @@ public record SendRequest : IJsonOnDeserialized
+     private readonly IDictionary<string, JsonElement> _extensionData =
+         new Dictionary<string, JsonElement>();
+ 
++    [JsonRequired]
+     [JsonPropertyName("prompt")]
+-    public string Prompt { get; set; } = "You are a helpful assistant";
++    public SendRequest.PromptLiteral Prompt { get;
++#if NET5_0_OR_GREATER
++        init;
++#else
++        set;
++#endif
++    } = new();
+ 
+     [JsonPropertyName("query")]
+     public required string Query { get; set; }
+ 
++    [JsonRequired]
+     [JsonPropertyName("stream")]
+-    public bool Stream { get; set; } = false;
++    public SendRequest.StreamLiteral Stream { get;
++#if NET5_0_OR_GREATER
++        init;
++#else
++        set;
++#endif
++    } = new();
+ 
++    [JsonRequired]
+     [JsonPropertyName("ending")]
+-    public string Ending { get; set; } = "$ending";
++    public SendRequest.EndingLiteral Ending { get;
++#if NET5_0_OR_GREATER
++        init;
++#else
++        set;
++#endif
++    } = new();
+ 
++    [JsonRequired]
+     [JsonPropertyName("context")]
+-    public string Context { get; set; } = "You're super wise";
++    public SomeLiteral Context { get;
++#if NET5_0_OR_GREATER
++        init;
++#else
++        set;
++#endif
++    } = new();
+ 
+     [JsonPropertyName("maybeContext")]
+     public string? MaybeContext { get; set; }
+@@ -43,4 +71,215 @@ public record SendRequest : IJsonOnDeserialized
+     {
+         return JsonUtils.Serialize(this);
+     }
++
++    [JsonConverter(typeof(PromptLiteralConverter))]
++    public readonly struct PromptLiteral
++    {
++        public const string Value = "You are a helpful assistant";
++
++        public static implicit operator string(PromptLiteral _) => Value;
++
++        public override string ToString() => Value;
++
++        public override int GetHashCode() =>
++            global::System.StringComparer.Ordinal.GetHashCode(Value);
++
++        public override bool Equals(object? obj) => obj is PromptLiteral;
++
++        public static bool operator ==(PromptLiteral _, PromptLiteral __) => true;
++
++        public static bool operator !=(PromptLiteral _, PromptLiteral __) => false;
++
++        internal sealed class PromptLiteralConverter : JsonConverter<PromptLiteral>
++        {
++            public override PromptLiteral Read(
++                ref Utf8JsonReader reader,
++                global::System.Type typeToConvert,
++                JsonSerializerOptions options
++            )
++            {
++                var value = reader.GetString();
++                if (value != PromptLiteral.Value)
++                {
++                    throw new JsonException(
++                        "Expected \""
++                            + PromptLiteral.Value
++                            + "\" for type discriminator but got \""
++                            + value
++                            + "\"."
++                    );
++                }
++                return new PromptLiteral();
++            }
++
++            public override void Write(
++                Utf8JsonWriter writer,
++                PromptLiteral value,
++                JsonSerializerOptions options
++            ) => writer.WriteStringValue(PromptLiteral.Value);
++
++            public override PromptLiteral ReadAsPropertyName(
++                ref Utf8JsonReader reader,
++                global::System.Type typeToConvert,
++                JsonSerializerOptions options
++            )
++            {
++                var value = reader.GetString();
++                if (value != PromptLiteral.Value)
++                {
++                    throw new JsonException(
++                        "Expected \""
++                            + PromptLiteral.Value
++                            + "\" for type discriminator but got \""
++                            + value
++                            + "\"."
++                    );
++                }
++                return new PromptLiteral();
++            }
++
++            public override void WriteAsPropertyName(
++                Utf8JsonWriter writer,
++                PromptLiteral value,
++                JsonSerializerOptions options
++            ) => writer.WritePropertyName(PromptLiteral.Value);
++        }
++    }
++
++    [JsonConverter(typeof(StreamLiteralConverter))]
++    public readonly struct StreamLiteral
++    {
++        public const bool Value = false;
++
++        public static implicit operator bool(StreamLiteral _) => Value;
++
++        public override string ToString() => Value.ToString();
++
++        public override int GetHashCode() => Value.GetHashCode();
++
++        public override bool Equals(object? obj) => obj is StreamLiteral;
++
++        public static bool operator ==(StreamLiteral _, StreamLiteral __) => true;
++
++        public static bool operator !=(StreamLiteral _, StreamLiteral __) => false;
++
++        internal sealed class StreamLiteralConverter : JsonConverter<StreamLiteral>
++        {
++            public override StreamLiteral Read(
++                ref Utf8JsonReader reader,
++                global::System.Type typeToConvert,
++                JsonSerializerOptions options
++            )
++            {
++                var value = reader.GetBoolean();
++                if (value != StreamLiteral.Value)
++                {
++                    throw new JsonException("Expected false for type discriminator but got true.");
++                }
++                return new StreamLiteral();
++            }
++
++            public override void Write(
++                Utf8JsonWriter writer,
++                StreamLiteral value,
++                JsonSerializerOptions options
++            ) => writer.WriteBooleanValue(StreamLiteral.Value);
++
++            public override StreamLiteral ReadAsPropertyName(
++                ref Utf8JsonReader reader,
++                global::System.Type typeToConvert,
++                JsonSerializerOptions options
++            )
++            {
++                var value = reader.GetString();
++                if (!bool.TryParse(value, out var boolValue) || boolValue != StreamLiteral.Value)
++                {
++                    throw new JsonException(
++                        "Expected false for type discriminator but got \"" + value + "\"."
++                    );
++                }
++                return new StreamLiteral();
++            }
++
++            public override void WriteAsPropertyName(
++                Utf8JsonWriter writer,
++                StreamLiteral value,
++                JsonSerializerOptions options
++            ) => writer.WritePropertyName(StreamLiteral.Value.ToString());
++        }
++    }
++
++    [JsonConverter(typeof(EndingLiteralConverter))]
++    public readonly struct EndingLiteral
++    {
++        public const string Value = "$ending";
++
++        public static implicit operator string(EndingLiteral _) => Value;
++
++        public override string ToString() => Value;
++
++        public override int GetHashCode() =>
++            global::System.StringComparer.Ordinal.GetHashCode(Value);
++
++        public override bool Equals(object? obj) => obj is EndingLiteral;
++
++        public static bool operator ==(EndingLiteral _, EndingLiteral __) => true;
++
++        public static bool operator !=(EndingLiteral _, EndingLiteral __) => false;
++
++        internal sealed class EndingLiteralConverter : JsonConverter<EndingLiteral>
++        {
++            public override EndingLiteral Read(
++                ref Utf8JsonReader reader,
++                global::System.Type typeToConvert,
++                JsonSerializerOptions options
++            )
++            {
++                var value = reader.GetString();
++                if (value != EndingLiteral.Value)
++                {
++                    throw new JsonException(
++                        "Expected \""
++                            + EndingLiteral.Value
++                            + "\" for type discriminator but got \""
++                            + value
++                            + "\"."
++                    );
++                }
++                return new EndingLiteral();
++            }
++
++            public override void Write(
++                Utf8JsonWriter writer,
++                EndingLiteral value,
++                JsonSerializerOptions options
++            ) => writer.WriteStringValue(EndingLiteral.Value);
++
++            public override EndingLiteral ReadAsPropertyName(
++                ref Utf8JsonReader reader,
++                global::System.Type typeToConvert,
++                JsonSerializerOptions options
++            )
++            {
++                var value = reader.GetString();
++                if (value != EndingLiteral.Value)
++                {
++                    throw new JsonException(
++                        "Expected \""
++                            + EndingLiteral.Value
++                            + "\" for type discriminator but got \""
++                            + value
++                            + "\"."
++                    );
++                }
++                return new EndingLiteral();
++            }
++
++            public override void WriteAsPropertyName(
++                Utf8JsonWriter writer,
++                EndingLiteral value,
++                JsonSerializerOptions options
++            ) => writer.WritePropertyName(EndingLiteral.Value);
++        }
++    }
+ }
+diff --git a/src/SeedLiteral/Reference/Types/SomeLiteral.cs b/src/SeedLiteral/Reference/Types/SomeLiteral.cs
+new file mode 100644
+index 00000000000..18bdd4e7106
+--- /dev/null
++++ b/src/SeedLiteral/Reference/Types/SomeLiteral.cs
+@@ -0,0 +1,77 @@
++using global::System.Text.Json;
++using global::System.Text.Json.Serialization;
++
++namespace SeedLiteral;
++
++[JsonConverter(typeof(SomeLiteralConverter))]
++public readonly struct SomeLiteral
++{
++    public const string Value = "You're super wise";
++
++    public static implicit operator string(SomeLiteral _) => Value;
++
++    public override string ToString() => Value;
++
++    public override int GetHashCode() => global::System.StringComparer.Ordinal.GetHashCode(Value);
++
++    public override bool Equals(object? obj) => obj is SomeLiteral;
++
++    public static bool operator ==(SomeLiteral _, SomeLiteral __) => true;
++
++    public static bool operator !=(SomeLiteral _, SomeLiteral __) => false;
++
++    internal sealed class SomeLiteralConverter : JsonConverter<SomeLiteral>
++    {
++        public override SomeLiteral Read(
++            ref Utf8JsonReader reader,
++            global::System.Type typeToConvert,
++            JsonSerializerOptions options
++        )
++        {
++            var value = reader.GetString();
++            if (value != SomeLiteral.Value)
++            {
++                throw new JsonException(
++                    "Expected \""
++                        + SomeLiteral.Value
++                        + "\" for type discriminator but got \""
++                        + value
++                        + "\"."
++                );
++            }
++            return new SomeLiteral();
++        }
++
++        public override void Write(
++            Utf8JsonWriter writer,
++            SomeLiteral value,
++            JsonSerializerOptions options
++        ) => writer.WriteStringValue(SomeLiteral.Value);
++
++        public override SomeLiteral ReadAsPropertyName(
++            ref Utf8JsonReader reader,
++            global::System.Type typeToConvert,
++            JsonSerializerOptions options
++        )
++        {
++            var value = reader.GetString();
++            if (value != SomeLiteral.Value)
++            {
++                throw new JsonException(
++                    "Expected \""
++                        + SomeLiteral.Value
++                        + "\" for type discriminator but got \""
++                        + value
++                        + "\"."
++                );
++            }
++            return new SomeLiteral();
++        }
++
++        public override void WriteAsPropertyName(
++            Utf8JsonWriter writer,
++            SomeLiteral value,
++            JsonSerializerOptions options
++        ) => writer.WritePropertyName(SomeLiteral.Value);
++    }
++}
+diff --git a/src/SeedLiteral/Types/SendResponse.cs b/src/SeedLiteral/Types/SendResponse.cs
+index 519de5e0265..af29aa8e34c 100644
+--- a/src/SeedLiteral/Types/SendResponse.cs
++++ b/src/SeedLiteral/Types/SendResponse.cs
+@@ -17,8 +17,15 @@ public record SendResponse : IJsonOnDeserialized
+     [JsonPropertyName("status")]
+     public required int Status { get; set; }
+ 
++    [JsonRequired]
+     [JsonPropertyName("success")]
+-    public bool Success { get; set; } = true;
++    public SendResponse.SuccessLiteral Success { get;
++#if NET5_0_OR_GREATER
++        init;
++#else
++        set;
++#endif
++    } = new();
+ 
+     [JsonIgnore]
+     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+@@ -31,4 +38,67 @@ public record SendResponse : IJsonOnDeserialized
+     {
+         return JsonUtils.Serialize(this);
+     }
++
++    [JsonConverter(typeof(SuccessLiteralConverter))]
++    public readonly struct SuccessLiteral
++    {
++        public const bool Value = true;
++
++        public static implicit operator bool(SuccessLiteral _) => Value;
++
++        public override string ToString() => Value.ToString();
++
++        public override int GetHashCode() => Value.GetHashCode();
++
++        public override bool Equals(object? obj) => obj is SuccessLiteral;
++
++        public static bool operator ==(SuccessLiteral _, SuccessLiteral __) => true;
++
++        public static bool operator !=(SuccessLiteral _, SuccessLiteral __) => false;
++
++        internal sealed class SuccessLiteralConverter : JsonConverter<SuccessLiteral>
++        {
++            public override SuccessLiteral Read(
++                ref Utf8JsonReader reader,
++                global::System.Type typeToConvert,
++                JsonSerializerOptions options
++            )
++            {
++                var value = reader.GetBoolean();
++                if (value != SuccessLiteral.Value)
++                {
++                    throw new JsonException("Expected true for type discriminator but got false.");
++                }
++                return new SuccessLiteral();
++            }
++
++            public override void Write(
++                Utf8JsonWriter writer,
++                SuccessLiteral value,
++                JsonSerializerOptions options
++            ) => writer.WriteBooleanValue(SuccessLiteral.Value);
++
++            public override SuccessLiteral ReadAsPropertyName(
++                ref Utf8JsonReader reader,
++                global::System.Type typeToConvert,
++                JsonSerializerOptions options
++            )
++            {
++                var value = reader.GetString();
++                if (!bool.TryParse(value, out var boolValue) || boolValue != SuccessLiteral.Value)
++                {
++                    throw new JsonException(
++                        "Expected true for type discriminator but got \"" + value + "\"."
++                    );
++                }
++                return new SuccessLiteral();
++            }
++
++            public override void WriteAsPropertyName(
++                Utf8JsonWriter writer,
++                SuccessLiteral value,
++                JsonSerializerOptions options
++            ) => writer.WritePropertyName(SuccessLiteral.Value.ToString());
++        }
++    }
+ }
+diff --git a/src/SeedLiteral.Test/Unit/MockServer/Inlined/SendTest.cs b/src/SeedLiteral.Test/Unit/MockServer/Inlined/SendTest.cs
+index 621745c6596..5994338465f 100644
+--- a/src/SeedLiteral.Test/Unit/MockServer/Inlined/SendTest.cs
++++ b/src/SeedLiteral.Test/Unit/MockServer/Inlined/SendTest.cs
+@@ -55,17 +55,11 @@ public class SendTest : BaseMockServerTest
+         var response = await Client.Inlined.SendAsync(
+             new SendLiteralsInlinedRequest
+             {
+-                Prompt = "You are a helpful assistant",
+                 Context = "You're super wise",
+                 Query = "query",
+                 Temperature = 1.1,
+-                Stream = false,
+-                AliasedContext = "You're super wise",
+                 MaybeContext = "You're super wise",
+-                ObjectWithLiteral = new ATopLevelLiteral
+-                {
+-                    NestedLiteral = new ANestedLiteral { MyLiteral = "How super cool" },
+-                },
++                ObjectWithLiteral = new ATopLevelLiteral { NestedLiteral = new ANestedLiteral() },
+             }
+         );
+         JsonAssert.AreEqual(response, mockResponse);
+@@ -118,15 +112,9 @@ public class SendTest : BaseMockServerTest
+             new SendLiteralsInlinedRequest
+             {
+                 Temperature = 10.1,
+-                Prompt = "You are a helpful assistant",
+                 Context = "You're super wise",
+-                AliasedContext = "You're super wise",
+                 MaybeContext = "You're super wise",
+-                ObjectWithLiteral = new ATopLevelLiteral
+-                {
+-                    NestedLiteral = new ANestedLiteral { MyLiteral = "How super cool" },
+-                },
+-                Stream = false,
++                ObjectWithLiteral = new ATopLevelLiteral { NestedLiteral = new ANestedLiteral() },
+                 Query = "What is the weather today",
+             }
+         );
+diff --git a/src/SeedLiteral.Test/Unit/MockServer/Reference/SendTest.cs b/src/SeedLiteral.Test/Unit/MockServer/Reference/SendTest.cs
+index 2e4fec3bc85..c76db213b72 100644
+--- a/src/SeedLiteral.Test/Unit/MockServer/Reference/SendTest.cs
++++ b/src/SeedLiteral.Test/Unit/MockServer/Reference/SendTest.cs
+@@ -63,28 +63,14 @@ public class SendTest : BaseMockServerTest
+         var response = await Client.Reference.SendAsync(
+             new SendRequest
+             {
+-                Prompt = "You are a helpful assistant",
+                 Query = "query",
+-                Stream = false,
+-                Ending = "$ending",
+-                Context = "You're super wise",
+                 MaybeContext = "You're super wise",
+                 ContainerObject = new ContainerObject
+                 {
+                     NestedObjects = new List<NestedObjectWithLiterals>()
+                     {
+-                        new NestedObjectWithLiterals
+-                        {
+-                            Literal1 = "literal1",
+-                            Literal2 = "literal2",
+-                            StrProp = "strProp",
+-                        },
+-                        new NestedObjectWithLiterals
+-                        {
+-                            Literal1 = "literal1",
+-                            Literal2 = "literal2",
+-                            StrProp = "strProp",
+-                        },
++                        new NestedObjectWithLiterals { StrProp = "strProp" },
++                        new NestedObjectWithLiterals { StrProp = "strProp" },
+                     },
+                 },
+             }
+@@ -139,20 +125,12 @@ public class SendTest : BaseMockServerTest
+         var response = await Client.Reference.SendAsync(
+             new SendRequest
+             {
+-                Prompt = "You are a helpful assistant",
+-                Stream = false,
+-                Context = "You're super wise",
+                 Query = "What is the weather today",
+                 ContainerObject = new ContainerObject
+                 {
+                     NestedObjects = new List<NestedObjectWithLiterals>()
+                     {
+-                        new NestedObjectWithLiterals
+-                        {
+-                            Literal1 = "literal1",
+-                            Literal2 = "literal2",
+-                            StrProp = "strProp",
+-                        },
++                        new NestedObjectWithLiterals { StrProp = "strProp" },
+                     },
+                 },
+             }

@@ -1,0 +1,59 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index d8b7bf00e12..74f375430e1 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,9 @@
+     "cliVersion": "DUMMY",
+     "generatorName": "fernapi/fern-typescript-sdk",
+     "generatorVersion": "local",
++    "generatorConfig": {
++        "useDefaultRequestParameterValues": true
++    },
+     "originGitCommit": "DUMMY",
+     "originGitCommitIsDirty": null,
+     "invokedBy": "ci",
+diff --git a/src/api/resources/user/client/Client.ts b/src/api/resources/user/client/Client.ts
+index 9dc47feccd0..8f04efe5124 100644
+--- a/src/api/resources/user/client/Client.ts
++++ b/src/api/resources/user/client/Client.ts
+@@ -267,7 +267,7 @@ export class UserClient {
+         requestOptions?: UserClient.RequestOptions,
+     ): Promise<core.WithRawResponse<SeedRequestParameters.User>> {
+         const {
+-            limit,
++            limit = 10,
+             id,
+             date,
+             deadline,
+@@ -281,8 +281,8 @@ export class UserClient {
+             optionalUser,
+             excludeUser,
+             filter,
+-            longParam,
+-            bigIntParam,
++            longParam = 9223372036854776000,
++            bigIntParam = "18446744073709551615",
+         } = request;
+         const _queryParams: Record<string, unknown> = {
+             limit,
+diff --git a/src/api/resources/user/client/requests/GetUsersRequest.ts b/src/api/resources/user/client/requests/GetUsersRequest.ts
+index 7f72fbd1d9b..d00540dbf27 100644
+--- a/src/api/resources/user/client/requests/GetUsersRequest.ts
++++ b/src/api/resources/user/client/requests/GetUsersRequest.ts
+@@ -47,7 +47,7 @@ import type * as SeedRequestParameters from "../../../../index.js";
+  *     }
+  */
+ export interface GetUsersRequest {
+-    limit: number;
++    limit?: number;
+     id: string;
+     date: string;
+     deadline: string;
+@@ -61,6 +61,6 @@ export interface GetUsersRequest {
+     optionalUser?: SeedRequestParameters.User;
+     excludeUser: SeedRequestParameters.User | SeedRequestParameters.User[];
+     filter: string | string[];
+-    longParam: number;
++    longParam?: number;
+     bigIntParam?: string;
+ }

@@ -1,0 +1,232 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 2ecd82f71ab..2642e256ed0 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,11 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-python-sdk",
+   "generatorVersion": "local",
++  "generatorConfig": {
++    "pydantic_config": {
++      "positional_single_property_constructors": true
++    }
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "ci",
+diff --git a/src/seed/types/cusip.py b/src/seed/types/cusip.py
+index 9867eb53b12..c53465156a4 100644
+--- a/src/seed/types/cusip.py
++++ b/src/seed/types/cusip.py
+@@ -9,6 +9,17 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+ class Cusip(UniversalBaseModel):
+     cusip: str
+ 
++    @typing.overload
++    def __init__(self, cusip: str) -> None: ...
++    @typing.overload
++    def __init__(self, *, cusip: str) -> None: ...
++    def __init__(self, *args: typing.Any, **kwargs: typing.Any) -> None:
++        if args:
++            kwargs.pop("cusip", None)
++            super().__init__(cusip=args[0], **kwargs)
++        else:
++            super().__init__(**kwargs)
++
+     if IS_PYDANTIC_V2:
+         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+     else:
+diff --git a/src/seed/types/identifier.py b/src/seed/types/identifier.py
+index 6c4e880c81b..93b63611714 100644
+--- a/src/seed/types/identifier.py
++++ b/src/seed/types/identifier.py
+@@ -13,6 +13,17 @@ class Identifier_Isin(UniversalBaseModel):
+     identifier_type: typing.Literal["isin"] = "isin"
+     isin: str
+ 
++    @typing.overload
++    def __init__(self, isin: str) -> None: ...
++    @typing.overload
++    def __init__(self, *, isin: str) -> None: ...
++    def __init__(self, *args: typing.Any, **kwargs: typing.Any) -> None:
++        if args:
++            kwargs.pop("isin", None)
++            super().__init__(isin=args[0], **kwargs)
++        else:
++            super().__init__(**kwargs)
++
+     if IS_PYDANTIC_V2:
+         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+     else:
+@@ -27,6 +38,17 @@ class Identifier_Cusip(UniversalBaseModel):
+     identifier_type: typing.Literal["cusip"] = "cusip"
+     cusip: str
+ 
++    @typing.overload
++    def __init__(self, cusip: str) -> None: ...
++    @typing.overload
++    def __init__(self, *, cusip: str) -> None: ...
++    def __init__(self, *args: typing.Any, **kwargs: typing.Any) -> None:
++        if args:
++            kwargs.pop("cusip", None)
++            super().__init__(cusip=args[0], **kwargs)
++        else:
++            super().__init__(**kwargs)
++
+     if IS_PYDANTIC_V2:
+         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+     else:
+diff --git a/src/seed/types/isin.py b/src/seed/types/isin.py
+index 1e25a647229..e8644127e95 100644
+--- a/src/seed/types/isin.py
++++ b/src/seed/types/isin.py
+@@ -9,6 +9,17 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+ class Isin(UniversalBaseModel):
+     isin: str
+ 
++    @typing.overload
++    def __init__(self, isin: str) -> None: ...
++    @typing.overload
++    def __init__(self, *, isin: str) -> None: ...
++    def __init__(self, *args: typing.Any, **kwargs: typing.Any) -> None:
++        if args:
++            kwargs.pop("isin", None)
++            super().__init__(isin=args[0], **kwargs)
++        else:
++            super().__init__(**kwargs)
++
+     if IS_PYDANTIC_V2:
+         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+     else:
+diff --git a/src/seed/types/isin_with_discriminator.py b/src/seed/types/isin_with_discriminator.py
+index 22c04638fbc..e08ed790e59 100644
+--- a/src/seed/types/isin_with_discriminator.py
++++ b/src/seed/types/isin_with_discriminator.py
+@@ -10,6 +10,17 @@ class IsinWithDiscriminator(UniversalBaseModel):
+     isin: str
+     type: typing.Literal["ISIN"] = "ISIN"
+ 
++    @typing.overload
++    def __init__(self, isin: str) -> None: ...
++    @typing.overload
++    def __init__(self, *, isin: str) -> None: ...
++    def __init__(self, *args: typing.Any, **kwargs: typing.Any) -> None:
++        if args:
++            kwargs.pop("isin", None)
++            super().__init__(isin=args[0], **kwargs)
++        else:
++            super().__init__(**kwargs)
++
+     if IS_PYDANTIC_V2:
+         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+     else:
+diff --git a/src/seed/types/multiple_discriminators.py b/src/seed/types/multiple_discriminators.py
+index 16dfd07adeb..fdef8246666 100644
+--- a/src/seed/types/multiple_discriminators.py
++++ b/src/seed/types/multiple_discriminators.py
+@@ -11,6 +11,17 @@ class MultipleDiscriminators(UniversalBaseModel):
+     type: typing.Literal["TYPE_A"] = "TYPE_A"
+     version: typing.Literal["v1"] = "v1"
+ 
++    @typing.overload
++    def __init__(self, value: str) -> None: ...
++    @typing.overload
++    def __init__(self, *, value: str) -> None: ...
++    def __init__(self, *args: typing.Any, **kwargs: typing.Any) -> None:
++        if args:
++            kwargs.pop("value", None)
++            super().__init__(value=args[0], **kwargs)
++        else:
++            super().__init__(**kwargs)
++
+     if IS_PYDANTIC_V2:
+         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+     else:
+diff --git a/src/seed/types/one_required_one_optional.py b/src/seed/types/one_required_one_optional.py
+index 75b86ef78c4..32fdf026480 100644
+--- a/src/seed/types/one_required_one_optional.py
++++ b/src/seed/types/one_required_one_optional.py
+@@ -10,6 +10,17 @@ class OneRequiredOneOptional(UniversalBaseModel):
+     required_field: str
+     optional_field: typing.Optional[str] = None
+ 
++    @typing.overload
++    def __init__(self, required_field: str) -> None: ...
++    @typing.overload
++    def __init__(self, *, required_field: str) -> None: ...
++    def __init__(self, *args: typing.Any, **kwargs: typing.Any) -> None:
++        if args:
++            kwargs.pop("required_field", None)
++            super().__init__(required_field=args[0], **kwargs)
++        else:
++            super().__init__(**kwargs)
++
+     if IS_PYDANTIC_V2:
+         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+     else:
+diff --git a/src/seed/types/quantity.py b/src/seed/types/quantity.py
+index cfbc36dfd73..595476d0489 100644
+--- a/src/seed/types/quantity.py
++++ b/src/seed/types/quantity.py
+@@ -10,6 +10,17 @@ class Quantity(UniversalBaseModel):
+     quantity: float
+     type: typing.Literal["QUANTITY"] = "QUANTITY"
+ 
++    @typing.overload
++    def __init__(self, quantity: float) -> None: ...
++    @typing.overload
++    def __init__(self, *, quantity: float) -> None: ...
++    def __init__(self, *args: typing.Any, **kwargs: typing.Any) -> None:
++        if args:
++            kwargs.pop("quantity", None)
++            super().__init__(quantity=args[0], **kwargs)
++        else:
++            super().__init__(**kwargs)
++
+     if IS_PYDANTIC_V2:
+         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+     else:
+diff --git a/src/seed/types/taker_party.py b/src/seed/types/taker_party.py
+index b57abaff75f..6abf3ec57ae 100644
+--- a/src/seed/types/taker_party.py
++++ b/src/seed/types/taker_party.py
+@@ -10,6 +10,17 @@ from .trader import Trader
+ class TakerParty(UniversalBaseModel):
+     trader: Trader
+ 
++    @typing.overload
++    def __init__(self, trader: Trader) -> None: ...
++    @typing.overload
++    def __init__(self, *, trader: Trader) -> None: ...
++    def __init__(self, *args: typing.Any, **kwargs: typing.Any) -> None:
++        if args:
++            kwargs.pop("trader", None)
++            super().__init__(trader=args[0], **kwargs)
++        else:
++            super().__init__(**kwargs)
++
+     if IS_PYDANTIC_V2:
+         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+     else:
+diff --git a/src/seed/types/trader.py b/src/seed/types/trader.py
+index 11c9a971406..124582d1439 100644
+--- a/src/seed/types/trader.py
++++ b/src/seed/types/trader.py
+@@ -9,6 +9,17 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+ class Trader(UniversalBaseModel):
+     uuid_: int
+ 
++    @typing.overload
++    def __init__(self, uuid_: int) -> None: ...
++    @typing.overload
++    def __init__(self, *, uuid_: int) -> None: ...
++    def __init__(self, *args: typing.Any, **kwargs: typing.Any) -> None:
++        if args:
++            kwargs.pop("uuid_", None)
++            super().__init__(uuid_=args[0], **kwargs)
++        else:
++            super().__init__(**kwargs)
++
+     if IS_PYDANTIC_V2:
+         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+     else:

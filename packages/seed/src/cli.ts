@@ -2,6 +2,7 @@ import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
 import { askToLogin } from "@fern-api/login";
 import { FernRegistryClient as FdrClient } from "@fern-fern/generators-sdk";
+import fs from "fs";
 import { writeFile } from "fs/promises";
 import { minimatch } from "minimatch";
 import os from "os";
@@ -40,6 +41,7 @@ import { validateGenerator } from "./commands/validate/validateGeneratorChangelo
 import { validateVersionsYml } from "./commands/validate/validateVersionsYml.js";
 import { GeneratorWorkspace, loadGeneratorWorkspaces } from "./loadGeneratorWorkspaces.js";
 import { Semaphore } from "./Semaphore.js";
+import { getBaselineDir, getDiffFilePath, reconstructVariant } from "./utils/diffStorage.js";
 
 tryRunCli()
     .then(() => {
@@ -84,6 +86,7 @@ export async function tryRunCli(): Promise<void> {
     addLatestCommands(cli);
     addGenerateCommands(cli);
     addInspectCommand(cli);
+    addReconstructCommand(cli);
 
     await cli.parse();
 }
@@ -1638,6 +1641,87 @@ function addInspectCommand(cli: Argv) {
                 direct: argv.direct,
                 logLevel: argv["log-level"]
             });
+        }
+    );
+}
+
+function addReconstructCommand(cli: Argv) {
+    cli.command(
+        "reconstruct",
+        "Reconstruct a full variant directory from baseline + diff",
+        (yargs) =>
+            yargs
+                .option("generator", {
+                    type: "string",
+                    demandOption: true,
+                    alias: "g",
+                    description: "The generator workspace (e.g. python-sdk)"
+                })
+                .option("fixture", {
+                    type: "string",
+                    demandOption: true,
+                    alias: "f",
+                    description: "The fixture name (e.g. exhaustive)"
+                })
+                .option("variant", {
+                    type: "string",
+                    demandOption: true,
+                    alias: "v",
+                    description: "The custom config variant to reconstruct (e.g. pydantic-v1)"
+                })
+                .option("output", {
+                    type: "string",
+                    demandOption: true,
+                    alias: "o",
+                    description: "Output directory for the reconstructed variant"
+                }),
+        async (argv) => {
+            const generators = await loadGeneratorWorkspaces();
+            const generator = generators.find((g) => g.workspaceName === argv.generator);
+            if (generator == null) {
+                console.error(`Generator '${argv.generator}' not found. Available generators:`);
+                for (const g of generators) {
+                    console.error(`  - ${g.workspaceName}`);
+                }
+                process.exit(1);
+            }
+
+            const baselineDir = getBaselineDir(generator.absolutePathToWorkspace, argv.fixture);
+            if (!fs.existsSync(baselineDir)) {
+                console.error(`Baseline directory not found at ${baselineDir}`);
+                console.error("Has this fixture been migrated to diff-based storage?");
+                process.exit(1);
+            }
+
+            const diffPath = getDiffFilePath(generator.absolutePathToWorkspace, argv.fixture, argv.variant);
+            if (!fs.existsSync(diffPath)) {
+                console.error(`Diff file not found at ${diffPath}`);
+                console.error("Available diffs:");
+                const customConfigsDir = join(
+                    generator.absolutePathToWorkspace,
+                    RelativeFilePath.of(argv.fixture),
+                    RelativeFilePath.of("custom-configs")
+                );
+                if (fs.existsSync(customConfigsDir)) {
+                    const files = fs.readdirSync(customConfigsDir).filter((f: string) => f.endsWith(".diff"));
+                    for (const file of files) {
+                        console.error(`  - ${file.replace(".diff", "")}`);
+                    }
+                }
+                process.exit(1);
+            }
+
+            const outputDir = argv.output.startsWith("/")
+                ? AbsoluteFilePath.of(argv.output)
+                : join(AbsoluteFilePath.of(process.cwd()), RelativeFilePath.of(argv.output));
+
+            console.log(`Reconstructing ${argv.generator}/${argv.fixture}/${argv.variant}...`);
+            console.log(`  Baseline: ${baselineDir}`);
+            console.log(`  Diff: ${diffPath}`);
+            console.log(`  Output: ${outputDir}`);
+
+            await reconstructVariant(baselineDir, diffPath, outputDir);
+            console.log("Done.");
         }
     );
 }

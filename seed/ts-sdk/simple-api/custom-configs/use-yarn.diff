@@ -1,0 +1,174 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index d8b7bf00e12..ae7e758ca84 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,9 @@
+     "cliVersion": "DUMMY",
+     "generatorName": "fernapi/fern-typescript-sdk",
+     "generatorVersion": "local",
++    "generatorConfig": {
++        "packageManager": "yarn"
++    },
+     "originGitCommit": "DUMMY",
+     "originGitCommitIsDirty": null,
+     "invokedBy": "ci",
+diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+index 93fba226cb6..b4ac610fee8 100644
+--- a/.github/workflows/ci.yml
++++ b/.github/workflows/ci.yml
+@@ -17,14 +17,11 @@ jobs:
+       - name: Set up node
+         uses: actions/setup-node@v6
+ 
+-      - name: Install pnpm
+-        uses: pnpm/action-setup@v4
+-
+       - name: Install dependencies
+-        run: pnpm install --frozen-lockfile
++        run: yarn install --frozen-lockfile
+ 
+       - name: Compile
+-        run: pnpm build
++        run: yarn build
+ 
+   test:
+     runs-on: ubuntu-latest
+@@ -35,12 +32,9 @@ jobs:
+ 
+       - name: Set up node
+         uses: actions/setup-node@v6
+-                
+-      - name: Install pnpm
+-        uses: pnpm/action-setup@v4
+ 
+       - name: Install dependencies
+-        run: pnpm install --frozen-lockfile
++        run: yarn install --frozen-lockfile
+ 
+       - name: Test
+-        run: pnpm test
++        run: yarn test
+diff --git a/CONTRIBUTING.md b/CONTRIBUTING.md
+index fe5bc2f77e0..4b59dbc9790 100644
+--- a/CONTRIBUTING.md
++++ b/CONTRIBUTING.md
+@@ -7,14 +7,14 @@ Thanks for your interest in contributing to this SDK! This document provides gui
+ ### Prerequisites
+ 
+ - Node.js 20 or higher
+-- pnpm package manager
++- yarn package manager
+ 
+ ### Installation
+ 
+ Install the project dependencies:
+ 
+ ```bash
+-pnpm install
++yarn install
+ ```
+ 
+ ### Building
+@@ -22,7 +22,7 @@ pnpm install
+ Build the project:
+ 
+ ```bash
+-pnpm build
++yarn build
+ ```
+ 
+ ### Testing
+@@ -30,33 +30,33 @@ pnpm build
+ Run the test suite:
+ 
+ ```bash
+-pnpm test
++yarn test
+ ```
+ 
+ Run specific test types:
+-- `pnpm test:unit` - Run unit tests
+-- `pnpm test:wire` - Run wire/integration tests
++- `yarn test:unit` - Run unit tests
++- `yarn test:wire` - Run wire/integration tests
+ 
+ ### Linting and Formatting
+ 
+ Check code style:
+ 
+ ```bash
+-pnpm run lint
+-pnpm run format:check
++yarn run lint
++yarn run format:check
+ ```
+ 
+ Fix code style issues:
+ 
+ ```bash
+-pnpm run lint:fix
+-pnpm run format:fix
++yarn run lint:fix
++yarn run format:fix
+ ```
+ 
+ Or use the combined check command:
+ 
+ ```bash
+-pnpm run check:fix
++yarn run check:fix
+ ```
+ 
+ ## About Generated Code
+@@ -106,9 +106,9 @@ This approach is best for:
+ 
+ 1. Create a new branch for your changes
+ 2. Make your modifications
+-3. Run tests to ensure nothing breaks: `pnpm test`
+-4. Run linting and formatting: `pnpm run check:fix`
+-5. Build the project: `pnpm build`
++3. Run tests to ensure nothing breaks: `yarn test`
++4. Run linting and formatting: `yarn run check:fix`
++5. Build the project: `yarn build`
+ 6. Commit your changes with a clear commit message
+ 7. Push your branch and create a pull request
+ 
+@@ -118,7 +118,7 @@ Write clear, descriptive commit messages that explain what changed and why.
+ 
+ ### Code Style
+ 
+-This project uses automated code formatting and linting. Run `pnpm run check:fix` before committing to ensure your code meets the project's style guidelines.
++This project uses automated code formatting and linting. Run `yarn run check:fix` before committing to ensure your code meets the project's style guidelines.
+ 
+ ## Questions or Issues?
+ 
+diff --git a/package.json b/package.json
+index d0cc3a8b5d8..36c8a0df05e 100644
+--- a/package.json
++++ b/package.json
+@@ -48,7 +48,7 @@
+         "lint:fix": "biome lint --fix --unsafe --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
+         "check": "biome check --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
+         "check:fix": "biome check --fix --unsafe --skip-parse-errors --no-errors-on-unmatched --max-diagnostics=none",
+-        "build": "pnpm build:cjs && pnpm build:esm",
++        "build": "yarn build:cjs && yarn build:esm",
+         "build:cjs": "tsc --project ./tsconfig.cjs.json",
+         "build:esm": "tsc --project ./tsconfig.esm.json && node scripts/rename-to-esm-files.js dist/esm",
+         "test": "vitest",
+@@ -72,7 +72,7 @@
+         "stream": false,
+         "crypto": false
+     },
+-    "packageManager": "pnpm@10.33.0",
++    "packageManager": "yarn@1.22.22",
+     "engines": {
+         "node": ">=18.0.0"
+     },
+diff --git a/pnpm-workspace.yaml b/pnpm-workspace.yaml
+deleted file mode 100644
+index 6e4c395107d..00000000000
+--- a/pnpm-workspace.yaml
++++ /dev/null
+@@ -1 +0,0 @@
+-packages: ['.']
+\ No newline at end of file

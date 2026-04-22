@@ -1,0 +1,77 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 0eba66302dd..e224d10f0ad 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-php-sdk",
+   "generatorVersion": "local",
++  "generatorConfig": {
++    "propertyAccess": "private"
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "ci",
+diff --git a/src/Types/EchoRequest.php b/src/Types/EchoRequest.php
+index 5aff0ee3d39..c3cc7ec7a88 100644
+--- a/src/Types/EchoRequest.php
++++ b/src/Types/EchoRequest.php
+@@ -11,13 +11,13 @@ class EchoRequest extends JsonSerializableType
+      * @var string $name
+      */
+     #[JsonProperty('name')]
+-    public string $name;
++    private string $name;
+ 
+     /**
+      * @var int $size
+      */
+     #[JsonProperty('size')]
+-    public int $size;
++    private int $size;
+ 
+     /**
+      * @param array{
+@@ -32,6 +32,42 @@ class EchoRequest extends JsonSerializableType
+         $this->size = $values['size'];
+     }
+ 
++    /**
++     * @return string
++     */
++    public function getName(): string
++    {
++        return $this->name;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setName(string $value): self
++    {
++        $this->name = $value;
++        $this->_setField('name');
++        return $this;
++    }
++
++    /**
++     * @return int
++     */
++    public function getSize(): int
++    {
++        return $this->size;
++    }
++
++    /**
++     * @param int $value
++     */
++    public function setSize(int $value): self
++    {
++        $this->size = $value;
++        $this->_setField('size');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */

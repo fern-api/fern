@@ -1,0 +1,1089 @@
+diff --git a/README.md b/README.md
+index b242c2000f7..7140f17136b 100644
+--- a/README.md
++++ b/README.md
+@@ -10,8 +10,6 @@ The Seed TypeScript library provides convenient access to the Seed APIs from Typ
+ - [Installation](#installation)
+ - [Reference](#reference)
+ - [Usage](#usage)
+-- [Environments](#environments)
+-- [Request and Response Types](#request-and-response-types)
+ - [Exception Handling](#exception-handling)
+ - [Advanced](#advanced)
+   - [Subpackage Exports](#subpackage-exports)
+@@ -41,39 +39,10 @@ A full reference for this library is available [here](./reference.md).
+ Instantiate and use the client with the following:
+ 
+ ```typescript
+-import { SeedAudiencesClient, SeedAudiencesEnvironment } from "@fern/audiences";
+-
+-const client = new SeedAudiencesClient({ environment: SeedAudiencesEnvironment.EnvironmentA });
+-await client.foo.find({
+-    optionalString: "optionalString",
+-    publicProperty: "publicProperty",
+-    privateProperty: 1
+-});
+-```
+-
+-## Environments
+-
+-This SDK allows you to configure different environments for API requests.
+-
+-```typescript
+-import { SeedAudiencesClient, SeedAudiencesEnvironment } from "@fern/audiences";
+-
+-const client = new SeedAudiencesClient({
+-    environment: SeedAudiencesEnvironment.EnvironmentA,
+-});
+-```
+-
+-## Request and Response Types
+-
+-The SDK exports all request and response types as TypeScript interfaces. Simply import them with the
+-following namespace:
+-
+-```typescript
+-import { SeedAudiences } from "@fern/audiences";
++import { SeedAudiencesClient } from "@fern/audiences";
+ 
+-const request: SeedAudiences.GetDirectThreadRequest = {
+-    ...
+-};
++const client = new SeedAudiencesClient({ environment: "YOUR_BASE_URL" });
++await client.folderD.service.getDirectThread();
+ ```
+ 
+ ## Exception Handling
+@@ -85,7 +54,7 @@ will be thrown.
+ import { SeedAudiencesError } from "@fern/audiences";
+ 
+ try {
+-    await client.foo.find(...);
++    await client.folderD.service.getDirectThread(...);
+ } catch (err) {
+     if (err instanceof SeedAudiencesError) {
+         console.log(err.statusCode);
+@@ -103,9 +72,9 @@ try {
+ This SDK supports direct imports of subpackage clients, which allows JavaScript bundlers to tree-shake and include only the imported subpackage code. This results in much smaller bundle sizes.
+ 
+ ```typescript
+-import { FolderAClient } from '@fern/audiences/folderA';
++import { FolderDClient } from '@fern/audiences/folderD';
+ 
+-const client = new FolderAClient({...});
++const client = new FolderDClient({...});
+ ```
+ 
+ ### Additional Headers
+@@ -122,7 +91,7 @@ const client = new SeedAudiencesClient({
+     }
+ });
+ 
+-const response = await client.foo.find(..., {
++const response = await client.folderD.service.getDirectThread(..., {
+     headers: {
+         'X-Custom-Header': 'custom value'
+     }
+@@ -134,7 +103,7 @@ const response = await client.foo.find(..., {
+ If you would like to send additional query string parameters as part of the request, use the `queryParams` request option.
+ 
+ ```typescript
+-const response = await client.foo.find(..., {
++const response = await client.folderD.service.getDirectThread(..., {
+     queryParams: {
+         'customQueryParamKey': 'custom query param value'
+     }
+@@ -156,7 +125,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
+ Use the `maxRetries` request option to configure this behavior.
+ 
+ ```typescript
+-const response = await client.foo.find(..., {
++const response = await client.folderD.service.getDirectThread(..., {
+     maxRetries: 0 // override maxRetries at the request level
+ });
+ ```
+@@ -166,7 +135,7 @@ const response = await client.foo.find(..., {
+ The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
+ 
+ ```typescript
+-const response = await client.foo.find(..., {
++const response = await client.folderD.service.getDirectThread(..., {
+     timeoutInSeconds: 30 // override timeout to 30s
+ });
+ ```
+@@ -177,7 +146,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
+ 
+ ```typescript
+ const controller = new AbortController();
+-const response = await client.foo.find(..., {
++const response = await client.folderD.service.getDirectThread(..., {
+     abortSignal: controller.signal
+ });
+ controller.abort(); // aborts the request
+@@ -189,7 +158,7 @@ The SDK provides access to raw response data, including headers, through the `.w
+ The `.withRawResponse()` method returns a promise that results to an object with a `data` and a `rawResponse` property.
+ 
+ ```typescript
+-const { data, rawResponse } = await client.foo.find(...).withRawResponse();
++const { data, rawResponse } = await client.folderD.service.getDirectThread(...).withRawResponse();
+ 
+ console.log(data);
+ console.log(rawResponse.headers['X-My-Header']);
+diff --git a/package.json b/package.json
+index fdb60c33db1..5bf18719203 100644
+--- a/package.json
++++ b/package.json
+@@ -22,50 +22,6 @@
+             },
+             "default": "./dist/cjs/index.js"
+         },
+-        "./folderA": {
+-            "import": {
+-                "types": "./dist/esm/api/resources/folderA/exports.d.mts",
+-                "default": "./dist/esm/api/resources/folderA/exports.mjs"
+-            },
+-            "require": {
+-                "types": "./dist/cjs/api/resources/folderA/exports.d.ts",
+-                "default": "./dist/cjs/api/resources/folderA/exports.js"
+-            },
+-            "default": "./dist/cjs/api/resources/folderA/exports.js"
+-        },
+-        "./folderA/service": {
+-            "import": {
+-                "types": "./dist/esm/api/resources/folderA/resources/service/exports.d.mts",
+-                "default": "./dist/esm/api/resources/folderA/resources/service/exports.mjs"
+-            },
+-            "require": {
+-                "types": "./dist/cjs/api/resources/folderA/resources/service/exports.d.ts",
+-                "default": "./dist/cjs/api/resources/folderA/resources/service/exports.js"
+-            },
+-            "default": "./dist/cjs/api/resources/folderA/resources/service/exports.js"
+-        },
+-        "./folderB": {
+-            "import": {
+-                "types": "./dist/esm/api/resources/folderB/exports.d.mts",
+-                "default": "./dist/esm/api/resources/folderB/exports.mjs"
+-            },
+-            "require": {
+-                "types": "./dist/cjs/api/resources/folderB/exports.d.ts",
+-                "default": "./dist/cjs/api/resources/folderB/exports.js"
+-            },
+-            "default": "./dist/cjs/api/resources/folderB/exports.js"
+-        },
+-        "./folderC": {
+-            "import": {
+-                "types": "./dist/esm/api/resources/folderC/exports.d.mts",
+-                "default": "./dist/esm/api/resources/folderC/exports.mjs"
+-            },
+-            "require": {
+-                "types": "./dist/cjs/api/resources/folderC/exports.d.ts",
+-                "default": "./dist/cjs/api/resources/folderC/exports.js"
+-            },
+-            "default": "./dist/cjs/api/resources/folderC/exports.js"
+-        },
+         "./folderD": {
+             "import": {
+                 "types": "./dist/esm/api/resources/folderD/exports.d.mts",
+@@ -88,17 +44,6 @@
+             },
+             "default": "./dist/cjs/api/resources/folderD/resources/service/exports.js"
+         },
+-        "./foo": {
+-            "import": {
+-                "types": "./dist/esm/api/resources/foo/exports.d.mts",
+-                "default": "./dist/esm/api/resources/foo/exports.mjs"
+-            },
+-            "require": {
+-                "types": "./dist/cjs/api/resources/foo/exports.d.ts",
+-                "default": "./dist/cjs/api/resources/foo/exports.js"
+-            },
+-            "default": "./dist/cjs/api/resources/foo/exports.js"
+-        },
+         "./package.json": "./package.json"
+     },
+     "files": [
+diff --git a/reference.md b/reference.md
+index 2a70596db75..99f340663f5 100644
+--- a/reference.md
++++ b/reference.md
+@@ -1,57 +1,4 @@
+ # Reference
+-## FolderA Service
+-<details><summary><code>client.folderA.service.<a href="/src/api/resources/folderA/resources/service/client/Client.ts">getDirectThread</a>({ ...params }) -> SeedAudiences.Response</code></summary>
+-<dl>
+-<dd>
+-
+-#### 🔌 Usage
+-
+-<dl>
+-<dd>
+-
+-<dl>
+-<dd>
+-
+-```typescript
+-await client.folderA.service.getDirectThread({
+-    ids: "ids",
+-    tags: "tags"
+-});
+-
+-```
+-</dd>
+-</dl>
+-</dd>
+-</dl>
+-
+-#### ⚙️ Parameters
+-
+-<dl>
+-<dd>
+-
+-<dl>
+-<dd>
+-
+-**request:** `SeedAudiences.folderA.GetDirectThreadRequest` 
+-    
+-</dd>
+-</dl>
+-
+-<dl>
+-<dd>
+-
+-**requestOptions:** `ServiceClient.RequestOptions` 
+-    
+-</dd>
+-</dl>
+-</dd>
+-</dl>
+-
+-
+-</dd>
+-</dl>
+-</details>
+-
+ ## FolderD Service
+ <details><summary><code>client.folderD.service.<a href="/src/api/resources/folderD/resources/service/client/Client.ts">getDirectThread</a>() -> SeedAudiences.Response</code></summary>
+ <dl>
+@@ -94,57 +41,3 @@ await client.folderD.service.getDirectThread();
+ </dl>
+ </details>
+ 
+-## Foo
+-<details><summary><code>client.foo.<a href="/src/api/resources/foo/client/Client.ts">find</a>({ ...params }) -> SeedAudiences.ImportingType</code></summary>
+-<dl>
+-<dd>
+-
+-#### 🔌 Usage
+-
+-<dl>
+-<dd>
+-
+-<dl>
+-<dd>
+-
+-```typescript
+-await client.foo.find({
+-    optionalString: "optionalString",
+-    publicProperty: "publicProperty",
+-    privateProperty: 1
+-});
+-
+-```
+-</dd>
+-</dl>
+-</dd>
+-</dl>
+-
+-#### ⚙️ Parameters
+-
+-<dl>
+-<dd>
+-
+-<dl>
+-<dd>
+-
+-**request:** `SeedAudiences.FindRequest` 
+-    
+-</dd>
+-</dl>
+-
+-<dl>
+-<dd>
+-
+-**requestOptions:** `FooClient.RequestOptions` 
+-    
+-</dd>
+-</dl>
+-</dd>
+-</dl>
+-
+-
+-</dd>
+-</dl>
+-</details>
+-
+diff --git a/snippet.json b/snippet.json
+index c69c0cada2d..bf7e0fee1d8 100644
+--- a/snippet.json
++++ b/snippet.json
+@@ -1,16 +1,5 @@
+ {
+     "endpoints": [
+-        {
+-            "id": {
+-                "path": "/",
+-                "method": "GET",
+-                "identifier_override": "endpoint_folder-a/service.getDirectThread"
+-            },
+-            "snippet": {
+-                "type": "typescript",
+-                "client": "import { SeedAudiencesClient, SeedAudiencesEnvironment } from \"@fern/audiences\";\n\nconst client = new SeedAudiencesClient({ environment: SeedAudiencesEnvironment.EnvironmentA });\nawait client.folderA.service.getDirectThread({\n    ids: \"ids\",\n    tags: \"tags\"\n});\n"
+-            }
+-        },
+         {
+             "id": {
+                 "path": "/partner-path",
+@@ -19,18 +8,7 @@
+             },
+             "snippet": {
+                 "type": "typescript",
+-                "client": "import { SeedAudiencesClient, SeedAudiencesEnvironment } from \"@fern/audiences\";\n\nconst client = new SeedAudiencesClient({ environment: SeedAudiencesEnvironment.EnvironmentA });\nawait client.folderD.service.getDirectThread();\n"
+-            }
+-        },
+-        {
+-            "id": {
+-                "path": "/",
+-                "method": "POST",
+-                "identifier_override": "endpoint_foo.find"
+-            },
+-            "snippet": {
+-                "type": "typescript",
+-                "client": "import { SeedAudiencesClient, SeedAudiencesEnvironment } from \"@fern/audiences\";\n\nconst client = new SeedAudiencesClient({ environment: SeedAudiencesEnvironment.EnvironmentA });\nawait client.foo.find({\n    optionalString: \"optionalString\",\n    publicProperty: \"publicProperty\",\n    privateProperty: 1\n});\n"
++                "client": "import { SeedAudiencesClient } from \"@fern/audiences\";\n\nconst client = new SeedAudiencesClient({ environment: \"YOUR_BASE_URL\" });\nawait client.folderD.service.getDirectThread();\n"
+             }
+         }
+     ],
+diff --git a/src/BaseClient.ts b/src/BaseClient.ts
+index 54bd458b85a..13c62b9654f 100644
+--- a/src/BaseClient.ts
++++ b/src/BaseClient.ts
+@@ -2,10 +2,9 @@
+ 
+ import { mergeHeaders } from "./core/headers.js";
+ import * as core from "./core/index.js";
+-import type * as environments from "./environments.js";
+ 
+ export interface BaseClientOptions {
+-    environment: core.Supplier<environments.SeedAudiencesEnvironment | string>;
++    environment: core.Supplier<string>;
+     /** Specify a custom URL to connect the client to. */
+     baseUrl?: core.Supplier<string>;
+     /** Additional headers to include in requests. */
+diff --git a/src/Client.ts b/src/Client.ts
+index d3d13bc76c8..f2f25d084fa 100644
+--- a/src/Client.ts
++++ b/src/Client.ts
+@@ -1,8 +1,6 @@
+ // This file was auto-generated by Fern from our API Definition.
+ 
+-import { FolderAClient } from "./api/resources/folderA/client/Client.js";
+ import { FolderDClient } from "./api/resources/folderD/client/Client.js";
+-import { FooClient } from "./api/resources/foo/client/Client.js";
+ import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
+ import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
+ import * as core from "./core/index.js";
+@@ -15,26 +13,16 @@ export declare namespace SeedAudiencesClient {
+ 
+ export class SeedAudiencesClient {
+     protected readonly _options: NormalizedClientOptions<SeedAudiencesClient.Options>;
+-    protected _folderA: FolderAClient | undefined;
+     protected _folderD: FolderDClient | undefined;
+-    protected _foo: FooClient | undefined;
+ 
+     constructor(options: SeedAudiencesClient.Options) {
+         this._options = normalizeClientOptions(options);
+     }
+ 
+-    public get folderA(): FolderAClient {
+-        return (this._folderA ??= new FolderAClient(this._options));
+-    }
+-
+     public get folderD(): FolderDClient {
+         return (this._folderD ??= new FolderDClient(this._options));
+     }
+ 
+-    public get foo(): FooClient {
+-        return (this._foo ??= new FooClient(this._options));
+-    }
+-
+     /**
+      * Make a passthrough request using the SDK's configured auth, retry, logging, etc.
+      * This is useful for making requests to endpoints not yet supported in the SDK.
+diff --git a/src/api/resources/commons/exports.ts b/src/api/resources/commons/exports.ts
+deleted file mode 100644
+index 94d57674a30..00000000000
+--- a/src/api/resources/commons/exports.ts
++++ /dev/null
+@@ -1,3 +0,0 @@
+-// This file was auto-generated by Fern from our API Definition.
+-
+-export * from "./index.js";
+diff --git a/src/api/resources/commons/index.ts b/src/api/resources/commons/index.ts
+deleted file mode 100644
+index 2f88e301585..00000000000
+--- a/src/api/resources/commons/index.ts
++++ /dev/null
+@@ -1 +0,0 @@
+-export * from "./types/index.js";
+diff --git a/src/api/resources/commons/types/Imported.ts b/src/api/resources/commons/types/Imported.ts
+deleted file mode 100644
+index 988e485ea83..00000000000
+--- a/src/api/resources/commons/types/Imported.ts
++++ /dev/null
+@@ -1,3 +0,0 @@
+-// This file was auto-generated by Fern from our API Definition.
+-
+-export type Imported = string;
+diff --git a/src/api/resources/commons/types/index.ts b/src/api/resources/commons/types/index.ts
+deleted file mode 100644
+index 99bedb9e77c..00000000000
+--- a/src/api/resources/commons/types/index.ts
++++ /dev/null
+@@ -1 +0,0 @@
+-export * from "./Imported.js";
+diff --git a/src/api/resources/folderA/client/Client.ts b/src/api/resources/folderA/client/Client.ts
+deleted file mode 100644
+index a3d03f1f95f..00000000000
+--- a/src/api/resources/folderA/client/Client.ts
++++ /dev/null
+@@ -1,22 +0,0 @@
+-// This file was auto-generated by Fern from our API Definition.
+-
+-import type { BaseClientOptions } from "../../../../BaseClient.js";
+-import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
+-import { ServiceClient } from "../resources/service/client/Client.js";
+-
+-export declare namespace FolderAClient {
+-    export type Options = BaseClientOptions;
+-}
+-
+-export class FolderAClient {
+-    protected readonly _options: NormalizedClientOptions<FolderAClient.Options>;
+-    protected _service: ServiceClient | undefined;
+-
+-    constructor(options: FolderAClient.Options) {
+-        this._options = normalizeClientOptions(options);
+-    }
+-
+-    public get service(): ServiceClient {
+-        return (this._service ??= new ServiceClient(this._options));
+-    }
+-}
+diff --git a/src/api/resources/folderA/client/index.ts b/src/api/resources/folderA/client/index.ts
+deleted file mode 100644
+index cb0ff5c3b54..00000000000
+--- a/src/api/resources/folderA/client/index.ts
++++ /dev/null
+@@ -1 +0,0 @@
+-export {};
+diff --git a/src/api/resources/folderA/exports.ts b/src/api/resources/folderA/exports.ts
+deleted file mode 100644
+index ff3176772f4..00000000000
+--- a/src/api/resources/folderA/exports.ts
++++ /dev/null
+@@ -1,5 +0,0 @@
+-// This file was auto-generated by Fern from our API Definition.
+-
+-export { FolderAClient } from "./client/Client.js";
+-export * from "./client/index.js";
+-export * from "./resources/index.js";
+diff --git a/src/api/resources/folderA/index.ts b/src/api/resources/folderA/index.ts
+deleted file mode 100644
+index 9eb1192dcc3..00000000000
+--- a/src/api/resources/folderA/index.ts
++++ /dev/null
+@@ -1,2 +0,0 @@
+-export * from "./client/index.js";
+-export * from "./resources/index.js";
+diff --git a/src/api/resources/folderA/resources/index.ts b/src/api/resources/folderA/resources/index.ts
+deleted file mode 100644
+index a7df9d9e3bd..00000000000
+--- a/src/api/resources/folderA/resources/index.ts
++++ /dev/null
+@@ -1,3 +0,0 @@
+-export * from "./service/client/requests/index.js";
+-export * as service from "./service/index.js";
+-export * from "./service/types/index.js";
+diff --git a/src/api/resources/folderA/resources/service/client/Client.ts b/src/api/resources/folderA/resources/service/client/Client.ts
+deleted file mode 100644
+index 54bde80a033..00000000000
+--- a/src/api/resources/folderA/resources/service/client/Client.ts
++++ /dev/null
+@@ -1,83 +0,0 @@
+-// This file was auto-generated by Fern from our API Definition.
+-
+-import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.js";
+-import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../../../BaseClient.js";
+-import { mergeHeaders } from "../../../../../../core/headers.js";
+-import * as core from "../../../../../../core/index.js";
+-import { handleNonStatusCodeError } from "../../../../../../errors/handleNonStatusCodeError.js";
+-import * as errors from "../../../../../../errors/index.js";
+-import type * as SeedAudiences from "../../../../../index.js";
+-
+-export declare namespace ServiceClient {
+-    export type Options = BaseClientOptions;
+-
+-    export interface RequestOptions extends BaseRequestOptions {}
+-}
+-
+-export class ServiceClient {
+-    protected readonly _options: NormalizedClientOptions<ServiceClient.Options>;
+-
+-    constructor(options: ServiceClient.Options) {
+-        this._options = normalizeClientOptions(options);
+-    }
+-
+-    /**
+-     * @param {SeedAudiences.folderA.GetDirectThreadRequest} request
+-     * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
+-     *
+-     * @example
+-     *     await client.folderA.service.getDirectThread({
+-     *         ids: "ids",
+-     *         tags: "tags"
+-     *     })
+-     */
+-    public getDirectThread(
+-        request: SeedAudiences.folderA.GetDirectThreadRequest,
+-        requestOptions?: ServiceClient.RequestOptions,
+-    ): core.HttpResponsePromise<SeedAudiences.folderA.Response> {
+-        return core.HttpResponsePromise.fromPromise(this.__getDirectThread(request, requestOptions));
+-    }
+-
+-    private async __getDirectThread(
+-        request: SeedAudiences.folderA.GetDirectThreadRequest,
+-        requestOptions?: ServiceClient.RequestOptions,
+-    ): Promise<core.WithRawResponse<SeedAudiences.folderA.Response>> {
+-        const { ids, tags } = request;
+-        const _queryParams: Record<string, unknown> = {
+-            ids,
+-            tags,
+-        };
+-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+-        const _response = await core.fetcher({
+-            url:
+-                (await core.Supplier.get(this._options.baseUrl)) ??
+-                (await core.Supplier.get(this._options.environment)),
+-            method: "GET",
+-            headers: _headers,
+-            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+-            queryString: core.url
+-                .queryBuilder()
+-                .addMany(_queryParams)
+-                .mergeAdditional(requestOptions?.queryParams)
+-                .build(),
+-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+-            abortSignal: requestOptions?.abortSignal,
+-            fetchFn: this._options?.fetch,
+-            logging: this._options.logging,
+-        });
+-        if (_response.ok) {
+-            return { data: _response.body as SeedAudiences.folderA.Response, rawResponse: _response.rawResponse };
+-        }
+-
+-        if (_response.error.reason === "status-code") {
+-            throw new errors.SeedAudiencesError({
+-                statusCode: _response.error.statusCode,
+-                body: _response.error.body,
+-                rawResponse: _response.rawResponse,
+-            });
+-        }
+-
+-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/");
+-    }
+-}
+diff --git a/src/api/resources/folderA/resources/service/client/index.ts b/src/api/resources/folderA/resources/service/client/index.ts
+deleted file mode 100644
+index 195f9aa8a84..00000000000
+--- a/src/api/resources/folderA/resources/service/client/index.ts
++++ /dev/null
+@@ -1 +0,0 @@
+-export * from "./requests/index.js";
+diff --git a/src/api/resources/folderA/resources/service/client/requests/GetDirectThreadRequest.ts b/src/api/resources/folderA/resources/service/client/requests/GetDirectThreadRequest.ts
+deleted file mode 100644
+index bbe17a2bc92..00000000000
+--- a/src/api/resources/folderA/resources/service/client/requests/GetDirectThreadRequest.ts
++++ /dev/null
+@@ -1,13 +0,0 @@
+-// This file was auto-generated by Fern from our API Definition.
+-
+-/**
+- * @example
+- *     {
+- *         ids: "ids",
+- *         tags: "tags"
+- *     }
+- */
+-export interface GetDirectThreadRequest {
+-    ids: string | string[];
+-    tags: string | string[];
+-}
+diff --git a/src/api/resources/folderA/resources/service/client/requests/index.ts b/src/api/resources/folderA/resources/service/client/requests/index.ts
+deleted file mode 100644
+index 3f1377624e6..00000000000
+--- a/src/api/resources/folderA/resources/service/client/requests/index.ts
++++ /dev/null
+@@ -1 +0,0 @@
+-export type { GetDirectThreadRequest } from "./GetDirectThreadRequest.js";
+diff --git a/src/api/resources/folderA/resources/service/exports.ts b/src/api/resources/folderA/resources/service/exports.ts
+deleted file mode 100644
+index 1fe320822cf..00000000000
+--- a/src/api/resources/folderA/resources/service/exports.ts
++++ /dev/null
+@@ -1,4 +0,0 @@
+-// This file was auto-generated by Fern from our API Definition.
+-
+-export { ServiceClient } from "./client/Client.js";
+-export * from "./client/index.js";
+diff --git a/src/api/resources/folderA/resources/service/index.ts b/src/api/resources/folderA/resources/service/index.ts
+deleted file mode 100644
+index d9adb1af9a9..00000000000
+--- a/src/api/resources/folderA/resources/service/index.ts
++++ /dev/null
+@@ -1,2 +0,0 @@
+-export * from "./client/index.js";
+-export * from "./types/index.js";
+diff --git a/src/api/resources/folderA/resources/service/types/Response.ts b/src/api/resources/folderA/resources/service/types/Response.ts
+deleted file mode 100644
+index fc60f2314a5..00000000000
+--- a/src/api/resources/folderA/resources/service/types/Response.ts
++++ /dev/null
+@@ -1,7 +0,0 @@
+-// This file was auto-generated by Fern from our API Definition.
+-
+-import type * as SeedAudiences from "../../../../../index.js";
+-
+-export interface Response {
+-    foo?: SeedAudiences.folderB.Foo | undefined;
+-}
+diff --git a/src/api/resources/folderA/resources/service/types/index.ts b/src/api/resources/folderA/resources/service/types/index.ts
+deleted file mode 100644
+index 30ae72ef3c6..00000000000
+--- a/src/api/resources/folderA/resources/service/types/index.ts
++++ /dev/null
+@@ -1 +0,0 @@
+-export * from "./Response.js";
+diff --git a/src/api/resources/folderB/exports.ts b/src/api/resources/folderB/exports.ts
+deleted file mode 100644
+index 752227296db..00000000000
+--- a/src/api/resources/folderB/exports.ts
++++ /dev/null
+@@ -1,4 +0,0 @@
+-// This file was auto-generated by Fern from our API Definition.
+-
+-export * from "./index.js";
+-export * from "./resources/index.js";
+diff --git a/src/api/resources/folderB/index.ts b/src/api/resources/folderB/index.ts
+deleted file mode 100644
+index e445af0d831..00000000000
+--- a/src/api/resources/folderB/index.ts
++++ /dev/null
+@@ -1 +0,0 @@
+-export * from "./resources/index.js";
+diff --git a/src/api/resources/folderB/resources/common/exports.ts b/src/api/resources/folderB/resources/common/exports.ts
+deleted file mode 100644
+index 94d57674a30..00000000000
+--- a/src/api/resources/folderB/resources/common/exports.ts
++++ /dev/null
+@@ -1,3 +0,0 @@
+-// This file was auto-generated by Fern from our API Definition.
+-
+-export * from "./index.js";
+diff --git a/src/api/resources/folderB/resources/common/index.ts b/src/api/resources/folderB/resources/common/index.ts
+deleted file mode 100644
+index 2f88e301585..00000000000
+--- a/src/api/resources/folderB/resources/common/index.ts
++++ /dev/null
+@@ -1 +0,0 @@
+-export * from "./types/index.js";
+diff --git a/src/api/resources/folderB/resources/common/types/Foo.ts b/src/api/resources/folderB/resources/common/types/Foo.ts
+deleted file mode 100644
+index 2fdebb51331..00000000000
+--- a/src/api/resources/folderB/resources/common/types/Foo.ts
++++ /dev/null
+@@ -1,7 +0,0 @@
+-// This file was auto-generated by Fern from our API Definition.
+-
+-import type * as SeedAudiences from "../../../../../index.js";
+-
+-export interface Foo {
+-    foo?: SeedAudiences.folderC.FolderCFoo | undefined;
+-}
+diff --git a/src/api/resources/folderB/resources/common/types/index.ts b/src/api/resources/folderB/resources/common/types/index.ts
+deleted file mode 100644
+index 35fb06b7c90..00000000000
+--- a/src/api/resources/folderB/resources/common/types/index.ts
++++ /dev/null
+@@ -1 +0,0 @@
+-export * from "./Foo.js";
+diff --git a/src/api/resources/folderB/resources/index.ts b/src/api/resources/folderB/resources/index.ts
+deleted file mode 100644
+index c56bc1409b2..00000000000
+--- a/src/api/resources/folderB/resources/index.ts
++++ /dev/null
+@@ -1,2 +0,0 @@
+-export * as common from "./common/index.js";
+-export * from "./common/types/index.js";
+diff --git a/src/api/resources/folderC/exports.ts b/src/api/resources/folderC/exports.ts
+deleted file mode 100644
+index 752227296db..00000000000
+--- a/src/api/resources/folderC/exports.ts
++++ /dev/null
+@@ -1,4 +0,0 @@
+-// This file was auto-generated by Fern from our API Definition.
+-
+-export * from "./index.js";
+-export * from "./resources/index.js";
+diff --git a/src/api/resources/folderC/index.ts b/src/api/resources/folderC/index.ts
+deleted file mode 100644
+index e445af0d831..00000000000
+--- a/src/api/resources/folderC/index.ts
++++ /dev/null
+@@ -1 +0,0 @@
+-export * from "./resources/index.js";
+diff --git a/src/api/resources/folderC/resources/common/exports.ts b/src/api/resources/folderC/resources/common/exports.ts
+deleted file mode 100644
+index 94d57674a30..00000000000
+--- a/src/api/resources/folderC/resources/common/exports.ts
++++ /dev/null
+@@ -1,3 +0,0 @@
+-// This file was auto-generated by Fern from our API Definition.
+-
+-export * from "./index.js";
+diff --git a/src/api/resources/folderC/resources/common/index.ts b/src/api/resources/folderC/resources/common/index.ts
+deleted file mode 100644
+index 2f88e301585..00000000000
+--- a/src/api/resources/folderC/resources/common/index.ts
++++ /dev/null
+@@ -1 +0,0 @@
+-export * from "./types/index.js";
+diff --git a/src/api/resources/folderC/resources/common/types/FolderCFoo.ts b/src/api/resources/folderC/resources/common/types/FolderCFoo.ts
+deleted file mode 100644
+index 8d51a1aeea8..00000000000
+--- a/src/api/resources/folderC/resources/common/types/FolderCFoo.ts
++++ /dev/null
+@@ -1,5 +0,0 @@
+-// This file was auto-generated by Fern from our API Definition.
+-
+-export interface FolderCFoo {
+-    bar_property: string;
+-}
+diff --git a/src/api/resources/folderC/resources/common/types/index.ts b/src/api/resources/folderC/resources/common/types/index.ts
+deleted file mode 100644
+index a071b36b172..00000000000
+--- a/src/api/resources/folderC/resources/common/types/index.ts
++++ /dev/null
+@@ -1 +0,0 @@
+-export * from "./FolderCFoo.js";
+diff --git a/src/api/resources/folderC/resources/index.ts b/src/api/resources/folderC/resources/index.ts
+deleted file mode 100644
+index c56bc1409b2..00000000000
+--- a/src/api/resources/folderC/resources/index.ts
++++ /dev/null
+@@ -1,2 +0,0 @@
+-export * as common from "./common/index.js";
+-export * from "./common/types/index.js";
+diff --git a/src/api/resources/foo/client/Client.ts b/src/api/resources/foo/client/Client.ts
+deleted file mode 100644
+index e5893525f42..00000000000
+--- a/src/api/resources/foo/client/Client.ts
++++ /dev/null
+@@ -1,86 +0,0 @@
+-// This file was auto-generated by Fern from our API Definition.
+-
+-import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
+-import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
+-import { mergeHeaders } from "../../../../core/headers.js";
+-import * as core from "../../../../core/index.js";
+-import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
+-import * as errors from "../../../../errors/index.js";
+-import type * as SeedAudiences from "../../../index.js";
+-
+-export declare namespace FooClient {
+-    export type Options = BaseClientOptions;
+-
+-    export interface RequestOptions extends BaseRequestOptions {}
+-}
+-
+-export class FooClient {
+-    protected readonly _options: NormalizedClientOptions<FooClient.Options>;
+-
+-    constructor(options: FooClient.Options) {
+-        this._options = normalizeClientOptions(options);
+-    }
+-
+-    /**
+-     * @param {SeedAudiences.FindRequest} request
+-     * @param {FooClient.RequestOptions} requestOptions - Request-specific configuration.
+-     *
+-     * @example
+-     *     await client.foo.find({
+-     *         optionalString: "optionalString",
+-     *         publicProperty: "publicProperty",
+-     *         privateProperty: 1
+-     *     })
+-     */
+-    public find(
+-        request: SeedAudiences.FindRequest = {},
+-        requestOptions?: FooClient.RequestOptions,
+-    ): core.HttpResponsePromise<SeedAudiences.ImportingType> {
+-        return core.HttpResponsePromise.fromPromise(this.__find(request, requestOptions));
+-    }
+-
+-    private async __find(
+-        request: SeedAudiences.FindRequest = {},
+-        requestOptions?: FooClient.RequestOptions,
+-    ): Promise<core.WithRawResponse<SeedAudiences.ImportingType>> {
+-        const { optionalString, ..._body } = request;
+-        const _queryParams: Record<string, unknown> = {
+-            optionalString,
+-        };
+-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+-        const _response = await core.fetcher({
+-            url:
+-                (await core.Supplier.get(this._options.baseUrl)) ??
+-                (await core.Supplier.get(this._options.environment)),
+-            method: "POST",
+-            headers: _headers,
+-            contentType: "application/json",
+-            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+-            queryString: core.url
+-                .queryBuilder()
+-                .addMany(_queryParams)
+-                .mergeAdditional(requestOptions?.queryParams)
+-                .build(),
+-            requestType: "json",
+-            body: _body,
+-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+-            abortSignal: requestOptions?.abortSignal,
+-            fetchFn: this._options?.fetch,
+-            logging: this._options.logging,
+-        });
+-        if (_response.ok) {
+-            return { data: _response.body as SeedAudiences.ImportingType, rawResponse: _response.rawResponse };
+-        }
+-
+-        if (_response.error.reason === "status-code") {
+-            throw new errors.SeedAudiencesError({
+-                statusCode: _response.error.statusCode,
+-                body: _response.error.body,
+-                rawResponse: _response.rawResponse,
+-            });
+-        }
+-
+-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/");
+-    }
+-}
+diff --git a/src/api/resources/foo/client/index.ts b/src/api/resources/foo/client/index.ts
+deleted file mode 100644
+index 195f9aa8a84..00000000000
+--- a/src/api/resources/foo/client/index.ts
++++ /dev/null
+@@ -1 +0,0 @@
+-export * from "./requests/index.js";
+diff --git a/src/api/resources/foo/client/requests/FindRequest.ts b/src/api/resources/foo/client/requests/FindRequest.ts
+deleted file mode 100644
+index 20014c5b15e..00000000000
+--- a/src/api/resources/foo/client/requests/FindRequest.ts
++++ /dev/null
+@@ -1,17 +0,0 @@
+-// This file was auto-generated by Fern from our API Definition.
+-
+-import type * as SeedAudiences from "../../../../index.js";
+-
+-/**
+- * @example
+- *     {
+- *         optionalString: "optionalString",
+- *         publicProperty: "publicProperty",
+- *         privateProperty: 1
+- *     }
+- */
+-export interface FindRequest {
+-    optionalString?: SeedAudiences.OptionalString;
+-    publicProperty?: string;
+-    privateProperty?: number;
+-}
+diff --git a/src/api/resources/foo/client/requests/index.ts b/src/api/resources/foo/client/requests/index.ts
+deleted file mode 100644
+index 17a043e2752..00000000000
+--- a/src/api/resources/foo/client/requests/index.ts
++++ /dev/null
+@@ -1 +0,0 @@
+-export type { FindRequest } from "./FindRequest.js";
+diff --git a/src/api/resources/foo/exports.ts b/src/api/resources/foo/exports.ts
+deleted file mode 100644
+index 3daef7442f2..00000000000
+--- a/src/api/resources/foo/exports.ts
++++ /dev/null
+@@ -1,4 +0,0 @@
+-// This file was auto-generated by Fern from our API Definition.
+-
+-export { FooClient } from "./client/Client.js";
+-export * from "./client/index.js";
+diff --git a/src/api/resources/foo/index.ts b/src/api/resources/foo/index.ts
+deleted file mode 100644
+index d9adb1af9a9..00000000000
+--- a/src/api/resources/foo/index.ts
++++ /dev/null
+@@ -1,2 +0,0 @@
+-export * from "./client/index.js";
+-export * from "./types/index.js";
+diff --git a/src/api/resources/foo/types/FilteredType.ts b/src/api/resources/foo/types/FilteredType.ts
+deleted file mode 100644
+index 52f135926d9..00000000000
+--- a/src/api/resources/foo/types/FilteredType.ts
++++ /dev/null
+@@ -1,6 +0,0 @@
+-// This file was auto-generated by Fern from our API Definition.
+-
+-export interface FilteredType {
+-    public_property?: string | undefined;
+-    private_property: number;
+-}
+diff --git a/src/api/resources/foo/types/ImportingType.ts b/src/api/resources/foo/types/ImportingType.ts
+deleted file mode 100644
+index 588614abc58..00000000000
+--- a/src/api/resources/foo/types/ImportingType.ts
++++ /dev/null
+@@ -1,7 +0,0 @@
+-// This file was auto-generated by Fern from our API Definition.
+-
+-import type * as SeedAudiences from "../../../index.js";
+-
+-export interface ImportingType {
+-    imported: SeedAudiences.Imported;
+-}
+diff --git a/src/api/resources/foo/types/OptionalString.ts b/src/api/resources/foo/types/OptionalString.ts
+deleted file mode 100644
+index fdb56067364..00000000000
+--- a/src/api/resources/foo/types/OptionalString.ts
++++ /dev/null
+@@ -1,3 +0,0 @@
+-// This file was auto-generated by Fern from our API Definition.
+-
+-export type OptionalString = string | undefined;
+diff --git a/src/api/resources/foo/types/index.ts b/src/api/resources/foo/types/index.ts
+deleted file mode 100644
+index 92561a32e0e..00000000000
+--- a/src/api/resources/foo/types/index.ts
++++ /dev/null
+@@ -1,3 +0,0 @@
+-export * from "./FilteredType.js";
+-export * from "./ImportingType.js";
+-export * from "./OptionalString.js";
+diff --git a/src/api/resources/index.ts b/src/api/resources/index.ts
+index 00e54e076ed..1b5bce67290 100644
+--- a/src/api/resources/index.ts
++++ b/src/api/resources/index.ts
+@@ -1,9 +1 @@
+-export * as commons from "./commons/index.js";
+-export * from "./commons/types/index.js";
+-export * as folderA from "./folderA/index.js";
+-export * as folderB from "./folderB/index.js";
+-export * as folderC from "./folderC/index.js";
+ export * as folderD from "./folderD/index.js";
+-export * from "./foo/client/requests/index.js";
+-export * as foo from "./foo/index.js";
+-export * from "./foo/types/index.js";
+diff --git a/src/environments.ts b/src/environments.ts
+deleted file mode 100644
+index bb51c784746..00000000000
+--- a/src/environments.ts
++++ /dev/null
+@@ -1,10 +0,0 @@
+-// This file was auto-generated by Fern from our API Definition.
+-
+-export const SeedAudiencesEnvironment = {
+-    EnvironmentA: "https://api.example.a.com",
+-    EnvironmentB: "https://api.example.b.com",
+-} as const;
+-
+-export type SeedAudiencesEnvironment =
+-    | typeof SeedAudiencesEnvironment.EnvironmentA
+-    | typeof SeedAudiencesEnvironment.EnvironmentB;
+diff --git a/src/index.ts b/src/index.ts
+index fecc5506fc6..4346dfd1d9b 100644
+--- a/src/index.ts
++++ b/src/index.ts
+@@ -1,6 +1,5 @@
+ export * as SeedAudiences from "./api/index.js";
+ export type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
+ export { SeedAudiencesClient } from "./Client.js";
+-export { SeedAudiencesEnvironment } from "./environments.js";
+ export { SeedAudiencesError, SeedAudiencesTimeoutError } from "./errors/index.js";
+ export * from "./exports.js";
+diff --git a/tests/wire/folder-a/service.test.ts b/tests/wire/folder-a/service.test.ts
+deleted file mode 100644
+index fa53773d139..00000000000
+--- a/tests/wire/folder-a/service.test.ts
++++ /dev/null
+@@ -1,21 +0,0 @@
+-// This file was auto-generated by Fern from our API Definition.
+-
+-import { SeedAudiencesClient } from "../../../src/Client";
+-import { mockServerPool } from "../../mock-server/MockServerPool";
+-
+-describe("ServiceClient", () => {
+-    test("getDirectThread", async () => {
+-        const server = mockServerPool.createServer();
+-        const client = new SeedAudiencesClient({ maxRetries: 0, environment: server.baseUrl });
+-
+-        const rawResponseBody = { foo: { foo: { bar_property: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32" } } };
+-
+-        server.mockEndpoint().get("").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
+-
+-        const response = await client.folderA.service.getDirectThread({
+-            ids: "ids",
+-            tags: "tags",
+-        });
+-        expect(response).toEqual(rawResponseBody);
+-    });
+-});
+diff --git a/tests/wire/foo.test.ts b/tests/wire/foo.test.ts
+deleted file mode 100644
+index e8179b84f88..00000000000
+--- a/tests/wire/foo.test.ts
++++ /dev/null
+@@ -1,29 +0,0 @@
+-// This file was auto-generated by Fern from our API Definition.
+-
+-import { SeedAudiencesClient } from "../../src/Client";
+-import { mockServerPool } from "../mock-server/MockServerPool";
+-
+-describe("FooClient", () => {
+-    test("find", async () => {
+-        const server = mockServerPool.createServer();
+-        const client = new SeedAudiencesClient({ maxRetries: 0, environment: server.baseUrl });
+-        const rawRequestBody = { publicProperty: "publicProperty", privateProperty: 1 };
+-        const rawResponseBody = { imported: "imported" };
+-
+-        server
+-            .mockEndpoint()
+-            .post("")
+-            .jsonBody(rawRequestBody)
+-            .respondWith()
+-            .statusCode(200)
+-            .jsonBody(rawResponseBody)
+-            .build();
+-
+-        const response = await client.foo.find({
+-            optionalString: "optionalString",
+-            publicProperty: "publicProperty",
+-            privateProperty: 1,
+-        });
+-        expect(response).toEqual(rawResponseBody);
+-    });
+-});

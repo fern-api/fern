@@ -6,13 +6,13 @@ image: fernapi/fern-java-sdk
 buildScripts:
   compileScript:
     commands:
-      - ./gradlew compileJava
+    - ./gradlew compileJava
 
 publish:
   workingDirectory: generators/java
   preBuildCommands:
-    - ./gradlew :sdk:distTar
-    - pnpm turbo run dist:cli --filter @fern-api/java-sdk
+  - ./gradlew :sdk:distTar
+  - pnpm turbo run dist:cli --filter @fern-api/java-sdk
   docker:
     file: ./generators/java/sdk/Dockerfile
     image: fernapi/fern-java-sdk
@@ -22,27 +22,27 @@ test:
     image: fernapi/fern-java-sdk:latest
     context: .
     command:
-      - cd generators/java
-      - ./gradlew :sdk:distTar
-      - cd ../../
-      - pnpm turbo run dist:cli --filter @fern-api/java-sdk
-      - docker build -f generators/java/sdk/Dockerfile -t fernapi/fern-java-sdk:latest .
+    - cd generators/java
+    - ./gradlew :sdk:distTar
+    - cd ../../
+    - pnpm turbo run dist:cli --filter @fern-api/java-sdk
+    - docker build -f generators/java/sdk/Dockerfile -t fernapi/fern-java-sdk:latest .
   podman:
     image: fernapi/fern-java-sdk:latest
     context: .
     command:
-      - cd generators/java
-      - ./gradlew :sdk:distTar
-      - cd ../../
-      - pnpm turbo run dist:cli --filter @fern-api/java-sdk
-      - podman build -f generators/java/sdk/Dockerfile -t fernapi/fern-java-sdk:latest .
+    - cd generators/java
+    - ./gradlew :sdk:distTar
+    - cd ../../
+    - pnpm turbo run dist:cli --filter @fern-api/java-sdk
+    - podman build -f generators/java/sdk/Dockerfile -t fernapi/fern-java-sdk:latest .
   local:
     workingDirectory: generators/java
     buildCommand:
-      - ./gradlew :sdk:distTar
-      - chmod +x install-gradle.sh && ./install-gradle.sh
-      - cd sdk && tar -xvf build/distributions/sdk.tar -C .
-      - pnpm turbo run compile --filter @fern-api/java-sdk && pnpm turbo run dist:cli --filter @fern-api/java-sdk
+    - ./gradlew :sdk:distTar
+    - chmod +x install-gradle.sh && ./install-gradle.sh
+    - cd sdk && tar -xvf build/distributions/sdk.tar -C .
+    - pnpm turbo run compile --filter @fern-api/java-sdk && pnpm turbo run dist:cli --filter @fern-api/java-sdk
     runCommand: cd sdk/sdk && java -cp sdk.jar:lib/* com.fern.java.client.Cli {CONFIG_PATH}
     env:
       # Path to Node.js executable (uses system node)
@@ -55,374 +55,364 @@ generatorType: SDK
 defaultOutputMode: github
 fixtures:
   exhaustive:
-    - customConfig:
-        enable-wire-tests: true
-      outputFolder: no-custom-config
-    - customConfig:
-        package-layout: flat
-        use-default-request-parameter-values: true
-      outputFolder: flat-package-layout
-    - customConfig:
-        inline-path-parameters: true
-        custom-dependencies:
-          - "implementation jakarta.websocket:jakarta.websocket-api:2.1.0"
-      outputFolder: custom-dependency
-    - customConfig:
-        inline-path-parameters: true
-        custom-plugins:
-          - "com.github.johnrengelman.shadow:8.1.1"
-          - "org.jetbrains.kotlin.jvm:2.1.0"
-      outputFolder: custom-plugins
-    - customConfig:
-        inline-path-parameters: true
-        json-include: non-empty
-      outputFolder: json-include-non-empty
-    - customConfig:
-        inline-path-parameters: true
-        enable-forward-compatible-enums: true
-      outputFolder: forward-compatible-enums
-    - customConfig:
-        inline-path-parameters: true
-        base-api-exception-class-name: CustomApiException
-        base-exception-class-name: CustomException
-      outputFolder: custom-error-names
-    - customConfig:
-        inline-path-parameters: true
-        client-class-name: Best
-      outputFolder: custom-client-class-name
-      readmeConfig:
-        exampleStyle: minimal
-    - customConfig:
-        inline-path-parameters: true
-        package-prefix: com.fern.sdk
-      outputMode: local_files
-      outputFolder: local-files
-    - customConfig:
-        inline-path-parameters: true
-        enable-public-constructors: true
-      outputFolder: enable-public-constructors
+  - customConfig:
+      enable-wire-tests: true
+    outputFolder: enable-wire-tests
+  - customConfig:
+      package-layout: flat
+      use-default-request-parameter-values: true
+    outputFolder: flat-package-layout
+  - customConfig:
+      inline-path-parameters: true
+      custom-dependencies:
+      - "implementation jakarta.websocket:jakarta.websocket-api:2.1.0"
+    outputFolder: custom-dependency
+  - customConfig:
+      inline-path-parameters: true
+      custom-plugins:
+      - "com.github.johnrengelman.shadow:8.1.1"
+      - "org.jetbrains.kotlin.jvm:2.1.0"
+    outputFolder: custom-plugins
+  - customConfig:
+      inline-path-parameters: true
+      json-include: non-empty
+    outputFolder: json-include-non-empty
+  - customConfig:
+      inline-path-parameters: true
+      enable-forward-compatible-enums: true
+    outputFolder: forward-compatible-enums
+  - customConfig:
+      inline-path-parameters: true
+      base-api-exception-class-name: CustomApiException
+      base-exception-class-name: CustomException
+    outputFolder: custom-error-names
+  - customConfig:
+      inline-path-parameters: true
+      client-class-name: Best
+    outputFolder: custom-client-class-name
+    readmeConfig:
+      exampleStyle: minimal
+  - customConfig:
+      inline-path-parameters: true
+      package-prefix: com.fern.sdk
+    outputMode: local_files
+    outputFolder: local-files
+  - customConfig:
+      inline-path-parameters: true
+      enable-public-constructors: true
+    outputFolder: enable-public-constructors
     # Wire tests moved to main module to fix compilation
     # - customConfig:
     #     inline-path-parameters: true
     #     enable-wire-tests: true
     #   outputFolder: wire-tests
-    - customConfig:
-        custom-interceptors: true
-      outputFolder: custom-interceptors
-    - customConfig:
-        publish-to: central
-      outputFolder: publish-to
-    - publishConfig:
-        type: maven
-        coordinate: com.fern:exhaustive
-        registryUrl: "definitelyMavenCentral"
-        signature:
-          keyId: "test_kid"
-          password: "test_password"
-          secretKey: "test_secretkey"
-      publishMetadata:
-        package_description: My very good and lengthy description
-        publisher_email: "me@gmail.com"
-        publisher_name: "Fern"
-        reference_url: "https://buildwithfern.com"
-      outputFolder: signed_publish
-    - publishConfig:
-        type: maven
-        coordinate: com.fern:exhaustive
-        registryUrl: "definitelyMavenCentral"
-      publishMetadata:
-        package_description: SDK with custom license
-        publisher_email: "developers@example.com"
-        publisher_name: "Example Corp"
-      license:
-        custom: LICENSE
-      outputFolder: custom-license
+  - customConfig:
+      custom-interceptors: true
+    outputFolder: custom-interceptors
+  - customConfig:
+      publish-to: central
+    outputFolder: publish-to
+  - publishConfig:
+      type: maven
+      coordinate: com.fern:exhaustive
+      registryUrl: "definitelyMavenCentral"
+      signature:
+        keyId: "test_kid"
+        password: "test_password"
+        secretKey: "test_secretkey"
+    publishMetadata:
+      package_description: My very good and lengthy description
+      publisher_email: "me@gmail.com"
+      publisher_name: "Fern"
+      reference_url: "https://buildwithfern.com"
+    outputFolder: signed_publish
+  - publishConfig:
+      type: maven
+      coordinate: com.fern:exhaustive
+      registryUrl: "definitelyMavenCentral"
+    publishMetadata:
+      package_description: SDK with custom license
+      publisher_email: "developers@example.com"
+      publisher_name: "Example Corp"
+    license:
+      custom: LICENSE
+    outputFolder: custom-license
   java-inline-types:
-    - customConfig:
-        enable-inline-types: true
-        wrapped-aliases: true
-      outputFolder: inline
-    - customConfig:
-        enable-inline-types: false
-        wrapped-aliases: true
-      outputFolder: no-inline
-    - customConfig:
-        enable-inline-types: true
-        wrapped-aliases: false
-      outputFolder: no-wrapped-aliases
-    - customConfig:
-        enable-inline-types: true
-        wrapped-aliases: false
-        enable-forward-compatible-enums: true
-      outputFolder: enable-forward-compatible-enums
+  - customConfig:
+      enable-inline-types: true
+      wrapped-aliases: true
+    outputFolder: inline
+  - customConfig:
+      enable-inline-types: false
+      wrapped-aliases: true
+    outputFolder: no-inline
+  - customConfig:
+      enable-inline-types: true
+      wrapped-aliases: false
+    outputFolder: no-wrapped-aliases
+  - customConfig:
+      enable-inline-types: true
+      wrapped-aliases: false
+      enable-forward-compatible-enums: true
+    outputFolder: enable-forward-compatible-enums
   imdb:
-    - customConfig:
-        disable-required-property-builder-checks: true
-      outputFolder: disable-required-property-builder-checks
-    - customConfig:
-        package-layout: flat
-      outputFolder: flat-package-layout
-    - customConfig:
-        omit-fern-headers: true
-        maxRetries: 5
-      outputFolder: omit-fern-headers
+  - customConfig:
+      disable-required-property-builder-checks: true
+    outputFolder: disable-required-property-builder-checks
+  - customConfig:
+      package-layout: flat
+    outputFolder: flat-package-layout
+  - customConfig:
+      omit-fern-headers: true
+      maxRetries: 5
+    outputFolder: omit-fern-headers
   java-custom-package-prefix:
-    - customConfig:
-        package-prefix: "com.customprefix"
-      outputFolder: java-custom-package-prefix
+  - customConfig:
+      package-prefix: "com.customprefix"
+    outputFolder: java-custom-package-prefix
   java-single-property-endpoint:
-    - outputFolder: java-single-property-endpoint
+  - outputFolder: java-single-property-endpoint
   java-pagination-deep-cursor-path:
-    - outputFolder: java-pagination-deep-cursor-path
-    - customConfig:
-        enable-wire-tests: true
-      outputFolder: wire-tests
+  - outputFolder: java-pagination-deep-cursor-path
+  - customConfig:
+      enable-wire-tests: true
+    outputFolder: wire-tests
   pagination-uri-path:
-    - customConfig:
-        enable-wire-tests: true
-      outputFolder: wire-tests
+  - customConfig:
+      enable-wire-tests: true
+    outputFolder: wire-tests
   pagination:
-    - customConfig:
-        enable-wire-tests: true
-      outputFolder: default
-    - customConfig:
-        enable-wire-tests: true
-        offset-semantics: "item-index"
-      outputFolder: item-index-semantics
+  - customConfig:
+      enable-wire-tests: true
+    outputFolder: default
+  - customConfig:
+      enable-wire-tests: true
+      offset-semantics: "item-index"
+    outputFolder: item-index-semantics
   pagination-custom:
-    - customConfig:
-        custom-pager-name: "FernCustomPaginator"
-      outputFolder: default
+  - customConfig:
+      custom-pager-name: "FernCustomPaginator"
+    outputFolder: default
   unions:
-    - customConfig:
-        enable-wire-tests: true
-      outputFolder: default
+  - customConfig:
+      enable-wire-tests: true
+    outputFolder: default
   unions-with-local-date:
-    - customConfig:
-        use-local-date-for-dates: true
-        package-prefix: com.seed.unions
-      outputFolder: default
+  - customConfig:
+      use-local-date-for-dates: true
+      package-prefix: com.seed.unions
+    outputFolder: default
   accept-header:
-    - outputFolder: accept-header
+  - outputFolder: accept-header
   client-side-params:
-    - customConfig:
-        use-default-request-parameter-values: true
-        enable-wire-tests: true
-      outputFolder: default
+  - customConfig:
+      use-default-request-parameter-values: true
+      enable-wire-tests: true
+    outputFolder: default
   file-upload:
-    - customConfig:
-        wrapped-aliases: true
-      outputFolder: wrapped-aliases
-    - customConfig:
-        inline-file-properties: true
-        inline-path-parameters: true
-      outputFolder: inline-file-properties
-    - outputFolder: no-custom-config
+  - customConfig:
+      wrapped-aliases: true
+    outputFolder: wrapped-aliases
+  - customConfig:
+      inline-file-properties: true
+      inline-path-parameters: true
+    outputFolder: inline-file-properties
   examples:
-    - customConfig:
-        enable-wire-tests: true
-      outputFolder: default
-    - customConfig:
-        inline-file-properties: true
-        inline-path-parameters: true
-      outputFolder: inline-file-properties
-    - outputFolder: no-custom-config
-    - customConfig:
-        custom-readme-sections:
-          - title: "Generator Invocation Custom Section"
-            content: "Generator Invocation Custom Content for {{ group }}:{{ artifact }}:{{ version }}"
-          - title: "Override Section"
-            content: "Override Content"
-      readmeConfig:
-        apiName: "CustomName"
-        disabledSections:
-          - "contributing"
-        bannerLink: https://www.fernapi.com
-        apiReferenceLink: https://www.docs.fernapi.com
-        defaultEndpoint: POST /movie
-        exampleStyle: minimal
-        customSections:
-          - title: "Custom Section"
-            language: java
-            content: |
-              This is a custom section. Latest package info is {{ group }}:{{ artifact }}:{{ version }}
-          - title: "Override Section"
-            language: java
-            content: "Base Content"
-        features:
-          timeouts:
-            - GET /movie/{movieId}
-            - method: POST
-              path: /movie
-      outputFolder: readme-config
+  - customConfig:
+      enable-wire-tests: true
+    outputFolder: default
+  - customConfig:
+      inline-file-properties: true
+      inline-path-parameters: true
+    outputFolder: inline-file-properties
+  - customConfig:
+      custom-readme-sections:
+      - title: "Generator Invocation Custom Section"
+        content: "Generator Invocation Custom Content for {{ group }}:{{ artifact }}:{{ version }}"
+      - title: "Override Section"
+        content: "Override Content"
+    readmeConfig:
+      apiName: "CustomName"
+      disabledSections:
+      - "contributing"
+      bannerLink: https://www.fernapi.com
+      apiReferenceLink: https://www.docs.fernapi.com
+      defaultEndpoint: POST /movie
+      exampleStyle: minimal
+      customSections:
+      - title: "Custom Section"
+        language: java
+        content: |
+          This is a custom section. Latest package info is {{ group }}:{{ artifact }}:{{ version }}
+      - title: "Override Section"
+        language: java
+        content: "Base Content"
+      features:
+        timeouts:
+        - GET /movie/{movieId}
+        - method: POST
+          path: /movie
+    outputFolder: readme-config
   nullable:
-    - customConfig:
-        wrapped-aliases: true
-      outputFolder: wrapped-aliases
-    - outputFolder: no-custom-config
+  - customConfig:
+      wrapped-aliases: true
+    outputFolder: wrapped-aliases
   java-nullable-named-request-types:
-    - outputFolder: custom-config
-      customConfig:
-        respect-nullable-schemas: true
+  - outputFolder: custom-config
+    customConfig:
+      respect-nullable-schemas: true
   enum:
-    - customConfig:
-        enable-forward-compatible-enums: true
-      outputFolder: forward-compatible-enums
-    - outputFolder: no-custom-config
+  - customConfig:
+      enable-forward-compatible-enums: true
+    outputFolder: forward-compatible-enums
   version:
-    - customConfig:
-        enable-forward-compatible-enums: true
-      outputFolder: forward-compatible-enums
-    - outputFolder: no-custom-config
+  - customConfig:
+      enable-forward-compatible-enums: true
+    outputFolder: forward-compatible-enums
   java-builder-extension:
-    - customConfig:
-        client-class-name: BaseClient
-      outputFolder: base-client
-    - customConfig:
-        client-class-name: BaseClient
-        enable-extensible-builders: true
-      outputFolder: extensible-builders
+  - customConfig:
+      client-class-name: BaseClient
+    outputFolder: base-client
+  - customConfig:
+      client-class-name: BaseClient
+      enable-extensible-builders: true
+    outputFolder: extensible-builders
   basic-auth:
-    - customConfig:
-        enable-wire-tests: true
-      outputFolder: basic-auth
+  - customConfig:
+      enable-wire-tests: true
+    outputFolder: basic-auth
   oauth-client-credentials:
-    - customConfig:
-        enable-wire-tests: true
-      outputFolder: oauth-client-credentials
-    - customConfig:
-        custom-interceptors: true
-      outputFolder: custom-interceptors
-  oauth-client-credentials-mandatory-auth:
-    - customConfig: null
-      outputFolder: no-custom-config
+  - customConfig:
+      enable-wire-tests: true
+    outputFolder: oauth-client-credentials
+  - customConfig:
+      custom-interceptors: true
+    outputFolder: custom-interceptors
   header-auth:
-    - customConfig:
-        enable-wire-tests: true
-      outputFolder: header-auth
+  - customConfig:
+      enable-wire-tests: true
+    outputFolder: header-auth
   nullable-optional:
-    - customConfig:
-        use-nullable-annotation: true
-      outputFolder: with-nullable-annotation
-    - customConfig:
-        use-nullable-annotation: false
-      outputFolder: legacy
-    - customConfig:
-        collapse-optional-nullable: true
-      outputFolder: collapse-optional-nullable
+  - customConfig:
+      use-nullable-annotation: true
+    outputFolder: with-nullable-annotation
+  - customConfig:
+      use-nullable-annotation: false
+    outputFolder: legacy
+  - customConfig:
+      collapse-optional-nullable: true
+    outputFolder: collapse-optional-nullable
   optional:
-    - customConfig:
-        enable-wire-tests: true
-      outputFolder: wire-tests
+  - customConfig:
+      enable-wire-tests: true
+    outputFolder: wire-tests
   streaming:
-    - customConfig:
-        enable-wire-tests: true
-      outputFolder: streaming
+  - customConfig:
+      enable-wire-tests: true
+    outputFolder: streaming
   server-sent-event-examples:
-    - customConfig:
-        enable-wire-tests: true
-      outputFolder: with-wire-tests
-    - customConfig: null
-      outputFolder: no-custom-config
+  - customConfig:
+      enable-wire-tests: true
+    outputFolder: with-wire-tests
   server-sent-events-openapi:
-    - customConfig:
-        enable_wire_tests: true
-      outputFolder: with-wire-tests
+  - customConfig:
+      enable_wire_tests: true
+    outputFolder: with-wire-tests
   java-optional-nullable-query-params:
-    - customConfig:
-        use-default-request-parameter-values: true
-        collapse-optional-nullable: true
-      outputFolder: default
+  - customConfig:
+      use-default-request-parameter-values: true
+      collapse-optional-nullable: true
+    outputFolder: default
   java-default-timeout:
-    - customConfig:
-        default-timeout-in-seconds: 120
-      outputFolder: default
+  - customConfig:
+      default-timeout-in-seconds: 120
+    outputFolder: default
   java-with-property-conflict:
-    - outputFolder: default
+  - outputFolder: default
   java-path-param-key-conflict:
-    - outputFolder: default
+  - outputFolder: default
   java-many-properties:
-    - outputFolder: default
+  - outputFolder: default
   java-output-directory:
     # Test with no output-directory config (should use default PROJECT_ROOT)
-    - customConfig:
-        package-prefix: com.test.sdk
-      outputMode: local_files
-      outputFolder: no-config
-      skipScripts: true
+  - customConfig:
+      package-prefix: com.test.sdk
+    outputMode: local_files
+    outputFolder: no-config
+    skipScripts: true
     # Test with explicit project-root (should behave same as default)
-    - customConfig:
-        package-prefix: com.test.sdk
-        output-directory: project-root
-      outputMode: local_files
-      outputFolder: project-root
-      skipScripts: true
+  - customConfig:
+      package-prefix: com.test.sdk
+      output-directory: project-root
+    outputMode: local_files
+    outputFolder: project-root
+    skipScripts: true
     # Test with source-root (should NOT add src/main/java)
-    - customConfig:
-        package-prefix: com.test.sdk
-        output-directory: source-root
-      outputMode: local_files
-      outputFolder: source-root
-      skipScripts: true
+  - customConfig:
+      package-prefix: com.test.sdk
+      output-directory: source-root
+    outputMode: local_files
+    outputFolder: source-root
+    skipScripts: true
 scripts:
   docker:
-    - image: fernapi/java-seed
-      commands:
-        - source ~/.bash_profile && jenv shell 1.8 && source ~/.bash_profile && ./gradlew compileJava spotlessCheck
+  - image: fernapi/java-seed
+    commands:
+    - source ~/.bash_profile && jenv shell 1.8 && source ~/.bash_profile && ./gradlew compileJava spotlessCheck
   local:
-    - commands:
-      - ./gradlew compileJava spotlessCheck
+  - commands:
+    - ./gradlew compileJava spotlessCheck
 
 allowedFailures:
-  - alias-extends
-  - enum:forward-compatible-enums
-  - enum:no-custom-config
-  - examples:default
-  - examples:inline-file-properties
-  - examples:no-custom-config
-  - examples:readme-config
-  - exhaustive:local-files
-  - exhaustive:publish-to
-  - exhaustive:signed_publish
-  - extends
-  - java-inline-types:no-wrapped-aliases
-  - nullable-optional:with-nullable-annotation
-  - nullable-optional:collapse-optional-nullable
-  - oauth-client-credentials
-  - oauth-client-credentials:custom-interceptors
-  - oauth-client-credentials-custom
-  - oauth-client-credentials-default
-  - oauth-client-credentials-environment-variables
-  - oauth-client-credentials-mandatory-auth:no-custom-config
-  - oauth-client-credentials-nested-root
-  - oauth-client-credentials-with-variables
-  - oauth-client-credentials-reference
-  - request-parameters
-  - streaming-parameter
-  - inferred-auth-implicit-reference
-  - endpoint-security-auth
+- alias-extends
+- enum:forward-compatible-enums
+- enum:baseline
+- examples:default
+- examples:inline-file-properties
+- examples:baseline
+- examples:readme-config
+- exhaustive:local-files
+- exhaustive:publish-to
+- exhaustive:signed_publish
+- extends
+- java-inline-types:no-wrapped-aliases
+- nullable-optional:with-nullable-annotation
+- nullable-optional:collapse-optional-nullable
+- oauth-client-credentials
+- oauth-client-credentials:custom-interceptors
+- oauth-client-credentials-custom
+- oauth-client-credentials-default
+- oauth-client-credentials-environment-variables
+- oauth-client-credentials-mandatory-auth:baseline
+- oauth-client-credentials-nested-root
+- oauth-client-credentials-with-variables
+- oauth-client-credentials-reference
+- request-parameters
+- streaming-parameter
+- inferred-auth-implicit-reference
+- endpoint-security-auth
 
   # Snippet failures; many of these failures are due to the fact that a
   # required list of query parameters is not actually required by the builder.
-  - any-auth
-  - java-inline-types:inline
-  - java-inline-types:enable-forward-compatible-enums
-  - nullable:wrapped-aliases
-  - nullable:no-custom-config
-  - pagination-custom
+- any-auth
+- java-inline-types:inline
+- java-inline-types:enable-forward-compatible-enums
+- nullable:wrapped-aliases
+- nullable:baseline
+- pagination-custom
 
-  - java-pagination-deep-cursor-path:wire-tests
+- java-pagination-deep-cursor-path:wire-tests
 
   # Bug with how java-sdk creates nightly balanced files
-  - java-pagination-deep-cursor-path
+- java-pagination-deep-cursor-path
 
   # File upload dynamic snippets have compilation errors due to missing file parameters
   # These failures are from pre-existing broken dynamic snippet generation
-  - file-upload:no-custom-config
-  - file-upload:wrapped-aliases
-  - file-upload:inline-file-properties
-  - file-upload-openapi
+- file-upload:baseline
+- file-upload:wrapped-aliases
+- file-upload:inline-file-properties
+- file-upload-openapi
 
   # Optional wire tests have snippet generation bug with optional(nullable(T))
   # Snippet generator doesn't wrap value in Optional.of() for optional request bodies
-  - optional:wire-tests
+- optional:wire-tests

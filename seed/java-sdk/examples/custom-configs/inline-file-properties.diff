@@ -1,0 +1,15 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 1bdd1da9041..9a7ab4f0dfc 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,10 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-java-sdk",
+   "generatorVersion": "local",
++  "generatorConfig": {
++    "inline-file-properties": true,
++    "inline-path-parameters": true
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "ci",

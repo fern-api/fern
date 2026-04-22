@@ -1,0 +1,151 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 0eba66302dd..3101e624d3d 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,18 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-php-sdk",
+   "generatorVersion": "local",
++  "generatorConfig": {
++    "customReadmeSections": [
++      {
++        "title": "Override Section",
++        "content": "Override Content"
++      },
++      {
++        "title": "Generator Invocation Custom Section",
++        "content": "Generator Invocation Custom Content for {{ packageName }}"
++      }
++    ]
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "ci",
+diff --git a/README.md b/README.md
+index 5fc59efcf5c..7afa5531783 100644
+--- a/README.md
++++ b/README.md
+@@ -1,5 +1,7 @@
+ # Seed PHP Library
+ 
++![](https://www.fernapi.com)
++
+ [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FPHP)
+ [![php shield](https://img.shields.io/badge/php-packagist-pink)](https://packagist.org/packages/seed/seed)
+ 
+@@ -7,8 +9,12 @@ The Seed PHP library provides convenient access to the Seed APIs from PHP.
+ 
+ ## Table of Contents
+ 
++- [Documentation](#documentation)
+ - [Requirements](#requirements)
+ - [Installation](#installation)
++- [Base Readme Custom Section](#base-readme-custom-section)
++- [Override Section](#override-section)
++- [Generator Invocation Custom Section](#generator-invocation-custom-section)
+ - [Usage](#usage)
+ - [Environments](#environments)
+ - [Exception Handling](#exception-handling)
+@@ -18,6 +24,10 @@ The Seed PHP library provides convenient access to the Seed APIs from PHP.
+   - [Timeouts](#timeouts)
+ - [Contributing](#contributing)
+ 
++## Documentation
++
++API reference documentation is available [here](https://www.docs.fernapi.com).
++
+ ## Requirements
+ 
+ This SDK requires PHP ^8.1.
+@@ -28,6 +38,18 @@ This SDK requires PHP ^8.1.
+ composer require seed/seed
+ ```
+ 
++## Base Readme Custom Section
++
++Base Readme Custom Content for seed/seed
++
++## Override Section
++
++Override Content
++
++## Generator Invocation Custom Section
++
++Generator Invocation Custom Content for seed/seed
++
+ ## Usage
+ 
+ Instantiate and use the client with the following:
+@@ -38,12 +60,34 @@ Instantiate and use the client with the following:
+ namespace Example;
+ 
+ use Seed\SeedClient;
++use Seed\Types\Types\Movie;
+ 
+ $client = new SeedClient(
+     token: '<token>',
+ );
+-$client->echo_(
+-    'Hello world!\n\nwith\n\tnewlines',
++$client->service->createMovie(
++    new Movie([
++        'id' => 'movie-c06a4ad7',
++        'prequel' => 'movie-cv9b914f',
++        'title' => 'The Boy and the Heron',
++        'from' => 'Hayao Miyazaki',
++        'rating' => 8,
++        'type' => 'movie',
++        'tag' => 'tag-wf9as23d',
++        'metadata' => [
++            'actors' => [
++                "Christian Bale",
++                "Florence Pugh",
++                "Willem Dafoe",
++            ],
++            'releaseDate' => "2023-12-08",
++            'ratings' => [
++                'rottenTomatoes' => 97,
++                'imdb' => 7.6,
++            ],
++        ],
++        'revenue' => 1000000,
++    ]),
+ );
+ 
+ ```
+@@ -81,7 +125,7 @@ use Seed\Exceptions\SeedApiException;
+ use Seed\Exceptions\SeedException;
+ 
+ try {
+-    $response = $client->echo_(...);
++    $response = $client->service->createMovie(...);
+ } catch (SeedApiException $e) {
+     echo 'API Exception occurred: ' . $e->getMessage() . "\n";
+     echo 'Status Code: ' . $e->getCode() . "\n";
+@@ -135,7 +179,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
+ Use the `maxRetries` request option to configure this behavior.
+ 
+ ```php
+-$response = $client->echo_(
++$response = $client->service->createMovie(
+     ...,
+     options: [
+         'maxRetries' => 0 // Override maxRetries at the request level
+@@ -148,7 +192,16 @@ $response = $client->echo_(
+ The SDK defaults to a 30 second timeout. Use the `timeout` option to configure this behavior.
+ 
+ ```php
+-$response = $client->echo_(
++$response = $client->service->getMovie(
++    ...,
++    options: [
++        'timeout' => 3.0 // Override timeout at the request level
++    ]
++);
++```
++
++```php
++$response = $client->service->createMovie(
+     ...,
+     options: [
+         'timeout' => 3.0 // Override timeout at the request level

@@ -5,7 +5,7 @@ changelogLocation: ../../generators/swift/sdk/versions.yml
 
 publish:
   preBuildCommands:
-    - pnpm turbo run dist:cli --filter @fern-api/swift-sdk
+  - pnpm turbo run dist:cli --filter @fern-api/swift-sdk
   docker:
     file: ./generators/swift/sdk/Dockerfile
     image: fernapi/fern-swift-sdk
@@ -14,7 +14,7 @@ publish:
     name: fern-swift-sdk
     project: swift-sdk
     sourceMaps:
-      - dir: generators/swift/sdk/dist
+    - dir: generators/swift/sdk/dist
 
 test:
   docker:
@@ -26,7 +26,7 @@ test:
   local:
     workingDirectory: generators/swift
     buildCommand:
-      - pnpm turbo run dist:cli --filter @fern-api/swift-sdk
+    - pnpm turbo run dist:cli --filter @fern-api/swift-sdk
     runCommand: node --enable-source-maps sdk/dist/cli.cjs {CONFIG_PATH}
 
 language: swift
@@ -36,155 +36,143 @@ defaultCustomConfig: {}
 
 scripts:
   docker:
-    - image: swift:6.1.2
-      commands:
-        build:
-          - swift build -c release --build-tests
-        test:
-          - swift test
+  - image: swift:6.1.2
+    commands:
+      build:
+      - swift build -c release --build-tests
+      test:
+      - swift test
   local:
-    - commands:
-        build:
-          - if [ -d /Applications/Xcode.app/Contents/Developer ]; then export DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer; else export DEVELOPER_DIR=/Library/Developer/CommandLineTools; fi
-          - if [ -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk ]; then export SDKROOT=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk; else export SDKROOT=/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk; fi
-          - export PATH="$HOME/.local/bin:$PATH"
-          - swift build -c release --build-tests
-        test:
-          - if [ -d /Applications/Xcode.app/Contents/Developer ]; then export DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer; else export DEVELOPER_DIR=/Library/Developer/CommandLineTools; fi
-          - if [ -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk ]; then export SDKROOT=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk; else export SDKROOT=/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk; fi
-          - export PATH="$HOME/.local/bin:$PATH"
-          - swift test
+  - commands:
+      build:
+      - if [ -d /Applications/Xcode.app/Contents/Developer ]; then export DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer; else export DEVELOPER_DIR=/Library/Developer/CommandLineTools; fi
+      - if [ -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk ]; then export SDKROOT=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk; else export SDKROOT=/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk; fi
+      - export PATH="$HOME/.local/bin:$PATH"
+      - swift build -c release --build-tests
+      test:
+      - if [ -d /Applications/Xcode.app/Contents/Developer ]; then export DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer; else export DEVELOPER_DIR=/Library/Developer/CommandLineTools; fi
+      - if [ -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk ]; then export SDKROOT=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk; else export SDKROOT=/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk; fi
+      - export PATH="$HOME/.local/bin:$PATH"
+      - swift test
 
 fixtures:
   client-side-params:
-    - customConfig:
-        moduleName: MyCustomModule
-        clientClassName: MyCustomClient
-      outputFolder: with-custom-config
-    - customConfig: null
-      outputFolder: no-custom-config
+  - customConfig:
+      moduleName: MyCustomModule
+      clientClassName: MyCustomClient
+    outputFolder: with-custom-config
   examples:
-    - customConfig: null
-      outputFolder: no-custom-config
-    - customConfig:
-        customReadmeSections:
-          - title: "Override Section"
-            content: "Override Content"
-          - title: "Generator Invocation Custom Section"
-            content: "Generator Invocation Custom Content for {{ gitUrl }}:{{ minVersion }}"
-      readmeConfig:
-        apiName: "CustomName"
-        disabledSections:
-          - apiReference
-        bannerLink: https://www.fernapi.com
-        apiReferenceLink: https://www.docs.fernapi.com
-        defaultEndpoint: POST /movie
-        customSections:
-          - title: "Base Readme Custom Section"
-            language: swift
-            content: "Base Readme Custom Content for {{ gitUrl }}:{{ minVersion }}"
-          - title: "Override Section"
-            language: swift
-            content: "Base Content"
-        features:
-          timeouts:
-            - GET /movie/{movieId}
-      outputFolder: readme-config
+  - customConfig:
+      customReadmeSections:
+      - title: "Override Section"
+        content: "Override Content"
+      - title: "Generator Invocation Custom Section"
+        content: "Generator Invocation Custom Content for {{ gitUrl }}:{{ minVersion }}"
+    readmeConfig:
+      apiName: "CustomName"
+      disabledSections:
+      - apiReference
+      bannerLink: https://www.fernapi.com
+      apiReferenceLink: https://www.docs.fernapi.com
+      defaultEndpoint: POST /movie
+      customSections:
+      - title: "Base Readme Custom Section"
+        language: swift
+        content: "Base Readme Custom Content for {{ gitUrl }}:{{ minVersion }}"
+      - title: "Override Section"
+        language: swift
+        content: "Base Content"
+      features:
+        timeouts:
+        - GET /movie/{movieId}
+    outputFolder: readme-config
   nullable:
-    - customConfig: null
-      outputFolder: no-custom-config
-    - customConfig:
-        decodeNullableToOptional: true
-      outputFolder: nullable-as-optional
+  - customConfig:
+      decodeNullableToOptional: true
+    outputFolder: nullable-as-optional
   nullable-optional:
-    - customConfig: null
-      outputFolder: no-custom-config
-    - customConfig:
-        decodeNullableToOptional: true
-      outputFolder: nullable-as-optional
+  - customConfig:
+      decodeNullableToOptional: true
+    outputFolder: nullable-as-optional
   pagination:
-    - customConfig: null
-      outputFolder: no-custom-config
-    - customConfig:
-        custom-pager-name: MyPager
-      outputFolder: custom-pager
-    - customConfig:
-        custom-pager-name: MyPager
-        include-exception-handler: true
-      outputFolder: custom-pager-with-exception-handler
+  - customConfig:
+      custom-pager-name: MyPager
+    outputFolder: custom-pager
+  - customConfig:
+      custom-pager-name: MyPager
+      include-exception-handler: true
+    outputFolder: custom-pager-with-exception-handler
   required-nullable:
-    - customConfig: null
-      outputFolder: no-custom-config
-    - customConfig:
-        decodeNullableToOptional: true
-      outputFolder: nullable-as-optional
+  - customConfig:
+      decodeNullableToOptional: true
+    outputFolder: nullable-as-optional
   single-url-environment-default:
-    - customConfig:
-        maxRetries: 5
-      outputFolder: no-custom-config
-    - customConfig:
-        environmentEnumName: MyCustomEnvironment
-      outputFolder: with-custom-config
+  - customConfig:
+      maxRetries: 5
+    outputFolder: maxRetries
+  - customConfig:
+      environmentEnumName: MyCustomEnvironment
+    outputFolder: with-custom-config
 
 allowedFailures:
-  - schemaless-request-body-examples
-  - api-wide-base-path
-  - bytes-upload
-  - audiences
-  - header-auth-environment-variable
-  - client-side-params:with-custom-config
-  - client-side-params:no-custom-config
-  - cross-package-type-names
-  - enum
-  - errors
-  - examples:no-custom-config
-  - examples:readme-config
-  - exhaustive
-  - extra-properties
-  - file-upload-openapi
-  - idempotency-headers
-  - inferred-auth-explicit
-  - inferred-auth-implicit
-  - inferred-auth-implicit-no-expiry
-  - inferred-auth-implicit-api-key
-  - inferred-auth-implicit-reference
-  - literal
-  - mixed-case
-  - mixed-file-directory
-  - multi-url-environment
-  - multi-url-environment-no-default
-  - multi-url-environment-reference
-  - nullable:no-custom-config
-  - nullable:nullable-as-optional
-  - nullable-optional:no-custom-config
-  - nullable-optional:nullable-as-optional
-  - nullable-request-body
-  - oauth-client-credentials-custom
-  - oauth-client-credentials-with-variables
-  - pagination:no-custom-config
-  - pagination:custom-pager
-  - pagination:custom-pager-with-exception-handler
-  - path-parameters
-  - plain-text
-  - query-parameters
-  - request-parameters
-  - required-nullable:no-custom-config
-  - required-nullable:nullable-as-optional
-  - reserved-keywords
-  - response-property
-  - streaming
-  - streaming-parameter
-  - trace
-  - undiscriminated-unions
+- schemaless-request-body-examples
+- api-wide-base-path
+- bytes-upload
+- audiences
+- header-auth-environment-variable
+- client-side-params:with-custom-config
+- client-side-params:baseline
+- cross-package-type-names
+- enum
+- errors
+- examples:baseline
+- examples:readme-config
+- exhaustive
+- extra-properties
+- file-upload-openapi
+- idempotency-headers
+- inferred-auth-explicit
+- inferred-auth-implicit
+- inferred-auth-implicit-no-expiry
+- inferred-auth-implicit-api-key
+- inferred-auth-implicit-reference
+- literal
+- mixed-case
+- mixed-file-directory
+- multi-url-environment
+- multi-url-environment-no-default
+- multi-url-environment-reference
+- nullable:baseline
+- nullable:nullable-as-optional
+- nullable-optional:baseline
+- nullable-optional:nullable-as-optional
+- nullable-request-body
+- oauth-client-credentials-custom
+- oauth-client-credentials-with-variables
+- pagination:baseline
+- pagination:custom-pager
+- pagination:custom-pager-with-exception-handler
+- path-parameters
+- plain-text
+- query-parameters
+- request-parameters
+- required-nullable:baseline
+- required-nullable:nullable-as-optional
+- reserved-keywords
+- response-property
+- streaming
+- streaming-parameter
+- trace
+- undiscriminated-unions
   # Java-specific fixture for LocalDate support
-  - unions-with-local-date
+- unions-with-local-date
   # Server URL templating not yet supported in Swift SDK
-  - server-sent-events-openapi
-  - server-url-templating
-  - variables
-  - websocket-inferred-auth
+- server-sent-events-openapi
+- server-url-templating
+- variables
+- websocket-inferred-auth
   # Intermediate failures
-  - any-auth
-  - imdb
+- any-auth
+- imdb
   # Boolean literal enum changes require seed snapshot regeneration
-  - null-type
+- null-type

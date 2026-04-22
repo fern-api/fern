@@ -1,0 +1,93 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 5e4188a44b1..0993de70afd 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,7 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-csharp-sdk",
+   "generatorVersion": "local",
+-  "generatorConfig": {},
++  "generatorConfig": {
++    "experimental-explicit-nullable-optional": true
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "ci",
+diff --git a/src/SeedApi/Requests/GetFooRequest.cs b/src/SeedApi/Requests/GetFooRequest.cs
+index 90bd351c7e7..b7071a571da 100644
+--- a/src/SeedApi/Requests/GetFooRequest.cs
++++ b/src/SeedApi/Requests/GetFooRequest.cs
+@@ -16,7 +16,7 @@ public record GetFooRequest
+     /// An optional baz
+     /// </summary>
+     [JsonIgnore]
+-    public string? OptionalNullableBaz { get; set; }
++    public Optional<string?> OptionalNullableBaz { get; set; }
+ 
+     /// <summary>
+     /// A required baz
+diff --git a/src/SeedApi/Requests/UpdateFooRequest.cs b/src/SeedApi/Requests/UpdateFooRequest.cs
+index 44407d0c421..6e477fa382a 100644
+--- a/src/SeedApi/Requests/UpdateFooRequest.cs
++++ b/src/SeedApi/Requests/UpdateFooRequest.cs
+@@ -12,18 +12,21 @@ public record UpdateFooRequest
+     /// <summary>
+     /// Can be explicitly set to null to clear the value
+     /// </summary>
++    [Nullable, Optional]
+     [JsonPropertyName("nullable_text")]
+-    public string? NullableText { get; set; }
++    public Optional<string?> NullableText { get; set; }
+ 
+     /// <summary>
+     /// Can be explicitly set to null to clear the value
+     /// </summary>
++    [Nullable, Optional]
+     [JsonPropertyName("nullable_number")]
+-    public double? NullableNumber { get; set; }
++    public Optional<double?> NullableNumber { get; set; }
+ 
+     /// <summary>
+     /// Regular non-nullable field
+     /// </summary>
++    [Optional]
+     [JsonPropertyName("non_nullable_text")]
+     public string? NonNullableText { get; set; }
+ 
+diff --git a/src/SeedApi/SeedApiClient.cs b/src/SeedApi/SeedApiClient.cs
+index 1ec0e7b57c0..3af8ae38b5e 100644
+--- a/src/SeedApi/SeedApiClient.cs
++++ b/src/SeedApi/SeedApiClient.cs
+@@ -37,7 +37,10 @@ public partial class SeedApiClient : ISeedApiClient
+     {
+         var _queryString = new SeedApi.Core.QueryStringBuilder.Builder(capacity: 4)
+             .Add("optional_baz", request.OptionalBaz)
+-            .Add("optional_nullable_baz", request.OptionalNullableBaz)
++            .Add(
++                "optional_nullable_baz",
++                request.OptionalNullableBaz.IsDefined ? request.OptionalNullableBaz.Value : null
++            )
+             .Add("required_baz", request.RequiredBaz)
+             .Add("required_nullable_baz", request.RequiredNullableBaz)
+             .MergeAdditional(options?.AdditionalQueryParameters)
+diff --git a/src/SeedApi/Types/Foo.cs b/src/SeedApi/Types/Foo.cs
+index adffee730c5..4adfee5ca0b 100644
+--- a/src/SeedApi/Types/Foo.cs
++++ b/src/SeedApi/Types/Foo.cs
+@@ -11,12 +11,15 @@ public record Foo : IJsonOnDeserialized
+     private readonly IDictionary<string, JsonElement> _extensionData =
+         new Dictionary<string, JsonElement>();
+ 
++    [Optional]
+     [JsonPropertyName("bar")]
+     public string? Bar { get; set; }
+ 
++    [Nullable, Optional]
+     [JsonPropertyName("nullable_bar")]
+-    public string? NullableBar { get; set; }
++    public Optional<string?> NullableBar { get; set; }
+ 
++    [Nullable]
+     [JsonPropertyName("nullable_required_bar")]
+     public string? NullableRequiredBar { get; set; }
+ 

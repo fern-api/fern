@@ -1,0 +1,1229 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index e206b6bea6d..c239d1be4cb 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -3,7 +3,11 @@
+   "generatorName": "fernapi/fern-go-sdk",
+   "generatorVersion": "local",
+   "generatorConfig": {
+-    "enableWireTests": false
++    "enableWireTests": false,
++    "packageName": "path",
++    "module": {
++      "path": "github.com/fern-api/path-parameters-go"
++    }
+   },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+diff --git a/README.md b/README.md
+index 714d005b71f..0d04b18ef83 100644
+--- a/README.md
++++ b/README.md
+@@ -32,13 +32,13 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/path-parameters/fern"
+-    client "github.com/path-parameters/fern/client"
++    path "github.com/fern-api/path-parameters-go"
++    client "github.com/fern-api/path-parameters-go/client"
+ )
+ 
+ func do() {
+     client := client.NewClient()
+-    request := &fern.User{
++    request := &path.User{
+         Name: "name",
+         Tags: []string{
+             "tags",
+diff --git a/client/client.go b/client/client.go
+index 2a9c70a05a4..b50c7841f74 100644
+--- a/client/client.go
++++ b/client/client.go
+@@ -3,11 +3,11 @@
+ package client
+ 
+ import (
+-	core "github.com/path-parameters/fern/core"
+-	internal "github.com/path-parameters/fern/internal"
+-	option "github.com/path-parameters/fern/option"
+-	organizations "github.com/path-parameters/fern/organizations"
+-	user "github.com/path-parameters/fern/user"
++	core "github.com/fern-api/path-parameters-go/core"
++	internal "github.com/fern-api/path-parameters-go/internal"
++	option "github.com/fern-api/path-parameters-go/option"
++	organizations "github.com/fern-api/path-parameters-go/organizations"
++	user "github.com/fern-api/path-parameters-go/user"
+ )
+ 
+ type Client struct {
+diff --git a/client/client_test.go b/client/client_test.go
+index 5bbe678fa36..761b113c52a 100644
+--- a/client/client_test.go
++++ b/client/client_test.go
+@@ -3,7 +3,7 @@
+ package client
+ 
+ import (
+-	option "github.com/path-parameters/fern/option"
++	option "github.com/fern-api/path-parameters-go/option"
+ 	assert "github.com/stretchr/testify/assert"
+ 	http "net/http"
+ 	testing "testing"
+diff --git a/core/request_option.go b/core/request_option.go
+index 8fe13ac35b1..592c45fbebf 100644
+--- a/core/request_option.go
++++ b/core/request_option.go
+@@ -49,7 +49,7 @@ func (r *RequestOptions) ToHeader() http.Header { return r.cloneHeader() }
+ func (r *RequestOptions) cloneHeader() http.Header {
+ 	headers := r.HTTPHeader.Clone()
+ 	headers.Set("X-Fern-Language", "Go")
+-	headers.Set("X-Fern-SDK-Name", "github.com/path-parameters/fern")
++	headers.Set("X-Fern-SDK-Name", "github.com/fern-api/path-parameters-go")
+ 	headers.Set("X-Fern-SDK-Version", "v0.0.1")
+ 	headers.Set("User-Agent", "github.com/path-parameters/fern/0.0.1")
+ 	return headers
+diff --git a/dynamic-snippets/example0/snippet.go b/dynamic-snippets/example0/snippet.go
+index 861ef78d259..f69b211dfc0 100644
+--- a/dynamic-snippets/example0/snippet.go
++++ b/dynamic-snippets/example0/snippet.go
+@@ -3,8 +3,8 @@ package example
+ import (
+     context "context"
+ 
+-    client "github.com/path-parameters/fern/client"
+-    option "github.com/path-parameters/fern/option"
++    client "github.com/fern-api/path-parameters-go/client"
++    option "github.com/fern-api/path-parameters-go/option"
+ )
+ 
+ func do() {
+diff --git a/dynamic-snippets/example1/snippet.go b/dynamic-snippets/example1/snippet.go
+index bb9464be12e..4b1c9129981 100644
+--- a/dynamic-snippets/example1/snippet.go
++++ b/dynamic-snippets/example1/snippet.go
+@@ -3,9 +3,9 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/path-parameters/fern"
+-    client "github.com/path-parameters/fern/client"
+-    option "github.com/path-parameters/fern/option"
++    path "github.com/fern-api/path-parameters-go"
++    client "github.com/fern-api/path-parameters-go/client"
++    option "github.com/fern-api/path-parameters-go/option"
+ )
+ 
+ func do() {
+@@ -14,7 +14,7 @@ func do() {
+             "https://api.fern.com",
+         ),
+     )
+-    request := &fern.GetOrganizationUserRequest{
++    request := &path.GetOrganizationUserRequest{
+         TenantID: "tenant_id",
+         OrganizationID: "organization_id",
+         UserID: "user_id",
+diff --git a/dynamic-snippets/example2/snippet.go b/dynamic-snippets/example2/snippet.go
+index c0ca418831d..70f252ddf92 100644
+--- a/dynamic-snippets/example2/snippet.go
++++ b/dynamic-snippets/example2/snippet.go
+@@ -3,9 +3,9 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/path-parameters/fern"
+-    client "github.com/path-parameters/fern/client"
+-    option "github.com/path-parameters/fern/option"
++    path "github.com/fern-api/path-parameters-go"
++    client "github.com/fern-api/path-parameters-go/client"
++    option "github.com/fern-api/path-parameters-go/option"
+ )
+ 
+ func do() {
+@@ -14,8 +14,8 @@ func do() {
+             "https://api.fern.com",
+         ),
+     )
+-    request := &fern.SearchOrganizationsRequest{
+-        Limit: fern.Int(
++    request := &path.SearchOrganizationsRequest{
++        Limit: path.Int(
+             1,
+         ),
+     }
+diff --git a/dynamic-snippets/example3/snippet.go b/dynamic-snippets/example3/snippet.go
+index b3c7bef42b7..3a9e863b449 100644
+--- a/dynamic-snippets/example3/snippet.go
++++ b/dynamic-snippets/example3/snippet.go
+@@ -3,9 +3,9 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/path-parameters/fern"
+-    client "github.com/path-parameters/fern/client"
+-    option "github.com/path-parameters/fern/option"
++    path "github.com/fern-api/path-parameters-go"
++    client "github.com/fern-api/path-parameters-go/client"
++    option "github.com/fern-api/path-parameters-go/option"
+ )
+ 
+ func do() {
+@@ -14,7 +14,7 @@ func do() {
+             "https://api.fern.com",
+         ),
+     )
+-    request := &fern.GetUsersRequest{
++    request := &path.GetUsersRequest{
+         TenantID: "tenant_id",
+         UserID: "user_id",
+     }
+diff --git a/dynamic-snippets/example4/snippet.go b/dynamic-snippets/example4/snippet.go
+index 9c238babfba..6dfbbda0aeb 100644
+--- a/dynamic-snippets/example4/snippet.go
++++ b/dynamic-snippets/example4/snippet.go
+@@ -3,9 +3,9 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/path-parameters/fern"
+-    client "github.com/path-parameters/fern/client"
+-    option "github.com/path-parameters/fern/option"
++    path "github.com/fern-api/path-parameters-go"
++    client "github.com/fern-api/path-parameters-go/client"
++    option "github.com/fern-api/path-parameters-go/option"
+ )
+ 
+ func do() {
+@@ -14,7 +14,7 @@ func do() {
+             "https://api.fern.com",
+         ),
+     )
+-    request := &fern.User{
++    request := &path.User{
+         Name: "name",
+         Tags: []string{
+             "tags",
+diff --git a/dynamic-snippets/example5/snippet.go b/dynamic-snippets/example5/snippet.go
+index 223172e371a..22b62eb06d1 100644
+--- a/dynamic-snippets/example5/snippet.go
++++ b/dynamic-snippets/example5/snippet.go
+@@ -3,9 +3,9 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/path-parameters/fern"
+-    client "github.com/path-parameters/fern/client"
+-    option "github.com/path-parameters/fern/option"
++    path "github.com/fern-api/path-parameters-go"
++    client "github.com/fern-api/path-parameters-go/client"
++    option "github.com/fern-api/path-parameters-go/option"
+ )
+ 
+ func do() {
+@@ -14,10 +14,10 @@ func do() {
+             "https://api.fern.com",
+         ),
+     )
+-    request := &fern.UpdateUserRequest{
++    request := &path.UpdateUserRequest{
+         TenantID: "tenant_id",
+         UserID: "user_id",
+-        Body: &fern.User{
++        Body: &path.User{
+             Name: "name",
+             Tags: []string{
+                 "tags",
+diff --git a/dynamic-snippets/example6/snippet.go b/dynamic-snippets/example6/snippet.go
+index ba9dfb0cb10..73aacb0feee 100644
+--- a/dynamic-snippets/example6/snippet.go
++++ b/dynamic-snippets/example6/snippet.go
+@@ -3,9 +3,9 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/path-parameters/fern"
+-    client "github.com/path-parameters/fern/client"
+-    option "github.com/path-parameters/fern/option"
++    path "github.com/fern-api/path-parameters-go"
++    client "github.com/fern-api/path-parameters-go/client"
++    option "github.com/fern-api/path-parameters-go/option"
+ )
+ 
+ func do() {
+@@ -14,10 +14,10 @@ func do() {
+             "https://api.fern.com",
+         ),
+     )
+-    request := &fern.SearchUsersRequest{
++    request := &path.SearchUsersRequest{
+         TenantID: "tenant_id",
+         UserID: "user_id",
+-        Limit: fern.Int(
++        Limit: path.Int(
+             1,
+         ),
+     }
+diff --git a/dynamic-snippets/example7/snippet.go b/dynamic-snippets/example7/snippet.go
+index 82147bf54bb..a3271a3a21d 100644
+--- a/dynamic-snippets/example7/snippet.go
++++ b/dynamic-snippets/example7/snippet.go
+@@ -3,9 +3,9 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/path-parameters/fern"
+-    client "github.com/path-parameters/fern/client"
+-    option "github.com/path-parameters/fern/option"
++    path "github.com/fern-api/path-parameters-go"
++    client "github.com/fern-api/path-parameters-go/client"
++    option "github.com/fern-api/path-parameters-go/option"
+ )
+ 
+ func do() {
+@@ -14,7 +14,7 @@ func do() {
+             "https://api.fern.com",
+         ),
+     )
+-    request := &fern.GetUserMetadataRequest{
++    request := &path.GetUserMetadataRequest{
+         TenantID: "tenant_id",
+         UserID: "user_id",
+         Version: 1,
+diff --git a/dynamic-snippets/example8/snippet.go b/dynamic-snippets/example8/snippet.go
+index 2b8e8a2b445..90578246ec4 100644
+--- a/dynamic-snippets/example8/snippet.go
++++ b/dynamic-snippets/example8/snippet.go
+@@ -3,9 +3,9 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/path-parameters/fern"
+-    client "github.com/path-parameters/fern/client"
+-    option "github.com/path-parameters/fern/option"
++    path "github.com/fern-api/path-parameters-go"
++    client "github.com/fern-api/path-parameters-go/client"
++    option "github.com/fern-api/path-parameters-go/option"
+ )
+ 
+ func do() {
+@@ -14,7 +14,7 @@ func do() {
+             "https://api.fern.com",
+         ),
+     )
+-    request := &fern.GetUserSpecificsRequest{
++    request := &path.GetUserSpecificsRequest{
+         TenantID: "tenant_id",
+         UserID: "user_id",
+         Version: 1,
+diff --git a/error_codes.go b/error_codes.go
+index 9fb6db95a1b..21196ff06a1 100644
+--- a/error_codes.go
++++ b/error_codes.go
+@@ -1,9 +1,9 @@
+ // Code generated by Fern. DO NOT EDIT.
+ 
+-package pathparameters
++package path
+ 
+ import (
+-	internal "github.com/path-parameters/fern/internal"
++	internal "github.com/fern-api/path-parameters-go/internal"
+ )
+ 
+ var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{}
+diff --git a/file_param.go b/file_param.go
+index b2bee528b8c..bab5fdce518 100644
+--- a/file_param.go
++++ b/file_param.go
+@@ -1,4 +1,4 @@
+-package pathparameters
++package path
+ 
+ import (
+ 	"io"
+diff --git a/go.mod b/go.mod
+index c804b48d502..7e898601861 100644
+--- a/go.mod
++++ b/go.mod
+@@ -1,4 +1,4 @@
+-module github.com/path-parameters/fern
++module github.com/fern-api/path-parameters-go
+ 
+ go 1.21
+ 
+diff --git a/internal/caller.go b/internal/caller.go
+index 7914fc2d155..3501f707843 100644
+--- a/internal/caller.go
++++ b/internal/caller.go
+@@ -12,7 +12,7 @@ import (
+ 	"reflect"
+ 	"strings"
+ 
+-	"github.com/path-parameters/fern/core"
++	"github.com/fern-api/path-parameters-go/core"
+ )
+ 
+ const (
+diff --git a/internal/caller_test.go b/internal/caller_test.go
+index 844c8d22708..af70ba786d0 100644
+--- a/internal/caller_test.go
++++ b/internal/caller_test.go
+@@ -14,7 +14,7 @@ import (
+ 	"strings"
+ 	"testing"
+ 
+-	"github.com/path-parameters/fern/core"
++	"github.com/fern-api/path-parameters-go/core"
+ 	"github.com/stretchr/testify/assert"
+ 	"github.com/stretchr/testify/require"
+ )
+diff --git a/internal/error_decoder.go b/internal/error_decoder.go
+index 0877a6619a9..bb756005da0 100644
+--- a/internal/error_decoder.go
++++ b/internal/error_decoder.go
+@@ -8,7 +8,7 @@ import (
+ 	"io"
+ 	"net/http"
+ 
+-	"github.com/path-parameters/fern/core"
++	"github.com/fern-api/path-parameters-go/core"
+ )
+ 
+ // ErrorCodes maps HTTP status codes to error constructors.
+diff --git a/internal/error_decoder_test.go b/internal/error_decoder_test.go
+index ad2acc6027b..4020276cd40 100644
+--- a/internal/error_decoder_test.go
++++ b/internal/error_decoder_test.go
+@@ -6,7 +6,7 @@ import (
+ 	"net/http"
+ 	"testing"
+ 
+-	"github.com/path-parameters/fern/core"
++	"github.com/fern-api/path-parameters-go/core"
+ 	"github.com/stretchr/testify/assert"
+ )
+ 
+diff --git a/internal/retrier_test.go b/internal/retrier_test.go
+index 44b68c0ab0f..6265084bb9b 100644
+--- a/internal/retrier_test.go
++++ b/internal/retrier_test.go
+@@ -10,7 +10,7 @@ import (
+ 	"testing"
+ 	"time"
+ 
+-	"github.com/path-parameters/fern/core"
++	"github.com/fern-api/path-parameters-go/core"
+ 	"github.com/stretchr/testify/assert"
+ 	"github.com/stretchr/testify/require"
+ )
+diff --git a/option/request_option.go b/option/request_option.go
+index e8e92f4c500..6771e1e5d87 100644
+--- a/option/request_option.go
++++ b/option/request_option.go
+@@ -3,7 +3,7 @@
+ package option
+ 
+ import (
+-	core "github.com/path-parameters/fern/core"
++	core "github.com/fern-api/path-parameters-go/core"
+ 	http "net/http"
+ 	url "net/url"
+ )
+diff --git a/organizations/client.go b/organizations/client.go
+index 117b7e25110..887d16a45c7 100644
+--- a/organizations/client.go
++++ b/organizations/client.go
+@@ -5,10 +5,10 @@ package organizations
+ import (
+ 	context "context"
+ 
+-	fern "github.com/path-parameters/fern"
+-	core "github.com/path-parameters/fern/core"
+-	internal "github.com/path-parameters/fern/internal"
+-	option "github.com/path-parameters/fern/option"
++	path "github.com/fern-api/path-parameters-go"
++	core "github.com/fern-api/path-parameters-go/core"
++	internal "github.com/fern-api/path-parameters-go/internal"
++	option "github.com/fern-api/path-parameters-go/option"
+ )
+ 
+ type Client struct {
+@@ -38,7 +38,7 @@ func (c *Client) GetOrganization(
+ 	tenantID string,
+ 	organizationID string,
+ 	opts ...option.RequestOption,
+-) (*fern.Organization, error) {
++) (*path.Organization, error) {
+ 	response, err := c.WithRawResponse.GetOrganization(
+ 		ctx,
+ 		tenantID,
+@@ -53,9 +53,9 @@ func (c *Client) GetOrganization(
+ 
+ func (c *Client) GetOrganizationUser(
+ 	ctx context.Context,
+-	request *fern.GetOrganizationUserRequest,
++	request *path.GetOrganizationUserRequest,
+ 	opts ...option.RequestOption,
+-) (*fern.User, error) {
++) (*path.User, error) {
+ 	response, err := c.WithRawResponse.GetOrganizationUser(
+ 		ctx,
+ 		request,
+@@ -71,9 +71,9 @@ func (c *Client) SearchOrganizations(
+ 	ctx context.Context,
+ 	tenantID string,
+ 	organizationID string,
+-	request *fern.SearchOrganizationsRequest,
++	request *path.SearchOrganizationsRequest,
+ 	opts ...option.RequestOption,
+-) ([]*fern.Organization, error) {
++) ([]*path.Organization, error) {
+ 	response, err := c.WithRawResponse.SearchOrganizations(
+ 		ctx,
+ 		tenantID,
+diff --git a/organizations/raw_client.go b/organizations/raw_client.go
+index 00edb047821..6460e08b439 100644
+--- a/organizations/raw_client.go
++++ b/organizations/raw_client.go
+@@ -6,10 +6,10 @@ import (
+ 	context "context"
+ 	http "net/http"
+ 
+-	fern "github.com/path-parameters/fern"
+-	core "github.com/path-parameters/fern/core"
+-	internal "github.com/path-parameters/fern/internal"
+-	option "github.com/path-parameters/fern/option"
++	path "github.com/fern-api/path-parameters-go"
++	core "github.com/fern-api/path-parameters-go/core"
++	internal "github.com/fern-api/path-parameters-go/internal"
++	option "github.com/fern-api/path-parameters-go/option"
+ )
+ 
+ type RawClient struct {
+@@ -36,7 +36,7 @@ func (r *RawClient) GetOrganization(
+ 	tenantID string,
+ 	organizationID string,
+ 	opts ...option.RequestOption,
+-) (*core.Response[*fern.Organization], error) {
++) (*core.Response[*path.Organization], error) {
+ 	options := core.NewRequestOptions(opts...)
+ 	baseURL := internal.ResolveBaseURL(
+ 		options.BaseURL,
+@@ -52,7 +52,7 @@ func (r *RawClient) GetOrganization(
+ 		r.options.ToHeader(),
+ 		options.ToHeader(),
+ 	)
+-	var response *fern.Organization
++	var response *path.Organization
+ 	raw, err := r.caller.Call(
+ 		ctx,
+ 		&internal.CallParams{
+@@ -69,7 +69,7 @@ func (r *RawClient) GetOrganization(
+ 	if err != nil {
+ 		return nil, err
+ 	}
+-	return &core.Response[*fern.Organization]{
++	return &core.Response[*path.Organization]{
+ 		StatusCode: raw.StatusCode,
+ 		Header:     raw.Header,
+ 		Body:       response,
+@@ -78,9 +78,9 @@ func (r *RawClient) GetOrganization(
+ 
+ func (r *RawClient) GetOrganizationUser(
+ 	ctx context.Context,
+-	request *fern.GetOrganizationUserRequest,
++	request *path.GetOrganizationUserRequest,
+ 	opts ...option.RequestOption,
+-) (*core.Response[*fern.User], error) {
++) (*core.Response[*path.User], error) {
+ 	options := core.NewRequestOptions(opts...)
+ 	baseURL := internal.ResolveBaseURL(
+ 		options.BaseURL,
+@@ -97,7 +97,7 @@ func (r *RawClient) GetOrganizationUser(
+ 		r.options.ToHeader(),
+ 		options.ToHeader(),
+ 	)
+-	var response *fern.User
++	var response *path.User
+ 	raw, err := r.caller.Call(
+ 		ctx,
+ 		&internal.CallParams{
+@@ -114,7 +114,7 @@ func (r *RawClient) GetOrganizationUser(
+ 	if err != nil {
+ 		return nil, err
+ 	}
+-	return &core.Response[*fern.User]{
++	return &core.Response[*path.User]{
+ 		StatusCode: raw.StatusCode,
+ 		Header:     raw.Header,
+ 		Body:       response,
+@@ -125,9 +125,9 @@ func (r *RawClient) SearchOrganizations(
+ 	ctx context.Context,
+ 	tenantID string,
+ 	organizationID string,
+-	request *fern.SearchOrganizationsRequest,
++	request *path.SearchOrganizationsRequest,
+ 	opts ...option.RequestOption,
+-) (*core.Response[[]*fern.Organization], error) {
++) (*core.Response[[]*path.Organization], error) {
+ 	options := core.NewRequestOptions(opts...)
+ 	baseURL := internal.ResolveBaseURL(
+ 		options.BaseURL,
+@@ -150,7 +150,7 @@ func (r *RawClient) SearchOrganizations(
+ 		r.options.ToHeader(),
+ 		options.ToHeader(),
+ 	)
+-	var response []*fern.Organization
++	var response []*path.Organization
+ 	raw, err := r.caller.Call(
+ 		ctx,
+ 		&internal.CallParams{
+@@ -167,7 +167,7 @@ func (r *RawClient) SearchOrganizations(
+ 	if err != nil {
+ 		return nil, err
+ 	}
+-	return &core.Response[[]*fern.Organization]{
++	return &core.Response[[]*path.Organization]{
+ 		StatusCode: raw.StatusCode,
+ 		Header:     raw.Header,
+ 		Body:       response,
+diff --git a/organizations.go b/organizations.go
+index dfd07ce47e6..d7312b5b3f5 100644
+--- a/organizations.go
++++ b/organizations.go
+@@ -1,11 +1,11 @@
+ // Code generated by Fern. DO NOT EDIT.
+ 
+-package pathparameters
++package path
+ 
+ import (
+ 	json "encoding/json"
+ 	fmt "fmt"
+-	internal "github.com/path-parameters/fern/internal"
++	internal "github.com/fern-api/path-parameters-go/internal"
+ 	big "math/big"
+ )
+ 
+diff --git a/organizations_test.go b/organizations_test.go
+index 80caf97c512..171f4d60b76 100644
+--- a/organizations_test.go
++++ b/organizations_test.go
+@@ -1,6 +1,6 @@
+ // Code generated by Fern. DO NOT EDIT.
+ 
+-package pathparameters
++package path
+ 
+ import (
+ 	json "encoding/json"
+diff --git a/pointer.go b/pointer.go
+index daf27c8d71d..04ddf554e8e 100644
+--- a/pointer.go
++++ b/pointer.go
+@@ -1,4 +1,4 @@
+-package pathparameters
++package path
+ 
+ import (
+ 	"time"
+diff --git a/pointer_test.go b/pointer_test.go
+index 96371cb4f26..53bb9bcf828 100644
+--- a/pointer_test.go
++++ b/pointer_test.go
+@@ -1,4 +1,4 @@
+-package pathparameters
++package path
+ 
+ import (
+ 	"testing"
+diff --git a/reference.md b/reference.md
+index 2f6da269f98..4cd1395843f 100644
+--- a/reference.md
++++ b/reference.md
+@@ -1,6 +1,6 @@
+ # Reference
+ ## Organizations
+-<details><summary><code>client.Organizations.GetOrganization(TenantID, OrganizationID) -> *fern.Organization</code></summary>
++<details><summary><code>client.Organizations.GetOrganization(TenantID, OrganizationID) -> *path.Organization</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -53,7 +53,7 @@ client.Organizations.GetOrganization(
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.Organizations.GetOrganizationUser(TenantID, OrganizationID, UserID) -> *fern.User</code></summary>
++<details><summary><code>client.Organizations.GetOrganizationUser(TenantID, OrganizationID, UserID) -> *path.User</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -66,7 +66,7 @@ client.Organizations.GetOrganization(
+ <dd>
+ 
+ ```go
+-request := &fern.GetOrganizationUserRequest{
++request := &path.GetOrganizationUserRequest{
+         TenantID: "tenant_id",
+         OrganizationID: "organization_id",
+         UserID: "user_id",
+@@ -118,7 +118,7 @@ client.Organizations.GetOrganizationUser(
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.Organizations.SearchOrganizations(TenantID, OrganizationID) -> []*fern.Organization</code></summary>
++<details><summary><code>client.Organizations.SearchOrganizations(TenantID, OrganizationID) -> []*path.Organization</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -131,8 +131,8 @@ client.Organizations.GetOrganizationUser(
+ <dd>
+ 
+ ```go
+-request := &fern.SearchOrganizationsRequest{
+-        Limit: fern.Int(
++request := &path.SearchOrganizationsRequest{
++        Limit: path.Int(
+             1,
+         ),
+     }
+@@ -186,7 +186,7 @@ client.Organizations.SearchOrganizations(
+ </details>
+ 
+ ## User
+-<details><summary><code>client.User.GetUser(TenantID, UserID) -> *fern.User</code></summary>
++<details><summary><code>client.User.GetUser(TenantID, UserID) -> *path.User</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -199,7 +199,7 @@ client.Organizations.SearchOrganizations(
+ <dd>
+ 
+ ```go
+-request := &fern.GetUsersRequest{
++request := &path.GetUsersRequest{
+         TenantID: "tenant_id",
+         UserID: "user_id",
+     }
+@@ -242,7 +242,7 @@ client.User.GetUser(
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.User.CreateUser(TenantID, request) -> *fern.User</code></summary>
++<details><summary><code>client.User.CreateUser(TenantID, request) -> *path.User</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -255,7 +255,7 @@ client.User.GetUser(
+ <dd>
+ 
+ ```go
+-request := &fern.User{
++request := &path.User{
+         Name: "name",
+         Tags: []string{
+             "tags",
+@@ -290,7 +290,7 @@ client.User.CreateUser(
+ <dl>
+ <dd>
+ 
+-**request:** `*fern.User` 
++**request:** `*path.User` 
+     
+ </dd>
+ </dl>
+@@ -302,7 +302,7 @@ client.User.CreateUser(
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.User.UpdateUser(TenantID, UserID, request) -> *fern.User</code></summary>
++<details><summary><code>client.User.UpdateUser(TenantID, UserID, request) -> *path.User</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -315,10 +315,10 @@ client.User.CreateUser(
+ <dd>
+ 
+ ```go
+-request := &fern.UpdateUserRequest{
++request := &path.UpdateUserRequest{
+         TenantID: "tenant_id",
+         UserID: "user_id",
+-        Body: &fern.User{
++        Body: &path.User{
+             Name: "name",
+             Tags: []string{
+                 "tags",
+@@ -361,7 +361,7 @@ client.User.UpdateUser(
+ <dl>
+ <dd>
+ 
+-**request:** `*fern.User` 
++**request:** `*path.User` 
+     
+ </dd>
+ </dl>
+@@ -373,7 +373,7 @@ client.User.UpdateUser(
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.User.SearchUsers(TenantID, UserID) -> []*fern.User</code></summary>
++<details><summary><code>client.User.SearchUsers(TenantID, UserID) -> []*path.User</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -386,10 +386,10 @@ client.User.UpdateUser(
+ <dd>
+ 
+ ```go
+-request := &fern.SearchUsersRequest{
++request := &path.SearchUsersRequest{
+         TenantID: "tenant_id",
+         UserID: "user_id",
+-        Limit: fern.Int(
++        Limit: path.Int(
+             1,
+         ),
+     }
+@@ -440,7 +440,7 @@ client.User.SearchUsers(
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.User.GetUserMetadata(TenantID, UserID, Version) -> *fern.User</code></summary>
++<details><summary><code>client.User.GetUserMetadata(TenantID, UserID, Version) -> *path.User</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -467,7 +467,7 @@ Test endpoint with path parameter that has a text prefix (v{version})
+ <dd>
+ 
+ ```go
+-request := &fern.GetUserMetadataRequest{
++request := &path.GetUserMetadataRequest{
+         TenantID: "tenant_id",
+         UserID: "user_id",
+         Version: 1,
+@@ -519,7 +519,7 @@ client.User.GetUserMetadata(
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.User.GetUserSpecifics(TenantID, UserID, Version, Thought) -> *fern.User</code></summary>
++<details><summary><code>client.User.GetUserSpecifics(TenantID, UserID, Version, Thought) -> *path.User</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -546,7 +546,7 @@ Test endpoint with path parameters listed in different order than found in path
+ <dd>
+ 
+ ```go
+-request := &fern.GetUserSpecificsRequest{
++request := &path.GetUserSpecificsRequest{
+         TenantID: "tenant_id",
+         UserID: "user_id",
+         Version: 1,
+diff --git a/snippet.json b/snippet.json
+index fae1c194dc9..912ab0f6c3a 100644
+--- a/snippet.json
++++ b/snippet.json
+@@ -8,7 +8,7 @@
+             },
+             "snippet": {
+                 "type": "go",
+-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/path-parameters/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Organizations.GetOrganization(\n\tcontext.TODO(),\n\t\"tenant_id\",\n\t\"organization_id\",\n)\n"
++                "client": "import (\n\tcontext \"context\"\n\tpathparametersgoclient \"github.com/fern-api/path-parameters-go/client\"\n)\n\nclient := pathparametersgoclient.NewClient()\nresponse, err := client.Organizations.GetOrganization(\n\tcontext.TODO(),\n\t\"tenant_id\",\n\t\"organization_id\",\n)\n"
+             }
+         },
+         {
+@@ -19,7 +19,7 @@
+             },
+             "snippet": {
+                 "type": "go",
+-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/path-parameters/fern\"\n\tfernclient \"github.com/path-parameters/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Organizations.SearchOrganizations(\n\tcontext.TODO(),\n\t\"tenant_id\",\n\t\"organization_id\",\n\t\u0026fern.SearchOrganizationsRequest{\n\t\tLimit: fern.Int(\n\t\t\t1,\n\t\t),\n\t},\n)\n"
++                "client": "import (\n\tcontext \"context\"\n\tpathparametersgo \"github.com/fern-api/path-parameters-go\"\n\tpathparametersgoclient \"github.com/fern-api/path-parameters-go/client\"\n)\n\nclient := pathparametersgoclient.NewClient()\nresponse, err := client.Organizations.SearchOrganizations(\n\tcontext.TODO(),\n\t\"tenant_id\",\n\t\"organization_id\",\n\t\u0026pathparametersgo.SearchOrganizationsRequest{\n\t\tLimit: pathparametersgo.Int(\n\t\t\t1,\n\t\t),\n\t},\n)\n"
+             }
+         },
+         {
+@@ -30,7 +30,7 @@
+             },
+             "snippet": {
+                 "type": "go",
+-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/path-parameters/fern\"\n\tfernclient \"github.com/path-parameters/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Organizations.GetOrganizationUser(\n\tcontext.TODO(),\n\t\u0026fern.GetOrganizationUserRequest{\n\t\tTenantID:       \"tenant_id\",\n\t\tOrganizationID: \"organization_id\",\n\t\tUserID:         \"user_id\",\n\t},\n)\n"
++                "client": "import (\n\tcontext \"context\"\n\tpathparametersgo \"github.com/fern-api/path-parameters-go\"\n\tpathparametersgoclient \"github.com/fern-api/path-parameters-go/client\"\n)\n\nclient := pathparametersgoclient.NewClient()\nresponse, err := client.Organizations.GetOrganizationUser(\n\tcontext.TODO(),\n\t\u0026pathparametersgo.GetOrganizationUserRequest{\n\t\tTenantID:       \"tenant_id\",\n\t\tOrganizationID: \"organization_id\",\n\t\tUserID:         \"user_id\",\n\t},\n)\n"
+             }
+         },
+         {
+@@ -41,7 +41,7 @@
+             },
+             "snippet": {
+                 "type": "go",
+-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/path-parameters/fern\"\n\tfernclient \"github.com/path-parameters/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.User.CreateUser(\n\tcontext.TODO(),\n\t\"tenant_id\",\n\t\u0026fern.User{\n\t\tName: \"name\",\n\t\tTags: []string{\n\t\t\t\"tags\",\n\t\t\t\"tags\",\n\t\t},\n\t},\n)\n"
++                "client": "import (\n\tcontext \"context\"\n\tpathparametersgo \"github.com/fern-api/path-parameters-go\"\n\tpathparametersgoclient \"github.com/fern-api/path-parameters-go/client\"\n)\n\nclient := pathparametersgoclient.NewClient()\nresponse, err := client.User.CreateUser(\n\tcontext.TODO(),\n\t\"tenant_id\",\n\t\u0026pathparametersgo.User{\n\t\tName: \"name\",\n\t\tTags: []string{\n\t\t\t\"tags\",\n\t\t\t\"tags\",\n\t\t},\n\t},\n)\n"
+             }
+         },
+         {
+@@ -52,7 +52,7 @@
+             },
+             "snippet": {
+                 "type": "go",
+-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/path-parameters/fern\"\n\tfernclient \"github.com/path-parameters/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.User.GetUser(\n\tcontext.TODO(),\n\t\u0026fern.GetUsersRequest{\n\t\tTenantID: \"tenant_id\",\n\t\tUserID:   \"user_id\",\n\t},\n)\n"
++                "client": "import (\n\tcontext \"context\"\n\tpathparametersgo \"github.com/fern-api/path-parameters-go\"\n\tpathparametersgoclient \"github.com/fern-api/path-parameters-go/client\"\n)\n\nclient := pathparametersgoclient.NewClient()\nresponse, err := client.User.GetUser(\n\tcontext.TODO(),\n\t\u0026pathparametersgo.GetUsersRequest{\n\t\tTenantID: \"tenant_id\",\n\t\tUserID:   \"user_id\",\n\t},\n)\n"
+             }
+         },
+         {
+@@ -63,7 +63,7 @@
+             },
+             "snippet": {
+                 "type": "go",
+-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/path-parameters/fern\"\n\tfernclient \"github.com/path-parameters/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.User.UpdateUser(\n\tcontext.TODO(),\n\t\u0026fern.UpdateUserRequest{\n\t\tTenantID: \"tenant_id\",\n\t\tUserID:   \"user_id\",\n\t\tBody: \u0026fern.User{\n\t\t\tName: \"name\",\n\t\t\tTags: []string{\n\t\t\t\t\"tags\",\n\t\t\t\t\"tags\",\n\t\t\t},\n\t\t},\n\t},\n)\n"
++                "client": "import (\n\tcontext \"context\"\n\tpathparametersgo \"github.com/fern-api/path-parameters-go\"\n\tpathparametersgoclient \"github.com/fern-api/path-parameters-go/client\"\n)\n\nclient := pathparametersgoclient.NewClient()\nresponse, err := client.User.UpdateUser(\n\tcontext.TODO(),\n\t\u0026pathparametersgo.UpdateUserRequest{\n\t\tTenantID: \"tenant_id\",\n\t\tUserID:   \"user_id\",\n\t\tBody: \u0026pathparametersgo.User{\n\t\t\tName: \"name\",\n\t\t\tTags: []string{\n\t\t\t\t\"tags\",\n\t\t\t\t\"tags\",\n\t\t\t},\n\t\t},\n\t},\n)\n"
+             }
+         },
+         {
+@@ -74,7 +74,7 @@
+             },
+             "snippet": {
+                 "type": "go",
+-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/path-parameters/fern\"\n\tfernclient \"github.com/path-parameters/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.User.GetUserMetadata(\n\tcontext.TODO(),\n\t\u0026fern.GetUserMetadataRequest{\n\t\tTenantID: \"tenant_id\",\n\t\tUserID:   \"user_id\",\n\t\tVersion:  1,\n\t},\n)\n"
++                "client": "import (\n\tcontext \"context\"\n\tpathparametersgo \"github.com/fern-api/path-parameters-go\"\n\tpathparametersgoclient \"github.com/fern-api/path-parameters-go/client\"\n)\n\nclient := pathparametersgoclient.NewClient()\nresponse, err := client.User.GetUserMetadata(\n\tcontext.TODO(),\n\t\u0026pathparametersgo.GetUserMetadataRequest{\n\t\tTenantID: \"tenant_id\",\n\t\tUserID:   \"user_id\",\n\t\tVersion:  1,\n\t},\n)\n"
+             }
+         },
+         {
+@@ -85,7 +85,7 @@
+             },
+             "snippet": {
+                 "type": "go",
+-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/path-parameters/fern\"\n\tfernclient \"github.com/path-parameters/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.User.SearchUsers(\n\tcontext.TODO(),\n\t\u0026fern.SearchUsersRequest{\n\t\tTenantID: \"tenant_id\",\n\t\tUserID:   \"user_id\",\n\t\tLimit: fern.Int(\n\t\t\t1,\n\t\t),\n\t},\n)\n"
++                "client": "import (\n\tcontext \"context\"\n\tpathparametersgo \"github.com/fern-api/path-parameters-go\"\n\tpathparametersgoclient \"github.com/fern-api/path-parameters-go/client\"\n)\n\nclient := pathparametersgoclient.NewClient()\nresponse, err := client.User.SearchUsers(\n\tcontext.TODO(),\n\t\u0026pathparametersgo.SearchUsersRequest{\n\t\tTenantID: \"tenant_id\",\n\t\tUserID:   \"user_id\",\n\t\tLimit: pathparametersgo.Int(\n\t\t\t1,\n\t\t),\n\t},\n)\n"
+             }
+         },
+         {
+@@ -96,7 +96,7 @@
+             },
+             "snippet": {
+                 "type": "go",
+-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/path-parameters/fern\"\n\tfernclient \"github.com/path-parameters/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.User.GetUserSpecifics(\n\tcontext.TODO(),\n\t\u0026fern.GetUserSpecificsRequest{\n\t\tTenantID: \"tenant_id\",\n\t\tUserID:   \"user_id\",\n\t\tVersion:  1,\n\t\tThought:  \"thought\",\n\t},\n)\n"
++                "client": "import (\n\tcontext \"context\"\n\tpathparametersgo \"github.com/fern-api/path-parameters-go\"\n\tpathparametersgoclient \"github.com/fern-api/path-parameters-go/client\"\n)\n\nclient := pathparametersgoclient.NewClient()\nresponse, err := client.User.GetUserSpecifics(\n\tcontext.TODO(),\n\t\u0026pathparametersgo.GetUserSpecificsRequest{\n\t\tTenantID: \"tenant_id\",\n\t\tUserID:   \"user_id\",\n\t\tVersion:  1,\n\t\tThought:  \"thought\",\n\t},\n)\n"
+             }
+         }
+     ]
+diff --git a/user/client.go b/user/client.go
+index 898f6f7b287..b9a50eb3ae0 100644
+--- a/user/client.go
++++ b/user/client.go
+@@ -5,10 +5,10 @@ package user
+ import (
+ 	context "context"
+ 
+-	fern "github.com/path-parameters/fern"
+-	core "github.com/path-parameters/fern/core"
+-	internal "github.com/path-parameters/fern/internal"
+-	option "github.com/path-parameters/fern/option"
++	path "github.com/fern-api/path-parameters-go"
++	core "github.com/fern-api/path-parameters-go/core"
++	internal "github.com/fern-api/path-parameters-go/internal"
++	option "github.com/fern-api/path-parameters-go/option"
+ )
+ 
+ type Client struct {
+@@ -35,9 +35,9 @@ func NewClient(options *core.RequestOptions) *Client {
+ 
+ func (c *Client) GetUser(
+ 	ctx context.Context,
+-	request *fern.GetUsersRequest,
++	request *path.GetUsersRequest,
+ 	opts ...option.RequestOption,
+-) (*fern.User, error) {
++) (*path.User, error) {
+ 	response, err := c.WithRawResponse.GetUser(
+ 		ctx,
+ 		request,
+@@ -52,9 +52,9 @@ func (c *Client) GetUser(
+ func (c *Client) CreateUser(
+ 	ctx context.Context,
+ 	tenantID string,
+-	request *fern.User,
++	request *path.User,
+ 	opts ...option.RequestOption,
+-) (*fern.User, error) {
++) (*path.User, error) {
+ 	response, err := c.WithRawResponse.CreateUser(
+ 		ctx,
+ 		tenantID,
+@@ -69,9 +69,9 @@ func (c *Client) CreateUser(
+ 
+ func (c *Client) UpdateUser(
+ 	ctx context.Context,
+-	request *fern.UpdateUserRequest,
++	request *path.UpdateUserRequest,
+ 	opts ...option.RequestOption,
+-) (*fern.User, error) {
++) (*path.User, error) {
+ 	response, err := c.WithRawResponse.UpdateUser(
+ 		ctx,
+ 		request,
+@@ -85,9 +85,9 @@ func (c *Client) UpdateUser(
+ 
+ func (c *Client) SearchUsers(
+ 	ctx context.Context,
+-	request *fern.SearchUsersRequest,
++	request *path.SearchUsersRequest,
+ 	opts ...option.RequestOption,
+-) ([]*fern.User, error) {
++) ([]*path.User, error) {
+ 	response, err := c.WithRawResponse.SearchUsers(
+ 		ctx,
+ 		request,
+@@ -102,9 +102,9 @@ func (c *Client) SearchUsers(
+ // Test endpoint with path parameter that has a text prefix (v{version})
+ func (c *Client) GetUserMetadata(
+ 	ctx context.Context,
+-	request *fern.GetUserMetadataRequest,
++	request *path.GetUserMetadataRequest,
+ 	opts ...option.RequestOption,
+-) (*fern.User, error) {
++) (*path.User, error) {
+ 	response, err := c.WithRawResponse.GetUserMetadata(
+ 		ctx,
+ 		request,
+@@ -119,9 +119,9 @@ func (c *Client) GetUserMetadata(
+ // Test endpoint with path parameters listed in different order than found in path
+ func (c *Client) GetUserSpecifics(
+ 	ctx context.Context,
+-	request *fern.GetUserSpecificsRequest,
++	request *path.GetUserSpecificsRequest,
+ 	opts ...option.RequestOption,
+-) (*fern.User, error) {
++) (*path.User, error) {
+ 	response, err := c.WithRawResponse.GetUserSpecifics(
+ 		ctx,
+ 		request,
+diff --git a/user/raw_client.go b/user/raw_client.go
+index fcafc40f077..6497af4d6e6 100644
+--- a/user/raw_client.go
++++ b/user/raw_client.go
+@@ -6,10 +6,10 @@ import (
+ 	context "context"
+ 	http "net/http"
+ 
+-	fern "github.com/path-parameters/fern"
+-	core "github.com/path-parameters/fern/core"
+-	internal "github.com/path-parameters/fern/internal"
+-	option "github.com/path-parameters/fern/option"
++	path "github.com/fern-api/path-parameters-go"
++	core "github.com/fern-api/path-parameters-go/core"
++	internal "github.com/fern-api/path-parameters-go/internal"
++	option "github.com/fern-api/path-parameters-go/option"
+ )
+ 
+ type RawClient struct {
+@@ -33,9 +33,9 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
+ 
+ func (r *RawClient) GetUser(
+ 	ctx context.Context,
+-	request *fern.GetUsersRequest,
++	request *path.GetUsersRequest,
+ 	opts ...option.RequestOption,
+-) (*core.Response[*fern.User], error) {
++) (*core.Response[*path.User], error) {
+ 	options := core.NewRequestOptions(opts...)
+ 	baseURL := internal.ResolveBaseURL(
+ 		options.BaseURL,
+@@ -51,7 +51,7 @@ func (r *RawClient) GetUser(
+ 		r.options.ToHeader(),
+ 		options.ToHeader(),
+ 	)
+-	var response *fern.User
++	var response *path.User
+ 	raw, err := r.caller.Call(
+ 		ctx,
+ 		&internal.CallParams{
+@@ -68,7 +68,7 @@ func (r *RawClient) GetUser(
+ 	if err != nil {
+ 		return nil, err
+ 	}
+-	return &core.Response[*fern.User]{
++	return &core.Response[*path.User]{
+ 		StatusCode: raw.StatusCode,
+ 		Header:     raw.Header,
+ 		Body:       response,
+@@ -78,9 +78,9 @@ func (r *RawClient) GetUser(
+ func (r *RawClient) CreateUser(
+ 	ctx context.Context,
+ 	tenantID string,
+-	request *fern.User,
++	request *path.User,
+ 	opts ...option.RequestOption,
+-) (*core.Response[*fern.User], error) {
++) (*core.Response[*path.User], error) {
+ 	options := core.NewRequestOptions(opts...)
+ 	baseURL := internal.ResolveBaseURL(
+ 		options.BaseURL,
+@@ -95,7 +95,7 @@ func (r *RawClient) CreateUser(
+ 		r.options.ToHeader(),
+ 		options.ToHeader(),
+ 	)
+-	var response *fern.User
++	var response *path.User
+ 	raw, err := r.caller.Call(
+ 		ctx,
+ 		&internal.CallParams{
+@@ -113,7 +113,7 @@ func (r *RawClient) CreateUser(
+ 	if err != nil {
+ 		return nil, err
+ 	}
+-	return &core.Response[*fern.User]{
++	return &core.Response[*path.User]{
+ 		StatusCode: raw.StatusCode,
+ 		Header:     raw.Header,
+ 		Body:       response,
+@@ -122,9 +122,9 @@ func (r *RawClient) CreateUser(
+ 
+ func (r *RawClient) UpdateUser(
+ 	ctx context.Context,
+-	request *fern.UpdateUserRequest,
++	request *path.UpdateUserRequest,
+ 	opts ...option.RequestOption,
+-) (*core.Response[*fern.User], error) {
++) (*core.Response[*path.User], error) {
+ 	options := core.NewRequestOptions(opts...)
+ 	baseURL := internal.ResolveBaseURL(
+ 		options.BaseURL,
+@@ -140,7 +140,7 @@ func (r *RawClient) UpdateUser(
+ 		r.options.ToHeader(),
+ 		options.ToHeader(),
+ 	)
+-	var response *fern.User
++	var response *path.User
+ 	raw, err := r.caller.Call(
+ 		ctx,
+ 		&internal.CallParams{
+@@ -158,7 +158,7 @@ func (r *RawClient) UpdateUser(
+ 	if err != nil {
+ 		return nil, err
+ 	}
+-	return &core.Response[*fern.User]{
++	return &core.Response[*path.User]{
+ 		StatusCode: raw.StatusCode,
+ 		Header:     raw.Header,
+ 		Body:       response,
+@@ -167,9 +167,9 @@ func (r *RawClient) UpdateUser(
+ 
+ func (r *RawClient) SearchUsers(
+ 	ctx context.Context,
+-	request *fern.SearchUsersRequest,
++	request *path.SearchUsersRequest,
+ 	opts ...option.RequestOption,
+-) (*core.Response[[]*fern.User], error) {
++) (*core.Response[[]*path.User], error) {
+ 	options := core.NewRequestOptions(opts...)
+ 	baseURL := internal.ResolveBaseURL(
+ 		options.BaseURL,
+@@ -192,7 +192,7 @@ func (r *RawClient) SearchUsers(
+ 		r.options.ToHeader(),
+ 		options.ToHeader(),
+ 	)
+-	var response []*fern.User
++	var response []*path.User
+ 	raw, err := r.caller.Call(
+ 		ctx,
+ 		&internal.CallParams{
+@@ -209,7 +209,7 @@ func (r *RawClient) SearchUsers(
+ 	if err != nil {
+ 		return nil, err
+ 	}
+-	return &core.Response[[]*fern.User]{
++	return &core.Response[[]*path.User]{
+ 		StatusCode: raw.StatusCode,
+ 		Header:     raw.Header,
+ 		Body:       response,
+@@ -218,9 +218,9 @@ func (r *RawClient) SearchUsers(
+ 
+ func (r *RawClient) GetUserMetadata(
+ 	ctx context.Context,
+-	request *fern.GetUserMetadataRequest,
++	request *path.GetUserMetadataRequest,
+ 	opts ...option.RequestOption,
+-) (*core.Response[*fern.User], error) {
++) (*core.Response[*path.User], error) {
+ 	options := core.NewRequestOptions(opts...)
+ 	baseURL := internal.ResolveBaseURL(
+ 		options.BaseURL,
+@@ -237,7 +237,7 @@ func (r *RawClient) GetUserMetadata(
+ 		r.options.ToHeader(),
+ 		options.ToHeader(),
+ 	)
+-	var response *fern.User
++	var response *path.User
+ 	raw, err := r.caller.Call(
+ 		ctx,
+ 		&internal.CallParams{
+@@ -254,7 +254,7 @@ func (r *RawClient) GetUserMetadata(
+ 	if err != nil {
+ 		return nil, err
+ 	}
+-	return &core.Response[*fern.User]{
++	return &core.Response[*path.User]{
+ 		StatusCode: raw.StatusCode,
+ 		Header:     raw.Header,
+ 		Body:       response,
+@@ -263,9 +263,9 @@ func (r *RawClient) GetUserMetadata(
+ 
+ func (r *RawClient) GetUserSpecifics(
+ 	ctx context.Context,
+-	request *fern.GetUserSpecificsRequest,
++	request *path.GetUserSpecificsRequest,
+ 	opts ...option.RequestOption,
+-) (*core.Response[*fern.User], error) {
++) (*core.Response[*path.User], error) {
+ 	options := core.NewRequestOptions(opts...)
+ 	baseURL := internal.ResolveBaseURL(
+ 		options.BaseURL,
+@@ -283,7 +283,7 @@ func (r *RawClient) GetUserSpecifics(
+ 		r.options.ToHeader(),
+ 		options.ToHeader(),
+ 	)
+-	var response *fern.User
++	var response *path.User
+ 	raw, err := r.caller.Call(
+ 		ctx,
+ 		&internal.CallParams{
+@@ -300,7 +300,7 @@ func (r *RawClient) GetUserSpecifics(
+ 	if err != nil {
+ 		return nil, err
+ 	}
+-	return &core.Response[*fern.User]{
++	return &core.Response[*path.User]{
+ 		StatusCode: raw.StatusCode,
+ 		Header:     raw.Header,
+ 		Body:       response,
+diff --git a/user.go b/user.go
+index bd62caa198c..3ef4eaaeac5 100644
+--- a/user.go
++++ b/user.go
+@@ -1,11 +1,11 @@
+ // Code generated by Fern. DO NOT EDIT.
+ 
+-package pathparameters
++package path
+ 
+ import (
+ 	json "encoding/json"
+ 	fmt "fmt"
+-	internal "github.com/path-parameters/fern/internal"
++	internal "github.com/fern-api/path-parameters-go/internal"
+ 	big "math/big"
+ )
+ 
+diff --git a/user_test.go b/user_test.go
+index fa50d2e3cae..dd2f8274efa 100644
+--- a/user_test.go
++++ b/user_test.go
+@@ -1,6 +1,6 @@
+ // Code generated by Fern. DO NOT EDIT.
+ 
+-package pathparameters
++package path
+ 
+ import (
+ 	json "encoding/json"

@@ -1,0 +1,993 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 2ecd82f71ab..ad0c4107119 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,10 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-python-sdk",
+   "generatorVersion": "local",
++  "generatorConfig": {
++    "use_typeddict_requests": true,
++    "use_typeddict_requests_for_file_upload": true
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "ci",
+diff --git a/src/seed/__init__.py b/src/seed/__init__.py
+index a2b5f1cbf8d..f1f0905b76b 100644
+--- a/src/seed/__init__.py
++++ b/src/seed/__init__.py
+@@ -13,10 +13,15 @@ if typing.TYPE_CHECKING:
+         Id,
+         ModelType,
+         MyAliasObject,
++        MyAliasObjectParams,
+         MyCollectionAliasObject,
++        MyCollectionAliasObjectParams,
+         MyInlineType,
++        MyInlineTypeParams,
+         MyObject,
++        MyObjectParams,
+         MyObjectWithOptional,
++        MyObjectWithOptionalParams,
+         ObjectType,
+         OpenEnumType,
+     )
+@@ -28,10 +33,15 @@ _dynamic_imports: typing.Dict[str, str] = {
+     "Id": ".service",
+     "ModelType": ".service",
+     "MyAliasObject": ".service",
++    "MyAliasObjectParams": ".service",
+     "MyCollectionAliasObject": ".service",
++    "MyCollectionAliasObjectParams": ".service",
+     "MyInlineType": ".service",
++    "MyInlineTypeParams": ".service",
+     "MyObject": ".service",
++    "MyObjectParams": ".service",
+     "MyObjectWithOptional": ".service",
++    "MyObjectWithOptionalParams": ".service",
+     "ObjectType": ".service",
+     "OpenEnumType": ".service",
+     "SeedFileUpload": ".client",
+@@ -68,10 +78,15 @@ __all__ = [
+     "Id",
+     "ModelType",
+     "MyAliasObject",
++    "MyAliasObjectParams",
+     "MyCollectionAliasObject",
++    "MyCollectionAliasObjectParams",
+     "MyInlineType",
++    "MyInlineTypeParams",
+     "MyObject",
++    "MyObjectParams",
+     "MyObjectWithOptional",
++    "MyObjectWithOptionalParams",
+     "ObjectType",
+     "OpenEnumType",
+     "SeedFileUpload",
+diff --git a/src/seed/service/__init__.py b/src/seed/service/__init__.py
+index 6aeab7a73be..7acbe2ae6dd 100644
+--- a/src/seed/service/__init__.py
++++ b/src/seed/service/__init__.py
+@@ -17,14 +17,26 @@ if typing.TYPE_CHECKING:
+         ObjectType,
+         OpenEnumType,
+     )
++    from .requests import (
++        MyAliasObjectParams,
++        MyCollectionAliasObjectParams,
++        MyInlineTypeParams,
++        MyObjectParams,
++        MyObjectWithOptionalParams,
++    )
+ _dynamic_imports: typing.Dict[str, str] = {
+     "Id": ".types",
+     "ModelType": ".types",
+     "MyAliasObject": ".types",
++    "MyAliasObjectParams": ".requests",
+     "MyCollectionAliasObject": ".types",
++    "MyCollectionAliasObjectParams": ".requests",
+     "MyInlineType": ".types",
++    "MyInlineTypeParams": ".requests",
+     "MyObject": ".types",
++    "MyObjectParams": ".requests",
+     "MyObjectWithOptional": ".types",
++    "MyObjectWithOptionalParams": ".requests",
+     "ObjectType": ".types",
+     "OpenEnumType": ".types",
+ }
+@@ -55,10 +67,15 @@ __all__ = [
+     "Id",
+     "ModelType",
+     "MyAliasObject",
++    "MyAliasObjectParams",
+     "MyCollectionAliasObject",
++    "MyCollectionAliasObjectParams",
+     "MyInlineType",
++    "MyInlineTypeParams",
+     "MyObject",
++    "MyObjectParams",
+     "MyObjectWithOptional",
++    "MyObjectWithOptionalParams",
+     "ObjectType",
+     "OpenEnumType",
+ ]
+diff --git a/src/seed/service/client.py b/src/seed/service/client.py
+index bfa9bbe8017..69aa76e288c 100644
+--- a/src/seed/service/client.py
++++ b/src/seed/service/client.py
+@@ -6,13 +6,13 @@ from .. import core
+ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+ from ..core.request_options import RequestOptions
+ from .raw_client import AsyncRawServiceClient, RawServiceClient
++from .requests.my_alias_object import MyAliasObjectParams
++from .requests.my_collection_alias_object import MyCollectionAliasObjectParams
++from .requests.my_inline_type import MyInlineTypeParams
++from .requests.my_object import MyObjectParams
++from .requests.my_object_with_optional import MyObjectWithOptionalParams
+ from .types.id import Id
+ from .types.model_type import ModelType
+-from .types.my_alias_object import MyAliasObject
+-from .types.my_collection_alias_object import MyCollectionAliasObject
+-from .types.my_inline_type import MyInlineType
+-from .types.my_object import MyObject
+-from .types.my_object_with_optional import MyObjectWithOptional
+ from .types.object_type import ObjectType
+ from .types.open_enum_type import OpenEnumType
+ 
+@@ -41,15 +41,15 @@ class ServiceClient:
+         integer: int,
+         file: core.File,
+         file_list: typing.List[core.File],
+-        list_of_objects: typing.List[MyObject],
+-        alias_object: MyAliasObject,
+-        list_of_alias_object: typing.List[MyAliasObject],
+-        alias_list_of_object: MyCollectionAliasObject,
++        list_of_objects: typing.Sequence[MyObjectParams],
++        alias_object: MyAliasObjectParams,
++        list_of_alias_object: typing.Sequence[MyAliasObjectParams],
++        alias_list_of_object: MyCollectionAliasObjectParams,
+         maybe_string: typing.Optional[str] = OMIT,
+         maybe_file: typing.Optional[core.File] = OMIT,
+         maybe_file_list: typing.Optional[typing.List[core.File]] = OMIT,
+         maybe_integer: typing.Optional[int] = OMIT,
+-        optional_list_of_strings: typing.Optional[typing.List[str]] = OMIT,
++        optional_list_of_strings: typing.Optional[typing.Sequence[str]] = OMIT,
+         optional_metadata: typing.Optional[typing.Any] = OMIT,
+         optional_object_type: typing.Optional[ObjectType] = OMIT,
+         optional_id: typing.Optional[Id] = OMIT,
+@@ -66,13 +66,13 @@ class ServiceClient:
+         file_list : typing.List[core.File]
+             See core.File for more documentation
+ 
+-        list_of_objects : typing.List[MyObject]
++        list_of_objects : typing.Sequence[MyObjectParams]
+ 
+-        alias_object : MyAliasObject
++        alias_object : MyAliasObjectParams
+ 
+-        list_of_alias_object : typing.List[MyAliasObject]
++        list_of_alias_object : typing.Sequence[MyAliasObjectParams]
+ 
+-        alias_list_of_object : MyCollectionAliasObject
++        alias_list_of_object : MyCollectionAliasObjectParams
+ 
+         maybe_string : typing.Optional[str]
+ 
+@@ -84,7 +84,7 @@ class ServiceClient:
+ 
+         maybe_integer : typing.Optional[int]
+ 
+-        optional_list_of_strings : typing.Optional[typing.List[str]]
++        optional_list_of_strings : typing.Optional[typing.Sequence[str]]
+ 
+         optional_metadata : typing.Optional[typing.Any]
+ 
+@@ -225,8 +225,8 @@ class ServiceClient:
+         *,
+         file: core.File,
+         foo: str,
+-        bar: MyObject,
+-        foo_bar: typing.Optional[MyObject] = OMIT,
++        bar: MyObjectParams,
++        foo_bar: typing.Optional[MyObjectParams] = OMIT,
+         request_options: typing.Optional[RequestOptions] = None,
+     ) -> None:
+         """
+@@ -237,9 +237,9 @@ class ServiceClient:
+ 
+         foo : str
+ 
+-        bar : MyObject
++        bar : MyObjectParams
+ 
+-        foo_bar : typing.Optional[MyObject]
++        foo_bar : typing.Optional[MyObjectParams]
+ 
+         request_options : typing.Optional[RequestOptions]
+             Request-specific configuration.
+@@ -254,7 +254,7 @@ class ServiceClient:
+         return _response.data
+ 
+     def with_form_encoding(
+-        self, *, file: core.File, foo: str, bar: MyObject, request_options: typing.Optional[RequestOptions] = None
++        self, *, file: core.File, foo: str, bar: MyObjectParams, request_options: typing.Optional[RequestOptions] = None
+     ) -> None:
+         """
+         Parameters
+@@ -264,7 +264,7 @@ class ServiceClient:
+ 
+         foo : str
+ 
+-        bar : MyObject
++        bar : MyObjectParams
+ 
+         request_options : typing.Optional[RequestOptions]
+             Request-specific configuration.
+@@ -282,16 +282,16 @@ class ServiceClient:
+         integer: int,
+         file: core.File,
+         file_list: typing.List[core.File],
+-        list_of_objects: typing.List[MyObject],
+-        list_of_objects_with_optionals: typing.List[MyObjectWithOptional],
+-        alias_object: MyAliasObject,
+-        list_of_alias_object: typing.List[MyAliasObject],
+-        alias_list_of_object: MyCollectionAliasObject,
++        list_of_objects: typing.Sequence[MyObjectParams],
++        list_of_objects_with_optionals: typing.Sequence[MyObjectWithOptionalParams],
++        alias_object: MyAliasObjectParams,
++        list_of_alias_object: typing.Sequence[MyAliasObjectParams],
++        alias_list_of_object: MyCollectionAliasObjectParams,
+         maybe_string: typing.Optional[str] = OMIT,
+         maybe_file: typing.Optional[core.File] = OMIT,
+         maybe_file_list: typing.Optional[typing.List[core.File]] = OMIT,
+         maybe_integer: typing.Optional[int] = OMIT,
+-        optional_list_of_strings: typing.Optional[typing.List[str]] = OMIT,
++        optional_list_of_strings: typing.Optional[typing.Sequence[str]] = OMIT,
+         optional_metadata: typing.Optional[typing.Any] = OMIT,
+         optional_object_type: typing.Optional[ObjectType] = OMIT,
+         optional_id: typing.Optional[Id] = OMIT,
+@@ -308,15 +308,15 @@ class ServiceClient:
+         file_list : typing.List[core.File]
+             See core.File for more documentation
+ 
+-        list_of_objects : typing.List[MyObject]
++        list_of_objects : typing.Sequence[MyObjectParams]
+ 
+-        list_of_objects_with_optionals : typing.List[MyObjectWithOptional]
++        list_of_objects_with_optionals : typing.Sequence[MyObjectWithOptionalParams]
+ 
+-        alias_object : MyAliasObject
++        alias_object : MyAliasObjectParams
+ 
+-        list_of_alias_object : typing.List[MyAliasObject]
++        list_of_alias_object : typing.Sequence[MyAliasObjectParams]
+ 
+-        alias_list_of_object : MyCollectionAliasObject
++        alias_list_of_object : MyCollectionAliasObjectParams
+ 
+         maybe_string : typing.Optional[str]
+ 
+@@ -328,7 +328,7 @@ class ServiceClient:
+ 
+         maybe_integer : typing.Optional[int]
+ 
+-        optional_list_of_strings : typing.Optional[typing.List[str]]
++        optional_list_of_strings : typing.Optional[typing.Sequence[str]]
+ 
+         optional_metadata : typing.Optional[typing.Any]
+ 
+@@ -401,7 +401,7 @@ class ServiceClient:
+         return _response.data
+ 
+     def with_inline_type(
+-        self, *, file: core.File, request: MyInlineType, request_options: typing.Optional[RequestOptions] = None
++        self, *, file: core.File, request: MyInlineTypeParams, request_options: typing.Optional[RequestOptions] = None
+     ) -> str:
+         """
+         Parameters
+@@ -409,7 +409,7 @@ class ServiceClient:
+         file : core.File
+             See core.File for more documentation
+ 
+-        request : MyInlineType
++        request : MyInlineTypeParams
+ 
+         request_options : typing.Optional[RequestOptions]
+             Request-specific configuration.
+@@ -425,7 +425,7 @@ class ServiceClient:
+         self,
+         *,
+         file: core.File,
+-        json: typing.Optional[MyObject] = OMIT,
++        json: typing.Optional[MyObjectParams] = OMIT,
+         request_options: typing.Optional[RequestOptions] = None,
+     ) -> str:
+         """
+@@ -434,7 +434,7 @@ class ServiceClient:
+         file : core.File
+             See core.File for more documentation
+ 
+-        json : typing.Optional[MyObject]
++        json : typing.Optional[MyObjectParams]
+ 
+         request_options : typing.Optional[RequestOptions]
+             Request-specific configuration.
+@@ -528,15 +528,15 @@ class AsyncServiceClient:
+         integer: int,
+         file: core.File,
+         file_list: typing.List[core.File],
+-        list_of_objects: typing.List[MyObject],
+-        alias_object: MyAliasObject,
+-        list_of_alias_object: typing.List[MyAliasObject],
+-        alias_list_of_object: MyCollectionAliasObject,
++        list_of_objects: typing.Sequence[MyObjectParams],
++        alias_object: MyAliasObjectParams,
++        list_of_alias_object: typing.Sequence[MyAliasObjectParams],
++        alias_list_of_object: MyCollectionAliasObjectParams,
+         maybe_string: typing.Optional[str] = OMIT,
+         maybe_file: typing.Optional[core.File] = OMIT,
+         maybe_file_list: typing.Optional[typing.List[core.File]] = OMIT,
+         maybe_integer: typing.Optional[int] = OMIT,
+-        optional_list_of_strings: typing.Optional[typing.List[str]] = OMIT,
++        optional_list_of_strings: typing.Optional[typing.Sequence[str]] = OMIT,
+         optional_metadata: typing.Optional[typing.Any] = OMIT,
+         optional_object_type: typing.Optional[ObjectType] = OMIT,
+         optional_id: typing.Optional[Id] = OMIT,
+@@ -553,13 +553,13 @@ class AsyncServiceClient:
+         file_list : typing.List[core.File]
+             See core.File for more documentation
+ 
+-        list_of_objects : typing.List[MyObject]
++        list_of_objects : typing.Sequence[MyObjectParams]
+ 
+-        alias_object : MyAliasObject
++        alias_object : MyAliasObjectParams
+ 
+-        list_of_alias_object : typing.List[MyAliasObject]
++        list_of_alias_object : typing.Sequence[MyAliasObjectParams]
+ 
+-        alias_list_of_object : MyCollectionAliasObject
++        alias_list_of_object : MyCollectionAliasObjectParams
+ 
+         maybe_string : typing.Optional[str]
+ 
+@@ -571,7 +571,7 @@ class AsyncServiceClient:
+ 
+         maybe_integer : typing.Optional[int]
+ 
+-        optional_list_of_strings : typing.Optional[typing.List[str]]
++        optional_list_of_strings : typing.Optional[typing.Sequence[str]]
+ 
+         optional_metadata : typing.Optional[typing.Any]
+ 
+@@ -720,8 +720,8 @@ class AsyncServiceClient:
+         *,
+         file: core.File,
+         foo: str,
+-        bar: MyObject,
+-        foo_bar: typing.Optional[MyObject] = OMIT,
++        bar: MyObjectParams,
++        foo_bar: typing.Optional[MyObjectParams] = OMIT,
+         request_options: typing.Optional[RequestOptions] = None,
+     ) -> None:
+         """
+@@ -732,9 +732,9 @@ class AsyncServiceClient:
+ 
+         foo : str
+ 
+-        bar : MyObject
++        bar : MyObjectParams
+ 
+-        foo_bar : typing.Optional[MyObject]
++        foo_bar : typing.Optional[MyObjectParams]
+ 
+         request_options : typing.Optional[RequestOptions]
+             Request-specific configuration.
+@@ -749,7 +749,7 @@ class AsyncServiceClient:
+         return _response.data
+ 
+     async def with_form_encoding(
+-        self, *, file: core.File, foo: str, bar: MyObject, request_options: typing.Optional[RequestOptions] = None
++        self, *, file: core.File, foo: str, bar: MyObjectParams, request_options: typing.Optional[RequestOptions] = None
+     ) -> None:
+         """
+         Parameters
+@@ -759,7 +759,7 @@ class AsyncServiceClient:
+ 
+         foo : str
+ 
+-        bar : MyObject
++        bar : MyObjectParams
+ 
+         request_options : typing.Optional[RequestOptions]
+             Request-specific configuration.
+@@ -779,16 +779,16 @@ class AsyncServiceClient:
+         integer: int,
+         file: core.File,
+         file_list: typing.List[core.File],
+-        list_of_objects: typing.List[MyObject],
+-        list_of_objects_with_optionals: typing.List[MyObjectWithOptional],
+-        alias_object: MyAliasObject,
+-        list_of_alias_object: typing.List[MyAliasObject],
+-        alias_list_of_object: MyCollectionAliasObject,
++        list_of_objects: typing.Sequence[MyObjectParams],
++        list_of_objects_with_optionals: typing.Sequence[MyObjectWithOptionalParams],
++        alias_object: MyAliasObjectParams,
++        list_of_alias_object: typing.Sequence[MyAliasObjectParams],
++        alias_list_of_object: MyCollectionAliasObjectParams,
+         maybe_string: typing.Optional[str] = OMIT,
+         maybe_file: typing.Optional[core.File] = OMIT,
+         maybe_file_list: typing.Optional[typing.List[core.File]] = OMIT,
+         maybe_integer: typing.Optional[int] = OMIT,
+-        optional_list_of_strings: typing.Optional[typing.List[str]] = OMIT,
++        optional_list_of_strings: typing.Optional[typing.Sequence[str]] = OMIT,
+         optional_metadata: typing.Optional[typing.Any] = OMIT,
+         optional_object_type: typing.Optional[ObjectType] = OMIT,
+         optional_id: typing.Optional[Id] = OMIT,
+@@ -805,15 +805,15 @@ class AsyncServiceClient:
+         file_list : typing.List[core.File]
+             See core.File for more documentation
+ 
+-        list_of_objects : typing.List[MyObject]
++        list_of_objects : typing.Sequence[MyObjectParams]
+ 
+-        list_of_objects_with_optionals : typing.List[MyObjectWithOptional]
++        list_of_objects_with_optionals : typing.Sequence[MyObjectWithOptionalParams]
+ 
+-        alias_object : MyAliasObject
++        alias_object : MyAliasObjectParams
+ 
+-        list_of_alias_object : typing.List[MyAliasObject]
++        list_of_alias_object : typing.Sequence[MyAliasObjectParams]
+ 
+-        alias_list_of_object : MyCollectionAliasObject
++        alias_list_of_object : MyCollectionAliasObjectParams
+ 
+         maybe_string : typing.Optional[str]
+ 
+@@ -825,7 +825,7 @@ class AsyncServiceClient:
+ 
+         maybe_integer : typing.Optional[int]
+ 
+-        optional_list_of_strings : typing.Optional[typing.List[str]]
++        optional_list_of_strings : typing.Optional[typing.Sequence[str]]
+ 
+         optional_metadata : typing.Optional[typing.Any]
+ 
+@@ -906,7 +906,7 @@ class AsyncServiceClient:
+         return _response.data
+ 
+     async def with_inline_type(
+-        self, *, file: core.File, request: MyInlineType, request_options: typing.Optional[RequestOptions] = None
++        self, *, file: core.File, request: MyInlineTypeParams, request_options: typing.Optional[RequestOptions] = None
+     ) -> str:
+         """
+         Parameters
+@@ -914,7 +914,7 @@ class AsyncServiceClient:
+         file : core.File
+             See core.File for more documentation
+ 
+-        request : MyInlineType
++        request : MyInlineTypeParams
+ 
+         request_options : typing.Optional[RequestOptions]
+             Request-specific configuration.
+@@ -930,7 +930,7 @@ class AsyncServiceClient:
+         self,
+         *,
+         file: core.File,
+-        json: typing.Optional[MyObject] = OMIT,
++        json: typing.Optional[MyObjectParams] = OMIT,
+         request_options: typing.Optional[RequestOptions] = None,
+     ) -> str:
+         """
+@@ -939,7 +939,7 @@ class AsyncServiceClient:
+         file : core.File
+             See core.File for more documentation
+ 
+-        json : typing.Optional[MyObject]
++        json : typing.Optional[MyObjectParams]
+ 
+         request_options : typing.Optional[RequestOptions]
+             Request-specific configuration.
+diff --git a/src/seed/service/raw_client.py b/src/seed/service/raw_client.py
+index 693085e72b5..f879248258b 100644
+--- a/src/seed/service/raw_client.py
++++ b/src/seed/service/raw_client.py
+@@ -13,13 +13,13 @@ from ..core.jsonable_encoder import jsonable_encoder
+ from ..core.parse_error import ParsingError
+ from ..core.pydantic_utilities import parse_obj_as
+ from ..core.request_options import RequestOptions
++from .requests.my_alias_object import MyAliasObjectParams
++from .requests.my_collection_alias_object import MyCollectionAliasObjectParams
++from .requests.my_inline_type import MyInlineTypeParams
++from .requests.my_object import MyObjectParams
++from .requests.my_object_with_optional import MyObjectWithOptionalParams
+ from .types.id import Id
+ from .types.model_type import ModelType
+-from .types.my_alias_object import MyAliasObject
+-from .types.my_collection_alias_object import MyCollectionAliasObject
+-from .types.my_inline_type import MyInlineType
+-from .types.my_object import MyObject
+-from .types.my_object_with_optional import MyObjectWithOptional
+ from .types.object_type import ObjectType
+ from .types.open_enum_type import OpenEnumType
+ from pydantic import ValidationError
+@@ -38,15 +38,15 @@ class RawServiceClient:
+         integer: int,
+         file: core.File,
+         file_list: typing.List[core.File],
+-        list_of_objects: typing.List[MyObject],
+-        alias_object: MyAliasObject,
+-        list_of_alias_object: typing.List[MyAliasObject],
+-        alias_list_of_object: MyCollectionAliasObject,
++        list_of_objects: typing.Sequence[MyObjectParams],
++        alias_object: MyAliasObjectParams,
++        list_of_alias_object: typing.Sequence[MyAliasObjectParams],
++        alias_list_of_object: MyCollectionAliasObjectParams,
+         maybe_string: typing.Optional[str] = OMIT,
+         maybe_file: typing.Optional[core.File] = OMIT,
+         maybe_file_list: typing.Optional[typing.List[core.File]] = OMIT,
+         maybe_integer: typing.Optional[int] = OMIT,
+-        optional_list_of_strings: typing.Optional[typing.List[str]] = OMIT,
++        optional_list_of_strings: typing.Optional[typing.Sequence[str]] = OMIT,
+         optional_metadata: typing.Optional[typing.Any] = OMIT,
+         optional_object_type: typing.Optional[ObjectType] = OMIT,
+         optional_id: typing.Optional[Id] = OMIT,
+@@ -63,13 +63,13 @@ class RawServiceClient:
+         file_list : typing.List[core.File]
+             See core.File for more documentation
+ 
+-        list_of_objects : typing.List[MyObject]
++        list_of_objects : typing.Sequence[MyObjectParams]
+ 
+-        alias_object : MyAliasObject
++        alias_object : MyAliasObjectParams
+ 
+-        list_of_alias_object : typing.List[MyAliasObject]
++        list_of_alias_object : typing.Sequence[MyAliasObjectParams]
+ 
+-        alias_list_of_object : MyCollectionAliasObject
++        alias_list_of_object : MyCollectionAliasObjectParams
+ 
+         maybe_string : typing.Optional[str]
+ 
+@@ -81,7 +81,7 @@ class RawServiceClient:
+ 
+         maybe_integer : typing.Optional[int]
+ 
+-        optional_list_of_strings : typing.Optional[typing.List[str]]
++        optional_list_of_strings : typing.Optional[typing.Sequence[str]]
+ 
+         optional_metadata : typing.Optional[typing.Any]
+ 
+@@ -297,8 +297,8 @@ class RawServiceClient:
+         *,
+         file: core.File,
+         foo: str,
+-        bar: MyObject,
+-        foo_bar: typing.Optional[MyObject] = OMIT,
++        bar: MyObjectParams,
++        foo_bar: typing.Optional[MyObjectParams] = OMIT,
+         request_options: typing.Optional[RequestOptions] = None,
+     ) -> HttpResponse[None]:
+         """
+@@ -309,9 +309,9 @@ class RawServiceClient:
+ 
+         foo : str
+ 
+-        bar : MyObject
++        bar : MyObjectParams
+ 
+-        foo_bar : typing.Optional[MyObject]
++        foo_bar : typing.Optional[MyObjectParams]
+ 
+         request_options : typing.Optional[RequestOptions]
+             Request-specific configuration.
+@@ -352,7 +352,7 @@ class RawServiceClient:
+         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+ 
+     def with_form_encoding(
+-        self, *, file: core.File, foo: str, bar: MyObject, request_options: typing.Optional[RequestOptions] = None
++        self, *, file: core.File, foo: str, bar: MyObjectParams, request_options: typing.Optional[RequestOptions] = None
+     ) -> HttpResponse[None]:
+         """
+         Parameters
+@@ -362,7 +362,7 @@ class RawServiceClient:
+ 
+         foo : str
+ 
+-        bar : MyObject
++        bar : MyObjectParams
+ 
+         request_options : typing.Optional[RequestOptions]
+             Request-specific configuration.
+@@ -403,16 +403,16 @@ class RawServiceClient:
+         integer: int,
+         file: core.File,
+         file_list: typing.List[core.File],
+-        list_of_objects: typing.List[MyObject],
+-        list_of_objects_with_optionals: typing.List[MyObjectWithOptional],
+-        alias_object: MyAliasObject,
+-        list_of_alias_object: typing.List[MyAliasObject],
+-        alias_list_of_object: MyCollectionAliasObject,
++        list_of_objects: typing.Sequence[MyObjectParams],
++        list_of_objects_with_optionals: typing.Sequence[MyObjectWithOptionalParams],
++        alias_object: MyAliasObjectParams,
++        list_of_alias_object: typing.Sequence[MyAliasObjectParams],
++        alias_list_of_object: MyCollectionAliasObjectParams,
+         maybe_string: typing.Optional[str] = OMIT,
+         maybe_file: typing.Optional[core.File] = OMIT,
+         maybe_file_list: typing.Optional[typing.List[core.File]] = OMIT,
+         maybe_integer: typing.Optional[int] = OMIT,
+-        optional_list_of_strings: typing.Optional[typing.List[str]] = OMIT,
++        optional_list_of_strings: typing.Optional[typing.Sequence[str]] = OMIT,
+         optional_metadata: typing.Optional[typing.Any] = OMIT,
+         optional_object_type: typing.Optional[ObjectType] = OMIT,
+         optional_id: typing.Optional[Id] = OMIT,
+@@ -429,15 +429,15 @@ class RawServiceClient:
+         file_list : typing.List[core.File]
+             See core.File for more documentation
+ 
+-        list_of_objects : typing.List[MyObject]
++        list_of_objects : typing.Sequence[MyObjectParams]
+ 
+-        list_of_objects_with_optionals : typing.List[MyObjectWithOptional]
++        list_of_objects_with_optionals : typing.Sequence[MyObjectWithOptionalParams]
+ 
+-        alias_object : MyAliasObject
++        alias_object : MyAliasObjectParams
+ 
+-        list_of_alias_object : typing.List[MyAliasObject]
++        list_of_alias_object : typing.Sequence[MyAliasObjectParams]
+ 
+-        alias_list_of_object : MyCollectionAliasObject
++        alias_list_of_object : MyCollectionAliasObjectParams
+ 
+         maybe_string : typing.Optional[str]
+ 
+@@ -449,7 +449,7 @@ class RawServiceClient:
+ 
+         maybe_integer : typing.Optional[int]
+ 
+-        optional_list_of_strings : typing.Optional[typing.List[str]]
++        optional_list_of_strings : typing.Optional[typing.Sequence[str]]
+ 
+         optional_metadata : typing.Optional[typing.Any]
+ 
+@@ -568,7 +568,7 @@ class RawServiceClient:
+         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+ 
+     def with_inline_type(
+-        self, *, file: core.File, request: MyInlineType, request_options: typing.Optional[RequestOptions] = None
++        self, *, file: core.File, request: MyInlineTypeParams, request_options: typing.Optional[RequestOptions] = None
+     ) -> HttpResponse[str]:
+         """
+         Parameters
+@@ -576,7 +576,7 @@ class RawServiceClient:
+         file : core.File
+             See core.File for more documentation
+ 
+-        request : MyInlineType
++        request : MyInlineTypeParams
+ 
+         request_options : typing.Optional[RequestOptions]
+             Request-specific configuration.
+@@ -621,7 +621,7 @@ class RawServiceClient:
+         self,
+         *,
+         file: core.File,
+-        json: typing.Optional[MyObject] = OMIT,
++        json: typing.Optional[MyObjectParams] = OMIT,
+         request_options: typing.Optional[RequestOptions] = None,
+     ) -> HttpResponse[str]:
+         """
+@@ -630,7 +630,7 @@ class RawServiceClient:
+         file : core.File
+             See core.File for more documentation
+ 
+-        json : typing.Optional[MyObject]
++        json : typing.Optional[MyObjectParams]
+ 
+         request_options : typing.Optional[RequestOptions]
+             Request-specific configuration.
+@@ -772,15 +772,15 @@ class AsyncRawServiceClient:
+         integer: int,
+         file: core.File,
+         file_list: typing.List[core.File],
+-        list_of_objects: typing.List[MyObject],
+-        alias_object: MyAliasObject,
+-        list_of_alias_object: typing.List[MyAliasObject],
+-        alias_list_of_object: MyCollectionAliasObject,
++        list_of_objects: typing.Sequence[MyObjectParams],
++        alias_object: MyAliasObjectParams,
++        list_of_alias_object: typing.Sequence[MyAliasObjectParams],
++        alias_list_of_object: MyCollectionAliasObjectParams,
+         maybe_string: typing.Optional[str] = OMIT,
+         maybe_file: typing.Optional[core.File] = OMIT,
+         maybe_file_list: typing.Optional[typing.List[core.File]] = OMIT,
+         maybe_integer: typing.Optional[int] = OMIT,
+-        optional_list_of_strings: typing.Optional[typing.List[str]] = OMIT,
++        optional_list_of_strings: typing.Optional[typing.Sequence[str]] = OMIT,
+         optional_metadata: typing.Optional[typing.Any] = OMIT,
+         optional_object_type: typing.Optional[ObjectType] = OMIT,
+         optional_id: typing.Optional[Id] = OMIT,
+@@ -797,13 +797,13 @@ class AsyncRawServiceClient:
+         file_list : typing.List[core.File]
+             See core.File for more documentation
+ 
+-        list_of_objects : typing.List[MyObject]
++        list_of_objects : typing.Sequence[MyObjectParams]
+ 
+-        alias_object : MyAliasObject
++        alias_object : MyAliasObjectParams
+ 
+-        list_of_alias_object : typing.List[MyAliasObject]
++        list_of_alias_object : typing.Sequence[MyAliasObjectParams]
+ 
+-        alias_list_of_object : MyCollectionAliasObject
++        alias_list_of_object : MyCollectionAliasObjectParams
+ 
+         maybe_string : typing.Optional[str]
+ 
+@@ -815,7 +815,7 @@ class AsyncRawServiceClient:
+ 
+         maybe_integer : typing.Optional[int]
+ 
+-        optional_list_of_strings : typing.Optional[typing.List[str]]
++        optional_list_of_strings : typing.Optional[typing.Sequence[str]]
+ 
+         optional_metadata : typing.Optional[typing.Any]
+ 
+@@ -1031,8 +1031,8 @@ class AsyncRawServiceClient:
+         *,
+         file: core.File,
+         foo: str,
+-        bar: MyObject,
+-        foo_bar: typing.Optional[MyObject] = OMIT,
++        bar: MyObjectParams,
++        foo_bar: typing.Optional[MyObjectParams] = OMIT,
+         request_options: typing.Optional[RequestOptions] = None,
+     ) -> AsyncHttpResponse[None]:
+         """
+@@ -1043,9 +1043,9 @@ class AsyncRawServiceClient:
+ 
+         foo : str
+ 
+-        bar : MyObject
++        bar : MyObjectParams
+ 
+-        foo_bar : typing.Optional[MyObject]
++        foo_bar : typing.Optional[MyObjectParams]
+ 
+         request_options : typing.Optional[RequestOptions]
+             Request-specific configuration.
+@@ -1086,7 +1086,7 @@ class AsyncRawServiceClient:
+         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+ 
+     async def with_form_encoding(
+-        self, *, file: core.File, foo: str, bar: MyObject, request_options: typing.Optional[RequestOptions] = None
++        self, *, file: core.File, foo: str, bar: MyObjectParams, request_options: typing.Optional[RequestOptions] = None
+     ) -> AsyncHttpResponse[None]:
+         """
+         Parameters
+@@ -1096,7 +1096,7 @@ class AsyncRawServiceClient:
+ 
+         foo : str
+ 
+-        bar : MyObject
++        bar : MyObjectParams
+ 
+         request_options : typing.Optional[RequestOptions]
+             Request-specific configuration.
+@@ -1137,16 +1137,16 @@ class AsyncRawServiceClient:
+         integer: int,
+         file: core.File,
+         file_list: typing.List[core.File],
+-        list_of_objects: typing.List[MyObject],
+-        list_of_objects_with_optionals: typing.List[MyObjectWithOptional],
+-        alias_object: MyAliasObject,
+-        list_of_alias_object: typing.List[MyAliasObject],
+-        alias_list_of_object: MyCollectionAliasObject,
++        list_of_objects: typing.Sequence[MyObjectParams],
++        list_of_objects_with_optionals: typing.Sequence[MyObjectWithOptionalParams],
++        alias_object: MyAliasObjectParams,
++        list_of_alias_object: typing.Sequence[MyAliasObjectParams],
++        alias_list_of_object: MyCollectionAliasObjectParams,
+         maybe_string: typing.Optional[str] = OMIT,
+         maybe_file: typing.Optional[core.File] = OMIT,
+         maybe_file_list: typing.Optional[typing.List[core.File]] = OMIT,
+         maybe_integer: typing.Optional[int] = OMIT,
+-        optional_list_of_strings: typing.Optional[typing.List[str]] = OMIT,
++        optional_list_of_strings: typing.Optional[typing.Sequence[str]] = OMIT,
+         optional_metadata: typing.Optional[typing.Any] = OMIT,
+         optional_object_type: typing.Optional[ObjectType] = OMIT,
+         optional_id: typing.Optional[Id] = OMIT,
+@@ -1163,15 +1163,15 @@ class AsyncRawServiceClient:
+         file_list : typing.List[core.File]
+             See core.File for more documentation
+ 
+-        list_of_objects : typing.List[MyObject]
++        list_of_objects : typing.Sequence[MyObjectParams]
+ 
+-        list_of_objects_with_optionals : typing.List[MyObjectWithOptional]
++        list_of_objects_with_optionals : typing.Sequence[MyObjectWithOptionalParams]
+ 
+-        alias_object : MyAliasObject
++        alias_object : MyAliasObjectParams
+ 
+-        list_of_alias_object : typing.List[MyAliasObject]
++        list_of_alias_object : typing.Sequence[MyAliasObjectParams]
+ 
+-        alias_list_of_object : MyCollectionAliasObject
++        alias_list_of_object : MyCollectionAliasObjectParams
+ 
+         maybe_string : typing.Optional[str]
+ 
+@@ -1183,7 +1183,7 @@ class AsyncRawServiceClient:
+ 
+         maybe_integer : typing.Optional[int]
+ 
+-        optional_list_of_strings : typing.Optional[typing.List[str]]
++        optional_list_of_strings : typing.Optional[typing.Sequence[str]]
+ 
+         optional_metadata : typing.Optional[typing.Any]
+ 
+@@ -1302,7 +1302,7 @@ class AsyncRawServiceClient:
+         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+ 
+     async def with_inline_type(
+-        self, *, file: core.File, request: MyInlineType, request_options: typing.Optional[RequestOptions] = None
++        self, *, file: core.File, request: MyInlineTypeParams, request_options: typing.Optional[RequestOptions] = None
+     ) -> AsyncHttpResponse[str]:
+         """
+         Parameters
+@@ -1310,7 +1310,7 @@ class AsyncRawServiceClient:
+         file : core.File
+             See core.File for more documentation
+ 
+-        request : MyInlineType
++        request : MyInlineTypeParams
+ 
+         request_options : typing.Optional[RequestOptions]
+             Request-specific configuration.
+@@ -1355,7 +1355,7 @@ class AsyncRawServiceClient:
+         self,
+         *,
+         file: core.File,
+-        json: typing.Optional[MyObject] = OMIT,
++        json: typing.Optional[MyObjectParams] = OMIT,
+         request_options: typing.Optional[RequestOptions] = None,
+     ) -> AsyncHttpResponse[str]:
+         """
+@@ -1364,7 +1364,7 @@ class AsyncRawServiceClient:
+         file : core.File
+             See core.File for more documentation
+ 
+-        json : typing.Optional[MyObject]
++        json : typing.Optional[MyObjectParams]
+ 
+         request_options : typing.Optional[RequestOptions]
+             Request-specific configuration.
+diff --git a/src/seed/service/requests/__init__.py b/src/seed/service/requests/__init__.py
+new file mode 100644
+index 00000000000..3db9d2aa6ec
+--- /dev/null
++++ b/src/seed/service/requests/__init__.py
+@@ -0,0 +1,50 @@
++# This file was auto-generated by Fern from our API Definition.
++
++# isort: skip_file
++
++import typing
++from importlib import import_module
++
++if typing.TYPE_CHECKING:
++    from .my_alias_object import MyAliasObjectParams
++    from .my_collection_alias_object import MyCollectionAliasObjectParams
++    from .my_inline_type import MyInlineTypeParams
++    from .my_object import MyObjectParams
++    from .my_object_with_optional import MyObjectWithOptionalParams
++_dynamic_imports: typing.Dict[str, str] = {
++    "MyAliasObjectParams": ".my_alias_object",
++    "MyCollectionAliasObjectParams": ".my_collection_alias_object",
++    "MyInlineTypeParams": ".my_inline_type",
++    "MyObjectParams": ".my_object",
++    "MyObjectWithOptionalParams": ".my_object_with_optional",
++}
++
++
++def __getattr__(attr_name: str) -> typing.Any:
++    module_name = _dynamic_imports.get(attr_name)
++    if module_name is None:
++        raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
++    try:
++        module = import_module(module_name, __package__)
++        if module_name == f".{attr_name}":
++            return module
++        else:
++            return getattr(module, attr_name)
++    except ImportError as e:
++        raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
++    except AttributeError as e:
++        raise AttributeError(f"Failed to get {attr_name} from {module_name}: {e}") from e
++
++
++def __dir__():
++    lazy_attrs = list(_dynamic_imports.keys())
++    return sorted(lazy_attrs)
++
++
++__all__ = [
++    "MyAliasObjectParams",
++    "MyCollectionAliasObjectParams",
++    "MyInlineTypeParams",
++    "MyObjectParams",
++    "MyObjectWithOptionalParams",
++]
+diff --git a/src/seed/service/requests/my_alias_object.py b/src/seed/service/requests/my_alias_object.py
+new file mode 100644
+index 00000000000..0eca4a9c9f4
+--- /dev/null
++++ b/src/seed/service/requests/my_alias_object.py
+@@ -0,0 +1,5 @@
++# This file was auto-generated by Fern from our API Definition.
++
++from ..types.my_object import MyObject
++
++MyAliasObjectParams = MyObject
+diff --git a/src/seed/service/requests/my_collection_alias_object.py b/src/seed/service/requests/my_collection_alias_object.py
+new file mode 100644
+index 00000000000..212abc6cac5
+--- /dev/null
++++ b/src/seed/service/requests/my_collection_alias_object.py
+@@ -0,0 +1,7 @@
++# This file was auto-generated by Fern from our API Definition.
++
++import typing
++
++from ..types.my_object import MyObject
++
++MyCollectionAliasObjectParams = typing.List[MyObject]
+diff --git a/src/seed/service/requests/my_inline_type.py b/src/seed/service/requests/my_inline_type.py
+new file mode 100644
+index 00000000000..6e4eead7bce
+--- /dev/null
++++ b/src/seed/service/requests/my_inline_type.py
+@@ -0,0 +1,7 @@
++# This file was auto-generated by Fern from our API Definition.
++
++import typing_extensions
++
++
++class MyInlineTypeParams(typing_extensions.TypedDict):
++    bar: str
+diff --git a/src/seed/service/requests/my_object.py b/src/seed/service/requests/my_object.py
+new file mode 100644
+index 00000000000..c23f1d9fcae
+--- /dev/null
++++ b/src/seed/service/requests/my_object.py
+@@ -0,0 +1,7 @@
++# This file was auto-generated by Fern from our API Definition.
++
++import typing_extensions
++
++
++class MyObjectParams(typing_extensions.TypedDict):
++    foo: str
+diff --git a/src/seed/service/requests/my_object_with_optional.py b/src/seed/service/requests/my_object_with_optional.py
+new file mode 100644
+index 00000000000..bb29a1163f7
+--- /dev/null
++++ b/src/seed/service/requests/my_object_with_optional.py
+@@ -0,0 +1,9 @@
++# This file was auto-generated by Fern from our API Definition.
++
++import typing_extensions
++from ...core.serialization import FieldMetadata
++
++
++class MyObjectWithOptionalParams(typing_extensions.TypedDict):
++    prop: str
++    optional_prop: typing_extensions.NotRequired[typing_extensions.Annotated[str, FieldMetadata(alias="optionalProp")]]

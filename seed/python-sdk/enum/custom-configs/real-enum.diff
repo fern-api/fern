@@ -1,0 +1,882 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 2ecd82f71ab..52827968435 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,11 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-python-sdk",
+   "generatorVersion": "local",
++  "generatorConfig": {
++    "pydantic_config": {
++      "enum_type": "python_enums"
++    }
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "ci",
+diff --git a/README.md b/README.md
+index 7216a5e5031..72ca9b95c89 100644
+--- a/README.md
++++ b/README.md
+@@ -34,16 +34,16 @@ A full reference for this library is available [here](./reference.md).
+ Instantiate and use the client with the following:
+ 
+ ```python
+-from seed import SeedEnum
++from seed import SeedEnum, Operand, Color
+ 
+ client = SeedEnum(
+     base_url="https://yourhost.com/path/to/api",
+ )
+ 
+ client.headers.send(
+-    operand=">",
+-    maybe_operand=">",
+-    operand_or_color="red",
++    operand=Operand.GREATER_THAN,
++    maybe_operand=Operand.GREATER_THAN,
++    operand_or_color=Color.RED,
+ )
+ ```
+ 
+@@ -63,9 +63,9 @@ client = AsyncSeedEnum(
+ 
+ async def main() -> None:
+     await client.headers.send(
+-        operand=">",
+-        maybe_operand=">",
+-        operand_or_color="red",
++        operand=Operand.GREATER_THAN,
++        maybe_operand=Operand.GREATER_THAN,
++        operand_or_color=Color.RED,
+     )
+ 
+ 
+diff --git a/reference.md b/reference.md
+index 867179931a7..a2ab4c24d67 100644
+--- a/reference.md
++++ b/reference.md
+@@ -13,16 +13,16 @@
+ <dd>
+ 
+ ```python
+-from seed import SeedEnum
++from seed import SeedEnum, Operand, Color
+ 
+ client = SeedEnum(
+     base_url="https://yourhost.com/path/to/api",
+ )
+ 
+ client.headers.send(
+-    operand=">",
+-    maybe_operand=">",
+-    operand_or_color="red",
++    operand=Operand.GREATER_THAN,
++    maybe_operand=Operand.GREATER_THAN,
++    operand_or_color=Color.RED,
+ )
+ 
+ ```
+@@ -97,15 +97,15 @@ client.headers.send(
+ <dd>
+ 
+ ```python
+-from seed import SeedEnum
++from seed import SeedEnum, Operand, Color
+ 
+ client = SeedEnum(
+     base_url="https://yourhost.com/path/to/api",
+ )
+ 
+ client.inlined_request.send(
+-    operand=">",
+-    operand_or_color="red",
++    operand=Operand.GREATER_THAN,
++    operand_or_color=Color.RED,
+ )
+ 
+ ```
+@@ -253,15 +253,15 @@ client.multipart_form.multipart_form(...)
+ <dd>
+ 
+ ```python
+-from seed import SeedEnum
++from seed import SeedEnum, Operand, Color
+ 
+ client = SeedEnum(
+     base_url="https://yourhost.com/path/to/api",
+ )
+ 
+ client.path_param.send(
+-    operand=">",
+-    operand_or_color="red",
++    operand=Operand.GREATER_THAN,
++    operand_or_color=Color.RED,
+ )
+ 
+ ```
+@@ -320,15 +320,15 @@ client.path_param.send(
+ <dd>
+ 
+ ```python
+-from seed import SeedEnum
++from seed import SeedEnum, Operand, Color
+ 
+ client = SeedEnum(
+     base_url="https://yourhost.com/path/to/api",
+ )
+ 
+ client.query_param.send(
+-    operand=">",
+-    operand_or_color="red",
++    operand=Operand.GREATER_THAN,
++    operand_or_color=Color.RED,
+ )
+ 
+ ```
+@@ -402,7 +402,7 @@ client.query_param.send(
+ <dd>
+ 
+ ```python
+-from seed import SeedEnum
++from seed import SeedEnum, Operand, Color
+ 
+ client = SeedEnum(
+     base_url="https://yourhost.com/path/to/api",
+@@ -410,16 +410,16 @@ client = SeedEnum(
+ 
+ client.query_param.send_list(
+     operand=[
+-        ">"
++        Operand.GREATER_THAN
+     ],
+     maybe_operand=[
+-        ">"
++        Operand.GREATER_THAN
+     ],
+     operand_or_color=[
+-        "red"
++        Color.RED
+     ],
+     maybe_operand_or_color=[
+-        "red"
++        Color.RED
+     ],
+ )
+ 
+diff --git a/snippet.json b/snippet.json
+index ac21b0da00a..b440c41124c 100644
+--- a/snippet.json
++++ b/snippet.json
+@@ -1,10 +1,10 @@
+ {
+     "types": {
+-        "type_:Operand": "\">\"\n",
+-        "type_:Color": "\"red\"\n",
+-        "type_:ColorOrOperand": "\"red\"\n",
+-        "type_:ForwardCompatibleEnum": "\"active\"\n",
+-        "type_:EnumWithCustom": "\"safe\"\n"
++        "type_:Operand": "from seed import Operand\n\nOperand.GREATER_THAN\n",
++        "type_:Color": "from seed import Color\n\nColor.RED\n",
++        "type_:ColorOrOperand": "from seed import Color\n\nColor.RED\n",
++        "type_:ForwardCompatibleEnum": "from seed import ForwardCompatibleEnum\n\nForwardCompatibleEnum.ACTIVE\n",
++        "type_:EnumWithCustom": "from seed import EnumWithCustom\n\nEnumWithCustom.SAFE\n"
+     },
+     "endpoints": [
+         {
+@@ -15,8 +15,8 @@
+                 "identifier_override": "endpoint_headers.send"
+             },
+             "snippet": {
+-                "sync_client": "from seed import SeedEnum\n\nclient = SeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.headers.send(\n    operand=\">\",\n    maybe_operand=\">\",\n    operand_or_color=\"red\",\n)\n",
+-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedEnum\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.headers.send(\n        operand=\">\",\n        maybe_operand=\">\",\n        operand_or_color=\"red\",\n    )\n\n\nasyncio.run(main())\n",
++                "sync_client": "from seed import Color, Operand, SeedEnum\n\nclient = SeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.headers.send(\n    operand=Operand.GREATER_THAN,\n    maybe_operand=Operand.GREATER_THAN,\n    operand_or_color=Color.RED,\n)\n",
++                "async_client": "import asyncio\n\nfrom seed import AsyncSeedEnum, Color, Operand\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.headers.send(\n        operand=Operand.GREATER_THAN,\n        maybe_operand=Operand.GREATER_THAN,\n        operand_or_color=Color.RED,\n    )\n\n\nasyncio.run(main())\n",
+                 "type": "python"
+             }
+         },
+@@ -28,8 +28,8 @@
+                 "identifier_override": "endpoint_inlined-request.send"
+             },
+             "snippet": {
+-                "sync_client": "from seed import SeedEnum\n\nclient = SeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.inlined_request.send(\n    operand=\">\",\n    operand_or_color=\"red\",\n)\n",
+-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedEnum\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.inlined_request.send(\n        operand=\">\",\n        operand_or_color=\"red\",\n    )\n\n\nasyncio.run(main())\n",
++                "sync_client": "from seed import Color, Operand, SeedEnum\n\nclient = SeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.inlined_request.send(\n    operand=Operand.GREATER_THAN,\n    operand_or_color=Color.RED,\n)\n",
++                "async_client": "import asyncio\n\nfrom seed import AsyncSeedEnum, Color, Operand\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.inlined_request.send(\n        operand=Operand.GREATER_THAN,\n        operand_or_color=Color.RED,\n    )\n\n\nasyncio.run(main())\n",
+                 "type": "python"
+             }
+         },
+@@ -41,8 +41,8 @@
+                 "identifier_override": "endpoint_path-param.send"
+             },
+             "snippet": {
+-                "sync_client": "from seed import SeedEnum\n\nclient = SeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.path_param.send(\n    operand=\">\",\n    operand_or_color=\"red\",\n)\n",
+-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedEnum\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.path_param.send(\n        operand=\">\",\n        operand_or_color=\"red\",\n    )\n\n\nasyncio.run(main())\n",
++                "sync_client": "from seed import Color, Operand, SeedEnum\n\nclient = SeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.path_param.send(\n    operand=Operand.GREATER_THAN,\n    operand_or_color=Color.RED,\n)\n",
++                "async_client": "import asyncio\n\nfrom seed import AsyncSeedEnum, Color, Operand\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.path_param.send(\n        operand=Operand.GREATER_THAN,\n        operand_or_color=Color.RED,\n    )\n\n\nasyncio.run(main())\n",
+                 "type": "python"
+             }
+         },
+@@ -54,8 +54,8 @@
+                 "identifier_override": "endpoint_query-param.send"
+             },
+             "snippet": {
+-                "sync_client": "from seed import SeedEnum\n\nclient = SeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.query_param.send(\n    operand=\">\",\n    operand_or_color=\"red\",\n)\n",
+-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedEnum\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.query_param.send(\n        operand=\">\",\n        operand_or_color=\"red\",\n    )\n\n\nasyncio.run(main())\n",
++                "sync_client": "from seed import Color, Operand, SeedEnum\n\nclient = SeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.query_param.send(\n    operand=Operand.GREATER_THAN,\n    operand_or_color=Color.RED,\n)\n",
++                "async_client": "import asyncio\n\nfrom seed import AsyncSeedEnum, Color, Operand\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.query_param.send(\n        operand=Operand.GREATER_THAN,\n        operand_or_color=Color.RED,\n    )\n\n\nasyncio.run(main())\n",
+                 "type": "python"
+             }
+         },
+@@ -67,8 +67,8 @@
+                 "identifier_override": "endpoint_query-param.sendList"
+             },
+             "snippet": {
+-                "sync_client": "from seed import SeedEnum\n\nclient = SeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.query_param.send_list(\n    operand=\">\",\n    maybe_operand=\">\",\n    operand_or_color=\"red\",\n    maybe_operand_or_color=\"red\",\n)\n",
+-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedEnum\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.query_param.send_list(\n        operand=\">\",\n        maybe_operand=\">\",\n        operand_or_color=\"red\",\n        maybe_operand_or_color=\"red\",\n    )\n\n\nasyncio.run(main())\n",
++                "sync_client": "from seed import Color, Operand, SeedEnum\n\nclient = SeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.query_param.send_list(\n    operand=Operand.GREATER_THAN,\n    maybe_operand=Operand.GREATER_THAN,\n    operand_or_color=Color.RED,\n    maybe_operand_or_color=Color.RED,\n)\n",
++                "async_client": "import asyncio\n\nfrom seed import AsyncSeedEnum, Color, Operand\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.query_param.send_list(\n        operand=Operand.GREATER_THAN,\n        maybe_operand=Operand.GREATER_THAN,\n        operand_or_color=Color.RED,\n        maybe_operand_or_color=Color.RED,\n    )\n\n\nasyncio.run(main())\n",
+                 "type": "python"
+             }
+         }
+diff --git a/src/seed/core/enum.py b/src/seed/core/enum.py
+new file mode 100644
+index 00000000000..a3d17a67b12
+--- /dev/null
++++ b/src/seed/core/enum.py
+@@ -0,0 +1,20 @@
++# This file was auto-generated by Fern from our API Definition.
++
++"""
++Provides a StrEnum base class that works across Python versions.
++
++For Python >= 3.11, this re-exports the standard library enum.StrEnum.
++For older Python versions, this defines a compatible StrEnum using the
++(str, Enum) mixin pattern so that generated SDKs can use a single base
++class in all supported Python versions.
++"""
++
++import enum
++import sys
++
++if sys.version_info >= (3, 11):
++    from enum import StrEnum
++else:
++
++    class StrEnum(str, enum.Enum):
++        pass
+diff --git a/src/seed/headers/client.py b/src/seed/headers/client.py
+index 63f410673d4..9bf8bf4c27e 100644
+--- a/src/seed/headers/client.py
++++ b/src/seed/headers/client.py
+@@ -53,15 +53,15 @@ class HeadersClient:
+ 
+         Examples
+         --------
+-        from seed import SeedEnum
++        from seed import Color, Operand, SeedEnum
+ 
+         client = SeedEnum(
+             base_url="https://yourhost.com/path/to/api",
+         )
+         client.headers.send(
+-            operand=">",
+-            maybe_operand=">",
+-            operand_or_color="red",
++            operand=Operand.GREATER_THAN,
++            maybe_operand=Operand.GREATER_THAN,
++            operand_or_color=Color.RED,
+         )
+         """
+         _response = self._raw_client.send(
+@@ -120,7 +120,7 @@ class AsyncHeadersClient:
+         --------
+         import asyncio
+ 
+-        from seed import AsyncSeedEnum
++        from seed import AsyncSeedEnum, Color, Operand
+ 
+         client = AsyncSeedEnum(
+             base_url="https://yourhost.com/path/to/api",
+@@ -129,9 +129,9 @@ class AsyncHeadersClient:
+ 
+         async def main() -> None:
+             await client.headers.send(
+-                operand=">",
+-                maybe_operand=">",
+-                operand_or_color="red",
++                operand=Operand.GREATER_THAN,
++                maybe_operand=Operand.GREATER_THAN,
++                operand_or_color=Color.RED,
+             )
+ 
+ 
+diff --git a/src/seed/headers/raw_client.py b/src/seed/headers/raw_client.py
+index 3f904c961c1..634cd7f5aa0 100644
+--- a/src/seed/headers/raw_client.py
++++ b/src/seed/headers/raw_client.py
+@@ -48,8 +48,8 @@ class RawHeadersClient:
+             "headers",
+             method="POST",
+             headers={
+-                "operand": str(operand) if operand is not None else None,
+-                "maybeOperand": str(maybe_operand) if maybe_operand is not None else None,
++                "operand": operand.value if operand is not None else None,
++                "maybeOperand": maybe_operand.value if maybe_operand is not None else None,
+                 "operandOrColor": str(operand_or_color) if operand_or_color is not None else None,
+                 "maybeOperandOrColor": str(maybe_operand_or_color) if maybe_operand_or_color is not None else None,
+             },
+@@ -103,8 +103,8 @@ class AsyncRawHeadersClient:
+             "headers",
+             method="POST",
+             headers={
+-                "operand": str(operand) if operand is not None else None,
+-                "maybeOperand": str(maybe_operand) if maybe_operand is not None else None,
++                "operand": operand.value if operand is not None else None,
++                "maybeOperand": maybe_operand.value if maybe_operand is not None else None,
+                 "operandOrColor": str(operand_or_color) if operand_or_color is not None else None,
+                 "maybeOperandOrColor": str(maybe_operand_or_color) if maybe_operand_or_color is not None else None,
+             },
+diff --git a/src/seed/inlined_request/client.py b/src/seed/inlined_request/client.py
+index e0ef004a995..0169ab2e4e7 100644
+--- a/src/seed/inlined_request/client.py
++++ b/src/seed/inlined_request/client.py
+@@ -56,14 +56,14 @@ class InlinedRequestClient:
+ 
+         Examples
+         --------
+-        from seed import SeedEnum
++        from seed import Color, Operand, SeedEnum
+ 
+         client = SeedEnum(
+             base_url="https://yourhost.com/path/to/api",
+         )
+         client.inlined_request.send(
+-            operand=">",
+-            operand_or_color="red",
++            operand=Operand.GREATER_THAN,
++            operand_or_color=Color.RED,
+         )
+         """
+         _response = self._raw_client.send(
+@@ -122,7 +122,7 @@ class AsyncInlinedRequestClient:
+         --------
+         import asyncio
+ 
+-        from seed import AsyncSeedEnum
++        from seed import AsyncSeedEnum, Color, Operand
+ 
+         client = AsyncSeedEnum(
+             base_url="https://yourhost.com/path/to/api",
+@@ -131,8 +131,8 @@ class AsyncInlinedRequestClient:
+ 
+         async def main() -> None:
+             await client.inlined_request.send(
+-                operand=">",
+-                operand_or_color="red",
++                operand=Operand.GREATER_THAN,
++                operand_or_color=Color.RED,
+             )
+ 
+ 
+diff --git a/src/seed/path_param/client.py b/src/seed/path_param/client.py
+index 2d1d9e87b2e..bfef7d616aa 100644
+--- a/src/seed/path_param/client.py
++++ b/src/seed/path_param/client.py
+@@ -47,14 +47,14 @@ class PathParamClient:
+ 
+         Examples
+         --------
+-        from seed import SeedEnum
++        from seed import Color, Operand, SeedEnum
+ 
+         client = SeedEnum(
+             base_url="https://yourhost.com/path/to/api",
+         )
+         client.path_param.send(
+-            operand=">",
+-            operand_or_color="red",
++            operand=Operand.GREATER_THAN,
++            operand_or_color=Color.RED,
+         )
+         """
+         _response = self._raw_client.send(operand, operand_or_color, request_options=request_options)
+@@ -101,7 +101,7 @@ class AsyncPathParamClient:
+         --------
+         import asyncio
+ 
+-        from seed import AsyncSeedEnum
++        from seed import AsyncSeedEnum, Color, Operand
+ 
+         client = AsyncSeedEnum(
+             base_url="https://yourhost.com/path/to/api",
+@@ -110,8 +110,8 @@ class AsyncPathParamClient:
+ 
+         async def main() -> None:
+             await client.path_param.send(
+-                operand=">",
+-                operand_or_color="red",
++                operand=Operand.GREATER_THAN,
++                operand_or_color=Color.RED,
+             )
+ 
+ 
+diff --git a/src/seed/query_param/client.py b/src/seed/query_param/client.py
+index f766dd2385c..dcc18097769 100644
+--- a/src/seed/query_param/client.py
++++ b/src/seed/query_param/client.py
+@@ -53,14 +53,14 @@ class QueryParamClient:
+ 
+         Examples
+         --------
+-        from seed import SeedEnum
++        from seed import Color, Operand, SeedEnum
+ 
+         client = SeedEnum(
+             base_url="https://yourhost.com/path/to/api",
+         )
+         client.query_param.send(
+-            operand=">",
+-            operand_or_color="red",
++            operand=Operand.GREATER_THAN,
++            operand_or_color=Color.RED,
+         )
+         """
+         _response = self._raw_client.send(
+@@ -101,16 +101,16 @@ class QueryParamClient:
+ 
+         Examples
+         --------
+-        from seed import SeedEnum
++        from seed import Color, Operand, SeedEnum
+ 
+         client = SeedEnum(
+             base_url="https://yourhost.com/path/to/api",
+         )
+         client.query_param.send_list(
+-            operand=">",
+-            maybe_operand=">",
+-            operand_or_color="red",
+-            maybe_operand_or_color="red",
++            operand=Operand.GREATER_THAN,
++            maybe_operand=Operand.GREATER_THAN,
++            operand_or_color=Color.RED,
++            maybe_operand_or_color=Color.RED,
+         )
+         """
+         _response = self._raw_client.send_list(
+@@ -169,7 +169,7 @@ class AsyncQueryParamClient:
+         --------
+         import asyncio
+ 
+-        from seed import AsyncSeedEnum
++        from seed import AsyncSeedEnum, Color, Operand
+ 
+         client = AsyncSeedEnum(
+             base_url="https://yourhost.com/path/to/api",
+@@ -178,8 +178,8 @@ class AsyncQueryParamClient:
+ 
+         async def main() -> None:
+             await client.query_param.send(
+-                operand=">",
+-                operand_or_color="red",
++                operand=Operand.GREATER_THAN,
++                operand_or_color=Color.RED,
+             )
+ 
+ 
+@@ -225,7 +225,7 @@ class AsyncQueryParamClient:
+         --------
+         import asyncio
+ 
+-        from seed import AsyncSeedEnum
++        from seed import AsyncSeedEnum, Color, Operand
+ 
+         client = AsyncSeedEnum(
+             base_url="https://yourhost.com/path/to/api",
+@@ -234,10 +234,10 @@ class AsyncQueryParamClient:
+ 
+         async def main() -> None:
+             await client.query_param.send_list(
+-                operand=">",
+-                maybe_operand=">",
+-                operand_or_color="red",
+-                maybe_operand_or_color="red",
++                operand=Operand.GREATER_THAN,
++                maybe_operand=Operand.GREATER_THAN,
++                operand_or_color=Color.RED,
++                maybe_operand_or_color=Color.RED,
+             )
+ 
+ 
+diff --git a/src/seed/types/color.py b/src/seed/types/color.py
+index 61d663a76a8..a1673feea39 100644
+--- a/src/seed/types/color.py
++++ b/src/seed/types/color.py
+@@ -2,4 +2,25 @@
+ 
+ import typing
+ 
+-Color = typing.Union[typing.Literal["red", "blue"], typing.Any]
++from ..core import enum
++
++T_Result = typing.TypeVar("T_Result")
++
++
++class Color(enum.StrEnum):
++    """
++    Examples
++    --------
++    from seed import Color
++
++    Color.RED
++    """
++
++    RED = "red"
++    BLUE = "blue"
++
++    def visit(self, red: typing.Callable[[], T_Result], blue: typing.Callable[[], T_Result]) -> T_Result:
++        if self is Color.RED:
++            return red()
++        if self is Color.BLUE:
++            return blue()
+diff --git a/src/seed/types/enum_with_custom.py b/src/seed/types/enum_with_custom.py
+index 86e4befb6e3..c9167722f90 100644
+--- a/src/seed/types/enum_with_custom.py
++++ b/src/seed/types/enum_with_custom.py
+@@ -2,4 +2,25 @@
+ 
+ import typing
+ 
+-EnumWithCustom = typing.Union[typing.Literal["safe", "Custom"], typing.Any]
++from ..core import enum
++
++T_Result = typing.TypeVar("T_Result")
++
++
++class EnumWithCustom(enum.StrEnum):
++    """
++    Examples
++    --------
++    from seed import EnumWithCustom
++
++    EnumWithCustom.SAFE
++    """
++
++    SAFE = "safe"
++    CUSTOM = "Custom"
++
++    def visit(self, safe: typing.Callable[[], T_Result], custom: typing.Callable[[], T_Result]) -> T_Result:
++        if self is EnumWithCustom.SAFE:
++            return safe()
++        if self is EnumWithCustom.CUSTOM:
++            return custom()
+diff --git a/src/seed/types/enum_with_special_characters.py b/src/seed/types/enum_with_special_characters.py
+index 0743cc84db1..68132e01cce 100644
+--- a/src/seed/types/enum_with_special_characters.py
++++ b/src/seed/types/enum_with_special_characters.py
+@@ -2,4 +2,17 @@
+ 
+ import typing
+ 
+-EnumWithSpecialCharacters = typing.Union[typing.Literal["\\$bla", "\\$yo"], typing.Any]
++from ..core import enum
++
++T_Result = typing.TypeVar("T_Result")
++
++
++class EnumWithSpecialCharacters(enum.StrEnum):
++    BLA = "\\$bla"
++    YO = "\\$yo"
++
++    def visit(self, bla: typing.Callable[[], T_Result], yo: typing.Callable[[], T_Result]) -> T_Result:
++        if self is EnumWithSpecialCharacters.BLA:
++            return bla()
++        if self is EnumWithSpecialCharacters.YO:
++            return yo()
+diff --git a/src/seed/types/forward_compatible_enum.py b/src/seed/types/forward_compatible_enum.py
+index e083593fa20..a5b75f5f797 100644
+--- a/src/seed/types/forward_compatible_enum.py
++++ b/src/seed/types/forward_compatible_enum.py
+@@ -2,4 +2,28 @@
+ 
+ import typing
+ 
+-ForwardCompatibleEnum = typing.Union[typing.Literal["active", "inactive"], typing.Any]
++from ..core import enum
++
++T_Result = typing.TypeVar("T_Result")
++
++
++class ForwardCompatibleEnum(enum.StrEnum):
++    """
++    Tests forward-compatible enums that accept
++    both known values and arbitrary strings.
++
++    Examples
++    --------
++    from seed import ForwardCompatibleEnum
++
++    ForwardCompatibleEnum.ACTIVE
++    """
++
++    ACTIVE = "active"
++    INACTIVE = "inactive"
++
++    def visit(self, active: typing.Callable[[], T_Result], inactive: typing.Callable[[], T_Result]) -> T_Result:
++        if self is ForwardCompatibleEnum.ACTIVE:
++            return active()
++        if self is ForwardCompatibleEnum.INACTIVE:
++            return inactive()
+diff --git a/src/seed/types/operand.py b/src/seed/types/operand.py
+index 69af35ae2f5..e66e0f37928 100644
+--- a/src/seed/types/operand.py
++++ b/src/seed/types/operand.py
+@@ -2,4 +2,40 @@
+ 
+ import typing
+ 
+-Operand = typing.Union[typing.Literal[">", "=", "less_than"], typing.Any]
++from ..core import enum
++
++T_Result = typing.TypeVar("T_Result")
++
++
++class Operand(enum.StrEnum):
++    """
++    Tests enum name and value can be
++    different.
++
++    Examples
++    --------
++    from seed import Operand
++
++    Operand.GREATER_THAN
++    """
++
++    GREATER_THAN = ">"
++    EQUAL_TO = "="
++    LESS_THAN = "less_than"
++    """
++    The name and value should be similar
++    are similar for less than.
++    """
++
++    def visit(
++        self,
++        greater_than: typing.Callable[[], T_Result],
++        equal_to: typing.Callable[[], T_Result],
++        less_than: typing.Callable[[], T_Result],
++    ) -> T_Result:
++        if self is Operand.GREATER_THAN:
++            return greater_than()
++        if self is Operand.EQUAL_TO:
++            return equal_to()
++        if self is Operand.LESS_THAN:
++            return less_than()
+diff --git a/src/seed/types/special_enum.py b/src/seed/types/special_enum.py
+index b73b59d5fc1..ca369ab2b6d 100644
+--- a/src/seed/types/special_enum.py
++++ b/src/seed/types/special_enum.py
+@@ -2,40 +2,141 @@
+ 
+ import typing
+ 
+-SpecialEnum = typing.Union[
+-    typing.Literal[
+-        "",
+-        'Hello \\"World\\"',
+-        "Hello 'World'",
+-        "Hello\\\\World",
+-        "Hello\\nWorld",
+-        "Hello\\rWorld",
+-        "Hello\\tWorld",
+-        "Hello\\fWorld",
+-        "Hello\\u0008World",
+-        "Hello\\vWorld",
+-        "Hello\\x00World",
+-        "Hello\\u0007World",
+-        "Hello\\u0001World",
+-        "Hello\\u0002World",
+-        "Hello\\u001FWorld",
+-        "Hello\\u007FWorld",
+-        "Hello\\u009FWorld",
+-        'Line 1\\n"Quote"\\tTab\\\\Backslash\\r\\nLine 2\\0Null',
+-        "\\n\\r\\t\\x00\\u0008\\f\\v\\u0007",
+-        "Hello 世界",
+-        "café",
+-        "🚀",
+-        "\\\\n",
+-        "\\\\",
+-        '{"name": "John", "age": 30, "city": "New York"}',
+-        "SELECT * FROM users WHERE name = 'John O\\\\'Reilly'",
+-        "C:\\\\Users\\\\John\\\\Documents\\\\file.txt",
+-        "/usr/local/bin/app",
+-        "\\\\d{3}-\\\\d{2}-\\\\d{4}",
+-        "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\\\.[a-zA-Z]{2,}",
+-        'transcript[transcriptType="final"]',
+-        "transcript[transcriptType='final']",
+-    ],
+-    typing.Any,
+-]
++from ..core import enum
++
++T_Result = typing.TypeVar("T_Result")
++
++
++class SpecialEnum(enum.StrEnum):
++    A = ""
++    B = 'Hello \\"World\\"'
++    C = "Hello 'World'"
++    D = "Hello\\\\World"
++    E = "Hello\\nWorld"
++    F = "Hello\\rWorld"
++    H = "Hello\\tWorld"
++    I = "Hello\\fWorld"
++    J = "Hello\\u0008World"
++    K = "Hello\\vWorld"
++    L = "Hello\\x00World"
++    M = "Hello\\u0007World"
++    N = "Hello\\u0001World"
++    O = "Hello\\u0002World"
++    P = "Hello\\u001FWorld"
++    Q = "Hello\\u007FWorld"
++    R = "Hello\\u009FWorld"
++    S = 'Line 1\\n"Quote"\\tTab\\\\Backslash\\r\\nLine 2\\0Null'
++    T = "\\n\\r\\t\\x00\\u0008\\f\\v\\u0007"
++    U = "Hello 世界"
++    V = "café"
++    W = "🚀"
++    X = "\\\\n"
++    Y = "\\\\"
++    Z = '{"name": "John", "age": 30, "city": "New York"}'
++    AA = "SELECT * FROM users WHERE name = 'John O\\\\'Reilly'"
++    BB = "C:\\\\Users\\\\John\\\\Documents\\\\file.txt"
++    CC = "/usr/local/bin/app"
++    DD = "\\\\d{3}-\\\\d{2}-\\\\d{4}"
++    EE = "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\\\.[a-zA-Z]{2,}"
++    FF = 'transcript[transcriptType="final"]'
++    GG = "transcript[transcriptType='final']"
++
++    def visit(
++        self,
++        a: typing.Callable[[], T_Result],
++        b: typing.Callable[[], T_Result],
++        c: typing.Callable[[], T_Result],
++        d: typing.Callable[[], T_Result],
++        e: typing.Callable[[], T_Result],
++        f: typing.Callable[[], T_Result],
++        h: typing.Callable[[], T_Result],
++        i: typing.Callable[[], T_Result],
++        j: typing.Callable[[], T_Result],
++        k: typing.Callable[[], T_Result],
++        l: typing.Callable[[], T_Result],
++        m: typing.Callable[[], T_Result],
++        n: typing.Callable[[], T_Result],
++        o: typing.Callable[[], T_Result],
++        p: typing.Callable[[], T_Result],
++        q: typing.Callable[[], T_Result],
++        r: typing.Callable[[], T_Result],
++        s: typing.Callable[[], T_Result],
++        t: typing.Callable[[], T_Result],
++        u: typing.Callable[[], T_Result],
++        v: typing.Callable[[], T_Result],
++        w: typing.Callable[[], T_Result],
++        x: typing.Callable[[], T_Result],
++        y: typing.Callable[[], T_Result],
++        z: typing.Callable[[], T_Result],
++        aa: typing.Callable[[], T_Result],
++        bb: typing.Callable[[], T_Result],
++        cc: typing.Callable[[], T_Result],
++        dd: typing.Callable[[], T_Result],
++        ee: typing.Callable[[], T_Result],
++        ff: typing.Callable[[], T_Result],
++        gg: typing.Callable[[], T_Result],
++    ) -> T_Result:
++        if self is SpecialEnum.A:
++            return a()
++        if self is SpecialEnum.B:
++            return b()
++        if self is SpecialEnum.C:
++            return c()
++        if self is SpecialEnum.D:
++            return d()
++        if self is SpecialEnum.E:
++            return e()
++        if self is SpecialEnum.F:
++            return f()
++        if self is SpecialEnum.H:
++            return h()
++        if self is SpecialEnum.I:
++            return i()
++        if self is SpecialEnum.J:
++            return j()
++        if self is SpecialEnum.K:
++            return k()
++        if self is SpecialEnum.L:
++            return l()
++        if self is SpecialEnum.M:
++            return m()
++        if self is SpecialEnum.N:
++            return n()
++        if self is SpecialEnum.O:
++            return o()
++        if self is SpecialEnum.P:
++            return p()
++        if self is SpecialEnum.Q:
++            return q()
++        if self is SpecialEnum.R:
++            return r()
++        if self is SpecialEnum.S:
++            return s()
++        if self is SpecialEnum.T:
++            return t()
++        if self is SpecialEnum.U:
++            return u()
++        if self is SpecialEnum.V:
++            return v()
++        if self is SpecialEnum.W:
++            return w()
++        if self is SpecialEnum.X:
++            return x()
++        if self is SpecialEnum.Y:
++            return y()
++        if self is SpecialEnum.Z:
++            return z()
++        if self is SpecialEnum.AA:
++            return aa()
++        if self is SpecialEnum.BB:
++            return bb()
++        if self is SpecialEnum.CC:
++            return cc()
++        if self is SpecialEnum.DD:
++            return dd()
++        if self is SpecialEnum.EE:
++            return ee()
++        if self is SpecialEnum.FF:
++            return ff()
++        if self is SpecialEnum.GG:
++            return gg()
+diff --git a/src/seed/unknown/types/status.py b/src/seed/unknown/types/status.py
+index 5ca553e75e4..54932dfc50c 100644
+--- a/src/seed/unknown/types/status.py
++++ b/src/seed/unknown/types/status.py
+@@ -2,4 +2,17 @@
+ 
+ import typing
+ 
+-Status = typing.Union[typing.Literal["Known", "Unknown"], typing.Any]
++from ...core import enum
++
++T_Result = typing.TypeVar("T_Result")
++
++
++class Status(enum.StrEnum):
++    KNOWN = "Known"
++    UNKNOWN = "Unknown"
++
++    def visit(self, known: typing.Callable[[], T_Result], unknown: typing.Callable[[], T_Result]) -> T_Result:
++        if self is Status.KNOWN:
++            return known()
++        if self is Status.UNKNOWN:
++            return unknown()

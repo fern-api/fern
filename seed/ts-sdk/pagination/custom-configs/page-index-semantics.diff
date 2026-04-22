@@ -1,0 +1,66 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index d8b7bf00e12..fec289d81c8 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,9 @@
+     "cliVersion": "DUMMY",
+     "generatorName": "fernapi/fern-typescript-sdk",
+     "generatorVersion": "local",
++    "generatorConfig": {
++        "offsetSemantics": "page-index"
++    },
+     "originGitCommit": "DUMMY",
+     "originGitCommitIsDirty": null,
+     "invokedBy": "ci",
+diff --git a/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts b/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts
+index e69116774a8..1f0f7cc4f06 100644
+--- a/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts
++++ b/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts
+@@ -614,8 +614,8 @@ export class InlineUsersClient {
+             rawResponse: dataWithRawResponse.rawResponse,
+             hasNextPage: (response) => (response?.data.users ?? []).length >= Math.floor(request?.limit ?? 1),
+             getItems: (response) => response?.data.users ?? [],
+-            loadPage: (response) => {
+-                _offset += response?.data.users != null ? response.data.users.length : 1;
++            loadPage: (_response) => {
++                _offset += 1;
+                 return list(core.setObjectProperty(request, "page", _offset));
+             },
+         });
+@@ -702,8 +702,8 @@ export class InlineUsersClient {
+             hasNextPage: (response) =>
+                 response?.hasNextPage ?? (response?.data.users ?? []).length >= Math.floor(request?.limit ?? 1),
+             getItems: (response) => response?.data.users ?? [],
+-            loadPage: (response) => {
+-                _offset += response?.data.users != null ? response.data.users.length : 1;
++            loadPage: (_response) => {
++                _offset += 1;
+                 return list(core.setObjectProperty(request, "page", _offset));
+             },
+         });
+diff --git a/src/api/resources/users/client/Client.ts b/src/api/resources/users/client/Client.ts
+index 16f4e8a5374..b49a2b9abed 100644
+--- a/src/api/resources/users/client/Client.ts
++++ b/src/api/resources/users/client/Client.ts
+@@ -637,8 +637,8 @@ export class UsersClient {
+             rawResponse: dataWithRawResponse.rawResponse,
+             hasNextPage: (response) => (response?.data ?? []).length >= Math.floor(request?.limit ?? 123),
+             getItems: (response) => response?.data ?? [],
+-            loadPage: (response) => {
+-                _offset += response?.data != null ? response.data.length : 1;
++            loadPage: (_response) => {
++                _offset += 1;
+                 return list(core.setObjectProperty(request, "page", _offset));
+             },
+         });
+@@ -724,8 +724,8 @@ export class UsersClient {
+             hasNextPage: (response) =>
+                 response?.hasNextPage ?? (response?.data ?? []).length >= Math.floor(request?.limit ?? 1),
+             getItems: (response) => response?.data ?? [],
+-            loadPage: (response) => {
+-                _offset += response?.data != null ? response.data.length : 1;
++            loadPage: (_response) => {
++                _offset += 1;
+                 return list(core.setObjectProperty(request, "page", _offset));
+             },
+         });

@@ -1,0 +1,371 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index d8b7bf00e12..76d20befe40 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,9 @@
+     "cliVersion": "DUMMY",
+     "generatorName": "fernapi/fern-typescript-sdk",
+     "generatorVersion": "local",
++    "generatorConfig": {
++        "experimentalGenerateReadWriteOnlyTypes": true
++    },
+     "originGitCommit": "DUMMY",
+     "originGitCommitIsDirty": null,
+     "invokedBy": "ci",
+diff --git a/README.md b/README.md
+index 248bb59d85d..d8c2eec5672 100644
+--- a/README.md
++++ b/README.md
+@@ -42,14 +42,10 @@ import { SeedPropertyAccessClient } from "@fern/property-access";
+ 
+ const client = new SeedPropertyAccessClient({ environment: "YOUR_BASE_URL" });
+ await client.createUser({
+-    id: "id",
+-    email: "email",
+     password: "password",
+     profile: {
+         name: "name",
+-        verification: {
+-            verified: "verified"
+-        },
++        verification: {},
+         ssn: "ssn"
+     }
+ });
+diff --git a/reference.md b/reference.md
+index 4c776212c01..6dc0c4bbbf3 100644
+--- a/reference.md
++++ b/reference.md
+@@ -1,5 +1,5 @@
+ # Reference
+-<details><summary><code>client.<a href="/src/Client.ts">createUser</a>({ ...params }) -> SeedPropertyAccess.User</code></summary>
++<details><summary><code>client.<a href="/src/Client.ts">createUser</a>({ ...params }) -> SeedPropertyAccess.User.Response</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -13,14 +13,10 @@
+ 
+ ```typescript
+ await client.createUser({
+-    id: "id",
+-    email: "email",
+     password: "password",
+     profile: {
+         name: "name",
+-        verification: {
+-            verified: "verified"
+-        },
++        verification: {},
+         ssn: "ssn"
+     }
+ });
+@@ -39,7 +35,7 @@ await client.createUser({
+ <dl>
+ <dd>
+ 
+-**request:** `SeedPropertyAccess.User` 
++**request:** `SeedPropertyAccess.User.Request` 
+     
+ </dd>
+ </dl>
+diff --git a/snippet.json b/snippet.json
+index 19a3c32e15a..1b468d67fa6 100644
+--- a/snippet.json
++++ b/snippet.json
+@@ -8,7 +8,7 @@
+             },
+             "snippet": {
+                 "type": "typescript",
+-                "client": "import { SeedPropertyAccessClient } from \"@fern/property-access\";\n\nconst client = new SeedPropertyAccessClient({ environment: \"YOUR_BASE_URL\" });\nawait client.createUser({\n    id: \"id\",\n    email: \"email\",\n    password: \"password\",\n    profile: {\n        name: \"name\",\n        verification: {\n            verified: \"verified\"\n        },\n        ssn: \"ssn\"\n    }\n});\n"
++                "client": "import { SeedPropertyAccessClient } from \"@fern/property-access\";\n\nconst client = new SeedPropertyAccessClient({ environment: \"YOUR_BASE_URL\" });\nawait client.createUser({\n    password: \"password\",\n    profile: {\n        name: \"name\",\n        verification: {},\n        ssn: \"ssn\"\n    }\n});\n"
+             }
+         }
+     ],
+diff --git a/src/Client.ts b/src/Client.ts
+index 7ec4af283e5..bbba6bca647 100644
+--- a/src/Client.ts
++++ b/src/Client.ts
+@@ -22,34 +22,30 @@ export class SeedPropertyAccessClient {
+     }
+ 
+     /**
+-     * @param {SeedPropertyAccess.User} request
++     * @param {SeedPropertyAccess.User.Request} request
+      * @param {SeedPropertyAccessClient.RequestOptions} requestOptions - Request-specific configuration.
+      *
+      * @example
+      *     await client.createUser({
+-     *         id: "id",
+-     *         email: "email",
+      *         password: "password",
+      *         profile: {
+      *             name: "name",
+-     *             verification: {
+-     *                 verified: "verified"
+-     *             },
++     *             verification: {},
+      *             ssn: "ssn"
+      *         }
+      *     })
+      */
+     public createUser(
+-        request: SeedPropertyAccess.User,
++        request: SeedPropertyAccess.User.Request,
+         requestOptions?: SeedPropertyAccessClient.RequestOptions,
+-    ): core.HttpResponsePromise<SeedPropertyAccess.User> {
++    ): core.HttpResponsePromise<SeedPropertyAccess.User.Response> {
+         return core.HttpResponsePromise.fromPromise(this.__createUser(request, requestOptions));
+     }
+ 
+     private async __createUser(
+-        request: SeedPropertyAccess.User,
++        request: SeedPropertyAccess.User.Request,
+         requestOptions?: SeedPropertyAccessClient.RequestOptions,
+-    ): Promise<core.WithRawResponse<SeedPropertyAccess.User>> {
++    ): Promise<core.WithRawResponse<SeedPropertyAccess.User.Response>> {
+         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+         const _response = await core.fetcher({
+             url: core.url.join(
+diff --git a/src/api/types/Admin.ts b/src/api/types/Admin.ts
+index 34761db8b57..522d71788c2 100644
+--- a/src/api/types/Admin.ts
++++ b/src/api/types/Admin.ts
+@@ -9,3 +9,12 @@ export interface Admin extends SeedPropertyAccess.User {
+     /** The level of admin privileges. */
+     adminLevel: string;
+ }
++
++export namespace Admin {
++    export type Request = Omit<Admin, "adminLevel" | keyof SeedPropertyAccess.User> & {
++        adminLevel: string;
++    } & SeedPropertyAccess.User.Request;
++    export type Response = Omit<Admin, "adminLevel" | keyof SeedPropertyAccess.User> & {
++        adminLevel: string;
++    } & SeedPropertyAccess.User.Response;
++}
+diff --git a/src/api/types/Foo.ts b/src/api/types/Foo.ts
+index 6a74724f46e..cf780114649 100644
+--- a/src/api/types/Foo.ts
++++ b/src/api/types/Foo.ts
+@@ -5,3 +5,16 @@ export interface Foo {
+     read: string;
+     write: string;
+ }
++
++export namespace Foo {
++    export type Request = Omit<Foo, "normal" | "read" | "write"> & {
++        normal: string;
++        read: string;
++        write: string;
++    };
++    export type Response = Omit<Foo, "normal" | "read" | "write"> & {
++        normal: string;
++        read: string;
++        write: string;
++    };
++}
+diff --git a/src/api/types/User.ts b/src/api/types/User.ts
+index a80fba1fadd..e10e9b7c074 100644
+--- a/src/api/types/User.ts
++++ b/src/api/types/User.ts
+@@ -15,3 +15,18 @@ export interface User {
+     /** User profile object */
+     profile: SeedPropertyAccess.UserProfile;
+ }
++
++export namespace User {
++    export type Request = Omit<User, "id" | "email" | "password" | "profile"> & {
++        id: string;
++        email: string;
++        password: string;
++        profile: SeedPropertyAccess.UserProfile.Request;
++    };
++    export type Response = Omit<User, "id" | "email" | "password" | "profile"> & {
++        id: string;
++        email: string;
++        password: string;
++        profile: SeedPropertyAccess.UserProfile.Response;
++    };
++}
+diff --git a/src/api/types/UserOrAdmin.ts b/src/api/types/UserOrAdmin.ts
+index 671830589d2..1fa6721823b 100644
+--- a/src/api/types/UserOrAdmin.ts
++++ b/src/api/types/UserOrAdmin.ts
+@@ -6,3 +6,14 @@ import type * as SeedPropertyAccess from "../index.js";
+  * Example of an undiscriminated union
+  */
+ export type UserOrAdmin = SeedPropertyAccess.User | SeedPropertyAccess.Admin;
++
++export namespace UserOrAdmin {
++    /**
++     * Example of an undiscriminated union
++     */
++    export type Request = SeedPropertyAccess.User.Request | SeedPropertyAccess.Admin.Request;
++    /**
++     * Example of an undiscriminated union
++     */
++    export type Response = SeedPropertyAccess.User.Response | SeedPropertyAccess.Admin.Response;
++}
+diff --git a/src/api/types/UserOrAdminDiscriminated.ts b/src/api/types/UserOrAdminDiscriminated.ts
+index b26e9007ef9..1b9aa48ddf8 100644
+--- a/src/api/types/UserOrAdminDiscriminated.ts
++++ b/src/api/types/UserOrAdminDiscriminated.ts
+@@ -15,32 +15,76 @@ export namespace UserOrAdminDiscriminated {
+         type: "user";
+     }
+ 
++    export namespace User {
++        export interface Request extends SeedPropertyAccess.User.Request, _Base.Request {
++            type: "user";
++        }
++
++        export interface Response extends SeedPropertyAccess.User.Response, _Base.Response {
++            type: "user";
++        }
++    }
++
+     export interface Admin extends _Base {
+         type: "admin";
+         admin: SeedPropertyAccess.Admin;
+     }
+ 
++    export namespace Admin {
++        export interface Request extends _Base.Request {
++            type: "admin";
++            admin: SeedPropertyAccess.Admin.Request;
++        }
++
++        export interface Response extends _Base.Response {
++            type: "admin";
++            admin: SeedPropertyAccess.Admin.Response;
++        }
++    }
++
+     export interface Empty extends _Base {
+         type: "empty";
+     }
+ 
++    export namespace Empty {
++        export interface Request extends _Base.Request {
++            type: "empty";
++        }
++
++        export interface Response extends _Base.Response {
++            type: "empty";
++        }
++    }
++
+     export interface _Base extends SeedPropertyAccess.Foo {
+         normal: string;
+         foo: SeedPropertyAccess.Foo;
+     }
+ 
++    export namespace _Base {
++        export interface Request extends SeedPropertyAccess.Foo.Request {
++            normal: string;
++            foo: SeedPropertyAccess.Foo.Request;
++        }
++
++        export interface Response extends SeedPropertyAccess.Foo.Response {
++            normal: string;
++            foo: SeedPropertyAccess.Foo.Response;
++        }
++    }
++
+     /**
+      * Example of an discriminated union
+      */
+     export type Request =
+-        | SeedPropertyAccess.UserOrAdminDiscriminated.User
+-        | SeedPropertyAccess.UserOrAdminDiscriminated.Admin
++        | SeedPropertyAccess.UserOrAdminDiscriminated.User.Request
++        | SeedPropertyAccess.UserOrAdminDiscriminated.Admin.Request
+         | SeedPropertyAccess.UserOrAdminDiscriminated.Empty;
+     /**
+      * Example of an discriminated union
+      */
+     export type Response =
+-        | SeedPropertyAccess.UserOrAdminDiscriminated.User
+-        | SeedPropertyAccess.UserOrAdminDiscriminated.Admin
++        | SeedPropertyAccess.UserOrAdminDiscriminated.User.Response
++        | SeedPropertyAccess.UserOrAdminDiscriminated.Admin.Response
+         | SeedPropertyAccess.UserOrAdminDiscriminated.Empty;
+ }
+diff --git a/src/api/types/UserProfile.ts b/src/api/types/UserProfile.ts
+index 3a502f65724..32c39bf357a 100644
+--- a/src/api/types/UserProfile.ts
++++ b/src/api/types/UserProfile.ts
+@@ -13,3 +13,16 @@ export interface UserProfile {
+     /** The social security number of the user. */
+     ssn: string;
+ }
++
++export namespace UserProfile {
++    export type Request = Omit<UserProfile, "name" | "verification" | "ssn"> & {
++        name: string;
++        verification: SeedPropertyAccess.UserProfileVerification.Request;
++        ssn: string;
++    };
++    export type Response = Omit<UserProfile, "name" | "verification" | "ssn"> & {
++        name: string;
++        verification: SeedPropertyAccess.UserProfileVerification;
++        ssn: string;
++    };
++}
+diff --git a/src/api/types/UserProfileVerification.ts b/src/api/types/UserProfileVerification.ts
+index 18935b9ca88..5bf87a774d6 100644
+--- a/src/api/types/UserProfileVerification.ts
++++ b/src/api/types/UserProfileVerification.ts
+@@ -7,3 +7,12 @@ export interface UserProfileVerification {
+     /** User profile verification status */
+     verified: string;
+ }
++
++export namespace UserProfileVerification {
++    export type Request = Omit<UserProfileVerification, "verified"> & {
++        verified: string;
++    };
++    export type Response = Omit<UserProfileVerification, "verified"> & {
++        verified: string;
++    };
++}
+diff --git a/tests/wire/main.test.ts b/tests/wire/main.test.ts
+index e51b3af6c20..30b4b9b8930 100644
+--- a/tests/wire/main.test.ts
++++ b/tests/wire/main.test.ts
+@@ -7,17 +7,11 @@ describe("SeedPropertyAccessClient", () => {
+     test("createUser", async () => {
+         const server = mockServerPool.createServer();
+         const client = new SeedPropertyAccessClient({ maxRetries: 0, environment: server.baseUrl });
+-        const rawRequestBody = {
+-            id: "id",
+-            email: "email",
+-            password: "password",
+-            profile: { name: "name", verification: { verified: "verified" }, ssn: "ssn" },
+-        };
++        const rawRequestBody = { password: "password", profile: { name: "name", verification: {}, ssn: "ssn" } };
+         const rawResponseBody = {
+             id: "id",
+             email: "email",
+-            password: "password",
+-            profile: { name: "name", verification: { verified: "verified" }, ssn: "ssn" },
++            profile: { name: "name", verification: { verified: "verified" } },
+         };
+ 
+         server
+@@ -30,14 +24,10 @@ describe("SeedPropertyAccessClient", () => {
+             .build();
+ 
+         const response = await client.createUser({
+-            id: "id",
+-            email: "email",
+             password: "password",
+             profile: {
+                 name: "name",
+-                verification: {
+-                    verified: "verified",
+-                },
++                verification: {},
+                 ssn: "ssn",
+             },
+         });

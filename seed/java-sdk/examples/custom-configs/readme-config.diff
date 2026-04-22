@@ -1,0 +1,184 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 1bdd1da9041..98d039e157a 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,18 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-java-sdk",
+   "generatorVersion": "local",
++  "generatorConfig": {
++    "custom-readme-sections": [
++      {
++        "title": "Generator Invocation Custom Section",
++        "content": "Generator Invocation Custom Content for {{ group }}:{{ artifact }}:{{ version }}"
++      },
++      {
++        "title": "Override Section",
++        "content": "Override Content"
++      }
++    ]
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "ci",
+diff --git a/README.md b/README.md
+index 6541df3a039..c25a1e134aa 100644
+--- a/README.md
++++ b/README.md
+@@ -1,14 +1,20 @@
+-# Seed Java Library
++# CustomName Java Library
++
++![](https://www.fernapi.com)
+ 
+ [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FJava)
+ [![Maven Central](https://img.shields.io/maven-central/v/com.fern/examples)](https://central.sonatype.com/artifact/com.fern/examples)
+ 
+-The Seed Java library provides convenient access to the Seed APIs from Java.
++The CustomName Java library provides convenient access to the CustomName APIs from Java.
+ 
+ ## Table of Contents
+ 
++- [Documentation](#documentation)
+ - [Installation](#installation)
+ - [Reference](#reference)
++- [Custom Section](#custom-section)
++- [Generator Invocation Custom Section](#generator-invocation-custom-section)
++- [Override Section](#override-section)
+ - [Usage](#usage)
+ - [Environments](#environments)
+ - [Base Url](#base-url)
+@@ -19,7 +25,10 @@ The Seed Java library provides convenient access to the Seed APIs from Java.
+   - [Timeouts](#timeouts)
+   - [Custom Headers](#custom-headers)
+   - [Access Raw Response Data](#access-raw-response-data)
+-- [Contributing](#contributing)
++
++## Documentation
++
++API reference documentation is available [here](https://www.docs.fernapi.com).
+ 
+ ## Installation
+ 
+@@ -49,6 +58,19 @@ Add the dependency in your `pom.xml` file:
+ 
+ A full reference for this library is available [here](./reference.md).
+ 
++## Custom Section
++
++This is a custom section. Latest package info is com.fern:examples:0.0.1
++
++
++## Generator Invocation Custom Section
++
++Generator Invocation Custom Content for com.fern:examples:0.0.1
++
++## Override Section
++
++Override Content
++
+ ## Usage
+ 
+ Instantiate and use the client with the following:
+@@ -57,6 +79,8 @@ Instantiate and use the client with the following:
+ package com.example.usage;
+ 
+ import com.seed.examples.SeedExamplesClient;
++import com.seed.examples.resources.types.types.Movie;
++import java.util.HashMap;
+ 
+ public class Example {
+     public static void main(String[] args) {
+@@ -65,7 +89,24 @@ public class Example {
+             .token("<token>")
+             .build();
+ 
+-        client.echo("Hello world!\\n\\nwith\\n\\tnewlines");
++        client.service().createMovie(
++            Movie
++                .builder()
++                .id("id")
++                .title("title")
++                .from("from")
++                .rating(1.1)
++                .tag("tag")
++                .revenue(1000000L)
++                .metadata(
++                    new HashMap<String, Object>() {{
++                        put("metadata", new 
++                        HashMap<String, Object>() {{put("key", "value");
++                        }});
++                    }}
++                )
++                .build()
++        );
+     }
+ }
+ ```
+@@ -105,7 +146,7 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
+ import com.seed.examples.core.SeedExamplesApiException;
+ 
+ try{
+-    client.echo(...);
++    client.service().createMovie(...);
+ } catch (SeedExamplesApiException e){
+     // Do something with the API exception...
+ }
+@@ -169,7 +210,27 @@ SeedExamplesClient client = SeedExamplesClient
+     .build();
+ 
+ // Request level
+-client.echo(
++client.service().getMovie(
++    ...,
++    RequestOptions
++        .builder()
++        .timeout(60)
++        .build()
++);
++```
++
++```java
++import com.seed.examples.SeedExamplesClient;
++import com.seed.examples.core.RequestOptions;
++
++// Client level
++SeedExamplesClient client = SeedExamplesClient
++    .builder()
++    .timeout(60)
++    .build();
++
++// Request level
++client.service().createMovie(
+     ...,
+     RequestOptions
+         .builder()
+@@ -195,7 +256,7 @@ SeedExamplesClient client = SeedExamplesClient
+ ;
+ 
+ // Request level
+-client.echo(
++client.service().createMovie(
+     ...,
+     RequestOptions
+         .builder()
+@@ -211,18 +272,9 @@ The `withRawResponse()` method returns a raw client that wraps all responses wit
+ (A normal client's `response` is identical to a raw client's `response.body()`.)
+ 
+ ```java
+-SeedExamplesHttpResponse response = client.withRawResponse().echo(...);
++SeedExamplesHttpResponse response = client.service().withRawResponse().createMovie(...);
+ 
+ System.out.println(response.body());
+ System.out.println(response.headers().get("X-My-Header"));
+ ```
+ 
+-## Contributing
+-
+-While we value open-source contributions to this SDK, this library is generated programmatically.
+-Additions made directly to this library would have to be moved over to our generation code,
+-otherwise they would be overwritten upon the next generated release. Feel free to open a PR as
+-a proof of concept, but know that we will not be able to merge it as-is. We suggest opening
+-an issue first to discuss with us!
+-
+-On the other hand, contributions to the README are always very welcome!

@@ -7,6 +7,7 @@ import { rm } from "fs/promises";
 import path from "path";
 
 import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces.js";
+import { BASELINE_DIR, CUSTOM_CONFIGS_DIR } from "../../utils/diffStorage.js";
 import { LANGUAGE_SPECIFIC_FIXTURE_PREFIXES } from "../test/testWorkspaceFixtures.js";
 
 export interface OrphanedFolder {
@@ -53,8 +54,13 @@ function getExpectedOutputFoldersForFixture(generator: GeneratorWorkspace, fixtu
         if (outputFolders.has(".")) {
             return null;
         }
+        // With diff-based storage, the fixture directory contains baseline/ and custom-configs/
+        // instead of individual output folders. Accept both the new layout and legacy layout.
+        outputFolders.add(BASELINE_DIR);
+        outputFolders.add(CUSTOM_CONFIGS_DIR);
         return outputFolders;
     }
+    // Fixtures without custom config entries just have baseline/
     return null;
 }
 

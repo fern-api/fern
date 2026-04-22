@@ -6,16 +6,16 @@ changelogLocation: ../../generators/rust/sdk/versions.yml
 buildScripts:
   compileScript:
     commands:
-      - cargo build --all-features
+    - cargo build --all-features
   testScript:
     commands:
-      - cargo test
-      - if [ -f "run_wire_tests.sh" ]; then echo "Running wire tests..." && bash run_wire_tests.sh; fi
+    - cargo test
+    - if [ -f "run_wire_tests.sh" ]; then echo "Running wire tests..." && bash run_wire_tests.sh; fi
 
 publish:
   workingDirectory: generators/rust
   preBuildCommands:
-    - pnpm turbo run dist:cli --filter @fern-api/rust-sdk
+  - pnpm turbo run dist:cli --filter @fern-api/rust-sdk
   docker:
     file: ./generators/rust/sdk/Dockerfile
     image: fernapi/fern-rust-sdk
@@ -24,7 +24,7 @@ publish:
     name: fern-rust-sdk
     project: rust-sdk
     sourceMaps:
-      - dir: generators/rust/sdk/dist
+    - dir: generators/rust/sdk/dist
 
 test:
   docker:
@@ -33,7 +33,7 @@ test:
   local:
     workingDirectory: generators/rust
     buildCommand:
-      - pnpm turbo run dist:cli --filter @fern-api/rust-sdk
+    - pnpm turbo run dist:cli --filter @fern-api/rust-sdk
     runCommand: node --enable-source-maps ./sdk/dist/cli.cjs {CONFIG_PATH}
 
 language: rust
@@ -47,122 +47,120 @@ customFixtureConfig:
 
 fixtures:
   simple-api:
-    - customConfig: null
-      outputFolder: basic
-    - customConfig:
-        crateName: custom_simple_sdk
-        crateVersion: "1.2.0"
-        clientClassName: CustomSimpleClient
-        enableWireTests: true
-      outputFolder: basic-custom-config
+  - customConfig:
+    outputFolder: basic
+  - customConfig:
+      crateName: custom_simple_sdk
+      crateVersion: "1.2.0"
+      clientClassName: CustomSimpleClient
+      enableWireTests: true
+    outputFolder: basic-custom-config
   imdb:
-    - customConfig:
-        clientName: ImdbClient
-        maxRetries: 5
-      outputFolder: imdb
-    - customConfig:
-        crateName: custom_imdb_sdk
-        crateVersion: "2.1.0"
-        clientClassName: CustomImdbClient
-        extraDependencies:
-          serde_derive: "1.0"
-          tokio-util: "0.7"
-        enableWireTests: true
-      outputFolder: imdb-custom-config
-    - customConfig:
-        clientName: ImdbClient
-        features:
-          experimental: ["reqwest/blocking", "tokio/process"]
-          advanced: ["sse"]
-        defaultFeatures: ["experimental"]
-      outputFolder: imdb-custom-features
+  - customConfig:
+      clientName: ImdbClient
+      maxRetries: 5
+    outputFolder: imdb
+  - customConfig:
+      crateName: custom_imdb_sdk
+      crateVersion: "2.1.0"
+      clientClassName: CustomImdbClient
+      extraDependencies:
+        serde_derive: "1.0"
+        tokio-util: "0.7"
+      enableWireTests: true
+    outputFolder: imdb-custom-config
+  - customConfig:
+      clientName: ImdbClient
+      features:
+        experimental: ["reqwest/blocking", "tokio/process"]
+        advanced: ["sse"]
+      defaultFeatures: ["experimental"]
+    outputFolder: imdb-custom-features
   single-url-environment-default:
-    - customConfig: null
-      outputFolder: basic
-    - customConfig:
-        environmentEnumName: CustomApiEnvironment
-        crateName: environment_test_sdk
-        crateVersion: "0.2.0"
-      outputFolder: custom-environment
-    - customConfig:
-        environmentEnumName: MyCustomEnvironment
-        customReadmeSections:
-          - title: "Custom Installation"
-            content: "Add this line to your Cargo.toml:\n```toml\n[dependencies]\ncustom_sdk = \"1.0.0\"\n```"
-          - title: "Advanced Usage"
-            content: "For advanced users, you can configure custom retry policies and timeouts."
-        crateName: full_custom_sdk
-        crateVersion: "1.0.0"
-        enableWireTests: true
-      outputFolder: full-custom
+  - customConfig:
+    outputFolder: basic
+  - customConfig:
+      environmentEnumName: CustomApiEnvironment
+      crateName: environment_test_sdk
+      crateVersion: "0.2.0"
+    outputFolder: custom-environment
+  - customConfig:
+      environmentEnumName: MyCustomEnvironment
+      customReadmeSections:
+      - title: "Custom Installation"
+        content: "Add this line to your Cargo.toml:\n```toml\n[dependencies]\ncustom_sdk = \"1.0.0\"\n```"
+      - title: "Advanced Usage"
+        content: "For advanced users, you can configure custom retry policies and timeouts."
+      crateName: full_custom_sdk
+      crateVersion: "1.0.0"
+      enableWireTests: true
+    outputFolder: full-custom
   examples:
-    - customConfig: null
-      outputFolder: no-custom-config
-    - customConfig:
-        enableWireTests: true
-        customReadmeSections:
-          - title: "Override Section"
-            content: "Override Content"
-          - title: "Generator Invocation Custom Section"
-            content: "Generator Invocation Custom Content for {{ packageName }}:{{ version }}"
-      readmeConfig:
-        apiName: "CustomName"
-        disabledSections:
-          - apiReference
-        bannerLink: https://www.fernapi.com
-        apiReferenceLink: https://www.docs.fernapi.com
-        defaultEndpoint: POST /movie
-        customSections:
-          - title: "Base Readme Custom Section"
-            language: rust
-            content: "Base Readme Custom Content for {{ packageName }}:{{ version }}"
-          - title: "Override Section"
-            language: rust
-            content: "Base Content"
-        features:
-          timeouts:
-            - GET /movie/{movieId}
-      outputFolder: readme-config
+  - customConfig:
+      enableWireTests: true
+      customReadmeSections:
+      - title: "Override Section"
+        content: "Override Content"
+      - title: "Generator Invocation Custom Section"
+        content: "Generator Invocation Custom Content for {{ packageName }}:{{ version }}"
+    readmeConfig:
+      apiName: "CustomName"
+      disabledSections:
+      - apiReference
+      bannerLink: https://www.fernapi.com
+      apiReferenceLink: https://www.docs.fernapi.com
+      defaultEndpoint: POST /movie
+      customSections:
+      - title: "Base Readme Custom Section"
+        language: rust
+        content: "Base Readme Custom Content for {{ packageName }}:{{ version }}"
+      - title: "Override Section"
+        language: rust
+        content: "Base Content"
+      features:
+        timeouts:
+        - GET /movie/{movieId}
+    outputFolder: readme-config
   exhaustive:
-    - customConfig:
-        enableWireTests: true
-      outputFolder: .
+  - customConfig:
+      enableWireTests: true
+    outputFolder: .
   server-sent-event-examples:
-    - customConfig:
-        enableWireTests: true
-        packageName: sse_examples
-        packageVersion: "0.1.0"
-      outputFolder: with-wire-tests
+  - customConfig:
+      enableWireTests: true
+      packageName: sse_examples
+      packageVersion: "0.1.0"
+    outputFolder: with-wire-tests
   server-sent-events:
-    - customConfig:
-        enableWireTests: true
-        packageName: sse_events
-        packageVersion: "0.1.0"
-      outputFolder: with-wire-tests
+  - customConfig:
+      enableWireTests: true
+      packageName: sse_events
+      packageVersion: "0.1.0"
+    outputFolder: with-wire-tests
   websocket:
-    - customConfig:
-        enableWebsockets: true
-      outputFolder: .
+  - customConfig:
+      enableWebsockets: true
+    outputFolder: .
   websocket-bearer-auth:
-    - customConfig:
-        enableWebsockets: true
-      outputFolder: .
+  - customConfig:
+      enableWebsockets: true
+    outputFolder: .
   websocket-inferred-auth:
-    - customConfig:
-        enableWebsockets: true
-      outputFolder: .
+  - customConfig:
+      enableWebsockets: true
+    outputFolder: .
   license:
-    - customConfig: null
-      outputFolder: basic
-    - customConfig:
-        packageLicenseFile: "LICENSE.md"
-      outputFolder: custom-license-file
-    - customConfig:
-        packageLicenseFile: ""
-      outputFolder: empty-license-file
-    - customConfig:
-        packageLicense: "Apache-2.0"
-        packageLicenseFile: "LICENSE.md"
-      outputFolder: both-license-options
+  - customConfig:
+    outputFolder: basic
+  - customConfig:
+      packageLicenseFile: "LICENSE.md"
+    outputFolder: custom-license-file
+  - customConfig:
+      packageLicenseFile: ""
+    outputFolder: empty-license-file
+  - customConfig:
+      packageLicense: "Apache-2.0"
+      packageLicenseFile: "LICENSE.md"
+    outputFolder: both-license-options
 allowedFailures:
-  - server-sent-events-openapi
+- server-sent-events-openapi

@@ -1,0 +1,481 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index e206b6bea6d..1dc7814c35a 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -3,7 +3,12 @@
+   "generatorName": "fernapi/fern-go-sdk",
+   "generatorVersion": "local",
+   "generatorConfig": {
+-    "enableWireTests": false
++    "enableWireTests": false,
++    "alwaysSendRequiredProperties": false,
++    "inlineFileProperties": false,
++    "inlinePathParameters": false,
++    "useReaderForBytesRequest": false,
++    "union": "v0"
+   },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+diff --git a/commons/types.go b/commons/types.go
+index a74508ab4b9..a151e7e63cf 100644
+--- a/commons/types.go
++++ b/commons/types.go
+@@ -15,6 +15,14 @@ type Data struct {
+ 	Base64      []byte
+ }
+ 
++func NewDataFromFieldString(value string) *Data {
++	return &Data{Type: "string", FieldString: value}
++}
++
++func NewDataFromBase64(value []byte) *Data {
++	return &Data{Type: "base64", Base64: value}
++}
++
+ func (d *Data) GetType() string {
+ 	if d == nil {
+ 		return ""
+@@ -72,7 +80,10 @@ func (d Data) MarshalJSON() ([]byte, error) {
+ 	if err := d.validate(); err != nil {
+ 		return nil, err
+ 	}
+-	if d.FieldString != "" {
++	switch d.Type {
++	default:
++		return nil, fmt.Errorf("invalid type %s in %T", d.Type, d)
++	case "string":
+ 		var marshaler = struct {
+ 			Type        string `json:"type"`
+ 			FieldString string `json:"value"`
+@@ -81,8 +92,7 @@ func (d Data) MarshalJSON() ([]byte, error) {
+ 			FieldString: d.FieldString,
+ 		}
+ 		return json.Marshal(marshaler)
+-	}
+-	if d.Base64 != nil {
++	case "base64":
+ 		var marshaler = struct {
+ 			Type   string `json:"type"`
+ 			Base64 []byte `json:"value"`
+@@ -92,7 +102,6 @@ func (d Data) MarshalJSON() ([]byte, error) {
+ 		}
+ 		return json.Marshal(marshaler)
+ 	}
+-	return nil, fmt.Errorf("type %T does not define a non-empty union type", d)
+ }
+ 
+ type DataVisitor interface {
+@@ -101,13 +110,14 @@ type DataVisitor interface {
+ }
+ 
+ func (d *Data) Accept(visitor DataVisitor) error {
+-	if d.FieldString != "" {
++	switch d.Type {
++	default:
++		return fmt.Errorf("invalid type %s in %T", d.Type, d)
++	case "string":
+ 		return visitor.VisitFieldString(d.FieldString)
+-	}
+-	if d.Base64 != nil {
++	case "base64":
+ 		return visitor.VisitBase64(d.Base64)
+ 	}
+-	return fmt.Errorf("type %T does not define a non-empty union type", d)
+ }
+ 
+ func (d *Data) validate() error {
+@@ -150,6 +160,14 @@ type EventInfo struct {
+ 	Tag      Tag
+ }
+ 
++func NewEventInfoFromMetadata(value *Metadata) *EventInfo {
++	return &EventInfo{Type: "metadata", Metadata: value}
++}
++
++func NewEventInfoFromTag(value Tag) *EventInfo {
++	return &EventInfo{Type: "tag", Tag: value}
++}
++
+ func (e *EventInfo) GetType() string {
+ 	if e == nil {
+ 		return ""
+@@ -205,10 +223,12 @@ func (e EventInfo) MarshalJSON() ([]byte, error) {
+ 	if err := e.validate(); err != nil {
+ 		return nil, err
+ 	}
+-	if e.Metadata != nil {
++	switch e.Type {
++	default:
++		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
++	case "metadata":
+ 		return internal.MarshalJSONWithExtraProperty(e.Metadata, "type", "metadata")
+-	}
+-	if e.Tag != "" {
++	case "tag":
+ 		var marshaler = struct {
+ 			Type string `json:"type"`
+ 			Tag  Tag    `json:"value"`
+@@ -218,7 +238,6 @@ func (e EventInfo) MarshalJSON() ([]byte, error) {
+ 		}
+ 		return json.Marshal(marshaler)
+ 	}
+-	return nil, fmt.Errorf("type %T does not define a non-empty union type", e)
+ }
+ 
+ type EventInfoVisitor interface {
+@@ -227,13 +246,14 @@ type EventInfoVisitor interface {
+ }
+ 
+ func (e *EventInfo) Accept(visitor EventInfoVisitor) error {
+-	if e.Metadata != nil {
++	switch e.Type {
++	default:
++		return fmt.Errorf("invalid type %s in %T", e.Type, e)
++	case "metadata":
+ 		return visitor.VisitMetadata(e.Metadata)
+-	}
+-	if e.Tag != "" {
++	case "tag":
+ 		return visitor.VisitTag(e.Tag)
+ 	}
+-	return fmt.Errorf("type %T does not define a non-empty union type", e)
+ }
+ 
+ func (e *EventInfo) validate() error {
+diff --git a/snippet.json b/snippet.json
+index c0c92610f4d..de21ff2a516 100644
+--- a/snippet.json
++++ b/snippet.json
+@@ -8,7 +8,7 @@
+             },
+             "snippet": {
+                 "type": "go",
+-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/examples/fern\"\n\tfernclient \"github.com/examples/fern/client\"\n\toption \"github.com/examples/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n\toption.WithBaseURL(\n\t\tfern.Environments.Production,\n\t),\n)\nresponse, err := client.CreateType(\n\tcontext.TODO(),\n\t\u0026fern.Type{\n\t\tBasicType: fern.BasicTypePrimitive,\n\t},\n)\n"
++                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/examples/fern\"\n\tfernclient \"github.com/examples/fern/client\"\n\toption \"github.com/examples/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n\toption.WithBaseURL(\n\t\tfern.Environments.Production,\n\t),\n)\nresponse, err := client.CreateType(\n\tcontext.TODO(),\n\tfern.NewTypeFromBasicType(\n\t\tfern.BasicTypePrimitive,\n\t),\n)\n"
+             }
+         },
+         {
+@@ -30,7 +30,7 @@
+             },
+             "snippet": {
+                 "type": "go",
+-                "client": "import (\n\tcommons \"github.com/examples/fern/commons\"\n\tcontext \"context\"\n\tfern \"github.com/examples/fern\"\n\tfernclient \"github.com/examples/fern/client\"\n\toption \"github.com/examples/fern/option\"\n\tuuid \"github.com/google/uuid\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n\toption.WithBaseURL(\n\t\tfern.Environments.Production,\n\t),\n)\nresponse, err := client.Service.CreateBigEntity(\n\tcontext.TODO(),\n\t\u0026fern.BigEntity{\n\t\tCastMember: \u0026fern.CastMember{\n\t\t\tActor: \u0026fern.Actor{\n\t\t\t\tName: \"name\",\n\t\t\t\tID:   \"id\",\n\t\t\t},\n\t\t},\n\t\tExtendedMovie: \u0026fern.ExtendedMovie{\n\t\t\tCast: []string{\n\t\t\t\t\"cast\",\n\t\t\t\t\"cast\",\n\t\t\t},\n\t\t\tID: \"id\",\n\t\t\tPrequel: fern.String(\n\t\t\t\t\"prequel\",\n\t\t\t),\n\t\t\tTitle:  \"title\",\n\t\t\tFrom:   \"from\",\n\t\t\tRating: 1.1,\n\t\t\tTag:    \"tag\",\n\t\t\tBook: fern.String(\n\t\t\t\t\"book\",\n\t\t\t),\n\t\t\tMetadata: map[string]any{\n\t\t\t\t\"metadata\": map[string]interface{}{\n\t\t\t\t\t\"key\": \"value\",\n\t\t\t\t},\n\t\t\t},\n\t\t\tRevenue: 1000000,\n\t\t},\n\t\tEntity: \u0026fern.Entity{\n\t\t\tType: \u0026fern.Type{\n\t\t\t\tBasicType: fern.BasicTypePrimitive,\n\t\t\t},\n\t\t\tName: \"name\",\n\t\t},\n\t\tMetadata: \u0026fern.Metadata{\n\t\t\tHTML: \"metadata\",\n\t\t},\n\t\tCommonMetadata: \u0026commons.Metadata{\n\t\t\tID: \"id\",\n\t\t\tData: map[string]string{\n\t\t\t\t\"data\": \"data\",\n\t\t\t},\n\t\t\tJSONString: fern.String(\n\t\t\t\t\"jsonString\",\n\t\t\t),\n\t\t},\n\t\tEventInfo: \u0026commons.EventInfo{\n\t\t\tMetadata: \u0026commons.Metadata{\n\t\t\t\tID: \"id\",\n\t\t\t\tData: map[string]string{\n\t\t\t\t\t\"data\": \"data\",\n\t\t\t\t},\n\t\t\t\tJSONString: fern.String(\n\t\t\t\t\t\"jsonString\",\n\t\t\t\t),\n\t\t\t},\n\t\t},\n\t\tData: \u0026commons.Data{\n\t\t\tFieldString: \"data\",\n\t\t},\n\t\tMigration: \u0026fern.Migration{\n\t\t\tName:   \"name\",\n\t\t\tStatus: fern.MigrationStatusRunning,\n\t\t},\n\t\tException: \u0026fern.Exception{\n\t\t\tGeneric: \u0026fern.ExceptionInfo{\n\t\t\t\tExceptionType:       \"exceptionType\",\n\t\t\t\tExceptionMessage:    \"exceptionMessage\",\n\t\t\t\tExceptionStacktrace: \"exceptionStacktrace\",\n\t\t\t},\n\t\t},\n\t\tTest: \u0026fern.Test{\n\t\t\tAnd: true,\n\t\t},\n\t\tNode: \u0026fern.Node{\n\t\t\tName: \"name\",\n\t\t\tNodes: []*fern.Node{\n\t\t\t\t\u0026fern.Node{\n\t\t\t\t\tName: \"name\",\n\t\t\t\t\tNodes: []*fern.Node{\n\t\t\t\t\t\t\u0026fern.Node{\n\t\t\t\t\t\t\tName: \"name\",\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\u0026fern.Node{\n\t\t\t\t\t\t\tName: \"name\",\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t\tTrees: []*fern.Tree{\n\t\t\t\t\t\t\u0026fern.Tree{},\n\t\t\t\t\t\t\u0026fern.Tree{},\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t\t\u0026fern.Node{\n\t\t\t\t\tName: \"name\",\n\t\t\t\t\tNodes: []*fern.Node{\n\t\t\t\t\t\t\u0026fern.Node{\n\t\t\t\t\t\t\tName: \"name\",\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\u0026fern.Node{\n\t\t\t\t\t\t\tName: \"name\",\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t\tTrees: []*fern.Tree{\n\t\t\t\t\t\t\u0026fern.Tree{},\n\t\t\t\t\t\t\u0026fern.Tree{},\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t},\n\t\t\tTrees: []*fern.Tree{\n\t\t\t\t\u0026fern.Tree{\n\t\t\t\t\tNodes: []*fern.Node{\n\t\t\t\t\t\t\u0026fern.Node{\n\t\t\t\t\t\t\tName: \"name\",\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\u0026fern.Node{\n\t\t\t\t\t\t\tName: \"name\",\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t\t\u0026fern.Tree{\n\t\t\t\t\tNodes: []*fern.Node{\n\t\t\t\t\t\t\u0026fern.Node{\n\t\t\t\t\t\t\tName: \"name\",\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\u0026fern.Node{\n\t\t\t\t\t\t\tName: \"name\",\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t\tDirectory: \u0026fern.Directory{\n\t\t\tName: \"name\",\n\t\t\tFiles: []*fern.File{\n\t\t\t\t\u0026fern.File{\n\t\t\t\t\tName:     \"name\",\n\t\t\t\t\tContents: \"contents\",\n\t\t\t\t},\n\t\t\t\t\u0026fern.File{\n\t\t\t\t\tName:     \"name\",\n\t\t\t\t\tContents: \"contents\",\n\t\t\t\t},\n\t\t\t},\n\t\t\tDirectories: []*fern.Directory{\n\t\t\t\t\u0026fern.Directory{\n\t\t\t\t\tName: \"name\",\n\t\t\t\t\tFiles: []*fern.File{\n\t\t\t\t\t\t\u0026fern.File{\n\t\t\t\t\t\t\tName:     \"name\",\n\t\t\t\t\t\t\tContents: \"contents\",\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\u0026fern.File{\n\t\t\t\t\t\t\tName:     \"name\",\n\t\t\t\t\t\t\tContents: \"contents\",\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t\tDirectories: []*fern.Directory{\n\t\t\t\t\t\t\u0026fern.Directory{\n\t\t\t\t\t\t\tName: \"name\",\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\u0026fern.Directory{\n\t\t\t\t\t\t\tName: \"name\",\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t\t\u0026fern.Directory{\n\t\t\t\t\tName: \"name\",\n\t\t\t\t\tFiles: []*fern.File{\n\t\t\t\t\t\t\u0026fern.File{\n\t\t\t\t\t\t\tName:     \"name\",\n\t\t\t\t\t\t\tContents: \"contents\",\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\u0026fern.File{\n\t\t\t\t\t\t\tName:     \"name\",\n\t\t\t\t\t\t\tContents: \"contents\",\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t\tDirectories: []*fern.Directory{\n\t\t\t\t\t\t\u0026fern.Directory{\n\t\t\t\t\t\t\tName: \"name\",\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\u0026fern.Directory{\n\t\t\t\t\t\t\tName: \"name\",\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t\tMoment: \u0026fern.Moment{\n\t\t\tID: uuid.MustParse(\n\t\t\t\t\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n\t\t\t),\n\t\t\tDate: fern.MustParseDate(\n\t\t\t\t\"2023-01-15\",\n\t\t\t),\n\t\t\tDatetime: fern.MustParseDateTime(\n\t\t\t\t\"2024-01-15T09:30:00Z\",\n\t\t\t),\n\t\t},\n\t},\n)\n"
++                "client": "import (\n\tcommons \"github.com/examples/fern/commons\"\n\tcontext \"context\"\n\tfern \"github.com/examples/fern\"\n\tfernclient \"github.com/examples/fern/client\"\n\toption \"github.com/examples/fern/option\"\n\tuuid \"github.com/google/uuid\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n\toption.WithBaseURL(\n\t\tfern.Environments.Production,\n\t),\n)\nresponse, err := client.Service.CreateBigEntity(\n\tcontext.TODO(),\n\t\u0026fern.BigEntity{\n\t\tCastMember: fern.NewCastMemberFromActor(\n\t\t\t\u0026fern.Actor{\n\t\t\t\tName: \"name\",\n\t\t\t\tID:   \"id\",\n\t\t\t},\n\t\t),\n\t\tExtendedMovie: \u0026fern.ExtendedMovie{\n\t\t\tCast: []string{\n\t\t\t\t\"cast\",\n\t\t\t\t\"cast\",\n\t\t\t},\n\t\t\tID: \"id\",\n\t\t\tPrequel: fern.String(\n\t\t\t\t\"prequel\",\n\t\t\t),\n\t\t\tTitle:  \"title\",\n\t\t\tFrom:   \"from\",\n\t\t\tRating: 1.1,\n\t\t\tTag:    \"tag\",\n\t\t\tBook: fern.String(\n\t\t\t\t\"book\",\n\t\t\t),\n\t\t\tMetadata: map[string]any{\n\t\t\t\t\"metadata\": map[string]interface{}{\n\t\t\t\t\t\"key\": \"value\",\n\t\t\t\t},\n\t\t\t},\n\t\t\tRevenue: 1000000,\n\t\t},\n\t\tEntity: \u0026fern.Entity{\n\t\t\tType: fern.NewTypeFromBasicType(\n\t\t\t\tfern.BasicTypePrimitive,\n\t\t\t),\n\t\t\tName: \"name\",\n\t\t},\n\t\tMetadata: fern.NewMetadataFromHTML(\n\t\t\t\"metadata\",\n\t\t),\n\t\tCommonMetadata: \u0026commons.Metadata{\n\t\t\tID: \"id\",\n\t\t\tData: map[string]string{\n\t\t\t\t\"data\": \"data\",\n\t\t\t},\n\t\t\tJSONString: fern.String(\n\t\t\t\t\"jsonString\",\n\t\t\t),\n\t\t},\n\t\tEventInfo: commons.NewEventInfoFromMetadata(\n\t\t\t\u0026commons.Metadata{\n\t\t\t\tID: \"id\",\n\t\t\t\tData: map[string]string{\n\t\t\t\t\t\"data\": \"data\",\n\t\t\t\t},\n\t\t\t\tJSONString: fern.String(\n\t\t\t\t\t\"jsonString\",\n\t\t\t\t),\n\t\t\t},\n\t\t),\n\t\tData: commons.NewDataFromString(\n\t\t\t\"data\",\n\t\t),\n\t\tMigration: \u0026fern.Migration{\n\t\t\tName:   \"name\",\n\t\t\tStatus: fern.MigrationStatusRunning,\n\t\t},\n\t\tException: fern.NewExceptionFromGeneric(\n\t\t\t\u0026fern.ExceptionInfo{\n\t\t\t\tExceptionType:       \"exceptionType\",\n\t\t\t\tExceptionMessage:    \"exceptionMessage\",\n\t\t\t\tExceptionStacktrace: \"exceptionStacktrace\",\n\t\t\t},\n\t\t),\n\t\tTest: fern.NewTestFromAnd(\n\t\t\ttrue,\n\t\t),\n\t\tNode: \u0026fern.Node{\n\t\t\tName: \"name\",\n\t\t\tNodes: []*fern.Node{\n\t\t\t\t\u0026fern.Node{\n\t\t\t\t\tName: \"name\",\n\t\t\t\t\tNodes: []*fern.Node{\n\t\t\t\t\t\t\u0026fern.Node{\n\t\t\t\t\t\t\tName: \"name\",\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\u0026fern.Node{\n\t\t\t\t\t\t\tName: \"name\",\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t\tTrees: []*fern.Tree{\n\t\t\t\t\t\t\u0026fern.Tree{},\n\t\t\t\t\t\t\u0026fern.Tree{},\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t\t\u0026fern.Node{\n\t\t\t\t\tName: \"name\",\n\t\t\t\t\tNodes: []*fern.Node{\n\t\t\t\t\t\t\u0026fern.Node{\n\t\t\t\t\t\t\tName: \"name\",\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\u0026fern.Node{\n\t\t\t\t\t\t\tName: \"name\",\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t\tTrees: []*fern.Tree{\n\t\t\t\t\t\t\u0026fern.Tree{},\n\t\t\t\t\t\t\u0026fern.Tree{},\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t},\n\t\t\tTrees: []*fern.Tree{\n\t\t\t\t\u0026fern.Tree{\n\t\t\t\t\tNodes: []*fern.Node{\n\t\t\t\t\t\t\u0026fern.Node{\n\t\t\t\t\t\t\tName: \"name\",\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\u0026fern.Node{\n\t\t\t\t\t\t\tName: \"name\",\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t\t\u0026fern.Tree{\n\t\t\t\t\tNodes: []*fern.Node{\n\t\t\t\t\t\t\u0026fern.Node{\n\t\t\t\t\t\t\tName: \"name\",\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\u0026fern.Node{\n\t\t\t\t\t\t\tName: \"name\",\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t\tDirectory: \u0026fern.Directory{\n\t\t\tName: \"name\",\n\t\t\tFiles: []*fern.File{\n\t\t\t\t\u0026fern.File{\n\t\t\t\t\tName:     \"name\",\n\t\t\t\t\tContents: \"contents\",\n\t\t\t\t},\n\t\t\t\t\u0026fern.File{\n\t\t\t\t\tName:     \"name\",\n\t\t\t\t\tContents: \"contents\",\n\t\t\t\t},\n\t\t\t},\n\t\t\tDirectories: []*fern.Directory{\n\t\t\t\t\u0026fern.Directory{\n\t\t\t\t\tName: \"name\",\n\t\t\t\t\tFiles: []*fern.File{\n\t\t\t\t\t\t\u0026fern.File{\n\t\t\t\t\t\t\tName:     \"name\",\n\t\t\t\t\t\t\tContents: \"contents\",\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\u0026fern.File{\n\t\t\t\t\t\t\tName:     \"name\",\n\t\t\t\t\t\t\tContents: \"contents\",\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t\tDirectories: []*fern.Directory{\n\t\t\t\t\t\t\u0026fern.Directory{\n\t\t\t\t\t\t\tName: \"name\",\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\u0026fern.Directory{\n\t\t\t\t\t\t\tName: \"name\",\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t\t\u0026fern.Directory{\n\t\t\t\t\tName: \"name\",\n\t\t\t\t\tFiles: []*fern.File{\n\t\t\t\t\t\t\u0026fern.File{\n\t\t\t\t\t\t\tName:     \"name\",\n\t\t\t\t\t\t\tContents: \"contents\",\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\u0026fern.File{\n\t\t\t\t\t\t\tName:     \"name\",\n\t\t\t\t\t\t\tContents: \"contents\",\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t\tDirectories: []*fern.Directory{\n\t\t\t\t\t\t\u0026fern.Directory{\n\t\t\t\t\t\t\tName: \"name\",\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\u0026fern.Directory{\n\t\t\t\t\t\t\tName: \"name\",\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t\tMoment: \u0026fern.Moment{\n\t\t\tID: uuid.MustParse(\n\t\t\t\t\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n\t\t\t),\n\t\t\tDate: fern.MustParseDate(\n\t\t\t\t\"2023-01-15\",\n\t\t\t),\n\t\t\tDatetime: fern.MustParseDateTime(\n\t\t\t\t\"2024-01-15T09:30:00Z\",\n\t\t\t),\n\t\t},\n\t},\n)\n"
+             }
+         },
+         {
+diff --git a/types.go b/types.go
+index 77c85bcfb70..81474d87383 100644
+--- a/types.go
++++ b/types.go
+@@ -66,7 +66,7 @@ var (
+ )
+ 
+ type Identifier struct {
+-	Type  *Type  `json:"type" url:"type"`
++	Type  *Type  `json:"type,omitempty" url:"type,omitempty"`
+ 	Value string `json:"value" url:"value"`
+ 	Label string `json:"label" url:"label"`
+ 
+@@ -182,6 +182,14 @@ type Type struct {
+ 	typ string
+ }
+ 
++func NewTypeFromBasicType(value BasicType) *Type {
++	return &Type{typ: "BasicType", BasicType: value}
++}
++
++func NewTypeFromComplexType(value ComplexType) *Type {
++	return &Type{typ: "ComplexType", ComplexType: value}
++}
++
+ func (t *Type) GetBasicType() BasicType {
+ 	if t == nil {
+ 		return ""
+@@ -821,6 +829,18 @@ type CastMember struct {
+ 	typ string
+ }
+ 
++func NewCastMemberFromActor(value *Actor) *CastMember {
++	return &CastMember{typ: "Actor", Actor: value}
++}
++
++func NewCastMemberFromActress(value *Actress) *CastMember {
++	return &CastMember{typ: "Actress", Actress: value}
++}
++
++func NewCastMemberFromStuntDouble(value *StuntDouble) *CastMember {
++	return &CastMember{typ: "StuntDouble", StuntDouble: value}
++}
++
+ func (c *CastMember) GetActor() *Actor {
+ 	if c == nil {
+ 		return nil
+@@ -1102,7 +1122,7 @@ var (
+ )
+ 
+ type Entity struct {
+-	Type *Type  `json:"type" url:"type"`
++	Type *Type  `json:"type,omitempty" url:"type,omitempty"`
+ 	Name string `json:"name" url:"name"`
+ 
+ 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+@@ -1202,6 +1222,14 @@ type Exception struct {
+ 	Timeout interface{}
+ }
+ 
++func NewExceptionFromGeneric(value *ExceptionInfo) *Exception {
++	return &Exception{Type: "generic", Generic: value}
++}
++
++func NewExceptionFromTimeout(value interface{}) *Exception {
++	return &Exception{Type: "timeout", Timeout: value}
++}
++
+ func (e *Exception) GetType() string {
+ 	if e == nil {
+ 		return ""
+@@ -1255,10 +1283,12 @@ func (e Exception) MarshalJSON() ([]byte, error) {
+ 	if err := e.validate(); err != nil {
+ 		return nil, err
+ 	}
+-	if e.Generic != nil {
++	switch e.Type {
++	default:
++		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
++	case "generic":
+ 		return internal.MarshalJSONWithExtraProperty(e.Generic, "type", "generic")
+-	}
+-	if e.Timeout != nil {
++	case "timeout":
+ 		var marshaler = struct {
+ 			Type    string      `json:"type"`
+ 			Timeout interface{} `json:"timeout,omitempty"`
+@@ -1268,7 +1298,6 @@ func (e Exception) MarshalJSON() ([]byte, error) {
+ 		}
+ 		return json.Marshal(marshaler)
+ 	}
+-	return nil, fmt.Errorf("type %T does not define a non-empty union type", e)
+ }
+ 
+ type ExceptionVisitor interface {
+@@ -1277,13 +1306,14 @@ type ExceptionVisitor interface {
+ }
+ 
+ func (e *Exception) Accept(visitor ExceptionVisitor) error {
+-	if e.Generic != nil {
++	switch e.Type {
++	default:
++		return fmt.Errorf("invalid type %s in %T", e.Type, e)
++	case "generic":
+ 		return visitor.VisitGeneric(e.Generic)
+-	}
+-	if e.Timeout != nil {
++	case "timeout":
+ 		return visitor.VisitTimeout(e.Timeout)
+ 	}
+-	return fmt.Errorf("type %T does not define a non-empty union type", e)
+ }
+ 
+ func (e *Exception) validate() error {
+@@ -1458,9 +1488,9 @@ type ExtendedMovie struct {
+ 	Rating   float64        `json:"rating" url:"rating"`
+ 	Tag      commons.Tag    `json:"tag" url:"tag"`
+ 	Book     *string        `json:"book,omitempty" url:"book,omitempty"`
+-	Metadata map[string]any `json:"metadata" url:"metadata"`
++	Metadata map[string]any `json:"metadata,omitempty" url:"metadata,omitempty"`
+ 	Revenue  int64          `json:"revenue" url:"revenue"`
+-	Cast     []string       `json:"cast" url:"cast"`
++	Cast     []string       `json:"cast,omitempty" url:"cast,omitempty"`
+ 
+ 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+ 	explicitFields *big.Int `json:"-" url:"-"`
+@@ -1789,6 +1819,14 @@ type Metadata struct {
+ 	Markdown string
+ }
+ 
++func NewMetadataFromHTML(value string) *Metadata {
++	return &Metadata{Type: "html", HTML: value}
++}
++
++func NewMetadataFromMarkdown(value string) *Metadata {
++	return &Metadata{Type: "markdown", Markdown: value}
++}
++
+ func (m *Metadata) GetType() string {
+ 	if m == nil {
+ 		return ""
+@@ -1827,8 +1865,8 @@ func (m *Metadata) GetMarkdown() string {
+ func (m *Metadata) UnmarshalJSON(data []byte) error {
+ 	var unmarshaler struct {
+ 		Type  string            `json:"type"`
+-		Extra map[string]string `json:"extra"`
+-		Tags  []string          `json:"tags"`
++		Extra map[string]string `json:"extra,omitempty"`
++		Tags  []string          `json:"tags,omitempty"`
+ 	}
+ 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+ 		return err
+@@ -1864,11 +1902,14 @@ func (m Metadata) MarshalJSON() ([]byte, error) {
+ 	if err := m.validate(); err != nil {
+ 		return nil, err
+ 	}
+-	if m.HTML != "" {
++	switch m.Type {
++	default:
++		return nil, fmt.Errorf("invalid type %s in %T", m.Type, m)
++	case "html":
+ 		var marshaler = struct {
+ 			Type  string            `json:"type"`
+-			Extra map[string]string `json:"extra"`
+-			Tags  []string          `json:"tags"`
++			Extra map[string]string `json:"extra,omitempty"`
++			Tags  []string          `json:"tags,omitempty"`
+ 			HTML  string            `json:"value"`
+ 		}{
+ 			Type:  "html",
+@@ -1877,12 +1918,11 @@ func (m Metadata) MarshalJSON() ([]byte, error) {
+ 			HTML:  m.HTML,
+ 		}
+ 		return json.Marshal(marshaler)
+-	}
+-	if m.Markdown != "" {
++	case "markdown":
+ 		var marshaler = struct {
+ 			Type     string            `json:"type"`
+-			Extra    map[string]string `json:"extra"`
+-			Tags     []string          `json:"tags"`
++			Extra    map[string]string `json:"extra,omitempty"`
++			Tags     []string          `json:"tags,omitempty"`
+ 			Markdown string            `json:"value"`
+ 		}{
+ 			Type:     "markdown",
+@@ -1892,7 +1932,6 @@ func (m Metadata) MarshalJSON() ([]byte, error) {
+ 		}
+ 		return json.Marshal(marshaler)
+ 	}
+-	return nil, fmt.Errorf("type %T does not define a non-empty union type", m)
+ }
+ 
+ type MetadataVisitor interface {
+@@ -1901,13 +1940,14 @@ type MetadataVisitor interface {
+ }
+ 
+ func (m *Metadata) Accept(visitor MetadataVisitor) error {
+-	if m.HTML != "" {
++	switch m.Type {
++	default:
++		return fmt.Errorf("invalid type %s in %T", m.Type, m)
++	case "html":
+ 		return visitor.VisitHTML(m.HTML)
+-	}
+-	if m.Markdown != "" {
++	case "markdown":
+ 		return visitor.VisitMarkdown(m.Markdown)
+ 	}
+-	return fmt.Errorf("type %T does not define a non-empty union type", m)
+ }
+ 
+ func (m *Metadata) validate() error {
+@@ -2220,7 +2260,7 @@ type Movie struct {
+ 	Rating   float64        `json:"rating" url:"rating"`
+ 	Tag      commons.Tag    `json:"tag" url:"tag"`
+ 	Book     *string        `json:"book,omitempty" url:"book,omitempty"`
+-	Metadata map[string]any `json:"metadata" url:"metadata"`
++	Metadata map[string]any `json:"metadata,omitempty" url:"metadata,omitempty"`
+ 	Revenue  int64          `json:"revenue" url:"revenue"`
+ 
+ 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+@@ -2635,7 +2675,7 @@ var (
+ )
+ 
+ type Request struct {
+-	Request any `json:"request" url:"request"`
++	Request any `json:"request,omitempty" url:"request,omitempty"`
+ 
+ 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+ 	explicitFields *big.Int `json:"-" url:"-"`
+@@ -2720,8 +2760,8 @@ var (
+ )
+ 
+ type Response struct {
+-	Response    any           `json:"response" url:"response"`
+-	Identifiers []*Identifier `json:"identifiers" url:"identifiers"`
++	Response    any           `json:"response,omitempty" url:"response,omitempty"`
++	Identifiers []*Identifier `json:"identifiers,omitempty" url:"identifiers,omitempty"`
+ 
+ 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+ 	explicitFields *big.Int `json:"-" url:"-"`
+@@ -2819,7 +2859,7 @@ var (
+ )
+ 
+ type ResponseType struct {
+-	Type *Type `json:"type" url:"type"`
++	Type *Type `json:"type,omitempty" url:"type,omitempty"`
+ 
+ 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+ 	explicitFields *big.Int `json:"-" url:"-"`
+@@ -3004,6 +3044,14 @@ type Test struct {
+ 	Or   bool
+ }
+ 
++func NewTestFromAnd(value bool) *Test {
++	return &Test{Type: "and", And: value}
++}
++
++func NewTestFromOr(value bool) *Test {
++	return &Test{Type: "or", Or: value}
++}
++
+ func (t *Test) GetType() string {
+ 	if t == nil {
+ 		return ""
+@@ -3061,7 +3109,10 @@ func (t Test) MarshalJSON() ([]byte, error) {
+ 	if err := t.validate(); err != nil {
+ 		return nil, err
+ 	}
+-	if t.And != false {
++	switch t.Type {
++	default:
++		return nil, fmt.Errorf("invalid type %s in %T", t.Type, t)
++	case "and":
+ 		var marshaler = struct {
+ 			Type string `json:"type"`
+ 			And  bool   `json:"value"`
+@@ -3070,8 +3121,7 @@ func (t Test) MarshalJSON() ([]byte, error) {
+ 			And:  t.And,
+ 		}
+ 		return json.Marshal(marshaler)
+-	}
+-	if t.Or != false {
++	case "or":
+ 		var marshaler = struct {
+ 			Type string `json:"type"`
+ 			Or   bool   `json:"value"`
+@@ -3081,7 +3131,6 @@ func (t Test) MarshalJSON() ([]byte, error) {
+ 		}
+ 		return json.Marshal(marshaler)
+ 	}
+-	return nil, fmt.Errorf("type %T does not define a non-empty union type", t)
+ }
+ 
+ type TestVisitor interface {
+@@ -3090,13 +3139,14 @@ type TestVisitor interface {
+ }
+ 
+ func (t *Test) Accept(visitor TestVisitor) error {
+-	if t.And != false {
++	switch t.Type {
++	default:
++		return fmt.Errorf("invalid type %s in %T", t.Type, t)
++	case "and":
+ 		return visitor.VisitAnd(t.And)
+-	}
+-	if t.Or != false {
++	case "or":
+ 		return visitor.VisitOr(t.Or)
+ 	}
+-	return fmt.Errorf("type %T does not define a non-empty union type", t)
+ }
+ 
+ func (t *Test) validate() error {

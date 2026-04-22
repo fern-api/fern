@@ -1,0 +1,29 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 2ecd82f71ab..f18a1d1276a 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,12 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-python-sdk",
+   "generatorVersion": "local",
++  "generatorConfig": {
++    "mypy_exclude": [
++      "legacy/",
++      "tests/integration/"
++    ]
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "ci",
+diff --git a/pyproject.toml b/pyproject.toml
+index d68d6c1a982..ea7305ef819 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -68,6 +68,7 @@ markers = [
+ 
+ [tool.mypy]
+ plugins = ["pydantic.mypy"]
++exclude = ["legacy/", "tests/integration/"]
+ 
+ [tool.ruff]
+ line-length = 120

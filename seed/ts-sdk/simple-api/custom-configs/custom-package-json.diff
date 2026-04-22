@@ -1,0 +1,111 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index d8b7bf00e12..67812819ac1 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,38 @@
+     "cliVersion": "DUMMY",
+     "generatorName": "fernapi/fern-typescript-sdk",
+     "generatorVersion": "local",
++    "generatorConfig": {
++        "private": true,
++        "extraDependencies": {
++            "lodash-es": "^4.17.21"
++        },
++        "extraDevDependencies": {
++            "jest": "^29.7.0"
++        },
++        "extraPeerDependencies": {
++            "openai": "^4.47.1"
++        },
++        "extraPeerDependenciesMeta": {
++            "openai": {
++                "optional": true
++            }
++        },
++        "packageJson": {
++            "version": "0.0.2",
++            "dependencies": {
++                "stream": "^0.0.2",
++                "qs": "^6.11.2"
++            },
++            "files": ["exampleFile", "dist"],
++            "browser": {
++                "command-exists": false,
++                "execa": false
++            },
++            "engines": {
++                "node": ">=16.0.0"
++            }
++        }
++    },
+     "originGitCommit": "DUMMY",
+     "originGitCommitIsDirty": null,
+     "invokedBy": "ci",
+diff --git a/package.json b/package.json
+index d0cc3a8b5d8..0cd4c0bcd16 100644
+--- a/package.json
++++ b/package.json
+@@ -1,7 +1,7 @@
+ {
+     "name": "@fern/simple-api",
+-    "version": "0.0.1",
+-    "private": false,
++    "version": "0.0.2",
++    "private": true,
+     "repository": {
+         "type": "git",
+         "url": "git+https://github.com/simple-api/fern.git"
+@@ -36,6 +36,7 @@
+         "./package.json": "./package.json"
+     },
+     "files": [
++        "exampleFile",
+         "dist",
+         "reference.md",
+         "README.md",
+@@ -55,7 +56,19 @@
+         "test:unit": "vitest --project unit",
+         "test:wire": "vitest --project wire"
+     },
+-    "dependencies": {},
++    "dependencies": {
++        "lodash-es": "^4.17.21",
++        "stream": "^0.0.2",
++        "qs": "^6.11.2"
++    },
++    "peerDependencies": {
++        "openai": "^4.47.1"
++    },
++    "peerDependenciesMeta": {
++        "openai": {
++            "optional": true
++        }
++    },
+     "devDependencies": {
+         "webpack": "^5.105.4",
+         "ts-loader": "^9.5.4",
+@@ -63,18 +76,21 @@
+         "msw": "2.11.2",
+         "@types/node": "^18.19.70",
+         "typescript": "~5.9.3",
+-        "@biomejs/biome": "2.4.10"
++        "@biomejs/biome": "2.4.10",
++        "jest": "^29.7.0"
+     },
+     "browser": {
+         "fs": false,
+         "os": false,
+         "path": false,
+         "stream": false,
+-        "crypto": false
++        "crypto": false,
++        "command-exists": false,
++        "execa": false
+     },
+     "packageManager": "pnpm@10.33.0",
+     "engines": {
+-        "node": ">=18.0.0"
++        "node": ">=16.0.0"
+     },
+     "sideEffects": false
+ }

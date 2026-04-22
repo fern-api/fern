@@ -1,0 +1,709 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index d8b7bf00e12..fa5fa9e6e18 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,9 @@
+     "cliVersion": "DUMMY",
+     "generatorName": "fernapi/fern-typescript-sdk",
+     "generatorVersion": "local",
++    "generatorConfig": {
++        "neverThrowErrors": true
++    },
+     "originGitCommit": "DUMMY",
+     "originGitCommitIsDirty": null,
+     "invokedBy": "ci",
+diff --git a/reference.md b/reference.md
+index 497934184ef..91fa32425c8 100644
+--- a/reference.md
++++ b/reference.md
+@@ -1,6 +1,6 @@
+ # Reference
+ ## Auth
+-<details><summary><code>client.auth.<a href="/src/api/resources/auth/client/Client.ts">getToken</a>({ ...params }) -> SeedOauthClientCredentials.TokenResponse</code></summary>
++<details><summary><code>client.auth.<a href="/src/api/resources/auth/client/Client.ts">getToken</a>({ ...params }) -> core.APIResponse&lt;SeedOauthClientCredentials.TokenResponse, SeedOauthClientCredentials.auth.getToken.Error&gt;</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -54,7 +54,7 @@ await client.auth.getToken({
+ </details>
+ 
+ ## NestedNoAuth Api
+-<details><summary><code>client.nestedNoAuth.api.<a href="/src/api/resources/nestedNoAuth/resources/api/client/Client.ts">getSomething</a>() -> void</code></summary>
++<details><summary><code>client.nestedNoAuth.api.<a href="/src/api/resources/nestedNoAuth/resources/api/client/Client.ts">getSomething</a>() -> core.APIResponse&lt;void, SeedOauthClientCredentials.nestedNoAuth.api.getSomething.Error&gt;</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -96,7 +96,7 @@ await client.nestedNoAuth.api.getSomething();
+ </details>
+ 
+ ## Nested Api
+-<details><summary><code>client.nested.api.<a href="/src/api/resources/nested/resources/api/client/Client.ts">getSomething</a>() -> void</code></summary>
++<details><summary><code>client.nested.api.<a href="/src/api/resources/nested/resources/api/client/Client.ts">getSomething</a>() -> core.APIResponse&lt;void, SeedOauthClientCredentials.nested.api.getSomething.Error&gt;</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -138,7 +138,7 @@ await client.nested.api.getSomething();
+ </details>
+ 
+ ## Simple
+-<details><summary><code>client.simple.<a href="/src/api/resources/simple/client/Client.ts">getSomething</a>() -> void</code></summary>
++<details><summary><code>client.simple.<a href="/src/api/resources/simple/client/Client.ts">getSomething</a>() -> core.APIResponse&lt;void, SeedOauthClientCredentials.simple.getSomething.Error&gt;</code></summary>
+ <dl>
+ <dd>
+ 
+diff --git a/src/api/resources/auth/client/Client.ts b/src/api/resources/auth/client/Client.ts
+index 8ba45eb35d0..bd3ebf41772 100644
+--- a/src/api/resources/auth/client/Client.ts
++++ b/src/api/resources/auth/client/Client.ts
+@@ -4,9 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
+ import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
+ import { mergeHeaders } from "../../../../core/headers.js";
+ import * as core from "../../../../core/index.js";
+-import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
+-import * as errors from "../../../../errors/index.js";
+-import type * as SeedOauthClientCredentials from "../../../index.js";
++import * as SeedOauthClientCredentials from "../../../index.js";
+ 
+ export declare namespace AuthClient {
+     export type Options = BaseClientOptions;
+@@ -35,14 +33,23 @@ export class AuthClient {
+     public getToken(
+         request: SeedOauthClientCredentials.auth.GetTokenRequest,
+         requestOptions?: AuthClient.RequestOptions,
+-    ): core.HttpResponsePromise<SeedOauthClientCredentials.auth.TokenResponse> {
++    ): core.HttpResponsePromise<
++        core.APIResponse<SeedOauthClientCredentials.auth.TokenResponse, SeedOauthClientCredentials.auth.getToken.Error>
++    > {
+         return core.HttpResponsePromise.fromPromise(this.__getToken(request, requestOptions));
+     }
+ 
+     private async __getToken(
+         request: SeedOauthClientCredentials.auth.GetTokenRequest,
+         requestOptions?: AuthClient.RequestOptions,
+-    ): Promise<core.WithRawResponse<SeedOauthClientCredentials.auth.TokenResponse>> {
++    ): Promise<
++        core.WithRawResponse<
++            core.APIResponse<
++                SeedOauthClientCredentials.auth.TokenResponse,
++                SeedOauthClientCredentials.auth.getToken.Error
++            >
++        >
++    > {
+         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+         const _response = await core.fetcher({
+             url: core.url.join(
+@@ -64,19 +71,23 @@ export class AuthClient {
+         });
+         if (_response.ok) {
+             return {
+-                data: _response.body as SeedOauthClientCredentials.auth.TokenResponse,
++                data: {
++                    ok: true,
++                    body: _response.body as SeedOauthClientCredentials.auth.TokenResponse,
++                    headers: _response.headers,
++                    rawResponse: _response.rawResponse,
++                },
+                 rawResponse: _response.rawResponse,
+             };
+         }
+ 
+-        if (_response.error.reason === "status-code") {
+-            throw new errors.SeedOauthClientCredentialsError({
+-                statusCode: _response.error.statusCode,
+-                body: _response.error.body,
++        return {
++            data: {
++                ok: false,
++                error: SeedOauthClientCredentials.auth.getToken.Error._unknown(_response.error),
+                 rawResponse: _response.rawResponse,
+-            });
+-        }
+-
+-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/token");
++            },
++            rawResponse: _response.rawResponse,
++        };
+     }
+ }
+diff --git a/src/api/resources/auth/client/getToken.ts b/src/api/resources/auth/client/getToken.ts
+new file mode 100644
+index 00000000000..8e168ff89d5
+--- /dev/null
++++ b/src/api/resources/auth/client/getToken.ts
+@@ -0,0 +1,36 @@
++// This file was auto-generated by Fern from our API Definition.
++
++import type * as core from "../../../../core/index.js";
++import type * as SeedOauthClientCredentials from "../../../index.js";
++
++export type Error = SeedOauthClientCredentials.auth.getToken.Error._Unknown;
++
++export namespace Error {
++    export interface _Unknown {
++        statusCode: void;
++        content: core.Fetcher.Error;
++    }
++
++    export interface _Visitor<_Result> {
++        _other: (value: core.Fetcher.Error) => _Result;
++    }
++}
++
++export const Error = {
++    _unknown: (fetcherError: core.Fetcher.Error): SeedOauthClientCredentials.auth.getToken.Error._Unknown => {
++        return {
++            statusCode: undefined,
++            content: fetcherError,
++        };
++    },
++
++    _visit: <_Result>(
++        value: SeedOauthClientCredentials.auth.getToken.Error,
++        visitor: SeedOauthClientCredentials.auth.getToken.Error._Visitor<_Result>,
++    ): _Result => {
++        switch (value.statusCode) {
++            default:
++                return visitor._other(value.content);
++        }
++    },
++} as const;
+diff --git a/src/api/resources/auth/client/index.ts b/src/api/resources/auth/client/index.ts
+index 195f9aa8a84..05071635479 100644
+--- a/src/api/resources/auth/client/index.ts
++++ b/src/api/resources/auth/client/index.ts
+@@ -1 +1,2 @@
++export * as getToken from "./getToken.js";
+ export * from "./requests/index.js";
+diff --git a/src/api/resources/nested/resources/api/client/Client.ts b/src/api/resources/nested/resources/api/client/Client.ts
+index 64e0f0c6fd9..63a67d6414e 100644
+--- a/src/api/resources/nested/resources/api/client/Client.ts
++++ b/src/api/resources/nested/resources/api/client/Client.ts
+@@ -4,8 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../Ba
+ import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../../../BaseClient.js";
+ import { mergeHeaders } from "../../../../../../core/headers.js";
+ import * as core from "../../../../../../core/index.js";
+-import { handleNonStatusCodeError } from "../../../../../../errors/handleNonStatusCodeError.js";
+-import * as errors from "../../../../../../errors/index.js";
++import * as SeedOauthClientCredentials from "../../../../../index.js";
+ 
+ export declare namespace ApiClient {
+     export type Options = BaseClientOptions;
+@@ -26,11 +25,15 @@ export class ApiClient {
+      * @example
+      *     await client.nested.api.getSomething()
+      */
+-    public getSomething(requestOptions?: ApiClient.RequestOptions): core.HttpResponsePromise<void> {
++    public getSomething(
++        requestOptions?: ApiClient.RequestOptions,
++    ): core.HttpResponsePromise<core.APIResponse<void, SeedOauthClientCredentials.nested.api.getSomething.Error>> {
+         return core.HttpResponsePromise.fromPromise(this.__getSomething(requestOptions));
+     }
+ 
+-    private async __getSomething(requestOptions?: ApiClient.RequestOptions): Promise<core.WithRawResponse<void>> {
++    private async __getSomething(
++        requestOptions?: ApiClient.RequestOptions,
++    ): Promise<core.WithRawResponse<core.APIResponse<void, SeedOauthClientCredentials.nested.api.getSomething.Error>>> {
+         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+             _authRequest.headers,
+@@ -53,17 +56,24 @@ export class ApiClient {
+             logging: this._options.logging,
+         });
+         if (_response.ok) {
+-            return { data: undefined, rawResponse: _response.rawResponse };
+-        }
+-
+-        if (_response.error.reason === "status-code") {
+-            throw new errors.SeedOauthClientCredentialsError({
+-                statusCode: _response.error.statusCode,
+-                body: _response.error.body,
++            return {
++                data: {
++                    ok: true,
++                    body: undefined,
++                    headers: _response.headers,
++                    rawResponse: _response.rawResponse,
++                },
+                 rawResponse: _response.rawResponse,
+-            });
++            };
+         }
+ 
+-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/nested/get-something");
++        return {
++            data: {
++                ok: false,
++                error: SeedOauthClientCredentials.nested.api.getSomething.Error._unknown(_response.error),
++                rawResponse: _response.rawResponse,
++            },
++            rawResponse: _response.rawResponse,
++        };
+     }
+ }
+diff --git a/src/api/resources/nested/resources/api/client/getSomething.ts b/src/api/resources/nested/resources/api/client/getSomething.ts
+new file mode 100644
+index 00000000000..73be353e4a5
+--- /dev/null
++++ b/src/api/resources/nested/resources/api/client/getSomething.ts
+@@ -0,0 +1,36 @@
++// This file was auto-generated by Fern from our API Definition.
++
++import type * as core from "../../../../../../core/index.js";
++import type * as SeedOauthClientCredentials from "../../../../../index.js";
++
++export type Error = SeedOauthClientCredentials.nested.api.getSomething.Error._Unknown;
++
++export namespace Error {
++    export interface _Unknown {
++        statusCode: void;
++        content: core.Fetcher.Error;
++    }
++
++    export interface _Visitor<_Result> {
++        _other: (value: core.Fetcher.Error) => _Result;
++    }
++}
++
++export const Error = {
++    _unknown: (fetcherError: core.Fetcher.Error): SeedOauthClientCredentials.nested.api.getSomething.Error._Unknown => {
++        return {
++            statusCode: undefined,
++            content: fetcherError,
++        };
++    },
++
++    _visit: <_Result>(
++        value: SeedOauthClientCredentials.nested.api.getSomething.Error,
++        visitor: SeedOauthClientCredentials.nested.api.getSomething.Error._Visitor<_Result>,
++    ): _Result => {
++        switch (value.statusCode) {
++            default:
++                return visitor._other(value.content);
++        }
++    },
++} as const;
+diff --git a/src/api/resources/nested/resources/api/client/index.ts b/src/api/resources/nested/resources/api/client/index.ts
+index cb0ff5c3b54..0fecc4dc022 100644
+--- a/src/api/resources/nested/resources/api/client/index.ts
++++ b/src/api/resources/nested/resources/api/client/index.ts
+@@ -1 +1 @@
+-export {};
++export * as getSomething from "./getSomething.js";
+diff --git a/src/api/resources/nestedNoAuth/resources/api/client/Client.ts b/src/api/resources/nestedNoAuth/resources/api/client/Client.ts
+index a84066079de..fcf3099b228 100644
+--- a/src/api/resources/nestedNoAuth/resources/api/client/Client.ts
++++ b/src/api/resources/nestedNoAuth/resources/api/client/Client.ts
+@@ -4,8 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../Ba
+ import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../../../BaseClient.js";
+ import { mergeHeaders } from "../../../../../../core/headers.js";
+ import * as core from "../../../../../../core/index.js";
+-import { handleNonStatusCodeError } from "../../../../../../errors/handleNonStatusCodeError.js";
+-import * as errors from "../../../../../../errors/index.js";
++import * as SeedOauthClientCredentials from "../../../../../index.js";
+ 
+ export declare namespace ApiClient {
+     export type Options = BaseClientOptions;
+@@ -26,11 +25,19 @@ export class ApiClient {
+      * @example
+      *     await client.nestedNoAuth.api.getSomething()
+      */
+-    public getSomething(requestOptions?: ApiClient.RequestOptions): core.HttpResponsePromise<void> {
++    public getSomething(
++        requestOptions?: ApiClient.RequestOptions,
++    ): core.HttpResponsePromise<
++        core.APIResponse<void, SeedOauthClientCredentials.nestedNoAuth.api.getSomething.Error>
++    > {
+         return core.HttpResponsePromise.fromPromise(this.__getSomething(requestOptions));
+     }
+ 
+-    private async __getSomething(requestOptions?: ApiClient.RequestOptions): Promise<core.WithRawResponse<void>> {
++    private async __getSomething(
++        requestOptions?: ApiClient.RequestOptions,
++    ): Promise<
++        core.WithRawResponse<core.APIResponse<void, SeedOauthClientCredentials.nestedNoAuth.api.getSomething.Error>>
++    > {
+         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+         const _response = await core.fetcher({
+             url: core.url.join(
+@@ -48,17 +55,24 @@ export class ApiClient {
+             logging: this._options.logging,
+         });
+         if (_response.ok) {
+-            return { data: undefined, rawResponse: _response.rawResponse };
+-        }
+-
+-        if (_response.error.reason === "status-code") {
+-            throw new errors.SeedOauthClientCredentialsError({
+-                statusCode: _response.error.statusCode,
+-                body: _response.error.body,
++            return {
++                data: {
++                    ok: true,
++                    body: undefined,
++                    headers: _response.headers,
++                    rawResponse: _response.rawResponse,
++                },
+                 rawResponse: _response.rawResponse,
+-            });
++            };
+         }
+ 
+-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/nested-no-auth/get-something");
++        return {
++            data: {
++                ok: false,
++                error: SeedOauthClientCredentials.nestedNoAuth.api.getSomething.Error._unknown(_response.error),
++                rawResponse: _response.rawResponse,
++            },
++            rawResponse: _response.rawResponse,
++        };
+     }
+ }
+diff --git a/src/api/resources/nestedNoAuth/resources/api/client/getSomething.ts b/src/api/resources/nestedNoAuth/resources/api/client/getSomething.ts
+new file mode 100644
+index 00000000000..296dcb61d89
+--- /dev/null
++++ b/src/api/resources/nestedNoAuth/resources/api/client/getSomething.ts
+@@ -0,0 +1,38 @@
++// This file was auto-generated by Fern from our API Definition.
++
++import type * as core from "../../../../../../core/index.js";
++import type * as SeedOauthClientCredentials from "../../../../../index.js";
++
++export type Error = SeedOauthClientCredentials.nestedNoAuth.api.getSomething.Error._Unknown;
++
++export namespace Error {
++    export interface _Unknown {
++        statusCode: void;
++        content: core.Fetcher.Error;
++    }
++
++    export interface _Visitor<_Result> {
++        _other: (value: core.Fetcher.Error) => _Result;
++    }
++}
++
++export const Error = {
++    _unknown: (
++        fetcherError: core.Fetcher.Error,
++    ): SeedOauthClientCredentials.nestedNoAuth.api.getSomething.Error._Unknown => {
++        return {
++            statusCode: undefined,
++            content: fetcherError,
++        };
++    },
++
++    _visit: <_Result>(
++        value: SeedOauthClientCredentials.nestedNoAuth.api.getSomething.Error,
++        visitor: SeedOauthClientCredentials.nestedNoAuth.api.getSomething.Error._Visitor<_Result>,
++    ): _Result => {
++        switch (value.statusCode) {
++            default:
++                return visitor._other(value.content);
++        }
++    },
++} as const;
+diff --git a/src/api/resources/nestedNoAuth/resources/api/client/index.ts b/src/api/resources/nestedNoAuth/resources/api/client/index.ts
+index cb0ff5c3b54..0fecc4dc022 100644
+--- a/src/api/resources/nestedNoAuth/resources/api/client/index.ts
++++ b/src/api/resources/nestedNoAuth/resources/api/client/index.ts
+@@ -1 +1 @@
+-export {};
++export * as getSomething from "./getSomething.js";
+diff --git a/src/api/resources/simple/client/Client.ts b/src/api/resources/simple/client/Client.ts
+index 477434bf953..b6e0da3e228 100644
+--- a/src/api/resources/simple/client/Client.ts
++++ b/src/api/resources/simple/client/Client.ts
+@@ -4,8 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
+ import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../BaseClient.js";
+ import { mergeHeaders } from "../../../../core/headers.js";
+ import * as core from "../../../../core/index.js";
+-import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
+-import * as errors from "../../../../errors/index.js";
++import * as SeedOauthClientCredentials from "../../../index.js";
+ 
+ export declare namespace SimpleClient {
+     export type Options = BaseClientOptions;
+@@ -26,11 +25,15 @@ export class SimpleClient {
+      * @example
+      *     await client.simple.getSomething()
+      */
+-    public getSomething(requestOptions?: SimpleClient.RequestOptions): core.HttpResponsePromise<void> {
++    public getSomething(
++        requestOptions?: SimpleClient.RequestOptions,
++    ): core.HttpResponsePromise<core.APIResponse<void, SeedOauthClientCredentials.simple.getSomething.Error>> {
+         return core.HttpResponsePromise.fromPromise(this.__getSomething(requestOptions));
+     }
+ 
+-    private async __getSomething(requestOptions?: SimpleClient.RequestOptions): Promise<core.WithRawResponse<void>> {
++    private async __getSomething(
++        requestOptions?: SimpleClient.RequestOptions,
++    ): Promise<core.WithRawResponse<core.APIResponse<void, SeedOauthClientCredentials.simple.getSomething.Error>>> {
+         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+             _authRequest.headers,
+@@ -53,17 +56,24 @@ export class SimpleClient {
+             logging: this._options.logging,
+         });
+         if (_response.ok) {
+-            return { data: undefined, rawResponse: _response.rawResponse };
+-        }
+-
+-        if (_response.error.reason === "status-code") {
+-            throw new errors.SeedOauthClientCredentialsError({
+-                statusCode: _response.error.statusCode,
+-                body: _response.error.body,
++            return {
++                data: {
++                    ok: true,
++                    body: undefined,
++                    headers: _response.headers,
++                    rawResponse: _response.rawResponse,
++                },
+                 rawResponse: _response.rawResponse,
+-            });
++            };
+         }
+ 
+-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/get-something");
++        return {
++            data: {
++                ok: false,
++                error: SeedOauthClientCredentials.simple.getSomething.Error._unknown(_response.error),
++                rawResponse: _response.rawResponse,
++            },
++            rawResponse: _response.rawResponse,
++        };
+     }
+ }
+diff --git a/src/api/resources/simple/client/getSomething.ts b/src/api/resources/simple/client/getSomething.ts
+new file mode 100644
+index 00000000000..f6d5395e866
+--- /dev/null
++++ b/src/api/resources/simple/client/getSomething.ts
+@@ -0,0 +1,36 @@
++// This file was auto-generated by Fern from our API Definition.
++
++import type * as core from "../../../../core/index.js";
++import type * as SeedOauthClientCredentials from "../../../index.js";
++
++export type Error = SeedOauthClientCredentials.simple.getSomething.Error._Unknown;
++
++export namespace Error {
++    export interface _Unknown {
++        statusCode: void;
++        content: core.Fetcher.Error;
++    }
++
++    export interface _Visitor<_Result> {
++        _other: (value: core.Fetcher.Error) => _Result;
++    }
++}
++
++export const Error = {
++    _unknown: (fetcherError: core.Fetcher.Error): SeedOauthClientCredentials.simple.getSomething.Error._Unknown => {
++        return {
++            statusCode: undefined,
++            content: fetcherError,
++        };
++    },
++
++    _visit: <_Result>(
++        value: SeedOauthClientCredentials.simple.getSomething.Error,
++        visitor: SeedOauthClientCredentials.simple.getSomething.Error._Visitor<_Result>,
++    ): _Result => {
++        switch (value.statusCode) {
++            default:
++                return visitor._other(value.content);
++        }
++    },
++} as const;
+diff --git a/src/api/resources/simple/client/index.ts b/src/api/resources/simple/client/index.ts
+index cb0ff5c3b54..0fecc4dc022 100644
+--- a/src/api/resources/simple/client/index.ts
++++ b/src/api/resources/simple/client/index.ts
+@@ -1 +1 @@
+-export {};
++export * as getSomething from "./getSomething.js";
+diff --git a/src/auth/OAuthAuthProvider.ts b/src/auth/OAuthAuthProvider.ts
+index 2a3c709a553..bd88c8f9561 100644
+--- a/src/auth/OAuthAuthProvider.ts
++++ b/src/auth/OAuthAuthProvider.ts
+@@ -8,9 +8,9 @@ import * as errors from "../errors/index.js";
+ const CLIENT_ID_PARAM = "clientId" as const;
+ const CLIENT_SECRET_PARAM = "clientSecret" as const;
+ const TOKEN_PARAM = "token" as const;
+-const CLIENT_ID_REQUIRED_ERROR_MESSAGE = `${CLIENT_ID_PARAM} is required` as const;
+-const CLIENT_SECRET_REQUIRED_ERROR_MESSAGE = `${CLIENT_SECRET_PARAM} is required` as const;
+-const TOKEN_PARAM_REQUIRED_ERROR_MESSAGE = `${TOKEN_PARAM} is required. Please provide it in options.` as const;
++const _CLIENT_ID_REQUIRED_ERROR_MESSAGE = `${CLIENT_ID_PARAM} is required` as const;
++const _CLIENT_SECRET_REQUIRED_ERROR_MESSAGE = `${CLIENT_SECRET_PARAM} is required` as const;
++const _TOKEN_PARAM_REQUIRED_ERROR_MESSAGE = `${TOKEN_PARAM} is required. Please provide it in options.` as const;
+ const BUFFER_IN_MINUTES = 2 as const;
+ 
+ export class OAuthAuthProvider implements core.AuthProvider {
+@@ -37,9 +37,7 @@ export class OAuthAuthProvider implements core.AuthProvider {
+     } = {}): Promise<string> {
+         const supplier = this.options[CLIENT_ID_PARAM];
+         if (supplier == null) {
+-            throw new errors.SeedOauthClientCredentialsError({
+-                message: CLIENT_ID_REQUIRED_ERROR_MESSAGE,
+-            });
++            return "";
+         }
+         return core.EndpointSupplier.get(supplier, { endpointMetadata });
+     }
+@@ -51,9 +49,7 @@ export class OAuthAuthProvider implements core.AuthProvider {
+     } = {}): Promise<string> {
+         const supplier = this.options[CLIENT_SECRET_PARAM];
+         if (supplier == null) {
+-            throw new errors.SeedOauthClientCredentialsError({
+-                message: CLIENT_SECRET_REQUIRED_ERROR_MESSAGE,
+-            });
++            return "";
+         }
+         return core.EndpointSupplier.get(supplier, { endpointMetadata });
+     }
+@@ -92,9 +88,11 @@ export class OAuthAuthProvider implements core.AuthProvider {
+                     client_id: clientId,
+                     client_secret: clientSecret,
+                 });
+-
+-                this.accessToken = tokenResponse.access_token;
+-                this.expiresAt = this.getExpiresAt(tokenResponse.expires_in, BUFFER_IN_MINUTES);
++                if (!tokenResponse.ok) {
++                    throw new errors.SeedOauthClientCredentialsError({ body: tokenResponse.error });
++                }
++                this.accessToken = tokenResponse.body.access_token;
++                this.expiresAt = this.getExpiresAt(tokenResponse.body.expires_in, BUFFER_IN_MINUTES);
+                 return this.accessToken;
+             } finally {
+                 this.refreshPromise = undefined;
+@@ -129,9 +127,7 @@ export class OAuthTokenOverrideAuthProvider implements core.AuthProvider {
+     } = {}): Promise<core.AuthRequest> {
+         const token = this.options[TOKEN_PARAM];
+         if (token == null) {
+-            throw new errors.SeedOauthClientCredentialsError({
+-                message: TOKEN_PARAM_REQUIRED_ERROR_MESSAGE,
+-            });
++            return { headers: {} };
+         }
+         return {
+             headers: {
+diff --git a/src/errors/handleNonStatusCodeError.ts b/src/errors/handleNonStatusCodeError.ts
+deleted file mode 100644
+index 3c8a658fd1e..00000000000
+--- a/src/errors/handleNonStatusCodeError.ts
++++ /dev/null
+@@ -1,43 +0,0 @@
+-// This file was auto-generated by Fern from our API Definition.
+-
+-import type * as core from "../core/index.js";
+-import * as errors from "./index.js";
+-
+-export function handleNonStatusCodeError(
+-    error: core.Fetcher.Error,
+-    rawResponse: core.RawResponse,
+-    method: string,
+-    path: string,
+-): never {
+-    switch (error.reason) {
+-        case "non-json":
+-            throw new errors.SeedOauthClientCredentialsError({
+-                statusCode: error.statusCode,
+-                body: error.rawBody,
+-                rawResponse: rawResponse,
+-            });
+-        case "body-is-null":
+-            throw new errors.SeedOauthClientCredentialsError({
+-                statusCode: error.statusCode,
+-                rawResponse: rawResponse,
+-            });
+-        case "timeout":
+-            throw new errors.SeedOauthClientCredentialsTimeoutError(
+-                `Timeout exceeded when calling ${method} ${path}.`,
+-                {
+-                    cause: error.cause,
+-                },
+-            );
+-        case "unknown":
+-            throw new errors.SeedOauthClientCredentialsError({
+-                message: error.errorMessage,
+-                rawResponse: rawResponse,
+-                cause: error.cause,
+-            });
+-        default:
+-            throw new errors.SeedOauthClientCredentialsError({
+-                message: "Unknown error",
+-                rawResponse: rawResponse,
+-            });
+-    }
+-}
+diff --git a/tests/wire/auth/main.test.ts b/tests/wire/auth/main.test.ts
+index ba8d7062e6f..fa38a24197a 100644
+--- a/tests/wire/auth/main.test.ts
++++ b/tests/wire/auth/main.test.ts
+@@ -38,6 +38,11 @@ describe("AuthClient", () => {
+             client_secret: "client_secret",
+             scope: "scope",
+         });
+-        expect(response).toEqual(rawResponseBody);
++        expect(response).toEqual({
++            body: rawResponseBody,
++            ok: true,
++            headers: expect.any(Object),
++            rawResponse: expect.any(Object),
++        });
+     });
+ });
+diff --git a/tests/wire/nested/api.test.ts b/tests/wire/nested/api.test.ts
+index a3e59ac03da..a698ce1a763 100644
+--- a/tests/wire/nested/api.test.ts
++++ b/tests/wire/nested/api.test.ts
+@@ -19,6 +19,11 @@ describe("ApiClient", () => {
+         server.mockEndpoint().get("/nested/get-something").respondWith().statusCode(200).build();
+ 
+         const response = await client.nested.api.getSomething();
+-        expect(response).toEqual(undefined);
++        expect(response).toEqual({
++            body: undefined,
++            ok: true,
++            headers: expect.any(Object),
++            rawResponse: expect.any(Object),
++        });
+     });
+ });
+diff --git a/tests/wire/nested-no-auth/api.test.ts b/tests/wire/nested-no-auth/api.test.ts
+index 2a5ad2d99c7..c4b97dc30fc 100644
+--- a/tests/wire/nested-no-auth/api.test.ts
++++ b/tests/wire/nested-no-auth/api.test.ts
+@@ -19,6 +19,11 @@ describe("ApiClient", () => {
+         server.mockEndpoint().get("/nested-no-auth/get-something").respondWith().statusCode(200).build();
+ 
+         const response = await client.nestedNoAuth.api.getSomething();
+-        expect(response).toEqual(undefined);
++        expect(response).toEqual({
++            body: undefined,
++            ok: true,
++            headers: expect.any(Object),
++            rawResponse: expect.any(Object),
++        });
+     });
+ });
+diff --git a/tests/wire/simple.test.ts b/tests/wire/simple.test.ts
+index 9f327687ec0..acbc0707fd7 100644
+--- a/tests/wire/simple.test.ts
++++ b/tests/wire/simple.test.ts
+@@ -19,6 +19,11 @@ describe("SimpleClient", () => {
+         server.mockEndpoint().get("/get-something").respondWith().statusCode(200).build();
+ 
+         const response = await client.simple.getSomething();
+-        expect(response).toEqual(undefined);
++        expect(response).toEqual({
++            body: undefined,
++            ok: true,
++            headers: expect.any(Object),
++            rawResponse: expect.any(Object),
++        });
+     });
+ });

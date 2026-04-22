@@ -1,0 +1,12 @@
+diff --git a/openapi.yml b/openapi.yml
+index a1614de76e3..55a4ac9971b 100644
+--- a/openapi.yml
++++ b/openapi.yml
+@@ -53,7 +53,6 @@ components:
+   schemas:
+     MovieId:
+       title: MovieId
+-      type: string
+     Movie:
+       title: Movie
+       type: object

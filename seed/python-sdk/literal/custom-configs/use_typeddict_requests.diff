@@ -1,0 +1,901 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 2ecd82f71ab..63a2062b5d1 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-python-sdk",
+   "generatorVersion": "local",
++  "generatorConfig": {
++    "use_typeddict_requests": true
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "ci",
+diff --git a/snippet.json b/snippet.json
+index b05b2b11887..520dcf2a405 100644
+--- a/snippet.json
++++ b/snippet.json
+@@ -22,8 +22,8 @@
+                 "identifier_override": "endpoint_inlined.send"
+             },
+             "snippet": {
+-                "sync_client": "from seed import SeedLiteral\nfrom seed.inlined import ANestedLiteral, ATopLevelLiteral\n\nclient = SeedLiteral(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.inlined.send(\n    temperature=10.1,\n    context=\"You're super wise\",\n    maybe_context=\"You're super wise\",\n    object_with_literal=ATopLevelLiteral(\n        nested_literal=ANestedLiteral(),\n    ),\n    query=\"What is the weather today\",\n)\n",
+-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedLiteral\nfrom seed.inlined import ANestedLiteral, ATopLevelLiteral\n\nclient = AsyncSeedLiteral(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.inlined.send(\n        temperature=10.1,\n        context=\"You're super wise\",\n        maybe_context=\"You're super wise\",\n        object_with_literal=ATopLevelLiteral(\n            nested_literal=ANestedLiteral(),\n        ),\n        query=\"What is the weather today\",\n    )\n\n\nasyncio.run(main())\n",
++                "sync_client": "from seed import SeedLiteral\n\nclient = SeedLiteral(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.inlined.send(\n    temperature=10.1,\n    context=\"You're super wise\",\n    maybe_context=\"You're super wise\",\n    object_with_literal={\"nested_literal\": {\"my_literal\": \"How super cool\"}},\n    query=\"What is the weather today\",\n)\n",
++                "async_client": "import asyncio\n\nfrom seed import AsyncSeedLiteral\n\nclient = AsyncSeedLiteral(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.inlined.send(\n        temperature=10.1,\n        context=\"You're super wise\",\n        maybe_context=\"You're super wise\",\n        object_with_literal={\n            \"nested_literal\": {\"my_literal\": \"How super cool\"}\n        },\n        query=\"What is the weather today\",\n    )\n\n\nasyncio.run(main())\n",
+                 "type": "python"
+             }
+         },
+@@ -61,8 +61,8 @@
+                 "identifier_override": "endpoint_reference.send"
+             },
+             "snippet": {
+-                "sync_client": "from seed import SeedLiteral\nfrom seed.reference import ContainerObject, NestedObjectWithLiterals\n\nclient = SeedLiteral(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.reference.send(\n    query=\"What is the weather today\",\n    container_object=ContainerObject(\n        nested_objects=[\n            NestedObjectWithLiterals(\n                str_prop=\"strProp\",\n            )\n        ],\n    ),\n)\n",
+-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedLiteral\nfrom seed.reference import ContainerObject, NestedObjectWithLiterals\n\nclient = AsyncSeedLiteral(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.reference.send(\n        query=\"What is the weather today\",\n        container_object=ContainerObject(\n            nested_objects=[\n                NestedObjectWithLiterals(\n                    str_prop=\"strProp\",\n                )\n            ],\n        ),\n    )\n\n\nasyncio.run(main())\n",
++                "sync_client": "from seed import SeedLiteral\n\nclient = SeedLiteral(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.reference.send(\n    query=\"What is the weather today\",\n    container_object={\n        \"nested_objects\": [\n            {\n                \"literal1\": \"literal1\",\n                \"literal2\": \"literal2\",\n                \"str_prop\": \"strProp\",\n            }\n        ]\n    },\n)\n",
++                "async_client": "import asyncio\n\nfrom seed import AsyncSeedLiteral\n\nclient = AsyncSeedLiteral(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.reference.send(\n        query=\"What is the weather today\",\n        container_object={\n            \"nested_objects\": [\n                {\n                    \"literal1\": \"literal1\",\n                    \"literal2\": \"literal2\",\n                    \"str_prop\": \"strProp\",\n                }\n            ]\n        },\n    )\n\n\nasyncio.run(main())\n",
+                 "type": "python"
+             }
+         }
+diff --git a/src/seed/__init__.py b/src/seed/__init__.py
+index d50334e61cb..11e6aae8a11 100644
+--- a/src/seed/__init__.py
++++ b/src/seed/__init__.py
+@@ -12,39 +12,68 @@ if typing.TYPE_CHECKING:
+     from .client import AsyncSeedLiteral, SeedLiteral
+     from .inlined import (
+         ANestedLiteral,
++        ANestedLiteralParams,
+         ATopLevelLiteral,
++        ATopLevelLiteralParams,
+         DiscriminatedLiteral,
++        DiscriminatedLiteralParams,
+         DiscriminatedLiteral_CustomName,
++        DiscriminatedLiteral_CustomNameParams,
+         DiscriminatedLiteral_DefaultName,
++        DiscriminatedLiteral_DefaultNameParams,
+         DiscriminatedLiteral_George,
++        DiscriminatedLiteral_GeorgeParams,
+         DiscriminatedLiteral_LiteralGeorge,
++        DiscriminatedLiteral_LiteralGeorgeParams,
+         SomeAliasedLiteral,
+         UndiscriminatedLiteral,
++        UndiscriminatedLiteralParams,
+     )
+     from .query import AliasToPrompt, AliasToStream
+-    from .reference import ContainerObject, NestedObjectWithLiterals, SendRequest, SomeLiteral
++    from .reference import (
++        ContainerObject,
++        ContainerObjectParams,
++        NestedObjectWithLiterals,
++        NestedObjectWithLiteralsParams,
++        SendRequest,
++        SendRequestParams,
++        SomeLiteral,
++    )
++    from .requests import SendResponseParams
+     from .version import __version__
+ _dynamic_imports: typing.Dict[str, str] = {
+     "ANestedLiteral": ".inlined",
++    "ANestedLiteralParams": ".inlined",
+     "ATopLevelLiteral": ".inlined",
++    "ATopLevelLiteralParams": ".inlined",
+     "AliasToPrompt": ".query",
+     "AliasToStream": ".query",
+     "AsyncSeedLiteral": ".client",
+     "ContainerObject": ".reference",
++    "ContainerObjectParams": ".reference",
+     "DefaultAioHttpClient": "._default_clients",
+     "DefaultAsyncHttpxClient": "._default_clients",
+     "DiscriminatedLiteral": ".inlined",
++    "DiscriminatedLiteralParams": ".inlined",
+     "DiscriminatedLiteral_CustomName": ".inlined",
++    "DiscriminatedLiteral_CustomNameParams": ".inlined",
+     "DiscriminatedLiteral_DefaultName": ".inlined",
++    "DiscriminatedLiteral_DefaultNameParams": ".inlined",
+     "DiscriminatedLiteral_George": ".inlined",
++    "DiscriminatedLiteral_GeorgeParams": ".inlined",
+     "DiscriminatedLiteral_LiteralGeorge": ".inlined",
++    "DiscriminatedLiteral_LiteralGeorgeParams": ".inlined",
+     "NestedObjectWithLiterals": ".reference",
++    "NestedObjectWithLiteralsParams": ".reference",
+     "SeedLiteral": ".client",
+     "SendRequest": ".reference",
++    "SendRequestParams": ".reference",
+     "SendResponse": ".types",
++    "SendResponseParams": ".requests",
+     "SomeAliasedLiteral": ".inlined",
+     "SomeLiteral": ".reference",
+     "UndiscriminatedLiteral": ".inlined",
++    "UndiscriminatedLiteralParams": ".inlined",
+     "__version__": ".version",
+     "headers": ".headers",
+     "inlined": ".inlined",
+@@ -77,25 +106,37 @@ def __dir__():
+ 
+ __all__ = [
+     "ANestedLiteral",
++    "ANestedLiteralParams",
+     "ATopLevelLiteral",
++    "ATopLevelLiteralParams",
+     "AliasToPrompt",
+     "AliasToStream",
+     "AsyncSeedLiteral",
+     "ContainerObject",
++    "ContainerObjectParams",
+     "DefaultAioHttpClient",
+     "DefaultAsyncHttpxClient",
+     "DiscriminatedLiteral",
++    "DiscriminatedLiteralParams",
+     "DiscriminatedLiteral_CustomName",
++    "DiscriminatedLiteral_CustomNameParams",
+     "DiscriminatedLiteral_DefaultName",
++    "DiscriminatedLiteral_DefaultNameParams",
+     "DiscriminatedLiteral_George",
++    "DiscriminatedLiteral_GeorgeParams",
+     "DiscriminatedLiteral_LiteralGeorge",
++    "DiscriminatedLiteral_LiteralGeorgeParams",
+     "NestedObjectWithLiterals",
++    "NestedObjectWithLiteralsParams",
+     "SeedLiteral",
+     "SendRequest",
++    "SendRequestParams",
+     "SendResponse",
++    "SendResponseParams",
+     "SomeAliasedLiteral",
+     "SomeLiteral",
+     "UndiscriminatedLiteral",
++    "UndiscriminatedLiteralParams",
+     "__version__",
+     "headers",
+     "inlined",
+diff --git a/src/seed/inlined/__init__.py b/src/seed/inlined/__init__.py
+index 09c71069190..3a593a259bd 100644
+--- a/src/seed/inlined/__init__.py
++++ b/src/seed/inlined/__init__.py
+@@ -17,16 +17,34 @@ if typing.TYPE_CHECKING:
+         SomeAliasedLiteral,
+         UndiscriminatedLiteral,
+     )
++    from .requests import (
++        ANestedLiteralParams,
++        ATopLevelLiteralParams,
++        DiscriminatedLiteralParams,
++        DiscriminatedLiteral_CustomNameParams,
++        DiscriminatedLiteral_DefaultNameParams,
++        DiscriminatedLiteral_GeorgeParams,
++        DiscriminatedLiteral_LiteralGeorgeParams,
++        UndiscriminatedLiteralParams,
++    )
+ _dynamic_imports: typing.Dict[str, str] = {
+     "ANestedLiteral": ".types",
++    "ANestedLiteralParams": ".requests",
+     "ATopLevelLiteral": ".types",
++    "ATopLevelLiteralParams": ".requests",
+     "DiscriminatedLiteral": ".types",
++    "DiscriminatedLiteralParams": ".requests",
+     "DiscriminatedLiteral_CustomName": ".types",
++    "DiscriminatedLiteral_CustomNameParams": ".requests",
+     "DiscriminatedLiteral_DefaultName": ".types",
++    "DiscriminatedLiteral_DefaultNameParams": ".requests",
+     "DiscriminatedLiteral_George": ".types",
++    "DiscriminatedLiteral_GeorgeParams": ".requests",
+     "DiscriminatedLiteral_LiteralGeorge": ".types",
++    "DiscriminatedLiteral_LiteralGeorgeParams": ".requests",
+     "SomeAliasedLiteral": ".types",
+     "UndiscriminatedLiteral": ".types",
++    "UndiscriminatedLiteralParams": ".requests",
+ }
+ 
+ 
+@@ -53,12 +71,20 @@ def __dir__():
+ 
+ __all__ = [
+     "ANestedLiteral",
++    "ANestedLiteralParams",
+     "ATopLevelLiteral",
++    "ATopLevelLiteralParams",
+     "DiscriminatedLiteral",
++    "DiscriminatedLiteralParams",
+     "DiscriminatedLiteral_CustomName",
++    "DiscriminatedLiteral_CustomNameParams",
+     "DiscriminatedLiteral_DefaultName",
++    "DiscriminatedLiteral_DefaultNameParams",
+     "DiscriminatedLiteral_George",
++    "DiscriminatedLiteral_GeorgeParams",
+     "DiscriminatedLiteral_LiteralGeorge",
++    "DiscriminatedLiteral_LiteralGeorgeParams",
+     "SomeAliasedLiteral",
+     "UndiscriminatedLiteral",
++    "UndiscriminatedLiteralParams",
+ ]
+diff --git a/src/seed/inlined/client.py b/src/seed/inlined/client.py
+index 5e07362e777..7db7e579eef 100644
+--- a/src/seed/inlined/client.py
++++ b/src/seed/inlined/client.py
+@@ -6,7 +6,7 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+ from ..core.request_options import RequestOptions
+ from ..types.send_response import SendResponse
+ from .raw_client import AsyncRawInlinedClient, RawInlinedClient
+-from .types.a_top_level_literal import ATopLevelLiteral
++from .requests.a_top_level_literal import ATopLevelLiteralParams
+ from .types.some_aliased_literal import SomeAliasedLiteral
+ 
+ # this is used as the default value for optional parameters
+@@ -32,7 +32,7 @@ class InlinedClient:
+         self,
+         *,
+         query: str,
+-        object_with_literal: ATopLevelLiteral,
++        object_with_literal: ATopLevelLiteralParams,
+         context: typing.Optional[typing.Literal["You're super wise"]] = OMIT,
+         temperature: typing.Optional[float] = OMIT,
+         maybe_context: typing.Optional[SomeAliasedLiteral] = OMIT,
+@@ -43,7 +43,7 @@ class InlinedClient:
+         ----------
+         query : str
+ 
+-        object_with_literal : ATopLevelLiteral
++        object_with_literal : ATopLevelLiteralParams
+ 
+         context : typing.Optional[typing.Literal["You're super wise"]]
+ 
+@@ -61,7 +61,6 @@ class InlinedClient:
+         Examples
+         --------
+         from seed import SeedLiteral
+-        from seed.inlined import ANestedLiteral, ATopLevelLiteral
+ 
+         client = SeedLiteral(
+             base_url="https://yourhost.com/path/to/api",
+@@ -70,9 +69,7 @@ class InlinedClient:
+             temperature=10.1,
+             context="You're super wise",
+             maybe_context="You're super wise",
+-            object_with_literal=ATopLevelLiteral(
+-                nested_literal=ANestedLiteral(),
+-            ),
++            object_with_literal={"nested_literal": {"my_literal": "How super cool"}},
+             query="What is the weather today",
+         )
+         """
+@@ -106,7 +103,7 @@ class AsyncInlinedClient:
+         self,
+         *,
+         query: str,
+-        object_with_literal: ATopLevelLiteral,
++        object_with_literal: ATopLevelLiteralParams,
+         context: typing.Optional[typing.Literal["You're super wise"]] = OMIT,
+         temperature: typing.Optional[float] = OMIT,
+         maybe_context: typing.Optional[SomeAliasedLiteral] = OMIT,
+@@ -117,7 +114,7 @@ class AsyncInlinedClient:
+         ----------
+         query : str
+ 
+-        object_with_literal : ATopLevelLiteral
++        object_with_literal : ATopLevelLiteralParams
+ 
+         context : typing.Optional[typing.Literal["You're super wise"]]
+ 
+@@ -137,7 +134,6 @@ class AsyncInlinedClient:
+         import asyncio
+ 
+         from seed import AsyncSeedLiteral
+-        from seed.inlined import ANestedLiteral, ATopLevelLiteral
+ 
+         client = AsyncSeedLiteral(
+             base_url="https://yourhost.com/path/to/api",
+@@ -149,9 +145,9 @@ class AsyncInlinedClient:
+                 temperature=10.1,
+                 context="You're super wise",
+                 maybe_context="You're super wise",
+-                object_with_literal=ATopLevelLiteral(
+-                    nested_literal=ANestedLiteral(),
+-                ),
++                object_with_literal={
++                    "nested_literal": {"my_literal": "How super cool"}
++                },
+                 query="What is the weather today",
+             )
+ 
+diff --git a/src/seed/inlined/raw_client.py b/src/seed/inlined/raw_client.py
+index d6b5ab06cb0..ca0744d7b39 100644
+--- a/src/seed/inlined/raw_client.py
++++ b/src/seed/inlined/raw_client.py
+@@ -11,7 +11,7 @@ from ..core.pydantic_utilities import parse_obj_as
+ from ..core.request_options import RequestOptions
+ from ..core.serialization import convert_and_respect_annotation_metadata
+ from ..types.send_response import SendResponse
+-from .types.a_top_level_literal import ATopLevelLiteral
++from .requests.a_top_level_literal import ATopLevelLiteralParams
+ from .types.some_aliased_literal import SomeAliasedLiteral
+ from pydantic import ValidationError
+ 
+@@ -27,7 +27,7 @@ class RawInlinedClient:
+         self,
+         *,
+         query: str,
+-        object_with_literal: ATopLevelLiteral,
++        object_with_literal: ATopLevelLiteralParams,
+         context: typing.Optional[typing.Literal["You're super wise"]] = OMIT,
+         temperature: typing.Optional[float] = OMIT,
+         maybe_context: typing.Optional[SomeAliasedLiteral] = OMIT,
+@@ -38,7 +38,7 @@ class RawInlinedClient:
+         ----------
+         query : str
+ 
+-        object_with_literal : ATopLevelLiteral
++        object_with_literal : ATopLevelLiteralParams
+ 
+         context : typing.Optional[typing.Literal["You're super wise"]]
+ 
+@@ -62,7 +62,7 @@ class RawInlinedClient:
+                 "temperature": temperature,
+                 "maybeContext": maybe_context,
+                 "objectWithLiteral": convert_and_respect_annotation_metadata(
+-                    object_=object_with_literal, annotation=ATopLevelLiteral, direction="write"
++                    object_=object_with_literal, annotation=ATopLevelLiteralParams, direction="write"
+                 ),
+                 "prompt": "You are a helpful assistant",
+                 "stream": False,
+@@ -99,7 +99,7 @@ class AsyncRawInlinedClient:
+         self,
+         *,
+         query: str,
+-        object_with_literal: ATopLevelLiteral,
++        object_with_literal: ATopLevelLiteralParams,
+         context: typing.Optional[typing.Literal["You're super wise"]] = OMIT,
+         temperature: typing.Optional[float] = OMIT,
+         maybe_context: typing.Optional[SomeAliasedLiteral] = OMIT,
+@@ -110,7 +110,7 @@ class AsyncRawInlinedClient:
+         ----------
+         query : str
+ 
+-        object_with_literal : ATopLevelLiteral
++        object_with_literal : ATopLevelLiteralParams
+ 
+         context : typing.Optional[typing.Literal["You're super wise"]]
+ 
+@@ -134,7 +134,7 @@ class AsyncRawInlinedClient:
+                 "temperature": temperature,
+                 "maybeContext": maybe_context,
+                 "objectWithLiteral": convert_and_respect_annotation_metadata(
+-                    object_=object_with_literal, annotation=ATopLevelLiteral, direction="write"
++                    object_=object_with_literal, annotation=ATopLevelLiteralParams, direction="write"
+                 ),
+                 "prompt": "You are a helpful assistant",
+                 "stream": False,
+diff --git a/src/seed/inlined/requests/__init__.py b/src/seed/inlined/requests/__init__.py
+new file mode 100644
+index 00000000000..8ae33e142c5
+--- /dev/null
++++ b/src/seed/inlined/requests/__init__.py
+@@ -0,0 +1,61 @@
++# This file was auto-generated by Fern from our API Definition.
++
++# isort: skip_file
++
++import typing
++from importlib import import_module
++
++if typing.TYPE_CHECKING:
++    from .a_nested_literal import ANestedLiteralParams
++    from .a_top_level_literal import ATopLevelLiteralParams
++    from .discriminated_literal import (
++        DiscriminatedLiteralParams,
++        DiscriminatedLiteral_CustomNameParams,
++        DiscriminatedLiteral_DefaultNameParams,
++        DiscriminatedLiteral_GeorgeParams,
++        DiscriminatedLiteral_LiteralGeorgeParams,
++    )
++    from .undiscriminated_literal import UndiscriminatedLiteralParams
++_dynamic_imports: typing.Dict[str, str] = {
++    "ANestedLiteralParams": ".a_nested_literal",
++    "ATopLevelLiteralParams": ".a_top_level_literal",
++    "DiscriminatedLiteralParams": ".discriminated_literal",
++    "DiscriminatedLiteral_CustomNameParams": ".discriminated_literal",
++    "DiscriminatedLiteral_DefaultNameParams": ".discriminated_literal",
++    "DiscriminatedLiteral_GeorgeParams": ".discriminated_literal",
++    "DiscriminatedLiteral_LiteralGeorgeParams": ".discriminated_literal",
++    "UndiscriminatedLiteralParams": ".undiscriminated_literal",
++}
++
++
++def __getattr__(attr_name: str) -> typing.Any:
++    module_name = _dynamic_imports.get(attr_name)
++    if module_name is None:
++        raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
++    try:
++        module = import_module(module_name, __package__)
++        if module_name == f".{attr_name}":
++            return module
++        else:
++            return getattr(module, attr_name)
++    except ImportError as e:
++        raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
++    except AttributeError as e:
++        raise AttributeError(f"Failed to get {attr_name} from {module_name}: {e}") from e
++
++
++def __dir__():
++    lazy_attrs = list(_dynamic_imports.keys())
++    return sorted(lazy_attrs)
++
++
++__all__ = [
++    "ANestedLiteralParams",
++    "ATopLevelLiteralParams",
++    "DiscriminatedLiteralParams",
++    "DiscriminatedLiteral_CustomNameParams",
++    "DiscriminatedLiteral_DefaultNameParams",
++    "DiscriminatedLiteral_GeorgeParams",
++    "DiscriminatedLiteral_LiteralGeorgeParams",
++    "UndiscriminatedLiteralParams",
++]
+diff --git a/src/seed/inlined/requests/a_nested_literal.py b/src/seed/inlined/requests/a_nested_literal.py
+new file mode 100644
+index 00000000000..b44614e6052
+--- /dev/null
++++ b/src/seed/inlined/requests/a_nested_literal.py
+@@ -0,0 +1,10 @@
++# This file was auto-generated by Fern from our API Definition.
++
++import typing
++
++import typing_extensions
++from ...core.serialization import FieldMetadata
++
++
++class ANestedLiteralParams(typing_extensions.TypedDict):
++    my_literal: typing_extensions.Annotated[typing.Literal["How super cool"], FieldMetadata(alias="myLiteral")]
+diff --git a/src/seed/inlined/requests/a_top_level_literal.py b/src/seed/inlined/requests/a_top_level_literal.py
+new file mode 100644
+index 00000000000..243a10d97a8
+--- /dev/null
++++ b/src/seed/inlined/requests/a_top_level_literal.py
+@@ -0,0 +1,9 @@
++# This file was auto-generated by Fern from our API Definition.
++
++import typing_extensions
++from ...core.serialization import FieldMetadata
++from .a_nested_literal import ANestedLiteralParams
++
++
++class ATopLevelLiteralParams(typing_extensions.TypedDict):
++    nested_literal: typing_extensions.Annotated[ANestedLiteralParams, FieldMetadata(alias="nestedLiteral")]
+diff --git a/src/seed/inlined/requests/discriminated_literal.py b/src/seed/inlined/requests/discriminated_literal.py
+new file mode 100644
+index 00000000000..789da53a574
+--- /dev/null
++++ b/src/seed/inlined/requests/discriminated_literal.py
+@@ -0,0 +1,35 @@
++# This file was auto-generated by Fern from our API Definition.
++
++from __future__ import annotations
++
++import typing
++
++import typing_extensions
++
++
++class DiscriminatedLiteral_CustomNameParams(typing_extensions.TypedDict):
++    value: str
++    type: typing.Literal["customName"]
++
++
++class DiscriminatedLiteral_DefaultNameParams(typing_extensions.TypedDict):
++    value: typing.Literal["Bob"]
++    type: typing.Literal["defaultName"]
++
++
++class DiscriminatedLiteral_GeorgeParams(typing_extensions.TypedDict):
++    value: bool
++    type: typing.Literal["george"]
++
++
++class DiscriminatedLiteral_LiteralGeorgeParams(typing_extensions.TypedDict):
++    value: typing.Literal[True]
++    type: typing.Literal["literalGeorge"]
++
++
++DiscriminatedLiteralParams = typing.Union[
++    DiscriminatedLiteral_CustomNameParams,
++    DiscriminatedLiteral_DefaultNameParams,
++    DiscriminatedLiteral_GeorgeParams,
++    DiscriminatedLiteral_LiteralGeorgeParams,
++]
+diff --git a/src/seed/inlined/requests/undiscriminated_literal.py b/src/seed/inlined/requests/undiscriminated_literal.py
+new file mode 100644
+index 00000000000..fd0fbd6ee93
+--- /dev/null
++++ b/src/seed/inlined/requests/undiscriminated_literal.py
+@@ -0,0 +1,12 @@
++# This file was auto-generated by Fern from our API Definition.
++
++import typing
++
++UndiscriminatedLiteralParams = typing.Union[
++    str,
++    typing.Literal["$ending"],
++    typing.Literal["10 non-alphanumeric string literals you're going to love & why (number 8 will surprise you)"],
++    typing.Literal[True],
++    typing.Literal[False],
++    bool,
++]
+diff --git a/src/seed/reference/__init__.py b/src/seed/reference/__init__.py
+index f8ac3b7d470..23a88f5298f 100644
+--- a/src/seed/reference/__init__.py
++++ b/src/seed/reference/__init__.py
+@@ -7,10 +7,14 @@ from importlib import import_module
+ 
+ if typing.TYPE_CHECKING:
+     from .types import ContainerObject, NestedObjectWithLiterals, SendRequest, SomeLiteral
++    from .requests import ContainerObjectParams, NestedObjectWithLiteralsParams, SendRequestParams
+ _dynamic_imports: typing.Dict[str, str] = {
+     "ContainerObject": ".types",
++    "ContainerObjectParams": ".requests",
+     "NestedObjectWithLiterals": ".types",
++    "NestedObjectWithLiteralsParams": ".requests",
+     "SendRequest": ".types",
++    "SendRequestParams": ".requests",
+     "SomeLiteral": ".types",
+ }
+ 
+@@ -36,4 +40,12 @@ def __dir__():
+     return sorted(lazy_attrs)
+ 
+ 
+-__all__ = ["ContainerObject", "NestedObjectWithLiterals", "SendRequest", "SomeLiteral"]
++__all__ = [
++    "ContainerObject",
++    "ContainerObjectParams",
++    "NestedObjectWithLiterals",
++    "NestedObjectWithLiteralsParams",
++    "SendRequest",
++    "SendRequestParams",
++    "SomeLiteral",
++]
+diff --git a/src/seed/reference/client.py b/src/seed/reference/client.py
+index d3be7dd616f..ac9e775548c 100644
+--- a/src/seed/reference/client.py
++++ b/src/seed/reference/client.py
+@@ -6,7 +6,7 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+ from ..core.request_options import RequestOptions
+ from ..types.send_response import SendResponse
+ from .raw_client import AsyncRawReferenceClient, RawReferenceClient
+-from .types.container_object import ContainerObject
++from .requests.container_object import ContainerObjectParams
+ from .types.some_literal import SomeLiteral
+ 
+ # this is used as the default value for optional parameters
+@@ -32,7 +32,7 @@ class ReferenceClient:
+         self,
+         *,
+         query: str,
+-        container_object: ContainerObject,
++        container_object: ContainerObjectParams,
+         maybe_context: typing.Optional[SomeLiteral] = OMIT,
+         request_options: typing.Optional[RequestOptions] = None,
+     ) -> SendResponse:
+@@ -41,7 +41,7 @@ class ReferenceClient:
+         ----------
+         query : str
+ 
+-        container_object : ContainerObject
++        container_object : ContainerObjectParams
+ 
+         maybe_context : typing.Optional[SomeLiteral]
+ 
+@@ -55,20 +55,21 @@ class ReferenceClient:
+         Examples
+         --------
+         from seed import SeedLiteral
+-        from seed.reference import ContainerObject, NestedObjectWithLiterals
+ 
+         client = SeedLiteral(
+             base_url="https://yourhost.com/path/to/api",
+         )
+         client.reference.send(
+             query="What is the weather today",
+-            container_object=ContainerObject(
+-                nested_objects=[
+-                    NestedObjectWithLiterals(
+-                        str_prop="strProp",
+-                    )
+-                ],
+-            ),
++            container_object={
++                "nested_objects": [
++                    {
++                        "literal1": "literal1",
++                        "literal2": "literal2",
++                        "str_prop": "strProp",
++                    }
++                ]
++            },
+         )
+         """
+         _response = self._raw_client.send(
+@@ -96,7 +97,7 @@ class AsyncReferenceClient:
+         self,
+         *,
+         query: str,
+-        container_object: ContainerObject,
++        container_object: ContainerObjectParams,
+         maybe_context: typing.Optional[SomeLiteral] = OMIT,
+         request_options: typing.Optional[RequestOptions] = None,
+     ) -> SendResponse:
+@@ -105,7 +106,7 @@ class AsyncReferenceClient:
+         ----------
+         query : str
+ 
+-        container_object : ContainerObject
++        container_object : ContainerObjectParams
+ 
+         maybe_context : typing.Optional[SomeLiteral]
+ 
+@@ -121,7 +122,6 @@ class AsyncReferenceClient:
+         import asyncio
+ 
+         from seed import AsyncSeedLiteral
+-        from seed.reference import ContainerObject, NestedObjectWithLiterals
+ 
+         client = AsyncSeedLiteral(
+             base_url="https://yourhost.com/path/to/api",
+@@ -131,13 +131,15 @@ class AsyncReferenceClient:
+         async def main() -> None:
+             await client.reference.send(
+                 query="What is the weather today",
+-                container_object=ContainerObject(
+-                    nested_objects=[
+-                        NestedObjectWithLiterals(
+-                            str_prop="strProp",
+-                        )
+-                    ],
+-                ),
++                container_object={
++                    "nested_objects": [
++                        {
++                            "literal1": "literal1",
++                            "literal2": "literal2",
++                            "str_prop": "strProp",
++                        }
++                    ]
++                },
+             )
+ 
+ 
+diff --git a/src/seed/reference/raw_client.py b/src/seed/reference/raw_client.py
+index be49ea40cc3..bf9ee438deb 100644
+--- a/src/seed/reference/raw_client.py
++++ b/src/seed/reference/raw_client.py
+@@ -11,7 +11,7 @@ from ..core.pydantic_utilities import parse_obj_as
+ from ..core.request_options import RequestOptions
+ from ..core.serialization import convert_and_respect_annotation_metadata
+ from ..types.send_response import SendResponse
+-from .types.container_object import ContainerObject
++from .requests.container_object import ContainerObjectParams
+ from .types.some_literal import SomeLiteral
+ from pydantic import ValidationError
+ 
+@@ -27,7 +27,7 @@ class RawReferenceClient:
+         self,
+         *,
+         query: str,
+-        container_object: ContainerObject,
++        container_object: ContainerObjectParams,
+         maybe_context: typing.Optional[SomeLiteral] = OMIT,
+         request_options: typing.Optional[RequestOptions] = None,
+     ) -> HttpResponse[SendResponse]:
+@@ -36,7 +36,7 @@ class RawReferenceClient:
+         ----------
+         query : str
+ 
+-        container_object : ContainerObject
++        container_object : ContainerObjectParams
+ 
+         maybe_context : typing.Optional[SomeLiteral]
+ 
+@@ -54,7 +54,7 @@ class RawReferenceClient:
+                 "query": query,
+                 "maybeContext": maybe_context,
+                 "containerObject": convert_and_respect_annotation_metadata(
+-                    object_=container_object, annotation=ContainerObject, direction="write"
++                    object_=container_object, annotation=ContainerObjectParams, direction="write"
+                 ),
+                 "prompt": "You are a helpful assistant",
+                 "stream": False,
+@@ -92,7 +92,7 @@ class AsyncRawReferenceClient:
+         self,
+         *,
+         query: str,
+-        container_object: ContainerObject,
++        container_object: ContainerObjectParams,
+         maybe_context: typing.Optional[SomeLiteral] = OMIT,
+         request_options: typing.Optional[RequestOptions] = None,
+     ) -> AsyncHttpResponse[SendResponse]:
+@@ -101,7 +101,7 @@ class AsyncRawReferenceClient:
+         ----------
+         query : str
+ 
+-        container_object : ContainerObject
++        container_object : ContainerObjectParams
+ 
+         maybe_context : typing.Optional[SomeLiteral]
+ 
+@@ -119,7 +119,7 @@ class AsyncRawReferenceClient:
+                 "query": query,
+                 "maybeContext": maybe_context,
+                 "containerObject": convert_and_respect_annotation_metadata(
+-                    object_=container_object, annotation=ContainerObject, direction="write"
++                    object_=container_object, annotation=ContainerObjectParams, direction="write"
+                 ),
+                 "prompt": "You are a helpful assistant",
+                 "stream": False,
+diff --git a/src/seed/reference/requests/__init__.py b/src/seed/reference/requests/__init__.py
+new file mode 100644
+index 00000000000..cd6379ec257
+--- /dev/null
++++ b/src/seed/reference/requests/__init__.py
+@@ -0,0 +1,40 @@
++# This file was auto-generated by Fern from our API Definition.
++
++# isort: skip_file
++
++import typing
++from importlib import import_module
++
++if typing.TYPE_CHECKING:
++    from .container_object import ContainerObjectParams
++    from .nested_object_with_literals import NestedObjectWithLiteralsParams
++    from .send_request import SendRequestParams
++_dynamic_imports: typing.Dict[str, str] = {
++    "ContainerObjectParams": ".container_object",
++    "NestedObjectWithLiteralsParams": ".nested_object_with_literals",
++    "SendRequestParams": ".send_request",
++}
++
++
++def __getattr__(attr_name: str) -> typing.Any:
++    module_name = _dynamic_imports.get(attr_name)
++    if module_name is None:
++        raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
++    try:
++        module = import_module(module_name, __package__)
++        if module_name == f".{attr_name}":
++            return module
++        else:
++            return getattr(module, attr_name)
++    except ImportError as e:
++        raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
++    except AttributeError as e:
++        raise AttributeError(f"Failed to get {attr_name} from {module_name}: {e}") from e
++
++
++def __dir__():
++    lazy_attrs = list(_dynamic_imports.keys())
++    return sorted(lazy_attrs)
++
++
++__all__ = ["ContainerObjectParams", "NestedObjectWithLiteralsParams", "SendRequestParams"]
+diff --git a/src/seed/reference/requests/container_object.py b/src/seed/reference/requests/container_object.py
+new file mode 100644
+index 00000000000..2998acd7d09
+--- /dev/null
++++ b/src/seed/reference/requests/container_object.py
+@@ -0,0 +1,13 @@
++# This file was auto-generated by Fern from our API Definition.
++
++import typing
++
++import typing_extensions
++from ...core.serialization import FieldMetadata
++from .nested_object_with_literals import NestedObjectWithLiteralsParams
++
++
++class ContainerObjectParams(typing_extensions.TypedDict):
++    nested_objects: typing_extensions.Annotated[
++        typing.Sequence[NestedObjectWithLiteralsParams], FieldMetadata(alias="nestedObjects")
++    ]
+diff --git a/src/seed/reference/requests/nested_object_with_literals.py b/src/seed/reference/requests/nested_object_with_literals.py
+new file mode 100644
+index 00000000000..a59b8b8b619
+--- /dev/null
++++ b/src/seed/reference/requests/nested_object_with_literals.py
+@@ -0,0 +1,12 @@
++# This file was auto-generated by Fern from our API Definition.
++
++import typing
++
++import typing_extensions
++from ...core.serialization import FieldMetadata
++
++
++class NestedObjectWithLiteralsParams(typing_extensions.TypedDict):
++    literal1: typing.Literal["literal1"]
++    literal2: typing.Literal["literal2"]
++    str_prop: typing_extensions.Annotated[str, FieldMetadata(alias="strProp")]
+diff --git a/src/seed/reference/requests/send_request.py b/src/seed/reference/requests/send_request.py
+new file mode 100644
+index 00000000000..ddc4660c31b
+--- /dev/null
++++ b/src/seed/reference/requests/send_request.py
+@@ -0,0 +1,20 @@
++# This file was auto-generated by Fern from our API Definition.
++
++import typing
++
++import typing_extensions
++from ...core.serialization import FieldMetadata
++from ..types.some_literal import SomeLiteral
++from .container_object import ContainerObjectParams
++
++
++class SendRequestParams(typing_extensions.TypedDict):
++    prompt: typing.Literal["You are a helpful assistant"]
++    query: str
++    stream: typing.Literal[False]
++    ending: typing.Literal["$ending"]
++    context: SomeLiteral
++    maybe_context: typing_extensions.NotRequired[
++        typing_extensions.Annotated[SomeLiteral, FieldMetadata(alias="maybeContext")]
++    ]
++    container_object: typing_extensions.Annotated[ContainerObjectParams, FieldMetadata(alias="containerObject")]
+diff --git a/src/seed/requests/__init__.py b/src/seed/requests/__init__.py
+new file mode 100644
+index 00000000000..fafcf57b1bd
+--- /dev/null
++++ b/src/seed/requests/__init__.py
+@@ -0,0 +1,34 @@
++# This file was auto-generated by Fern from our API Definition.
++
++# isort: skip_file
++
++import typing
++from importlib import import_module
++
++if typing.TYPE_CHECKING:
++    from .send_response import SendResponseParams
++_dynamic_imports: typing.Dict[str, str] = {"SendResponseParams": ".send_response"}
++
++
++def __getattr__(attr_name: str) -> typing.Any:
++    module_name = _dynamic_imports.get(attr_name)
++    if module_name is None:
++        raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
++    try:
++        module = import_module(module_name, __package__)
++        if module_name == f".{attr_name}":
++            return module
++        else:
++            return getattr(module, attr_name)
++    except ImportError as e:
++        raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
++    except AttributeError as e:
++        raise AttributeError(f"Failed to get {attr_name} from {module_name}: {e}") from e
++
++
++def __dir__():
++    lazy_attrs = list(_dynamic_imports.keys())
++    return sorted(lazy_attrs)
++
++
++__all__ = ["SendResponseParams"]
+diff --git a/src/seed/requests/send_response.py b/src/seed/requests/send_response.py
+new file mode 100644
+index 00000000000..0580389d6fb
+--- /dev/null
++++ b/src/seed/requests/send_response.py
+@@ -0,0 +1,11 @@
++# This file was auto-generated by Fern from our API Definition.
++
++import typing
++
++import typing_extensions
++
++
++class SendResponseParams(typing_extensions.TypedDict):
++    message: str
++    status: int
++    success: typing.Literal[True]

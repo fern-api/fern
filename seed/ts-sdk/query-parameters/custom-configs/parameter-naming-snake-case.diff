@@ -1,0 +1,279 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index d8b7bf00e12..1911ec36d95 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,9 @@
+     "cliVersion": "DUMMY",
+     "generatorName": "fernapi/fern-typescript-sdk",
+     "generatorVersion": "local",
++    "generatorConfig": {
++        "parameterNaming": "snakeCase"
++    },
+     "originGitCommit": "DUMMY",
+     "originGitCommitIsDirty": null,
+     "invokedBy": "ci",
+diff --git a/README.md b/README.md
+index 76f46a2b34d..de54d770970 100644
+--- a/README.md
++++ b/README.md
+@@ -53,30 +53,30 @@ await client.user.getUsername({
+         name: "name",
+         tags: ["tags", "tags"]
+     },
+-    userList: [{
++    user_list: [{
+             name: "name",
+             tags: ["tags", "tags"]
+         }, {
+             name: "name",
+             tags: ["tags", "tags"]
+         }],
+-    optionalDeadline: "2024-01-15T09:30:00Z",
+-    keyValue: {
++    optional_deadline: "2024-01-15T09:30:00Z",
++    key_value: {
+         "keyValue": "keyValue"
+     },
+-    optionalString: "optionalString",
+-    nestedUser: {
++    optional_string: "optionalString",
++    nested_user: {
+         name: "name",
+         user: {
+             name: "name",
+             tags: ["tags", "tags"]
+         }
+     },
+-    optionalUser: {
++    optional_user: {
+         name: "name",
+         tags: ["tags", "tags"]
+     },
+-    excludeUser: {
++    exclude_user: {
+         name: "name",
+         tags: ["tags", "tags"]
+     },
+diff --git a/reference.md b/reference.md
+index 4a7d5bd678b..f3badcfc778 100644
+--- a/reference.md
++++ b/reference.md
+@@ -23,30 +23,30 @@ await client.user.getUsername({
+         name: "name",
+         tags: ["tags", "tags"]
+     },
+-    userList: [{
++    user_list: [{
+             name: "name",
+             tags: ["tags", "tags"]
+         }, {
+             name: "name",
+             tags: ["tags", "tags"]
+         }],
+-    optionalDeadline: "2024-01-15T09:30:00Z",
+-    keyValue: {
++    optional_deadline: "2024-01-15T09:30:00Z",
++    key_value: {
+         "keyValue": "keyValue"
+     },
+-    optionalString: "optionalString",
+-    nestedUser: {
++    optional_string: "optionalString",
++    nested_user: {
+         name: "name",
+         user: {
+             name: "name",
+             tags: ["tags", "tags"]
+         }
+     },
+-    optionalUser: {
++    optional_user: {
+         name: "name",
+         tags: ["tags", "tags"]
+     },
+-    excludeUser: {
++    exclude_user: {
+         name: "name",
+         tags: ["tags", "tags"]
+     },
+diff --git a/snippet.json b/snippet.json
+index 4d021ae2fba..b3c37f5e723 100644
+--- a/snippet.json
++++ b/snippet.json
+@@ -8,7 +8,7 @@
+             },
+             "snippet": {
+                 "type": "typescript",
+-                "client": "import { SeedQueryParametersClient } from \"@fern/query-parameters\";\n\nconst client = new SeedQueryParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.getUsername({\n    limit: 1,\n    id: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    date: \"2023-01-15\",\n    deadline: \"2024-01-15T09:30:00Z\",\n    bytes: \"SGVsbG8gd29ybGQh\",\n    user: {\n        name: \"name\",\n        tags: [\"tags\", \"tags\"]\n    },\n    userList: [{\n            name: \"name\",\n            tags: [\"tags\", \"tags\"]\n        }, {\n            name: \"name\",\n            tags: [\"tags\", \"tags\"]\n        }],\n    optionalDeadline: \"2024-01-15T09:30:00Z\",\n    keyValue: {\n        \"keyValue\": \"keyValue\"\n    },\n    optionalString: \"optionalString\",\n    nestedUser: {\n        name: \"name\",\n        user: {\n            name: \"name\",\n            tags: [\"tags\", \"tags\"]\n        }\n    },\n    optionalUser: {\n        name: \"name\",\n        tags: [\"tags\", \"tags\"]\n    },\n    excludeUser: {\n        name: \"name\",\n        tags: [\"tags\", \"tags\"]\n    },\n    filter: \"filter\"\n});\n"
++                "client": "import { SeedQueryParametersClient } from \"@fern/query-parameters\";\n\nconst client = new SeedQueryParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.getUsername({\n    limit: 1,\n    id: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    date: \"2023-01-15\",\n    deadline: \"2024-01-15T09:30:00Z\",\n    bytes: \"SGVsbG8gd29ybGQh\",\n    user: {\n        name: \"name\",\n        tags: [\"tags\", \"tags\"]\n    },\n    user_list: [{\n            name: \"name\",\n            tags: [\"tags\", \"tags\"]\n        }, {\n            name: \"name\",\n            tags: [\"tags\", \"tags\"]\n        }],\n    optional_deadline: \"2024-01-15T09:30:00Z\",\n    key_value: {\n        \"keyValue\": \"keyValue\"\n    },\n    optional_string: \"optionalString\",\n    nested_user: {\n        name: \"name\",\n        user: {\n            name: \"name\",\n            tags: [\"tags\", \"tags\"]\n        }\n    },\n    optional_user: {\n        name: \"name\",\n        tags: [\"tags\", \"tags\"]\n    },\n    exclude_user: {\n        name: \"name\",\n        tags: [\"tags\", \"tags\"]\n    },\n    filter: \"filter\"\n});\n"
+             }
+         }
+     ],
+diff --git a/src/api/resources/user/client/Client.ts b/src/api/resources/user/client/Client.ts
+index 771faa1da58..a63908094e5 100644
+--- a/src/api/resources/user/client/Client.ts
++++ b/src/api/resources/user/client/Client.ts
+@@ -37,30 +37,30 @@ export class UserClient {
+      *             name: "name",
+      *             tags: ["tags", "tags"]
+      *         },
+-     *         userList: [{
++     *         user_list: [{
+      *                 name: "name",
+      *                 tags: ["tags", "tags"]
+      *             }, {
+      *                 name: "name",
+      *                 tags: ["tags", "tags"]
+      *             }],
+-     *         optionalDeadline: "2024-01-15T09:30:00Z",
+-     *         keyValue: {
++     *         optional_deadline: "2024-01-15T09:30:00Z",
++     *         key_value: {
+      *             "keyValue": "keyValue"
+      *         },
+-     *         optionalString: "optionalString",
+-     *         nestedUser: {
++     *         optional_string: "optionalString",
++     *         nested_user: {
+      *             name: "name",
+      *             user: {
+      *                 name: "name",
+      *                 tags: ["tags", "tags"]
+      *             }
+      *         },
+-     *         optionalUser: {
++     *         optional_user: {
+      *             name: "name",
+      *             tags: ["tags", "tags"]
+      *         },
+-     *         excludeUser: {
++     *         exclude_user: {
+      *             name: "name",
+      *             tags: ["tags", "tags"]
+      *         },
+@@ -85,13 +85,13 @@ export class UserClient {
+             deadline,
+             bytes,
+             user,
+-            userList,
+-            optionalDeadline,
+-            keyValue,
+-            optionalString,
+-            nestedUser,
+-            optionalUser,
+-            excludeUser,
++            user_list: userList,
++            optional_deadline: optionalDeadline,
++            key_value: keyValue,
++            optional_string: optionalString,
++            nested_user: nestedUser,
++            optional_user: optionalUser,
++            exclude_user: excludeUser,
+             filter,
+         } = request;
+         const _queryParams: Record<string, unknown> = {
+diff --git a/src/api/resources/user/client/requests/GetUsersRequest.ts b/src/api/resources/user/client/requests/GetUsersRequest.ts
+index 6df615440b3..20a38bcd381 100644
+--- a/src/api/resources/user/client/requests/GetUsersRequest.ts
++++ b/src/api/resources/user/client/requests/GetUsersRequest.ts
+@@ -14,30 +14,30 @@ import type * as SeedQueryParameters from "../../../../index.js";
+  *             name: "name",
+  *             tags: ["tags", "tags"]
+  *         },
+- *         userList: [{
++ *         user_list: [{
+  *                 name: "name",
+  *                 tags: ["tags", "tags"]
+  *             }, {
+  *                 name: "name",
+  *                 tags: ["tags", "tags"]
+  *             }],
+- *         optionalDeadline: "2024-01-15T09:30:00Z",
+- *         keyValue: {
++ *         optional_deadline: "2024-01-15T09:30:00Z",
++ *         key_value: {
+  *             "keyValue": "keyValue"
+  *         },
+- *         optionalString: "optionalString",
+- *         nestedUser: {
++ *         optional_string: "optionalString",
++ *         nested_user: {
+  *             name: "name",
+  *             user: {
+  *                 name: "name",
+  *                 tags: ["tags", "tags"]
+  *             }
+  *         },
+- *         optionalUser: {
++ *         optional_user: {
+  *             name: "name",
+  *             tags: ["tags", "tags"]
+  *         },
+- *         excludeUser: {
++ *         exclude_user: {
+  *             name: "name",
+  *             tags: ["tags", "tags"]
+  *         },
+@@ -51,12 +51,12 @@ export interface GetUsersRequest {
+     deadline: string;
+     bytes: string;
+     user: SeedQueryParameters.User;
+-    userList: SeedQueryParameters.User[];
+-    optionalDeadline?: string;
+-    keyValue: Record<string, string>;
+-    optionalString?: string;
+-    nestedUser: SeedQueryParameters.NestedUser;
+-    optionalUser?: SeedQueryParameters.User;
+-    excludeUser: SeedQueryParameters.User | SeedQueryParameters.User[];
++    user_list: SeedQueryParameters.User[];
++    optional_deadline?: string;
++    key_value: Record<string, string>;
++    optional_string?: string;
++    nested_user: SeedQueryParameters.NestedUser;
++    optional_user?: SeedQueryParameters.User;
++    exclude_user: SeedQueryParameters.User | SeedQueryParameters.User[];
+     filter: string | string[];
+ }
+diff --git a/tests/wire/user.test.ts b/tests/wire/user.test.ts
+index ecf1ce3e184..2b8377b7822 100644
+--- a/tests/wire/user.test.ts
++++ b/tests/wire/user.test.ts
+@@ -22,7 +22,7 @@ describe("UserClient", () => {
+                 name: "name",
+                 tags: ["tags", "tags"],
+             },
+-            userList: [
++            user_list: [
+                 {
+                     name: "name",
+                     tags: ["tags", "tags"],
+@@ -32,23 +32,23 @@ describe("UserClient", () => {
+                     tags: ["tags", "tags"],
+                 },
+             ],
+-            optionalDeadline: "2024-01-15T09:30:00Z",
+-            keyValue: {
++            optional_deadline: "2024-01-15T09:30:00Z",
++            key_value: {
+                 keyValue: "keyValue",
+             },
+-            optionalString: "optionalString",
+-            nestedUser: {
++            optional_string: "optionalString",
++            nested_user: {
+                 name: "name",
+                 user: {
+                     name: "name",
+                     tags: ["tags", "tags"],
+                 },
+             },
+-            optionalUser: {
++            optional_user: {
+                 name: "name",
+                 tags: ["tags", "tags"],
+             },
+-            excludeUser: {
++            exclude_user: {
+                 name: "name",
+                 tags: ["tags", "tags"],
+             },

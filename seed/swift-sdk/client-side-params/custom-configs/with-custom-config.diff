@@ -1,0 +1,1044 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 3a766ccaa4a..5db4b91bf54 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,7 +2,10 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-swift-sdk",
+   "generatorVersion": "local",
+-  "generatorConfig": {},
++  "generatorConfig": {
++    "moduleName": "MyCustomModule",
++    "clientClassName": "MyCustomClient"
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "ci",
+diff --git a/Package.swift b/Package.swift
+index 35fbef197f9..cf0660fa1f3 100644
+--- a/Package.swift
++++ b/Package.swift
+@@ -3,7 +3,7 @@
+ import PackageDescription
+ 
+ let package = Package(
+-    name: "ClientSideParams",
++    name: "MyCustomModule",
+     platforms: [
+         .iOS(.v15),
+         .macOS(.v12),
+@@ -12,19 +12,19 @@ let package = Package(
+     ],
+     products: [
+         .library(
+-            name: "ClientSideParams",
+-            targets: ["ClientSideParams"]
++            name: "MyCustomModule",
++            targets: ["MyCustomModule"]
+         )
+     ],
+     dependencies: [],
+     targets: [
+         .target(
+-            name: "ClientSideParams",
++            name: "MyCustomModule",
+             path: "Sources"
+         ),
+         .testTarget(
+-            name: "ClientSideParamsTests",
+-            dependencies: ["ClientSideParams"],
++            name: "MyCustomModuleTests",
++            dependencies: ["MyCustomModule"],
+             path: "Tests"
+         )
+     ]
+diff --git a/README.md b/README.md
+index 3fd4313c115..5af5706a24a 100644
+--- a/README.md
++++ b/README.md
+@@ -49,10 +49,10 @@ Instantiate and use the client with the following:
+ 
+ ```swift
+ import Foundation
+-import ClientSideParams
++import MyCustomModule
+ 
+ private func main() async throws {
+-    let client = ClientSideParamsClient(token: "<token>")
++    let client = MyCustomClient(token: "<token>")
+ 
+     _ = try await client.service.searchResources(
+         limit: 1,
+@@ -76,14 +76,14 @@ try await main()
+ The SDK throws a single error enum for all failures. Client-side issues encoding/decoding failures and network errors use dedicated cases, while non-success HTTP responses are wrapped in an `HTTPError` that exposes the status code, a simple classification and an optional decoded message.
+ 
+ ```swift
+-import ClientSideParams
++import MyCustomModule
+ 
+-let client = ClientSideParamsClient(...)
++let client = MyCustomClient(...)
+ 
+ do {
+     let response = try await client.service.searchResources(...)
+     // Handle successful response
+-} catch let error as ClientSideParamsError {
++} catch let error as MyCustomModuleError {
+     switch error {
+     case .httpError(let httpError):
+         print("Status code:", httpError.statusCode)
+@@ -106,7 +106,7 @@ do {
+ The SDK exports all request types as Swift structs. Simply import the SDK module to access them:
+ 
+ ```swift
+-import ClientSideParams
++import MyCustomModule
+ 
+ let request = Requests.SearchResourcesRequest(
+     ...
+@@ -155,9 +155,9 @@ The SDK allows you to customize the underlying `URLSession` used for HTTP reques
+ 
+ ```swift
+ import Foundation
+-import ClientSideParams
++import MyCustomModule
+ 
+-let client = ClientSideParamsClient(
++let client = MyCustomClient(
+     ...,
+     urlSession: // Provide your implementation here
+ )
+diff --git a/Snippets/Example0.swift b/Snippets/Example0.swift
+index f455d0f5bdd..3988ac8b414 100644
+--- a/Snippets/Example0.swift
++++ b/Snippets/Example0.swift
+@@ -1,8 +1,8 @@
+ import Foundation
+-import ClientSideParams
++import MyCustomModule
+ 
+ private func main() async throws {
+-    let client = ClientSideParamsClient(
++    let client = MyCustomClient(
+         baseURL: "https://api.fern.com",
+         token: "<token>"
+     )
+diff --git a/Snippets/Example1.swift b/Snippets/Example1.swift
+index cf3a4b02ab4..9aee12d0f84 100644
+--- a/Snippets/Example1.swift
++++ b/Snippets/Example1.swift
+@@ -1,8 +1,8 @@
+ import Foundation
+-import ClientSideParams
++import MyCustomModule
+ 
+ private func main() async throws {
+-    let client = ClientSideParamsClient(
++    let client = MyCustomClient(
+         baseURL: "https://api.fern.com",
+         token: "<token>"
+     )
+diff --git a/Snippets/Example10.swift b/Snippets/Example10.swift
+index 339b037e510..bf76d9087ef 100644
+--- a/Snippets/Example10.swift
++++ b/Snippets/Example10.swift
+@@ -1,8 +1,8 @@
+ import Foundation
+-import ClientSideParams
++import MyCustomModule
+ 
+ private func main() async throws {
+-    let client = ClientSideParamsClient(
++    let client = MyCustomClient(
+         baseURL: "https://api.fern.com",
+         token: "<token>"
+     )
+diff --git a/Snippets/Example11.swift b/Snippets/Example11.swift
+index 863448123d1..a653578db80 100644
+--- a/Snippets/Example11.swift
++++ b/Snippets/Example11.swift
+@@ -1,8 +1,8 @@
+ import Foundation
+-import ClientSideParams
++import MyCustomModule
+ 
+ private func main() async throws {
+-    let client = ClientSideParamsClient(
++    let client = MyCustomClient(
+         baseURL: "https://api.fern.com",
+         token: "<token>"
+     )
+diff --git a/Snippets/Example2.swift b/Snippets/Example2.swift
+index 112774e5e1b..d7fd494ad9c 100644
+--- a/Snippets/Example2.swift
++++ b/Snippets/Example2.swift
+@@ -1,8 +1,8 @@
+ import Foundation
+-import ClientSideParams
++import MyCustomModule
+ 
+ private func main() async throws {
+-    let client = ClientSideParamsClient(
++    let client = MyCustomClient(
+         baseURL: "https://api.fern.com",
+         token: "<token>"
+     )
+diff --git a/Snippets/Example3.swift b/Snippets/Example3.swift
+index 21574a6891f..4e7097d065a 100644
+--- a/Snippets/Example3.swift
++++ b/Snippets/Example3.swift
+@@ -1,8 +1,8 @@
+ import Foundation
+-import ClientSideParams
++import MyCustomModule
+ 
+ private func main() async throws {
+-    let client = ClientSideParamsClient(
++    let client = MyCustomClient(
+         baseURL: "https://api.fern.com",
+         token: "<token>"
+     )
+diff --git a/Snippets/Example4.swift b/Snippets/Example4.swift
+index 19b58183ac8..bf41009e593 100644
+--- a/Snippets/Example4.swift
++++ b/Snippets/Example4.swift
+@@ -1,8 +1,8 @@
+ import Foundation
+-import ClientSideParams
++import MyCustomModule
+ 
+ private func main() async throws {
+-    let client = ClientSideParamsClient(
++    let client = MyCustomClient(
+         baseURL: "https://api.fern.com",
+         token: "<token>"
+     )
+diff --git a/Snippets/Example5.swift b/Snippets/Example5.swift
+index f1877c2ef2a..f1f0adc240e 100644
+--- a/Snippets/Example5.swift
++++ b/Snippets/Example5.swift
+@@ -1,8 +1,8 @@
+ import Foundation
+-import ClientSideParams
++import MyCustomModule
+ 
+ private func main() async throws {
+-    let client = ClientSideParamsClient(
++    let client = MyCustomClient(
+         baseURL: "https://api.fern.com",
+         token: "<token>"
+     )
+diff --git a/Snippets/Example6.swift b/Snippets/Example6.swift
+index 627c4341b13..213843a4bc3 100644
+--- a/Snippets/Example6.swift
++++ b/Snippets/Example6.swift
+@@ -1,8 +1,8 @@
+ import Foundation
+-import ClientSideParams
++import MyCustomModule
+ 
+ private func main() async throws {
+-    let client = ClientSideParamsClient(
++    let client = MyCustomClient(
+         baseURL: "https://api.fern.com",
+         token: "<token>"
+     )
+diff --git a/Snippets/Example7.swift b/Snippets/Example7.swift
+index 29c2cf50927..291bf598461 100644
+--- a/Snippets/Example7.swift
++++ b/Snippets/Example7.swift
+@@ -1,8 +1,8 @@
+ import Foundation
+-import ClientSideParams
++import MyCustomModule
+ 
+ private func main() async throws {
+-    let client = ClientSideParamsClient(
++    let client = MyCustomClient(
+         baseURL: "https://api.fern.com",
+         token: "<token>"
+     )
+diff --git a/Snippets/Example8.swift b/Snippets/Example8.swift
+index 88aa7ab6cf5..8bc99f869a4 100644
+--- a/Snippets/Example8.swift
++++ b/Snippets/Example8.swift
+@@ -1,8 +1,8 @@
+ import Foundation
+-import ClientSideParams
++import MyCustomModule
+ 
+ private func main() async throws {
+-    let client = ClientSideParamsClient(
++    let client = MyCustomClient(
+         baseURL: "https://api.fern.com",
+         token: "<token>"
+     )
+diff --git a/Snippets/Example9.swift b/Snippets/Example9.swift
+index c8c67f2dcbb..157223214e3 100644
+--- a/Snippets/Example9.swift
++++ b/Snippets/Example9.swift
+@@ -1,8 +1,8 @@
+ import Foundation
+-import ClientSideParams
++import MyCustomModule
+ 
+ private func main() async throws {
+-    let client = ClientSideParamsClient(
++    let client = MyCustomClient(
+         baseURL: "https://api.fern.com",
+         token: "<token>"
+     )
+diff --git a/Sources/Core/Networking/HTTPClient.swift b/Sources/Core/Networking/HTTPClient.swift
+index a9adc9d8c47..e6f323a10e4 100644
+--- a/Sources/Core/Networking/HTTPClient.swift
++++ b/Sources/Core/Networking/HTTPClient.swift
+@@ -77,7 +77,7 @@ final class HTTPClient: Swift.Sendable {
+             if let data = data as? T {
+                 return data
+             } else {
+-                throw ClientSideParamsError.invalidResponse
++                throw MyCustomModuleError.invalidResponse
+             }
+         }
+ 
+@@ -85,14 +85,14 @@ final class HTTPClient: Swift.Sendable {
+             if let string = Swift.String(data: data, encoding: .utf8) as? T {
+                 return string
+             } else {
+-                throw ClientSideParamsError.invalidResponse
++                throw MyCustomModuleError.invalidResponse
+             }
+         }
+ 
+         do {
+             return try jsonDecoder.decode(responseType, from: data)
+         } catch {
+-            throw ClientSideParamsError.decodingError(error)
++            throw MyCustomModuleError.decodingError(error)
+         }
+     }
+ 
+@@ -275,7 +275,7 @@ final class HTTPClient: Swift.Sendable {
+                 let (data, response) = try await clientConfig.urlSession.data(for: request)
+ 
+                 guard let httpResponse = response as? Networking.HTTPURLResponse else {
+-                    throw ClientSideParamsError.invalidResponse
++                    throw MyCustomModuleError.invalidResponse
+                 }
+ 
+                 // Handle successful responses
+@@ -298,12 +298,12 @@ final class HTTPClient: Swift.Sendable {
+                     data: data
+                 )
+             } catch {
+-                let clientError: ClientSideParamsError?
++                let clientError: MyCustomModuleError?
+ 
+                 // Treat timeouts as a first-class, non-retryable error
+                 if let urlError = error as? Foundation.URLError, urlError.code == .timedOut {
+                     clientError = .timeout(error)
+-                } else if let existingClientError = error as? ClientSideParamsError {
++                } else if let existingClientError = error as? MyCustomModuleError {
+                     clientError = existingClientError
+                 } else {
+                     clientError = nil
+@@ -313,7 +313,7 @@ final class HTTPClient: Swift.Sendable {
+                     if let clientError {
+                         throw clientError
+                     } else {
+-                        throw ClientSideParamsError.networkError(error)
++                        throw MyCustomModuleError.networkError(error)
+                     }
+                 }
+                 let delay = Self.initialRetryDelay * pow(2.0, Swift.Double(attempt))
+@@ -327,7 +327,7 @@ final class HTTPClient: Swift.Sendable {
+         if let (data, httpResponse) = lastResponse {
+             throw makeErrorFromResponse(statusCode: httpResponse.statusCode, data: data)
+         }
+-        throw ClientSideParamsError.invalidResponse
++        throw MyCustomModuleError.invalidResponse
+     }
+ 
+     private func shouldRetry(statusCode: Swift.Int) -> Swift.Bool {
+@@ -385,13 +385,13 @@ final class HTTPClient: Swift.Sendable {
+         return delay * jitterMultiplier
+     }
+ 
+-    private func makeErrorFromResponse(statusCode: Swift.Int, data: Foundation.Data) -> ClientSideParamsError
++    private func makeErrorFromResponse(statusCode: Swift.Int, data: Foundation.Data) -> MyCustomModuleError
+     {
+         let httpError = HTTPError.from(
+             statusCode: statusCode,
+             data: data,
+             jsonDecoder: jsonDecoder
+         )
+-        return ClientSideParamsError.httpError(httpError)
++        return MyCustomModuleError.httpError(httpError)
+     }
+ }
+diff --git a/Sources/ClientSideParamsClient.swift b/Sources/MyCustomClient.swift
+similarity index 98%
+rename from Sources/ClientSideParamsClient.swift
+rename to Sources/MyCustomClient.swift
+index b40d1c03e63..eaa4e033f5d 100644
+--- a/Sources/ClientSideParamsClient.swift
++++ b/Sources/MyCustomClient.swift
+@@ -1,7 +1,7 @@
+ import Foundation
+ 
+ /// Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
+-public final class ClientSideParamsClient: Sendable {
++public final class MyCustomClient: Sendable {
+     public let service: ServiceClient
+     public let types: TypesClient
+     private let httpClient: HTTPClient
+diff --git a/Sources/ClientSideParamsError.swift b/Sources/MyCustomModuleError.swift
+similarity index 97%
+rename from Sources/ClientSideParamsError.swift
+rename to Sources/MyCustomModuleError.swift
+index fde7de127a4..c51c9296188 100644
+--- a/Sources/ClientSideParamsError.swift
++++ b/Sources/MyCustomModuleError.swift
+@@ -4,7 +4,7 @@ import Foundation
+ ///
+ /// Request / client-side failures are represented as dedicated cases and
+ /// HTTP response failures are wrapped in an `HTTPError` that classifies the status code.
+-public enum ClientSideParamsError: Swift.Error {
++public enum MyCustomModuleError: Swift.Error {
+     // MARK: - Client / transport errors
+ 
+     /// The request URL could not be constructed.
+diff --git a/Tests/Core/ClientErrorTests.swift b/Tests/Core/ClientErrorTests.swift
+index 8ac40709301..74e5e004006 100644
+--- a/Tests/Core/ClientErrorTests.swift
++++ b/Tests/Core/ClientErrorTests.swift
+@@ -1,4 +1,4 @@
+-import ClientSideParams
++import MyCustomModule
+ import Foundation
+ import Testing
+ 
+@@ -13,7 +13,7 @@ import Testing
+             body: Data(#"{"message":"Bad request"}"#.utf8)
+         )
+ 
+-        let client = ClientSideParamsClient(
++        let client = MyCustomClient(
+             baseURL: "https://api.fern.com",
+             token: "<token>",
+             urlSession: stub.urlSession
+@@ -32,16 +32,16 @@ import Testing
+             )
+ 
+             Issue.record("Expected error to be thrown")
+-        } catch let error as ClientSideParamsError {
++        } catch let error as MyCustomModuleError {
+             guard case .httpError(let httpError) = error else {
+-                Issue.record("Expected ClientSideParamsError.httpError, got \(error)")
++                Issue.record("Expected MyCustomModuleError.httpError, got \(error)")
+                 return
+             }
+             try #require(httpError.statusCode == 400)
+             try #require(httpError.kind == .client)
+             try #require(httpError.body?.message == "Bad request")
+         } catch {
+-            Issue.record("Expected ClientSideParamsError, got \(error)")
++            Issue.record("Expected MyCustomModuleError, got \(error)")
+         }
+     }
+ 
+@@ -53,7 +53,7 @@ import Testing
+             body: Data(#"{"message":"Not found"}"#.utf8)
+         )
+ 
+-        let client = ClientSideParamsClient(
++        let client = MyCustomClient(
+             baseURL: "https://api.fern.com",
+             token: "<token>",
+             urlSession: stub.urlSession
+@@ -72,16 +72,16 @@ import Testing
+             )
+ 
+             Issue.record("Expected error to be thrown")
+-        } catch let error as ClientSideParamsError {
++        } catch let error as MyCustomModuleError {
+             guard case .httpError(let httpError) = error else {
+-                Issue.record("Expected ClientSideParamsError.httpError, got \(error)")
++                Issue.record("Expected MyCustomModuleError.httpError, got \(error)")
+                 return
+             }
+             try #require(httpError.statusCode == 404)
+             try #require(httpError.kind == .notFound)
+             try #require(httpError.body?.message == "Not found")
+         } catch {
+-            Issue.record("Expected ClientSideParamsError, got \(error)")
++            Issue.record("Expected MyCustomModuleError, got \(error)")
+         }
+     }
+ 
+@@ -93,7 +93,7 @@ import Testing
+             body: Data(#"{"message":"Validation failed"}"#.utf8)
+         )
+ 
+-        let client = ClientSideParamsClient(
++        let client = MyCustomClient(
+             baseURL: "https://api.fern.com",
+             token: "<token>",
+             urlSession: stub.urlSession
+@@ -112,16 +112,16 @@ import Testing
+             )
+ 
+             Issue.record("Expected error to be thrown")
+-        } catch let error as ClientSideParamsError {
++        } catch let error as MyCustomModuleError {
+             guard case .httpError(let httpError) = error else {
+-                Issue.record("Expected ClientSideParamsError.httpError, got \(error)")
++                Issue.record("Expected MyCustomModuleError.httpError, got \(error)")
+                 return
+             }
+             try #require(httpError.statusCode == 422)
+             try #require(httpError.kind == .validation)
+             try #require(httpError.body?.message == "Validation failed")
+         } catch {
+-            Issue.record("Expected ClientSideParamsError, got \(error)")
++            Issue.record("Expected MyCustomModuleError, got \(error)")
+         }
+     }
+ 
+@@ -135,7 +135,7 @@ import Testing
+             body: Data(#"{"message":"Internal error"}"#.utf8)
+         )
+ 
+-        let client = ClientSideParamsClient(
++        let client = MyCustomClient(
+             baseURL: "https://api.fern.com",
+             token: "<token>",
+             urlSession: stub.urlSession
+@@ -154,16 +154,16 @@ import Testing
+             )
+ 
+             Issue.record("Expected error to be thrown")
+-        } catch let error as ClientSideParamsError {
++        } catch let error as MyCustomModuleError {
+             guard case .httpError(let httpError) = error else {
+-                Issue.record("Expected ClientSideParamsError.httpError, got \(error)")
++                Issue.record("Expected MyCustomModuleError.httpError, got \(error)")
+                 return
+             }
+             try #require(httpError.statusCode == 500)
+             try #require(httpError.kind == .server)
+             try #require(httpError.body?.message == "Internal error")
+         } catch {
+-            Issue.record("Expected ClientSideParamsError, got \(error)")
++            Issue.record("Expected MyCustomModuleError, got \(error)")
+         }
+     }
+ 
+@@ -175,7 +175,7 @@ import Testing
+             body: Data(#"{"message":"Unavailable"}"#.utf8)
+         )
+ 
+-        let client = ClientSideParamsClient(
++        let client = MyCustomClient(
+             baseURL: "https://api.fern.com",
+             token: "<token>",
+             urlSession: stub.urlSession
+@@ -194,16 +194,16 @@ import Testing
+             )
+ 
+             Issue.record("Expected error to be thrown")
+-        } catch let error as ClientSideParamsError {
++        } catch let error as MyCustomModuleError {
+             guard case .httpError(let httpError) = error else {
+-                Issue.record("Expected ClientSideParamsError.httpError, got \(error)")
++                Issue.record("Expected MyCustomModuleError.httpError, got \(error)")
+                 return
+             }
+             try #require(httpError.statusCode == 503)
+             try #require(httpError.kind == .serviceUnavailable)
+             try #require(httpError.body?.message == "Unavailable")
+         } catch {
+-            Issue.record("Expected ClientSideParamsError, got \(error)")
++            Issue.record("Expected MyCustomModuleError, got \(error)")
+         }
+     }
+ 
+@@ -217,7 +217,7 @@ import Testing
+             body: Data()
+         )
+ 
+-        let client = ClientSideParamsClient(
++        let client = MyCustomClient(
+             baseURL: "https://api.fern.com",
+             token: "<token>",
+             urlSession: stub.urlSession
+@@ -236,16 +236,16 @@ import Testing
+             )
+ 
+             Issue.record("Expected error to be thrown")
+-        } catch let error as ClientSideParamsError {
++        } catch let error as MyCustomModuleError {
+             guard case .httpError(let httpError) = error else {
+-                Issue.record("Expected ClientSideParamsError.httpError, got \(error)")
++                Issue.record("Expected MyCustomModuleError.httpError, got \(error)")
+                 return
+             }
+             try #require(httpError.statusCode == 302)
+             try #require(httpError.kind == .redirect)
+             try #require(httpError.body == nil)
+         } catch {
+-            Issue.record("Expected ClientSideParamsError, got \(error)")
++            Issue.record("Expected MyCustomModuleError, got \(error)")
+         }
+     }
+ 
+@@ -257,7 +257,7 @@ import Testing
+             body: Data("Plain text error".utf8)
+         )
+ 
+-        let client = ClientSideParamsClient(
++        let client = MyCustomClient(
+             baseURL: "https://api.fern.com",
+             token: "<token>",
+             urlSession: stub.urlSession
+@@ -276,16 +276,16 @@ import Testing
+             )
+ 
+             Issue.record("Expected error to be thrown")
+-        } catch let error as ClientSideParamsError {
++        } catch let error as MyCustomModuleError {
+             guard case .httpError(let httpError) = error else {
+-                Issue.record("Expected ClientSideParamsError.httpError, got \(error)")
++                Issue.record("Expected MyCustomModuleError.httpError, got \(error)")
+                 return
+             }
+             try #require(httpError.statusCode == 500)
+             try #require(httpError.kind == .server)
+             try #require(httpError.body?.message == "Plain text error")
+         } catch {
+-            Issue.record("Expected ClientSideParamsError, got \(error)")
++            Issue.record("Expected MyCustomModuleError, got \(error)")
+         }
+     }
+ }
+diff --git a/Tests/Core/ClientRetryTests.swift b/Tests/Core/ClientRetryTests.swift
+index d6d5ebfb47e..d35d7d5e4ce 100644
+--- a/Tests/Core/ClientRetryTests.swift
++++ b/Tests/Core/ClientRetryTests.swift
+@@ -1,4 +1,4 @@
+-import ClientSideParams
++import MyCustomModule
+ import Foundation
+ import Testing
+ 
+@@ -14,7 +14,7 @@ import Testing
+             ),
+         ])
+ 
+-        let client = ClientSideParamsClient(
++        let client = MyCustomClient(
+             baseURL: "https://api.fern.com",
+             token: "<token>",
+             urlSession: stub.urlSession
+@@ -48,7 +48,7 @@ import Testing
+             ),
+         ])
+ 
+-        let client = ClientSideParamsClient(
++        let client = MyCustomClient(
+             baseURL: "https://api.fern.com",
+             token: "<token>",
+             urlSession: stub.urlSession
+@@ -82,7 +82,7 @@ import Testing
+             ),
+         ])
+ 
+-        let client = ClientSideParamsClient(
++        let client = MyCustomClient(
+             baseURL: "https://api.fern.com",
+             token: "<token>",
+             urlSession: stub.urlSession
+@@ -115,7 +115,7 @@ import Testing
+             ),
+         ])
+ 
+-        let client = ClientSideParamsClient(
++        let client = MyCustomClient(
+             baseURL: "https://api.fern.com",
+             token: "<token>",
+             urlSession: stub.urlSession
+@@ -147,7 +147,7 @@ import Testing
+             )
+         ])
+ 
+-        let client = ClientSideParamsClient(
++        let client = MyCustomClient(
+             baseURL: "https://api.fern.com",
+             token: "<token>",
+             urlSession: stub.urlSession
+@@ -180,7 +180,7 @@ import Testing
+             )
+         ])
+ 
+-        let client = ClientSideParamsClient(
++        let client = MyCustomClient(
+             baseURL: "https://api.fern.com",
+             token: "<token>",
+             urlSession: stub.urlSession
+@@ -213,7 +213,7 @@ import Testing
+             (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
+         ])
+ 
+-        let client = ClientSideParamsClient(
++        let client = MyCustomClient(
+             baseURL: "https://api.fern.com",
+             token: "<token>",
+             urlSession: stub.urlSession
+@@ -250,7 +250,7 @@ import Testing
+             ),
+         ])
+ 
+-        let client = ClientSideParamsClient(
++        let client = MyCustomClient(
+             baseURL: "https://api.fern.com",
+             token: "<token>",
+             urlSession: stub.urlSession
+@@ -298,7 +298,7 @@ import Testing
+             ),
+         ])
+ 
+-        let client = ClientSideParamsClient(
++        let client = MyCustomClient(
+             baseURL: "https://api.fern.com",
+             token: "<token>",
+             urlSession: stub.urlSession
+@@ -342,7 +342,7 @@ import Testing
+             ),
+         ])
+ 
+-        let client = ClientSideParamsClient(
++        let client = MyCustomClient(
+             baseURL: "https://api.fern.com",
+             token: "<token>",
+             urlSession: stub.urlSession
+@@ -398,7 +398,7 @@ import Testing
+             ),
+         ])
+ 
+-        let client = ClientSideParamsClient(
++        let client = MyCustomClient(
+             baseURL: "https://api.fern.com",
+             token: "<token>",
+             urlSession: stub.urlSession
+@@ -427,7 +427,7 @@ import Testing
+             (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data())
+         ])
+ 
+-        let client = ClientSideParamsClient(
++        let client = MyCustomClient(
+             baseURL: "https://api.fern.com",
+             token: "<token>",
+             urlSession: stub.urlSession
+@@ -460,7 +460,7 @@ import Testing
+             )
+         ])
+ 
+-        let client = ClientSideParamsClient(
++        let client = MyCustomClient(
+             baseURL: "https://api.fern.com",
+             token: "<token>",
+             urlSession: stub.urlSession
+diff --git a/Tests/Utilities/HTTPStub.swift b/Tests/Utilities/HTTPStub.swift
+index a5d6b806663..5648f0789c6 100644
+--- a/Tests/Utilities/HTTPStub.swift
++++ b/Tests/Utilities/HTTPStub.swift
+@@ -1,4 +1,4 @@
+-import ClientSideParams
++import MyCustomModule
+ import Foundation
+ 
+ final class HTTPStub {
+diff --git a/Tests/Wire/Resources/Service/ServiceClientWireTests.swift b/Tests/Wire/Resources/Service/ServiceClientWireTests.swift
+index 19ae1f6826d..f325ba1dd11 100644
+--- a/Tests/Wire/Resources/Service/ServiceClientWireTests.swift
++++ b/Tests/Wire/Resources/Service/ServiceClientWireTests.swift
+@@ -1,6 +1,6 @@
+ import Foundation
+ import Testing
+-import ClientSideParams
++import MyCustomModule
+ 
+ @Suite("ServiceClient Wire Tests") struct ServiceClientWireTests {
+     @Test func listResources1() async throws -> Void {
+@@ -37,7 +37,7 @@ import ClientSideParams
+                 """.utf8
+             )
+         )
+-        let client = ClientSideParamsClient(
++        let client = MyCustomClient(
+             baseURL: "https://api.fern.com",
+             token: "<token>",
+             urlSession: stub.urlSession
+@@ -105,7 +105,7 @@ import ClientSideParams
+                 """.utf8
+             )
+         )
+-        let client = ClientSideParamsClient(
++        let client = MyCustomClient(
+             baseURL: "https://api.fern.com",
+             token: "<token>",
+             urlSession: stub.urlSession
+@@ -171,7 +171,7 @@ import ClientSideParams
+                 """.utf8
+             )
+         )
+-        let client = ClientSideParamsClient(
++        let client = MyCustomClient(
+             baseURL: "https://api.fern.com",
+             token: "<token>",
+             urlSession: stub.urlSession
+@@ -344,7 +344,7 @@ import ClientSideParams
+                 """.utf8
+             )
+         )
+-        let client = ClientSideParamsClient(
++        let client = MyCustomClient(
+             baseURL: "https://api.fern.com",
+             token: "<token>",
+             urlSession: stub.urlSession
+@@ -540,7 +540,7 @@ import ClientSideParams
+                 """.utf8
+             )
+         )
+-        let client = ClientSideParamsClient(
++        let client = MyCustomClient(
+             baseURL: "https://api.fern.com",
+             token: "<token>",
+             urlSession: stub.urlSession
+@@ -668,7 +668,7 @@ import ClientSideParams
+                 """.utf8
+             )
+         )
+-        let client = ClientSideParamsClient(
++        let client = MyCustomClient(
+             baseURL: "https://api.fern.com",
+             token: "<token>",
+             urlSession: stub.urlSession
+@@ -812,7 +812,7 @@ import ClientSideParams
+                 """.utf8
+             )
+         )
+-        let client = ClientSideParamsClient(
++        let client = MyCustomClient(
+             baseURL: "https://api.fern.com",
+             token: "<token>",
+             urlSession: stub.urlSession
+@@ -958,7 +958,7 @@ import ClientSideParams
+                 """.utf8
+             )
+         )
+-        let client = ClientSideParamsClient(
++        let client = MyCustomClient(
+             baseURL: "https://api.fern.com",
+             token: "<token>",
+             urlSession: stub.urlSession
+@@ -1065,7 +1065,7 @@ import ClientSideParams
+                 """.utf8
+             )
+         )
+-        let client = ClientSideParamsClient(
++        let client = MyCustomClient(
+             baseURL: "https://api.fern.com",
+             token: "<token>",
+             urlSession: stub.urlSession
+@@ -1273,7 +1273,7 @@ import ClientSideParams
+                 """.utf8
+             )
+         )
+-        let client = ClientSideParamsClient(
++        let client = MyCustomClient(
+             baseURL: "https://api.fern.com",
+             token: "<token>",
+             urlSession: stub.urlSession
+@@ -1564,7 +1564,7 @@ import ClientSideParams
+                 """.utf8
+             )
+         )
+-        let client = ClientSideParamsClient(
++        let client = MyCustomClient(
+             baseURL: "https://api.fern.com",
+             token: "<token>",
+             urlSession: stub.urlSession
+diff --git a/Tests/Wire/Resources/Types/TypesClientWireTests.swift b/Tests/Wire/Resources/Types/TypesClientWireTests.swift
+index 18bedab2004..5598b334738 100644
+--- a/Tests/Wire/Resources/Types/TypesClientWireTests.swift
++++ b/Tests/Wire/Resources/Types/TypesClientWireTests.swift
+@@ -1,6 +1,6 @@
+ import Foundation
+ import Testing
+-import ClientSideParams
++import MyCustomModule
+ 
+ @Suite("TypesClient Wire Tests") struct TypesClientWireTests {
+ }
+\ No newline at end of file
+diff --git a/reference.md b/reference.md
+index 3100ec13713..c8391afa4bd 100644
+--- a/reference.md
++++ b/reference.md
+@@ -28,10 +28,10 @@ List resources with pagination
+ 
+ ```swift
+ import Foundation
+-import ClientSideParams
++import MyCustomModule
+ 
+ private func main() async throws {
+-    let client = ClientSideParamsClient(token: "<token>")
++    let client = MyCustomClient(token: "<token>")
+ 
+     _ = try await client.service.listResources(
+         page: 1,
+@@ -155,10 +155,10 @@ Get a single resource
+ 
+ ```swift
+ import Foundation
+-import ClientSideParams
++import MyCustomModule
+ 
+ private func main() async throws {
+-    let client = ClientSideParamsClient(token: "<token>")
++    let client = MyCustomClient(token: "<token>")
+ 
+     _ = try await client.service.getResource(
+         resourceId: "resourceId",
+@@ -246,10 +246,10 @@ Search resources with complex parameters
+ 
+ ```swift
+ import Foundation
+-import ClientSideParams
++import MyCustomModule
+ 
+ private func main() async throws {
+-    let client = ClientSideParamsClient(token: "<token>")
++    let client = MyCustomClient(token: "<token>")
+ 
+     _ = try await client.service.searchResources(
+         limit: 1,
+@@ -344,10 +344,10 @@ List or search for users
+ 
+ ```swift
+ import Foundation
+-import ClientSideParams
++import MyCustomModule
+ 
+ private func main() async throws {
+-    let client = ClientSideParamsClient(token: "<token>")
++    let client = MyCustomClient(token: "<token>")
+ 
+     _ = try await client.service.listUsers(
+         page: 1,
+@@ -480,10 +480,10 @@ Get a user by ID
+ 
+ ```swift
+ import Foundation
+-import ClientSideParams
++import MyCustomModule
+ 
+ private func main() async throws {
+-    let client = ClientSideParamsClient(token: "<token>")
++    let client = MyCustomClient(token: "<token>")
+ 
+     _ = try await client.service.getUserById(
+         userId: "userId",
+@@ -571,10 +571,10 @@ Create a new user
+ 
+ ```swift
+ import Foundation
+-import ClientSideParams
++import MyCustomModule
+ 
+ private func main() async throws {
+-    let client = ClientSideParamsClient(token: "<token>")
++    let client = MyCustomClient(token: "<token>")
+ 
+     _ = try await client.service.createUser(request: CreateUserRequest(
+         email: "email",
+@@ -660,10 +660,10 @@ Update a user
+ 
+ ```swift
+ import Foundation
+-import ClientSideParams
++import MyCustomModule
+ 
+ private func main() async throws {
+-    let client = ClientSideParamsClient(token: "<token>")
++    let client = MyCustomClient(token: "<token>")
+ 
+     _ = try await client.service.updateUser(
+         userId: "userId",
+@@ -760,10 +760,10 @@ Delete a user
+ 
+ ```swift
+ import Foundation
+-import ClientSideParams
++import MyCustomModule
+ 
+ private func main() async throws {
+-    let client = ClientSideParamsClient(token: "<token>")
++    let client = MyCustomClient(token: "<token>")
+ 
+     _ = try await client.service.deleteUser(userId: "userId")
+ }
+@@ -831,10 +831,10 @@ List all connections
+ 
+ ```swift
+ import Foundation
+-import ClientSideParams
++import MyCustomModule
+ 
+ private func main() async throws {
+-    let client = ClientSideParamsClient(token: "<token>")
++    let client = MyCustomClient(token: "<token>")
+ 
+     _ = try await client.service.listConnections(
+         strategy: "strategy",
+@@ -922,10 +922,10 @@ Get a connection by ID
+ 
+ ```swift
+ import Foundation
+-import ClientSideParams
++import MyCustomModule
+ 
+ private func main() async throws {
+-    let client = ClientSideParamsClient(token: "<token>")
++    let client = MyCustomClient(token: "<token>")
+ 
+     _ = try await client.service.getConnection(
+         connectionId: "connectionId",
+@@ -1004,10 +1004,10 @@ List all clients/applications
+ 
+ ```swift
+ import Foundation
+-import ClientSideParams
++import MyCustomModule
+ 
+ private func main() async throws {
+-    let client = ClientSideParamsClient(token: "<token>")
++    let client = MyCustomClient(token: "<token>")
+ 
+     _ = try await client.service.listClients(
+         fields: "fields",
+@@ -1143,10 +1143,10 @@ Get a client by ID
+ 
+ ```swift
+ import Foundation
+-import ClientSideParams
++import MyCustomModule
+ 
+ private func main() async throws {
+-    let client = ClientSideParamsClient(token: "<token>")
++    let client = MyCustomClient(token: "<token>")
+ 
+     _ = try await client.service.getClient(
+         clientId: "clientId",

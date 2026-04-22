@@ -1,0 +1,333 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 0eba66302dd..2827aeadd82 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-php-sdk",
+   "generatorVersion": "local",
++  "generatorConfig": {
++    "generateClientInterfaces": true
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "ci",
+diff --git a/src/A/AClient.php b/src/A/AClient.php
+index a3ce5fee7fa..8e34bccc2cf 100644
+--- a/src/A/AClient.php
++++ b/src/A/AClient.php
+@@ -6,8 +6,10 @@ use Seed\A\B\BClient;
+ use Seed\A\C\CClient;
+ use Psr\Http\Client\ClientInterface;
+ use Seed\Core\Client\RawClient;
++use Seed\A\B\BClientInterface;
++use Seed\A\C\CClientInterface;
+ 
+-class AClient
++class AClient implements AClientInterface
+ {
+     /**
+      * @var BClient $b
+@@ -54,4 +56,20 @@ class AClient
+         $this->b = new BClient($this->client, $this->options);
+         $this->c = new CClient($this->client, $this->options);
+     }
++
++    /**
++     * @return BClientInterface
++     */
++    public function getB(): BClientInterface
++    {
++        return $this->b;
++    }
++
++    /**
++     * @return CClientInterface
++     */
++    public function getC(): CClientInterface
++    {
++        return $this->c;
++    }
+ }
+diff --git a/src/A/AClientInterface.php b/src/A/AClientInterface.php
+new file mode 100644
+index 00000000000..c5115527edd
+--- /dev/null
++++ b/src/A/AClientInterface.php
+@@ -0,0 +1,19 @@
++<?php
++
++namespace Seed\A;
++
++use Seed\A\B\BClientInterface;
++use Seed\A\C\CClientInterface;
++
++interface AClientInterface
++{
++    /**
++     * @return BClientInterface
++     */
++    public function getB(): BClientInterface;
++
++    /**
++     * @return CClientInterface
++     */
++    public function getC(): CClientInterface;
++}
+diff --git a/src/A/B/BClient.php b/src/A/B/BClient.php
+index 2ad785c410f..67df12e2d58 100644
+--- a/src/A/B/BClient.php
++++ b/src/A/B/BClient.php
+@@ -10,7 +10,7 @@ use Seed\Core\Json\JsonApiRequest;
+ use Seed\Core\Client\HttpMethod;
+ use Psr\Http\Client\ClientExceptionInterface;
+ 
+-class BClient
++class BClient implements BClientInterface
+ {
+     /**
+      * @var array{
+diff --git a/src/A/B/BClientInterface.php b/src/A/B/BClientInterface.php
+new file mode 100644
+index 00000000000..f3b2bef7aa6
+--- /dev/null
++++ b/src/A/B/BClientInterface.php
+@@ -0,0 +1,18 @@
++<?php
++
++namespace Seed\A\B;
++
++interface BClientInterface
++{
++    /**
++     * @param ?array{
++     *   baseUrl?: string,
++     *   maxRetries?: int,
++     *   timeout?: float,
++     *   headers?: array<string, string>,
++     *   queryParameters?: array<string, mixed>,
++     *   bodyProperties?: array<string, mixed>,
++     * } $options
++     */
++    public function foo(?array $options = null): void;
++}
+diff --git a/src/A/C/CClient.php b/src/A/C/CClient.php
+index b4907b30de5..b3196cf14ba 100644
+--- a/src/A/C/CClient.php
++++ b/src/A/C/CClient.php
+@@ -10,7 +10,7 @@ use Seed\Core\Json\JsonApiRequest;
+ use Seed\Core\Client\HttpMethod;
+ use Psr\Http\Client\ClientExceptionInterface;
+ 
+-class CClient
++class CClient implements CClientInterface
+ {
+     /**
+      * @var array{
+diff --git a/src/A/C/CClientInterface.php b/src/A/C/CClientInterface.php
+new file mode 100644
+index 00000000000..1bc362da107
+--- /dev/null
++++ b/src/A/C/CClientInterface.php
+@@ -0,0 +1,18 @@
++<?php
++
++namespace Seed\A\C;
++
++interface CClientInterface
++{
++    /**
++     * @param ?array{
++     *   baseUrl?: string,
++     *   maxRetries?: int,
++     *   timeout?: float,
++     *   headers?: array<string, string>,
++     *   queryParameters?: array<string, mixed>,
++     *   bodyProperties?: array<string, mixed>,
++     * } $options
++     */
++    public function foo(?array $options = null): void;
++}
+diff --git a/src/Folder/FolderClient.php b/src/Folder/FolderClient.php
+index 01f6331c247..b3092422cb6 100644
+--- a/src/Folder/FolderClient.php
++++ b/src/Folder/FolderClient.php
+@@ -10,8 +10,9 @@ use Seed\Exceptions\SeedApiException;
+ use Seed\Core\Json\JsonApiRequest;
+ use Seed\Core\Client\HttpMethod;
+ use Psr\Http\Client\ClientExceptionInterface;
++use Seed\Folder\Service\ServiceClientInterface;
+ 
+-class FolderClient
++class FolderClient implements FolderClientInterface
+ {
+     /**
+      * @var ServiceClient $service
+@@ -90,4 +91,12 @@ class FolderClient
+             body: $response->getBody()->getContents(),
+         );
+     }
++
++    /**
++     * @return ServiceClientInterface
++     */
++    public function getService(): ServiceClientInterface
++    {
++        return $this->service;
++    }
+ }
+diff --git a/src/Folder/FolderClientInterface.php b/src/Folder/FolderClientInterface.php
+new file mode 100644
+index 00000000000..8ad71dcecb9
+--- /dev/null
++++ b/src/Folder/FolderClientInterface.php
+@@ -0,0 +1,25 @@
++<?php
++
++namespace Seed\Folder;
++
++use Seed\Folder\Service\ServiceClientInterface;
++
++interface FolderClientInterface
++{
++    /**
++     * @param ?array{
++     *   baseUrl?: string,
++     *   maxRetries?: int,
++     *   timeout?: float,
++     *   headers?: array<string, string>,
++     *   queryParameters?: array<string, mixed>,
++     *   bodyProperties?: array<string, mixed>,
++     * } $options
++     */
++    public function foo(?array $options = null): void;
++
++    /**
++     * @return ServiceClientInterface
++     */
++    public function getService(): ServiceClientInterface;
++}
+diff --git a/src/Folder/Service/ServiceClient.php b/src/Folder/Service/ServiceClient.php
+index 02cdeed686f..ff1d5e5863a 100644
+--- a/src/Folder/Service/ServiceClient.php
++++ b/src/Folder/Service/ServiceClient.php
+@@ -10,7 +10,7 @@ use Seed\Core\Json\JsonApiRequest;
+ use Seed\Core\Client\HttpMethod;
+ use Psr\Http\Client\ClientExceptionInterface;
+ 
+-class ServiceClient
++class ServiceClient implements ServiceClientInterface
+ {
+     /**
+      * @var array{
+diff --git a/src/Folder/Service/ServiceClientInterface.php b/src/Folder/Service/ServiceClientInterface.php
+new file mode 100644
+index 00000000000..c2b0853a928
+--- /dev/null
++++ b/src/Folder/Service/ServiceClientInterface.php
+@@ -0,0 +1,31 @@
++<?php
++
++namespace Seed\Folder\Service;
++
++interface ServiceClientInterface
++{
++    /**
++     * @param ?array{
++     *   baseUrl?: string,
++     *   maxRetries?: int,
++     *   timeout?: float,
++     *   headers?: array<string, string>,
++     *   queryParameters?: array<string, mixed>,
++     *   bodyProperties?: array<string, mixed>,
++     * } $options
++     */
++    public function endpoint(?array $options = null): void;
++
++    /**
++     * @param mixed $request
++     * @param ?array{
++     *   baseUrl?: string,
++     *   maxRetries?: int,
++     *   timeout?: float,
++     *   headers?: array<string, string>,
++     *   queryParameters?: array<string, mixed>,
++     *   bodyProperties?: array<string, mixed>,
++     * } $options
++     */
++    public function unknownRequest(mixed $request, ?array $options = null): void;
++}
+diff --git a/src/SeedClient.php b/src/SeedClient.php
+index 900ace08d19..cfb2a63ea13 100644
+--- a/src/SeedClient.php
++++ b/src/SeedClient.php
+@@ -11,8 +11,10 @@ use Seed\Exceptions\SeedApiException;
+ use Seed\Core\Json\JsonApiRequest;
+ use Seed\Core\Client\HttpMethod;
+ use Psr\Http\Client\ClientExceptionInterface;
++use Seed\A\AClientInterface;
++use Seed\Folder\FolderClientInterface;
+ 
+-class SeedClient
++class SeedClient implements SeedClientInterface
+ {
+     /**
+      * @var AClient $a
+@@ -111,4 +113,20 @@ class SeedClient
+             body: $response->getBody()->getContents(),
+         );
+     }
++
++    /**
++     * @return AClientInterface
++     */
++    public function getA(): AClientInterface
++    {
++        return $this->a;
++    }
++
++    /**
++     * @return FolderClientInterface
++     */
++    public function getFolder(): FolderClientInterface
++    {
++        return $this->folder;
++    }
+ }
+diff --git a/src/SeedClientInterface.php b/src/SeedClientInterface.php
+new file mode 100644
+index 00000000000..b7062f5d56f
+--- /dev/null
++++ b/src/SeedClientInterface.php
+@@ -0,0 +1,31 @@
++<?php
++
++namespace Seed;
++
++use Seed\A\AClientInterface;
++use Seed\Folder\FolderClientInterface;
++
++interface SeedClientInterface
++{
++    /**
++     * @param ?array{
++     *   baseUrl?: string,
++     *   maxRetries?: int,
++     *   timeout?: float,
++     *   headers?: array<string, string>,
++     *   queryParameters?: array<string, mixed>,
++     *   bodyProperties?: array<string, mixed>,
++     * } $options
++     */
++    public function foo(?array $options = null): void;
++
++    /**
++     * @return AClientInterface
++     */
++    public function getA(): AClientInterface;
++
++    /**
++     * @return FolderClientInterface
++     */
++    public function getFolder(): FolderClientInterface;
++}

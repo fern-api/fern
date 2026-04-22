@@ -1,0 +1,740 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index e206b6bea6d..1dc7814c35a 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -3,7 +3,12 @@
+   "generatorName": "fernapi/fern-go-sdk",
+   "generatorVersion": "local",
+   "generatorConfig": {
+-    "enableWireTests": false
++    "enableWireTests": false,
++    "alwaysSendRequiredProperties": false,
++    "inlineFileProperties": false,
++    "inlinePathParameters": false,
++    "useReaderForBytesRequest": false,
++    "union": "v0"
+   },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+diff --git a/README.md b/README.md
+index 71dde44cb31..11e36670c3a 100644
+--- a/README.md
++++ b/README.md
+@@ -33,20 +33,16 @@ import (
+     context "context"
+     strings "strings"
+ 
+-    fern "github.com/file-upload/fern"
+     client "github.com/file-upload/fern/client"
+ )
+ 
+ func do() {
+     client := client.NewClient()
+-    request := &fern.JustFileRequest{
+-        File: strings.NewReader(
+-            "",
+-        ),
+-    }
+     client.Service.JustFile(
+         context.TODO(),
+-        request,
++        strings.NewReader(
++            "",
++        ),
+     )
+ }
+ ```
+diff --git a/dynamic-snippets/example0/snippet.go b/dynamic-snippets/example0/snippet.go
+index 3a2b2c37707..866dfbcfc24 100644
+--- a/dynamic-snippets/example0/snippet.go
++++ b/dynamic-snippets/example0/snippet.go
+@@ -4,7 +4,6 @@ import (
+     context "context"
+     strings "strings"
+ 
+-    fern "github.com/file-upload/fern"
+     client "github.com/file-upload/fern/client"
+     option "github.com/file-upload/fern/option"
+ )
+@@ -15,13 +14,10 @@ func do() {
+             "https://api.fern.com",
+         ),
+     )
+-    request := &fern.JustFileRequest{
+-        File: strings.NewReader(
+-            "",
+-        ),
+-    }
+     client.Service.JustFile(
+         context.TODO(),
+-        request,
++        strings.NewReader(
++            "",
++        ),
+     )
+ }
+diff --git a/dynamic-snippets/example1/snippet.go b/dynamic-snippets/example1/snippet.go
+index 58dcab120b0..22b3feb8760 100644
+--- a/dynamic-snippets/example1/snippet.go
++++ b/dynamic-snippets/example1/snippet.go
+@@ -15,13 +15,12 @@ func do() {
+             "https://api.fern.com",
+         ),
+     )
+-    request := &fern.OptionalArgsRequest{
+-        ImageFile: strings.NewReader(
+-            "",
+-        ),
+-    }
++    request := &fern.OptionalArgsRequest{}
+     client.Service.OptionalArgs(
+         context.TODO(),
++        strings.NewReader(
++            "",
++        ),
+         request,
+     )
+ }
+diff --git a/reference.md b/reference.md
+index d2ccc9525c3..0e4a85af942 100644
+--- a/reference.md
++++ b/reference.md
+@@ -13,14 +13,11 @@
+ <dd>
+ 
+ ```go
+-request := &fern.JustFileRequest{
+-        File: strings.NewReader(
+-            "",
+-        ),
+-    }
+ client.Service.JustFile(
+         context.TODO(),
+-        request,
++        strings.NewReader(
++            "",
++        ),
+     )
+ }
+ ```
+@@ -47,13 +44,12 @@ client.Service.JustFile(
+ <dd>
+ 
+ ```go
+-request := &fern.OptionalArgsRequest{
+-        ImageFile: strings.NewReader(
+-            "",
+-        ),
+-    }
++request := &fern.OptionalArgsRequest{}
+ client.Service.OptionalArgs(
+         context.TODO(),
++        strings.NewReader(
++            "",
++        ),
+         request,
+     )
+ }
+diff --git a/service/client.go b/service/client.go
+index 11db7537f9a..0fa9ed3589c 100644
+--- a/service/client.go
++++ b/service/client.go
+@@ -4,6 +4,7 @@ package service
+ 
+ import (
+ 	context "context"
++	io "io"
+ 
+ 	fern "github.com/file-upload/fern"
+ 	core "github.com/file-upload/fern/core"
+@@ -35,11 +36,19 @@ func NewClient(options *core.RequestOptions) *Client {
+ 
+ func (c *Client) Post(
+ 	ctx context.Context,
++	file io.Reader,
++	fileList []io.Reader,
++	maybeFile io.Reader,
++	maybeFileList []io.Reader,
+ 	request *fern.MyRequest,
+ 	opts ...option.RequestOption,
+ ) error {
+ 	_, err := c.WithRawResponse.Post(
+ 		ctx,
++		file,
++		fileList,
++		maybeFile,
++		maybeFileList,
+ 		request,
+ 		opts...,
+ 	)
+@@ -51,12 +60,12 @@ func (c *Client) Post(
+ 
+ func (c *Client) JustFile(
+ 	ctx context.Context,
+-	request *fern.JustFileRequest,
++	file io.Reader,
+ 	opts ...option.RequestOption,
+ ) error {
+ 	_, err := c.WithRawResponse.JustFile(
+ 		ctx,
+-		request,
++		file,
+ 		opts...,
+ 	)
+ 	if err != nil {
+@@ -67,11 +76,13 @@ func (c *Client) JustFile(
+ 
+ func (c *Client) JustFileWithQueryParams(
+ 	ctx context.Context,
++	file io.Reader,
+ 	request *fern.JustFileWithQueryParamsRequest,
+ 	opts ...option.RequestOption,
+ ) error {
+ 	_, err := c.WithRawResponse.JustFileWithQueryParams(
+ 		ctx,
++		file,
+ 		request,
+ 		opts...,
+ 	)
+@@ -83,11 +94,13 @@ func (c *Client) JustFileWithQueryParams(
+ 
+ func (c *Client) JustFileWithOptionalQueryParams(
+ 	ctx context.Context,
++	file io.Reader,
+ 	request *fern.JustFileWithOptionalQueryParamsRequest,
+ 	opts ...option.RequestOption,
+ ) error {
+ 	_, err := c.WithRawResponse.JustFileWithOptionalQueryParams(
+ 		ctx,
++		file,
+ 		request,
+ 		opts...,
+ 	)
+@@ -99,11 +112,13 @@ func (c *Client) JustFileWithOptionalQueryParams(
+ 
+ func (c *Client) WithContentType(
+ 	ctx context.Context,
++	file io.Reader,
+ 	request *fern.WithContentTypeRequest,
+ 	opts ...option.RequestOption,
+ ) error {
+ 	_, err := c.WithRawResponse.WithContentType(
+ 		ctx,
++		file,
+ 		request,
+ 		opts...,
+ 	)
+@@ -115,11 +130,13 @@ func (c *Client) WithContentType(
+ 
+ func (c *Client) WithFormEncoding(
+ 	ctx context.Context,
++	file io.Reader,
+ 	request *fern.WithFormEncodingRequest,
+ 	opts ...option.RequestOption,
+ ) error {
+ 	_, err := c.WithRawResponse.WithFormEncoding(
+ 		ctx,
++		file,
+ 		request,
+ 		opts...,
+ 	)
+@@ -131,11 +148,19 @@ func (c *Client) WithFormEncoding(
+ 
+ func (c *Client) WithFormEncodedContainers(
+ 	ctx context.Context,
++	file io.Reader,
++	fileList []io.Reader,
++	maybeFile io.Reader,
++	maybeFileList []io.Reader,
+ 	request *fern.MyOtherRequest,
+ 	opts ...option.RequestOption,
+ ) error {
+ 	_, err := c.WithRawResponse.WithFormEncodedContainers(
+ 		ctx,
++		file,
++		fileList,
++		maybeFile,
++		maybeFileList,
+ 		request,
+ 		opts...,
+ 	)
+@@ -147,11 +172,13 @@ func (c *Client) WithFormEncodedContainers(
+ 
+ func (c *Client) OptionalArgs(
+ 	ctx context.Context,
++	imageFile io.Reader,
+ 	request *fern.OptionalArgsRequest,
+ 	opts ...option.RequestOption,
+ ) (string, error) {
+ 	response, err := c.WithRawResponse.OptionalArgs(
+ 		ctx,
++		imageFile,
+ 		request,
+ 		opts...,
+ 	)
+@@ -163,11 +190,13 @@ func (c *Client) OptionalArgs(
+ 
+ func (c *Client) WithInlineType(
+ 	ctx context.Context,
++	file io.Reader,
+ 	request *fern.InlineTypeRequest,
+ 	opts ...option.RequestOption,
+ ) (string, error) {
+ 	response, err := c.WithRawResponse.WithInlineType(
+ 		ctx,
++		file,
+ 		request,
+ 		opts...,
+ 	)
+@@ -179,11 +208,13 @@ func (c *Client) WithInlineType(
+ 
+ func (c *Client) WithJSONProperty(
+ 	ctx context.Context,
++	file io.Reader,
+ 	request *fern.WithJSONPropertyRequest,
+ 	opts ...option.RequestOption,
+ ) (string, error) {
+ 	response, err := c.WithRawResponse.WithJSONProperty(
+ 		ctx,
++		file,
+ 		request,
+ 		opts...,
+ 	)
+@@ -209,11 +240,13 @@ func (c *Client) Simple(
+ 
+ func (c *Client) WithLiteralAndEnumTypes(
+ 	ctx context.Context,
++	file io.Reader,
+ 	request *fern.LiteralEnumRequest,
+ 	opts ...option.RequestOption,
+ ) (string, error) {
+ 	response, err := c.WithRawResponse.WithLiteralAndEnumTypes(
+ 		ctx,
++		file,
+ 		request,
+ 		opts...,
+ 	)
+diff --git a/service/raw_client.go b/service/raw_client.go
+index ceb7ee663f1..3473bede26a 100644
+--- a/service/raw_client.go
++++ b/service/raw_client.go
+@@ -5,6 +5,7 @@ package service
+ import (
+ 	context "context"
+ 	fmt "fmt"
++	io "io"
+ 	http "net/http"
+ 
+ 	fern "github.com/file-upload/fern"
+@@ -34,6 +35,10 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
+ 
+ func (r *RawClient) Post(
+ 	ctx context.Context,
++	file io.Reader,
++	fileList []io.Reader,
++	maybeFile io.Reader,
++	maybeFileList []io.Reader,
+ 	request *fern.MyRequest,
+ 	opts ...option.RequestOption,
+ ) (*core.Response[any], error) {
+@@ -57,20 +62,20 @@ func (r *RawClient) Post(
+ 	if err := writer.WriteField("integer", fmt.Sprintf("%v", request.Integer)); err != nil {
+ 		return nil, err
+ 	}
+-	if err := writer.WriteFile("file", request.File); err != nil {
++	if err := writer.WriteFile("file", file); err != nil {
+ 		return nil, err
+ 	}
+-	for _, f := range request.FileList {
++	for _, f := range fileList {
+ 		if err := writer.WriteFile("file_list", f); err != nil {
+ 			return nil, err
+ 		}
+ 	}
+-	if request.MaybeFile != nil {
+-		if err := writer.WriteFile("maybe_file", request.MaybeFile); err != nil {
++	if maybeFile != nil {
++		if err := writer.WriteFile("maybe_file", maybeFile); err != nil {
+ 			return nil, err
+ 		}
+ 	}
+-	for _, f := range request.MaybeFileList {
++	for _, f := range maybeFileList {
+ 		if err := writer.WriteFile("maybe_file_list", f); err != nil {
+ 			return nil, err
+ 		}
+@@ -148,7 +153,7 @@ func (r *RawClient) Post(
+ 
+ func (r *RawClient) JustFile(
+ 	ctx context.Context,
+-	request *fern.JustFileRequest,
++	file io.Reader,
+ 	opts ...option.RequestOption,
+ ) (*core.Response[any], error) {
+ 	options := core.NewRequestOptions(opts...)
+@@ -163,7 +168,7 @@ func (r *RawClient) JustFile(
+ 		options.ToHeader(),
+ 	)
+ 	writer := internal.NewMultipartWriter()
+-	if err := writer.WriteFile("file", request.File); err != nil {
++	if err := writer.WriteFile("file", file); err != nil {
+ 		return nil, err
+ 	}
+ 	if err := writer.Close(); err != nil {
+@@ -181,7 +186,6 @@ func (r *RawClient) JustFile(
+ 			BodyProperties:  options.BodyProperties,
+ 			QueryParameters: options.QueryParameters,
+ 			Client:          options.HTTPClient,
+-			Request:         writer.Buffer(),
+ 		},
+ 	)
+ 	if err != nil {
+@@ -196,6 +200,7 @@ func (r *RawClient) JustFile(
+ 
+ func (r *RawClient) JustFileWithQueryParams(
+ 	ctx context.Context,
++	file io.Reader,
+ 	request *fern.JustFileWithQueryParamsRequest,
+ 	opts ...option.RequestOption,
+ ) (*core.Response[any], error) {
+@@ -218,7 +223,7 @@ func (r *RawClient) JustFileWithQueryParams(
+ 		options.ToHeader(),
+ 	)
+ 	writer := internal.NewMultipartWriter()
+-	if err := writer.WriteFile("file", request.File); err != nil {
++	if err := writer.WriteFile("file", file); err != nil {
+ 		return nil, err
+ 	}
+ 	if err := writer.Close(); err != nil {
+@@ -251,6 +256,7 @@ func (r *RawClient) JustFileWithQueryParams(
+ 
+ func (r *RawClient) JustFileWithOptionalQueryParams(
+ 	ctx context.Context,
++	file io.Reader,
+ 	request *fern.JustFileWithOptionalQueryParamsRequest,
+ 	opts ...option.RequestOption,
+ ) (*core.Response[any], error) {
+@@ -273,7 +279,7 @@ func (r *RawClient) JustFileWithOptionalQueryParams(
+ 		options.ToHeader(),
+ 	)
+ 	writer := internal.NewMultipartWriter()
+-	if err := writer.WriteFile("file", request.File); err != nil {
++	if err := writer.WriteFile("file", file); err != nil {
+ 		return nil, err
+ 	}
+ 	if err := writer.Close(); err != nil {
+@@ -306,6 +312,7 @@ func (r *RawClient) JustFileWithOptionalQueryParams(
+ 
+ func (r *RawClient) WithContentType(
+ 	ctx context.Context,
++	file io.Reader,
+ 	request *fern.WithContentTypeRequest,
+ 	opts ...option.RequestOption,
+ ) (*core.Response[any], error) {
+@@ -321,7 +328,7 @@ func (r *RawClient) WithContentType(
+ 		options.ToHeader(),
+ 	)
+ 	writer := internal.NewMultipartWriter()
+-	if err := writer.WriteFile("file", request.File, internal.WithDefaultContentType("application/octet-stream")); err != nil {
++	if err := writer.WriteFile("file", file, internal.WithDefaultContentType("application/octet-stream")); err != nil {
+ 		return nil, err
+ 	}
+ 	if err := writer.WriteField("foo", request.Foo); err != nil {
+@@ -365,6 +372,7 @@ func (r *RawClient) WithContentType(
+ 
+ func (r *RawClient) WithFormEncoding(
+ 	ctx context.Context,
++	file io.Reader,
+ 	request *fern.WithFormEncodingRequest,
+ 	opts ...option.RequestOption,
+ ) (*core.Response[any], error) {
+@@ -380,7 +388,7 @@ func (r *RawClient) WithFormEncoding(
+ 		options.ToHeader(),
+ 	)
+ 	writer := internal.NewMultipartWriter()
+-	if err := writer.WriteFile("file", request.File, internal.WithDefaultContentType("application/octet-stream")); err != nil {
++	if err := writer.WriteFile("file", file, internal.WithDefaultContentType("application/octet-stream")); err != nil {
+ 		return nil, err
+ 	}
+ 	if err := writer.WriteField("foo", request.Foo); err != nil {
+@@ -419,6 +427,10 @@ func (r *RawClient) WithFormEncoding(
+ 
+ func (r *RawClient) WithFormEncodedContainers(
+ 	ctx context.Context,
++	file io.Reader,
++	fileList []io.Reader,
++	maybeFile io.Reader,
++	maybeFileList []io.Reader,
+ 	request *fern.MyOtherRequest,
+ 	opts ...option.RequestOption,
+ ) (*core.Response[any], error) {
+@@ -442,20 +454,20 @@ func (r *RawClient) WithFormEncodedContainers(
+ 	if err := writer.WriteField("integer", fmt.Sprintf("%v", request.Integer)); err != nil {
+ 		return nil, err
+ 	}
+-	if err := writer.WriteFile("file", request.File); err != nil {
++	if err := writer.WriteFile("file", file); err != nil {
+ 		return nil, err
+ 	}
+-	for _, f := range request.FileList {
++	for _, f := range fileList {
+ 		if err := writer.WriteFile("file_list", f); err != nil {
+ 			return nil, err
+ 		}
+ 	}
+-	if request.MaybeFile != nil {
+-		if err := writer.WriteFile("maybe_file", request.MaybeFile); err != nil {
++	if maybeFile != nil {
++		if err := writer.WriteFile("maybe_file", maybeFile); err != nil {
+ 			return nil, err
+ 		}
+ 	}
+-	for _, f := range request.MaybeFileList {
++	for _, f := range maybeFileList {
+ 		if err := writer.WriteFile("maybe_file_list", f); err != nil {
+ 			return nil, err
+ 		}
+@@ -538,6 +550,7 @@ func (r *RawClient) WithFormEncodedContainers(
+ 
+ func (r *RawClient) OptionalArgs(
+ 	ctx context.Context,
++	imageFile io.Reader,
+ 	request *fern.OptionalArgsRequest,
+ 	opts ...option.RequestOption,
+ ) (*core.Response[string], error) {
+@@ -553,8 +566,8 @@ func (r *RawClient) OptionalArgs(
+ 		options.ToHeader(),
+ 	)
+ 	writer := internal.NewMultipartWriter()
+-	if request.ImageFile != nil {
+-		if err := writer.WriteFile("image_file", request.ImageFile, internal.WithDefaultContentType("image/jpeg")); err != nil {
++	if imageFile != nil {
++		if err := writer.WriteFile("image_file", imageFile, internal.WithDefaultContentType("image/jpeg")); err != nil {
+ 			return nil, err
+ 		}
+ 	}
+@@ -595,6 +608,7 @@ func (r *RawClient) OptionalArgs(
+ 
+ func (r *RawClient) WithInlineType(
+ 	ctx context.Context,
++	file io.Reader,
+ 	request *fern.InlineTypeRequest,
+ 	opts ...option.RequestOption,
+ ) (*core.Response[string], error) {
+@@ -610,7 +624,7 @@ func (r *RawClient) WithInlineType(
+ 		options.ToHeader(),
+ 	)
+ 	writer := internal.NewMultipartWriter()
+-	if err := writer.WriteFile("file", request.File); err != nil {
++	if err := writer.WriteFile("file", file); err != nil {
+ 		return nil, err
+ 	}
+ 	if err := writer.WriteJSON("request", request.Request); err != nil {
+@@ -648,6 +662,7 @@ func (r *RawClient) WithInlineType(
+ 
+ func (r *RawClient) WithJSONProperty(
+ 	ctx context.Context,
++	file io.Reader,
+ 	request *fern.WithJSONPropertyRequest,
+ 	opts ...option.RequestOption,
+ ) (*core.Response[string], error) {
+@@ -663,7 +678,7 @@ func (r *RawClient) WithJSONProperty(
+ 		options.ToHeader(),
+ 	)
+ 	writer := internal.NewMultipartWriter()
+-	if err := writer.WriteFile("file", request.File); err != nil {
++	if err := writer.WriteFile("file", file); err != nil {
+ 		return nil, err
+ 	}
+ 	if request.JSON != nil {
+@@ -740,6 +755,7 @@ func (r *RawClient) Simple(
+ 
+ func (r *RawClient) WithLiteralAndEnumTypes(
+ 	ctx context.Context,
++	file io.Reader,
+ 	request *fern.LiteralEnumRequest,
+ 	opts ...option.RequestOption,
+ ) (*core.Response[string], error) {
+@@ -755,7 +771,7 @@ func (r *RawClient) WithLiteralAndEnumTypes(
+ 		options.ToHeader(),
+ 	)
+ 	writer := internal.NewMultipartWriter()
+-	if err := writer.WriteFile("file", request.File); err != nil {
++	if err := writer.WriteFile("file", file); err != nil {
+ 		return nil, err
+ 	}
+ 	if request.ModelType != nil {
+diff --git a/service.go b/service.go
+index d194a185ffc..1c9d7b39d6f 100644
+--- a/service.go
++++ b/service.go
+@@ -6,33 +6,17 @@ import (
+ 	json "encoding/json"
+ 	fmt "fmt"
+ 	internal "github.com/file-upload/fern/internal"
+-	io "io"
+ 	big "math/big"
+ )
+ 
+-type JustFileRequest struct {
+-	File io.Reader `json:"-" url:"-"`
+-
+-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+-	explicitFields *big.Int `json:"-" url:"-"`
+-}
+-
+-func (j *JustFileRequest) require(field *big.Int) {
+-	if j.explicitFields == nil {
+-		j.explicitFields = big.NewInt(0)
+-	}
+-	j.explicitFields.Or(j.explicitFields, field)
+-}
+-
+ var (
+ 	justFileWithOptionalQueryParamsRequestFieldMaybeString  = big.NewInt(1 << 0)
+ 	justFileWithOptionalQueryParamsRequestFieldMaybeInteger = big.NewInt(1 << 1)
+ )
+ 
+ type JustFileWithOptionalQueryParamsRequest struct {
+-	MaybeString  *string   `json:"-" url:"maybeString,omitempty"`
+-	MaybeInteger *int      `json:"-" url:"maybeInteger,omitempty"`
+-	File         io.Reader `json:"-" url:"-"`
++	MaybeString  *string `json:"-" url:"maybeString,omitempty"`
++	MaybeInteger *int    `json:"-" url:"maybeInteger,omitempty"`
+ 
+ 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+ 	explicitFields *big.Int `json:"-" url:"-"`
+@@ -94,7 +78,6 @@ type JustFileWithQueryParamsRequest struct {
+ 	MaybeInteger          *int      `json:"-" url:"maybeInteger,omitempty"`
+ 	ListOfStrings         []string  `json:"-" url:"listOfStrings"`
+ 	OptionalListOfStrings []*string `json:"-" url:"optionalListOfStrings,omitempty"`
+-	File                  io.Reader `json:"-" url:"-"`
+ 
+ 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+ 	explicitFields *big.Int `json:"-" url:"-"`
+@@ -164,8 +147,7 @@ func (j *JustFileWithQueryParamsRequest) MarshalJSON() ([]byte, error) {
+ }
+ 
+ type OptionalArgsRequest struct {
+-	ImageFile io.Reader `json:"-" url:"-"`
+-	Request   any       `json:"request,omitempty" url:"-"`
++	Request any `json:"request,omitempty" url:"-"`
+ 
+ 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+ 	explicitFields *big.Int `json:"-" url:"-"`
+@@ -179,21 +161,17 @@ func (o *OptionalArgsRequest) require(field *big.Int) {
+ }
+ 
+ type MyRequest struct {
+-	File                  io.Reader               `json:"-" url:"-"`
+-	FileList              []io.Reader             `json:"-" url:"-"`
+-	MaybeFile             io.Reader               `json:"-" url:"-"`
+-	MaybeFileList         []io.Reader             `json:"-" url:"-"`
+ 	MaybeString           *string                 `json:"maybe_string,omitempty" url:"-"`
+ 	Integer               int                     `json:"integer" url:"-"`
+ 	MaybeInteger          *int                    `json:"maybe_integer,omitempty" url:"-"`
+ 	OptionalListOfStrings []string                `json:"optional_list_of_strings,omitempty" url:"-"`
+-	ListOfObjects         []*MyObject             `json:"list_of_objects" url:"-"`
++	ListOfObjects         []*MyObject             `json:"list_of_objects,omitempty" url:"-"`
+ 	OptionalMetadata      any                     `json:"optional_metadata,omitempty" url:"-"`
+ 	OptionalObjectType    *ObjectType             `json:"optional_object_type,omitempty" url:"-"`
+ 	OptionalID            *ID                     `json:"optional_id,omitempty" url:"-"`
+-	AliasObject           MyAliasObject           `json:"alias_object" url:"-"`
+-	ListOfAliasObject     []MyAliasObject         `json:"list_of_alias_object" url:"-"`
+-	AliasListOfObject     MyCollectionAliasObject `json:"alias_list_of_object" url:"-"`
++	AliasObject           MyAliasObject           `json:"alias_object,omitempty" url:"-"`
++	ListOfAliasObject     []MyAliasObject         `json:"list_of_alias_object,omitempty" url:"-"`
++	AliasListOfObject     MyCollectionAliasObject `json:"alias_list_of_object,omitempty" url:"-"`
+ 
+ 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+ 	explicitFields *big.Int `json:"-" url:"-"`
+@@ -530,9 +508,8 @@ func (o OpenEnumType) Ptr() *OpenEnumType {
+ }
+ 
+ type WithContentTypeRequest struct {
+-	File   io.Reader `json:"-" url:"-"`
+ 	Foo    string    `json:"foo" url:"-"`
+-	Bar    *MyObject `json:"bar" url:"-"`
++	Bar    *MyObject `json:"bar,omitempty" url:"-"`
+ 	FooBar *MyObject `json:"foo_bar,omitempty" url:"-"`
+ 
+ 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+@@ -547,22 +524,18 @@ func (w *WithContentTypeRequest) require(field *big.Int) {
+ }
+ 
+ type MyOtherRequest struct {
+-	File                       io.Reader               `json:"-" url:"-"`
+-	FileList                   []io.Reader             `json:"-" url:"-"`
+-	MaybeFile                  io.Reader               `json:"-" url:"-"`
+-	MaybeFileList              []io.Reader             `json:"-" url:"-"`
+ 	MaybeString                *string                 `json:"maybe_string,omitempty" url:"-"`
+ 	Integer                    int                     `json:"integer" url:"-"`
+ 	MaybeInteger               *int                    `json:"maybe_integer,omitempty" url:"-"`
+ 	OptionalListOfStrings      []string                `json:"optional_list_of_strings,omitempty" url:"-"`
+-	ListOfObjects              []*MyObject             `json:"list_of_objects" url:"-"`
++	ListOfObjects              []*MyObject             `json:"list_of_objects,omitempty" url:"-"`
+ 	OptionalMetadata           any                     `json:"optional_metadata,omitempty" url:"-"`
+ 	OptionalObjectType         *ObjectType             `json:"optional_object_type,omitempty" url:"-"`
+ 	OptionalID                 *ID                     `json:"optional_id,omitempty" url:"-"`
+-	ListOfObjectsWithOptionals []*MyObjectWithOptional `json:"list_of_objects_with_optionals" url:"-"`
+-	AliasObject                MyAliasObject           `json:"alias_object" url:"-"`
+-	ListOfAliasObject          []MyAliasObject         `json:"list_of_alias_object" url:"-"`
+-	AliasListOfObject          MyCollectionAliasObject `json:"alias_list_of_object" url:"-"`
++	ListOfObjectsWithOptionals []*MyObjectWithOptional `json:"list_of_objects_with_optionals,omitempty" url:"-"`
++	AliasObject                MyAliasObject           `json:"alias_object,omitempty" url:"-"`
++	ListOfAliasObject          []MyAliasObject         `json:"list_of_alias_object,omitempty" url:"-"`
++	AliasListOfObject          MyCollectionAliasObject `json:"alias_list_of_object,omitempty" url:"-"`
+ 
+ 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+ 	explicitFields *big.Int `json:"-" url:"-"`
+@@ -576,9 +549,8 @@ func (m *MyOtherRequest) require(field *big.Int) {
+ }
+ 
+ type WithFormEncodingRequest struct {
+-	File io.Reader `json:"-" url:"-"`
+-	Foo  string    `json:"foo" url:"-"`
+-	Bar  *MyObject `json:"bar" url:"-"`
++	Foo string    `json:"foo" url:"-"`
++	Bar *MyObject `json:"bar,omitempty" url:"-"`
+ 
+ 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+ 	explicitFields *big.Int `json:"-" url:"-"`
+@@ -592,8 +564,7 @@ func (w *WithFormEncodingRequest) require(field *big.Int) {
+ }
+ 
+ type InlineTypeRequest struct {
+-	File    io.Reader     `json:"-" url:"-"`
+-	Request *MyInlineType `json:"request" url:"-"`
++	Request *MyInlineType `json:"request,omitempty" url:"-"`
+ 
+ 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+ 	explicitFields *big.Int `json:"-" url:"-"`
+@@ -607,7 +578,6 @@ func (i *InlineTypeRequest) require(field *big.Int) {
+ }
+ 
+ type WithJSONPropertyRequest struct {
+-	File io.Reader `json:"-" url:"-"`
+ 	JSON *MyObject `json:"json,omitempty" url:"-"`
+ 
+ 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+@@ -622,7 +592,6 @@ func (w *WithJSONPropertyRequest) require(field *big.Int) {
+ }
+ 
+ type LiteralEnumRequest struct {
+-	File      io.Reader     `json:"-" url:"-"`
+ 	ModelType *ModelType    `json:"model_type,omitempty" url:"-"`
+ 	OpenEnum  *OpenEnumType `json:"open_enum,omitempty" url:"-"`
+ 	MaybeName *string       `json:"maybe_name,omitempty" url:"-"`
+diff --git a/snippet.json b/snippet.json
+index 1ba8f33720f..70b4cdd6f9f 100644
+--- a/snippet.json
++++ b/snippet.json
+@@ -8,7 +8,7 @@
+             },
+             "snippet": {
+                 "type": "go",
+-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/file-upload/fern\"\n\tfernclient \"github.com/file-upload/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Service.JustFile(\n\tcontext.TODO(),\n\t\u0026fern.JustFileRequest{},\n)\n"
++                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/file-upload/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Service.JustFile(\n\tcontext.TODO(),\n)\n"
+             }
+         },
+         {

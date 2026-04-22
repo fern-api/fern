@@ -1,0 +1,140 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 3a766ccaa4a..0ea3f0060cd 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,7 +2,18 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-swift-sdk",
+   "generatorVersion": "local",
+-  "generatorConfig": {},
++  "generatorConfig": {
++    "customReadmeSections": [
++      {
++        "title": "Override Section",
++        "content": "Override Content"
++      },
++      {
++        "title": "Generator Invocation Custom Section",
++        "content": "Generator Invocation Custom Content for {{ gitUrl }}:{{ minVersion }}"
++      }
++    ]
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "ci",
+diff --git a/README.md b/README.md
+index 33ff23c5665..3574a7e716a 100644
+--- a/README.md
++++ b/README.md
+@@ -1,5 +1,7 @@
+ # Seed Swift Library
+ 
++![](https://www.fernapi.com)
++
+ [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FSwift)
+ ![SwiftPM compatible](https://img.shields.io/badge/SwiftPM-compatible-orange.svg)
+ 
+@@ -7,9 +9,13 @@ The Seed Swift library provides convenient access to the Seed APIs from Swift.
+ 
+ ## Table of Contents
+ 
++- [Documentation](#documentation)
+ - [Requirements](#requirements)
+ - [Installation](#installation)
+ - [Reference](#reference)
++- [Base Readme Custom Section](#base-readme-custom-section)
++- [Override Section](#override-section)
++- [Generator Invocation Custom Section](#generator-invocation-custom-section)
+ - [Usage](#usage)
+ - [Environments](#environments)
+ - [Errors](#errors)
+@@ -20,6 +26,10 @@ The Seed Swift library provides convenient access to the Seed APIs from Swift.
+   - [Custom Networking Client](#custom-networking-client)
+ - [Contributing](#contributing)
+ 
++## Documentation
++
++API reference documentation is available [here](https://www.docs.fernapi.com).
++
+ ## Requirements
+ 
+ This SDK requires:
+@@ -43,6 +53,18 @@ dependencies: [
+ 
+ A full reference for this library is available [here](./reference.md).
+ 
++## Base Readme Custom Section
++
++Base Readme Custom Content for https://github.com/examples/fern:0.0.1
++
++## Override Section
++
++Override Content
++
++## Generator Invocation Custom Section
++
++Generator Invocation Custom Content for https://github.com/examples/fern:0.0.1
++
+ ## Usage
+ 
+ Instantiate and use the client with the following:
+@@ -54,7 +76,22 @@ import Examples
+ private func main() async throws {
+     let client = ExamplesClient(token: "<token>")
+ 
+-    _ = try await client.echo(request: "string")
++    _ = try await client.service.createMovie(request: Movie(
++        id: "id",
++        prequel: "prequel",
++        title: "title",
++        from: "from",
++        rating: 1.1,
++        type: .movie,
++        tag: "tag",
++        book: "book",
++        metadata: [
++            "metadata": .object([
++                "key": .string("value")
++            ])
++        ],
++        revenue: 1000000
++    ))
+ }
+ 
+ try await main()
+@@ -83,7 +120,7 @@ import Examples
+ let client = ExamplesClient(...)
+ 
+ do {
+-    let response = try await client.echo(...)
++    let response = try await client.service.createMovie(...)
+     // Handle successful response
+ } catch let error as ExamplesError {
+     switch error {
+@@ -110,7 +147,7 @@ do {
+ If you would like to send additional headers as part of the request, use the `additionalHeaders` request option.
+ 
+ ```swift
+-try await client.echo(..., requestOptions: .init(
++try await client.service.createMovie(..., requestOptions: .init(
+     additionalHeaders: [
+         "X-Custom-Header": "custom value"
+     ]
+@@ -122,7 +159,7 @@ try await client.echo(..., requestOptions: .init(
+ If you would like to send additional query string parameters as part of the request, use the `additionalQueryParameters` request option.
+ 
+ ```swift
+-try await client.echo(..., requestOptions: .init(
++try await client.service.createMovie(..., requestOptions: .init(
+     additionalQueryParameters: [
+         "custom_query_param_key": "custom_query_param_value"
+     ]
+@@ -134,7 +171,7 @@ try await client.echo(..., requestOptions: .init(
+ The SDK defaults to a 60-second timeout. Use the `timeout` option to configure this behavior.
+ 
+ ```swift
+-try await client.echo(..., requestOptions: .init(
++try await client.service.getMovie(..., requestOptions: .init(
+     timeout: 30
+ ))
+ ```

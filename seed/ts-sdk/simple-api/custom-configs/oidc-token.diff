@@ -1,0 +1,169 @@
+diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+index 93fba226cb6..41635392d9a 100644
+--- a/.github/workflows/ci.yml
++++ b/.github/workflows/ci.yml
+@@ -44,3 +44,47 @@ jobs:
+ 
+       - name: Test
+         run: pnpm test
++
++  publish:
++    needs: [ compile, test ]
++    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
++    runs-on: ubuntu-latest
++    permissions:
++      contents: read   # Required for checkout
++      id-token: write  # Required for OIDC
++    steps:
++      - name: Checkout repo
++        uses: actions/checkout@v6
++
++      - name: Set up node
++        uses: actions/setup-node@v6
++
++      - name: Install pnpm
++        uses: pnpm/action-setup@v4
++
++      - name: Install dependencies
++        run: pnpm install --frozen-lockfile
++
++      - name: Build
++        run: pnpm build
++
++      - name: Publish to npm
++        run: |
++          publish() {  # use latest npm to ensure OIDC support
++            npx -y npm@latest publish "$@"
++          }
++          if [[ ${GITHUB_REF} == *alpha* ]]; then
++            publish --access public --tag alpha
++          elif [[ ${GITHUB_REF} == *beta* ]]; then
++            publish --access public --tag beta
++          else
++            PKG_NAME=$(node -p "require('./package.json').name")
++            PKG_VERSION=$(node -p "require('./package.json').version")
++            CURRENT_LATEST=$(npm view "${PKG_NAME}" dist-tags.latest 2>/dev/null || echo "0.0.0")
++            if npx -y semver "${PKG_VERSION}" -r "<${CURRENT_LATEST}" > /dev/null 2>&1; then
++              echo "Publishing ${PKG_VERSION} with --tag backport (current latest is ${CURRENT_LATEST})"
++              publish --access public --tag backport
++            else
++              publish --access public
++            fi
++          fi
+\ No newline at end of file
+diff --git a/README.md b/README.md
+index e5f3d14b95b..2c71e6c9c6d 100644
+--- a/README.md
++++ b/README.md
+@@ -1,7 +1,7 @@
+ # Seed TypeScript Library
+ 
+ [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FTypeScript)
+-[![npm shield](https://img.shields.io/npm/v/@fern/simple-api)](https://www.npmjs.com/package/@fern/simple-api)
++[![npm shield](https://img.shields.io/npm/v/@fern-api/dummy)](https://www.npmjs.com/package/@fern-api/dummy)
+ 
+ The Seed TypeScript library provides convenient access to the Seed APIs from TypeScript.
+ 
+@@ -28,7 +28,7 @@ The Seed TypeScript library provides convenient access to the Seed APIs from Typ
+ ## Installation
+ 
+ ```sh
+-npm i -s @fern/simple-api
++npm i -s @fern-api/dummy
+ ```
+ 
+ ## Reference
+@@ -40,7 +40,7 @@ A full reference for this library is available [here](./reference.md).
+ Instantiate and use the client with the following:
+ 
+ ```typescript
+-import { SeedSimpleApiClient, SeedSimpleApiEnvironment } from "@fern/simple-api";
++import { SeedSimpleApiClient, SeedSimpleApiEnvironment } from "@fern-api/dummy";
+ 
+ const client = new SeedSimpleApiClient({ environment: SeedSimpleApiEnvironment.Production, token: "YOUR_TOKEN" });
+ await client.user.get("id");
+@@ -51,7 +51,7 @@ await client.user.get("id");
+ This SDK allows you to configure different environments for API requests.
+ 
+ ```typescript
+-import { SeedSimpleApiClient, SeedSimpleApiEnvironment } from "@fern/simple-api";
++import { SeedSimpleApiClient, SeedSimpleApiEnvironment } from "@fern-api/dummy";
+ 
+ const client = new SeedSimpleApiClient({
+     environment: SeedSimpleApiEnvironment.Production,
+@@ -64,7 +64,7 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
+ will be thrown.
+ 
+ ```typescript
+-import { SeedSimpleApiError } from "@fern/simple-api";
++import { SeedSimpleApiError } from "@fern-api/dummy";
+ 
+ try {
+     await client.user.get(...);
+@@ -85,7 +85,7 @@ try {
+ This SDK supports direct imports of subpackage clients, which allows JavaScript bundlers to tree-shake and include only the imported subpackage code. This results in much smaller bundle sizes.
+ 
+ ```typescript
+-import { UserClient } from '@fern/simple-api/user';
++import { UserClient } from '@fern-api/dummy/user';
+ 
+ const client = new UserClient({...});
+ ```
+@@ -95,7 +95,7 @@ const client = new UserClient({...});
+ If you would like to send additional headers as part of the request, use the `headers` request option.
+ 
+ ```typescript
+-import { SeedSimpleApiClient } from "@fern/simple-api";
++import { SeedSimpleApiClient } from "@fern-api/dummy";
+ 
+ const client = new SeedSimpleApiClient({
+     ...
+@@ -182,7 +182,7 @@ console.log(rawResponse.headers['X-My-Header']);
+ The SDK supports logging. You can configure the logger by passing in a `logging` object to the client options.
+ 
+ ```typescript
+-import { SeedSimpleApiClient, logging } from "@fern/simple-api";
++import { SeedSimpleApiClient, logging } from "@fern-api/dummy";
+ 
+ const client = new SeedSimpleApiClient({
+     ...
+diff --git a/package.json b/package.json
+index d0cc3a8b5d8..5c75ce36ef0 100644
+--- a/package.json
++++ b/package.json
+@@ -1,5 +1,5 @@
+ {
+-    "name": "@fern/simple-api",
++    "name": "@fern-api/dummy",
+     "version": "0.0.1",
+     "private": false,
+     "repository": {
+diff --git a/snippet.json b/snippet.json
+index a66ba5b7e79..41bd8689d9b 100644
+--- a/snippet.json
++++ b/snippet.json
+@@ -8,7 +8,7 @@
+             },
+             "snippet": {
+                 "type": "typescript",
+-                "client": "import { SeedSimpleApiClient, SeedSimpleApiEnvironment } from \"@fern/simple-api\";\n\nconst client = new SeedSimpleApiClient({ environment: SeedSimpleApiEnvironment.Production, token: \"YOUR_TOKEN\" });\nawait client.user.get(\"id\");\n"
++                "client": "import { SeedSimpleApiClient, SeedSimpleApiEnvironment } from \"@fern-api/dummy\";\n\nconst client = new SeedSimpleApiClient({ environment: SeedSimpleApiEnvironment.Production, token: \"YOUR_TOKEN\" });\nawait client.user.get(\"id\");\n"
+             }
+         }
+     ],
+diff --git a/src/BaseClient.ts b/src/BaseClient.ts
+index 339461e0a49..61cb229112b 100644
+--- a/src/BaseClient.ts
++++ b/src/BaseClient.ts
+@@ -50,9 +50,9 @@ export function normalizeClientOptions<T extends BaseClientOptions = BaseClientO
+     const headers = mergeHeaders(
+         {
+             "X-Fern-Language": "JavaScript",
+-            "X-Fern-SDK-Name": "@fern/simple-api",
++            "X-Fern-SDK-Name": "@fern-api/dummy",
+             "X-Fern-SDK-Version": "0.0.1",
+-            "User-Agent": "@fern/simple-api/0.0.1",
++            "User-Agent": "@fern-api/dummy/0.0.1",
+             "X-Fern-Runtime": core.RUNTIME.type,
+             "X-Fern-Runtime-Version": core.RUNTIME.version,
+         },

@@ -1,0 +1,165 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 0eba66302dd..e224d10f0ad 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-php-sdk",
+   "generatorVersion": "local",
++  "generatorConfig": {
++    "propertyAccess": "private"
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "ci",
+diff --git a/src/Imdb/Types/CreateMovieRequest.php b/src/Imdb/Types/CreateMovieRequest.php
+index c2658c3de19..cd037dccb9e 100644
+--- a/src/Imdb/Types/CreateMovieRequest.php
++++ b/src/Imdb/Types/CreateMovieRequest.php
+@@ -11,13 +11,13 @@ class CreateMovieRequest extends JsonSerializableType
+      * @var string $title
+      */
+     #[JsonProperty('title')]
+-    public string $title;
++    private string $title;
+ 
+     /**
+      * @var float $rating
+      */
+     #[JsonProperty('rating')]
+-    public float $rating;
++    private float $rating;
+ 
+     /**
+      * @param array{
+@@ -32,6 +32,42 @@ class CreateMovieRequest extends JsonSerializableType
+         $this->rating = $values['rating'];
+     }
+ 
++    /**
++     * @return string
++     */
++    public function getTitle(): string
++    {
++        return $this->title;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setTitle(string $value): self
++    {
++        $this->title = $value;
++        $this->_setField('title');
++        return $this;
++    }
++
++    /**
++     * @return float
++     */
++    public function getRating(): float
++    {
++        return $this->rating;
++    }
++
++    /**
++     * @param float $value
++     */
++    public function setRating(float $value): self
++    {
++        $this->rating = $value;
++        $this->_setField('rating');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Imdb/Types/Movie.php b/src/Imdb/Types/Movie.php
+index 0a77bc1c88c..5422f4513fe 100644
+--- a/src/Imdb/Types/Movie.php
++++ b/src/Imdb/Types/Movie.php
+@@ -11,19 +11,19 @@ class Movie extends JsonSerializableType
+      * @var string $id
+      */
+     #[JsonProperty('id')]
+-    public string $id;
++    private string $id;
+ 
+     /**
+      * @var string $title
+      */
+     #[JsonProperty('title')]
+-    public string $title;
++    private string $title;
+ 
+     /**
+      * @var float $rating The rating scale is one to five stars
+      */
+     #[JsonProperty('rating')]
+-    public float $rating;
++    private float $rating;
+ 
+     /**
+      * @param array{
+@@ -40,6 +40,60 @@ class Movie extends JsonSerializableType
+         $this->rating = $values['rating'];
+     }
+ 
++    /**
++     * @return string
++     */
++    public function getId(): string
++    {
++        return $this->id;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setId(string $value): self
++    {
++        $this->id = $value;
++        $this->_setField('id');
++        return $this;
++    }
++
++    /**
++     * @return string
++     */
++    public function getTitle(): string
++    {
++        return $this->title;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setTitle(string $value): self
++    {
++        $this->title = $value;
++        $this->_setField('title');
++        return $this;
++    }
++
++    /**
++     * @return float
++     */
++    public function getRating(): float
++    {
++        return $this->rating;
++    }
++
++    /**
++     * @param float $value
++     */
++    public function setRating(float $value): self
++    {
++        $this->rating = $value;
++        $this->_setField('rating');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */

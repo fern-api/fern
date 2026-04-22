@@ -1,0 +1,327 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 5e4188a44b1..e0368df5f3a 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,7 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-csharp-sdk",
+   "generatorVersion": "local",
+-  "generatorConfig": {},
++  "generatorConfig": {
++    "unified-client-options": true
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "ci",
+diff --git a/README.md b/README.md
+index 3b9e91626e6..0e1ca6ef6fb 100644
+--- a/README.md
++++ b/README.md
+@@ -41,7 +41,9 @@ Instantiate and use the client with the following:
+ ```csharp
+ using SeedOauthClientCredentialsMandatoryAuth;
+ 
+-var client = new SeedOauthClientCredentialsMandatoryAuthClient("client_id", "client_secret");
++var client = new SeedOauthClientCredentialsMandatoryAuthClient(
++    clientOptions: new ClientOptions { ClientId = "client_id", ClientSecret = "client_secret" }
++);
+ await client.Auth.GetTokenWithClientCredentialsAsync(
+     new GetTokenRequest
+     {
+diff --git a/Snippets/Example0.cs b/Snippets/Example0.cs
+index 5ac9c17b254..6fc96c8f383 100644
+--- a/Snippets/Example0.cs
++++ b/Snippets/Example0.cs
+@@ -4,9 +4,9 @@ public partial class Examples
+ {
+     public async Task Example0() {
+         var client = new SeedOauthClientCredentialsMandatoryAuthClient(
+-            clientId: "<clientId>",
+-            clientSecret: "<clientSecret>",
+             clientOptions: new ClientOptions {
++                ClientId = "<clientId>",
++                ClientSecret = "<clientSecret>",
+                 BaseUrl = "https://api.fern.com"
+             }
+         );
+diff --git a/Snippets/Example1.cs b/Snippets/Example1.cs
+index f642580f66b..d1e00921ee3 100644
+--- a/Snippets/Example1.cs
++++ b/Snippets/Example1.cs
+@@ -4,9 +4,9 @@ public partial class Examples
+ {
+     public async Task Example1() {
+         var client = new SeedOauthClientCredentialsMandatoryAuthClient(
+-            clientId: "<clientId>",
+-            clientSecret: "<clientSecret>",
+             clientOptions: new ClientOptions {
++                ClientId = "<clientId>",
++                ClientSecret = "<clientSecret>",
+                 BaseUrl = "https://api.fern.com"
+             }
+         );
+diff --git a/Snippets/Example2.cs b/Snippets/Example2.cs
+index 77f49b6dc81..fe3a4c39ba2 100644
+--- a/Snippets/Example2.cs
++++ b/Snippets/Example2.cs
+@@ -4,9 +4,9 @@ public partial class Examples
+ {
+     public async Task Example2() {
+         var client = new SeedOauthClientCredentialsMandatoryAuthClient(
+-            clientId: "<clientId>",
+-            clientSecret: "<clientSecret>",
+             clientOptions: new ClientOptions {
++                ClientId = "<clientId>",
++                ClientSecret = "<clientSecret>",
+                 BaseUrl = "https://api.fern.com"
+             }
+         );
+diff --git a/Snippets/Example3.cs b/Snippets/Example3.cs
+index 9dc05994837..85f68697353 100644
+--- a/Snippets/Example3.cs
++++ b/Snippets/Example3.cs
+@@ -4,9 +4,9 @@ public partial class Examples
+ {
+     public async Task Example3() {
+         var client = new SeedOauthClientCredentialsMandatoryAuthClient(
+-            clientId: "<clientId>",
+-            clientSecret: "<clientSecret>",
+             clientOptions: new ClientOptions {
++                ClientId = "<clientId>",
++                ClientSecret = "<clientSecret>",
+                 BaseUrl = "https://api.fern.com"
+             }
+         );
+diff --git a/Snippets/Example4.cs b/Snippets/Example4.cs
+index 04879f689e2..2190dfd3ef2 100644
+--- a/Snippets/Example4.cs
++++ b/Snippets/Example4.cs
+@@ -4,9 +4,9 @@ public partial class Examples
+ {
+     public async Task Example4() {
+         var client = new SeedOauthClientCredentialsMandatoryAuthClient(
+-            clientId: "<clientId>",
+-            clientSecret: "<clientSecret>",
+             clientOptions: new ClientOptions {
++                ClientId = "<clientId>",
++                ClientSecret = "<clientSecret>",
+                 BaseUrl = "https://api.fern.com"
+             }
+         );
+diff --git a/Snippets/Example5.cs b/Snippets/Example5.cs
+index 3df50a2f418..cc04849cfdb 100644
+--- a/Snippets/Example5.cs
++++ b/Snippets/Example5.cs
+@@ -4,9 +4,9 @@ public partial class Examples
+ {
+     public async Task Example5() {
+         var client = new SeedOauthClientCredentialsMandatoryAuthClient(
+-            clientId: "<clientId>",
+-            clientSecret: "<clientSecret>",
+             clientOptions: new ClientOptions {
++                ClientId = "<clientId>",
++                ClientSecret = "<clientSecret>",
+                 BaseUrl = "https://api.fern.com"
+             }
+         );
+diff --git a/snippet.json b/snippet.json
+index eff55300aff..e8326fa3074 100644
+--- a/snippet.json
++++ b/snippet.json
+@@ -10,7 +10,7 @@
+             },
+             "snippet": {
+                 "type": "csharp",
+-                "client": "using SeedOauthClientCredentialsMandatoryAuth;\n\nvar client = new SeedOauthClientCredentialsMandatoryAuthClient(\"client_id\", \"client_secret\");\nawait client.Auth.GetTokenWithClientCredentialsAsync(\n    new GetTokenRequest\n    {\n        ClientId = \"my_oauth_app_123\",\n        ClientSecret = \"sk_live_abcdef123456789\",\n        Audience = \"https://api.example.com\",\n        GrantType = \"client_credentials\",\n        Scope = \"read:users\",\n    }\n);\n"
++                "client": "using SeedOauthClientCredentialsMandatoryAuth;\n\nvar client = new SeedOauthClientCredentialsMandatoryAuthClient(\n    clientOptions: new ClientOptions { ClientId = \"client_id\", ClientSecret = \"client_secret\" }\n);\nawait client.Auth.GetTokenWithClientCredentialsAsync(\n    new GetTokenRequest\n    {\n        ClientId = \"my_oauth_app_123\",\n        ClientSecret = \"sk_live_abcdef123456789\",\n        Audience = \"https://api.example.com\",\n        GrantType = \"client_credentials\",\n        Scope = \"read:users\",\n    }\n);\n"
+             }
+         },
+         {
+@@ -22,7 +22,7 @@
+             },
+             "snippet": {
+                 "type": "csharp",
+-                "client": "using SeedOauthClientCredentialsMandatoryAuth;\n\nvar client = new SeedOauthClientCredentialsMandatoryAuthClient(\"client_id\", \"client_secret\");\nawait client.Auth.RefreshTokenAsync(\n    new RefreshTokenRequest\n    {\n        ClientId = \"my_oauth_app_123\",\n        ClientSecret = \"sk_live_abcdef123456789\",\n        RefreshToken = \"refresh_token\",\n        Audience = \"https://api.example.com\",\n        GrantType = \"refresh_token\",\n        Scope = \"read:users\",\n    }\n);\n"
++                "client": "using SeedOauthClientCredentialsMandatoryAuth;\n\nvar client = new SeedOauthClientCredentialsMandatoryAuthClient(\n    clientOptions: new ClientOptions { ClientId = \"client_id\", ClientSecret = \"client_secret\" }\n);\nawait client.Auth.RefreshTokenAsync(\n    new RefreshTokenRequest\n    {\n        ClientId = \"my_oauth_app_123\",\n        ClientSecret = \"sk_live_abcdef123456789\",\n        RefreshToken = \"refresh_token\",\n        Audience = \"https://api.example.com\",\n        GrantType = \"refresh_token\",\n        Scope = \"read:users\",\n    }\n);\n"
+             }
+         },
+         {
+@@ -34,7 +34,7 @@
+             },
+             "snippet": {
+                 "type": "csharp",
+-                "client": "using SeedOauthClientCredentialsMandatoryAuth;\n\nvar client = new SeedOauthClientCredentialsMandatoryAuthClient(\"client_id\", \"client_secret\");\nawait client.Nested.Api.GetSomethingAsync();\n"
++                "client": "using SeedOauthClientCredentialsMandatoryAuth;\n\nvar client = new SeedOauthClientCredentialsMandatoryAuthClient(\n    clientOptions: new ClientOptions { ClientId = \"client_id\", ClientSecret = \"client_secret\" }\n);\nawait client.Nested.Api.GetSomethingAsync();\n"
+             }
+         },
+         {
+@@ -46,7 +46,7 @@
+             },
+             "snippet": {
+                 "type": "csharp",
+-                "client": "using SeedOauthClientCredentialsMandatoryAuth;\n\nvar client = new SeedOauthClientCredentialsMandatoryAuthClient(\"client_id\", \"client_secret\");\nawait client.Simple.GetSomethingAsync();\n"
++                "client": "using SeedOauthClientCredentialsMandatoryAuth;\n\nvar client = new SeedOauthClientCredentialsMandatoryAuthClient(\n    clientOptions: new ClientOptions { ClientId = \"client_id\", ClientSecret = \"client_secret\" }\n);\nawait client.Simple.GetSomethingAsync();\n"
+             }
+         }
+     ]
+diff --git a/src/SeedOauthClientCredentialsMandatoryAuth/Core/Public/ClientOptions.cs b/src/SeedOauthClientCredentialsMandatoryAuth/Core/Public/ClientOptions.cs
+index c502163249d..9d494ba632a 100644
+--- a/src/SeedOauthClientCredentialsMandatoryAuth/Core/Public/ClientOptions.cs
++++ b/src/SeedOauthClientCredentialsMandatoryAuth/Core/Public/ClientOptions.cs
+@@ -1,3 +1,4 @@
++using global::System.Diagnostics.CodeAnalysis;
+ using SeedOauthClientCredentialsMandatoryAuth.Core;
+ 
+ namespace SeedOauthClientCredentialsMandatoryAuth;
+@@ -5,6 +6,21 @@ namespace SeedOauthClientCredentialsMandatoryAuth;
+ [Serializable]
+ public partial class ClientOptions
+ {
++    public ClientOptions() { }
++
++    [SetsRequiredMembers]
++    internal ClientOptions(ClientOptions other)
++    {
++        BaseUrl = other.BaseUrl;
++        HttpClient = other.HttpClient;
++        MaxRetries = other.MaxRetries;
++        Timeout = other.Timeout;
++        Headers = new Headers(new Dictionary<string, HeaderValue>(other.Headers));
++        AdditionalHeaders = other.AdditionalHeaders;
++        ClientId = other.ClientId;
++        ClientSecret = other.ClientSecret;
++    }
++
+     /// <summary>
+     /// The http headers sent with the request.
+     /// </summary>
+@@ -13,13 +29,13 @@ public partial class ClientOptions
+     /// <summary>
+     /// The Base URL for the API.
+     /// </summary>
+-    public string BaseUrl { get;
++    public required string BaseUrl { get;
+ #if NET5_0_OR_GREATER
+         init;
+ #else
+         set;
+ #endif
+-    } = "";
++    }
+ 
+     /// <summary>
+     /// The http client used to make requests.
+@@ -66,19 +82,33 @@ public partial class ClientOptions
+ #endif
+     } = TimeSpan.FromSeconds(30);
+ 
++    /// <summary>
++    /// The clientId to use for authentication.
++    /// </summary>
++    public required string ClientId { get;
++#if NET5_0_OR_GREATER
++        init;
++#else
++        set;
++#endif
++    }
++
++    /// <summary>
++    /// The clientSecret to use for authentication.
++    /// </summary>
++    public required string ClientSecret { get;
++#if NET5_0_OR_GREATER
++        init;
++#else
++        set;
++#endif
++    }
++
+     /// <summary>
+     /// Clones this and returns a new instance
+     /// </summary>
+     internal ClientOptions Clone()
+     {
+-        return new ClientOptions
+-        {
+-            BaseUrl = BaseUrl,
+-            HttpClient = HttpClient,
+-            MaxRetries = MaxRetries,
+-            Timeout = Timeout,
+-            Headers = new Headers(new Dictionary<string, HeaderValue>(Headers)),
+-            AdditionalHeaders = AdditionalHeaders,
+-        };
++        return new ClientOptions(this);
+     }
+ }
+diff --git a/src/SeedOauthClientCredentialsMandatoryAuth/SeedOauthClientCredentialsMandatoryAuthClient.cs b/src/SeedOauthClientCredentialsMandatoryAuth/SeedOauthClientCredentialsMandatoryAuthClient.cs
+index 1a003075646..9a031c50305 100644
+--- a/src/SeedOauthClientCredentialsMandatoryAuth/SeedOauthClientCredentialsMandatoryAuthClient.cs
++++ b/src/SeedOauthClientCredentialsMandatoryAuth/SeedOauthClientCredentialsMandatoryAuthClient.cs
+@@ -8,13 +8,8 @@ public partial class SeedOauthClientCredentialsMandatoryAuthClient
+ {
+     private readonly RawClient _client;
+ 
+-    public SeedOauthClientCredentialsMandatoryAuthClient(
+-        string clientId,
+-        string clientSecret,
+-        ClientOptions? clientOptions = null
+-    )
++    public SeedOauthClientCredentialsMandatoryAuthClient(ClientOptions clientOptions)
+     {
+-        clientOptions ??= new ClientOptions();
+         var platformHeaders = new Headers(
+             new Dictionary<string, string>()
+             {
+@@ -33,8 +28,8 @@ public partial class SeedOauthClientCredentialsMandatoryAuthClient
+         }
+         var clientOptionsWithAuth = clientOptions.Clone();
+         var tokenProvider = new OAuthTokenProvider(
+-            clientId,
+-            clientSecret,
++            clientOptions.ClientId,
++            clientOptions.ClientSecret,
+             new AuthClient(new RawClient(clientOptions))
+         );
+         clientOptionsWithAuth.Headers["Authorization"] =
+diff --git a/src/SeedOauthClientCredentialsMandatoryAuth.Test/Core/RawClientTests/RetriesTests.cs b/src/SeedOauthClientCredentialsMandatoryAuth.Test/Core/RawClientTests/RetriesTests.cs
+index 28ae2d284a2..695c8653af6 100644
+--- a/src/SeedOauthClientCredentialsMandatoryAuth.Test/Core/RawClientTests/RetriesTests.cs
++++ b/src/SeedOauthClientCredentialsMandatoryAuth.Test/Core/RawClientTests/RetriesTests.cs
+@@ -26,7 +26,14 @@ public class RetriesTests
+         _baseUrl = _server.Url ?? "";
+         _httpClient = new HttpClient { BaseAddress = new Uri(_baseUrl) };
+         _rawClient = new RawClient(
+-            new ClientOptions { HttpClient = _httpClient, MaxRetries = MaxRetries }
++            new ClientOptions
++            {
++                HttpClient = _httpClient,
++                MaxRetries = MaxRetries,
++                BaseUrl = "http://localhost",
++                ClientId = "test",
++                ClientSecret = "test",
++            }
+         )
+         {
+             BaseRetryDelay = 0,
+diff --git a/src/SeedOauthClientCredentialsMandatoryAuth.Test/Unit/MockServer/BaseMockServerTest.cs b/src/SeedOauthClientCredentialsMandatoryAuth.Test/Unit/MockServer/BaseMockServerTest.cs
+index df9f1a099aa..b24ba4366be 100644
+--- a/src/SeedOauthClientCredentialsMandatoryAuth.Test/Unit/MockServer/BaseMockServerTest.cs
++++ b/src/SeedOauthClientCredentialsMandatoryAuth.Test/Unit/MockServer/BaseMockServerTest.cs
+@@ -80,9 +80,13 @@ public class BaseMockServerTest
+ 
+         // Initialize the Client
+         Client = new SeedOauthClientCredentialsMandatoryAuthClient(
+-            "client_id",
+-            "client_secret",
+-            clientOptions: new ClientOptions { BaseUrl = Server.Urls[0], MaxRetries = 0 }
++            clientOptions: new ClientOptions
++            {
++                ClientId = "client_id",
++                ClientSecret = "client_secret",
++                BaseUrl = Server.Urls[0],
++                MaxRetries = 0,
++            }
+         );
+         MockOAuthEndpoint();
+     }

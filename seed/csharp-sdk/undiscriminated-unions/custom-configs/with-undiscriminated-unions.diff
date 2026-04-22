@@ -1,0 +1,4677 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 5e4188a44b1..53d9ced2270 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,7 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-csharp-sdk",
+   "generatorVersion": "local",
+-  "generatorConfig": {},
++  "generatorConfig": {
++    "use-undiscriminated-unions": true
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "ci",
+diff --git a/reference.md b/reference.md
+index 73e8ad1e065..a333a9caec8 100644
+--- a/reference.md
++++ b/reference.md
+@@ -1,6 +1,6 @@
+ # Reference
+ ## Union
+-<details><summary><code>client.Union.<a href="/src/SeedUndiscriminatedUnions/Union/UnionClient.cs">GetAsync</a>(OneOf&lt;string, IEnumerable&lt;string&gt;, int, IEnumerable&lt;int&gt;, IEnumerable&lt;IEnumerable&lt;int&gt;&gt;, HashSet&lt;string&gt;&gt; { ... }) -> WithRawResponseTask&lt;OneOf&lt;string, IEnumerable&lt;string&gt;, int, IEnumerable&lt;int&gt;, IEnumerable&lt;IEnumerable&lt;int&gt;&gt;, HashSet&lt;string&gt;&gt;&gt;</code></summary>
++<details><summary><code>client.Union.<a href="/src/SeedUndiscriminatedUnions/Union/UnionClient.cs">GetAsync</a>(MyUnion { ... }) -> WithRawResponseTask&lt;MyUnion&gt;</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -28,7 +28,7 @@ await client.Union.GetAsync("string");
+ <dl>
+ <dd>
+ 
+-**request:** `OneOf<string, IEnumerable<string>, int, IEnumerable<int>, IEnumerable<IEnumerable<int>>, HashSet<string>>` 
++**request:** `MyUnion` 
+     
+ </dd>
+ </dl>
+@@ -40,7 +40,7 @@ await client.Union.GetAsync("string");
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.Union.<a href="/src/SeedUndiscriminatedUnions/Union/UnionClient.cs">GetMetadataAsync</a>() -> WithRawResponseTask&lt;Dictionary&lt;OneOf&lt;KeyType, string&gt;, string&gt;&gt;</code></summary>
++<details><summary><code>client.Union.<a href="/src/SeedUndiscriminatedUnions/Union/UnionClient.cs">GetMetadataAsync</a>() -> WithRawResponseTask&lt;Dictionary&lt;Key, string&gt;&gt;</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -65,7 +65,7 @@ await client.Union.GetMetadataAsync();
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.Union.<a href="/src/SeedUndiscriminatedUnions/Union/UnionClient.cs">UpdateMetadataAsync</a>(OneOf&lt;Dictionary&lt;string, object?&gt;?, NamedMetadata&gt; { ... }) -> WithRawResponseTask&lt;bool&gt;</code></summary>
++<details><summary><code>client.Union.<a href="/src/SeedUndiscriminatedUnions/Union/UnionClient.cs">UpdateMetadataAsync</a>(MetadataUnion { ... }) -> WithRawResponseTask&lt;bool&gt;</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -101,7 +101,7 @@ await client.Union.UpdateMetadataAsync(
+ <dl>
+ <dd>
+ 
+-**request:** `OneOf<Dictionary<string, object?>?, NamedMetadata>` 
++**request:** `MetadataUnion` 
+     
+ </dd>
+ </dl>
+@@ -164,7 +164,7 @@ await client.Union.CallAsync(
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.Union.<a href="/src/SeedUndiscriminatedUnions/Union/UnionClient.cs">DuplicateTypesUnionAsync</a>(OneOf&lt;string, IEnumerable&lt;string&gt;, int, HashSet&lt;string&gt;&gt; { ... }) -> WithRawResponseTask&lt;OneOf&lt;string, IEnumerable&lt;string&gt;, int, HashSet&lt;string&gt;&gt;&gt;</code></summary>
++<details><summary><code>client.Union.<a href="/src/SeedUndiscriminatedUnions/Union/UnionClient.cs">DuplicateTypesUnionAsync</a>(UnionWithDuplicateTypes { ... }) -> WithRawResponseTask&lt;UnionWithDuplicateTypes&gt;</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -192,7 +192,7 @@ await client.Union.DuplicateTypesUnionAsync("string");
+ <dl>
+ <dd>
+ 
+-**request:** `OneOf<string, IEnumerable<string>, int, HashSet<string>>` 
++**request:** `UnionWithDuplicateTypes` 
+     
+ </dd>
+ </dl>
+@@ -204,7 +204,7 @@ await client.Union.DuplicateTypesUnionAsync("string");
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.Union.<a href="/src/SeedUndiscriminatedUnions/Union/UnionClient.cs">NestedUnionsAsync</a>(OneOf&lt;string, IEnumerable&lt;string&gt;, OneOf&lt;int, HashSet&lt;string&gt;, IEnumerable&lt;string&gt;, OneOf&lt;bool, HashSet&lt;string&gt;, IEnumerable&lt;string&gt;&gt;&gt;&gt; { ... }) -> WithRawResponseTask&lt;string&gt;</code></summary>
++<details><summary><code>client.Union.<a href="/src/SeedUndiscriminatedUnions/Union/UnionClient.cs">NestedUnionsAsync</a>(NestedUnionRoot { ... }) -> WithRawResponseTask&lt;string&gt;</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -232,7 +232,7 @@ await client.Union.NestedUnionsAsync("string");
+ <dl>
+ <dd>
+ 
+-**request:** `OneOf<string, IEnumerable<string>, OneOf<int, HashSet<string>, IEnumerable<string>, OneOf<bool, HashSet<string>, IEnumerable<string>>>>` 
++**request:** `NestedUnionRoot` 
+     
+ </dd>
+ </dl>
+diff --git a/src/SeedUndiscriminatedUnions/Core/CollectionItemSerializer.cs b/src/SeedUndiscriminatedUnions/Core/CollectionItemSerializer.cs
+deleted file mode 100644
+index 74edd53f60c..00000000000
+--- a/src/SeedUndiscriminatedUnions/Core/CollectionItemSerializer.cs
++++ /dev/null
+@@ -1,91 +0,0 @@
+-using global::System.Text.Json;
+-using global::System.Text.Json.Serialization;
+-
+-namespace SeedUndiscriminatedUnions.Core;
+-
+-/// <summary>
+-/// Json collection converter.
+-/// </summary>
+-/// <typeparam name="TDatatype">Type of item to convert.</typeparam>
+-/// <typeparam name="TConverterType">Converter to use for individual items.</typeparam>
+-internal class CollectionItemSerializer<TDatatype, TConverterType>
+-    : JsonConverter<IEnumerable<TDatatype>>
+-    where TConverterType : JsonConverter, new()
+-{
+-    private static readonly TConverterType _converter = new TConverterType();
+-
+-    /// <summary>
+-    /// Reads a json string and deserializes it into an object.
+-    /// </summary>
+-    /// <param name="reader">Json reader.</param>
+-    /// <param name="typeToConvert">Type to convert.</param>
+-    /// <param name="options">Serializer options.</param>
+-    /// <returns>Created object.</returns>
+-    public override IEnumerable<TDatatype>? Read(
+-        ref Utf8JsonReader reader,
+-        global::System.Type typeToConvert,
+-        JsonSerializerOptions options
+-    )
+-    {
+-        if (reader.TokenType == JsonTokenType.Null)
+-        {
+-            return default;
+-        }
+-
+-        var jsonSerializerOptions = new JsonSerializerOptions(options);
+-        jsonSerializerOptions.Converters.Clear();
+-        jsonSerializerOptions.Converters.Add(_converter);
+-
+-        var returnValue = new List<TDatatype>();
+-
+-        while (reader.TokenType != JsonTokenType.EndArray)
+-        {
+-            if (reader.TokenType != JsonTokenType.StartArray)
+-            {
+-                var item = (TDatatype)(
+-                    JsonSerializer.Deserialize(ref reader, typeof(TDatatype), jsonSerializerOptions)
+-                    ?? throw new global::System.Exception(
+-                        $"Failed to deserialize collection item of type {typeof(TDatatype)}"
+-                    )
+-                );
+-                returnValue.Add(item);
+-            }
+-
+-            reader.Read();
+-        }
+-
+-        return returnValue;
+-    }
+-
+-    /// <summary>
+-    /// Writes a json string.
+-    /// </summary>
+-    /// <param name="writer">Json writer.</param>
+-    /// <param name="value">Value to write.</param>
+-    /// <param name="options">Serializer options.</param>
+-    public override void Write(
+-        Utf8JsonWriter writer,
+-        IEnumerable<TDatatype>? value,
+-        JsonSerializerOptions options
+-    )
+-    {
+-        if (value is null)
+-        {
+-            writer.WriteNullValue();
+-            return;
+-        }
+-
+-        var jsonSerializerOptions = new JsonSerializerOptions(options);
+-        jsonSerializerOptions.Converters.Clear();
+-        jsonSerializerOptions.Converters.Add(_converter);
+-
+-        writer.WriteStartArray();
+-
+-        foreach (var data in value)
+-        {
+-            JsonSerializer.Serialize(writer, data, jsonSerializerOptions);
+-        }
+-
+-        writer.WriteEndArray();
+-    }
+-}
+diff --git a/src/SeedUndiscriminatedUnions/Core/JsonConfiguration.cs b/src/SeedUndiscriminatedUnions/Core/JsonConfiguration.cs
+index ea93f725146..d8fd1f66efe 100644
+--- a/src/SeedUndiscriminatedUnions/Core/JsonConfiguration.cs
++++ b/src/SeedUndiscriminatedUnions/Core/JsonConfiguration.cs
+@@ -16,15 +16,11 @@ internal static partial class JsonOptions
+     {
+         var options = new JsonSerializerOptions
+         {
+-            Converters =
+-            {
+-                new DateTimeSerializer(),
++            Converters = { new DateTimeSerializer(),
+ #if USE_PORTABLE_DATE_ONLY
+                 new DateOnlyConverter(),
+ #endif
+-                new OneOfSerializer(),
+-                new OptionalJsonConverterFactory(),
+-            },
++                new OptionalJsonConverterFactory() },
+ #if DEBUG
+             WriteIndented = true,
+ #endif
+diff --git a/src/SeedUndiscriminatedUnions/Core/OneOfSerializer.cs b/src/SeedUndiscriminatedUnions/Core/OneOfSerializer.cs
+deleted file mode 100644
+index 3d46a82a4b0..00000000000
+--- a/src/SeedUndiscriminatedUnions/Core/OneOfSerializer.cs
++++ /dev/null
+@@ -1,145 +0,0 @@
+-using global::System.Reflection;
+-using global::System.Text.Json;
+-using global::System.Text.Json.Serialization;
+-using OneOf;
+-
+-namespace SeedUndiscriminatedUnions.Core;
+-
+-internal class OneOfSerializer : JsonConverter<IOneOf>
+-{
+-    public override IOneOf? Read(
+-        ref Utf8JsonReader reader,
+-        global::System.Type typeToConvert,
+-        JsonSerializerOptions options
+-    )
+-    {
+-        if (reader.TokenType is JsonTokenType.Null)
+-            return default;
+-
+-        foreach (var (type, cast) in GetOneOfTypes(typeToConvert))
+-        {
+-            try
+-            {
+-                var readerCopy = reader;
+-                var result = JsonSerializer.Deserialize(ref readerCopy, type, options);
+-                reader.Skip();
+-                return (IOneOf)cast.Invoke(null, [result])!;
+-            }
+-            catch (JsonException) { }
+-        }
+-
+-        throw new JsonException(
+-            $"Cannot deserialize into one of the supported types for {typeToConvert}"
+-        );
+-    }
+-
+-    public override void Write(Utf8JsonWriter writer, IOneOf value, JsonSerializerOptions options)
+-    {
+-        JsonSerializer.Serialize(writer, value.Value, options);
+-    }
+-
+-    public override IOneOf ReadAsPropertyName(
+-        ref Utf8JsonReader reader,
+-        global::System.Type typeToConvert,
+-        JsonSerializerOptions options
+-    )
+-    {
+-        var stringValue = reader.GetString();
+-        if (stringValue == null)
+-            throw new JsonException("Cannot deserialize null property name into OneOf type");
+-
+-        // Try to deserialize the string value into one of the supported types
+-        foreach (var (type, cast) in GetOneOfTypes(typeToConvert))
+-        {
+-            try
+-            {
+-                // For primitive types, try direct conversion
+-                if (type == typeof(string))
+-                {
+-                    return (IOneOf)cast.Invoke(null, [stringValue])!;
+-                }
+-
+-                // For other types, try to deserialize from JSON string
+-                var result = JsonSerializer.Deserialize($"\"{stringValue}\"", type, options);
+-                if (result != null)
+-                {
+-                    return (IOneOf)cast.Invoke(null, [result])!;
+-                }
+-            }
+-            catch { }
+-        }
+-
+-        // If no type-specific deserialization worked, default to string if available
+-        var stringType = GetOneOfTypes(typeToConvert).FirstOrDefault(t => t.type == typeof(string));
+-        if (stringType != default)
+-        {
+-            return (IOneOf)stringType.cast.Invoke(null, [stringValue])!;
+-        }
+-
+-        throw new JsonException(
+-            $"Cannot deserialize dictionary key '{stringValue}' into one of the supported types for {typeToConvert}"
+-        );
+-    }
+-
+-    public override void WriteAsPropertyName(
+-        Utf8JsonWriter writer,
+-        IOneOf value,
+-        JsonSerializerOptions options
+-    )
+-    {
+-        // Serialize the underlying value to a string suitable for use as a dictionary key
+-        var stringValue = value.Value?.ToString() ?? "null";
+-        writer.WritePropertyName(stringValue);
+-    }
+-
+-    private static (global::System.Type type, MethodInfo cast)[] GetOneOfTypes(
+-        global::System.Type typeToConvert
+-    )
+-    {
+-        var type = typeToConvert;
+-        if (Nullable.GetUnderlyingType(type) is { } underlyingType)
+-        {
+-            type = underlyingType;
+-        }
+-
+-        var casts = type.GetRuntimeMethods()
+-            .Where(m => m.IsSpecialName && m.Name == "op_Implicit")
+-            .ToArray();
+-        while (type is not null)
+-        {
+-            if (
+-                type.IsGenericType
+-                && (type.Name.StartsWith("OneOf`") || type.Name.StartsWith("OneOfBase`"))
+-            )
+-            {
+-                var genericArguments = type.GetGenericArguments();
+-                if (genericArguments.Length == 1)
+-                {
+-                    return [(genericArguments[0], casts[0])];
+-                }
+-
+-                // if object type is present, make sure it is last
+-                var indexOfObjectType = Array.IndexOf(genericArguments, typeof(object));
+-                if (indexOfObjectType != -1 && genericArguments.Length - 1 != indexOfObjectType)
+-                {
+-                    genericArguments = genericArguments
+-                        .OrderBy(t => t == typeof(object) ? 1 : 0)
+-                        .ToArray();
+-                }
+-
+-                return genericArguments
+-                    .Select(t => (t, casts.First(c => c.GetParameters()[0].ParameterType == t)))
+-                    .ToArray();
+-            }
+-
+-            type = type.BaseType;
+-        }
+-
+-        throw new InvalidOperationException($"{type} isn't OneOf or OneOfBase");
+-    }
+-
+-    public override bool CanConvert(global::System.Type typeToConvert)
+-    {
+-        return typeof(IOneOf).IsAssignableFrom(typeToConvert);
+-    }
+-}
+diff --git a/src/SeedUndiscriminatedUnions/SeedUndiscriminatedUnions.csproj b/src/SeedUndiscriminatedUnions/SeedUndiscriminatedUnions.csproj
+index f6d2012dc94..73090edfea4 100644
+--- a/src/SeedUndiscriminatedUnions/SeedUndiscriminatedUnions.csproj
++++ b/src/SeedUndiscriminatedUnions/SeedUndiscriminatedUnions.csproj
+@@ -37,13 +37,10 @@
+       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+       <PrivateAssets>all</PrivateAssets>
+     </PackageReference>
+-    <PackageReference Include="OneOf" Version="3.0.271" />
+-    <PackageReference Include="OneOf.Extended" Version="3.0.271" />
+-    <PackageReference Include="System.Net.Http" Version="[4.3.4,)" />
+-    <PackageReference Include="System.Text.RegularExpressions" Version="[4.3.1,)" />
+   </ItemGroup>
+   <ItemGroup Condition="!$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
+     <PackageReference Include="System.Text.Json" Version="9.0.9" />
++    <PackageReference Include="System.Net.Http" Version="[4.3.4,)" />
+   </ItemGroup>
+ 
+   <ItemGroup>
+diff --git a/src/SeedUndiscriminatedUnions/Union/IUnionClient.cs b/src/SeedUndiscriminatedUnions/Union/IUnionClient.cs
+index 0020e3bca79..1619d933a2d 100644
+--- a/src/SeedUndiscriminatedUnions/Union/IUnionClient.cs
++++ b/src/SeedUndiscriminatedUnions/Union/IUnionClient.cs
+@@ -1,38 +1,20 @@
+-using OneOf;
+-
+ namespace SeedUndiscriminatedUnions;
+ 
+ public partial interface IUnionClient
+ {
+-    WithRawResponseTask<
+-        OneOf<
+-            string,
+-            IEnumerable<string>,
+-            int,
+-            IEnumerable<int>,
+-            IEnumerable<IEnumerable<int>>,
+-            HashSet<string>
+-        >
+-    > GetAsync(
+-        OneOf<
+-            string,
+-            IEnumerable<string>,
+-            int,
+-            IEnumerable<int>,
+-            IEnumerable<IEnumerable<int>>,
+-            HashSet<string>
+-        > request,
++    WithRawResponseTask<MyUnion> GetAsync(
++        MyUnion request,
+         RequestOptions? options = null,
+         CancellationToken cancellationToken = default
+     );
+ 
+-    WithRawResponseTask<Dictionary<OneOf<KeyType, string>, string>> GetMetadataAsync(
++    WithRawResponseTask<Dictionary<Key, string>> GetMetadataAsync(
+         RequestOptions? options = null,
+         CancellationToken cancellationToken = default
+     );
+ 
+     WithRawResponseTask<bool> UpdateMetadataAsync(
+-        OneOf<Dictionary<string, object?>?, NamedMetadata> request,
++        MetadataUnion request,
+         RequestOptions? options = null,
+         CancellationToken cancellationToken = default
+     );
+@@ -43,25 +25,14 @@ public partial interface IUnionClient
+         CancellationToken cancellationToken = default
+     );
+ 
+-    WithRawResponseTask<
+-        OneOf<string, IEnumerable<string>, int, HashSet<string>>
+-    > DuplicateTypesUnionAsync(
+-        OneOf<string, IEnumerable<string>, int, HashSet<string>> request,
++    WithRawResponseTask<UnionWithDuplicateTypes> DuplicateTypesUnionAsync(
++        UnionWithDuplicateTypes request,
+         RequestOptions? options = null,
+         CancellationToken cancellationToken = default
+     );
+ 
+     WithRawResponseTask<string> NestedUnionsAsync(
+-        OneOf<
+-            string,
+-            IEnumerable<string>,
+-            OneOf<
+-                int,
+-                HashSet<string>,
+-                IEnumerable<string>,
+-                OneOf<bool, HashSet<string>, IEnumerable<string>>
+-            >
+-        > request,
++        NestedUnionRoot request,
+         RequestOptions? options = null,
+         CancellationToken cancellationToken = default
+     );
+diff --git a/src/SeedUndiscriminatedUnions/Union/Requests/PaymentRequest.cs b/src/SeedUndiscriminatedUnions/Union/Requests/PaymentRequest.cs
+index 58b52fa0748..490143a4802 100644
+--- a/src/SeedUndiscriminatedUnions/Union/Requests/PaymentRequest.cs
++++ b/src/SeedUndiscriminatedUnions/Union/Requests/PaymentRequest.cs
+@@ -1,5 +1,4 @@
+ using global::System.Text.Json.Serialization;
+-using OneOf;
+ using SeedUndiscriminatedUnions.Core;
+ 
+ namespace SeedUndiscriminatedUnions;
+@@ -8,7 +7,7 @@ namespace SeedUndiscriminatedUnions;
+ public record PaymentRequest
+ {
+     [JsonPropertyName("paymentMethod")]
+-    public required OneOf<TokenizeCard, ConvertToken> PaymentMethod { get; set; }
++    public required PaymentMethodUnion PaymentMethod { get; set; }
+ 
+     /// <inheritdoc />
+     public override string ToString()
+diff --git a/src/SeedUndiscriminatedUnions/Union/Types/Key.cs b/src/SeedUndiscriminatedUnions/Union/Types/Key.cs
+new file mode 100644
+index 00000000000..da22afc18f8
+--- /dev/null
++++ b/src/SeedUndiscriminatedUnions/Union/Types/Key.cs
+@@ -0,0 +1,253 @@
++// ReSharper disable NullableWarningSuppressionIsUsed
++// ReSharper disable InconsistentNaming
++
++using global::System.Text.Json;
++using global::System.Text.Json.Serialization;
++using SeedUndiscriminatedUnions.Core;
++
++namespace SeedUndiscriminatedUnions;
++
++[JsonConverter(typeof(Key.JsonConverter))]
++[Serializable]
++public class Key
++{
++    private Key(string type, object? value)
++    {
++        Type = type;
++        Value = value;
++    }
++
++    /// <summary>
++    /// Type discriminator
++    /// </summary>
++    [JsonIgnore]
++    public string Type { get; internal set; }
++
++    /// <summary>
++    /// Union value
++    /// </summary>
++    [JsonIgnore]
++    public object? Value { get; internal set; }
++
++    /// <summary>
++    /// Factory method to create a union from a SeedUndiscriminatedUnions.KeyType value.
++    /// </summary>
++    public static Key FromKeyType(SeedUndiscriminatedUnions.KeyType value) => new("keyType", value);
++
++    /// <summary>
++    /// Factory method to create a union with the literal value "default".
++    /// </summary>
++    public static Key FromDefault() => new("default", "default");
++
++    /// <summary>
++    /// Returns true if <see cref="Type"/> is "keyType"
++    /// </summary>
++    public bool IsKeyType() => Type == "keyType";
++
++    /// <summary>
++    /// Returns true if <see cref="Type"/> is "default"
++    /// </summary>
++    public bool IsDefault() => Type == "default";
++
++    /// <summary>
++    /// Returns the value as a <see cref="SeedUndiscriminatedUnions.KeyType"/> if <see cref="Type"/> is 'keyType', otherwise throws an exception.
++    /// </summary>
++    /// <exception cref="SeedUndiscriminatedUnionsException">Thrown when <see cref="Type"/> is not 'keyType'.</exception>
++    public SeedUndiscriminatedUnions.KeyType AsKeyType() =>
++        IsKeyType()
++            ? (SeedUndiscriminatedUnions.KeyType)Value!
++            : throw new SeedUndiscriminatedUnionsException("Union type is not 'keyType'");
++
++    /// <summary>
++    /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'default', otherwise throws an exception.
++    /// </summary>
++    /// <exception cref="SeedUndiscriminatedUnionsException">Thrown when <see cref="Type"/> is not 'default'.</exception>
++    public string AsDefault() =>
++        IsDefault()
++            ? (string)Value!
++            : throw new SeedUndiscriminatedUnionsException("Union type is not 'default'");
++
++    /// <summary>
++    /// Attempts to cast the value to a <see cref="SeedUndiscriminatedUnions.KeyType"/> and returns true if successful.
++    /// </summary>
++    public bool TryGetKeyType(out SeedUndiscriminatedUnions.KeyType? value)
++    {
++        if (Type == "keyType")
++        {
++            value = (SeedUndiscriminatedUnions.KeyType)Value!;
++            return true;
++        }
++        value = null;
++        return false;
++    }
++
++    /// <summary>
++    /// Attempts to cast the value to a <see cref="string"/> and returns true if successful.
++    /// </summary>
++    public bool TryGetDefault(out string? value)
++    {
++        if (Type == "default")
++        {
++            value = (string)Value!;
++            return true;
++        }
++        value = null;
++        return false;
++    }
++
++    public T Match<T>(
++        Func<SeedUndiscriminatedUnions.KeyType, T> onKeyType,
++        Func<string, T> onDefault
++    )
++    {
++        return Type switch
++        {
++            "keyType" => onKeyType(AsKeyType()),
++            "default" => onDefault(AsDefault()),
++            _ => throw new SeedUndiscriminatedUnionsException($"Unknown union type: {Type}"),
++        };
++    }
++
++    public void Visit(Action<SeedUndiscriminatedUnions.KeyType> onKeyType, Action<string> onDefault)
++    {
++        switch (Type)
++        {
++            case "keyType":
++                onKeyType(AsKeyType());
++                break;
++            case "default":
++                onDefault(AsDefault());
++                break;
++            default:
++                throw new SeedUndiscriminatedUnionsException($"Unknown union type: {Type}");
++        }
++    }
++
++    public override int GetHashCode()
++    {
++        unchecked
++        {
++            var hashCode = Type.GetHashCode();
++            if (Value != null)
++            {
++                hashCode = (hashCode * 397) ^ Value.GetHashCode();
++            }
++            return hashCode;
++        }
++    }
++
++    public override bool Equals(object? obj)
++    {
++        if (obj is null)
++            return false;
++        if (ReferenceEquals(this, obj))
++            return true;
++        if (obj is not Key other)
++            return false;
++
++        // Compare type discriminators
++        if (Type != other.Type)
++            return false;
++
++        // Compare values using EqualityComparer for deep comparison
++        return System.Collections.Generic.EqualityComparer<object?>.Default.Equals(
++            Value,
++            other.Value
++        );
++    }
++
++    public override string ToString() => JsonUtils.Serialize(this);
++
++    public static implicit operator Key(SeedUndiscriminatedUnions.KeyType value) =>
++        new("keyType", value);
++
++    [Serializable]
++    internal sealed class JsonConverter : JsonConverter<Key>
++    {
++        public override Key? Read(
++            ref Utf8JsonReader reader,
++            global::System.Type typeToConvert,
++            JsonSerializerOptions options
++        )
++        {
++            if (reader.TokenType == JsonTokenType.Null)
++            {
++                return null;
++            }
++
++            if (reader.TokenType == JsonTokenType.String)
++            {
++                var stringValue = reader.GetString()!;
++
++                if (stringValue == "default")
++                {
++                    Key literalResult = new("default", stringValue);
++                    return literalResult;
++                }
++            }
++
++            if (reader.TokenType == JsonTokenType.StartObject)
++            {
++                var document = JsonDocument.ParseValue(ref reader);
++
++                var types = new (string Key, System.Type Type)[]
++                {
++                    ("keyType", typeof(SeedUndiscriminatedUnions.KeyType)),
++                };
++
++                foreach (var (key, type) in types)
++                {
++                    try
++                    {
++                        var value = document.Deserialize(type, options);
++                        if (value != null)
++                        {
++                            Key result = new(key, value);
++                            return result;
++                        }
++                    }
++                    catch (JsonException)
++                    {
++                        // Try next type;
++                    }
++                }
++            }
++
++            throw new JsonException($"Cannot deserialize JSON token {reader.TokenType} into Key");
++        }
++
++        public override void Write(Utf8JsonWriter writer, Key value, JsonSerializerOptions options)
++        {
++            if (value == null)
++            {
++                writer.WriteNullValue();
++                return;
++            }
++
++            value.Visit(
++                obj => JsonSerializer.Serialize(writer, obj, options),
++                obj => JsonSerializer.Serialize(writer, obj, options)
++            );
++        }
++
++        public override Key ReadAsPropertyName(
++            ref Utf8JsonReader reader,
++            global::System.Type typeToConvert,
++            JsonSerializerOptions options
++        )
++        {
++            var stringValue = reader.GetString()!;
++            Key result = new("string", stringValue);
++            return result;
++        }
++
++        public override void WriteAsPropertyName(
++            Utf8JsonWriter writer,
++            Key value,
++            JsonSerializerOptions options
++        )
++        {
++            writer.WritePropertyName(value.Value?.ToString() ?? "null");
++        }
++    }
++}
+diff --git a/src/SeedUndiscriminatedUnions/Union/Types/MetadataUnion.cs b/src/SeedUndiscriminatedUnions/Union/Types/MetadataUnion.cs
+new file mode 100644
+index 00000000000..89e362e0e22
+--- /dev/null
++++ b/src/SeedUndiscriminatedUnions/Union/Types/MetadataUnion.cs
+@@ -0,0 +1,257 @@
++// ReSharper disable NullableWarningSuppressionIsUsed
++// ReSharper disable InconsistentNaming
++
++using global::System.Text.Json;
++using global::System.Text.Json.Serialization;
++using SeedUndiscriminatedUnions.Core;
++
++namespace SeedUndiscriminatedUnions;
++
++[JsonConverter(typeof(MetadataUnion.JsonConverter))]
++[Serializable]
++public class MetadataUnion
++{
++    private MetadataUnion(string type, object? value)
++    {
++        Type = type;
++        Value = value;
++    }
++
++    /// <summary>
++    /// Type discriminator
++    /// </summary>
++    [JsonIgnore]
++    public string Type { get; internal set; }
++
++    /// <summary>
++    /// Union value
++    /// </summary>
++    [JsonIgnore]
++    public object? Value { get; internal set; }
++
++    /// <summary>
++    /// Factory method to create a union from a Dictionary<string, object?>? value.
++    /// </summary>
++    public static MetadataUnion FromOptionalMetadata(Dictionary<string, object?>? value) =>
++        new("optionalMetadata", value);
++
++    /// <summary>
++    /// Factory method to create a union from a SeedUndiscriminatedUnions.NamedMetadata value.
++    /// </summary>
++    public static MetadataUnion FromNamedMetadata(SeedUndiscriminatedUnions.NamedMetadata value) =>
++        new("namedMetadata", value);
++
++    /// <summary>
++    /// Returns true if <see cref="Type"/> is "optionalMetadata"
++    /// </summary>
++    public bool IsOptionalMetadata() => Type == "optionalMetadata";
++
++    /// <summary>
++    /// Returns true if <see cref="Type"/> is "namedMetadata"
++    /// </summary>
++    public bool IsNamedMetadata() => Type == "namedMetadata";
++
++    /// <summary>
++    /// Returns the value as a <see cref="Dictionary<string, object?>?"/> if <see cref="Type"/> is 'optionalMetadata', otherwise throws an exception.
++    /// </summary>
++    /// <exception cref="SeedUndiscriminatedUnionsException">Thrown when <see cref="Type"/> is not 'optionalMetadata'.</exception>
++    public Dictionary<string, object?>? AsOptionalMetadata() =>
++        IsOptionalMetadata()
++            ? (Dictionary<string, object?>?)Value!
++            : throw new SeedUndiscriminatedUnionsException("Union type is not 'optionalMetadata'");
++
++    /// <summary>
++    /// Returns the value as a <see cref="SeedUndiscriminatedUnions.NamedMetadata"/> if <see cref="Type"/> is 'namedMetadata', otherwise throws an exception.
++    /// </summary>
++    /// <exception cref="SeedUndiscriminatedUnionsException">Thrown when <see cref="Type"/> is not 'namedMetadata'.</exception>
++    public SeedUndiscriminatedUnions.NamedMetadata AsNamedMetadata() =>
++        IsNamedMetadata()
++            ? (SeedUndiscriminatedUnions.NamedMetadata)Value!
++            : throw new SeedUndiscriminatedUnionsException("Union type is not 'namedMetadata'");
++
++    /// <summary>
++    /// Attempts to cast the value to a <see cref="Dictionary<string, object?>?"/> and returns true if successful.
++    /// </summary>
++    public bool TryGetOptionalMetadata(out Dictionary<string, object?>? value)
++    {
++        if (Type == "optionalMetadata")
++        {
++            value = (Dictionary<string, object?>?)Value!;
++            return true;
++        }
++        value = null;
++        return false;
++    }
++
++    /// <summary>
++    /// Attempts to cast the value to a <see cref="SeedUndiscriminatedUnions.NamedMetadata"/> and returns true if successful.
++    /// </summary>
++    public bool TryGetNamedMetadata(out SeedUndiscriminatedUnions.NamedMetadata? value)
++    {
++        if (Type == "namedMetadata")
++        {
++            value = (SeedUndiscriminatedUnions.NamedMetadata)Value!;
++            return true;
++        }
++        value = null;
++        return false;
++    }
++
++    public T Match<T>(
++        Func<Dictionary<string, object?>?, T> onOptionalMetadata,
++        Func<SeedUndiscriminatedUnions.NamedMetadata, T> onNamedMetadata
++    )
++    {
++        return Type switch
++        {
++            "optionalMetadata" => onOptionalMetadata(AsOptionalMetadata()),
++            "namedMetadata" => onNamedMetadata(AsNamedMetadata()),
++            _ => throw new SeedUndiscriminatedUnionsException($"Unknown union type: {Type}"),
++        };
++    }
++
++    public void Visit(
++        Action<Dictionary<string, object?>?> onOptionalMetadata,
++        Action<SeedUndiscriminatedUnions.NamedMetadata> onNamedMetadata
++    )
++    {
++        switch (Type)
++        {
++            case "optionalMetadata":
++                onOptionalMetadata(AsOptionalMetadata());
++                break;
++            case "namedMetadata":
++                onNamedMetadata(AsNamedMetadata());
++                break;
++            default:
++                throw new SeedUndiscriminatedUnionsException($"Unknown union type: {Type}");
++        }
++    }
++
++    public override int GetHashCode()
++    {
++        unchecked
++        {
++            var hashCode = Type.GetHashCode();
++            if (Value != null)
++            {
++                hashCode = (hashCode * 397) ^ Value.GetHashCode();
++            }
++            return hashCode;
++        }
++    }
++
++    public override bool Equals(object? obj)
++    {
++        if (obj is null)
++            return false;
++        if (ReferenceEquals(this, obj))
++            return true;
++        if (obj is not MetadataUnion other)
++            return false;
++
++        // Compare type discriminators
++        if (Type != other.Type)
++            return false;
++
++        // Compare values using EqualityComparer for deep comparison
++        return System.Collections.Generic.EqualityComparer<object?>.Default.Equals(
++            Value,
++            other.Value
++        );
++    }
++
++    public override string ToString() => JsonUtils.Serialize(this);
++
++    public static implicit operator MetadataUnion(Dictionary<string, object?>? value) =>
++        new("optionalMetadata", value);
++
++    public static implicit operator MetadataUnion(SeedUndiscriminatedUnions.NamedMetadata value) =>
++        new("namedMetadata", value);
++
++    [Serializable]
++    internal sealed class JsonConverter : JsonConverter<MetadataUnion>
++    {
++        public override MetadataUnion? Read(
++            ref Utf8JsonReader reader,
++            global::System.Type typeToConvert,
++            JsonSerializerOptions options
++        )
++        {
++            if (reader.TokenType == JsonTokenType.Null)
++            {
++                return null;
++            }
++
++            if (reader.TokenType == JsonTokenType.StartObject)
++            {
++                var document = JsonDocument.ParseValue(ref reader);
++
++                var types = new (string Key, System.Type Type)[]
++                {
++                    ("namedMetadata", typeof(SeedUndiscriminatedUnions.NamedMetadata)),
++                    ("optionalMetadata", typeof(Dictionary<string, object?>)),
++                };
++
++                foreach (var (key, type) in types)
++                {
++                    try
++                    {
++                        var value = document.Deserialize(type, options);
++                        if (value != null)
++                        {
++                            MetadataUnion result = new(key, value);
++                            return result;
++                        }
++                    }
++                    catch (JsonException)
++                    {
++                        // Try next type;
++                    }
++                }
++            }
++
++            throw new JsonException(
++                $"Cannot deserialize JSON token {reader.TokenType} into MetadataUnion"
++            );
++        }
++
++        public override void Write(
++            Utf8JsonWriter writer,
++            MetadataUnion value,
++            JsonSerializerOptions options
++        )
++        {
++            if (value == null)
++            {
++                writer.WriteNullValue();
++                return;
++            }
++
++            value.Visit(
++                obj => JsonSerializer.Serialize(writer, obj, options),
++                obj => JsonSerializer.Serialize(writer, obj, options)
++            );
++        }
++
++        public override MetadataUnion ReadAsPropertyName(
++            ref Utf8JsonReader reader,
++            global::System.Type typeToConvert,
++            JsonSerializerOptions options
++        )
++        {
++            var stringValue = reader.GetString()!;
++            MetadataUnion result = new("string", stringValue);
++            return result;
++        }
++
++        public override void WriteAsPropertyName(
++            Utf8JsonWriter writer,
++            MetadataUnion value,
++            JsonSerializerOptions options
++        )
++        {
++            writer.WritePropertyName(value.Value?.ToString() ?? "null");
++        }
++    }
++}
+diff --git a/src/SeedUndiscriminatedUnions/Union/Types/MyUnion.cs b/src/SeedUndiscriminatedUnions/Union/Types/MyUnion.cs
+new file mode 100644
+index 00000000000..34b38d373c9
+--- /dev/null
++++ b/src/SeedUndiscriminatedUnions/Union/Types/MyUnion.cs
+@@ -0,0 +1,442 @@
++// ReSharper disable NullableWarningSuppressionIsUsed
++// ReSharper disable InconsistentNaming
++
++using global::System.Text.Json;
++using global::System.Text.Json.Serialization;
++using SeedUndiscriminatedUnions.Core;
++
++namespace SeedUndiscriminatedUnions;
++
++/// <summary>
++/// Several different types are accepted.
++/// </summary>
++[JsonConverter(typeof(MyUnion.JsonConverter))]
++[Serializable]
++public class MyUnion
++{
++    private MyUnion(string type, object? value)
++    {
++        Type = type;
++        Value = value;
++    }
++
++    /// <summary>
++    /// Type discriminator
++    /// </summary>
++    [JsonIgnore]
++    public string Type { get; internal set; }
++
++    /// <summary>
++    /// Union value
++    /// </summary>
++    [JsonIgnore]
++    public object? Value { get; internal set; }
++
++    /// <summary>
++    /// Factory method to create a union from a string value.
++    /// </summary>
++    public static MyUnion FromString(string value) => new("string", value);
++
++    /// <summary>
++    /// Factory method to create a union from a IEnumerable<string> value.
++    /// </summary>
++    public static MyUnion FromListOfString(IEnumerable<string> value) => new("list", value);
++
++    /// <summary>
++    /// Factory method to create a union from a int value.
++    /// </summary>
++    public static MyUnion FromInt(int value) => new("int", value);
++
++    /// <summary>
++    /// Factory method to create a union from a IEnumerable<int> value.
++    /// </summary>
++    public static MyUnion FromListOfInt(IEnumerable<int> value) => new("list_1", value);
++
++    /// <summary>
++    /// Factory method to create a union from a IEnumerable<IEnumerable<int>> value.
++    /// </summary>
++    public static MyUnion FromListOfListOfInt(IEnumerable<IEnumerable<int>> value) =>
++        new("list_2", value);
++
++    /// <summary>
++    /// Factory method to create a union from a HashSet<string> value.
++    /// </summary>
++    public static MyUnion FromSetOfString(HashSet<string> value) => new("set", value);
++
++    /// <summary>
++    /// Returns true if <see cref="Type"/> is "string"
++    /// </summary>
++    public bool IsString() => Type == "string";
++
++    /// <summary>
++    /// Returns true if <see cref="Type"/> is "list"
++    /// </summary>
++    public bool IsListOfString() => Type == "list";
++
++    /// <summary>
++    /// Returns true if <see cref="Type"/> is "int"
++    /// </summary>
++    public bool IsInt() => Type == "int";
++
++    /// <summary>
++    /// Returns true if <see cref="Type"/> is "list_1"
++    /// </summary>
++    public bool IsListOfInt() => Type == "list_1";
++
++    /// <summary>
++    /// Returns true if <see cref="Type"/> is "list_2"
++    /// </summary>
++    public bool IsListOfListOfInt() => Type == "list_2";
++
++    /// <summary>
++    /// Returns true if <see cref="Type"/> is "set"
++    /// </summary>
++    public bool IsSetOfString() => Type == "set";
++
++    /// <summary>
++    /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'string', otherwise throws an exception.
++    /// </summary>
++    /// <exception cref="SeedUndiscriminatedUnionsException">Thrown when <see cref="Type"/> is not 'string'.</exception>
++    public string AsString() =>
++        IsString()
++            ? (string)Value!
++            : throw new SeedUndiscriminatedUnionsException("Union type is not 'string'");
++
++    /// <summary>
++    /// Returns the value as a <see cref="IEnumerable<string>"/> if <see cref="Type"/> is 'list', otherwise throws an exception.
++    /// </summary>
++    /// <exception cref="SeedUndiscriminatedUnionsException">Thrown when <see cref="Type"/> is not 'list'.</exception>
++    public IEnumerable<string> AsListOfString() =>
++        IsListOfString()
++            ? (IEnumerable<string>)Value!
++            : throw new SeedUndiscriminatedUnionsException("Union type is not 'list'");
++
++    /// <summary>
++    /// Returns the value as a <see cref="int"/> if <see cref="Type"/> is 'int', otherwise throws an exception.
++    /// </summary>
++    /// <exception cref="SeedUndiscriminatedUnionsException">Thrown when <see cref="Type"/> is not 'int'.</exception>
++    public int AsInt() =>
++        IsInt()
++            ? (int)Value!
++            : throw new SeedUndiscriminatedUnionsException("Union type is not 'int'");
++
++    /// <summary>
++    /// Returns the value as a <see cref="IEnumerable<int>"/> if <see cref="Type"/> is 'list_1', otherwise throws an exception.
++    /// </summary>
++    /// <exception cref="SeedUndiscriminatedUnionsException">Thrown when <see cref="Type"/> is not 'list_1'.</exception>
++    public IEnumerable<int> AsListOfInt() =>
++        IsListOfInt()
++            ? (IEnumerable<int>)Value!
++            : throw new SeedUndiscriminatedUnionsException("Union type is not 'list_1'");
++
++    /// <summary>
++    /// Returns the value as a <see cref="IEnumerable<IEnumerable<int>>"/> if <see cref="Type"/> is 'list_2', otherwise throws an exception.
++    /// </summary>
++    /// <exception cref="SeedUndiscriminatedUnionsException">Thrown when <see cref="Type"/> is not 'list_2'.</exception>
++    public IEnumerable<IEnumerable<int>> AsListOfListOfInt() =>
++        IsListOfListOfInt()
++            ? (IEnumerable<IEnumerable<int>>)Value!
++            : throw new SeedUndiscriminatedUnionsException("Union type is not 'list_2'");
++
++    /// <summary>
++    /// Returns the value as a <see cref="HashSet<string>"/> if <see cref="Type"/> is 'set', otherwise throws an exception.
++    /// </summary>
++    /// <exception cref="SeedUndiscriminatedUnionsException">Thrown when <see cref="Type"/> is not 'set'.</exception>
++    public HashSet<string> AsSetOfString() =>
++        IsSetOfString()
++            ? (HashSet<string>)Value!
++            : throw new SeedUndiscriminatedUnionsException("Union type is not 'set'");
++
++    /// <summary>
++    /// Attempts to cast the value to a <see cref="string"/> and returns true if successful.
++    /// </summary>
++    public bool TryGetString(out string? value)
++    {
++        if (Type == "string")
++        {
++            value = (string)Value!;
++            return true;
++        }
++        value = null;
++        return false;
++    }
++
++    /// <summary>
++    /// Attempts to cast the value to a <see cref="IEnumerable<string>"/> and returns true if successful.
++    /// </summary>
++    public bool TryGetListOfString(out IEnumerable<string>? value)
++    {
++        if (Type == "list")
++        {
++            value = (IEnumerable<string>)Value!;
++            return true;
++        }
++        value = null;
++        return false;
++    }
++
++    /// <summary>
++    /// Attempts to cast the value to a <see cref="int"/> and returns true if successful.
++    /// </summary>
++    public bool TryGetInt(out int? value)
++    {
++        if (Type == "int")
++        {
++            value = (int)Value!;
++            return true;
++        }
++        value = null;
++        return false;
++    }
++
++    /// <summary>
++    /// Attempts to cast the value to a <see cref="IEnumerable<int>"/> and returns true if successful.
++    /// </summary>
++    public bool TryGetListOfInt(out IEnumerable<int>? value)
++    {
++        if (Type == "list_1")
++        {
++            value = (IEnumerable<int>)Value!;
++            return true;
++        }
++        value = null;
++        return false;
++    }
++
++    /// <summary>
++    /// Attempts to cast the value to a <see cref="IEnumerable<IEnumerable<int>>"/> and returns true if successful.
++    /// </summary>
++    public bool TryGetListOfListOfInt(out IEnumerable<IEnumerable<int>>? value)
++    {
++        if (Type == "list_2")
++        {
++            value = (IEnumerable<IEnumerable<int>>)Value!;
++            return true;
++        }
++        value = null;
++        return false;
++    }
++
++    /// <summary>
++    /// Attempts to cast the value to a <see cref="HashSet<string>"/> and returns true if successful.
++    /// </summary>
++    public bool TryGetSetOfString(out HashSet<string>? value)
++    {
++        if (Type == "set")
++        {
++            value = (HashSet<string>)Value!;
++            return true;
++        }
++        value = null;
++        return false;
++    }
++
++    public T Match<T>(
++        Func<string, T> onString,
++        Func<IEnumerable<string>, T> onListOfString,
++        Func<int, T> onInt,
++        Func<IEnumerable<int>, T> onListOfInt,
++        Func<IEnumerable<IEnumerable<int>>, T> onListOfListOfInt,
++        Func<HashSet<string>, T> onSetOfString
++    )
++    {
++        return Type switch
++        {
++            "string" => onString(AsString()),
++            "list" => onListOfString(AsListOfString()),
++            "int" => onInt(AsInt()),
++            "list_1" => onListOfInt(AsListOfInt()),
++            "list_2" => onListOfListOfInt(AsListOfListOfInt()),
++            "set" => onSetOfString(AsSetOfString()),
++            _ => throw new SeedUndiscriminatedUnionsException($"Unknown union type: {Type}"),
++        };
++    }
++
++    public void Visit(
++        Action<string> onString,
++        Action<IEnumerable<string>> onListOfString,
++        Action<int> onInt,
++        Action<IEnumerable<int>> onListOfInt,
++        Action<IEnumerable<IEnumerable<int>>> onListOfListOfInt,
++        Action<HashSet<string>> onSetOfString
++    )
++    {
++        switch (Type)
++        {
++            case "string":
++                onString(AsString());
++                break;
++            case "list":
++                onListOfString(AsListOfString());
++                break;
++            case "int":
++                onInt(AsInt());
++                break;
++            case "list_1":
++                onListOfInt(AsListOfInt());
++                break;
++            case "list_2":
++                onListOfListOfInt(AsListOfListOfInt());
++                break;
++            case "set":
++                onSetOfString(AsSetOfString());
++                break;
++            default:
++                throw new SeedUndiscriminatedUnionsException($"Unknown union type: {Type}");
++        }
++    }
++
++    public override int GetHashCode()
++    {
++        unchecked
++        {
++            var hashCode = Type.GetHashCode();
++            if (Value != null)
++            {
++                hashCode = (hashCode * 397) ^ Value.GetHashCode();
++            }
++            return hashCode;
++        }
++    }
++
++    public override bool Equals(object? obj)
++    {
++        if (obj is null)
++            return false;
++        if (ReferenceEquals(this, obj))
++            return true;
++        if (obj is not MyUnion other)
++            return false;
++
++        // Compare type discriminators
++        if (Type != other.Type)
++            return false;
++
++        // Compare values using EqualityComparer for deep comparison
++        return System.Collections.Generic.EqualityComparer<object?>.Default.Equals(
++            Value,
++            other.Value
++        );
++    }
++
++    public override string ToString() => JsonUtils.Serialize(this);
++
++    public static implicit operator MyUnion(string value) => new("string", value);
++
++    public static implicit operator MyUnion(int value) => new("int", value);
++
++    [Serializable]
++    internal sealed class JsonConverter : JsonConverter<MyUnion>
++    {
++        public override MyUnion? Read(
++            ref Utf8JsonReader reader,
++            global::System.Type typeToConvert,
++            JsonSerializerOptions options
++        )
++        {
++            if (reader.TokenType == JsonTokenType.Null)
++            {
++                return null;
++            }
++
++            if (reader.TokenType == JsonTokenType.Number)
++            {
++                if (reader.TryGetInt32(out var intValue))
++                {
++                    MyUnion intResult = new("int", intValue);
++                    return intResult;
++                }
++            }
++
++            if (reader.TokenType == JsonTokenType.String)
++            {
++                var stringValue = reader.GetString()!;
++
++                if (int.TryParse(stringValue, out var intFromStringValue))
++                {
++                    MyUnion intFromStringResult = new("int", intFromStringValue);
++                    return intFromStringResult;
++                }
++
++                MyUnion stringResult = new("string", stringValue);
++                return stringResult;
++            }
++
++            if (reader.TokenType == JsonTokenType.StartArray)
++            {
++                var document = JsonDocument.ParseValue(ref reader);
++
++                var types = new (string Key, System.Type Type)[]
++                {
++                    ("list_2", typeof(IEnumerable<IEnumerable<int>>)),
++                    ("list_1", typeof(IEnumerable<int>)),
++                    ("set", typeof(HashSet<string>)),
++                    ("list", typeof(IEnumerable<string>)),
++                };
++
++                foreach (var (key, type) in types)
++                {
++                    try
++                    {
++                        var value = document.Deserialize(type, options);
++                        if (value != null)
++                        {
++                            MyUnion result = new(key, value);
++                            return result;
++                        }
++                    }
++                    catch (JsonException)
++                    {
++                        // Try next type;
++                    }
++                }
++            }
++
++            throw new JsonException(
++                $"Cannot deserialize JSON token {reader.TokenType} into MyUnion"
++            );
++        }
++
++        public override void Write(
++            Utf8JsonWriter writer,
++            MyUnion value,
++            JsonSerializerOptions options
++        )
++        {
++            if (value == null)
++            {
++                writer.WriteNullValue();
++                return;
++            }
++
++            value.Visit(
++                str => writer.WriteStringValue(str),
++                obj => JsonSerializer.Serialize(writer, obj, options),
++                num => writer.WriteNumberValue(num),
++                obj => JsonSerializer.Serialize(writer, obj, options),
++                obj => JsonSerializer.Serialize(writer, obj, options),
++                obj => JsonSerializer.Serialize(writer, obj, options)
++            );
++        }
++
++        public override MyUnion ReadAsPropertyName(
++            ref Utf8JsonReader reader,
++            global::System.Type typeToConvert,
++            JsonSerializerOptions options
++        )
++        {
++            var stringValue = reader.GetString()!;
++            MyUnion result = new("string", stringValue);
++            return result;
++        }
++
++        public override void WriteAsPropertyName(
++            Utf8JsonWriter writer,
++            MyUnion value,
++            JsonSerializerOptions options
++        )
++        {
++            writer.WritePropertyName(value.Value?.ToString() ?? "null");
++        }
++    }
++}
+diff --git a/src/SeedUndiscriminatedUnions/Union/Types/NestedUnionL1.cs b/src/SeedUndiscriminatedUnions/Union/Types/NestedUnionL1.cs
+new file mode 100644
+index 00000000000..e2501df4d16
+--- /dev/null
++++ b/src/SeedUndiscriminatedUnions/Union/Types/NestedUnionL1.cs
+@@ -0,0 +1,377 @@
++// ReSharper disable NullableWarningSuppressionIsUsed
++// ReSharper disable InconsistentNaming
++
++using global::System.Text.Json;
++using global::System.Text.Json.Serialization;
++using SeedUndiscriminatedUnions.Core;
++
++namespace SeedUndiscriminatedUnions;
++
++/// <summary>
++/// Nested layer 1.
++/// </summary>
++[JsonConverter(typeof(NestedUnionL1.JsonConverter))]
++[Serializable]
++public class NestedUnionL1
++{
++    private NestedUnionL1(string type, object? value)
++    {
++        Type = type;
++        Value = value;
++    }
++
++    /// <summary>
++    /// Type discriminator
++    /// </summary>
++    [JsonIgnore]
++    public string Type { get; internal set; }
++
++    /// <summary>
++    /// Union value
++    /// </summary>
++    [JsonIgnore]
++    public object? Value { get; internal set; }
++
++    /// <summary>
++    /// Factory method to create a union from a int value.
++    /// </summary>
++    public static NestedUnionL1 FromInt(int value) => new("int", value);
++
++    /// <summary>
++    /// Factory method to create a union from a HashSet<string> value.
++    /// </summary>
++    public static NestedUnionL1 FromSetOfString(HashSet<string> value) => new("set", value);
++
++    /// <summary>
++    /// Factory method to create a union from a IEnumerable<string> value.
++    /// </summary>
++    public static NestedUnionL1 FromListOfString(IEnumerable<string> value) => new("list", value);
++
++    /// <summary>
++    /// Factory method to create a union from a SeedUndiscriminatedUnions.NestedUnionL2 value.
++    /// </summary>
++    public static NestedUnionL1 FromNestedUnionL2(SeedUndiscriminatedUnions.NestedUnionL2 value) =>
++        new("nestedUnionL2", value);
++
++    /// <summary>
++    /// Returns true if <see cref="Type"/> is "int"
++    /// </summary>
++    public bool IsInt() => Type == "int";
++
++    /// <summary>
++    /// Returns true if <see cref="Type"/> is "set"
++    /// </summary>
++    public bool IsSetOfString() => Type == "set";
++
++    /// <summary>
++    /// Returns true if <see cref="Type"/> is "list"
++    /// </summary>
++    public bool IsListOfString() => Type == "list";
++
++    /// <summary>
++    /// Returns true if <see cref="Type"/> is "nestedUnionL2"
++    /// </summary>
++    public bool IsNestedUnionL2() => Type == "nestedUnionL2";
++
++    /// <summary>
++    /// Returns the value as a <see cref="int"/> if <see cref="Type"/> is 'int', otherwise throws an exception.
++    /// </summary>
++    /// <exception cref="SeedUndiscriminatedUnionsException">Thrown when <see cref="Type"/> is not 'int'.</exception>
++    public int AsInt() =>
++        IsInt()
++            ? (int)Value!
++            : throw new SeedUndiscriminatedUnionsException("Union type is not 'int'");
++
++    /// <summary>
++    /// Returns the value as a <see cref="HashSet<string>"/> if <see cref="Type"/> is 'set', otherwise throws an exception.
++    /// </summary>
++    /// <exception cref="SeedUndiscriminatedUnionsException">Thrown when <see cref="Type"/> is not 'set'.</exception>
++    public HashSet<string> AsSetOfString() =>
++        IsSetOfString()
++            ? (HashSet<string>)Value!
++            : throw new SeedUndiscriminatedUnionsException("Union type is not 'set'");
++
++    /// <summary>
++    /// Returns the value as a <see cref="IEnumerable<string>"/> if <see cref="Type"/> is 'list', otherwise throws an exception.
++    /// </summary>
++    /// <exception cref="SeedUndiscriminatedUnionsException">Thrown when <see cref="Type"/> is not 'list'.</exception>
++    public IEnumerable<string> AsListOfString() =>
++        IsListOfString()
++            ? (IEnumerable<string>)Value!
++            : throw new SeedUndiscriminatedUnionsException("Union type is not 'list'");
++
++    /// <summary>
++    /// Returns the value as a <see cref="SeedUndiscriminatedUnions.NestedUnionL2"/> if <see cref="Type"/> is 'nestedUnionL2', otherwise throws an exception.
++    /// </summary>
++    /// <exception cref="SeedUndiscriminatedUnionsException">Thrown when <see cref="Type"/> is not 'nestedUnionL2'.</exception>
++    public SeedUndiscriminatedUnions.NestedUnionL2 AsNestedUnionL2() =>
++        IsNestedUnionL2()
++            ? (SeedUndiscriminatedUnions.NestedUnionL2)Value!
++            : throw new SeedUndiscriminatedUnionsException("Union type is not 'nestedUnionL2'");
++
++    /// <summary>
++    /// Attempts to cast the value to a <see cref="int"/> and returns true if successful.
++    /// </summary>
++    public bool TryGetInt(out int? value)
++    {
++        if (Type == "int")
++        {
++            value = (int)Value!;
++            return true;
++        }
++        value = null;
++        return false;
++    }
++
++    /// <summary>
++    /// Attempts to cast the value to a <see cref="HashSet<string>"/> and returns true if successful.
++    /// </summary>
++    public bool TryGetSetOfString(out HashSet<string>? value)
++    {
++        if (Type == "set")
++        {
++            value = (HashSet<string>)Value!;
++            return true;
++        }
++        value = null;
++        return false;
++    }
++
++    /// <summary>
++    /// Attempts to cast the value to a <see cref="IEnumerable<string>"/> and returns true if successful.
++    /// </summary>
++    public bool TryGetListOfString(out IEnumerable<string>? value)
++    {
++        if (Type == "list")
++        {
++            value = (IEnumerable<string>)Value!;
++            return true;
++        }
++        value = null;
++        return false;
++    }
++
++    /// <summary>
++    /// Attempts to cast the value to a <see cref="SeedUndiscriminatedUnions.NestedUnionL2"/> and returns true if successful.
++    /// </summary>
++    public bool TryGetNestedUnionL2(out SeedUndiscriminatedUnions.NestedUnionL2? value)
++    {
++        if (Type == "nestedUnionL2")
++        {
++            value = (SeedUndiscriminatedUnions.NestedUnionL2)Value!;
++            return true;
++        }
++        value = null;
++        return false;
++    }
++
++    public T Match<T>(
++        Func<int, T> onInt,
++        Func<HashSet<string>, T> onSetOfString,
++        Func<IEnumerable<string>, T> onListOfString,
++        Func<SeedUndiscriminatedUnions.NestedUnionL2, T> onNestedUnionL2
++    )
++    {
++        return Type switch
++        {
++            "int" => onInt(AsInt()),
++            "set" => onSetOfString(AsSetOfString()),
++            "list" => onListOfString(AsListOfString()),
++            "nestedUnionL2" => onNestedUnionL2(AsNestedUnionL2()),
++            _ => throw new SeedUndiscriminatedUnionsException($"Unknown union type: {Type}"),
++        };
++    }
++
++    public void Visit(
++        Action<int> onInt,
++        Action<HashSet<string>> onSetOfString,
++        Action<IEnumerable<string>> onListOfString,
++        Action<SeedUndiscriminatedUnions.NestedUnionL2> onNestedUnionL2
++    )
++    {
++        switch (Type)
++        {
++            case "int":
++                onInt(AsInt());
++                break;
++            case "set":
++                onSetOfString(AsSetOfString());
++                break;
++            case "list":
++                onListOfString(AsListOfString());
++                break;
++            case "nestedUnionL2":
++                onNestedUnionL2(AsNestedUnionL2());
++                break;
++            default:
++                throw new SeedUndiscriminatedUnionsException($"Unknown union type: {Type}");
++        }
++    }
++
++    public override int GetHashCode()
++    {
++        unchecked
++        {
++            var hashCode = Type.GetHashCode();
++            if (Value != null)
++            {
++                hashCode = (hashCode * 397) ^ Value.GetHashCode();
++            }
++            return hashCode;
++        }
++    }
++
++    public override bool Equals(object? obj)
++    {
++        if (obj is null)
++            return false;
++        if (ReferenceEquals(this, obj))
++            return true;
++        if (obj is not NestedUnionL1 other)
++            return false;
++
++        // Compare type discriminators
++        if (Type != other.Type)
++            return false;
++
++        // Compare values using EqualityComparer for deep comparison
++        return System.Collections.Generic.EqualityComparer<object?>.Default.Equals(
++            Value,
++            other.Value
++        );
++    }
++
++    public override string ToString() => JsonUtils.Serialize(this);
++
++    public static implicit operator NestedUnionL1(int value) => new("int", value);
++
++    public static implicit operator NestedUnionL1(SeedUndiscriminatedUnions.NestedUnionL2 value) =>
++        new("nestedUnionL2", value);
++
++    public static implicit operator NestedUnionL1(bool value) =>
++        new("nestedUnionL2", (NestedUnionL2)value);
++
++    [Serializable]
++    internal sealed class JsonConverter : JsonConverter<NestedUnionL1>
++    {
++        public override NestedUnionL1? Read(
++            ref Utf8JsonReader reader,
++            global::System.Type typeToConvert,
++            JsonSerializerOptions options
++        )
++        {
++            if (reader.TokenType == JsonTokenType.Null)
++            {
++                return null;
++            }
++
++            if (reader.TokenType == JsonTokenType.Number)
++            {
++                if (reader.TryGetInt32(out var intValue))
++                {
++                    NestedUnionL1 intResult = new("int", intValue);
++                    return intResult;
++                }
++            }
++
++            if (reader.TokenType == JsonTokenType.StartArray)
++            {
++                var document = JsonDocument.ParseValue(ref reader);
++
++                var types = new (string Key, System.Type Type)[]
++                {
++                    ("set", typeof(HashSet<string>)),
++                    ("list", typeof(IEnumerable<string>)),
++                };
++
++                foreach (var (key, type) in types)
++                {
++                    try
++                    {
++                        var value = document.Deserialize(type, options);
++                        if (value != null)
++                        {
++                            NestedUnionL1 result = new(key, value);
++                            return result;
++                        }
++                    }
++                    catch (JsonException)
++                    {
++                        // Try next type;
++                    }
++                }
++            }
++
++            if (reader.TokenType == JsonTokenType.StartObject)
++            {
++                var document = JsonDocument.ParseValue(ref reader);
++
++                var types = new (string Key, System.Type Type)[]
++                {
++                    ("nestedUnionL2", typeof(SeedUndiscriminatedUnions.NestedUnionL2)),
++                };
++
++                foreach (var (key, type) in types)
++                {
++                    try
++                    {
++                        var value = document.Deserialize(type, options);
++                        if (value != null)
++                        {
++                            NestedUnionL1 result = new(key, value);
++                            return result;
++                        }
++                    }
++                    catch (JsonException)
++                    {
++                        // Try next type;
++                    }
++                }
++            }
++
++            throw new JsonException(
++                $"Cannot deserialize JSON token {reader.TokenType} into NestedUnionL1"
++            );
++        }
++
++        public override void Write(
++            Utf8JsonWriter writer,
++            NestedUnionL1 value,
++            JsonSerializerOptions options
++        )
++        {
++            if (value == null)
++            {
++                writer.WriteNullValue();
++                return;
++            }
++
++            value.Visit(
++                num => writer.WriteNumberValue(num),
++                obj => JsonSerializer.Serialize(writer, obj, options),
++                obj => JsonSerializer.Serialize(writer, obj, options),
++                obj => JsonSerializer.Serialize(writer, obj, options)
++            );
++        }
++
++        public override NestedUnionL1 ReadAsPropertyName(
++            ref Utf8JsonReader reader,
++            global::System.Type typeToConvert,
++            JsonSerializerOptions options
++        )
++        {
++            var stringValue = reader.GetString()!;
++            NestedUnionL1 result = new("string", stringValue);
++            return result;
++        }
++
++        public override void WriteAsPropertyName(
++            Utf8JsonWriter writer,
++            NestedUnionL1 value,
++            JsonSerializerOptions options
++        )
++        {
++            writer.WritePropertyName(value.Value?.ToString() ?? "null");
++        }
++    }
++}
+diff --git a/src/SeedUndiscriminatedUnions/Union/Types/NestedUnionL2.cs b/src/SeedUndiscriminatedUnions/Union/Types/NestedUnionL2.cs
+new file mode 100644
+index 00000000000..2a462df64cf
+--- /dev/null
++++ b/src/SeedUndiscriminatedUnions/Union/Types/NestedUnionL2.cs
+@@ -0,0 +1,300 @@
++// ReSharper disable NullableWarningSuppressionIsUsed
++// ReSharper disable InconsistentNaming
++
++using global::System.Text.Json;
++using global::System.Text.Json.Serialization;
++using SeedUndiscriminatedUnions.Core;
++
++namespace SeedUndiscriminatedUnions;
++
++/// <summary>
++/// Nested layer 2.
++/// </summary>
++[JsonConverter(typeof(NestedUnionL2.JsonConverter))]
++[Serializable]
++public class NestedUnionL2
++{
++    private NestedUnionL2(string type, object? value)
++    {
++        Type = type;
++        Value = value;
++    }
++
++    /// <summary>
++    /// Type discriminator
++    /// </summary>
++    [JsonIgnore]
++    public string Type { get; internal set; }
++
++    /// <summary>
++    /// Union value
++    /// </summary>
++    [JsonIgnore]
++    public object? Value { get; internal set; }
++
++    /// <summary>
++    /// Factory method to create a union from a bool value.
++    /// </summary>
++    public static NestedUnionL2 FromBool(bool value) => new("bool", value);
++
++    /// <summary>
++    /// Factory method to create a union from a HashSet<string> value.
++    /// </summary>
++    public static NestedUnionL2 FromSetOfString(HashSet<string> value) => new("set", value);
++
++    /// <summary>
++    /// Factory method to create a union from a IEnumerable<string> value.
++    /// </summary>
++    public static NestedUnionL2 FromListOfString(IEnumerable<string> value) => new("list", value);
++
++    /// <summary>
++    /// Returns true if <see cref="Type"/> is "bool"
++    /// </summary>
++    public bool IsBool() => Type == "bool";
++
++    /// <summary>
++    /// Returns true if <see cref="Type"/> is "set"
++    /// </summary>
++    public bool IsSetOfString() => Type == "set";
++
++    /// <summary>
++    /// Returns true if <see cref="Type"/> is "list"
++    /// </summary>
++    public bool IsListOfString() => Type == "list";
++
++    /// <summary>
++    /// Returns the value as a <see cref="bool"/> if <see cref="Type"/> is 'bool', otherwise throws an exception.
++    /// </summary>
++    /// <exception cref="SeedUndiscriminatedUnionsException">Thrown when <see cref="Type"/> is not 'bool'.</exception>
++    public bool AsBool() =>
++        IsBool()
++            ? (bool)Value!
++            : throw new SeedUndiscriminatedUnionsException("Union type is not 'bool'");
++
++    /// <summary>
++    /// Returns the value as a <see cref="HashSet<string>"/> if <see cref="Type"/> is 'set', otherwise throws an exception.
++    /// </summary>
++    /// <exception cref="SeedUndiscriminatedUnionsException">Thrown when <see cref="Type"/> is not 'set'.</exception>
++    public HashSet<string> AsSetOfString() =>
++        IsSetOfString()
++            ? (HashSet<string>)Value!
++            : throw new SeedUndiscriminatedUnionsException("Union type is not 'set'");
++
++    /// <summary>
++    /// Returns the value as a <see cref="IEnumerable<string>"/> if <see cref="Type"/> is 'list', otherwise throws an exception.
++    /// </summary>
++    /// <exception cref="SeedUndiscriminatedUnionsException">Thrown when <see cref="Type"/> is not 'list'.</exception>
++    public IEnumerable<string> AsListOfString() =>
++        IsListOfString()
++            ? (IEnumerable<string>)Value!
++            : throw new SeedUndiscriminatedUnionsException("Union type is not 'list'");
++
++    /// <summary>
++    /// Attempts to cast the value to a <see cref="bool"/> and returns true if successful.
++    /// </summary>
++    public bool TryGetBool(out bool? value)
++    {
++        if (Type == "bool")
++        {
++            value = (bool)Value!;
++            return true;
++        }
++        value = null;
++        return false;
++    }
++
++    /// <summary>
++    /// Attempts to cast the value to a <see cref="HashSet<string>"/> and returns true if successful.
++    /// </summary>
++    public bool TryGetSetOfString(out HashSet<string>? value)
++    {
++        if (Type == "set")
++        {
++            value = (HashSet<string>)Value!;
++            return true;
++        }
++        value = null;
++        return false;
++    }
++
++    /// <summary>
++    /// Attempts to cast the value to a <see cref="IEnumerable<string>"/> and returns true if successful.
++    /// </summary>
++    public bool TryGetListOfString(out IEnumerable<string>? value)
++    {
++        if (Type == "list")
++        {
++            value = (IEnumerable<string>)Value!;
++            return true;
++        }
++        value = null;
++        return false;
++    }
++
++    public T Match<T>(
++        Func<bool, T> onBool,
++        Func<HashSet<string>, T> onSetOfString,
++        Func<IEnumerable<string>, T> onListOfString
++    )
++    {
++        return Type switch
++        {
++            "bool" => onBool(AsBool()),
++            "set" => onSetOfString(AsSetOfString()),
++            "list" => onListOfString(AsListOfString()),
++            _ => throw new SeedUndiscriminatedUnionsException($"Unknown union type: {Type}"),
++        };
++    }
++
++    public void Visit(
++        Action<bool> onBool,
++        Action<HashSet<string>> onSetOfString,
++        Action<IEnumerable<string>> onListOfString
++    )
++    {
++        switch (Type)
++        {
++            case "bool":
++                onBool(AsBool());
++                break;
++            case "set":
++                onSetOfString(AsSetOfString());
++                break;
++            case "list":
++                onListOfString(AsListOfString());
++                break;
++            default:
++                throw new SeedUndiscriminatedUnionsException($"Unknown union type: {Type}");
++        }
++    }
++
++    public override int GetHashCode()
++    {
++        unchecked
++        {
++            var hashCode = Type.GetHashCode();
++            if (Value != null)
++            {
++                hashCode = (hashCode * 397) ^ Value.GetHashCode();
++            }
++            return hashCode;
++        }
++    }
++
++    public override bool Equals(object? obj)
++    {
++        if (obj is null)
++            return false;
++        if (ReferenceEquals(this, obj))
++            return true;
++        if (obj is not NestedUnionL2 other)
++            return false;
++
++        // Compare type discriminators
++        if (Type != other.Type)
++            return false;
++
++        // Compare values using EqualityComparer for deep comparison
++        return System.Collections.Generic.EqualityComparer<object?>.Default.Equals(
++            Value,
++            other.Value
++        );
++    }
++
++    public override string ToString() => JsonUtils.Serialize(this);
++
++    public static implicit operator NestedUnionL2(bool value) => new("bool", value);
++
++    [Serializable]
++    internal sealed class JsonConverter : JsonConverter<NestedUnionL2>
++    {
++        public override NestedUnionL2? Read(
++            ref Utf8JsonReader reader,
++            global::System.Type typeToConvert,
++            JsonSerializerOptions options
++        )
++        {
++            if (reader.TokenType == JsonTokenType.Null)
++            {
++                return null;
++            }
++
++            if (reader.TokenType == JsonTokenType.True || reader.TokenType == JsonTokenType.False)
++            {
++                NestedUnionL2 boolResult = new("bool", reader.GetBoolean());
++                return boolResult;
++            }
++
++            if (reader.TokenType == JsonTokenType.StartArray)
++            {
++                var document = JsonDocument.ParseValue(ref reader);
++
++                var types = new (string Key, System.Type Type)[]
++                {
++                    ("set", typeof(HashSet<string>)),
++                    ("list", typeof(IEnumerable<string>)),
++                };
++
++                foreach (var (key, type) in types)
++                {
++                    try
++                    {
++                        var value = document.Deserialize(type, options);
++                        if (value != null)
++                        {
++                            NestedUnionL2 result = new(key, value);
++                            return result;
++                        }
++                    }
++                    catch (JsonException)
++                    {
++                        // Try next type;
++                    }
++                }
++            }
++
++            throw new JsonException(
++                $"Cannot deserialize JSON token {reader.TokenType} into NestedUnionL2"
++            );
++        }
++
++        public override void Write(
++            Utf8JsonWriter writer,
++            NestedUnionL2 value,
++            JsonSerializerOptions options
++        )
++        {
++            if (value == null)
++            {
++                writer.WriteNullValue();
++                return;
++            }
++
++            value.Visit(
++                b => writer.WriteBooleanValue(b),
++                obj => JsonSerializer.Serialize(writer, obj, options),
++                obj => JsonSerializer.Serialize(writer, obj, options)
++            );
++        }
++
++        public override NestedUnionL2 ReadAsPropertyName(
++            ref Utf8JsonReader reader,
++            global::System.Type typeToConvert,
++            JsonSerializerOptions options
++        )
++        {
++            var stringValue = reader.GetString()!;
++            NestedUnionL2 result = new("string", stringValue);
++            return result;
++        }
++
++        public override void WriteAsPropertyName(
++            Utf8JsonWriter writer,
++            NestedUnionL2 value,
++            JsonSerializerOptions options
++        )
++        {
++            writer.WritePropertyName(value.Value?.ToString() ?? "null");
++        }
++    }
++}
+diff --git a/src/SeedUndiscriminatedUnions/Union/Types/NestedUnionRoot.cs b/src/SeedUndiscriminatedUnions/Union/Types/NestedUnionRoot.cs
+new file mode 100644
+index 00000000000..0c6f1a4ebb7
+--- /dev/null
++++ b/src/SeedUndiscriminatedUnions/Union/Types/NestedUnionRoot.cs
+@@ -0,0 +1,337 @@
++// ReSharper disable NullableWarningSuppressionIsUsed
++// ReSharper disable InconsistentNaming
++
++using global::System.Text.Json;
++using global::System.Text.Json.Serialization;
++using SeedUndiscriminatedUnions.Core;
++
++namespace SeedUndiscriminatedUnions;
++
++/// <summary>
++/// Nested union root.
++/// </summary>
++[JsonConverter(typeof(NestedUnionRoot.JsonConverter))]
++[Serializable]
++public class NestedUnionRoot
++{
++    private NestedUnionRoot(string type, object? value)
++    {
++        Type = type;
++        Value = value;
++    }
++
++    /// <summary>
++    /// Type discriminator
++    /// </summary>
++    [JsonIgnore]
++    public string Type { get; internal set; }
++
++    /// <summary>
++    /// Union value
++    /// </summary>
++    [JsonIgnore]
++    public object? Value { get; internal set; }
++
++    /// <summary>
++    /// Factory method to create a union from a string value.
++    /// </summary>
++    public static NestedUnionRoot FromString(string value) => new("string", value);
++
++    /// <summary>
++    /// Factory method to create a union from a IEnumerable<string> value.
++    /// </summary>
++    public static NestedUnionRoot FromListOfString(IEnumerable<string> value) => new("list", value);
++
++    /// <summary>
++    /// Factory method to create a union from a SeedUndiscriminatedUnions.NestedUnionL1 value.
++    /// </summary>
++    public static NestedUnionRoot FromNestedUnionL1(
++        SeedUndiscriminatedUnions.NestedUnionL1 value
++    ) => new("nestedUnionL1", value);
++
++    /// <summary>
++    /// Returns true if <see cref="Type"/> is "string"
++    /// </summary>
++    public bool IsString() => Type == "string";
++
++    /// <summary>
++    /// Returns true if <see cref="Type"/> is "list"
++    /// </summary>
++    public bool IsListOfString() => Type == "list";
++
++    /// <summary>
++    /// Returns true if <see cref="Type"/> is "nestedUnionL1"
++    /// </summary>
++    public bool IsNestedUnionL1() => Type == "nestedUnionL1";
++
++    /// <summary>
++    /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'string', otherwise throws an exception.
++    /// </summary>
++    /// <exception cref="SeedUndiscriminatedUnionsException">Thrown when <see cref="Type"/> is not 'string'.</exception>
++    public string AsString() =>
++        IsString()
++            ? (string)Value!
++            : throw new SeedUndiscriminatedUnionsException("Union type is not 'string'");
++
++    /// <summary>
++    /// Returns the value as a <see cref="IEnumerable<string>"/> if <see cref="Type"/> is 'list', otherwise throws an exception.
++    /// </summary>
++    /// <exception cref="SeedUndiscriminatedUnionsException">Thrown when <see cref="Type"/> is not 'list'.</exception>
++    public IEnumerable<string> AsListOfString() =>
++        IsListOfString()
++            ? (IEnumerable<string>)Value!
++            : throw new SeedUndiscriminatedUnionsException("Union type is not 'list'");
++
++    /// <summary>
++    /// Returns the value as a <see cref="SeedUndiscriminatedUnions.NestedUnionL1"/> if <see cref="Type"/> is 'nestedUnionL1', otherwise throws an exception.
++    /// </summary>
++    /// <exception cref="SeedUndiscriminatedUnionsException">Thrown when <see cref="Type"/> is not 'nestedUnionL1'.</exception>
++    public SeedUndiscriminatedUnions.NestedUnionL1 AsNestedUnionL1() =>
++        IsNestedUnionL1()
++            ? (SeedUndiscriminatedUnions.NestedUnionL1)Value!
++            : throw new SeedUndiscriminatedUnionsException("Union type is not 'nestedUnionL1'");
++
++    /// <summary>
++    /// Attempts to cast the value to a <see cref="string"/> and returns true if successful.
++    /// </summary>
++    public bool TryGetString(out string? value)
++    {
++        if (Type == "string")
++        {
++            value = (string)Value!;
++            return true;
++        }
++        value = null;
++        return false;
++    }
++
++    /// <summary>
++    /// Attempts to cast the value to a <see cref="IEnumerable<string>"/> and returns true if successful.
++    /// </summary>
++    public bool TryGetListOfString(out IEnumerable<string>? value)
++    {
++        if (Type == "list")
++        {
++            value = (IEnumerable<string>)Value!;
++            return true;
++        }
++        value = null;
++        return false;
++    }
++
++    /// <summary>
++    /// Attempts to cast the value to a <see cref="SeedUndiscriminatedUnions.NestedUnionL1"/> and returns true if successful.
++    /// </summary>
++    public bool TryGetNestedUnionL1(out SeedUndiscriminatedUnions.NestedUnionL1? value)
++    {
++        if (Type == "nestedUnionL1")
++        {
++            value = (SeedUndiscriminatedUnions.NestedUnionL1)Value!;
++            return true;
++        }
++        value = null;
++        return false;
++    }
++
++    public T Match<T>(
++        Func<string, T> onString,
++        Func<IEnumerable<string>, T> onListOfString,
++        Func<SeedUndiscriminatedUnions.NestedUnionL1, T> onNestedUnionL1
++    )
++    {
++        return Type switch
++        {
++            "string" => onString(AsString()),
++            "list" => onListOfString(AsListOfString()),
++            "nestedUnionL1" => onNestedUnionL1(AsNestedUnionL1()),
++            _ => throw new SeedUndiscriminatedUnionsException($"Unknown union type: {Type}"),
++        };
++    }
++
++    public void Visit(
++        Action<string> onString,
++        Action<IEnumerable<string>> onListOfString,
++        Action<SeedUndiscriminatedUnions.NestedUnionL1> onNestedUnionL1
++    )
++    {
++        switch (Type)
++        {
++            case "string":
++                onString(AsString());
++                break;
++            case "list":
++                onListOfString(AsListOfString());
++                break;
++            case "nestedUnionL1":
++                onNestedUnionL1(AsNestedUnionL1());
++                break;
++            default:
++                throw new SeedUndiscriminatedUnionsException($"Unknown union type: {Type}");
++        }
++    }
++
++    public override int GetHashCode()
++    {
++        unchecked
++        {
++            var hashCode = Type.GetHashCode();
++            if (Value != null)
++            {
++                hashCode = (hashCode * 397) ^ Value.GetHashCode();
++            }
++            return hashCode;
++        }
++    }
++
++    public override bool Equals(object? obj)
++    {
++        if (obj is null)
++            return false;
++        if (ReferenceEquals(this, obj))
++            return true;
++        if (obj is not NestedUnionRoot other)
++            return false;
++
++        // Compare type discriminators
++        if (Type != other.Type)
++            return false;
++
++        // Compare values using EqualityComparer for deep comparison
++        return System.Collections.Generic.EqualityComparer<object?>.Default.Equals(
++            Value,
++            other.Value
++        );
++    }
++
++    public override string ToString() => JsonUtils.Serialize(this);
++
++    public static implicit operator NestedUnionRoot(string value) => new("string", value);
++
++    public static implicit operator NestedUnionRoot(
++        SeedUndiscriminatedUnions.NestedUnionL1 value
++    ) => new("nestedUnionL1", value);
++
++    public static implicit operator NestedUnionRoot(int value) =>
++        new("nestedUnionL1", (NestedUnionL1)value);
++
++    [Serializable]
++    internal sealed class JsonConverter : JsonConverter<NestedUnionRoot>
++    {
++        public override NestedUnionRoot? Read(
++            ref Utf8JsonReader reader,
++            global::System.Type typeToConvert,
++            JsonSerializerOptions options
++        )
++        {
++            if (reader.TokenType == JsonTokenType.Null)
++            {
++                return null;
++            }
++
++            if (reader.TokenType == JsonTokenType.String)
++            {
++                var stringValue = reader.GetString()!;
++
++                NestedUnionRoot stringResult = new("string", stringValue);
++                return stringResult;
++            }
++
++            if (reader.TokenType == JsonTokenType.StartArray)
++            {
++                var document = JsonDocument.ParseValue(ref reader);
++
++                var types = new (string Key, System.Type Type)[]
++                {
++                    ("list", typeof(IEnumerable<string>)),
++                };
++
++                foreach (var (key, type) in types)
++                {
++                    try
++                    {
++                        var value = document.Deserialize(type, options);
++                        if (value != null)
++                        {
++                            NestedUnionRoot result = new(key, value);
++                            return result;
++                        }
++                    }
++                    catch (JsonException)
++                    {
++                        // Try next type;
++                    }
++                }
++            }
++
++            if (reader.TokenType == JsonTokenType.StartObject)
++            {
++                var document = JsonDocument.ParseValue(ref reader);
++
++                var types = new (string Key, System.Type Type)[]
++                {
++                    ("nestedUnionL1", typeof(SeedUndiscriminatedUnions.NestedUnionL1)),
++                };
++
++                foreach (var (key, type) in types)
++                {
++                    try
++                    {
++                        var value = document.Deserialize(type, options);
++                        if (value != null)
++                        {
++                            NestedUnionRoot result = new(key, value);
++                            return result;
++                        }
++                    }
++                    catch (JsonException)
++                    {
++                        // Try next type;
++                    }
++                }
++            }
++
++            throw new JsonException(
++                $"Cannot deserialize JSON token {reader.TokenType} into NestedUnionRoot"
++            );
++        }
++
++        public override void Write(
++            Utf8JsonWriter writer,
++            NestedUnionRoot value,
++            JsonSerializerOptions options
++        )
++        {
++            if (value == null)
++            {
++                writer.WriteNullValue();
++                return;
++            }
++
++            value.Visit(
++                str => writer.WriteStringValue(str),
++                obj => JsonSerializer.Serialize(writer, obj, options),
++                obj => JsonSerializer.Serialize(writer, obj, options)
++            );
++        }
++
++        public override NestedUnionRoot ReadAsPropertyName(
++            ref Utf8JsonReader reader,
++            global::System.Type typeToConvert,
++            JsonSerializerOptions options
++        )
++        {
++            var stringValue = reader.GetString()!;
++            NestedUnionRoot result = new("string", stringValue);
++            return result;
++        }
++
++        public override void WriteAsPropertyName(
++            Utf8JsonWriter writer,
++            NestedUnionRoot value,
++            JsonSerializerOptions options
++        )
++        {
++            writer.WritePropertyName(value.Value?.ToString() ?? "null");
++        }
++    }
++}
+diff --git a/src/SeedUndiscriminatedUnions/Union/Types/PaymentMethodUnion.cs b/src/SeedUndiscriminatedUnions/Union/Types/PaymentMethodUnion.cs
+new file mode 100644
+index 00000000000..2a8e92069b8
+--- /dev/null
++++ b/src/SeedUndiscriminatedUnions/Union/Types/PaymentMethodUnion.cs
+@@ -0,0 +1,265 @@
++// ReSharper disable NullableWarningSuppressionIsUsed
++// ReSharper disable InconsistentNaming
++
++using global::System.Text.Json;
++using global::System.Text.Json.Serialization;
++using SeedUndiscriminatedUnions.Core;
++
++namespace SeedUndiscriminatedUnions;
++
++/// <summary>
++/// Tests that nested properties with camelCase wire names are properly
++/// converted from snake_case Ruby keys when passed as Hash values.
++/// </summary>
++[JsonConverter(typeof(PaymentMethodUnion.JsonConverter))]
++[Serializable]
++public class PaymentMethodUnion
++{
++    private PaymentMethodUnion(string type, object? value)
++    {
++        Type = type;
++        Value = value;
++    }
++
++    /// <summary>
++    /// Type discriminator
++    /// </summary>
++    [JsonIgnore]
++    public string Type { get; internal set; }
++
++    /// <summary>
++    /// Union value
++    /// </summary>
++    [JsonIgnore]
++    public object? Value { get; internal set; }
++
++    /// <summary>
++    /// Factory method to create a union from a SeedUndiscriminatedUnions.TokenizeCard value.
++    /// </summary>
++    public static PaymentMethodUnion FromTokenizeCard(
++        SeedUndiscriminatedUnions.TokenizeCard value
++    ) => new("tokenizeCard", value);
++
++    /// <summary>
++    /// Factory method to create a union from a SeedUndiscriminatedUnions.ConvertToken value.
++    /// </summary>
++    public static PaymentMethodUnion FromConvertToken(
++        SeedUndiscriminatedUnions.ConvertToken value
++    ) => new("convertToken", value);
++
++    /// <summary>
++    /// Returns true if <see cref="Type"/> is "tokenizeCard"
++    /// </summary>
++    public bool IsTokenizeCard() => Type == "tokenizeCard";
++
++    /// <summary>
++    /// Returns true if <see cref="Type"/> is "convertToken"
++    /// </summary>
++    public bool IsConvertToken() => Type == "convertToken";
++
++    /// <summary>
++    /// Returns the value as a <see cref="SeedUndiscriminatedUnions.TokenizeCard"/> if <see cref="Type"/> is 'tokenizeCard', otherwise throws an exception.
++    /// </summary>
++    /// <exception cref="SeedUndiscriminatedUnionsException">Thrown when <see cref="Type"/> is not 'tokenizeCard'.</exception>
++    public SeedUndiscriminatedUnions.TokenizeCard AsTokenizeCard() =>
++        IsTokenizeCard()
++            ? (SeedUndiscriminatedUnions.TokenizeCard)Value!
++            : throw new SeedUndiscriminatedUnionsException("Union type is not 'tokenizeCard'");
++
++    /// <summary>
++    /// Returns the value as a <see cref="SeedUndiscriminatedUnions.ConvertToken"/> if <see cref="Type"/> is 'convertToken', otherwise throws an exception.
++    /// </summary>
++    /// <exception cref="SeedUndiscriminatedUnionsException">Thrown when <see cref="Type"/> is not 'convertToken'.</exception>
++    public SeedUndiscriminatedUnions.ConvertToken AsConvertToken() =>
++        IsConvertToken()
++            ? (SeedUndiscriminatedUnions.ConvertToken)Value!
++            : throw new SeedUndiscriminatedUnionsException("Union type is not 'convertToken'");
++
++    /// <summary>
++    /// Attempts to cast the value to a <see cref="SeedUndiscriminatedUnions.TokenizeCard"/> and returns true if successful.
++    /// </summary>
++    public bool TryGetTokenizeCard(out SeedUndiscriminatedUnions.TokenizeCard? value)
++    {
++        if (Type == "tokenizeCard")
++        {
++            value = (SeedUndiscriminatedUnions.TokenizeCard)Value!;
++            return true;
++        }
++        value = null;
++        return false;
++    }
++
++    /// <summary>
++    /// Attempts to cast the value to a <see cref="SeedUndiscriminatedUnions.ConvertToken"/> and returns true if successful.
++    /// </summary>
++    public bool TryGetConvertToken(out SeedUndiscriminatedUnions.ConvertToken? value)
++    {
++        if (Type == "convertToken")
++        {
++            value = (SeedUndiscriminatedUnions.ConvertToken)Value!;
++            return true;
++        }
++        value = null;
++        return false;
++    }
++
++    public T Match<T>(
++        Func<SeedUndiscriminatedUnions.TokenizeCard, T> onTokenizeCard,
++        Func<SeedUndiscriminatedUnions.ConvertToken, T> onConvertToken
++    )
++    {
++        return Type switch
++        {
++            "tokenizeCard" => onTokenizeCard(AsTokenizeCard()),
++            "convertToken" => onConvertToken(AsConvertToken()),
++            _ => throw new SeedUndiscriminatedUnionsException($"Unknown union type: {Type}"),
++        };
++    }
++
++    public void Visit(
++        Action<SeedUndiscriminatedUnions.TokenizeCard> onTokenizeCard,
++        Action<SeedUndiscriminatedUnions.ConvertToken> onConvertToken
++    )
++    {
++        switch (Type)
++        {
++            case "tokenizeCard":
++                onTokenizeCard(AsTokenizeCard());
++                break;
++            case "convertToken":
++                onConvertToken(AsConvertToken());
++                break;
++            default:
++                throw new SeedUndiscriminatedUnionsException($"Unknown union type: {Type}");
++        }
++    }
++
++    public override int GetHashCode()
++    {
++        unchecked
++        {
++            var hashCode = Type.GetHashCode();
++            if (Value != null)
++            {
++                hashCode = (hashCode * 397) ^ Value.GetHashCode();
++            }
++            return hashCode;
++        }
++    }
++
++    public override bool Equals(object? obj)
++    {
++        if (obj is null)
++            return false;
++        if (ReferenceEquals(this, obj))
++            return true;
++        if (obj is not PaymentMethodUnion other)
++            return false;
++
++        // Compare type discriminators
++        if (Type != other.Type)
++            return false;
++
++        // Compare values using EqualityComparer for deep comparison
++        return System.Collections.Generic.EqualityComparer<object?>.Default.Equals(
++            Value,
++            other.Value
++        );
++    }
++
++    public override string ToString() => JsonUtils.Serialize(this);
++
++    public static implicit operator PaymentMethodUnion(
++        SeedUndiscriminatedUnions.TokenizeCard value
++    ) => new("tokenizeCard", value);
++
++    public static implicit operator PaymentMethodUnion(
++        SeedUndiscriminatedUnions.ConvertToken value
++    ) => new("convertToken", value);
++
++    [Serializable]
++    internal sealed class JsonConverter : JsonConverter<PaymentMethodUnion>
++    {
++        public override PaymentMethodUnion? Read(
++            ref Utf8JsonReader reader,
++            global::System.Type typeToConvert,
++            JsonSerializerOptions options
++        )
++        {
++            if (reader.TokenType == JsonTokenType.Null)
++            {
++                return null;
++            }
++
++            if (reader.TokenType == JsonTokenType.StartObject)
++            {
++                var document = JsonDocument.ParseValue(ref reader);
++
++                var types = new (string Key, System.Type Type)[]
++                {
++                    ("tokenizeCard", typeof(SeedUndiscriminatedUnions.TokenizeCard)),
++                    ("convertToken", typeof(SeedUndiscriminatedUnions.ConvertToken)),
++                };
++
++                foreach (var (key, type) in types)
++                {
++                    try
++                    {
++                        var value = document.Deserialize(type, options);
++                        if (value != null)
++                        {
++                            PaymentMethodUnion result = new(key, value);
++                            return result;
++                        }
++                    }
++                    catch (JsonException)
++                    {
++                        // Try next type;
++                    }
++                }
++            }
++
++            throw new JsonException(
++                $"Cannot deserialize JSON token {reader.TokenType} into PaymentMethodUnion"
++            );
++        }
++
++        public override void Write(
++            Utf8JsonWriter writer,
++            PaymentMethodUnion value,
++            JsonSerializerOptions options
++        )
++        {
++            if (value == null)
++            {
++                writer.WriteNullValue();
++                return;
++            }
++
++            value.Visit(
++                obj => JsonSerializer.Serialize(writer, obj, options),
++                obj => JsonSerializer.Serialize(writer, obj, options)
++            );
++        }
++
++        public override PaymentMethodUnion ReadAsPropertyName(
++            ref Utf8JsonReader reader,
++            global::System.Type typeToConvert,
++            JsonSerializerOptions options
++        )
++        {
++            var stringValue = reader.GetString()!;
++            PaymentMethodUnion result = new("string", stringValue);
++            return result;
++        }
++
++        public override void WriteAsPropertyName(
++            Utf8JsonWriter writer,
++            PaymentMethodUnion value,
++            JsonSerializerOptions options
++        )
++        {
++            writer.WritePropertyName(value.Value?.ToString() ?? "null");
++        }
++    }
++}
+diff --git a/src/SeedUndiscriminatedUnions/Union/Types/Request.cs b/src/SeedUndiscriminatedUnions/Union/Types/Request.cs
+index 0f2fbb429de..de11278068c 100644
+--- a/src/SeedUndiscriminatedUnions/Union/Types/Request.cs
++++ b/src/SeedUndiscriminatedUnions/Union/Types/Request.cs
+@@ -1,6 +1,5 @@
+ using global::System.Text.Json;
+ using global::System.Text.Json.Serialization;
+-using OneOf;
+ using SeedUndiscriminatedUnions.Core;
+ 
+ namespace SeedUndiscriminatedUnions;
+@@ -13,7 +12,7 @@ public record Request : IJsonOnDeserialized
+         new Dictionary<string, JsonElement>();
+ 
+     [JsonPropertyName("union")]
+-    public OneOf<Dictionary<string, object?>?, NamedMetadata>? Union { get; set; }
++    public MetadataUnion? Union { get; set; }
+ 
+     [JsonIgnore]
+     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+diff --git a/src/SeedUndiscriminatedUnions/Union/Types/TypeWithOptionalUnion.cs b/src/SeedUndiscriminatedUnions/Union/Types/TypeWithOptionalUnion.cs
+index 3839070d90f..d1e7a342498 100644
+--- a/src/SeedUndiscriminatedUnions/Union/Types/TypeWithOptionalUnion.cs
++++ b/src/SeedUndiscriminatedUnions/Union/Types/TypeWithOptionalUnion.cs
+@@ -1,6 +1,5 @@
+ using global::System.Text.Json;
+ using global::System.Text.Json.Serialization;
+-using OneOf;
+ using SeedUndiscriminatedUnions.Core;
+ 
+ namespace SeedUndiscriminatedUnions;
+@@ -13,14 +12,7 @@ public record TypeWithOptionalUnion : IJsonOnDeserialized
+         new Dictionary<string, JsonElement>();
+ 
+     [JsonPropertyName("myUnion")]
+-    public OneOf<
+-        string,
+-        IEnumerable<string>,
+-        int,
+-        IEnumerable<int>,
+-        IEnumerable<IEnumerable<int>>,
+-        HashSet<string>
+-    >? MyUnion { get; set; }
++    public MyUnion? MyUnion { get; set; }
+ 
+     [JsonIgnore]
+     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+diff --git a/src/SeedUndiscriminatedUnions/Union/Types/UnionWithDuplicateTypes.cs b/src/SeedUndiscriminatedUnions/Union/Types/UnionWithDuplicateTypes.cs
+new file mode 100644
+index 00000000000..1ecd4f8ee69
+--- /dev/null
++++ b/src/SeedUndiscriminatedUnions/Union/Types/UnionWithDuplicateTypes.cs
+@@ -0,0 +1,361 @@
++// ReSharper disable NullableWarningSuppressionIsUsed
++// ReSharper disable InconsistentNaming
++
++using global::System.Text.Json;
++using global::System.Text.Json.Serialization;
++using SeedUndiscriminatedUnions.Core;
++
++namespace SeedUndiscriminatedUnions;
++
++/// <summary>
++/// Duplicate types.
++/// </summary>
++[JsonConverter(typeof(UnionWithDuplicateTypes.JsonConverter))]
++[Serializable]
++public class UnionWithDuplicateTypes
++{
++    private UnionWithDuplicateTypes(string type, object? value)
++    {
++        Type = type;
++        Value = value;
++    }
++
++    /// <summary>
++    /// Type discriminator
++    /// </summary>
++    [JsonIgnore]
++    public string Type { get; internal set; }
++
++    /// <summary>
++    /// Union value
++    /// </summary>
++    [JsonIgnore]
++    public object? Value { get; internal set; }
++
++    /// <summary>
++    /// Factory method to create a union from a string value.
++    /// </summary>
++    public static UnionWithDuplicateTypes FromString(string value) => new("string", value);
++
++    /// <summary>
++    /// Factory method to create a union from a IEnumerable<string> value.
++    /// </summary>
++    public static UnionWithDuplicateTypes FromListOfString(IEnumerable<string> value) =>
++        new("list", value);
++
++    /// <summary>
++    /// Factory method to create a union from a int value.
++    /// </summary>
++    public static UnionWithDuplicateTypes FromInt(int value) => new("int", value);
++
++    /// <summary>
++    /// Factory method to create a union from a HashSet<string> value.
++    /// </summary>
++    public static UnionWithDuplicateTypes FromSetOfString(HashSet<string> value) =>
++        new("set", value);
++
++    /// <summary>
++    /// Returns true if <see cref="Type"/> is "string"
++    /// </summary>
++    public bool IsString() => Type == "string";
++
++    /// <summary>
++    /// Returns true if <see cref="Type"/> is "list"
++    /// </summary>
++    public bool IsListOfString() => Type == "list";
++
++    /// <summary>
++    /// Returns true if <see cref="Type"/> is "int"
++    /// </summary>
++    public bool IsInt() => Type == "int";
++
++    /// <summary>
++    /// Returns true if <see cref="Type"/> is "set"
++    /// </summary>
++    public bool IsSetOfString() => Type == "set";
++
++    /// <summary>
++    /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'string', otherwise throws an exception.
++    /// </summary>
++    /// <exception cref="SeedUndiscriminatedUnionsException">Thrown when <see cref="Type"/> is not 'string'.</exception>
++    public string AsString() =>
++        IsString()
++            ? (string)Value!
++            : throw new SeedUndiscriminatedUnionsException("Union type is not 'string'");
++
++    /// <summary>
++    /// Returns the value as a <see cref="IEnumerable<string>"/> if <see cref="Type"/> is 'list', otherwise throws an exception.
++    /// </summary>
++    /// <exception cref="SeedUndiscriminatedUnionsException">Thrown when <see cref="Type"/> is not 'list'.</exception>
++    public IEnumerable<string> AsListOfString() =>
++        IsListOfString()
++            ? (IEnumerable<string>)Value!
++            : throw new SeedUndiscriminatedUnionsException("Union type is not 'list'");
++
++    /// <summary>
++    /// Returns the value as a <see cref="int"/> if <see cref="Type"/> is 'int', otherwise throws an exception.
++    /// </summary>
++    /// <exception cref="SeedUndiscriminatedUnionsException">Thrown when <see cref="Type"/> is not 'int'.</exception>
++    public int AsInt() =>
++        IsInt()
++            ? (int)Value!
++            : throw new SeedUndiscriminatedUnionsException("Union type is not 'int'");
++
++    /// <summary>
++    /// Returns the value as a <see cref="HashSet<string>"/> if <see cref="Type"/> is 'set', otherwise throws an exception.
++    /// </summary>
++    /// <exception cref="SeedUndiscriminatedUnionsException">Thrown when <see cref="Type"/> is not 'set'.</exception>
++    public HashSet<string> AsSetOfString() =>
++        IsSetOfString()
++            ? (HashSet<string>)Value!
++            : throw new SeedUndiscriminatedUnionsException("Union type is not 'set'");
++
++    /// <summary>
++    /// Attempts to cast the value to a <see cref="string"/> and returns true if successful.
++    /// </summary>
++    public bool TryGetString(out string? value)
++    {
++        if (Type == "string")
++        {
++            value = (string)Value!;
++            return true;
++        }
++        value = null;
++        return false;
++    }
++
++    /// <summary>
++    /// Attempts to cast the value to a <see cref="IEnumerable<string>"/> and returns true if successful.
++    /// </summary>
++    public bool TryGetListOfString(out IEnumerable<string>? value)
++    {
++        if (Type == "list")
++        {
++            value = (IEnumerable<string>)Value!;
++            return true;
++        }
++        value = null;
++        return false;
++    }
++
++    /// <summary>
++    /// Attempts to cast the value to a <see cref="int"/> and returns true if successful.
++    /// </summary>
++    public bool TryGetInt(out int? value)
++    {
++        if (Type == "int")
++        {
++            value = (int)Value!;
++            return true;
++        }
++        value = null;
++        return false;
++    }
++
++    /// <summary>
++    /// Attempts to cast the value to a <see cref="HashSet<string>"/> and returns true if successful.
++    /// </summary>
++    public bool TryGetSetOfString(out HashSet<string>? value)
++    {
++        if (Type == "set")
++        {
++            value = (HashSet<string>)Value!;
++            return true;
++        }
++        value = null;
++        return false;
++    }
++
++    public T Match<T>(
++        Func<string, T> onString,
++        Func<IEnumerable<string>, T> onListOfString,
++        Func<int, T> onInt,
++        Func<HashSet<string>, T> onSetOfString
++    )
++    {
++        return Type switch
++        {
++            "string" => onString(AsString()),
++            "list" => onListOfString(AsListOfString()),
++            "int" => onInt(AsInt()),
++            "set" => onSetOfString(AsSetOfString()),
++            _ => throw new SeedUndiscriminatedUnionsException($"Unknown union type: {Type}"),
++        };
++    }
++
++    public void Visit(
++        Action<string> onString,
++        Action<IEnumerable<string>> onListOfString,
++        Action<int> onInt,
++        Action<HashSet<string>> onSetOfString
++    )
++    {
++        switch (Type)
++        {
++            case "string":
++                onString(AsString());
++                break;
++            case "list":
++                onListOfString(AsListOfString());
++                break;
++            case "int":
++                onInt(AsInt());
++                break;
++            case "set":
++                onSetOfString(AsSetOfString());
++                break;
++            default:
++                throw new SeedUndiscriminatedUnionsException($"Unknown union type: {Type}");
++        }
++    }
++
++    public override int GetHashCode()
++    {
++        unchecked
++        {
++            var hashCode = Type.GetHashCode();
++            if (Value != null)
++            {
++                hashCode = (hashCode * 397) ^ Value.GetHashCode();
++            }
++            return hashCode;
++        }
++    }
++
++    public override bool Equals(object? obj)
++    {
++        if (obj is null)
++            return false;
++        if (ReferenceEquals(this, obj))
++            return true;
++        if (obj is not UnionWithDuplicateTypes other)
++            return false;
++
++        // Compare type discriminators
++        if (Type != other.Type)
++            return false;
++
++        // Compare values using EqualityComparer for deep comparison
++        return System.Collections.Generic.EqualityComparer<object?>.Default.Equals(
++            Value,
++            other.Value
++        );
++    }
++
++    public override string ToString() => JsonUtils.Serialize(this);
++
++    public static implicit operator UnionWithDuplicateTypes(string value) => new("string", value);
++
++    public static implicit operator UnionWithDuplicateTypes(int value) => new("int", value);
++
++    [Serializable]
++    internal sealed class JsonConverter : JsonConverter<UnionWithDuplicateTypes>
++    {
++        public override UnionWithDuplicateTypes? Read(
++            ref Utf8JsonReader reader,
++            global::System.Type typeToConvert,
++            JsonSerializerOptions options
++        )
++        {
++            if (reader.TokenType == JsonTokenType.Null)
++            {
++                return null;
++            }
++
++            if (reader.TokenType == JsonTokenType.Number)
++            {
++                if (reader.TryGetInt32(out var intValue))
++                {
++                    UnionWithDuplicateTypes intResult = new("int", intValue);
++                    return intResult;
++                }
++            }
++
++            if (reader.TokenType == JsonTokenType.String)
++            {
++                var stringValue = reader.GetString()!;
++
++                if (int.TryParse(stringValue, out var intFromStringValue))
++                {
++                    UnionWithDuplicateTypes intFromStringResult = new("int", intFromStringValue);
++                    return intFromStringResult;
++                }
++
++                UnionWithDuplicateTypes stringResult = new("string", stringValue);
++                return stringResult;
++            }
++
++            if (reader.TokenType == JsonTokenType.StartArray)
++            {
++                var document = JsonDocument.ParseValue(ref reader);
++
++                var types = new (string Key, System.Type Type)[]
++                {
++                    ("set", typeof(HashSet<string>)),
++                    ("list", typeof(IEnumerable<string>)),
++                };
++
++                foreach (var (key, type) in types)
++                {
++                    try
++                    {
++                        var value = document.Deserialize(type, options);
++                        if (value != null)
++                        {
++                            UnionWithDuplicateTypes result = new(key, value);
++                            return result;
++                        }
++                    }
++                    catch (JsonException)
++                    {
++                        // Try next type;
++                    }
++                }
++            }
++
++            throw new JsonException(
++                $"Cannot deserialize JSON token {reader.TokenType} into UnionWithDuplicateTypes"
++            );
++        }
++
++        public override void Write(
++            Utf8JsonWriter writer,
++            UnionWithDuplicateTypes value,
++            JsonSerializerOptions options
++        )
++        {
++            if (value == null)
++            {
++                writer.WriteNullValue();
++                return;
++            }
++
++            value.Visit(
++                str => writer.WriteStringValue(str),
++                obj => JsonSerializer.Serialize(writer, obj, options),
++                num => writer.WriteNumberValue(num),
++                obj => JsonSerializer.Serialize(writer, obj, options)
++            );
++        }
++
++        public override UnionWithDuplicateTypes ReadAsPropertyName(
++            ref Utf8JsonReader reader,
++            global::System.Type typeToConvert,
++            JsonSerializerOptions options
++        )
++        {
++            var stringValue = reader.GetString()!;
++            UnionWithDuplicateTypes result = new("string", stringValue);
++            return result;
++        }
++
++        public override void WriteAsPropertyName(
++            Utf8JsonWriter writer,
++            UnionWithDuplicateTypes value,
++            JsonSerializerOptions options
++        )
++        {
++            writer.WritePropertyName(value.Value?.ToString() ?? "null");
++        }
++    }
++}
+diff --git a/src/SeedUndiscriminatedUnions/Union/Types/UnionWithIdenticalPrimitives.cs b/src/SeedUndiscriminatedUnions/Union/Types/UnionWithIdenticalPrimitives.cs
+new file mode 100644
+index 00000000000..7e440256751
+--- /dev/null
++++ b/src/SeedUndiscriminatedUnions/Union/Types/UnionWithIdenticalPrimitives.cs
+@@ -0,0 +1,293 @@
++// ReSharper disable NullableWarningSuppressionIsUsed
++// ReSharper disable InconsistentNaming
++
++using global::System.Text.Json;
++using global::System.Text.Json.Serialization;
++using SeedUndiscriminatedUnions.Core;
++
++namespace SeedUndiscriminatedUnions;
++
++/// <summary>
++/// Mix of primitives where some resolve to the same Java type.
++/// </summary>
++[JsonConverter(typeof(UnionWithIdenticalPrimitives.JsonConverter))]
++[Serializable]
++public class UnionWithIdenticalPrimitives
++{
++    private UnionWithIdenticalPrimitives(string type, object? value)
++    {
++        Type = type;
++        Value = value;
++    }
++
++    /// <summary>
++    /// Type discriminator
++    /// </summary>
++    [JsonIgnore]
++    public string Type { get; internal set; }
++
++    /// <summary>
++    /// Union value
++    /// </summary>
++    [JsonIgnore]
++    public object? Value { get; internal set; }
++
++    /// <summary>
++    /// Factory method to create a union from a int value.
++    /// </summary>
++    public static UnionWithIdenticalPrimitives FromInt(int value) => new("int", value);
++
++    /// <summary>
++    /// Factory method to create a union from a double value.
++    /// </summary>
++    public static UnionWithIdenticalPrimitives FromDouble(double value) => new("double", value);
++
++    /// <summary>
++    /// Factory method to create a union from a string value.
++    /// </summary>
++    public static UnionWithIdenticalPrimitives FromString(string value) => new("string", value);
++
++    /// <summary>
++    /// Returns true if <see cref="Type"/> is "int"
++    /// </summary>
++    public bool IsInt() => Type == "int";
++
++    /// <summary>
++    /// Returns true if <see cref="Type"/> is "double"
++    /// </summary>
++    public bool IsDouble() => Type == "double";
++
++    /// <summary>
++    /// Returns true if <see cref="Type"/> is "string"
++    /// </summary>
++    public bool IsString() => Type == "string";
++
++    /// <summary>
++    /// Returns the value as a <see cref="int"/> if <see cref="Type"/> is 'int', otherwise throws an exception.
++    /// </summary>
++    /// <exception cref="SeedUndiscriminatedUnionsException">Thrown when <see cref="Type"/> is not 'int'.</exception>
++    public int AsInt() =>
++        IsInt()
++            ? (int)Value!
++            : throw new SeedUndiscriminatedUnionsException("Union type is not 'int'");
++
++    /// <summary>
++    /// Returns the value as a <see cref="double"/> if <see cref="Type"/> is 'double', otherwise throws an exception.
++    /// </summary>
++    /// <exception cref="SeedUndiscriminatedUnionsException">Thrown when <see cref="Type"/> is not 'double'.</exception>
++    public double AsDouble() =>
++        IsDouble()
++            ? (double)Value!
++            : throw new SeedUndiscriminatedUnionsException("Union type is not 'double'");
++
++    /// <summary>
++    /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'string', otherwise throws an exception.
++    /// </summary>
++    /// <exception cref="SeedUndiscriminatedUnionsException">Thrown when <see cref="Type"/> is not 'string'.</exception>
++    public string AsString() =>
++        IsString()
++            ? (string)Value!
++            : throw new SeedUndiscriminatedUnionsException("Union type is not 'string'");
++
++    /// <summary>
++    /// Attempts to cast the value to a <see cref="int"/> and returns true if successful.
++    /// </summary>
++    public bool TryGetInt(out int? value)
++    {
++        if (Type == "int")
++        {
++            value = (int)Value!;
++            return true;
++        }
++        value = null;
++        return false;
++    }
++
++    /// <summary>
++    /// Attempts to cast the value to a <see cref="double"/> and returns true if successful.
++    /// </summary>
++    public bool TryGetDouble(out double? value)
++    {
++        if (Type == "double")
++        {
++            value = (double)Value!;
++            return true;
++        }
++        value = null;
++        return false;
++    }
++
++    /// <summary>
++    /// Attempts to cast the value to a <see cref="string"/> and returns true if successful.
++    /// </summary>
++    public bool TryGetString(out string? value)
++    {
++        if (Type == "string")
++        {
++            value = (string)Value!;
++            return true;
++        }
++        value = null;
++        return false;
++    }
++
++    public T Match<T>(Func<int, T> onInt, Func<double, T> onDouble, Func<string, T> onString)
++    {
++        return Type switch
++        {
++            "int" => onInt(AsInt()),
++            "double" => onDouble(AsDouble()),
++            "string" => onString(AsString()),
++            _ => throw new SeedUndiscriminatedUnionsException($"Unknown union type: {Type}"),
++        };
++    }
++
++    public void Visit(Action<int> onInt, Action<double> onDouble, Action<string> onString)
++    {
++        switch (Type)
++        {
++            case "int":
++                onInt(AsInt());
++                break;
++            case "double":
++                onDouble(AsDouble());
++                break;
++            case "string":
++                onString(AsString());
++                break;
++            default:
++                throw new SeedUndiscriminatedUnionsException($"Unknown union type: {Type}");
++        }
++    }
++
++    public override int GetHashCode()
++    {
++        unchecked
++        {
++            var hashCode = Type.GetHashCode();
++            if (Value != null)
++            {
++                hashCode = (hashCode * 397) ^ Value.GetHashCode();
++            }
++            return hashCode;
++        }
++    }
++
++    public override bool Equals(object? obj)
++    {
++        if (obj is null)
++            return false;
++        if (ReferenceEquals(this, obj))
++            return true;
++        if (obj is not UnionWithIdenticalPrimitives other)
++            return false;
++
++        // Compare type discriminators
++        if (Type != other.Type)
++            return false;
++
++        // Compare values using EqualityComparer for deep comparison
++        return System.Collections.Generic.EqualityComparer<object?>.Default.Equals(
++            Value,
++            other.Value
++        );
++    }
++
++    public override string ToString() => JsonUtils.Serialize(this);
++
++    public static implicit operator UnionWithIdenticalPrimitives(int value) => new("int", value);
++
++    public static implicit operator UnionWithIdenticalPrimitives(double value) =>
++        new("double", value);
++
++    public static implicit operator UnionWithIdenticalPrimitives(string value) =>
++        new("string", value);
++
++    [Serializable]
++    internal sealed class JsonConverter : JsonConverter<UnionWithIdenticalPrimitives>
++    {
++        public override UnionWithIdenticalPrimitives? Read(
++            ref Utf8JsonReader reader,
++            global::System.Type typeToConvert,
++            JsonSerializerOptions options
++        )
++        {
++            if (reader.TokenType == JsonTokenType.Null)
++            {
++                return null;
++            }
++
++            if (reader.TokenType == JsonTokenType.Number)
++            {
++                if (reader.TryGetInt32(out var intValue))
++                {
++                    UnionWithIdenticalPrimitives intResult = new("int", intValue);
++                    return intResult;
++                }
++
++                UnionWithIdenticalPrimitives doubleResult = new("double", reader.GetDouble());
++                return doubleResult;
++            }
++
++            if (reader.TokenType == JsonTokenType.String)
++            {
++                var stringValue = reader.GetString()!;
++
++                if (int.TryParse(stringValue, out var intFromStringValue))
++                {
++                    UnionWithIdenticalPrimitives intFromStringResult = new(
++                        "int",
++                        intFromStringValue
++                    );
++                    return intFromStringResult;
++                }
++
++                UnionWithIdenticalPrimitives stringResult = new("string", stringValue);
++                return stringResult;
++            }
++
++            throw new JsonException(
++                $"Cannot deserialize JSON token {reader.TokenType} into UnionWithIdenticalPrimitives"
++            );
++        }
++
++        public override void Write(
++            Utf8JsonWriter writer,
++            UnionWithIdenticalPrimitives value,
++            JsonSerializerOptions options
++        )
++        {
++            if (value == null)
++            {
++                writer.WriteNullValue();
++                return;
++            }
++
++            value.Visit(
++                num => writer.WriteNumberValue(num),
++                num => writer.WriteNumberValue(num),
++                str => writer.WriteStringValue(str)
++            );
++        }
++
++        public override UnionWithIdenticalPrimitives ReadAsPropertyName(
++            ref Utf8JsonReader reader,
++            global::System.Type typeToConvert,
++            JsonSerializerOptions options
++        )
++        {
++            var stringValue = reader.GetString()!;
++            UnionWithIdenticalPrimitives result = new("string", stringValue);
++            return result;
++        }
++
++        public override void WriteAsPropertyName(
++            Utf8JsonWriter writer,
++            UnionWithIdenticalPrimitives value,
++            JsonSerializerOptions options
++        )
++        {
++            writer.WritePropertyName(value.Value?.ToString() ?? "null");
++        }
++    }
++}
+diff --git a/src/SeedUndiscriminatedUnions/Union/Types/UnionWithIdenticalStrings.cs b/src/SeedUndiscriminatedUnions/Union/Types/UnionWithIdenticalStrings.cs
+new file mode 100644
+index 00000000000..a74b0577a94
+--- /dev/null
++++ b/src/SeedUndiscriminatedUnions/Union/Types/UnionWithIdenticalStrings.cs
+@@ -0,0 +1,189 @@
++// ReSharper disable NullableWarningSuppressionIsUsed
++// ReSharper disable InconsistentNaming
++
++using global::System.Text.Json;
++using global::System.Text.Json.Serialization;
++using SeedUndiscriminatedUnions.Core;
++
++namespace SeedUndiscriminatedUnions;
++
++/// <summary>
++/// Multiple string types that all resolve to String in Java.
++/// This tests the fix for duplicate method signatures.
++/// </summary>
++[JsonConverter(typeof(UnionWithIdenticalStrings.JsonConverter))]
++[Serializable]
++public class UnionWithIdenticalStrings
++{
++    private UnionWithIdenticalStrings(string type, object? value)
++    {
++        Type = type;
++        Value = value;
++    }
++
++    /// <summary>
++    /// Type discriminator
++    /// </summary>
++    [JsonIgnore]
++    public string Type { get; internal set; }
++
++    /// <summary>
++    /// Union value
++    /// </summary>
++    [JsonIgnore]
++    public object? Value { get; internal set; }
++
++    /// <summary>
++    /// Factory method to create a union from a string value.
++    /// </summary>
++    public static UnionWithIdenticalStrings FromString(string value) => new("string", value);
++
++    /// <summary>
++    /// Returns true if <see cref="Type"/> is "string"
++    /// </summary>
++    public bool IsString() => Type == "string";
++
++    /// <summary>
++    /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'string', otherwise throws an exception.
++    /// </summary>
++    /// <exception cref="SeedUndiscriminatedUnionsException">Thrown when <see cref="Type"/> is not 'string'.</exception>
++    public string AsString() =>
++        IsString()
++            ? (string)Value!
++            : throw new SeedUndiscriminatedUnionsException("Union type is not 'string'");
++
++    /// <summary>
++    /// Attempts to cast the value to a <see cref="string"/> and returns true if successful.
++    /// </summary>
++    public bool TryGetString(out string? value)
++    {
++        if (Type == "string")
++        {
++            value = (string)Value!;
++            return true;
++        }
++        value = null;
++        return false;
++    }
++
++    public T Match<T>(Func<string, T> onString)
++    {
++        return Type switch
++        {
++            "string" => onString(AsString()),
++            _ => throw new SeedUndiscriminatedUnionsException($"Unknown union type: {Type}"),
++        };
++    }
++
++    public void Visit(Action<string> onString)
++    {
++        switch (Type)
++        {
++            case "string":
++                onString(AsString());
++                break;
++            default:
++                throw new SeedUndiscriminatedUnionsException($"Unknown union type: {Type}");
++        }
++    }
++
++    public override int GetHashCode()
++    {
++        unchecked
++        {
++            var hashCode = Type.GetHashCode();
++            if (Value != null)
++            {
++                hashCode = (hashCode * 397) ^ Value.GetHashCode();
++            }
++            return hashCode;
++        }
++    }
++
++    public override bool Equals(object? obj)
++    {
++        if (obj is null)
++            return false;
++        if (ReferenceEquals(this, obj))
++            return true;
++        if (obj is not UnionWithIdenticalStrings other)
++            return false;
++
++        // Compare type discriminators
++        if (Type != other.Type)
++            return false;
++
++        // Compare values using EqualityComparer for deep comparison
++        return System.Collections.Generic.EqualityComparer<object?>.Default.Equals(
++            Value,
++            other.Value
++        );
++    }
++
++    public override string ToString() => JsonUtils.Serialize(this);
++
++    public static implicit operator UnionWithIdenticalStrings(string value) => new("string", value);
++
++    [Serializable]
++    internal sealed class JsonConverter : JsonConverter<UnionWithIdenticalStrings>
++    {
++        public override UnionWithIdenticalStrings? Read(
++            ref Utf8JsonReader reader,
++            global::System.Type typeToConvert,
++            JsonSerializerOptions options
++        )
++        {
++            if (reader.TokenType == JsonTokenType.Null)
++            {
++                return null;
++            }
++
++            if (reader.TokenType == JsonTokenType.String)
++            {
++                var stringValue = reader.GetString()!;
++
++                UnionWithIdenticalStrings stringResult = new("string", stringValue);
++                return stringResult;
++            }
++
++            throw new JsonException(
++                $"Cannot deserialize JSON token {reader.TokenType} into UnionWithIdenticalStrings"
++            );
++        }
++
++        public override void Write(
++            Utf8JsonWriter writer,
++            UnionWithIdenticalStrings value,
++            JsonSerializerOptions options
++        )
++        {
++            if (value == null)
++            {
++                writer.WriteNullValue();
++                return;
++            }
++
++            value.Visit(str => writer.WriteStringValue(str));
++        }
++
++        public override UnionWithIdenticalStrings ReadAsPropertyName(
++            ref Utf8JsonReader reader,
++            global::System.Type typeToConvert,
++            JsonSerializerOptions options
++        )
++        {
++            var stringValue = reader.GetString()!;
++            UnionWithIdenticalStrings result = new("string", stringValue);
++            return result;
++        }
++
++        public override void WriteAsPropertyName(
++            Utf8JsonWriter writer,
++            UnionWithIdenticalStrings value,
++            JsonSerializerOptions options
++        )
++        {
++            writer.WritePropertyName(value.Value?.ToString() ?? "null");
++        }
++    }
++}
+diff --git a/src/SeedUndiscriminatedUnions/Union/Types/UnionWithReservedNames.cs b/src/SeedUndiscriminatedUnions/Union/Types/UnionWithReservedNames.cs
+new file mode 100644
+index 00000000000..c19a410f7b1
+--- /dev/null
++++ b/src/SeedUndiscriminatedUnions/Union/Types/UnionWithReservedNames.cs
+@@ -0,0 +1,286 @@
++// ReSharper disable NullableWarningSuppressionIsUsed
++// ReSharper disable InconsistentNaming
++
++using global::System.Text.Json;
++using global::System.Text.Json.Serialization;
++using SeedUndiscriminatedUnions.Core;
++
++namespace SeedUndiscriminatedUnions;
++
++/// <summary>
++/// Tests that union members named 'Type' or 'Value' don't collide with internal properties
++/// </summary>
++[JsonConverter(typeof(UnionWithReservedNames.JsonConverter))]
++[Serializable]
++public class UnionWithReservedNames
++{
++    private UnionWithReservedNames(string type, object? value)
++    {
++        Type = type;
++        Value = value;
++    }
++
++    /// <summary>
++    /// Type discriminator
++    /// </summary>
++    [JsonIgnore]
++    public string Type { get; internal set; }
++
++    /// <summary>
++    /// Union value
++    /// </summary>
++    [JsonIgnore]
++    public object? Value { get; internal set; }
++
++    /// <summary>
++    /// Factory method to create a union with the literal value "type".
++    /// </summary>
++    public static UnionWithReservedNames FromTypeMember() => new("type", "type");
++
++    /// <summary>
++    /// Factory method to create a union with the literal value "value".
++    /// </summary>
++    public static UnionWithReservedNames FromValueMember() => new("value", "value");
++
++    /// <summary>
++    /// Factory method to create a union from a string value.
++    /// </summary>
++    public static UnionWithReservedNames FromString(string value) => new("string", value);
++
++    /// <summary>
++    /// Returns true if <see cref="Type"/> is "type"
++    /// </summary>
++    public bool IsTypeMember() => Type == "type";
++
++    /// <summary>
++    /// Returns true if <see cref="Type"/> is "value"
++    /// </summary>
++    public bool IsValueMember() => Type == "value";
++
++    /// <summary>
++    /// Returns true if <see cref="Type"/> is "string"
++    /// </summary>
++    public bool IsString() => Type == "string";
++
++    /// <summary>
++    /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'type', otherwise throws an exception.
++    /// </summary>
++    /// <exception cref="SeedUndiscriminatedUnionsException">Thrown when <see cref="Type"/> is not 'type'.</exception>
++    public string AsTypeMember() =>
++        IsTypeMember()
++            ? (string)Value!
++            : throw new SeedUndiscriminatedUnionsException("Union type is not 'type'");
++
++    /// <summary>
++    /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'value', otherwise throws an exception.
++    /// </summary>
++    /// <exception cref="SeedUndiscriminatedUnionsException">Thrown when <see cref="Type"/> is not 'value'.</exception>
++    public string AsValueMember() =>
++        IsValueMember()
++            ? (string)Value!
++            : throw new SeedUndiscriminatedUnionsException("Union type is not 'value'");
++
++    /// <summary>
++    /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'string', otherwise throws an exception.
++    /// </summary>
++    /// <exception cref="SeedUndiscriminatedUnionsException">Thrown when <see cref="Type"/> is not 'string'.</exception>
++    public string AsString() =>
++        IsString()
++            ? (string)Value!
++            : throw new SeedUndiscriminatedUnionsException("Union type is not 'string'");
++
++    /// <summary>
++    /// Attempts to cast the value to a <see cref="string"/> and returns true if successful.
++    /// </summary>
++    public bool TryGetTypeMember(out string? value)
++    {
++        if (Type == "type")
++        {
++            value = (string)Value!;
++            return true;
++        }
++        value = null;
++        return false;
++    }
++
++    /// <summary>
++    /// Attempts to cast the value to a <see cref="string"/> and returns true if successful.
++    /// </summary>
++    public bool TryGetValueMember(out string? value)
++    {
++        if (Type == "value")
++        {
++            value = (string)Value!;
++            return true;
++        }
++        value = null;
++        return false;
++    }
++
++    /// <summary>
++    /// Attempts to cast the value to a <see cref="string"/> and returns true if successful.
++    /// </summary>
++    public bool TryGetString(out string? value)
++    {
++        if (Type == "string")
++        {
++            value = (string)Value!;
++            return true;
++        }
++        value = null;
++        return false;
++    }
++
++    public T Match<T>(
++        Func<string, T> onTypeMember,
++        Func<string, T> onValueMember,
++        Func<string, T> onString
++    )
++    {
++        return Type switch
++        {
++            "type" => onTypeMember(AsTypeMember()),
++            "value" => onValueMember(AsValueMember()),
++            "string" => onString(AsString()),
++            _ => throw new SeedUndiscriminatedUnionsException($"Unknown union type: {Type}"),
++        };
++    }
++
++    public void Visit(
++        Action<string> onTypeMember,
++        Action<string> onValueMember,
++        Action<string> onString
++    )
++    {
++        switch (Type)
++        {
++            case "type":
++                onTypeMember(AsTypeMember());
++                break;
++            case "value":
++                onValueMember(AsValueMember());
++                break;
++            case "string":
++                onString(AsString());
++                break;
++            default:
++                throw new SeedUndiscriminatedUnionsException($"Unknown union type: {Type}");
++        }
++    }
++
++    public override int GetHashCode()
++    {
++        unchecked
++        {
++            var hashCode = Type.GetHashCode();
++            if (Value != null)
++            {
++                hashCode = (hashCode * 397) ^ Value.GetHashCode();
++            }
++            return hashCode;
++        }
++    }
++
++    public override bool Equals(object? obj)
++    {
++        if (obj is null)
++            return false;
++        if (ReferenceEquals(this, obj))
++            return true;
++        if (obj is not UnionWithReservedNames other)
++            return false;
++
++        // Compare type discriminators
++        if (Type != other.Type)
++            return false;
++
++        // Compare values using EqualityComparer for deep comparison
++        return System.Collections.Generic.EqualityComparer<object?>.Default.Equals(
++            Value,
++            other.Value
++        );
++    }
++
++    public override string ToString() => JsonUtils.Serialize(this);
++
++    public static implicit operator UnionWithReservedNames(string value) => new("string", value);
++
++    [Serializable]
++    internal sealed class JsonConverter : JsonConverter<UnionWithReservedNames>
++    {
++        public override UnionWithReservedNames? Read(
++            ref Utf8JsonReader reader,
++            global::System.Type typeToConvert,
++            JsonSerializerOptions options
++        )
++        {
++            if (reader.TokenType == JsonTokenType.Null)
++            {
++                return null;
++            }
++
++            if (reader.TokenType == JsonTokenType.String)
++            {
++                var stringValue = reader.GetString()!;
++
++                if (stringValue == "type")
++                {
++                    UnionWithReservedNames literalResult = new("type", stringValue);
++                    return literalResult;
++                }
++
++                if (stringValue == "value")
++                {
++                    UnionWithReservedNames literalResult = new("value", stringValue);
++                    return literalResult;
++                }
++
++                UnionWithReservedNames stringResult = new("string", stringValue);
++                return stringResult;
++            }
++
++            throw new JsonException(
++                $"Cannot deserialize JSON token {reader.TokenType} into UnionWithReservedNames"
++            );
++        }
++
++        public override void Write(
++            Utf8JsonWriter writer,
++            UnionWithReservedNames value,
++            JsonSerializerOptions options
++        )
++        {
++            if (value == null)
++            {
++                writer.WriteNullValue();
++                return;
++            }
++
++            value.Visit(
++                obj => JsonSerializer.Serialize(writer, obj, options),
++                obj => JsonSerializer.Serialize(writer, obj, options),
++                str => writer.WriteStringValue(str)
++            );
++        }
++
++        public override UnionWithReservedNames ReadAsPropertyName(
++            ref Utf8JsonReader reader,
++            global::System.Type typeToConvert,
++            JsonSerializerOptions options
++        )
++        {
++            var stringValue = reader.GetString()!;
++            UnionWithReservedNames result = new("string", stringValue);
++            return result;
++        }
++
++        public override void WriteAsPropertyName(
++            Utf8JsonWriter writer,
++            UnionWithReservedNames value,
++            JsonSerializerOptions options
++        )
++        {
++            writer.WritePropertyName(value.Value?.ToString() ?? "null");
++        }
++    }
++}
+diff --git a/src/SeedUndiscriminatedUnions/Union/Types/UnionWithTypeAliases.cs b/src/SeedUndiscriminatedUnions/Union/Types/UnionWithTypeAliases.cs
+new file mode 100644
+index 00000000000..5476b88dcbe
+--- /dev/null
++++ b/src/SeedUndiscriminatedUnions/Union/Types/UnionWithTypeAliases.cs
+@@ -0,0 +1,299 @@
++// ReSharper disable NullableWarningSuppressionIsUsed
++// ReSharper disable InconsistentNaming
++
++using global::System.Text.Json;
++using global::System.Text.Json.Serialization;
++using SeedUndiscriminatedUnions.Core;
++
++namespace SeedUndiscriminatedUnions;
++
++/// <summary>
++/// Union with multiple named type aliases that all resolve to the same C# type (string).
++/// Without the fix, this would generate duplicate implicit operators:
++///   public static implicit operator UnionWithTypeAliases(string value) =&gt; ...
++///   public static implicit operator UnionWithTypeAliases(string value) =&gt; ...
++///   public static implicit operator UnionWithTypeAliases(string value) =&gt; ...
++/// causing CS0557 compiler error.
++/// </summary>
++[JsonConverter(typeof(UnionWithTypeAliases.JsonConverter))]
++[Serializable]
++public class UnionWithTypeAliases
++{
++    private UnionWithTypeAliases(string type, object? value)
++    {
++        Type = type;
++        Value = value;
++    }
++
++    /// <summary>
++    /// Type discriminator
++    /// </summary>
++    [JsonIgnore]
++    public string Type { get; internal set; }
++
++    /// <summary>
++    /// Union value
++    /// </summary>
++    [JsonIgnore]
++    public object? Value { get; internal set; }
++
++    /// <summary>
++    /// Factory method to create a union from a string value.
++    /// </summary>
++    public static UnionWithTypeAliases FromString(string value) => new("string", value);
++
++    /// <summary>
++    /// Factory method to create a union from a string value.
++    /// </summary>
++    public static UnionWithTypeAliases FromUserId(string value) => new("userId", value);
++
++    /// <summary>
++    /// Factory method to create a union from a string value.
++    /// </summary>
++    public static UnionWithTypeAliases FromName(string value) => new("name", value);
++
++    /// <summary>
++    /// Returns true if <see cref="Type"/> is "string"
++    /// </summary>
++    public bool IsString() => Type == "string";
++
++    /// <summary>
++    /// Returns true if <see cref="Type"/> is "userId"
++    /// </summary>
++    public bool IsUserId() => Type == "userId";
++
++    /// <summary>
++    /// Returns true if <see cref="Type"/> is "name"
++    /// </summary>
++    public bool IsName() => Type == "name";
++
++    /// <summary>
++    /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'string', otherwise throws an exception.
++    /// </summary>
++    /// <exception cref="SeedUndiscriminatedUnionsException">Thrown when <see cref="Type"/> is not 'string'.</exception>
++    public string AsString() =>
++        IsString()
++            ? (string)Value!
++            : throw new SeedUndiscriminatedUnionsException("Union type is not 'string'");
++
++    /// <summary>
++    /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'userId', otherwise throws an exception.
++    /// </summary>
++    /// <exception cref="SeedUndiscriminatedUnionsException">Thrown when <see cref="Type"/> is not 'userId'.</exception>
++    public string AsUserId() =>
++        IsUserId()
++            ? (string)Value!
++            : throw new SeedUndiscriminatedUnionsException("Union type is not 'userId'");
++
++    /// <summary>
++    /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'name', otherwise throws an exception.
++    /// </summary>
++    /// <exception cref="SeedUndiscriminatedUnionsException">Thrown when <see cref="Type"/> is not 'name'.</exception>
++    public string AsName() =>
++        IsName()
++            ? (string)Value!
++            : throw new SeedUndiscriminatedUnionsException("Union type is not 'name'");
++
++    /// <summary>
++    /// Attempts to cast the value to a <see cref="string"/> and returns true if successful.
++    /// </summary>
++    public bool TryGetString(out string? value)
++    {
++        if (Type == "string")
++        {
++            value = (string)Value!;
++            return true;
++        }
++        value = null;
++        return false;
++    }
++
++    /// <summary>
++    /// Attempts to cast the value to a <see cref="string"/> and returns true if successful.
++    /// </summary>
++    public bool TryGetUserId(out string? value)
++    {
++        if (Type == "userId")
++        {
++            value = (string)Value!;
++            return true;
++        }
++        value = null;
++        return false;
++    }
++
++    /// <summary>
++    /// Attempts to cast the value to a <see cref="string"/> and returns true if successful.
++    /// </summary>
++    public bool TryGetName(out string? value)
++    {
++        if (Type == "name")
++        {
++            value = (string)Value!;
++            return true;
++        }
++        value = null;
++        return false;
++    }
++
++    public T Match<T>(Func<string, T> onString, Func<string, T> onUserId, Func<string, T> onName)
++    {
++        return Type switch
++        {
++            "string" => onString(AsString()),
++            "userId" => onUserId(AsUserId()),
++            "name" => onName(AsName()),
++            _ => throw new SeedUndiscriminatedUnionsException($"Unknown union type: {Type}"),
++        };
++    }
++
++    public void Visit(Action<string> onString, Action<string> onUserId, Action<string> onName)
++    {
++        switch (Type)
++        {
++            case "string":
++                onString(AsString());
++                break;
++            case "userId":
++                onUserId(AsUserId());
++                break;
++            case "name":
++                onName(AsName());
++                break;
++            default:
++                throw new SeedUndiscriminatedUnionsException($"Unknown union type: {Type}");
++        }
++    }
++
++    public override int GetHashCode()
++    {
++        unchecked
++        {
++            var hashCode = Type.GetHashCode();
++            if (Value != null)
++            {
++                hashCode = (hashCode * 397) ^ Value.GetHashCode();
++            }
++            return hashCode;
++        }
++    }
++
++    public override bool Equals(object? obj)
++    {
++        if (obj is null)
++            return false;
++        if (ReferenceEquals(this, obj))
++            return true;
++        if (obj is not UnionWithTypeAliases other)
++            return false;
++
++        // Compare type discriminators
++        if (Type != other.Type)
++            return false;
++
++        // Compare values using EqualityComparer for deep comparison
++        return System.Collections.Generic.EqualityComparer<object?>.Default.Equals(
++            Value,
++            other.Value
++        );
++    }
++
++    public override string ToString() => JsonUtils.Serialize(this);
++
++    public static implicit operator UnionWithTypeAliases(string value) => new("string", value);
++
++    [Serializable]
++    internal sealed class JsonConverter : JsonConverter<UnionWithTypeAliases>
++    {
++        public override UnionWithTypeAliases? Read(
++            ref Utf8JsonReader reader,
++            global::System.Type typeToConvert,
++            JsonSerializerOptions options
++        )
++        {
++            if (reader.TokenType == JsonTokenType.Null)
++            {
++                return null;
++            }
++
++            if (reader.TokenType == JsonTokenType.String)
++            {
++                var stringValue = reader.GetString()!;
++
++                UnionWithTypeAliases stringResult = new("string", stringValue);
++                return stringResult;
++            }
++
++            if (reader.TokenType == JsonTokenType.StartObject)
++            {
++                var document = JsonDocument.ParseValue(ref reader);
++
++                var types = new (string Key, System.Type Type)[]
++                {
++                    ("userId", typeof(string)),
++                    ("name", typeof(string)),
++                };
++
++                foreach (var (key, type) in types)
++                {
++                    try
++                    {
++                        var value = document.Deserialize(type, options);
++                        if (value != null)
++                        {
++                            UnionWithTypeAliases result = new(key, value);
++                            return result;
++                        }
++                    }
++                    catch (JsonException)
++                    {
++                        // Try next type;
++                    }
++                }
++            }
++
++            throw new JsonException(
++                $"Cannot deserialize JSON token {reader.TokenType} into UnionWithTypeAliases"
++            );
++        }
++
++        public override void Write(
++            Utf8JsonWriter writer,
++            UnionWithTypeAliases value,
++            JsonSerializerOptions options
++        )
++        {
++            if (value == null)
++            {
++                writer.WriteNullValue();
++                return;
++            }
++
++            value.Visit(
++                str => writer.WriteStringValue(str),
++                obj => JsonSerializer.Serialize(writer, obj, options),
++                obj => JsonSerializer.Serialize(writer, obj, options)
++            );
++        }
++
++        public override UnionWithTypeAliases ReadAsPropertyName(
++            ref Utf8JsonReader reader,
++            global::System.Type typeToConvert,
++            JsonSerializerOptions options
++        )
++        {
++            var stringValue = reader.GetString()!;
++            UnionWithTypeAliases result = new("string", stringValue);
++            return result;
++        }
++
++        public override void WriteAsPropertyName(
++            Utf8JsonWriter writer,
++            UnionWithTypeAliases value,
++            JsonSerializerOptions options
++        )
++        {
++            writer.WritePropertyName(value.Value?.ToString() ?? "null");
++        }
++    }
++}
+diff --git a/src/SeedUndiscriminatedUnions/Union/UnionClient.cs b/src/SeedUndiscriminatedUnions/Union/UnionClient.cs
+index e4a48b70a68..29c4f240660 100644
+--- a/src/SeedUndiscriminatedUnions/Union/UnionClient.cs
++++ b/src/SeedUndiscriminatedUnions/Union/UnionClient.cs
+@@ -1,5 +1,4 @@
+ using global::System.Text.Json;
+-using OneOf;
+ using SeedUndiscriminatedUnions.Core;
+ 
+ namespace SeedUndiscriminatedUnions;
+@@ -13,26 +12,8 @@ public partial class UnionClient : IUnionClient
+         _client = client;
+     }
+ 
+-    private async Task<
+-        WithRawResponse<
+-            OneOf<
+-                string,
+-                IEnumerable<string>,
+-                int,
+-                IEnumerable<int>,
+-                IEnumerable<IEnumerable<int>>,
+-                HashSet<string>
+-            >
+-        >
+-    > GetAsyncCore(
+-        OneOf<
+-            string,
+-            IEnumerable<string>,
+-            int,
+-            IEnumerable<int>,
+-            IEnumerable<IEnumerable<int>>,
+-            HashSet<string>
+-        > request,
++    private async Task<WithRawResponse<MyUnion>> GetAsyncCore(
++        MyUnion request,
+         RequestOptions? options = null,
+         CancellationToken cancellationToken = default
+     )
+@@ -63,26 +44,8 @@ public partial class UnionClient : IUnionClient
+                 .ConfigureAwait(false);
+             try
+             {
+-                var responseData = JsonUtils.Deserialize<
+-                    OneOf<
+-                        string,
+-                        IEnumerable<string>,
+-                        int,
+-                        IEnumerable<int>,
+-                        IEnumerable<IEnumerable<int>>,
+-                        HashSet<string>
+-                    >
+-                >(responseBody)!;
+-                return new WithRawResponse<
+-                    OneOf<
+-                        string,
+-                        IEnumerable<string>,
+-                        int,
+-                        IEnumerable<int>,
+-                        IEnumerable<IEnumerable<int>>,
+-                        HashSet<string>
+-                    >
+-                >()
++                var responseData = JsonUtils.Deserialize<MyUnion>(responseBody)!;
++                return new WithRawResponse<MyUnion>()
+                 {
+                     Data = responseData,
+                     RawResponse = new RawResponse()
+@@ -115,9 +78,7 @@ public partial class UnionClient : IUnionClient
+         }
+     }
+ 
+-    private async Task<
+-        WithRawResponse<Dictionary<OneOf<KeyType, string>, string>>
+-    > GetMetadataAsyncCore(
++    private async Task<WithRawResponse<Dictionary<Key, string>>> GetMetadataAsyncCore(
+         RequestOptions? options = null,
+         CancellationToken cancellationToken = default
+     )
+@@ -147,10 +108,8 @@ public partial class UnionClient : IUnionClient
+                 .ConfigureAwait(false);
+             try
+             {
+-                var responseData = JsonUtils.Deserialize<
+-                    Dictionary<OneOf<KeyType, string>, string>
+-                >(responseBody)!;
+-                return new WithRawResponse<Dictionary<OneOf<KeyType, string>, string>>()
++                var responseData = JsonUtils.Deserialize<Dictionary<Key, string>>(responseBody)!;
++                return new WithRawResponse<Dictionary<Key, string>>()
+                 {
+                     Data = responseData,
+                     RawResponse = new RawResponse()
+@@ -184,7 +143,7 @@ public partial class UnionClient : IUnionClient
+     }
+ 
+     private async Task<WithRawResponse<bool>> UpdateMetadataAsyncCore(
+-        OneOf<Dictionary<string, object?>?, NamedMetadata> request,
++        MetadataUnion request,
+         RequestOptions? options = null,
+         CancellationToken cancellationToken = default
+     )
+@@ -315,10 +274,8 @@ public partial class UnionClient : IUnionClient
+         }
+     }
+ 
+-    private async Task<
+-        WithRawResponse<OneOf<string, IEnumerable<string>, int, HashSet<string>>>
+-    > DuplicateTypesUnionAsyncCore(
+-        OneOf<string, IEnumerable<string>, int, HashSet<string>> request,
++    private async Task<WithRawResponse<UnionWithDuplicateTypes>> DuplicateTypesUnionAsyncCore(
++        UnionWithDuplicateTypes request,
+         RequestOptions? options = null,
+         CancellationToken cancellationToken = default
+     )
+@@ -349,12 +306,8 @@ public partial class UnionClient : IUnionClient
+                 .ConfigureAwait(false);
+             try
+             {
+-                var responseData = JsonUtils.Deserialize<
+-                    OneOf<string, IEnumerable<string>, int, HashSet<string>>
+-                >(responseBody)!;
+-                return new WithRawResponse<
+-                    OneOf<string, IEnumerable<string>, int, HashSet<string>>
+-                >()
++                var responseData = JsonUtils.Deserialize<UnionWithDuplicateTypes>(responseBody)!;
++                return new WithRawResponse<UnionWithDuplicateTypes>()
+                 {
+                     Data = responseData,
+                     RawResponse = new RawResponse()
+@@ -388,16 +341,7 @@ public partial class UnionClient : IUnionClient
+     }
+ 
+     private async Task<WithRawResponse<string>> NestedUnionsAsyncCore(
+-        OneOf<
+-            string,
+-            IEnumerable<string>,
+-            OneOf<
+-                int,
+-                HashSet<string>,
+-                IEnumerable<string>,
+-                OneOf<bool, HashSet<string>, IEnumerable<string>>
+-            >
+-        > request,
++        NestedUnionRoot request,
+         RequestOptions? options = null,
+         CancellationToken cancellationToken = default
+     )
+@@ -531,49 +475,24 @@ public partial class UnionClient : IUnionClient
+     /// <example><code>
+     /// await client.Union.GetAsync("string");
+     /// </code></example>
+-    public WithRawResponseTask<
+-        OneOf<
+-            string,
+-            IEnumerable<string>,
+-            int,
+-            IEnumerable<int>,
+-            IEnumerable<IEnumerable<int>>,
+-            HashSet<string>
+-        >
+-    > GetAsync(
+-        OneOf<
+-            string,
+-            IEnumerable<string>,
+-            int,
+-            IEnumerable<int>,
+-            IEnumerable<IEnumerable<int>>,
+-            HashSet<string>
+-        > request,
++    public WithRawResponseTask<MyUnion> GetAsync(
++        MyUnion request,
+         RequestOptions? options = null,
+         CancellationToken cancellationToken = default
+     )
+     {
+-        return new WithRawResponseTask<
+-            OneOf<
+-                string,
+-                IEnumerable<string>,
+-                int,
+-                IEnumerable<int>,
+-                IEnumerable<IEnumerable<int>>,
+-                HashSet<string>
+-            >
+-        >(GetAsyncCore(request, options, cancellationToken));
++        return new WithRawResponseTask<MyUnion>(GetAsyncCore(request, options, cancellationToken));
+     }
+ 
+     /// <example><code>
+     /// await client.Union.GetMetadataAsync();
+     /// </code></example>
+-    public WithRawResponseTask<Dictionary<OneOf<KeyType, string>, string>> GetMetadataAsync(
++    public WithRawResponseTask<Dictionary<Key, string>> GetMetadataAsync(
+         RequestOptions? options = null,
+         CancellationToken cancellationToken = default
+     )
+     {
+-        return new WithRawResponseTask<Dictionary<OneOf<KeyType, string>, string>>(
++        return new WithRawResponseTask<Dictionary<Key, string>>(
+             GetMetadataAsyncCore(options, cancellationToken)
+         );
+     }
+@@ -590,7 +509,7 @@ public partial class UnionClient : IUnionClient
+     /// );
+     /// </code></example>
+     public WithRawResponseTask<bool> UpdateMetadataAsync(
+-        OneOf<Dictionary<string, object?>?, NamedMetadata> request,
++        MetadataUnion request,
+         RequestOptions? options = null,
+         CancellationToken cancellationToken = default
+     )
+@@ -626,15 +545,13 @@ public partial class UnionClient : IUnionClient
+     /// <example><code>
+     /// await client.Union.DuplicateTypesUnionAsync("string");
+     /// </code></example>
+-    public WithRawResponseTask<
+-        OneOf<string, IEnumerable<string>, int, HashSet<string>>
+-    > DuplicateTypesUnionAsync(
+-        OneOf<string, IEnumerable<string>, int, HashSet<string>> request,
++    public WithRawResponseTask<UnionWithDuplicateTypes> DuplicateTypesUnionAsync(
++        UnionWithDuplicateTypes request,
+         RequestOptions? options = null,
+         CancellationToken cancellationToken = default
+     )
+     {
+-        return new WithRawResponseTask<OneOf<string, IEnumerable<string>, int, HashSet<string>>>(
++        return new WithRawResponseTask<UnionWithDuplicateTypes>(
+             DuplicateTypesUnionAsyncCore(request, options, cancellationToken)
+         );
+     }
+@@ -643,16 +560,7 @@ public partial class UnionClient : IUnionClient
+     /// await client.Union.NestedUnionsAsync("string");
+     /// </code></example>
+     public WithRawResponseTask<string> NestedUnionsAsync(
+-        OneOf<
+-            string,
+-            IEnumerable<string>,
+-            OneOf<
+-                int,
+-                HashSet<string>,
+-                IEnumerable<string>,
+-                OneOf<bool, HashSet<string>, IEnumerable<string>>
+-            >
+-        > request,
++        NestedUnionRoot request,
+         RequestOptions? options = null,
+         CancellationToken cancellationToken = default
+     )
+diff --git a/src/SeedUndiscriminatedUnions.Test/Utils/NUnitExtensions.cs b/src/SeedUndiscriminatedUnions.Test/Utils/NUnitExtensions.cs
+index 816f4c010e6..f451b2b04e9 100644
+--- a/src/SeedUndiscriminatedUnions.Test/Utils/NUnitExtensions.cs
++++ b/src/SeedUndiscriminatedUnions.Test/Utils/NUnitExtensions.cs
+@@ -23,7 +23,6 @@ public static class NUnitExtensions
+             .UsingReadOnlyMemoryComparer<bool>()
+             .UsingReadOnlyMemoryComparer<float>()
+             .UsingReadOnlyMemoryComparer<double>()
+-            .UsingOneOfComparer()
+             .UsingJsonElementComparer()
+             .UsingOptionalComparer()
+             .UsingObjectDictionaryComparer()
+diff --git a/src/SeedUndiscriminatedUnions.Test/Utils/OneOfComparer.cs b/src/SeedUndiscriminatedUnions.Test/Utils/OneOfComparer.cs
+deleted file mode 100644
+index 76743917436..00000000000
+--- a/src/SeedUndiscriminatedUnions.Test/Utils/OneOfComparer.cs
++++ /dev/null
+@@ -1,86 +0,0 @@
+-using NUnit.Framework.Constraints;
+-using OneOf;
+-
+-namespace NUnit.Framework;
+-
+-/// <summary>
+-/// Extensions for EqualConstraint to handle OneOf values.
+-/// </summary>
+-public static class EqualConstraintExtensions
+-{
+-    /// <summary>
+-    /// Modifies the EqualConstraint to handle OneOf instances by comparing their inner values.
+-    /// This works alongside other comparison modifiers like UsingPropertiesComparer.
+-    /// </summary>
+-    /// <param name="constraint">The EqualConstraint to modify.</param>
+-    /// <returns>The same constraint instance for method chaining.</returns>
+-    public static EqualConstraint UsingOneOfComparer(this EqualConstraint constraint)
+-    {
+-        // Register a comparer factory for IOneOf types
+-        constraint.Using<IOneOf>(
+-            (x, y) =>
+-            {
+-                // ReSharper disable ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
+-                if (x.Value is null && y.Value is null)
+-                {
+-                    return true;
+-                }
+-
+-                if (x.Value is null)
+-                {
+-                    return false;
+-                }
+-
+-                var propertiesComparer = new NUnitEqualityComparer();
+-                var tolerance = Tolerance.Default;
+-                propertiesComparer.CompareProperties = true;
+-                // Add OneOf comparer to handle nested OneOf values (e.g., in Lists)
+-                propertiesComparer.ExternalComparers.Add(
+-                    new OneOfEqualityAdapter(propertiesComparer)
+-                );
+-                return propertiesComparer.AreEqual(x.Value, y.Value, ref tolerance);
+-            }
+-        );
+-
+-        return constraint;
+-    }
+-
+-    /// <summary>
+-    /// EqualityAdapter for comparing IOneOf instances within NUnitEqualityComparer.
+-    /// This enables recursive comparison of nested OneOf values.
+-    /// </summary>
+-    private class OneOfEqualityAdapter : EqualityAdapter
+-    {
+-        private readonly NUnitEqualityComparer _comparer;
+-
+-        public OneOfEqualityAdapter(NUnitEqualityComparer comparer)
+-        {
+-            _comparer = comparer;
+-        }
+-
+-        public override bool CanCompare(object? x, object? y)
+-        {
+-            return x is IOneOf && y is IOneOf;
+-        }
+-
+-        public override bool AreEqual(object? x, object? y)
+-        {
+-            var oneOfX = (IOneOf?)x;
+-            var oneOfY = (IOneOf?)y;
+-
+-            // ReSharper disable ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
+-            if (oneOfX?.Value is null && oneOfY?.Value is null)
+-            {
+-                return true;
+-            }
+-
+-            if (oneOfX?.Value is null || oneOfY?.Value is null)
+-            {
+-                return false;
+-            }
+-
+-            var tolerance = Tolerance.Default;
+-            return _comparer.AreEqual(oneOfX.Value, oneOfY.Value, ref tolerance);
+-        }
+-    }
+-}
+diff --git a/src/SeedUndiscriminatedUnions.Test/Utils/OptionalComparer.cs b/src/SeedUndiscriminatedUnions.Test/Utils/OptionalComparer.cs
+index b879c42ecce..5623ee879c9 100644
+--- a/src/SeedUndiscriminatedUnions.Test/Utils/OptionalComparer.cs
++++ b/src/SeedUndiscriminatedUnions.Test/Utils/OptionalComparer.cs
+@@ -1,5 +1,4 @@
+ using NUnit.Framework.Constraints;
+-using OneOf;
+ using SeedUndiscriminatedUnions.Core;
+ 
+ namespace NUnit.Framework;
+@@ -52,53 +51,10 @@ public static class OptionalComparerExtensions
+                 var propertiesComparer = new NUnitEqualityComparer();
+                 var tolerance = Tolerance.Default;
+                 propertiesComparer.CompareProperties = true;
+-                // Add OneOf comparer to handle nested OneOf values (e.g., in Lists within Optional<T>)
+-                propertiesComparer.ExternalComparers.Add(
+-                    new OneOfEqualityAdapter(propertiesComparer)
+-                );
+                 return propertiesComparer.AreEqual(xValue, yValue, ref tolerance);
+             }
+         );
+ 
+         return constraint;
+     }
+-
+-    /// <summary>
+-    /// EqualityAdapter for comparing IOneOf instances within NUnitEqualityComparer.
+-    /// This enables recursive comparison of nested OneOf values within Optional<T> types.
+-    /// </summary>
+-    private class OneOfEqualityAdapter : EqualityAdapter
+-    {
+-        private readonly NUnitEqualityComparer _comparer;
+-
+-        public OneOfEqualityAdapter(NUnitEqualityComparer comparer)
+-        {
+-            _comparer = comparer;
+-        }
+-
+-        public override bool CanCompare(object? x, object? y)
+-        {
+-            return x is IOneOf && y is IOneOf;
+-        }
+-
+-        public override bool AreEqual(object? x, object? y)
+-        {
+-            var oneOfX = (IOneOf?)x;
+-            var oneOfY = (IOneOf?)y;
+-
+-            // ReSharper disable ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
+-            if (oneOfX?.Value is null && oneOfY?.Value is null)
+-            {
+-                return true;
+-            }
+-
+-            if (oneOfX?.Value is null || oneOfY?.Value is null)
+-            {
+-                return false;
+-            }
+-
+-            var tolerance = Tolerance.Default;
+-            return _comparer.AreEqual(oneOfX.Value, oneOfY.Value, ref tolerance);
+-        }
+-    }
+ }

@@ -1,0 +1,29 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 0eba66302dd..c29ee36aa03 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-php-sdk",
+   "generatorVersion": "local",
++  "generatorConfig": {
++    "omitFernHeaders": true
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "ci",
+diff --git a/src/SeedClient.php b/src/SeedClient.php
+index 52d0ae46e86..32845c7bbce 100644
+--- a/src/SeedClient.php
++++ b/src/SeedClient.php
+@@ -44,10 +44,6 @@ class SeedClient
+         ?array $options = null,
+     ) {
+         $defaultHeaders = [
+-            'X-Fern-Language' => 'PHP',
+-            'X-Fern-SDK-Name' => 'Seed',
+-            'X-Fern-SDK-Version' => '0.0.1',
+-            'User-Agent' => 'seed/seed/0.0.1',
+         ];
+         if ($token != null) {
+             $defaultHeaders['Authorization'] = "Bearer $token";

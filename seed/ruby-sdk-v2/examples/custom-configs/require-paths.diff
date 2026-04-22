@@ -1,0 +1,32 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 6533addd8b4..4789a0a1d19 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -3,7 +3,11 @@
+   "generatorName": "fernapi/fern-ruby-sdk-v2",
+   "generatorVersion": "local",
+   "generatorConfig": {
+-    "rubocopSeverity": "error"
++    "rubocopSeverity": "error",
++    "requirePaths": [
++      "custom_integration",
++      "sentry_integration"
++    ]
+   },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+diff --git a/lib/seed.rb b/lib/seed.rb
+index 5abb083de4c..de79fbb338e 100644
+--- a/lib/seed.rb
++++ b/lib/seed.rb
+@@ -81,3 +81,10 @@ require_relative "seed/health/service/client"
+ require_relative "seed/service/client"
+ require_relative "seed/service/types/get_metadata_request"
+ require_relative "seed/environment"
++
++# Load user-defined files if present (e.g., for Sentry integration)
++# Files are loaded from lib/seed/ if they exist
++["seed/custom_integration", "seed/sentry_integration"].each do |relative_path|
++  absolute_path = File.join(__dir__, "#{relative_path}.rb")
++  require_relative relative_path if File.exist?(absolute_path)
++end

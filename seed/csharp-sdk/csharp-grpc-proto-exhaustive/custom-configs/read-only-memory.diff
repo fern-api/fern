@@ -1,0 +1,250 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 5e4188a44b1..395a7a3f2d4 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,7 +2,11 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-csharp-sdk",
+   "generatorVersion": "local",
+-  "generatorConfig": {},
++  "generatorConfig": {
++    "read-only-memory-types": [
++      "float"
++    ]
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "ci",
+diff --git a/reference.md b/reference.md
+index 0be0c5ebe40..82f930a0832 100644
+--- a/reference.md
++++ b/reference.md
+@@ -228,11 +228,7 @@ await client.DataService.UploadAsync(
+     {
+         Columns = new List<SeedApi.Column>()
+         {
+-            new SeedApi.Column
+-            {
+-                Id = "id",
+-                Values = new List<float>() { 1.1f },
+-            },
++            new SeedApi.Column { Id = "id", Values = new[] { 1.1f } },
+         },
+     }
+ );
+diff --git a/snippet.json b/snippet.json
+index 1aeb6586f4c..495ce6bb87d 100644
+--- a/snippet.json
++++ b/snippet.json
+@@ -70,7 +70,7 @@
+             },
+             "snippet": {
+                 "type": "csharp",
+-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.DataService.UploadAsync(\n    new UploadRequest\n    {\n        Columns = new List<SeedApi.Column>()\n        {\n            new SeedApi.Column\n            {\n                Id = \"id\",\n                Values = new List<float>() { 1.1f },\n            },\n        },\n    }\n);\n"
++                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.DataService.UploadAsync(\n    new UploadRequest\n    {\n        Columns = new List<SeedApi.Column>()\n        {\n            new SeedApi.Column { Id = \"id\", Values = new[] { 1.1f } },\n        },\n    }\n);\n"
+             }
+         },
+         {
+diff --git a/src/SeedApi/DataService/DataServiceClient.cs b/src/SeedApi/DataService/DataServiceClient.cs
+index 8056ee05488..361272e2fef 100644
+--- a/src/SeedApi/DataService/DataServiceClient.cs
++++ b/src/SeedApi/DataService/DataServiceClient.cs
+@@ -317,11 +317,7 @@ public partial class DataServiceClient : IDataServiceClient
+     ///     {
+     ///         Columns = new List&lt;SeedApi.Column&gt;()
+     ///         {
+-    ///             new SeedApi.Column
+-    ///             {
+-    ///                 Id = "id",
+-    ///                 Values = new List&lt;float&gt;() { 1.1f },
+-    ///             },
++    ///             new SeedApi.Column { Id = "id", Values = new[] { 1.1f } },
+     ///         },
+     ///     }
+     /// );
+diff --git a/src/SeedApi/DataService/Requests/QueryRequest.cs b/src/SeedApi/DataService/Requests/QueryRequest.cs
+index c7ebe662f06..f9686c1045e 100644
+--- a/src/SeedApi/DataService/Requests/QueryRequest.cs
++++ b/src/SeedApi/DataService/Requests/QueryRequest.cs
+@@ -26,7 +26,7 @@ public record QueryRequest
+     public IEnumerable<QueryColumn>? Queries { get; set; }
+ 
+     [JsonPropertyName("column")]
+-    public IEnumerable<float>? Column { get; set; }
++    public ReadOnlyMemory<float>? Column { get; set; }
+ 
+     [JsonPropertyName("id")]
+     public string? Id { get; set; }
+@@ -61,9 +61,9 @@ public record QueryRequest
+         {
+             result.Queries.AddRange(Queries.Select(elem => elem.ToProto()));
+         }
+-        if (Column != null && Column.Any())
++        if (Column != null && !Column.Value.IsEmpty)
+         {
+-            result.Column.AddRange(Column);
++            result.Column.AddRange(Column.Value.ToArray());
+         }
+         if (Id != null)
+         {
+diff --git a/src/SeedApi/DataService/Requests/UpdateRequest.cs b/src/SeedApi/DataService/Requests/UpdateRequest.cs
+index cbb6af651b9..567cb9b5a72 100644
+--- a/src/SeedApi/DataService/Requests/UpdateRequest.cs
++++ b/src/SeedApi/DataService/Requests/UpdateRequest.cs
+@@ -14,7 +14,7 @@ public record UpdateRequest
+     public required string Id { get; set; }
+ 
+     [JsonPropertyName("values")]
+-    public IEnumerable<float>? Values { get; set; }
++    public ReadOnlyMemory<float>? Values { get; set; }
+ 
+     [JsonPropertyName("set_metadata")]
+     public Metadata? SetMetadata { get; set; }
+@@ -53,9 +53,9 @@ public record UpdateRequest
+     {
+         var result = new Proto.UpdateRequest();
+         result.Id = Id;
+-        if (Values != null && Values.Any())
++        if (Values != null && !Values.Value.IsEmpty)
+         {
+-            result.Values.AddRange(Values);
++            result.Values.AddRange(Values.Value.ToArray());
+         }
+         if (SetMetadata != null)
+         {
+diff --git a/src/SeedApi/Types/Column.cs b/src/SeedApi/Types/Column.cs
+index ed6c8cc067c..0ded0c135da 100644
+--- a/src/SeedApi/Types/Column.cs
++++ b/src/SeedApi/Types/Column.cs
+@@ -16,7 +16,7 @@ public record Column : IJsonOnDeserialized
+     public required string Id { get; set; }
+ 
+     [JsonPropertyName("values")]
+-    public IEnumerable<float> Values { get; set; } = new List<float>();
++    public ReadOnlyMemory<float> Values { get; set; }
+ 
+     [JsonPropertyName("metadata")]
+     public Metadata? Metadata { get; set; }
+@@ -35,7 +35,7 @@ public record Column : IJsonOnDeserialized
+         return new Column
+         {
+             Id = value.Id,
+-            Values = value.Values?.ToList() ?? Enumerable.Empty<float>(),
++            Values = value.Values?.ToArray() ?? new ReadOnlyMemory<float>(),
+             Metadata = value.Metadata != null ? SeedApi.Metadata.FromProto(value.Metadata) : null,
+             IndexedData =
+                 value.IndexedData != null ? SeedApi.IndexedData.FromProto(value.IndexedData) : null,
+@@ -52,9 +52,9 @@ public record Column : IJsonOnDeserialized
+     {
+         var result = new ProtoDataV1Grpc.Column();
+         result.Id = Id;
+-        if (Values.Any())
++        if (!Values.IsEmpty)
+         {
+-            result.Values.AddRange(Values);
++            result.Values.AddRange(Values.ToArray());
+         }
+         if (Metadata != null)
+         {
+diff --git a/src/SeedApi/Types/IndexedData.cs b/src/SeedApi/Types/IndexedData.cs
+index da38e7d8316..ca3604d772c 100644
+--- a/src/SeedApi/Types/IndexedData.cs
++++ b/src/SeedApi/Types/IndexedData.cs
+@@ -16,7 +16,7 @@ public record IndexedData : IJsonOnDeserialized
+     public IEnumerable<uint> Indices { get; set; } = new List<uint>();
+ 
+     [JsonPropertyName("values")]
+-    public IEnumerable<float> Values { get; set; } = new List<float>();
++    public ReadOnlyMemory<float> Values { get; set; }
+ 
+     [JsonIgnore]
+     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+@@ -29,7 +29,7 @@ public record IndexedData : IJsonOnDeserialized
+         return new IndexedData
+         {
+             Indices = value.Indices?.ToList() ?? Enumerable.Empty<uint>(),
+-            Values = value.Values?.ToList() ?? Enumerable.Empty<float>(),
++            Values = value.Values?.ToArray() ?? new ReadOnlyMemory<float>(),
+         };
+     }
+ 
+@@ -46,9 +46,9 @@ public record IndexedData : IJsonOnDeserialized
+         {
+             result.Indices.AddRange(Indices);
+         }
+-        if (Values.Any())
++        if (!Values.IsEmpty)
+         {
+-            result.Values.AddRange(Values);
++            result.Values.AddRange(Values.ToArray());
+         }
+         return result;
+     }
+diff --git a/src/SeedApi/Types/QueryColumn.cs b/src/SeedApi/Types/QueryColumn.cs
+index 9b4ac805714..d4967b02ff5 100644
+--- a/src/SeedApi/Types/QueryColumn.cs
++++ b/src/SeedApi/Types/QueryColumn.cs
+@@ -13,7 +13,7 @@ public record QueryColumn : IJsonOnDeserialized
+         new Dictionary<string, JsonElement>();
+ 
+     [JsonPropertyName("values")]
+-    public IEnumerable<float> Values { get; set; } = new List<float>();
++    public ReadOnlyMemory<float> Values { get; set; }
+ 
+     [JsonPropertyName("top_k")]
+     public uint? TopK { get; set; }
+@@ -37,7 +37,7 @@ public record QueryColumn : IJsonOnDeserialized
+     {
+         return new QueryColumn
+         {
+-            Values = value.Values?.ToList() ?? Enumerable.Empty<float>(),
++            Values = value.Values?.ToArray() ?? new ReadOnlyMemory<float>(),
+             TopK = value.TopK,
+             Namespace = value.Namespace,
+             Filter = value.Filter != null ? SeedApi.Metadata.FromProto(value.Filter) : null,
+@@ -55,9 +55,9 @@ public record QueryColumn : IJsonOnDeserialized
+     internal ProtoDataV1Grpc.QueryColumn ToProto()
+     {
+         var result = new ProtoDataV1Grpc.QueryColumn();
+-        if (Values.Any())
++        if (!Values.IsEmpty)
+         {
+-            result.Values.AddRange(Values);
++            result.Values.AddRange(Values.ToArray());
+         }
+         if (TopK != null)
+         {
+diff --git a/src/SeedApi/Types/ScoredColumn.cs b/src/SeedApi/Types/ScoredColumn.cs
+index 23160ed9d03..dd8a55cf21a 100644
+--- a/src/SeedApi/Types/ScoredColumn.cs
++++ b/src/SeedApi/Types/ScoredColumn.cs
+@@ -19,7 +19,7 @@ public record ScoredColumn : IJsonOnDeserialized
+     public float? Score { get; set; }
+ 
+     [JsonPropertyName("values")]
+-    public IEnumerable<float>? Values { get; set; }
++    public ReadOnlyMemory<float>? Values { get; set; }
+ 
+     [JsonPropertyName("metadata")]
+     public Metadata? Metadata { get; set; }
+@@ -39,7 +39,7 @@ public record ScoredColumn : IJsonOnDeserialized
+         {
+             Id = value.Id,
+             Score = value.Score,
+-            Values = value.Values?.ToList(),
++            Values = value.Values?.ToArray(),
+             Metadata = value.Metadata != null ? SeedApi.Metadata.FromProto(value.Metadata) : null,
+             IndexedData =
+                 value.IndexedData != null ? SeedApi.IndexedData.FromProto(value.IndexedData) : null,
+@@ -60,9 +60,9 @@ public record ScoredColumn : IJsonOnDeserialized
+         {
+             result.Score = Score ?? 0.0f;
+         }
+-        if (Values != null && Values.Any())
++        if (Values != null && !Values.Value.IsEmpty)
+         {
+-            result.Values.AddRange(Values);
++            result.Values.AddRange(Values.Value.ToArray());
+         }
+         if (Metadata != null)
+         {

@@ -1,0 +1,118 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 5e4188a44b1..152551a157f 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,7 +2,10 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-csharp-sdk",
+   "generatorVersion": "local",
+-  "generatorConfig": {},
++  "generatorConfig": {
++    "base-api-exception-class-name": "CustomApiException",
++    "base-exception-class-name": "CustomException"
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "ci",
+diff --git a/README.md b/README.md
+index 708740bb39f..1c9b547ec4f 100644
+--- a/README.md
++++ b/README.md
+@@ -55,7 +55,7 @@ using SeedApi;
+ 
+ try {
+     var response = await client.Imdb.CreateMovieAsync(...);
+-} catch (SeedApiApiException e) {
++} catch (CustomApiException e) {
+     System.Console.WriteLine(e.Body);
+     System.Console.WriteLine(e.StatusCode);
+ }
+diff --git a/src/SeedApi/Core/Public/SeedApiApiException.cs b/src/SeedApi/Core/Public/CustomApiException.cs
+similarity index 86%
+rename from src/SeedApi/Core/Public/SeedApiApiException.cs
+rename to src/SeedApi/Core/Public/CustomApiException.cs
+index 94afb43fa0a..d3f9c4a634f 100644
+--- a/src/SeedApi/Core/Public/SeedApiApiException.cs
++++ b/src/SeedApi/Core/Public/CustomApiException.cs
+@@ -3,12 +3,12 @@ namespace SeedApi;
+ /// <summary>
+ /// This exception type will be thrown for any non-2XX API responses.
+ /// </summary>
+-public class SeedApiApiException(
++public class CustomApiException(
+     string message,
+     int statusCode,
+     object body,
+     Exception? innerException = null
+-) : SeedApiException(message, innerException)
++) : CustomException(message, innerException)
+ {
+     /// <summary>
+     /// The error code of the response that triggered the exception.
+diff --git a/src/SeedApi/Core/Public/SeedApiException.cs b/src/SeedApi/Core/Public/CustomException.cs
+similarity index 65%
+rename from src/SeedApi/Core/Public/SeedApiException.cs
+rename to src/SeedApi/Core/Public/CustomException.cs
+index 90e03e71e69..80f77717b99 100644
+--- a/src/SeedApi/Core/Public/SeedApiException.cs
++++ b/src/SeedApi/Core/Public/CustomException.cs
+@@ -3,5 +3,5 @@ namespace SeedApi;
+ /// <summary>
+ /// Base exception class for all exceptions thrown by the SDK.
+ /// </summary>
+-public class SeedApiException(string message, Exception? innerException = null)
++public class CustomException(string message, Exception? innerException = null)
+     : Exception(message, innerException);
+diff --git a/src/SeedApi/Imdb/Exceptions/MovieDoesNotExistError.cs b/src/SeedApi/Imdb/Exceptions/MovieDoesNotExistError.cs
+index 4565ee4c496..26cc08252dd 100644
+--- a/src/SeedApi/Imdb/Exceptions/MovieDoesNotExistError.cs
++++ b/src/SeedApi/Imdb/Exceptions/MovieDoesNotExistError.cs
+@@ -5,7 +5,7 @@ namespace SeedApi;
+ /// </summary>
+ [Serializable]
+ public class MovieDoesNotExistError(string body)
+-    : SeedApiApiException("MovieDoesNotExistError", 404, body)
++    : CustomApiException("MovieDoesNotExistError", 404, body)
+ {
+     /// <summary>
+     /// The body of the response that triggered the exception.
+diff --git a/src/SeedApi/Imdb/ImdbClient.cs b/src/SeedApi/Imdb/ImdbClient.cs
+index 27c72e74dec..f2c02b603f6 100644
+--- a/src/SeedApi/Imdb/ImdbClient.cs
++++ b/src/SeedApi/Imdb/ImdbClient.cs
+@@ -58,7 +58,7 @@ public partial class ImdbClient : IImdbClient
+             }
+             catch (JsonException e)
+             {
+-                throw new SeedApiApiException(
++                throw new CustomApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+                     responseBody,
+@@ -70,7 +70,7 @@ public partial class ImdbClient : IImdbClient
+             var responseBody = await response
+                 .Raw.Content.ReadAsStringAsync(cancellationToken)
+                 .ConfigureAwait(false);
+-            throw new SeedApiApiException(
++            throw new CustomApiException(
+                 $"Error with status code {response.StatusCode}",
+                 response.StatusCode,
+                 responseBody
+@@ -126,7 +126,7 @@ public partial class ImdbClient : IImdbClient
+             }
+             catch (JsonException e)
+             {
+-                throw new SeedApiApiException(
++                throw new CustomApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+                     responseBody,
+@@ -152,7 +152,7 @@ public partial class ImdbClient : IImdbClient
+             {
+                 // unable to map error response, throwing generic error
+             }
+-            throw new SeedApiApiException(
++            throw new CustomApiException(
+                 $"Error with status code {response.StatusCode}",
+                 response.StatusCode,
+                 responseBody

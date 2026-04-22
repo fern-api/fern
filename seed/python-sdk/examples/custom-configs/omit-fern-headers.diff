@@ -1,0 +1,34 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 2ecd82f71ab..db15012dadb 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-python-sdk",
+   "generatorVersion": "local",
++  "generatorConfig": {
++    "omit_fern_headers": true
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "ci",
+diff --git a/src/seed/core/client_wrapper.py b/src/seed/core/client_wrapper.py
+index fd0d6a1fbc1..b4af38649a8 100644
+--- a/src/seed/core/client_wrapper.py
++++ b/src/seed/core/client_wrapper.py
+@@ -24,15 +24,7 @@ class BaseClientWrapper:
+         self._logging = logging
+ 
+     def get_headers(self) -> typing.Dict[str, str]:
+-        import platform
+-
+         headers: typing.Dict[str, str] = {
+-            "User-Agent": "fern_examples/0.0.1",
+-            "X-Fern-Language": "Python",
+-            "X-Fern-Runtime": f"python/{platform.python_version()}",
+-            "X-Fern-Platform": f"{platform.system().lower()}/{platform.release()}",
+-            "X-Fern-SDK-Name": "fern_examples",
+-            "X-Fern-SDK-Version": "0.0.1",
+             **(self.get_custom_headers() or {}),
+         }
+         token = self._get_token()

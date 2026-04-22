@@ -1,0 +1,683 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index d8b7bf00e12..c9d465daa73 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,9 @@
+     "cliVersion": "DUMMY",
+     "generatorName": "fernapi/fern-typescript-sdk",
+     "generatorVersion": "local",
++    "generatorConfig": {
++        "parameterNaming": "camelCase"
++    },
+     "originGitCommit": "DUMMY",
+     "originGitCommitIsDirty": null,
+     "invokedBy": "ci",
+diff --git a/reference.md b/reference.md
+index d0792a7198a..c44e52fdcf1 100644
+--- a/reference.md
++++ b/reference.md
+@@ -1,6 +1,6 @@
+ # Reference
+ ## Organizations
+-<details><summary><code>client.organizations.<a href="/src/api/resources/organizations/client/Client.ts">getOrganization</a>(organization_id) -> SeedPathParameters.Organization</code></summary>
++<details><summary><code>client.organizations.<a href="/src/api/resources/organizations/client/Client.ts">getOrganization</a>(organizationId) -> SeedPathParameters.Organization</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -29,7 +29,7 @@ await client.organizations.getOrganization("organization_id");
+ <dl>
+ <dd>
+ 
+-**organization_id:** `string` 
++**organizationId:** `string` 
+     
+ </dd>
+ </dl>
+@@ -63,8 +63,8 @@ await client.organizations.getOrganization("organization_id");
+ 
+ ```typescript
+ await client.organizations.getOrganizationUser({
+-    organization_id: "organization_id",
+-    user_id: "user_id"
++    organizationId: "organization_id",
++    userId: "user_id"
+ });
+ 
+ ```
+@@ -101,7 +101,7 @@ await client.organizations.getOrganizationUser({
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.organizations.<a href="/src/api/resources/organizations/client/Client.ts">searchOrganizations</a>(organization_id, { ...params }) -> SeedPathParameters.Organization[]</code></summary>
++<details><summary><code>client.organizations.<a href="/src/api/resources/organizations/client/Client.ts">searchOrganizations</a>(organizationId, { ...params }) -> SeedPathParameters.Organization[]</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -132,7 +132,7 @@ await client.organizations.searchOrganizations("organization_id", {
+ <dl>
+ <dd>
+ 
+-**organization_id:** `string` 
++**organizationId:** `string` 
+     
+ </dd>
+ </dl>
+@@ -175,7 +175,7 @@ await client.organizations.searchOrganizations("organization_id", {
+ 
+ ```typescript
+ await client.user.getUser({
+-    user_id: "user_id"
++    userId: "user_id"
+ });
+ 
+ ```
+@@ -278,7 +278,7 @@ await client.user.createUser({
+ 
+ ```typescript
+ await client.user.updateUser({
+-    user_id: "user_id",
++    userId: "user_id",
+     body: {
+         name: "name",
+         tags: ["tags", "tags"]
+@@ -333,7 +333,7 @@ await client.user.updateUser({
+ 
+ ```typescript
+ await client.user.searchUsers({
+-    user_id: "user_id",
++    userId: "user_id",
+     limit: 1
+ });
+ 
+@@ -399,7 +399,7 @@ Test endpoint with path parameter that has a text prefix (v{version})
+ 
+ ```typescript
+ await client.user.getUserMetadata({
+-    user_id: "user_id",
++    userId: "user_id",
+     version: 1
+ });
+ 
+@@ -465,7 +465,7 @@ Test endpoint with path parameters listed in different order than found in path
+ 
+ ```typescript
+ await client.user.getUserSpecifics({
+-    user_id: "user_id",
++    userId: "user_id",
+     version: 1,
+     thought: "thought"
+ });
+diff --git a/snippet.json b/snippet.json
+index 6af6e5f9ad4..eb705d08c6f 100644
+--- a/snippet.json
++++ b/snippet.json
+@@ -19,7 +19,7 @@
+             },
+             "snippet": {
+                 "type": "typescript",
+-                "client": "import { SeedPathParametersClient } from \"@fern/path-parameters\";\n\nconst client = new SeedPathParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.organizations.getOrganizationUser({\n    organization_id: \"organization_id\",\n    user_id: \"user_id\"\n});\n"
++                "client": "import { SeedPathParametersClient } from \"@fern/path-parameters\";\n\nconst client = new SeedPathParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.organizations.getOrganizationUser({\n    organizationId: \"organization_id\",\n    userId: \"user_id\"\n});\n"
+             }
+         },
+         {
+@@ -41,7 +41,7 @@
+             },
+             "snippet": {
+                 "type": "typescript",
+-                "client": "import { SeedPathParametersClient } from \"@fern/path-parameters\";\n\nconst client = new SeedPathParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.getUser({\n    user_id: \"user_id\"\n});\n"
++                "client": "import { SeedPathParametersClient } from \"@fern/path-parameters\";\n\nconst client = new SeedPathParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.getUser({\n    userId: \"user_id\"\n});\n"
+             }
+         },
+         {
+@@ -63,7 +63,7 @@
+             },
+             "snippet": {
+                 "type": "typescript",
+-                "client": "import { SeedPathParametersClient } from \"@fern/path-parameters\";\n\nconst client = new SeedPathParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.updateUser({\n    user_id: \"user_id\",\n    body: {\n        name: \"name\",\n        tags: [\"tags\", \"tags\"]\n    }\n});\n"
++                "client": "import { SeedPathParametersClient } from \"@fern/path-parameters\";\n\nconst client = new SeedPathParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.updateUser({\n    userId: \"user_id\",\n    body: {\n        name: \"name\",\n        tags: [\"tags\", \"tags\"]\n    }\n});\n"
+             }
+         },
+         {
+@@ -74,7 +74,7 @@
+             },
+             "snippet": {
+                 "type": "typescript",
+-                "client": "import { SeedPathParametersClient } from \"@fern/path-parameters\";\n\nconst client = new SeedPathParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.searchUsers({\n    user_id: \"user_id\",\n    limit: 1\n});\n"
++                "client": "import { SeedPathParametersClient } from \"@fern/path-parameters\";\n\nconst client = new SeedPathParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.searchUsers({\n    userId: \"user_id\",\n    limit: 1\n});\n"
+             }
+         },
+         {
+@@ -85,7 +85,7 @@
+             },
+             "snippet": {
+                 "type": "typescript",
+-                "client": "import { SeedPathParametersClient } from \"@fern/path-parameters\";\n\nconst client = new SeedPathParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.getUserMetadata({\n    user_id: \"user_id\",\n    version: 1\n});\n"
++                "client": "import { SeedPathParametersClient } from \"@fern/path-parameters\";\n\nconst client = new SeedPathParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.getUserMetadata({\n    userId: \"user_id\",\n    version: 1\n});\n"
+             }
+         },
+         {
+@@ -96,7 +96,7 @@
+             },
+             "snippet": {
+                 "type": "typescript",
+-                "client": "import { SeedPathParametersClient } from \"@fern/path-parameters\";\n\nconst client = new SeedPathParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.getUserSpecifics({\n    user_id: \"user_id\",\n    version: 1,\n    thought: \"thought\"\n});\n"
++                "client": "import { SeedPathParametersClient } from \"@fern/path-parameters\";\n\nconst client = new SeedPathParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.getUserSpecifics({\n    userId: \"user_id\",\n    version: 1,\n    thought: \"thought\"\n});\n"
+             }
+         }
+     ],
+diff --git a/src/BaseClient.ts b/src/BaseClient.ts
+index 2400e14a1c7..a060acb02ed 100644
+--- a/src/BaseClient.ts
++++ b/src/BaseClient.ts
+@@ -7,7 +7,7 @@ export interface BaseClientOptions {
+     environment: core.Supplier<string>;
+     /** Specify a custom URL to connect the client to. */
+     baseUrl?: core.Supplier<string>;
+-    tenant_id: string;
++    tenantId: string;
+     /** Additional headers to include in requests. */
+     headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
+     /** The default maximum time to wait for a response in seconds. */
+diff --git a/src/api/resources/organizations/client/Client.ts b/src/api/resources/organizations/client/Client.ts
+index ffc32534dcb..87028a00a02 100644
+--- a/src/api/resources/organizations/client/Client.ts
++++ b/src/api/resources/organizations/client/Client.ts
+@@ -22,21 +22,21 @@ export class OrganizationsClient {
+     }
+ 
+     /**
+-     * @param {string} organization_id
++     * @param {string} organizationId
+      * @param {OrganizationsClient.RequestOptions} requestOptions - Request-specific configuration.
+      *
+      * @example
+      *     await client.organizations.getOrganization("organization_id")
+      */
+     public getOrganization(
+-        organization_id: string,
++        organizationId: string,
+         requestOptions?: OrganizationsClient.RequestOptions,
+     ): core.HttpResponsePromise<SeedPathParameters.Organization> {
+-        return core.HttpResponsePromise.fromPromise(this.__getOrganization(organization_id, requestOptions));
++        return core.HttpResponsePromise.fromPromise(this.__getOrganization(organizationId, requestOptions));
+     }
+ 
+     private async __getOrganization(
+-        organization_id: string,
++        organizationId: string,
+         requestOptions?: OrganizationsClient.RequestOptions,
+     ): Promise<core.WithRawResponse<SeedPathParameters.Organization>> {
+         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+@@ -44,7 +44,7 @@ export class OrganizationsClient {
+             url: core.url.join(
+                 (await core.Supplier.get(this._options.baseUrl)) ??
+                     (await core.Supplier.get(this._options.environment)),
+-                `/${core.url.encodePathParam(this._options.tenant_id)}/organizations/${core.url.encodePathParam(organization_id)}/`,
++                `/${core.url.encodePathParam(this._options.tenantId)}/organizations/${core.url.encodePathParam(organizationId)}/`,
+             ),
+             method: "GET",
+             headers: _headers,
+@@ -81,8 +81,8 @@ export class OrganizationsClient {
+      *
+      * @example
+      *     await client.organizations.getOrganizationUser({
+-     *         organization_id: "organization_id",
+-     *         user_id: "user_id"
++     *         organizationId: "organization_id",
++     *         userId: "user_id"
+      *     })
+      */
+     public getOrganizationUser(
+@@ -96,13 +96,13 @@ export class OrganizationsClient {
+         request: SeedPathParameters.GetOrganizationUserRequest,
+         requestOptions?: OrganizationsClient.RequestOptions,
+     ): Promise<core.WithRawResponse<SeedPathParameters.User>> {
+-        const { organization_id: organizationId, user_id: userId } = request;
++        const { organizationId, userId } = request;
+         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+         const _response = await core.fetcher({
+             url: core.url.join(
+                 (await core.Supplier.get(this._options.baseUrl)) ??
+                     (await core.Supplier.get(this._options.environment)),
+-                `/${core.url.encodePathParam(this._options.tenant_id)}/organizations/${core.url.encodePathParam(organizationId)}/users/${core.url.encodePathParam(userId)}`,
++                `/${core.url.encodePathParam(this._options.tenantId)}/organizations/${core.url.encodePathParam(organizationId)}/users/${core.url.encodePathParam(userId)}`,
+             ),
+             method: "GET",
+             headers: _headers,
+@@ -134,7 +134,7 @@ export class OrganizationsClient {
+     }
+ 
+     /**
+-     * @param {string} organization_id
++     * @param {string} organizationId
+      * @param {SeedPathParameters.SearchOrganizationsRequest} request
+      * @param {OrganizationsClient.RequestOptions} requestOptions - Request-specific configuration.
+      *
+@@ -144,17 +144,17 @@ export class OrganizationsClient {
+      *     })
+      */
+     public searchOrganizations(
+-        organization_id: string,
++        organizationId: string,
+         request: SeedPathParameters.SearchOrganizationsRequest = {},
+         requestOptions?: OrganizationsClient.RequestOptions,
+     ): core.HttpResponsePromise<SeedPathParameters.Organization[]> {
+         return core.HttpResponsePromise.fromPromise(
+-            this.__searchOrganizations(organization_id, request, requestOptions),
++            this.__searchOrganizations(organizationId, request, requestOptions),
+         );
+     }
+ 
+     private async __searchOrganizations(
+-        organization_id: string,
++        organizationId: string,
+         request: SeedPathParameters.SearchOrganizationsRequest = {},
+         requestOptions?: OrganizationsClient.RequestOptions,
+     ): Promise<core.WithRawResponse<SeedPathParameters.Organization[]>> {
+@@ -167,7 +167,7 @@ export class OrganizationsClient {
+             url: core.url.join(
+                 (await core.Supplier.get(this._options.baseUrl)) ??
+                     (await core.Supplier.get(this._options.environment)),
+-                `/${core.url.encodePathParam(this._options.tenant_id)}/organizations/${core.url.encodePathParam(organization_id)}/search`,
++                `/${core.url.encodePathParam(this._options.tenantId)}/organizations/${core.url.encodePathParam(organizationId)}/search`,
+             ),
+             method: "GET",
+             headers: _headers,
+diff --git a/src/api/resources/organizations/client/requests/GetOrganizationUserRequest.ts b/src/api/resources/organizations/client/requests/GetOrganizationUserRequest.ts
+index 3c2ef11e5f3..f94c259d2aa 100644
+--- a/src/api/resources/organizations/client/requests/GetOrganizationUserRequest.ts
++++ b/src/api/resources/organizations/client/requests/GetOrganizationUserRequest.ts
+@@ -3,11 +3,11 @@
+ /**
+  * @example
+  *     {
+- *         organization_id: "organization_id",
+- *         user_id: "user_id"
++ *         organizationId: "organization_id",
++ *         userId: "user_id"
+  *     }
+  */
+ export interface GetOrganizationUserRequest {
+-    organization_id: string;
+-    user_id: string;
++    organizationId: string;
++    userId: string;
+ }
+diff --git a/src/api/resources/user/client/Client.ts b/src/api/resources/user/client/Client.ts
+index e8ba7f24858..2bba0b99a95 100644
+--- a/src/api/resources/user/client/Client.ts
++++ b/src/api/resources/user/client/Client.ts
+@@ -27,7 +27,7 @@ export class UserClient {
+      *
+      * @example
+      *     await client.user.getUser({
+-     *         user_id: "user_id"
++     *         userId: "user_id"
+      *     })
+      */
+     public getUser(
+@@ -41,13 +41,13 @@ export class UserClient {
+         request: SeedPathParameters.GetUsersRequest,
+         requestOptions?: UserClient.RequestOptions,
+     ): Promise<core.WithRawResponse<SeedPathParameters.User>> {
+-        const { user_id: userId } = request;
++        const { userId } = request;
+         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+         const _response = await core.fetcher({
+             url: core.url.join(
+                 (await core.Supplier.get(this._options.baseUrl)) ??
+                     (await core.Supplier.get(this._options.environment)),
+-                `/${core.url.encodePathParam(this._options.tenant_id)}/user/${core.url.encodePathParam(userId)}`,
++                `/${core.url.encodePathParam(this._options.tenantId)}/user/${core.url.encodePathParam(userId)}`,
+             ),
+             method: "GET",
+             headers: _headers,
+@@ -99,7 +99,7 @@ export class UserClient {
+             url: core.url.join(
+                 (await core.Supplier.get(this._options.baseUrl)) ??
+                     (await core.Supplier.get(this._options.environment)),
+-                `/${core.url.encodePathParam(this._options.tenant_id)}/user/`,
++                `/${core.url.encodePathParam(this._options.tenantId)}/user/`,
+             ),
+             method: "POST",
+             headers: _headers,
+@@ -134,7 +134,7 @@ export class UserClient {
+      *
+      * @example
+      *     await client.user.updateUser({
+-     *         user_id: "user_id",
++     *         userId: "user_id",
+      *         body: {
+      *             name: "name",
+      *             tags: ["tags", "tags"]
+@@ -152,13 +152,13 @@ export class UserClient {
+         request: SeedPathParameters.UpdateUserRequest,
+         requestOptions?: UserClient.RequestOptions,
+     ): Promise<core.WithRawResponse<SeedPathParameters.User>> {
+-        const { user_id: userId, body: _body } = request;
++        const { userId, body: _body } = request;
+         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+         const _response = await core.fetcher({
+             url: core.url.join(
+                 (await core.Supplier.get(this._options.baseUrl)) ??
+                     (await core.Supplier.get(this._options.environment)),
+-                `/${core.url.encodePathParam(this._options.tenant_id)}/user/${core.url.encodePathParam(userId)}`,
++                `/${core.url.encodePathParam(this._options.tenantId)}/user/${core.url.encodePathParam(userId)}`,
+             ),
+             method: "PATCH",
+             headers: _headers,
+@@ -193,7 +193,7 @@ export class UserClient {
+      *
+      * @example
+      *     await client.user.searchUsers({
+-     *         user_id: "user_id",
++     *         userId: "user_id",
+      *         limit: 1
+      *     })
+      */
+@@ -208,7 +208,7 @@ export class UserClient {
+         request: SeedPathParameters.SearchUsersRequest,
+         requestOptions?: UserClient.RequestOptions,
+     ): Promise<core.WithRawResponse<SeedPathParameters.User[]>> {
+-        const { user_id: userId, limit } = request;
++        const { userId, limit } = request;
+         const _queryParams: Record<string, unknown> = {
+             limit,
+         };
+@@ -217,7 +217,7 @@ export class UserClient {
+             url: core.url.join(
+                 (await core.Supplier.get(this._options.baseUrl)) ??
+                     (await core.Supplier.get(this._options.environment)),
+-                `/${core.url.encodePathParam(this._options.tenant_id)}/user/${core.url.encodePathParam(userId)}/search`,
++                `/${core.url.encodePathParam(this._options.tenantId)}/user/${core.url.encodePathParam(userId)}/search`,
+             ),
+             method: "GET",
+             headers: _headers,
+@@ -261,7 +261,7 @@ export class UserClient {
+      *
+      * @example
+      *     await client.user.getUserMetadata({
+-     *         user_id: "user_id",
++     *         userId: "user_id",
+      *         version: 1
+      *     })
+      */
+@@ -276,13 +276,13 @@ export class UserClient {
+         request: SeedPathParameters.GetUserMetadataRequest,
+         requestOptions?: UserClient.RequestOptions,
+     ): Promise<core.WithRawResponse<SeedPathParameters.User>> {
+-        const { user_id: userId, version } = request;
++        const { userId, version } = request;
+         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+         const _response = await core.fetcher({
+             url: core.url.join(
+                 (await core.Supplier.get(this._options.baseUrl)) ??
+                     (await core.Supplier.get(this._options.environment)),
+-                `/${core.url.encodePathParam(this._options.tenant_id)}/user/${core.url.encodePathParam(userId)}/metadata/v${core.url.encodePathParam(version)}`,
++                `/${core.url.encodePathParam(this._options.tenantId)}/user/${core.url.encodePathParam(userId)}/metadata/v${core.url.encodePathParam(version)}`,
+             ),
+             method: "GET",
+             headers: _headers,
+@@ -321,7 +321,7 @@ export class UserClient {
+      *
+      * @example
+      *     await client.user.getUserSpecifics({
+-     *         user_id: "user_id",
++     *         userId: "user_id",
+      *         version: 1,
+      *         thought: "thought"
+      *     })
+@@ -337,13 +337,13 @@ export class UserClient {
+         request: SeedPathParameters.GetUserSpecificsRequest,
+         requestOptions?: UserClient.RequestOptions,
+     ): Promise<core.WithRawResponse<SeedPathParameters.User>> {
+-        const { user_id: userId, version, thought } = request;
++        const { userId, version, thought } = request;
+         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+         const _response = await core.fetcher({
+             url: core.url.join(
+                 (await core.Supplier.get(this._options.baseUrl)) ??
+                     (await core.Supplier.get(this._options.environment)),
+-                `/${core.url.encodePathParam(this._options.tenant_id)}/user/${core.url.encodePathParam(userId)}/specifics/${core.url.encodePathParam(version)}/${core.url.encodePathParam(thought)}`,
++                `/${core.url.encodePathParam(this._options.tenantId)}/user/${core.url.encodePathParam(userId)}/specifics/${core.url.encodePathParam(version)}/${core.url.encodePathParam(thought)}`,
+             ),
+             method: "GET",
+             headers: _headers,
+diff --git a/src/api/resources/user/client/requests/GetUserMetadataRequest.ts b/src/api/resources/user/client/requests/GetUserMetadataRequest.ts
+index 8044b0486e4..3f69e0a2d94 100644
+--- a/src/api/resources/user/client/requests/GetUserMetadataRequest.ts
++++ b/src/api/resources/user/client/requests/GetUserMetadataRequest.ts
+@@ -3,11 +3,11 @@
+ /**
+  * @example
+  *     {
+- *         user_id: "user_id",
++ *         userId: "user_id",
+  *         version: 1
+  *     }
+  */
+ export interface GetUserMetadataRequest {
+-    user_id: string;
++    userId: string;
+     version: number;
+ }
+diff --git a/src/api/resources/user/client/requests/GetUserSpecificsRequest.ts b/src/api/resources/user/client/requests/GetUserSpecificsRequest.ts
+index fd753ec810c..1ef50cfbf68 100644
+--- a/src/api/resources/user/client/requests/GetUserSpecificsRequest.ts
++++ b/src/api/resources/user/client/requests/GetUserSpecificsRequest.ts
+@@ -3,13 +3,13 @@
+ /**
+  * @example
+  *     {
+- *         user_id: "user_id",
++ *         userId: "user_id",
+  *         version: 1,
+  *         thought: "thought"
+  *     }
+  */
+ export interface GetUserSpecificsRequest {
+-    user_id: string;
++    userId: string;
+     version: number;
+     thought: string;
+ }
+diff --git a/src/api/resources/user/client/requests/GetUsersRequest.ts b/src/api/resources/user/client/requests/GetUsersRequest.ts
+index 860ba8e01a5..42e89edd23f 100644
+--- a/src/api/resources/user/client/requests/GetUsersRequest.ts
++++ b/src/api/resources/user/client/requests/GetUsersRequest.ts
+@@ -3,9 +3,9 @@
+ /**
+  * @example
+  *     {
+- *         user_id: "user_id"
++ *         userId: "user_id"
+  *     }
+  */
+ export interface GetUsersRequest {
+-    user_id: string;
++    userId: string;
+ }
+diff --git a/src/api/resources/user/client/requests/SearchUsersRequest.ts b/src/api/resources/user/client/requests/SearchUsersRequest.ts
+index 86cfd1efae9..e46c1ac8c9f 100644
+--- a/src/api/resources/user/client/requests/SearchUsersRequest.ts
++++ b/src/api/resources/user/client/requests/SearchUsersRequest.ts
+@@ -3,11 +3,11 @@
+ /**
+  * @example
+  *     {
+- *         user_id: "user_id",
++ *         userId: "user_id",
+  *         limit: 1
+  *     }
+  */
+ export interface SearchUsersRequest {
+-    user_id: string;
++    userId: string;
+     limit?: number;
+ }
+diff --git a/src/api/resources/user/client/requests/UpdateUserRequest.ts b/src/api/resources/user/client/requests/UpdateUserRequest.ts
+index a114d09121b..9fa359f4c7f 100644
+--- a/src/api/resources/user/client/requests/UpdateUserRequest.ts
++++ b/src/api/resources/user/client/requests/UpdateUserRequest.ts
+@@ -5,7 +5,7 @@ import type * as SeedPathParameters from "../../../../index.js";
+ /**
+  * @example
+  *     {
+- *         user_id: "user_id",
++ *         userId: "user_id",
+  *         body: {
+  *             name: "name",
+  *             tags: ["tags", "tags"]
+@@ -13,6 +13,6 @@ import type * as SeedPathParameters from "../../../../index.js";
+  *     }
+  */
+ export interface UpdateUserRequest {
+-    user_id: string;
++    userId: string;
+     body: SeedPathParameters.User;
+ }
+diff --git a/tests/wire/organizations.test.ts b/tests/wire/organizations.test.ts
+index 0724ddb7965..241c0de6614 100644
+--- a/tests/wire/organizations.test.ts
++++ b/tests/wire/organizations.test.ts
+@@ -8,7 +8,7 @@ describe("OrganizationsClient", () => {
+         const server = mockServerPool.createServer();
+         const client = new SeedPathParametersClient({
+             maxRetries: 0,
+-            tenant_id: "tenant_id",
++            tenantId: "tenant_id",
+             environment: server.baseUrl,
+         });
+ 
+@@ -30,7 +30,7 @@ describe("OrganizationsClient", () => {
+         const server = mockServerPool.createServer();
+         const client = new SeedPathParametersClient({
+             maxRetries: 0,
+-            tenant_id: "tenant_id",
++            tenantId: "tenant_id",
+             environment: server.baseUrl,
+         });
+ 
+@@ -45,8 +45,8 @@ describe("OrganizationsClient", () => {
+             .build();
+ 
+         const response = await client.organizations.getOrganizationUser({
+-            organization_id: "organization_id",
+-            user_id: "user_id",
++            organizationId: "organization_id",
++            userId: "user_id",
+         });
+         expect(response).toEqual(rawResponseBody);
+     });
+@@ -55,7 +55,7 @@ describe("OrganizationsClient", () => {
+         const server = mockServerPool.createServer();
+         const client = new SeedPathParametersClient({
+             maxRetries: 0,
+-            tenant_id: "tenant_id",
++            tenantId: "tenant_id",
+             environment: server.baseUrl,
+         });
+ 
+diff --git a/tests/wire/user.test.ts b/tests/wire/user.test.ts
+index afad4e65b72..41710af1525 100644
+--- a/tests/wire/user.test.ts
++++ b/tests/wire/user.test.ts
+@@ -8,7 +8,7 @@ describe("UserClient", () => {
+         const server = mockServerPool.createServer();
+         const client = new SeedPathParametersClient({
+             maxRetries: 0,
+-            tenant_id: "tenant_id",
++            tenantId: "tenant_id",
+             environment: server.baseUrl,
+         });
+ 
+@@ -23,7 +23,7 @@ describe("UserClient", () => {
+             .build();
+ 
+         const response = await client.user.getUser({
+-            user_id: "user_id",
++            userId: "user_id",
+         });
+         expect(response).toEqual(rawResponseBody);
+     });
+@@ -32,7 +32,7 @@ describe("UserClient", () => {
+         const server = mockServerPool.createServer();
+         const client = new SeedPathParametersClient({
+             maxRetries: 0,
+-            tenant_id: "tenant_id",
++            tenantId: "tenant_id",
+             environment: server.baseUrl,
+         });
+         const rawRequestBody = { name: "name", tags: ["tags", "tags"] };
+@@ -58,7 +58,7 @@ describe("UserClient", () => {
+         const server = mockServerPool.createServer();
+         const client = new SeedPathParametersClient({
+             maxRetries: 0,
+-            tenant_id: "tenant_id",
++            tenantId: "tenant_id",
+             environment: server.baseUrl,
+         });
+         const rawRequestBody = { name: "name", tags: ["tags", "tags"] };
+@@ -74,7 +74,7 @@ describe("UserClient", () => {
+             .build();
+ 
+         const response = await client.user.updateUser({
+-            user_id: "user_id",
++            userId: "user_id",
+             body: {
+                 name: "name",
+                 tags: ["tags", "tags"],
+@@ -87,7 +87,7 @@ describe("UserClient", () => {
+         const server = mockServerPool.createServer();
+         const client = new SeedPathParametersClient({
+             maxRetries: 0,
+-            tenant_id: "tenant_id",
++            tenantId: "tenant_id",
+             environment: server.baseUrl,
+         });
+ 
+@@ -105,7 +105,7 @@ describe("UserClient", () => {
+             .build();
+ 
+         const response = await client.user.searchUsers({
+-            user_id: "user_id",
++            userId: "user_id",
+             limit: 1,
+         });
+         expect(response).toEqual(rawResponseBody);
+@@ -115,7 +115,7 @@ describe("UserClient", () => {
+         const server = mockServerPool.createServer();
+         const client = new SeedPathParametersClient({
+             maxRetries: 0,
+-            tenant_id: "tenant_id",
++            tenantId: "tenant_id",
+             environment: server.baseUrl,
+         });
+ 
+@@ -130,7 +130,7 @@ describe("UserClient", () => {
+             .build();
+ 
+         const response = await client.user.getUserMetadata({
+-            user_id: "user_id",
++            userId: "user_id",
+             version: 1,
+         });
+         expect(response).toEqual(rawResponseBody);
+@@ -140,7 +140,7 @@ describe("UserClient", () => {
+         const server = mockServerPool.createServer();
+         const client = new SeedPathParametersClient({
+             maxRetries: 0,
+-            tenant_id: "tenant_id",
++            tenantId: "tenant_id",
+             environment: server.baseUrl,
+         });
+ 
+@@ -155,7 +155,7 @@ describe("UserClient", () => {
+             .build();
+ 
+         const response = await client.user.getUserSpecifics({
+-            user_id: "user_id",
++            userId: "user_id",
+             version: 1,
+             thought: "thought",
+         });

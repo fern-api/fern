@@ -1,0 +1,365 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 5e4188a44b1..27f9e35f5f9 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,7 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-csharp-sdk",
+   "generatorVersion": "local",
+-  "generatorConfig": {},
++  "generatorConfig": {
++    "output-path": "custom-src"
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "ci",
+diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+index e3066d1f512..f0723d7d5b7 100644
+--- a/.github/workflows/ci.yml
++++ b/.github/workflows/ci.yml
+@@ -26,27 +26,27 @@ jobs:
+         run: dotnet tool restore
+ 
+       - name: Restore dependencies
+-        run: dotnet restore src/SeedSimpleApi/SeedSimpleApi.csproj
++        run: dotnet restore custom-src/SeedSimpleApi/SeedSimpleApi.csproj
+ 
+       - name: Build
+-        run: dotnet build src/SeedSimpleApi/SeedSimpleApi.csproj --no-restore -c Release
++        run: dotnet build custom-src/SeedSimpleApi/SeedSimpleApi.csproj --no-restore -c Release
+ 
+       - name: Restore test dependencies
+-        run: dotnet restore src/SeedSimpleApi.Test/SeedSimpleApi.Test.csproj
++        run: dotnet restore custom-src/SeedSimpleApi.Test/SeedSimpleApi.Test.csproj
+ 
+       - name: Build tests
+-        run: dotnet build src/SeedSimpleApi.Test/SeedSimpleApi.Test.csproj --no-restore -c Release
++        run: dotnet build custom-src/SeedSimpleApi.Test/SeedSimpleApi.Test.csproj --no-restore -c Release
+ 
+       - name: Test
+-        run: dotnet test src/SeedSimpleApi.Test/SeedSimpleApi.Test.csproj --no-restore --no-build -c Release
++        run: dotnet test custom-src/SeedSimpleApi.Test/SeedSimpleApi.Test.csproj --no-restore --no-build -c Release
+ 
+       - name: Pack
+         if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+-        run: dotnet pack src/SeedSimpleApi/SeedSimpleApi.csproj --no-build --no-restore -c Release
++        run: dotnet pack custom-src/SeedSimpleApi/SeedSimpleApi.csproj --no-build --no-restore -c Release
+ 
+       - name: Publish to NuGet.org
+         if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+         env:
+           NUGET_API_KEY: ${{ secrets.NUGET_API_TOKEN }}
+-        run: dotnet nuget push src/SeedSimpleApi/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source "nuget.org"
++        run: dotnet nuget push custom-src/SeedSimpleApi/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source "nuget.org"
+ 
+diff --git a/SeedSimpleApi.slnx b/SeedSimpleApi.slnx
+index 838bfb08ae1..cbb2e3d4c2c 100644
+--- a/SeedSimpleApi.slnx
++++ b/SeedSimpleApi.slnx
+@@ -1,4 +1,4 @@
+ <Solution>
+-  <Project Path="src/SeedSimpleApi.Test/SeedSimpleApi.Test.csproj" />
+-  <Project Path="src/SeedSimpleApi/SeedSimpleApi.csproj" />
++  <Project Path="custom-src/SeedSimpleApi.Test/SeedSimpleApi.Test.csproj" />
++  <Project Path="custom-src/SeedSimpleApi/SeedSimpleApi.csproj" />
+ </Solution>
+diff --git a/src/SeedSimpleApi/Core/ApiResponse.cs b/custom-src/SeedSimpleApi/Core/ApiResponse.cs
+similarity index 100%
+rename from src/SeedSimpleApi/Core/ApiResponse.cs
+rename to custom-src/SeedSimpleApi/Core/ApiResponse.cs
+diff --git a/src/SeedSimpleApi/Core/BaseRequest.cs b/custom-src/SeedSimpleApi/Core/BaseRequest.cs
+similarity index 100%
+rename from src/SeedSimpleApi/Core/BaseRequest.cs
+rename to custom-src/SeedSimpleApi/Core/BaseRequest.cs
+diff --git a/src/SeedSimpleApi/Core/CollectionItemSerializer.cs b/custom-src/SeedSimpleApi/Core/CollectionItemSerializer.cs
+similarity index 100%
+rename from src/SeedSimpleApi/Core/CollectionItemSerializer.cs
+rename to custom-src/SeedSimpleApi/Core/CollectionItemSerializer.cs
+diff --git a/src/SeedSimpleApi/Core/Constants.cs b/custom-src/SeedSimpleApi/Core/Constants.cs
+similarity index 100%
+rename from src/SeedSimpleApi/Core/Constants.cs
+rename to custom-src/SeedSimpleApi/Core/Constants.cs
+diff --git a/src/SeedSimpleApi/Core/DateOnlyConverter.cs b/custom-src/SeedSimpleApi/Core/DateOnlyConverter.cs
+similarity index 100%
+rename from src/SeedSimpleApi/Core/DateOnlyConverter.cs
+rename to custom-src/SeedSimpleApi/Core/DateOnlyConverter.cs
+diff --git a/src/SeedSimpleApi/Core/DateTimeSerializer.cs b/custom-src/SeedSimpleApi/Core/DateTimeSerializer.cs
+similarity index 100%
+rename from src/SeedSimpleApi/Core/DateTimeSerializer.cs
+rename to custom-src/SeedSimpleApi/Core/DateTimeSerializer.cs
+diff --git a/src/SeedSimpleApi/Core/EmptyRequest.cs b/custom-src/SeedSimpleApi/Core/EmptyRequest.cs
+similarity index 100%
+rename from src/SeedSimpleApi/Core/EmptyRequest.cs
+rename to custom-src/SeedSimpleApi/Core/EmptyRequest.cs
+diff --git a/src/SeedSimpleApi/Core/EncodingCache.cs b/custom-src/SeedSimpleApi/Core/EncodingCache.cs
+similarity index 100%
+rename from src/SeedSimpleApi/Core/EncodingCache.cs
+rename to custom-src/SeedSimpleApi/Core/EncodingCache.cs
+diff --git a/src/SeedSimpleApi/Core/Extensions.cs b/custom-src/SeedSimpleApi/Core/Extensions.cs
+similarity index 100%
+rename from src/SeedSimpleApi/Core/Extensions.cs
+rename to custom-src/SeedSimpleApi/Core/Extensions.cs
+diff --git a/src/SeedSimpleApi/Core/FormUrlEncoder.cs b/custom-src/SeedSimpleApi/Core/FormUrlEncoder.cs
+similarity index 100%
+rename from src/SeedSimpleApi/Core/FormUrlEncoder.cs
+rename to custom-src/SeedSimpleApi/Core/FormUrlEncoder.cs
+diff --git a/src/SeedSimpleApi/Core/HeaderValue.cs b/custom-src/SeedSimpleApi/Core/HeaderValue.cs
+similarity index 100%
+rename from src/SeedSimpleApi/Core/HeaderValue.cs
+rename to custom-src/SeedSimpleApi/Core/HeaderValue.cs
+diff --git a/src/SeedSimpleApi/Core/Headers.cs b/custom-src/SeedSimpleApi/Core/Headers.cs
+similarity index 100%
+rename from src/SeedSimpleApi/Core/Headers.cs
+rename to custom-src/SeedSimpleApi/Core/Headers.cs
+diff --git a/src/SeedSimpleApi/Core/HeadersBuilder.cs b/custom-src/SeedSimpleApi/Core/HeadersBuilder.cs
+similarity index 100%
+rename from src/SeedSimpleApi/Core/HeadersBuilder.cs
+rename to custom-src/SeedSimpleApi/Core/HeadersBuilder.cs
+diff --git a/src/SeedSimpleApi/Core/HttpContentExtensions.cs b/custom-src/SeedSimpleApi/Core/HttpContentExtensions.cs
+similarity index 100%
+rename from src/SeedSimpleApi/Core/HttpContentExtensions.cs
+rename to custom-src/SeedSimpleApi/Core/HttpContentExtensions.cs
+diff --git a/src/SeedSimpleApi/Core/HttpMethodExtensions.cs b/custom-src/SeedSimpleApi/Core/HttpMethodExtensions.cs
+similarity index 100%
+rename from src/SeedSimpleApi/Core/HttpMethodExtensions.cs
+rename to custom-src/SeedSimpleApi/Core/HttpMethodExtensions.cs
+diff --git a/src/SeedSimpleApi/Core/IIsRetryableContent.cs b/custom-src/SeedSimpleApi/Core/IIsRetryableContent.cs
+similarity index 100%
+rename from src/SeedSimpleApi/Core/IIsRetryableContent.cs
+rename to custom-src/SeedSimpleApi/Core/IIsRetryableContent.cs
+diff --git a/src/SeedSimpleApi/Core/IRequestOptions.cs b/custom-src/SeedSimpleApi/Core/IRequestOptions.cs
+similarity index 100%
+rename from src/SeedSimpleApi/Core/IRequestOptions.cs
+rename to custom-src/SeedSimpleApi/Core/IRequestOptions.cs
+diff --git a/src/SeedSimpleApi/Core/JsonAccessAttribute.cs b/custom-src/SeedSimpleApi/Core/JsonAccessAttribute.cs
+similarity index 100%
+rename from src/SeedSimpleApi/Core/JsonAccessAttribute.cs
+rename to custom-src/SeedSimpleApi/Core/JsonAccessAttribute.cs
+diff --git a/src/SeedSimpleApi/Core/JsonConfiguration.cs b/custom-src/SeedSimpleApi/Core/JsonConfiguration.cs
+similarity index 100%
+rename from src/SeedSimpleApi/Core/JsonConfiguration.cs
+rename to custom-src/SeedSimpleApi/Core/JsonConfiguration.cs
+diff --git a/src/SeedSimpleApi/Core/JsonRequest.cs b/custom-src/SeedSimpleApi/Core/JsonRequest.cs
+similarity index 100%
+rename from src/SeedSimpleApi/Core/JsonRequest.cs
+rename to custom-src/SeedSimpleApi/Core/JsonRequest.cs
+diff --git a/src/SeedSimpleApi/Core/MultipartFormRequest.cs b/custom-src/SeedSimpleApi/Core/MultipartFormRequest.cs
+similarity index 100%
+rename from src/SeedSimpleApi/Core/MultipartFormRequest.cs
+rename to custom-src/SeedSimpleApi/Core/MultipartFormRequest.cs
+diff --git a/src/SeedSimpleApi/Core/NullableAttribute.cs b/custom-src/SeedSimpleApi/Core/NullableAttribute.cs
+similarity index 100%
+rename from src/SeedSimpleApi/Core/NullableAttribute.cs
+rename to custom-src/SeedSimpleApi/Core/NullableAttribute.cs
+diff --git a/src/SeedSimpleApi/Core/OneOfSerializer.cs b/custom-src/SeedSimpleApi/Core/OneOfSerializer.cs
+similarity index 100%
+rename from src/SeedSimpleApi/Core/OneOfSerializer.cs
+rename to custom-src/SeedSimpleApi/Core/OneOfSerializer.cs
+diff --git a/src/SeedSimpleApi/Core/Optional.cs b/custom-src/SeedSimpleApi/Core/Optional.cs
+similarity index 100%
+rename from src/SeedSimpleApi/Core/Optional.cs
+rename to custom-src/SeedSimpleApi/Core/Optional.cs
+diff --git a/src/SeedSimpleApi/Core/OptionalAttribute.cs b/custom-src/SeedSimpleApi/Core/OptionalAttribute.cs
+similarity index 100%
+rename from src/SeedSimpleApi/Core/OptionalAttribute.cs
+rename to custom-src/SeedSimpleApi/Core/OptionalAttribute.cs
+diff --git a/src/SeedSimpleApi/Core/Public/AdditionalProperties.cs b/custom-src/SeedSimpleApi/Core/Public/AdditionalProperties.cs
+similarity index 100%
+rename from src/SeedSimpleApi/Core/Public/AdditionalProperties.cs
+rename to custom-src/SeedSimpleApi/Core/Public/AdditionalProperties.cs
+diff --git a/src/SeedSimpleApi/Core/Public/ClientOptions.cs b/custom-src/SeedSimpleApi/Core/Public/ClientOptions.cs
+similarity index 100%
+rename from src/SeedSimpleApi/Core/Public/ClientOptions.cs
+rename to custom-src/SeedSimpleApi/Core/Public/ClientOptions.cs
+diff --git a/src/SeedSimpleApi/Core/Public/FileParameter.cs b/custom-src/SeedSimpleApi/Core/Public/FileParameter.cs
+similarity index 100%
+rename from src/SeedSimpleApi/Core/Public/FileParameter.cs
+rename to custom-src/SeedSimpleApi/Core/Public/FileParameter.cs
+diff --git a/src/SeedSimpleApi/Core/Public/RawResponse.cs b/custom-src/SeedSimpleApi/Core/Public/RawResponse.cs
+similarity index 100%
+rename from src/SeedSimpleApi/Core/Public/RawResponse.cs
+rename to custom-src/SeedSimpleApi/Core/Public/RawResponse.cs
+diff --git a/src/SeedSimpleApi/Core/Public/RequestOptions.cs b/custom-src/SeedSimpleApi/Core/Public/RequestOptions.cs
+similarity index 100%
+rename from src/SeedSimpleApi/Core/Public/RequestOptions.cs
+rename to custom-src/SeedSimpleApi/Core/Public/RequestOptions.cs
+diff --git a/src/SeedSimpleApi/Core/Public/SeedSimpleApiApiException.cs b/custom-src/SeedSimpleApi/Core/Public/SeedSimpleApiApiException.cs
+similarity index 100%
+rename from src/SeedSimpleApi/Core/Public/SeedSimpleApiApiException.cs
+rename to custom-src/SeedSimpleApi/Core/Public/SeedSimpleApiApiException.cs
+diff --git a/src/SeedSimpleApi/Core/Public/SeedSimpleApiEnvironment.cs b/custom-src/SeedSimpleApi/Core/Public/SeedSimpleApiEnvironment.cs
+similarity index 100%
+rename from src/SeedSimpleApi/Core/Public/SeedSimpleApiEnvironment.cs
+rename to custom-src/SeedSimpleApi/Core/Public/SeedSimpleApiEnvironment.cs
+diff --git a/src/SeedSimpleApi/Core/Public/SeedSimpleApiException.cs b/custom-src/SeedSimpleApi/Core/Public/SeedSimpleApiException.cs
+similarity index 100%
+rename from src/SeedSimpleApi/Core/Public/SeedSimpleApiException.cs
+rename to custom-src/SeedSimpleApi/Core/Public/SeedSimpleApiException.cs
+diff --git a/src/SeedSimpleApi/Core/Public/Version.cs b/custom-src/SeedSimpleApi/Core/Public/Version.cs
+similarity index 100%
+rename from src/SeedSimpleApi/Core/Public/Version.cs
+rename to custom-src/SeedSimpleApi/Core/Public/Version.cs
+diff --git a/src/SeedSimpleApi/Core/Public/WithRawResponse.cs b/custom-src/SeedSimpleApi/Core/Public/WithRawResponse.cs
+similarity index 100%
+rename from src/SeedSimpleApi/Core/Public/WithRawResponse.cs
+rename to custom-src/SeedSimpleApi/Core/Public/WithRawResponse.cs
+diff --git a/src/SeedSimpleApi/Core/Public/WithRawResponseTask.cs b/custom-src/SeedSimpleApi/Core/Public/WithRawResponseTask.cs
+similarity index 100%
+rename from src/SeedSimpleApi/Core/Public/WithRawResponseTask.cs
+rename to custom-src/SeedSimpleApi/Core/Public/WithRawResponseTask.cs
+diff --git a/src/SeedSimpleApi/Core/QueryStringBuilder.cs b/custom-src/SeedSimpleApi/Core/QueryStringBuilder.cs
+similarity index 100%
+rename from src/SeedSimpleApi/Core/QueryStringBuilder.cs
+rename to custom-src/SeedSimpleApi/Core/QueryStringBuilder.cs
+diff --git a/src/SeedSimpleApi/Core/QueryStringConverter.cs b/custom-src/SeedSimpleApi/Core/QueryStringConverter.cs
+similarity index 100%
+rename from src/SeedSimpleApi/Core/QueryStringConverter.cs
+rename to custom-src/SeedSimpleApi/Core/QueryStringConverter.cs
+diff --git a/src/SeedSimpleApi/Core/RawClient.cs b/custom-src/SeedSimpleApi/Core/RawClient.cs
+similarity index 100%
+rename from src/SeedSimpleApi/Core/RawClient.cs
+rename to custom-src/SeedSimpleApi/Core/RawClient.cs
+diff --git a/src/SeedSimpleApi/Core/RawResponse.cs b/custom-src/SeedSimpleApi/Core/RawResponse.cs
+similarity index 100%
+rename from src/SeedSimpleApi/Core/RawResponse.cs
+rename to custom-src/SeedSimpleApi/Core/RawResponse.cs
+diff --git a/src/SeedSimpleApi/Core/ResponseHeaders.cs b/custom-src/SeedSimpleApi/Core/ResponseHeaders.cs
+similarity index 100%
+rename from src/SeedSimpleApi/Core/ResponseHeaders.cs
+rename to custom-src/SeedSimpleApi/Core/ResponseHeaders.cs
+diff --git a/src/SeedSimpleApi/Core/StreamRequest.cs b/custom-src/SeedSimpleApi/Core/StreamRequest.cs
+similarity index 100%
+rename from src/SeedSimpleApi/Core/StreamRequest.cs
+rename to custom-src/SeedSimpleApi/Core/StreamRequest.cs
+diff --git a/src/SeedSimpleApi/Core/StringEnum.cs b/custom-src/SeedSimpleApi/Core/StringEnum.cs
+similarity index 100%
+rename from src/SeedSimpleApi/Core/StringEnum.cs
+rename to custom-src/SeedSimpleApi/Core/StringEnum.cs
+diff --git a/src/SeedSimpleApi/Core/StringEnumExtensions.cs b/custom-src/SeedSimpleApi/Core/StringEnumExtensions.cs
+similarity index 100%
+rename from src/SeedSimpleApi/Core/StringEnumExtensions.cs
+rename to custom-src/SeedSimpleApi/Core/StringEnumExtensions.cs
+diff --git a/src/SeedSimpleApi/Core/ValueConvert.cs b/custom-src/SeedSimpleApi/Core/ValueConvert.cs
+similarity index 100%
+rename from src/SeedSimpleApi/Core/ValueConvert.cs
+rename to custom-src/SeedSimpleApi/Core/ValueConvert.cs
+diff --git a/src/SeedSimpleApi/ISeedSimpleApiClient.cs b/custom-src/SeedSimpleApi/ISeedSimpleApiClient.cs
+similarity index 100%
+rename from src/SeedSimpleApi/ISeedSimpleApiClient.cs
+rename to custom-src/SeedSimpleApi/ISeedSimpleApiClient.cs
+diff --git a/src/SeedSimpleApi/SeedSimpleApi.Custom.props b/custom-src/SeedSimpleApi/SeedSimpleApi.Custom.props
+similarity index 100%
+rename from src/SeedSimpleApi/SeedSimpleApi.Custom.props
+rename to custom-src/SeedSimpleApi/SeedSimpleApi.Custom.props
+diff --git a/src/SeedSimpleApi/SeedSimpleApi.csproj b/custom-src/SeedSimpleApi/SeedSimpleApi.csproj
+similarity index 100%
+rename from src/SeedSimpleApi/SeedSimpleApi.csproj
+rename to custom-src/SeedSimpleApi/SeedSimpleApi.csproj
+diff --git a/src/SeedSimpleApi/SeedSimpleApiClient.cs b/custom-src/SeedSimpleApi/SeedSimpleApiClient.cs
+similarity index 100%
+rename from src/SeedSimpleApi/SeedSimpleApiClient.cs
+rename to custom-src/SeedSimpleApi/SeedSimpleApiClient.cs
+diff --git a/src/SeedSimpleApi/User/IUserClient.cs b/custom-src/SeedSimpleApi/User/IUserClient.cs
+similarity index 100%
+rename from src/SeedSimpleApi/User/IUserClient.cs
+rename to custom-src/SeedSimpleApi/User/IUserClient.cs
+diff --git a/src/SeedSimpleApi/User/Types/User.cs b/custom-src/SeedSimpleApi/User/Types/User.cs
+similarity index 100%
+rename from src/SeedSimpleApi/User/Types/User.cs
+rename to custom-src/SeedSimpleApi/User/Types/User.cs
+diff --git a/src/SeedSimpleApi/User/UserClient.cs b/custom-src/SeedSimpleApi/User/UserClient.cs
+similarity index 100%
+rename from src/SeedSimpleApi/User/UserClient.cs
+rename to custom-src/SeedSimpleApi/User/UserClient.cs
+diff --git a/src/SeedSimpleApi.Test/Core/HeadersBuilderTests.cs b/custom-src/SeedSimpleApi.Test/Core/HeadersBuilderTests.cs
+similarity index 100%
+rename from src/SeedSimpleApi.Test/Core/HeadersBuilderTests.cs
+rename to custom-src/SeedSimpleApi.Test/Core/HeadersBuilderTests.cs
+diff --git a/src/SeedSimpleApi.Test/Core/Json/AdditionalPropertiesTests.cs b/custom-src/SeedSimpleApi.Test/Core/Json/AdditionalPropertiesTests.cs
+similarity index 100%
+rename from src/SeedSimpleApi.Test/Core/Json/AdditionalPropertiesTests.cs
+rename to custom-src/SeedSimpleApi.Test/Core/Json/AdditionalPropertiesTests.cs
+diff --git a/src/SeedSimpleApi.Test/Core/Json/DateOnlyJsonTests.cs b/custom-src/SeedSimpleApi.Test/Core/Json/DateOnlyJsonTests.cs
+similarity index 100%
+rename from src/SeedSimpleApi.Test/Core/Json/DateOnlyJsonTests.cs
+rename to custom-src/SeedSimpleApi.Test/Core/Json/DateOnlyJsonTests.cs
+diff --git a/src/SeedSimpleApi.Test/Core/Json/DateTimeJsonTests.cs b/custom-src/SeedSimpleApi.Test/Core/Json/DateTimeJsonTests.cs
+similarity index 100%
+rename from src/SeedSimpleApi.Test/Core/Json/DateTimeJsonTests.cs
+rename to custom-src/SeedSimpleApi.Test/Core/Json/DateTimeJsonTests.cs
+diff --git a/src/SeedSimpleApi.Test/Core/Json/JsonAccessAttributeTests.cs b/custom-src/SeedSimpleApi.Test/Core/Json/JsonAccessAttributeTests.cs
+similarity index 100%
+rename from src/SeedSimpleApi.Test/Core/Json/JsonAccessAttributeTests.cs
+rename to custom-src/SeedSimpleApi.Test/Core/Json/JsonAccessAttributeTests.cs
+diff --git a/src/SeedSimpleApi.Test/Core/QueryStringBuilderTests.cs b/custom-src/SeedSimpleApi.Test/Core/QueryStringBuilderTests.cs
+similarity index 100%
+rename from src/SeedSimpleApi.Test/Core/QueryStringBuilderTests.cs
+rename to custom-src/SeedSimpleApi.Test/Core/QueryStringBuilderTests.cs
+diff --git a/src/SeedSimpleApi.Test/Core/QueryStringConverterTests.cs b/custom-src/SeedSimpleApi.Test/Core/QueryStringConverterTests.cs
+similarity index 100%
+rename from src/SeedSimpleApi.Test/Core/QueryStringConverterTests.cs
+rename to custom-src/SeedSimpleApi.Test/Core/QueryStringConverterTests.cs
+diff --git a/src/SeedSimpleApi.Test/Core/RawClientTests/MultipartFormTests.cs b/custom-src/SeedSimpleApi.Test/Core/RawClientTests/MultipartFormTests.cs
+similarity index 100%
+rename from src/SeedSimpleApi.Test/Core/RawClientTests/MultipartFormTests.cs
+rename to custom-src/SeedSimpleApi.Test/Core/RawClientTests/MultipartFormTests.cs
+diff --git a/src/SeedSimpleApi.Test/Core/RawClientTests/QueryParameterTests.cs b/custom-src/SeedSimpleApi.Test/Core/RawClientTests/QueryParameterTests.cs
+similarity index 100%
+rename from src/SeedSimpleApi.Test/Core/RawClientTests/QueryParameterTests.cs
+rename to custom-src/SeedSimpleApi.Test/Core/RawClientTests/QueryParameterTests.cs
+diff --git a/src/SeedSimpleApi.Test/Core/RawClientTests/RetriesTests.cs b/custom-src/SeedSimpleApi.Test/Core/RawClientTests/RetriesTests.cs
+similarity index 100%
+rename from src/SeedSimpleApi.Test/Core/RawClientTests/RetriesTests.cs
+rename to custom-src/SeedSimpleApi.Test/Core/RawClientTests/RetriesTests.cs
+diff --git a/src/SeedSimpleApi.Test/Core/WithRawResponseTests.cs b/custom-src/SeedSimpleApi.Test/Core/WithRawResponseTests.cs
+similarity index 100%
+rename from src/SeedSimpleApi.Test/Core/WithRawResponseTests.cs
+rename to custom-src/SeedSimpleApi.Test/Core/WithRawResponseTests.cs
+diff --git a/src/SeedSimpleApi.Test/SeedSimpleApi.Test.Custom.props b/custom-src/SeedSimpleApi.Test/SeedSimpleApi.Test.Custom.props
+similarity index 100%
+rename from src/SeedSimpleApi.Test/SeedSimpleApi.Test.Custom.props
+rename to custom-src/SeedSimpleApi.Test/SeedSimpleApi.Test.Custom.props
+diff --git a/src/SeedSimpleApi.Test/SeedSimpleApi.Test.csproj b/custom-src/SeedSimpleApi.Test/SeedSimpleApi.Test.csproj
+similarity index 100%
+rename from src/SeedSimpleApi.Test/SeedSimpleApi.Test.csproj
+rename to custom-src/SeedSimpleApi.Test/SeedSimpleApi.Test.csproj
+diff --git a/src/SeedSimpleApi.Test/TestClient.cs b/custom-src/SeedSimpleApi.Test/TestClient.cs
+similarity index 100%
+rename from src/SeedSimpleApi.Test/TestClient.cs
+rename to custom-src/SeedSimpleApi.Test/TestClient.cs
+diff --git a/src/SeedSimpleApi.Test/Unit/MockServer/BaseMockServerTest.cs b/custom-src/SeedSimpleApi.Test/Unit/MockServer/BaseMockServerTest.cs
+similarity index 100%
+rename from src/SeedSimpleApi.Test/Unit/MockServer/BaseMockServerTest.cs
+rename to custom-src/SeedSimpleApi.Test/Unit/MockServer/BaseMockServerTest.cs
+diff --git a/src/SeedSimpleApi.Test/Unit/MockServer/User/GetTest.cs b/custom-src/SeedSimpleApi.Test/Unit/MockServer/User/GetTest.cs
+similarity index 100%
+rename from src/SeedSimpleApi.Test/Unit/MockServer/User/GetTest.cs
+rename to custom-src/SeedSimpleApi.Test/Unit/MockServer/User/GetTest.cs
+diff --git a/src/SeedSimpleApi.Test/Utils/AdditionalPropertiesComparer.cs b/custom-src/SeedSimpleApi.Test/Utils/AdditionalPropertiesComparer.cs
+similarity index 100%
+rename from src/SeedSimpleApi.Test/Utils/AdditionalPropertiesComparer.cs
+rename to custom-src/SeedSimpleApi.Test/Utils/AdditionalPropertiesComparer.cs
+diff --git a/src/SeedSimpleApi.Test/Utils/JsonAssert.cs b/custom-src/SeedSimpleApi.Test/Utils/JsonAssert.cs
+similarity index 100%
+rename from src/SeedSimpleApi.Test/Utils/JsonAssert.cs
+rename to custom-src/SeedSimpleApi.Test/Utils/JsonAssert.cs
+diff --git a/src/SeedSimpleApi.Test/Utils/JsonElementComparer.cs b/custom-src/SeedSimpleApi.Test/Utils/JsonElementComparer.cs
+similarity index 100%
+rename from src/SeedSimpleApi.Test/Utils/JsonElementComparer.cs
+rename to custom-src/SeedSimpleApi.Test/Utils/JsonElementComparer.cs
+diff --git a/src/SeedSimpleApi.Test/Utils/NUnitExtensions.cs b/custom-src/SeedSimpleApi.Test/Utils/NUnitExtensions.cs
+similarity index 100%
+rename from src/SeedSimpleApi.Test/Utils/NUnitExtensions.cs
+rename to custom-src/SeedSimpleApi.Test/Utils/NUnitExtensions.cs
+diff --git a/src/SeedSimpleApi.Test/Utils/OneOfComparer.cs b/custom-src/SeedSimpleApi.Test/Utils/OneOfComparer.cs
+similarity index 100%
+rename from src/SeedSimpleApi.Test/Utils/OneOfComparer.cs
+rename to custom-src/SeedSimpleApi.Test/Utils/OneOfComparer.cs
+diff --git a/src/SeedSimpleApi.Test/Utils/OptionalComparer.cs b/custom-src/SeedSimpleApi.Test/Utils/OptionalComparer.cs
+similarity index 100%
+rename from src/SeedSimpleApi.Test/Utils/OptionalComparer.cs
+rename to custom-src/SeedSimpleApi.Test/Utils/OptionalComparer.cs
+diff --git a/src/SeedSimpleApi.Test/Utils/ReadOnlyMemoryComparer.cs b/custom-src/SeedSimpleApi.Test/Utils/ReadOnlyMemoryComparer.cs
+similarity index 100%
+rename from src/SeedSimpleApi.Test/Utils/ReadOnlyMemoryComparer.cs
+rename to custom-src/SeedSimpleApi.Test/Utils/ReadOnlyMemoryComparer.cs

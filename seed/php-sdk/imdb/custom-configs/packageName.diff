@@ -1,0 +1,60 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 0eba66302dd..3f9c35762fc 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-php-sdk",
+   "generatorVersion": "local",
++  "generatorConfig": {
++    "packageName": "fern-api/imdb-php"
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "ci",
+diff --git a/README.md b/README.md
+index f57c693ef3f..66bdabba35a 100644
+--- a/README.md
++++ b/README.md
+@@ -1,7 +1,7 @@
+ # Seed PHP Library
+ 
+ [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FPHP)
+-[![php shield](https://img.shields.io/badge/php-packagist-pink)](https://packagist.org/packages/seed/seed)
++[![php shield](https://img.shields.io/badge/php-packagist-pink)](https://packagist.org/packages/fern-api/imdb-php)
+ 
+ The Seed PHP library provides convenient access to the Seed APIs from PHP.
+ 
+@@ -24,7 +24,7 @@ This SDK requires PHP ^8.1.
+ ## Installation
+ 
+ ```sh
+-composer require seed/seed
++composer require fern-api/imdb-php
+ ```
+ 
+ ## Usage
+diff --git a/composer.json b/composer.json
+index 4b33a660f73..24e6977e863 100644
+--- a/composer.json
++++ b/composer.json
+@@ -1,5 +1,5 @@
+ {
+-  "name": "seed/seed",
++  "name": "fern-api/imdb-php",
+   "version": "0.0.1",
+   "description": "Seed PHP Library",
+   "keywords": [
+diff --git a/src/SeedClient.php b/src/SeedClient.php
+index 52d0ae46e86..ccd39debc4d 100644
+--- a/src/SeedClient.php
++++ b/src/SeedClient.php
+@@ -47,7 +47,7 @@ class SeedClient
+             'X-Fern-Language' => 'PHP',
+             'X-Fern-SDK-Name' => 'Seed',
+             'X-Fern-SDK-Version' => '0.0.1',
+-            'User-Agent' => 'seed/seed/0.0.1',
++            'User-Agent' => 'fern-api/imdb-php/0.0.1',
+         ];
+         if ($token != null) {
+             $defaultHeaders['Authorization'] = "Bearer $token";

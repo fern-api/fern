@@ -1,0 +1,256 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 6533addd8b4..be08219f31f 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -3,7 +3,17 @@
+   "generatorName": "fernapi/fern-ruby-sdk-v2",
+   "generatorVersion": "local",
+   "generatorConfig": {
+-    "rubocopSeverity": "error"
++    "rubocopSeverity": "error",
++    "customReadmeSections": [
++      {
++        "title": "Override Section",
++        "content": "Override Content"
++      },
++      {
++        "title": "Generator Invocation Custom Section",
++        "content": "Generator Invocation Custom Content for {{ packageName }}"
++      }
++    ]
+   },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+diff --git a/README.md b/README.md
+index 97c02cef0af..5194d04e417 100644
+--- a/README.md
++++ b/README.md
+@@ -1,12 +1,18 @@
+ # Seed Ruby Library
+ 
++![](https://www.fernapi.com)
++
+ [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FRuby)
+ 
+ The Seed Ruby library provides convenient access to the Seed APIs from Ruby.
+ 
+ ## Table of Contents
+ 
++- [Documentation](#documentation)
+ - [Reference](#reference)
++- [Base Readme Custom Section](#base-readme-custom-section)
++- [Override Section](#override-section)
++- [Generator Invocation Custom Section](#generator-invocation-custom-section)
+ - [Usage](#usage)
+ - [Environments](#environments)
+ - [Errors](#errors)
+@@ -17,10 +23,26 @@ The Seed Ruby library provides convenient access to the Seed APIs from Ruby.
+   - [Additional Query Parameters](#additional-query-parameters)
+ - [Contributing](#contributing)
+ 
++## Documentation
++
++API reference documentation is available [here](https://www.docs.fernapi.com).
++
+ ## Reference
+ 
+ A full reference for this library is available [here](./reference.md).
+ 
++## Base Readme Custom Section
++
++Base Readme Custom Content for {{ packageName }}
++
++## Override Section
++
++Override Content
++
++## Generator Invocation Custom Section
++
++Generator Invocation Custom Content for {{ packageName }}
++
+ ## Usage
+ 
+ Instantiate and use the client with the following:
+@@ -30,7 +52,136 @@ require "seed"
+ 
+ client = Seed::Client.new(token: "<token>")
+ 
+-client.echo(request: "Hello world!\\n\\nwith\\n\\tnewlines")
++client.service.create_big_entity(
++  cast_member: {
++    name: "name",
++    id: "id"
++  },
++  extended_movie: {
++    cast: %w[cast cast],
++    id: "id",
++    prequel: "prequel",
++    title: "title",
++    from: "from",
++    rating: 1.1,
++    type: "movie",
++    tag: "tag",
++    book: "book",
++    metadata: {},
++    revenue: 1000000
++  },
++  entity: {
++    type: "primitive",
++    name: "name"
++  },
++  metadata: {},
++  common_metadata: {
++    id: "id",
++    data: {
++      data: "data"
++    },
++    json_string: "jsonString"
++  },
++  data: {},
++  migration: {
++    name: "name",
++    status: "RUNNING"
++  },
++  test: {},
++  node: {
++    name: "name",
++    nodes: [{
++      name: "name",
++      nodes: [{
++        name: "name"
++      }, {
++        name: "name"
++      }],
++      trees: [{
++        nodes: []
++      }, {
++        nodes: []
++      }]
++    }, {
++      name: "name",
++      nodes: [{
++        name: "name"
++      }, {
++        name: "name"
++      }],
++      trees: [{
++        nodes: []
++      }, {
++        nodes: []
++      }]
++    }],
++    trees: [{
++      nodes: [{
++        name: "name",
++        nodes: [],
++        trees: []
++      }, {
++        name: "name",
++        nodes: [],
++        trees: []
++      }]
++    }, {
++      nodes: [{
++        name: "name",
++        nodes: [],
++        trees: []
++      }, {
++        name: "name",
++        nodes: [],
++        trees: []
++      }]
++    }]
++  },
++  directory: {
++    name: "name",
++    files: [{
++      name: "name",
++      contents: "contents"
++    }, {
++      name: "name",
++      contents: "contents"
++    }],
++    directories: [{
++      name: "name",
++      files: [{
++        name: "name",
++        contents: "contents"
++      }, {
++        name: "name",
++        contents: "contents"
++      }],
++      directories: [{
++        name: "name"
++      }, {
++        name: "name"
++      }]
++    }, {
++      name: "name",
++      files: [{
++        name: "name",
++        contents: "contents"
++      }, {
++        name: "name",
++        contents: "contents"
++      }],
++      directories: [{
++        name: "name"
++      }, {
++        name: "name"
++      }]
++    }]
++  },
++  moment: {
++    id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
++    date: "2023-01-15",
++    datetime: "2024-01-15T09:30:00Z"
++  }
++)
+ ```
+ 
+ ## Environments
+@@ -66,7 +217,7 @@ client = Seed::Client.new(
+ )
+ 
+ begin
+-    result = client.echo
++    result = client.service.create_big_entity
+ rescue Seed::Errors::TimeoutError
+     puts "API didn't respond before our timeout elapsed"
+ rescue Seed::Errors::ServiceUnavailableError
+@@ -111,7 +262,16 @@ The SDK defaults to a 60 second timeout. Use the `timeout` option to configure t
+ ```ruby
+ require "seed"
+ 
+-response = client.echo(
++response = client.service.get_movie(
++    ...,
++    timeout: 30  # 30 second timeout
++)
++```
++
++```ruby
++require "seed"
++
++response = client.service.create_movie(
+     ...,
+     timeout: 30  # 30 second timeout
+ )
+@@ -124,7 +284,7 @@ If you would like to send additional headers as part of the request, use the `ad
+ ```ruby
+ require "seed"
+ 
+-response = client.echo(
++response = client.service.create_big_entity(
+     ...,
+     request_options: {
+         additional_headers: {
+@@ -141,7 +301,7 @@ If you would like to send additional query parameters as part of the request, us
+ ```ruby
+ require "seed"
+ 
+-response = client.echo(
++response = client.service.create_big_entity(
+     ...,
+     request_options: {
+         additional_query_parameters: {

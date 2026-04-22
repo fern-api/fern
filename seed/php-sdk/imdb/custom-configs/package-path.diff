@@ -1,0 +1,1028 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 0eba66302dd..c2d52fe8a0b 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,10 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-php-sdk",
+   "generatorVersion": "local",
++  "generatorConfig": {
++    "packagePath": "Custom/Package/Path",
++    "namespace": "Custom\\Package\\Path"
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "ci",
+diff --git a/README.md b/README.md
+index f57c693ef3f..ffa33a7180d 100644
+--- a/README.md
++++ b/README.md
+@@ -36,8 +36,8 @@ Instantiate and use the client with the following:
+ 
+ namespace Example;
+ 
+-use Seed\SeedClient;
+-use Seed\Imdb\Types\CreateMovieRequest;
++use Custom\Package\Path\SeedClient;
++use Custom\Package\Path\Imdb\Types\CreateMovieRequest;
+ 
+ $client = new SeedClient(
+     token: '<token>',
+@@ -56,8 +56,8 @@ $client->imdb->createMovie(
+ When the API returns a non-success status code (4xx or 5xx response), an exception will be thrown.
+ 
+ ```php
+-use Seed\Exceptions\SeedApiException;
+-use Seed\Exceptions\SeedException;
++use Custom\Package\Path\Exceptions\SeedApiException;
++use Custom\Package\Path\Exceptions\SeedException;
+ 
+ try {
+     $response = $client->imdb->createMovie(...);
+@@ -78,7 +78,7 @@ By default, if no client is provided, the SDK will use `php-http/discovery` to f
+ However, you can pass your own client that adheres to `ClientInterface`:
+ 
+ ```php
+-use Seed\SeedClient;
++use Custom\Package\Path\SeedClient;
+ 
+ // Pass any PSR-18 compatible HTTP client implementation.
+ // For example, using Guzzle:
+diff --git a/composer.json b/composer.json
+index 4b33a660f73..c60a28f2c9d 100644
+--- a/composer.json
++++ b/composer.json
+@@ -1,7 +1,7 @@
+ {
+   "name": "seed/seed",
+   "version": "0.0.1",
+-  "description": "Seed PHP Library",
++  "description": "Custom\\Package\\Path PHP Library",
+   "keywords": [
+     "seed",
+     "api",
+@@ -27,12 +27,12 @@
+   },
+   "autoload": {
+     "psr-4": {
+-      "Seed\\": "src/"
++      "Custom\\Package\\Path\\": "src/Custom/Package/Path/"
+     }
+   },
+   "autoload-dev": {
+     "psr-4": {
+-      "Seed\\Tests\\": "tests/"
++      "Custom\\Package\\Path\\Tests\\": "tests/Custom/Package/Path/"
+     }
+   },
+   "scripts": {
+diff --git a/src/Core/Client/BaseApiRequest.php b/src/Custom/Package/Path/Core/Client/BaseApiRequest.php
+similarity index 94%
+rename from src/Core/Client/BaseApiRequest.php
+rename to src/Custom/Package/Path/Core/Client/BaseApiRequest.php
+index 5e1283e2b6f..43c98ba9e49 100644
+--- a/src/Core/Client/BaseApiRequest.php
++++ b/src/Custom/Package/Path/Core/Client/BaseApiRequest.php
+@@ -1,6 +1,6 @@
+ <?php
+ 
+-namespace Seed\Core\Client;
++namespace Custom\Package\Path\Core\Client;
+ 
+ abstract class BaseApiRequest
+ {
+diff --git a/src/Core/Client/HttpClientBuilder.php b/src/Custom/Package/Path/Core/Client/HttpClientBuilder.php
+similarity index 97%
+rename from src/Core/Client/HttpClientBuilder.php
+rename to src/Custom/Package/Path/Core/Client/HttpClientBuilder.php
+index 8ac806af032..87a718cb6d0 100644
+--- a/src/Core/Client/HttpClientBuilder.php
++++ b/src/Custom/Package/Path/Core/Client/HttpClientBuilder.php
+@@ -1,6 +1,6 @@
+ <?php
+ 
+-namespace Seed\Core\Client;
++namespace Custom\Package\Path\Core\Client;
+ 
+ use Http\Discovery\Psr17FactoryDiscovery;
+ use Http\Discovery\Psr18ClientDiscovery;
+diff --git a/src/Core/Client/HttpMethod.php b/src/Custom/Package/Path/Core/Client/HttpMethod.php
+similarity index 70%
+rename from src/Core/Client/HttpMethod.php
+rename to src/Custom/Package/Path/Core/Client/HttpMethod.php
+index b9a3e2d0321..43ebdda75ff 100644
+--- a/src/Core/Client/HttpMethod.php
++++ b/src/Custom/Package/Path/Core/Client/HttpMethod.php
+@@ -1,6 +1,6 @@
+ <?php
+ 
+-namespace Seed\Core\Client;
++namespace Custom\Package\Path\Core\Client;
+ 
+ enum HttpMethod
+ {
+diff --git a/src/Core/Client/MockHttpClient.php b/src/Custom/Package/Path/Core/Client/MockHttpClient.php
+similarity index 97%
+rename from src/Core/Client/MockHttpClient.php
+rename to src/Custom/Package/Path/Core/Client/MockHttpClient.php
+index 8d8dfc48883..1ae54041a0b 100644
+--- a/src/Core/Client/MockHttpClient.php
++++ b/src/Custom/Package/Path/Core/Client/MockHttpClient.php
+@@ -1,6 +1,6 @@
+ <?php
+ 
+-namespace Seed\Core\Client;
++namespace Custom\Package\Path\Core\Client;
+ 
+ use Psr\Http\Client\ClientInterface;
+ use Psr\Http\Message\RequestInterface;
+diff --git a/src/Core/Client/RawClient.php b/src/Custom/Package/Path/Core/Client/RawClient.php
+similarity index 97%
+rename from src/Core/Client/RawClient.php
+rename to src/Custom/Package/Path/Core/Client/RawClient.php
+index 14716c7d678..a8ad00ea9f7 100644
+--- a/src/Core/Client/RawClient.php
++++ b/src/Custom/Package/Path/Core/Client/RawClient.php
+@@ -1,6 +1,6 @@
+ <?php
+ 
+-namespace Seed\Core\Client;
++namespace Custom\Package\Path\Core\Client;
+ 
+ use JsonSerializable;
+ use InvalidArgumentException;
+@@ -12,9 +12,9 @@ use Psr\Http\Message\ResponseInterface;
+ use Http\Message\MultipartStream\MultipartStreamBuilder;
+ use Psr\Http\Message\StreamFactoryInterface;
+ use Psr\Http\Message\StreamInterface;
+-use Seed\Core\Json\JsonApiRequest;
+-use Seed\Core\Json\JsonEncoder;
+-use Seed\Core\Multipart\MultipartApiRequest;
++use Custom\Package\Path\Core\Json\JsonApiRequest;
++use Custom\Package\Path\Core\Json\JsonEncoder;
++use Custom\Package\Path\Core\Multipart\MultipartApiRequest;
+ 
+ class RawClient
+ {
+diff --git a/src/Core/Client/RetryDecoratingClient.php b/src/Custom/Package/Path/Core/Client/RetryDecoratingClient.php
+similarity index 99%
+rename from src/Core/Client/RetryDecoratingClient.php
+rename to src/Custom/Package/Path/Core/Client/RetryDecoratingClient.php
+index b16170cf280..29d222092b0 100644
+--- a/src/Core/Client/RetryDecoratingClient.php
++++ b/src/Custom/Package/Path/Core/Client/RetryDecoratingClient.php
+@@ -1,6 +1,6 @@
+ <?php
+ 
+-namespace Seed\Core\Client;
++namespace Custom\Package\Path\Core\Client;
+ 
+ use Psr\Http\Client\ClientExceptionInterface;
+ use Psr\Http\Client\ClientInterface;
+diff --git a/src/Core/Json/JsonApiRequest.php b/src/Custom/Package/Path/Core/Json/JsonApiRequest.php
+similarity index 84%
+rename from src/Core/Json/JsonApiRequest.php
+rename to src/Custom/Package/Path/Core/Json/JsonApiRequest.php
+index 8fdf493606e..32809c81dc6 100644
+--- a/src/Core/Json/JsonApiRequest.php
++++ b/src/Custom/Package/Path/Core/Json/JsonApiRequest.php
+@@ -1,9 +1,9 @@
+ <?php
+ 
+-namespace Seed\Core\Json;
++namespace Custom\Package\Path\Core\Json;
+ 
+-use Seed\Core\Client\BaseApiRequest;
+-use Seed\Core\Client\HttpMethod;
++use Custom\Package\Path\Core\Client\BaseApiRequest;
++use Custom\Package\Path\Core\Client\HttpMethod;
+ 
+ class JsonApiRequest extends BaseApiRequest
+ {
+diff --git a/src/Core/Json/JsonDecoder.php b/src/Custom/Package/Path/Core/Json/JsonDecoder.php
+similarity index 98%
+rename from src/Core/Json/JsonDecoder.php
+rename to src/Custom/Package/Path/Core/Json/JsonDecoder.php
+index 2da34087c64..cf38ddf1210 100644
+--- a/src/Core/Json/JsonDecoder.php
++++ b/src/Custom/Package/Path/Core/Json/JsonDecoder.php
+@@ -1,11 +1,11 @@
+ <?php
+ 
+-namespace Seed\Core\Json;
++namespace Custom\Package\Path\Core\Json;
+ 
+ use DateTime;
+ use Exception;
+ use JsonException;
+-use Seed\Core\Types\Union;
++use Custom\Package\Path\Core\Types\Union;
+ 
+ class JsonDecoder
+ {
+diff --git a/src/Core/Json/JsonDeserializer.php b/src/Custom/Package/Path/Core/Json/JsonDeserializer.php
+similarity index 98%
+rename from src/Core/Json/JsonDeserializer.php
+rename to src/Custom/Package/Path/Core/Json/JsonDeserializer.php
+index 1a250c614e4..5bb229d6f5d 100644
+--- a/src/Core/Json/JsonDeserializer.php
++++ b/src/Custom/Package/Path/Core/Json/JsonDeserializer.php
+@@ -1,12 +1,12 @@
+ <?php
+ 
+-namespace Seed\Core\Json;
++namespace Custom\Package\Path\Core\Json;
+ 
+ use DateTime;
+ use Exception;
+ use JsonException;
+-use Seed\Core\Types\Constant;
+-use Seed\Core\Types\Union;
++use Custom\Package\Path\Core\Types\Constant;
++use Custom\Package\Path\Core\Types\Union;
+ 
+ class JsonDeserializer
+ {
+diff --git a/src/Core/Json/JsonEncoder.php b/src/Custom/Package/Path/Core/Json/JsonEncoder.php
+similarity index 89%
+rename from src/Core/Json/JsonEncoder.php
+rename to src/Custom/Package/Path/Core/Json/JsonEncoder.php
+index 0dbf3fcc994..35b56edd1d8 100644
+--- a/src/Core/Json/JsonEncoder.php
++++ b/src/Custom/Package/Path/Core/Json/JsonEncoder.php
+@@ -1,6 +1,6 @@
+ <?php
+ 
+-namespace Seed\Core\Json;
++namespace Custom\Package\Path\Core\Json;
+ 
+ use JsonException;
+ 
+diff --git a/src/Core/Json/JsonProperty.php b/src/Custom/Package/Path/Core/Json/JsonProperty.php
+similarity index 78%
+rename from src/Core/Json/JsonProperty.php
+rename to src/Custom/Package/Path/Core/Json/JsonProperty.php
+index 6ab737fac2a..6faa52138de 100644
+--- a/src/Core/Json/JsonProperty.php
++++ b/src/Custom/Package/Path/Core/Json/JsonProperty.php
+@@ -1,6 +1,6 @@
+ <?php
+ 
+-namespace Seed\Core\Json;
++namespace Custom\Package\Path\Core\Json;
+ 
+ use Attribute;
+ 
+diff --git a/src/Core/Json/JsonSerializableType.php b/src/Custom/Package/Path/Core/Json/JsonSerializableType.php
+similarity index 97%
+rename from src/Core/Json/JsonSerializableType.php
+rename to src/Custom/Package/Path/Core/Json/JsonSerializableType.php
+index e0e507b86b5..0821fccd90e 100644
+--- a/src/Core/Json/JsonSerializableType.php
++++ b/src/Custom/Package/Path/Core/Json/JsonSerializableType.php
+@@ -1,15 +1,15 @@
+ <?php
+ 
+-namespace Seed\Core\Json;
++namespace Custom\Package\Path\Core\Json;
+ 
+ use DateTime;
+ use Exception;
+ use JsonException;
+ use ReflectionNamedType;
+ use ReflectionProperty;
+-use Seed\Core\Types\ArrayType;
+-use Seed\Core\Types\Date;
+-use Seed\Core\Types\Union;
++use Custom\Package\Path\Core\Types\ArrayType;
++use Custom\Package\Path\Core\Types\Date;
++use Custom\Package\Path\Core\Types\Union;
+ 
+ /**
+  * Provides generic serialization and deserialization methods.
+diff --git a/src/Core/Json/JsonSerializer.php b/src/Custom/Package/Path/Core/Json/JsonSerializer.php
+similarity index 98%
+rename from src/Core/Json/JsonSerializer.php
+rename to src/Custom/Package/Path/Core/Json/JsonSerializer.php
+index f7d80ed5e8f..dd9302dc6de 100644
+--- a/src/Core/Json/JsonSerializer.php
++++ b/src/Custom/Package/Path/Core/Json/JsonSerializer.php
+@@ -1,13 +1,13 @@
+ <?php
+ 
+-namespace Seed\Core\Json;
++namespace Custom\Package\Path\Core\Json;
+ 
+ use DateTime;
+ use Exception;
+ use JsonException;
+ use JsonSerializable;
+-use Seed\Core\Types\Constant;
+-use Seed\Core\Types\Union;
++use Custom\Package\Path\Core\Types\Constant;
++use Custom\Package\Path\Core\Types\Union;
+ 
+ class JsonSerializer
+ {
+diff --git a/src/Core/Json/Utils.php b/src/Custom/Package/Path/Core/Json/Utils.php
+similarity index 97%
+rename from src/Core/Json/Utils.php
+rename to src/Custom/Package/Path/Core/Json/Utils.php
+index 4099b825300..ea153348809 100644
+--- a/src/Core/Json/Utils.php
++++ b/src/Custom/Package/Path/Core/Json/Utils.php
+@@ -1,6 +1,6 @@
+ <?php
+ 
+-namespace Seed\Core\Json;
++namespace Custom\Package\Path\Core\Json;
+ 
+ use DateTime;
+ use Exception;
+diff --git a/src/Core/Multipart/MultipartApiRequest.php b/src/Custom/Package/Path/Core/Multipart/MultipartApiRequest.php
+similarity index 85%
+rename from src/Core/Multipart/MultipartApiRequest.php
+rename to src/Custom/Package/Path/Core/Multipart/MultipartApiRequest.php
+index 7760366456c..cf35bcae792 100644
+--- a/src/Core/Multipart/MultipartApiRequest.php
++++ b/src/Custom/Package/Path/Core/Multipart/MultipartApiRequest.php
+@@ -1,9 +1,9 @@
+ <?php
+ 
+-namespace Seed\Core\Multipart;
++namespace Custom\Package\Path\Core\Multipart;
+ 
+-use Seed\Core\Client\BaseApiRequest;
+-use Seed\Core\Client\HttpMethod;
++use Custom\Package\Path\Core\Client\BaseApiRequest;
++use Custom\Package\Path\Core\Client\HttpMethod;
+ 
+ class MultipartApiRequest extends BaseApiRequest
+ {
+diff --git a/src/Core/Multipart/MultipartFormData.php b/src/Custom/Package/Path/Core/Multipart/MultipartFormData.php
+similarity index 96%
+rename from src/Core/Multipart/MultipartFormData.php
+rename to src/Custom/Package/Path/Core/Multipart/MultipartFormData.php
+index 911a28b6ad6..3b0b66d6137 100644
+--- a/src/Core/Multipart/MultipartFormData.php
++++ b/src/Custom/Package/Path/Core/Multipart/MultipartFormData.php
+@@ -1,6 +1,6 @@
+ <?php
+ 
+-namespace Seed\Core\Multipart;
++namespace Custom\Package\Path\Core\Multipart;
+ 
+ use Http\Message\MultipartStream\MultipartStreamBuilder;
+ use Psr\Http\Message\StreamInterface;
+diff --git a/src/Core/Multipart/MultipartFormDataPart.php b/src/Custom/Package/Path/Core/Multipart/MultipartFormDataPart.php
+similarity index 96%
+rename from src/Core/Multipart/MultipartFormDataPart.php
+rename to src/Custom/Package/Path/Core/Multipart/MultipartFormDataPart.php
+index 4db35e58ae3..c67eaf10a3b 100644
+--- a/src/Core/Multipart/MultipartFormDataPart.php
++++ b/src/Custom/Package/Path/Core/Multipart/MultipartFormDataPart.php
+@@ -1,6 +1,6 @@
+ <?php
+ 
+-namespace Seed\Core\Multipart;
++namespace Custom\Package\Path\Core\Multipart;
+ 
+ use Http\Message\MultipartStream\MultipartStreamBuilder;
+ use Psr\Http\Message\StreamInterface;
+diff --git a/src/Core/Types/ArrayType.php b/src/Custom/Package/Path/Core/Types/ArrayType.php
+similarity index 86%
+rename from src/Core/Types/ArrayType.php
+rename to src/Custom/Package/Path/Core/Types/ArrayType.php
+index a26d29008ec..f27ed8e96c9 100644
+--- a/src/Core/Types/ArrayType.php
++++ b/src/Custom/Package/Path/Core/Types/ArrayType.php
+@@ -1,6 +1,6 @@
+ <?php
+ 
+-namespace Seed\Core\Types;
++namespace Custom\Package\Path\Core\Types;
+ 
+ use Attribute;
+ 
+diff --git a/src/Core/Types/Constant.php b/src/Custom/Package/Path/Core/Types/Constant.php
+similarity index 84%
+rename from src/Core/Types/Constant.php
+rename to src/Custom/Package/Path/Core/Types/Constant.php
+index 5ac4518cc6d..9c4a667d873 100644
+--- a/src/Core/Types/Constant.php
++++ b/src/Custom/Package/Path/Core/Types/Constant.php
+@@ -1,6 +1,6 @@
+ <?php
+ 
+-namespace Seed\Core\Types;
++namespace Custom\Package\Path\Core\Types;
+ 
+ use DateTimeInterface;
+ 
+diff --git a/src/Core/Types/Date.php b/src/Custom/Package/Path/Core/Types/Date.php
+similarity index 84%
+rename from src/Core/Types/Date.php
+rename to src/Custom/Package/Path/Core/Types/Date.php
+index ac4684523ad..c9311f5de32 100644
+--- a/src/Core/Types/Date.php
++++ b/src/Custom/Package/Path/Core/Types/Date.php
+@@ -1,6 +1,6 @@
+ <?php
+ 
+-namespace Seed\Core\Types;
++namespace Custom\Package\Path\Core\Types;
+ 
+ use Attribute;
+ 
+diff --git a/src/Core/Types/Union.php b/src/Custom/Package/Path/Core/Types/Union.php
+similarity index 97%
+rename from src/Core/Types/Union.php
+rename to src/Custom/Package/Path/Core/Types/Union.php
+index d7bacf5921f..2c97f3f8310 100644
+--- a/src/Core/Types/Union.php
++++ b/src/Custom/Package/Path/Core/Types/Union.php
+@@ -1,6 +1,6 @@
+ <?php
+ 
+-namespace Seed\Core\Types;
++namespace Custom\Package\Path\Core\Types;
+ 
+ use Attribute;
+ 
+diff --git a/src/Exceptions/SeedApiException.php b/src/Custom/Package/Path/Exceptions/SeedApiException.php
+similarity index 96%
+rename from src/Exceptions/SeedApiException.php
+rename to src/Custom/Package/Path/Exceptions/SeedApiException.php
+index 6d0bba7c39b..b081bd0fa24 100644
+--- a/src/Exceptions/SeedApiException.php
++++ b/src/Custom/Package/Path/Exceptions/SeedApiException.php
+@@ -1,6 +1,6 @@
+ <?php
+ 
+-namespace Seed\Exceptions;
++namespace Custom\Package\Path\Exceptions;
+ 
+ use Throwable;
+ 
+diff --git a/src/Exceptions/SeedException.php b/src/Custom/Package/Path/Exceptions/SeedException.php
+similarity index 76%
+rename from src/Exceptions/SeedException.php
+rename to src/Custom/Package/Path/Exceptions/SeedException.php
+index 45703527673..82739c81ba1 100644
+--- a/src/Exceptions/SeedException.php
++++ b/src/Custom/Package/Path/Exceptions/SeedException.php
+@@ -1,6 +1,6 @@
+ <?php
+ 
+-namespace Seed\Exceptions;
++namespace Custom\Package\Path\Exceptions;
+ 
+ use Exception;
+ 
+diff --git a/src/Imdb/ImdbClient.php b/src/Custom/Package/Path/Imdb/ImdbClient.php
+similarity index 91%
+rename from src/Imdb/ImdbClient.php
+rename to src/Custom/Package/Path/Imdb/ImdbClient.php
+index 4e85929c88f..1dce7a157dd 100644
+--- a/src/Imdb/ImdbClient.php
++++ b/src/Custom/Package/Path/Imdb/ImdbClient.php
+@@ -1,18 +1,18 @@
+ <?php
+ 
+-namespace Seed\Imdb;
++namespace Custom\Package\Path\Imdb;
+ 
+ use Psr\Http\Client\ClientInterface;
+-use Seed\Core\Client\RawClient;
+-use Seed\Imdb\Types\CreateMovieRequest;
+-use Seed\Exceptions\SeedException;
+-use Seed\Exceptions\SeedApiException;
+-use Seed\Core\Json\JsonApiRequest;
+-use Seed\Core\Client\HttpMethod;
+-use Seed\Core\Json\JsonDecoder;
++use Custom\Package\Path\Core\Client\RawClient;
++use Custom\Package\Path\Imdb\Types\CreateMovieRequest;
++use Custom\Package\Path\Exceptions\SeedException;
++use Custom\Package\Path\Exceptions\SeedApiException;
++use Custom\Package\Path\Core\Json\JsonApiRequest;
++use Custom\Package\Path\Core\Client\HttpMethod;
++use Custom\Package\Path\Core\Json\JsonDecoder;
+ use JsonException;
+ use Psr\Http\Client\ClientExceptionInterface;
+-use Seed\Imdb\Types\Movie;
++use Custom\Package\Path\Imdb\Types\Movie;
+ 
+ class ImdbClient
+ {
+diff --git a/src/Imdb/Types/CreateMovieRequest.php b/src/Custom/Package/Path/Imdb/Types/CreateMovieRequest.php
+similarity index 81%
+rename from src/Imdb/Types/CreateMovieRequest.php
+rename to src/Custom/Package/Path/Imdb/Types/CreateMovieRequest.php
+index c2658c3de19..5c6eeb9d241 100644
+--- a/src/Imdb/Types/CreateMovieRequest.php
++++ b/src/Custom/Package/Path/Imdb/Types/CreateMovieRequest.php
+@@ -1,9 +1,9 @@
+ <?php
+ 
+-namespace Seed\Imdb\Types;
++namespace Custom\Package\Path\Imdb\Types;
+ 
+-use Seed\Core\Json\JsonSerializableType;
+-use Seed\Core\Json\JsonProperty;
++use Custom\Package\Path\Core\Json\JsonSerializableType;
++use Custom\Package\Path\Core\Json\JsonProperty;
+ 
+ class CreateMovieRequest extends JsonSerializableType
+ {
+diff --git a/src/Imdb/Types/Movie.php b/src/Custom/Package/Path/Imdb/Types/Movie.php
+similarity index 84%
+rename from src/Imdb/Types/Movie.php
+rename to src/Custom/Package/Path/Imdb/Types/Movie.php
+index 0a77bc1c88c..78625aa8930 100644
+--- a/src/Imdb/Types/Movie.php
++++ b/src/Custom/Package/Path/Imdb/Types/Movie.php
+@@ -1,9 +1,9 @@
+ <?php
+ 
+-namespace Seed\Imdb\Types;
++namespace Custom\Package\Path\Imdb\Types;
+ 
+-use Seed\Core\Json\JsonSerializableType;
+-use Seed\Core\Json\JsonProperty;
++use Custom\Package\Path\Core\Json\JsonSerializableType;
++use Custom\Package\Path\Core\Json\JsonProperty;
+ 
+ class Movie extends JsonSerializableType
+ {
+diff --git a/src/SeedClient.php b/src/Custom/Package/Path/SeedClient.php
+similarity index 89%
+rename from src/SeedClient.php
+rename to src/Custom/Package/Path/SeedClient.php
+index 52d0ae46e86..21a3c98cddc 100644
+--- a/src/SeedClient.php
++++ b/src/Custom/Package/Path/SeedClient.php
+@@ -1,10 +1,10 @@
+ <?php
+ 
+-namespace Seed;
++namespace Custom\Package\Path;
+ 
+-use Seed\Imdb\ImdbClient;
++use Custom\Package\Path\Imdb\ImdbClient;
+ use Psr\Http\Client\ClientInterface;
+-use Seed\Core\Client\RawClient;
++use Custom\Package\Path\Core\Client\RawClient;
+ 
+ class SeedClient
+ {
+@@ -45,7 +45,7 @@ class SeedClient
+     ) {
+         $defaultHeaders = [
+             'X-Fern-Language' => 'PHP',
+-            'X-Fern-SDK-Name' => 'Seed',
++            'X-Fern-SDK-Name' => 'Custom\Package\Path',
+             'X-Fern-SDK-Version' => '0.0.1',
+             'User-Agent' => 'seed/seed/0.0.1',
+         ];
+diff --git a/src/Utils/File.php b/src/Custom/Package/Path/Utils/File.php
+similarity index 97%
+rename from src/Utils/File.php
+rename to src/Custom/Package/Path/Utils/File.php
+index ee2af27b890..b8ec64eb143 100644
+--- a/src/Utils/File.php
++++ b/src/Custom/Package/Path/Utils/File.php
+@@ -1,11 +1,11 @@
+ <?php
+ 
+-namespace Seed\Utils;
++namespace Custom\Package\Path\Utils;
+ 
+ use Exception;
+ use Http\Discovery\Psr17FactoryDiscovery;
+ use Psr\Http\Message\StreamInterface;
+-use Seed\Core\Multipart\MultipartFormDataPart;
++use Custom\Package\Path\Core\Multipart\MultipartFormDataPart;
+ 
+ /**
+  * File is a utility class used to transfer files as multipart form data.
+diff --git a/src/dynamic-snippets/example0/snippet.php b/src/dynamic-snippets/example0/snippet.php
+index 2411a957dec..c5eacf2e149 100644
+--- a/src/dynamic-snippets/example0/snippet.php
++++ b/src/dynamic-snippets/example0/snippet.php
+@@ -2,8 +2,8 @@
+ 
+ namespace Example;
+ 
+-use Seed\SeedClient;
+-use Seed\Imdb\Types\CreateMovieRequest;
++use Custom\Package\Path\SeedClient;
++use Custom\Package\Path\Imdb\Types\CreateMovieRequest;
+ 
+ $client = new SeedClient(
+     token: '<token>',
+diff --git a/src/dynamic-snippets/example1/snippet.php b/src/dynamic-snippets/example1/snippet.php
+index 26871030699..1f20eb78f8a 100644
+--- a/src/dynamic-snippets/example1/snippet.php
++++ b/src/dynamic-snippets/example1/snippet.php
+@@ -2,7 +2,7 @@
+ 
+ namespace Example;
+ 
+-use Seed\SeedClient;
++use Custom\Package\Path\SeedClient;
+ 
+ $client = new SeedClient(
+     token: '<token>',
+diff --git a/src/dynamic-snippets/example2/snippet.php b/src/dynamic-snippets/example2/snippet.php
+index 26871030699..1f20eb78f8a 100644
+--- a/src/dynamic-snippets/example2/snippet.php
++++ b/src/dynamic-snippets/example2/snippet.php
+@@ -2,7 +2,7 @@
+ 
+ namespace Example;
+ 
+-use Seed\SeedClient;
++use Custom\Package\Path\SeedClient;
+ 
+ $client = new SeedClient(
+     token: '<token>',
+diff --git a/tests/Core/Client/RawClientTest.php b/tests/Custom/Package/Path/Core/Client/RawClientTest.php
+similarity index 97%
+rename from tests/Core/Client/RawClientTest.php
+rename to tests/Custom/Package/Path/Core/Client/RawClientTest.php
+index df36dc91889..9003f4e28e4 100644
+--- a/tests/Core/Client/RawClientTest.php
++++ b/tests/Custom/Package/Path/Core/Client/RawClientTest.php
+@@ -1,23 +1,23 @@
+ <?php
+ 
+-namespace Seed\Tests\Core\Client;
++namespace Custom\Package\Path\Tests\Core\Client;
+ 
+ use PHPUnit\Framework\TestCase;
+ use Psr\Http\Client\ClientExceptionInterface;
+ use Psr\Http\Message\RequestInterface;
+ use Psr\Http\Message\ResponseInterface;
+-use Seed\Core\Client\HttpMethod;
+-use Seed\Core\Client\HttpClientBuilder;
+-use Seed\Core\Client\MockHttpClient;
+-use Seed\Core\Client\RawClient;
+-use Seed\Core\Client\RetryDecoratingClient;
+-use Seed\Core\Json\JsonApiRequest;
+-use Seed\Core\Json\JsonEncoder;
+-use Seed\Core\Json\JsonSerializableType;
+-use Seed\Core\Json\JsonProperty;
+-use Seed\Core\Multipart\MultipartApiRequest;
+-use Seed\Core\Multipart\MultipartFormData;
+-use Seed\Core\Multipart\MultipartFormDataPart;
++use Custom\Package\Path\Core\Client\HttpMethod;
++use Custom\Package\Path\Core\Client\HttpClientBuilder;
++use Custom\Package\Path\Core\Client\MockHttpClient;
++use Custom\Package\Path\Core\Client\RawClient;
++use Custom\Package\Path\Core\Client\RetryDecoratingClient;
++use Custom\Package\Path\Core\Json\JsonApiRequest;
++use Custom\Package\Path\Core\Json\JsonEncoder;
++use Custom\Package\Path\Core\Json\JsonSerializableType;
++use Custom\Package\Path\Core\Json\JsonProperty;
++use Custom\Package\Path\Core\Multipart\MultipartApiRequest;
++use Custom\Package\Path\Core\Multipart\MultipartFormData;
++use Custom\Package\Path\Core\Multipart\MultipartFormDataPart;
+ 
+ class JsonRequest extends JsonSerializableType
+ {
+diff --git a/tests/Core/Json/AdditionalPropertiesTest.php b/tests/Custom/Package/Path/Core/Json/AdditionalPropertiesTest.php
+similarity index 87%
+rename from tests/Core/Json/AdditionalPropertiesTest.php
+rename to tests/Custom/Package/Path/Core/Json/AdditionalPropertiesTest.php
+index 2c32002340e..6b7e91dbc5e 100644
+--- a/tests/Core/Json/AdditionalPropertiesTest.php
++++ b/tests/Custom/Package/Path/Core/Json/AdditionalPropertiesTest.php
+@@ -1,11 +1,11 @@
+ <?php
+ 
+-namespace Seed\Tests\Core\Json;
++namespace Custom\Package\Path\Tests\Core\Json;
+ 
+ use PHPUnit\Framework\TestCase;
+-use Seed\Core\Json\JsonEncoder;
+-use Seed\Core\Json\JsonProperty;
+-use Seed\Core\Json\JsonSerializableType;
++use Custom\Package\Path\Core\Json\JsonEncoder;
++use Custom\Package\Path\Core\Json\JsonProperty;
++use Custom\Package\Path\Core\Json\JsonSerializableType;
+ 
+ class Person extends JsonSerializableType
+ {
+diff --git a/tests/Core/Json/DateArrayTest.php b/tests/Custom/Package/Path/Core/Json/DateArrayTest.php
+similarity index 86%
+rename from tests/Core/Json/DateArrayTest.php
+rename to tests/Custom/Package/Path/Core/Json/DateArrayTest.php
+index e7794d65243..3ca54a27ffc 100644
+--- a/tests/Core/Json/DateArrayTest.php
++++ b/tests/Custom/Package/Path/Core/Json/DateArrayTest.php
+@@ -1,13 +1,13 @@
+ <?php
+ 
+-namespace Seed\Tests\Core\Json;
++namespace Custom\Package\Path\Tests\Core\Json;
+ 
+ use DateTime;
+ use PHPUnit\Framework\TestCase;
+-use Seed\Core\Json\JsonEncoder;
+-use Seed\Core\Json\JsonProperty;
+-use Seed\Core\Json\JsonSerializableType;
+-use Seed\Core\Types\ArrayType;
++use Custom\Package\Path\Core\Json\JsonEncoder;
++use Custom\Package\Path\Core\Json\JsonProperty;
++use Custom\Package\Path\Core\Json\JsonSerializableType;
++use Custom\Package\Path\Core\Types\ArrayType;
+ 
+ class DateArray extends JsonSerializableType
+ {
+diff --git a/tests/Core/Json/EmptyArrayTest.php b/tests/Custom/Package/Path/Core/Json/EmptyArrayTest.php
+similarity index 86%
+rename from tests/Core/Json/EmptyArrayTest.php
+rename to tests/Custom/Package/Path/Core/Json/EmptyArrayTest.php
+index b5f217e01f7..95596bd4723 100644
+--- a/tests/Core/Json/EmptyArrayTest.php
++++ b/tests/Custom/Package/Path/Core/Json/EmptyArrayTest.php
+@@ -1,13 +1,13 @@
+ <?php
+ 
+-namespace Seed\Tests\Core\Json;
++namespace Custom\Package\Path\Tests\Core\Json;
+ 
+ use PHPUnit\Framework\TestCase;
+-use Seed\Core\Json\JsonEncoder;
+-use Seed\Core\Json\JsonProperty;
+-use Seed\Core\Json\JsonSerializableType;
+-use Seed\Core\Types\ArrayType;
+-use Seed\Core\Types\Union;
++use Custom\Package\Path\Core\Json\JsonEncoder;
++use Custom\Package\Path\Core\Json\JsonProperty;
++use Custom\Package\Path\Core\Json\JsonSerializableType;
++use Custom\Package\Path\Core\Types\ArrayType;
++use Custom\Package\Path\Core\Types\Union;
+ 
+ class EmptyArray extends JsonSerializableType
+ {
+diff --git a/tests/Core/Json/EnumTest.php b/tests/Custom/Package/Path/Core/Json/EnumTest.php
+similarity index 85%
+rename from tests/Core/Json/EnumTest.php
+rename to tests/Custom/Package/Path/Core/Json/EnumTest.php
+index 72dc6f2cfa0..73814491f74 100644
+--- a/tests/Core/Json/EnumTest.php
++++ b/tests/Custom/Package/Path/Core/Json/EnumTest.php
+@@ -1,13 +1,13 @@
+ <?php
+ 
+-namespace Seed\Tests\Core\Json;
++namespace Custom\Package\Path\Tests\Core\Json;
+ 
+ use JsonSerializable;
+ use PHPUnit\Framework\TestCase;
+-use Seed\Core\Json\JsonEncoder;
+-use Seed\Core\Json\JsonProperty;
+-use Seed\Core\Json\JsonSerializableType;
+-use Seed\Core\Types\ArrayType;
++use Custom\Package\Path\Core\Json\JsonEncoder;
++use Custom\Package\Path\Core\Json\JsonProperty;
++use Custom\Package\Path\Core\Json\JsonSerializableType;
++use Custom\Package\Path\Core\Types\ArrayType;
+ 
+ enum Shape: string implements JsonSerializable
+ {
+diff --git a/tests/Core/Json/ExhaustiveTest.php b/tests/Custom/Package/Path/Core/Json/ExhaustiveTest.php
+similarity index 95%
+rename from tests/Core/Json/ExhaustiveTest.php
+rename to tests/Custom/Package/Path/Core/Json/ExhaustiveTest.php
+index 4c288378b48..9a992642399 100644
+--- a/tests/Core/Json/ExhaustiveTest.php
++++ b/tests/Custom/Package/Path/Core/Json/ExhaustiveTest.php
+@@ -1,15 +1,15 @@
+ <?php
+ 
+-namespace Seed\Tests\Core\Json;
++namespace Custom\Package\Path\Tests\Core\Json;
+ 
+ use DateTime;
+ use PHPUnit\Framework\TestCase;
+-use Seed\Core\Json\JsonEncoder;
+-use Seed\Core\Json\JsonProperty;
+-use Seed\Core\Json\JsonSerializableType;
+-use Seed\Core\Types\ArrayType;
+-use Seed\Core\Types\Date;
+-use Seed\Core\Types\Union;
++use Custom\Package\Path\Core\Json\JsonEncoder;
++use Custom\Package\Path\Core\Json\JsonProperty;
++use Custom\Package\Path\Core\Json\JsonSerializableType;
++use Custom\Package\Path\Core\Types\ArrayType;
++use Custom\Package\Path\Core\Types\Date;
++use Custom\Package\Path\Core\Types\Union;
+ 
+ class Nested extends JsonSerializableType
+ {
+diff --git a/tests/Core/Json/InvalidTest.php b/tests/Custom/Package/Path/Core/Json/InvalidTest.php
+similarity index 79%
+rename from tests/Core/Json/InvalidTest.php
+rename to tests/Custom/Package/Path/Core/Json/InvalidTest.php
+index 9d845ea113b..29981e248b6 100644
+--- a/tests/Core/Json/InvalidTest.php
++++ b/tests/Custom/Package/Path/Core/Json/InvalidTest.php
+@@ -1,11 +1,11 @@
+ <?php
+ 
+-namespace Seed\Tests\Core\Json;
++namespace Custom\Package\Path\Tests\Core\Json;
+ 
+ use PHPUnit\Framework\TestCase;
+-use Seed\Core\Json\JsonEncoder;
+-use Seed\Core\Json\JsonSerializableType;
+-use Seed\Core\Json\JsonProperty;
++use Custom\Package\Path\Core\Json\JsonEncoder;
++use Custom\Package\Path\Core\Json\JsonSerializableType;
++use Custom\Package\Path\Core\Json\JsonProperty;
+ 
+ class Invalid extends JsonSerializableType
+ {
+diff --git a/tests/Core/Json/NestedUnionArrayTest.php b/tests/Custom/Package/Path/Core/Json/NestedUnionArrayTest.php
+similarity index 90%
+rename from tests/Core/Json/NestedUnionArrayTest.php
+rename to tests/Custom/Package/Path/Core/Json/NestedUnionArrayTest.php
+index 8fbbeb939f0..b20062c9e5b 100644
+--- a/tests/Core/Json/NestedUnionArrayTest.php
++++ b/tests/Custom/Package/Path/Core/Json/NestedUnionArrayTest.php
+@@ -1,15 +1,15 @@
+ <?php
+ 
+-namespace Seed\Tests\Core\Json;
++namespace Custom\Package\Path\Tests\Core\Json;
+ 
+ use DateTime;
+ use PHPUnit\Framework\TestCase;
+-use Seed\Core\Json\JsonEncoder;
+-use Seed\Core\Json\JsonProperty;
+-use Seed\Core\Json\JsonSerializableType;
+-use Seed\Core\Types\ArrayType;
+-use Seed\Core\Types\Constant;
+-use Seed\Core\Types\Union;
++use Custom\Package\Path\Core\Json\JsonEncoder;
++use Custom\Package\Path\Core\Json\JsonProperty;
++use Custom\Package\Path\Core\Json\JsonSerializableType;
++use Custom\Package\Path\Core\Types\ArrayType;
++use Custom\Package\Path\Core\Types\Constant;
++use Custom\Package\Path\Core\Types\Union;
+ 
+ class UnionObject extends JsonSerializableType
+ {
+diff --git a/tests/Core/Json/NullPropertyTest.php b/tests/Custom/Package/Path/Core/Json/NullPropertyTest.php
+similarity index 90%
+rename from tests/Core/Json/NullPropertyTest.php
+rename to tests/Custom/Package/Path/Core/Json/NullPropertyTest.php
+index ce20a244282..b1000e71840 100644
+--- a/tests/Core/Json/NullPropertyTest.php
++++ b/tests/Custom/Package/Path/Core/Json/NullPropertyTest.php
+@@ -1,10 +1,10 @@
+ <?php
+ 
+-namespace Seed\Tests\Core\Json;
++namespace Custom\Package\Path\Tests\Core\Json;
+ 
+ use PHPUnit\Framework\TestCase;
+-use Seed\Core\Json\JsonProperty;
+-use Seed\Core\Json\JsonSerializableType;
++use Custom\Package\Path\Core\Json\JsonProperty;
++use Custom\Package\Path\Core\Json\JsonSerializableType;
+ 
+ class NullProperty extends JsonSerializableType
+ {
+diff --git a/tests/Core/Json/NullableArrayTest.php b/tests/Custom/Package/Path/Core/Json/NullableArrayTest.php
+similarity index 80%
+rename from tests/Core/Json/NullableArrayTest.php
+rename to tests/Custom/Package/Path/Core/Json/NullableArrayTest.php
+index d1749c434a4..5bb4555c1e4 100644
+--- a/tests/Core/Json/NullableArrayTest.php
++++ b/tests/Custom/Package/Path/Core/Json/NullableArrayTest.php
+@@ -1,13 +1,13 @@
+ <?php
+ 
+-namespace Seed\Tests\Core\Json;
++namespace Custom\Package\Path\Tests\Core\Json;
+ 
+ use PHPUnit\Framework\TestCase;
+-use Seed\Core\Json\JsonEncoder;
+-use Seed\Core\Json\JsonProperty;
+-use Seed\Core\Json\JsonSerializableType;
+-use Seed\Core\Types\ArrayType;
+-use Seed\Core\Types\Union;
++use Custom\Package\Path\Core\Json\JsonEncoder;
++use Custom\Package\Path\Core\Json\JsonProperty;
++use Custom\Package\Path\Core\Json\JsonSerializableType;
++use Custom\Package\Path\Core\Types\ArrayType;
++use Custom\Package\Path\Core\Types\Union;
+ 
+ class NullableArray extends JsonSerializableType
+ {
+diff --git a/tests/Core/Json/ScalarTest.php b/tests/Custom/Package/Path/Core/Json/ScalarTest.php
+similarity index 92%
+rename from tests/Core/Json/ScalarTest.php
+rename to tests/Custom/Package/Path/Core/Json/ScalarTest.php
+index ad4db0251bb..1934543f25c 100644
+--- a/tests/Core/Json/ScalarTest.php
++++ b/tests/Custom/Package/Path/Core/Json/ScalarTest.php
+@@ -1,13 +1,13 @@
+ <?php
+ 
+-namespace Seed\Tests\Core\Json;
++namespace Custom\Package\Path\Tests\Core\Json;
+ 
+ use PHPUnit\Framework\TestCase;
+-use Seed\Core\Json\JsonEncoder;
+-use Seed\Core\Json\JsonProperty;
+-use Seed\Core\Json\JsonSerializableType;
+-use Seed\Core\Types\ArrayType;
+-use Seed\Core\Types\Union;
++use Custom\Package\Path\Core\Json\JsonEncoder;
++use Custom\Package\Path\Core\Json\JsonProperty;
++use Custom\Package\Path\Core\Json\JsonSerializableType;
++use Custom\Package\Path\Core\Types\ArrayType;
++use Custom\Package\Path\Core\Types\Union;
+ 
+ class Scalar extends JsonSerializableType
+ {
+diff --git a/tests/Core/Json/TraitTest.php b/tests/Custom/Package/Path/Core/Json/TraitTest.php
+similarity index 88%
+rename from tests/Core/Json/TraitTest.php
+rename to tests/Custom/Package/Path/Core/Json/TraitTest.php
+index e18f06d4191..5b43a271632 100644
+--- a/tests/Core/Json/TraitTest.php
++++ b/tests/Custom/Package/Path/Core/Json/TraitTest.php
+@@ -1,11 +1,11 @@
+ <?php
+ 
+-namespace Seed\Tests\Core\Json;
++namespace Custom\Package\Path\Tests\Core\Json;
+ 
+ use PHPUnit\Framework\TestCase;
+-use Seed\Core\Json\JsonEncoder;
+-use Seed\Core\Json\JsonProperty;
+-use Seed\Core\Json\JsonSerializableType;
++use Custom\Package\Path\Core\Json\JsonEncoder;
++use Custom\Package\Path\Core\Json\JsonProperty;
++use Custom\Package\Path\Core\Json\JsonSerializableType;
+ 
+ trait IntegerPropertyTrait
+ {
+diff --git a/tests/Core/Json/UnionArrayTest.php b/tests/Custom/Package/Path/Core/Json/UnionArrayTest.php
+similarity index 84%
+rename from tests/Core/Json/UnionArrayTest.php
+rename to tests/Custom/Package/Path/Core/Json/UnionArrayTest.php
+index de20cf9fde1..95f466a0463 100644
+--- a/tests/Core/Json/UnionArrayTest.php
++++ b/tests/Custom/Package/Path/Core/Json/UnionArrayTest.php
+@@ -1,14 +1,14 @@
+ <?php
+ 
+-namespace Seed\Tests\Core\Json;
++namespace Custom\Package\Path\Tests\Core\Json;
+ 
+ use DateTime;
+ use PHPUnit\Framework\TestCase;
+-use Seed\Core\Json\JsonEncoder;
+-use Seed\Core\Json\JsonProperty;
+-use Seed\Core\Json\JsonSerializableType;
+-use Seed\Core\Types\ArrayType;
+-use Seed\Core\Types\Union;
++use Custom\Package\Path\Core\Json\JsonEncoder;
++use Custom\Package\Path\Core\Json\JsonProperty;
++use Custom\Package\Path\Core\Json\JsonSerializableType;
++use Custom\Package\Path\Core\Types\ArrayType;
++use Custom\Package\Path\Core\Types\Union;
+ 
+ class UnionArray extends JsonSerializableType
+ {
+diff --git a/tests/Core/Json/UnionPropertyTest.php b/tests/Custom/Package/Path/Core/Json/UnionPropertyTest.php
+similarity index 93%
+rename from tests/Core/Json/UnionPropertyTest.php
+rename to tests/Custom/Package/Path/Core/Json/UnionPropertyTest.php
+index f733062cfab..6c702e8fb29 100644
+--- a/tests/Core/Json/UnionPropertyTest.php
++++ b/tests/Custom/Package/Path/Core/Json/UnionPropertyTest.php
+@@ -1,12 +1,12 @@
+ <?php
+ 
+-namespace Seed\Tests\Core\Json;
++namespace Custom\Package\Path\Tests\Core\Json;
+ 
+ use PHPUnit\Framework\TestCase;
+-use Seed\Core\Json\JsonEncoder;
+-use Seed\Core\Json\JsonProperty;
+-use Seed\Core\Json\JsonSerializableType;
+-use Seed\Core\Types\Union;
++use Custom\Package\Path\Core\Json\JsonEncoder;
++use Custom\Package\Path\Core\Json\JsonProperty;
++use Custom\Package\Path\Core\Json\JsonSerializableType;
++use Custom\Package\Path\Core\Types\Union;
+ 
+ class UnionProperty extends JsonSerializableType
+ {

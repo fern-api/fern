@@ -1,0 +1,553 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index e206b6bea6d..350fd51ea79 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -3,7 +3,8 @@
+   "generatorName": "fernapi/fern-go-sdk",
+   "generatorVersion": "local",
+   "generatorConfig": {
+-    "enableWireTests": false
++    "enableWireTests": false,
++    "packagePath": "all/the/way/in/here/please"
+   },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+diff --git a/README.md b/README.md
+index f5a7f0f9405..c7cb779ea26 100644
+--- a/README.md
++++ b/README.md
+@@ -32,9 +32,9 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/imdb/fern"
+-    client "github.com/imdb/fern/client"
+-    option "github.com/imdb/fern/option"
++    please "github.com/imdb/fern/all/the/way/in/here/please"
++    client "github.com/imdb/fern/all/the/way/in/here/please/client"
++    option "github.com/imdb/fern/all/the/way/in/here/please/option"
+ )
+ 
+ func do() {
+@@ -43,7 +43,7 @@ func do() {
+             "<token>",
+         ),
+     )
+-    request := &fern.CreateMovieRequest{
++    request := &please.CreateMovieRequest{
+         Title: "title",
+         Rating: 1.1,
+     }
+diff --git a/client/client.go b/all/the/way/in/here/please/client/client.go
+similarity index 67%
+rename from client/client.go
+rename to all/the/way/in/here/please/client/client.go
+index 57cea0eefee..aa035b2bfef 100644
+--- a/client/client.go
++++ b/all/the/way/in/here/please/client/client.go
+@@ -3,10 +3,10 @@
+ package client
+ 
+ import (
+-	core "github.com/imdb/fern/core"
+-	imdb "github.com/imdb/fern/imdb"
+-	internal "github.com/imdb/fern/internal"
+-	option "github.com/imdb/fern/option"
++	core "github.com/imdb/fern/all/the/way/in/here/please/core"
++	imdb "github.com/imdb/fern/all/the/way/in/here/please/imdb"
++	internal "github.com/imdb/fern/all/the/way/in/here/please/internal"
++	option "github.com/imdb/fern/all/the/way/in/here/please/option"
+ )
+ 
+ type Client struct {
+diff --git a/client/client_test.go b/all/the/way/in/here/please/client/client_test.go
+similarity index 93%
+rename from client/client_test.go
+rename to all/the/way/in/here/please/client/client_test.go
+index 5c2f117febb..6d73a6079a8 100644
+--- a/client/client_test.go
++++ b/all/the/way/in/here/please/client/client_test.go
+@@ -3,7 +3,7 @@
+ package client
+ 
+ import (
+-	option "github.com/imdb/fern/option"
++	option "github.com/imdb/fern/all/the/way/in/here/please/option"
+ 	assert "github.com/stretchr/testify/assert"
+ 	http "net/http"
+ 	testing "testing"
+diff --git a/core/api_error.go b/all/the/way/in/here/please/core/api_error.go
+similarity index 100%
+rename from core/api_error.go
+rename to all/the/way/in/here/please/core/api_error.go
+diff --git a/core/http.go b/all/the/way/in/here/please/core/http.go
+similarity index 100%
+rename from core/http.go
+rename to all/the/way/in/here/please/core/http.go
+diff --git a/core/request_option.go b/all/the/way/in/here/please/core/request_option.go
+similarity index 100%
+rename from core/request_option.go
+rename to all/the/way/in/here/please/core/request_option.go
+diff --git a/error_codes.go b/all/the/way/in/here/please/error_codes.go
+similarity index 64%
+rename from error_codes.go
+rename to all/the/way/in/here/please/error_codes.go
+index 51307b630cd..1f09fc78491 100644
+--- a/error_codes.go
++++ b/all/the/way/in/here/please/error_codes.go
+@@ -3,8 +3,8 @@
+ package api
+ 
+ import (
+-	core "github.com/imdb/fern/core"
+-	internal "github.com/imdb/fern/internal"
++	core "github.com/imdb/fern/all/the/way/in/here/please/core"
++	internal "github.com/imdb/fern/all/the/way/in/here/please/internal"
+ )
+ 
+ var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{
+diff --git a/errors.go b/all/the/way/in/here/please/errors.go
+similarity index 89%
+rename from errors.go
+rename to all/the/way/in/here/please/errors.go
+index 10d8f396a1f..fc906323055 100644
+--- a/errors.go
++++ b/all/the/way/in/here/please/errors.go
+@@ -4,7 +4,7 @@ package api
+ 
+ import (
+ 	json "encoding/json"
+-	core "github.com/imdb/fern/core"
++	core "github.com/imdb/fern/all/the/way/in/here/please/core"
+ )
+ 
+ type MovieDoesNotExistError struct {
+diff --git a/file_param.go b/all/the/way/in/here/please/file_param.go
+similarity index 100%
+rename from file_param.go
+rename to all/the/way/in/here/please/file_param.go
+diff --git a/imdb/client.go b/all/the/way/in/here/please/imdb/client.go
+similarity index 74%
+rename from imdb/client.go
+rename to all/the/way/in/here/please/imdb/client.go
+index 439038e6d18..e6b37cb5eba 100644
+--- a/imdb/client.go
++++ b/all/the/way/in/here/please/imdb/client.go
+@@ -5,10 +5,10 @@ package imdb
+ import (
+ 	context "context"
+ 
+-	fern "github.com/imdb/fern"
+-	core "github.com/imdb/fern/core"
+-	internal "github.com/imdb/fern/internal"
+-	option "github.com/imdb/fern/option"
++	please "github.com/imdb/fern/all/the/way/in/here/please"
++	core "github.com/imdb/fern/all/the/way/in/here/please/core"
++	internal "github.com/imdb/fern/all/the/way/in/here/please/internal"
++	option "github.com/imdb/fern/all/the/way/in/here/please/option"
+ )
+ 
+ type Client struct {
+@@ -36,9 +36,9 @@ func NewClient(options *core.RequestOptions) *Client {
+ // Add a movie to the database using the movies/* /... path.
+ func (c *Client) CreateMovie(
+ 	ctx context.Context,
+-	request *fern.CreateMovieRequest,
++	request *please.CreateMovieRequest,
+ 	opts ...option.RequestOption,
+-) (fern.MovieID, error) {
++) (please.MovieID, error) {
+ 	response, err := c.WithRawResponse.CreateMovie(
+ 		ctx,
+ 		request,
+@@ -52,9 +52,9 @@ func (c *Client) CreateMovie(
+ 
+ func (c *Client) GetMovie(
+ 	ctx context.Context,
+-	movieID fern.MovieID,
++	movieID please.MovieID,
+ 	opts ...option.RequestOption,
+-) (*fern.Movie, error) {
++) (*please.Movie, error) {
+ 	response, err := c.WithRawResponse.GetMovie(
+ 		ctx,
+ 		movieID,
+diff --git a/imdb/raw_client.go b/all/the/way/in/here/please/imdb/raw_client.go
+similarity index 78%
+rename from imdb/raw_client.go
+rename to all/the/way/in/here/please/imdb/raw_client.go
+index 6646ec52d1d..ee00d10e757 100644
+--- a/imdb/raw_client.go
++++ b/all/the/way/in/here/please/imdb/raw_client.go
+@@ -6,10 +6,10 @@ import (
+ 	context "context"
+ 	http "net/http"
+ 
+-	fern "github.com/imdb/fern"
+-	core "github.com/imdb/fern/core"
+-	internal "github.com/imdb/fern/internal"
+-	option "github.com/imdb/fern/option"
++	please "github.com/imdb/fern/all/the/way/in/here/please"
++	core "github.com/imdb/fern/all/the/way/in/here/please/core"
++	internal "github.com/imdb/fern/all/the/way/in/here/please/internal"
++	option "github.com/imdb/fern/all/the/way/in/here/please/option"
+ )
+ 
+ type RawClient struct {
+@@ -33,9 +33,9 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
+ 
+ func (r *RawClient) CreateMovie(
+ 	ctx context.Context,
+-	request *fern.CreateMovieRequest,
++	request *please.CreateMovieRequest,
+ 	opts ...option.RequestOption,
+-) (*core.Response[fern.MovieID], error) {
++) (*core.Response[please.MovieID], error) {
+ 	options := core.NewRequestOptions(opts...)
+ 	baseURL := internal.ResolveBaseURL(
+ 		options.BaseURL,
+@@ -47,7 +47,7 @@ func (r *RawClient) CreateMovie(
+ 		r.options.ToHeader(),
+ 		options.ToHeader(),
+ 	)
+-	var response fern.MovieID
++	var response please.MovieID
+ 	raw, err := r.caller.Call(
+ 		ctx,
+ 		&internal.CallParams{
+@@ -65,7 +65,7 @@ func (r *RawClient) CreateMovie(
+ 	if err != nil {
+ 		return nil, err
+ 	}
+-	return &core.Response[fern.MovieID]{
++	return &core.Response[please.MovieID]{
+ 		StatusCode: raw.StatusCode,
+ 		Header:     raw.Header,
+ 		Body:       response,
+@@ -74,9 +74,9 @@ func (r *RawClient) CreateMovie(
+ 
+ func (r *RawClient) GetMovie(
+ 	ctx context.Context,
+-	movieID fern.MovieID,
++	movieID please.MovieID,
+ 	opts ...option.RequestOption,
+-) (*core.Response[*fern.Movie], error) {
++) (*core.Response[*please.Movie], error) {
+ 	options := core.NewRequestOptions(opts...)
+ 	baseURL := internal.ResolveBaseURL(
+ 		options.BaseURL,
+@@ -91,7 +91,7 @@ func (r *RawClient) GetMovie(
+ 		r.options.ToHeader(),
+ 		options.ToHeader(),
+ 	)
+-	var response *fern.Movie
++	var response *please.Movie
+ 	raw, err := r.caller.Call(
+ 		ctx,
+ 		&internal.CallParams{
+@@ -103,13 +103,13 @@ func (r *RawClient) GetMovie(
+ 			QueryParameters: options.QueryParameters,
+ 			Client:          options.HTTPClient,
+ 			Response:        &response,
+-			ErrorDecoder:    internal.NewErrorDecoder(fern.ErrorCodes),
++			ErrorDecoder:    internal.NewErrorDecoder(please.ErrorCodes),
+ 		},
+ 	)
+ 	if err != nil {
+ 		return nil, err
+ 	}
+-	return &core.Response[*fern.Movie]{
++	return &core.Response[*please.Movie]{
+ 		StatusCode: raw.StatusCode,
+ 		Header:     raw.Header,
+ 		Body:       response,
+diff --git a/imdb.go b/all/the/way/in/here/please/imdb.go
+similarity index 98%
+rename from imdb.go
+rename to all/the/way/in/here/please/imdb.go
+index d9f54cb2327..bdba7fd4561 100644
+--- a/imdb.go
++++ b/all/the/way/in/here/please/imdb.go
+@@ -5,7 +5,7 @@ package api
+ import (
+ 	json "encoding/json"
+ 	fmt "fmt"
+-	internal "github.com/imdb/fern/internal"
++	internal "github.com/imdb/fern/all/the/way/in/here/please/internal"
+ 	big "math/big"
+ )
+ 
+diff --git a/imdb_test.go b/all/the/way/in/here/please/imdb_test.go
+similarity index 100%
+rename from imdb_test.go
+rename to all/the/way/in/here/please/imdb_test.go
+diff --git a/internal/caller.go b/all/the/way/in/here/please/internal/caller.go
+similarity index 99%
+rename from internal/caller.go
+rename to all/the/way/in/here/please/internal/caller.go
+index 6b4b4ca1e46..3b8160c6135 100644
+--- a/internal/caller.go
++++ b/all/the/way/in/here/please/internal/caller.go
+@@ -12,7 +12,7 @@ import (
+ 	"reflect"
+ 	"strings"
+ 
+-	"github.com/imdb/fern/core"
++	"github.com/imdb/fern/all/the/way/in/here/please/core"
+ )
+ 
+ const (
+diff --git a/internal/caller_test.go b/all/the/way/in/here/please/internal/caller_test.go
+similarity index 99%
+rename from internal/caller_test.go
+rename to all/the/way/in/here/please/internal/caller_test.go
+index dff8688cfa3..44c0a1444ac 100644
+--- a/internal/caller_test.go
++++ b/all/the/way/in/here/please/internal/caller_test.go
+@@ -14,7 +14,7 @@ import (
+ 	"strings"
+ 	"testing"
+ 
+-	"github.com/imdb/fern/core"
++	"github.com/imdb/fern/all/the/way/in/here/please/core"
+ 	"github.com/stretchr/testify/assert"
+ 	"github.com/stretchr/testify/require"
+ )
+diff --git a/internal/error_decoder.go b/all/the/way/in/here/please/internal/error_decoder.go
+similarity index 97%
+rename from internal/error_decoder.go
+rename to all/the/way/in/here/please/internal/error_decoder.go
+index 7a13dbe5c8c..a2ff6ec0df6 100644
+--- a/internal/error_decoder.go
++++ b/all/the/way/in/here/please/internal/error_decoder.go
+@@ -8,7 +8,7 @@ import (
+ 	"io"
+ 	"net/http"
+ 
+-	"github.com/imdb/fern/core"
++	"github.com/imdb/fern/all/the/way/in/here/please/core"
+ )
+ 
+ // ErrorCodes maps HTTP status codes to error constructors.
+diff --git a/internal/error_decoder_test.go b/all/the/way/in/here/please/internal/error_decoder_test.go
+similarity index 96%
+rename from internal/error_decoder_test.go
+rename to all/the/way/in/here/please/internal/error_decoder_test.go
+index 65c3cc8d9ce..8b99ff1becd 100644
+--- a/internal/error_decoder_test.go
++++ b/all/the/way/in/here/please/internal/error_decoder_test.go
+@@ -6,7 +6,7 @@ import (
+ 	"net/http"
+ 	"testing"
+ 
+-	"github.com/imdb/fern/core"
++	"github.com/imdb/fern/all/the/way/in/here/please/core"
+ 	"github.com/stretchr/testify/assert"
+ )
+ 
+diff --git a/internal/explicit_fields.go b/all/the/way/in/here/please/internal/explicit_fields.go
+similarity index 100%
+rename from internal/explicit_fields.go
+rename to all/the/way/in/here/please/internal/explicit_fields.go
+diff --git a/internal/explicit_fields_test.go b/all/the/way/in/here/please/internal/explicit_fields_test.go
+similarity index 100%
+rename from internal/explicit_fields_test.go
+rename to all/the/way/in/here/please/internal/explicit_fields_test.go
+diff --git a/internal/extra_properties.go b/all/the/way/in/here/please/internal/extra_properties.go
+similarity index 100%
+rename from internal/extra_properties.go
+rename to all/the/way/in/here/please/internal/extra_properties.go
+diff --git a/internal/extra_properties_test.go b/all/the/way/in/here/please/internal/extra_properties_test.go
+similarity index 100%
+rename from internal/extra_properties_test.go
+rename to all/the/way/in/here/please/internal/extra_properties_test.go
+diff --git a/internal/http.go b/all/the/way/in/here/please/internal/http.go
+similarity index 100%
+rename from internal/http.go
+rename to all/the/way/in/here/please/internal/http.go
+diff --git a/internal/query.go b/all/the/way/in/here/please/internal/query.go
+similarity index 100%
+rename from internal/query.go
+rename to all/the/way/in/here/please/internal/query.go
+diff --git a/internal/query_test.go b/all/the/way/in/here/please/internal/query_test.go
+similarity index 100%
+rename from internal/query_test.go
+rename to all/the/way/in/here/please/internal/query_test.go
+diff --git a/internal/retrier.go b/all/the/way/in/here/please/internal/retrier.go
+similarity index 100%
+rename from internal/retrier.go
+rename to all/the/way/in/here/please/internal/retrier.go
+diff --git a/internal/retrier_test.go b/all/the/way/in/here/please/internal/retrier_test.go
+similarity index 99%
+rename from internal/retrier_test.go
+rename to all/the/way/in/here/please/internal/retrier_test.go
+index 5ebc955a6fd..b83e058764f 100644
+--- a/internal/retrier_test.go
++++ b/all/the/way/in/here/please/internal/retrier_test.go
+@@ -10,7 +10,7 @@ import (
+ 	"testing"
+ 	"time"
+ 
+-	"github.com/imdb/fern/core"
++	"github.com/imdb/fern/all/the/way/in/here/please/core"
+ 	"github.com/stretchr/testify/assert"
+ 	"github.com/stretchr/testify/require"
+ )
+diff --git a/internal/stringer.go b/all/the/way/in/here/please/internal/stringer.go
+similarity index 100%
+rename from internal/stringer.go
+rename to all/the/way/in/here/please/internal/stringer.go
+diff --git a/internal/time.go b/all/the/way/in/here/please/internal/time.go
+similarity index 100%
+rename from internal/time.go
+rename to all/the/way/in/here/please/internal/time.go
+diff --git a/option/request_option.go b/all/the/way/in/here/please/option/request_option.go
+similarity index 97%
+rename from option/request_option.go
+rename to all/the/way/in/here/please/option/request_option.go
+index 86728c9c372..714009842ea 100644
+--- a/option/request_option.go
++++ b/all/the/way/in/here/please/option/request_option.go
+@@ -3,7 +3,7 @@
+ package option
+ 
+ import (
+-	core "github.com/imdb/fern/core"
++	core "github.com/imdb/fern/all/the/way/in/here/please/core"
+ 	http "net/http"
+ 	url "net/url"
+ )
+diff --git a/pointer.go b/all/the/way/in/here/please/pointer.go
+similarity index 100%
+rename from pointer.go
+rename to all/the/way/in/here/please/pointer.go
+diff --git a/pointer_test.go b/all/the/way/in/here/please/pointer_test.go
+similarity index 100%
+rename from pointer_test.go
+rename to all/the/way/in/here/please/pointer_test.go
+diff --git a/dynamic-snippets/example0/snippet.go b/dynamic-snippets/example0/snippet.go
+index 5dec6a38965..037c93c85b0 100644
+--- a/dynamic-snippets/example0/snippet.go
++++ b/dynamic-snippets/example0/snippet.go
+@@ -3,9 +3,9 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/imdb/fern"
+-    client "github.com/imdb/fern/client"
+-    option "github.com/imdb/fern/option"
++    please "github.com/imdb/fern/all/the/way/in/here/please"
++    client "github.com/imdb/fern/all/the/way/in/here/please/client"
++    option "github.com/imdb/fern/all/the/way/in/here/please/option"
+ )
+ 
+ func do() {
+@@ -17,7 +17,7 @@ func do() {
+             "<token>",
+         ),
+     )
+-    request := &fern.CreateMovieRequest{
++    request := &please.CreateMovieRequest{
+         Title: "title",
+         Rating: 1.1,
+     }
+diff --git a/dynamic-snippets/example1/snippet.go b/dynamic-snippets/example1/snippet.go
+index 4acf6c43221..11fbcb8af9c 100644
+--- a/dynamic-snippets/example1/snippet.go
++++ b/dynamic-snippets/example1/snippet.go
+@@ -3,8 +3,8 @@ package example
+ import (
+     context "context"
+ 
+-    client "github.com/imdb/fern/client"
+-    option "github.com/imdb/fern/option"
++    client "github.com/imdb/fern/all/the/way/in/here/please/client"
++    option "github.com/imdb/fern/all/the/way/in/here/please/option"
+ )
+ 
+ func do() {
+diff --git a/dynamic-snippets/example2/snippet.go b/dynamic-snippets/example2/snippet.go
+index 4acf6c43221..11fbcb8af9c 100644
+--- a/dynamic-snippets/example2/snippet.go
++++ b/dynamic-snippets/example2/snippet.go
+@@ -3,8 +3,8 @@ package example
+ import (
+     context "context"
+ 
+-    client "github.com/imdb/fern/client"
+-    option "github.com/imdb/fern/option"
++    client "github.com/imdb/fern/all/the/way/in/here/please/client"
++    option "github.com/imdb/fern/all/the/way/in/here/please/option"
+ )
+ 
+ func do() {
+diff --git a/reference.md b/reference.md
+index 2dfbcf40cdf..2dcc5a4e2ca 100644
+--- a/reference.md
++++ b/reference.md
+@@ -1,6 +1,6 @@
+ # Reference
+ ## Imdb
+-<details><summary><code>client.Imdb.CreateMovie(request) -> fern.MovieID</code></summary>
++<details><summary><code>client.Imdb.CreateMovie(request) -> please.MovieID</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -27,7 +27,7 @@ Add a movie to the database using the movies/* /... path.
+ <dd>
+ 
+ ```go
+-request := &fern.CreateMovieRequest{
++request := &please.CreateMovieRequest{
+         Title: "title",
+         Rating: 1.1,
+     }
+@@ -50,7 +50,7 @@ client.Imdb.CreateMovie(
+ <dl>
+ <dd>
+ 
+-**request:** `*fern.CreateMovieRequest` 
++**request:** `*please.CreateMovieRequest` 
+     
+ </dd>
+ </dl>
+@@ -62,7 +62,7 @@ client.Imdb.CreateMovie(
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.Imdb.GetMovie(MovieID) -> *fern.Movie</code></summary>
++<details><summary><code>client.Imdb.GetMovie(MovieID) -> *please.Movie</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -94,7 +94,7 @@ client.Imdb.GetMovie(
+ <dl>
+ <dd>
+ 
+-**movieID:** `fern.MovieID` 
++**movieID:** `please.MovieID` 
+     
+ </dd>
+ </dl>
+diff --git a/snippet.json b/snippet.json
+index 7b770a7ba96..e105eadb6b4 100644
+--- a/snippet.json
++++ b/snippet.json
+@@ -8,7 +8,7 @@
+             },
+             "snippet": {
+                 "type": "go",
+-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/imdb/fern\"\n\tfernclient \"github.com/imdb/fern/client\"\n\toption \"github.com/imdb/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Imdb.CreateMovie(\n\tcontext.TODO(),\n\t\u0026fern.CreateMovieRequest{\n\t\tTitle:  \"title\",\n\t\tRating: 1.1,\n\t},\n)\n"
++                "client": "import (\n\tcontext \"context\"\n\toption \"github.com/imdb/fern/all/the/way/in/here/please/option\"\n\tplease \"github.com/imdb/fern/all/the/way/in/here/please\"\n\tpleaseclient \"github.com/imdb/fern/all/the/way/in/here/please/client\"\n)\n\nclient := pleaseclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Imdb.CreateMovie(\n\tcontext.TODO(),\n\t\u0026please.CreateMovieRequest{\n\t\tTitle:  \"title\",\n\t\tRating: 1.1,\n\t},\n)\n"
+             }
+         },
+         {
+@@ -19,7 +19,7 @@
+             },
+             "snippet": {
+                 "type": "go",
+-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/imdb/fern/client\"\n\toption \"github.com/imdb/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Imdb.GetMovie(\n\tcontext.TODO(),\n\t\"movieId\",\n)\n"
++                "client": "import (\n\tcontext \"context\"\n\toption \"github.com/imdb/fern/all/the/way/in/here/please/option\"\n\tpleaseclient \"github.com/imdb/fern/all/the/way/in/here/please/client\"\n)\n\nclient := pleaseclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Imdb.GetMovie(\n\tcontext.TODO(),\n\t\"movieId\",\n)\n"
+             }
+         }
+     ]

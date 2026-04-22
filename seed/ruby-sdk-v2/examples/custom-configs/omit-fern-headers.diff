@@ -1,0 +1,44 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 6533addd8b4..d00e475e560 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -3,7 +3,8 @@
+   "generatorName": "fernapi/fern-ruby-sdk-v2",
+   "generatorVersion": "local",
+   "generatorConfig": {
+-    "rubocopSeverity": "error"
++    "rubocopSeverity": "error",
++    "omitFernHeaders": true
+   },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+diff --git a/lib/seed/client.rb b/lib/seed/client.rb
+index bb5569799aa..55f2d06b620 100644
+--- a/lib/seed/client.rb
++++ b/lib/seed/client.rb
+@@ -10,8 +10,6 @@ module Seed
+       @raw_client = Seed::Internal::Http::RawClient.new(
+         base_url: base_url,
+         headers: {
+-          "User-Agent" => "fern_examples/0.0.1",
+-          "X-Fern-Language" => "Ruby",
+           Authorization: "Bearer #{token}"
+         }
+       )
+diff --git a/lib/seed/internal/http/raw_client.rb b/lib/seed/internal/http/raw_client.rb
+index 482ab951771..184a4f66154 100644
+--- a/lib/seed/internal/http/raw_client.rb
++++ b/lib/seed/internal/http/raw_client.rb
+@@ -25,11 +25,7 @@ module Seed
+           @base_url = base_url
+           @max_retries = max_retries
+           @timeout = timeout
+-          @default_headers = {
+-            "X-Fern-Language": "Ruby",
+-            "X-Fern-SDK-Name": "seed",
+-            "X-Fern-SDK-Version": "0.0.1"
+-          }.merge(headers)
++          @default_headers = headers
+         end
+ 
+         # @param request [Seed::Internal::Http::BaseRequest] The HTTP request.

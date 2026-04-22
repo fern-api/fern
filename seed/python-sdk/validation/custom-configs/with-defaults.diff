@@ -1,0 +1,147 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 2ecd82f71ab..dafae19318a 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-python-sdk",
+   "generatorVersion": "local",
++  "generatorConfig": {
++    "use_request_defaults": "all"
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "ci",
+diff --git a/src/seed/client.py b/src/seed/client.py
+index e2245fd8c20..f4758fc4c97 100644
+--- a/src/seed/client.py
++++ b/src/seed/client.py
+@@ -87,9 +87,9 @@ class SeedValidation:
+     def create(
+         self,
+         *,
+-        decimal: float,
+-        even: int,
+-        name: str,
++        decimal: float = 1.1,
++        even: int = 42,
++        name: str = "fern",
+         shape: Shape,
+         request_options: typing.Optional[RequestOptions] = None,
+     ) -> Type:
+@@ -131,7 +131,12 @@ class SeedValidation:
+         return _response.data
+ 
+     def get(
+-        self, *, decimal: float, even: int, name: str, request_options: typing.Optional[RequestOptions] = None
++        self,
++        *,
++        decimal: float = 1.1,
++        even: int = 42,
++        name: str = "fern",
++        request_options: typing.Optional[RequestOptions] = None,
+     ) -> Type:
+         """
+         Parameters
+@@ -255,9 +260,9 @@ class AsyncSeedValidation:
+     async def create(
+         self,
+         *,
+-        decimal: float,
+-        even: int,
+-        name: str,
++        decimal: float = 1.1,
++        even: int = 42,
++        name: str = "fern",
+         shape: Shape,
+         request_options: typing.Optional[RequestOptions] = None,
+     ) -> Type:
+@@ -307,7 +312,12 @@ class AsyncSeedValidation:
+         return _response.data
+ 
+     async def get(
+-        self, *, decimal: float, even: int, name: str, request_options: typing.Optional[RequestOptions] = None
++        self,
++        *,
++        decimal: float = 1.1,
++        even: int = 42,
++        name: str = "fern",
++        request_options: typing.Optional[RequestOptions] = None,
+     ) -> Type:
+         """
+         Parameters
+diff --git a/src/seed/raw_client.py b/src/seed/raw_client.py
+index 555a5ced5e7..7ae967b1a67 100644
+--- a/src/seed/raw_client.py
++++ b/src/seed/raw_client.py
+@@ -24,9 +24,9 @@ class RawSeedValidation:
+     def create(
+         self,
+         *,
+-        decimal: float,
+-        even: int,
+-        name: str,
++        decimal: float = 1.1,
++        even: int = 42,
++        name: str = "fern",
+         shape: Shape,
+         request_options: typing.Optional[RequestOptions] = None,
+     ) -> HttpResponse[Type]:
+@@ -80,7 +80,12 @@ class RawSeedValidation:
+         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+ 
+     def get(
+-        self, *, decimal: float, even: int, name: str, request_options: typing.Optional[RequestOptions] = None
++        self,
++        *,
++        decimal: float = 1.1,
++        even: int = 42,
++        name: str = "fern",
++        request_options: typing.Optional[RequestOptions] = None,
+     ) -> HttpResponse[Type]:
+         """
+         Parameters
+@@ -134,9 +139,9 @@ class AsyncRawSeedValidation:
+     async def create(
+         self,
+         *,
+-        decimal: float,
+-        even: int,
+-        name: str,
++        decimal: float = 1.1,
++        even: int = 42,
++        name: str = "fern",
+         shape: Shape,
+         request_options: typing.Optional[RequestOptions] = None,
+     ) -> AsyncHttpResponse[Type]:
+@@ -190,7 +195,12 @@ class AsyncRawSeedValidation:
+         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+ 
+     async def get(
+-        self, *, decimal: float, even: int, name: str, request_options: typing.Optional[RequestOptions] = None
++        self,
++        *,
++        decimal: float = 1.1,
++        even: int = 42,
++        name: str = "fern",
++        request_options: typing.Optional[RequestOptions] = None,
+     ) -> AsyncHttpResponse[Type]:
+         """
+         Parameters
+diff --git a/src/seed/types/type.py b/src/seed/types/type.py
+index c4b6f44b0e6..160558e666c 100644
+--- a/src/seed/types/type.py
++++ b/src/seed/types/type.py
+@@ -23,9 +23,9 @@ class Type(UniversalBaseModel):
+     )
+     """
+ 
+-    decimal: float
+-    even: int
+-    name: str
++    decimal: float = 1.1
++    even: int = 42
++    name: str = "fern"
+     shape: Shape
+ 
+     if IS_PYDANTIC_V2:

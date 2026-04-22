@@ -1,0 +1,3 @@
+- summary: |
+    Seed fixtures now store a single baseline/ with full output and per-variant .diff files in custom-configs/, dramatically reducing repo size and improving PR readability.
+  type: internal

@@ -1,0 +1,865 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 5e4188a44b1..da6d18d682e 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,7 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-csharp-sdk",
+   "generatorVersion": "local",
+-  "generatorConfig": {},
++  "generatorConfig": {
++    "include-exception-handler": true
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "ci",
+diff --git a/src/SeedOauthClientCredentials/Auth/AuthClient.cs b/src/SeedOauthClientCredentials/Auth/AuthClient.cs
+index 5ae35454ddc..e2c3e33ba87 100644
+--- a/src/SeedOauthClientCredentials/Auth/AuthClient.cs
++++ b/src/SeedOauthClientCredentials/Auth/AuthClient.cs
+@@ -9,7 +9,15 @@ public partial class AuthClient : IAuthClient
+ 
+     internal AuthClient(RawClient client)
+     {
+-        _client = client;
++        try
++        {
++            _client = client;
++        }
++        catch (Exception ex)
++        {
++            client.Options.ExceptionHandler?.CaptureException(ex);
++            throw;
++        }
+     }
+ 
+     private async Task<WithRawResponse<TokenResponse>> GetTokenWithClientCredentialsAsyncCore(
+@@ -18,65 +26,72 @@ public partial class AuthClient : IAuthClient
+         CancellationToken cancellationToken = default
+     )
+     {
+-        var _headers = await new SeedOauthClientCredentials.Core.HeadersBuilder.Builder()
+-            .Add(_client.Options.Headers)
+-            .Add(_client.Options.AdditionalHeaders)
+-            .Add(options?.AdditionalHeaders)
+-            .BuildAsync()
+-            .ConfigureAwait(false);
+-        var response = await _client
+-            .SendRequestAsync(
+-                new FormRequest
+-                {
+-                    Method = HttpMethod.Post,
+-                    Path = "/token",
+-                    Body = request,
+-                    Headers = _headers,
+-                    ContentType = "application/x-www-form-urlencoded",
+-                    Options = options,
+-                },
+-                cancellationToken
+-            )
+-            .ConfigureAwait(false);
+-        if (response.StatusCode is >= 200 and < 400)
+-        {
+-            var responseBody = await response
+-                .Raw.Content.ReadAsStringAsync(cancellationToken)
+-                .ConfigureAwait(false);
+-            try
++        return await _client
++            .Options.ExceptionHandler.TryCatchAsync(async () =>
+             {
+-                var responseData = JsonUtils.Deserialize<TokenResponse>(responseBody)!;
+-                return new WithRawResponse<TokenResponse>()
++                var _headers = await new SeedOauthClientCredentials.Core.HeadersBuilder.Builder()
++                    .Add(_client.Options.Headers)
++                    .Add(_client.Options.AdditionalHeaders)
++                    .Add(options?.AdditionalHeaders)
++                    .BuildAsync()
++                    .ConfigureAwait(false);
++                var response = await _client
++                    .SendRequestAsync(
++                        new FormRequest
++                        {
++                            Method = HttpMethod.Post,
++                            Path = "/token",
++                            Body = request,
++                            Headers = _headers,
++                            ContentType = "application/x-www-form-urlencoded",
++                            Options = options,
++                        },
++                        cancellationToken
++                    )
++                    .ConfigureAwait(false);
++                if (response.StatusCode is >= 200 and < 400)
+                 {
+-                    Data = responseData,
+-                    RawResponse = new RawResponse()
++                    var responseBody = await response
++                        .Raw.Content.ReadAsStringAsync(cancellationToken)
++                        .ConfigureAwait(false);
++                    try
+                     {
+-                        StatusCode = response.Raw.StatusCode,
+-                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+-                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+-                    },
+-                };
+-            }
+-            catch (JsonException e)
+-            {
+-                throw new SeedOauthClientCredentialsApiException(
+-                    "Failed to deserialize response",
+-                    response.StatusCode,
+-                    responseBody,
+-                    e
+-                );
+-            }
+-        }
+-        {
+-            var responseBody = await response
+-                .Raw.Content.ReadAsStringAsync(cancellationToken)
+-                .ConfigureAwait(false);
+-            throw new SeedOauthClientCredentialsApiException(
+-                $"Error with status code {response.StatusCode}",
+-                response.StatusCode,
+-                responseBody
+-            );
+-        }
++                        var responseData = JsonUtils.Deserialize<TokenResponse>(responseBody)!;
++                        return new WithRawResponse<TokenResponse>()
++                        {
++                            Data = responseData,
++                            RawResponse = new RawResponse()
++                            {
++                                StatusCode = response.Raw.StatusCode,
++                                Url =
++                                    response.Raw.RequestMessage?.RequestUri
++                                    ?? new Uri("about:blank"),
++                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
++                            },
++                        };
++                    }
++                    catch (JsonException e)
++                    {
++                        throw new SeedOauthClientCredentialsApiException(
++                            "Failed to deserialize response",
++                            response.StatusCode,
++                            responseBody,
++                            e
++                        );
++                    }
++                }
++                {
++                    var responseBody = await response
++                        .Raw.Content.ReadAsStringAsync(cancellationToken)
++                        .ConfigureAwait(false);
++                    throw new SeedOauthClientCredentialsApiException(
++                        $"Error with status code {response.StatusCode}",
++                        response.StatusCode,
++                        responseBody
++                    );
++                }
++            })
++            .ConfigureAwait(false);
+     }
+ 
+     private async Task<WithRawResponse<TokenResponse>> RefreshTokenAsyncCore(
+@@ -85,65 +100,72 @@ public partial class AuthClient : IAuthClient
+         CancellationToken cancellationToken = default
+     )
+     {
+-        var _headers = await new SeedOauthClientCredentials.Core.HeadersBuilder.Builder()
+-            .Add(_client.Options.Headers)
+-            .Add(_client.Options.AdditionalHeaders)
+-            .Add(options?.AdditionalHeaders)
+-            .BuildAsync()
+-            .ConfigureAwait(false);
+-        var response = await _client
+-            .SendRequestAsync(
+-                new FormRequest
+-                {
+-                    Method = HttpMethod.Post,
+-                    Path = "/token",
+-                    Body = request,
+-                    Headers = _headers,
+-                    ContentType = "application/x-www-form-urlencoded",
+-                    Options = options,
+-                },
+-                cancellationToken
+-            )
+-            .ConfigureAwait(false);
+-        if (response.StatusCode is >= 200 and < 400)
+-        {
+-            var responseBody = await response
+-                .Raw.Content.ReadAsStringAsync(cancellationToken)
+-                .ConfigureAwait(false);
+-            try
++        return await _client
++            .Options.ExceptionHandler.TryCatchAsync(async () =>
+             {
+-                var responseData = JsonUtils.Deserialize<TokenResponse>(responseBody)!;
+-                return new WithRawResponse<TokenResponse>()
++                var _headers = await new SeedOauthClientCredentials.Core.HeadersBuilder.Builder()
++                    .Add(_client.Options.Headers)
++                    .Add(_client.Options.AdditionalHeaders)
++                    .Add(options?.AdditionalHeaders)
++                    .BuildAsync()
++                    .ConfigureAwait(false);
++                var response = await _client
++                    .SendRequestAsync(
++                        new FormRequest
++                        {
++                            Method = HttpMethod.Post,
++                            Path = "/token",
++                            Body = request,
++                            Headers = _headers,
++                            ContentType = "application/x-www-form-urlencoded",
++                            Options = options,
++                        },
++                        cancellationToken
++                    )
++                    .ConfigureAwait(false);
++                if (response.StatusCode is >= 200 and < 400)
+                 {
+-                    Data = responseData,
+-                    RawResponse = new RawResponse()
++                    var responseBody = await response
++                        .Raw.Content.ReadAsStringAsync(cancellationToken)
++                        .ConfigureAwait(false);
++                    try
+                     {
+-                        StatusCode = response.Raw.StatusCode,
+-                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+-                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+-                    },
+-                };
+-            }
+-            catch (JsonException e)
+-            {
+-                throw new SeedOauthClientCredentialsApiException(
+-                    "Failed to deserialize response",
+-                    response.StatusCode,
+-                    responseBody,
+-                    e
+-                );
+-            }
+-        }
+-        {
+-            var responseBody = await response
+-                .Raw.Content.ReadAsStringAsync(cancellationToken)
+-                .ConfigureAwait(false);
+-            throw new SeedOauthClientCredentialsApiException(
+-                $"Error with status code {response.StatusCode}",
+-                response.StatusCode,
+-                responseBody
+-            );
+-        }
++                        var responseData = JsonUtils.Deserialize<TokenResponse>(responseBody)!;
++                        return new WithRawResponse<TokenResponse>()
++                        {
++                            Data = responseData,
++                            RawResponse = new RawResponse()
++                            {
++                                StatusCode = response.Raw.StatusCode,
++                                Url =
++                                    response.Raw.RequestMessage?.RequestUri
++                                    ?? new Uri("about:blank"),
++                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
++                            },
++                        };
++                    }
++                    catch (JsonException e)
++                    {
++                        throw new SeedOauthClientCredentialsApiException(
++                            "Failed to deserialize response",
++                            response.StatusCode,
++                            responseBody,
++                            e
++                        );
++                    }
++                }
++                {
++                    var responseBody = await response
++                        .Raw.Content.ReadAsStringAsync(cancellationToken)
++                        .ConfigureAwait(false);
++                    throw new SeedOauthClientCredentialsApiException(
++                        $"Error with status code {response.StatusCode}",
++                        response.StatusCode,
++                        responseBody
++                    );
++                }
++            })
++            .ConfigureAwait(false);
+     }
+ 
+     /// <example><code>
+diff --git a/src/SeedOauthClientCredentials/Core/ExceptionHandler.cs b/src/SeedOauthClientCredentials/Core/ExceptionHandler.cs
+new file mode 100644
+index 00000000000..0661675f007
+--- /dev/null
++++ b/src/SeedOauthClientCredentials/Core/ExceptionHandler.cs
+@@ -0,0 +1,95 @@
++using SystemTask = global::System.Threading.Tasks.Task;
++
++namespace SeedOauthClientCredentials.Core;
++
++public interface IExceptionInterceptor
++{
++    Exception Intercept(Exception exception);
++}
++
++internal class ExceptionHandler
++{
++    private readonly IExceptionInterceptor? _interceptor;
++
++    public ExceptionHandler(IExceptionInterceptor? interceptor)
++    {
++        _interceptor = interceptor;
++    }
++
++    internal void TryCatch(Action action)
++    {
++        if (_interceptor is null)
++        {
++            action();
++            return;
++        }
++
++        try
++        {
++            action();
++        }
++        catch (Exception ex)
++        {
++            throw _interceptor.Intercept(ex);
++        }
++    }
++
++    internal T TryCatch<T>(Func<T> func)
++    {
++        if (_interceptor is null)
++        {
++            return func();
++        }
++
++        try
++        {
++            return func();
++        }
++        catch (Exception ex)
++        {
++            throw _interceptor.Intercept(ex);
++        }
++    }
++
++    internal async SystemTask TryCatchAsync(Func<Task> func)
++    {
++        if (_interceptor is null)
++        {
++            await func().ConfigureAwait(false);
++            return;
++        }
++
++        try
++        {
++            await func().ConfigureAwait(false);
++        }
++        catch (Exception ex)
++        {
++            throw _interceptor.Intercept(ex);
++        }
++    }
++
++    internal async Task<T> TryCatchAsync<T>(Func<Task<T>> func)
++    {
++        if (_interceptor is null)
++        {
++            return await func().ConfigureAwait(false);
++        }
++
++        try
++        {
++            return await func().ConfigureAwait(false);
++        }
++        catch (Exception ex)
++        {
++            throw _interceptor.Intercept(ex);
++        }
++    }
++
++    internal void CaptureException(Exception exception)
++    {
++        _interceptor?.Intercept(exception);
++    }
++
++    internal ExceptionHandler Clone() => new ExceptionHandler(_interceptor);
++}
+diff --git a/src/SeedOauthClientCredentials/Core/Public/ClientOptions.cs b/src/SeedOauthClientCredentials/Core/Public/ClientOptions.cs
+index 1cbbcf0ef6b..05ca2608b33 100644
+--- a/src/SeedOauthClientCredentials/Core/Public/ClientOptions.cs
++++ b/src/SeedOauthClientCredentials/Core/Public/ClientOptions.cs
+@@ -10,6 +10,11 @@ public partial class ClientOptions
+     /// </summary>
+     internal Headers Headers { get; init; } = new();
+ 
++    /// <summary>
++    /// A handler that will handle exceptions thrown by the client.
++    /// </summary>
++    internal ExceptionHandler ExceptionHandler { get; set; } = new ExceptionHandler(null);
++
+     /// <summary>
+     /// The Base URL for the API.
+     /// </summary>
+@@ -79,6 +84,7 @@ public partial class ClientOptions
+             Timeout = Timeout,
+             Headers = new Headers(new Dictionary<string, HeaderValue>(Headers)),
+             AdditionalHeaders = AdditionalHeaders,
++            ExceptionHandler = ExceptionHandler.Clone(),
+         };
+     }
+ }
+diff --git a/src/SeedOauthClientCredentials/Core/SeedOauthClientCredentialsExceptionInterceptor.cs b/src/SeedOauthClientCredentials/Core/SeedOauthClientCredentialsExceptionInterceptor.cs
+new file mode 100644
+index 00000000000..387d79d0a1a
+--- /dev/null
++++ b/src/SeedOauthClientCredentials/Core/SeedOauthClientCredentialsExceptionInterceptor.cs
+@@ -0,0 +1,29 @@
++using SeedOauthClientCredentials;
++
++namespace SeedOauthClientCredentials.Core;
++
++/// <summary>
++/// Custom exception interceptor for the SDK. Implement the Intercept method to capture exceptions for observability (e.g., application monitoring platform, logging, etc.).
++/// </summary>
++public class SeedOauthClientCredentialsExceptionInterceptor : IExceptionInterceptor
++{
++    private readonly ClientOptions _clientOptions;
++
++    public SeedOauthClientCredentialsExceptionInterceptor(ClientOptions clientOptions)
++    {
++        _clientOptions = clientOptions;
++    }
++
++    /// <summary>
++    /// Intercepts an exception and returns it after capturing.
++    /// </summary>
++    public Exception Intercept(Exception exception)
++    {
++        // TODO: Implement your exception capturing logic here.
++        // Examples:
++        // - Send to application monitoring platform
++        // - Log to console: Console.Error.WriteLine(exception);
++        // - Send to custom logging service
++        return exception;
++    }
++}
+diff --git a/src/SeedOauthClientCredentials/Nested/Api/ApiClient.cs b/src/SeedOauthClientCredentials/Nested/Api/ApiClient.cs
+index eb5db684698..e1f092324bc 100644
+--- a/src/SeedOauthClientCredentials/Nested/Api/ApiClient.cs
++++ b/src/SeedOauthClientCredentials/Nested/Api/ApiClient.cs
+@@ -9,7 +9,15 @@ public partial class ApiClient : IApiClient
+ 
+     internal ApiClient(RawClient client)
+     {
+-        _client = client;
++        try
++        {
++            _client = client;
++        }
++        catch (Exception ex)
++        {
++            client.Options.ExceptionHandler?.CaptureException(ex);
++            throw;
++        }
+     }
+ 
+     /// <example><code>
+@@ -20,37 +28,42 @@ public partial class ApiClient : IApiClient
+         CancellationToken cancellationToken = default
+     )
+     {
+-        var _headers = await new SeedOauthClientCredentials.Core.HeadersBuilder.Builder()
+-            .Add(_client.Options.Headers)
+-            .Add(_client.Options.AdditionalHeaders)
+-            .Add(options?.AdditionalHeaders)
+-            .BuildAsync()
+-            .ConfigureAwait(false);
+-        var response = await _client
+-            .SendRequestAsync(
+-                new JsonRequest
++        await _client
++            .Options.ExceptionHandler.TryCatchAsync(async () =>
++            {
++                var _headers = await new SeedOauthClientCredentials.Core.HeadersBuilder.Builder()
++                    .Add(_client.Options.Headers)
++                    .Add(_client.Options.AdditionalHeaders)
++                    .Add(options?.AdditionalHeaders)
++                    .BuildAsync()
++                    .ConfigureAwait(false);
++                var response = await _client
++                    .SendRequestAsync(
++                        new JsonRequest
++                        {
++                            Method = HttpMethod.Get,
++                            Path = "/nested/get-something",
++                            Headers = _headers,
++                            Options = options,
++                        },
++                        cancellationToken
++                    )
++                    .ConfigureAwait(false);
++                if (response.StatusCode is >= 200 and < 400)
+                 {
+-                    Method = HttpMethod.Get,
+-                    Path = "/nested/get-something",
+-                    Headers = _headers,
+-                    Options = options,
+-                },
+-                cancellationToken
+-            )
++                    return;
++                }
++                {
++                    var responseBody = await response
++                        .Raw.Content.ReadAsStringAsync(cancellationToken)
++                        .ConfigureAwait(false);
++                    throw new SeedOauthClientCredentialsApiException(
++                        $"Error with status code {response.StatusCode}",
++                        response.StatusCode,
++                        responseBody
++                    );
++                }
++            })
+             .ConfigureAwait(false);
+-        if (response.StatusCode is >= 200 and < 400)
+-        {
+-            return;
+-        }
+-        {
+-            var responseBody = await response
+-                .Raw.Content.ReadAsStringAsync(cancellationToken)
+-                .ConfigureAwait(false);
+-            throw new SeedOauthClientCredentialsApiException(
+-                $"Error with status code {response.StatusCode}",
+-                response.StatusCode,
+-                responseBody
+-            );
+-        }
+     }
+ }
+diff --git a/src/SeedOauthClientCredentials/Nested/NestedClient.cs b/src/SeedOauthClientCredentials/Nested/NestedClient.cs
+index 0a3b0de9215..ce752d1818d 100644
+--- a/src/SeedOauthClientCredentials/Nested/NestedClient.cs
++++ b/src/SeedOauthClientCredentials/Nested/NestedClient.cs
+@@ -8,8 +8,16 @@ public partial class NestedClient : INestedClient
+ 
+     internal NestedClient(RawClient client)
+     {
+-        _client = client;
+-        Api = new ApiClient(_client);
++        try
++        {
++            _client = client;
++            Api = new ApiClient(_client);
++        }
++        catch (Exception ex)
++        {
++            client.Options.ExceptionHandler?.CaptureException(ex);
++            throw;
++        }
+     }
+ 
+     public IApiClient Api { get; }
+diff --git a/src/SeedOauthClientCredentials/NestedNoAuth/Api/ApiClient.cs b/src/SeedOauthClientCredentials/NestedNoAuth/Api/ApiClient.cs
+index 5a911357dbb..f9e820e2ca3 100644
+--- a/src/SeedOauthClientCredentials/NestedNoAuth/Api/ApiClient.cs
++++ b/src/SeedOauthClientCredentials/NestedNoAuth/Api/ApiClient.cs
+@@ -9,7 +9,15 @@ public partial class ApiClient : IApiClient
+ 
+     internal ApiClient(RawClient client)
+     {
+-        _client = client;
++        try
++        {
++            _client = client;
++        }
++        catch (Exception ex)
++        {
++            client.Options.ExceptionHandler?.CaptureException(ex);
++            throw;
++        }
+     }
+ 
+     /// <example><code>
+@@ -20,37 +28,42 @@ public partial class ApiClient : IApiClient
+         CancellationToken cancellationToken = default
+     )
+     {
+-        var _headers = await new SeedOauthClientCredentials.Core.HeadersBuilder.Builder()
+-            .Add(_client.Options.Headers)
+-            .Add(_client.Options.AdditionalHeaders)
+-            .Add(options?.AdditionalHeaders)
+-            .BuildAsync()
+-            .ConfigureAwait(false);
+-        var response = await _client
+-            .SendRequestAsync(
+-                new JsonRequest
++        await _client
++            .Options.ExceptionHandler.TryCatchAsync(async () =>
++            {
++                var _headers = await new SeedOauthClientCredentials.Core.HeadersBuilder.Builder()
++                    .Add(_client.Options.Headers)
++                    .Add(_client.Options.AdditionalHeaders)
++                    .Add(options?.AdditionalHeaders)
++                    .BuildAsync()
++                    .ConfigureAwait(false);
++                var response = await _client
++                    .SendRequestAsync(
++                        new JsonRequest
++                        {
++                            Method = HttpMethod.Get,
++                            Path = "/nested-no-auth/get-something",
++                            Headers = _headers,
++                            Options = options,
++                        },
++                        cancellationToken
++                    )
++                    .ConfigureAwait(false);
++                if (response.StatusCode is >= 200 and < 400)
+                 {
+-                    Method = HttpMethod.Get,
+-                    Path = "/nested-no-auth/get-something",
+-                    Headers = _headers,
+-                    Options = options,
+-                },
+-                cancellationToken
+-            )
++                    return;
++                }
++                {
++                    var responseBody = await response
++                        .Raw.Content.ReadAsStringAsync(cancellationToken)
++                        .ConfigureAwait(false);
++                    throw new SeedOauthClientCredentialsApiException(
++                        $"Error with status code {response.StatusCode}",
++                        response.StatusCode,
++                        responseBody
++                    );
++                }
++            })
+             .ConfigureAwait(false);
+-        if (response.StatusCode is >= 200 and < 400)
+-        {
+-            return;
+-        }
+-        {
+-            var responseBody = await response
+-                .Raw.Content.ReadAsStringAsync(cancellationToken)
+-                .ConfigureAwait(false);
+-            throw new SeedOauthClientCredentialsApiException(
+-                $"Error with status code {response.StatusCode}",
+-                response.StatusCode,
+-                responseBody
+-            );
+-        }
+     }
+ }
+diff --git a/src/SeedOauthClientCredentials/NestedNoAuth/NestedNoAuthClient.cs b/src/SeedOauthClientCredentials/NestedNoAuth/NestedNoAuthClient.cs
+index 3546ac24897..a97954c2401 100644
+--- a/src/SeedOauthClientCredentials/NestedNoAuth/NestedNoAuthClient.cs
++++ b/src/SeedOauthClientCredentials/NestedNoAuth/NestedNoAuthClient.cs
+@@ -8,8 +8,16 @@ public partial class NestedNoAuthClient : INestedNoAuthClient
+ 
+     internal NestedNoAuthClient(RawClient client)
+     {
+-        _client = client;
+-        Api = new ApiClient(_client);
++        try
++        {
++            _client = client;
++            Api = new ApiClient(_client);
++        }
++        catch (Exception ex)
++        {
++            client.Options.ExceptionHandler?.CaptureException(ex);
++            throw;
++        }
+     }
+ 
+     public IApiClient Api { get; }
+diff --git a/src/SeedOauthClientCredentials/SeedOauthClientCredentialsClient.cs b/src/SeedOauthClientCredentials/SeedOauthClientCredentialsClient.cs
+index b71fdf87998..e2cdfa2135c 100644
+--- a/src/SeedOauthClientCredentials/SeedOauthClientCredentialsClient.cs
++++ b/src/SeedOauthClientCredentials/SeedOauthClientCredentialsClient.cs
+@@ -14,38 +14,50 @@ public partial class SeedOauthClientCredentialsClient : ISeedOauthClientCredenti
+         ClientOptions? clientOptions = null
+     )
+     {
+-        clientOptions ??= new ClientOptions();
+-        var platformHeaders = new Headers(
+-            new Dictionary<string, string>()
+-            {
+-                { "X-Fern-Language", "C#" },
+-                { "X-Fern-SDK-Name", "SeedOauthClientCredentials" },
+-                { "X-Fern-SDK-Version", Version.Current },
+-                { "User-Agent", "Fernoauth-client-credentials/0.0.1" },
+-            }
+-        );
+-        foreach (var header in platformHeaders)
++        try
+         {
+-            if (!clientOptions.Headers.ContainsKey(header.Key))
++            clientOptions ??= new ClientOptions();
++            clientOptions.ExceptionHandler = new ExceptionHandler(
++                new SeedOauthClientCredentialsExceptionInterceptor(clientOptions)
++            );
++            var platformHeaders = new Headers(
++                new Dictionary<string, string>()
++                {
++                    { "X-Fern-Language", "C#" },
++                    { "X-Fern-SDK-Name", "SeedOauthClientCredentials" },
++                    { "X-Fern-SDK-Version", Version.Current },
++                    { "User-Agent", "Fernoauth-client-credentials/0.0.1" },
++                }
++            );
++            foreach (var header in platformHeaders)
+             {
+-                clientOptions.Headers[header.Key] = header.Value;
++                if (!clientOptions.Headers.ContainsKey(header.Key))
++                {
++                    clientOptions.Headers[header.Key] = header.Value;
++                }
+             }
+-        }
+-        var clientOptionsWithAuth = clientOptions.Clone();
+-        var tokenProvider = new OAuthTokenProvider(
+-            clientId,
+-            clientSecret,
+-            new AuthClient(new RawClient(clientOptions))
+-        );
+-        clientOptionsWithAuth.Headers["Authorization"] =
+-            new Func<global::System.Threading.Tasks.ValueTask<string>>(async () =>
+-                await tokenProvider.GetAccessTokenAsync().ConfigureAwait(false)
++            var clientOptionsWithAuth = clientOptions.Clone();
++            var tokenProvider = new OAuthTokenProvider(
++                clientId,
++                clientSecret,
++                new AuthClient(new RawClient(clientOptions))
+             );
+-        _client = new RawClient(clientOptionsWithAuth);
+-        Auth = new AuthClient(_client);
+-        NestedNoAuth = new NestedNoAuthClient(_client);
+-        Nested = new NestedClient(_client);
+-        Simple = new SimpleClient(_client);
++            clientOptionsWithAuth.Headers["Authorization"] =
++                new Func<global::System.Threading.Tasks.ValueTask<string>>(async () =>
++                    await tokenProvider.GetAccessTokenAsync().ConfigureAwait(false)
++                );
++            _client = new RawClient(clientOptionsWithAuth);
++            Auth = new AuthClient(_client);
++            NestedNoAuth = new NestedNoAuthClient(_client);
++            Nested = new NestedClient(_client);
++            Simple = new SimpleClient(_client);
++        }
++        catch (Exception ex)
++        {
++            var interceptor = new SeedOauthClientCredentialsExceptionInterceptor(clientOptions);
++            interceptor.Intercept(ex);
++            throw;
++        }
+     }
+ 
+     public IAuthClient Auth { get; }
+diff --git a/src/SeedOauthClientCredentials/Simple/SimpleClient.cs b/src/SeedOauthClientCredentials/Simple/SimpleClient.cs
+index 7267200de26..51e6c1f498b 100644
+--- a/src/SeedOauthClientCredentials/Simple/SimpleClient.cs
++++ b/src/SeedOauthClientCredentials/Simple/SimpleClient.cs
+@@ -8,7 +8,15 @@ public partial class SimpleClient : ISimpleClient
+ 
+     internal SimpleClient(RawClient client)
+     {
+-        _client = client;
++        try
++        {
++            _client = client;
++        }
++        catch (Exception ex)
++        {
++            client.Options.ExceptionHandler?.CaptureException(ex);
++            throw;
++        }
+     }
+ 
+     /// <example><code>
+@@ -19,37 +27,42 @@ public partial class SimpleClient : ISimpleClient
+         CancellationToken cancellationToken = default
+     )
+     {
+-        var _headers = await new SeedOauthClientCredentials.Core.HeadersBuilder.Builder()
+-            .Add(_client.Options.Headers)
+-            .Add(_client.Options.AdditionalHeaders)
+-            .Add(options?.AdditionalHeaders)
+-            .BuildAsync()
+-            .ConfigureAwait(false);
+-        var response = await _client
+-            .SendRequestAsync(
+-                new JsonRequest
++        await _client
++            .Options.ExceptionHandler.TryCatchAsync(async () =>
++            {
++                var _headers = await new SeedOauthClientCredentials.Core.HeadersBuilder.Builder()
++                    .Add(_client.Options.Headers)
++                    .Add(_client.Options.AdditionalHeaders)
++                    .Add(options?.AdditionalHeaders)
++                    .BuildAsync()
++                    .ConfigureAwait(false);
++                var response = await _client
++                    .SendRequestAsync(
++                        new JsonRequest
++                        {
++                            Method = HttpMethod.Get,
++                            Path = "/get-something",
++                            Headers = _headers,
++                            Options = options,
++                        },
++                        cancellationToken
++                    )
++                    .ConfigureAwait(false);
++                if (response.StatusCode is >= 200 and < 400)
+                 {
+-                    Method = HttpMethod.Get,
+-                    Path = "/get-something",
+-                    Headers = _headers,
+-                    Options = options,
+-                },
+-                cancellationToken
+-            )
++                    return;
++                }
++                {
++                    var responseBody = await response
++                        .Raw.Content.ReadAsStringAsync(cancellationToken)
++                        .ConfigureAwait(false);
++                    throw new SeedOauthClientCredentialsApiException(
++                        $"Error with status code {response.StatusCode}",
++                        response.StatusCode,
++                        responseBody
++                    );
++                }
++            })
+             .ConfigureAwait(false);
+-        if (response.StatusCode is >= 200 and < 400)
+-        {
+-            return;
+-        }
+-        {
+-            var responseBody = await response
+-                .Raw.Content.ReadAsStringAsync(cancellationToken)
+-                .ConfigureAwait(false);
+-            throw new SeedOauthClientCredentialsApiException(
+-                $"Error with status code {response.StatusCode}",
+-                response.StatusCode,
+-                responseBody
+-            );
+-        }
+     }
+ }

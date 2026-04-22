@@ -1,0 +1,31 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 5e4188a44b1..07a8013056d 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,7 +2,12 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-csharp-sdk",
+   "generatorVersion": "local",
+-  "generatorConfig": {},
++  "generatorConfig": {
++    "extra-dependencies": {
++      "Moq": "4.20.70",
++      "Moq.Contrib.HttpClient": "1.4.0"
++    }
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "ci",
+diff --git a/src/SeedApi/SeedApi.csproj b/src/SeedApi/SeedApi.csproj
+index 3400d4b2909..9894a86bc90 100644
+--- a/src/SeedApi/SeedApi.csproj
++++ b/src/SeedApi/SeedApi.csproj
+@@ -41,6 +41,8 @@
+     <PackageReference Include="OneOf.Extended" Version="3.0.271" />
+     <PackageReference Include="System.Net.Http" Version="[4.3.4,)" />
+     <PackageReference Include="System.Text.RegularExpressions" Version="[4.3.1,)" />
++    <PackageReference Include="Moq" Version="4.20.70" />
++    <PackageReference Include="Moq.Contrib.HttpClient" Version="1.4.0" />
+   </ItemGroup>
+   <ItemGroup Condition="!$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
+     <PackageReference Include="System.Text.Json" Version="9.0.9" />

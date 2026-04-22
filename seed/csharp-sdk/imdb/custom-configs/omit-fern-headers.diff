@@ -1,0 +1,36 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 5e4188a44b1..a7d3028a349 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,7 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-csharp-sdk",
+   "generatorVersion": "local",
+-  "generatorConfig": {},
++  "generatorConfig": {
++    "omit-fern-headers": true
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "ci",
+diff --git a/src/SeedApi/SeedApiClient.cs b/src/SeedApi/SeedApiClient.cs
+index 0f7549ea591..9285a04339b 100644
+--- a/src/SeedApi/SeedApiClient.cs
++++ b/src/SeedApi/SeedApiClient.cs
+@@ -9,15 +9,7 @@ public partial class SeedApiClient : ISeedApiClient
+     public SeedApiClient(string token, ClientOptions? clientOptions = null)
+     {
+         clientOptions ??= new ClientOptions();
+-        var platformHeaders = new Headers(
+-            new Dictionary<string, string>()
+-            {
+-                { "X-Fern-Language", "C#" },
+-                { "X-Fern-SDK-Name", "SeedApi" },
+-                { "X-Fern-SDK-Version", Version.Current },
+-                { "User-Agent", "Fernimdb/0.0.1" },
+-            }
+-        );
++        var platformHeaders = new Headers(new Dictionary<string, string>() { });
+         foreach (var header in platformHeaders)
+         {
+             if (!clientOptions.Headers.ContainsKey(header.Key))

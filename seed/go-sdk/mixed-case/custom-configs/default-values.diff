@@ -1,0 +1,32 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index e206b6bea6d..042dc51b741 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -3,7 +3,8 @@
+   "generatorName": "fernapi/fern-go-sdk",
+   "generatorVersion": "local",
+   "generatorConfig": {
+-    "enableWireTests": false
++    "enableWireTests": false,
++    "useDefaultRequestParameterValues": true
+   },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+diff --git a/service/raw_client.go b/service/raw_client.go
+index 866baf80c1a..2b11544a3af 100644
+--- a/service/raw_client.go
++++ b/service/raw_client.go
+@@ -86,7 +86,12 @@ func (r *RawClient) ListResources(
+ 		"",
+ 	)
+ 	endpointURL := baseURL + "/resource"
+-	queryParams, err := internal.QueryValues(request)
++	queryParams, err := internal.QueryValuesWithDefaults(
++		request,
++		map[string]any{
++			"page_limit": 25,
++		},
++	)
+ 	if err != nil {
+ 		return nil, err
+ 	}

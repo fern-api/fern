@@ -1,0 +1,61 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index d8b7bf00e12..c626f1a9cbc 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,9 @@
+     "cliVersion": "DUMMY",
+     "generatorName": "fernapi/fern-typescript-sdk",
+     "generatorVersion": "local",
++    "generatorConfig": {
++        "includeContentHeadersOnFileDownloadResponse": true
++    },
+     "originGitCommit": "DUMMY",
+     "originGitCommitIsDirty": null,
+     "invokedBy": "ci",
+diff --git a/src/api/resources/service/client/Client.ts b/src/api/resources/service/client/Client.ts
+index 63b405d2b12..2ab3c0e2081 100644
+--- a/src/api/resources/service/client/Client.ts
++++ b/src/api/resources/service/client/Client.ts
+@@ -62,13 +62,21 @@ export class ServiceClient {
+         return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/snippet");
+     }
+ 
+-    public downloadFile(requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<core.BinaryResponse> {
++    public downloadFile(requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<{
++        data: core.BinaryResponse;
++        contentLengthInBytes?: number;
++        contentType?: string;
++    }> {
+         return core.HttpResponsePromise.fromPromise(this.__downloadFile(requestOptions));
+     }
+ 
+-    private async __downloadFile(
+-        requestOptions?: ServiceClient.RequestOptions,
+-    ): Promise<core.WithRawResponse<core.BinaryResponse>> {
++    private async __downloadFile(requestOptions?: ServiceClient.RequestOptions): Promise<
++        core.WithRawResponse<{
++            data: core.BinaryResponse;
++            contentLengthInBytes?: number;
++            contentType?: string;
++        }>
++    > {
+         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+         const _response = await core.fetcher<core.BinaryResponse>({
+             url:
+@@ -85,7 +93,15 @@ export class ServiceClient {
+             logging: this._options.logging,
+         });
+         if (_response.ok) {
+-            return { data: _response.body, rawResponse: _response.rawResponse };
++            const _contentLength = core.getHeader(_response.headers ?? {}, "Content-Length");
++            return {
++                data: {
++                    data: _response.body,
++                    contentLengthInBytes: _contentLength != null ? Number(_contentLength) : undefined,
++                    contentType: core.getHeader(_response.headers ?? {}, "Content-Type"),
++                },
++                rawResponse: _response.rawResponse,
++            };
+         }
+ 
+         if (_response.error.reason === "status-code") {

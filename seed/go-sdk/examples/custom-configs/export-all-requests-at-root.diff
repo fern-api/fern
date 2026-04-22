@@ -1,0 +1,327 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index e206b6bea6d..362cf01732e 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -3,7 +3,8 @@
+   "generatorName": "fernapi/fern-go-sdk",
+   "generatorVersion": "local",
+   "generatorConfig": {
+-    "enableWireTests": false
++    "enableWireTests": false,
++    "exportAllRequestsAtRoot": true
+   },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+diff --git a/dynamic-snippets/example5/snippet.go b/dynamic-snippets/example5/snippet.go
+index 6232afc27db..a84d010a982 100644
+--- a/dynamic-snippets/example5/snippet.go
++++ b/dynamic-snippets/example5/snippet.go
+@@ -3,8 +3,8 @@ package example
+ import (
+     context "context"
+ 
++    fern "github.com/examples/fern"
+     client "github.com/examples/fern/client"
+-    file "github.com/examples/fern/file"
+     option "github.com/examples/fern/option"
+ )
+ 
+@@ -17,7 +17,7 @@ func do() {
+             "<token>",
+         ),
+     )
+-    request := &file.GetFileRequest{
++    request := &fern.GetFileRequest{
+         XFileAPIVersion: "0.0.2",
+     }
+     client.File.Service.GetFile(
+diff --git a/dynamic-snippets/example6/snippet.go b/dynamic-snippets/example6/snippet.go
+index 0d5f9a4c1f8..1958bf21c8b 100644
+--- a/dynamic-snippets/example6/snippet.go
++++ b/dynamic-snippets/example6/snippet.go
+@@ -3,8 +3,8 @@ package example
+ import (
+     context "context"
+ 
++    fern "github.com/examples/fern"
+     client "github.com/examples/fern/client"
+-    file "github.com/examples/fern/file"
+     option "github.com/examples/fern/option"
+ )
+ 
+@@ -17,7 +17,7 @@ func do() {
+             "<token>",
+         ),
+     )
+-    request := &file.GetFileRequest{
++    request := &fern.GetFileRequest{
+         XFileAPIVersion: "X-File-API-Version",
+     }
+     client.File.Service.GetFile(
+diff --git a/dynamic-snippets/example7/snippet.go b/dynamic-snippets/example7/snippet.go
+index 0d5f9a4c1f8..1958bf21c8b 100644
+--- a/dynamic-snippets/example7/snippet.go
++++ b/dynamic-snippets/example7/snippet.go
+@@ -3,8 +3,8 @@ package example
+ import (
+     context "context"
+ 
++    fern "github.com/examples/fern"
+     client "github.com/examples/fern/client"
+-    file "github.com/examples/fern/file"
+     option "github.com/examples/fern/option"
+ )
+ 
+@@ -17,7 +17,7 @@ func do() {
+             "<token>",
+         ),
+     )
+-    request := &file.GetFileRequest{
++    request := &fern.GetFileRequest{
+         XFileAPIVersion: "X-File-API-Version",
+     }
+     client.File.Service.GetFile(
+diff --git a/file/service/client.go b/file/service/client.go
+index f4e96ef3a8b..312cb7f28d3 100644
+--- a/file/service/client.go
++++ b/file/service/client.go
+@@ -7,7 +7,6 @@ import (
+ 
+ 	fern "github.com/examples/fern"
+ 	core "github.com/examples/fern/core"
+-	file "github.com/examples/fern/file"
+ 	internal "github.com/examples/fern/internal"
+ 	option "github.com/examples/fern/option"
+ )
+@@ -39,7 +38,7 @@ func (c *Client) GetFile(
+ 	ctx context.Context,
+ 	// This is a filename
+ 	filename string,
+-	request *file.GetFileRequest,
++	request *fern.GetFileRequest,
+ 	opts ...option.RequestOption,
+ ) (*fern.File, error) {
+ 	response, err := c.WithRawResponse.GetFile(
+diff --git a/file/service/raw_client.go b/file/service/raw_client.go
+index 7579a75b6c5..4ce78752808 100644
+--- a/file/service/raw_client.go
++++ b/file/service/raw_client.go
+@@ -36,7 +36,7 @@ func (r *RawClient) GetFile(
+ 	ctx context.Context,
+ 	// This is a filename
+ 	filename string,
+-	request *file.GetFileRequest,
++	request *fern.GetFileRequest,
+ 	opts ...option.RequestOption,
+ ) (*core.Response[*fern.File], error) {
+ 	options := core.NewRequestOptions(opts...)
+diff --git a/file/service.go b/file/service.go
+index 3faa28ccafa..119b167427b 100644
+--- a/file/service.go
++++ b/file/service.go
+@@ -2,33 +2,4 @@
+ 
+ package file
+ 
+-import (
+-	big "math/big"
+-)
+-
+-var (
+-	getFileRequestFieldXFileAPIVersion = big.NewInt(1 << 0)
+-)
+-
+-type GetFileRequest struct {
+-	XFileAPIVersion string `json:"-" url:"-"`
+-
+-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+-	explicitFields *big.Int `json:"-" url:"-"`
+-}
+-
+-func (g *GetFileRequest) require(field *big.Int) {
+-	if g.explicitFields == nil {
+-		g.explicitFields = big.NewInt(0)
+-	}
+-	g.explicitFields.Or(g.explicitFields, field)
+-}
+-
+-// SetXFileAPIVersion sets the XFileAPIVersion field and marks it as non-optional;
+-// this prevents an empty or null value for this field from being omitted during serialization.
+-func (g *GetFileRequest) SetXFileAPIVersion(xFileAPIVersion string) {
+-	g.XFileAPIVersion = xFileAPIVersion
+-	g.require(getFileRequestFieldXFileAPIVersion)
+-}
+-
+ type Filename = string
+diff --git a/file/service_test.go b/file/service_test.go
+deleted file mode 100644
+index b2d4f85389b..00000000000
+--- a/file/service_test.go
++++ /dev/null
+@@ -1,55 +0,0 @@
+-// Code generated by Fern. DO NOT EDIT.
+-
+-package file
+-
+-import (
+-	json "encoding/json"
+-	assert "github.com/stretchr/testify/assert"
+-	require "github.com/stretchr/testify/require"
+-	testing "testing"
+-)
+-
+-func TestSettersGetFileRequest(t *testing.T) {
+-	t.Run("SetXFileAPIVersion", func(t *testing.T) {
+-		obj := &GetFileRequest{}
+-		var fernTestValueXFileAPIVersion string
+-		obj.SetXFileAPIVersion(fernTestValueXFileAPIVersion)
+-		assert.Equal(t, fernTestValueXFileAPIVersion, obj.XFileAPIVersion)
+-		assert.NotNil(t, obj.explicitFields)
+-	})
+-
+-}
+-
+-func TestSettersMarkExplicitGetFileRequest(t *testing.T) {
+-	t.Run("SetXFileAPIVersion_MarksExplicit", func(t *testing.T) {
+-		t.Parallel()
+-		// Arrange
+-		obj := &GetFileRequest{}
+-		var fernTestValueXFileAPIVersion string
+-
+-		// Act
+-		obj.SetXFileAPIVersion(fernTestValueXFileAPIVersion)
+-
+-		// Assert - object with explicitly set field can be marshaled/unmarshaled
+-		bytes, err := json.Marshal(obj)
+-		require.NoError(t, err, "marshaling should succeed for test setup")
+-
+-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+-		if len(bytes) > 0 && bytes[0] == '{' {
+-			// JSON object - unmarshal into map
+-			var unmarshaled map[string]interface{}
+-			err = json.Unmarshal(bytes, &unmarshaled)
+-			require.NoError(t, err, "unmarshaling should succeed for test verification")
+-		} else {
+-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+-			var unmarshaled interface{}
+-			err = json.Unmarshal(bytes, &unmarshaled)
+-			require.NoError(t, err, "unmarshaling should succeed for test verification")
+-		}
+-
+-		// Note: This does not explicitly assert the presence of a specific JSON field
+-		// It verifies that setting a field via setter allows successful JSON round-trip
+-	})
+-
+-}
+diff --git a/reference.md b/reference.md
+index 7ca93de0e5c..1f9bf9513e0 100644
+--- a/reference.md
++++ b/reference.md
+@@ -160,7 +160,7 @@ This endpoint returns a file by its name.
+ <dd>
+ 
+ ```go
+-request := &file.GetFileRequest{
++request := &fern.GetFileRequest{
+         XFileAPIVersion: "0.0.2",
+     }
+ client.File.Service.GetFile(
+diff --git a/service.go b/requests.go
+similarity index 67%
+rename from service.go
+rename to requests.go
+index a26cbfe05a9..aba81047230 100644
+--- a/service.go
++++ b/requests.go
+@@ -6,6 +6,31 @@ import (
+ 	big "math/big"
+ )
+ 
++var (
++	getFileRequestFieldXFileAPIVersion = big.NewInt(1 << 0)
++)
++
++type GetFileRequest struct {
++	XFileAPIVersion string `json:"-" url:"-"`
++
++	// Private bitmask of fields set to an explicit value and therefore not to be omitted
++	explicitFields *big.Int `json:"-" url:"-"`
++}
++
++func (g *GetFileRequest) require(field *big.Int) {
++	if g.explicitFields == nil {
++		g.explicitFields = big.NewInt(0)
++	}
++	g.explicitFields.Or(g.explicitFields, field)
++}
++
++// SetXFileAPIVersion sets the XFileAPIVersion field and marks it as non-optional;
++// this prevents an empty or null value for this field from being omitted during serialization.
++func (g *GetFileRequest) SetXFileAPIVersion(xFileAPIVersion string) {
++	g.XFileAPIVersion = xFileAPIVersion
++	g.require(getFileRequestFieldXFileAPIVersion)
++}
++
+ var (
+ 	getMetadataRequestFieldXAPIVersion = big.NewInt(1 << 0)
+ 	getMetadataRequestFieldShallow     = big.NewInt(1 << 1)
+diff --git a/service_test.go b/requests_test.go
+similarity index 74%
+rename from service_test.go
+rename to requests_test.go
+index ca0eae6f163..93f25e6d0c8 100644
+--- a/service_test.go
++++ b/requests_test.go
+@@ -9,6 +9,51 @@ import (
+ 	testing "testing"
+ )
+ 
++func TestSettersGetFileRequest(t *testing.T) {
++	t.Run("SetXFileAPIVersion", func(t *testing.T) {
++		obj := &GetFileRequest{}
++		var fernTestValueXFileAPIVersion string
++		obj.SetXFileAPIVersion(fernTestValueXFileAPIVersion)
++		assert.Equal(t, fernTestValueXFileAPIVersion, obj.XFileAPIVersion)
++		assert.NotNil(t, obj.explicitFields)
++	})
++
++}
++
++func TestSettersMarkExplicitGetFileRequest(t *testing.T) {
++	t.Run("SetXFileAPIVersion_MarksExplicit", func(t *testing.T) {
++		t.Parallel()
++		// Arrange
++		obj := &GetFileRequest{}
++		var fernTestValueXFileAPIVersion string
++
++		// Act
++		obj.SetXFileAPIVersion(fernTestValueXFileAPIVersion)
++
++		// Assert - object with explicitly set field can be marshaled/unmarshaled
++		bytes, err := json.Marshal(obj)
++		require.NoError(t, err, "marshaling should succeed for test setup")
++
++		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
++		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
++		if len(bytes) > 0 && bytes[0] == '{' {
++			// JSON object - unmarshal into map
++			var unmarshaled map[string]interface{}
++			err = json.Unmarshal(bytes, &unmarshaled)
++			require.NoError(t, err, "unmarshaling should succeed for test verification")
++		} else {
++			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
++			var unmarshaled interface{}
++			err = json.Unmarshal(bytes, &unmarshaled)
++			require.NoError(t, err, "unmarshaling should succeed for test verification")
++		}
++
++		// Note: This does not explicitly assert the presence of a specific JSON field
++		// It verifies that setting a field via setter allows successful JSON round-trip
++	})
++
++}
++
+ func TestSettersGetMetadataRequest(t *testing.T) {
+ 	t.Run("SetXAPIVersion", func(t *testing.T) {
+ 		obj := &GetMetadataRequest{}

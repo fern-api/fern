@@ -1,0 +1,5492 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 0eba66302dd..e224d10f0ad 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-php-sdk",
+   "generatorVersion": "local",
++  "generatorConfig": {
++    "propertyAccess": "private"
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "ci",
+diff --git a/src/.php-cs-fixer.cache b/src/.php-cs-fixer.cache
+index 542ac529f86..902c25d441b 100644
+--- a/src/.php-cs-fixer.cache
++++ b/src/.php-cs-fixer.cache
+@@ -1 +1 @@
+-{"php":"8.3.12","version":"3.94.2","indent":"    ","lineEnding":"\n","rules":{"binary_operator_spaces":{"default":"at_least_single_space"},"blank_line_after_opening_tag":true,"blank_line_between_import_groups":true,"blank_lines_before_namespace":true,"braces_position":{"allow_single_line_anonymous_functions":false,"allow_single_line_empty_anonymous_classes":true},"class_definition":{"inline_constructor_arguments":false,"space_before_parenthesis":true},"compact_nullable_type_declaration":true,"declare_equal_normalize":true,"lowercase_cast":true,"lowercase_static_reference":true,"modifier_keywords":true,"new_with_parentheses":{"anonymous_class":true},"no_blank_lines_after_class_opening":true,"no_extra_blank_lines":{"tokens":["use"]},"no_leading_import_slash":true,"no_whitespace_in_blank_line":true,"ordered_class_elements":{"order":["use_trait"]},"ordered_imports":{"imports_order":["class","function","const"],"sort_algorithm":"none"},"return_type_declaration":true,"short_scalar_cast":true,"single_import_per_statement":{"group_to_single_imports":false},"single_space_around_construct":{"constructs_followed_by_a_single_space":["abstract","as","case","catch","class","const_import","do","else","elseif","final","finally","for","foreach","function","function_import","if","insteadof","interface","namespace","new","private","protected","public","static","switch","trait","try","use","use_lambda","while"],"constructs_preceded_by_a_single_space":["as","else","elseif","use_lambda"]},"single_trait_insert_per_statement":true,"ternary_operator_spaces":true,"unary_operator_spaces":{"only_dec_inc":true},"blank_line_after_namespace":true,"constant_case":true,"control_structure_braces":true,"control_structure_continuation_position":true,"elseif":true,"function_declaration":{"closure_fn_spacing":"one"},"indentation_type":true,"line_ending":true,"lowercase_keywords":true,"method_argument_space":{"after_heredoc":false,"attribute_placement":"ignore","on_multiline":"ensure_fully_multiline"},"no_break_comment":true,"no_closing_tag":true,"no_multiple_statements_per_line":true,"no_space_around_double_colon":true,"no_spaces_after_function_name":true,"no_trailing_whitespace":true,"no_trailing_whitespace_in_comment":true,"single_blank_line_at_eof":true,"single_class_element_per_statement":{"elements":["property"]},"single_line_after_imports":true,"spaces_inside_parentheses":true,"statement_indentation":true,"switch_case_semicolon_to_colon":true,"switch_case_space":true,"encoding":true,"full_opening_tag":true},"ruleCustomisationPolicyVersion":"null-policy","hashes":{"Types\/UsernamePage.php":"b30e6af5f3d9ebb23b182c0265c61130","Types\/UsernameCursor.php":"16605a0fa8eb7c32c3c014c212eabc85","SeedClient.php":"98e25ff122e85123f43a134754e52926","Exceptions\/SeedException.php":"2e4cba4f6dd8c93306a37c289c0689ef","Exceptions\/SeedApiException.php":"01988cd717b966498f62c1be413a9058","Complex\/Types\/MultipleFilterSearchRequest.php":"9846aa7293b6c528a2b5846b9281803b","Complex\/Types\/SingleFilterSearchRequestOperator.php":"6553d409ba0727c3a2601305021eeecb","Complex\/Types\/PaginatedConversationResponse.php":"f3381e0093e4370960bed2000587e52d","Complex\/Types\/CursorPages.php":"49c28bb177bb7d3a939a36f830486295","Complex\/Types\/StartingAfterPaging.php":"fc05ca8c97ba5694fea6e02935bbf66e","Complex\/Types\/MultipleFilterSearchRequestOperator.php":"ebf487237a1c6462ad5cf6775ca43654","Complex\/Types\/SearchRequest.php":"e2dc363573495ed110fd061f135ce364","Complex\/Types\/SingleFilterSearchRequest.php":"c90b56f6c193e7be56706d2fb6a66910","Complex\/Types\/Conversation.php":"f93b1c252736f458caa577e7478547b9","Complex\/ComplexClient.php":"f49cfb1f89bcd2379a4fe91c7911b97e","Users\/Types\/ListUsersAliasedDataPaginationResponse.php":"39dff5860943dc8935d1e43e5b612e81","Users\/Types\/UsernameContainer.php":"e1c39ca1ef9dd91bc4df66e1d94eabf3","Users\/Types\/WithCursor.php":"3a98e2a573e2e6a91ca83661781a1745","Users\/Types\/Order.php":"02d6ca21c111fe7ea04b969101aa74af","Users\/Types\/User.php":"fcc07bf2ff032533eaf6f707f2fdb1ed","Users\/Types\/ListUsersMixedTypePaginationResponse.php":"d0331e7a7b6c3bf9fe8bdda469e98728","Users\/Types\/UserPage.php":"3e17c8c28a86accbec8b56620e65c854","Users\/Types\/UserListContainer.php":"c0627a3d73fb6e5cf35b3ab648dc3db6","Users\/Requests\/ListUsersOffsetPaginationRequest.php":"362327d3d40614469aef26cff4d2a6d2","Users\/Requests\/ListUsersBodyCursorPaginationRequest.php":"64c2161a2c6308244849252f27115f08","Users\/Requests\/ListUsersMixedTypeCursorPaginationRequest.php":"6548fa15084c876110d3bef4b56f6296","Users\/Requests\/ListUsersOffsetStepPaginationRequest.php":"70f3918ec6351849468f67ae2f5e3422","Users\/Requests\/ListUsersOptionalDataRequest.php":"f57b37b763071d70375e1b3443363dcc","Users\/Requests\/ListUsersTopLevelBodyCursorPaginationRequest.php":"bc81a9d0f37cf9ad5ea1ba56311cb5e4","Users\/Requests\/ListUsersExtendedRequest.php":"bdb88ca9f35fc0cc92a98e32f85e8261","Users\/Requests\/ListUsersDoubleOffsetPaginationRequest.php":"1957f472a6af439f449a6f5758d99824","Users\/Requests\/ListUsersAliasedDataRequest.php":"50bda5e985331fe023da758b8fc1248e","Users\/Requests\/ListUsersCursorPaginationRequest.php":"a280417140d6b0ed22c7e856c52c1dd5","Users\/Requests\/ListUsersExtendedRequestForOptionalData.php":"038b1311f131a9cc3548675a17da0d76","Users\/Requests\/ListUsersBodyOffsetPaginationRequest.php":"d65a5b89eb350e239a55f552c34f5724","Users\/Requests\/ListWithOffsetPaginationHasNextPageRequest.php":"21b9a852cc29beae640e7fdf1447355f","Users\/Requests\/ListUsernamesRequest.php":"d1638ed4f44d5307d92fd9ad44a906d8","Users\/Requests\/ListWithGlobalConfigRequest.php":"aba6edf674057162d528db9076ce2e9d","Users\/Requests\/ListUsernamesWithOptionalResponseRequest.php":"df517a1ca9839f97df24bdd1cadcf6d2","Users\/Traits\/UserOptionalListPage.php":"b66bad169e4f7acfe4635250b8801277","Users\/Types\/UserOptionalListContainer.php":"638626e4155004082a11cf132e3020d9","Users\/Types\/ListUsersTopLevelCursorPaginationResponse.php":"17bdfd4cbdd9330f6ec0f6bc5b71427c","Users\/Types\/WithPage.php":"2eeb5a39e31c28b4a4b6c08b675d2a32","Users\/Types\/NextPage.php":"ca77a7c7a3cee4a419e2fc4287917bf0","Users\/Types\/ListUsersPaginationResponse.php":"540d14626a204b62d59f9518e4cc814f","Users\/Types\/UserOptionalListPage.php":"387e5ef7b63ace934f13b8c3a9be5dda","Users\/Types\/ListUsersExtendedOptionalListResponse.php":"7758262f0baabc5ff512ed32e7044ac9","Users\/Types\/Page.php":"406305720c3595dd5b08963d03a3bcf1","Users\/Types\/ListUsersExtendedResponse.php":"73e1ca4d9b8bb08350af4feeb252ef8d","Users\/Types\/ListUsersOptionalDataPaginationResponse.php":"f11ab23d4d812ac71c5a7db9b7f3ecba","InlineUsers\/InlineUsers\/Requests\/ListUsersBodyCursorPaginationRequest.php":"0f2fdaf5dabf5c9e03886128105dce50","InlineUsers\/InlineUsers\/Requests\/ListUsersMixedTypeCursorPaginationRequest.php":"37e6c3bfaa23320c834b1fbcf1f9196c","InlineUsers\/InlineUsers\/Requests\/ListUsersOffsetStepPaginationRequest.php":"490f82d2ff881c9d1957eb44ef801baf","InlineUsers\/InlineUsers\/Requests\/ListUsersExtendedRequest.php":"f06b6acad7908bc3ad525fd4c2b965bd","InlineUsers\/InlineUsers\/Requests\/ListUsersDoubleOffsetPaginationRequest.php":"12f52468c8d427850a6d2ed405e958ff","InlineUsers\/InlineUsers\/Requests\/ListUsersCursorPaginationRequest.php":"666a39e1df83124eb018bc2709312fc3","InlineUsers\/InlineUsers\/Requests\/ListUsersExtendedRequestForOptionalData.php":"7fcb62c9d00f7161550be5f70b0d8f76","InlineUsers\/InlineUsers\/Requests\/ListUsersBodyOffsetPaginationRequest.php":"c76931a600161ee5c05710040f3ad11b","InlineUsers\/InlineUsers\/Requests\/ListWithOffsetPaginationHasNextPageRequest.php":"f9fe7514f03c1a061f5bc9ca74f51338","InlineUsers\/InlineUsers\/Requests\/ListUsernamesRequest.php":"7f6b1df9902dbf3e8de2571d72b6247f","InlineUsers\/InlineUsers\/Types\/ListUsersPaginationResponse.php":"8fed73ba109b6d34ea4951e63b239fa1","InlineUsers\/InlineUsers\/Types\/UserOptionalListPage.php":"3c2b8ccd4ecdbebe3d9fe33031d5c0d9","InlineUsers\/InlineUsers\/Types\/ListUsersExtendedOptionalListResponse.php":"3e89b2eda49393b506f8de6b6771f8b1","InlineUsers\/InlineUsers\/Types\/Page.php":"66e57e927a1f57d7a2bea71d472ab407","InlineUsers\/InlineUsers\/Types\/ListUsersExtendedResponse.php":"356b312374124ab2c6f537afa9f6ffbb","InlineUsers\/InlineUsers\/Types\/ListUsersMixedTypePaginationResponse.php":"3a228cf65fcc7e95a3bd4c4e7cfd8531","InlineUsers\/InlineUsers\/Types\/UserPage.php":"8fe9ad1fcf90dc2c32f53bd88e80fd60","InlineUsers\/InlineUsers\/Types\/UserListContainer.php":"7b7a4d0da3faa6f96230b0a83e3b9d4d","InlineUsers\/InlineUsers\/Types\/Users.php":"08ec030588b816a509ca7219d1420d5a","InlineUsers\/InlineUsers\/Requests\/ListUsersOffsetPaginationRequest.php":"cdbea9dedb77997fbd182349e5db3f46","InlineUsers\/InlineUsers\/Requests\/ListWithGlobalConfigRequest.php":"263e0f74d664d5437a7bc590e2319746","InlineUsers\/InlineUsers\/Traits\/UserOptionalListPage.php":"d75ab47d8da95dddc2f640ff1f49accb","InlineUsers\/InlineUsers\/Traits\/UserPage.php":"f948a433e80f8341601a0732af42f795","InlineUsers\/InlineUsers\/InlineUsersClient.php":"17c714a3c180f7f08fae6b110f8f4282","Users\/Traits\/UserPage.php":"468a56a083cbf10a9ff1aabaa64dc6fa","Users\/UsersClient.php":"e486d75dfcae71f77d2b671f5362fc02","InlineUsers\/InlineUsersClient.php":"de55a6e74ba9ce7b2ea4a80ffc4b67ae","InlineUsers\/InlineUsers\/Types\/UsernameContainer.php":"d46b73a27871021525e01b2098d36138","InlineUsers\/InlineUsers\/Types\/WithCursor.php":"5a70a52eb337d4562018eb07d144c396","InlineUsers\/InlineUsers\/Types\/Order.php":"c409137de772923ff097050e41e37819","InlineUsers\/InlineUsers\/Types\/User.php":"8e0157e1fdb1be2275e96753f51f8a9a","InlineUsers\/InlineUsers\/Types\/UserOptionalListContainer.php":"db8e69bbb790439c7db8374b9a4ba1a4","InlineUsers\/InlineUsers\/Types\/WithPage.php":"ce9eb539bfdede040c8f05371b96ecf0","InlineUsers\/InlineUsers\/Types\/NextPage.php":"8b0435e232f26527afe95462b2e99499"}}
+\ No newline at end of file
++{"php":"8.3.12","version":"3.94.2","indent":"    ","lineEnding":"\n","rules":{"binary_operator_spaces":{"default":"at_least_single_space"},"blank_line_after_opening_tag":true,"blank_line_between_import_groups":true,"blank_lines_before_namespace":true,"braces_position":{"allow_single_line_anonymous_functions":false,"allow_single_line_empty_anonymous_classes":true},"class_definition":{"inline_constructor_arguments":false,"space_before_parenthesis":true},"compact_nullable_type_declaration":true,"declare_equal_normalize":true,"lowercase_cast":true,"lowercase_static_reference":true,"modifier_keywords":true,"new_with_parentheses":{"anonymous_class":true},"no_blank_lines_after_class_opening":true,"no_extra_blank_lines":{"tokens":["use"]},"no_leading_import_slash":true,"no_whitespace_in_blank_line":true,"ordered_class_elements":{"order":["use_trait"]},"ordered_imports":{"imports_order":["class","function","const"],"sort_algorithm":"none"},"return_type_declaration":true,"short_scalar_cast":true,"single_import_per_statement":{"group_to_single_imports":false},"single_space_around_construct":{"constructs_followed_by_a_single_space":["abstract","as","case","catch","class","const_import","do","else","elseif","final","finally","for","foreach","function","function_import","if","insteadof","interface","namespace","new","private","protected","public","static","switch","trait","try","use","use_lambda","while"],"constructs_preceded_by_a_single_space":["as","else","elseif","use_lambda"]},"single_trait_insert_per_statement":true,"ternary_operator_spaces":true,"unary_operator_spaces":{"only_dec_inc":true},"blank_line_after_namespace":true,"constant_case":true,"control_structure_braces":true,"control_structure_continuation_position":true,"elseif":true,"function_declaration":{"closure_fn_spacing":"one"},"indentation_type":true,"line_ending":true,"lowercase_keywords":true,"method_argument_space":{"after_heredoc":false,"attribute_placement":"ignore","on_multiline":"ensure_fully_multiline"},"no_break_comment":true,"no_closing_tag":true,"no_multiple_statements_per_line":true,"no_space_around_double_colon":true,"no_spaces_after_function_name":true,"no_trailing_whitespace":true,"no_trailing_whitespace_in_comment":true,"single_blank_line_at_eof":true,"single_class_element_per_statement":{"elements":["property"]},"single_line_after_imports":true,"spaces_inside_parentheses":true,"statement_indentation":true,"switch_case_semicolon_to_colon":true,"switch_case_space":true,"encoding":true,"full_opening_tag":true},"ruleCustomisationPolicyVersion":"null-policy","hashes":{"Types\/UsernamePage.php":"7de14fe05b237b58e0a5337cc82915a7","Types\/UsernameCursor.php":"435845640656e03a39606aa2cb09fe2d","SeedClient.php":"98e25ff122e85123f43a134754e52926","Exceptions\/SeedException.php":"2e4cba4f6dd8c93306a37c289c0689ef","Exceptions\/SeedApiException.php":"01988cd717b966498f62c1be413a9058","Complex\/Types\/MultipleFilterSearchRequest.php":"7c574d04fcb465037bf0f32677219f4e","Complex\/Types\/SingleFilterSearchRequestOperator.php":"6553d409ba0727c3a2601305021eeecb","Complex\/Types\/PaginatedConversationResponse.php":"bfc74a4f7b045c8bb332eabc852dbb34","Complex\/Types\/CursorPages.php":"49047216afb48b70f9324a764ef05dee","Complex\/Types\/StartingAfterPaging.php":"fb07a88cfb62051c017141892332b8c2","Complex\/Types\/MultipleFilterSearchRequestOperator.php":"ebf487237a1c6462ad5cf6775ca43654","Complex\/Types\/SearchRequest.php":"02538a8702434091c8dc721d1046eb36","Complex\/Types\/SingleFilterSearchRequest.php":"7873f27384bd5466c7a1e04377cdda05","Complex\/Types\/Conversation.php":"d33fd2d59af81d4f0545562800a65295","Complex\/ComplexClient.php":"6c00eb232c686dfbd6c9696924b4d1de","Users\/Types\/ListUsersAliasedDataPaginationResponse.php":"abf0c1a5386638e0017fcc72323b28c6","Users\/Types\/UsernameContainer.php":"11fd801d8ca549487da1304a4f31b912","Users\/Types\/WithCursor.php":"e4bb8ee6c1d871a6ca2cd7d09d6f47d6","Users\/Types\/Order.php":"02d6ca21c111fe7ea04b969101aa74af","Users\/Types\/User.php":"2a64c46f756d4cc3c70283aab7b82baf","InlineUsers\/InlineUsers\/Requests\/ListUsersBodyCursorPaginationRequest.php":"93fbfee54d47dad8a6c249bcf0be848e","InlineUsers\/InlineUsers\/Requests\/ListUsersMixedTypeCursorPaginationRequest.php":"68b2107c6292db9bdbde59fd9bf65634","InlineUsers\/InlineUsers\/Requests\/ListUsersOffsetStepPaginationRequest.php":"9284fc9284a4969d02174be54866218a","InlineUsers\/InlineUsers\/Requests\/ListUsersExtendedRequest.php":"8bb5b411f3e401eb686de4b2b89a46c4","InlineUsers\/InlineUsers\/Requests\/ListUsersDoubleOffsetPaginationRequest.php":"6d73a78fee64ad8c07b730d7551d43ae","InlineUsers\/InlineUsers\/Requests\/ListUsersCursorPaginationRequest.php":"971b3ff9258019c35036c46bc30ef27a","InlineUsers\/InlineUsers\/Requests\/ListUsersExtendedRequestForOptionalData.php":"436d210b2bd453be379840d4c638e037","InlineUsers\/InlineUsers\/Requests\/ListUsersBodyOffsetPaginationRequest.php":"4daeaf99b9ec4338083783a8857e1331","InlineUsers\/InlineUsers\/Requests\/ListWithOffsetPaginationHasNextPageRequest.php":"ae0911c1d50123d8668daa4f7ada37c2","InlineUsers\/InlineUsers\/Requests\/ListUsernamesRequest.php":"e5d99b3c962e95422fbb284dbc147d54","Users\/Requests\/ListUsersDoubleOffsetPaginationRequest.php":"0b27b589e397d2255b4acd5781c625e4","Users\/Requests\/ListUsersAliasedDataRequest.php":"517087f2715afc41815fdda578bdd545","Users\/Requests\/ListUsersCursorPaginationRequest.php":"c15e1eee7a26cec146e426ce3a672639","Users\/Requests\/ListUsersExtendedRequestForOptionalData.php":"676711c0795bba8d67f5c0b247d55a0a","Users\/Requests\/ListUsersBodyOffsetPaginationRequest.php":"3abc57d43c23d902dcde35d2e4bb667c","Users\/Requests\/ListWithOffsetPaginationHasNextPageRequest.php":"b60363db18dc95842cf8d6b6ebf3ae1f","Users\/Requests\/ListUsernamesRequest.php":"ab28308419318abed6a79f967a9edf39","Users\/Requests\/ListWithGlobalConfigRequest.php":"71c945ccd2d7b6f67460680100fd2f46","Users\/Requests\/ListUsernamesWithOptionalResponseRequest.php":"f11e86d0dd15d2f7ac3a69b796b9b821","Users\/Traits\/UserOptionalListPage.php":"7cac2331338f02022188e10a05522a42","Users\/Types\/UserOptionalListContainer.php":"d724b59f5a90bf7d328dcbf2e30a59b6","Users\/Types\/ListUsersTopLevelCursorPaginationResponse.php":"684925941bcacb5cdae335474025a426","Users\/Types\/WithPage.php":"d912665ebfa6e5118a637ea5fd6d405d","Users\/Types\/NextPage.php":"b27cc2942ea6670e3119054f01105c21","Users\/Types\/ListUsersPaginationResponse.php":"a0cff99cf0cb9c61f6fea9ae35222e3d","Users\/Types\/UserOptionalListPage.php":"78b9a432f6e0b9c3acdcfd84751edd0e","Users\/Types\/ListUsersExtendedOptionalListResponse.php":"3e5216bf2b7268464df33fd9bd6af283","Users\/Types\/Page.php":"18289dd7b96a43b8843443798ef4cfee","Users\/Types\/ListUsersExtendedResponse.php":"5b8ceb08a2e7cac0c9d87403bceadb02","Users\/Types\/ListUsersOptionalDataPaginationResponse.php":"2721bae55e58d920af8101da10fefb4f","Users\/Types\/ListUsersMixedTypePaginationResponse.php":"7a172e7b6d9bb029d97908c1dc8a918e","Users\/Types\/UserPage.php":"5daf488db576b8a9402fd20529eb0160","Users\/Types\/UserListContainer.php":"6fdbf92443856a9b7e1b1a19e8188927","Users\/Requests\/ListUsersOffsetPaginationRequest.php":"19cabee957407b2d8050f945b0541b54","Users\/Requests\/ListUsersBodyCursorPaginationRequest.php":"a36b4c1e6dc28303e26a5729a3d8e335","Users\/Requests\/ListUsersMixedTypeCursorPaginationRequest.php":"54535264f97d4725dbb96e3265fc2ce9","Users\/Requests\/ListUsersOffsetStepPaginationRequest.php":"dcbe2d640d40292885b10d322cb2b871","Users\/Requests\/ListUsersOptionalDataRequest.php":"e37c7845a6118327d7350901a23f7043","Users\/Requests\/ListUsersTopLevelBodyCursorPaginationRequest.php":"df3317692f7ecd799524cc6a9f723538","Users\/Requests\/ListUsersExtendedRequest.php":"f5c48e6c5712ddd4b2de1a31710d0e44","InlineUsers\/InlineUsers\/Types\/ListUsersPaginationResponse.php":"6ae298451d85e7cc48c26fc5dfbf0835","InlineUsers\/InlineUsers\/Types\/UserOptionalListPage.php":"4e1fbb7ade5069da24f45fc5f67957de","InlineUsers\/InlineUsers\/Types\/ListUsersExtendedOptionalListResponse.php":"962758f75ca67a2264d3c69b3eb72b91","InlineUsers\/InlineUsers\/Types\/Page.php":"7d822cbf99f9b07fc085157134be3161","InlineUsers\/InlineUsers\/Types\/ListUsersExtendedResponse.php":"c5acace42724565e5017280e5e2fac3f","InlineUsers\/InlineUsers\/Types\/ListUsersMixedTypePaginationResponse.php":"b4ac9ab7b8a97964d2e4f5d1bd800f86","InlineUsers\/InlineUsers\/Types\/UserPage.php":"41a11699741d20bcc90f5b7bf1642b47","InlineUsers\/InlineUsers\/Types\/UserListContainer.php":"0f3ff1a78e60e98dbe0905b380f710ec","InlineUsers\/InlineUsers\/Types\/Users.php":"0338160178520b90e6f31d3ecac160c7","InlineUsers\/InlineUsers\/Requests\/ListUsersOffsetPaginationRequest.php":"6ebe946e634ece9f7a5b72c182082fa0","InlineUsers\/InlineUsers\/Requests\/ListWithGlobalConfigRequest.php":"9277b1e69f7a39f39103bad713cb0879","InlineUsers\/InlineUsers\/Traits\/UserOptionalListPage.php":"b869d45eb7994758bc823a66f4e03781","InlineUsers\/InlineUsers\/Traits\/UserPage.php":"14b654752342c52712331577e56ccc69","InlineUsers\/InlineUsers\/InlineUsersClient.php":"fb9c6b1bc46069c4a000d0619794e495","Users\/Traits\/UserPage.php":"5c5128551224d4368bd585943c52e90c","Users\/UsersClient.php":"ce7897d1c3913e26114ce9a05f2ea800","InlineUsers\/InlineUsersClient.php":"de55a6e74ba9ce7b2ea4a80ffc4b67ae","InlineUsers\/InlineUsers\/Types\/UsernameContainer.php":"3028ae7f8ea90d6b16e57e6c2025f09a","InlineUsers\/InlineUsers\/Types\/WithCursor.php":"ed84982ebf3549db69c62148f1fa7de4","InlineUsers\/InlineUsers\/Types\/Order.php":"c409137de772923ff097050e41e37819","InlineUsers\/InlineUsers\/Types\/User.php":"f7887338fecd894839a65a125c572d5b","InlineUsers\/InlineUsers\/Types\/UserOptionalListContainer.php":"d0e84093a6192f33f7344ed2efdfe64e","InlineUsers\/InlineUsers\/Types\/WithPage.php":"33f7bf699a7378ca2795762f77de4a53","InlineUsers\/InlineUsers\/Types\/NextPage.php":"581b3bfcbea1d58c02fa83648df0c3da"}}
+\ No newline at end of file
+diff --git a/src/Complex/ComplexClient.php b/src/Complex/ComplexClient.php
+index 8198644c647..71b302f3009 100644
+--- a/src/Complex/ComplexClient.php
++++ b/src/Complex/ComplexClient.php
+@@ -75,9 +75,9 @@ class ComplexClient
+                 PaginationHelper::setDeep($request, ["pagination", "startingAfter"], $cursor);
+             },
+             /* @phpstan-ignore-next-line */
+-            getNextCursor: fn (?PaginatedConversationResponse $response) => $response?->pages?->next?->startingAfter ?? null,
++            getNextCursor: fn (?PaginatedConversationResponse $response) => $response?->getPages()?->getNext()?->getStartingAfter() ?? null,
+             /* @phpstan-ignore-next-line */
+-            getItems: fn (?PaginatedConversationResponse $response) => $response?->conversations ?? [],
++            getItems: fn (?PaginatedConversationResponse $response) => $response?->getConversations() ?? [],
+         );
+     }
+ 
+diff --git a/src/Complex/Types/Conversation.php b/src/Complex/Types/Conversation.php
+index dfe60061ce9..eca1b74e45a 100644
+--- a/src/Complex/Types/Conversation.php
++++ b/src/Complex/Types/Conversation.php
+@@ -11,7 +11,7 @@ class Conversation extends JsonSerializableType
+      * @var string $foo
+      */
+     #[JsonProperty('foo')]
+-    public string $foo;
++    private string $foo;
+ 
+     /**
+      * @param array{
+@@ -24,6 +24,24 @@ class Conversation extends JsonSerializableType
+         $this->foo = $values['foo'];
+     }
+ 
++    /**
++     * @return string
++     */
++    public function getFoo(): string
++    {
++        return $this->foo;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setFoo(string $value): self
++    {
++        $this->foo = $value;
++        $this->_setField('foo');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Complex/Types/CursorPages.php b/src/Complex/Types/CursorPages.php
+index 0aef30ba08d..e3ac74f415b 100644
+--- a/src/Complex/Types/CursorPages.php
++++ b/src/Complex/Types/CursorPages.php
+@@ -11,31 +11,31 @@ class CursorPages extends JsonSerializableType
+      * @var ?StartingAfterPaging $next
+      */
+     #[JsonProperty('next')]
+-    public ?StartingAfterPaging $next;
++    private ?StartingAfterPaging $next;
+ 
+     /**
+      * @var ?int $page
+      */
+     #[JsonProperty('page')]
+-    public ?int $page;
++    private ?int $page;
+ 
+     /**
+      * @var ?int $perPage
+      */
+     #[JsonProperty('per_page')]
+-    public ?int $perPage;
++    private ?int $perPage;
+ 
+     /**
+      * @var ?int $totalPages
+      */
+     #[JsonProperty('total_pages')]
+-    public ?int $totalPages;
++    private ?int $totalPages;
+ 
+     /**
+      * @var 'pages' $type
+      */
+     #[JsonProperty('type')]
+-    public string $type;
++    private string $type;
+ 
+     /**
+      * @param array{
+@@ -56,6 +56,96 @@ class CursorPages extends JsonSerializableType
+         $this->type = $values['type'];
+     }
+ 
++    /**
++     * @return ?StartingAfterPaging
++     */
++    public function getNext(): ?StartingAfterPaging
++    {
++        return $this->next;
++    }
++
++    /**
++     * @param ?StartingAfterPaging $value
++     */
++    public function setNext(?StartingAfterPaging $value = null): self
++    {
++        $this->next = $value;
++        $this->_setField('next');
++        return $this;
++    }
++
++    /**
++     * @return ?int
++     */
++    public function getPage(): ?int
++    {
++        return $this->page;
++    }
++
++    /**
++     * @param ?int $value
++     */
++    public function setPage(?int $value = null): self
++    {
++        $this->page = $value;
++        $this->_setField('page');
++        return $this;
++    }
++
++    /**
++     * @return ?int
++     */
++    public function getPerPage(): ?int
++    {
++        return $this->perPage;
++    }
++
++    /**
++     * @param ?int $value
++     */
++    public function setPerPage(?int $value = null): self
++    {
++        $this->perPage = $value;
++        $this->_setField('perPage');
++        return $this;
++    }
++
++    /**
++     * @return ?int
++     */
++    public function getTotalPages(): ?int
++    {
++        return $this->totalPages;
++    }
++
++    /**
++     * @param ?int $value
++     */
++    public function setTotalPages(?int $value = null): self
++    {
++        $this->totalPages = $value;
++        $this->_setField('totalPages');
++        return $this;
++    }
++
++    /**
++     * @return 'pages'
++     */
++    public function getType(): string
++    {
++        return $this->type;
++    }
++
++    /**
++     * @param 'pages' $value
++     */
++    public function setType(string $value): self
++    {
++        $this->type = $value;
++        $this->_setField('type');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Complex/Types/MultipleFilterSearchRequest.php b/src/Complex/Types/MultipleFilterSearchRequest.php
+index d6787c68645..e66b636a246 100644
+--- a/src/Complex/Types/MultipleFilterSearchRequest.php
++++ b/src/Complex/Types/MultipleFilterSearchRequest.php
+@@ -12,7 +12,7 @@ class MultipleFilterSearchRequest extends JsonSerializableType
+      * @var ?value-of<MultipleFilterSearchRequestOperator> $operator
+      */
+     #[JsonProperty('operator')]
+-    public ?string $operator;
++    private ?string $operator;
+ 
+     /**
+      * @var (
+@@ -21,7 +21,7 @@ class MultipleFilterSearchRequest extends JsonSerializableType
+      * )|null $value
+      */
+     #[JsonProperty('value'), Union([MultipleFilterSearchRequest::class], [SingleFilterSearchRequest::class], 'null')]
+-    public array|null $value;
++    private array|null $value;
+ 
+     /**
+      * @param array{
+@@ -39,6 +39,48 @@ class MultipleFilterSearchRequest extends JsonSerializableType
+         $this->value = $values['value'] ?? null;
+     }
+ 
++    /**
++     * @return ?value-of<MultipleFilterSearchRequestOperator>
++     */
++    public function getOperator(): ?string
++    {
++        return $this->operator;
++    }
++
++    /**
++     * @param ?value-of<MultipleFilterSearchRequestOperator> $value
++     */
++    public function setOperator(?string $value = null): self
++    {
++        $this->operator = $value;
++        $this->_setField('operator');
++        return $this;
++    }
++
++    /**
++     * @return (
++     *    array<MultipleFilterSearchRequest>
++     *   |array<SingleFilterSearchRequest>
++     * )|null
++     */
++    public function getValue(): array|null
++    {
++        return $this->value;
++    }
++
++    /**
++     * @param (
++     *    array<MultipleFilterSearchRequest>
++     *   |array<SingleFilterSearchRequest>
++     * )|null $value
++     */
++    public function setValue(array|null $value = null): self
++    {
++        $this->value = $value;
++        $this->_setField('value');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Complex/Types/PaginatedConversationResponse.php b/src/Complex/Types/PaginatedConversationResponse.php
+index cc8dc96b1a9..2b109af5e8a 100644
+--- a/src/Complex/Types/PaginatedConversationResponse.php
++++ b/src/Complex/Types/PaginatedConversationResponse.php
+@@ -12,25 +12,25 @@ class PaginatedConversationResponse extends JsonSerializableType
+      * @var array<Conversation> $conversations
+      */
+     #[JsonProperty('conversations'), ArrayType([Conversation::class])]
+-    public array $conversations;
++    private array $conversations;
+ 
+     /**
+      * @var ?CursorPages $pages
+      */
+     #[JsonProperty('pages')]
+-    public ?CursorPages $pages;
++    private ?CursorPages $pages;
+ 
+     /**
+      * @var int $totalCount
+      */
+     #[JsonProperty('total_count')]
+-    public int $totalCount;
++    private int $totalCount;
+ 
+     /**
+      * @var 'conversation.list' $type
+      */
+     #[JsonProperty('type')]
+-    public string $type;
++    private string $type;
+ 
+     /**
+      * @param array{
+@@ -49,6 +49,78 @@ class PaginatedConversationResponse extends JsonSerializableType
+         $this->type = $values['type'];
+     }
+ 
++    /**
++     * @return array<Conversation>
++     */
++    public function getConversations(): array
++    {
++        return $this->conversations;
++    }
++
++    /**
++     * @param array<Conversation> $value
++     */
++    public function setConversations(array $value): self
++    {
++        $this->conversations = $value;
++        $this->_setField('conversations');
++        return $this;
++    }
++
++    /**
++     * @return ?CursorPages
++     */
++    public function getPages(): ?CursorPages
++    {
++        return $this->pages;
++    }
++
++    /**
++     * @param ?CursorPages $value
++     */
++    public function setPages(?CursorPages $value = null): self
++    {
++        $this->pages = $value;
++        $this->_setField('pages');
++        return $this;
++    }
++
++    /**
++     * @return int
++     */
++    public function getTotalCount(): int
++    {
++        return $this->totalCount;
++    }
++
++    /**
++     * @param int $value
++     */
++    public function setTotalCount(int $value): self
++    {
++        $this->totalCount = $value;
++        $this->_setField('totalCount');
++        return $this;
++    }
++
++    /**
++     * @return 'conversation.list'
++     */
++    public function getType(): string
++    {
++        return $this->type;
++    }
++
++    /**
++     * @param 'conversation.list' $value
++     */
++    public function setType(string $value): self
++    {
++        $this->type = $value;
++        $this->_setField('type');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Complex/Types/SearchRequest.php b/src/Complex/Types/SearchRequest.php
+index 789c3002043..a3ec0706350 100644
+--- a/src/Complex/Types/SearchRequest.php
++++ b/src/Complex/Types/SearchRequest.php
+@@ -12,7 +12,7 @@ class SearchRequest extends JsonSerializableType
+      * @var ?StartingAfterPaging $pagination
+      */
+     #[JsonProperty('pagination')]
+-    public ?StartingAfterPaging $pagination;
++    private ?StartingAfterPaging $pagination;
+ 
+     /**
+      * @var (
+@@ -21,7 +21,7 @@ class SearchRequest extends JsonSerializableType
+      * ) $query
+      */
+     #[JsonProperty('query'), Union(SingleFilterSearchRequest::class, MultipleFilterSearchRequest::class)]
+-    public SingleFilterSearchRequest|MultipleFilterSearchRequest $query;
++    private SingleFilterSearchRequest|MultipleFilterSearchRequest $query;
+ 
+     /**
+      * @param array{
+@@ -39,6 +39,48 @@ class SearchRequest extends JsonSerializableType
+         $this->query = $values['query'];
+     }
+ 
++    /**
++     * @return ?StartingAfterPaging
++     */
++    public function getPagination(): ?StartingAfterPaging
++    {
++        return $this->pagination;
++    }
++
++    /**
++     * @param ?StartingAfterPaging $value
++     */
++    public function setPagination(?StartingAfterPaging $value = null): self
++    {
++        $this->pagination = $value;
++        $this->_setField('pagination');
++        return $this;
++    }
++
++    /**
++     * @return (
++     *    SingleFilterSearchRequest
++     *   |MultipleFilterSearchRequest
++     * )
++     */
++    public function getQuery(): SingleFilterSearchRequest|MultipleFilterSearchRequest
++    {
++        return $this->query;
++    }
++
++    /**
++     * @param (
++     *    SingleFilterSearchRequest
++     *   |MultipleFilterSearchRequest
++     * ) $value
++     */
++    public function setQuery(SingleFilterSearchRequest|MultipleFilterSearchRequest $value): self
++    {
++        $this->query = $value;
++        $this->_setField('query');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Complex/Types/SingleFilterSearchRequest.php b/src/Complex/Types/SingleFilterSearchRequest.php
+index c7abdd606b5..5f808396920 100644
+--- a/src/Complex/Types/SingleFilterSearchRequest.php
++++ b/src/Complex/Types/SingleFilterSearchRequest.php
+@@ -11,19 +11,19 @@ class SingleFilterSearchRequest extends JsonSerializableType
+      * @var ?string $field
+      */
+     #[JsonProperty('field')]
+-    public ?string $field;
++    private ?string $field;
+ 
+     /**
+      * @var ?value-of<SingleFilterSearchRequestOperator> $operator
+      */
+     #[JsonProperty('operator')]
+-    public ?string $operator;
++    private ?string $operator;
+ 
+     /**
+      * @var ?string $value
+      */
+     #[JsonProperty('value')]
+-    public ?string $value;
++    private ?string $value;
+ 
+     /**
+      * @param array{
+@@ -40,6 +40,60 @@ class SingleFilterSearchRequest extends JsonSerializableType
+         $this->value = $values['value'] ?? null;
+     }
+ 
++    /**
++     * @return ?string
++     */
++    public function getField(): ?string
++    {
++        return $this->field;
++    }
++
++    /**
++     * @param ?string $value
++     */
++    public function setField(?string $value = null): self
++    {
++        $this->field = $value;
++        $this->_setField('field');
++        return $this;
++    }
++
++    /**
++     * @return ?value-of<SingleFilterSearchRequestOperator>
++     */
++    public function getOperator(): ?string
++    {
++        return $this->operator;
++    }
++
++    /**
++     * @param ?value-of<SingleFilterSearchRequestOperator> $value
++     */
++    public function setOperator(?string $value = null): self
++    {
++        $this->operator = $value;
++        $this->_setField('operator');
++        return $this;
++    }
++
++    /**
++     * @return ?string
++     */
++    public function getValue(): ?string
++    {
++        return $this->value;
++    }
++
++    /**
++     * @param ?string $value
++     */
++    public function setValue(?string $value = null): self
++    {
++        $this->value = $value;
++        $this->_setField('value');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Complex/Types/StartingAfterPaging.php b/src/Complex/Types/StartingAfterPaging.php
+index 7e68e12b98c..18258f65d59 100644
+--- a/src/Complex/Types/StartingAfterPaging.php
++++ b/src/Complex/Types/StartingAfterPaging.php
+@@ -11,13 +11,13 @@ class StartingAfterPaging extends JsonSerializableType
+      * @var int $perPage
+      */
+     #[JsonProperty('per_page')]
+-    public int $perPage;
++    private int $perPage;
+ 
+     /**
+      * @var ?string $startingAfter
+      */
+     #[JsonProperty('starting_after')]
+-    public ?string $startingAfter;
++    private ?string $startingAfter;
+ 
+     /**
+      * @param array{
+@@ -32,6 +32,42 @@ class StartingAfterPaging extends JsonSerializableType
+         $this->startingAfter = $values['startingAfter'] ?? null;
+     }
+ 
++    /**
++     * @return int
++     */
++    public function getPerPage(): int
++    {
++        return $this->perPage;
++    }
++
++    /**
++     * @param int $value
++     */
++    public function setPerPage(int $value): self
++    {
++        $this->perPage = $value;
++        $this->_setField('perPage');
++        return $this;
++    }
++
++    /**
++     * @return ?string
++     */
++    public function getStartingAfter(): ?string
++    {
++        return $this->startingAfter;
++    }
++
++    /**
++     * @param ?string $value
++     */
++    public function setStartingAfter(?string $value = null): self
++    {
++        $this->startingAfter = $value;
++        $this->_setField('startingAfter');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/InlineUsers/InlineUsers/InlineUsersClient.php b/src/InlineUsers/InlineUsers/InlineUsersClient.php
+index b779f513a83..bf967999e22 100644
+--- a/src/InlineUsers/InlineUsers/InlineUsersClient.php
++++ b/src/InlineUsers/InlineUsers/InlineUsersClient.php
+@@ -88,12 +88,12 @@ class InlineUsersClient
+             request: $request,
+             getNextPage: fn (ListUsersCursorPaginationRequest $request) => $this->_listWithCursorPagination($request, $options),
+             setCursor: function (ListUsersCursorPaginationRequest $request, string $cursor) {
+-                $request->startingAfter = $cursor;
++                $request->setStartingAfter($cursor);
+             },
+             /* @phpstan-ignore-next-line */
+-            getNextCursor: fn (?ListUsersPaginationResponse $response) => $response?->page?->next?->startingAfter ?? null,
++            getNextCursor: fn (?ListUsersPaginationResponse $response) => $response?->getPage()?->getNext()?->getStartingAfter() ?? null,
+             /* @phpstan-ignore-next-line */
+-            getItems: fn (?ListUsersPaginationResponse $response) => $response?->data?->users ?? [],
++            getItems: fn (?ListUsersPaginationResponse $response) => $response?->getData()?->getUsers() ?? [],
+         );
+     }
+ 
+@@ -115,12 +115,12 @@ class InlineUsersClient
+             request: $request,
+             getNextPage: fn (ListUsersMixedTypeCursorPaginationRequest $request) => $this->_listWithMixedTypeCursorPagination($request, $options),
+             setCursor: function (ListUsersMixedTypeCursorPaginationRequest $request, string $cursor) {
+-                $request->cursor = $cursor;
++                $request->setCursor($cursor);
+             },
+             /* @phpstan-ignore-next-line */
+-            getNextCursor: fn (?ListUsersMixedTypePaginationResponse $response) => $response?->next ?? null,
++            getNextCursor: fn (?ListUsersMixedTypePaginationResponse $response) => $response?->getNext() ?? null,
+             /* @phpstan-ignore-next-line */
+-            getItems: fn (?ListUsersMixedTypePaginationResponse $response) => $response?->data?->users ?? [],
++            getItems: fn (?ListUsersMixedTypePaginationResponse $response) => $response?->getData()?->getUsers() ?? [],
+         );
+     }
+ 
+@@ -145,9 +145,9 @@ class InlineUsersClient
+                 PaginationHelper::setDeep($request, ["pagination", "cursor"], $cursor);
+             },
+             /* @phpstan-ignore-next-line */
+-            getNextCursor: fn (?ListUsersPaginationResponse $response) => $response?->page?->next?->startingAfter ?? null,
++            getNextCursor: fn (?ListUsersPaginationResponse $response) => $response?->getPage()?->getNext()?->getStartingAfter() ?? null,
+             /* @phpstan-ignore-next-line */
+-            getItems: fn (?ListUsersPaginationResponse $response) => $response?->data?->users ?? [],
++            getItems: fn (?ListUsersPaginationResponse $response) => $response?->getData()?->getUsers() ?? [],
+         );
+     }
+ 
+@@ -169,13 +169,13 @@ class InlineUsersClient
+             request: $request,
+             getNextPage: fn (ListUsersOffsetPaginationRequest $request) => $this->_listWithOffsetPagination($request, $options),
+             /* @phpstan-ignore-next-line */
+-            getOffset: fn (ListUsersOffsetPaginationRequest $request) => $request?->page ?? 0,
++            getOffset: fn (ListUsersOffsetPaginationRequest $request) => $request?->getPage() ?? 0,
+             setOffset: function (ListUsersOffsetPaginationRequest $request, int $offset) {
+-                $request->page = $offset;
++                $request->setPage($offset);
+             },
+             getStep: null,
+             /* @phpstan-ignore-next-line */
+-            getItems: fn (?ListUsersPaginationResponse $response) => $response?->data?->users ?? [],
++            getItems: fn (?ListUsersPaginationResponse $response) => $response?->getData()?->getUsers() ?? [],
+             /* @phpstan-ignore-next-line */
+             hasNextPage: null,
+         );
+@@ -199,13 +199,13 @@ class InlineUsersClient
+             request: $request,
+             getNextPage: fn (ListUsersDoubleOffsetPaginationRequest $request) => $this->_listWithDoubleOffsetPagination($request, $options),
+             /* @phpstan-ignore-next-line */
+-            getOffset: fn (ListUsersDoubleOffsetPaginationRequest $request) => $request?->page ?? 0,
++            getOffset: fn (ListUsersDoubleOffsetPaginationRequest $request) => $request?->getPage() ?? 0,
+             setOffset: function (ListUsersDoubleOffsetPaginationRequest $request, int $offset) {
+-                $request->page = $offset;
++                $request->setPage($offset);
+             },
+             getStep: null,
+             /* @phpstan-ignore-next-line */
+-            getItems: fn (?ListUsersPaginationResponse $response) => $response?->data?->users ?? [],
++            getItems: fn (?ListUsersPaginationResponse $response) => $response?->getData()?->getUsers() ?? [],
+             /* @phpstan-ignore-next-line */
+             hasNextPage: null,
+         );
+@@ -229,13 +229,13 @@ class InlineUsersClient
+             request: $request,
+             getNextPage: fn (ListUsersBodyOffsetPaginationRequest $request) => $this->_listWithBodyOffsetPagination($request, $options),
+             /* @phpstan-ignore-next-line */
+-            getOffset: fn (ListUsersBodyOffsetPaginationRequest $request) => $request?->pagination?->page ?? 0,
++            getOffset: fn (ListUsersBodyOffsetPaginationRequest $request) => $request?->getPagination()?->getPage() ?? 0,
+             setOffset: function (ListUsersBodyOffsetPaginationRequest $request, int $offset) {
+                 PaginationHelper::setDeep($request, ["pagination", "page"], $offset);
+             },
+             getStep: null,
+             /* @phpstan-ignore-next-line */
+-            getItems: fn (?ListUsersPaginationResponse $response) => $response?->data?->users ?? [],
++            getItems: fn (?ListUsersPaginationResponse $response) => $response?->getData()?->getUsers() ?? [],
+             /* @phpstan-ignore-next-line */
+             hasNextPage: null,
+         );
+@@ -259,14 +259,14 @@ class InlineUsersClient
+             request: $request,
+             getNextPage: fn (ListUsersOffsetStepPaginationRequest $request) => $this->_listWithOffsetStepPagination($request, $options),
+             /* @phpstan-ignore-next-line */
+-            getOffset: fn (ListUsersOffsetStepPaginationRequest $request) => $request?->page ?? 0,
++            getOffset: fn (ListUsersOffsetStepPaginationRequest $request) => $request?->getPage() ?? 0,
+             setOffset: function (ListUsersOffsetStepPaginationRequest $request, int $offset) {
+-                $request->page = $offset;
++                $request->setPage($offset);
+             },
+             /* @phpstan-ignore-next-line */
+-            getStep: fn (ListUsersOffsetStepPaginationRequest $request) => $request?->limit ?? 0,
++            getStep: fn (ListUsersOffsetStepPaginationRequest $request) => $request?->getLimit() ?? 0,
+             /* @phpstan-ignore-next-line */
+-            getItems: fn (?ListUsersPaginationResponse $response) => $response?->data?->users ?? [],
++            getItems: fn (?ListUsersPaginationResponse $response) => $response?->getData()?->getUsers() ?? [],
+             /* @phpstan-ignore-next-line */
+             hasNextPage: null,
+         );
+@@ -290,16 +290,16 @@ class InlineUsersClient
+             request: $request,
+             getNextPage: fn (ListWithOffsetPaginationHasNextPageRequest $request) => $this->_listWithOffsetPaginationHasNextPage($request, $options),
+             /* @phpstan-ignore-next-line */
+-            getOffset: fn (ListWithOffsetPaginationHasNextPageRequest $request) => $request?->page ?? 0,
++            getOffset: fn (ListWithOffsetPaginationHasNextPageRequest $request) => $request?->getPage() ?? 0,
+             setOffset: function (ListWithOffsetPaginationHasNextPageRequest $request, int $offset) {
+-                $request->page = $offset;
++                $request->setPage($offset);
+             },
+             /* @phpstan-ignore-next-line */
+-            getStep: fn (ListWithOffsetPaginationHasNextPageRequest $request) => $request?->limit ?? 0,
++            getStep: fn (ListWithOffsetPaginationHasNextPageRequest $request) => $request?->getLimit() ?? 0,
+             /* @phpstan-ignore-next-line */
+-            getItems: fn (?ListUsersPaginationResponse $response) => $response?->data?->users ?? [],
++            getItems: fn (?ListUsersPaginationResponse $response) => $response?->getData()?->getUsers() ?? [],
+             /* @phpstan-ignore-next-line */
+-            hasNextPage: fn (?ListUsersPaginationResponse $response) => $response?->hasNextPage,
++            hasNextPage: fn (?ListUsersPaginationResponse $response) => $response?->getHasNextPage(),
+         );
+     }
+ 
+@@ -321,12 +321,12 @@ class InlineUsersClient
+             request: $request,
+             getNextPage: fn (ListUsersExtendedRequest $request) => $this->_listWithExtendedResults($request, $options),
+             setCursor: function (ListUsersExtendedRequest $request, ?string $cursor) {
+-                $request->cursor = $cursor;
++                $request->setCursor($cursor);
+             },
+             /* @phpstan-ignore-next-line */
+-            getNextCursor: fn (?ListUsersExtendedResponse $response) => $response?->next ?? null,
++            getNextCursor: fn (?ListUsersExtendedResponse $response) => $response?->getNext() ?? null,
+             /* @phpstan-ignore-next-line */
+-            getItems: fn (?ListUsersExtendedResponse $response) => $response?->data?->users ?? [],
++            getItems: fn (?ListUsersExtendedResponse $response) => $response?->getData()?->getUsers() ?? [],
+         );
+     }
+ 
+@@ -348,12 +348,12 @@ class InlineUsersClient
+             request: $request,
+             getNextPage: fn (ListUsersExtendedRequestForOptionalData $request) => $this->_listWithExtendedResultsAndOptionalData($request, $options),
+             setCursor: function (ListUsersExtendedRequestForOptionalData $request, ?string $cursor) {
+-                $request->cursor = $cursor;
++                $request->setCursor($cursor);
+             },
+             /* @phpstan-ignore-next-line */
+-            getNextCursor: fn (?ListUsersExtendedOptionalListResponse $response) => $response?->next ?? null,
++            getNextCursor: fn (?ListUsersExtendedOptionalListResponse $response) => $response?->getNext() ?? null,
+             /* @phpstan-ignore-next-line */
+-            getItems: fn (?ListUsersExtendedOptionalListResponse $response) => $response?->data?->users ?? [],
++            getItems: fn (?ListUsersExtendedOptionalListResponse $response) => $response?->getData()?->getUsers() ?? [],
+         );
+     }
+ 
+@@ -375,12 +375,12 @@ class InlineUsersClient
+             request: $request,
+             getNextPage: fn (ListUsernamesRequest $request) => $this->_listUsernames($request, $options),
+             setCursor: function (ListUsernamesRequest $request, ?string $cursor) {
+-                $request->startingAfter = $cursor;
++                $request->setStartingAfter($cursor);
+             },
+             /* @phpstan-ignore-next-line */
+-            getNextCursor: fn (?UsernameCursor $response) => $response?->cursor?->after ?? null,
++            getNextCursor: fn (?UsernameCursor $response) => $response?->getCursor()?->getAfter() ?? null,
+             /* @phpstan-ignore-next-line */
+-            getItems: fn (?UsernameCursor $response) => $response?->cursor?->data ?? [],
++            getItems: fn (?UsernameCursor $response) => $response?->getCursor()?->getData() ?? [],
+         );
+     }
+ 
+@@ -402,13 +402,13 @@ class InlineUsersClient
+             request: $request,
+             getNextPage: fn (ListWithGlobalConfigRequest $request) => $this->_listWithGlobalConfig($request, $options),
+             /* @phpstan-ignore-next-line */
+-            getOffset: fn (ListWithGlobalConfigRequest $request) => $request?->offset ?? 0,
++            getOffset: fn (ListWithGlobalConfigRequest $request) => $request?->getOffset() ?? 0,
+             setOffset: function (ListWithGlobalConfigRequest $request, int $offset) {
+-                $request->offset = $offset;
++                $request->setOffset($offset);
+             },
+             getStep: null,
+             /* @phpstan-ignore-next-line */
+-            getItems: fn (?UsernameContainer $response) => $response?->results ?? [],
++            getItems: fn (?UsernameContainer $response) => $response?->getResults() ?? [],
+             /* @phpstan-ignore-next-line */
+             hasNextPage: null,
+         );
+@@ -432,17 +432,17 @@ class InlineUsersClient
+     {
+         $options = array_merge($this->options, $options ?? []);
+         $query = [];
+-        if ($request->page != null) {
+-            $query['page'] = $request->page;
++        if ($request->getPage() != null) {
++            $query['page'] = $request->getPage();
+         }
+-        if ($request->perPage != null) {
+-            $query['per_page'] = $request->perPage;
++        if ($request->getPerPage() != null) {
++            $query['per_page'] = $request->getPerPage();
+         }
+-        if ($request->order != null) {
+-            $query['order'] = $request->order;
++        if ($request->getOrder() != null) {
++            $query['order'] = $request->getOrder();
+         }
+-        if ($request->startingAfter != null) {
+-            $query['starting_after'] = $request->startingAfter;
++        if ($request->getStartingAfter() != null) {
++            $query['starting_after'] = $request->getStartingAfter();
+         }
+         try {
+             $response = $this->client->sendRequest(
+@@ -492,8 +492,8 @@ class InlineUsersClient
+     {
+         $options = array_merge($this->options, $options ?? []);
+         $query = [];
+-        if ($request->cursor != null) {
+-            $query['cursor'] = $request->cursor;
++        if ($request->getCursor() != null) {
++            $query['cursor'] = $request->getCursor();
+         }
+         try {
+             $response = $this->client->sendRequest(
+@@ -590,17 +590,17 @@ class InlineUsersClient
+     {
+         $options = array_merge($this->options, $options ?? []);
+         $query = [];
+-        if ($request->page != null) {
+-            $query['page'] = $request->page;
++        if ($request->getPage() != null) {
++            $query['page'] = $request->getPage();
+         }
+-        if ($request->perPage != null) {
+-            $query['per_page'] = $request->perPage;
++        if ($request->getPerPage() != null) {
++            $query['per_page'] = $request->getPerPage();
+         }
+-        if ($request->order != null) {
+-            $query['order'] = $request->order;
++        if ($request->getOrder() != null) {
++            $query['order'] = $request->getOrder();
+         }
+-        if ($request->startingAfter != null) {
+-            $query['starting_after'] = $request->startingAfter;
++        if ($request->getStartingAfter() != null) {
++            $query['starting_after'] = $request->getStartingAfter();
+         }
+         try {
+             $response = $this->client->sendRequest(
+@@ -650,17 +650,17 @@ class InlineUsersClient
+     {
+         $options = array_merge($this->options, $options ?? []);
+         $query = [];
+-        if ($request->page != null) {
+-            $query['page'] = $request->page;
++        if ($request->getPage() != null) {
++            $query['page'] = $request->getPage();
+         }
+-        if ($request->perPage != null) {
+-            $query['per_page'] = $request->perPage;
++        if ($request->getPerPage() != null) {
++            $query['per_page'] = $request->getPerPage();
+         }
+-        if ($request->order != null) {
+-            $query['order'] = $request->order;
++        if ($request->getOrder() != null) {
++            $query['order'] = $request->getOrder();
+         }
+-        if ($request->startingAfter != null) {
+-            $query['starting_after'] = $request->startingAfter;
++        if ($request->getStartingAfter() != null) {
++            $query['starting_after'] = $request->getStartingAfter();
+         }
+         try {
+             $response = $this->client->sendRequest(
+@@ -757,14 +757,14 @@ class InlineUsersClient
+     {
+         $options = array_merge($this->options, $options ?? []);
+         $query = [];
+-        if ($request->page != null) {
+-            $query['page'] = $request->page;
++        if ($request->getPage() != null) {
++            $query['page'] = $request->getPage();
+         }
+-        if ($request->limit != null) {
+-            $query['limit'] = $request->limit;
++        if ($request->getLimit() != null) {
++            $query['limit'] = $request->getLimit();
+         }
+-        if ($request->order != null) {
+-            $query['order'] = $request->order;
++        if ($request->getOrder() != null) {
++            $query['order'] = $request->getOrder();
+         }
+         try {
+             $response = $this->client->sendRequest(
+@@ -814,14 +814,14 @@ class InlineUsersClient
+     {
+         $options = array_merge($this->options, $options ?? []);
+         $query = [];
+-        if ($request->page != null) {
+-            $query['page'] = $request->page;
++        if ($request->getPage() != null) {
++            $query['page'] = $request->getPage();
+         }
+-        if ($request->limit != null) {
+-            $query['limit'] = $request->limit;
++        if ($request->getLimit() != null) {
++            $query['limit'] = $request->getLimit();
+         }
+-        if ($request->order != null) {
+-            $query['order'] = $request->order;
++        if ($request->getOrder() != null) {
++            $query['order'] = $request->getOrder();
+         }
+         try {
+             $response = $this->client->sendRequest(
+@@ -871,8 +871,8 @@ class InlineUsersClient
+     {
+         $options = array_merge($this->options, $options ?? []);
+         $query = [];
+-        if ($request->cursor != null) {
+-            $query['cursor'] = $request->cursor;
++        if ($request->getCursor() != null) {
++            $query['cursor'] = $request->getCursor();
+         }
+         try {
+             $response = $this->client->sendRequest(
+@@ -922,8 +922,8 @@ class InlineUsersClient
+     {
+         $options = array_merge($this->options, $options ?? []);
+         $query = [];
+-        if ($request->cursor != null) {
+-            $query['cursor'] = $request->cursor;
++        if ($request->getCursor() != null) {
++            $query['cursor'] = $request->getCursor();
+         }
+         try {
+             $response = $this->client->sendRequest(
+@@ -973,8 +973,8 @@ class InlineUsersClient
+     {
+         $options = array_merge($this->options, $options ?? []);
+         $query = [];
+-        if ($request->startingAfter != null) {
+-            $query['starting_after'] = $request->startingAfter;
++        if ($request->getStartingAfter() != null) {
++            $query['starting_after'] = $request->getStartingAfter();
+         }
+         try {
+             $response = $this->client->sendRequest(
+@@ -1024,8 +1024,8 @@ class InlineUsersClient
+     {
+         $options = array_merge($this->options, $options ?? []);
+         $query = [];
+-        if ($request->offset != null) {
+-            $query['offset'] = $request->offset;
++        if ($request->getOffset() != null) {
++            $query['offset'] = $request->getOffset();
+         }
+         try {
+             $response = $this->client->sendRequest(
+diff --git a/src/InlineUsers/InlineUsers/Requests/ListUsernamesRequest.php b/src/InlineUsers/InlineUsers/Requests/ListUsernamesRequest.php
+index d8c1111fd31..cad20cfb6cd 100644
+--- a/src/InlineUsers/InlineUsers/Requests/ListUsernamesRequest.php
++++ b/src/InlineUsers/InlineUsers/Requests/ListUsernamesRequest.php
+@@ -12,7 +12,7 @@ class ListUsernamesRequest extends JsonSerializableType
+      *
+      * @var ?string $startingAfter
+      */
+-    public ?string $startingAfter;
++    private ?string $startingAfter;
+ 
+     /**
+      * @param array{
+@@ -24,4 +24,22 @@ class ListUsernamesRequest extends JsonSerializableType
+     ) {
+         $this->startingAfter = $values['startingAfter'] ?? null;
+     }
++
++    /**
++     * @return ?string
++     */
++    public function getStartingAfter(): ?string
++    {
++        return $this->startingAfter;
++    }
++
++    /**
++     * @param ?string $value
++     */
++    public function setStartingAfter(?string $value = null): self
++    {
++        $this->startingAfter = $value;
++        $this->_setField('startingAfter');
++        return $this;
++    }
+ }
+diff --git a/src/InlineUsers/InlineUsers/Requests/ListUsersBodyCursorPaginationRequest.php b/src/InlineUsers/InlineUsers/Requests/ListUsersBodyCursorPaginationRequest.php
+index ff21725e62e..411297d84c4 100644
+--- a/src/InlineUsers/InlineUsers/Requests/ListUsersBodyCursorPaginationRequest.php
++++ b/src/InlineUsers/InlineUsers/Requests/ListUsersBodyCursorPaginationRequest.php
+@@ -15,7 +15,7 @@ class ListUsersBodyCursorPaginationRequest extends JsonSerializableType
+      * @var ?WithCursor $pagination
+      */
+     #[JsonProperty('pagination')]
+-    public ?WithCursor $pagination;
++    private ?WithCursor $pagination;
+ 
+     /**
+      * @param array{
+@@ -27,4 +27,22 @@ class ListUsersBodyCursorPaginationRequest extends JsonSerializableType
+     ) {
+         $this->pagination = $values['pagination'] ?? null;
+     }
++
++    /**
++     * @return ?WithCursor
++     */
++    public function getPagination(): ?WithCursor
++    {
++        return $this->pagination;
++    }
++
++    /**
++     * @param ?WithCursor $value
++     */
++    public function setPagination(?WithCursor $value = null): self
++    {
++        $this->pagination = $value;
++        $this->_setField('pagination');
++        return $this;
++    }
+ }
+diff --git a/src/InlineUsers/InlineUsers/Requests/ListUsersBodyOffsetPaginationRequest.php b/src/InlineUsers/InlineUsers/Requests/ListUsersBodyOffsetPaginationRequest.php
+index 5dd27eb8201..6c3c592296c 100644
+--- a/src/InlineUsers/InlineUsers/Requests/ListUsersBodyOffsetPaginationRequest.php
++++ b/src/InlineUsers/InlineUsers/Requests/ListUsersBodyOffsetPaginationRequest.php
+@@ -15,7 +15,7 @@ class ListUsersBodyOffsetPaginationRequest extends JsonSerializableType
+      * @var ?WithPage $pagination
+      */
+     #[JsonProperty('pagination')]
+-    public ?WithPage $pagination;
++    private ?WithPage $pagination;
+ 
+     /**
+      * @param array{
+@@ -27,4 +27,22 @@ class ListUsersBodyOffsetPaginationRequest extends JsonSerializableType
+     ) {
+         $this->pagination = $values['pagination'] ?? null;
+     }
++
++    /**
++     * @return ?WithPage
++     */
++    public function getPagination(): ?WithPage
++    {
++        return $this->pagination;
++    }
++
++    /**
++     * @param ?WithPage $value
++     */
++    public function setPagination(?WithPage $value = null): self
++    {
++        $this->pagination = $value;
++        $this->_setField('pagination');
++        return $this;
++    }
+ }
+diff --git a/src/InlineUsers/InlineUsers/Requests/ListUsersCursorPaginationRequest.php b/src/InlineUsers/InlineUsers/Requests/ListUsersCursorPaginationRequest.php
+index 26bbb90d66f..1121293ef95 100644
+--- a/src/InlineUsers/InlineUsers/Requests/ListUsersCursorPaginationRequest.php
++++ b/src/InlineUsers/InlineUsers/Requests/ListUsersCursorPaginationRequest.php
+@@ -10,17 +10,17 @@ class ListUsersCursorPaginationRequest extends JsonSerializableType
+     /**
+      * @var ?int $page Defaults to first page
+      */
+-    public ?int $page;
++    private ?int $page;
+ 
+     /**
+      * @var ?int $perPage Defaults to per page
+      */
+-    public ?int $perPage;
++    private ?int $perPage;
+ 
+     /**
+      * @var ?value-of<Order> $order
+      */
+-    public ?string $order;
++    private ?string $order;
+ 
+     /**
+      * The cursor used for pagination in order to fetch
+@@ -28,7 +28,7 @@ class ListUsersCursorPaginationRequest extends JsonSerializableType
+      *
+      * @var ?string $startingAfter
+      */
+-    public ?string $startingAfter;
++    private ?string $startingAfter;
+ 
+     /**
+      * @param array{
+@@ -46,4 +46,76 @@ class ListUsersCursorPaginationRequest extends JsonSerializableType
+         $this->order = $values['order'] ?? null;
+         $this->startingAfter = $values['startingAfter'] ?? null;
+     }
++
++    /**
++     * @return ?int
++     */
++    public function getPage(): ?int
++    {
++        return $this->page;
++    }
++
++    /**
++     * @param ?int $value
++     */
++    public function setPage(?int $value = null): self
++    {
++        $this->page = $value;
++        $this->_setField('page');
++        return $this;
++    }
++
++    /**
++     * @return ?int
++     */
++    public function getPerPage(): ?int
++    {
++        return $this->perPage;
++    }
++
++    /**
++     * @param ?int $value
++     */
++    public function setPerPage(?int $value = null): self
++    {
++        $this->perPage = $value;
++        $this->_setField('perPage');
++        return $this;
++    }
++
++    /**
++     * @return ?value-of<Order>
++     */
++    public function getOrder(): ?string
++    {
++        return $this->order;
++    }
++
++    /**
++     * @param ?value-of<Order> $value
++     */
++    public function setOrder(?string $value = null): self
++    {
++        $this->order = $value;
++        $this->_setField('order');
++        return $this;
++    }
++
++    /**
++     * @return ?string
++     */
++    public function getStartingAfter(): ?string
++    {
++        return $this->startingAfter;
++    }
++
++    /**
++     * @param ?string $value
++     */
++    public function setStartingAfter(?string $value = null): self
++    {
++        $this->startingAfter = $value;
++        $this->_setField('startingAfter');
++        return $this;
++    }
+ }
+diff --git a/src/InlineUsers/InlineUsers/Requests/ListUsersDoubleOffsetPaginationRequest.php b/src/InlineUsers/InlineUsers/Requests/ListUsersDoubleOffsetPaginationRequest.php
+index f31fa0c9056..1b3701a06fe 100644
+--- a/src/InlineUsers/InlineUsers/Requests/ListUsersDoubleOffsetPaginationRequest.php
++++ b/src/InlineUsers/InlineUsers/Requests/ListUsersDoubleOffsetPaginationRequest.php
+@@ -10,17 +10,17 @@ class ListUsersDoubleOffsetPaginationRequest extends JsonSerializableType
+     /**
+      * @var ?float $page Defaults to first page
+      */
+-    public ?float $page;
++    private ?float $page;
+ 
+     /**
+      * @var ?float $perPage Defaults to per page
+      */
+-    public ?float $perPage;
++    private ?float $perPage;
+ 
+     /**
+      * @var ?value-of<Order> $order
+      */
+-    public ?string $order;
++    private ?string $order;
+ 
+     /**
+      * The cursor used for pagination in order to fetch
+@@ -28,7 +28,7 @@ class ListUsersDoubleOffsetPaginationRequest extends JsonSerializableType
+      *
+      * @var ?string $startingAfter
+      */
+-    public ?string $startingAfter;
++    private ?string $startingAfter;
+ 
+     /**
+      * @param array{
+@@ -46,4 +46,76 @@ class ListUsersDoubleOffsetPaginationRequest extends JsonSerializableType
+         $this->order = $values['order'] ?? null;
+         $this->startingAfter = $values['startingAfter'] ?? null;
+     }
++
++    /**
++     * @return ?float
++     */
++    public function getPage(): ?float
++    {
++        return $this->page;
++    }
++
++    /**
++     * @param ?float $value
++     */
++    public function setPage(?float $value = null): self
++    {
++        $this->page = $value;
++        $this->_setField('page');
++        return $this;
++    }
++
++    /**
++     * @return ?float
++     */
++    public function getPerPage(): ?float
++    {
++        return $this->perPage;
++    }
++
++    /**
++     * @param ?float $value
++     */
++    public function setPerPage(?float $value = null): self
++    {
++        $this->perPage = $value;
++        $this->_setField('perPage');
++        return $this;
++    }
++
++    /**
++     * @return ?value-of<Order>
++     */
++    public function getOrder(): ?string
++    {
++        return $this->order;
++    }
++
++    /**
++     * @param ?value-of<Order> $value
++     */
++    public function setOrder(?string $value = null): self
++    {
++        $this->order = $value;
++        $this->_setField('order');
++        return $this;
++    }
++
++    /**
++     * @return ?string
++     */
++    public function getStartingAfter(): ?string
++    {
++        return $this->startingAfter;
++    }
++
++    /**
++     * @param ?string $value
++     */
++    public function setStartingAfter(?string $value = null): self
++    {
++        $this->startingAfter = $value;
++        $this->_setField('startingAfter');
++        return $this;
++    }
+ }
+diff --git a/src/InlineUsers/InlineUsers/Requests/ListUsersExtendedRequest.php b/src/InlineUsers/InlineUsers/Requests/ListUsersExtendedRequest.php
+index 3bdd9852ee0..bd963e8998d 100644
+--- a/src/InlineUsers/InlineUsers/Requests/ListUsersExtendedRequest.php
++++ b/src/InlineUsers/InlineUsers/Requests/ListUsersExtendedRequest.php
+@@ -9,7 +9,7 @@ class ListUsersExtendedRequest extends JsonSerializableType
+     /**
+      * @var ?string $cursor
+      */
+-    public ?string $cursor;
++    private ?string $cursor;
+ 
+     /**
+      * @param array{
+@@ -21,4 +21,22 @@ class ListUsersExtendedRequest extends JsonSerializableType
+     ) {
+         $this->cursor = $values['cursor'] ?? null;
+     }
++
++    /**
++     * @return ?string
++     */
++    public function getCursor(): ?string
++    {
++        return $this->cursor;
++    }
++
++    /**
++     * @param ?string $value
++     */
++    public function setCursor(?string $value = null): self
++    {
++        $this->cursor = $value;
++        $this->_setField('cursor');
++        return $this;
++    }
+ }
+diff --git a/src/InlineUsers/InlineUsers/Requests/ListUsersExtendedRequestForOptionalData.php b/src/InlineUsers/InlineUsers/Requests/ListUsersExtendedRequestForOptionalData.php
+index 23838d951cd..423d9efe044 100644
+--- a/src/InlineUsers/InlineUsers/Requests/ListUsersExtendedRequestForOptionalData.php
++++ b/src/InlineUsers/InlineUsers/Requests/ListUsersExtendedRequestForOptionalData.php
+@@ -9,7 +9,7 @@ class ListUsersExtendedRequestForOptionalData extends JsonSerializableType
+     /**
+      * @var ?string $cursor
+      */
+-    public ?string $cursor;
++    private ?string $cursor;
+ 
+     /**
+      * @param array{
+@@ -21,4 +21,22 @@ class ListUsersExtendedRequestForOptionalData extends JsonSerializableType
+     ) {
+         $this->cursor = $values['cursor'] ?? null;
+     }
++
++    /**
++     * @return ?string
++     */
++    public function getCursor(): ?string
++    {
++        return $this->cursor;
++    }
++
++    /**
++     * @param ?string $value
++     */
++    public function setCursor(?string $value = null): self
++    {
++        $this->cursor = $value;
++        $this->_setField('cursor');
++        return $this;
++    }
+ }
+diff --git a/src/InlineUsers/InlineUsers/Requests/ListUsersMixedTypeCursorPaginationRequest.php b/src/InlineUsers/InlineUsers/Requests/ListUsersMixedTypeCursorPaginationRequest.php
+index a66d8a965c0..c125da873ba 100644
+--- a/src/InlineUsers/InlineUsers/Requests/ListUsersMixedTypeCursorPaginationRequest.php
++++ b/src/InlineUsers/InlineUsers/Requests/ListUsersMixedTypeCursorPaginationRequest.php
+@@ -9,7 +9,7 @@ class ListUsersMixedTypeCursorPaginationRequest extends JsonSerializableType
+     /**
+      * @var ?string $cursor
+      */
+-    public ?string $cursor;
++    private ?string $cursor;
+ 
+     /**
+      * @param array{
+@@ -21,4 +21,22 @@ class ListUsersMixedTypeCursorPaginationRequest extends JsonSerializableType
+     ) {
+         $this->cursor = $values['cursor'] ?? null;
+     }
++
++    /**
++     * @return ?string
++     */
++    public function getCursor(): ?string
++    {
++        return $this->cursor;
++    }
++
++    /**
++     * @param ?string $value
++     */
++    public function setCursor(?string $value = null): self
++    {
++        $this->cursor = $value;
++        $this->_setField('cursor');
++        return $this;
++    }
+ }
+diff --git a/src/InlineUsers/InlineUsers/Requests/ListUsersOffsetPaginationRequest.php b/src/InlineUsers/InlineUsers/Requests/ListUsersOffsetPaginationRequest.php
+index 8e669d5f853..ef661a9c5b5 100644
+--- a/src/InlineUsers/InlineUsers/Requests/ListUsersOffsetPaginationRequest.php
++++ b/src/InlineUsers/InlineUsers/Requests/ListUsersOffsetPaginationRequest.php
+@@ -10,17 +10,17 @@ class ListUsersOffsetPaginationRequest extends JsonSerializableType
+     /**
+      * @var ?int $page Defaults to first page
+      */
+-    public ?int $page;
++    private ?int $page;
+ 
+     /**
+      * @var ?int $perPage Defaults to per page
+      */
+-    public ?int $perPage;
++    private ?int $perPage;
+ 
+     /**
+      * @var ?value-of<Order> $order
+      */
+-    public ?string $order;
++    private ?string $order;
+ 
+     /**
+      * The cursor used for pagination in order to fetch
+@@ -28,7 +28,7 @@ class ListUsersOffsetPaginationRequest extends JsonSerializableType
+      *
+      * @var ?string $startingAfter
+      */
+-    public ?string $startingAfter;
++    private ?string $startingAfter;
+ 
+     /**
+      * @param array{
+@@ -46,4 +46,76 @@ class ListUsersOffsetPaginationRequest extends JsonSerializableType
+         $this->order = $values['order'] ?? null;
+         $this->startingAfter = $values['startingAfter'] ?? null;
+     }
++
++    /**
++     * @return ?int
++     */
++    public function getPage(): ?int
++    {
++        return $this->page;
++    }
++
++    /**
++     * @param ?int $value
++     */
++    public function setPage(?int $value = null): self
++    {
++        $this->page = $value;
++        $this->_setField('page');
++        return $this;
++    }
++
++    /**
++     * @return ?int
++     */
++    public function getPerPage(): ?int
++    {
++        return $this->perPage;
++    }
++
++    /**
++     * @param ?int $value
++     */
++    public function setPerPage(?int $value = null): self
++    {
++        $this->perPage = $value;
++        $this->_setField('perPage');
++        return $this;
++    }
++
++    /**
++     * @return ?value-of<Order>
++     */
++    public function getOrder(): ?string
++    {
++        return $this->order;
++    }
++
++    /**
++     * @param ?value-of<Order> $value
++     */
++    public function setOrder(?string $value = null): self
++    {
++        $this->order = $value;
++        $this->_setField('order');
++        return $this;
++    }
++
++    /**
++     * @return ?string
++     */
++    public function getStartingAfter(): ?string
++    {
++        return $this->startingAfter;
++    }
++
++    /**
++     * @param ?string $value
++     */
++    public function setStartingAfter(?string $value = null): self
++    {
++        $this->startingAfter = $value;
++        $this->_setField('startingAfter');
++        return $this;
++    }
+ }
+diff --git a/src/InlineUsers/InlineUsers/Requests/ListUsersOffsetStepPaginationRequest.php b/src/InlineUsers/InlineUsers/Requests/ListUsersOffsetStepPaginationRequest.php
+index d414c73e97b..da2c3919673 100644
+--- a/src/InlineUsers/InlineUsers/Requests/ListUsersOffsetStepPaginationRequest.php
++++ b/src/InlineUsers/InlineUsers/Requests/ListUsersOffsetStepPaginationRequest.php
+@@ -10,7 +10,7 @@ class ListUsersOffsetStepPaginationRequest extends JsonSerializableType
+     /**
+      * @var ?int $page Defaults to first page
+      */
+-    public ?int $page;
++    private ?int $page;
+ 
+     /**
+      * The maximum number of elements to return.
+@@ -19,12 +19,12 @@ class ListUsersOffsetStepPaginationRequest extends JsonSerializableType
+      *
+      * @var ?int $limit
+      */
+-    public ?int $limit;
++    private ?int $limit;
+ 
+     /**
+      * @var ?value-of<Order> $order
+      */
+-    public ?string $order;
++    private ?string $order;
+ 
+     /**
+      * @param array{
+@@ -40,4 +40,58 @@ class ListUsersOffsetStepPaginationRequest extends JsonSerializableType
+         $this->limit = $values['limit'] ?? null;
+         $this->order = $values['order'] ?? null;
+     }
++
++    /**
++     * @return ?int
++     */
++    public function getPage(): ?int
++    {
++        return $this->page;
++    }
++
++    /**
++     * @param ?int $value
++     */
++    public function setPage(?int $value = null): self
++    {
++        $this->page = $value;
++        $this->_setField('page');
++        return $this;
++    }
++
++    /**
++     * @return ?int
++     */
++    public function getLimit(): ?int
++    {
++        return $this->limit;
++    }
++
++    /**
++     * @param ?int $value
++     */
++    public function setLimit(?int $value = null): self
++    {
++        $this->limit = $value;
++        $this->_setField('limit');
++        return $this;
++    }
++
++    /**
++     * @return ?value-of<Order>
++     */
++    public function getOrder(): ?string
++    {
++        return $this->order;
++    }
++
++    /**
++     * @param ?value-of<Order> $value
++     */
++    public function setOrder(?string $value = null): self
++    {
++        $this->order = $value;
++        $this->_setField('order');
++        return $this;
++    }
+ }
+diff --git a/src/InlineUsers/InlineUsers/Requests/ListWithGlobalConfigRequest.php b/src/InlineUsers/InlineUsers/Requests/ListWithGlobalConfigRequest.php
+index f12ee9a5cce..512aac0c1c2 100644
+--- a/src/InlineUsers/InlineUsers/Requests/ListWithGlobalConfigRequest.php
++++ b/src/InlineUsers/InlineUsers/Requests/ListWithGlobalConfigRequest.php
+@@ -9,7 +9,7 @@ class ListWithGlobalConfigRequest extends JsonSerializableType
+     /**
+      * @var ?int $offset
+      */
+-    public ?int $offset;
++    private ?int $offset;
+ 
+     /**
+      * @param array{
+@@ -21,4 +21,22 @@ class ListWithGlobalConfigRequest extends JsonSerializableType
+     ) {
+         $this->offset = $values['offset'] ?? null;
+     }
++
++    /**
++     * @return ?int
++     */
++    public function getOffset(): ?int
++    {
++        return $this->offset;
++    }
++
++    /**
++     * @param ?int $value
++     */
++    public function setOffset(?int $value = null): self
++    {
++        $this->offset = $value;
++        $this->_setField('offset');
++        return $this;
++    }
+ }
+diff --git a/src/InlineUsers/InlineUsers/Requests/ListWithOffsetPaginationHasNextPageRequest.php b/src/InlineUsers/InlineUsers/Requests/ListWithOffsetPaginationHasNextPageRequest.php
+index 2773e59aa33..ff030ec053e 100644
+--- a/src/InlineUsers/InlineUsers/Requests/ListWithOffsetPaginationHasNextPageRequest.php
++++ b/src/InlineUsers/InlineUsers/Requests/ListWithOffsetPaginationHasNextPageRequest.php
+@@ -10,7 +10,7 @@ class ListWithOffsetPaginationHasNextPageRequest extends JsonSerializableType
+     /**
+      * @var ?int $page Defaults to first page
+      */
+-    public ?int $page;
++    private ?int $page;
+ 
+     /**
+      * The maximum number of elements to return.
+@@ -19,12 +19,12 @@ class ListWithOffsetPaginationHasNextPageRequest extends JsonSerializableType
+      *
+      * @var ?int $limit
+      */
+-    public ?int $limit;
++    private ?int $limit;
+ 
+     /**
+      * @var ?value-of<Order> $order
+      */
+-    public ?string $order;
++    private ?string $order;
+ 
+     /**
+      * @param array{
+@@ -40,4 +40,58 @@ class ListWithOffsetPaginationHasNextPageRequest extends JsonSerializableType
+         $this->limit = $values['limit'] ?? null;
+         $this->order = $values['order'] ?? null;
+     }
++
++    /**
++     * @return ?int
++     */
++    public function getPage(): ?int
++    {
++        return $this->page;
++    }
++
++    /**
++     * @param ?int $value
++     */
++    public function setPage(?int $value = null): self
++    {
++        $this->page = $value;
++        $this->_setField('page');
++        return $this;
++    }
++
++    /**
++     * @return ?int
++     */
++    public function getLimit(): ?int
++    {
++        return $this->limit;
++    }
++
++    /**
++     * @param ?int $value
++     */
++    public function setLimit(?int $value = null): self
++    {
++        $this->limit = $value;
++        $this->_setField('limit');
++        return $this;
++    }
++
++    /**
++     * @return ?value-of<Order>
++     */
++    public function getOrder(): ?string
++    {
++        return $this->order;
++    }
++
++    /**
++     * @param ?value-of<Order> $value
++     */
++    public function setOrder(?string $value = null): self
++    {
++        $this->order = $value;
++        $this->_setField('order');
++        return $this;
++    }
+ }
+diff --git a/src/InlineUsers/InlineUsers/Traits/UserOptionalListPage.php b/src/InlineUsers/InlineUsers/Traits/UserOptionalListPage.php
+index 1b985b5c50d..7d0cadf44f0 100644
+--- a/src/InlineUsers/InlineUsers/Traits/UserOptionalListPage.php
++++ b/src/InlineUsers/InlineUsers/Traits/UserOptionalListPage.php
+@@ -15,11 +15,47 @@ trait UserOptionalListPage
+      * @var UserOptionalListContainer $data
+      */
+     #[JsonProperty('data')]
+-    public UserOptionalListContainer $data;
++    private UserOptionalListContainer $data;
+ 
+     /**
+      * @var ?string $next
+      */
+     #[JsonProperty('next')]
+-    public ?string $next;
++    private ?string $next;
++
++    /**
++     * @return UserOptionalListContainer
++     */
++    public function getData(): UserOptionalListContainer
++    {
++        return $this->data;
++    }
++
++    /**
++     * @param UserOptionalListContainer $value
++     */
++    public function setData(UserOptionalListContainer $value): self
++    {
++        $this->data = $value;
++        $this->_setField('data');
++        return $this;
++    }
++
++    /**
++     * @return ?string
++     */
++    public function getNext(): ?string
++    {
++        return $this->next;
++    }
++
++    /**
++     * @param ?string $value
++     */
++    public function setNext(?string $value = null): self
++    {
++        $this->next = $value;
++        $this->_setField('next');
++        return $this;
++    }
+ }
+diff --git a/src/InlineUsers/InlineUsers/Traits/UserPage.php b/src/InlineUsers/InlineUsers/Traits/UserPage.php
+index 713e0ab603e..28ac9a5b471 100644
+--- a/src/InlineUsers/InlineUsers/Traits/UserPage.php
++++ b/src/InlineUsers/InlineUsers/Traits/UserPage.php
+@@ -15,11 +15,47 @@ trait UserPage
+      * @var UserListContainer $data
+      */
+     #[JsonProperty('data')]
+-    public UserListContainer $data;
++    private UserListContainer $data;
+ 
+     /**
+      * @var ?string $next
+      */
+     #[JsonProperty('next')]
+-    public ?string $next;
++    private ?string $next;
++
++    /**
++     * @return UserListContainer
++     */
++    public function getData(): UserListContainer
++    {
++        return $this->data;
++    }
++
++    /**
++     * @param UserListContainer $value
++     */
++    public function setData(UserListContainer $value): self
++    {
++        $this->data = $value;
++        $this->_setField('data');
++        return $this;
++    }
++
++    /**
++     * @return ?string
++     */
++    public function getNext(): ?string
++    {
++        return $this->next;
++    }
++
++    /**
++     * @param ?string $value
++     */
++    public function setNext(?string $value = null): self
++    {
++        $this->next = $value;
++        $this->_setField('next');
++        return $this;
++    }
+ }
+diff --git a/src/InlineUsers/InlineUsers/Types/ListUsersExtendedOptionalListResponse.php b/src/InlineUsers/InlineUsers/Types/ListUsersExtendedOptionalListResponse.php
+index d757af589cf..0fc6c4f0f75 100644
+--- a/src/InlineUsers/InlineUsers/Types/ListUsersExtendedOptionalListResponse.php
++++ b/src/InlineUsers/InlineUsers/Types/ListUsersExtendedOptionalListResponse.php
+@@ -14,7 +14,7 @@ class ListUsersExtendedOptionalListResponse extends JsonSerializableType
+      * @var int $totalCount The totall number of /users
+      */
+     #[JsonProperty('total_count')]
+-    public int $totalCount;
++    private int $totalCount;
+ 
+     /**
+      * @param array{
+@@ -31,6 +31,24 @@ class ListUsersExtendedOptionalListResponse extends JsonSerializableType
+         $this->totalCount = $values['totalCount'];
+     }
+ 
++    /**
++     * @return int
++     */
++    public function getTotalCount(): int
++    {
++        return $this->totalCount;
++    }
++
++    /**
++     * @param int $value
++     */
++    public function setTotalCount(int $value): self
++    {
++        $this->totalCount = $value;
++        $this->_setField('totalCount');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/InlineUsers/InlineUsers/Types/ListUsersExtendedResponse.php b/src/InlineUsers/InlineUsers/Types/ListUsersExtendedResponse.php
+index 91216f8bab0..c42717e93b2 100644
+--- a/src/InlineUsers/InlineUsers/Types/ListUsersExtendedResponse.php
++++ b/src/InlineUsers/InlineUsers/Types/ListUsersExtendedResponse.php
+@@ -14,7 +14,7 @@ class ListUsersExtendedResponse extends JsonSerializableType
+      * @var int $totalCount The totall number of /users
+      */
+     #[JsonProperty('total_count')]
+-    public int $totalCount;
++    private int $totalCount;
+ 
+     /**
+      * @param array{
+@@ -31,6 +31,24 @@ class ListUsersExtendedResponse extends JsonSerializableType
+         $this->totalCount = $values['totalCount'];
+     }
+ 
++    /**
++     * @return int
++     */
++    public function getTotalCount(): int
++    {
++        return $this->totalCount;
++    }
++
++    /**
++     * @param int $value
++     */
++    public function setTotalCount(int $value): self
++    {
++        $this->totalCount = $value;
++        $this->_setField('totalCount');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/InlineUsers/InlineUsers/Types/ListUsersMixedTypePaginationResponse.php b/src/InlineUsers/InlineUsers/Types/ListUsersMixedTypePaginationResponse.php
+index d7970ddec96..4ec5731e813 100644
+--- a/src/InlineUsers/InlineUsers/Types/ListUsersMixedTypePaginationResponse.php
++++ b/src/InlineUsers/InlineUsers/Types/ListUsersMixedTypePaginationResponse.php
+@@ -11,13 +11,13 @@ class ListUsersMixedTypePaginationResponse extends JsonSerializableType
+      * @var string $next
+      */
+     #[JsonProperty('next')]
+-    public string $next;
++    private string $next;
+ 
+     /**
+      * @var Users $data
+      */
+     #[JsonProperty('data')]
+-    public Users $data;
++    private Users $data;
+ 
+     /**
+      * @param array{
+@@ -32,6 +32,42 @@ class ListUsersMixedTypePaginationResponse extends JsonSerializableType
+         $this->data = $values['data'];
+     }
+ 
++    /**
++     * @return string
++     */
++    public function getNext(): string
++    {
++        return $this->next;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setNext(string $value): self
++    {
++        $this->next = $value;
++        $this->_setField('next');
++        return $this;
++    }
++
++    /**
++     * @return Users
++     */
++    public function getData(): Users
++    {
++        return $this->data;
++    }
++
++    /**
++     * @param Users $value
++     */
++    public function setData(Users $value): self
++    {
++        $this->data = $value;
++        $this->_setField('data');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/InlineUsers/InlineUsers/Types/ListUsersPaginationResponse.php b/src/InlineUsers/InlineUsers/Types/ListUsersPaginationResponse.php
+index dfa9bb45716..64a53b4fc55 100644
+--- a/src/InlineUsers/InlineUsers/Types/ListUsersPaginationResponse.php
++++ b/src/InlineUsers/InlineUsers/Types/ListUsersPaginationResponse.php
+@@ -11,25 +11,25 @@ class ListUsersPaginationResponse extends JsonSerializableType
+      * @var ?bool $hasNextPage
+      */
+     #[JsonProperty('hasNextPage')]
+-    public ?bool $hasNextPage;
++    private ?bool $hasNextPage;
+ 
+     /**
+      * @var ?Page $page
+      */
+     #[JsonProperty('page')]
+-    public ?Page $page;
++    private ?Page $page;
+ 
+     /**
+      * @var int $totalCount The totall number of /users
+      */
+     #[JsonProperty('total_count')]
+-    public int $totalCount;
++    private int $totalCount;
+ 
+     /**
+      * @var Users $data
+      */
+     #[JsonProperty('data')]
+-    public Users $data;
++    private Users $data;
+ 
+     /**
+      * @param array{
+@@ -48,6 +48,78 @@ class ListUsersPaginationResponse extends JsonSerializableType
+         $this->data = $values['data'];
+     }
+ 
++    /**
++     * @return ?bool
++     */
++    public function getHasNextPage(): ?bool
++    {
++        return $this->hasNextPage;
++    }
++
++    /**
++     * @param ?bool $value
++     */
++    public function setHasNextPage(?bool $value = null): self
++    {
++        $this->hasNextPage = $value;
++        $this->_setField('hasNextPage');
++        return $this;
++    }
++
++    /**
++     * @return ?Page
++     */
++    public function getPage(): ?Page
++    {
++        return $this->page;
++    }
++
++    /**
++     * @param ?Page $value
++     */
++    public function setPage(?Page $value = null): self
++    {
++        $this->page = $value;
++        $this->_setField('page');
++        return $this;
++    }
++
++    /**
++     * @return int
++     */
++    public function getTotalCount(): int
++    {
++        return $this->totalCount;
++    }
++
++    /**
++     * @param int $value
++     */
++    public function setTotalCount(int $value): self
++    {
++        $this->totalCount = $value;
++        $this->_setField('totalCount');
++        return $this;
++    }
++
++    /**
++     * @return Users
++     */
++    public function getData(): Users
++    {
++        return $this->data;
++    }
++
++    /**
++     * @param Users $value
++     */
++    public function setData(Users $value): self
++    {
++        $this->data = $value;
++        $this->_setField('data');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/InlineUsers/InlineUsers/Types/NextPage.php b/src/InlineUsers/InlineUsers/Types/NextPage.php
+index a7254f72340..c3306027b7b 100644
+--- a/src/InlineUsers/InlineUsers/Types/NextPage.php
++++ b/src/InlineUsers/InlineUsers/Types/NextPage.php
+@@ -11,13 +11,13 @@ class NextPage extends JsonSerializableType
+      * @var int $page
+      */
+     #[JsonProperty('page')]
+-    public int $page;
++    private int $page;
+ 
+     /**
+      * @var string $startingAfter
+      */
+     #[JsonProperty('starting_after')]
+-    public string $startingAfter;
++    private string $startingAfter;
+ 
+     /**
+      * @param array{
+@@ -32,6 +32,42 @@ class NextPage extends JsonSerializableType
+         $this->startingAfter = $values['startingAfter'];
+     }
+ 
++    /**
++     * @return int
++     */
++    public function getPage(): int
++    {
++        return $this->page;
++    }
++
++    /**
++     * @param int $value
++     */
++    public function setPage(int $value): self
++    {
++        $this->page = $value;
++        $this->_setField('page');
++        return $this;
++    }
++
++    /**
++     * @return string
++     */
++    public function getStartingAfter(): string
++    {
++        return $this->startingAfter;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setStartingAfter(string $value): self
++    {
++        $this->startingAfter = $value;
++        $this->_setField('startingAfter');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/InlineUsers/InlineUsers/Types/Page.php b/src/InlineUsers/InlineUsers/Types/Page.php
+index 3cab33f1da0..339c38c5a54 100644
+--- a/src/InlineUsers/InlineUsers/Types/Page.php
++++ b/src/InlineUsers/InlineUsers/Types/Page.php
+@@ -11,25 +11,25 @@ class Page extends JsonSerializableType
+      * @var int $page The current page
+      */
+     #[JsonProperty('page')]
+-    public int $page;
++    private int $page;
+ 
+     /**
+      * @var ?NextPage $next
+      */
+     #[JsonProperty('next')]
+-    public ?NextPage $next;
++    private ?NextPage $next;
+ 
+     /**
+      * @var int $perPage
+      */
+     #[JsonProperty('per_page')]
+-    public int $perPage;
++    private int $perPage;
+ 
+     /**
+      * @var int $totalPage
+      */
+     #[JsonProperty('total_page')]
+-    public int $totalPage;
++    private int $totalPage;
+ 
+     /**
+      * @param array{
+@@ -48,6 +48,78 @@ class Page extends JsonSerializableType
+         $this->totalPage = $values['totalPage'];
+     }
+ 
++    /**
++     * @return int
++     */
++    public function getPage(): int
++    {
++        return $this->page;
++    }
++
++    /**
++     * @param int $value
++     */
++    public function setPage(int $value): self
++    {
++        $this->page = $value;
++        $this->_setField('page');
++        return $this;
++    }
++
++    /**
++     * @return ?NextPage
++     */
++    public function getNext(): ?NextPage
++    {
++        return $this->next;
++    }
++
++    /**
++     * @param ?NextPage $value
++     */
++    public function setNext(?NextPage $value = null): self
++    {
++        $this->next = $value;
++        $this->_setField('next');
++        return $this;
++    }
++
++    /**
++     * @return int
++     */
++    public function getPerPage(): int
++    {
++        return $this->perPage;
++    }
++
++    /**
++     * @param int $value
++     */
++    public function setPerPage(int $value): self
++    {
++        $this->perPage = $value;
++        $this->_setField('perPage');
++        return $this;
++    }
++
++    /**
++     * @return int
++     */
++    public function getTotalPage(): int
++    {
++        return $this->totalPage;
++    }
++
++    /**
++     * @param int $value
++     */
++    public function setTotalPage(int $value): self
++    {
++        $this->totalPage = $value;
++        $this->_setField('totalPage');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/InlineUsers/InlineUsers/Types/User.php b/src/InlineUsers/InlineUsers/Types/User.php
+index 21f461f2f02..fe566d14838 100644
+--- a/src/InlineUsers/InlineUsers/Types/User.php
++++ b/src/InlineUsers/InlineUsers/Types/User.php
+@@ -11,13 +11,13 @@ class User extends JsonSerializableType
+      * @var string $name
+      */
+     #[JsonProperty('name')]
+-    public string $name;
++    private string $name;
+ 
+     /**
+      * @var int $id
+      */
+     #[JsonProperty('id')]
+-    public int $id;
++    private int $id;
+ 
+     /**
+      * @param array{
+@@ -32,6 +32,42 @@ class User extends JsonSerializableType
+         $this->id = $values['id'];
+     }
+ 
++    /**
++     * @return string
++     */
++    public function getName(): string
++    {
++        return $this->name;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setName(string $value): self
++    {
++        $this->name = $value;
++        $this->_setField('name');
++        return $this;
++    }
++
++    /**
++     * @return int
++     */
++    public function getId(): int
++    {
++        return $this->id;
++    }
++
++    /**
++     * @param int $value
++     */
++    public function setId(int $value): self
++    {
++        $this->id = $value;
++        $this->_setField('id');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/InlineUsers/InlineUsers/Types/UserListContainer.php b/src/InlineUsers/InlineUsers/Types/UserListContainer.php
+index faedb33f2c5..a8b2449b5e6 100644
+--- a/src/InlineUsers/InlineUsers/Types/UserListContainer.php
++++ b/src/InlineUsers/InlineUsers/Types/UserListContainer.php
+@@ -12,7 +12,7 @@ class UserListContainer extends JsonSerializableType
+      * @var array<User> $users
+      */
+     #[JsonProperty('users'), ArrayType([User::class])]
+-    public array $users;
++    private array $users;
+ 
+     /**
+      * @param array{
+@@ -25,6 +25,24 @@ class UserListContainer extends JsonSerializableType
+         $this->users = $values['users'];
+     }
+ 
++    /**
++     * @return array<User>
++     */
++    public function getUsers(): array
++    {
++        return $this->users;
++    }
++
++    /**
++     * @param array<User> $value
++     */
++    public function setUsers(array $value): self
++    {
++        $this->users = $value;
++        $this->_setField('users');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/InlineUsers/InlineUsers/Types/UserOptionalListContainer.php b/src/InlineUsers/InlineUsers/Types/UserOptionalListContainer.php
+index 62d2d4d2179..d23ef5cf9c3 100644
+--- a/src/InlineUsers/InlineUsers/Types/UserOptionalListContainer.php
++++ b/src/InlineUsers/InlineUsers/Types/UserOptionalListContainer.php
+@@ -12,7 +12,7 @@ class UserOptionalListContainer extends JsonSerializableType
+      * @var ?array<User> $users
+      */
+     #[JsonProperty('users'), ArrayType([User::class])]
+-    public ?array $users;
++    private ?array $users;
+ 
+     /**
+      * @param array{
+@@ -25,6 +25,24 @@ class UserOptionalListContainer extends JsonSerializableType
+         $this->users = $values['users'] ?? null;
+     }
+ 
++    /**
++     * @return ?array<User>
++     */
++    public function getUsers(): ?array
++    {
++        return $this->users;
++    }
++
++    /**
++     * @param ?array<User> $value
++     */
++    public function setUsers(?array $value = null): self
++    {
++        $this->users = $value;
++        $this->_setField('users');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/InlineUsers/InlineUsers/Types/UserOptionalListPage.php b/src/InlineUsers/InlineUsers/Types/UserOptionalListPage.php
+index 5dc0efc8654..de8cc353062 100644
+--- a/src/InlineUsers/InlineUsers/Types/UserOptionalListPage.php
++++ b/src/InlineUsers/InlineUsers/Types/UserOptionalListPage.php
+@@ -11,13 +11,13 @@ class UserOptionalListPage extends JsonSerializableType
+      * @var UserOptionalListContainer $data
+      */
+     #[JsonProperty('data')]
+-    public UserOptionalListContainer $data;
++    private UserOptionalListContainer $data;
+ 
+     /**
+      * @var ?string $next
+      */
+     #[JsonProperty('next')]
+-    public ?string $next;
++    private ?string $next;
+ 
+     /**
+      * @param array{
+@@ -32,6 +32,42 @@ class UserOptionalListPage extends JsonSerializableType
+         $this->next = $values['next'] ?? null;
+     }
+ 
++    /**
++     * @return UserOptionalListContainer
++     */
++    public function getData(): UserOptionalListContainer
++    {
++        return $this->data;
++    }
++
++    /**
++     * @param UserOptionalListContainer $value
++     */
++    public function setData(UserOptionalListContainer $value): self
++    {
++        $this->data = $value;
++        $this->_setField('data');
++        return $this;
++    }
++
++    /**
++     * @return ?string
++     */
++    public function getNext(): ?string
++    {
++        return $this->next;
++    }
++
++    /**
++     * @param ?string $value
++     */
++    public function setNext(?string $value = null): self
++    {
++        $this->next = $value;
++        $this->_setField('next');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/InlineUsers/InlineUsers/Types/UserPage.php b/src/InlineUsers/InlineUsers/Types/UserPage.php
+index fda4454686d..87521b97b36 100644
+--- a/src/InlineUsers/InlineUsers/Types/UserPage.php
++++ b/src/InlineUsers/InlineUsers/Types/UserPage.php
+@@ -11,13 +11,13 @@ class UserPage extends JsonSerializableType
+      * @var UserListContainer $data
+      */
+     #[JsonProperty('data')]
+-    public UserListContainer $data;
++    private UserListContainer $data;
+ 
+     /**
+      * @var ?string $next
+      */
+     #[JsonProperty('next')]
+-    public ?string $next;
++    private ?string $next;
+ 
+     /**
+      * @param array{
+@@ -32,6 +32,42 @@ class UserPage extends JsonSerializableType
+         $this->next = $values['next'] ?? null;
+     }
+ 
++    /**
++     * @return UserListContainer
++     */
++    public function getData(): UserListContainer
++    {
++        return $this->data;
++    }
++
++    /**
++     * @param UserListContainer $value
++     */
++    public function setData(UserListContainer $value): self
++    {
++        $this->data = $value;
++        $this->_setField('data');
++        return $this;
++    }
++
++    /**
++     * @return ?string
++     */
++    public function getNext(): ?string
++    {
++        return $this->next;
++    }
++
++    /**
++     * @param ?string $value
++     */
++    public function setNext(?string $value = null): self
++    {
++        $this->next = $value;
++        $this->_setField('next');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/InlineUsers/InlineUsers/Types/UsernameContainer.php b/src/InlineUsers/InlineUsers/Types/UsernameContainer.php
+index afa80fe2b54..90f38ba78e3 100644
+--- a/src/InlineUsers/InlineUsers/Types/UsernameContainer.php
++++ b/src/InlineUsers/InlineUsers/Types/UsernameContainer.php
+@@ -12,7 +12,7 @@ class UsernameContainer extends JsonSerializableType
+      * @var array<string> $results
+      */
+     #[JsonProperty('results'), ArrayType(['string'])]
+-    public array $results;
++    private array $results;
+ 
+     /**
+      * @param array{
+@@ -25,6 +25,24 @@ class UsernameContainer extends JsonSerializableType
+         $this->results = $values['results'];
+     }
+ 
++    /**
++     * @return array<string>
++     */
++    public function getResults(): array
++    {
++        return $this->results;
++    }
++
++    /**
++     * @param array<string> $value
++     */
++    public function setResults(array $value): self
++    {
++        $this->results = $value;
++        $this->_setField('results');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/InlineUsers/InlineUsers/Types/Users.php b/src/InlineUsers/InlineUsers/Types/Users.php
+index 408324376b2..252368f2239 100644
+--- a/src/InlineUsers/InlineUsers/Types/Users.php
++++ b/src/InlineUsers/InlineUsers/Types/Users.php
+@@ -12,7 +12,7 @@ class Users extends JsonSerializableType
+      * @var array<User> $users
+      */
+     #[JsonProperty('users'), ArrayType([User::class])]
+-    public array $users;
++    private array $users;
+ 
+     /**
+      * @param array{
+@@ -25,6 +25,24 @@ class Users extends JsonSerializableType
+         $this->users = $values['users'];
+     }
+ 
++    /**
++     * @return array<User>
++     */
++    public function getUsers(): array
++    {
++        return $this->users;
++    }
++
++    /**
++     * @param array<User> $value
++     */
++    public function setUsers(array $value): self
++    {
++        $this->users = $value;
++        $this->_setField('users');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/InlineUsers/InlineUsers/Types/WithCursor.php b/src/InlineUsers/InlineUsers/Types/WithCursor.php
+index d07a1d9d2b2..7df8d927efe 100644
+--- a/src/InlineUsers/InlineUsers/Types/WithCursor.php
++++ b/src/InlineUsers/InlineUsers/Types/WithCursor.php
+@@ -11,7 +11,7 @@ class WithCursor extends JsonSerializableType
+      * @var ?string $cursor
+      */
+     #[JsonProperty('cursor')]
+-    public ?string $cursor;
++    private ?string $cursor;
+ 
+     /**
+      * @param array{
+@@ -24,6 +24,24 @@ class WithCursor extends JsonSerializableType
+         $this->cursor = $values['cursor'] ?? null;
+     }
+ 
++    /**
++     * @return ?string
++     */
++    public function getCursor(): ?string
++    {
++        return $this->cursor;
++    }
++
++    /**
++     * @param ?string $value
++     */
++    public function setCursor(?string $value = null): self
++    {
++        $this->cursor = $value;
++        $this->_setField('cursor');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/InlineUsers/InlineUsers/Types/WithPage.php b/src/InlineUsers/InlineUsers/Types/WithPage.php
+index 54aaba36aa8..3a83e09bca5 100644
+--- a/src/InlineUsers/InlineUsers/Types/WithPage.php
++++ b/src/InlineUsers/InlineUsers/Types/WithPage.php
+@@ -11,7 +11,7 @@ class WithPage extends JsonSerializableType
+      * @var ?int $page
+      */
+     #[JsonProperty('page')]
+-    public ?int $page;
++    private ?int $page;
+ 
+     /**
+      * @param array{
+@@ -24,6 +24,24 @@ class WithPage extends JsonSerializableType
+         $this->page = $values['page'] ?? null;
+     }
+ 
++    /**
++     * @return ?int
++     */
++    public function getPage(): ?int
++    {
++        return $this->page;
++    }
++
++    /**
++     * @param ?int $value
++     */
++    public function setPage(?int $value = null): self
++    {
++        $this->page = $value;
++        $this->_setField('page');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Types/UsernameCursor.php b/src/Types/UsernameCursor.php
+index e64d44fa92c..a7ca98f6993 100644
+--- a/src/Types/UsernameCursor.php
++++ b/src/Types/UsernameCursor.php
+@@ -11,7 +11,7 @@ class UsernameCursor extends JsonSerializableType
+      * @var UsernamePage $cursor
+      */
+     #[JsonProperty('cursor')]
+-    public UsernamePage $cursor;
++    private UsernamePage $cursor;
+ 
+     /**
+      * @param array{
+@@ -24,6 +24,24 @@ class UsernameCursor extends JsonSerializableType
+         $this->cursor = $values['cursor'];
+     }
+ 
++    /**
++     * @return UsernamePage
++     */
++    public function getCursor(): UsernamePage
++    {
++        return $this->cursor;
++    }
++
++    /**
++     * @param UsernamePage $value
++     */
++    public function setCursor(UsernamePage $value): self
++    {
++        $this->cursor = $value;
++        $this->_setField('cursor');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Types/UsernamePage.php b/src/Types/UsernamePage.php
+index c21651929c0..b0372a3099b 100644
+--- a/src/Types/UsernamePage.php
++++ b/src/Types/UsernamePage.php
+@@ -12,13 +12,13 @@ class UsernamePage extends JsonSerializableType
+      * @var ?string $after
+      */
+     #[JsonProperty('after')]
+-    public ?string $after;
++    private ?string $after;
+ 
+     /**
+      * @var array<string> $data
+      */
+     #[JsonProperty('data'), ArrayType(['string'])]
+-    public array $data;
++    private array $data;
+ 
+     /**
+      * @param array{
+@@ -33,6 +33,42 @@ class UsernamePage extends JsonSerializableType
+         $this->data = $values['data'];
+     }
+ 
++    /**
++     * @return ?string
++     */
++    public function getAfter(): ?string
++    {
++        return $this->after;
++    }
++
++    /**
++     * @param ?string $value
++     */
++    public function setAfter(?string $value = null): self
++    {
++        $this->after = $value;
++        $this->_setField('after');
++        return $this;
++    }
++
++    /**
++     * @return array<string>
++     */
++    public function getData(): array
++    {
++        return $this->data;
++    }
++
++    /**
++     * @param array<string> $value
++     */
++    public function setData(array $value): self
++    {
++        $this->data = $value;
++        $this->_setField('data');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Users/Requests/ListUsernamesRequest.php b/src/Users/Requests/ListUsernamesRequest.php
+index d8a2ea1bbe0..c5325897b8e 100644
+--- a/src/Users/Requests/ListUsernamesRequest.php
++++ b/src/Users/Requests/ListUsernamesRequest.php
+@@ -12,7 +12,7 @@ class ListUsernamesRequest extends JsonSerializableType
+      *
+      * @var ?string $startingAfter
+      */
+-    public ?string $startingAfter;
++    private ?string $startingAfter;
+ 
+     /**
+      * @param array{
+@@ -24,4 +24,22 @@ class ListUsernamesRequest extends JsonSerializableType
+     ) {
+         $this->startingAfter = $values['startingAfter'] ?? null;
+     }
++
++    /**
++     * @return ?string
++     */
++    public function getStartingAfter(): ?string
++    {
++        return $this->startingAfter;
++    }
++
++    /**
++     * @param ?string $value
++     */
++    public function setStartingAfter(?string $value = null): self
++    {
++        $this->startingAfter = $value;
++        $this->_setField('startingAfter');
++        return $this;
++    }
+ }
+diff --git a/src/Users/Requests/ListUsernamesWithOptionalResponseRequest.php b/src/Users/Requests/ListUsernamesWithOptionalResponseRequest.php
+index 218a5fb0181..c823df61518 100644
+--- a/src/Users/Requests/ListUsernamesWithOptionalResponseRequest.php
++++ b/src/Users/Requests/ListUsernamesWithOptionalResponseRequest.php
+@@ -12,7 +12,7 @@ class ListUsernamesWithOptionalResponseRequest extends JsonSerializableType
+      *
+      * @var ?string $startingAfter
+      */
+-    public ?string $startingAfter;
++    private ?string $startingAfter;
+ 
+     /**
+      * @param array{
+@@ -24,4 +24,22 @@ class ListUsernamesWithOptionalResponseRequest extends JsonSerializableType
+     ) {
+         $this->startingAfter = $values['startingAfter'] ?? null;
+     }
++
++    /**
++     * @return ?string
++     */
++    public function getStartingAfter(): ?string
++    {
++        return $this->startingAfter;
++    }
++
++    /**
++     * @param ?string $value
++     */
++    public function setStartingAfter(?string $value = null): self
++    {
++        $this->startingAfter = $value;
++        $this->_setField('startingAfter');
++        return $this;
++    }
+ }
+diff --git a/src/Users/Requests/ListUsersAliasedDataRequest.php b/src/Users/Requests/ListUsersAliasedDataRequest.php
+index f0794d24d13..c886501e1cb 100644
+--- a/src/Users/Requests/ListUsersAliasedDataRequest.php
++++ b/src/Users/Requests/ListUsersAliasedDataRequest.php
+@@ -9,12 +9,12 @@ class ListUsersAliasedDataRequest extends JsonSerializableType
+     /**
+      * @var ?int $page Defaults to first page
+      */
+-    public ?int $page;
++    private ?int $page;
+ 
+     /**
+      * @var ?int $perPage Defaults to per page
+      */
+-    public ?int $perPage;
++    private ?int $perPage;
+ 
+     /**
+      * The cursor used for pagination in order to fetch
+@@ -22,7 +22,7 @@ class ListUsersAliasedDataRequest extends JsonSerializableType
+      *
+      * @var ?string $startingAfter
+      */
+-    public ?string $startingAfter;
++    private ?string $startingAfter;
+ 
+     /**
+      * @param array{
+@@ -38,4 +38,58 @@ class ListUsersAliasedDataRequest extends JsonSerializableType
+         $this->perPage = $values['perPage'] ?? null;
+         $this->startingAfter = $values['startingAfter'] ?? null;
+     }
++
++    /**
++     * @return ?int
++     */
++    public function getPage(): ?int
++    {
++        return $this->page;
++    }
++
++    /**
++     * @param ?int $value
++     */
++    public function setPage(?int $value = null): self
++    {
++        $this->page = $value;
++        $this->_setField('page');
++        return $this;
++    }
++
++    /**
++     * @return ?int
++     */
++    public function getPerPage(): ?int
++    {
++        return $this->perPage;
++    }
++
++    /**
++     * @param ?int $value
++     */
++    public function setPerPage(?int $value = null): self
++    {
++        $this->perPage = $value;
++        $this->_setField('perPage');
++        return $this;
++    }
++
++    /**
++     * @return ?string
++     */
++    public function getStartingAfter(): ?string
++    {
++        return $this->startingAfter;
++    }
++
++    /**
++     * @param ?string $value
++     */
++    public function setStartingAfter(?string $value = null): self
++    {
++        $this->startingAfter = $value;
++        $this->_setField('startingAfter');
++        return $this;
++    }
+ }
+diff --git a/src/Users/Requests/ListUsersBodyCursorPaginationRequest.php b/src/Users/Requests/ListUsersBodyCursorPaginationRequest.php
+index f1b508c220b..8d51e8c199a 100644
+--- a/src/Users/Requests/ListUsersBodyCursorPaginationRequest.php
++++ b/src/Users/Requests/ListUsersBodyCursorPaginationRequest.php
+@@ -15,7 +15,7 @@ class ListUsersBodyCursorPaginationRequest extends JsonSerializableType
+      * @var ?WithCursor $pagination
+      */
+     #[JsonProperty('pagination')]
+-    public ?WithCursor $pagination;
++    private ?WithCursor $pagination;
+ 
+     /**
+      * @param array{
+@@ -27,4 +27,22 @@ class ListUsersBodyCursorPaginationRequest extends JsonSerializableType
+     ) {
+         $this->pagination = $values['pagination'] ?? null;
+     }
++
++    /**
++     * @return ?WithCursor
++     */
++    public function getPagination(): ?WithCursor
++    {
++        return $this->pagination;
++    }
++
++    /**
++     * @param ?WithCursor $value
++     */
++    public function setPagination(?WithCursor $value = null): self
++    {
++        $this->pagination = $value;
++        $this->_setField('pagination');
++        return $this;
++    }
+ }
+diff --git a/src/Users/Requests/ListUsersBodyOffsetPaginationRequest.php b/src/Users/Requests/ListUsersBodyOffsetPaginationRequest.php
+index bbe529d63da..482a1495671 100644
+--- a/src/Users/Requests/ListUsersBodyOffsetPaginationRequest.php
++++ b/src/Users/Requests/ListUsersBodyOffsetPaginationRequest.php
+@@ -15,7 +15,7 @@ class ListUsersBodyOffsetPaginationRequest extends JsonSerializableType
+      * @var ?WithPage $pagination
+      */
+     #[JsonProperty('pagination')]
+-    public ?WithPage $pagination;
++    private ?WithPage $pagination;
+ 
+     /**
+      * @param array{
+@@ -27,4 +27,22 @@ class ListUsersBodyOffsetPaginationRequest extends JsonSerializableType
+     ) {
+         $this->pagination = $values['pagination'] ?? null;
+     }
++
++    /**
++     * @return ?WithPage
++     */
++    public function getPagination(): ?WithPage
++    {
++        return $this->pagination;
++    }
++
++    /**
++     * @param ?WithPage $value
++     */
++    public function setPagination(?WithPage $value = null): self
++    {
++        $this->pagination = $value;
++        $this->_setField('pagination');
++        return $this;
++    }
+ }
+diff --git a/src/Users/Requests/ListUsersCursorPaginationRequest.php b/src/Users/Requests/ListUsersCursorPaginationRequest.php
+index 02eaa03a200..a0f1a94c20f 100644
+--- a/src/Users/Requests/ListUsersCursorPaginationRequest.php
++++ b/src/Users/Requests/ListUsersCursorPaginationRequest.php
+@@ -10,17 +10,17 @@ class ListUsersCursorPaginationRequest extends JsonSerializableType
+     /**
+      * @var ?int $page Defaults to first page
+      */
+-    public ?int $page;
++    private ?int $page;
+ 
+     /**
+      * @var ?int $perPage Defaults to per page
+      */
+-    public ?int $perPage;
++    private ?int $perPage;
+ 
+     /**
+      * @var ?value-of<Order> $order
+      */
+-    public ?string $order;
++    private ?string $order;
+ 
+     /**
+      * The cursor used for pagination in order to fetch
+@@ -28,7 +28,7 @@ class ListUsersCursorPaginationRequest extends JsonSerializableType
+      *
+      * @var ?string $startingAfter
+      */
+-    public ?string $startingAfter;
++    private ?string $startingAfter;
+ 
+     /**
+      * @param array{
+@@ -46,4 +46,76 @@ class ListUsersCursorPaginationRequest extends JsonSerializableType
+         $this->order = $values['order'] ?? null;
+         $this->startingAfter = $values['startingAfter'] ?? null;
+     }
++
++    /**
++     * @return ?int
++     */
++    public function getPage(): ?int
++    {
++        return $this->page;
++    }
++
++    /**
++     * @param ?int $value
++     */
++    public function setPage(?int $value = null): self
++    {
++        $this->page = $value;
++        $this->_setField('page');
++        return $this;
++    }
++
++    /**
++     * @return ?int
++     */
++    public function getPerPage(): ?int
++    {
++        return $this->perPage;
++    }
++
++    /**
++     * @param ?int $value
++     */
++    public function setPerPage(?int $value = null): self
++    {
++        $this->perPage = $value;
++        $this->_setField('perPage');
++        return $this;
++    }
++
++    /**
++     * @return ?value-of<Order>
++     */
++    public function getOrder(): ?string
++    {
++        return $this->order;
++    }
++
++    /**
++     * @param ?value-of<Order> $value
++     */
++    public function setOrder(?string $value = null): self
++    {
++        $this->order = $value;
++        $this->_setField('order');
++        return $this;
++    }
++
++    /**
++     * @return ?string
++     */
++    public function getStartingAfter(): ?string
++    {
++        return $this->startingAfter;
++    }
++
++    /**
++     * @param ?string $value
++     */
++    public function setStartingAfter(?string $value = null): self
++    {
++        $this->startingAfter = $value;
++        $this->_setField('startingAfter');
++        return $this;
++    }
+ }
+diff --git a/src/Users/Requests/ListUsersDoubleOffsetPaginationRequest.php b/src/Users/Requests/ListUsersDoubleOffsetPaginationRequest.php
+index 8f6a7f424ec..03b7938fe7d 100644
+--- a/src/Users/Requests/ListUsersDoubleOffsetPaginationRequest.php
++++ b/src/Users/Requests/ListUsersDoubleOffsetPaginationRequest.php
+@@ -10,17 +10,17 @@ class ListUsersDoubleOffsetPaginationRequest extends JsonSerializableType
+     /**
+      * @var ?float $page Defaults to first page
+      */
+-    public ?float $page;
++    private ?float $page;
+ 
+     /**
+      * @var ?float $perPage Defaults to per page
+      */
+-    public ?float $perPage;
++    private ?float $perPage;
+ 
+     /**
+      * @var ?value-of<Order> $order
+      */
+-    public ?string $order;
++    private ?string $order;
+ 
+     /**
+      * The cursor used for pagination in order to fetch
+@@ -28,7 +28,7 @@ class ListUsersDoubleOffsetPaginationRequest extends JsonSerializableType
+      *
+      * @var ?string $startingAfter
+      */
+-    public ?string $startingAfter;
++    private ?string $startingAfter;
+ 
+     /**
+      * @param array{
+@@ -46,4 +46,76 @@ class ListUsersDoubleOffsetPaginationRequest extends JsonSerializableType
+         $this->order = $values['order'] ?? null;
+         $this->startingAfter = $values['startingAfter'] ?? null;
+     }
++
++    /**
++     * @return ?float
++     */
++    public function getPage(): ?float
++    {
++        return $this->page;
++    }
++
++    /**
++     * @param ?float $value
++     */
++    public function setPage(?float $value = null): self
++    {
++        $this->page = $value;
++        $this->_setField('page');
++        return $this;
++    }
++
++    /**
++     * @return ?float
++     */
++    public function getPerPage(): ?float
++    {
++        return $this->perPage;
++    }
++
++    /**
++     * @param ?float $value
++     */
++    public function setPerPage(?float $value = null): self
++    {
++        $this->perPage = $value;
++        $this->_setField('perPage');
++        return $this;
++    }
++
++    /**
++     * @return ?value-of<Order>
++     */
++    public function getOrder(): ?string
++    {
++        return $this->order;
++    }
++
++    /**
++     * @param ?value-of<Order> $value
++     */
++    public function setOrder(?string $value = null): self
++    {
++        $this->order = $value;
++        $this->_setField('order');
++        return $this;
++    }
++
++    /**
++     * @return ?string
++     */
++    public function getStartingAfter(): ?string
++    {
++        return $this->startingAfter;
++    }
++
++    /**
++     * @param ?string $value
++     */
++    public function setStartingAfter(?string $value = null): self
++    {
++        $this->startingAfter = $value;
++        $this->_setField('startingAfter');
++        return $this;
++    }
+ }
+diff --git a/src/Users/Requests/ListUsersExtendedRequest.php b/src/Users/Requests/ListUsersExtendedRequest.php
+index c3c6f4fea1f..12c1be0571a 100644
+--- a/src/Users/Requests/ListUsersExtendedRequest.php
++++ b/src/Users/Requests/ListUsersExtendedRequest.php
+@@ -9,7 +9,7 @@ class ListUsersExtendedRequest extends JsonSerializableType
+     /**
+      * @var ?string $cursor
+      */
+-    public ?string $cursor;
++    private ?string $cursor;
+ 
+     /**
+      * @param array{
+@@ -21,4 +21,22 @@ class ListUsersExtendedRequest extends JsonSerializableType
+     ) {
+         $this->cursor = $values['cursor'] ?? null;
+     }
++
++    /**
++     * @return ?string
++     */
++    public function getCursor(): ?string
++    {
++        return $this->cursor;
++    }
++
++    /**
++     * @param ?string $value
++     */
++    public function setCursor(?string $value = null): self
++    {
++        $this->cursor = $value;
++        $this->_setField('cursor');
++        return $this;
++    }
+ }
+diff --git a/src/Users/Requests/ListUsersExtendedRequestForOptionalData.php b/src/Users/Requests/ListUsersExtendedRequestForOptionalData.php
+index 7285caa3968..025b6865fdf 100644
+--- a/src/Users/Requests/ListUsersExtendedRequestForOptionalData.php
++++ b/src/Users/Requests/ListUsersExtendedRequestForOptionalData.php
+@@ -9,7 +9,7 @@ class ListUsersExtendedRequestForOptionalData extends JsonSerializableType
+     /**
+      * @var ?string $cursor
+      */
+-    public ?string $cursor;
++    private ?string $cursor;
+ 
+     /**
+      * @param array{
+@@ -21,4 +21,22 @@ class ListUsersExtendedRequestForOptionalData extends JsonSerializableType
+     ) {
+         $this->cursor = $values['cursor'] ?? null;
+     }
++
++    /**
++     * @return ?string
++     */
++    public function getCursor(): ?string
++    {
++        return $this->cursor;
++    }
++
++    /**
++     * @param ?string $value
++     */
++    public function setCursor(?string $value = null): self
++    {
++        $this->cursor = $value;
++        $this->_setField('cursor');
++        return $this;
++    }
+ }
+diff --git a/src/Users/Requests/ListUsersMixedTypeCursorPaginationRequest.php b/src/Users/Requests/ListUsersMixedTypeCursorPaginationRequest.php
+index 497d7595386..e2234e67829 100644
+--- a/src/Users/Requests/ListUsersMixedTypeCursorPaginationRequest.php
++++ b/src/Users/Requests/ListUsersMixedTypeCursorPaginationRequest.php
+@@ -9,7 +9,7 @@ class ListUsersMixedTypeCursorPaginationRequest extends JsonSerializableType
+     /**
+      * @var ?string $cursor
+      */
+-    public ?string $cursor;
++    private ?string $cursor;
+ 
+     /**
+      * @param array{
+@@ -21,4 +21,22 @@ class ListUsersMixedTypeCursorPaginationRequest extends JsonSerializableType
+     ) {
+         $this->cursor = $values['cursor'] ?? null;
+     }
++
++    /**
++     * @return ?string
++     */
++    public function getCursor(): ?string
++    {
++        return $this->cursor;
++    }
++
++    /**
++     * @param ?string $value
++     */
++    public function setCursor(?string $value = null): self
++    {
++        $this->cursor = $value;
++        $this->_setField('cursor');
++        return $this;
++    }
+ }
+diff --git a/src/Users/Requests/ListUsersOffsetPaginationRequest.php b/src/Users/Requests/ListUsersOffsetPaginationRequest.php
+index 6a6fee22c63..bb18a6ea10c 100644
+--- a/src/Users/Requests/ListUsersOffsetPaginationRequest.php
++++ b/src/Users/Requests/ListUsersOffsetPaginationRequest.php
+@@ -10,17 +10,17 @@ class ListUsersOffsetPaginationRequest extends JsonSerializableType
+     /**
+      * @var ?int $page Defaults to first page
+      */
+-    public ?int $page;
++    private ?int $page;
+ 
+     /**
+      * @var ?int $perPage Defaults to per page
+      */
+-    public ?int $perPage;
++    private ?int $perPage;
+ 
+     /**
+      * @var ?value-of<Order> $order
+      */
+-    public ?string $order;
++    private ?string $order;
+ 
+     /**
+      * The cursor used for pagination in order to fetch
+@@ -28,7 +28,7 @@ class ListUsersOffsetPaginationRequest extends JsonSerializableType
+      *
+      * @var ?string $startingAfter
+      */
+-    public ?string $startingAfter;
++    private ?string $startingAfter;
+ 
+     /**
+      * @param array{
+@@ -46,4 +46,76 @@ class ListUsersOffsetPaginationRequest extends JsonSerializableType
+         $this->order = $values['order'] ?? null;
+         $this->startingAfter = $values['startingAfter'] ?? null;
+     }
++
++    /**
++     * @return ?int
++     */
++    public function getPage(): ?int
++    {
++        return $this->page;
++    }
++
++    /**
++     * @param ?int $value
++     */
++    public function setPage(?int $value = null): self
++    {
++        $this->page = $value;
++        $this->_setField('page');
++        return $this;
++    }
++
++    /**
++     * @return ?int
++     */
++    public function getPerPage(): ?int
++    {
++        return $this->perPage;
++    }
++
++    /**
++     * @param ?int $value
++     */
++    public function setPerPage(?int $value = null): self
++    {
++        $this->perPage = $value;
++        $this->_setField('perPage');
++        return $this;
++    }
++
++    /**
++     * @return ?value-of<Order>
++     */
++    public function getOrder(): ?string
++    {
++        return $this->order;
++    }
++
++    /**
++     * @param ?value-of<Order> $value
++     */
++    public function setOrder(?string $value = null): self
++    {
++        $this->order = $value;
++        $this->_setField('order');
++        return $this;
++    }
++
++    /**
++     * @return ?string
++     */
++    public function getStartingAfter(): ?string
++    {
++        return $this->startingAfter;
++    }
++
++    /**
++     * @param ?string $value
++     */
++    public function setStartingAfter(?string $value = null): self
++    {
++        $this->startingAfter = $value;
++        $this->_setField('startingAfter');
++        return $this;
++    }
+ }
+diff --git a/src/Users/Requests/ListUsersOffsetStepPaginationRequest.php b/src/Users/Requests/ListUsersOffsetStepPaginationRequest.php
+index 560224b5907..7b2d7167b2f 100644
+--- a/src/Users/Requests/ListUsersOffsetStepPaginationRequest.php
++++ b/src/Users/Requests/ListUsersOffsetStepPaginationRequest.php
+@@ -10,7 +10,7 @@ class ListUsersOffsetStepPaginationRequest extends JsonSerializableType
+     /**
+      * @var ?int $page Defaults to first page
+      */
+-    public ?int $page;
++    private ?int $page;
+ 
+     /**
+      * The maximum number of elements to return.
+@@ -19,12 +19,12 @@ class ListUsersOffsetStepPaginationRequest extends JsonSerializableType
+      *
+      * @var ?int $limit
+      */
+-    public ?int $limit;
++    private ?int $limit;
+ 
+     /**
+      * @var ?value-of<Order> $order
+      */
+-    public ?string $order;
++    private ?string $order;
+ 
+     /**
+      * @param array{
+@@ -40,4 +40,58 @@ class ListUsersOffsetStepPaginationRequest extends JsonSerializableType
+         $this->limit = $values['limit'] ?? null;
+         $this->order = $values['order'] ?? null;
+     }
++
++    /**
++     * @return ?int
++     */
++    public function getPage(): ?int
++    {
++        return $this->page;
++    }
++
++    /**
++     * @param ?int $value
++     */
++    public function setPage(?int $value = null): self
++    {
++        $this->page = $value;
++        $this->_setField('page');
++        return $this;
++    }
++
++    /**
++     * @return ?int
++     */
++    public function getLimit(): ?int
++    {
++        return $this->limit;
++    }
++
++    /**
++     * @param ?int $value
++     */
++    public function setLimit(?int $value = null): self
++    {
++        $this->limit = $value;
++        $this->_setField('limit');
++        return $this;
++    }
++
++    /**
++     * @return ?value-of<Order>
++     */
++    public function getOrder(): ?string
++    {
++        return $this->order;
++    }
++
++    /**
++     * @param ?value-of<Order> $value
++     */
++    public function setOrder(?string $value = null): self
++    {
++        $this->order = $value;
++        $this->_setField('order');
++        return $this;
++    }
+ }
+diff --git a/src/Users/Requests/ListUsersOptionalDataRequest.php b/src/Users/Requests/ListUsersOptionalDataRequest.php
+index 2e70b8b547d..ec47cc783de 100644
+--- a/src/Users/Requests/ListUsersOptionalDataRequest.php
++++ b/src/Users/Requests/ListUsersOptionalDataRequest.php
+@@ -9,7 +9,7 @@ class ListUsersOptionalDataRequest extends JsonSerializableType
+     /**
+      * @var ?int $page Defaults to first page
+      */
+-    public ?int $page;
++    private ?int $page;
+ 
+     /**
+      * @param array{
+@@ -21,4 +21,22 @@ class ListUsersOptionalDataRequest extends JsonSerializableType
+     ) {
+         $this->page = $values['page'] ?? null;
+     }
++
++    /**
++     * @return ?int
++     */
++    public function getPage(): ?int
++    {
++        return $this->page;
++    }
++
++    /**
++     * @param ?int $value
++     */
++    public function setPage(?int $value = null): self
++    {
++        $this->page = $value;
++        $this->_setField('page');
++        return $this;
++    }
+ }
+diff --git a/src/Users/Requests/ListUsersTopLevelBodyCursorPaginationRequest.php b/src/Users/Requests/ListUsersTopLevelBodyCursorPaginationRequest.php
+index 5c410a72064..76bf32babb8 100644
+--- a/src/Users/Requests/ListUsersTopLevelBodyCursorPaginationRequest.php
++++ b/src/Users/Requests/ListUsersTopLevelBodyCursorPaginationRequest.php
+@@ -14,13 +14,13 @@ class ListUsersTopLevelBodyCursorPaginationRequest extends JsonSerializableType
+      * @var ?string $cursor
+      */
+     #[JsonProperty('cursor')]
+-    public ?string $cursor;
++    private ?string $cursor;
+ 
+     /**
+      * @var ?string $filter An optional filter to apply to the results.
+      */
+     #[JsonProperty('filter')]
+-    public ?string $filter;
++    private ?string $filter;
+ 
+     /**
+      * @param array{
+@@ -34,4 +34,40 @@ class ListUsersTopLevelBodyCursorPaginationRequest extends JsonSerializableType
+         $this->cursor = $values['cursor'] ?? null;
+         $this->filter = $values['filter'] ?? null;
+     }
++
++    /**
++     * @return ?string
++     */
++    public function getCursor(): ?string
++    {
++        return $this->cursor;
++    }
++
++    /**
++     * @param ?string $value
++     */
++    public function setCursor(?string $value = null): self
++    {
++        $this->cursor = $value;
++        $this->_setField('cursor');
++        return $this;
++    }
++
++    /**
++     * @return ?string
++     */
++    public function getFilter(): ?string
++    {
++        return $this->filter;
++    }
++
++    /**
++     * @param ?string $value
++     */
++    public function setFilter(?string $value = null): self
++    {
++        $this->filter = $value;
++        $this->_setField('filter');
++        return $this;
++    }
+ }
+diff --git a/src/Users/Requests/ListWithGlobalConfigRequest.php b/src/Users/Requests/ListWithGlobalConfigRequest.php
+index 2478af96fad..5c67f0dcd78 100644
+--- a/src/Users/Requests/ListWithGlobalConfigRequest.php
++++ b/src/Users/Requests/ListWithGlobalConfigRequest.php
+@@ -9,7 +9,7 @@ class ListWithGlobalConfigRequest extends JsonSerializableType
+     /**
+      * @var ?int $offset
+      */
+-    public ?int $offset;
++    private ?int $offset;
+ 
+     /**
+      * @param array{
+@@ -21,4 +21,22 @@ class ListWithGlobalConfigRequest extends JsonSerializableType
+     ) {
+         $this->offset = $values['offset'] ?? null;
+     }
++
++    /**
++     * @return ?int
++     */
++    public function getOffset(): ?int
++    {
++        return $this->offset;
++    }
++
++    /**
++     * @param ?int $value
++     */
++    public function setOffset(?int $value = null): self
++    {
++        $this->offset = $value;
++        $this->_setField('offset');
++        return $this;
++    }
+ }
+diff --git a/src/Users/Requests/ListWithOffsetPaginationHasNextPageRequest.php b/src/Users/Requests/ListWithOffsetPaginationHasNextPageRequest.php
+index fc61dd4b3a9..0cfbcd0abf9 100644
+--- a/src/Users/Requests/ListWithOffsetPaginationHasNextPageRequest.php
++++ b/src/Users/Requests/ListWithOffsetPaginationHasNextPageRequest.php
+@@ -10,7 +10,7 @@ class ListWithOffsetPaginationHasNextPageRequest extends JsonSerializableType
+     /**
+      * @var ?int $page Defaults to first page
+      */
+-    public ?int $page;
++    private ?int $page;
+ 
+     /**
+      * The maximum number of elements to return.
+@@ -19,12 +19,12 @@ class ListWithOffsetPaginationHasNextPageRequest extends JsonSerializableType
+      *
+      * @var ?int $limit
+      */
+-    public ?int $limit;
++    private ?int $limit;
+ 
+     /**
+      * @var ?value-of<Order> $order
+      */
+-    public ?string $order;
++    private ?string $order;
+ 
+     /**
+      * @param array{
+@@ -40,4 +40,58 @@ class ListWithOffsetPaginationHasNextPageRequest extends JsonSerializableType
+         $this->limit = $values['limit'] ?? null;
+         $this->order = $values['order'] ?? null;
+     }
++
++    /**
++     * @return ?int
++     */
++    public function getPage(): ?int
++    {
++        return $this->page;
++    }
++
++    /**
++     * @param ?int $value
++     */
++    public function setPage(?int $value = null): self
++    {
++        $this->page = $value;
++        $this->_setField('page');
++        return $this;
++    }
++
++    /**
++     * @return ?int
++     */
++    public function getLimit(): ?int
++    {
++        return $this->limit;
++    }
++
++    /**
++     * @param ?int $value
++     */
++    public function setLimit(?int $value = null): self
++    {
++        $this->limit = $value;
++        $this->_setField('limit');
++        return $this;
++    }
++
++    /**
++     * @return ?value-of<Order>
++     */
++    public function getOrder(): ?string
++    {
++        return $this->order;
++    }
++
++    /**
++     * @param ?value-of<Order> $value
++     */
++    public function setOrder(?string $value = null): self
++    {
++        $this->order = $value;
++        $this->_setField('order');
++        return $this;
++    }
+ }
+diff --git a/src/Users/Traits/UserOptionalListPage.php b/src/Users/Traits/UserOptionalListPage.php
+index d4107da32bb..4833bb53ab9 100644
+--- a/src/Users/Traits/UserOptionalListPage.php
++++ b/src/Users/Traits/UserOptionalListPage.php
+@@ -15,11 +15,47 @@ trait UserOptionalListPage
+      * @var UserOptionalListContainer $data
+      */
+     #[JsonProperty('data')]
+-    public UserOptionalListContainer $data;
++    private UserOptionalListContainer $data;
+ 
+     /**
+      * @var ?string $next
+      */
+     #[JsonProperty('next')]
+-    public ?string $next;
++    private ?string $next;
++
++    /**
++     * @return UserOptionalListContainer
++     */
++    public function getData(): UserOptionalListContainer
++    {
++        return $this->data;
++    }
++
++    /**
++     * @param UserOptionalListContainer $value
++     */
++    public function setData(UserOptionalListContainer $value): self
++    {
++        $this->data = $value;
++        $this->_setField('data');
++        return $this;
++    }
++
++    /**
++     * @return ?string
++     */
++    public function getNext(): ?string
++    {
++        return $this->next;
++    }
++
++    /**
++     * @param ?string $value
++     */
++    public function setNext(?string $value = null): self
++    {
++        $this->next = $value;
++        $this->_setField('next');
++        return $this;
++    }
+ }
+diff --git a/src/Users/Traits/UserPage.php b/src/Users/Traits/UserPage.php
+index 157e7ebf6c1..e1bd3224557 100644
+--- a/src/Users/Traits/UserPage.php
++++ b/src/Users/Traits/UserPage.php
+@@ -15,11 +15,47 @@ trait UserPage
+      * @var UserListContainer $data
+      */
+     #[JsonProperty('data')]
+-    public UserListContainer $data;
++    private UserListContainer $data;
+ 
+     /**
+      * @var ?string $next
+      */
+     #[JsonProperty('next')]
+-    public ?string $next;
++    private ?string $next;
++
++    /**
++     * @return UserListContainer
++     */
++    public function getData(): UserListContainer
++    {
++        return $this->data;
++    }
++
++    /**
++     * @param UserListContainer $value
++     */
++    public function setData(UserListContainer $value): self
++    {
++        $this->data = $value;
++        $this->_setField('data');
++        return $this;
++    }
++
++    /**
++     * @return ?string
++     */
++    public function getNext(): ?string
++    {
++        return $this->next;
++    }
++
++    /**
++     * @param ?string $value
++     */
++    public function setNext(?string $value = null): self
++    {
++        $this->next = $value;
++        $this->_setField('next');
++        return $this;
++    }
+ }
+diff --git a/src/Users/Types/ListUsersAliasedDataPaginationResponse.php b/src/Users/Types/ListUsersAliasedDataPaginationResponse.php
+index f71bb8cdc63..a41dca3cbb5 100644
+--- a/src/Users/Types/ListUsersAliasedDataPaginationResponse.php
++++ b/src/Users/Types/ListUsersAliasedDataPaginationResponse.php
+@@ -12,25 +12,25 @@ class ListUsersAliasedDataPaginationResponse extends JsonSerializableType
+      * @var ?bool $hasNextPage
+      */
+     #[JsonProperty('hasNextPage')]
+-    public ?bool $hasNextPage;
++    private ?bool $hasNextPage;
+ 
+     /**
+      * @var ?Page $page
+      */
+     #[JsonProperty('page')]
+-    public ?Page $page;
++    private ?Page $page;
+ 
+     /**
+      * @var int $totalCount The totall number of /users
+      */
+     #[JsonProperty('total_count')]
+-    public int $totalCount;
++    private int $totalCount;
+ 
+     /**
+      * @var array<User> $data
+      */
+     #[JsonProperty('data'), ArrayType([User::class])]
+-    public array $data;
++    private array $data;
+ 
+     /**
+      * @param array{
+@@ -49,6 +49,78 @@ class ListUsersAliasedDataPaginationResponse extends JsonSerializableType
+         $this->data = $values['data'];
+     }
+ 
++    /**
++     * @return ?bool
++     */
++    public function getHasNextPage(): ?bool
++    {
++        return $this->hasNextPage;
++    }
++
++    /**
++     * @param ?bool $value
++     */
++    public function setHasNextPage(?bool $value = null): self
++    {
++        $this->hasNextPage = $value;
++        $this->_setField('hasNextPage');
++        return $this;
++    }
++
++    /**
++     * @return ?Page
++     */
++    public function getPage(): ?Page
++    {
++        return $this->page;
++    }
++
++    /**
++     * @param ?Page $value
++     */
++    public function setPage(?Page $value = null): self
++    {
++        $this->page = $value;
++        $this->_setField('page');
++        return $this;
++    }
++
++    /**
++     * @return int
++     */
++    public function getTotalCount(): int
++    {
++        return $this->totalCount;
++    }
++
++    /**
++     * @param int $value
++     */
++    public function setTotalCount(int $value): self
++    {
++        $this->totalCount = $value;
++        $this->_setField('totalCount');
++        return $this;
++    }
++
++    /**
++     * @return array<User>
++     */
++    public function getData(): array
++    {
++        return $this->data;
++    }
++
++    /**
++     * @param array<User> $value
++     */
++    public function setData(array $value): self
++    {
++        $this->data = $value;
++        $this->_setField('data');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Users/Types/ListUsersExtendedOptionalListResponse.php b/src/Users/Types/ListUsersExtendedOptionalListResponse.php
+index 8a32c9ddae9..4b90f8aa63d 100644
+--- a/src/Users/Types/ListUsersExtendedOptionalListResponse.php
++++ b/src/Users/Types/ListUsersExtendedOptionalListResponse.php
+@@ -14,7 +14,7 @@ class ListUsersExtendedOptionalListResponse extends JsonSerializableType
+      * @var int $totalCount The totall number of /users
+      */
+     #[JsonProperty('total_count')]
+-    public int $totalCount;
++    private int $totalCount;
+ 
+     /**
+      * @param array{
+@@ -31,6 +31,24 @@ class ListUsersExtendedOptionalListResponse extends JsonSerializableType
+         $this->totalCount = $values['totalCount'];
+     }
+ 
++    /**
++     * @return int
++     */
++    public function getTotalCount(): int
++    {
++        return $this->totalCount;
++    }
++
++    /**
++     * @param int $value
++     */
++    public function setTotalCount(int $value): self
++    {
++        $this->totalCount = $value;
++        $this->_setField('totalCount');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Users/Types/ListUsersExtendedResponse.php b/src/Users/Types/ListUsersExtendedResponse.php
+index a5bd5bb8563..a3c4f0dc1f1 100644
+--- a/src/Users/Types/ListUsersExtendedResponse.php
++++ b/src/Users/Types/ListUsersExtendedResponse.php
+@@ -14,7 +14,7 @@ class ListUsersExtendedResponse extends JsonSerializableType
+      * @var int $totalCount The totall number of /users
+      */
+     #[JsonProperty('total_count')]
+-    public int $totalCount;
++    private int $totalCount;
+ 
+     /**
+      * @param array{
+@@ -31,6 +31,24 @@ class ListUsersExtendedResponse extends JsonSerializableType
+         $this->totalCount = $values['totalCount'];
+     }
+ 
++    /**
++     * @return int
++     */
++    public function getTotalCount(): int
++    {
++        return $this->totalCount;
++    }
++
++    /**
++     * @param int $value
++     */
++    public function setTotalCount(int $value): self
++    {
++        $this->totalCount = $value;
++        $this->_setField('totalCount');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Users/Types/ListUsersMixedTypePaginationResponse.php b/src/Users/Types/ListUsersMixedTypePaginationResponse.php
+index 25984e25055..2dea3ff654b 100644
+--- a/src/Users/Types/ListUsersMixedTypePaginationResponse.php
++++ b/src/Users/Types/ListUsersMixedTypePaginationResponse.php
+@@ -12,13 +12,13 @@ class ListUsersMixedTypePaginationResponse extends JsonSerializableType
+      * @var string $next
+      */
+     #[JsonProperty('next')]
+-    public string $next;
++    private string $next;
+ 
+     /**
+      * @var array<User> $data
+      */
+     #[JsonProperty('data'), ArrayType([User::class])]
+-    public array $data;
++    private array $data;
+ 
+     /**
+      * @param array{
+@@ -33,6 +33,42 @@ class ListUsersMixedTypePaginationResponse extends JsonSerializableType
+         $this->data = $values['data'];
+     }
+ 
++    /**
++     * @return string
++     */
++    public function getNext(): string
++    {
++        return $this->next;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setNext(string $value): self
++    {
++        $this->next = $value;
++        $this->_setField('next');
++        return $this;
++    }
++
++    /**
++     * @return array<User>
++     */
++    public function getData(): array
++    {
++        return $this->data;
++    }
++
++    /**
++     * @param array<User> $value
++     */
++    public function setData(array $value): self
++    {
++        $this->data = $value;
++        $this->_setField('data');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Users/Types/ListUsersOptionalDataPaginationResponse.php b/src/Users/Types/ListUsersOptionalDataPaginationResponse.php
+index 5c940d0bdad..c32eacd7e74 100644
+--- a/src/Users/Types/ListUsersOptionalDataPaginationResponse.php
++++ b/src/Users/Types/ListUsersOptionalDataPaginationResponse.php
+@@ -12,25 +12,25 @@ class ListUsersOptionalDataPaginationResponse extends JsonSerializableType
+      * @var ?bool $hasNextPage
+      */
+     #[JsonProperty('hasNextPage')]
+-    public ?bool $hasNextPage;
++    private ?bool $hasNextPage;
+ 
+     /**
+      * @var ?Page $page
+      */
+     #[JsonProperty('page')]
+-    public ?Page $page;
++    private ?Page $page;
+ 
+     /**
+      * @var int $totalCount The totall number of /users
+      */
+     #[JsonProperty('total_count')]
+-    public int $totalCount;
++    private int $totalCount;
+ 
+     /**
+      * @var ?array<User> $data
+      */
+     #[JsonProperty('data'), ArrayType([User::class])]
+-    public ?array $data;
++    private ?array $data;
+ 
+     /**
+      * @param array{
+@@ -49,6 +49,78 @@ class ListUsersOptionalDataPaginationResponse extends JsonSerializableType
+         $this->data = $values['data'] ?? null;
+     }
+ 
++    /**
++     * @return ?bool
++     */
++    public function getHasNextPage(): ?bool
++    {
++        return $this->hasNextPage;
++    }
++
++    /**
++     * @param ?bool $value
++     */
++    public function setHasNextPage(?bool $value = null): self
++    {
++        $this->hasNextPage = $value;
++        $this->_setField('hasNextPage');
++        return $this;
++    }
++
++    /**
++     * @return ?Page
++     */
++    public function getPage(): ?Page
++    {
++        return $this->page;
++    }
++
++    /**
++     * @param ?Page $value
++     */
++    public function setPage(?Page $value = null): self
++    {
++        $this->page = $value;
++        $this->_setField('page');
++        return $this;
++    }
++
++    /**
++     * @return int
++     */
++    public function getTotalCount(): int
++    {
++        return $this->totalCount;
++    }
++
++    /**
++     * @param int $value
++     */
++    public function setTotalCount(int $value): self
++    {
++        $this->totalCount = $value;
++        $this->_setField('totalCount');
++        return $this;
++    }
++
++    /**
++     * @return ?array<User>
++     */
++    public function getData(): ?array
++    {
++        return $this->data;
++    }
++
++    /**
++     * @param ?array<User> $value
++     */
++    public function setData(?array $value = null): self
++    {
++        $this->data = $value;
++        $this->_setField('data');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Users/Types/ListUsersPaginationResponse.php b/src/Users/Types/ListUsersPaginationResponse.php
+index c542f29c382..ab792f7eaca 100644
+--- a/src/Users/Types/ListUsersPaginationResponse.php
++++ b/src/Users/Types/ListUsersPaginationResponse.php
+@@ -12,25 +12,25 @@ class ListUsersPaginationResponse extends JsonSerializableType
+      * @var ?bool $hasNextPage
+      */
+     #[JsonProperty('hasNextPage')]
+-    public ?bool $hasNextPage;
++    private ?bool $hasNextPage;
+ 
+     /**
+      * @var ?Page $page
+      */
+     #[JsonProperty('page')]
+-    public ?Page $page;
++    private ?Page $page;
+ 
+     /**
+      * @var int $totalCount The totall number of /users
+      */
+     #[JsonProperty('total_count')]
+-    public int $totalCount;
++    private int $totalCount;
+ 
+     /**
+      * @var array<User> $data
+      */
+     #[JsonProperty('data'), ArrayType([User::class])]
+-    public array $data;
++    private array $data;
+ 
+     /**
+      * @param array{
+@@ -49,6 +49,78 @@ class ListUsersPaginationResponse extends JsonSerializableType
+         $this->data = $values['data'];
+     }
+ 
++    /**
++     * @return ?bool
++     */
++    public function getHasNextPage(): ?bool
++    {
++        return $this->hasNextPage;
++    }
++
++    /**
++     * @param ?bool $value
++     */
++    public function setHasNextPage(?bool $value = null): self
++    {
++        $this->hasNextPage = $value;
++        $this->_setField('hasNextPage');
++        return $this;
++    }
++
++    /**
++     * @return ?Page
++     */
++    public function getPage(): ?Page
++    {
++        return $this->page;
++    }
++
++    /**
++     * @param ?Page $value
++     */
++    public function setPage(?Page $value = null): self
++    {
++        $this->page = $value;
++        $this->_setField('page');
++        return $this;
++    }
++
++    /**
++     * @return int
++     */
++    public function getTotalCount(): int
++    {
++        return $this->totalCount;
++    }
++
++    /**
++     * @param int $value
++     */
++    public function setTotalCount(int $value): self
++    {
++        $this->totalCount = $value;
++        $this->_setField('totalCount');
++        return $this;
++    }
++
++    /**
++     * @return array<User>
++     */
++    public function getData(): array
++    {
++        return $this->data;
++    }
++
++    /**
++     * @param array<User> $value
++     */
++    public function setData(array $value): self
++    {
++        $this->data = $value;
++        $this->_setField('data');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Users/Types/ListUsersTopLevelCursorPaginationResponse.php b/src/Users/Types/ListUsersTopLevelCursorPaginationResponse.php
+index 686c9120605..e0e1785657b 100644
+--- a/src/Users/Types/ListUsersTopLevelCursorPaginationResponse.php
++++ b/src/Users/Types/ListUsersTopLevelCursorPaginationResponse.php
+@@ -12,13 +12,13 @@ class ListUsersTopLevelCursorPaginationResponse extends JsonSerializableType
+      * @var ?string $nextCursor
+      */
+     #[JsonProperty('next_cursor')]
+-    public ?string $nextCursor;
++    private ?string $nextCursor;
+ 
+     /**
+      * @var array<User> $data
+      */
+     #[JsonProperty('data'), ArrayType([User::class])]
+-    public array $data;
++    private array $data;
+ 
+     /**
+      * @param array{
+@@ -33,6 +33,42 @@ class ListUsersTopLevelCursorPaginationResponse extends JsonSerializableType
+         $this->data = $values['data'];
+     }
+ 
++    /**
++     * @return ?string
++     */
++    public function getNextCursor(): ?string
++    {
++        return $this->nextCursor;
++    }
++
++    /**
++     * @param ?string $value
++     */
++    public function setNextCursor(?string $value = null): self
++    {
++        $this->nextCursor = $value;
++        $this->_setField('nextCursor');
++        return $this;
++    }
++
++    /**
++     * @return array<User>
++     */
++    public function getData(): array
++    {
++        return $this->data;
++    }
++
++    /**
++     * @param array<User> $value
++     */
++    public function setData(array $value): self
++    {
++        $this->data = $value;
++        $this->_setField('data');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Users/Types/NextPage.php b/src/Users/Types/NextPage.php
+index f4f67a700b0..ba4bd1ab3ea 100644
+--- a/src/Users/Types/NextPage.php
++++ b/src/Users/Types/NextPage.php
+@@ -11,13 +11,13 @@ class NextPage extends JsonSerializableType
+      * @var int $page
+      */
+     #[JsonProperty('page')]
+-    public int $page;
++    private int $page;
+ 
+     /**
+      * @var string $startingAfter
+      */
+     #[JsonProperty('starting_after')]
+-    public string $startingAfter;
++    private string $startingAfter;
+ 
+     /**
+      * @param array{
+@@ -32,6 +32,42 @@ class NextPage extends JsonSerializableType
+         $this->startingAfter = $values['startingAfter'];
+     }
+ 
++    /**
++     * @return int
++     */
++    public function getPage(): int
++    {
++        return $this->page;
++    }
++
++    /**
++     * @param int $value
++     */
++    public function setPage(int $value): self
++    {
++        $this->page = $value;
++        $this->_setField('page');
++        return $this;
++    }
++
++    /**
++     * @return string
++     */
++    public function getStartingAfter(): string
++    {
++        return $this->startingAfter;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setStartingAfter(string $value): self
++    {
++        $this->startingAfter = $value;
++        $this->_setField('startingAfter');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Users/Types/Page.php b/src/Users/Types/Page.php
+index 87384be83eb..b03b9d42bc4 100644
+--- a/src/Users/Types/Page.php
++++ b/src/Users/Types/Page.php
+@@ -11,25 +11,25 @@ class Page extends JsonSerializableType
+      * @var int $page The current page
+      */
+     #[JsonProperty('page')]
+-    public int $page;
++    private int $page;
+ 
+     /**
+      * @var ?NextPage $next
+      */
+     #[JsonProperty('next')]
+-    public ?NextPage $next;
++    private ?NextPage $next;
+ 
+     /**
+      * @var int $perPage
+      */
+     #[JsonProperty('per_page')]
+-    public int $perPage;
++    private int $perPage;
+ 
+     /**
+      * @var int $totalPage
+      */
+     #[JsonProperty('total_page')]
+-    public int $totalPage;
++    private int $totalPage;
+ 
+     /**
+      * @param array{
+@@ -48,6 +48,78 @@ class Page extends JsonSerializableType
+         $this->totalPage = $values['totalPage'];
+     }
+ 
++    /**
++     * @return int
++     */
++    public function getPage(): int
++    {
++        return $this->page;
++    }
++
++    /**
++     * @param int $value
++     */
++    public function setPage(int $value): self
++    {
++        $this->page = $value;
++        $this->_setField('page');
++        return $this;
++    }
++
++    /**
++     * @return ?NextPage
++     */
++    public function getNext(): ?NextPage
++    {
++        return $this->next;
++    }
++
++    /**
++     * @param ?NextPage $value
++     */
++    public function setNext(?NextPage $value = null): self
++    {
++        $this->next = $value;
++        $this->_setField('next');
++        return $this;
++    }
++
++    /**
++     * @return int
++     */
++    public function getPerPage(): int
++    {
++        return $this->perPage;
++    }
++
++    /**
++     * @param int $value
++     */
++    public function setPerPage(int $value): self
++    {
++        $this->perPage = $value;
++        $this->_setField('perPage');
++        return $this;
++    }
++
++    /**
++     * @return int
++     */
++    public function getTotalPage(): int
++    {
++        return $this->totalPage;
++    }
++
++    /**
++     * @param int $value
++     */
++    public function setTotalPage(int $value): self
++    {
++        $this->totalPage = $value;
++        $this->_setField('totalPage');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Users/Types/User.php b/src/Users/Types/User.php
+index 7ae63a1f0f0..e8f5fbea83a 100644
+--- a/src/Users/Types/User.php
++++ b/src/Users/Types/User.php
+@@ -11,13 +11,13 @@ class User extends JsonSerializableType
+      * @var string $name
+      */
+     #[JsonProperty('name')]
+-    public string $name;
++    private string $name;
+ 
+     /**
+      * @var int $id
+      */
+     #[JsonProperty('id')]
+-    public int $id;
++    private int $id;
+ 
+     /**
+      * @param array{
+@@ -32,6 +32,42 @@ class User extends JsonSerializableType
+         $this->id = $values['id'];
+     }
+ 
++    /**
++     * @return string
++     */
++    public function getName(): string
++    {
++        return $this->name;
++    }
++
++    /**
++     * @param string $value
++     */
++    public function setName(string $value): self
++    {
++        $this->name = $value;
++        $this->_setField('name');
++        return $this;
++    }
++
++    /**
++     * @return int
++     */
++    public function getId(): int
++    {
++        return $this->id;
++    }
++
++    /**
++     * @param int $value
++     */
++    public function setId(int $value): self
++    {
++        $this->id = $value;
++        $this->_setField('id');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Users/Types/UserListContainer.php b/src/Users/Types/UserListContainer.php
+index e9e828d48d5..1e876682ccf 100644
+--- a/src/Users/Types/UserListContainer.php
++++ b/src/Users/Types/UserListContainer.php
+@@ -12,7 +12,7 @@ class UserListContainer extends JsonSerializableType
+      * @var array<User> $users
+      */
+     #[JsonProperty('users'), ArrayType([User::class])]
+-    public array $users;
++    private array $users;
+ 
+     /**
+      * @param array{
+@@ -25,6 +25,24 @@ class UserListContainer extends JsonSerializableType
+         $this->users = $values['users'];
+     }
+ 
++    /**
++     * @return array<User>
++     */
++    public function getUsers(): array
++    {
++        return $this->users;
++    }
++
++    /**
++     * @param array<User> $value
++     */
++    public function setUsers(array $value): self
++    {
++        $this->users = $value;
++        $this->_setField('users');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Users/Types/UserOptionalListContainer.php b/src/Users/Types/UserOptionalListContainer.php
+index 159c45235bc..38884f0cf34 100644
+--- a/src/Users/Types/UserOptionalListContainer.php
++++ b/src/Users/Types/UserOptionalListContainer.php
+@@ -12,7 +12,7 @@ class UserOptionalListContainer extends JsonSerializableType
+      * @var ?array<User> $users
+      */
+     #[JsonProperty('users'), ArrayType([User::class])]
+-    public ?array $users;
++    private ?array $users;
+ 
+     /**
+      * @param array{
+@@ -25,6 +25,24 @@ class UserOptionalListContainer extends JsonSerializableType
+         $this->users = $values['users'] ?? null;
+     }
+ 
++    /**
++     * @return ?array<User>
++     */
++    public function getUsers(): ?array
++    {
++        return $this->users;
++    }
++
++    /**
++     * @param ?array<User> $value
++     */
++    public function setUsers(?array $value = null): self
++    {
++        $this->users = $value;
++        $this->_setField('users');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Users/Types/UserOptionalListPage.php b/src/Users/Types/UserOptionalListPage.php
+index 5621cd5d324..0c7d2402f7e 100644
+--- a/src/Users/Types/UserOptionalListPage.php
++++ b/src/Users/Types/UserOptionalListPage.php
+@@ -11,13 +11,13 @@ class UserOptionalListPage extends JsonSerializableType
+      * @var UserOptionalListContainer $data
+      */
+     #[JsonProperty('data')]
+-    public UserOptionalListContainer $data;
++    private UserOptionalListContainer $data;
+ 
+     /**
+      * @var ?string $next
+      */
+     #[JsonProperty('next')]
+-    public ?string $next;
++    private ?string $next;
+ 
+     /**
+      * @param array{
+@@ -32,6 +32,42 @@ class UserOptionalListPage extends JsonSerializableType
+         $this->next = $values['next'] ?? null;
+     }
+ 
++    /**
++     * @return UserOptionalListContainer
++     */
++    public function getData(): UserOptionalListContainer
++    {
++        return $this->data;
++    }
++
++    /**
++     * @param UserOptionalListContainer $value
++     */
++    public function setData(UserOptionalListContainer $value): self
++    {
++        $this->data = $value;
++        $this->_setField('data');
++        return $this;
++    }
++
++    /**
++     * @return ?string
++     */
++    public function getNext(): ?string
++    {
++        return $this->next;
++    }
++
++    /**
++     * @param ?string $value
++     */
++    public function setNext(?string $value = null): self
++    {
++        $this->next = $value;
++        $this->_setField('next');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Users/Types/UserPage.php b/src/Users/Types/UserPage.php
+index 97418ae52e1..8ba0e474732 100644
+--- a/src/Users/Types/UserPage.php
++++ b/src/Users/Types/UserPage.php
+@@ -11,13 +11,13 @@ class UserPage extends JsonSerializableType
+      * @var UserListContainer $data
+      */
+     #[JsonProperty('data')]
+-    public UserListContainer $data;
++    private UserListContainer $data;
+ 
+     /**
+      * @var ?string $next
+      */
+     #[JsonProperty('next')]
+-    public ?string $next;
++    private ?string $next;
+ 
+     /**
+      * @param array{
+@@ -32,6 +32,42 @@ class UserPage extends JsonSerializableType
+         $this->next = $values['next'] ?? null;
+     }
+ 
++    /**
++     * @return UserListContainer
++     */
++    public function getData(): UserListContainer
++    {
++        return $this->data;
++    }
++
++    /**
++     * @param UserListContainer $value
++     */
++    public function setData(UserListContainer $value): self
++    {
++        $this->data = $value;
++        $this->_setField('data');
++        return $this;
++    }
++
++    /**
++     * @return ?string
++     */
++    public function getNext(): ?string
++    {
++        return $this->next;
++    }
++
++    /**
++     * @param ?string $value
++     */
++    public function setNext(?string $value = null): self
++    {
++        $this->next = $value;
++        $this->_setField('next');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Users/Types/UsernameContainer.php b/src/Users/Types/UsernameContainer.php
+index c38cebb1485..ab141e3adc4 100644
+--- a/src/Users/Types/UsernameContainer.php
++++ b/src/Users/Types/UsernameContainer.php
+@@ -12,7 +12,7 @@ class UsernameContainer extends JsonSerializableType
+      * @var array<string> $results
+      */
+     #[JsonProperty('results'), ArrayType(['string'])]
+-    public array $results;
++    private array $results;
+ 
+     /**
+      * @param array{
+@@ -25,6 +25,24 @@ class UsernameContainer extends JsonSerializableType
+         $this->results = $values['results'];
+     }
+ 
++    /**
++     * @return array<string>
++     */
++    public function getResults(): array
++    {
++        return $this->results;
++    }
++
++    /**
++     * @param array<string> $value
++     */
++    public function setResults(array $value): self
++    {
++        $this->results = $value;
++        $this->_setField('results');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Users/Types/WithCursor.php b/src/Users/Types/WithCursor.php
+index e568f140293..71fcdfc88db 100644
+--- a/src/Users/Types/WithCursor.php
++++ b/src/Users/Types/WithCursor.php
+@@ -11,7 +11,7 @@ class WithCursor extends JsonSerializableType
+      * @var ?string $cursor
+      */
+     #[JsonProperty('cursor')]
+-    public ?string $cursor;
++    private ?string $cursor;
+ 
+     /**
+      * @param array{
+@@ -24,6 +24,24 @@ class WithCursor extends JsonSerializableType
+         $this->cursor = $values['cursor'] ?? null;
+     }
+ 
++    /**
++     * @return ?string
++     */
++    public function getCursor(): ?string
++    {
++        return $this->cursor;
++    }
++
++    /**
++     * @param ?string $value
++     */
++    public function setCursor(?string $value = null): self
++    {
++        $this->cursor = $value;
++        $this->_setField('cursor');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Users/Types/WithPage.php b/src/Users/Types/WithPage.php
+index 937286f0ffc..1b2214a6684 100644
+--- a/src/Users/Types/WithPage.php
++++ b/src/Users/Types/WithPage.php
+@@ -11,7 +11,7 @@ class WithPage extends JsonSerializableType
+      * @var ?int $page
+      */
+     #[JsonProperty('page')]
+-    public ?int $page;
++    private ?int $page;
+ 
+     /**
+      * @param array{
+@@ -24,6 +24,24 @@ class WithPage extends JsonSerializableType
+         $this->page = $values['page'] ?? null;
+     }
+ 
++    /**
++     * @return ?int
++     */
++    public function getPage(): ?int
++    {
++        return $this->page;
++    }
++
++    /**
++     * @param ?int $value
++     */
++    public function setPage(?int $value = null): self
++    {
++        $this->page = $value;
++        $this->_setField('page');
++        return $this;
++    }
++
+     /**
+      * @return string
+      */
+diff --git a/src/Users/UsersClient.php b/src/Users/UsersClient.php
+index 5494c9faa7d..75268c9da5a 100644
+--- a/src/Users/UsersClient.php
++++ b/src/Users/UsersClient.php
+@@ -95,12 +95,12 @@ class UsersClient
+             request: $request,
+             getNextPage: fn (ListUsersCursorPaginationRequest $request) => $this->_listWithCursorPagination($request, $options),
+             setCursor: function (ListUsersCursorPaginationRequest $request, string $cursor) {
+-                $request->startingAfter = $cursor;
++                $request->setStartingAfter($cursor);
+             },
+             /* @phpstan-ignore-next-line */
+-            getNextCursor: fn (?ListUsersPaginationResponse $response) => $response?->page?->next?->startingAfter ?? null,
++            getNextCursor: fn (?ListUsersPaginationResponse $response) => $response?->getPage()?->getNext()?->getStartingAfter() ?? null,
+             /* @phpstan-ignore-next-line */
+-            getItems: fn (?ListUsersPaginationResponse $response) => $response?->data ?? [],
++            getItems: fn (?ListUsersPaginationResponse $response) => $response?->getData() ?? [],
+         );
+     }
+ 
+@@ -122,12 +122,12 @@ class UsersClient
+             request: $request,
+             getNextPage: fn (ListUsersMixedTypeCursorPaginationRequest $request) => $this->_listWithMixedTypeCursorPagination($request, $options),
+             setCursor: function (ListUsersMixedTypeCursorPaginationRequest $request, string $cursor) {
+-                $request->cursor = $cursor;
++                $request->setCursor($cursor);
+             },
+             /* @phpstan-ignore-next-line */
+-            getNextCursor: fn (?ListUsersMixedTypePaginationResponse $response) => $response?->next ?? null,
++            getNextCursor: fn (?ListUsersMixedTypePaginationResponse $response) => $response?->getNext() ?? null,
+             /* @phpstan-ignore-next-line */
+-            getItems: fn (?ListUsersMixedTypePaginationResponse $response) => $response?->data ?? [],
++            getItems: fn (?ListUsersMixedTypePaginationResponse $response) => $response?->getData() ?? [],
+         );
+     }
+ 
+@@ -152,9 +152,9 @@ class UsersClient
+                 PaginationHelper::setDeep($request, ["pagination", "cursor"], $cursor);
+             },
+             /* @phpstan-ignore-next-line */
+-            getNextCursor: fn (?ListUsersPaginationResponse $response) => $response?->page?->next?->startingAfter ?? null,
++            getNextCursor: fn (?ListUsersPaginationResponse $response) => $response?->getPage()?->getNext()?->getStartingAfter() ?? null,
+             /* @phpstan-ignore-next-line */
+-            getItems: fn (?ListUsersPaginationResponse $response) => $response?->data ?? [],
++            getItems: fn (?ListUsersPaginationResponse $response) => $response?->getData() ?? [],
+         );
+     }
+ 
+@@ -180,12 +180,12 @@ class UsersClient
+             request: $request,
+             getNextPage: fn (ListUsersTopLevelBodyCursorPaginationRequest $request) => $this->_listWithTopLevelBodyCursorPagination($request, $options),
+             setCursor: function (ListUsersTopLevelBodyCursorPaginationRequest $request, ?string $cursor) {
+-                $request->cursor = $cursor;
++                $request->setCursor($cursor);
+             },
+             /* @phpstan-ignore-next-line */
+-            getNextCursor: fn (?ListUsersTopLevelCursorPaginationResponse $response) => $response?->nextCursor ?? null,
++            getNextCursor: fn (?ListUsersTopLevelCursorPaginationResponse $response) => $response?->getNextCursor() ?? null,
+             /* @phpstan-ignore-next-line */
+-            getItems: fn (?ListUsersTopLevelCursorPaginationResponse $response) => $response?->data ?? [],
++            getItems: fn (?ListUsersTopLevelCursorPaginationResponse $response) => $response?->getData() ?? [],
+         );
+     }
+ 
+@@ -207,13 +207,13 @@ class UsersClient
+             request: $request,
+             getNextPage: fn (ListUsersOffsetPaginationRequest $request) => $this->_listWithOffsetPagination($request, $options),
+             /* @phpstan-ignore-next-line */
+-            getOffset: fn (ListUsersOffsetPaginationRequest $request) => $request?->page ?? 0,
++            getOffset: fn (ListUsersOffsetPaginationRequest $request) => $request?->getPage() ?? 0,
+             setOffset: function (ListUsersOffsetPaginationRequest $request, int $offset) {
+-                $request->page = $offset;
++                $request->setPage($offset);
+             },
+             getStep: null,
+             /* @phpstan-ignore-next-line */
+-            getItems: fn (?ListUsersPaginationResponse $response) => $response?->data ?? [],
++            getItems: fn (?ListUsersPaginationResponse $response) => $response?->getData() ?? [],
+             /* @phpstan-ignore-next-line */
+             hasNextPage: null,
+         );
+@@ -237,13 +237,13 @@ class UsersClient
+             request: $request,
+             getNextPage: fn (ListUsersDoubleOffsetPaginationRequest $request) => $this->_listWithDoubleOffsetPagination($request, $options),
+             /* @phpstan-ignore-next-line */
+-            getOffset: fn (ListUsersDoubleOffsetPaginationRequest $request) => $request?->page ?? 0,
++            getOffset: fn (ListUsersDoubleOffsetPaginationRequest $request) => $request?->getPage() ?? 0,
+             setOffset: function (ListUsersDoubleOffsetPaginationRequest $request, int $offset) {
+-                $request->page = $offset;
++                $request->setPage($offset);
+             },
+             getStep: null,
+             /* @phpstan-ignore-next-line */
+-            getItems: fn (?ListUsersPaginationResponse $response) => $response?->data ?? [],
++            getItems: fn (?ListUsersPaginationResponse $response) => $response?->getData() ?? [],
+             /* @phpstan-ignore-next-line */
+             hasNextPage: null,
+         );
+@@ -267,13 +267,13 @@ class UsersClient
+             request: $request,
+             getNextPage: fn (ListUsersBodyOffsetPaginationRequest $request) => $this->_listWithBodyOffsetPagination($request, $options),
+             /* @phpstan-ignore-next-line */
+-            getOffset: fn (ListUsersBodyOffsetPaginationRequest $request) => $request?->pagination?->page ?? 0,
++            getOffset: fn (ListUsersBodyOffsetPaginationRequest $request) => $request?->getPagination()?->getPage() ?? 0,
+             setOffset: function (ListUsersBodyOffsetPaginationRequest $request, int $offset) {
+                 PaginationHelper::setDeep($request, ["pagination", "page"], $offset);
+             },
+             getStep: null,
+             /* @phpstan-ignore-next-line */
+-            getItems: fn (?ListUsersPaginationResponse $response) => $response?->data ?? [],
++            getItems: fn (?ListUsersPaginationResponse $response) => $response?->getData() ?? [],
+             /* @phpstan-ignore-next-line */
+             hasNextPage: null,
+         );
+@@ -297,14 +297,14 @@ class UsersClient
+             request: $request,
+             getNextPage: fn (ListUsersOffsetStepPaginationRequest $request) => $this->_listWithOffsetStepPagination($request, $options),
+             /* @phpstan-ignore-next-line */
+-            getOffset: fn (ListUsersOffsetStepPaginationRequest $request) => $request?->page ?? 0,
++            getOffset: fn (ListUsersOffsetStepPaginationRequest $request) => $request?->getPage() ?? 0,
+             setOffset: function (ListUsersOffsetStepPaginationRequest $request, int $offset) {
+-                $request->page = $offset;
++                $request->setPage($offset);
+             },
+             /* @phpstan-ignore-next-line */
+-            getStep: fn (ListUsersOffsetStepPaginationRequest $request) => $request?->limit ?? 0,
++            getStep: fn (ListUsersOffsetStepPaginationRequest $request) => $request?->getLimit() ?? 0,
+             /* @phpstan-ignore-next-line */
+-            getItems: fn (?ListUsersPaginationResponse $response) => $response?->data ?? [],
++            getItems: fn (?ListUsersPaginationResponse $response) => $response?->getData() ?? [],
+             /* @phpstan-ignore-next-line */
+             hasNextPage: null,
+         );
+@@ -328,16 +328,16 @@ class UsersClient
+             request: $request,
+             getNextPage: fn (ListWithOffsetPaginationHasNextPageRequest $request) => $this->_listWithOffsetPaginationHasNextPage($request, $options),
+             /* @phpstan-ignore-next-line */
+-            getOffset: fn (ListWithOffsetPaginationHasNextPageRequest $request) => $request?->page ?? 0,
++            getOffset: fn (ListWithOffsetPaginationHasNextPageRequest $request) => $request?->getPage() ?? 0,
+             setOffset: function (ListWithOffsetPaginationHasNextPageRequest $request, int $offset) {
+-                $request->page = $offset;
++                $request->setPage($offset);
+             },
+             /* @phpstan-ignore-next-line */
+-            getStep: fn (ListWithOffsetPaginationHasNextPageRequest $request) => $request?->limit ?? 0,
++            getStep: fn (ListWithOffsetPaginationHasNextPageRequest $request) => $request?->getLimit() ?? 0,
+             /* @phpstan-ignore-next-line */
+-            getItems: fn (?ListUsersPaginationResponse $response) => $response?->data ?? [],
++            getItems: fn (?ListUsersPaginationResponse $response) => $response?->getData() ?? [],
+             /* @phpstan-ignore-next-line */
+-            hasNextPage: fn (?ListUsersPaginationResponse $response) => $response?->hasNextPage,
++            hasNextPage: fn (?ListUsersPaginationResponse $response) => $response?->getHasNextPage(),
+         );
+     }
+ 
+@@ -359,12 +359,12 @@ class UsersClient
+             request: $request,
+             getNextPage: fn (ListUsersExtendedRequest $request) => $this->_listWithExtendedResults($request, $options),
+             setCursor: function (ListUsersExtendedRequest $request, ?string $cursor) {
+-                $request->cursor = $cursor;
++                $request->setCursor($cursor);
+             },
+             /* @phpstan-ignore-next-line */
+-            getNextCursor: fn (?ListUsersExtendedResponse $response) => $response?->next ?? null,
++            getNextCursor: fn (?ListUsersExtendedResponse $response) => $response?->getNext() ?? null,
+             /* @phpstan-ignore-next-line */
+-            getItems: fn (?ListUsersExtendedResponse $response) => $response?->data?->users ?? [],
++            getItems: fn (?ListUsersExtendedResponse $response) => $response?->getData()?->getUsers() ?? [],
+         );
+     }
+ 
+@@ -386,12 +386,12 @@ class UsersClient
+             request: $request,
+             getNextPage: fn (ListUsersExtendedRequestForOptionalData $request) => $this->_listWithExtendedResultsAndOptionalData($request, $options),
+             setCursor: function (ListUsersExtendedRequestForOptionalData $request, ?string $cursor) {
+-                $request->cursor = $cursor;
++                $request->setCursor($cursor);
+             },
+             /* @phpstan-ignore-next-line */
+-            getNextCursor: fn (?ListUsersExtendedOptionalListResponse $response) => $response?->next ?? null,
++            getNextCursor: fn (?ListUsersExtendedOptionalListResponse $response) => $response?->getNext() ?? null,
+             /* @phpstan-ignore-next-line */
+-            getItems: fn (?ListUsersExtendedOptionalListResponse $response) => $response?->data?->users ?? [],
++            getItems: fn (?ListUsersExtendedOptionalListResponse $response) => $response?->getData()?->getUsers() ?? [],
+         );
+     }
+ 
+@@ -413,12 +413,12 @@ class UsersClient
+             request: $request,
+             getNextPage: fn (ListUsernamesRequest $request) => $this->_listUsernames($request, $options),
+             setCursor: function (ListUsernamesRequest $request, ?string $cursor) {
+-                $request->startingAfter = $cursor;
++                $request->setStartingAfter($cursor);
+             },
+             /* @phpstan-ignore-next-line */
+-            getNextCursor: fn (?UsernameCursor $response) => $response?->cursor?->after ?? null,
++            getNextCursor: fn (?UsernameCursor $response) => $response?->getCursor()?->getAfter() ?? null,
+             /* @phpstan-ignore-next-line */
+-            getItems: fn (?UsernameCursor $response) => $response?->cursor?->data ?? [],
++            getItems: fn (?UsernameCursor $response) => $response?->getCursor()?->getData() ?? [],
+         );
+     }
+ 
+@@ -440,12 +440,12 @@ class UsersClient
+             request: $request,
+             getNextPage: fn (ListUsernamesWithOptionalResponseRequest $request) => $this->_listUsernamesWithOptionalResponse($request, $options),
+             setCursor: function (ListUsernamesWithOptionalResponseRequest $request, ?string $cursor) {
+-                $request->startingAfter = $cursor;
++                $request->setStartingAfter($cursor);
+             },
+             /* @phpstan-ignore-next-line */
+-            getNextCursor: fn (?UsernameCursor $response) => $response?->cursor?->after ?? null,
++            getNextCursor: fn (?UsernameCursor $response) => $response?->getCursor()?->getAfter() ?? null,
+             /* @phpstan-ignore-next-line */
+-            getItems: fn (?UsernameCursor $response) => $response?->cursor?->data ?? [],
++            getItems: fn (?UsernameCursor $response) => $response?->getCursor()?->getData() ?? [],
+         );
+     }
+ 
+@@ -467,13 +467,13 @@ class UsersClient
+             request: $request,
+             getNextPage: fn (ListWithGlobalConfigRequest $request) => $this->_listWithGlobalConfig($request, $options),
+             /* @phpstan-ignore-next-line */
+-            getOffset: fn (ListWithGlobalConfigRequest $request) => $request?->offset ?? 0,
++            getOffset: fn (ListWithGlobalConfigRequest $request) => $request?->getOffset() ?? 0,
+             setOffset: function (ListWithGlobalConfigRequest $request, int $offset) {
+-                $request->offset = $offset;
++                $request->setOffset($offset);
+             },
+             getStep: null,
+             /* @phpstan-ignore-next-line */
+-            getItems: fn (?UsernameContainer $response) => $response?->results ?? [],
++            getItems: fn (?UsernameContainer $response) => $response?->getResults() ?? [],
+             /* @phpstan-ignore-next-line */
+             hasNextPage: null,
+         );
+@@ -497,13 +497,13 @@ class UsersClient
+             request: $request,
+             getNextPage: fn (ListUsersOptionalDataRequest $request) => $this->_listWithOptionalData($request, $options),
+             /* @phpstan-ignore-next-line */
+-            getOffset: fn (ListUsersOptionalDataRequest $request) => $request?->page ?? 0,
++            getOffset: fn (ListUsersOptionalDataRequest $request) => $request?->getPage() ?? 0,
+             setOffset: function (ListUsersOptionalDataRequest $request, int $offset) {
+-                $request->page = $offset;
++                $request->setPage($offset);
+             },
+             getStep: null,
+             /* @phpstan-ignore-next-line */
+-            getItems: fn (?ListUsersOptionalDataPaginationResponse $response) => $response?->data ?? [],
++            getItems: fn (?ListUsersOptionalDataPaginationResponse $response) => $response?->getData() ?? [],
+             /* @phpstan-ignore-next-line */
+             hasNextPage: null,
+         );
+@@ -527,12 +527,12 @@ class UsersClient
+             request: $request,
+             getNextPage: fn (ListUsersAliasedDataRequest $request) => $this->_listWithAliasedData($request, $options),
+             setCursor: function (ListUsersAliasedDataRequest $request, string $cursor) {
+-                $request->startingAfter = $cursor;
++                $request->setStartingAfter($cursor);
+             },
+             /* @phpstan-ignore-next-line */
+-            getNextCursor: fn (?ListUsersAliasedDataPaginationResponse $response) => $response?->page?->next?->startingAfter ?? null,
++            getNextCursor: fn (?ListUsersAliasedDataPaginationResponse $response) => $response?->getPage()?->getNext()?->getStartingAfter() ?? null,
+             /* @phpstan-ignore-next-line */
+-            getItems: fn (?ListUsersAliasedDataPaginationResponse $response) => $response?->data ?? [],
++            getItems: fn (?ListUsersAliasedDataPaginationResponse $response) => $response?->getData() ?? [],
+         );
+     }
+ 
+@@ -554,17 +554,17 @@ class UsersClient
+     {
+         $options = array_merge($this->options, $options ?? []);
+         $query = [];
+-        if ($request->page != null) {
+-            $query['page'] = $request->page;
++        if ($request->getPage() != null) {
++            $query['page'] = $request->getPage();
+         }
+-        if ($request->perPage != null) {
+-            $query['per_page'] = $request->perPage;
++        if ($request->getPerPage() != null) {
++            $query['per_page'] = $request->getPerPage();
+         }
+-        if ($request->order != null) {
+-            $query['order'] = $request->order;
++        if ($request->getOrder() != null) {
++            $query['order'] = $request->getOrder();
+         }
+-        if ($request->startingAfter != null) {
+-            $query['starting_after'] = $request->startingAfter;
++        if ($request->getStartingAfter() != null) {
++            $query['starting_after'] = $request->getStartingAfter();
+         }
+         try {
+             $response = $this->client->sendRequest(
+@@ -614,8 +614,8 @@ class UsersClient
+     {
+         $options = array_merge($this->options, $options ?? []);
+         $query = [];
+-        if ($request->cursor != null) {
+-            $query['cursor'] = $request->cursor;
++        if ($request->getCursor() != null) {
++            $query['cursor'] = $request->getCursor();
+         }
+         try {
+             $response = $this->client->sendRequest(
+@@ -763,17 +763,17 @@ class UsersClient
+     {
+         $options = array_merge($this->options, $options ?? []);
+         $query = [];
+-        if ($request->page != null) {
+-            $query['page'] = $request->page;
++        if ($request->getPage() != null) {
++            $query['page'] = $request->getPage();
+         }
+-        if ($request->perPage != null) {
+-            $query['per_page'] = $request->perPage;
++        if ($request->getPerPage() != null) {
++            $query['per_page'] = $request->getPerPage();
+         }
+-        if ($request->order != null) {
+-            $query['order'] = $request->order;
++        if ($request->getOrder() != null) {
++            $query['order'] = $request->getOrder();
+         }
+-        if ($request->startingAfter != null) {
+-            $query['starting_after'] = $request->startingAfter;
++        if ($request->getStartingAfter() != null) {
++            $query['starting_after'] = $request->getStartingAfter();
+         }
+         try {
+             $response = $this->client->sendRequest(
+@@ -823,17 +823,17 @@ class UsersClient
+     {
+         $options = array_merge($this->options, $options ?? []);
+         $query = [];
+-        if ($request->page != null) {
+-            $query['page'] = $request->page;
++        if ($request->getPage() != null) {
++            $query['page'] = $request->getPage();
+         }
+-        if ($request->perPage != null) {
+-            $query['per_page'] = $request->perPage;
++        if ($request->getPerPage() != null) {
++            $query['per_page'] = $request->getPerPage();
+         }
+-        if ($request->order != null) {
+-            $query['order'] = $request->order;
++        if ($request->getOrder() != null) {
++            $query['order'] = $request->getOrder();
+         }
+-        if ($request->startingAfter != null) {
+-            $query['starting_after'] = $request->startingAfter;
++        if ($request->getStartingAfter() != null) {
++            $query['starting_after'] = $request->getStartingAfter();
+         }
+         try {
+             $response = $this->client->sendRequest(
+@@ -930,14 +930,14 @@ class UsersClient
+     {
+         $options = array_merge($this->options, $options ?? []);
+         $query = [];
+-        if ($request->page != null) {
+-            $query['page'] = $request->page;
++        if ($request->getPage() != null) {
++            $query['page'] = $request->getPage();
+         }
+-        if ($request->limit != null) {
+-            $query['limit'] = $request->limit;
++        if ($request->getLimit() != null) {
++            $query['limit'] = $request->getLimit();
+         }
+-        if ($request->order != null) {
+-            $query['order'] = $request->order;
++        if ($request->getOrder() != null) {
++            $query['order'] = $request->getOrder();
+         }
+         try {
+             $response = $this->client->sendRequest(
+@@ -987,14 +987,14 @@ class UsersClient
+     {
+         $options = array_merge($this->options, $options ?? []);
+         $query = [];
+-        if ($request->page != null) {
+-            $query['page'] = $request->page;
++        if ($request->getPage() != null) {
++            $query['page'] = $request->getPage();
+         }
+-        if ($request->limit != null) {
+-            $query['limit'] = $request->limit;
++        if ($request->getLimit() != null) {
++            $query['limit'] = $request->getLimit();
+         }
+-        if ($request->order != null) {
+-            $query['order'] = $request->order;
++        if ($request->getOrder() != null) {
++            $query['order'] = $request->getOrder();
+         }
+         try {
+             $response = $this->client->sendRequest(
+@@ -1044,8 +1044,8 @@ class UsersClient
+     {
+         $options = array_merge($this->options, $options ?? []);
+         $query = [];
+-        if ($request->cursor != null) {
+-            $query['cursor'] = $request->cursor;
++        if ($request->getCursor() != null) {
++            $query['cursor'] = $request->getCursor();
+         }
+         try {
+             $response = $this->client->sendRequest(
+@@ -1095,8 +1095,8 @@ class UsersClient
+     {
+         $options = array_merge($this->options, $options ?? []);
+         $query = [];
+-        if ($request->cursor != null) {
+-            $query['cursor'] = $request->cursor;
++        if ($request->getCursor() != null) {
++            $query['cursor'] = $request->getCursor();
+         }
+         try {
+             $response = $this->client->sendRequest(
+@@ -1146,8 +1146,8 @@ class UsersClient
+     {
+         $options = array_merge($this->options, $options ?? []);
+         $query = [];
+-        if ($request->startingAfter != null) {
+-            $query['starting_after'] = $request->startingAfter;
++        if ($request->getStartingAfter() != null) {
++            $query['starting_after'] = $request->getStartingAfter();
+         }
+         try {
+             $response = $this->client->sendRequest(
+@@ -1197,8 +1197,8 @@ class UsersClient
+     {
+         $options = array_merge($this->options, $options ?? []);
+         $query = [];
+-        if ($request->startingAfter != null) {
+-            $query['starting_after'] = $request->startingAfter;
++        if ($request->getStartingAfter() != null) {
++            $query['starting_after'] = $request->getStartingAfter();
+         }
+         try {
+             $response = $this->client->sendRequest(
+@@ -1248,8 +1248,8 @@ class UsersClient
+     {
+         $options = array_merge($this->options, $options ?? []);
+         $query = [];
+-        if ($request->offset != null) {
+-            $query['offset'] = $request->offset;
++        if ($request->getOffset() != null) {
++            $query['offset'] = $request->getOffset();
+         }
+         try {
+             $response = $this->client->sendRequest(
+@@ -1299,8 +1299,8 @@ class UsersClient
+     {
+         $options = array_merge($this->options, $options ?? []);
+         $query = [];
+-        if ($request->page != null) {
+-            $query['page'] = $request->page;
++        if ($request->getPage() != null) {
++            $query['page'] = $request->getPage();
+         }
+         try {
+             $response = $this->client->sendRequest(
+@@ -1350,14 +1350,14 @@ class UsersClient
+     {
+         $options = array_merge($this->options, $options ?? []);
+         $query = [];
+-        if ($request->page != null) {
+-            $query['page'] = $request->page;
++        if ($request->getPage() != null) {
++            $query['page'] = $request->getPage();
+         }
+-        if ($request->perPage != null) {
+-            $query['per_page'] = $request->perPage;
++        if ($request->getPerPage() != null) {
++            $query['per_page'] = $request->getPerPage();
+         }
+-        if ($request->startingAfter != null) {
+-            $query['starting_after'] = $request->startingAfter;
++        if ($request->getStartingAfter() != null) {
++            $query['starting_after'] = $request->getStartingAfter();
+         }
+         try {
+             $response = $this->client->sendRequest(
+diff --git a/tests/Core/.php-cs-fixer.cache b/tests/Core/.php-cs-fixer.cache
+index 574d9ae114c..6eab0938a6c 100644
+--- a/tests/Core/.php-cs-fixer.cache
++++ b/tests/Core/.php-cs-fixer.cache
+@@ -1 +1 @@
+-{"php":"8.3.12","version":"3.94.2","indent":"    ","lineEnding":"\n","rules":{"binary_operator_spaces":{"default":"at_least_single_space"},"blank_line_after_opening_tag":true,"blank_line_between_import_groups":true,"blank_lines_before_namespace":true,"braces_position":{"allow_single_line_anonymous_functions":false,"allow_single_line_empty_anonymous_classes":true},"class_definition":{"inline_constructor_arguments":false,"space_before_parenthesis":true},"compact_nullable_type_declaration":true,"declare_equal_normalize":true,"lowercase_cast":true,"lowercase_static_reference":true,"modifier_keywords":true,"new_with_parentheses":{"anonymous_class":true},"no_blank_lines_after_class_opening":true,"no_extra_blank_lines":{"tokens":["use"]},"no_leading_import_slash":true,"no_whitespace_in_blank_line":true,"ordered_class_elements":{"order":["use_trait"]},"ordered_imports":{"imports_order":["class","function","const"],"sort_algorithm":"none"},"return_type_declaration":true,"short_scalar_cast":true,"single_import_per_statement":{"group_to_single_imports":false},"single_space_around_construct":{"constructs_followed_by_a_single_space":["abstract","as","case","catch","class","const_import","do","else","elseif","final","finally","for","foreach","function","function_import","if","insteadof","interface","namespace","new","private","protected","public","static","switch","trait","try","use","use_lambda","while"],"constructs_preceded_by_a_single_space":["as","else","elseif","use_lambda"]},"single_trait_insert_per_statement":true,"ternary_operator_spaces":true,"unary_operator_spaces":{"only_dec_inc":true},"blank_line_after_namespace":true,"constant_case":true,"control_structure_braces":true,"control_structure_continuation_position":true,"elseif":true,"function_declaration":{"closure_fn_spacing":"one"},"indentation_type":true,"line_ending":true,"lowercase_keywords":true,"method_argument_space":{"after_heredoc":false,"attribute_placement":"ignore","on_multiline":"ensure_fully_multiline"},"no_break_comment":true,"no_closing_tag":true,"no_multiple_statements_per_line":true,"no_space_around_double_colon":true,"no_spaces_after_function_name":true,"no_trailing_whitespace":true,"no_trailing_whitespace_in_comment":true,"single_blank_line_at_eof":true,"single_class_element_per_statement":{"elements":["property"]},"single_line_after_imports":true,"spaces_inside_parentheses":true,"statement_indentation":true,"switch_case_semicolon_to_colon":true,"switch_case_space":true,"encoding":true,"full_opening_tag":true},"ruleCustomisationPolicyVersion":"null-policy","hashes":{"Json\/InvalidTest.php":"44205a18b9942c97f76563cdcd341100","Json\/UnionArrayTest.php":"4ab6b5988fe19c4806ed700bb7df65bc","Json\/NestedUnionArrayTest.php":"9b94efc58da5e4e5182f7cd3452aabd9","Json\/ScalarTest.php":"a9b57f40f065b9e9c0cb3a62f7876952","Json\/NullPropertyTest.php":"a79f7e0bc03aca8feb8b7b5bd2d4a7a5","Json\/DateArrayTest.php":"11fe1582612d537b6b570ef8588c78c6","Json\/UnionPropertyTest.php":"0d711745113990584fdfeb96fc06610e","Json\/TraitTest.php":"6f942c800f0a3aeafc2346f0534175f3","Json\/EnumTest.php":"653a142fbe37469d26f21e1568f93c34","Json\/NullableArrayTest.php":"509550020c6ea83a2b860432546a4afd","Pagination\/CreateRequestWithDefaultsTest.php":"daf24f68867963ee3b2c26d160bfb6cc","Pagination\/HasNextPageOffsetPagerTest\/HasNextPageOffsetPagerTest.php":"643dfcab9ff2d08bc3e903c1278ee4df","Pagination\/GeneratorPagerTest\/GeneratorPagerTest.php":"e76924421c15b60bd73351c2427639f0","Pagination\/CursorPagerTest\/CursorPagerTest.php":"aca775d28d8bac90083630afd375f72f","Pagination\/DeepSetAccessorsTest.php":"a3549efd4e3d61e1372064b487ca12d0","Pagination\/DeepSetTest.php":"2a23e81ae45a3b50ef52ad6430b5e649","Pagination\/IntOffsetPagerTest\/IntOffsetPagerTest.php":"7686c40d254a7bf730304ae45e6f7e7f","Pagination\/StepOffsetPagerTest\/StepOffsetPagerTest.php":"daa17d755021337082e30c3c0f8a07d2","Json\/EmptyArrayTest.php":"a0ea91510b3a6d8ce5a760a6fa8a80f2","Json\/AdditionalPropertiesTest.php":"cf0c894e206063d4f5982782ef08597b","Json\/ExhaustiveTest.php":"0ad30d3d8f81988db2b80aff8778d91d","Client\/RawClientTest.php":"4bd711e4f76b56e2822f255e6d43c91d"}}
+\ No newline at end of file
++{"php":"8.3.12","version":"3.94.2","indent":"    ","lineEnding":"\n","rules":{"binary_operator_spaces":{"default":"at_least_single_space"},"blank_line_after_opening_tag":true,"blank_line_between_import_groups":true,"blank_lines_before_namespace":true,"braces_position":{"allow_single_line_anonymous_functions":false,"allow_single_line_empty_anonymous_classes":true},"class_definition":{"inline_constructor_arguments":false,"space_before_parenthesis":true},"compact_nullable_type_declaration":true,"declare_equal_normalize":true,"lowercase_cast":true,"lowercase_static_reference":true,"modifier_keywords":true,"new_with_parentheses":{"anonymous_class":true},"no_blank_lines_after_class_opening":true,"no_extra_blank_lines":{"tokens":["use"]},"no_leading_import_slash":true,"no_whitespace_in_blank_line":true,"ordered_class_elements":{"order":["use_trait"]},"ordered_imports":{"imports_order":["class","function","const"],"sort_algorithm":"none"},"return_type_declaration":true,"short_scalar_cast":true,"single_import_per_statement":{"group_to_single_imports":false},"single_space_around_construct":{"constructs_followed_by_a_single_space":["abstract","as","case","catch","class","const_import","do","else","elseif","final","finally","for","foreach","function","function_import","if","insteadof","interface","namespace","new","private","protected","public","static","switch","trait","try","use","use_lambda","while"],"constructs_preceded_by_a_single_space":["as","else","elseif","use_lambda"]},"single_trait_insert_per_statement":true,"ternary_operator_spaces":true,"unary_operator_spaces":{"only_dec_inc":true},"blank_line_after_namespace":true,"constant_case":true,"control_structure_braces":true,"control_structure_continuation_position":true,"elseif":true,"function_declaration":{"closure_fn_spacing":"one"},"indentation_type":true,"line_ending":true,"lowercase_keywords":true,"method_argument_space":{"after_heredoc":false,"attribute_placement":"ignore","on_multiline":"ensure_fully_multiline"},"no_break_comment":true,"no_closing_tag":true,"no_multiple_statements_per_line":true,"no_space_around_double_colon":true,"no_spaces_after_function_name":true,"no_trailing_whitespace":true,"no_trailing_whitespace_in_comment":true,"single_blank_line_at_eof":true,"single_class_element_per_statement":{"elements":["property"]},"single_line_after_imports":true,"spaces_inside_parentheses":true,"statement_indentation":true,"switch_case_semicolon_to_colon":true,"switch_case_space":true,"encoding":true,"full_opening_tag":true},"ruleCustomisationPolicyVersion":"null-policy","hashes":{"Pagination\/CreateRequestWithDefaultsTest.php":"daf24f68867963ee3b2c26d160bfb6cc","Pagination\/HasNextPageOffsetPagerTest\/HasNextPageOffsetPagerTest.php":"643dfcab9ff2d08bc3e903c1278ee4df","Pagination\/GeneratorPagerTest\/GeneratorPagerTest.php":"e76924421c15b60bd73351c2427639f0","Pagination\/CursorPagerTest\/CursorPagerTest.php":"aca775d28d8bac90083630afd375f72f","Pagination\/DeepSetAccessorsTest.php":"a3549efd4e3d61e1372064b487ca12d0","Pagination\/DeepSetTest.php":"2a23e81ae45a3b50ef52ad6430b5e649","Pagination\/IntOffsetPagerTest\/IntOffsetPagerTest.php":"7686c40d254a7bf730304ae45e6f7e7f","Pagination\/StepOffsetPagerTest\/StepOffsetPagerTest.php":"daa17d755021337082e30c3c0f8a07d2","Json\/EmptyArrayTest.php":"a0ea91510b3a6d8ce5a760a6fa8a80f2","Json\/AdditionalPropertiesTest.php":"cf0c894e206063d4f5982782ef08597b","Json\/InvalidTest.php":"44205a18b9942c97f76563cdcd341100","Json\/UnionArrayTest.php":"4ab6b5988fe19c4806ed700bb7df65bc","Json\/NestedUnionArrayTest.php":"9b94efc58da5e4e5182f7cd3452aabd9","Json\/ScalarTest.php":"a9b57f40f065b9e9c0cb3a62f7876952","Json\/NullPropertyTest.php":"a79f7e0bc03aca8feb8b7b5bd2d4a7a5","Json\/DateArrayTest.php":"11fe1582612d537b6b570ef8588c78c6","Json\/UnionPropertyTest.php":"0d711745113990584fdfeb96fc06610e","Json\/TraitTest.php":"6f942c800f0a3aeafc2346f0534175f3","Json\/EnumTest.php":"653a142fbe37469d26f21e1568f93c34","Json\/NullableArrayTest.php":"509550020c6ea83a2b860432546a4afd","Json\/ExhaustiveTest.php":"0ad30d3d8f81988db2b80aff8778d91d","Client\/RawClientTest.php":"4bd711e4f76b56e2822f255e6d43c91d"}}
+\ No newline at end of file
