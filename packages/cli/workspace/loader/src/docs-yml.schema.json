@@ -4429,6 +4429,13 @@
         "player"
       ]
     },
+    "docs.OgDynamicLogoColor": {
+      "type": "string",
+      "enum": [
+        "dark",
+        "light"
+      ]
+    },
     "docs.MetadataConfig": {
       "type": "object",
       "properties": {
@@ -4606,6 +4613,86 @@
           "oneOf": [
             {
               "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "og:dynamic:text-color": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "og:dynamic:background-color": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "og:dynamic:logo-color": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.OgDynamicLogoColor"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "og:dynamic:show-logo": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "og:dynamic:show-section": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "og:dynamic:show-description": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "og:dynamic:show-url": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "og:dynamic:show-gradient": {
+          "oneOf": [
+            {
+              "type": "boolean"
             },
             {
               "type": "null"

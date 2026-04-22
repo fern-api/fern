@@ -71,6 +71,7 @@ export async function loadOpenAPI({
     await resolveDescriptionMarkdownRefs(rawSpec, dirname(absolutePathToOpenAPI), context);
     const parsed = await parseOpenAPI({
         absolutePathToOpenAPI,
+        logger: context.logger,
         parsed: rawSpec
     });
 
@@ -117,7 +118,8 @@ export async function loadOpenAPI({
         result = await parseOpenAPI({
             absolutePathToOpenAPI,
             absolutePathToOpenAPIOverrides: overridesFilepath,
-            parsed: result
+            parsed: result,
+            logger: context.logger
         });
     }
 
@@ -198,7 +200,8 @@ export async function loadOpenAPI({
         return await parseOpenAPI({
             absolutePathToOpenAPI,
             absolutePathToOpenAPIOverlays, // Include overlay path for ref resolver
-            parsed: result
+            parsed: result,
+            logger: context.logger
         });
     }
     return result;

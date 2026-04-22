@@ -1,4 +1,46 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.87.1
+  changelogEntry:
+    - summary: |
+        Gracefully handle "Self-referencing circular pointer" errors from OpenAPI specs.
+        Instead of failing the entire publish, the CLI now logs a warning with the
+        offending file path and circular $ref breadcrumbs, then continues processing
+        without full reference resolution.
+      type: fix
+  createdAt: "2026-04-22"
+  irVersion: 66
+- version: 4.87.0
+  changelogEntry:
+    - summary: |
+        Add new `docs.yml` metadata fields for controlling dynamically generated OG images:
+        `og:dynamic:text-color`, `og:dynamic:background-color`, `og:dynamic:logo-color`
+        (`dark` | `light`), and five visibility toggle flags (`og:dynamic:show-logo`,
+        `og:dynamic:show-section`, `og:dynamic:show-description`, `og:dynamic:show-url`,
+        `og:dynamic:show-gradient`).
+        Also fixes a pre-existing gap where `og:dynamic` and `og:background-image` were
+        missing from the Zod `MetadataConfig` schema, causing `fern check` to reject them.
+      type: feat
+    - summary: |
+        Populate `apiNameToId` in `fern docs dev` so MDX widgets that resolve APIs by
+        user-facing name (e.g. `<MergeSupportedFieldsByIntegrationWidget apiName="hris_v2" ... />`)
+        work in local preview. Previously the preview server hardcoded this mapping to
+        `{}`, causing such widgets to throw `MergeWidgetResolutionError` and render the
+        affected pages as 500 Internal Server Error.
+      type: fix
+    - summary: |
+        Emit non-fatal warnings during `fern check` / `fern docs dev` when `docs.yml`
+        metadata settings silently conflict. Covered cases:
+        - `og:dynamic: true` combined with `og:image` or `twitter:image` (the static
+          images only apply to the homepage once dynamic generation is enabled).
+        - `og:dynamic:*` sub-settings or `og:background-image` set without
+          `og:dynamic: true` (they are ignored).
+        - `og:dynamic:logo-color` set with `og:dynamic:show-logo: false` (no effect).
+        - `og:image:width` / `og:image:height` set without `og:image`.
+        - `og:dynamic:text-color` equal to `og:dynamic:background-color`
+          (text is invisible).
+      type: chore
+  createdAt: "2026-04-22"
+  irVersion: 66
 - version: 4.86.2
   changelogEntry:
     - summary: |

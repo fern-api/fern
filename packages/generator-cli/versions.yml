@@ -1,6 +1,18 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Sign commits pushed by the GitHub pipeline step. Previously, pull-request
+        and push modes in the replay pipeline committed and pushed via plain git
+        CLI, producing unsigned commits. Commits are now created via the GitHub
+        REST API using the App installation token, which GitHub signs with the
+        App's key — matching the behavior of fiddle's legacy InMemoryGitRepo push
+        path and restoring verified fern-api[bot] commits on replay-enabled orgs.
+      type: fix
+  createdAt: "2026-04-22"
+  version: 0.9.11
+
+- changelogEntry:
+    - summary: |
         Only push the fern-generation-base tag when replay has unresolved conflicts, and skip syncFromDivergentMerge when the tag is not reachable from HEAD. Prevents stale tags from clean replay PRs from poisoning subsequent runs.
       type: fix
   createdAt: "2026-04-16"
