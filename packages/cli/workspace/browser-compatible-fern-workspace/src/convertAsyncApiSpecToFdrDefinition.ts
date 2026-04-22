@@ -4,7 +4,8 @@ import { generatorsYml } from "@fern-api/configuration";
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { convertIrToFdrApi } from "@fern-api/register";
-import { createMockTaskContext } from "@fern-api/task-context";
+import { CliError, createMockTaskContext } from "@fern-api/task-context";
+
 import { ErrorCollector } from "@fern-api/v3-importer-commons";
 
 import { OpenAPIWorkspace } from "./OpenAPIWorkspace.js";
@@ -84,7 +85,10 @@ async function convertAsyncApiSpecToIr({
     const result = await converter.convert();
 
     if (result == null) {
-        throw new Error("Failed to convert AsyncAPI spec to intermediate representation");
+        throw new CliError({
+            message: "Failed to convert AsyncAPI spec to intermediate representation",
+            code: CliError.Code.IrConversionError
+        });
     }
 
     if (errorCollector.hasErrors()) {

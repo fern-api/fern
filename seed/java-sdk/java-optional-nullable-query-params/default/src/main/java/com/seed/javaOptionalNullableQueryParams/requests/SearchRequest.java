@@ -63,6 +63,9 @@ public final class SearchRequest {
      */
     @JsonIgnore
     public OptionalNullable<String> getQuery() {
+        if (query == null) {
+            return OptionalNullable.absent();
+        }
         return query;
     }
 
@@ -71,6 +74,9 @@ public final class SearchRequest {
      */
     @JsonIgnore
     public OptionalNullable<Integer> getLimit() {
+        if (limit == null) {
+            return OptionalNullable.absent();
+        }
         return limit;
     }
 
@@ -79,6 +85,9 @@ public final class SearchRequest {
      */
     @JsonIgnore
     public OptionalNullable<Boolean> getIncludeArchived() {
+        if (includeArchived == null) {
+            return OptionalNullable.absent();
+        }
         return includeArchived;
     }
 
@@ -109,6 +118,9 @@ public final class SearchRequest {
      */
     @JsonIgnore
     public OptionalNullable<String> getRegularOptional() {
+        if (regularOptional == null) {
+            return OptionalNullable.absent();
+        }
         return regularOptional;
     }
 

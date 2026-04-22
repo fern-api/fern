@@ -2125,7 +2125,7 @@ function inflateIr(
         serviceTypeReferenceInfo: ir.serviceTypeReferenceInfo,
         readmeConfig: ir.readmeConfig,
         sourceConfig: ir.sourceConfig,
-        publishConfig: ir.publishConfig,
+        publishConfig: ir.publishConfig != null ? convertPublishConfig(ir.publishConfig) : undefined,
         dynamic: ir.dynamic != null ? inflateDynamicIr(ir.dynamic) : undefined,
         selfHosted: ir.selfHosted,
         audiences: ir.audiences,
@@ -2144,4 +2144,50 @@ function inflateIr(
                 : undefined,
         apiPlayground: ir.apiPlayground
     };
+}
+
+function convertPublishConfig(
+    publishConfig: IrVersions.V66.PublishingConfig
+): IrVersions.V65.PublishingConfig | undefined {
+    return IrVersions.V66.PublishingConfig._visit<IrVersions.V65.PublishingConfig | undefined>(publishConfig, {
+        github: (github) => {
+            const convertedTarget = convertPublishTarget(github.target);
+            return convertedTarget != null
+                ? IrVersions.V65.PublishingConfig.github({
+                      ...github,
+                      target: convertedTarget
+                  })
+                : undefined;
+        },
+        direct: (direct) => {
+            const convertedTarget = convertPublishTarget(direct.target);
+            return convertedTarget != null
+                ? IrVersions.V65.PublishingConfig.direct({
+                      target: convertedTarget
+                  })
+                : undefined;
+        },
+        filesystem: (filesystem) => {
+            const convertedTarget =
+                filesystem.publishTarget != null ? convertPublishTarget(filesystem.publishTarget) : undefined;
+            return IrVersions.V65.PublishingConfig.filesystem({
+                generateFullProject: filesystem.generateFullProject,
+                publishTarget: convertedTarget
+            });
+        },
+        _other: () => undefined
+    });
+}
+
+function convertPublishTarget(target: IrVersions.V66.PublishTarget): IrVersions.V65.PublishTarget | undefined {
+    return IrVersions.V66.PublishTarget._visit<IrVersions.V65.PublishTarget | undefined>(target, {
+        postman: IrVersions.V65.PublishTarget.postman,
+        npm: IrVersions.V65.PublishTarget.npm,
+        maven: IrVersions.V65.PublishTarget.maven,
+        pypi: IrVersions.V65.PublishTarget.pypi,
+        crates: IrVersions.V65.PublishTarget.crates,
+        // go publish target is not supported in v65, return undefined
+        go: () => undefined,
+        _other: () => undefined
+    });
 }

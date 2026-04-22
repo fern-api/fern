@@ -2,7 +2,8 @@ import { docsYml } from "@fern-api/configuration";
 import { assertNever, isPlainObject, sanitizeNullValues } from "@fern-api/core-utils";
 import { FdrAPI as CjsFdrSdk } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, dirname, doesPathExist, listFiles, resolve } from "@fern-api/fs-utils";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
+
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
@@ -518,7 +519,8 @@ async function parseContext7File({
     } catch (error) {
         context.failAndThrow(
             `Invalid JSON in Context7 config file: ${rawPath}`,
-            error instanceof Error ? error.message : String(error)
+            error instanceof Error ? error.message : String(error),
+            { code: CliError.Code.ConfigError }
         );
     }
 
@@ -754,9 +756,10 @@ async function getNavigationConfiguration({
                     featureFlags: convertFeatureFlag(product.featureFlag)
                 });
             } else {
-                throw new Error(
-                    `Invalid product configuration: product must have either 'path' or valid 'href' property`
-                );
+                throw new CliError({
+                    message: `Invalid product configuration: product must have either 'path' or valid 'href' property`,
+                    code: CliError.Code.ConfigError
+                });
             }
         }
 
@@ -772,7 +775,10 @@ async function getNavigationConfiguration({
             folderTitleSource
         });
     }
-    throw new Error("Unexpected. Docs have neither navigation or versions defined.");
+    throw new CliError({
+        message: "Unexpected. Docs have neither navigation or versions defined.",
+        code: CliError.Code.ConfigError
+    });
 }
 
 function convertFeatureFlag(
@@ -928,7 +934,10 @@ async function convertNavigationTabConfiguration({
 }): Promise<docsYml.TabbedNavigation> {
     const tab = tabs[item.tab];
     if (tab == null) {
-        throw new Error(`Tab ${item.tab} is not defined in the tabs config.`);
+        throw new CliError({
+            message: `Tab ${item.tab} is not defined in the tabs config.`,
+            code: CliError.Code.ConfigError
+        });
     }
 
     if (tabbedNavigationItemHasVariants(item)) {
@@ -1110,7 +1119,9 @@ async function expandFolderConfiguration({
     const folderPath = resolveFilepath(rawConfig.folder, absolutePathToConfig);
 
     if (!(await doesPathExist(folderPath))) {
-        context.failAndThrow(`Folder not found: ${rawConfig.folder}`);
+        context.failAndThrow(`Folder not found: ${rawConfig.folder}`, undefined, {
+            code: CliError.Code.ConfigError
+        });
     }
 
     validateCollapsibleConfig({
@@ -1521,7 +1532,10 @@ function parseLibrariesConfiguration(
     const result: Record<string, docsYml.ParsedLibraryConfiguration> = {};
     for (const [name, config] of Object.entries(libraries)) {
         if (!isGitLibraryInput(config.input)) {
-            throw new Error(`Library '${name}' uses 'path' input which is not yet supported. Please use 'git' input.`);
+            throw new CliError({
+                message: `Library '${name}' uses 'path' input which is not yet supported. Please use 'git' input.`,
+                code: CliError.Code.ConfigError
+            });
         }
         result[name] = {
             input: {
@@ -1800,14 +1814,18 @@ function validateCollapsibleConfig({
     if (collapsible != null && collapsed != null) {
         context.failAndThrow(
             `Section "${sectionTitle}": cannot use both "collapsible" and the deprecated "collapsed" property. ` +
-                `Please use "collapsible" and "collapsed-by-default" instead.`
+                `Please use "collapsible" and "collapsed-by-default" instead.`,
+            undefined,
+            { code: CliError.Code.ConfigError }
         );
     }
 
     if (collapsedByDefault != null && collapsible !== true) {
         context.failAndThrow(
             `Section "${sectionTitle}": "collapsed-by-default" requires "collapsible: true". ` +
-                `"collapsed-by-default" has no effect on a non-collapsible section.`
+                `"collapsed-by-default" has no effect on a non-collapsible section.`,
+            undefined,
+            { code: CliError.Code.ConfigError }
         );
     }
 }

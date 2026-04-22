@@ -1,4 +1,4 @@
-import { AbstractReadmeSnippetBuilder } from "@fern-api/base-generator";
+import { AbstractReadmeSnippetBuilder, GeneratorError } from "@fern-api/base-generator";
 import { isNonNullish } from "@fern-api/core-utils";
 import { CodeBlock, Expression, rust, Statement, UseStatement, Writer } from "@fern-api/rust-codegen";
 
@@ -206,7 +206,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         const snippets: Record<FernIr.EndpointId, string> = {};
         for (const endpointSnippet of Object.values(endpointSnippets)) {
             if (endpointSnippet.id.identifierOverride == null) {
-                throw new Error("Internal error; snippets must define the endpoint id to generate README.md");
+                throw GeneratorError.internalError("Internal error; snippets must define the endpoint id to generate README.md");
             }
 
             if (snippets[endpointSnippet.id.identifierOverride] != null) {

@@ -434,6 +434,10 @@ describe("loadAndRunMigrations", () => {
             ).rejects.toThrow("Invalid generator configuration");
         });
 
+        // Timeout bumped to 60s because these two happy-path tests fall through
+        // to loadMigrationModule, which performs a real `npm install
+        // @fern-api/generator-migrations@latest`. That call is network-bound and
+        // regularly exceeds the 5s vitest default on CI (observed 2s–5s+).
         it("should accept valid config with name property", async () => {
             const mockLogger = {
                 debug: vi.fn(),
@@ -456,7 +460,7 @@ describe("loadAndRunMigrations", () => {
             expect(mockLogger.warn).not.toHaveBeenCalledWith(
                 expect.stringContaining("Invalid generator configuration structure")
             );
-        });
+        }, 60000);
 
         it("should accept config with additional properties", async () => {
             const mockLogger = {
@@ -483,6 +487,6 @@ describe("loadAndRunMigrations", () => {
             expect(mockLogger.warn).not.toHaveBeenCalledWith(
                 expect.stringContaining("Invalid generator configuration structure")
             );
-        });
+        }, 60000);
     });
 });

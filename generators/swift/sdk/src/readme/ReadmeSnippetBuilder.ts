@@ -1,4 +1,4 @@
-import { AbstractReadmeSnippetBuilder } from "@fern-api/base-generator";
+import { AbstractReadmeSnippetBuilder, GeneratorError } from "@fern-api/base-generator";
 import { SwiftFile } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
@@ -94,7 +94,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private getErrorHandlingSnippetForEndpoint(endpointId: string): string {
         const endpoint = this.endpointsById[endpointId];
         if (endpoint == null) {
-            throw new Error(`Internal error; missing endpoint ${endpointId}`);
+            throw GeneratorError.internalError(`Internal error; missing endpoint ${endpointId}`);
         }
         const moduleSymbol = this.context.project.nameRegistry.getRegisteredSourceModuleSymbolOrThrow();
         const rootClientSymbol = this.context.project.nameRegistry.getRootClientSymbolOrThrow();
@@ -164,7 +164,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         return this.getEndpointIdsForFeature(ReadmeSnippetBuilder.ADDITIONAL_HEADERS_FEATURE_ID).map((endpointId) => {
             const endpoint = this.endpointsById[endpointId];
             if (endpoint == null) {
-                throw new Error(`Internal error; missing endpoint ${endpointId}`);
+                throw GeneratorError.internalError(`Internal error; missing endpoint ${endpointId}`);
             }
             return SwiftFile.getRawContents([
                 swift.Statement.expressionStatement(
@@ -210,7 +210,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             (endpointId) => {
                 const endpoint = this.endpointsById[endpointId];
                 if (endpoint == null) {
-                    throw new Error(`Internal error; missing endpoint ${endpointId}`);
+                    throw GeneratorError.internalError(`Internal error; missing endpoint ${endpointId}`);
                 }
                 return SwiftFile.getRawContents([
                     swift.Statement.expressionStatement(
@@ -261,7 +261,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         return this.getEndpointIdsForFeature(FernGeneratorCli.StructuredFeatureId.Timeouts).map((endpointId) => {
             const endpoint = this.endpointsById[endpointId];
             if (endpoint == null) {
-                throw new Error(`Internal error; missing endpoint ${endpointId}`);
+                throw GeneratorError.internalError(`Internal error; missing endpoint ${endpointId}`);
             }
             return SwiftFile.getRawContents([
                 swift.Statement.expressionStatement(

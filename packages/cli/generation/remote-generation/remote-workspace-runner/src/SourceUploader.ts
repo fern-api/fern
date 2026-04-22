@@ -2,7 +2,7 @@ import { FdrAPI as FdrAPI } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { ApiDefinitionSource, SourceConfig } from "@fern-api/ir-sdk";
 import { loggingExeca } from "@fern-api/logging-execa";
-import { InteractiveTaskContext } from "@fern-api/task-context";
+import { CliError, InteractiveTaskContext } from "@fern-api/task-context";
 import { IdentifiableSource } from "@fern-api/workspace-loader";
 import { readFile, unlink } from "fs/promises";
 import tmp from "tmp-promise";
@@ -45,7 +45,9 @@ export class SourceUploader {
         await uploadCommand.cleanup();
         if (!response.ok) {
             this.context.failAndThrow(
-                `Failed to upload source file: ${source.absoluteFilePath}. Status: ${response.status}, ${response.statusText}`
+                `Failed to upload source file: ${source.absoluteFilePath}. Status: ${response.status}, ${response.statusText}`,
+                undefined,
+                { code: CliError.Code.NetworkError }
             );
         }
     }
@@ -116,7 +118,9 @@ export class SourceUploader {
         const source = this.sources[id];
         if (source == null) {
             this.context.failAndThrow(
-                `Internal error; server responded with source id "${id}" which does not exist in the workspace.`
+                `Internal error; server responded with source id "${id}" which does not exist in the workspace.`,
+                undefined,
+                { code: CliError.Code.InternalError }
             );
         }
         return source;

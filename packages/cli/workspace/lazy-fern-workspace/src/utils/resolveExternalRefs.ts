@@ -1,3 +1,4 @@
+import { CliError } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import { dirname, resolve } from "path";
@@ -325,7 +326,10 @@ export async function resolveExternalRefs(
 
         const cacheKey = `${absoluteRefPath}#${jsonPointer}`;
         if (visited.has(cacheKey)) {
-            throw new Error(`Circular $ref detected: "${ref}" (resolved to "${cacheKey}")`);
+            throw new CliError({
+                message: `Circular $ref detected: "${ref}" (resolved to "${cacheKey}")`,
+                code: CliError.Code.ReferenceError
+            });
         }
         const newVisited = new Set(visited);
         newVisited.add(cacheKey);

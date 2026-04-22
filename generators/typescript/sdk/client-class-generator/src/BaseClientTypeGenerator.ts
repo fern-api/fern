@@ -4,7 +4,7 @@ import type { FernIr } from "@fern-fern/ir-sdk";
 import { getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
 import type { FileContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
-import { getLiteralValueForHeader } from "./endpoints/utils/index.js";
+import { getClientDefaultValue, getLiteralValueForHeader, typeContainsNullable } from "./endpoints/utils/index.js";
 import type { GeneratedHeader } from "./GeneratedHeader.js";
 
 export declare namespace BaseClientTypeGenerator {
@@ -476,11 +476,48 @@ function withNoOpAuthProvider<T extends BaseClientOptions = BaseClientOptions>(
                             );
                         }
                     } else {
-                        value = ts.factory.createPropertyAccessChain(
-                            ts.factory.createIdentifier(OPTIONS_PARAMETER_NAME),
-                            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                            ts.factory.createIdentifier(this.getOptionKeyForHeader(header, context))
-                        );
+                        const clientDefaultVal = getClientDefaultValue(header.clientDefault);
+                        if (clientDefaultVal != null && !typeContainsNullable(header.valueType, context)) {
+                            if (typeof clientDefaultVal === "boolean") {
+                                const booleanLiteral = clientDefaultVal
+                                    ? ts.factory.createTrue()
+                                    : ts.factory.createFalse();
+                                value = ts.factory.createCallExpression(
+                                    ts.factory.createPropertyAccessExpression(
+                                        ts.factory.createParenthesizedExpression(
+                                            ts.factory.createBinaryExpression(
+                                                ts.factory.createPropertyAccessChain(
+                                                    ts.factory.createIdentifier(OPTIONS_PARAMETER_NAME),
+                                                    ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                                                    ts.factory.createIdentifier(headerName)
+                                                ),
+                                                ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                                                booleanLiteral
+                                            )
+                                        ),
+                                        ts.factory.createIdentifier("toString")
+                                    ),
+                                    undefined,
+                                    []
+                                );
+                            } else {
+                                value = ts.factory.createBinaryExpression(
+                                    ts.factory.createPropertyAccessChain(
+                                        ts.factory.createIdentifier(OPTIONS_PARAMETER_NAME),
+                                        ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                                        ts.factory.createIdentifier(headerName)
+                                    ),
+                                    ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                                    ts.factory.createStringLiteral(clientDefaultVal.toString())
+                                );
+                            }
+                        } else {
+                            value = ts.factory.createPropertyAccessChain(
+                                ts.factory.createIdentifier(OPTIONS_PARAMETER_NAME),
+                                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                                ts.factory.createIdentifier(this.getOptionKeyForHeader(header, context))
+                            );
+                        }
                     }
 
                     return {

@@ -6,7 +6,7 @@ import {
     recursivelyVisitRawTypeReference
 } from "@fern-api/fern-definition-schema";
 import { ContainerType, TypeReference } from "@fern-api/ir-sdk";
-
+import { CliError } from "@fern-api/task-context";
 import { constructFernFileContext, FernFileContext } from "../FernFileContext.js";
 import { parseInlineType } from "../utils/parseInlineType.js";
 import { parseReferenceToTypeName } from "../utils/parseReferenceToTypeName.js";
@@ -39,7 +39,10 @@ export class TypeResolverImpl implements TypeResolver {
     public resolveTypeOrThrow({ type, file }: { type: string; file: FernFileContext }): ResolvedType {
         const resolvedType = this.resolveType({ type, file });
         if (resolvedType == null) {
-            throw new Error("Cannot resolve type: " + type + " in file " + file.relativeFilepath);
+            throw new CliError({
+                message: "Cannot resolve type: " + type + " in file " + file.relativeFilepath,
+                code: CliError.Code.ResolutionError
+            });
         }
         return resolvedType;
     }
@@ -53,9 +56,11 @@ export class TypeResolverImpl implements TypeResolver {
     }): RawTypeDeclarationInfo {
         const declaration = this.getDeclarationOfNamedType({ referenceToNamedType, file });
         if (declaration == null) {
-            throw new Error(
-                "Cannot find declaration of type: " + referenceToNamedType + " in file " + file.relativeFilepath
-            );
+            throw new CliError({
+                message:
+                    "Cannot find declaration of type: " + referenceToNamedType + " in file " + file.relativeFilepath,
+                code: CliError.Code.ResolutionError
+            });
         }
         return declaration;
     }
@@ -261,7 +266,10 @@ export class TypeResolverImpl implements TypeResolver {
     }): ResolvedType {
         const resolvedType = this.resolveNamedType({ referenceToNamedType, file });
         if (resolvedType == null) {
-            throw new Error("Cannot resolve type: " + referenceToNamedType);
+            throw new CliError({
+                message: "Cannot resolve type: " + referenceToNamedType,
+                code: CliError.Code.ResolutionError
+            });
         }
         return resolvedType;
     }

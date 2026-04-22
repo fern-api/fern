@@ -1,6 +1,6 @@
 import type { generatorsYml } from "@fern-api/configuration";
 import { extractErrorMessage } from "@fern-api/core-utils";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
 /**
  * Resolves the package name from the raw generator configuration.
  *
@@ -152,7 +152,9 @@ export async function checkVersionDoesNotAlreadyExist({
             context.failAndThrow(
                 `Version ${version} of ${resolvedPackageName} already exists on the ${getRegistryName(language)} registry. ` +
                     `Please use a different version number. ` +
-                    `If you want to automatically increment the version, omit the --version flag.`
+                    `If you want to automatically increment the version, omit the --version flag.`,
+                undefined,
+                { code: CliError.Code.VersionError }
             );
         } else {
             context.logger.warn(

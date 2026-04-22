@@ -10,7 +10,7 @@ import {
 import { formatDefinitionFile } from "@fern-api/fern-definition-formatter";
 import { RootApiFileSchema } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath, relative } from "@fern-api/fs-utils";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
 import { mkdir, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 
@@ -185,10 +185,19 @@ async function writeSampleApiDefinition({
     await writeFile(join(directoryOfDefinition, RelativeFilePath.of(ROOT_API_FILENAME)), yaml.dump(rootApi));
 
     const absoluteFilepathToImdbYaml = join(directoryOfDefinition, RelativeFilePath.of("imdb.yml"));
-    await writeFile(
-        absoluteFilepathToImdbYaml,
-        await formatDefinitionFile({
+    let formattedContent: string;
+    try {
+        formattedContent = await formatDefinitionFile({
             fileContents: SAMPLE_IMDB_API
-        })
-    );
+        });
+    } catch (error) {
+        if (error instanceof CliError) {
+            throw error;
+        }
+        throw new CliError({
+            message: `Failed to format definition file: ${error instanceof Error ? error.message : String(error)}`,
+            code: CliError.Code.ParseError
+        });
+    }
+    await writeFile(absoluteFilepathToImdbYaml, formattedContent);
 }

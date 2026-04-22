@@ -4,6 +4,7 @@ import type { AbsoluteFilePath } from "@fern-api/fs-utils";
 import type { Logger } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
 import type { Migration, MigrationModule, MigratorResult } from "@fern-api/migrations-base";
+import { CliError } from "@fern-api/task-context";
 import { readFileSync, unlinkSync } from "fs";
 import { mkdir, open, readFile, stat, unlink } from "fs/promises";
 import { join } from "path";
@@ -224,7 +225,10 @@ export class GeneratorMigrator {
                 const packageJson = JSON.parse(packageJsonContent) as { main?: string };
 
                 if (packageJson.main == null) {
-                    throw new Error(`No main field found in package.json for ${MIGRATION_PACKAGE_NAME}`);
+                    throw new CliError({
+                        message: `No main field found in package.json for ${MIGRATION_PACKAGE_NAME}`,
+                        code: CliError.Code.InternalError
+                    });
                 }
 
                 const packageEntryPoint = join(packageDir, packageJson.main);
@@ -370,11 +374,13 @@ export class GeneratorMigrator {
                 return undefined;
             }
 
-            throw new Error(
-                `Failed to load generator migrations for ${generatorName}.\n\n` +
+            throw new CliError({
+                message:
+                    `Failed to load generator migrations for ${generatorName}.\n\n` +
                     `Reason: ${errorMessage}\n\n` +
-                    `Please check your internet connection and npm configuration, then try again.`
-            );
+                    `Please check your internet connection and npm configuration, then try again.`,
+                code: CliError.Code.InternalError
+            });
         }
     }
 
@@ -417,11 +423,13 @@ export class GeneratorMigrator {
                 const bVersion = semver.parse(b.version);
 
                 if (aVersion == null || bVersion == null) {
-                    throw new Error(
-                        `Internal error: Invalid migration version found during sort. ` +
+                    throw new CliError({
+                        message:
+                            `Internal error: Invalid migration version found during sort. ` +
                             `Version A: ${a.version}, Version B: ${b.version}. ` +
-                            `This should not happen as invalid versions are filtered out.`
-                    );
+                            `This should not happen as invalid versions are filtered out.`,
+                        code: CliError.Code.InternalError
+                    });
                 }
 
                 return semver.compare(aVersion, bVersion);
@@ -448,11 +456,13 @@ export class GeneratorMigrator {
                 appliedVersions.push(migration.version);
             } catch (error) {
                 const errorMessage = extractErrorMessage(error);
-                throw new Error(
-                    `Failed to apply migration for version ${migration.version}.\n\n` +
+                throw new CliError({
+                    message:
+                        `Failed to apply migration for version ${migration.version}.\n\n` +
                         `Reason: ${errorMessage}\n\n` +
-                        `Please report this issue at: https://github.com/fern-api/fern/issues`
-                );
+                        `Please report this issue at: https://github.com/fern-api/fern/issues`,
+                    code: CliError.Code.InternalError
+                });
             }
         }
 

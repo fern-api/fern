@@ -1,4 +1,4 @@
-import { AbstractReadmeSnippetBuilder } from "@fern-api/base-generator";
+import { AbstractReadmeSnippetBuilder, GeneratorError } from "@fern-api/base-generator";
 import { java } from "@fern-api/java-ast";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
@@ -266,7 +266,7 @@ ${clientClassName} client = ${clientClassName}.builder()
         // This should never happen because the precondition prevents this code from running
         // if we don't have a default environment ID, but we need this check for the linter.
         if (defaultEnvironmentId == null) {
-            throw new Error("Could not get default environment ID for README snippet");
+            throw GeneratorError.internalError("Could not get default environment ID for README snippet");
         }
 
         const productionEnvironment = java.codeblock((writer) => {
@@ -656,10 +656,14 @@ ${clientClassName} client = ${clientClassName}.builder()
 
         for (const endpointSnippet of Object.values(endpointSnippets)) {
             if (endpointSnippet.id.identifierOverride == null) {
-                throw new Error("Internal error; snippets must define the endpoint id to generate README.md");
+                throw GeneratorError.internalError(
+                    "Internal error; snippets must define the endpoint id to generate README.md"
+                );
             }
             if (endpointSnippet.snippet.type !== "java") {
-                throw new Error(`Internal error; expected java snippet but got: ${endpointSnippet.snippet.type}`);
+                throw GeneratorError.internalError(
+                    `Internal error; expected java snippet but got: ${endpointSnippet.snippet.type}`
+                );
             }
 
             const endpointId = endpointSnippet.id.identifierOverride;
@@ -707,7 +711,9 @@ ${clientClassName} client = ${clientClassName}.builder()
             }
 
             if (selectedSnippet.snippet.type !== "java") {
-                throw new Error(`Internal error; expected java snippet but got: ${selectedSnippet.snippet.type}`);
+                throw GeneratorError.internalError(
+                    `Internal error; expected java snippet but got: ${selectedSnippet.snippet.type}`
+                );
             }
             let snippet = selectedSnippet.snippet.syncClient;
 
@@ -787,7 +793,7 @@ ${clientClassName} client = ${clientClassName}.builder()
     private lookupEndpointById(endpointId: FernIr.EndpointId): EndpointWithFilepath {
         const endpoint = this.endpointsById[endpointId];
         if (endpoint == null) {
-            throw new Error(`Internal error; missing endpoint ${endpointId}`);
+            throw GeneratorError.internalError(`Internal error; missing endpoint ${endpointId}`);
         }
         return endpoint;
     }
@@ -840,13 +846,13 @@ ${clientClassName} client = ${clientClassName}.builder()
         const dynamicIr = this.context.ir.dynamic;
 
         if (dynamicIr == null) {
-            throw new Error("Cannot generate README without dynamic IR");
+            throw GeneratorError.internalError("Cannot generate README without dynamic IR");
         }
 
         const endpoints = Object.entries(dynamicIr.endpoints);
 
         if (endpoints.length == 0) {
-            throw new Error("Cannot generate README without endpoints.");
+            throw GeneratorError.internalError("Cannot generate README without endpoints.");
         }
 
         // Prefer endpoints with a request body.
@@ -867,7 +873,7 @@ ${clientClassName} client = ${clientClassName}.builder()
 
         // Need this check for the linter
         if (endpoints[0] == null) {
-            throw new Error("Cannot generate README with null endpoint.");
+            throw GeneratorError.internalError("Cannot generate README with null endpoint.");
         }
 
         return endpoints[0][0];

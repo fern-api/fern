@@ -1,3 +1,4 @@
+import { GeneratorError } from "@fern-api/base-generator";
 import { java, Writer } from "@fern-api/java-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
@@ -57,7 +58,7 @@ export class TestMethodBuilder {
 
             // If we can't extract a method call, this endpoint should have been filtered out upstream
             if (methodCall === null) {
-                throw new Error(
+                throw GeneratorError.internalError(
                     `INTERNAL ERROR: Null method call reached TestMethodBuilder for endpoint ${endpoint.id}. ` +
                         `This should have been caught upstream in SdkWireTestGenerator.`
                 );

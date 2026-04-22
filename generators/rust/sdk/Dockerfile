@@ -7,6 +7,13 @@ RUN rustup component add rustfmt
 
 FROM node:22.12-alpine3.20
 
+ARG SENTRY_DSN
+ARG SENTRY_ENVIRONMENT=production
+ARG SENTRY_RELEASE
+ENV SENTRY_DSN=$SENTRY_DSN
+ENV SENTRY_ENVIRONMENT=$SENTRY_ENVIRONMENT
+ENV SENTRY_RELEASE=$SENTRY_RELEASE
+
 # Install system dependencies
 RUN apk --no-cache add bash curl git zip gcc musl-dev openssl-dev pkgconfig
 

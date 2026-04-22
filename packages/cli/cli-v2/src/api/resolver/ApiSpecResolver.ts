@@ -1,4 +1,5 @@
 import { AbsoluteFilePath, doesPathExist, resolve } from "@fern-api/fs-utils";
+import { CliError } from "@fern-api/task-context";
 import { mkdtemp, readFile, writeFile } from "fs/promises";
 import { tmpdir } from "os";
 import path from "path";
@@ -59,7 +60,10 @@ export class ApiSpecResolver {
     private async resolveLocal({ reference }: { reference: string }): Promise<ApiSpecResolver.Result> {
         const absoluteFilePath = resolve(this.context.cwd, reference);
         if (!(await doesPathExist(absoluteFilePath))) {
-            throw new Error(`API spec file does not exist: ${reference}`);
+            throw new CliError({
+                message: `API spec file does not exist: ${reference}`,
+                code: CliError.Code.ConfigError
+            });
         }
 
         const content = await readFile(absoluteFilePath, "utf-8");
@@ -74,14 +78,19 @@ export class ApiSpecResolver {
     private async fetchContent({ url }: { url: string }): Promise<{ content: string; contentType: string }> {
         const response = await fetch(url, { signal: AbortSignal.timeout(FETCH_API_SPEC_REQUEST_TIMEOUT_MS) });
         if (!response.ok) {
-            throw new Error(`Failed to fetch "${url}": HTTP ${response.status} ${response.statusText}`);
+            throw new CliError({
+                message: `Failed to fetch "${url}": HTTP ${response.status} ${response.statusText}`,
+                code: CliError.Code.NetworkError
+            });
         }
         const contentType = response.headers.get("content-type") ?? "";
         if (contentType.includes("text/html")) {
-            throw new Error(
-                `The URL "${url}" returned HTML content. ` +
-                    `Ensure you're pointing to a raw spec URL, not a documentation page.`
-            );
+            throw new CliError({
+                message:
+                    `The URL "${url}" returned HTML content. ` +
+                    `Ensure you're pointing to a raw spec URL, not a documentation page.`,
+                code: CliError.Code.ConfigError
+            });
         }
         const content = await response.text();
         return { content, contentType };
@@ -116,7 +125,10 @@ export class ApiSpecResolver {
             case "asyncapi":
                 return { asyncapi: absoluteFilePath, origin };
             default:
-                throw new Error(`Unsupported spec type for flags mode: "${specType}". Supported: openapi, asyncapi`);
+                throw new CliError({
+                    message: `Unsupported spec type for flags mode: "${specType}". Supported: openapi, asyncapi`,
+                    code: CliError.Code.ConfigError
+                });
         }
     }
 

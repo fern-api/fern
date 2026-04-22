@@ -1,6 +1,6 @@
 import { IntermediateRepresentation, TypeDeclaration, TypeId, TypeReference } from "@fern-api/ir-sdk";
 import { getOriginalName } from "@fern-api/ir-utils";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
 import { JSONSchema4 } from "json-schema";
 
 export class JsonSchemaConverterContext {
@@ -20,7 +20,7 @@ export class JsonSchemaConverterContext {
             } else {
                 // context.logger.error(`Type declaration not found for ${typeName}`);
             }
-            return this.context.failAndThrow();
+            return this.context.failAndThrow(undefined, undefined, { code: CliError.Code.ReferenceError });
         }
         return typeDeclaration;
     }

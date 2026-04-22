@@ -1,4 +1,4 @@
-import { File, GeneratorNotificationService } from "@fern-api/base-generator";
+import { File, GeneratorError, GeneratorNotificationService } from "@fern-api/base-generator";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
@@ -45,7 +45,7 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
     }
 
     protected async publishPackage(context: SdkGeneratorContext): Promise<void> {
-        throw new Error("Method not implemented.");
+        throw GeneratorError.internalError("Method not implemented.");
     }
 
     protected async writeForGithub(context: SdkGeneratorContext): Promise<void> {
@@ -118,14 +118,14 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
                 });
                 context.logger.debug("Generated readme!");
             } catch (e) {
-                throw new Error(`Failed to generate README.md: ${extractErrorMessage(e)}`);
+                throw GeneratorError.internalError(`Failed to generate README.md: ${extractErrorMessage(e)}`);
             }
         }
 
         try {
             await this.generateReference({ context });
         } catch (error) {
-            throw new Error(`Failed to generate reference.md: ${extractErrorMessage(error)}`);
+            throw GeneratorError.internalError(`Failed to generate reference.md: ${extractErrorMessage(error)}`);
         }
 
         await this.generateWireTestFiles(context);
@@ -219,7 +219,7 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
 
         const dynamicIr = context.ir.dynamic;
         if (dynamicIr == null) {
-            throw new Error("Cannot generate dynamic snippets without dynamic IR");
+            throw GeneratorError.internalError("Cannot generate dynamic snippets without dynamic IR");
         }
 
         const dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
