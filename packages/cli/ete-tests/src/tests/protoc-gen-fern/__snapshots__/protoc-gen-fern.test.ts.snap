@@ -39601,6 +39601,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
             "methodType": "UNARY"
           },
           "audiences": [],
+          "viewers": null,
           "retries": null,
           "apiPlayground": null,
           "responseHeaders": [],
@@ -40736,6 +40737,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
             "methodType": "CLIENT_STREAM"
           },
           "audiences": [],
+          "viewers": null,
           "retries": null,
           "apiPlayground": null,
           "responseHeaders": [],
@@ -41873,6 +41875,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
             "methodType": "UNARY"
           },
           "audiences": [],
+          "viewers": null,
           "retries": null,
           "apiPlayground": null,
           "responseHeaders": [],
@@ -43023,6 +43026,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
             "methodType": "UNARY"
           },
           "audiences": [],
+          "viewers": null,
           "retries": null,
           "apiPlayground": null,
           "responseHeaders": [],
@@ -43146,6 +43150,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
             "methodType": "UNARY"
           },
           "audiences": [],
+          "viewers": null,
           "retries": null,
           "apiPlayground": null,
           "responseHeaders": [],
@@ -44319,6 +44324,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
             "methodType": "SERVER_STREAM"
           },
           "audiences": [],
+          "viewers": null,
           "retries": null,
           "apiPlayground": null,
           "responseHeaders": [],
@@ -44328,7 +44334,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
       ],
       "transport": null,
       "encoding": null,
-      "audiences": null
+      "audiences": null,
+      "viewers": null
     },
     "anduril.taskmanager.v1.TaskManagerAPI": {
       "name": {
@@ -46575,6 +46582,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
             "methodType": "UNARY"
           },
           "audiences": [],
+          "viewers": null,
           "retries": null,
           "apiPlayground": null,
           "responseHeaders": [],
@@ -47763,6 +47771,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
             "methodType": "UNARY"
           },
           "audiences": [],
+          "viewers": null,
           "retries": null,
           "apiPlayground": null,
           "responseHeaders": [],
@@ -48954,6 +48963,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
             "methodType": "UNARY"
           },
           "audiences": [],
+          "viewers": null,
           "retries": null,
           "apiPlayground": null,
           "responseHeaders": [],
@@ -50194,6 +50204,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
             "methodType": "UNARY"
           },
           "audiences": [],
+          "viewers": null,
           "retries": null,
           "apiPlayground": null,
           "responseHeaders": [],
@@ -51334,6 +51345,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
             "methodType": "SERVER_STREAM"
           },
           "audiences": [],
+          "viewers": null,
           "retries": null,
           "apiPlayground": null,
           "responseHeaders": [],
@@ -51343,7 +51355,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
       ],
       "transport": null,
       "encoding": null,
-      "audiences": null
+      "audiences": null,
+      "viewers": null
     }
   },
   "webhookGroups": {},
@@ -51482,6 +51495,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
     }
   },
   "audiences": [],
+  "roles": null,
   "generationMetadata": null,
   "apiPlayground": null,
   "casingsConfig": null

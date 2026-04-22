@@ -269,6 +269,7 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "viewers": null,
                     "retries": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
@@ -276,7 +277,8 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
                     "docs": null
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "viewers": null
         }
     },
     "constants": {
@@ -651,6 +653,7 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
         "generatorConfig": null
     },
     "audiences": null,
+    "roles": null,
     "generationMetadata": null,
     "apiPlayground": true,
     "casingsConfig": {
@@ -767,4 +770,4 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
 }"
 `;
 
-exports[`dependencies > file dependencies 1`] = `2283663`;
+exports[`dependencies > file dependencies 1`] = `2284073`;

@@ -71,6 +71,7 @@ exports[`ir > {"name":"auth-header-prefix"} 1`] = `
         "generatorConfig": null
     },
     "audiences": null,
+    "roles": null,
     "generationMetadata": null,
     "apiPlayground": true,
     "casingsConfig": {
@@ -799,6 +800,7 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
         "generatorConfig": null
     },
     "audiences": null,
+    "roles": null,
     "generationMetadata": null,
     "apiPlayground": true,
     "casingsConfig": {
@@ -1058,6 +1060,7 @@ exports[`ir > {"name":"file-upload"} 1`] = `
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "viewers": null,
                     "retries": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
@@ -1065,7 +1068,8 @@ exports[`ir > {"name":"file-upload"} 1`] = `
                     "docs": null
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "viewers": null
         }
     },
     "constants": {
@@ -1361,6 +1365,7 @@ exports[`ir > {"name":"file-upload"} 1`] = `
         "generatorConfig": null
     },
     "audiences": null,
+    "roles": null,
     "generationMetadata": null,
     "apiPlayground": true,
     "casingsConfig": {
@@ -15438,6 +15443,7 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "viewers": null,
                     "retries": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
@@ -15508,6 +15514,7 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "viewers": null,
                     "retries": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
@@ -15515,7 +15522,8 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                     "docs": null
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "viewers": null
         },
         "service_service-url": {
             "availability": null,
@@ -15607,6 +15615,7 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "viewers": null,
                     "retries": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
@@ -15614,7 +15623,8 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                     "docs": null
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "viewers": null
         }
     },
     "constants": {
@@ -16038,6 +16048,7 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
         "generatorConfig": null
     },
     "audiences": null,
+    "roles": null,
     "generationMetadata": null,
     "apiPlayground": true,
     "casingsConfig": {
@@ -16169,6 +16180,7 @@ exports[`ir > {"name":"navigation-points-to"} 1`] = `
         "generatorConfig": null
     },
     "audiences": null,
+    "roles": null,
     "generationMetadata": null,
     "apiPlayground": true,
     "casingsConfig": {
@@ -17101,6 +17113,7 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "viewers": null,
                     "retries": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
@@ -17108,7 +17121,8 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                     "docs": null
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "viewers": null
         }
     },
     "constants": {
@@ -17555,6 +17569,7 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
         "generatorConfig": null
     },
     "audiences": null,
+    "roles": null,
     "generationMetadata": null,
     "apiPlayground": true,
     "casingsConfig": {
@@ -17971,6 +17986,7 @@ exports[`ir > {"name":"packages"} 1`] = `
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "viewers": null,
                     "retries": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
@@ -17978,7 +17994,8 @@ exports[`ir > {"name":"packages"} 1`] = `
                     "docs": null
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "viewers": null
         },
         "service_package": {
             "availability": null,
@@ -18008,7 +18025,8 @@ exports[`ir > {"name":"packages"} 1`] = `
                 "type": "http"
             },
             "endpoints": [],
-            "audiences": null
+            "audiences": null,
+            "viewers": null
         }
     },
     "constants": {
@@ -18437,6 +18455,7 @@ exports[`ir > {"name":"packages"} 1`] = `
         "generatorConfig": null
     },
     "audiences": null,
+    "roles": null,
     "generationMetadata": null,
     "apiPlayground": true,
     "casingsConfig": {
@@ -19119,6 +19138,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "viewers": null,
                     "retries": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
@@ -19409,6 +19429,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "viewers": null,
                     "retries": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
@@ -19416,7 +19437,8 @@ exports[`ir > {"name":"response-property"} 1`] = `
                     "docs": null
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "viewers": null
         }
     },
     "constants": {
@@ -19964,6 +19986,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
         "generatorConfig": null
     },
     "audiences": null,
+    "roles": null,
     "generationMetadata": null,
     "apiPlayground": true,
     "casingsConfig": {
@@ -20590,6 +20613,7 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                     "audiences": [
                         "internal"
                     ],
+                    "viewers": null,
                     "retries": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
@@ -20597,7 +20621,8 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                     "docs": null
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "viewers": null
         }
     },
     "constants": {
@@ -21027,6 +21052,7 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
         "internal",
         "test"
     ],
+    "roles": null,
     "generationMetadata": null,
     "apiPlayground": true,
     "casingsConfig": {
@@ -22492,6 +22518,7 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                     "audiences": [
                         "test"
                     ],
+                    "viewers": null,
                     "retries": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
@@ -22499,7 +22526,8 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                     "docs": null
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "viewers": null
         }
     },
     "constants": {
@@ -23035,6 +23063,7 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
         "internal",
         "test"
     ],
+    "roles": null,
     "generationMetadata": null,
     "apiPlayground": true,
     "casingsConfig": {
@@ -26161,6 +26190,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "audiences": [
                         "internal"
                     ],
+                    "viewers": null,
                     "retries": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
@@ -27095,6 +27125,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "audiences": [
                         "test"
                     ],
+                    "viewers": null,
                     "retries": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
@@ -28100,6 +28131,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "viewers": null,
                     "retries": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
@@ -28414,6 +28446,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "viewers": null,
                     "retries": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
@@ -28421,7 +28454,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "docs": null
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "viewers": null
         }
     },
     "constants": {
@@ -30873,6 +30907,7 @@ exports[`ir > {"name":"simple"} 1`] = `
         "internal",
         "test"
     ],
+    "roles": null,
     "generationMetadata": null,
     "apiPlayground": true,
     "casingsConfig": {
@@ -31141,6 +31176,7 @@ exports[`ir > {"name":"streaming"} 1`] = `
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "viewers": null,
                     "retries": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
@@ -31306,6 +31342,7 @@ exports[`ir > {"name":"streaming"} 1`] = `
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "viewers": null,
                     "retries": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
@@ -31313,7 +31350,8 @@ exports[`ir > {"name":"streaming"} 1`] = `
                     "docs": null
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "viewers": null
         }
     },
     "constants": {
@@ -31611,6 +31649,7 @@ exports[`ir > {"name":"streaming"} 1`] = `
         "generatorConfig": null
     },
     "audiences": null,
+    "roles": null,
     "generationMetadata": null,
     "apiPlayground": true,
     "casingsConfig": {
@@ -32004,6 +32043,7 @@ exports[`ir > {"name":"variables"} 1`] = `
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "viewers": null,
                     "retries": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
@@ -32011,7 +32051,8 @@ exports[`ir > {"name":"variables"} 1`] = `
                     "docs": null
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "viewers": null
         }
     },
     "constants": {
@@ -32347,6 +32388,7 @@ exports[`ir > {"name":"variables"} 1`] = `
         "generatorConfig": null
     },
     "audiences": null,
+    "roles": null,
     "generationMetadata": null,
     "apiPlayground": true,
     "casingsConfig": {
@@ -32873,6 +32915,8 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                 "responses": null,
                 "examples": null,
                 "v2Examples": null,
+                "audiences": null,
+                "viewers": null,
                 "availability": null,
                 "docs": "Fired when a new user is created."
             },
@@ -32925,6 +32969,8 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                 "responses": null,
                 "examples": null,
                 "v2Examples": null,
+                "audiences": null,
+                "viewers": null,
                 "availability": null,
                 "docs": "Fired when an order is completed."
             },
@@ -32974,6 +33020,8 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                 "responses": null,
                 "examples": null,
                 "v2Examples": null,
+                "audiences": null,
+                "viewers": null,
                 "availability": null,
                 "docs": "Fired when a payment status changes."
             },
@@ -33017,6 +33065,8 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                 "responses": null,
                 "examples": null,
                 "v2Examples": null,
+                "audiences": null,
+                "viewers": null,
                 "availability": null,
                 "docs": "Fired when a refund is processed."
             }
@@ -33625,6 +33675,7 @@ exports[`ir > {"name":"webhooks"} 1`] = `
         "generatorConfig": null
     },
     "audiences": null,
+    "roles": null,
     "generationMetadata": null,
     "apiPlayground": true,
     "casingsConfig": {
