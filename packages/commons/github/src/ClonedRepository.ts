@@ -315,10 +315,19 @@ export class ClonedRepository {
     /**
      * Pushes a specific object (commit SHA) to a remote ref.
      * Used to upload tree and blob objects to the remote without moving a branch.
+     *
+     * Pass `force: true` when overwriting a ref that may already point to an
+     * unrelated commit (e.g. retrying a temp ref after a local rebase rewrites
+     * history so the new SHA is not a descendant of the previous one).
      */
-    public async pushObjectToRef(localSha: string, remoteRef: string): Promise<void> {
+    public async pushObjectToRef(
+        localSha: string,
+        remoteRef: string,
+        { force = false }: { force?: boolean } = {}
+    ): Promise<void> {
         await this.git.cwd(this.clonePath);
-        await this.git.raw(["push", "origin", `${localSha}:${remoteRef}`]);
+        const spec = force ? `+${localSha}:${remoteRef}` : `${localSha}:${remoteRef}`;
+        await this.git.raw(["push", "origin", spec]);
     }
 
     /**

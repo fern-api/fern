@@ -91,7 +91,9 @@ describe("pushSignedCommit", () => {
         });
 
         expect(result).toBe("signed-sha-1");
-        expect(repository.pushObjectToRef).toHaveBeenCalledWith(
+        expect(repository.pushObjectToRef).toHaveBeenCalledTimes(1);
+        expect(repository.pushObjectToRef).toHaveBeenNthCalledWith(
+            1,
             "local-sha",
             expect.stringMatching(/^refs\/temp\/fern-/)
         );
@@ -226,8 +228,45 @@ describe("pushSignedCommit", () => {
             tree: "tree-sha-2",
             parents: ["parent-sha-2"]
         });
-        // Temp ref re-push happens on the rebase retry too.
+        // Temp ref re-push on the rebase retry must force, because the rebased commit
+        // is not a descendant of the original tempRef tip.
         expect(repository.pushObjectToRef).toHaveBeenCalledTimes(2);
+        expect(repository.pushObjectToRef).toHaveBeenNthCalledWith(
+            1,
+            "local-sha-1",
+            expect.stringMatching(/^refs\/temp\/fern-/)
+        );
+        expect(repository.pushObjectToRef).toHaveBeenNthCalledWith(
+            2,
+            "local-sha-2",
+            expect.stringMatching(/^refs\/temp\/fern-/),
+            { force: true }
+        );
+    });
+
+    it("propagates errors from the post-update local sync (does not swallow stale-HEAD risk)", async () => {
+        const resetBoom = new Error("reset --hard failed");
+        const repository = buildRepository({
+            resetHardToSha: vi.fn().mockRejectedValue(resetBoom)
+        });
+        const octokit = buildOctokit();
+
+        await expect(
+            makeCaller(
+                repository,
+                octokit
+            )({
+                ...baseArgs,
+                repository: repository as never,
+                octokit: octokit as never
+            })
+        ).rejects.toBe(resetBoom);
+
+        // Signed commit was created and the remote ref was updated before sync failed.
+        expect(octokit.git.createCommit).toHaveBeenCalledTimes(1);
+        expect(octokit.git.updateRef).toHaveBeenCalledTimes(1);
+        // Temp ref still cleaned up.
+        expect(octokit.git.deleteRef).toHaveBeenCalled();
     });
 
     it("cleans up the temp ref even when the push fails", async () => {

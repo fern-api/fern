@@ -77,7 +77,7 @@ export async function pushSignedCommit({
             try {
                 await upsertBranchRef({ octokit, owner, repo, branch, sha: signedSha, force });
                 logger.debug(`Updated refs/heads/${branch} to signed commit ${signedSha}`);
-                await syncLocalToSignedCommit({ repository, branch, signedSha, logger });
+                await syncLocalToSignedCommit({ repository, branch, signedSha });
                 return signedSha;
             } catch (err) {
                 if (!isNonFastForwardError(err) || force || attempt >= MAX_CONCURRENT_PUSH_RETRIES - 1) {
@@ -95,7 +95,9 @@ export async function pushSignedCommit({
                         repository.getHeadCommitMessage(),
                         repository.getHeadParents()
                     ]);
-                    await repository.pushObjectToRef(localHeadSha, tempRef);
+                    // The rebased commit is not a descendant of the original tempRef tip,
+                    // so force-push is required to overwrite it.
+                    await repository.pushObjectToRef(localHeadSha, tempRef, { force: true });
                 } else {
                     throw err;
                 }
@@ -156,22 +158,17 @@ async function upsertBranchRef({
 async function syncLocalToSignedCommit({
     repository,
     branch,
-    signedSha,
-    logger
+    signedSha
 }: {
     repository: ClonedRepository;
     branch: string;
     signedSha: string;
-    logger: PipelineLogger;
 }): Promise<void> {
-    try {
-        await repository.fetch(["origin", branch]);
-        await repository.resetHardToSha(signedSha);
-    } catch (err) {
-        logger.debug(
-            `Could not sync local branch ${branch} to signed commit ${signedSha}: ${extractErrorMessage(err)}`
-        );
-    }
+    // Intentionally does not swallow errors: if the signed commit exists on the remote but the
+    // local branch cannot be aligned to it, downstream operations (tag push, getHeadSha() used
+    // for changelog URLs) would silently use the stale local SHA.
+    await repository.fetch(["origin", branch]);
+    await repository.resetHardToSha(signedSha);
 }
 
 function hasNumericStatus(err: unknown): err is { status: number } {
