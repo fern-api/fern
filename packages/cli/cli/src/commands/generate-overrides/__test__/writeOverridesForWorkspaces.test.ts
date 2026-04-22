@@ -50,6 +50,7 @@ function createMinimalEndpoint(overrides: {
         idempotent: undefined,
         method: overrides.method,
         audiences: [],
+        viewers: undefined,
         path: overrides.path,
         summary: undefined,
         operationId: overrides.operationId ?? undefined,
