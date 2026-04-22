@@ -87,6 +87,7 @@ export interface APIDefinitionSettings {
     resolveAliases: generatorsYml.ResolveAliases | undefined;
     groupMultiApiEnvironments: boolean | undefined;
     groupEnvironmentsByHost: boolean | undefined;
+    multiServerStrategy: generatorsYml.MultiServerStrategy | undefined;
     inferDefaultEnvironment: boolean | undefined;
     wrapReferencesToNullableInOptional: boolean | undefined;
     coerceOptionalSchemasToNullable: boolean | undefined;

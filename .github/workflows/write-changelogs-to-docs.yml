@@ -10,6 +10,10 @@ permissions:
   pull-requests: write
   contents: write
 
+concurrency:
+  group: write-changelogs-to-docs
+  cancel-in-progress: false
+
 env:
   DO_NOT_TRACK: "1"
 

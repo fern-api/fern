@@ -1,0 +1,6 @@
+- summary: |
+    Gracefully handle "Self-referencing circular pointer" errors from OpenAPI specs.
+    Instead of failing the entire publish, the CLI now logs a warning with the
+    offending file path and circular $ref breadcrumbs, then continues processing
+    without full reference resolution.
+  type: fix

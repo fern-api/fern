@@ -92,6 +92,21 @@ export interface ConvertOpenAPIOptions {
     groupEnvironmentsByHost: boolean;
 
     /**
+     * Controls how multiple top-level OpenAPI servers are mapped to environments in the generated
+     * Fern definition, when those servers each declare an `x-fern-server-name` and endpoint-level
+     * `servers:` overrides reference those names.
+     *
+     * - `"environment-per-server"` (default): emit one environment per top-level server, so each
+     *   `x-fern-server-name` becomes its own environment constant in generated SDKs (e.g.
+     *   `Environment.PRODUCTION` and `Environment.AGENT`).
+     * - `"urls-per-environment"`: collapse all top-level servers into a single environment (named
+     *   after the first top-level server) with each server exposed as a named URL. Useful for APIs
+     *   that expose multiple base hosts belonging to the same logical environment (e.g.
+     *   `api.box.com` + `upload.box.com` + `dl.boxcloud.com`).
+     */
+    multiServerStrategy: generatorsYml.MultiServerStrategy;
+
+    /**
      * If `always`, remove discriminant properties from schemas in the IR, unless the schema is also used outside of a discriminated union.
      * If `never`, discriminant properties are preserved in the schemas.
      *
@@ -119,6 +134,7 @@ export const DEFAULT_CONVERT_OPENAPI_OPTIONS: ConvertOpenAPIOptions = {
     wrapReferencesToNullableInOptional: false,
     coerceOptionalSchemasToNullable: false,
     groupEnvironmentsByHost: false,
+    multiServerStrategy: generatorsYml.MultiServerStrategy.EnvironmentPerServer,
     removeDiscriminantsFromSchemas: generatorsYml.RemoveDiscriminantsFromSchemas.Always,
     inferDefaultEnvironment: true
 };

@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    When an OpenAPI endpoint has multiple request and response examples that cannot be paired by matching `summary` fields, the CLI now emits a warning explaining which response example had no match and how to fix it, rather than silently producing an extra example with an empty request body.
+  type: chore

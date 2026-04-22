@@ -459,8 +459,13 @@ export class WireTestGenerator {
         for (const [paramName, paramValue] of Object.entries(dynamicEndpointExample.queryParameters)) {
             if (paramValue != null) {
                 const key = JSON.stringify(paramName);
-                const value = JSON.stringify(String(paramValue));
-                queryParamEntries.push(`(${key}.to_string(), ${value}.to_string())`);
+                if (Array.isArray(paramValue) && paramValue.length > 1) {
+                    const items = paramValue.map((v: unknown) => JSON.stringify(String(v)));
+                    queryParamEntries.push(`(${key}.to_string(), json!([${items.join(", ")}]))`);
+                } else {
+                    const value = JSON.stringify(String(paramValue));
+                    queryParamEntries.push(`(${key}.to_string(), json!(${value}))`);
+                }
             }
         }
 

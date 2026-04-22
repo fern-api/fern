@@ -151,6 +151,8 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             })(),
             exampleGeneration: specs[0]?.settings?.exampleGeneration,
             groupEnvironmentsByHost: specs.some((spec) => spec.settings?.groupEnvironmentsByHost),
+            multiServerStrategy: specs.find((spec) => spec.settings?.multiServerStrategy != null)?.settings
+                ?.multiServerStrategy,
             inferDefaultEnvironment: collapseSpecBooleanSetting(specs, (s) => s?.inferDefaultEnvironment),
             defaultIntegerFormat: specs[0]?.settings?.defaultIntegerFormat,
             pathParameterOrder: specs[0]?.settings?.pathParameterOrder,

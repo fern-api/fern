@@ -446,8 +446,13 @@ export class WireTestGenerator {
             // but prioritize required params to avoid verifying optional params
             if (paramValue != null && requiredQueryParamNames.has(paramName)) {
                 const key = JSON.stringify(paramName);
-                const value = JSON.stringify(String(paramValue));
-                queryParamEntries.push(`${key} => ${value}`);
+                if (Array.isArray(paramValue) && paramValue.length > 1) {
+                    const items = paramValue.map((v: unknown) => JSON.stringify(String(v)));
+                    queryParamEntries.push(`${key} => [${items.join(", ")}]`);
+                } else {
+                    const value = JSON.stringify(String(paramValue));
+                    queryParamEntries.push(`${key} => ${value}`);
+                }
             }
         }
 
