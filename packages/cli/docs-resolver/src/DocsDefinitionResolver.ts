@@ -863,6 +863,7 @@ export class DocsDefinitionResolver {
             })),
             defaultLanguage: this.parsedDocsConfig.defaultLanguage,
             languages: this.parsedDocsConfig.languages,
+
             translations: this.getDocsTranslationsConfig(),
             analyticsConfig: {
                 ...this.parsedDocsConfig.analyticsConfig,
