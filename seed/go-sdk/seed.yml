@@ -315,43 +315,43 @@ scripts:
       fi
       exit $TEST_EXIT_CODE
 allowedFailures:
-- schemaless-request-body-examples
-- alias-extends
-- bytes-upload
-- bytes-download
-- enum
-- errors
-- literal
+- schemaless-request-body-examples:baseline
+- alias-extends:baseline
+- bytes-upload:baseline
+- bytes-download:baseline
+- enum:baseline
+- errors:baseline
+- literal:baseline
 - mixed-case:baseline
 - mixed-case:default-values
-- request-parameters
-- reserved-keywords
-- streaming-parameter
+- request-parameters:baseline
+- reserved-keywords:baseline
+- streaming-parameter:baseline
 - server-sent-event-examples:with-wire-tests   # TODO: update wiretests geranation then remove it
 - server-sent-events:with-wire-tests   # TODO: update wiretests geranation then remove it
 - server-sent-events-openapi:with-wire-tests   # TODO: fix go wire test generation for augmented fixture
-- server-url-templating
-- trace
-- property-access
+- server-url-templating:baseline
+- trace:baseline
+- property-access:baseline
 - oauth-client-credentials:.
-- oauth-client-credentials-reference
+- oauth-client-credentials-reference:baseline
 
   # TODO: Fix example generator to produce valid dynamic snippets.
-- pagination
-- pagination-uri-path
+- pagination:baseline
+- pagination-uri-path:baseline
 
   # TODO: Update the dynamic snippet generator to handle these cases.
 - examples:exported-client-name
 - path-parameters:baseline
 - path-parameters:package-name
 
-- oauth-client-credentials-with-variables
-- variables
+- oauth-client-credentials-with-variables:baseline
+- variables:baseline
 
   # Will include these back in once we fix dynamic snippets for inline file properties
 - file-upload:baseline
 - file-upload:package-name
-- file-upload-openapi
+- file-upload-openapi:baseline
 
 - go-deterministic-ordering:.
 

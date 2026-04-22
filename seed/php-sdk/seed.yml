@@ -160,30 +160,30 @@ scripts:
 allowedFailures:
 - exhaustive:baseline
 - exhaustive:wire-tests
-- pagination-custom
-- endpoint-security-auth
-- inferred-auth-implicit
-- inferred-auth-implicit-reference
+- pagination-custom:baseline
+- endpoint-security-auth:baseline
+- inferred-auth-implicit:baseline
+- inferred-auth-implicit-reference:baseline
   # Dynamic snippets need to add support for global headers included in the client constructor.
-- header-auth-environment-variable
+- header-auth-environment-variable:baseline
   # TODO: Add support for bytes upload.
-- bytes-upload
+- bytes-upload:baseline
   # Basic auth wire-tests are enabled in fixtures section.
   # Generating a union called "Exception" makes our references to Exception throws be escaped incorrectly
 - examples:baseline
 - examples:readme-config
-- trace
-- circular-references
-- circular-references-advanced
+- trace:baseline
+- circular-references:baseline
+- circular-references-advanced:baseline
   # Add support for literals and confirm that string literal examples are being generated.
-- literal
+- literal:baseline
   # Add support for OAuth.
-- oauth-client-credentials
-- oauth-client-credentials-custom
-- oauth-client-credentials-default
-- oauth-client-credentials-environment-variables
-- oauth-client-credentials-nested-root
-- oauth-client-credentials-reference
+- oauth-client-credentials:baseline
+- oauth-client-credentials-custom:baseline
+- oauth-client-credentials-default:baseline
+- oauth-client-credentials-environment-variables:baseline
+- oauth-client-credentials-nested-root:baseline
+- oauth-client-credentials-reference:baseline
   # Pagination example values come through as floats instead of integers (e.g. 1.1 instead of 1).
 - pagination:baseline
 - pagination:property-accessors
@@ -191,17 +191,17 @@ allowedFailures:
 - unions:baseline
 - unions:property-accessors
   # Java-specific fixture for LocalDate support
-- unions-with-local-date
+- unions-with-local-date:baseline
   # unknown
-- file-upload
-- http-head
-- oauth-client-credentials-with-variables
-- variables
+- file-upload:baseline
+- http-head:baseline
+- oauth-client-credentials-with-variables:baseline
+- variables:baseline
   # Java-specific fixture for staged builder ordering
-- java-staged-builder-ordering
-- server-sent-events-openapi
-- any-auth
-- circular-references
-- file-upload
+- java-staged-builder-ordering:baseline
+- server-sent-events-openapi:baseline
+- any-auth:baseline
+- circular-references:baseline
+- file-upload:baseline
 
 

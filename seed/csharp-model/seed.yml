@@ -125,9 +125,9 @@ scripts:
 
       dotnet test "$solution_file" --no-restore --no-build -c Release
 allowedFailures:
-- mixed-case
-- property-access
-- unions
-- unions-with-local-date
-- server-sent-event-examples
-- server-sent-events-openapi
+- mixed-case:baseline
+- property-access:baseline
+- unions:baseline
+- unions-with-local-date:baseline
+- server-sent-event-examples:baseline
+- server-sent-events-openapi:baseline

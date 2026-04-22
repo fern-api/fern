@@ -11,4 +11,4 @@ language: python
 generatorType: Model
 defaultOutputMode: local_files
 allowedFailures:
-  - version
+- version:baseline

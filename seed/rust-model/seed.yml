@@ -9,10 +9,10 @@ changelogLocation: ../../generators/rust/model/versions.yml
 buildScripts:
   compileScript:
     commands:
-      - cargo build
+    - cargo build
   testScript:
     commands:
-      - cargo test
+    - cargo test
 
 test:
   docker:
@@ -21,13 +21,13 @@ test:
   local:
     workingDirectory: generators/rust
     buildCommand:
-      - pnpm turbo run dist:cli --filter @fern-api/rust-model
+    - pnpm turbo run dist:cli --filter @fern-api/rust-model
     runCommand: node --enable-source-maps ./model/dist/cli.cjs {CONFIG_PATH}
 
 publish:
   workingDirectory: generators/rust
   preBuildCommands:
-    - pnpm turbo run dist:cli --filter @fern-api/rust-model
+  - pnpm turbo run dist:cli --filter @fern-api/rust-model
   docker:
     file: ./generators/rust/model/Dockerfile
     image: fernapi/fern-rust-model
@@ -36,7 +36,7 @@ publish:
     name: fern-rust-model
     project: rust-sdk
     sourceMaps:
-      - dir: generators/rust/model/dist
+    - dir: generators/rust/model/dist
 
 language: rust
 generatorType: MODEL
@@ -51,11 +51,11 @@ customFixtureConfig:
 
 fixtures:
   simple-api:
-    - customConfig: null
-      outputFolder: basic
+  - customConfig:
+    outputFolder: basic
   types:
-    - customConfig:
-        generateBuilders: true
-      outputFolder: with-builders
+  - customConfig:
+      generateBuilders: true
+    outputFolder: with-builders
 allowedFailures:
-  - server-sent-events-openapi
+- server-sent-events-openapi:baseline

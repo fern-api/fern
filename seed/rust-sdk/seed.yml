@@ -163,4 +163,4 @@ fixtures:
       packageLicenseFile: "LICENSE.md"
     outputFolder: both-license-options
 allowedFailures:
-- server-sent-events-openapi
+- server-sent-events-openapi:baseline

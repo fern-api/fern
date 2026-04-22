@@ -133,4 +133,4 @@ features:
   whitelabel: false
   apiReferenceGeneration: false
 allowedFailures:
-- server-sent-events-openapi
+- server-sent-events-openapi:baseline

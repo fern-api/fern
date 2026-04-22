@@ -501,8 +501,8 @@ allowedFailures:
 - enum:forward-compatible-enums-with-serde
 - exhaustive:never-throw-errors
 - exhaustive:multiple-exports
-- oauth-client-credentials-custom
-- package-yml
-- inferred-auth-implicit-reference
+- oauth-client-credentials-custom:baseline
+- package-yml:baseline
+- inferred-auth-implicit-reference:baseline
 - unions:serde-layer
 - server-sent-events-openapi:baseline           # tmp  - wire test generation is failing

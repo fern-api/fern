@@ -420,23 +420,23 @@ scripts:
     - poetry install --extras aiohttp
     - poetry run pytest -rP -n auto -m aiohttp .
 allowedFailures:
-- schemaless-request-body-examples
+- schemaless-request-body-examples:baseline
 - allof:baseline
 - allof-inline:baseline
-- any-auth
-- endpoint-security-auth
+- any-auth:baseline
+- endpoint-security-auth:baseline
 - examples:legacy-wire-tests
 - exhaustive:additional_init_exports
 - exhaustive:deps_with_min_python_version
 - exhaustive:pydantic-v1-with-utils
-- oauth-client-credentials-custom
-- oauth-client-credentials-openapi
-- pagination-custom
-- response-property
-- streaming-parameter
+- oauth-client-credentials-custom:baseline
+- oauth-client-credentials-openapi:baseline
+- pagination-custom:baseline
+- response-property:baseline
+- streaming-parameter:baseline
 - server-sent-event-examples:with-wire-tests   # TODO: update wiretests geranation then remove it
-- trace
-- multi-url-environment-reference
+- trace:baseline
+- multi-url-environment-reference:baseline
   # The unions API has two services (`union` and `bigunion`) that both expose
   # `GET /{id}` on the root base-path, which causes a WireMock stub collision at
   # test runtime. Code generation and imports are verified; one wire test

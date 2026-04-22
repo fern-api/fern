@@ -72,4 +72,4 @@ fixtures:
     outputFolder: no-inheritance-for-extended-models
 allowedFailures:
   # Complex circular refs
-- simple-fhir
+- simple-fhir:baseline
