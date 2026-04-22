@@ -213,6 +213,8 @@ export class Generation {
         websocketEnvironments: () => this.customConfig["temporary-websocket-environments"] ?? {},
         /** Custom name for the pagination class. Default: "" (auto-generated). */
         customPagerName: () => this.customConfig["custom-pager-name"] ?? "",
+        /** When true, uses page-index semantics for offset pagination (increment by 1). Default: false (item-index). */
+        usePageIndexSemantics: () => this.customConfig["offset-semantics"] === "page-index",
         /** Custom name for the environment configuration class. Default: "" (auto-generated). */
         environmentClassName: () => this.customConfig["environment-class-name"] ?? "",
         /** When true, generates dedicated error type classes for API errors. Default: true. */

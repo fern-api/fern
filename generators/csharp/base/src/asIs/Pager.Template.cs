@@ -142,6 +142,7 @@ internal sealed class OffsetPager<TRequest, TRequestOptions, TResponse, TOffset,
         GetStep? getStep,
         GetItems getItems,
         GetHasNextPage? getHasNextPage,
+        bool usePageIndexSemantics = false,
         CancellationToken cancellationToken = default
     )
     {
@@ -152,7 +153,8 @@ internal sealed class OffsetPager<TRequest, TRequestOptions, TResponse, TOffset,
             getOffset,
             setOffset,
             getStep,
-            getHasNextPage
+            getHasNextPage,
+            usePageIndexSemantics
         );
         var (nextRequest, hasNextPage, page) = parseApiCall(request, wrappedResponse);
         return new OffsetPager<TRequest, TRequestOptions, TResponse, TOffset, TStep, TItem>(
@@ -170,7 +172,8 @@ internal sealed class OffsetPager<TRequest, TRequestOptions, TResponse, TOffset,
         GetOffset getOffset,
         SetOffset setOffset,
         GetStep? getStep,
-        GetHasNextPage? getHasNextPage
+        GetHasNextPage? getHasNextPage,
+        bool usePageIndexSemantics
     )
     {
         return (request, wrappedResponse) =>
@@ -181,7 +184,8 @@ internal sealed class OffsetPager<TRequest, TRequestOptions, TResponse, TOffset,
                 getOffset,
                 setOffset,
                 getStep,
-                getHasNextPage
+                getHasNextPage,
+                usePageIndexSemantics
             );
     }
 
@@ -207,7 +211,8 @@ internal sealed class OffsetPager<TRequest, TRequestOptions, TResponse, TOffset,
         GetOffset getOffset,
         SetOffset setOffset,
         GetStep? getStep,
-        GetHasNextPage? getHasNextPage
+        GetHasNextPage? getHasNextPage,
+        bool usePageIndexSemantics
     )
     {
         var response = wrappedResponse.Data;
@@ -226,65 +231,65 @@ internal sealed class OffsetPager<TRequest, TRequestOptions, TResponse, TOffset,
         {
             case int offsetInt:
             {
-                if (getStep is not null)
+                if (usePageIndexSemantics || getStep is null)
                 {
-                    offsetInt += items?.Count ?? 1;
+                    offsetInt++;
                 }
                 else
                 {
-                    offsetInt++;
+                    offsetInt += items?.Count ?? 1;
                 }
                 offset = (TOffset)(object)offsetInt;
                 break;
             }
             case long offsetLong:
             {
-                if (getStep is not null)
+                if (usePageIndexSemantics || getStep is null)
                 {
-                    offsetLong += items?.Count ?? 1;
+                    offsetLong++;
                 }
                 else
                 {
-                    offsetLong++;
+                    offsetLong += items?.Count ?? 1;
                 }
                 offset = (TOffset)(object)offsetLong;
                 break;
             }
             case float offsetFloat:
             {
-                if (getStep is not null)
+                if (usePageIndexSemantics || getStep is null)
                 {
-                    offsetFloat += items?.Count ?? 1;
+                    offsetFloat++;
                 }
                 else
                 {
-                    offsetFloat++;
+                    offsetFloat += items?.Count ?? 1;
                 }
                 offset = (TOffset)(object)offsetFloat;
                 break;
             }
             case double offsetDouble:
             {
-                if (getStep is not null)
+                if (usePageIndexSemantics || getStep is null)
                 {
-                    offsetDouble += items?.Count ?? 1;
+                    offsetDouble++;
                 }
                 else
                 {
-                    offsetDouble++;
+                    offsetDouble += items?.Count ?? 1;
                 }
                 offset = (TOffset)(object)offsetDouble;
                 break;
             }
             case decimal offsetDecimal:
             {
-                if (getStep is not null)
+                if (usePageIndexSemantics || getStep is null)
                 {
-                    offsetDecimal += items?.Count ?? 1;
+                    offsetDecimal++;
                 }
                 else
                 {
-                    offsetDecimal++;
+                    offsetDecimal += items?.Count ?? 1;
                 }
                 offset = (TOffset)(object)offsetDecimal;
                 break;

@@ -1291,6 +1291,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                             ? `response => ${this.dotAccess(requestParameter.type, "response", pagination.hasNextPage)}`
                             : "null"
                     ),
+                    this.csharp.codeblock(this.settings.usePageIndexSemantics ? "true" : "false"),
                     this.csharp.codeblock(this.names.parameters.cancellationToken)
                 ]
             })
