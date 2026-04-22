@@ -669,7 +669,9 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 })
                 .option("group", {
                     type: "string",
-                    description: "The group to generate"
+                    array: true,
+                    description:
+                        "The group to generate. Pass --group multiple times to generate for several groups at once."
                 })
                 .option("generator", {
                     type: "string",
@@ -881,7 +883,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     }),
                     cliContext,
                     version: argv.version,
-                    groupName: argv.group,
+                    groupNames: argv.group,
                     generatorName,
                     generatorIndex,
                     shouldLogS3Url: argv.printZipUrl,
@@ -904,7 +906,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 });
             }
             if (argv.docs != null) {
-                if (argv.group != null) {
+                if (argv.group != null && argv.group.length > 0) {
                     cliContext.logger.warn("--group is ignored when generating docs");
                 }
                 if (argv.generator != null) {
@@ -942,7 +944,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 }),
                 cliContext,
                 version: argv.version,
-                groupName: argv.group,
+                groupNames: argv.group,
                 generatorName,
                 generatorIndex,
                 shouldLogS3Url: argv.printZipUrl,

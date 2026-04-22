@@ -28,7 +28,7 @@ export async function generateWorkspace({
     workspace,
     projectConfig,
     context,
-    groupName,
+    groupNames,
     generatorName,
     generatorIndex,
     version,
@@ -57,7 +57,8 @@ export async function generateWorkspace({
     projectConfig: fernConfigJson.ProjectConfig;
     context: TaskContext;
     version: string | undefined;
-    groupName: string | undefined;
+    /** One or more `--group` values. `undefined` means no `--group` was passed. */
+    groupNames: string[] | undefined;
     generatorName: string | undefined;
     generatorIndex: number | undefined;
     shouldLogS3Url: boolean;
@@ -96,7 +97,7 @@ export async function generateWorkspace({
     }
 
     const resolvedGroupNames = resolveGroupsOrFail({
-        groupName,
+        groupNames,
         generatorsConfiguration: workspace.generatorsConfiguration,
         isAutomation: automation != null,
         context
@@ -292,6 +293,45 @@ function resolveRunnableGroup({
  * error-message rendering and the throw.
  */
 function resolveGroupsOrFail({
+    groupNames,
+    generatorsConfiguration,
+    isAutomation,
+    context
+}: {
+    groupNames: string[] | undefined;
+    generatorsConfiguration: generatorsYml.GeneratorsConfiguration;
+    isAutomation: boolean;
+    context: TaskContext;
+}): string[] {
+    // No `--group`: delegate the fan-out vs. default-group vs. missing-group decision to the
+    // single-group resolver with `groupName: undefined`. Passing one explicit `--group` takes
+    // the same path with that name. Multiple `--group` values resolve each independently and
+    // union the results (de-duplicated, order-preserving).
+    if (groupNames == null || groupNames.length === 0) {
+        return resolveSingleGroupOrFail({
+            groupName: undefined,
+            generatorsConfiguration,
+            isAutomation,
+            context
+        });
+    }
+    const resolved: string[] = [];
+    for (const groupName of groupNames) {
+        for (const name of resolveSingleGroupOrFail({
+            groupName,
+            generatorsConfiguration,
+            isAutomation,
+            context
+        })) {
+            if (!resolved.includes(name)) {
+                resolved.push(name);
+            }
+        }
+    }
+    return resolved;
+}
+
+function resolveSingleGroupOrFail({
     groupName,
     generatorsConfiguration,
     isAutomation,
