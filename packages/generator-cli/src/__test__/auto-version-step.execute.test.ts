@@ -377,6 +377,31 @@ describe("AutoVersionStep.execute() — first generation", () => {
         const result = await step.execute(makeContext(prepared));
         expect(result.version).toBe("0.0.1");
     });
+
+    it("rejects a baseVersion containing shell metacharacters (injection guard)", async () => {
+        // A semver-shaped prefix followed by a single quote would escape the
+        // single-quoted sed expression in AutoVersioningService.replaceMagicVersion.
+        const step = new AutoVersionStep(repoPath, makeLogger(), {
+            ...baseConfig,
+            baseVersion: "1.0.0'; id>/tmp/fern-autoversion-injection-probe; echo '"
+        });
+        const prepared = fakePreparedReplay({
+            outputDir: repoPath,
+            previousGenerationSha: null,
+            currentGenerationSha: gitExec(["rev-parse", "HEAD"], repoPath)
+        });
+
+        const result = await step.execute(makeContext(prepared));
+
+        expect(result.executed).toBe(true);
+        expect(result.success).toBe(false);
+        expect(result.errorMessage).toMatch(/not a valid semver/);
+        // package.json should remain at the placeholder — no rewrite happened.
+        const pkg = JSON.parse(readFileSync(join(repoPath, "package.json"), "utf-8")) as {
+            version: string;
+        };
+        expect(pkg.version).toBe("0.0.0-fern-placeholder");
+    });
 });
 
 describe("AutoVersionStep.execute() — large-diff chunking", () => {

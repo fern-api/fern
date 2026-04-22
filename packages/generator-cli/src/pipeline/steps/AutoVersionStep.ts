@@ -9,6 +9,7 @@ import {
     countFilesInDiff,
     formatSizeKB,
     incrementVersion,
+    isValidSemver,
     MAGIC_VERSION,
     MAX_AI_DIFF_BYTES,
     MAX_CHUNKS,
@@ -95,6 +96,25 @@ export class AutoVersionStep extends BaseStep {
     }): Promise<AutoVersionStepResult> {
         const { service, language, mappedMagicVersion } = params;
         const initialVersion = this.config.baseVersion ?? (mappedMagicVersion.startsWith("v") ? "v0.0.1" : "0.0.1");
+
+        // `initialVersion` flows into `AutoVersioningService.replaceMagicVersion`, which
+        // runs `bash -c` with the value embedded in a single-quoted sed expression. A
+        // stray single quote or shell metacharacter would escape quoting and execute
+        // arbitrary code on the generation host. `baseVersion` is user-supplied config,
+        // so validate it against the same strict semver regex `incrementVersion` uses
+        // before letting it reach the shell. The two hardcoded defaults are safe.
+        if (!isValidSemver(initialVersion)) {
+            const errorMessage =
+                `AutoVersionStep: baseVersion ${JSON.stringify(initialVersion)} is not a valid semver ` +
+                `string (expected e.g. "1.2.3" or "v1.2.3"). Refusing to run to avoid shell injection ` +
+                `into the placeholder-rewrite step.`;
+            this.logger.error(errorMessage);
+            return {
+                executed: true,
+                success: false,
+                errorMessage
+            };
+        }
 
         this.logger.info(`AutoVersionStep: first generation — using initial version ${initialVersion}`);
 
