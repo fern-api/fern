@@ -8,6 +8,7 @@ import { ValidationError } from "../errors/ValidationError.js";
 import { Icons } from "../ui/format.js";
 import { Context } from "./Context.js";
 import type { GlobalArgs } from "./GlobalArgs.js";
+import { loadDotenvFile } from "./loadDotenvFile.js";
 
 // It's standard to use 128 as the base exit code for signals.
 // https://en.wikipedia.org/wiki/Signal_(IPC)
@@ -50,6 +51,7 @@ export function withContext<T extends GlobalArgs>(
 
 async function createContext(options: GlobalArgs): Promise<Context> {
     const logLevel = parseLogLevel(options["log-level"] ?? "info");
+    loadDotenvFile(options.env);
     return Context.create({
         stdout: process.stdout,
         stderr: process.stderr,
