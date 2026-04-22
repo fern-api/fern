@@ -2,6 +2,7 @@ import { getOriginalName, getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { FileContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
+import { getClientDefaultValue } from "./isLiteralHeader.js";
 import {
     REQUEST_OPTIONS_ADDITIONAL_QUERY_PARAMETERS_PROPERTY_NAME,
     REQUEST_OPTIONS_PARAMETER_NAME
@@ -102,7 +103,19 @@ export class GeneratedQueryParams {
             context
         });
 
+        // If clientDefault is set, add a fallback: value ?? "clientDefault"
+        // Skip when the type is nullable — explicit null means "don't send the parameter",
+        // and ?? would replace null with the clientDefault, preventing intentional omission.
+        const clientDefaultVal = getClientDefaultValue(queryParameter.clientDefault);
+
         if (!queryParameter.allowMultiple) {
+            if (clientDefaultVal != null && !typeContainsNullable(queryParameter.valueType, context)) {
+                return ts.factory.createBinaryExpression(
+                    scalarExpression,
+                    ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                    ts.factory.createStringLiteral(clientDefaultVal.toString())
+                );
+            }
             return scalarExpression;
         }
 
@@ -113,8 +126,18 @@ export class GeneratedQueryParams {
             context
         });
 
+        // For allowMultiple params, apply clientDefault fallback to the scalar branch
+        const scalarWithDefault =
+            clientDefaultVal != null && !typeContainsNullable(queryParameter.valueType, context)
+                ? ts.factory.createBinaryExpression(
+                      scalarExpression,
+                      ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                      ts.factory.createStringLiteral(clientDefaultVal.toString())
+                  )
+                : scalarExpression;
+
         if (!needsArrayCheck) {
-            return scalarExpression;
+            return scalarWithDefault;
         }
 
         return ts.factory.createConditionalExpression(
@@ -129,7 +152,7 @@ export class GeneratedQueryParams {
             ts.factory.createToken(ts.SyntaxKind.QuestionToken),
             arrayExpression,
             ts.factory.createToken(ts.SyntaxKind.ColonToken),
-            scalarExpression
+            scalarWithDefault
         );
     }
 
@@ -160,7 +183,7 @@ export class GeneratedQueryParams {
                         breadcrumbsPrefix: ["request", paramName],
                         omitUndefined: context.omitUndefined
                     });
-                if (this.isOptional(queryParameter.valueType)) {
+                if (this.isOptional(queryParameter.valueType) || queryParameter.clientDefault != null) {
                     return ts.factory.createConditionalExpression(
                         ts.factory.createBinaryExpression(
                             referenceToQueryParameter,
@@ -476,6 +499,29 @@ function primitiveTypeNeedsStringify(primitiveType: FernIr.PrimitiveType): boole
         case "DATE_TIME":
         case "DATE_TIME_RFC_2822":
             return true;
+        default:
+            return false;
+    }
+}
+
+function typeContainsNullable(type: FernIr.TypeReference, context: FileContext): boolean {
+    switch (type.type) {
+        case "container":
+            switch (type.container.type) {
+                case "nullable":
+                    return true;
+                case "optional":
+                    return typeContainsNullable(type.container.optional, context);
+                default:
+                    return false;
+            }
+        case "named": {
+            const declaration = context.type.getTypeDeclaration(type);
+            if (declaration.shape.type === "alias") {
+                return typeContainsNullable(declaration.shape.aliasOf, context);
+            }
+            return false;
+        }
         default:
             return false;
     }

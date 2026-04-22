@@ -37,6 +37,11 @@ publish:
     file: ./generators/ruby-v2/sdk/Dockerfile
     image: fernapi/fern-ruby-sdk-v2
     context: .
+  sentry:
+    name: fern-ruby-sdk-v2
+    project: ruby-sdk
+    sourceMaps:
+      - dir: generators/ruby-v2/sdk/dist
 
 scripts:
   - image: ruby:3.3

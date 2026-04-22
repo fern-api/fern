@@ -1,5 +1,7 @@
 import type { generatorsYml } from "@fern-api/configuration-loader";
 
+import { describeSkipReason } from "./describeSkipReason.js";
+
 /**
  * Determines whether a generator should be skipped for remote automation.
  *
@@ -8,6 +10,8 @@ import type { generatorsYml } from "@fern-api/configuration-loader";
  * - Output is configured for `local-file-system` (cannot run remotely)
  * - `autorelease` is disabled at the generator level, or at the root level
  *   when the generator does not specify its own override
+ *
+ * Callers that need the reason for an error message should use {@link describeSkipReason}.
  */
 export function shouldSkipGenerator({
     generator,
@@ -16,22 +20,5 @@ export function shouldSkipGenerator({
     generator: generatorsYml.GeneratorInvocation;
     rootAutorelease: boolean | undefined;
 }): boolean {
-    if (!generator.automation.generate) {
-        return true;
-    }
-
-    // Local-file-system output cannot run remotely
-    if (generator.absolutePathToLocalOutput != null) {
-        return true;
-    }
-
-    // Generator-level autorelease overrides root-level
-    if (generator.raw?.autorelease === false) {
-        return true;
-    }
-    if (generator.raw?.autorelease == null && rootAutorelease === false) {
-        return true;
-    }
-
-    return false;
+    return describeSkipReason(generator, rootAutorelease) != null;
 }

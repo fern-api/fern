@@ -1,0 +1,8 @@
+- summary: |
+    Thread the `--version` flag through to the Go SDK when using
+    `output.location: local-file-system`. The CLI now populates a Go publish
+    target on the IR's filesystem publishing config when the user explicitly
+    passes `--version`, so the Go generator can stamp the generated SDK with
+    the requested version. No version is populated when `--version` is not
+    provided.
+  type: fix

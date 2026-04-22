@@ -158,11 +158,11 @@ export class GithubStep extends BaseStep {
             this.logger.debug(`Committed changes to local copy of GitHub repository at ${this.outputDir}`);
         }
 
-        // In automation mode, detect no-diff before pushing.
+        // When skipIfNoDiff is enabled, detect no-diff before pushing.
         // --version AUTO already returns shouldCommit=false for NO_CHANGE, which prevents the
         // pipeline from running at all. This tree-hash check is a safety net for edge cases
         // where the version changes but the generated output doesn't.
-        if (this.config.automationMode) {
+        if (shouldCheckNoDiff(this.config)) {
             const noDiff = await repository.treeHashEquals(`origin/${baseBranch}`);
             if (noDiff) {
                 this.logger.info("No changes detected after generation — skipping PR creation");
@@ -304,8 +304,8 @@ export class GithubStep extends BaseStep {
         await repository.commitAllChanges(finalCommitMessage);
         this.logger.debug(`Committed changes to local copy of GitHub repository at ${this.outputDir}`);
 
-        // In automation mode, detect no-diff before pushing
-        if (this.config.automationMode) {
+        // When skipIfNoDiff is enabled, detect no-diff before pushing
+        if (shouldCheckNoDiff(this.config)) {
             const noDiff = await repository.treeHashEquals(`origin/${baseBranch}`);
             if (noDiff) {
                 this.logger.info("No changes detected after generation — skipping push");
@@ -403,6 +403,15 @@ export function shouldEnableAutomerge(config: {
     hasBreakingChanges?: boolean;
 }): boolean {
     return config.automationMode === true && config.autoMerge === true && config.hasBreakingChanges !== true;
+}
+
+/**
+ * Determines whether the no-diff tree-hash check should run before push/PR creation.
+ * Independent of automationMode: callers opt into this behavior explicitly via skipIfNoDiff.
+ * Exported for testing.
+ */
+export function shouldCheckNoDiff(config: { skipIfNoDiff?: boolean }): boolean {
+    return config.skipIfNoDiff === true;
 }
 
 /**

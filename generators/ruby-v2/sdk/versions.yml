@@ -1,4 +1,24 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.6.1
+  changelogEntry:
+    - summary: |
+        Add crash reporting via Sentry to the generator runtime, and classify
+        thrown errors using the new shared `GeneratorError` taxonomy so user-facing
+        failures (config, validation, auth, network, environment) are kept distinct
+        from internal Fern bugs — only the latter are forwarded to Sentry. No
+        change to generated output.
+      type: chore
+  createdAt: "2026-04-22"
+  irVersion: 66
+- version: 1.6.0
+  changelogEntry:
+    - summary: |
+        Expose HTTP response metadata (status code, headers, and raw HTTP response) on paginated iterators.
+        `CursorPageIterator`, `OffsetPageIterator`, `CustomPager`, and `ItemIterator` now expose `status_code`,
+        `headers`, and `http_response` methods that return metadata from the most recent page load.
+      type: feat
+  createdAt: "2026-04-21"
+  irVersion: 66
 - version: 1.5.0
   changelogEntry:
     - summary: |

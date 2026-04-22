@@ -112,6 +112,7 @@
     "@fern-api/configs": "workspace:*",
     "@fern-api/generator-cli": "catalog:",
     "@rolldown/binding-darwin-arm64": "catalog:",
+    "@sentry/cli": "catalog:",
     "cross-env": "catalog:",
     "cspell": "catalog:",
     "husky": "catalog:",

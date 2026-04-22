@@ -1,5 +1,6 @@
 import { isRawObjectDefinition, RawSchemas } from "@fern-api/fern-definition-schema";
 import { ObjectProperty } from "@fern-api/ir-sdk";
+import { CliError } from "@fern-api/task-context";
 
 import { FernFileContext } from "../../FernFileContext.js";
 import { ResolvedType } from "../../resolvers/ResolvedType.js";
@@ -101,7 +102,10 @@ export function getPropertyTypeFromObjectSchema({
     });
     const propertyType = properties[property];
     if (propertyType == null) {
-        throw new Error(`Response does not have a property named ${property}.`);
+        throw new CliError({
+            message: `Response does not have a property named ${property}.`,
+            code: CliError.Code.ReferenceError
+        });
     }
     return propertyType;
 }
@@ -164,7 +168,10 @@ function getAllPropertiesForExtendedType({
         });
     }
     // This should be unreachable; extended types must be named objects.
-    throw new Error(`Extended type ${extendedType} must be another named type.`);
+    throw new CliError({
+        message: `Extended type ${extendedType} must be another named type.`,
+        code: CliError.Code.InternalError
+    });
 }
 
 export function maybeFileFromResolvedType(resolvedType: ResolvedType | undefined): FernFileContext | undefined {

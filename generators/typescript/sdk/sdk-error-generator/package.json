@@ -32,7 +32,7 @@
     "test:update": "vitest --passWithNoTests --run -u"
   },
   "dependencies": {
-    "@fern-fern/ir-sdk": "66.0.0-alpha.1",
+    "@fern-fern/ir-sdk": "66.0.0",
     "@fern-typescript/abstract-error-class-generator": "workspace:*",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/contexts": "workspace:*",

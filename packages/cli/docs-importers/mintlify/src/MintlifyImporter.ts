@@ -7,6 +7,7 @@ import {
     TabInfo
 } from "@fern-api/docs-importer-commons";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { CliError } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 
 import { convertColors } from "./convertColors.js";
@@ -154,7 +155,11 @@ export class MintlifyImporter extends DocsImporter<MintlifyImporter.Args> {
         if (Object.keys(this.tabUrlToInfo).length > 0) {
             const tabUrl = getTabForMintItem({ mintItem });
             if (tabUrl == null) {
-                return this.context.failAndThrow(`Failed to assign navigation item to a tab group: ${mintItem.group}`);
+                return this.context.failAndThrow(
+                    `Failed to assign navigation item to a tab group: ${mintItem.group}`,
+                    undefined,
+                    { code: CliError.Code.ConfigError }
+                );
             }
             const tab = this.tabUrlToInfo[tabUrl] ?? this.getDefaultDocumentationTab(builder);
             return tab.navigationBuilder;

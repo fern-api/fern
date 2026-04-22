@@ -7,6 +7,7 @@ import {
     walkEstreeJsxAttributes
 } from "@fern-api/docs-markdown-utils";
 import { AbsoluteFilePath, dirname, RelativeFilePath, resolve } from "@fern-api/fs-utils";
+import { CliError } from "@fern-api/task-context";
 import type { Node as EstreeNode } from "estree";
 import { walk } from "estree-walker";
 import type { Root as HastRoot } from "hast";
@@ -62,7 +63,10 @@ export function collectLinksAndSources({
     do {
         loopCount++;
         if (loopCount > LOOP_LIMIT) {
-            throw new Error("Infinite loop detected while collecting links and sources");
+            throw new CliError({
+                message: "Infinite loop detected while collecting links and sources",
+                code: CliError.Code.ReferenceError
+            });
         }
         const popped = contentQueue.shift();
         if (popped == null) {
@@ -74,7 +78,10 @@ export function collectLinksAndSources({
         // NOTE: we don't want to visit the same file multiple times
         if (absoluteFilepath != null) {
             if (visitedAbsoluteFilepaths.has(absoluteFilepath)) {
-                throw new Error(`Circular import detected: ${absoluteFilepath}`);
+                throw new CliError({
+                    message: `Circular import detected: ${absoluteFilepath}`,
+                    code: CliError.Code.ReferenceError
+                });
             }
             visitedAbsoluteFilepaths.add(absoluteFilepath);
         }

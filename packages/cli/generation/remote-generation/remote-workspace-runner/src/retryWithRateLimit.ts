@@ -1,4 +1,5 @@
 import { Logger } from "@fern-api/logger";
+import { CliError } from "@fern-api/task-context";
 
 const RATE_LIMIT_INITIAL_RETRY_DELAY_MS = 2_000;
 const RATE_LIMIT_MAX_RETRY_DELAY_MS = 120_000;
@@ -67,5 +68,8 @@ export async function retryWithRateLimit<T>({
     }
 
     // Unreachable, but TypeScript needs this
-    throw new Error("Exceeded maximum retries for 429 Too Many Requests.");
+    throw new CliError({
+        message: "Exceeded maximum retries for 429 Too Many Requests.",
+        code: CliError.Code.InternalError
+    });
 }

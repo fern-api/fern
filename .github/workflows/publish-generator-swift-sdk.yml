@@ -38,6 +38,8 @@ jobs:
           version-file: "generators/swift/sdk/versions.yml"
           fern-token: ${{ secrets.FERN_TOKEN }}
           docker-pwd: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+          sentry-auth-token: ${{ secrets.FERN_SENTRY_AUTH_TOKEN }}
+          sentry-dsn: ${{ secrets.SENTRY_DSN_SWIFT_SDK }}
       - name: manual publish
         if: ${{ github.event_name == 'workflow_dispatch' }}
         uses: ./.github/actions/publish-generator
@@ -47,3 +49,5 @@ jobs:
           manual-trigger: "true"
           fern-token: ${{ secrets.FERN_TOKEN }}
           docker-pwd: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+          sentry-auth-token: ${{ secrets.FERN_SENTRY_AUTH_TOKEN }}
+          sentry-dsn: ${{ secrets.SENTRY_DSN_SWIFT_SDK }}

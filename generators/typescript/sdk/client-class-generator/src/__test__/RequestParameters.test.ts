@@ -389,7 +389,8 @@ describe("FileUploadRequestParameter", () => {
             env: undefined,
             availability: undefined,
             docs: undefined,
-            v2Examples: undefined
+            v2Examples: undefined,
+            clientDefault: undefined
         };
         const ref = param.getReferenceToNonLiteralHeader(header, context);
         expect(getTextOfTsNode(ref)).toContain(".");
@@ -412,7 +413,8 @@ describe("FileUploadRequestParameter", () => {
             env: undefined,
             availability: undefined,
             docs: undefined,
-            v2Examples: undefined
+            v2Examples: undefined,
+            clientDefault: undefined
         };
         const ref = param.getReferenceToNonLiteralHeader(header, context);
         const text = getTextOfTsNode(ref);

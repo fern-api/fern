@@ -42,6 +42,7 @@ function createHeader(opts: {
         env: undefined,
         availability: undefined,
         docs: undefined,
+        clientDefault: undefined,
         v2Examples: undefined
     };
 }
