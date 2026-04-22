@@ -4,11 +4,18 @@ import { describe, expect, it } from "vitest";
 import { OpenAPIConverter } from "../OpenAPIConverter.js";
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1.js";
 
-function createContext(spec: OpenAPIV3_1.Document, authOverrides?: any) {
+function createContext(
+    spec: OpenAPIV3_1.Document,
+    // biome-ignore lint/suspicious/noExplicitAny: test helper
+    authOverrides?: any
+) {
     return new OpenAPIConverterContext3_1({
         spec,
+        // biome-ignore lint/suspicious/noExplicitAny: test mock
         settings: {} as any,
+        // biome-ignore lint/suspicious/noExplicitAny: test mock
         errorCollector: new ErrorCollector({ logger: undefined as any }),
+        // biome-ignore lint/suspicious/noExplicitAny: test mock
         logger: undefined as any,
         generationLanguage: undefined,
         smartCasing: false,
