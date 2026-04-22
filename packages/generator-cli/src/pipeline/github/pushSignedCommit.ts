@@ -54,10 +54,12 @@ export async function pushSignedCommit({
     let tempRefPushed = false;
 
     try {
-        let localHeadSha = await repository.getHeadSha();
-        let treeSha = await repository.getHeadTreeHash();
-        let message = await repository.getHeadCommitMessage();
-        let parents = await repository.getHeadParents();
+        let [localHeadSha, treeSha, message, parents] = await Promise.all([
+            repository.getHeadSha(),
+            repository.getHeadTreeHash(),
+            repository.getHeadCommitMessage(),
+            repository.getHeadParents()
+        ]);
 
         await repository.pushObjectToRef(localHeadSha, tempRef);
         tempRefPushed = true;
@@ -87,10 +89,12 @@ export async function pushSignedCommit({
                         `Non-fast-forward on refs/heads/${branch} (attempt ${attempt + 1}/${MAX_CONCURRENT_PUSH_RETRIES}); rebasing locally and retrying.`
                     );
                     await repository.pullWithRebase(branch);
-                    localHeadSha = await repository.getHeadSha();
-                    treeSha = await repository.getHeadTreeHash();
-                    message = await repository.getHeadCommitMessage();
-                    parents = await repository.getHeadParents();
+                    [localHeadSha, treeSha, message, parents] = await Promise.all([
+                        repository.getHeadSha(),
+                        repository.getHeadTreeHash(),
+                        repository.getHeadCommitMessage(),
+                        repository.getHeadParents()
+                    ]);
                     await repository.pushObjectToRef(localHeadSha, tempRef);
                 } else {
                     throw err;
