@@ -13,8 +13,9 @@ import path from "path";
  * traffic and exfiltrate auth tokens.
  *
  * Existing env vars (set in the shell) are never overwritten (override: false).
+ * Values are never logged — only key names are shown, with <SET> as a placeholder.
  */
-export function loadDotenvFile(envFilePath: string | undefined): void {
+export function loadDotenvFile(envFilePath: string | undefined, logDebug?: (msg: string) => void): void {
     if (envFilePath == null) {
         return;
     }
@@ -24,5 +25,16 @@ export function loadDotenvFile(envFilePath: string | undefined): void {
         process.stderr.write(`${chalk.yellow("warn")} .env file not found: ${resolved}\n`);
         return;
     }
-    dotenvConfig({ path: resolved, override: false });
+
+    const result = dotenvConfig({ path: resolved, override: false });
+
+    if (logDebug != null && result.parsed != null) {
+        const keys = Object.keys(result.parsed);
+        if (keys.length > 0) {
+            // Never log values — use <SET> so the user knows a key was loaded
+            // without revealing the value or its length.
+            const redacted = keys.map((k) => `${k}=<SET>`).join(", ");
+            logDebug(`Loaded from ${resolved}: ${redacted}`);
+        }
+    }
 }

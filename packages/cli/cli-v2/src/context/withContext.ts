@@ -51,7 +51,11 @@ export function withContext<T extends GlobalArgs>(
 
 async function createContext(options: GlobalArgs): Promise<Context> {
     const logLevel = parseLogLevel(options["log-level"] ?? "info");
-    loadDotenvFile(options.env);
+    const logDebug =
+        logLevel === LogLevel.Debug
+            ? (msg: string) => process.stderr.write(`${chalk.dim("[debug]")} ${msg}\n`)
+            : undefined;
+    loadDotenvFile(options.env, logDebug);
     return Context.create({
         stdout: process.stdout,
         stderr: process.stderr,

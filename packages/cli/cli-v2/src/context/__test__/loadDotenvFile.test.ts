@@ -79,4 +79,30 @@ describe("loadDotenvFile", () => {
             expect(process.env.EXISTING_VAR).toBe("original");
         });
     });
+
+    describe("debug logging", () => {
+        it("calls logDebug with key names and <SET> placeholders, never the actual values", () => {
+            const envFile = path.join(tmpDir, "custom.env");
+            fs.writeFileSync(envFile, "SECRET_KEY=super-secret\nANOTHER=also-secret\n");
+            const logDebug = vi.fn();
+
+            loadDotenvFile(envFile, logDebug);
+
+            expect(logDebug).toHaveBeenCalledOnce();
+            const [msg] = logDebug.mock.calls[0] as [string];
+            expect(msg).toContain("SECRET_KEY=<SET>");
+            expect(msg).toContain("ANOTHER=<SET>");
+            // Values must never appear
+            expect(msg).not.toContain("super-secret");
+            expect(msg).not.toContain("also-secret");
+        });
+
+        it("does not call logDebug when no logDebug is provided", () => {
+            const envFile = path.join(tmpDir, "custom.env");
+            fs.writeFileSync(envFile, "SECRET_KEY=super-secret\n");
+
+            // Should not throw even without logDebug
+            expect(() => loadDotenvFile(envFile, undefined)).not.toThrow();
+        });
+    });
 });
