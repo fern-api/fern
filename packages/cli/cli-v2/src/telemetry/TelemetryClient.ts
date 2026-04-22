@@ -53,8 +53,27 @@ export class TelemetryClient {
                 dsn: sentryDsn,
                 release: `cli@${Version}`,
                 environment: sentryEnvironment,
+                // Opt out of every built-in integration (HTTP tracing, local
+                // variables, console breadcrumbs, etc.) — error capture is all
+                // we need.
                 defaultIntegrations: false,
-                integrations: [Sentry.rewriteFramesIntegration()],
+                // Rewrite absolute frame paths to repo-root-relative paths so
+                // they align with the source maps uploaded at publish time.
+                // onUncaughtException / onUnhandledRejection catch errors that
+                // escape the CLI's top-level handler (fire-and-forget callbacks,
+                // unhandled rejections in background work, etc.).
+                // linkedErrors chains .cause so wrapped errors stay traceable.
+                // nodeContext adds Node.js version and OS to every event.
+                // Local variables are intentionally NOT collected here: the
+                // CLI runs on user machines where stack-frame locals could
+                // contain tokens, paths, or customer API content.
+                integrations: [
+                    Sentry.rewriteFramesIntegration(),
+                    Sentry.onUncaughtExceptionIntegration(),
+                    Sentry.onUnhandledRejectionIntegration(),
+                    Sentry.linkedErrorsIntegration(),
+                    Sentry.nodeContextIntegration()
+                ],
                 tracesSampleRate: 0
             });
             setSentryRunIdTags();
