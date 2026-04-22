@@ -643,18 +643,31 @@ export class WireTestGenerator {
                                 })
                             );
                             break;
-                        case "basic":
-                            arguments_.push(
-                                go.invokeFunc({
-                                    func: go.typeReference({
-                                        name: "WithBasicAuth",
-                                        importPath: this.context.getOptionImportPath()
-                                    }),
-                                    arguments_: [go.codeblock('"test-username"'), go.codeblock('"test-password"')],
-                                    multiline: false
-                                })
-                            );
+                        case "basic": {
+                            const schemeRecord = scheme as unknown as Record<string, unknown>;
+                            const usernameOmitted = !!schemeRecord.usernameOmit;
+                            const passwordOmitted = !!schemeRecord.passwordOmit;
+                            if (!usernameOmitted || !passwordOmitted) {
+                                const basicAuthArgs: go.AstNode[] = [];
+                                if (!usernameOmitted) {
+                                    basicAuthArgs.push(go.codeblock('"test-username"'));
+                                }
+                                if (!passwordOmitted) {
+                                    basicAuthArgs.push(go.codeblock('"test-password"'));
+                                }
+                                arguments_.push(
+                                    go.invokeFunc({
+                                        func: go.typeReference({
+                                            name: "WithBasicAuth",
+                                            importPath: this.context.getOptionImportPath()
+                                        }),
+                                        arguments_: basicAuthArgs,
+                                        multiline: false
+                                    })
+                                );
+                            }
                             break;
+                        }
                         case "header": {
                             const fieldName = scheme.name
                                 ? this.context.caseConverter.pascalUnsafe(getNameFromWireValue(scheme.name))

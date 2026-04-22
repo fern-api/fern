@@ -6,5 +6,9 @@
     "enableWireTests": true
   },
   "originGitCommit": "DUMMY",
+  "originGitCommitIsDirty": null,
+  "invokedBy": "manual",
+  "requestedVersion": "0.0.1",
+  "ciProvider": null,
   "sdkVersion": "v0.0.1"
 }

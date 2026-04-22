@@ -71,7 +71,7 @@ func TestBasicAuthGetWithBasicAuthWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithBasicAuth("test-username", "test-password"),
+		option.WithBasicAuth("test-username"),
 	)
 	_, invocationErr := client.BasicAuth.GetWithBasicAuth(
 		context.TODO(),
@@ -93,7 +93,7 @@ func TestBasicAuthPostWithBasicAuthWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithBasicAuth("test-username", "test-password"),
+		option.WithBasicAuth("test-username"),
 	)
 	request := map[string]any{
 		"key": "value",
