@@ -1214,7 +1214,6 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                 null,
                 response => response.Data.Users_?.ToList(),
                 null,
-                true,
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -1265,7 +1264,6 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                 null,
                 response => response.Data.Users_?.ToList(),
                 null,
-                true,
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -1314,7 +1312,6 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                 null,
                 response => response.Data.Users_?.ToList(),
                 null,
-                true,
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -1361,10 +1358,9 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                 {
                     request.Page = offset;
                 },
-                request => request.Limit ?? 0,
+                null,
                 response => response.Data.Users_?.ToList(),
                 null,
-                true,
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -1411,10 +1407,9 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                 {
                     request.Page = offset;
                 },
-                request => request.Limit ?? 0,
+                null,
                 response => response.Data.Users_?.ToList(),
                 response => response.HasNextPage,
-                true,
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -1585,7 +1580,6 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                 null,
                 response => response.Results?.ToList(),
                 null,
-                true,
                 cancellationToken
             )
             .ConfigureAwait(false);

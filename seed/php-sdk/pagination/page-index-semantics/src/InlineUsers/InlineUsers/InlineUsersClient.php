@@ -178,7 +178,6 @@ class InlineUsersClient
             getItems: fn (?ListUsersPaginationResponse $response) => $response?->data?->users ?? [],
             /* @phpstan-ignore-next-line */
             hasNextPage: null,
-            usePageIndexSemantics: true,
         );
     }
 
@@ -209,7 +208,6 @@ class InlineUsersClient
             getItems: fn (?ListUsersPaginationResponse $response) => $response?->data?->users ?? [],
             /* @phpstan-ignore-next-line */
             hasNextPage: null,
-            usePageIndexSemantics: true,
         );
     }
 
@@ -240,7 +238,6 @@ class InlineUsersClient
             getItems: fn (?ListUsersPaginationResponse $response) => $response?->data?->users ?? [],
             /* @phpstan-ignore-next-line */
             hasNextPage: null,
-            usePageIndexSemantics: true,
         );
     }
 
@@ -266,13 +263,11 @@ class InlineUsersClient
             setOffset: function (ListUsersOffsetStepPaginationRequest $request, int $offset) {
                 $request->page = $offset;
             },
-            /* @phpstan-ignore-next-line */
-            getStep: fn (ListUsersOffsetStepPaginationRequest $request) => $request?->limit ?? 0,
+            getStep: null,
             /* @phpstan-ignore-next-line */
             getItems: fn (?ListUsersPaginationResponse $response) => $response?->data?->users ?? [],
             /* @phpstan-ignore-next-line */
             hasNextPage: null,
-            usePageIndexSemantics: true,
         );
     }
 
@@ -298,13 +293,11 @@ class InlineUsersClient
             setOffset: function (ListWithOffsetPaginationHasNextPageRequest $request, int $offset) {
                 $request->page = $offset;
             },
-            /* @phpstan-ignore-next-line */
-            getStep: fn (ListWithOffsetPaginationHasNextPageRequest $request) => $request?->limit ?? 0,
+            getStep: null,
             /* @phpstan-ignore-next-line */
             getItems: fn (?ListUsersPaginationResponse $response) => $response?->data?->users ?? [],
             /* @phpstan-ignore-next-line */
             hasNextPage: fn (?ListUsersPaginationResponse $response) => $response?->hasNextPage,
-            usePageIndexSemantics: true,
         );
     }
 
@@ -416,7 +409,6 @@ class InlineUsersClient
             getItems: fn (?UsernameContainer $response) => $response?->results ?? [],
             /* @phpstan-ignore-next-line */
             hasNextPage: null,
-            usePageIndexSemantics: true,
         );
     }
 

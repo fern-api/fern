@@ -9,14 +9,13 @@ module Seed
       # @param item_field [Symbol] The name of the field in API responses to extract the items to iterate over.
       # @param has_next_field [Symbol] The name of the field in API responses containing a boolean of whether another page exists.
       # @param step [Boolean] If true, treats the page number as a true offset (i.e. increments the page number by the number of items returned from each call rather than just 1)
-      # @param page_index_semantics [Boolean] If true, increments the page number by 1 each page (page-index semantics) rather than by the number of items returned (item-index semantics)
       # @param block [Proc] A block which is responsible for receiving a page number to use and returning the given page from the API.
       #
       # @return [Seed::Internal::OffsetItemIterator]
-      def initialize(initial_page:, item_field:, has_next_field:, step:, page_index_semantics: false, &)
+      def initialize(initial_page:, item_field:, has_next_field:, step:, &)
         super()
         @item_field = item_field
-        @page_iterator = OffsetPageIterator.new(initial_page:, item_field:, has_next_field:, step:, page_index_semantics:, &)
+        @page_iterator = OffsetPageIterator.new(initial_page:, item_field:, has_next_field:, step:, &)
         @page = nil
       end
 

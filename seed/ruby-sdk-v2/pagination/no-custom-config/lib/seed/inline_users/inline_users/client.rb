@@ -179,8 +179,7 @@ module Seed
             initial_page: query_params["page"],
             item_field: :users,
             has_next_field: nil,
-            step: false,
-            page_index_semantics: false
+            step: false
           ) do |next_page|
             query_params["page"] = next_page
             request = Seed::Internal::JSON::Request.new(
@@ -234,8 +233,7 @@ module Seed
             initial_page: query_params["page"],
             item_field: :users,
             has_next_field: nil,
-            step: false,
-            page_index_semantics: false
+            step: false
           ) do |next_page|
             query_params["page"] = next_page
             request = Seed::Internal::JSON::Request.new(
@@ -277,8 +275,7 @@ module Seed
             initial_page: query_params["page"],
             item_field: :users,
             has_next_field: nil,
-            step: false,
-            page_index_semantics: false
+            step: false
           ) do |next_page|
             query_params["page"] = next_page
             request = Seed::Internal::JSON::Request.new(
@@ -330,8 +327,7 @@ module Seed
             initial_page: query_params["page"],
             item_field: :users,
             has_next_field: nil,
-            step: true,
-            page_index_semantics: false
+            step: true
           ) do |next_page|
             query_params["page"] = next_page
             request = Seed::Internal::JSON::Request.new(
@@ -383,8 +379,7 @@ module Seed
             initial_page: query_params["page"],
             item_field: :users,
             has_next_field: :has_next_page,
-            step: true,
-            page_index_semantics: false
+            step: true
           ) do |next_page|
             query_params["page"] = next_page
             request = Seed::Internal::JSON::Request.new(
@@ -573,8 +568,7 @@ module Seed
             initial_page: query_params["offset"],
             item_field: :results,
             has_next_field: nil,
-            step: false,
-            page_index_semantics: false
+            step: false
           ) do |next_page|
             query_params["offset"] = next_page
             request = Seed::Internal::JSON::Request.new(

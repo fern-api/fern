@@ -16,12 +16,11 @@ module <%= gem_namespace %>
       # @param block [Proc] A block which is responsible for receiving a page number to use and returning the given page from the API.
       #   The block should return a two-element array: [parsed_page, raw_http_response].
       # @return [<%= gem_namespace %>::Internal::OffsetPageIterator]
-      def initialize(initial_page:, item_field:, has_next_field:, step:, page_index_semantics: false, &block)
-        @page_number = initial_page || (step && !page_index_semantics ? 0 : 1)
+      def initialize(initial_page:, item_field:, has_next_field:, step:, &block)
+        @page_number = initial_page || (step ? 0 : 1)
         @item_field = item_field
         @has_next_field = has_next_field
         @step = step
-        @page_index_semantics = page_index_semantics
         @get_next_page = block
 
         # A cache of whether the API has another page, if it gives us that information...
@@ -78,7 +77,7 @@ module <%= gem_namespace %>
         if items.nil? || items.empty?
           @page_number = nil
           return nil
-        elsif @step && !@page_index_semantics
+        elsif @step
           @page_number += items.length
         else
           @page_number += 1

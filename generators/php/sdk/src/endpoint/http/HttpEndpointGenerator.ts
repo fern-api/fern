@@ -406,6 +406,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         writer: php.Writer;
         unpagedEndpointMethodName: string;
     }) {
+        const usePageIndexSemantics = this.context.customConfig.offsetSemantics === "page-index";
         const offsetPagerClassReference = this.context.getOffsetPagerClassReference();
         writer.write("return ");
         writer.writeNodeStatement(
@@ -463,10 +464,10 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         })
                     },
                     {
-                        docs: pagination.step ? "@phpstan-ignore-next-line" : undefined,
+                        docs: pagination.step && !usePageIndexSemantics ? "@phpstan-ignore-next-line" : undefined,
                         name: "getStep",
                         assignment: php.codeblock((writer) => {
-                            if (!pagination.step) {
+                            if (!pagination.step || usePageIndexSemantics) {
                                 writer.write("null");
                                 return;
                             }
@@ -501,12 +502,6 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                             writer.write(" $response) => ");
                             writer.writeNode(this.nullableGet("$response", pagination.hasNextPage));
                         })
-                    },
-                    {
-                        name: "usePageIndexSemantics",
-                        assignment: php.codeblock(
-                            this.context.customConfig.offsetSemantics === "page-index" ? "true" : "false"
-                        )
                     }
                 ],
                 multiline: true

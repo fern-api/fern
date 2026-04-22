@@ -1611,7 +1611,6 @@ public partial class UsersClient : IUsersClient
                 null,
                 response => response.Data?.ToList(),
                 null,
-                true,
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -1662,7 +1661,6 @@ public partial class UsersClient : IUsersClient
                 null,
                 response => response.Data?.ToList(),
                 null,
-                true,
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -1711,7 +1709,6 @@ public partial class UsersClient : IUsersClient
                 null,
                 response => response.Data?.ToList(),
                 null,
-                true,
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -1758,10 +1755,9 @@ public partial class UsersClient : IUsersClient
                 {
                     request.Page = offset;
                 },
-                request => request.Limit ?? 0,
+                null,
                 response => response.Data?.ToList(),
                 null,
-                true,
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -1808,10 +1804,9 @@ public partial class UsersClient : IUsersClient
                 {
                     request.Page = offset;
                 },
-                request => request.Limit ?? 0,
+                null,
                 response => response.Data?.ToList(),
                 response => response.HasNextPage,
-                true,
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -2023,7 +2018,6 @@ public partial class UsersClient : IUsersClient
                 null,
                 response => response.Results?.ToList(),
                 null,
-                true,
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -2062,7 +2056,6 @@ public partial class UsersClient : IUsersClient
                 null,
                 response => response.Data?.ToList(),
                 null,
-                true,
                 cancellationToken
             )
             .ConfigureAwait(false);

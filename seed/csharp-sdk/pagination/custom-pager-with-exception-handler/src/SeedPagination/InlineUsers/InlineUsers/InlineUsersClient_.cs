@@ -1336,7 +1336,6 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                         null,
                         response => response.Data.Users_?.ToList(),
                         null,
-                        false,
                         cancellationToken
                     )
                     .ConfigureAwait(false);
@@ -1392,7 +1391,6 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                         null,
                         response => response.Data.Users_?.ToList(),
                         null,
-                        false,
                         cancellationToken
                     )
                     .ConfigureAwait(false);
@@ -1446,7 +1444,6 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                         null,
                         response => response.Data.Users_?.ToList(),
                         null,
-                        false,
                         cancellationToken
                     )
                     .ConfigureAwait(false);
@@ -1501,7 +1498,6 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                         request => request.Limit ?? 0,
                         response => response.Data.Users_?.ToList(),
                         null,
-                        false,
                         cancellationToken
                     )
                     .ConfigureAwait(false);
@@ -1556,7 +1552,6 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                         request => request.Limit ?? 0,
                         response => response.Data.Users_?.ToList(),
                         response => response.HasNextPage,
-                        false,
                         cancellationToken
                     )
                     .ConfigureAwait(false);
@@ -1755,7 +1750,6 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                         null,
                         response => response.Results?.ToList(),
                         null,
-                        false,
                         cancellationToken
                     )
                     .ConfigureAwait(false);
