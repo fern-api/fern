@@ -9,6 +9,12 @@ export interface WireMockStubMapping {
     };
 }
 
+export type QueryParameterMatcher = { equalTo: string } | { hasExactly: Array<{ equalTo: string }> };
+
+export function isEqualToMatcher(matcher: QueryParameterMatcher): matcher is { equalTo: string } {
+    return "equalTo" in matcher;
+}
+
 export interface WireMockMapping {
     id: string;
     name: string;
@@ -17,7 +23,7 @@ export interface WireMockMapping {
         method: string;
         headers?: Record<string, { matches?: string; equalTo?: string }>;
         pathParameters?: Record<string, { equalTo: string }>;
-        queryParameters?: Record<string, { equalTo: string }>;
+        queryParameters?: Record<string, QueryParameterMatcher>;
         formParameters?: Record<string, unknown>;
         bodyPatterns?: Array<{ matchesJsonPath: string }>;
     };
@@ -178,12 +184,33 @@ export class WireMock {
         }
 
         // Extract query parameters from example
-        const queryParameters: Record<string, { equalTo: string }> = {};
+        const queryParameters: Record<string, QueryParameterMatcher> = {};
         for (const param of example?.queryParameters || []) {
-            const paramValue = this.exampleToQueryOrHeaderValue({ value: param.value });
-            if (paramValue !== undefined) {
-                const paramName = param.name != null ? getWireValue(param.name) : undefined;
-                if (paramName) {
+            const paramName = param.name != null ? getWireValue(param.name) : undefined;
+            if (!paramName) {
+                continue;
+            }
+
+            if (Array.isArray(param.value.jsonExample)) {
+                // Multi-value query param: build hasExactly matcher with one equalTo per element
+                const matchers: Array<{ equalTo: string }> = [];
+                for (const item of param.value.jsonExample) {
+                    const itemStr =
+                        typeof item === "string"
+                            ? item
+                            : typeof item === "number" || typeof item === "boolean"
+                              ? String(item)
+                              : undefined;
+                    if (itemStr !== undefined) {
+                        matchers.push({ equalTo: itemStr });
+                    }
+                }
+                if (matchers.length > 0) {
+                    queryParameters[paramName] = { hasExactly: matchers };
+                }
+            } else {
+                const paramValue = this.exampleToQueryOrHeaderValue({ value: param.value });
+                if (paramValue !== undefined) {
                     queryParameters[paramName] = { equalTo: paramValue };
                 }
             }

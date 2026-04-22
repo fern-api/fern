@@ -33,6 +33,7 @@ import { TaskContextLogger } from "./TaskContextLogger.js";
  */
 export class TaskContextAdapter implements TaskContext {
     private result: TaskResult = TaskResult.Success;
+    private lastFailureMessage: string | undefined = undefined;
     private readonly context: Context;
 
     public readonly logger: Logger;
@@ -67,10 +68,15 @@ export class TaskContextAdapter implements TaskContext {
         }
         const fullMessage = this.getFullErrorMessage(message, error);
         if (fullMessage != null) {
+            this.lastFailureMessage = fullMessage;
             this.logger.error(fullMessage);
         }
 
         reportError(this.context, error, { ...options, message });
+    }
+
+    public getLastFailureMessage(): string | undefined {
+        return this.lastFailureMessage;
     }
 
     public captureException(error: unknown, code?: CliError.Code): void {
@@ -101,6 +107,7 @@ export class TaskContextAdapter implements TaskContext {
             failWithoutThrowing: this.failWithoutThrowing.bind(this),
             captureException: this.captureException.bind(this),
             getResult: () => this.result,
+            getLastFailureMessage: this.getLastFailureMessage.bind(this),
             addInteractiveTask: this.addInteractiveTask.bind(this),
             runInteractiveTask: this.runInteractiveTask.bind(this),
             instrumentPostHogEvent: this.instrumentPostHogEvent.bind(this),
