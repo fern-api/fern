@@ -51,6 +51,7 @@ export {
     ExampleGenerationSchema,
     FormParameterEncodingSchema,
     MessageNamingVersionSchema,
+    MultiServerStrategySchema,
     OpenApiExampleGenerationSchema,
     OpenApiFilterSchema,
     OpenApiSettingsSchema,

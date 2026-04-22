@@ -129,6 +129,7 @@ export class LegacyApiSpecAdapter {
             optionalAdditionalProperties: settings.optionalAdditionalProperties,
             shouldUseIdiomaticRequestNames: settings.idiomaticRequestNames,
             groupEnvironmentsByHost: settings.groupEnvironmentsByHost,
+            multiServerStrategy: this.adaptMultiServerStrategy(settings.multiServerStrategy),
             removeDiscriminantsFromSchemas: this.adaptRemoveDiscriminantsFromSchemas(
                 settings.removeDiscriminantsFromSchemas
             ),
@@ -174,6 +175,7 @@ export class LegacyApiSpecAdapter {
             optionalAdditionalProperties: settings.optionalAdditionalProperties,
             shouldUseIdiomaticRequestNames: settings.idiomaticRequestNames,
             groupEnvironmentsByHost: settings.groupEnvironmentsByHost,
+            multiServerStrategy: this.adaptMultiServerStrategy(settings.multiServerStrategy),
             removeDiscriminantsFromSchemas: this.adaptRemoveDiscriminantsFromSchemas(
                 settings.removeDiscriminantsFromSchemas
             ),
@@ -199,6 +201,22 @@ export class LegacyApiSpecAdapter {
                 return generatorsYml.RemoveDiscriminantsFromSchemas.Always;
             case "never":
                 return generatorsYml.RemoveDiscriminantsFromSchemas.Never;
+            default:
+                return undefined;
+        }
+    }
+
+    private adaptMultiServerStrategy(
+        value: schemas.MultiServerStrategySchema | undefined
+    ): generatorsYml.MultiServerStrategy | undefined {
+        if (value == null) {
+            return undefined;
+        }
+        switch (value) {
+            case "environmentPerServer":
+                return generatorsYml.MultiServerStrategy.EnvironmentPerServer;
+            case "urlsPerEnvironment":
+                return generatorsYml.MultiServerStrategy.UrlsPerEnvironment;
             default:
                 return undefined;
         }

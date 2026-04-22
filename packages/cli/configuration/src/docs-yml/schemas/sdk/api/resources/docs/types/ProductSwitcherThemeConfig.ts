@@ -3,5 +3,6 @@
 export const ProductSwitcherThemeConfig = {
     Default: "default",
     Toggle: "toggle",
+    Tabs: "tabs",
 } as const;
 export type ProductSwitcherThemeConfig = (typeof ProductSwitcherThemeConfig)[keyof typeof ProductSwitcherThemeConfig];

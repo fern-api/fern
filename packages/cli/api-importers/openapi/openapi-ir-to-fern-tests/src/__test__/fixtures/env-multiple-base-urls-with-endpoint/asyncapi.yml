@@ -1,0 +1,57 @@
+asyncapi: 3.0.0
+info:
+  title: Test AsyncAPI
+  version: 1.0.0
+# When `multi-server-strategy: urls-per-environment` is set, WebSocket servers with
+# `x-fern-server-name` are merged into the single consolidated environment.
+# `Events` has a unique name (no HTTP collision - merged as-is). `Upload`
+# shares its name with an existing HTTP server; the merge must preserve the
+# HTTP URL and fall back to `Upload_wss` for the WebSocket URL so both remain
+# addressable from the generated SDK.
+servers:
+  events:
+    host: events.example.com
+    protocol: wss
+    x-fern-server-name: Events
+  upload:
+    host: upload.example.com
+    protocol: wss
+    x-fern-server-name: Upload
+channels:
+  eventsChannel:
+    address: "/v1/events"
+    servers:
+      - $ref: "#/servers/events"
+    messages:
+      event:
+        $ref: "#/components/messages/event"
+  uploadChannel:
+    address: "/v1/uploads"
+    servers:
+      - $ref: "#/servers/upload"
+    messages:
+      uploadProgress:
+        $ref: "#/components/messages/uploadProgress"
+operations:
+  event:
+    action: receive
+    channel:
+      $ref: "#/channels/eventsChannel"
+    messages:
+      - $ref: "#/channels/eventsChannel/messages/event"
+  uploadProgress:
+    action: receive
+    channel:
+      $ref: "#/channels/uploadChannel"
+    messages:
+      - $ref: "#/channels/uploadChannel/messages/uploadProgress"
+components:
+  messages:
+    event:
+      summary: Server-sent event.
+      payload:
+        type: string
+    uploadProgress:
+      summary: Upload progress update.
+      payload:
+        type: string

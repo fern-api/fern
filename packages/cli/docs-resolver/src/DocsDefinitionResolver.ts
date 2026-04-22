@@ -880,7 +880,8 @@ export class DocsDefinitionResolver {
                           "page-actions": this.parsedDocsConfig.theme.pageActions,
                           footerNav: this.parsedDocsConfig.theme.footerNav,
                           "language-switcher": this.parsedDocsConfig.theme.languageSwitcher,
-                          "product-switcher": this.parsedDocsConfig.theme.productSwitcher
+                          "product-switcher": this.parsedDocsConfig.theme
+                              .productSwitcher as DocsV1Write.DocsThemeConfig["product-switcher"]
                       }
                     : undefined,
             // deprecated
