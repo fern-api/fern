@@ -10,6 +10,7 @@ export const BasePhpCustomConfigSchema = z.object({
     namespace: z.string().optional(),
     composerJson: z.optional(z.record(z.any())),
     customReadmeSections: z.array(CustomReadmeSectionSchema).optional(),
+    offsetSemantics: z.enum(["item-index", "page-index"]).optional(),
     omitFernHeaders: z.boolean().optional(),
     // Deprecated; use clientName instead.
     "client-class-name": z.string().optional()

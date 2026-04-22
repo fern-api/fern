@@ -501,6 +501,12 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                             writer.write(" $response) => ");
                             writer.writeNode(this.nullableGet("$response", pagination.hasNextPage));
                         })
+                    },
+                    {
+                        name: "usePageIndexSemantics",
+                        assignment: php.codeblock(
+                            this.context.customConfig.offsetSemantics === "page-index" ? "true" : "false"
+                        )
                     }
                 ],
                 multiline: true

@@ -34,6 +34,9 @@ class OffsetPager extends Pager
     /** @var ?callable(TResponse): ?bool */
     private $hasNextPage;
 
+    /** @var bool */
+    private $usePageIndexSemantics;
+
     /**
      * @param TRequest $request
      * @param callable(TRequest): TResponse $getNextPage
@@ -42,6 +45,7 @@ class OffsetPager extends Pager
      * @param ?callable(TRequest): ?int $getStep
      * @param callable(TResponse): ?array<TItem> $getItems
      * @param ?callable(TResponse): ?bool $hasNextPage
+     * @param bool $usePageIndexSemantics
      */
     public function __construct(
         $request,
@@ -50,7 +54,8 @@ class OffsetPager extends Pager
         callable $setOffset,
         ?callable $getStep,
         callable $getItems,
-        ?callable $hasNextPage
+        ?callable $hasNextPage,
+        bool $usePageIndexSemantics = false
     ) {
         $this->request = clone $request;
         $this->getNextPage = $getNextPage;
@@ -59,6 +64,7 @@ class OffsetPager extends Pager
         $this->getStep = $getStep;
         $this->getItems = $getItems;
         $this->hasNextPage = $hasNextPage;
+        $this->usePageIndexSemantics = $usePageIndexSemantics;
     }
 
     /**
@@ -77,7 +83,7 @@ class OffsetPager extends Pager
                 yield new Page($items);
             }
 
-            if ($hasStep) {
+            if ($hasStep && !$this->usePageIndexSemantics) {
                 $offset += $items !== null ? count($items) : 1;
             } else {
                 $offset++;
