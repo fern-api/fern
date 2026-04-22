@@ -11,7 +11,6 @@ import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { isTelemetryDisabled } from "../../telemetry/isTelemetryDisabled.js";
 import { filterGenerators } from "./filterGenerators.js";
 import { GenerationMode } from "./generateAPIWorkspaces.js";
-import { resolveGroupsOrFail } from "./resolveGroupsOrFail.js";
 import { buildAutomationTargeting, selectGeneratorsForAutomation } from "./selectGeneratorsForAutomation.js";
 import { shouldSkipMissingGenerator } from "./shouldSkipMissingGenerator.js";
 
@@ -20,7 +19,7 @@ export async function generateWorkspace({
     workspace,
     projectConfig,
     context,
-    groupNames,
+    resolvedGroupNames,
     generatorName,
     generatorIndex,
     version,
@@ -49,8 +48,11 @@ export async function generateWorkspace({
     projectConfig: fernConfigJson.ProjectConfig;
     context: TaskContext;
     version: string | undefined;
-    /** One or more `--group` values. `undefined` means no `--group` was passed. */
-    groupNames: string[] | undefined;
+    /**
+     * The resolved group names to run for this workspace, already validated and alias-expanded
+     * by the pre-flight pass in {@link generateAPIWorkspaces}. Must be non-empty.
+     */
+    resolvedGroupNames: string[];
     generatorName: string | undefined;
     generatorIndex: number | undefined;
     shouldLogS3Url: boolean;
@@ -87,13 +89,6 @@ export async function generateWorkspace({
         context.logger.warn(`This workspace has no groups specified in ${GENERATORS_CONFIGURATION_FILENAME}`);
         return;
     }
-
-    const resolvedGroupNames = resolveGroupsOrFail({
-        groupNames,
-        generatorsConfiguration: workspace.generatorsConfiguration,
-        isAutomation: automation != null,
-        context
-    });
 
     const { ai, replay } = workspace.generatorsConfiguration;
 
