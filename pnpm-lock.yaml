@@ -7542,9 +7542,6 @@ importers:
       glob:
         specifier: 'catalog:'
         version: 11.1.0
-      json-stream-stringify:
-        specifier: 'catalog:'
-        version: 3.1.6
       stream-json:
         specifier: 'catalog:'
         version: 1.9.1
