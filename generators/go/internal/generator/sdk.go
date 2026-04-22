@@ -663,9 +663,9 @@ func (f *fileWriter) writeRequestOptionStructs(
 				if err := f.writeOptionStruct(pascalCase, goType, true, asIdempotentRequestOption); err != nil {
 					return err
 				}
-				declaredOptionStructs[pascalCase] = true
+					declaredOptionStructs[pascalCase] = true
 			}
-				if authScheme.Basic != nil {
+			if authScheme.Basic != nil {
 				usernameOmitted := isBasicAuthUsernameOmitted(authScheme.Basic)
 				passwordOmitted := isBasicAuthPasswordOmitted(authScheme.Basic)
 				if usernameOmitted && passwordOmitted {
