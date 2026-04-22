@@ -850,6 +850,12 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                             apiUrlMap.get(envSuffix) || apiUrlMap.get("production") || apiUrlMap.values().next().value;
                         if (apiUrl) {
                             urls[apiName] = apiUrl;
+                            // Register the named URL id so that when `buildEndpoint`
+                            // resolves an endpoint-level server override, the URL
+                            // resolves to its named id (e.g. `Agent`) rather than to
+                            // `Base` (which may have been registered for the same URL
+                            // during the current or a prior environment iteration).
+                            context.setUrlId(apiUrl, apiName);
                         }
                     }
 

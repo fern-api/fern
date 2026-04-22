@@ -30,7 +30,7 @@
               "source": {
                 "openapi": "../openapi.yml",
               },
-              "url": "Base",
+              "url": "Agent",
             },
             "getStatus": {
               "auth": undefined,
@@ -85,7 +85,7 @@
         docs: Agent think models
         type: string
         status-code: 200
-      url: Base
+      url: Agent
       examples:
         - response:
             body: string
