@@ -106,8 +106,8 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
      * Loads and preprocesses the IR from file, handling integer overflow values and v66 compressed name
      * deserialization.
      *
-     * Uses a two-phase approach: first extracts casingsConfig via partial tree parse,
-     * then deserializes the full IR directly from bytes (avoiding full tree allocation).
+     * <p>Uses a two-phase approach: first extracts casingsConfig via partial tree parse, then deserializes the full IR
+     * directly from bytes (avoiding full tree allocation).
      */
     private static IntermediateRepresentation getIr(GeneratorConfig generatorConfig) {
         try {
@@ -140,12 +140,13 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
     }
 
     /**
-     * Extracts the casingsConfig from IR JSON bytes using a streaming approach.
-     * Only parses the top-level "casingsConfig" field to minimize work.
+     * Extracts the casingsConfig from IR JSON bytes using a streaming approach. Only parses the top-level
+     * "casingsConfig" field to minimize work.
      */
     private static CasingConfiguration extractCasingConfig(byte[] irBytes) throws IOException {
         // Use a tree read just for the casingsConfig field extraction
-        com.fasterxml.jackson.core.JsonParser parser = ObjectMappers.JSON_MAPPER.getFactory().createParser(irBytes);
+        com.fasterxml.jackson.core.JsonParser parser =
+                ObjectMappers.JSON_MAPPER.getFactory().createParser(irBytes);
         parser.nextToken(); // START_OBJECT
         while (parser.nextToken() != com.fasterxml.jackson.core.JsonToken.END_OBJECT) {
             String fieldName = parser.currentName();
