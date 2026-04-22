@@ -1,5 +1,5 @@
 - summary: |
     Add `skip-format-dynamic-snippets: true` custom config flag for Java
-    dynamic snippet tests. When `format-dynamic-snippets` is enabled, this
-    flag can be used to explicitly override and skip the spotlessApply step.
+    dynamic snippet tests. When set, skips the spotlessApply Gradle step
+    during dynamic snippet generation, saving ~30s of JVM startup time.
   type: feat
