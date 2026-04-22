@@ -88,7 +88,7 @@ describe("loadDotenvFile", () => {
 
             loadDotenvFile(envFile, logDebug);
 
-            const calls = logDebug.mock.calls.map(([msg]: [string]) => msg);
+            const calls = logDebug.mock.calls.map((args) => args[0] as string);
             expect(calls).toContain("SECRET_KEY=****");
             expect(calls).toContain("ANOTHER=****");
             // Values must never appear
