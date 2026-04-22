@@ -2,7 +2,7 @@ import { AbstractAPIWorkspace, FernDefinition, FernWorkspace } from "@fern-api/a
 import { generatorsYml } from "@fern-api/configuration";
 import { DEFINITION_DIRECTORY, loadDependenciesConfiguration } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
 import hash from "object-hash";
 
 import { OSSWorkspace } from "./OSSWorkspace.js";
@@ -62,7 +62,9 @@ export class LazyFernWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Setting
             const parseResult = await parseYamlFiles(yamlFiles);
             if (!parseResult.didSucceed) {
                 handleFailedWorkspaceParserResultRaw(parseResult.failures, defaultedContext.logger);
-                return defaultedContext.failAndThrow();
+                return defaultedContext.failAndThrow(undefined, undefined, {
+                    code: CliError.Code.ValidationError
+                });
             }
 
             const structuralValidationResult = validateStructureOfYamlFiles({
@@ -72,7 +74,9 @@ export class LazyFernWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Setting
             });
             if (!structuralValidationResult.didSucceed) {
                 handleFailedWorkspaceParserResultRaw(structuralValidationResult.failures, defaultedContext.logger);
-                return defaultedContext.failAndThrow();
+                return defaultedContext.failAndThrow(undefined, undefined, {
+                    code: CliError.Code.ValidationError
+                });
             }
 
             const processPackageMarkersResult = await processPackageMarkers({
@@ -85,7 +89,9 @@ export class LazyFernWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Setting
             });
             if (!processPackageMarkersResult.didSucceed) {
                 handleFailedWorkspaceParserResultRaw(processPackageMarkersResult.failures, defaultedContext.logger);
-                return defaultedContext.failAndThrow();
+                return defaultedContext.failAndThrow(undefined, undefined, {
+                    code: CliError.Code.ValidationError
+                });
             }
 
             let definition = {

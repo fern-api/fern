@@ -1,9 +1,13 @@
 import {
     FernGeneratorExec,
+    GeneratorError,
     GeneratorNotificationService,
     NopGeneratorNotificationService,
     parseGeneratorConfig,
-    parseIR
+    parseIR,
+    resolveErrorCode,
+    SentryClient,
+    shouldReportToSentry
 } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
@@ -48,18 +52,24 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
     public async runCli(options?: AbstractGeneratorCli.Options): Promise<void> {
         const pathToConfig = process.argv[process.argv.length - 1];
         if (pathToConfig == null) {
-            throw new Error("No argument for config filepath.");
+            throw GeneratorError.environmentError("No argument for config filepath.");
         }
         await this.run(pathToConfig, options);
     }
 
     public async run(pathToConfig: string, options?: AbstractGeneratorCli.Options): Promise<void> {
-        const config = await parseGeneratorConfig(pathToConfig);
-        const generatorNotificationService = options?.disableNotifications
-            ? new NopGeneratorNotificationService()
-            : new GeneratorNotificationService(config.environment);
+        let sentryClient: SentryClient | undefined;
 
+        const config = await parseGeneratorConfig(pathToConfig);
+        let generatorNotificationService: GeneratorNotificationService | NopGeneratorNotificationService =
+            options?.disableNotifications
+                ? new NopGeneratorNotificationService()
+                : new GeneratorNotificationService(config.environment);
         try {
+            sentryClient = new SentryClient({
+                workspaceName: config.workspaceName,
+                organization: config.organization
+            });
             const logger = createLogger((level, ...message) => {
                 CONSOLE_LOGGER.log(level, ...message);
 
@@ -119,7 +129,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
             });
             logger.debug(`[TIMING] code generation took ${Date.now() - codeGenStartTime}ms`);
             if (!generatorContext.didSucceed()) {
-                throw new Error("Failed to generate TypeScript project.");
+                throw GeneratorError.internalError("Failed to generate TypeScript project.");
             }
 
             const destinationPath = join(
@@ -254,7 +264,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                     });
                 },
                 _other: ({ type }) => {
-                    throw new Error(`${type} mode is not implemented`);
+                    throw GeneratorError.internalError(`${type} mode is not implemented`);
                 }
             });
 
@@ -268,6 +278,11 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
             // biome-ignore lint/suspicious/noConsole: allow console
             console.log("Sent success event to coordinator");
         } catch (e) {
+            const errorCode = resolveErrorCode(e);
+            if (shouldReportToSentry(e)) {
+                await sentryClient?.captureException(e, { errorCode });
+            }
+
             // This call tears down generator service
             // TODO: if using in conjunction with MCP server generator, MCP server generator to tear down the service?
             // SEE: go-v2
@@ -281,6 +296,8 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
             // biome-ignore lint/suspicious/noConsole: allow console
             console.log("Sent error event to coordinator");
             throw e;
+        } finally {
+            await sentryClient?.flush();
         }
     }
 

@@ -45,7 +45,10 @@ function resolveTarget({
         return { type: "id", value: id };
     }
     if (target == null) {
-        throw new Error("Must provide a preview URL or --id.");
+        throw new CliError({
+            message: "Must provide a preview URL or --id.",
+            code: CliError.Code.ConfigError
+        });
     }
     if (isPreviewUrl(target)) {
         return { type: "url", value: target };

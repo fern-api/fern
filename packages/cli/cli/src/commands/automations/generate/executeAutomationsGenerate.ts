@@ -83,6 +83,7 @@ export async function executeAutomationsGenerate({
                 requireEnvVars: false,
                 automationMode: true,
                 autoMerge: options.autoMerge,
+                skipIfNoDiff: true,
                 automation: { recorder: collector }
             });
         });

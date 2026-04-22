@@ -1,6 +1,7 @@
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
+import { CliError } from "@fern-api/task-context";
 import chalk from "chalk";
 import { execSync } from "child_process";
 import cliProgress from "cli-progress";
@@ -305,7 +306,10 @@ export async function downloadBundle({
     try {
         const docsBundleZipResponse = await fetch(docsBundleUrl);
         if (!docsBundleZipResponse.ok) {
-            throw new Error(`Failed to download docs preview bundle. Status code: ${docsBundleZipResponse.status}`);
+            throw new CliError({
+                message: `Failed to download docs preview bundle. Status code: ${docsBundleZipResponse.status}`,
+                code: CliError.Code.NetworkError
+            });
         }
         const outputZipPath = join(
             absoluteDirectoryToTmpDir,
@@ -482,9 +486,11 @@ export async function downloadBundle({
                     doNotPipeOutput: true
                 });
             } catch (error) {
-                throw new Error(
-                    "Requires [pnpm] to run local development. Please run: npm install -g pnpm, and then: fern docs dev"
-                );
+                throw new CliError({
+                    message:
+                        "Requires [pnpm] to run local development. Please run: npm install -g pnpm, and then: fern docs dev",
+                    code: CliError.Code.EnvironmentError
+                });
             }
 
             try {

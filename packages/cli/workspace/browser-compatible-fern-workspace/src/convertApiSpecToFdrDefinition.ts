@@ -1,8 +1,8 @@
 import { generatorsYml } from "@fern-api/configuration";
 import { FdrAPI } from "@fern-api/fdr-sdk";
+import { CliError } from "@fern-api/task-context";
 import { OpenrpcDocument } from "@open-rpc/meta-schema";
 import { OpenAPIV3_1 } from "openapi-types";
-
 import { convertAsyncApiSpecToFdrDefinition } from "./convertAsyncApiSpecToFdrDefinition.js";
 import { convertOpenApiSpecToFdrDefinition } from "./convertOpenApiSpecToFdrDefinition.js";
 import { convertOpenRpcSpecToFdrDefinition } from "./convertOpenRpcSpecToFdrDefinition.js";
@@ -78,17 +78,20 @@ export async function apiSpecToFdr({
     const detectedType = detectApiSpecType(spec);
 
     if (detectedType == null) {
-        throw new Error(
-            "Unable to detect API spec type. Expected a document with an 'openapi', 'swagger', 'asyncapi', or 'openrpc' top-level field."
-        );
+        throw new CliError({
+            message:
+                "Unable to detect API spec type. Expected a document with an 'openapi', 'swagger', 'asyncapi', or 'openrpc' top-level field.",
+            code: CliError.Code.ConfigError
+        });
     }
 
     switch (detectedType) {
         case "openapi": {
             if (typeof spec.swagger === "string") {
-                throw new Error(
-                    `Swagger v2.0 is not supported. Please convert your spec to OpenAPI 3.x first. Detected swagger version: ${spec.swagger}`
-                );
+                throw new CliError({
+                    message: `Swagger v2.0 is not supported. Please convert your spec to OpenAPI 3.x first. Detected swagger version: ${spec.swagger}`,
+                    code: CliError.Code.ConfigError
+                });
             }
             return convertOpenApiSpecToFdrDefinition({
                 spec: spec as unknown as OpenAPIV3_1.Document,

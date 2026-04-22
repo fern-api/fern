@@ -49,6 +49,7 @@ export async function generateWorkspace({
     requireEnvVars,
     automationMode,
     autoMerge,
+    skipIfNoDiff,
     automation
 }: {
     organization: string;
@@ -76,6 +77,7 @@ export async function generateWorkspace({
     requireEnvVars: boolean;
     automationMode?: boolean;
     autoMerge?: boolean;
+    skipIfNoDiff?: boolean;
     /**
      * When provided, this call runs in fan-out automation mode: iterate every group (ignoring
      * `default-group`), silently skip generators opted out of automation, and route per-generator
@@ -151,6 +153,7 @@ export async function generateWorkspace({
                         skipFernignore,
                         automationMode,
                         autoMerge,
+                        skipIfNoDiff,
                         disableTelemetry: isTelemetryDisabled()
                     });
                 } else if (token != null) {
@@ -174,6 +177,7 @@ export async function generateWorkspace({
                         requireEnvVars,
                         automationMode,
                         autoMerge,
+                        skipIfNoDiff,
                         automation
                     });
                 }

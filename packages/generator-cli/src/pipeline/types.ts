@@ -79,8 +79,10 @@ export interface GithubStepConfig {
         previousGenerationSha: string;
         currentGenerationSha: string;
     };
-    /** When true: separate PRs per generation, no-diff skip, automerge support, run_id in body */
+    /** When true: separate PRs per generation, automerge support, run_id in body */
     automationMode?: boolean;
+    /** When true: skip opening a PR / pushing when the generated output has no diff from the base branch. */
+    skipIfNoDiff?: boolean;
     /** Enable GitHub automerge on the PR (only effective when automationMode && !hasBreakingChanges) */
     autoMerge?: boolean;
     /** Pre-computed: version bump is MAJOR (from --version AUTO AI analysis) */

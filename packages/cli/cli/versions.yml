@@ -1,4 +1,31 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.84.0
+  changelogEntry:
+    - summary: |
+        Add `--skip-if-no-diff` flag to `fern generate` that skips opening a PR / pushing when the
+        generated output has no diff from the base branch. The existing no-diff skip behavior is
+        decoupled from `automationMode` and now gated behind its own `skipIfNoDiff` config.
+        `fern automations generate` continues to skip no-diff PRs by default.
+      type: feat
+  createdAt: "2026-04-22"
+  irVersion: 66
+- version: 4.83.0
+  changelogEntry:
+    - summary: |
+        Harden Sentry reporting for the legacy CLI:
+          - Opt in to the `onUncaughtException`, `onUnhandledRejection`, `linkedErrors`,
+            and `nodeContext` integrations so errors that escape the top-level handler
+            (fire-and-forget callbacks, unhandled rejections, wrapped `.cause` chains)
+            still reach Sentry with full context.
+          - Attach stack traces even for non-Error throws, and disable client reports
+            and performance sampling since the CLI doesn't emit transactions.
+          - Drop the `UNCLASSIFIED` error code now that every CLI package has been
+            migrated to the typed `CliError` system. Unknown errors now fall back to
+            `INTERNAL_ERROR` and are reported to Sentry, closing the last gap where
+            uncategorized failures went unobserved.
+      type: internal
+  createdAt: "2026-04-21"
+  irVersion: 66
 - version: 4.82.0
   changelogEntry:
     - summary: |

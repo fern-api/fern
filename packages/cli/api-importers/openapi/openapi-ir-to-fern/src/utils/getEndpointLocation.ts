@@ -1,8 +1,8 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { Endpoint, HttpMethod } from "@fern-api/openapi-ir";
 import { join, RelativeFilePath } from "@fern-api/path-utils";
+import { CliError } from "@fern-api/task-context";
 import { camelCase, compact, isEqual } from "lodash-es";
-
 import { convertEndpointSdkNameToFileWithoutExtension } from "./convertSdkGroupName.js";
 
 export interface EndpointLocation {
@@ -108,7 +108,10 @@ function getUnresolvedEndpointLocation(endpoint: Endpoint): EndpointLocation {
     }
 
     if (fileParts.length >= operationIdTokens.length) {
-        throw new Error(`Cannot get file for endpoint ${JSON.stringify(endpoint)}`);
+        throw new CliError({
+            message: `Cannot get file for endpoint ${JSON.stringify(endpoint)}`,
+            code: CliError.Code.InternalError
+        });
     }
 
     return {
