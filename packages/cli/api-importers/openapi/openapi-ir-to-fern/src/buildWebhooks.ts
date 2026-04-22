@@ -45,6 +45,7 @@ export function buildWebhooks(context: OpenApiIrConverterContext): void {
 
         const webhookDefinition: RawSchemas.WebhookSchema = {
             audiences: webhook.audiences,
+            viewers: webhook.viewers.length > 0 ? webhook.viewers : undefined,
             method: webhook.method,
             "display-name": webhook.summary ?? undefined,
             headers,

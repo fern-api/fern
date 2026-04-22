@@ -88,6 +88,7 @@ export abstract class AbstractSpecConverter<
                 }
             },
             audiences: undefined,
+            roles: undefined,
             generationMetadata: undefined,
             apiPlayground: undefined,
             casingsConfig: undefined
@@ -528,7 +529,8 @@ export abstract class AbstractSpecConverter<
             endpoints: [],
             transport: undefined,
             encoding: undefined,
-            audiences: undefined
+            audiences: undefined,
+            viewers: undefined
         };
     }
 

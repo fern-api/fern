@@ -15,6 +15,7 @@
     {
       "summary": "Request an access token",
       "audiences": [],
+      "viewers": [],
       "tags": [
         "OAuth"
       ],

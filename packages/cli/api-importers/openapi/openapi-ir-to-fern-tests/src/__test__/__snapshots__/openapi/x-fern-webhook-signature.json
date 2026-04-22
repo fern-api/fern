@@ -125,6 +125,7 @@
               },
               "type": "hmac",
             },
+            "viewers": undefined,
           },
           "paymentProcessed": {
             "audiences": [],
@@ -156,6 +157,7 @@
               },
               "type": "asymmetric",
             },
+            "viewers": undefined,
           },
           "refundProcessed": {
             "audiences": [],
@@ -183,6 +185,7 @@
               "timestamp": undefined,
               "type": "asymmetric",
             },
+            "viewers": undefined,
           },
           "userCreated": {
             "audiences": [],
@@ -220,6 +223,7 @@
               },
               "type": "hmac",
             },
+            "viewers": undefined,
           },
         },
       },

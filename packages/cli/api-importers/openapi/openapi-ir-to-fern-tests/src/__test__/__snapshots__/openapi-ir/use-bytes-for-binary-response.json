@@ -9,6 +9,7 @@
   "endpoints": [
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "audio",
       "tags": [],
       "pathParameters": [],
@@ -82,6 +83,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "audioStream",
       "tags": [],
       "pathParameters": [],

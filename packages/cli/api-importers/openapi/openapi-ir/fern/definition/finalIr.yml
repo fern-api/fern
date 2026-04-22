@@ -93,6 +93,7 @@ types:
       - commons.WithNamespace
     properties:
       audiences: list<string>
+      viewers: list<string>
       sdkName: optional<EndpointSdkName>
       method: WebhookHttpMethod
       summary: optional<string>
@@ -309,6 +310,7 @@ types:
       idempotent: optional<boolean>
       method: HttpMethod
       audiences: list<string>
+      viewers: list<string>
       path:
         type: string
         docs: |

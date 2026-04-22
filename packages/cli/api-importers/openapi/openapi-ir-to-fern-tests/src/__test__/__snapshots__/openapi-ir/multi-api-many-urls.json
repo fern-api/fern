@@ -29,6 +29,7 @@
   "endpoints": [
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "getOne",
       "tags": [],
       "pathParameters": [],
@@ -89,6 +90,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "getTwo",
       "tags": [],
       "pathParameters": [],
@@ -149,6 +151,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "getThree",
       "tags": [],
       "pathParameters": [],
@@ -209,6 +212,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "getFour",
       "tags": [],
       "pathParameters": [],

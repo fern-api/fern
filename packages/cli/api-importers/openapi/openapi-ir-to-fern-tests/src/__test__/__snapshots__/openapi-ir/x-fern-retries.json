@@ -18,6 +18,7 @@
   "endpoints": [
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "update-status",
       "tags": [],
       "sdkName": {
@@ -88,6 +89,7 @@
       "audiences": [
         "private"
       ],
+      "viewers": [],
       "operationId": "update-status2",
       "tags": [],
       "sdkName": {

@@ -11,6 +11,7 @@
     {
       "summary": "Get integers with parameters",
       "audiences": [],
+      "viewers": [],
       "tags": [],
       "pathParameters": [],
       "queryParameters": [
@@ -231,6 +232,7 @@
     {
       "summary": "Create integer resource",
       "audiences": [],
+      "viewers": [],
       "tags": [],
       "pathParameters": [],
       "queryParameters": [],
@@ -423,6 +425,7 @@
     {
       "summary": "Get integer by ID",
       "audiences": [],
+      "viewers": [],
       "tags": [],
       "pathParameters": [
         {

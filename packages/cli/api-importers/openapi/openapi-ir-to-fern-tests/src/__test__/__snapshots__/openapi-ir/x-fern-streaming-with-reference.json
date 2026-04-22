@@ -9,6 +9,7 @@
   "endpoints": [
     {
       "audiences": [],
+      "viewers": [],
       "tags": [],
       "sdkName": {
         "groupName": [
@@ -150,6 +151,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "tags": [],
       "sdkName": {
         "groupName": [
@@ -288,6 +290,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "tags": [],
       "sdkName": {
         "groupName": [
@@ -456,6 +459,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "tags": [],
       "sdkName": {
         "groupName": [
@@ -621,6 +625,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "chat_stream",
       "tags": [],
       "pathParameters": [],
@@ -757,6 +762,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "chat",
       "tags": [],
       "pathParameters": [],

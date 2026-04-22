@@ -3,6 +3,7 @@ imports:
   types: types.yml
   http: http.yml
   examples: examples.yml
+  role: role.yml
 
 types:
   WebhookGroup: list<Webhook>
@@ -30,6 +31,12 @@ types:
       responses: optional<list<http.HttpResponse>>
       examples: optional<list<ExampleWebhookCall>>
       v2Examples: optional<examples.V2WebhookExamples>
+      viewers:
+        type: optional<list<role.RoleId>>
+        docs: |
+          Roles required to view this webhook. Used for role-based access control (RBAC)
+          in documentation.
+      audiences: optional<list<string>>
 
   WebhookName: commons.NameOrString
 

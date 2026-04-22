@@ -86,6 +86,7 @@ describe("migrateFromV66ToV65", () => {
             errorDiscriminationStrategy: IrVersions.V66.ErrorDiscriminationStrategy.statusCode(),
             selfHosted: undefined,
             audiences: [],
+            roles: undefined,
             generationMetadata: undefined,
             apiPlayground: undefined,
             ...overrides
@@ -491,13 +492,15 @@ describe("migrateFromV66ToV65", () => {
                         transport: undefined,
                         source: undefined,
                         audiences: [],
+                        viewers: undefined,
                         retries: undefined,
                         apiPlayground: undefined
                     } as unknown as IrVersions.V66.HttpEndpoint
                 ],
                 encoding: undefined,
                 transport: undefined,
-                audiences: undefined
+                audiences: undefined,
+                viewers: undefined
             };
 
             const v66IR = createMinimalV66IR({

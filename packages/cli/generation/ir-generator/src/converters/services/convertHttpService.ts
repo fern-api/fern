@@ -271,6 +271,7 @@ export function convertHttpService({
                 v2Examples: undefined,
                 source: undefined,
                 audiences: endpoint.audiences,
+                viewers: endpoint.viewers,
                 retries: convertRetries({
                     endpointSchema: endpoint
                 }),
@@ -280,7 +281,8 @@ export function convertHttpService({
             httpEndpoint.id = IdGenerator.generateEndpointId(serviceName, httpEndpoint);
             return httpEndpoint;
         }),
-        audiences: serviceDefinition.audiences
+        audiences: serviceDefinition.audiences,
+        viewers: serviceDefinition.viewers
     };
     return service;
 }

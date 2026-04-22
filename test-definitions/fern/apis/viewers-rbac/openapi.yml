@@ -1,0 +1,85 @@
+openapi: 3.1.0
+info:
+  title: Viewers RBAC Test
+  version: 1.0.0
+  description: |
+    Tests that `x-fern-viewers` is correctly extracted from OpenAPI specs at
+    the document level (as a default) and at the operation level (as an override),
+    and applied to endpoints and webhooks in the generated IR.
+x-fern-viewers:
+  - everyone
+paths:
+  /plants:
+    get:
+      operationId: listPlants
+      x-fern-sdk-group-name: plants
+      x-fern-sdk-method-name: list
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Plant"
+    post:
+      operationId: createPlant
+      x-fern-viewers:
+        - admin
+        - gardener
+      x-fern-sdk-group-name: plants
+      x-fern-sdk-method-name: create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Plant"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Plant"
+  /plants/{plantId}:
+    delete:
+      operationId: deletePlant
+      x-fern-viewers:
+        - admin
+      x-fern-sdk-group-name: plants
+      x-fern-sdk-method-name: delete
+      parameters:
+        - name: plantId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: No Content
+  /plant-planted:
+    post:
+      operationId: plantPlantedWebhook
+      x-fern-webhook: true
+      x-fern-viewers:
+        - gardener
+      x-fern-sdk-group-name: webhooks
+      x-fern-sdk-method-name: plantPlanted
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Plant"
+components:
+  schemas:
+    Plant:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+      required:
+        - id
+        - name

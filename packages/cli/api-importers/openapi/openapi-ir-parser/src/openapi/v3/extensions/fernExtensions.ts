@@ -316,6 +316,19 @@ export const FernOpenAPIExtension = {
     AUDIENCES: "x-fern-audiences",
 
     /**
+     * Used to mark operations and webhooks with viewers (roles).
+     * Roles must be declared at the top of docs.yml in `roles:`.
+     * When set at the document root, all operations inherit the roles
+     * unless overridden at the operation level.
+     *
+     * paths:
+     *   /path/to/my/endpoint/{id}:
+     *     x-fern-viewers:
+     *       - admin
+     */
+    VIEWERS: "x-fern-viewers",
+
+    /**
      * Used to tell fern to ignore endpoints.
      *
      * paths:

@@ -11,6 +11,7 @@
     {
       "summary": "Test endpoint",
       "audiences": [],
+      "viewers": [],
       "tags": [],
       "pathParameters": [],
       "queryParameters": [],

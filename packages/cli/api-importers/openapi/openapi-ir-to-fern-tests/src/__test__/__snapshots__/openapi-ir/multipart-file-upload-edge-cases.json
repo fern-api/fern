@@ -9,6 +9,7 @@
   "endpoints": [
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "uploadFile",
       "tags": [],
       "pathParameters": [],
@@ -162,6 +163,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "uploadMultipleFiles",
       "tags": [],
       "pathParameters": [],
@@ -339,6 +341,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "uploadWithJson",
       "tags": [],
       "pathParameters": [],

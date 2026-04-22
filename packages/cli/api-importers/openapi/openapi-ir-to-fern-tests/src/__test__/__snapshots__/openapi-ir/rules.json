@@ -10,6 +10,7 @@
     {
       "summary": "Default and validation rules",
       "audiences": [],
+      "viewers": [],
       "tags": [],
       "pathParameters": [],
       "queryParameters": [],

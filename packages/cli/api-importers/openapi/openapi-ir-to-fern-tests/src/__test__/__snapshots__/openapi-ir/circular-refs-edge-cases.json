@@ -9,6 +9,7 @@
   "endpoints": [
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "createNode",
       "tags": [],
       "pathParameters": [],
@@ -100,6 +101,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "createAuthor",
       "tags": [],
       "pathParameters": [],
@@ -215,6 +217,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "createTree",
       "tags": [],
       "pathParameters": [],

@@ -9,6 +9,7 @@
   "endpoints": [
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "createFlexible",
       "tags": [],
       "pathParameters": [],
@@ -100,6 +101,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "createStrict",
       "tags": [],
       "pathParameters": [],
@@ -191,6 +193,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "createStringMap",
       "tags": [],
       "pathParameters": [],
@@ -275,6 +278,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "createObjectMap",
       "tags": [],
       "pathParameters": [],
@@ -388,6 +392,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "createUserMap",
       "tags": [],
       "pathParameters": [],
@@ -501,6 +506,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "createArrayMap",
       "tags": [],
       "pathParameters": [],
@@ -615,6 +621,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "createExtendedWithAny",
       "tags": [],
       "pathParameters": [],
@@ -728,6 +735,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "createExtendedWithTyped",
       "tags": [],
       "pathParameters": [],
@@ -834,6 +842,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "createExtendedWithRef",
       "tags": [],
       "pathParameters": [],

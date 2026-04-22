@@ -9,6 +9,7 @@
   "endpoints": [
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "createUser",
       "tags": [],
       "pathParameters": [],
@@ -143,6 +144,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "createAccount",
       "tags": [],
       "pathParameters": [],

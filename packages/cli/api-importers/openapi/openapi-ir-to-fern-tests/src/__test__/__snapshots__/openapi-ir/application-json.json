@@ -9,6 +9,7 @@
   "endpoints": [
     {
       "audiences": [],
+      "viewers": [],
       "tags": [],
       "pathParameters": [],
       "queryParameters": [],
@@ -76,6 +77,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "tags": [],
       "pathParameters": [],
       "queryParameters": [],

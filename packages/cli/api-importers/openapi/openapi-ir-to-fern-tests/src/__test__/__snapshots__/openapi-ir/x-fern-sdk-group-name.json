@@ -9,6 +9,7 @@
   "endpoints": [
     {
       "audiences": [],
+      "viewers": [],
       "tags": [],
       "sdkName": {
         "groupName": [
@@ -96,6 +97,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "tags": [],
       "sdkName": {
         "groupName": [

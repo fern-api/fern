@@ -10,6 +10,7 @@
     {
       "summary": "Create a user",
       "audiences": [],
+      "viewers": [],
       "tags": [],
       "pathParameters": [],
       "queryParameters": [],
@@ -164,6 +165,7 @@
     {
       "summary": "Update a user",
       "audiences": [],
+      "viewers": [],
       "tags": [],
       "pathParameters": [],
       "queryParameters": [],

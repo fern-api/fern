@@ -13,6 +13,7 @@
   "endpoints": [
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "GenerateContent",
       "tags": [
         "generativelanguage"

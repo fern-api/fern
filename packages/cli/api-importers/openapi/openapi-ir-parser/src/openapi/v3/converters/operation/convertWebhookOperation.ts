@@ -110,6 +110,10 @@ export function convertWebhookOperation({
         const webhook: WebhookWithExample = {
             summary: operation.summary,
             audiences: getExtension<string[]>(operation, FernOpenAPIExtension.AUDIENCES) ?? [],
+            viewers:
+                getExtension<string[]>(operation, FernOpenAPIExtension.VIEWERS) ??
+                getExtension<string[]>(document, FernOpenAPIExtension.VIEWERS) ??
+                [],
             sdkName: sdkMethodName,
             namespace: context.namespace,
             method,
@@ -184,6 +188,10 @@ export function convertWebhookOperation({
             const webhook: WebhookWithExample = {
                 summary: operation.summary,
                 audiences: getExtension<string[]>(operation, FernOpenAPIExtension.AUDIENCES) ?? [],
+                viewers:
+                    getExtension<string[]>(operation, FernOpenAPIExtension.VIEWERS) ??
+                    getExtension<string[]>(document, FernOpenAPIExtension.VIEWERS) ??
+                    [],
                 sdkName: sdkMethodName,
                 namespace: context.namespace,
                 method,

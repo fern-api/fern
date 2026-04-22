@@ -9,6 +9,7 @@ import { V2WebhookExamples } from "../../examples/types/V2WebhookExamples.js";
 import { FileUploadRequest } from "../../http/types/FileUploadRequest.js";
 import { HttpHeader } from "../../http/types/HttpHeader.js";
 import { HttpResponse } from "../../http/types/HttpResponse.js";
+import { RoleId } from "../../role/types/RoleId.js";
 import { ExampleWebhookCall } from "./ExampleWebhookCall.js";
 import { WebhookHttpMethod } from "./WebhookHttpMethod.js";
 import { WebhookName } from "./WebhookName.js";
@@ -28,6 +29,8 @@ export const Webhook: core.serialization.ObjectSchema<serializers.Webhook.Raw, F
         responses: core.serialization.list(HttpResponse).optional(),
         examples: core.serialization.list(ExampleWebhookCall).optional(),
         v2Examples: V2WebhookExamples.optional(),
+        viewers: core.serialization.list(RoleId).optional(),
+        audiences: core.serialization.list(core.serialization.string()).optional(),
     })
     .extend(Declaration);
 
@@ -44,5 +47,7 @@ export declare namespace Webhook {
         responses?: HttpResponse.Raw[] | null;
         examples?: ExampleWebhookCall.Raw[] | null;
         v2Examples?: V2WebhookExamples.Raw | null;
+        viewers?: RoleId.Raw[] | null;
+        audiences?: string[] | null;
     }
 }

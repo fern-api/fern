@@ -23,6 +23,7 @@
   "endpoints": [
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "list",
       "tags": [],
       "pathParameters": [],

@@ -13,6 +13,7 @@
   "endpoints": [
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "ExperimentalStreamCreate",
       "tags": [
         "audio"
@@ -180,6 +181,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "GetSpeech",
       "tags": [
         "audio"
@@ -412,6 +414,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "GetStream",
       "tags": [
         "audio"
@@ -618,6 +621,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "CreateAccessToken",
       "tags": [
         "auth"
@@ -756,6 +760,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "ListAPIKeys",
       "tags": [
         "apikey"
@@ -870,6 +875,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "CreateAPIKey",
       "tags": [
         "apikey"
@@ -974,6 +980,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "DeleteAPIKey",
       "tags": [
         "apikey"
@@ -1037,6 +1044,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "UpdateApiKey",
       "tags": [
         "apikey"
@@ -1194,6 +1202,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "GetVoices",
       "tags": [
         "voices"
@@ -1350,6 +1359,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "CreateVoice",
       "tags": [
         "voices"
@@ -1566,6 +1576,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "DeleteVoice",
       "tags": [
         "voices"

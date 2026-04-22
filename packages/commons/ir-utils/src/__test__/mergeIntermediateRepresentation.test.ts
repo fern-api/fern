@@ -87,6 +87,7 @@ function makeMinimalIr(overrides: Partial<FernIr.IntermediateRepresentation> = {
         dynamic: undefined,
         selfHosted: undefined,
         audiences: undefined,
+        roles: undefined,
         generationMetadata: undefined,
         apiPlayground: undefined,
         casingsConfig: undefined,

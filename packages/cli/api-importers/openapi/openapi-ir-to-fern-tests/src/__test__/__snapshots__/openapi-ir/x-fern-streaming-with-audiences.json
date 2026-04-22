@@ -9,6 +9,7 @@
   "endpoints": [
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "get_stream",
       "tags": [],
       "sdkName": {
@@ -166,6 +167,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "get",
       "tags": [],
       "sdkName": {

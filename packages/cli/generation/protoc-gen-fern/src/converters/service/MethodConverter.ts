@@ -105,6 +105,7 @@ export class MethodConverter extends AbstractConverter<ProtofileConverterContext
                     methodType: this.getGrpcMethodType()
                 }),
                 audiences: [],
+                viewers: undefined,
                 retries: undefined,
                 apiPlayground: undefined,
                 responseHeaders: []

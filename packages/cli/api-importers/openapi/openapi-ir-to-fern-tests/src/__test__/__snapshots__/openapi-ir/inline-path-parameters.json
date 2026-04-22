@@ -9,6 +9,7 @@
   "endpoints": [
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "GetUser",
       "tags": [],
       "pathParameters": [
@@ -64,6 +65,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "GetOrganizationUser",
       "tags": [],
       "pathParameters": [
@@ -240,6 +242,7 @@
     {
       "summary": "Search an organization",
       "audiences": [],
+      "viewers": [],
       "operationId": "Search",
       "tags": [
         "Organizations"

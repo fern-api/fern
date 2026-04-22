@@ -202,6 +202,7 @@ export function generateIntermediateRepresentation({
         publishConfig: undefined,
         dynamic: undefined,
         audiences: workspace.definition.rootApiFile.contents.audiences,
+        roles: undefined,
         generationMetadata: generationMetadata,
         apiPlayground: true,
         casingsConfig: { generationLanguage, keywords, smartCasing }

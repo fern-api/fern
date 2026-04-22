@@ -9,6 +9,7 @@
   "endpoints": [
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "listAccounts",
       "tags": [
         "api"
@@ -243,6 +244,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "retrieveAccount",
       "tags": [
         "api"
@@ -349,6 +351,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "listGames",
       "tags": [
         "api"
@@ -777,6 +780,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "retrieveGame",
       "tags": [
         "api"
@@ -1141,6 +1145,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "listGroups",
       "tags": [
         "api"
@@ -1595,6 +1600,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "retrieveGroup",
       "tags": [
         "api"
@@ -2035,6 +2041,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "listPlayers",
       "tags": [
         "api"
@@ -2331,6 +2338,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "retrievePlayer",
       "tags": [
         "api"
@@ -2524,6 +2532,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "listLocations",
       "tags": [
         "api"
@@ -2758,6 +2767,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "retrieveLocation",
       "tags": [
         "api"
@@ -2864,6 +2874,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "listPhotos",
       "tags": [
         "api"
@@ -3115,6 +3126,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "retrievePhoto",
       "tags": [
         "api"

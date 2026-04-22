@@ -13,4 +13,10 @@ export interface HttpService {
     encoding: FernIr.Encoding | undefined;
     transport: FernIr.Transport | undefined;
     audiences: FernIr.AudienceReference[] | undefined;
+    /**
+     * Roles required to view this service. Inherited by all endpoints in the service
+     * unless overridden at the endpoint level. Used for role-based access control (RBAC)
+     * in documentation.
+     */
+    viewers: FernIr.RoleId[] | undefined;
 }

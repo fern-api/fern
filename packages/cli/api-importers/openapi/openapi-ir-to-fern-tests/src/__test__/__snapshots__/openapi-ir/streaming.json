@@ -9,6 +9,7 @@
   "endpoints": [
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "user_stream",
       "tags": [],
       "pathParameters": [],
@@ -145,6 +146,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "user",
       "tags": [],
       "pathParameters": [],
@@ -278,6 +280,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "user_v2_stream",
       "tags": [],
       "pathParameters": [],
@@ -428,6 +431,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "user_v2",
       "tags": [],
       "pathParameters": [],
@@ -575,6 +579,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "user_v3_stream",
       "tags": [],
       "pathParameters": [],
@@ -789,6 +794,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "user_v3",
       "tags": [],
       "pathParameters": [],

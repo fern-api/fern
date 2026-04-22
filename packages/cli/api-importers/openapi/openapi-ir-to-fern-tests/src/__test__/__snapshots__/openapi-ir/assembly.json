@@ -39,6 +39,7 @@
     {
       "summary": "Upload an audio or video file which can be transcribed.",
       "audiences": [],
+      "viewers": [],
       "operationId": "uploadFile",
       "tags": [
         "transcript"
@@ -287,6 +288,7 @@
     {
       "summary": "List transcripts",
       "audiences": [],
+      "viewers": [],
       "operationId": "listTranscripts",
       "tags": [
         "transcript"
@@ -823,6 +825,7 @@
     {
       "summary": "Create a transcript from an audio file",
       "audiences": [],
+      "viewers": [],
       "operationId": "createTranscript",
       "tags": [
         "transcript"
@@ -1963,6 +1966,7 @@
     {
       "summary": "Get the transcript",
       "audiences": [],
+      "viewers": [],
       "operationId": "getTranscript",
       "tags": [
         "transcript"
@@ -3100,6 +3104,7 @@
     {
       "summary": "Delete the transcript",
       "audiences": [],
+      "viewers": [],
       "operationId": "deleteTranscript",
       "tags": [
         "transcript"
@@ -4237,6 +4242,7 @@
     {
       "summary": "Export transcript as SRT or VTT captions.",
       "audiences": [],
+      "viewers": [],
       "operationId": "getSubtitles",
       "tags": [
         "transcript"
@@ -4523,6 +4529,7 @@
     {
       "summary": "Get the transcript split by sentences",
       "audiences": [],
+      "viewers": [],
       "operationId": "getTranscriptSentences",
       "tags": [
         "transcript"
@@ -4904,6 +4911,7 @@
     {
       "summary": "Get the transcript split by paragraphs",
       "audiences": [],
+      "viewers": [],
       "operationId": "getTranscriptParagraphs",
       "tags": [
         "transcript"
@@ -5285,6 +5293,7 @@
     {
       "summary": "Search the given transcript for words, numbers, or phrases",
       "audiences": [],
+      "viewers": [],
       "operationId": "wordSearch",
       "tags": [
         "transcript"
@@ -5674,6 +5683,7 @@
     {
       "summary": "Retrieves the redacted audio object containing the status and URL to the redacted audio.",
       "audiences": [],
+      "viewers": [],
       "operationId": "getRedactedAudio",
       "tags": [
         "transcript"
@@ -5969,6 +5979,7 @@
     {
       "summary": "Create a temporary authentication token for real-time transcription",
       "audiences": [],
+      "viewers": [],
       "operationId": "createRealtimeToken",
       "tags": [
         "realtime"
@@ -6263,6 +6274,7 @@
     {
       "summary": "Generate a custom summary from one or more transcripts.",
       "audiences": [],
+      "viewers": [],
       "operationId": "lemurSummary",
       "tags": [
         "LeMUR"
@@ -6569,6 +6581,7 @@
     {
       "summary": "Create answers to one or more questions about one or more transcripts.",
       "audiences": [],
+      "viewers": [],
       "operationId": "lemurQuestionAnswer",
       "tags": [
         "LeMUR"
@@ -6909,6 +6922,7 @@
     {
       "summary": "Extract action items from one or more meeting transcripts.",
       "audiences": [],
+      "viewers": [],
       "operationId": "lemurActionItems",
       "tags": [
         "LeMUR"
@@ -7215,6 +7229,7 @@
     {
       "summary": "Ask LeMUR to use one or more transcripts with a Custom Task to handle your specialized task.",
       "audiences": [],
+      "viewers": [],
       "operationId": "lemurTask",
       "tags": [
         "LeMUR"
@@ -7528,6 +7543,7 @@
     {
       "summary": "Delete the data for a previously submitted LeMUR request.",
       "audiences": [],
+      "viewers": [],
       "operationId": "purgeLemurRequestData",
       "tags": [
         "LeMUR"

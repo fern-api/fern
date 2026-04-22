@@ -239,6 +239,7 @@ export class OperationConverter extends AbstractOperationConverter {
             transport: undefined,
             source: HttpEndpointSource.openapi(),
             audiences,
+            viewers: undefined,
             retries: undefined,
             apiPlayground
         };

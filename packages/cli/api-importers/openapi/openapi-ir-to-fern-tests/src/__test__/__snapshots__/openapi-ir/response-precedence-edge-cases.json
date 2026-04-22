@@ -9,6 +9,7 @@
   "endpoints": [
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "getData",
       "tags": [],
       "pathParameters": [],
@@ -144,6 +145,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "exportData",
       "tags": [],
       "pathParameters": [],
@@ -263,6 +265,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "getCsvData",
       "tags": [],
       "pathParameters": [],
@@ -291,6 +294,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "getItems",
       "tags": [],
       "pathParameters": [],
@@ -318,6 +322,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "getUsers",
       "tags": [],
       "pathParameters": [],
@@ -489,6 +494,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "deleteItem",
       "tags": [],
       "pathParameters": [],
@@ -530,6 +536,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "getRateLimited",
       "tags": [],
       "pathParameters": [],

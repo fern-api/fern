@@ -39,6 +39,11 @@ export interface HttpEndpoint extends FernIr.Declaration {
     transport: FernIr.Transport | undefined;
     source: FernIr.HttpEndpointSource | undefined;
     audiences: FernIr.AudienceReference[] | undefined;
+    /**
+     * Roles required to view this endpoint. When absent, falls back to the service's
+     * viewers. Used for role-based access control (RBAC) in documentation.
+     */
+    viewers: FernIr.RoleId[] | undefined;
     retries: FernIr.RetriesConfiguration | undefined;
     /** Whether this endpoint is shown in the API playground */
     apiPlayground: boolean | undefined;

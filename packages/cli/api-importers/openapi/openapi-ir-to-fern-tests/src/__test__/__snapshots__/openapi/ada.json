@@ -1296,6 +1296,7 @@ types:
             "method": "POST",
             "payload": "root.EndUserCreatedWebhookPayload",
             "signature": undefined,
+            "viewers": undefined,
           },
           "v1EndUserUpdatedPost83bfd265": {
             "audiences": [],
@@ -1345,6 +1346,7 @@ types:
             "method": "POST",
             "payload": "root.EndUserUpdatedWebhookPayload",
             "signature": undefined,
+            "viewers": undefined,
           },
         },
       },

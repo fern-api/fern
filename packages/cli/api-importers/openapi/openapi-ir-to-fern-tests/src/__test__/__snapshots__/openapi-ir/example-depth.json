@@ -11,6 +11,7 @@
     {
       "summary": "Get tree",
       "audiences": [],
+      "viewers": [],
       "operationId": "getTree",
       "tags": [],
       "pathParameters": [],

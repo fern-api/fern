@@ -15,6 +15,7 @@
     {
       "summary": "List Users",
       "audiences": [],
+      "viewers": [],
       "tags": [],
       "pathParameters": [],
       "queryParameters": [],
@@ -125,6 +126,7 @@
     {
       "summary": "Get user information",
       "audiences": [],
+      "viewers": [],
       "tags": [],
       "pathParameters": [
         {
@@ -266,6 +268,7 @@
     {
       "summary": "Get authentication token",
       "audiences": [],
+      "viewers": [],
       "tags": [],
       "pathParameters": [],
       "queryParameters": [],

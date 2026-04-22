@@ -403,6 +403,10 @@ export function buildEndpoint({
         convertedEndpoint.audiences = endpoint.audiences;
     }
 
+    if (endpoint.viewers.length > 0) {
+        convertedEndpoint.viewers = endpoint.viewers;
+    }
+
     return {
         value: convertedEndpoint,
         schemaIdsToExclude

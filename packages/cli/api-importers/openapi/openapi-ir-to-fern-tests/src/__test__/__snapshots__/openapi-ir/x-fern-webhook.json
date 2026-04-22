@@ -19,6 +19,7 @@
   "webhooks": [
     {
       "audiences": [],
+      "viewers": [],
       "sdkName": {
         "groupName": [
           "status"
@@ -62,6 +63,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "sdkName": {
         "groupName": [
           "status"
@@ -142,6 +144,7 @@
       "audiences": [
         "private"
       ],
+      "viewers": [],
       "sdkName": {
         "groupName": [
           "status2"

@@ -5,6 +5,7 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { AudienceReference } from "../../audience/types/AudienceReference.js";
 import { Availability } from "../../commons/types/Availability.js";
+import { RoleId } from "../../role/types/RoleId.js";
 import { Encoding } from "../../types/types/Encoding.js";
 import { DeclaredServiceName } from "./DeclaredServiceName.js";
 import { HttpEndpoint } from "./HttpEndpoint.js";
@@ -25,6 +26,7 @@ export const HttpService: core.serialization.ObjectSchema<serializers.HttpServic
         encoding: Encoding.optional(),
         transport: Transport.optional(),
         audiences: core.serialization.list(AudienceReference).optional(),
+        viewers: core.serialization.list(RoleId).optional(),
     });
 
 export declare namespace HttpService {
@@ -39,5 +41,6 @@ export declare namespace HttpService {
         encoding?: Encoding.Raw | null;
         transport?: Transport.Raw | null;
         audiences?: AudienceReference.Raw[] | null;
+        viewers?: RoleId.Raw[] | null;
     }
 }

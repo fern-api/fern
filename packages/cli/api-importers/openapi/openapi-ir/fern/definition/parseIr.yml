@@ -34,6 +34,7 @@ types:
       idempotent: optional<boolean>
       method: finalIr.HttpMethod
       audiences: list<string>
+      viewers: list<string>
       path:
         type: string
         docs: |
@@ -77,6 +78,7 @@ types:
       - commons.WithNamespace
     properties:
       audiences: list<string>
+      viewers: list<string>
       sdkName: optional<finalIr.EndpointSdkName>
       method: finalIr.WebhookHttpMethod
       summary: optional<string>

@@ -24,6 +24,7 @@
   "endpoints": [
     {
       "audiences": [],
+      "viewers": [],
       "tags": [],
       "pathParameters": [],
       "queryParameters": [],

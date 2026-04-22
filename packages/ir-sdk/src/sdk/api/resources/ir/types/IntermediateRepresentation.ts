@@ -43,6 +43,11 @@ export interface IntermediateRepresentation {
     dynamic: FernIr.dynamic.DynamicIntermediateRepresentation | undefined;
     selfHosted: boolean | undefined;
     audiences: FernIr.AudienceDefinition[] | undefined;
+    /**
+     * Roles declared at the top level of docs.yml. These are the valid values that
+     * `viewers` fields on services/endpoints/webhooks can reference.
+     */
+    roles: FernIr.RoleId[] | undefined;
     generationMetadata: FernIr.GenerationMetadata | undefined;
     /** Whether the API playground should be enabled. Defaults to true. */
     apiPlayground: boolean | undefined;

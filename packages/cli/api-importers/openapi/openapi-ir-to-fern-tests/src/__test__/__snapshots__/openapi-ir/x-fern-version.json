@@ -18,6 +18,7 @@
   "endpoints": [
     {
       "audiences": [],
+      "viewers": [],
       "tags": [],
       "sdkName": {
         "groupName": [

@@ -14,4 +14,5 @@ export interface WebhookSchema
     response?: FernDefinition.HttpResponseSchema;
     "response-stream"?: FernDefinition.HttpResponseStreamSchema;
     examples?: FernDefinition.ExampleWebhookCallSchema[];
+    viewers?: string[];
 }

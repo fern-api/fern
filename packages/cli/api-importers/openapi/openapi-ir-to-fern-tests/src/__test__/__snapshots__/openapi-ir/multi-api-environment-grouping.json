@@ -89,6 +89,7 @@
     {
       "summary": "List wallets",
       "audiences": [],
+      "viewers": [],
       "operationId": "listWallets",
       "tags": [],
       "pathParameters": [],
@@ -187,6 +188,7 @@
     {
       "summary": "Get wallet by ID",
       "audiences": [],
+      "viewers": [],
       "operationId": "getWallet",
       "tags": [],
       "pathParameters": [
@@ -302,6 +304,7 @@
     {
       "summary": "Get wallet balance",
       "audiences": [],
+      "viewers": [],
       "operationId": "getWalletBalance",
       "tags": [],
       "pathParameters": [
@@ -410,6 +413,7 @@
     {
       "summary": "List accounts",
       "audiences": [],
+      "viewers": [],
       "operationId": "listAccounts",
       "tags": [],
       "pathParameters": [],
@@ -498,6 +502,7 @@
     {
       "summary": "List transactions",
       "audiences": [],
+      "viewers": [],
       "operationId": "listTransactions",
       "tags": [],
       "pathParameters": [],
@@ -600,6 +605,7 @@
     {
       "summary": "Get transaction by ID",
       "audiences": [],
+      "viewers": [],
       "operationId": "getTransaction",
       "tags": [],
       "pathParameters": [
@@ -719,6 +725,7 @@
     {
       "summary": "Create a payment",
       "audiences": [],
+      "viewers": [],
       "operationId": "createPayment",
       "tags": [],
       "pathParameters": [],
@@ -842,6 +849,7 @@
     {
       "summary": "Refund a payment",
       "audiences": [],
+      "viewers": [],
       "operationId": "refundPayment",
       "tags": [],
       "pathParameters": [
@@ -978,6 +986,7 @@
     {
       "summary": "List all refunds",
       "audiences": [],
+      "viewers": [],
       "operationId": "listRefunds",
       "tags": [],
       "pathParameters": [],

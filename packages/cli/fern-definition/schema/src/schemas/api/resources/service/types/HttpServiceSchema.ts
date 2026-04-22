@@ -12,4 +12,5 @@ export interface HttpServiceSchema extends FernDefinition.DeclarationWithoutDocs
     transport?: FernDefinition.ServiceTransport;
     source?: FernDefinition.SourceSchema;
     endpoints: Record<string, FernDefinition.HttpEndpointSchema>;
+    viewers?: string[];
 }

@@ -14,6 +14,7 @@
     {
       "summary": "Start a chat",
       "audiences": [],
+      "viewers": [],
       "operationId": "createChat_stream",
       "tags": [
         "Chats"
@@ -206,6 +207,7 @@
     {
       "summary": "Start a chat",
       "audiences": [],
+      "viewers": [],
       "operationId": "createChat",
       "tags": [
         "Chats"

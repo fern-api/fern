@@ -7,6 +7,7 @@ export interface WebhookWithExample
         FernOpenapiIr.WithSource,
         FernOpenapiIr.WithNamespace {
     audiences: string[];
+    viewers: string[];
     sdkName: FernOpenapiIr.EndpointSdkName | undefined;
     method: FernOpenapiIr.WebhookHttpMethod;
     summary: string | undefined;

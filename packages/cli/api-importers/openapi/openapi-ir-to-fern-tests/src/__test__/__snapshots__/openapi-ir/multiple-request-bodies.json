@@ -15,6 +15,7 @@
     {
       "summary": "Upload document metadata (JSON) or document file",
       "audiences": [],
+      "viewers": [],
       "operationId": "uploadDocument",
       "tags": [],
       "sdkName": {
@@ -232,6 +233,7 @@
     {
       "summary": "Upload document metadata (JSON) or document file",
       "audiences": [],
+      "viewers": [],
       "operationId": "uploadDocument",
       "tags": [],
       "sdkName": {

@@ -1,0 +1,6 @@
+types:
+  RoleId:
+    type: string
+    docs: |
+      Identifier of a role declared at the top of docs.yml (`roles:` list).
+      Used for role-based access control (RBAC) on API operations.

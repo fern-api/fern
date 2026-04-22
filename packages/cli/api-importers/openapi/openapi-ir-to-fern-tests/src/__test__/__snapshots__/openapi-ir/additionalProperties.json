@@ -9,6 +9,7 @@
   "endpoints": [
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "with-additional-properties-explicit",
       "tags": [
         "additionalPropertiesDefaultsToTrue"
@@ -98,6 +99,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "without-additional-properties-explicit",
       "tags": [
         "additionalPropertiesDefaultsToTrue"
@@ -187,6 +189,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "implicit",
       "tags": [
         "additionalPropertiesDefaultsToTrue"
@@ -276,6 +279,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "with-additional-properties-explicit",
       "tags": [
         "additionalPropertiesDefaultsToFalse"
@@ -365,6 +369,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "without-additional-properties-explicit",
       "tags": [
         "additionalPropertiesDefaultsToFalse"
@@ -454,6 +459,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "implicit",
       "tags": [
         "additionalPropertiesDefaultsToFalse"

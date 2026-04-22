@@ -10,6 +10,7 @@
     {
       "summary": "Upload a file",
       "audiences": [],
+      "viewers": [],
       "operationId": "upload-file",
       "tags": [],
       "pathParameters": [],
@@ -74,6 +75,7 @@
     {
       "summary": "Upload a list of files",
       "audiences": [],
+      "viewers": [],
       "operationId": "upload-list",
       "tags": [],
       "pathParameters": [],
@@ -138,6 +140,7 @@
     {
       "summary": "Upload a file with a content type",
       "audiences": [],
+      "viewers": [],
       "operationId": "upload-with-content-type",
       "tags": [],
       "pathParameters": [],

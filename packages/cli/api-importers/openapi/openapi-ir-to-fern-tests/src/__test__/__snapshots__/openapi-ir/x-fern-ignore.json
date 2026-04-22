@@ -10,6 +10,7 @@
     {
       "summary": "List",
       "audiences": [],
+      "viewers": [],
       "operationId": "list",
       "tags": [],
       "pathParameters": [],

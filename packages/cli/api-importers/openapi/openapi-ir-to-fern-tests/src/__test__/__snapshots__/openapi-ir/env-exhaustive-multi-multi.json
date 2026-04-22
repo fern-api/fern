@@ -43,6 +43,7 @@
   "endpoints": [
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "list",
       "tags": [],
       "sdkName": {
@@ -109,6 +110,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "list",
       "tags": [],
       "sdkName": {

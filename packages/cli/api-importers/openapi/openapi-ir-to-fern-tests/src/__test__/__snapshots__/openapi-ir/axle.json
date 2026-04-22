@@ -21,6 +21,7 @@
     {
       "summary": "Start Ignition",
       "audiences": [],
+      "viewers": [],
       "operationId": "StartIgnition",
       "tags": [
         "Ignition"
@@ -383,6 +384,7 @@
     {
       "summary": "Exchange Token",
       "audiences": [],
+      "viewers": [],
       "operationId": "ExchangeToken",
       "tags": [
         "Tokens"
@@ -684,6 +686,7 @@
     {
       "summary": "Get Account",
       "audiences": [],
+      "viewers": [],
       "operationId": "GetAccount",
       "tags": [
         "Accounts"
@@ -976,6 +979,7 @@
     {
       "summary": "Get Policy",
       "audiences": [],
+      "viewers": [],
       "operationId": "GetPolicy",
       "tags": [
         "Policies"
@@ -1523,6 +1527,7 @@
     {
       "summary": "Get Carrier",
       "audiences": [],
+      "viewers": [],
       "operationId": "GetCarrier",
       "tags": [
         "Carriers"
@@ -1807,6 +1812,7 @@
     {
       "summary": "Get Carriers",
       "audiences": [],
+      "viewers": [],
       "operationId": "GetCarriers",
       "tags": [
         "Carriers"

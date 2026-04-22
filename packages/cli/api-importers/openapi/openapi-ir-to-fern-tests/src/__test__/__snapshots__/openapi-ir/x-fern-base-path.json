@@ -19,6 +19,7 @@
     {
       "summary": "Example endpoint",
       "audiences": [],
+      "viewers": [],
       "tags": [],
       "pathParameters": [],
       "queryParameters": [],

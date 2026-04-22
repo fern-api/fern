@@ -23,4 +23,10 @@ export interface Webhook extends FernIr.Declaration {
     responses: FernIr.HttpResponse[] | undefined;
     examples: FernIr.ExampleWebhookCall[] | undefined;
     v2Examples: FernIr.V2WebhookExamples | undefined;
+    /**
+     * Roles required to view this webhook. Used for role-based access control (RBAC)
+     * in documentation.
+     */
+    viewers: FernIr.RoleId[] | undefined;
+    audiences: string[] | undefined;
 }

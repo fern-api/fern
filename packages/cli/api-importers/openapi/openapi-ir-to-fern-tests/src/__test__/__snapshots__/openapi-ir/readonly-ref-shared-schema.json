@@ -11,6 +11,7 @@
     {
       "summary": "Get organization details",
       "audiences": [],
+      "viewers": [],
       "operationId": "getOrgDetails",
       "tags": [],
       "pathParameters": [],
@@ -87,6 +88,7 @@
     {
       "summary": "Update organization details",
       "audiences": [],
+      "viewers": [],
       "operationId": "updateOrgDetails",
       "tags": [],
       "pathParameters": [],

@@ -12,6 +12,7 @@ imports:
   http: http.yml
   proto: proto.yml
   publish: publish.yml
+  role: role.yml
   types: types.yml
   variables: variables.yml
   webhooks: webhooks.yml
@@ -66,6 +67,11 @@ types:
       dynamic: optional<dynamic.DynamicIntermediateRepresentation>
       selfHosted: optional<boolean>
       audiences: optional<list<audience.AudienceDefinition>>
+      roles:
+        type: optional<list<role.RoleId>>
+        docs: |
+          Roles declared at the top level of docs.yml. These are the valid values that
+          `viewers` fields on services/endpoints/webhooks can reference.
       generationMetadata: optional<GenerationMetadata>
       apiPlayground:
         type: optional<boolean>

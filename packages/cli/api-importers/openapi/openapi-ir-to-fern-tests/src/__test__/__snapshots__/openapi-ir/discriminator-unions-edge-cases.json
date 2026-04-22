@@ -9,6 +9,7 @@
   "endpoints": [
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "createAnimal",
       "tags": [],
       "pathParameters": [],
@@ -128,6 +129,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "createShape",
       "tags": [],
       "pathParameters": [],
@@ -234,6 +236,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "createPayment",
       "tags": [],
       "pathParameters": [],

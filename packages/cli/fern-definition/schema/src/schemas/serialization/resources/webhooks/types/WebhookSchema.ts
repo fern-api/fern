@@ -27,6 +27,7 @@ export const WebhookSchema: core.serialization.ObjectSchema<
         response: HttpResponseSchema.optional(),
         "response-stream": HttpResponseStreamSchema.optional(),
         examples: core.serialization.list(ExampleWebhookCallSchema).optional(),
+        viewers: core.serialization.list(core.serialization.string()).optional(),
     })
     .extend(WithAvailability)
     .extend(WithAudiences)
@@ -42,5 +43,6 @@ export declare namespace WebhookSchema {
         response?: HttpResponseSchema.Raw | null;
         "response-stream"?: HttpResponseStreamSchema.Raw | null;
         examples?: ExampleWebhookCallSchema.Raw[] | null;
+        viewers?: string[] | null;
     }
 }

@@ -11,6 +11,7 @@
     {
       "summary": "List All Agents",
       "audiences": [],
+      "viewers": [],
       "operationId": "List_all_agents_api_v1_agents_get",
       "tags": [
         "Agent"
@@ -83,6 +84,7 @@
     {
       "summary": "Create Agent",
       "audiences": [],
+      "viewers": [],
       "operationId": "Create_agent_api_v1_agents_post",
       "tags": [
         "Agent"
@@ -219,6 +221,7 @@
     {
       "summary": "Get Agent",
       "audiences": [],
+      "viewers": [],
       "operationId": "Get_agent_api_v1_agents__agentId__get",
       "tags": [
         "Agent"
@@ -345,6 +348,7 @@
     {
       "summary": "Delete Agent",
       "audiences": [],
+      "viewers": [],
       "operationId": "Delete_agent_api_v1_agents__agentId__delete",
       "tags": [
         "Agent"
@@ -471,6 +475,7 @@
     {
       "summary": "Patch Agent",
       "audiences": [],
+      "viewers": [],
       "operationId": "Patch_agent_api_v1_agents__agentId__patch",
       "tags": [
         "Agent"
@@ -647,6 +652,7 @@
     {
       "summary": "Prompt Agent",
       "audiences": [],
+      "viewers": [],
       "operationId": "Prompt_agent_api_v1_agents__agentId__predict_post",
       "tags": [
         "Agent"
@@ -818,6 +824,7 @@
     {
       "summary": "Sign In",
       "audiences": [],
+      "viewers": [],
       "operationId": "sign_in_api_v1_auth_sign_in_post",
       "tags": [
         "Auth"
@@ -948,6 +955,7 @@
     {
       "summary": "Sign Up",
       "audiences": [],
+      "viewers": [],
       "operationId": "sign_up_api_v1_auth_sign_up_post",
       "tags": [
         "Auth"
@@ -1078,6 +1086,7 @@
     {
       "summary": "Read User Me",
       "audiences": [],
+      "viewers": [],
       "operationId": "read_user_me_api_v1_users_me_get",
       "tags": [
         "User"
@@ -1149,6 +1158,7 @@
     {
       "summary": "Read User",
       "audiences": [],
+      "viewers": [],
       "operationId": "read_user_api_v1_users__userId__get",
       "tags": [
         "User"
@@ -1269,6 +1279,7 @@
     {
       "summary": "List Api Tokens",
       "audiences": [],
+      "viewers": [],
       "operationId": "List_API_tokens_api_v1_api_tokens_get",
       "tags": [
         "Api token"
@@ -1341,6 +1352,7 @@
     {
       "summary": "Create Api Token",
       "audiences": [],
+      "viewers": [],
       "operationId": "Create_API_token_api_v1_api_tokens_post",
       "tags": [
         "Api token"
@@ -1470,6 +1482,7 @@
     {
       "summary": "Get Api Token",
       "audiences": [],
+      "viewers": [],
       "operationId": "Get_API_token_api_v1_api_tokens__tokenId__get",
       "tags": [
         "Api token"
@@ -1596,6 +1609,7 @@
     {
       "summary": "Delete Api Token",
       "audiences": [],
+      "viewers": [],
       "operationId": "Delete_API_token_api_v1_api_tokens__tokenId__delete",
       "tags": [
         "Api token"
@@ -1722,6 +1736,7 @@
     {
       "summary": "List Documents",
       "audiences": [],
+      "viewers": [],
       "operationId": "List_documents_api_v1_documents_get",
       "tags": [
         "Documents"
@@ -1794,6 +1809,7 @@
     {
       "summary": "Create Document",
       "audiences": [],
+      "viewers": [],
       "operationId": "Create_document_api_v1_documents_post",
       "tags": [
         "Documents"
@@ -1937,6 +1953,7 @@
     {
       "summary": "Get Document",
       "audiences": [],
+      "viewers": [],
       "operationId": "Get_document_api_v1_documents__documentId__get",
       "tags": [
         "Documents"
@@ -2063,6 +2080,7 @@
     {
       "summary": "Delete Document",
       "audiences": [],
+      "viewers": [],
       "operationId": "Delete_document_api_v1_documents__documentId__delete",
       "tags": [
         "Documents"
@@ -2189,6 +2207,7 @@
     {
       "summary": "List Prompts",
       "audiences": [],
+      "viewers": [],
       "operationId": "List_prompts_api_v1_prompts_get",
       "tags": [
         "Prompts"
@@ -2261,6 +2280,7 @@
     {
       "summary": "Create A Prompt",
       "audiences": [],
+      "viewers": [],
       "operationId": "Create_a_prompt_api_v1_prompts_post",
       "tags": [
         "Prompts"
@@ -2401,6 +2421,7 @@
     {
       "summary": "Get Prompt",
       "audiences": [],
+      "viewers": [],
       "operationId": "Get_prompt_api_v1_prompts__promptId__get",
       "tags": [
         "Prompts"
@@ -2527,6 +2548,7 @@
     {
       "summary": "Delete Prompt",
       "audiences": [],
+      "viewers": [],
       "operationId": "Delete_prompt_api_v1_prompts__promptId__delete",
       "tags": [
         "Prompts"
@@ -2653,6 +2675,7 @@
     {
       "summary": "Patch Prompt",
       "audiences": [],
+      "viewers": [],
       "operationId": "Patch_prompt_api_v1_prompts__promptId__patch",
       "tags": [
         "Prompts"
@@ -2829,6 +2852,7 @@
     {
       "summary": "List Tools",
       "audiences": [],
+      "viewers": [],
       "operationId": "List_tools_api_v1_tools_get",
       "tags": [
         "Tools"
@@ -2901,6 +2925,7 @@
     {
       "summary": "Create A Tool",
       "audiences": [],
+      "viewers": [],
       "operationId": "Create_a_tool_api_v1_tools_post",
       "tags": [
         "Tools"
@@ -3037,6 +3062,7 @@
     {
       "summary": "Get Tool",
       "audiences": [],
+      "viewers": [],
       "operationId": "Get_tool_api_v1_tools__toolId__get",
       "tags": [
         "Tools"
@@ -3163,6 +3189,7 @@
     {
       "summary": "Delete Tool",
       "audiences": [],
+      "viewers": [],
       "operationId": "Delete_tool_api_v1_tools__toolId__delete",
       "tags": [
         "Tools"
@@ -3289,6 +3316,7 @@
     {
       "summary": "List Agent Traces",
       "audiences": [],
+      "viewers": [],
       "operationId": "List_agent_traces_api_v1_traces_get",
       "tags": [
         "Traces"

@@ -10,6 +10,7 @@
     {
       "summary": "Returns an array alias",
       "audiences": [],
+      "viewers": [],
       "operationId": "GetAliasArray",
       "tags": [],
       "pathParameters": [],
@@ -77,6 +78,7 @@
     {
       "summary": "Returns an object alias",
       "audiences": [],
+      "viewers": [],
       "operationId": "GetAliasObject",
       "tags": [],
       "pathParameters": [],
@@ -146,6 +148,7 @@
     {
       "summary": "Returns a string alias",
       "audiences": [],
+      "viewers": [],
       "operationId": "GetAliasString",
       "tags": [],
       "pathParameters": [],
@@ -203,6 +206,7 @@
     {
       "summary": "Returns an optional string alias",
       "audiences": [],
+      "viewers": [],
       "operationId": "GetAliasOptionalString",
       "tags": [],
       "pathParameters": [],
@@ -266,6 +270,7 @@
     {
       "summary": "Returns an optional object alias",
       "audiences": [],
+      "viewers": [],
       "operationId": "GetAliasOptionalObject",
       "tags": [],
       "pathParameters": [],
@@ -332,6 +337,7 @@
     {
       "summary": "Returns a don't resolve me alias",
       "audiences": [],
+      "viewers": [],
       "operationId": "GetDontResolveMe",
       "tags": [],
       "pathParameters": [],

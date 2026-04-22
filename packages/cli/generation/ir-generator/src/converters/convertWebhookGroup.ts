@@ -91,7 +91,9 @@ export function convertWebhookGroup({
                           workspace
                       })
                     : undefined,
-            v2Examples: undefined
+            v2Examples: undefined,
+            audiences: webhook.audiences,
+            viewers: webhook.viewers
         });
     }
     return webhookGroup;

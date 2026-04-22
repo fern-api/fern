@@ -123,7 +123,9 @@ export class WebhookConverter extends AbstractOperationConverter {
                     userSpecifiedExamples: this.getWebhookV2ExamplesFromRequestBodyV2Examples(
                         requestBody.v2Examples?.userSpecifiedExamples ?? {}
                     )
-                }
+                },
+                audiences: undefined,
+                viewers: undefined
             },
             inlinedTypes: this.inlinedTypes
         };

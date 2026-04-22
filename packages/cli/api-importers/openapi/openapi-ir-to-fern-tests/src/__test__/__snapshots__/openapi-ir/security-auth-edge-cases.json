@@ -9,6 +9,7 @@
   "endpoints": [
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "getData",
       "tags": [],
       "pathParameters": [],
@@ -36,6 +37,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "getPublic",
       "tags": [],
       "pathParameters": [],
@@ -64,6 +66,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "getProtected",
       "tags": [],
       "pathParameters": [],
@@ -96,6 +99,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "getSecure",
       "tags": [],
       "pathParameters": [],
@@ -129,6 +133,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "getFlexible",
       "tags": [],
       "pathParameters": [],

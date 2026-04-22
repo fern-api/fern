@@ -31,6 +31,7 @@
     {
       "summary": "Get an end user by ID",
       "audiences": [],
+      "viewers": [],
       "operationId": "getEndUserById",
       "tags": [
         "End users"
@@ -595,6 +596,7 @@
     {
       "summary": "Update an end user by ID",
       "audiences": [],
+      "viewers": [],
       "operationId": "updateEndUserById",
       "tags": [
         "End users"
@@ -1407,6 +1409,7 @@
     {
       "summary": "Get multiple end users by ID",
       "audiences": [],
+      "viewers": [],
       "operationId": "getEndUsers",
       "tags": [
         "End users"
@@ -2035,6 +2038,7 @@
     {
       "summary": "End user created webhook",
       "audiences": [],
+      "viewers": [],
       "method": "POST",
       "operationId": "v1EndUserCreatedPost29a75ca0",
       "tags": [
@@ -2284,6 +2288,7 @@
     {
       "summary": "End user updated webhook",
       "audiences": [],
+      "viewers": [],
       "method": "POST",
       "operationId": "v1EndUserUpdatedPost83bfd265",
       "tags": [

@@ -10,6 +10,7 @@
   "webhooks": [
     {
       "audiences": [],
+      "viewers": [],
       "method": "POST",
       "operationId": "CreatePet",
       "tags": [],
@@ -80,6 +81,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "method": "POST",
       "operationId": "newPet",
       "tags": [],

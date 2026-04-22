@@ -32,6 +32,7 @@ export const Endpoint: core.serialization.ObjectSchema<serializers.Endpoint.Raw,
             idempotent: core.serialization.boolean().optional(),
             method: HttpMethod,
             audiences: core.serialization.list(core.serialization.string()),
+            viewers: core.serialization.list(core.serialization.string()),
             path: core.serialization.string(),
             summary: core.serialization.string().optional(),
             operationId: core.serialization.string().optional(),
@@ -63,6 +64,7 @@ export declare namespace Endpoint {
         idempotent?: boolean | null;
         method: HttpMethod.Raw;
         audiences: string[];
+        viewers: string[];
         path: string;
         summary?: string | null;
         operationId?: string | null;

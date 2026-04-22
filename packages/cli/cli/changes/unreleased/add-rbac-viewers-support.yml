@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add RBAC `viewers` support to API specs. Endpoints, services, and webhooks can now
+    declare which roles are required to view them, either directly in the Fern Definition
+    (`viewers:` on the endpoint, service, or webhook) or via the `x-fern-viewers` OpenAPI
+    extension (at the document or operation level). Viewers on the service or document
+    are inherited by operations that don't declare their own.
+  type: feat

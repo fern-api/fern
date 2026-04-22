@@ -10,6 +10,7 @@
   "webhooks": [
     {
       "audiences": [],
+      "viewers": [],
       "sdkName": {
         "groupName": [
           "webhooks"
@@ -80,6 +81,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "sdkName": {
         "groupName": [
           "webhooks"
@@ -143,6 +145,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "sdkName": {
         "groupName": [
           "webhooks"
@@ -206,6 +209,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "sdkName": {
         "groupName": [
           "webhooks"

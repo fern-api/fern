@@ -14,6 +14,7 @@
     {
       "summary": "Auth and redirect sessions",
       "audiences": [],
+      "viewers": [],
       "operationId": "auth-and-redirect",
       "tags": [
         "Auth"
@@ -95,6 +96,7 @@
       "audiences": [
         "beta"
       ],
+      "viewers": [],
       "operationId": "extensions-get",
       "tags": [
         "Extensions"
@@ -333,6 +335,7 @@
       "audiences": [
         "beta"
       ],
+      "viewers": [],
       "operationId": "extensions-post",
       "tags": [
         "Extensions"
@@ -559,6 +562,7 @@
       "audiences": [
         "beta"
       ],
+      "viewers": [],
       "operationId": "extensions-delete",
       "tags": [
         "Extensions"
@@ -629,6 +633,7 @@
       "audiences": [
         "beta"
       ],
+      "viewers": [],
       "operationId": "extensions-get-by-id",
       "tags": [
         "Extensions"
@@ -911,6 +916,7 @@
       "audiences": [
         "public"
       ],
+      "viewers": [],
       "operationId": "profiles-get",
       "tags": [
         "Profiles"
@@ -1195,6 +1201,7 @@
       "audiences": [
         "beta"
       ],
+      "viewers": [],
       "operationId": "profiles-post",
       "tags": [
         "Profiles"
@@ -1434,6 +1441,7 @@
       "audiences": [
         "public"
       ],
+      "viewers": [],
       "operationId": "profiles-delete",
       "tags": [
         "Profiles"
@@ -1539,6 +1547,7 @@
       "audiences": [
         "public"
       ],
+      "viewers": [],
       "operationId": "profiles-get-by-id",
       "tags": [
         "Profiles"
@@ -1832,6 +1841,7 @@
       "audiences": [
         "public"
       ],
+      "viewers": [],
       "operationId": "sessions-list",
       "tags": [
         "Sessions"
@@ -2329,6 +2339,7 @@
       "audiences": [
         "public"
       ],
+      "viewers": [],
       "operationId": "sessions-post",
       "tags": [
         "Sessions"
@@ -2647,6 +2658,7 @@
       "audiences": [
         "public"
       ],
+      "viewers": [],
       "operationId": "sessions-getInfo",
       "tags": [
         "Sessions"
@@ -3028,6 +3040,7 @@
       "audiences": [
         "public"
       ],
+      "viewers": [],
       "operationId": "sessions-terminate",
       "tags": [
         "Sessions"
@@ -3091,6 +3104,7 @@
       "audiences": [
         "public"
       ],
+      "viewers": [],
       "operationId": "sessions-events",
       "tags": [
         "Sessions"
@@ -3450,6 +3464,7 @@
       "audiences": [
         "public"
       ],
+      "viewers": [],
       "operationId": "get-window-info",
       "tags": [
         "Windows"
@@ -3782,6 +3797,7 @@
       "audiences": [
         "public"
       ],
+      "viewers": [],
       "operationId": "prompt-content",
       "tags": [
         "Windows"
@@ -4088,6 +4104,7 @@
       "audiences": [
         "public"
       ],
+      "viewers": [],
       "operationId": "scrape-content",
       "tags": [
         "Windows"
@@ -4394,6 +4411,7 @@
       "audiences": [
         "public"
       ],
+      "viewers": [],
       "operationId": "summarize-content",
       "tags": [
         "Windows"

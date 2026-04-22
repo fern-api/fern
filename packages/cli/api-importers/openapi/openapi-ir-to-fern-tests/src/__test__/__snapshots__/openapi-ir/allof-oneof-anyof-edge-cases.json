@@ -9,6 +9,7 @@
   "endpoints": [
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "createExtended",
       "tags": [],
       "pathParameters": [],
@@ -129,6 +130,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "createPet",
       "tags": [],
       "pathParameters": [],
@@ -234,6 +236,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "createFlexible",
       "tags": [],
       "pathParameters": [],

@@ -2,6 +2,13 @@ import { CasingsGenerator } from "@fern-api/casings-generator";
 import * as FernIr from "@fern-api/ir-sdk";
 import { getWireValue } from "./utils/namesUtils.js";
 
+function mergeOptionalStringLists(a: string[] | undefined, b: string[] | undefined): string[] | undefined {
+    if (a == null && b == null) {
+        return undefined;
+    }
+    return Array.from(new Set([...(a ?? []), ...(b ?? [])]));
+}
+
 export function mergeIntermediateRepresentation(
     ir1: FernIr.IntermediateRepresentation,
     ir2: FernIr.IntermediateRepresentation,
@@ -79,6 +86,7 @@ export function mergeIntermediateRepresentation(
         dynamic: ir1.dynamic ?? ir2.dynamic,
         sdkConfig: ir1.sdkConfig ?? ir2.sdkConfig,
         audiences: [...(ir1.audiences ?? []), ...(ir2.audiences ?? [])],
+        roles: mergeOptionalStringLists(ir1.roles, ir2.roles),
         generationMetadata: ir1.generationMetadata ?? ir2.generationMetadata,
         apiPlayground: ir1.apiPlayground ?? ir2.apiPlayground,
         casingsConfig: ir1.casingsConfig ?? ir2.casingsConfig
@@ -387,7 +395,8 @@ function mergeServicesAndChannels(
                 headers: [...(mergedServices[serviceId].headers ?? []), ...(service.headers ?? [])],
                 encoding: service.encoding,
                 transport: service.transport,
-                audiences: [...(mergedServices[serviceId].audiences ?? []), ...(service.audiences ?? [])]
+                audiences: [...(mergedServices[serviceId].audiences ?? []), ...(service.audiences ?? [])],
+                viewers: mergeOptionalStringLists(mergedServices[serviceId].viewers, service.viewers)
             };
         }
     }

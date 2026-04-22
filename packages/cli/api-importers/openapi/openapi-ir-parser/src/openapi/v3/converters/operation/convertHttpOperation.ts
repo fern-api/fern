@@ -325,6 +325,10 @@ export function convertHttpOperation({
         internal: getExtension<boolean>(operation, OpenAPIExtension.INTERNAL),
         idempotent,
         audiences: getExtension<string[]>(operation, FernOpenAPIExtension.AUDIENCES) ?? [],
+        viewers:
+            getExtension<string[]>(operation, FernOpenAPIExtension.VIEWERS) ??
+            getExtension<string[]>(document, FernOpenAPIExtension.VIEWERS) ??
+            [],
         operationId:
             operation.operationId != null && suffix != null
                 ? operation.operationId + "_" + suffix

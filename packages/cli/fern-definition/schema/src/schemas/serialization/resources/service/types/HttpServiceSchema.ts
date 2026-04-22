@@ -24,6 +24,7 @@ export const HttpServiceSchema: core.serialization.ObjectSchema<
         transport: ServiceTransport.optional(),
         source: SourceSchema.optional(),
         endpoints: core.serialization.record(core.serialization.string(), HttpEndpointSchema),
+        viewers: core.serialization.list(core.serialization.string()).optional(),
     })
     .extend(DeclarationWithoutDocsSchema)
     .extend(WithDisplayName);
@@ -39,5 +40,6 @@ export declare namespace HttpServiceSchema {
         transport?: ServiceTransport.Raw | null;
         source?: SourceSchema.Raw | null;
         endpoints: Record<string, HttpEndpointSchema.Raw>;
+        viewers?: string[] | null;
     }
 }

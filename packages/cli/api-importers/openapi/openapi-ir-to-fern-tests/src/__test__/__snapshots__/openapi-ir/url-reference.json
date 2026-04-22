@@ -10,6 +10,7 @@
     {
       "summary": "List all pets",
       "audiences": [],
+      "viewers": [],
       "tags": [],
       "pathParameters": [],
       "queryParameters": [],

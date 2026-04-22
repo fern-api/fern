@@ -35,6 +35,7 @@
   "endpoints": [
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "listItems",
       "tags": [],
       "pathParameters": [],
@@ -90,6 +91,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "authorize",
       "tags": [],
       "pathParameters": [],
@@ -171,6 +173,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "uploadFile",
       "tags": [],
       "pathParameters": [],
@@ -231,6 +234,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "downloadFile",
       "tags": [],
       "pathParameters": [

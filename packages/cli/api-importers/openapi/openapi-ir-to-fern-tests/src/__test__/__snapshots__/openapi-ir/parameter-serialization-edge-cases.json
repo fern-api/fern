@@ -9,6 +9,7 @@
   "endpoints": [
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "getItems",
       "tags": [],
       "pathParameters": [],
@@ -62,6 +63,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "search",
       "tags": [],
       "pathParameters": [],
@@ -115,6 +117,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "filter",
       "tags": [],
       "pathParameters": [],
@@ -168,6 +171,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "getItemById",
       "tags": [],
       "pathParameters": [
@@ -222,6 +226,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "getData",
       "tags": [],
       "pathParameters": [],
@@ -275,6 +280,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "getComplex",
       "tags": [],
       "pathParameters": [],
@@ -386,6 +392,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "getFile",
       "tags": [],
       "pathParameters": [
@@ -440,6 +447,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "getSession",
       "tags": [],
       "pathParameters": [],
@@ -467,6 +475,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "getUserPost",
       "tags": [],
       "pathParameters": [

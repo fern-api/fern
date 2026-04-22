@@ -38,6 +38,7 @@
             "method": "POST",
             "payload": "Pet",
             "signature": undefined,
+            "viewers": undefined,
           },
           "newPet": {
             "audiences": [],
@@ -56,6 +57,7 @@
             "method": "POST",
             "payload": "Pet",
             "signature": undefined,
+            "viewers": undefined,
           },
         },
       },

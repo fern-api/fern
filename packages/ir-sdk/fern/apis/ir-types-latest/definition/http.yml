@@ -7,6 +7,7 @@ imports:
   errors: errors.yml
   examples: examples.yml
   proto: proto.yml
+  role: role.yml
   types: types.yml
   variables: variables.yml
   auth: auth.yml
@@ -24,6 +25,12 @@ types:
       encoding: optional<types.Encoding>
       transport: optional<Transport>
       audiences: optional<list<audience.AudienceReference>>
+      viewers:
+        type: optional<list<role.RoleId>>
+        docs: |
+          Roles required to view this service. Inherited by all endpoints in the service
+          unless overridden at the endpoint level. Used for role-based access control (RBAC)
+          in documentation.
 
   DeclaredServiceName:
     properties:
@@ -79,6 +86,11 @@ types:
       transport: optional<Transport>
       source: optional<HttpEndpointSource>
       audiences: optional<list<audience.AudienceReference>>
+      viewers:
+        type: optional<list<role.RoleId>>
+        docs: |
+          Roles required to view this endpoint. When absent, falls back to the service's
+          viewers. Used for role-based access control (RBAC) in documentation.
       retries: optional<RetriesConfiguration>
       apiPlayground:
         type: optional<boolean>

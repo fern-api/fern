@@ -11,6 +11,7 @@
     {
       "summary": "Create a new plant",
       "audiences": [],
+      "viewers": [],
       "operationId": "plants_create",
       "tags": [
         "Plants"

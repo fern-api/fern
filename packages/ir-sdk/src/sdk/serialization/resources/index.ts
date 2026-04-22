@@ -22,6 +22,8 @@ export * as proto from "./proto/index.js";
 export * from "./proto/types/index.js";
 export * as publish from "./publish/index.js";
 export * from "./publish/types/index.js";
+export * as role from "./role/index.js";
+export * from "./role/types/index.js";
 export * as types from "./types/index.js";
 export * from "./types/types/index.js";
 export * as variables from "./variables/index.js";

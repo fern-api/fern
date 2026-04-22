@@ -16,6 +16,7 @@
   "endpoints": [
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "deployments_retrieve",
       "tags": [
         "deployments"
@@ -165,6 +166,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "document_indexes_create",
       "tags": [
         "document-indexes"
@@ -952,6 +954,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "documents_list",
       "tags": [
         "documents"
@@ -1192,6 +1195,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "execute_workflow_stream",
       "tags": [
         "execute-workflow-stream"
@@ -1430,6 +1434,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "generate",
       "tags": [
         "generate"
@@ -1746,6 +1751,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "generate_stream",
       "tags": [
         "generate-stream"
@@ -2069,6 +2075,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "model_versions_retrieve",
       "tags": [
         "model-versions"
@@ -2377,6 +2384,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "model_version_compile_prompt",
       "tags": [
         "model-versions"
@@ -2532,6 +2540,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "register_prompt",
       "tags": [
         "registered-prompts"
@@ -2871,6 +2880,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "upsert_sandbox_scenario",
       "tags": [
         "sandboxes"
@@ -3353,6 +3363,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "delete_sandbox_scenario",
       "tags": [
         "sandboxes"
@@ -3443,6 +3454,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "search",
       "tags": [
         "search"
@@ -3689,6 +3701,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "submit_completion_actuals",
       "tags": [
         "submit-completion-actuals"
@@ -3862,6 +3875,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "upsert_test_suite_test_case",
       "tags": [
         "test-suites"
@@ -4049,6 +4063,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "delete_test_suite_test_case",
       "tags": [
         "test-suites"
@@ -4139,6 +4154,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "documents_upload",
       "tags": [
         "documents"

@@ -64,6 +64,7 @@
             "method": "POST",
             "payload": "root.Update",
             "signature": undefined,
+            "viewers": undefined,
           },
           "updateInlined": {
             "audiences": [],
@@ -79,6 +80,7 @@
             "method": "POST",
             "payload": "UpdateInlinedStatusPayload",
             "signature": undefined,
+            "viewers": undefined,
           },
         },
       },

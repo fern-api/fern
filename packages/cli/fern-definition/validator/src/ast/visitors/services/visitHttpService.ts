@@ -39,6 +39,7 @@ export function visitHttpService({
             });
         },
         audiences: noop,
+        viewers: noop,
         auth: noop,
         "path-parameters": (pathParameters) => {
             visitPathParameters({
@@ -228,6 +229,7 @@ function visitEndpoint({
             });
         },
         audiences: noop,
+        viewers: noop,
         method: noop,
         auth: noop,
         "stream-condition": (streamCondition) => {

@@ -42,6 +42,7 @@
   "endpoints": [
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "alpha",
       "tags": [],
       "sdkName": {
@@ -103,6 +104,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "beta",
       "tags": [],
       "sdkName": {
@@ -164,6 +166,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "gamma",
       "tags": [],
       "sdkName": {
@@ -225,6 +228,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "delta",
       "tags": [],
       "sdkName": {
@@ -286,6 +290,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "mu",
       "tags": [],
       "sdkName": {
@@ -347,6 +352,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "omega",
       "tags": [],
       "sdkName": {
@@ -408,6 +414,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "zeta",
       "tags": [],
       "sdkName": {
@@ -469,6 +476,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "eta",
       "tags": [],
       "sdkName": {

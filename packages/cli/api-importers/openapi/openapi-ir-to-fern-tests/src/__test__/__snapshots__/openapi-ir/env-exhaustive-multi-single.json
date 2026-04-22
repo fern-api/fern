@@ -26,6 +26,7 @@
   "endpoints": [
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "list",
       "tags": [],
       "pathParameters": [],
@@ -81,6 +82,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "list",
       "tags": [],
       "pathParameters": [],

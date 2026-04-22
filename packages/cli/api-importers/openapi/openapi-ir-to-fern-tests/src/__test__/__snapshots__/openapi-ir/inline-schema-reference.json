@@ -10,6 +10,7 @@
     {
       "summary": "Get Example",
       "audiences": [],
+      "viewers": [],
       "tags": [],
       "pathParameters": [],
       "queryParameters": [],

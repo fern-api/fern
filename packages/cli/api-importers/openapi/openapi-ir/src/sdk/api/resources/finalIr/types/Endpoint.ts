@@ -19,6 +19,7 @@ export interface Endpoint
     idempotent: boolean | undefined;
     method: FernOpenapiIr.HttpMethod;
     audiences: string[];
+    viewers: string[];
     /**
      * This string includes templated path parameters.
      * For example, `/users/{userId}` is a valid value.

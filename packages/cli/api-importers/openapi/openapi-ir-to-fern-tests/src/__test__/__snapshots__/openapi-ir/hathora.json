@@ -16,6 +16,7 @@
   "endpoints": [
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "GetApps",
       "tags": [
         "AppV1"
@@ -260,6 +261,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "CreateApp",
       "tags": [
         "AppV1"
@@ -484,6 +486,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "UpdateApp",
       "tags": [
         "AppV1"
@@ -736,6 +739,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "GetAppInfo",
       "tags": [
         "AppV1"
@@ -926,6 +930,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "DeleteApp",
       "tags": [
         "AppV1"
@@ -1043,6 +1048,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "LoginAnonymous",
       "tags": [
         "AuthV1"
@@ -1182,6 +1188,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "LoginNickname",
       "tags": [
         "AuthV1"
@@ -1371,6 +1378,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "LoginGoogle",
       "tags": [
         "AuthV1"
@@ -1587,6 +1595,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "GetBuilds",
       "tags": [
         "BuildV1"
@@ -1795,6 +1804,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "GetBuildInfo",
       "tags": [
         "BuildV1"
@@ -2019,6 +2029,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "CreateBuild",
       "tags": [
         "BuildV1"
@@ -2271,6 +2282,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "RunBuild",
       "tags": [
         "BuildV1"
@@ -2413,6 +2425,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "DeleteBuild",
       "tags": [
         "BuildV1"
@@ -2583,6 +2596,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "GetDeployments",
       "tags": [
         "DeploymentV1"
@@ -2805,6 +2819,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "GetDeploymentInfo",
       "tags": [
         "DeploymentV1"
@@ -3043,6 +3058,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "CreateDeployment",
       "tags": [
         "DeploymentV1"
@@ -3405,6 +3421,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "GetPingServiceEndpoints",
       "tags": [
         "DiscoveryV1"
@@ -3485,6 +3502,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "CreatePrivateLobbyDeprecated",
       "tags": [
         "LobbyV1"
@@ -3751,6 +3769,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "CreatePublicLobbyDeprecated",
       "tags": [
         "LobbyV1"
@@ -4017,6 +4036,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "ListActivePublicLobbiesDeprecated",
       "tags": [
         "LobbyV1"
@@ -4295,6 +4315,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "CreatePrivateLobby",
       "tags": [
         "LobbyV2"
@@ -4716,6 +4737,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "CreatePublicLobby",
       "tags": [
         "LobbyV2"
@@ -5137,6 +5159,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "CreateLocalLobby",
       "tags": [
         "LobbyV2"
@@ -5558,6 +5581,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "CreateLobby",
       "tags": [
         "LobbyV2"
@@ -6014,6 +6038,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "ListActivePublicLobbies",
       "tags": [
         "LobbyV2"
@@ -6215,6 +6240,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "GetLobbyInfo",
       "tags": [
         "LobbyV2"
@@ -6439,6 +6465,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "SetLobbyState",
       "tags": [
         "LobbyV2"
@@ -6768,6 +6795,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "GetLogsForApp",
       "tags": [
         "LogV1"
@@ -6910,6 +6938,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "GetLogsForProcess",
       "tags": [
         "LogV1"
@@ -7048,6 +7077,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "GetLogsForDeployment",
       "tags": [
         "LogV1"
@@ -7186,6 +7216,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "GetMetrics",
       "tags": [
         "MetricsV1"
@@ -7540,6 +7571,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "GetRunningProcesses",
       "tags": [
         "ProcessesV1"
@@ -7835,6 +7867,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "GetStoppedProcesses",
       "tags": [
         "ProcessesV1"
@@ -8092,6 +8125,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "GetProcessInfo",
       "tags": [
         "ProcessesV1"
@@ -8344,6 +8378,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "CreateRoom",
       "tags": [
         "RoomV1"
@@ -8538,6 +8573,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "GetRoomInfo",
       "tags": [
         "RoomV1"
@@ -8770,6 +8806,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "GetActiveRoomsForProcess",
       "tags": [
         "RoomV1"
@@ -8974,6 +9011,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "GetInactiveRoomsForProcess",
       "tags": [
         "RoomV1"
@@ -9178,6 +9216,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "DestroyRoom",
       "tags": [
         "RoomV1"
@@ -9321,6 +9360,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "SuspendRoom",
       "tags": [
         "RoomV1"
@@ -9464,6 +9504,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "GetConnectionInfo",
       "tags": [
         "RoomV1"
