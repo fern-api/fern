@@ -892,8 +892,7 @@ export function convertSchemaObject(
             schema.additionalProperties !== false &&
             hasNoProperties(schema) &&
             hasNoAllOf(schema) &&
-            (context.options.additionalPropertiesOnOneOf !== "ignore" ||
-                (hasNoOneOf(schema) && (schema.anyOf == null || schema.anyOf.length === 0)))
+            (context.options.additionalPropertiesOnOneOf !== "ignore" || (hasNoOneOf(schema) && hasNoAnyOf(schema)))
         ) {
             return convertAdditionalProperties({
                 nameOverride,
@@ -1619,6 +1618,10 @@ export function convertToReferencedSchema(
 
 function hasNoOneOf(schema: OpenAPIV3.SchemaObject): boolean {
     return schema.oneOf == null || schema.oneOf.length === 0;
+}
+
+function hasNoAnyOf(schema: OpenAPIV3.SchemaObject): boolean {
+    return schema.anyOf == null || schema.anyOf.length === 0;
 }
 
 function hasNoAllOf(schema: OpenAPIV3.SchemaObject): boolean {
