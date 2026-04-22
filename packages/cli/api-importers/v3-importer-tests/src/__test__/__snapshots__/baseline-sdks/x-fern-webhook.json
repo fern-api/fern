@@ -287,7 +287,8 @@
               }
             }
           }
-        ]
+        ],
+        "audiences": []
       },
       {
         "id": "webhooks_status.updateInlined",
@@ -333,7 +334,8 @@
               "jsonExample": {}
             }
           }
-        ]
+        ],
+        "audiences": []
       }
     ],
     "webhooks_status2": [
@@ -401,6 +403,9 @@
               }
             }
           }
+        ],
+        "audiences": [
+          "private"
         ]
       }
     ]
