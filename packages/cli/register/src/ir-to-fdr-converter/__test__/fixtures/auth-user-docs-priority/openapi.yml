@@ -1,0 +1,32 @@
+openapi: 3.0.3
+info:
+  title: Auth User Docs Priority Test API
+  version: 1.0.0
+  description: Test that user's explicit docs in generators.yml take priority over OpenAPI description
+
+servers:
+  - url: https://api.example.com
+
+paths:
+  /resource:
+    get:
+      operationId: getResource
+      summary: Get protected resource
+      security:
+        - apiKeyAuth: []
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: string
+                example: "resource data"
+
+components:
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: This is the OpenAPI description that should be ignored when user provides explicit docs
