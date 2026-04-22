@@ -902,9 +902,9 @@ importers:
 
   generators/csharp/formatter:
     dependencies:
-      '@fern-api/base-generator':
+      '@fern-api/browser-compatible-base-generator':
         specifier: workspace:*
-        version: link:../../base
+        version: link:../../browser-compatible-base
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
@@ -1119,9 +1119,9 @@ importers:
 
   generators/go-v2/formatter:
     dependencies:
-      '@fern-api/base-generator':
+      '@fern-api/browser-compatible-base-generator':
         specifier: workspace:*
-        version: link:../../base
+        version: link:../../browser-compatible-base
       '@wasm-fmt/gofmt':
         specifier: 'catalog:'
         version: 0.4.9
@@ -1753,9 +1753,9 @@ importers:
 
   generators/python-v2/formatter:
     devDependencies:
-      '@fern-api/base-generator':
+      '@fern-api/browser-compatible-base-generator':
         specifier: workspace:*
-        version: link:../../base
+        version: link:../../browser-compatible-base
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../packages/configs
@@ -2583,9 +2583,9 @@ importers:
 
   generators/typescript-v2/formatter:
     dependencies:
-      '@fern-api/base-generator':
+      '@fern-api/browser-compatible-base-generator':
         specifier: workspace:*
-        version: link:../../base
+        version: link:../../browser-compatible-base
       prettier2:
         specifier: 'catalog:'
         version: prettier@2.8.8
