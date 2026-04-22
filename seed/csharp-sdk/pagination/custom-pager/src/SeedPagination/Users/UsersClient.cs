@@ -1611,6 +1611,7 @@ public partial class UsersClient : IUsersClient
                 null,
                 response => response.Data?.ToList(),
                 null,
+                false,
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -1661,6 +1662,7 @@ public partial class UsersClient : IUsersClient
                 null,
                 response => response.Data?.ToList(),
                 null,
+                false,
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -1709,6 +1711,7 @@ public partial class UsersClient : IUsersClient
                 null,
                 response => response.Data?.ToList(),
                 null,
+                false,
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -1758,6 +1761,7 @@ public partial class UsersClient : IUsersClient
                 request => request.Limit ?? 0,
                 response => response.Data?.ToList(),
                 null,
+                false,
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -1807,6 +1811,7 @@ public partial class UsersClient : IUsersClient
                 request => request.Limit ?? 0,
                 response => response.Data?.ToList(),
                 response => response.HasNextPage,
+                false,
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -2018,6 +2023,7 @@ public partial class UsersClient : IUsersClient
                 null,
                 response => response.Results?.ToList(),
                 null,
+                false,
                 cancellationToken
             )
             .ConfigureAwait(false);
@@ -2056,6 +2062,7 @@ public partial class UsersClient : IUsersClient
                 null,
                 response => response.Data?.ToList(),
                 null,
+                false,
                 cancellationToken
             )
             .ConfigureAwait(false);
