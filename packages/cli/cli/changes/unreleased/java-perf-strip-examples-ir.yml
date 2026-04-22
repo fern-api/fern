@@ -1,0 +1,4 @@
+- summary: |
+    Optimize Java generator performance by stripping examples from IR before migration
+    and writing a separate full IR file for the v2 generator.
+  type: feat

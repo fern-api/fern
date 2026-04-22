@@ -124,11 +124,17 @@ export async function writeFilesToDiskAndRunGenerator({
     autoVersioningNewVersion?: string;
     autoVersioningPreviousVersion?: string;
 }> {
-    // Strip examples from the raw IR BEFORE migration so jsonOrThrow runs on ~5MB
-    // instead of ~57MB. Examples comprise ~97% of IR size but v1 doesn't use them.
-    const strippedRawIr = stripExamplesFromIr(ir) as IntermediateRepresentation;
+    // For Java generators, strip examples from the raw IR BEFORE migration so jsonOrThrow
+    // runs on ~5MB instead of ~57MB. Examples comprise ~97% of IR size but v1 doesn't use them.
+    // Non-Java generators (Go, TS, etc.) need examples for snippet generation, so skip stripping.
+    const generatorLanguage =
+        generatorInvocation.language ?? extractLanguageFromGeneratorName(generatorInvocation.name);
+    const isJavaGenerator = generatorLanguage === "java";
+    const irForMigration = isJavaGenerator
+        ? (stripExamplesFromIr(ir) as IntermediateRepresentation)
+        : ir;
 
-    const { migrated } = await getIntermediateRepresentation({
+    const { latest, migrated } = await getIntermediateRepresentation({
         workspace,
         audiences,
         generatorInvocation,
@@ -138,33 +144,39 @@ export async function writeFilesToDiskAndRunGenerator({
         version: version ?? outputVersionOverride,
         sourceConfig: getSourceConfig(workspace, executionEnvironment?.usesContainerPaths ?? true),
         includeOptionalRequestPropertyExamples,
-        ir: strippedRawIr
+        ir: irForMigration
     });
 
-    // Copy sourceConfig and generationMetadata from the mutated stripped IR to the full IR
-    // (getIntermediateRepresentation only mutated strippedRawIr, not the original ir)
-    ir.sourceConfig = strippedRawIr.sourceConfig;
-    ir.generationMetadata = strippedRawIr.generationMetadata;
+    if (isJavaGenerator) {
+        // Copy sourceConfig and generationMetadata from the mutated stripped IR to the full IR
+        // (getIntermediateRepresentation only mutated irForMigration, not the original ir)
+        ir.sourceConfig = irForMigration.sourceConfig;
+        ir.generationMetadata = irForMigration.generationMetadata;
+    }
 
-    // Write stripped migrated IR for v1 (already stripped before migration)
+    // Write migrated IR (stripped for Java, full for other generators)
     const absolutePathToIr = await writeIrToFile({
         workspaceTempDir,
         filename: IR_FILENAME,
         context,
         ir: migrated
     });
-    context.logger.debug("Wrote stripped IR to: " + absolutePathToIr);
+    context.logger.debug("Wrote IR to: " + absolutePathToIr);
 
-    // Write full raw IR (camelCase, with examples) for v2 — avoids expensive jsonOrThrow
-    // on the 57MB full IR. v2 reads this directly without Zod parsing.
-    const fullIrFilename = "ir-full.json";
-    const absolutePathToFullIr = await writeIrToFile({
-        workspaceTempDir,
-        filename: fullIrFilename,
-        context,
-        ir
-    });
-    context.logger.debug("Wrote full IR to: " + absolutePathToFullIr);
+    // For Java generators, also write the full raw IR (camelCase, with examples) for v2.
+    // This avoids expensive jsonOrThrow on the 57MB full IR. v2 reads this directly
+    // without Zod parsing via the FULL_IR_PATH environment variable.
+    let absolutePathToFullIr: AbsoluteFilePath | undefined;
+    if (isJavaGenerator) {
+        const fullIrFilename = "ir-full.json";
+        absolutePathToFullIr = await writeIrToFile({
+            workspaceTempDir,
+            filename: fullIrFilename,
+            context,
+            ir
+        });
+        context.logger.debug("Wrote full IR to: " + absolutePathToFullIr);
+    }
 
     const configJsonFile = join(workspaceTempDir.path, GENERATOR_CONFIG_FILENAME);
     const absolutePathToWriteConfigJson = AbsoluteFilePath.of(configJsonFile);
@@ -220,8 +232,6 @@ export async function writeFilesToDiskAndRunGenerator({
 
     // Map the magic version to language-specific format before passing to generator.
     // E.g., Go gets "v0.0.0-fern-placeholder", Python gets "0.0.0.dev0" (PEP 440 compatible).
-    const generatorLanguage =
-        generatorInvocation.language ?? extractLanguageFromGeneratorName(generatorInvocation.name);
     const mappedVersion = version != null ? mapMagicVersionForLanguage(version, generatorLanguage) : version;
     const mappedOutputVersionOverride =
         outputVersionOverride != null
@@ -295,7 +305,7 @@ export async function writeFilesToDiskAndRunGenerator({
     const generatedFilesResult = await taskHandler.copyGeneratedFiles();
 
     return {
-        ir,
+        ir: isJavaGenerator ? ir : latest,
         generatorConfig: config,
         ...generatedFilesResult
     };
