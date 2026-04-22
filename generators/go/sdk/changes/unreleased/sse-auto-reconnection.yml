@@ -1,0 +1,87 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add SSE auto-reconnection support to generated Go SDKs. Streams now
+    automatically reconnect on transient failures (network errors, non-fatal
+    HTTP status codes) with exponential backoff and jitter, resuming from the
+    last event ID via the `Last-Event-ID` header. The default is 10 reconnection
+    attempts; callers can tune or disable this with the new
+    `WithMaxReconnectAttempts` request option.
+
+    **New types and methods on `Stream[T]`:**
+
+    ```go
+    // RecvEvent returns parsed data together with SSE metadata.
+    func (s *Stream[T]) RecvEvent() (StreamEvent[T], error)
+
+    // RecvEventRaw returns the raw bytes with SSE metadata.
+    func (s *Stream[T]) RecvEventRaw() (StreamEventRaw, error)
+
+    // LastEventID returns the most recently received non-empty event ID,
+    // useful for manual resume logic.
+    func (s *Stream[T]) LastEventID() string
+
+    // Terminated reports whether the stream ended via a terminator match
+    // rather than a connection drop.
+    func (s *Stream[T]) Terminated() bool
+
+    // ServerRetry returns the most recently received retry interval from the server.
+    func (s *Stream[T]) ServerRetry() time.Duration
+    ```
+
+    **SSE metadata types:**
+
+    ```go
+    type SseEventMeta struct {
+        ID    string
+        Event string
+        Retry int // reconnection time in milliseconds; 0 if unset
+    }
+
+    type StreamEvent[T any] struct {
+        SseEventMeta
+        Data T
+    }
+    ```
+
+    **Usage — basic consumption (unchanged, reconnection is automatic):**
+
+    ```go
+    stream, err := client.GenerateStream(ctx, req)
+    if err != nil { ... }
+    defer stream.Close()
+    for {
+        msg, err := stream.Recv()
+        if errors.Is(err, io.EOF) {
+            break
+        }
+        if err != nil { ... }
+        fmt.Println(msg)
+    }
+    ```
+
+    **Usage — accessing SSE metadata:**
+
+    ```go
+    for {
+        event, err := stream.RecvEvent()
+        if errors.Is(err, io.EOF) { break }
+        if err != nil { ... }
+        fmt.Printf("id=%s type=%s data=%+v\n", event.ID, event.Event, event.Data)
+    }
+    ```
+
+    **Usage — configuring reconnection:**
+
+    ```go
+    // Increase to 20 attempts.
+    stream, _ := client.GenerateStream(ctx, req,
+        option.WithMaxReconnectAttempts(20),
+    )
+
+    // Disable auto-reconnection entirely.
+    stream, _ := client.GenerateStream(ctx, req,
+        option.WithMaxReconnectAttempts(0),
+    )
+    ```
+  type: feat
