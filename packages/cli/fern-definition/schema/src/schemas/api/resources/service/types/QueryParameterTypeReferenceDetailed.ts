@@ -5,4 +5,5 @@ import type * as FernDefinition from "../../../index.js";
 export interface QueryParameterTypeReferenceDetailed extends FernDefinition.TypeReferenceDeclarationWithName {
     "allow-multiple"?: boolean;
     explode?: boolean;
+    "client-default"?: unknown;
 }
