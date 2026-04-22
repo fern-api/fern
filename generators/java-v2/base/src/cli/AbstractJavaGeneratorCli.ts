@@ -15,8 +15,13 @@ export abstract class AbstractJavaGeneratorCli<
      * @returns
      */
     protected async parseIntermediateRepresentation(irFilepath: string): Promise<FernIr.IntermediateRepresentation> {
+        // Use full IR (with examples) if available via env var, otherwise use the config's irFilepath.
+        // The orchestrator writes a stripped IR (no examples) as the main ir.json for v1 Java generator
+        // performance, and passes the full IR path via FULL_IR_PATH for v2 which needs examples.
+        const fullIrPath = process.env.FULL_IR_PATH;
+        const resolvedPath = fullIrPath != null && fullIrPath.length > 0 ? fullIrPath : irFilepath;
         return await parseIR<FernIr.IntermediateRepresentation>({
-            absolutePathToIR: AbsoluteFilePath.of(irFilepath),
+            absolutePathToIR: AbsoluteFilePath.of(resolvedPath),
             parse: IrSerialization.IntermediateRepresentation.parse
         });
     }

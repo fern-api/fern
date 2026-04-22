@@ -30,7 +30,7 @@ export abstract class AbstractJavaGeneratorContext<
             smartCasing: ir.casingsConfig?.smartCasing ?? true
         });
         this.javaTypeMapper = new JavaTypeMapper(this);
-        this.project = new JavaProject({ context: this });
+        this.project = new JavaProject({ context: this, skipFormatting: true });
     }
 
     public abstract getRootPackageName(): string;

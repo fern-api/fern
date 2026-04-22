@@ -11,9 +11,17 @@ import { AbstractJavaGeneratorContext } from "../context/AbstractJavaGeneratorCo
  */
 export class JavaProject extends AbstractProject<AbstractJavaGeneratorContext<BaseJavaCustomConfigSchema>> {
     private sourceFiles: File[] = [];
+    private readonly skipFormatting: boolean;
 
-    public constructor({ context }: { context: AbstractJavaGeneratorContext<BaseJavaCustomConfigSchema> }) {
+    public constructor({
+        context,
+        skipFormatting = false
+    }: {
+        context: AbstractJavaGeneratorContext<BaseJavaCustomConfigSchema>;
+        skipFormatting?: boolean;
+    }) {
         super(context);
+        this.skipFormatting = skipFormatting;
     }
 
     public addJavaFiles(file: File): void {
@@ -36,6 +44,9 @@ export class JavaProject extends AbstractProject<AbstractJavaGeneratorContext<Ba
         });
         await this.writeRawFiles();
         this.context.logger.debug(`Successfully wrote java files to ${this.absolutePathToOutputDirectory}`);
+        if (this.skipFormatting) {
+            return;
+        }
         const gradlewPath = join(this.absolutePathToOutputDirectory, RelativeFilePath.of("gradlew"));
         const gradlewExists = await doesPathExist(gradlewPath, "file");
         if (gradlewExists) {

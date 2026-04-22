@@ -11,6 +11,7 @@ export declare namespace ExecutionEnvironment {
     interface ExecuteArgs {
         generatorName: string;
         irPath: AbsoluteFilePath;
+        fullIrPath?: AbsoluteFilePath;
         configPath: AbsoluteFilePath;
         outputPath: AbsoluteFilePath;
         snippetPath?: AbsoluteFilePath;
