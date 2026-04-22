@@ -93,10 +93,22 @@ import { RUNTIME } from "./runtime.js";
 void runCli();
 
 async function runCli() {
-    getOrCreateFernRunId();
+    // Shell completion must be fast and side-effect-free. When the shell
+    // invokes `fern --get-yargs-completions …` we skip version redirection
+    // (network call) and suppress upgrade notices so TAB never produces
+    // extraneous output.
+    const isCompletion = process.argv.includes("--get-yargs-completions");
+
+    if (!isCompletion) {
+        getOrCreateFernRunId();
+    }
 
     const isLocal = process.argv.includes("--local");
     const cliContext = await CliContext.create(process.stdout, process.stderr, { isLocal });
+
+    if (isCompletion) {
+        cliContext.suppressUpgradeMessage();
+    }
 
     const exit = async () => {
         await cliContext.exit();
@@ -126,14 +138,21 @@ async function runCli() {
         if (cwd != null) {
             process.chdir(cwd);
         }
-        const versionOfCliToRun = await getIntendedVersionOfCli(cliContext);
-        if (cliContext.environment.packageVersion === versionOfCliToRun) {
+
+        // During completion, skip version redirection to avoid a slow network
+        // round-trip that blocks every TAB press.
+        if (isCompletion) {
             await tryRunCli(cliContext);
         } else {
-            await rerunFernCliAtVersion({
-                version: versionOfCliToRun,
-                cliContext
-            });
+            const versionOfCliToRun = await getIntendedVersionOfCli(cliContext);
+            if (cliContext.environment.packageVersion === versionOfCliToRun) {
+                await tryRunCli(cliContext);
+            } else {
+                await rerunFernCliAtVersion({
+                    version: versionOfCliToRun,
+                    cliContext
+                });
+            }
         }
     } catch (error) {
         cliContext.failWithoutThrowing(undefined, error);

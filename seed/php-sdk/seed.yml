@@ -142,6 +142,9 @@ fixtures:
     - outputFolder: property-accessors
       customConfig:
         propertyAccess: private
+    - outputFolder: page-index-semantics
+      customConfig:
+        offsetSemantics: "page-index"
   unions:
     - outputFolder: no-custom-config
       customConfig: null

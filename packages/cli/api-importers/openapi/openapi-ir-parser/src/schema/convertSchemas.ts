@@ -914,9 +914,10 @@ export function convertSchemaObject(
             });
         }
 
+        const isDiscriminated = getExtension<boolean>(schema, FernOpenAPIExtension.IS_DISCRIMINATED);
+
         // handle oneOf with IS_DISCRIMINATED extension
         if (schema.oneOf != null && schema.oneOf.length > 0) {
-            const isDiscriminated = getExtension<boolean>(schema, FernOpenAPIExtension.IS_DISCRIMINATED);
             if (isDiscriminated === false) {
                 return convertUndiscriminatedOneOf({
                     nameOverride,
@@ -942,7 +943,11 @@ export function convertSchemaObject(
                 discriminator: schema.discriminator,
                 context
             });
-            if (!context.options.discriminatedUnionV2 || objectDiscriminatorContext === "protocol") {
+            if (
+                isDiscriminated === true ||
+                !context.options.discriminatedUnionV2 ||
+                objectDiscriminatorContext === "protocol"
+            ) {
                 return convertDiscriminatedOneOf({
                     nameOverride,
                     generatedName,
@@ -993,6 +998,7 @@ export function convertSchemaObject(
                     context
                 });
                 if (
+                    isDiscriminated !== true &&
                     (context.options.discriminatedUnionV2 || isUndiscriminated) &&
                     discriminatorContext !== "protocol"
                 ) {
@@ -1115,7 +1121,10 @@ export function convertSchemaObject(
                 }
 
                 const maybeDiscriminant = getDiscriminant({ schemas: schema.oneOf, context });
-                if (maybeDiscriminant != null && !context.options.discriminatedUnionV2 && !isUndiscriminated) {
+                if (
+                    maybeDiscriminant != null &&
+                    (isDiscriminated === true || (!context.options.discriminatedUnionV2 && !isUndiscriminated))
+                ) {
                     return convertDiscriminatedOneOfWithVariants({
                         nameOverride,
                         generatedName,
