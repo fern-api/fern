@@ -157,6 +157,9 @@ fixtures:
         custom-pager-name: MyPager
         include-exception-handler: true
       outputFolder: custom-pager-with-exception-handler
+    - customConfig:
+        offset-semantics: "page-index"
+      outputFolder: page-index-semantics
   examples:
     - customConfig: null
       outputFolder: no-custom-config

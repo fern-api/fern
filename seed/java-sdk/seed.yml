@@ -185,6 +185,10 @@ fixtures:
     - customConfig:
         enable-wire-tests: true
       outputFolder: default
+    - customConfig:
+        enable-wire-tests: true
+        offset-semantics: "item-index"
+      outputFolder: item-index-semantics
   pagination-custom:
     - customConfig:
         custom-pager-name: "FernCustomPaginator"

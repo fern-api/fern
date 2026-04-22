@@ -1,0 +1,15 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-java-sdk",
+  "generatorVersion": "local",
+  "generatorConfig": {
+    "enable-wire-tests": true,
+    "offset-semantics": "item-index"
+  },
+  "originGitCommit": "DUMMY",
+  "originGitCommitIsDirty": null,
+  "invokedBy": "manual",
+  "requestedVersion": "0.0.1",
+  "ciProvider": null,
+  "sdkVersion": "0.0.1"
+}
