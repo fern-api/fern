@@ -417,7 +417,6 @@ fixtures:
 allowedFailures:
   - allof
   - allof-inline
-  - bytes-upload
   - enum:forward-compatible-enums
   - imdb:exported-client-class-name
   - enum:plain-enums
