@@ -1,3 +1,3 @@
 - summary: |
-    Support `x-fern-discriminated: true` to override the global `prefer-undiscriminated-unions-with-literals` setting and keep specific schemas as discriminated unions.
-  type: feat
+    Fix `x-fern-discriminated: true` to correctly keep specific schemas as discriminated unions when `prefer-undiscriminated-unions-with-literals` is enabled.
+  type: fix
