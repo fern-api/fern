@@ -116,7 +116,12 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
             const descriptions = new Map(openApiSchemes.map((scheme) => [scheme.key, scheme.docs]));
             const enriched = {
                 ...this.context.authOverrides,
-                "auth-schemes": { ...this.context.authOverrides["auth-schemes"] }
+                "auth-schemes": Object.fromEntries(
+                    Object.entries(this.context.authOverrides["auth-schemes"]).map(([id, scheme]) => [
+                        id,
+                        { ...scheme }
+                    ])
+                )
             };
 
             for (const [schemeId, scheme] of Object.entries(enriched["auth-schemes"])) {
