@@ -579,6 +579,8 @@
                     }
                 ],
                 "v2Examples": null,
+                "audiences": null,
+                "viewers": null,
                 "availability": null,
                 "docs": "Fired when a new user is created. Inherits the document-level HMAC-SHA256\nsignature verification configuration."
             },
@@ -736,6 +738,8 @@
                     }
                 ],
                 "v2Examples": null,
+                "audiences": null,
+                "viewers": null,
                 "availability": null,
                 "docs": "Fired when an order is completed. Inherits the document-level HMAC-SHA256\nsignature verification configuration."
             },
@@ -890,6 +894,8 @@
                     }
                 ],
                 "v2Examples": null,
+                "audiences": null,
+                "viewers": null,
                 "availability": null,
                 "docs": "Fired when a payment status changes. Uses asymmetric RSA-SHA256 signature\nverification with keys fetched from a JWKS endpoint, overriding the\ndocument-level default."
             },
@@ -1058,6 +1064,8 @@
                     }
                 ],
                 "v2Examples": null,
+                "audiences": null,
+                "viewers": null,
                 "availability": null,
                 "docs": "Fired when a refund is processed. Uses asymmetric ECDSA-SHA256 signature\nverification with a static public key, overriding the document-level default."
             }
@@ -1574,6 +1582,7 @@
         "generatorConfig": null
     },
     "audiences": null,
+    "roles": null,
     "generationMetadata": null,
     "apiPlayground": true,
     "casingsConfig": {

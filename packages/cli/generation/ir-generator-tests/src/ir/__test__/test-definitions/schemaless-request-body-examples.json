@@ -703,6 +703,7 @@
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "viewers": null,
                     "retries": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
@@ -1185,6 +1186,7 @@
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "viewers": null,
                     "retries": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
@@ -1741,6 +1743,7 @@
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "viewers": null,
                     "retries": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
@@ -1748,7 +1751,8 @@
                     "docs": "A control endpoint that has both schema and example defined."
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "viewers": null
         }
     },
     "constants": {
@@ -2409,6 +2413,7 @@
         "generatorConfig": null
     },
     "audiences": null,
+    "roles": null,
     "generationMetadata": null,
     "apiPlayground": true,
     "casingsConfig": {

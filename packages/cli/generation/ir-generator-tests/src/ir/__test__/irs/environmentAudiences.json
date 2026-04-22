@@ -778,6 +778,7 @@
                     "audiences": [
                         "external"
                     ],
+                    "viewers": null,
                     "retries": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
@@ -1709,6 +1710,7 @@
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "viewers": null,
                     "retries": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
@@ -1716,7 +1718,8 @@
                     "docs": "Retrieve a movie from the database based on the ID"
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "viewers": null
         }
     },
     "constants": {
@@ -1826,6 +1829,10 @@
                 "responses": null,
                 "examples": null,
                 "v2Examples": null,
+                "audiences": [
+                    "external"
+                ],
+                "viewers": null,
                 "availability": null,
                 "docs": null
             },
@@ -1859,6 +1866,8 @@
                 "responses": null,
                 "examples": null,
                 "v2Examples": null,
+                "audiences": null,
+                "viewers": null,
                 "availability": null,
                 "docs": null
             }
@@ -2910,6 +2919,7 @@
         "internal",
         "development"
     ],
+    "roles": null,
     "generationMetadata": null,
     "apiPlayground": true,
     "casingsConfig": {

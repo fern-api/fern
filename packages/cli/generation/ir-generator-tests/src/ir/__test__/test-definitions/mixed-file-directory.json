@@ -1130,6 +1130,7 @@
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "viewers": null,
                     "retries": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
@@ -1137,7 +1138,8 @@
                     "docs": "Create a new organization."
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "viewers": null
         },
         "service_user": {
             "availability": null,
@@ -1591,6 +1593,7 @@
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "viewers": null,
                     "retries": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
@@ -1598,7 +1601,8 @@
                     "docs": "List all users."
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "viewers": null
         },
         "service_user/events": {
             "availability": null,
@@ -2023,6 +2027,7 @@
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "viewers": null,
                     "retries": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
@@ -2030,7 +2035,8 @@
                     "docs": "List all user events."
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "viewers": null
         },
         "service_user/events/metadata": {
             "availability": null,
@@ -2345,6 +2351,7 @@
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "viewers": null,
                     "retries": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
@@ -2352,7 +2359,8 @@
                     "docs": "Get event metadata."
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "viewers": null
         }
     },
     "constants": {
@@ -4104,6 +4112,7 @@
         "generatorConfig": null
     },
     "audiences": null,
+    "roles": null,
     "generationMetadata": null,
     "apiPlayground": true,
     "casingsConfig": {

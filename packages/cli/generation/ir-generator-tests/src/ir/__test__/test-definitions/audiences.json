@@ -963,6 +963,7 @@
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "viewers": null,
                     "retries": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
@@ -972,7 +973,8 @@
             ],
             "audiences": [
                 "public"
-            ]
+            ],
+            "viewers": null
         },
         "service_folder-d/service": {
             "availability": null,
@@ -1151,6 +1153,7 @@
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "viewers": null,
                     "retries": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
@@ -1160,7 +1163,8 @@
             ],
             "audiences": [
                 "partner"
-            ]
+            ],
+            "viewers": null
         },
         "service_foo": {
             "availability": null,
@@ -1508,6 +1512,7 @@
                         "public",
                         "private"
                     ],
+                    "viewers": null,
                     "retries": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
@@ -1515,7 +1520,8 @@
                     "docs": null
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "viewers": null
         }
     },
     "constants": {
@@ -3267,6 +3273,7 @@
         "private",
         "partner"
     ],
+    "roles": null,
     "generationMetadata": null,
     "apiPlayground": true,
     "casingsConfig": {

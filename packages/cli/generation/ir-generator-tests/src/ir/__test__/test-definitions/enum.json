@@ -1050,6 +1050,7 @@
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "viewers": null,
                     "retries": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
@@ -1057,7 +1058,8 @@
                     "docs": null
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "viewers": null
         },
         "service_inlined-request": {
             "availability": null,
@@ -1516,6 +1518,7 @@
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "viewers": null,
                     "retries": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
@@ -1523,7 +1526,8 @@
                     "docs": null
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "viewers": null
         },
         "service_multipart-form": {
             "availability": null,
@@ -1738,6 +1742,7 @@
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "viewers": null,
                     "retries": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
@@ -1745,7 +1750,8 @@
                     "docs": null
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "viewers": null
         },
         "service_path-param": {
             "availability": null,
@@ -2127,6 +2133,7 @@
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "viewers": null,
                     "retries": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
@@ -2134,7 +2141,8 @@
                     "docs": null
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "viewers": null
         },
         "service_query-param": {
             "availability": null,
@@ -2531,6 +2539,7 @@
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "viewers": null,
                     "retries": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
@@ -2803,6 +2812,7 @@
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "viewers": null,
                     "retries": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
@@ -2810,7 +2820,8 @@
                     "docs": null
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "viewers": null
         }
     },
     "constants": {
@@ -5692,6 +5703,7 @@
         "generatorConfig": null
     },
     "audiences": null,
+    "roles": null,
     "generationMetadata": null,
     "apiPlayground": true,
     "casingsConfig": {

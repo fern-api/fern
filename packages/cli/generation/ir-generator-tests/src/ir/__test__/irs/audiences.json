@@ -472,6 +472,7 @@
                     "audiences": [
                         "external"
                     ],
+                    "viewers": null,
                     "retries": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
@@ -479,7 +480,8 @@
                     "docs": "Add a movie to the database"
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "viewers": null
         }
     },
     "constants": {
@@ -573,6 +575,10 @@
                 "responses": null,
                 "examples": null,
                 "v2Examples": null,
+                "audiences": [
+                    "external"
+                ],
+                "viewers": null,
                 "availability": null,
                 "docs": null
             }
@@ -1019,6 +1025,7 @@
         "internal",
         "development"
     ],
+    "roles": null,
     "generationMetadata": null,
     "apiPlayground": true,
     "casingsConfig": {

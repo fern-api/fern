@@ -630,6 +630,7 @@
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "viewers": null,
                     "retries": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
@@ -1136,6 +1137,7 @@
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "viewers": null,
                     "retries": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
@@ -1143,7 +1145,8 @@
                     "docs": null
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "viewers": null
         },
         "service_nested-no-auth/api": {
             "availability": null,
@@ -1238,6 +1241,7 @@
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "viewers": null,
                     "retries": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
@@ -1245,7 +1249,8 @@
                     "docs": null
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "viewers": null
         },
         "service_nested/api": {
             "availability": null,
@@ -1344,6 +1349,7 @@
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "viewers": null,
                     "retries": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
@@ -1351,7 +1357,8 @@
                     "docs": null
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "viewers": null
         },
         "service_simple": {
             "availability": null,
@@ -1447,6 +1454,7 @@
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "viewers": null,
                     "retries": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
@@ -1454,7 +1462,8 @@
                     "docs": null
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "viewers": null
         }
     },
     "constants": {
@@ -3298,6 +3307,7 @@
         "generatorConfig": null
     },
     "audiences": null,
+    "roles": null,
     "generationMetadata": null,
     "apiPlayground": true,
     "casingsConfig": {

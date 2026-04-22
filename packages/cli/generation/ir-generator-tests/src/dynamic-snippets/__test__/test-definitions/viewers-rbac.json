@@ -1,0 +1,452 @@
+{
+    "version": "1.0.0",
+    "types": {
+        "type_:Plant": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "Plant",
+                    "camelCase": {
+                        "unsafeName": "plant",
+                        "safeName": "plant"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "plant",
+                        "safeName": "plant"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "PLANT",
+                        "safeName": "PLANT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Plant",
+                        "safeName": "Plant"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "id",
+                        "name": {
+                            "originalName": "id",
+                            "camelCase": {
+                                "unsafeName": "id",
+                                "safeName": "id"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "id",
+                                "safeName": "id"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ID",
+                                "safeName": "ID"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "ID",
+                                "safeName": "ID"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "name",
+                        "name": {
+                            "originalName": "name",
+                            "camelCase": {
+                                "unsafeName": "name",
+                                "safeName": "name"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "name",
+                                "safeName": "name"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NAME",
+                                "safeName": "NAME"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Name",
+                                "safeName": "Name"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        }
+    },
+    "headers": [],
+    "endpoints": {
+        "endpoint_plants.list": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "list",
+                    "camelCase": {
+                        "unsafeName": "list",
+                        "safeName": "list"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "list",
+                        "safeName": "list"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "LIST",
+                        "safeName": "LIST"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "List",
+                        "safeName": "List"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "plants",
+                            "camelCase": {
+                                "unsafeName": "plants",
+                                "safeName": "plants"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "plants",
+                                "safeName": "plants"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PLANTS",
+                                "safeName": "PLANTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Plants",
+                                "safeName": "Plants"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "plants",
+                        "camelCase": {
+                            "unsafeName": "plants",
+                            "safeName": "plants"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "plants",
+                            "safeName": "plants"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PLANTS",
+                            "safeName": "PLANTS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Plants",
+                            "safeName": "Plants"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/plants"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": null
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_plants.create": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "create",
+                    "camelCase": {
+                        "unsafeName": "create",
+                        "safeName": "create"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "create",
+                        "safeName": "create"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CREATE",
+                        "safeName": "CREATE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Create",
+                        "safeName": "Create"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "plants",
+                            "camelCase": {
+                                "unsafeName": "plants",
+                                "safeName": "plants"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "plants",
+                                "safeName": "plants"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PLANTS",
+                                "safeName": "PLANTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Plants",
+                                "safeName": "Plants"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "plants",
+                        "camelCase": {
+                            "unsafeName": "plants",
+                            "safeName": "plants"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "plants",
+                            "safeName": "plants"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PLANTS",
+                            "safeName": "PLANTS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Plants",
+                            "safeName": "Plants"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/plants"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": {
+                    "type": "typeReference",
+                    "value": {
+                        "type": "named",
+                        "value": "type_:Plant"
+                    }
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_plants.delete": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "delete",
+                    "camelCase": {
+                        "unsafeName": "delete",
+                        "safeName": "delete"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "delete",
+                        "safeName": "delete"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "DELETE",
+                        "safeName": "DELETE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Delete",
+                        "safeName": "Delete"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "plants",
+                            "camelCase": {
+                                "unsafeName": "plants",
+                                "safeName": "plants"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "plants",
+                                "safeName": "plants"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PLANTS",
+                                "safeName": "PLANTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Plants",
+                                "safeName": "Plants"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "plants",
+                        "camelCase": {
+                            "unsafeName": "plants",
+                            "safeName": "plants"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "plants",
+                            "safeName": "plants"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PLANTS",
+                            "safeName": "PLANTS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Plants",
+                            "safeName": "Plants"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "DELETE",
+                "path": "/plants/{plantId}"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "DeletePlantsRequest",
+                        "camelCase": {
+                            "unsafeName": "deletePlantsRequest",
+                            "safeName": "deletePlantsRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "delete_plants_request",
+                            "safeName": "delete_plants_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "DELETE_PLANTS_REQUEST",
+                            "safeName": "DELETE_PLANTS_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "DeletePlantsRequest",
+                            "safeName": "DeletePlantsRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "plants",
+                                "camelCase": {
+                                    "unsafeName": "plants",
+                                    "safeName": "plants"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "plants",
+                                    "safeName": "plants"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "PLANTS",
+                                    "safeName": "PLANTS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Plants",
+                                    "safeName": "Plants"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "plants",
+                            "camelCase": {
+                                "unsafeName": "plants",
+                                "safeName": "plants"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "plants",
+                                "safeName": "plants"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PLANTS",
+                                "safeName": "PLANTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Plants",
+                                "safeName": "Plants"
+                            }
+                        }
+                    }
+                },
+                "pathParameters": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "plantId",
+                                "camelCase": {
+                                    "unsafeName": "plantID",
+                                    "safeName": "plantID"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "plant_id",
+                                    "safeName": "plant_id"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "PLANT_ID",
+                                    "safeName": "PLANT_ID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "PlantID",
+                                    "safeName": "PlantID"
+                                }
+                            },
+                            "wireValue": "plantId"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "queryParameters": [],
+                "headers": [],
+                "body": null,
+                "metadata": {
+                    "includePathParameters": true,
+                    "onlyPathParameters": true
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        }
+    },
+    "pathParameters": [],
+    "environments": null,
+    "variables": null,
+    "generatorConfig": null
+}

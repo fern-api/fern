@@ -647,6 +647,7 @@
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "viewers": null,
                     "retries": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
@@ -654,7 +655,8 @@
                     "docs": "Place an outbound call or validate call setup with dry_run."
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "viewers": null
         },
         "service_users": {
             "availability": null,
@@ -1126,6 +1128,7 @@
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "viewers": null,
                     "retries": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
@@ -1133,7 +1136,8 @@
                     "docs": "Gets a user by ID. The deleted_at field uses type null."
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "viewers": null
         }
     },
     "constants": {
@@ -1831,6 +1835,7 @@
         "generatorConfig": null
     },
     "audiences": null,
+    "roles": null,
     "generationMetadata": null,
     "apiPlayground": true,
     "casingsConfig": {

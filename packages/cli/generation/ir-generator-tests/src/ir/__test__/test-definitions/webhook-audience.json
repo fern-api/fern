@@ -278,6 +278,10 @@
                     }
                 ],
                 "v2Examples": null,
+                "audiences": [
+                    "public"
+                ],
+                "viewers": null,
                 "availability": null,
                 "docs": null
             },
@@ -364,6 +368,10 @@
                     }
                 ],
                 "v2Examples": null,
+                "audiences": [
+                    "private"
+                ],
+                "viewers": null,
                 "availability": null,
                 "docs": null
             },
@@ -450,6 +458,8 @@
                     }
                 ],
                 "v2Examples": null,
+                "audiences": [],
+                "viewers": null,
                 "availability": null,
                 "docs": null
             }
@@ -660,6 +670,7 @@
         "generatorConfig": null
     },
     "audiences": null,
+    "roles": null,
     "generationMetadata": null,
     "apiPlayground": true,
     "casingsConfig": {

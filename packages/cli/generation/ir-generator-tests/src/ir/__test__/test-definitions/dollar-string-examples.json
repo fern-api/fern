@@ -409,6 +409,8 @@
                     }
                 ],
                 "v2Examples": null,
+                "audiences": null,
+                "viewers": null,
                 "availability": null,
                 "docs": "Triggered when a payment is processed.\nThis webhook tests that dollar sign values like \"$3.00\" are treated as literal strings,\nnot as example references."
             }
@@ -556,6 +558,7 @@
         "generatorConfig": null
     },
     "audiences": null,
+    "roles": null,
     "generationMetadata": null,
     "apiPlayground": true,
     "casingsConfig": {
