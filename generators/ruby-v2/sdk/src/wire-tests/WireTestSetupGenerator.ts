@@ -1,6 +1,6 @@
 import { File, GeneratorError } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { WireMock, WireMockStubMapping } from "@fern-api/mock-utils";
+import { isEqualToMatcher, WireMock, WireMockStubMapping } from "@fern-api/mock-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
@@ -52,12 +52,11 @@ export class WireTestSetupGenerator {
         for (const mapping of stubMapping.mappings) {
             if (mapping.request.queryParameters) {
                 for (const [, value] of Object.entries(mapping.request.queryParameters)) {
-                    const paramValue = value as { equalTo: string };
-                    if (
-                        paramValue.equalTo != null &&
-                        WireTestSetupGenerator.DATETIME_WITH_ZERO_MILLIS_REGEX.test(paramValue.equalTo)
-                    ) {
-                        paramValue.equalTo = paramValue.equalTo.replace(".000", "");
+                    if (!isEqualToMatcher(value)) {
+                        continue;
+                    }
+                    if (WireTestSetupGenerator.DATETIME_WITH_ZERO_MILLIS_REGEX.test(value.equalTo)) {
+                        value.equalTo = value.equalTo.replace(".000", "");
                     }
                 }
             }
@@ -287,7 +286,13 @@ class WireMockTestCase < Minitest::Test
     request_body = { "method" => method, "urlPath" => url_path }
     request_body["headers"] = { "X-Test-Id" => { "equalTo" => test_id } }
     if query_params
-      request_body["queryParameters"] = query_params.transform_values { |v| { "equalTo" => v } }
+      request_body["queryParameters"] = query_params.transform_values do |v|
+        if v.is_a?(Array)
+          { "hasExactly" => v.map { |item| { "equalTo" => item } } }
+        else
+          { "equalTo" => v }
+        end
+      end
     end
 
     post_request.body = request_body.to_json

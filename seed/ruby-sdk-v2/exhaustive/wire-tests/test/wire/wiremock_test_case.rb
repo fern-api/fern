@@ -37,7 +37,15 @@ class WireMockTestCase < Minitest::Test
 
     request_body = { "method" => method, "urlPath" => url_path }
     request_body["headers"] = { "X-Test-Id" => { "equalTo" => test_id } }
-    request_body["queryParameters"] = query_params.transform_values { |v| { "equalTo" => v } } if query_params
+    if query_params
+      request_body["queryParameters"] = query_params.transform_values do |v|
+        if v.is_a?(Array)
+          { "hasExactly" => v.map { |item| { "equalTo" => item } } }
+        else
+          { "equalTo" => v }
+        end
+      end
+    end
 
     post_request.body = request_body.to_json
     response = http.request(post_request)
