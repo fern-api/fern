@@ -4,7 +4,8 @@ import { DocsV1Read, DocsV2Read, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, dirname, doesPathExist, listFiles, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { runExeca } from "@fern-api/logging-execa";
 import { Project } from "@fern-api/project-loader";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
+
 import chalk from "chalk";
 import { execSync } from "child_process";
 import cors from "cors";
@@ -495,9 +496,10 @@ export async function runAppPreviewServer({
         try {
             const url = process.env.APP_DOCS_TAR_PREVIEW_BUCKET;
             if (url == null) {
-                throw new Error(
-                    "Failed to connect to the docs preview server. Please contact support@buildwithfern.com"
-                );
+                throw new CliError({
+                    message: "Failed to connect to the docs preview server. Please contact support@buildwithfern.com",
+                    code: CliError.Code.InternalError
+                });
             }
             await downloadBundle({
                 bucketUrl: url,
@@ -516,9 +518,11 @@ export async function runAppPreviewServer({
             try {
                 const url = process.env.APP_DOCS_PREVIEW_BUCKET;
                 if (url == null) {
-                    throw new Error(
-                        "Failed to connect to the docs preview server. Please contact support@buildwithfern.com"
-                    );
+                    throw new CliError({
+                        message:
+                            "Failed to connect to the docs preview server. Please contact support@buildwithfern.com",
+                        code: CliError.Code.InternalError
+                    });
                 }
                 await downloadBundle({
                     bucketUrl: url,

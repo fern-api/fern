@@ -7,6 +7,7 @@ import { OpenAPI } from "openapi-types";
 import { applyOverlays } from "../loaders/applyOverlays.js";
 import { mergeWithOverrides } from "../loaders/mergeWithOverrides.js";
 import { parseOpenAPI } from "./parseOpenAPI.js";
+import { resolveDescriptionMarkdownRefs } from "./resolveDescriptionMarkdownRefs.js";
 
 /**
  * Attempts to find a matching OpenAPI path template for a given example path.
@@ -63,8 +64,14 @@ export async function loadOpenAPI({
     absolutePathToOpenAPIOverlays: AbsoluteFilePath | undefined;
     loadAiExamples?: boolean;
 }): Promise<OpenAPI.Document> {
+    // Inline `description: { $ref: "./*.md" }` pointers before Redocly's bundler
+    // sees them — otherwise it tries to YAML-parse the markdown and mangles it.
+    const rawSpecContents = await readFile(absolutePathToOpenAPI, "utf-8");
+    const rawSpec = yaml.load(rawSpecContents) as OpenAPI.Document;
+    await resolveDescriptionMarkdownRefs(rawSpec, dirname(absolutePathToOpenAPI), context);
     const parsed = await parseOpenAPI({
-        absolutePathToOpenAPI
+        absolutePathToOpenAPI,
+        parsed: rawSpec
     });
 
     // Normalize overrides to an array for consistent processing
@@ -100,6 +107,10 @@ export async function loadOpenAPI({
             data: result,
             allowNullKeys: OPENAPI_EXAMPLES_KEYS
         });
+
+        // If this override introduced any `description: { $ref: "./*.md" }` pointers,
+        // resolve them against the override file's directory before Redocly runs.
+        await resolveDescriptionMarkdownRefs(result, dirname(overridesFilepath), context);
 
         // Resolve refs after each override is applied, using the current override's path
         // This ensures refs added by this override file are resolved relative to its location

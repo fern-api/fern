@@ -4,10 +4,82 @@ package folderc
 
 import (
 	json "encoding/json"
+	uuid "github.com/google/uuid"
 	assert "github.com/stretchr/testify/assert"
 	require "github.com/stretchr/testify/require"
 	testing "testing"
 )
+
+func TestSettersFolderCfoo(t *testing.T) {
+	t.Run("SetBarProperty", func(t *testing.T) {
+		obj := &FolderCfoo{}
+		var fernTestValueBarProperty uuid.UUID
+		obj.SetBarProperty(fernTestValueBarProperty)
+		assert.Equal(t, fernTestValueBarProperty, obj.BarProperty)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersFolderCfoo(t *testing.T) {
+	t.Run("GetBarProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FolderCfoo{}
+		var expected uuid.UUID
+		obj.BarProperty = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetBarProperty(), "getter should return the property value")
+	})
+
+	t.Run("GetBarProperty_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FolderCfoo
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetBarProperty() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitFolderCfoo(t *testing.T) {
+	t.Run("SetBarProperty_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FolderCfoo{}
+		var fernTestValueBarProperty uuid.UUID
+
+		// Act
+		obj.SetBarProperty(fernTestValueBarProperty)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
 
 func TestJSONMarshalingFolderCfoo(t *testing.T) {
 	t.Run("MarshalUnmarshal", func(t *testing.T) {

@@ -1,6 +1,6 @@
 import { mergeWithOverrides as coreMergeWithOverrides } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 
@@ -24,7 +24,9 @@ export async function mergeWithOverrides<T extends object>({
             parsedOverrides = yaml.load(contents, { json: true });
         }
     } catch (err) {
-        return context.failAndThrow(`Failed to read overrides from file ${absoluteFilePathToOverrides}`);
+        return context.failAndThrow(`Failed to read overrides from file ${absoluteFilePathToOverrides}`, undefined, {
+            code: CliError.Code.ParseError
+        });
     }
     return coreMergeWithOverrides({ data, overrides: parsedOverrides, allowNullKeys });
 }

@@ -9,6 +9,8 @@ on:
       - "packages/cli/cli/versions.yml"
       - "packages/generator-cli/versions.yml"
       - "generators/**/versions.yml"
+      - "scripts/validate-all-changelogs.sh"
+      - ".github/workflows/validate-changelog.yml"
   pull_request:
     branches:
       - main
@@ -17,6 +19,8 @@ on:
       - "packages/cli/cli/versions.yml"
       - "packages/generator-cli/versions.yml"
       - "generators/**/versions.yml"
+      - "scripts/validate-all-changelogs.sh"
+      - ".github/workflows/validate-changelog.yml"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}

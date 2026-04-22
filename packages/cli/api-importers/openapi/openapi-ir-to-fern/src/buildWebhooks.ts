@@ -13,6 +13,7 @@ import {
     WebhookTimestampFormat
 } from "@fern-api/openapi-ir";
 import { join, RelativeFilePath } from "@fern-api/path-utils";
+import { CliError } from "@fern-api/task-context";
 import { camelCase, isEqual } from "lodash-es";
 import { buildHeader } from "./buildHeader.js";
 import { buildTypeReference } from "./buildTypeReference.js";
@@ -142,7 +143,10 @@ export function buildWebhooks(context: OpenApiIrConverterContext): void {
                     };
                 },
                 _other: () => {
-                    throw new Error("Unrecognized Response type: " + webhook.response?.type);
+                    throw new CliError({
+                        message: "Unrecognized Response type: " + webhook.response?.type,
+                        code: CliError.Code.InternalError
+                    });
                 }
             });
         }

@@ -1,4 +1,4 @@
-import { GeneratorNotificationService, NameInput } from "@fern-api/base-generator";
+import { GeneratorError, GeneratorNotificationService, NameInput } from "@fern-api/base-generator";
 import { AbstractPhpGeneratorContext, AsIsFiles, FileLocation } from "@fern-api/php-base";
 import { php } from "@fern-api/php-codegen";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -66,7 +66,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
     public getHttpServiceOrThrow(serviceId: FernIr.ServiceId): FernIr.HttpService {
         const service = this.ir.services[serviceId];
         if (service == null) {
-            throw new Error(`Service with id ${serviceId} not found`);
+            throw GeneratorError.internalError(`Service with id ${serviceId} not found`);
         }
         return service;
     }
@@ -74,7 +74,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
     public getErrorDeclarationOrThrow(errorId: FernIr.ErrorId): FernIr.ErrorDeclaration {
         const error = this.ir.errors[errorId];
         if (error == null) {
-            throw new Error(`Error with id ${errorId} not found`);
+            throw GeneratorError.internalError(`Error with id ${errorId} not found`);
         }
         return error;
     }
@@ -438,12 +438,12 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         valueVarToSet: php.AstNode
     ): php.AstNode {
         if (setterPath.length === 0) {
-            throw new Error("setterPath cannot be empty");
+            throw GeneratorError.internalError("setterPath cannot be empty");
         }
         if (setterPath.length === 1) {
             const singleSetter = setterPath[0];
             if (singleSetter == null) {
-                throw new Error("setterPath[0] is unexpectedly undefined");
+                throw GeneratorError.internalError("setterPath[0] is unexpectedly undefined");
             }
             return php.codeblock((writer) => {
                 writer.writeNode(objectVarToSetOn);

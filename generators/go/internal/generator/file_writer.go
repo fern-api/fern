@@ -458,20 +458,26 @@ func (f *fileWriter) GenerateGetterSetterTestFile() (*File, error) {
 	testWriter.scope.AddImport("github.com/stretchr/testify/assert")
 	testWriter.scope.AddImport("github.com/stretchr/testify/require")
 
-	// Build a set of valid subpackages from the IR types and add them as imports.
-	// This ensures we only import packages that are actually part of the generated SDK.
-	// removeUnusedImports will clean up any that aren't actually used in the tests.
+	// Use the main scope's alias→path mapping to resolve test imports, avoiding
+	// alias collisions from identically-named subpackages under different parents.
+	mainAliasToPath := make(map[string]string)
+	for importPath, alias := range f.scope.Imports.Values {
+		mainAliasToPath[alias] = importPath
+	}
+
 	validSubpackages := make(map[string]struct{})
-	for _, typeDecl := range f.types {
-		if typeDecl.Name.FernFilepath != nil && len(typeDecl.Name.FernFilepath.PackagePath) > 0 {
-			// The last element of the package path is the Go package qualifier used in type references
-			subpkg := typeDecl.Name.FernFilepath.PackagePath[len(typeDecl.Name.FernFilepath.PackagePath)-1].CamelCase.SafeName
-			if subpkg != "" && subpkg != f.packageName {
-				validSubpackages[subpkg] = struct{}{}
-				// Use the full Fern filepath to build the correct import path,
-				// including any intermediate path segments (e.g. common/foo, not just foo).
-				subpkgImportPath := fernFilepathToImportPath(f.baseImportPath, typeDecl.Name.FernFilepath)
-				testWriter.scope.AddImport(subpkgImportPath)
+	for _, td := range f.testData {
+		for _, propType := range td.propertyTypes {
+			pkgQualifier := extractPackageQualifier(propType)
+			if pkgQualifier == "" || pkgQualifier == f.packageName || isStdLibPackage(pkgQualifier) {
+				continue
+			}
+			if _, seen := validSubpackages[pkgQualifier]; seen {
+				continue
+			}
+			if importPath, ok := mainAliasToPath[pkgQualifier]; ok {
+				validSubpackages[pkgQualifier] = struct{}{}
+				testWriter.scope.AddImport(importPath)
 			}
 		}
 	}

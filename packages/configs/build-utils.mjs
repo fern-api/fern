@@ -1,11 +1,49 @@
 import { exec } from "child_process";
-import { cp, mkdir, rm, writeFile } from "fs/promises";
+import { existsSync } from "fs";
+import { cp, mkdir, readdir, readFile, rm, writeFile } from "fs/promises";
 import path from "path";
 import tsup from "tsup";
 import { fileURLToPath } from "url";
 import { promisify } from "util";
 
 const execAsync = promisify(exec);
+
+const REPO_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
+
+/**
+ * Rewrite every .map file in absOutDir so each entry in `sources` is a clean
+ * path relative to the repo root (e.g. "packages/cli/cli/src/cli.ts") instead
+ * of a relative path like "../../src/cli.ts". This gives Sentry a tidy,
+ * already-normalised filename to display and lets a single repo-root-based
+ * code mapping resolve every frame regardless of package depth.
+ */
+export async function rewriteSourceMapSources(absOutDir) {
+    if (!existsSync(absOutDir)) {
+        return;
+    }
+    const entries = await readdir(absOutDir, { withFileTypes: true });
+    for (const entry of entries) {
+        if (!entry.isFile() || !entry.name.endsWith(".map")) {
+            continue;
+        }
+        const mapPath = path.join(absOutDir, entry.name);
+        const mapDir = path.dirname(mapPath);
+        const map = JSON.parse(await readFile(mapPath, "utf8"));
+        if (!Array.isArray(map.sources)) {
+            continue;
+        }
+        map.sources = map.sources.map((src) => {
+            if (typeof src !== "string" || src === "" || src.startsWith("<") || src.startsWith("data:")) {
+                return src;
+            }
+            return path.relative(REPO_ROOT, path.resolve(mapDir, src));
+        });
+        if ("sourceRoot" in map) {
+            delete map.sourceRoot;
+        }
+        await writeFile(mapPath, JSON.stringify(map));
+    }
+}
 
 /**
  * Standard build function for Fern generators
@@ -23,19 +61,25 @@ const execAsync = promisify(exec);
 export async function buildGenerator(dirname, options = {}) {
     const { entry = "src/cli.ts", tsupOptions = {}, copy = null } = options;
 
+    const outDir = tsupOptions.outDir ?? "dist";
+
     // Build with tsup (merge default options with custom ones)
     const defaultTsupOptions = {
         entry: [entry],
         format: ["cjs"],
         sourcemap: true,
         clean: true,
-        outDir: "dist"
+        outDir
     };
 
     await tsup.build({
         ...defaultTsupOptions,
         ...tsupOptions
     });
+
+    // Rewrite source map paths to be repo-root-relative so Sentry displays
+    // "packages/foo/src/bar.ts" instead of "../../../foo/src/bar.ts".
+    await rewriteSourceMapSources(path.join(dirname, outDir));
 
     // Copy additional files if needed
     if (copy) {

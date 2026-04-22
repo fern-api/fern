@@ -26,7 +26,8 @@ import { AbsoluteFilePath, convertToFernHostAbsoluteFilePath, doesPathExist, rel
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { Project } from "@fern-api/project-loader";
 import { convertIrToFdrApi } from "@fern-api/register";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
+
 import { readFile } from "fs/promises";
 import grayMatter from "gray-matter";
 import { v4 as uuidv4 } from "uuid";
@@ -128,7 +129,7 @@ export async function getPreviewDocsDefinition({
     const docsWorkspace = project.docsWorkspaces;
     const apiWorkspaces = project.apiWorkspaces;
     if (docsWorkspace == null) {
-        throw new Error("No docs workspace found in project");
+        throw new CliError({ message: "No docs workspace found in project", code: CliError.Code.ConfigError });
     }
 
     if (editedAbsoluteFilepaths != null && previousDocsDefinition != null) {

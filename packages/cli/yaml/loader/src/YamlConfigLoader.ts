@@ -1,6 +1,7 @@
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { AbsoluteFilePath, RelativeFilePath, relative } from "@fern-api/fs-utils";
 import { type Sourced, SourceLocation } from "@fern-api/source";
+import { CliError } from "@fern-api/task-context";
 import { z } from "zod";
 import { deepStrict } from "./deepStrict.js";
 import { ReferenceResolver } from "./ReferenceResolver.js";
@@ -8,6 +9,7 @@ import { ValidationIssue } from "./ValidationIssue.js";
 import type { YamlDocument } from "./YamlDocument.js";
 import { YamlParser } from "./YamlParser.js";
 import { YamlSourceResolver } from "./YamlSourceResolver.js";
+
 export namespace YamlConfigLoader {
     export type Result<T> = Success<T> | Failure;
 
@@ -129,7 +131,10 @@ export class YamlConfigLoader {
         try {
             return await this.parser.parseDocument({ absoluteFilePath, cwd: this.cwd });
         } catch (err) {
-            throw new Error(`Failed to parse YAML file ${absoluteFilePath}: ${extractErrorMessage(err)}`);
+            throw new CliError({
+                message: `Failed to parse YAML file ${absoluteFilePath}: ${extractErrorMessage(err)}`,
+                code: CliError.Code.ParseError
+            });
         }
     }
 

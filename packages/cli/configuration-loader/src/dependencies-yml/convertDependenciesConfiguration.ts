@@ -1,6 +1,6 @@
 import { dependenciesYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
-import { TaskContext, TaskResult } from "@fern-api/task-context";
+import { CliError, TaskContext, TaskResult } from "@fern-api/task-context";
 import path from "path";
 
 const EMPTY_DEPENDENCIES_CONFIGURATION: dependenciesYml.DependenciesConfiguration = {
@@ -32,7 +32,13 @@ export async function convertDependenciesConfiguration({
                 };
             } else {
                 // don't throw so we can log all failures
-                context.failWithoutThrowing(`Path to ${coordinate} dependency does not exist: ${pathToApi}`);
+                context.failWithoutThrowing(
+                    `Path to ${coordinate} dependency does not exist: ${pathToApi}`,
+                    undefined,
+                    {
+                        code: CliError.Code.ConfigError
+                    }
+                );
             }
         } else {
             const unprefixedCoordinate = coordinate.substring(1);
@@ -48,13 +54,15 @@ export async function convertDependenciesConfiguration({
                 };
             } else {
                 // don't throw so we can log all failures
-                context.failWithoutThrowing(`Failed to parse dependency: ${coordinate}`);
+                context.failWithoutThrowing(`Failed to parse dependency: ${coordinate}`, undefined, {
+                    code: CliError.Code.ConfigError
+                });
             }
         }
     }
 
     if (context.getResult() === TaskResult.Failure) {
-        context.failAndThrow();
+        context.failAndThrow(undefined, undefined, { code: CliError.Code.ConfigError });
     }
 
     return {

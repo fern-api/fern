@@ -51,7 +51,7 @@ export function normalizeClientOptions<T extends BaseClientOptions = BaseClientO
             "User-Agent": "@fern/x-fern-default/0.0.1",
             "X-Fern-Runtime": core.RUNTIME.type,
             "X-Fern-Runtime-Version": core.RUNTIME.version,
-            "X-API-Version": options?.apiVersion,
+            "X-API-Version": options?.apiVersion ?? "2024-02-08",
         },
         options?.headers,
     );

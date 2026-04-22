@@ -118,11 +118,14 @@ export class DefaultValueExtractor {
     }
 
     /**
-     * Escapes a string for use as a Ruby single-quoted string literal.
+     * Escapes a string for use as a Ruby double-quoted string literal.
      */
     private escapeString(value: string): string {
-        const escaped = value.replace(/\\/g, "\\\\").replace(/'/g, "\\'");
-        return `'${escaped}'`;
+        const escaped = value
+            .replace(/\\/g, "\\\\")
+            .replace(/"/g, '\\"')
+            .replace(/#(?=[{$@])/g, "\\#");
+        return `"${escaped}"`;
     }
 
     /**

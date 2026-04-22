@@ -1,5 +1,11 @@
 import { fail } from "node:assert";
-import { AbstractFormatter, CaseConverter, GeneratorNotificationService, NopFormatter } from "@fern-api/base-generator";
+import {
+    AbstractFormatter,
+    CaseConverter,
+    GeneratorError,
+    GeneratorNotificationService,
+    NopFormatter
+} from "@fern-api/base-generator";
 import { AsIsFiles, GeneratorContext } from "@fern-api/csharp-base";
 import { ast, CsharpConfigSchema, Generation } from "@fern-api/csharp-codegen";
 
@@ -355,7 +361,7 @@ export class SdkGeneratorContext extends GeneratorContext {
     public resolveEndpoint(service: FernIr.HttpService, endpointId: FernIr.EndpointId): FernIr.HttpEndpoint {
         const httpEndpoint = service.endpoints.find((endpoint) => endpoint.id === endpointId);
         if (httpEndpoint == null) {
-            throw new Error(`Failed to find token endpoint ${endpointId}`);
+            throw GeneratorError.internalError(`Failed to find token endpoint ${endpointId}`);
         }
         return httpEndpoint;
     }

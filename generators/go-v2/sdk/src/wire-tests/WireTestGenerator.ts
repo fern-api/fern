@@ -1,4 +1,4 @@
-import { getNameFromWireValue, getWireValue } from "@fern-api/base-generator";
+import { GeneratorError, getNameFromWireValue, getWireValue } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { go } from "@fern-api/go-ast";
 import { GoFile } from "@fern-api/go-base";
@@ -23,7 +23,7 @@ export class WireTestGenerator {
         this.context = context;
         const dynamicIr = this.context.ir.dynamic;
         if (!dynamicIr) {
-            throw new Error("Cannot generate wire tests without FernIr.dynamic IR");
+            throw GeneratorError.internalError("Cannot generate wire tests without FernIr.dynamic IR");
         }
         this.dynamicIr = dynamicIr;
         this.dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
@@ -337,7 +337,7 @@ export class WireTestGenerator {
             config: { outputWiremockTests: true }
         });
         if (!response.snippet) {
-            throw new Error("No snippet generated for example");
+            throw GeneratorError.internalError("No snippet generated for example");
         }
         return response.snippet;
     }
@@ -769,7 +769,7 @@ export class WireTestGenerator {
         const wiremockMapping = this.wireMockConfigContent[mappingKey];
         // Take the first 15 keys
         if (!wiremockMapping) {
-            throw new Error(
+            throw GeneratorError.internalError(
                 `No wiremock mapping found for endpoint ${endpoint.id} and mappingKey "${mappingKey}". Keys available look like "${Object.keys(this.wireMockConfigContent).slice(0, 15).join('", "')}"`
             );
         }

@@ -1,3 +1,4 @@
+import { GeneratorError } from "@fern-api/base-generator";
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
@@ -51,7 +52,7 @@ export class MultiUrlEnvironmentGenerator extends FileGenerator<CSharpFile> {
                             arguments_: Object.entries(environment.urls).map(([id, url]) => {
                                 const baseUrl = this.multiUrlEnvironments.baseUrls.find((url) => url.id === id);
                                 if (baseUrl == null) {
-                                    throw new Error(`Failed to find base url with id ${id}`);
+                                    throw GeneratorError.referenceError(`Failed to find base url with id ${id}`);
                                 }
                                 return {
                                     name: this.case.pascalSafe(baseUrl?.name) ?? "",
