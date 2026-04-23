@@ -145,14 +145,28 @@ export class AutoVersionStep extends BaseStep {
         const { prepared, service, language, mappedMagicVersion, previousGenerationSha } = params;
 
         const rawDiff = this.gitDiff(previousGenerationSha, prepared.currentGenerationSha);
-        if (rawDiff.trim().length === 0) {
-            this.logger.info("AutoVersionStep: empty diff between generations; skipping autoversion.");
-            return { executed: true, success: true };
-        }
 
         const previousVersion = await this.resolvePreviousVersion({ service, rawDiff, mappedMagicVersion });
         if (previousVersion == null) {
             return await this.handleFirstGeneration({ service, language, mappedMagicVersion });
+        }
+
+        // Even when the two [fern-generated] trees are byte-identical, the
+        // current working tree still has the placeholder from this run's
+        // generator output. We must rewrite it to `previousVersion` before
+        // exiting or the SDK ships with `0.0.0-fern-placeholder` baked into
+        // its manifests and user-agent strings.
+        if (rawDiff.trim().length === 0) {
+            this.logger.info(
+                `AutoVersionStep: empty diff between generations; rewriting placeholder to ${previousVersion}.`
+            );
+            return await this.finalizeNoChange({
+                service,
+                language,
+                mappedMagicVersion,
+                previousVersion,
+                reason: "no diff between generations"
+            });
         }
 
         const cleanedDiff = service.cleanDiffForAI(rawDiff, mappedMagicVersion);
@@ -164,8 +178,16 @@ export class AutoVersionStep extends BaseStep {
         );
 
         if (cleanedDiff.trim().length === 0) {
-            this.logger.info("AutoVersionStep: cleaned diff is empty; no semantic changes.");
-            return { executed: true, success: true };
+            this.logger.info(
+                `AutoVersionStep: cleaned diff is empty; no semantic changes — rewriting placeholder to ${previousVersion}.`
+            );
+            return await this.finalizeNoChange({
+                service,
+                language,
+                mappedMagicVersion,
+                previousVersion,
+                reason: "no semantic changes"
+            });
         }
 
         if (cleanedBytes > MAX_RAW_DIFF_BYTES) {
@@ -204,13 +226,14 @@ export class AutoVersionStep extends BaseStep {
         }
 
         if (analysis == null) {
-            this.logger.info("AutoVersionStep: FAI returned NO_CHANGE; skipping autoversion commit.");
-            return {
-                executed: true,
-                success: true,
+            this.logger.info(`AutoVersionStep: FAI returned NO_CHANGE; rewriting placeholder to ${previousVersion}.`);
+            return await this.finalizeNoChange({
+                service,
+                language,
+                mappedMagicVersion,
                 previousVersion,
-                versionBump: "NO_CHANGE"
-            };
+                reason: "FAI returned NO_CHANGE"
+            });
         }
 
         return await this.finalizeWithBump({
@@ -220,6 +243,56 @@ export class AutoVersionStep extends BaseStep {
             previousVersion,
             analysis
         });
+    }
+
+    /**
+     * Terminal path for runs that determine no semver bump is needed. The
+     * current working tree still contains `0.0.0-fern-placeholder` from this
+     * run's generator output, so we must rewrite it to `previousVersion`
+     * before exiting — otherwise the SDK ships with the placeholder embedded
+     * in manifests (package.json, pyproject.toml, .fern/metadata.json) and
+     * user-agent strings (e.g. `X-Fern-SDK-Version`). Commits the rewrite as
+     * `[fern-autoversion]` so the replay + github steps see a stable base.
+     */
+    private async finalizeNoChange(params: {
+        service: AutoVersioningService;
+        language: string;
+        mappedMagicVersion: string;
+        previousVersion: string;
+        reason: string;
+    }): Promise<AutoVersionStepResult> {
+        const { service, language, mappedMagicVersion, previousVersion, reason } = params;
+
+        // `previousVersion` flows into the same `bash -c` + single-quoted sed
+        // expression that `handleFirstGeneration` guards against with
+        // `isValidSemver`. Extraction (regex), metadata.json, and git tags
+        // are all user-influenced surfaces — reject anything that isn't a
+        // clean semver rather than let it escape shell quoting.
+        if (!isValidSemver(previousVersion)) {
+            const errorMessage =
+                `AutoVersionStep: resolved previousVersion ${JSON.stringify(previousVersion)} is not a ` +
+                `valid semver string. Refusing to rewrite placeholder to avoid shell injection.`;
+            this.logger.error(errorMessage);
+            return { executed: true, success: false, errorMessage };
+        }
+
+        await service.replaceMagicVersion(this.outputDir, mappedMagicVersion, previousVersion);
+        if (language === "go") {
+            await service.addGoMajorVersionSuffix(this.outputDir, previousVersion);
+        }
+
+        const commitMessage = this.brandMessage(`SDK regeneration (no semver change: ${reason})`);
+        const commitSha = this.commitAutoversion(commitMessage);
+
+        return {
+            executed: true,
+            success: true,
+            version: previousVersion,
+            previousVersion,
+            versionBump: "NO_CHANGE",
+            commitMessage,
+            commitSha
+        };
     }
 
     private async finalizeWithBump(params: {
