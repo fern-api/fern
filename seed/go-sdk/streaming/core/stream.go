@@ -493,10 +493,7 @@ func isRetryableStreamError(err error) bool {
 		return true
 	}
 	var netErr net.Error
-	if errors.As(err, &netErr) {
-		return true
-	}
-	return false
+	return errors.As(err, &netErr)
 }
 
 func backoffDelay(attempt int, serverRetry time.Duration) time.Duration {
