@@ -380,12 +380,6 @@ types:
           When enabled, displays an "Open in Claude" button that allows users to send the page content to Claude for further exploration and Q&A.
 
           @default: false
-      cursor:
-        type: optional<boolean>
-        docs: |
-          When enabled, displays an "Open in Cursor" button that allows users to open the page content in Cursor IDE with AI-powered code assistance.
-
-          @default: false
       claude-code:
         type: optional<boolean>
         docs: |
@@ -394,6 +388,12 @@ types:
           renders on docs sites that have Ask AI enabled; set to `false` to hide it on those sites.
 
           @default: true
+      cursor:
+        type: optional<boolean>
+        docs: |
+          When enabled, displays an "Open in Cursor" button that allows users to open the page content in Cursor IDE with AI-powered code assistance.
+
+          @default: false
       vscode:
         type: optional<boolean>
         docs: |
