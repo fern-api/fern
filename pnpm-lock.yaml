@@ -7853,6 +7853,9 @@ importers:
 
   packages/generator-cli:
     dependencies:
+      '@boundaryml/baml':
+        specifier: 'catalog:'
+        version: 0.219.0
       '@fern-api/cli-ai':
         specifier: workspace:*
         version: link:../cli/ai

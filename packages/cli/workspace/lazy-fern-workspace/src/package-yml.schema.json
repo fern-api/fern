@@ -474,6 +474,23 @@
             }
           ]
         },
+        "client-default": {
+          "oneOf": [
+            {
+              "type": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "array",
+                "null"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "encoding": {
           "oneOf": [
             {
@@ -956,6 +973,23 @@
             }
           ]
         },
+        "client-default": {
+          "oneOf": [
+            {
+              "type": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "array",
+                "null"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "encoding": {
           "oneOf": [
             {
@@ -1273,6 +1307,16 @@
           "additionalProperties": {
             "$ref": "#/definitions/types.SingleUnionTypeSchema"
           }
+        },
+        "default-variant": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -1679,6 +1723,23 @@
             }
           ]
         },
+        "client-default": {
+          "oneOf": [
+            {
+              "type": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "array",
+                "null"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "encoding": {
           "oneOf": [
             {
@@ -1751,6 +1812,16 @@
               "type": "null"
             }
           ]
+        },
+        "explode": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -1775,6 +1846,23 @@
           "type": "string"
         },
         "default": {
+          "oneOf": [
+            {
+              "type": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "array",
+                "null"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "client-default": {
           "oneOf": [
             {
               "type": [
@@ -1920,6 +2008,23 @@
           "type": "string"
         },
         "default": {
+          "oneOf": [
+            {
+              "type": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "array",
+                "null"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "client-default": {
           "oneOf": [
             {
               "type": [

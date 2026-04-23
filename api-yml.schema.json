@@ -1359,6 +1359,23 @@
             }
           ]
         },
+        "client-default": {
+          "oneOf": [
+            {
+              "type": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "array",
+                "null"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "encoding": {
           "oneOf": [
             {
@@ -1493,6 +1510,23 @@
       "type": "object",
       "properties": {
         "default": {
+          "oneOf": [
+            {
+              "type": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "array",
+                "null"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "client-default": {
           "oneOf": [
             {
               "type": [

@@ -25,11 +25,18 @@ async function main() {
         clean: true
     };
 
-    // CLI: bundle everything so it works as a standalone binary
+    // CLI: bundle everything so it works as a standalone binary.
+    // Keep @boundaryml/baml external so esbuild does not try to bundle its
+    // platform-specific native .node files; at runtime it's resolved from
+    // node_modules via the baml dep listed in the published package.json below.
     await tsup.build({
         ...commonConfig,
         entry: ["src/cli.ts"],
-        noExternal: [/.*/]
+        // Match everything EXCEPT @boundaryml/baml so esbuild does not try to
+        // statically bundle baml's platform-specific native .node files; baml
+        // is resolved from node_modules at runtime via the dep in package.json.
+        noExternal: [/^(?!@boundaryml\/baml(\/|$)).*/],
+        external: ["@boundaryml/baml"]
     });
 
     // API: bundle private workspace deps (@fern-api/github, @fern-api/fs-utils),
@@ -38,7 +45,7 @@ async function main() {
         ...commonConfig,
         entry: ["src/api.ts"],
         noExternal: ["@fern-api/github", "@fern-api/fs-utils", "@fern-api/core-utils"],
-        external: ["@fern-api/replay", "@octokit/rest", "es-toolkit", "tmp-promise"],
+        external: ["@fern-api/replay", "@octokit/rest", "es-toolkit", "tmp-promise", "@boundaryml/baml"],
         clean: false
     });
 
