@@ -5,8 +5,8 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
 export const Availability: core.serialization.Schema<serializers.Availability.Raw, FernOpenapiIr.Availability> =
-    core.serialization.enum_(["GenerallyAvailable", "Beta", "Deprecated"]);
+    core.serialization.enum_(["GenerallyAvailable", "Beta", "Deprecated", "Alpha", "Preview", "Legacy"]);
 
 export declare namespace Availability {
-    export type Raw = "GenerallyAvailable" | "Beta" | "Deprecated";
+    export type Raw = "GenerallyAvailable" | "Beta" | "Deprecated" | "Alpha" | "Preview" | "Legacy";
 }

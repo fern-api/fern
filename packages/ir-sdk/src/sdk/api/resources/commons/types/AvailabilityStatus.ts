@@ -5,6 +5,9 @@ const AvailabilityStatusValues = {
     PreRelease: "PRE_RELEASE",
     GeneralAvailability: "GENERAL_AVAILABILITY",
     Deprecated: "DEPRECATED",
+    Alpha: "ALPHA",
+    Preview: "PREVIEW",
+    Legacy: "LEGACY",
 } as const;
 export type AvailabilityStatus = (typeof AvailabilityStatusValues)[keyof typeof AvailabilityStatusValues];
 export const AvailabilityStatus: typeof AvailabilityStatusValues & {
@@ -21,6 +24,12 @@ export const AvailabilityStatus: typeof AvailabilityStatusValues & {
                 return visitor.generalAvailability();
             case AvailabilityStatus.Deprecated:
                 return visitor.deprecated();
+            case AvailabilityStatus.Alpha:
+                return visitor.alpha();
+            case AvailabilityStatus.Preview:
+                return visitor.preview();
+            case AvailabilityStatus.Legacy:
+                return visitor.legacy();
             default:
                 return visitor._other();
         }
@@ -33,6 +42,9 @@ export namespace AvailabilityStatus {
         preRelease: () => R;
         generalAvailability: () => R;
         deprecated: () => R;
+        alpha: () => R;
+        preview: () => R;
+        legacy: () => R;
         _other: () => R;
     }
 }

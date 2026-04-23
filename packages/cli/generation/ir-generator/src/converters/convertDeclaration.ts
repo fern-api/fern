@@ -48,6 +48,12 @@ function convertAvailabilityStatus(status: RawSchemas.AvailabilityStatusSchema):
             return AvailabilityStatus.Deprecated;
         case "generally-available":
             return AvailabilityStatus.GeneralAvailability;
+        case "alpha":
+            return AvailabilityStatus.Alpha;
+        case "preview":
+            return AvailabilityStatus.Preview;
+        case "legacy":
+            return AvailabilityStatus.Legacy;
         default:
             assertNever(status);
     }

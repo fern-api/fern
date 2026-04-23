@@ -19,3 +19,6 @@ types:
       - deprecated
       - value: generally-available
         name: GenerallyAvailable
+      - alpha
+      - preview
+      - legacy

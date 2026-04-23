@@ -17,6 +17,12 @@ export function getFernAvailability(operationObject: OpenAPIV3.OperationObject):
         return Availability.Beta;
     } else if (availability === "deprecated") {
         return Availability.Deprecated;
+    } else if (availability === "alpha") {
+        return Availability.Alpha;
+    } else if (availability === "preview") {
+        return Availability.Preview;
+    } else if (availability === "legacy") {
+        return Availability.Legacy;
     }
     if (operationObject.deprecated) {
         return Availability.Deprecated;

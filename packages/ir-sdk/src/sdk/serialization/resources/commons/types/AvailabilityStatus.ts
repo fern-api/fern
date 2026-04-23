@@ -7,8 +7,23 @@ import type * as serializers from "../../../index.js";
 export const AvailabilityStatus: core.serialization.Schema<
     serializers.AvailabilityStatus.Raw,
     FernIr.AvailabilityStatus
-> = core.serialization.enum_(["IN_DEVELOPMENT", "PRE_RELEASE", "GENERAL_AVAILABILITY", "DEPRECATED"]);
+> = core.serialization.enum_([
+    "IN_DEVELOPMENT",
+    "PRE_RELEASE",
+    "GENERAL_AVAILABILITY",
+    "DEPRECATED",
+    "ALPHA",
+    "PREVIEW",
+    "LEGACY",
+]);
 
 export declare namespace AvailabilityStatus {
-    export type Raw = "IN_DEVELOPMENT" | "PRE_RELEASE" | "GENERAL_AVAILABILITY" | "DEPRECATED";
+    export type Raw =
+        | "IN_DEVELOPMENT"
+        | "PRE_RELEASE"
+        | "GENERAL_AVAILABILITY"
+        | "DEPRECATED"
+        | "ALPHA"
+        | "PREVIEW"
+        | "LEGACY";
 }

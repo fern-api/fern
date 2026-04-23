@@ -11,6 +11,12 @@ export function convertAvailability(
             return "pre-release";
         case Availability.GenerallyAvailable:
             return "generally-available";
+        case Availability.Alpha:
+            return "alpha";
+        case Availability.Preview:
+            return "preview";
+        case Availability.Legacy:
+            return "legacy";
         default:
             return undefined;
     }

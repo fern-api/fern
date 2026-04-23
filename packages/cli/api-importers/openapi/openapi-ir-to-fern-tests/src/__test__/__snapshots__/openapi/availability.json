@@ -99,6 +99,44 @@
                 "openapi": "../openapi.yml",
               },
             },
+            "postSuccessInlineAlphaBody": {
+              "auth": undefined,
+              "availability": "alpha",
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {},
+                  "response": {
+                    "body": {
+                      "not_deprecated_setting": true,
+                    },
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/success-inline-alpha-body",
+              "request": {
+                "body": {
+                  "properties": {
+                    "fine_setting": "optional<boolean>",
+                  },
+                },
+                "content-type": "application/json",
+                "headers": undefined,
+                "name": "PostSuccessInlineAlphaBodyRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+              },
+              "response": {
+                "docs": "OK",
+                "status-code": 200,
+                "type": "NotDeprecatedSettings",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
             "postSuccessInlineBetaBody": {
               "auth": undefined,
               "availability": "pre-release",
@@ -137,6 +175,44 @@
                 "openapi": "../openapi.yml",
               },
             },
+            "postSuccessInlineLegacyBody": {
+              "auth": undefined,
+              "availability": "legacy",
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {},
+                  "response": {
+                    "body": {
+                      "not_deprecated_setting": true,
+                    },
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/success-inline-legacy-body",
+              "request": {
+                "body": {
+                  "properties": {
+                    "fine_setting": "optional<boolean>",
+                  },
+                },
+                "content-type": "application/json",
+                "headers": undefined,
+                "name": "PostSuccessInlineLegacyBodyRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+              },
+              "response": {
+                "docs": "OK",
+                "status-code": 200,
+                "type": "NotDeprecatedSettings",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
             "postSuccessInlineObjectDeprecation": {
               "auth": undefined,
               "availability": "deprecated",
@@ -163,6 +239,44 @@
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "PostSuccessInlineObjectDeprecationRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+              },
+              "response": {
+                "docs": "OK",
+                "status-code": 200,
+                "type": "NotDeprecatedSettings",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "postSuccessInlinePreviewBody": {
+              "auth": undefined,
+              "availability": "preview",
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {},
+                  "response": {
+                    "body": {
+                      "not_deprecated_setting": true,
+                    },
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/success-inline-preview-body",
+              "request": {
+                "body": {
+                  "properties": {
+                    "fine_setting": "optional<boolean>",
+                  },
+                },
+                "content-type": "application/json",
+                "headers": undefined,
+                "name": "PostSuccessInlinePreviewBodyRequest",
                 "path-parameters": undefined,
                 "query-parameters": undefined,
               },
@@ -440,6 +554,69 @@
         type: NotDeprecatedSettings
         status-code: 200
       availability: pre-release
+      examples:
+        - request: {}
+          response:
+            body:
+              not_deprecated_setting: true
+    postSuccessInlineAlphaBody:
+      path: /success-inline-alpha-body
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      request:
+        name: PostSuccessInlineAlphaBodyRequest
+        body:
+          properties:
+            fine_setting: optional<boolean>
+        content-type: application/json
+      response:
+        docs: OK
+        type: NotDeprecatedSettings
+        status-code: 200
+      availability: alpha
+      examples:
+        - request: {}
+          response:
+            body:
+              not_deprecated_setting: true
+    postSuccessInlinePreviewBody:
+      path: /success-inline-preview-body
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      request:
+        name: PostSuccessInlinePreviewBodyRequest
+        body:
+          properties:
+            fine_setting: optional<boolean>
+        content-type: application/json
+      response:
+        docs: OK
+        type: NotDeprecatedSettings
+        status-code: 200
+      availability: preview
+      examples:
+        - request: {}
+          response:
+            body:
+              not_deprecated_setting: true
+    postSuccessInlineLegacyBody:
+      path: /success-inline-legacy-body
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      request:
+        name: PostSuccessInlineLegacyBodyRequest
+        body:
+          properties:
+            fine_setting: optional<boolean>
+        content-type: application/json
+      response:
+        docs: OK
+        type: NotDeprecatedSettings
+        status-code: 200
+      availability: legacy
       examples:
         - request: {}
           response:

@@ -94,6 +94,9 @@ types:
       - PRE_RELEASE
       - GENERAL_AVAILABILITY
       - DEPRECATED
+      - ALPHA
+      - PREVIEW
+      - LEGACY
 
   # references
 

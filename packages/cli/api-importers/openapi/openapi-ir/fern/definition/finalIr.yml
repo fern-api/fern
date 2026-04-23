@@ -280,6 +280,9 @@ types:
       - GenerallyAvailable
       - Beta
       - Deprecated
+      - Alpha
+      - Preview
+      - Legacy
 
   DiscriminatorContext:
     docs: |

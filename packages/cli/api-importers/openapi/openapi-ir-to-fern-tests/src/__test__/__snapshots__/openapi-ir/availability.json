@@ -776,6 +776,333 @@
         "file": "../openapi.yml",
         "type": "openapi"
       }
+    },
+    {
+      "audiences": [],
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "PostSuccessInlineAlphaBodyRequest",
+      "request": {
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "postSuccessInlineAlphaBodyRequestFineSetting",
+              "key": "fine_setting",
+              "schema": {
+                "generatedName": "PostSuccessInlineAlphaBodyRequestFineSetting",
+                "value": {
+                  "schema": {
+                    "type": "boolean"
+                  },
+                  "generatedName": "PostSuccessInlineAlphaBodyRequestFineSetting",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "PostSuccessInlineAlphaBodyRequest",
+          "groupName": [],
+          "additionalProperties": false,
+          "availability": "Alpha",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "OK",
+        "schema": {
+          "generatedName": "PostSuccessInlineAlphaBodyResponse",
+          "schema": "NotDeprecatedSettings",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "availability": "Alpha",
+      "method": "POST",
+      "path": "/success-inline-alpha-body",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "not_deprecated_setting": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "PostSuccessInlinePreviewBodyRequest",
+      "request": {
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "postSuccessInlinePreviewBodyRequestFineSetting",
+              "key": "fine_setting",
+              "schema": {
+                "generatedName": "PostSuccessInlinePreviewBodyRequestFineSetting",
+                "value": {
+                  "schema": {
+                    "type": "boolean"
+                  },
+                  "generatedName": "PostSuccessInlinePreviewBodyRequestFineSetting",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "PostSuccessInlinePreviewBodyRequest",
+          "groupName": [],
+          "additionalProperties": false,
+          "availability": "Preview",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "OK",
+        "schema": {
+          "generatedName": "PostSuccessInlinePreviewBodyResponse",
+          "schema": "NotDeprecatedSettings",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "availability": "Preview",
+      "method": "POST",
+      "path": "/success-inline-preview-body",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "not_deprecated_setting": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "PostSuccessInlineLegacyBodyRequest",
+      "request": {
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "postSuccessInlineLegacyBodyRequestFineSetting",
+              "key": "fine_setting",
+              "schema": {
+                "generatedName": "PostSuccessInlineLegacyBodyRequestFineSetting",
+                "value": {
+                  "schema": {
+                    "type": "boolean"
+                  },
+                  "generatedName": "PostSuccessInlineLegacyBodyRequestFineSetting",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "PostSuccessInlineLegacyBodyRequest",
+          "groupName": [],
+          "additionalProperties": false,
+          "availability": "Legacy",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "OK",
+        "schema": {
+          "generatedName": "PostSuccessInlineLegacyBodyResponse",
+          "schema": "NotDeprecatedSettings",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "availability": "Legacy",
+      "method": "POST",
+      "path": "/success-inline-legacy-body",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "not_deprecated_setting": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
     }
   ],
   "webhooks": [],
