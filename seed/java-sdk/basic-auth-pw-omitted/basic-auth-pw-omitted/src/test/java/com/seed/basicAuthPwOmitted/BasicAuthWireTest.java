@@ -40,6 +40,12 @@ public class BasicAuthWireTest {
         Assertions.assertNotNull(request);
         Assertions.assertEquals("GET", request.getMethod());
 
+        // Validate Basic Auth Authorization header
+        Assertions.assertEquals(
+                "Basic dGVzdC11c2VybmFtZTo=",
+                request.getHeader("Authorization"),
+                "Basic Auth Authorization header should contain correct encoded credentials");
+
         // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
         String actualResponseJson = objectMapper.writeValueAsString(response);
@@ -86,6 +92,12 @@ public class BasicAuthWireTest {
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("POST", request.getMethod());
+
+        // Validate Basic Auth Authorization header
+        Assertions.assertEquals(
+                "Basic dGVzdC11c2VybmFtZTo=",
+                request.getHeader("Authorization"),
+                "Basic Auth Authorization header should contain correct encoded credentials");
         // Validate request body
         String actualRequestBody = request.getBody().readUtf8();
         String expectedRequestBody = "" + "{\n" + "  \"key\": \"value\"\n" + "}";
