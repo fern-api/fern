@@ -65,7 +65,7 @@ export class ReqWithHeadersClient {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            queryString: core.url.toQueryString(requestOptions?.queryParams),
+            queryString: core.url.toQueryString(requestOptions?.queryParams, { arrayFormat: "repeat" }),
             requestType: "json",
             body: _body,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,

@@ -87,7 +87,10 @@ export class QueryClient {
             ),
             method: "POST",
             headers: _headers,
-            queryString: core.url.toQueryString({ ..._queryParams, ...requestOptions?.queryParams }),
+            queryString: core.url.toQueryString(
+                { ..._queryParams, ...requestOptions?.queryParams },
+                { arrayFormat: "repeat" },
+            ),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

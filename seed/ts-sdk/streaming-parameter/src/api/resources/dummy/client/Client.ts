@@ -42,7 +42,7 @@ export class DummyClient {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            queryString: core.url.toQueryString(requestOptions?.queryParams),
+            queryString: core.url.toQueryString(requestOptions?.queryParams, { arrayFormat: "repeat" }),
             requestType: "json",
             body: request,
             responseType: "streaming",

@@ -55,7 +55,7 @@ export class EnumClient {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            queryString: core.url.toQueryString(requestOptions?.queryParams),
+            queryString: core.url.toQueryString(requestOptions?.queryParams, { arrayFormat: "repeat" }),
             requestType: "json",
             body: serializers.types.WeatherReport.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",

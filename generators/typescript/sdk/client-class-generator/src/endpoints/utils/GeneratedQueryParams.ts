@@ -333,7 +333,16 @@ export class GeneratedQueryParams {
                   ])
                 : additionalQueryParams;
 
-            return context.coreUtilities.urlUtils.toQueryString._invoke([argument]);
+            // Explicitly pass arrayFormat: "repeat" so shortened calls match the
+            // queryBuilder's output byte-for-byte regardless of the qs.ts default.
+            const optionsArg = ts.factory.createObjectLiteralExpression([
+                ts.factory.createPropertyAssignment(
+                    ts.factory.createIdentifier("arrayFormat"),
+                    ts.factory.createStringLiteral("repeat")
+                )
+            ]);
+
+            return context.coreUtilities.urlUtils.toQueryString._invoke([argument, optionsArg]);
         }
 
         // Comma-style params require the builder so we can apply `style: "comma"` per key.

@@ -74,7 +74,10 @@ export class PlaylistClient {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            queryString: core.url.toQueryString({ ..._queryParams, ...requestOptions?.queryParams }),
+            queryString: core.url.toQueryString(
+                { ..._queryParams, ...requestOptions?.queryParams },
+                { arrayFormat: "repeat" },
+            ),
             requestType: "json",
             body: _body,
             timeoutMs:
@@ -166,7 +169,10 @@ export class PlaylistClient {
             ),
             method: "GET",
             headers: _headers,
-            queryString: core.url.toQueryString({ ..._queryParams, ...requestOptions?.queryParams }),
+            queryString: core.url.toQueryString(
+                { ..._queryParams, ...requestOptions?.queryParams },
+                { arrayFormat: "repeat" },
+            ),
             timeoutMs:
                 requestOptions?.timeoutInSeconds != null
                     ? requestOptions.timeoutInSeconds * 1000
@@ -240,7 +246,7 @@ export class PlaylistClient {
             ),
             method: "GET",
             headers: _headers,
-            queryString: core.url.toQueryString(requestOptions?.queryParams),
+            queryString: core.url.toQueryString(requestOptions?.queryParams, { arrayFormat: "repeat" }),
             timeoutMs:
                 requestOptions?.timeoutInSeconds != null
                     ? requestOptions.timeoutInSeconds * 1000
@@ -344,7 +350,7 @@ export class PlaylistClient {
             method: "PUT",
             headers: _headers,
             contentType: "application/json",
-            queryString: core.url.toQueryString(requestOptions?.queryParams),
+            queryString: core.url.toQueryString(requestOptions?.queryParams, { arrayFormat: "repeat" }),
             requestType: "json",
             body: request,
             timeoutMs:
@@ -436,7 +442,7 @@ export class PlaylistClient {
             ),
             method: "DELETE",
             headers: _headers,
-            queryString: core.url.toQueryString(requestOptions?.queryParams),
+            queryString: core.url.toQueryString(requestOptions?.queryParams, { arrayFormat: "repeat" }),
             timeoutMs:
                 requestOptions?.timeoutInSeconds != null
                     ? requestOptions.timeoutInSeconds * 1000

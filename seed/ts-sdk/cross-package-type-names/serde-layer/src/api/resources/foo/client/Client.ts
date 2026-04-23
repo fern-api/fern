@@ -56,7 +56,10 @@ export class FooClient {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            queryString: core.url.toQueryString({ ..._queryParams, ...requestOptions?.queryParams }),
+            queryString: core.url.toQueryString(
+                { ..._queryParams, ...requestOptions?.queryParams },
+                { arrayFormat: "repeat" },
+            ),
             requestType: "json",
             body: serializers.FindRequest.jsonOrThrow(_body, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,

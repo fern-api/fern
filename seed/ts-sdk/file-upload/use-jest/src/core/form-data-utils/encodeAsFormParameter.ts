@@ -1,7 +1,7 @@
 import { toQueryString } from "../url/qs.js";
 
 export function encodeAsFormParameter(value: unknown): Record<string, string> {
-    const stringified = toQueryString(value, { encode: false, arrayFormat: "indices" });
+    const stringified = toQueryString(value, { encode: false });
 
     const keyValuePairs = stringified.split("&").map((pair) => {
         const [key, value] = pair.split("=");
