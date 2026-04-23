@@ -9,10 +9,13 @@ if typing.TYPE_CHECKING:
     from .types import PlainObject
     from .errors import UnprocessableEntityError
     from . import test_group
+    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .client import AsyncSeedApi, SeedApi
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedApi": ".client",
+    "DefaultAioHttpClient": "._default_clients",
+    "DefaultAsyncHttpxClient": "._default_clients",
     "PlainObject": ".types",
     "SeedApi": ".client",
     "UnprocessableEntityError": ".errors",
@@ -42,4 +45,13 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["AsyncSeedApi", "PlainObject", "SeedApi", "UnprocessableEntityError", "__version__", "test_group"]
+__all__ = [
+    "AsyncSeedApi",
+    "DefaultAioHttpClient",
+    "DefaultAsyncHttpxClient",
+    "PlainObject",
+    "SeedApi",
+    "UnprocessableEntityError",
+    "__version__",
+    "test_group",
+]

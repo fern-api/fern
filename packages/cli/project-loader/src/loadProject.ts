@@ -13,18 +13,25 @@ import {
     OPENAPI_DIRECTORY
 } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
 import { handleFailedWorkspaceParserResult, loadAPIWorkspace, loadDocsWorkspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";
 import { readdir } from "fs/promises";
 
+import { normalizeCommandLineApiWorkspace } from "./normalizeCommandLineApiWorkspace.js";
 import { Project } from "./Project.js";
 
 export declare namespace loadProject {
     export interface Args {
         cliName: string;
         cliVersion: string;
-        commandLineApiWorkspace: string | undefined;
+        /**
+         * The API workspace name(s) supplied via `--api` on the command line. A single string
+         * preserves the historical single-`--api` behavior; an array allows callers that accept
+         * `--api` multiple times (e.g. `fern generate`) to filter to a union of workspaces.
+         * `undefined` means no `--api` flag was supplied.
+         */
+        commandLineApiWorkspace: string | string[] | undefined;
         /**
          * if false and commandLineWorkspace it not defined,
          * loadProject will cause the CLI to fail
@@ -44,7 +51,9 @@ export declare namespace loadProject {
 export async function loadProject({ context, nameOverride, ...args }: loadProject.Args): Promise<Project> {
     const fernDirectory = await getFernDirectory(nameOverride);
     if (fernDirectory == null) {
-        return context.failAndThrow(`Directory "${nameOverride ?? FERN_DIRECTORY}" not found.`);
+        return context.failAndThrow(`Directory "${nameOverride ?? FERN_DIRECTORY}" not found.`, undefined, {
+            code: CliError.Code.ConfigError
+        });
     }
 
     return await loadProjectFromDirectory({
@@ -101,7 +110,9 @@ export async function loadProjectFromDirectory({
                 ` › ${ASYNCAPI_DIRECTORY}/\n` +
                 `For more information:\n` +
                 ` › SDK project structure: https://buildwithfern.com/learn/api-definitions/overview/project-structure\n` +
-                ` › Docs project structure: https://buildwithfern.com/learn/docs/getting-started/project-structure`
+                ` › Docs project structure: https://buildwithfern.com/learn/docs/getting-started/project-structure`,
+            undefined,
+            { code: CliError.Code.ConfigError }
         );
     }
 
@@ -130,9 +141,15 @@ export async function loadApis({
     fernDirectory: AbsoluteFilePath;
     context: TaskContext;
     cliVersion: string;
-    commandLineApiWorkspace: string | undefined;
+    commandLineApiWorkspace: string | string[] | undefined;
     defaultToAllApiWorkspaces: boolean;
 }): Promise<AbstractAPIWorkspace<unknown>[]> {
+    // Normalize `--api` input. `undefined` means no filter; a single string or an array of
+    // strings narrows to the named workspace(s). Passing `--api` multiple times produces an
+    // array (e.g. `fern generate --api foo --api bar`); callers that still take a single
+    // `--api` pass a single string.
+    const commandLineApiWorkspaceNames = normalizeCommandLineApiWorkspace(commandLineApiWorkspace);
+
     const apisDirectory = join(fernDirectory, RelativeFilePath.of(APIS_DIRECTORY));
     const apisDirectoryExists = await doesPathExist(apisDirectory);
     if (apisDirectoryExists) {
@@ -145,12 +162,19 @@ export async function loadApis({
             return all;
         }, []);
 
-        if (commandLineApiWorkspace != null) {
-            if (!apiWorkspaceDirectoryNames.includes(commandLineApiWorkspace)) {
-                return context.failAndThrow("API does not exist: " + commandLineApiWorkspace);
+        if (commandLineApiWorkspaceNames != null) {
+            const missing = commandLineApiWorkspaceNames.filter((name) => !apiWorkspaceDirectoryNames.includes(name));
+            if (missing.length > 0) {
+                return context.failAndThrow(
+                    missing.length === 1
+                        ? "API does not exist: " + missing[0]
+                        : "APIs do not exist: " + missing.join(", "),
+                    undefined,
+                    { code: CliError.Code.ConfigError }
+                );
             }
         } else if (apiWorkspaceDirectoryNames.length === 0) {
-            return context.failAndThrow("No APIs found.");
+            return context.failAndThrow("No APIs found.", undefined, { code: CliError.Code.ConfigError });
         } else if (apiWorkspaceDirectoryNames.length > 1 && !defaultToAllApiWorkspaces) {
             let message = "There are multiple workspaces. You must specify one with --api:\n";
             const longestWorkspaceName = Math.max(
@@ -164,16 +188,14 @@ export async function loadApis({
                     )}`;
                 })
                 .join("\n");
-            return context.failAndThrow(message);
+            return context.failAndThrow(message, undefined, { code: CliError.Code.ConfigError });
         }
 
         const apiWorkspaces: AbstractAPIWorkspace<unknown>[] = [];
 
         const filteredWorkspaces =
-            commandLineApiWorkspace != null
-                ? apiWorkspaceDirectoryNames.filter((api) => {
-                      return api === commandLineApiWorkspace;
-                  })
+            commandLineApiWorkspaceNames != null
+                ? apiWorkspaceDirectoryNames.filter((api) => commandLineApiWorkspaceNames.includes(api))
                 : apiWorkspaceDirectoryNames;
 
         await Promise.all(
@@ -188,7 +210,7 @@ export async function loadApis({
                     apiWorkspaces.push(workspace.workspace);
                 } else {
                     handleFailedWorkspaceParserResult(workspace, context.logger);
-                    context.failAndThrow();
+                    context.failAndThrow(undefined, undefined, { code: CliError.Code.ConfigError });
                 }
             })
         );

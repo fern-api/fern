@@ -97,7 +97,7 @@ export const ContentAlignment = z.enum(["center", "left"]);
 
 export const HeaderPosition = z.enum(["fixed", "static"]);
 
-export const ProductSwitcherThemeConfig = z.enum(["default", "toggle"]);
+export const ProductSwitcherThemeConfig = z.enum(["default", "toggle", "tabs"]);
 
 export const LanguageSwitcherThemeConfig = z.enum(["default", "minimal"]);
 
@@ -236,6 +236,15 @@ export const AIChatWebsiteDatasource = z.object({
 
 export const AIChatDatasource = AIChatWebsiteDatasource;
 
+export const PageDescriptionSource = z.enum(["description", "subtitle"]);
+
+export const AgentsConfig = z.object({
+    "page-directive": z.string().optional(),
+    "page-description-source": PageDescriptionSource.optional(),
+    "llms-txt": z.string().optional(),
+    "llms-full-txt": z.string().optional()
+});
+
 export const AIChatConfig = z.object({
     model: AIChatModel.optional(),
     "system-prompt": z.string().optional(),
@@ -298,7 +307,8 @@ export const LayoutConfig = z.object({
     "header-position": HeaderPosition.optional(),
     "disable-header": z.boolean().optional(),
     "hide-nav-links": z.boolean().optional(),
-    "hide-feedback": z.boolean().optional()
+    "hide-feedback": z.boolean().optional(),
+    "mobile-toc": z.boolean().optional()
 });
 
 // ===== Settings =====
@@ -387,7 +397,6 @@ export const EditThisPageConfig = z.object({
 export const DocsInstance = z.object({
     url: z.string(),
     "custom-domain": CustomDomain.optional(),
-    private: z.boolean().optional(),
     "edit-this-page": EditThisPageConfig.optional(),
     audiences: Audience.optional()
 });
@@ -549,6 +558,16 @@ export const MetadataConfig = z.object({
     "twitter:site": z.string().optional(),
     "twitter:url": z.string().optional(),
     "twitter:card": TwitterCardSetting.optional(),
+    "og:dynamic": z.boolean().optional(),
+    "og:background-image": z.string().optional(),
+    "og:dynamic:text-color": z.string().optional(),
+    "og:dynamic:background-color": z.string().optional(),
+    "og:dynamic:logo-color": z.enum(["dark", "light"]).optional(),
+    "og:dynamic:show-logo": z.boolean().optional(),
+    "og:dynamic:show-section": z.boolean().optional(),
+    "og:dynamic:show-description": z.boolean().optional(),
+    "og:dynamic:show-url": z.boolean().optional(),
+    "og:dynamic:show-gradient": z.boolean().optional(),
     "canonical-host": z.string().optional()
 });
 
@@ -570,7 +589,8 @@ export const CheckRulesConfig = z.object({
     "no-non-component-refs": CheckRuleSeverity.optional(),
     "valid-local-references": CheckRuleSeverity.optional(),
     "no-circular-redirects": CheckRuleSeverity.optional(),
-    "valid-docs-endpoints": CheckRuleSeverity.optional()
+    "valid-docs-endpoints": CheckRuleSeverity.optional(),
+    "missing-redirects": CheckRuleSeverity.optional()
 });
 
 export const CheckConfig = z.object({
@@ -947,6 +967,7 @@ export const DocsConfiguration = z.object({
     "ai-chat": AIChatConfig.optional(),
     "ai-search": AIChatConfig.optional(),
     "ai-examples": AiExamplesConfig.optional(),
+    agents: AgentsConfig.optional(),
     metadata: MetadataConfig.optional(),
     redirects: z.array(RedirectConfig).optional(),
     check: CheckConfig.optional(),

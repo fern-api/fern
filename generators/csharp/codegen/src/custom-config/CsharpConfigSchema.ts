@@ -52,6 +52,7 @@ export const CsharpConfigSchema = z.object({
     "experimental-explicit-nullable-optional": z.boolean().optional(),
     "use-default-request-parameter-values": z.boolean().optional(),
     "redact-response-body-on-error": z.boolean().optional(),
+    "enable-inline-types": z.boolean().optional(),
 
     // temporary options to unblock websocket URIs generation
     //
@@ -87,6 +88,7 @@ export const CsharpConfigSchema = z.object({
     // General options.
     "root-client-class-access": z.enum(["public", "internal"]).optional(),
     "custom-pager-name": z.string().optional(),
+    "offset-semantics": z.enum(["item-index", "page-index"]).optional(),
     "enable-forward-compatible-enums": z.boolean().optional(),
     "generate-error-types": z.boolean().optional(),
     "package-id": z.string().optional(),
@@ -113,7 +115,8 @@ export const CsharpConfigSchema = z.object({
     // "sln" generates both .sln and .slnx files for compatibility with older
     // .NET tooling or CI systems that do not yet support .slnx.
     // "slnx" (default) generates only the modern .slnx format.
-    "sln-format": z.enum(["sln", "slnx"]).optional()
+    "sln-format": z.enum(["sln", "slnx"]).optional(),
+    maxRetries: z.number().int().min(0).optional()
 });
 
 export type CsharpConfigSchema = z.infer<typeof CsharpConfigSchema>;

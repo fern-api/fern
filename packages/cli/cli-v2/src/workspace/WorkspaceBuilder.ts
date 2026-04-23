@@ -42,6 +42,7 @@ export class WorkspaceBuilder {
             name: lang,
             api: DEFAULT_API_NAME,
             image: imageRef.image,
+            registry: undefined,
             lang,
             version: imageRef.tag,
             sourceLocation,

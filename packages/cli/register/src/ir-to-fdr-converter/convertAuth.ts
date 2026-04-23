@@ -73,7 +73,7 @@ function convertAuthScheme({
                               endpointId: FdrCjsSdk.EndpointId(
                                   scheme.configuration.tokenEndpoint.endpointReference.endpointId
                               ),
-                              accessTokenLocator: FdrCjsSdk.JqString(tokenPath),
+                              accessTokenLocator: tokenPath,
                               headerName: scheme.configuration.tokenHeader,
                               tokenPrefix: scheme.configuration.tokenPrefix,
                               description: scheme.docs

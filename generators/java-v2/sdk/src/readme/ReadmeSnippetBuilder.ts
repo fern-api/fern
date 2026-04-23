@@ -1,4 +1,4 @@
-import { AbstractReadmeSnippetBuilder } from "@fern-api/base-generator";
+import { AbstractReadmeSnippetBuilder, GeneratorError } from "@fern-api/base-generator";
 import { java } from "@fern-api/java-ast";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
@@ -266,7 +266,7 @@ ${clientClassName} client = ${clientClassName}.builder()
         // This should never happen because the precondition prevents this code from running
         // if we don't have a default environment ID, but we need this check for the linter.
         if (defaultEnvironmentId == null) {
-            throw new Error("Could not get default environment ID for README snippet");
+            throw GeneratorError.internalError("Could not get default environment ID for README snippet");
         }
 
         const productionEnvironment = java.codeblock((writer) => {
@@ -656,10 +656,14 @@ ${clientClassName} client = ${clientClassName}.builder()
 
         for (const endpointSnippet of Object.values(endpointSnippets)) {
             if (endpointSnippet.id.identifierOverride == null) {
-                throw new Error("Internal error; snippets must define the endpoint id to generate README.md");
+                throw GeneratorError.internalError(
+                    "Internal error; snippets must define the endpoint id to generate README.md"
+                );
             }
             if (endpointSnippet.snippet.type !== "java") {
-                throw new Error(`Internal error; expected java snippet but got: ${endpointSnippet.snippet.type}`);
+                throw GeneratorError.internalError(
+                    `Internal error; expected java snippet but got: ${endpointSnippet.snippet.type}`
+                );
             }
 
             const endpointId = endpointSnippet.id.identifierOverride;
@@ -707,7 +711,9 @@ ${clientClassName} client = ${clientClassName}.builder()
             }
 
             if (selectedSnippet.snippet.type !== "java") {
-                throw new Error(`Internal error; expected java snippet but got: ${selectedSnippet.snippet.type}`);
+                throw GeneratorError.internalError(
+                    `Internal error; expected java snippet but got: ${selectedSnippet.snippet.type}`
+                );
             }
             let snippet = selectedSnippet.snippet.syncClient;
 
@@ -741,7 +747,7 @@ ${clientClassName} client = ${clientClassName}.builder()
                                 valueType.type === "container" &&
                                 (valueType.container.type === "optional" || valueType.container.type === "nullable")
                             ) {
-                                const fieldName = property.name.name.camelCase.unsafeName;
+                                const fieldName = this.context.caseConverter.camelUnsafe(property.name);
                                 optionalFieldNames.add(fieldName);
                             }
                         }
@@ -787,7 +793,7 @@ ${clientClassName} client = ${clientClassName}.builder()
     private lookupEndpointById(endpointId: FernIr.EndpointId): EndpointWithFilepath {
         const endpoint = this.endpointsById[endpointId];
         if (endpoint == null) {
-            throw new Error(`Internal error; missing endpoint ${endpointId}`);
+            throw GeneratorError.internalError(`Internal error; missing endpoint ${endpointId}`);
         }
         return endpoint;
     }
@@ -802,7 +808,7 @@ ${clientClassName} client = ${clientClassName}.builder()
 
     private getAccessFromRootClient(fernFilepath: FernIr.FernFilepath): java.AstNode {
         const clientAccessParts = fernFilepath.allParts.map(
-            (part) => this.getKeyWordCompatibleMethodName(part.camelCase.safeName) + "()"
+            (part) => this.getKeyWordCompatibleMethodName(this.context.caseConverter.camelSafe(part)) + "()"
         );
         return clientAccessParts.length > 0
             ? java.codeblock(`${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME}.${clientAccessParts.join(".")}`)
@@ -810,7 +816,7 @@ ${clientClassName} client = ${clientClassName}.builder()
     }
 
     private getEndpointMethodName(endpoint: FernIr.HttpEndpoint): string {
-        return endpoint.name.camelCase.unsafeName;
+        return this.context.caseConverter.camelUnsafe(endpoint.name);
     }
 
     private getDefaultEnvironmentId(): string | undefined {
@@ -840,13 +846,13 @@ ${clientClassName} client = ${clientClassName}.builder()
         const dynamicIr = this.context.ir.dynamic;
 
         if (dynamicIr == null) {
-            throw new Error("Cannot generate README without dynamic IR");
+            throw GeneratorError.internalError("Cannot generate README without dynamic IR");
         }
 
         const endpoints = Object.entries(dynamicIr.endpoints);
 
         if (endpoints.length == 0) {
-            throw new Error("Cannot generate README without endpoints.");
+            throw GeneratorError.internalError("Cannot generate README without endpoints.");
         }
 
         // Prefer endpoints with a request body.
@@ -867,7 +873,7 @@ ${clientClassName} client = ${clientClassName}.builder()
 
         // Need this check for the linter
         if (endpoints[0] == null) {
-            throw new Error("Cannot generate README with null endpoint.");
+            throw GeneratorError.internalError("Cannot generate README with null endpoint.");
         }
 
         return endpoints[0][0];
@@ -900,7 +906,8 @@ ${clientClassName} client = ${clientClassName}.builder()
         if (this.context.ir.auth.schemes.length > 0) {
             const authScheme = this.context.ir.auth.schemes[0];
             if (authScheme?.type === "bearer") {
-                const tokenName = authScheme.token?.camelCase?.unsafeName ?? "token";
+                const tokenName =
+                    authScheme.token != null ? this.context.caseConverter.camelUnsafe(authScheme.token) : "token";
                 builderParameters.push({
                     name: tokenName,
                     value: java.TypeLiteral.string("<token>")
@@ -915,7 +922,8 @@ ${clientClassName} client = ${clientClassName}.builder()
                     value: java.TypeLiteral.string("<password>")
                 });
             } else if (authScheme?.type === "header") {
-                const headerName = authScheme.name.name?.camelCase?.unsafeName ?? "apiKey";
+                const headerName =
+                    authScheme.name != null ? this.context.caseConverter.camelUnsafe(authScheme.name) : "apiKey";
                 builderParameters.push({
                     name: headerName,
                     value: java.TypeLiteral.string("<api-key>")
@@ -926,8 +934,10 @@ ${clientClassName} client = ${clientClassName}.builder()
         if (this.context.ir.variables != null && this.context.ir.variables.length > 0) {
             for (const variable of this.context.ir.variables) {
                 builderParameters.push({
-                    name: variable.name.camelCase.unsafeName,
-                    value: java.TypeLiteral.string(`YOUR_${variable.name.screamingSnakeCase.unsafeName}`)
+                    name: this.context.caseConverter.camelUnsafe(variable.name),
+                    value: java.TypeLiteral.string(
+                        `YOUR_${this.context.caseConverter.screamingSnakeUnsafe(variable.name)}`
+                    )
                 });
             }
         }
@@ -935,16 +945,20 @@ ${clientClassName} client = ${clientClassName}.builder()
         if (this.context.ir.pathParameters != null && this.context.ir.pathParameters.length > 0) {
             for (const param of this.context.ir.pathParameters.filter((p) => p.variable == null)) {
                 builderParameters.push({
-                    name: param.name.camelCase.unsafeName,
-                    value: java.TypeLiteral.string(`YOUR_${param.name.screamingSnakeCase.unsafeName}`)
+                    name: this.context.caseConverter.camelUnsafe(param.name),
+                    value: java.TypeLiteral.string(
+                        `YOUR_${this.context.caseConverter.screamingSnakeUnsafe(param.name)}`
+                    )
                 });
             }
         }
         // Environment URL variables (e.g., tenantDomain)
         for (const urlVariable of this.getEnvironmentUrlVariables()) {
             builderParameters.push({
-                name: urlVariable.name.camelCase.unsafeName,
-                value: java.TypeLiteral.string(`YOUR_${urlVariable.name.screamingSnakeCase.unsafeName}`)
+                name: this.context.caseConverter.camelUnsafe(urlVariable.name),
+                value: java.TypeLiteral.string(
+                    `YOUR_${this.context.caseConverter.screamingSnakeUnsafe(urlVariable.name)}`
+                )
             });
         }
     }
@@ -1029,8 +1043,7 @@ ${clientClassName} client = ${clientClassName}.builder()
 
         // Get access path to WebSocket client from root client
         const clientAccessParts = fernFilepath.allParts.map(
-            (part: { camelCase: { safeName: string } }) =>
-                this.getKeyWordCompatibleMethodName(part.camelCase.safeName) + "()"
+            (part) => this.getKeyWordCompatibleMethodName(this.context.caseConverter.camelSafe(part)) + "()"
         );
         const wsClientAccess =
             clientAccessParts.length > 0
@@ -1100,11 +1113,11 @@ ${clientClassName} client = ${clientClassName}.builder()
         }
 
         // Build the factory method name: <channelName>WebSocket()
-        const channelName = channel.name.camelCase.safeName;
+        const channelName = this.context.caseConverter.camelSafe(channel.name);
         const wsFactoryMethod = `${channelName}WebSocket`;
 
         // Build connect options class name: <PascalName>ConnectOptions
-        const channelPascalName = channel.name.pascalCase.safeName;
+        const channelPascalName = this.context.caseConverter.pascalSafe(channel.name);
         const connectOptionsClass = `${channelPascalName}ConnectOptions`;
 
         // Check if there are required query parameters for the connect options

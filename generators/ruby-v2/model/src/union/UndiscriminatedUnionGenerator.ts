@@ -35,10 +35,9 @@ export class UndiscriminatedUnionGenerator extends FileGenerator<
             superclass: this.context.getModelClassReference(),
             docstring: this.typeDeclaration.docs ?? undefined
         });
-        classNode.addStatement(ruby.codeblock(`extend ${this.context.getRootModuleName()}::Internal::Types::Union`));
-
         classNode.addStatement(
             ruby.codeblock((writer) => {
+                writer.write(`extend ${this.context.getRootModuleName()}::Internal::Types::Union`);
                 writer.newLine();
             })
         );

@@ -22,7 +22,7 @@ func VerifyRequestCount(
 	testId string,
 	method string,
 	urlPath string,
-	queryParams map[string]string,
+	queryParams map[string]any,
 	expected int,
 ) {
 	wiremockURL := os.Getenv("WIREMOCK_URL")
@@ -47,9 +47,23 @@ func VerifyRequestCount(
 			}
 			reqBody.WriteString(`"`)
 			reqBody.WriteString(key)
-			reqBody.WriteString(`":{"equalTo":"`)
-			reqBody.WriteString(value)
-			reqBody.WriteString(`"}`)
+			switch v := value.(type) {
+			case string:
+				reqBody.WriteString(`":{"equalTo":"`)
+				reqBody.WriteString(v)
+				reqBody.WriteString(`"}`)
+			case []string:
+				reqBody.WriteString(`":{"hasExactly":[`)
+				for i, item := range v {
+					if i > 0 {
+						reqBody.WriteString(",")
+					}
+					reqBody.WriteString(`{"equalTo":"`)
+					reqBody.WriteString(item)
+					reqBody.WriteString(`"}`)
+				}
+				reqBody.WriteString(`]}`)
+			}
 			first = false
 		}
 		reqBody.WriteString("}")
@@ -73,6 +87,7 @@ func TestEndpointsPrimitiveGetAndReturnStringWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := "string"
 	_, invocationErr := client.Endpoints.Primitive.GetAndReturnString(
@@ -96,6 +111,7 @@ func TestEndpointsPrimitiveGetAndReturnIntWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := 1
 	_, invocationErr := client.Endpoints.Primitive.GetAndReturnInt(
@@ -119,6 +135,7 @@ func TestEndpointsPrimitiveGetAndReturnLongWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := int64(1000000)
 	_, invocationErr := client.Endpoints.Primitive.GetAndReturnLong(
@@ -142,6 +159,7 @@ func TestEndpointsPrimitiveGetAndReturnDoubleWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := 1.1
 	_, invocationErr := client.Endpoints.Primitive.GetAndReturnDouble(
@@ -165,6 +183,7 @@ func TestEndpointsPrimitiveGetAndReturnBoolWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := true
 	_, invocationErr := client.Endpoints.Primitive.GetAndReturnBool(
@@ -188,6 +207,7 @@ func TestEndpointsPrimitiveGetAndReturnDatetimeWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := fern.MustParseDateTime(
 		"2024-01-15T09:30:00Z",
@@ -204,7 +224,7 @@ func TestEndpointsPrimitiveGetAndReturnDatetimeWithWireMock(
 	VerifyRequestCount(t, "TestEndpointsPrimitiveGetAndReturnDatetimeWithWireMock", "POST", "/primitive/datetime", nil, 1)
 }
 
-func TestEndpointsPrimitiveGetAndReturnUuidWithWireMock(
+func TestEndpointsPrimitiveGetAndReturnUUIDWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -213,20 +233,21 @@ func TestEndpointsPrimitiveGetAndReturnUuidWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := uuid.MustParse(
 		"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
 	)
-	_, invocationErr := client.Endpoints.Primitive.GetAndReturnUuid(
+	_, invocationErr := client.Endpoints.Primitive.GetAndReturnUUID(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestEndpointsPrimitiveGetAndReturnUuidWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestEndpointsPrimitiveGetAndReturnUUIDWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestEndpointsPrimitiveGetAndReturnUuidWithWireMock", "POST", "/primitive/uuid", nil, 1)
+	VerifyRequestCount(t, "TestEndpointsPrimitiveGetAndReturnUUIDWithWireMock", "POST", "/primitive/uuid", nil, 1)
 }
 
 func TestEndpointsPrimitiveGetAndReturnBase64WithWireMock(
@@ -238,6 +259,7 @@ func TestEndpointsPrimitiveGetAndReturnBase64WithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := []byte("SGVsbG8gd29ybGQh")
 	_, invocationErr := client.Endpoints.Primitive.GetAndReturnBase64(

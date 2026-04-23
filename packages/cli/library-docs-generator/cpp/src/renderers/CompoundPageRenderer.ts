@@ -4,6 +4,7 @@
  * Handles: class, concept, function, enum, typedef, variable
  */
 
+import { CliError } from "@fern-api/task-context";
 import type {
     CppClassIr,
     CppConceptIr,
@@ -50,7 +51,10 @@ export function renderCompoundPage(compound: CppCompoundIr, meta: CompoundMeta):
             return renderVariablePage(compound.data, meta);
         default: {
             const _exhaustive: never = compound;
-            throw new Error(`Unknown compound kind: ${JSON.stringify(_exhaustive)}`);
+            throw new CliError({
+                message: `Unknown compound kind: ${JSON.stringify(_exhaustive)}`,
+                code: CliError.Code.InternalError
+            });
         }
     }
 }

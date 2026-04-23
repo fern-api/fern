@@ -18,7 +18,7 @@ func do() {
         ),
     )
     request := &file.GetFileRequest{
-        XFileApiVersion: "0.0.2",
+        XFileAPIVersion: "0.0.2",
     }
     client.File.Service.GetFile(
         context.TODO(),

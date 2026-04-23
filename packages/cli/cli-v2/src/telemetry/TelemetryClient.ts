@@ -1,4 +1,6 @@
+import { setSentryRunIdTags } from "@fern-api/cli-telemetry";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { CliError } from "@fern-api/task-context";
 import * as Sentry from "@sentry/node";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import IS_CI from "is-ci";
@@ -17,9 +19,15 @@ export class TelemetryClient {
     private readonly sentry: Sentry.NodeClient | undefined;
     private readonly baseTags: Tags;
     private readonly accumulatedTags: Tags = {};
-    private cachedDistinctId: string | undefined;
+    private readonly distinctId: string;
 
-    constructor({ isTTY }: { isTTY: boolean }) {
+    public static async create({ isTTY }: { isTTY: boolean }): Promise<TelemetryClient> {
+        const distinctId = await TelemetryClient.getDistinctId();
+        return new TelemetryClient({ isTTY, distinctId });
+    }
+
+    private constructor({ isTTY, distinctId }: { isTTY: boolean; distinctId: string }) {
+        this.distinctId = distinctId;
         const isTelemetryEnabled = this.isTelemetryEnabled();
         const apiKey = process.env.POSTHOG_API_KEY;
         this.baseTags = {
@@ -36,27 +44,50 @@ export class TelemetryClient {
         if (sentryDsn != null && sentryDsn.length > 0 && isTelemetryEnabled) {
             const sentryEnvironment = process.env.SENTRY_ENVIRONMENT;
             if (sentryEnvironment == null || sentryEnvironment.length === 0) {
-                throw new Error("SENTRY_ENVIRONMENT must be set when SENTRY_DSN is configured");
+                throw new CliError({
+                    message: "SENTRY_ENVIRONMENT must be set when SENTRY_DSN is configured",
+                    code: CliError.Code.ConfigError
+                });
             }
             this.sentry = Sentry.init({
                 dsn: sentryDsn,
                 release: `cli@${Version}`,
                 environment: sentryEnvironment,
+                // Opt out of every built-in integration (HTTP tracing, local
+                // variables, console breadcrumbs, etc.) — error capture is all
+                // we need.
                 defaultIntegrations: false,
-                integrations: [Sentry.rewriteFramesIntegration()],
+                // Rewrite absolute frame paths to repo-root-relative paths so
+                // they align with the source maps uploaded at publish time.
+                // onUncaughtException / onUnhandledRejection catch errors that
+                // escape the CLI's top-level handler (fire-and-forget callbacks,
+                // unhandled rejections in background work, etc.).
+                // linkedErrors chains .cause so wrapped errors stay traceable.
+                // nodeContext adds Node.js version and OS to every event.
+                // Local variables are intentionally NOT collected here: the
+                // CLI runs on user machines where stack-frame locals could
+                // contain tokens, paths, or customer API content.
+                integrations: [
+                    Sentry.rewriteFramesIntegration(),
+                    Sentry.onUncaughtExceptionIntegration(),
+                    Sentry.onUnhandledRejectionIntegration(),
+                    Sentry.linkedErrorsIntegration(),
+                    Sentry.nodeContextIntegration()
+                ],
                 tracesSampleRate: 0
             });
+            setSentryRunIdTags();
         }
     }
 
     /** Send a named event that inherits base + accumulated properties. */
-    public async sendEvent(event: string, tags?: Tags): Promise<void> {
+    public sendEvent(event: string, tags?: Tags): void {
         if (this.posthog == null) {
             return;
         }
         try {
             this.posthog.capture({
-                distinctId: await this.getDistinctId(),
+                distinctId: this.distinctId,
                 event,
                 properties: { ...this.baseTags, ...this.accumulatedTags, ...tags }
             });
@@ -69,13 +100,13 @@ export class TelemetryClient {
      *
      * This is not meant to be called directly by command handlers.
      */
-    public async sendLifecycleEvent(event: LifecycleEvent): Promise<void> {
+    public sendLifecycleEvent(event: LifecycleEvent): void {
         if (this.posthog == null) {
             return;
         }
         try {
             this.posthog.capture({
-                distinctId: await this.getDistinctId(),
+                distinctId: this.distinctId,
                 event: "cli",
                 properties: {
                     ...this.baseTags,
@@ -99,15 +130,15 @@ export class TelemetryClient {
      * The caller is responsible for deciding which errors are worth reporting
      * (see `shouldReportToSentry` in withContext.ts).
      */
-    public async captureException(error: unknown): Promise<void> {
+    public captureException(error: unknown, { errorCode }: { errorCode: string }): void {
         if (this.sentry === undefined) {
             return;
         }
         try {
             this.sentry.captureException(error, {
                 captureContext: {
-                    user: { id: await this.getDistinctId() },
-                    tags: { ...this.baseTags, ...this.accumulatedTags }
+                    user: { id: this.distinctId },
+                    tags: { ...this.baseTags, ...this.accumulatedTags, "error.code": errorCode }
                 }
             });
         } catch {
@@ -118,7 +149,12 @@ export class TelemetryClient {
     public async flush(): Promise<void> {
         const promises: Promise<unknown>[] = [];
         if (this.posthog != null) {
-            promises.push(this.posthog.shutdown().catch(() => undefined));
+            promises.push(
+                Promise.race([
+                    this.posthog.shutdown().catch(() => undefined),
+                    new Promise<void>((resolve) => setTimeout(resolve, 3000))
+                ])
+            );
         }
         if (this.sentry !== undefined) {
             promises.push(Promise.resolve(this.sentry.flush(2000)).catch(() => undefined));
@@ -126,12 +162,9 @@ export class TelemetryClient {
         await Promise.all(promises);
     }
 
-    private async getDistinctId(): Promise<string> {
-        if (this.cachedDistinctId != null) {
-            return this.cachedDistinctId;
-        }
-
-        const distinctIdFilepath = this.getDistinctIdFilepath();
+    private static async getDistinctId(): Promise<string> {
+        const distinctIdFilepath = TelemetryClient.getDistinctIdFilepath();
+        let distinctId: string | null = null;
 
         try {
             if (!(await doesPathExist(distinctIdFilepath))) {
@@ -140,23 +173,22 @@ export class TelemetryClient {
             }
 
             const content = (await readFile(distinctIdFilepath)).toString().trim();
-            this.cachedDistinctId = content;
-
+            distinctId = content;
             if (!isValidUUID(content)) {
                 // Update the cached ID if it was corrupted.
                 const newId = uuidv4();
                 await writeFile(distinctIdFilepath, newId);
-                this.cachedDistinctId = newId;
+                distinctId = newId;
             }
         } catch {
-            this.cachedDistinctId = uuidv4(); // Fallback to a new ID.
+            distinctId = uuidv4(); // Fallback to a new ID.
         }
 
-        if (this.cachedDistinctId == null || this.cachedDistinctId.length === 0) {
-            this.cachedDistinctId = uuidv4();
+        if (distinctId == null || distinctId.length === 0) {
+            distinctId = uuidv4();
         }
 
-        return this.cachedDistinctId;
+        return distinctId;
     }
 
     /**
@@ -165,18 +197,18 @@ export class TelemetryClient {
      * Note that all telemetry is anonymous, but we still use a shared distinct ID
      * to correlate metrics from the same user/machine across multiple CLI invocations.
      */
-    private getDistinctIdFilepath(): AbsoluteFilePath {
+    private static getDistinctIdFilepath(): AbsoluteFilePath {
         return join(AbsoluteFilePath.of(homedir()), RelativeFilePath.of(".fern"), RelativeFilePath.of("id"));
     }
 
     /**
-     * Returns true if telemetry should be disabled.
+     * Returns true if telemetry is enabled.
      *
      * Priority:
      *  1. FERN_TELEMETRY_DISABLED env var (any non-empty value)
      *  2. telemetry.enabled: false in ~/.fernrc
      */
-    private isTelemetryEnabled(): boolean {
+    public isTelemetryEnabled(): boolean {
         const envDisabled = process.env["FERN_TELEMETRY_DISABLED"];
         if (envDisabled != null && envDisabled.length > 0) {
             return false;

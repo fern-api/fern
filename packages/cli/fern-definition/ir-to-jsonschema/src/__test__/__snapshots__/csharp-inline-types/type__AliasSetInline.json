@@ -1,0 +1,25 @@
+{
+  "type": "array",
+  "items": {
+    "$ref": "#/definitions/AliasInlineValue"
+  },
+  "uniqueItems": true,
+  "definitions": {
+    "AliasInlineValue": {
+      "type": "object",
+      "properties": {
+        "foo": {
+          "type": "string"
+        },
+        "bar": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "foo",
+        "bar"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

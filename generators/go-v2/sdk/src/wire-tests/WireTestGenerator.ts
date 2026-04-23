@@ -1,9 +1,11 @@
+import { GeneratorError, getNameFromWireValue, getWireValue } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { go } from "@fern-api/go-ast";
 import { GoFile } from "@fern-api/go-base";
 import { DynamicSnippetsGenerator } from "@fern-api/go-dynamic-snippets";
 import { WireMockMapping } from "@fern-api/mock-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
+
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest.js";
 import { convertIr } from "../utils/convertIr.js";
@@ -21,7 +23,7 @@ export class WireTestGenerator {
         this.context = context;
         const dynamicIr = this.context.ir.dynamic;
         if (!dynamicIr) {
-            throw new Error("Cannot generate wire tests without FernIr.dynamic IR");
+            throw GeneratorError.internalError("Cannot generate wire tests without FernIr.dynamic IR");
         }
         this.dynamicIr = dynamicIr;
         this.dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
@@ -243,7 +245,7 @@ export class WireTestGenerator {
                     }),
                     go.parameter({
                         name: "queryParams",
-                        type: go.Type.map(go.Type.string(), go.Type.string())
+                        type: go.Type.map(go.Type.string(), go.Type.any())
                     }),
                     go.parameter({
                         name: "expected",
@@ -294,11 +296,39 @@ export class WireTestGenerator {
                     writer.newLine();
                     writer.writeNode(go.codeblock("        reqBody.WriteString(key)"));
                     writer.newLine();
-                    writer.writeNode(go.codeblock('        reqBody.WriteString(`":{"equalTo":"`)'));
+                    writer.writeNode(go.codeblock("        switch v := value.(type) {"));
                     writer.newLine();
-                    writer.writeNode(go.codeblock("        reqBody.WriteString(value)"));
+                    writer.writeNode(go.codeblock("        case string:"));
                     writer.newLine();
-                    writer.writeNode(go.codeblock('        reqBody.WriteString(`"}`)'));
+                    writer.writeNode(go.codeblock('            reqBody.WriteString(`":{"equalTo":"`)'));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock("            reqBody.WriteString(v)"));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock('            reqBody.WriteString(`"}`)'));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock("        case []string:"));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock('            reqBody.WriteString(`":{"hasExactly":[`)'));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock("            for i, item := range v {"));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock("                if i > 0 {"));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock('                    reqBody.WriteString(",")'));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock("                }"));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock('                reqBody.WriteString(`{"equalTo":"`)'));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock("                reqBody.WriteString(item)"));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock('                reqBody.WriteString(`"}`)'));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock("            }"));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock("            reqBody.WriteString(`]}`)"));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock("        }"));
                     writer.newLine();
                     writer.writeNode(go.codeblock("        first = false"));
                     writer.newLine();
@@ -335,7 +365,7 @@ export class WireTestGenerator {
             config: { outputWiremockTests: true }
         });
         if (!response.snippet) {
-            throw new Error("No snippet generated for example");
+            throw GeneratorError.internalError("No snippet generated for example");
         }
         return response.snippet;
     }
@@ -611,26 +641,88 @@ export class WireTestGenerator {
         endpoint: FernIr.HttpEndpoint;
         snippet: string;
     }): go.CodeBlock {
-        // Generate the client constructor directly with WireMockBaseURL instead of parsing from snippet
-        // The snippet uses the original constructor args (e.g., WithToken), but we need WithBaseURL
+        // Generate the client constructor with WireMockBaseURL and auth options matching the WireMock matchers.
         return go.codeblock((writer) => {
             writer.write("client := ");
+            const arguments_: go.AstNode[] = [
+                go.invokeFunc({
+                    func: go.typeReference({
+                        name: "WithBaseURL",
+                        importPath: this.context.getOptionImportPath()
+                    }),
+                    arguments_: [go.codeblock("WireMockBaseURL")],
+                    multiline: false
+                })
+            ];
+            // Add auth options when the endpoint requires authentication, so that the
+            // request matches the WireMock stub's header matchers.
+            if (endpoint.auth) {
+                for (const scheme of this.context.ir.auth.schemes) {
+                    switch (scheme.type) {
+                        case "bearer":
+                            arguments_.push(
+                                go.invokeFunc({
+                                    func: go.typeReference({
+                                        name: "WithToken",
+                                        importPath: this.context.getOptionImportPath()
+                                    }),
+                                    arguments_: [go.codeblock('"test-token"')],
+                                    multiline: false
+                                })
+                            );
+                            break;
+                        case "basic": {
+                            const usernameOmitted = !!scheme.usernameOmit;
+                            const passwordOmitted = !!scheme.passwordOmit;
+                            if (!usernameOmitted || !passwordOmitted) {
+                                const basicAuthArgs: go.AstNode[] = [];
+                                if (!usernameOmitted) {
+                                    basicAuthArgs.push(go.codeblock('"test-username"'));
+                                }
+                                if (!passwordOmitted) {
+                                    basicAuthArgs.push(go.codeblock('"test-password"'));
+                                }
+                                arguments_.push(
+                                    go.invokeFunc({
+                                        func: go.typeReference({
+                                            name: "WithBasicAuth",
+                                            importPath: this.context.getOptionImportPath()
+                                        }),
+                                        arguments_: basicAuthArgs,
+                                        multiline: false
+                                    })
+                                );
+                            }
+                            break;
+                        }
+                        case "header": {
+                            const fieldName = scheme.name
+                                ? this.context.caseConverter.pascalUnsafe(getNameFromWireValue(scheme.name))
+                                : undefined;
+                            if (fieldName) {
+                                arguments_.push(
+                                    go.invokeFunc({
+                                        func: go.typeReference({
+                                            name: `With${fieldName}`,
+                                            importPath: this.context.getOptionImportPath()
+                                        }),
+                                        arguments_: [go.codeblock('"test-value"')],
+                                        multiline: false
+                                    })
+                                );
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
             writer.writeNode(
                 go.invokeFunc({
                     func: go.typeReference({
                         name: this.context.getClientConstructorName(),
                         importPath: this.context.getRootClientImportPath()
                     }),
-                    arguments_: [
-                        go.invokeFunc({
-                            func: go.typeReference({
-                                name: "WithBaseURL",
-                                importPath: this.context.getOptionImportPath()
-                            }),
-                            arguments_: [go.codeblock("WireMockBaseURL")],
-                            multiline: false
-                        })
-                    ],
+                    arguments_,
                     multiline: true
                 })
             );
@@ -717,7 +809,7 @@ export class WireTestGenerator {
         const wiremockMapping = this.wireMockConfigContent[mappingKey];
         // Take the first 15 keys
         if (!wiremockMapping) {
-            throw new Error(
+            throw GeneratorError.internalError(
                 `No wiremock mapping found for endpoint ${endpoint.id} and mappingKey "${mappingKey}". Keys available look like "${Object.keys(this.wireMockConfigContent).slice(0, 15).join('", "')}"`
             );
         }
@@ -768,7 +860,8 @@ export class WireTestGenerator {
         for (const qp of endpoint.queryParameters) {
             const primitive = this.context.maybePrimitive(qp.valueType);
             if (primitive === FernIr.PrimitiveTypeV1.DateTime) {
-                datetimeQueryParams.add(qp.name.wireValue);
+                const qpWireValue = getWireValue(qp.name);
+                datetimeQueryParams.add(qpWireValue);
             }
         }
 
@@ -776,17 +869,22 @@ export class WireTestGenerator {
         for (const [paramName, paramValue] of Object.entries(dynamicEndpointExample.queryParameters)) {
             if (paramValue != null) {
                 const key = JSON.stringify(paramName);
-                let stringValue = String(paramValue);
-                // Normalize datetime values to always include milliseconds, matching the
-                // Go SDK's RFC3339Milli format ("2006-01-02T15:04:05.000Z07:00").
-                if (datetimeQueryParams.has(paramName)) {
-                    const date = new Date(stringValue);
-                    if (!isNaN(date.getTime())) {
-                        stringValue = date.toISOString();
+                if (Array.isArray(paramValue) && paramValue.length > 1) {
+                    const items = paramValue.map((v: unknown) => JSON.stringify(String(v)));
+                    queryParamEntries.push(`${key}: []string{${items.join(", ")}}`);
+                } else {
+                    let stringValue = String(paramValue);
+                    // Normalize datetime values to always include milliseconds, matching the
+                    // Go SDK's RFC3339Milli format ("2006-01-02T15:04:05.000Z07:00").
+                    if (datetimeQueryParams.has(paramName)) {
+                        const date = new Date(stringValue);
+                        if (!isNaN(date.getTime())) {
+                            stringValue = date.toISOString();
+                        }
                     }
+                    const value = JSON.stringify(stringValue);
+                    queryParamEntries.push(`${key}: ${value}`);
                 }
-                const value = JSON.stringify(stringValue);
-                queryParamEntries.push(`${key}: ${value}`);
             }
         }
 
@@ -794,7 +892,7 @@ export class WireTestGenerator {
             return "nil";
         }
 
-        return `map[string]string{${queryParamEntries.join(", ")}}`;
+        return `map[string]interface{}{${queryParamEntries.join(", ")}}`;
     }
 
     private getDynamicEndpointExample(endpoint: FernIr.HttpEndpoint): FernIr.dynamic.EndpointExample | null {
@@ -930,7 +1028,10 @@ export class WireTestGenerator {
     }
 
     private getFormattedServiceName(service: FernIr.HttpService): string {
-        return service.name?.fernFilepath?.allParts?.map((part) => part.snakeCase.safeName).join("_") || "root";
+        return (
+            service.name?.fernFilepath?.allParts?.map((part) => this.context.caseConverter.snakeSafe(part)).join("_") ||
+            "root"
+        );
     }
 
     /**

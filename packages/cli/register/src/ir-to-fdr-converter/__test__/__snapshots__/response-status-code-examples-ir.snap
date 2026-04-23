@@ -45,7 +45,7 @@
       "type": {
         "_visit": [Function],
         "default": undefined,
-        "displayName": undefined,
+        "displayName": "ErrorResponse",
         "fernFilepath": {
           "allParts": [],
           "file": undefined,
@@ -89,7 +89,7 @@
       "type": {
         "_visit": [Function],
         "default": undefined,
-        "displayName": undefined,
+        "displayName": "ErrorResponse",
         "fernFilepath": {
           "allParts": [],
           "file": undefined,
@@ -133,7 +133,7 @@
       "type": {
         "_visit": [Function],
         "default": undefined,
-        "displayName": undefined,
+        "displayName": "ErrorResponse",
         "fernFilepath": {
           "allParts": [],
           "file": undefined,
@@ -177,7 +177,7 @@
       "type": {
         "_visit": [Function],
         "default": undefined,
-        "displayName": undefined,
+        "displayName": "ErrorResponse",
         "fernFilepath": {
           "allParts": [],
           "file": undefined,
@@ -340,7 +340,7 @@
             "requestBodyType": {
               "_visit": [Function],
               "default": undefined,
-              "displayName": undefined,
+              "displayName": "CreateSessionRequest",
               "fernFilepath": {
                 "allParts": [],
                 "file": undefined,
@@ -371,7 +371,7 @@
                 "responseBodyType": {
                   "_visit": [Function],
                   "default": undefined,
-                  "displayName": undefined,
+                  "displayName": "CreateSessionResponse",
                   "fernFilepath": {
                     "allParts": [],
                     "file": undefined,
@@ -455,7 +455,7 @@
                 "requestBodyType": {
                   "_visit": [Function],
                   "default": undefined,
-                  "displayName": undefined,
+                  "displayName": "CreateSessionRequest",
                   "fernFilepath": {
                     "allParts": [],
                     "file": undefined,
@@ -490,7 +490,7 @@
                     "responseBodyType": {
                       "_visit": [Function],
                       "default": undefined,
-                      "displayName": undefined,
+                      "displayName": "CreateSessionResponse",
                       "fernFilepath": {
                         "allParts": [],
                         "file": undefined,

@@ -24,6 +24,16 @@ export declare namespace visitDocsConfigFileYamlAst {
     }
 }
 
+/**
+ * Traverses `docs.yml` and emits the AST node visits that `fern check` rules
+ * know how to validate, such as filepaths, markdown pages, version/product
+ * files, API sections, and permission-bearing nodes.
+ *
+ * Many top-level config fields intentionally use `noop` because they do not
+ * produce any rule-relevant AST nodes in the docs validator. Those fields are
+ * still parsed elsewhere, but there is nothing additional for validation rules
+ * to visit here.
+ */
 export async function visitDocsConfigFileYamlAst({
     contents,
     visitor,
@@ -190,6 +200,26 @@ export async function visitDocsConfigFileYamlAst({
         },
         landingPage: noop,
         layout: noop,
+        agents: async (agents) => {
+            if (agents?.llmsTxt != null) {
+                await visitFilepath({
+                    absoluteFilepathToConfiguration,
+                    rawUnresolvedFilepath: agents.llmsTxt,
+                    visitor,
+                    nodePath: ["agents", "llms-txt"],
+                    willBeUploaded: true
+                });
+            }
+            if (agents?.llmsFullTxt != null) {
+                await visitFilepath({
+                    absoluteFilepathToConfiguration,
+                    rawUnresolvedFilepath: agents.llmsFullTxt,
+                    visitor,
+                    nodePath: ["agents", "llms-full-txt"],
+                    willBeUploaded: true
+                });
+            }
+        },
         settings: noop,
         logo: async () => {
             if (contents.logo?.dark != null) {
@@ -216,6 +246,8 @@ export async function visitDocsConfigFileYamlAst({
                 return;
             }
 
+            const navStart = performance.now();
+            context.logger.debug("[docs-ast] Starting main navigation traversal...");
             await visitNavigationAst({
                 absolutePathToFernFolder,
                 navigation,
@@ -225,12 +257,17 @@ export async function visitDocsConfigFileYamlAst({
                 apiWorkspaces,
                 context
             });
+            context.logger.debug(
+                `[docs-ast] Main navigation traversal complete in ${(performance.now() - navStart).toFixed(0)}ms`
+            );
         },
         products: async (products) => {
             if (products == null) {
                 return;
             }
 
+            const productsStart = performance.now();
+            context.logger.debug(`[docs-ast] Processing ${products.length} products...`);
             await Promise.all(
                 products.map(async (product, idx) => {
                     if ("path" in product) {
@@ -266,6 +303,9 @@ export async function visitDocsConfigFileYamlAst({
                         }
                     }
                 })
+            );
+            context.logger.debug(
+                `[docs-ast] Products processing complete in ${(performance.now() - productsStart).toFixed(0)}ms`
             );
         },
         check: noop,
@@ -317,6 +357,8 @@ export async function visitDocsConfigFileYamlAst({
                 return;
             }
 
+            const versionsStart = performance.now();
+            context.logger.debug(`[docs-ast] Processing ${versions.length} versions...`);
             await Promise.all(
                 versions.map(async (version, idx) => {
                     await visitFilepath({
@@ -350,6 +392,9 @@ export async function visitDocsConfigFileYamlAst({
                         });
                     }
                 })
+            );
+            context.logger.debug(
+                `[docs-ast] Versions processing complete in ${(performance.now() - versionsStart).toFixed(0)}ms`
             );
         },
         roles: noop,

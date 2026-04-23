@@ -91,8 +91,7 @@ Get started [here](https://github.com/fern-api/docs-starter).
 
 ## 🌿 Generators
 
-Generators are processes that take your API Definition as input and output artifacts (SDKs,
-Postman Collections, Server boilerplate, etc.). To add a generator, run `fern add <generator id>`.
+Generators are processes that take your API Definition as input and output artifacts (SDKs, Server boilerplate, etc.). To add a generator, run `fern add <generator id>`.
 
 ### SDK Generators
 
@@ -108,26 +107,15 @@ Postman Collections, Server boilerplate, etc.). To add a generator, run `fern ad
 | `fernapi/fern-swift-sdk`           | ![Swift Generator Version](https://img.shields.io/docker/v/fernapi/fern-swift-sdk)                | [Changelog](https://buildwithfern.com/learn/sdks/generators/swift/changelog)                                    |
 | `fernapi/fern-rust-sdk`            | ![Rust Generator Version](https://img.shields.io/docker/v/fernapi/fern-rust-sdk)                  | [Changelog](https://buildwithfern.com/learn/sdks/generators/rust/changelog)                                     |
 
-### Model Generators
-
-Fern's model generators will output schemas or types defined in your OpenAPI spec or Fern Definition.
-
-| Generator ID                  | Latest Version                                                                                   | Changelog                                                                     |
-| ----------------------------- | ------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------- |
-| `fernapi/fern-pydantic-model` | ![Pydantic Model Generator Version](https://img.shields.io/docker/v/fernapi/fern-pydantic-model) | [versions.yml](./generators/python/pydantic/versions.yml)                     |
-| `fernapi/fern-java-model`     | ![Java Model Generator Version](https://img.shields.io/docker/v/fernapi/fern-java-model)         | [versions.yml](./generators/java/model/versions.yml)                          |
-| `fernapi/fern-go-model`       | ![Go Model Generator Version](https://img.shields.io/docker/v/fernapi/fern-go-model)             | [versions.yml](./generators/go/model/versions.yml)                            |
-
 ### Spec Generators
 
-Fern's spec generators can output an OpenAPI spec or a Postman collection.
+Fern's spec generators can output an OpenAPI spec.
 
 > **Note**: The OpenAPI spec generator is primarily intended for Fern Definition users. This prevents lock-in so that one can always export to OpenAPI.
 
 | Generator ID           | Latest Version                                                                     | Changelog                                              |
 | ---------------------- | ---------------------------------------------------------------------------------- | ------------------------------------------------------ |
 | `fernapi/fern-openapi` | ![OpenAPI Generator Version](https://img.shields.io/docker/v/fernapi/fern-openapi) | [versions.yml](./generators/openapi/versions.yml)      |
-| `fernapi/fern-postman` | ![Postman Generator Version](https://img.shields.io/docker/v/fernapi/fern-postman) | [versions.yml](./generators/postman/versions.yml)      |
 
 ## 🌿 CLI Commands
 

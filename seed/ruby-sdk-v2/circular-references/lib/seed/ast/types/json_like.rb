@@ -3,11 +3,11 @@
 module Seed
   module Ast
     module Types
-      class JsonLike < Internal::Types::Model
+      class JSONLike < Internal::Types::Model
         extend Seed::Internal::Types::Union
 
-        member -> { Internal::Types::Array[Seed::Ast::Types::JsonLike] }
-        member -> { Internal::Types::Hash[String, Seed::Ast::Types::JsonLike] }
+        member -> { Internal::Types::Array[Seed::Ast::Types::JSONLike] }
+        member -> { Internal::Types::Hash[String, Seed::Ast::Types::JSONLike] }
         member -> { String }
         member -> { Integer }
         member -> { Internal::Types::Boolean }

@@ -1,3 +1,4 @@
+import { GeneratorError } from "@fern-api/base-generator";
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast, is, lazy } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
@@ -117,7 +118,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkGe
             if (typeRef.isOptional) {
                 continue;
             }
-            const name = this.model.getPropertyNameFor(customProperty.property.name);
+            const name = this.model.getPropertyNameFor(this.case.resolveNameAndWireValue(customProperty.property.name));
 
             this.additionalRequestFields.set(
                 name,
@@ -134,7 +135,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkGe
                 reference: scopes.property.valueType
             });
             if (!typeRef.isOptional) {
-                const name = this.model.getPropertyNameFor(scopes.property.name);
+                const name = this.model.getPropertyNameFor(this.case.resolveNameAndWireValue(scopes.property.name));
                 this.additionalRequestFields.set(
                     name,
                     this.cls.addField({
@@ -263,11 +264,15 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkGe
     private request = lazy({
         clientId: () =>
             this.context.getNameForField(
-                this.scheme.configuration.tokenEndpoint.requestProperties.clientId.property.name
+                this.case.resolveNameAndWireValue(
+                    this.scheme.configuration.tokenEndpoint.requestProperties.clientId.property.name
+                )
             ),
         secret: () =>
             this.context.getNameForField(
-                this.scheme.configuration.tokenEndpoint.requestProperties.clientSecret.property.name
+                this.case.resolveNameAndWireValue(
+                    this.scheme.configuration.tokenEndpoint.requestProperties.clientSecret.property.name
+                )
             )
     });
 
@@ -281,7 +286,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkGe
         // otherwise we'd need a rather hacky-lookup scheme.
 
         // try to get the request type from the sdk request first
-        const requestWrapper = this.requestWrapperName();
+        const requestWrapper = this.getRequestBody();
         if (requestWrapper) {
             return this.context.getRequestWrapperReference(this.tokenEndpointReference.serviceId, requestWrapper);
         }
@@ -292,34 +297,22 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkGe
                 return typeRef;
             }
         }
-        throw new Error("Failed to get request class reference");
+        throw GeneratorError.internalError("Failed to get request class reference");
     }
 
-    private rwn() {
-        if (is.IR.SdkRequestShape.Wrapper(this.tokenEndpoint.sdkRequest?.shape)) {
-            return this.tokenEndpoint.sdkRequest?.shape.wrapperName;
-        }
-
-        if (is.IR.HttpRequestBody.InlinedRequestBody(this.tokenEndpoint.requestBody)) {
-            return this.tokenEndpoint.requestBody.name;
-        }
-
-        return undefined;
-    }
-
-    private requestWrapperName() {
+    private getRequestBody() {
         return (
             this.tokenEndpoint.sdkRequest?.shape._visit({
                 _other: (value) => undefined,
                 justRequestBody: (value) => undefined,
-                wrapper: (value) => value.wrapperName
+                wrapper: (value) => value
             }) ??
             this.tokenEndpoint.requestBody?._visit({
                 _other: (value) => undefined,
                 reference: (value) => undefined,
                 fileUpload: (value) => undefined,
                 bytes: (value) => undefined,
-                inlinedRequestBody: (value) => value.name
+                inlinedRequestBody: (value) => value
             })
         );
     }
@@ -361,11 +354,11 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkGe
         );
     }
 
-    private dotAccess(property: ObjectProperty, path?: FernIr.Name[]): string {
+    private dotAccess(property: ObjectProperty, path?: FernIr.NameOrString[]): string {
         if (path != null && path.length > 0) {
-            return `${path.map((val) => val.pascalCase).join(".")}.${property.name.name.pascalCase.safeName}`;
+            return `${path.map((val) => this.case.pascalSafe(val)).join(".")}.${this.case.pascalSafe(property.name)}`;
         }
-        return property.name.name.pascalCase.safeName;
+        return this.case.pascalSafe(property.name);
     }
 }
 

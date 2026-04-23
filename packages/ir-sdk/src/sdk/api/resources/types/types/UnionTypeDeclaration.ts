@@ -9,6 +9,11 @@ export interface UnionTypeDeclaration {
     types: FernIr.SingleUnionType[];
     baseProperties: FernIr.ObjectProperty[];
     /**
+     * The default union variant to use when the discriminant field is missing from input.
+     * When set, generators should fall back to this variant rather than an unknown/error type.
+     */
+    default: FernIr.SingleUnionType | undefined;
+    /**
      * Context for where the discriminator exists. Defaults to "data" for backward compatibility.
      * "data" means discriminator is within the union data itself.
      * "protocol" means discriminator is at the protocol level (e.g., SSE event field).

@@ -26,7 +26,8 @@ import {
 } from "@fern-api/ir-utils";
 import { dirname, join, RelativeFilePath } from "@fern-api/path-utils";
 import { SourceResolver } from "@fern-api/source-resolver";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
+
 import { generateFernConstants } from "./converters/constants.js";
 import { convertApiAuth } from "./converters/convertApiAuth.js";
 import { convertApiVersionScheme } from "./converters/convertApiVersionScheme.js";
@@ -147,7 +148,8 @@ export function generateIntermediateRepresentation({
             rawApiFileSchema: workspace.definition.rootApiFile.contents,
             file: rootApiFileContext,
             propertyResolver,
-            endpointResolver
+            endpointResolver,
+            typeResolver
         }),
         headers:
             workspace.definition.rootApiFile.contents.headers != null
@@ -268,7 +270,10 @@ export function generateIntermediateRepresentation({
                 }
                 const errorDiscriminationSchema = workspace.definition.rootApiFile.contents["error-discrimination"];
                 if (errorDiscriminationSchema == null) {
-                    throw new Error("error-discrimination is missing in api.yml but there are declared errors.");
+                    throw new CliError({
+                        message: "error-discrimination is missing in api.yml but there are declared errors.",
+                        code: CliError.Code.ConfigError
+                    });
                 }
                 for (const [errorName, errorDeclaration] of Object.entries(errors)) {
                     const convertedErrorDeclaration = convertErrorDeclaration({

@@ -10,13 +10,13 @@ import (
 )
 
 var (
-	getTokenRequestFieldClientId     = big.NewInt(1 << 0)
+	getTokenRequestFieldClientID     = big.NewInt(1 << 0)
 	getTokenRequestFieldClientSecret = big.NewInt(1 << 1)
 	getTokenRequestFieldScope        = big.NewInt(1 << 2)
 )
 
 type GetTokenRequest struct {
-	ClientId     string  `json:"client_id" url:"-"`
+	ClientID     string  `json:"client_id" url:"-"`
 	ClientSecret string  `json:"client_secret" url:"-"`
 	Scope        *string `json:"scope,omitempty" url:"-"`
 	audience     string
@@ -41,11 +41,11 @@ func (g *GetTokenRequest) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
-// SetClientId sets the ClientId field and marks it as non-optional;
+// SetClientID sets the ClientID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetTokenRequest) SetClientId(clientId string) {
-	g.ClientId = clientId
-	g.require(getTokenRequestFieldClientId)
+func (g *GetTokenRequest) SetClientID(clientID string) {
+	g.ClientID = clientID
+	g.require(getTokenRequestFieldClientID)
 }
 
 // SetClientSecret sets the ClientSecret field and marks it as non-optional;

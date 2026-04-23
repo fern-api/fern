@@ -708,7 +708,7 @@
             "valueType": {
               "_visit": [Function],
               "default": undefined,
-              "displayName": undefined,
+              "displayName": "PaymentSession",
               "fernFilepath": {
                 "allParts": [],
                 "file": undefined,
@@ -1206,7 +1206,7 @@
           "payloadType": {
             "_visit": [Function],
             "default": undefined,
-            "displayName": undefined,
+            "displayName": "PaymentSessionCompletedEvent",
             "fernFilepath": {
               "allParts": [],
               "file": undefined,

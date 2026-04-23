@@ -1,0 +1,4 @@
+- summary: |
+    `fern automations list generate` now skips generators with local-file-system output
+    or autorelease disabled, matching the behavior of autopilot.
+  type: fix

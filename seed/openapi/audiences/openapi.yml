@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: Audiences API
-  version: ''
+  version: 0.0.0
 paths:
   /:
     get:
@@ -25,7 +25,7 @@ paths:
               type: string
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -42,7 +42,7 @@ paths:
             $ref: '#/components/schemas/OptionalString'
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -55,11 +55,13 @@ paths:
               type: object
               properties:
                 publicProperty:
-                  type: string
-                  nullable: true
+                  type:
+                    - string
+                    - 'null'
                 privateProperty:
-                  type: integer
-                  nullable: true
+                  type:
+                    - integer
+                    - 'null'
   /partner-path:
     get:
       operationId: folderD_service_getDirectThread
@@ -68,7 +70,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -83,15 +85,17 @@ components:
       type: object
       properties:
         foo:
-          $ref: '#/components/schemas/folder-bFoo'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/folder-bFoo'
+            - type: 'null'
     folder-bFoo:
       title: folder-bFoo
       type: object
       properties:
         foo:
-          $ref: '#/components/schemas/folder-cFolderCFoo'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/folder-cFolderCFoo'
+            - type: 'null'
     folder-cFolderCFoo:
       title: folder-cFolderCFoo
       type: object
@@ -119,15 +123,17 @@ components:
         - imported
     OptionalString:
       title: OptionalString
-      type: string
-      nullable: true
+      type:
+        - string
+        - 'null'
     FilteredType:
       title: FilteredType
       type: object
       properties:
         public_property:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         private_property:
           type: integer
       required:

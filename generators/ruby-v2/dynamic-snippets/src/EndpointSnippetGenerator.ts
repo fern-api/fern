@@ -213,16 +213,28 @@ export class EndpointSnippetGenerator {
         auth: FernIr.dynamic.BasicAuth;
         values: FernIr.dynamic.BasicAuthValues;
     }): ruby.KeywordArgument[] {
-        return [
-            ruby.keywordArgument({
-                name: auth.username.snakeCase.safeName,
-                value: ruby.TypeLiteral.string(values.username)
-            }),
-            ruby.keywordArgument({
-                name: auth.password.snakeCase.safeName,
-                value: ruby.TypeLiteral.string(values.password)
-            })
-        ];
+        // usernameOmit/passwordOmit may exist in newer IR versions
+        const authRecord = auth as unknown as Record<string, unknown>;
+        const usernameOmitted = !!authRecord.usernameOmit;
+        const passwordOmitted = !!authRecord.passwordOmit;
+        const args: ruby.KeywordArgument[] = [];
+        if (!usernameOmitted) {
+            args.push(
+                ruby.keywordArgument({
+                    name: auth.username.snakeCase.safeName,
+                    value: ruby.TypeLiteral.string(values.username)
+                })
+            );
+        }
+        if (!passwordOmitted) {
+            args.push(
+                ruby.keywordArgument({
+                    name: auth.password.snakeCase.safeName,
+                    value: ruby.TypeLiteral.string(values.password)
+                })
+            );
+        }
+        return args;
     }
 
     private getRootClientBearerAuthArgs({
@@ -620,10 +632,11 @@ export class EndpointSnippetGenerator {
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): ruby.KeywordArgument[] {
         const args: ruby.KeywordArgument[] = [];
+        const record = this.context.getRecord(snippet.requestBody) ?? {};
 
         const bodyProperties = this.context.associateByWireValue({
             parameters: request.value,
-            values: this.context.getRecord(snippet.requestBody) ?? {}
+            values: record
         });
         for (const parameter of bodyProperties) {
             const value = this.context.dynamicTypeLiteralMapper.convert(parameter);
@@ -638,6 +651,7 @@ export class EndpointSnippetGenerator {
                 })
             );
         }
+
         return args;
     }
 
@@ -868,6 +882,7 @@ export class EndpointSnippetGenerator {
                         }
                     }
                 }
+
                 break;
             }
             case "alias":

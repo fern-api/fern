@@ -506,6 +506,7 @@
               "name": "Request",
               "typeId": "Request",
               "inline": false,
+              "displayName": "Request",
               "type": "named"
             },
             "v2Examples": {
@@ -529,6 +530,7 @@
                   "name": "Request",
                   "typeId": "Request",
                   "inline": false,
+                  "displayName": "Request",
                   "type": "named"
                 },
                 "v2Examples": {
@@ -553,6 +555,7 @@
                   "name": "Response",
                   "typeId": "Response",
                   "inline": false,
+                  "displayName": "Response",
                   "type": "named"
                 },
                 "docs": "A simple API response.",
@@ -613,6 +616,7 @@
                       "name": "Response",
                       "typeId": "Response",
                       "inline": false,
+                      "displayName": "Response",
                       "type": "named"
                     },
                     "docs": "A simple API response.",

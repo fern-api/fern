@@ -17,15 +17,18 @@ import {
     convertDbDocsConfigToRead,
     convertDocsDefinitionToDb,
     DocsV1Read,
+    DocsV1Write,
     FdrAPI,
     FernNavigation,
     SDKSnippetHolder
 } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, convertToFernHostAbsoluteFilePath, doesPathExist, relative } from "@fern-api/fs-utils";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { getOriginalName } from "@fern-api/ir-utils";
 import { Project } from "@fern-api/project-loader";
 import { convertIrToFdrApi } from "@fern-api/register";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
+
 import { readFile } from "fs/promises";
 import grayMatter from "gray-matter";
 import { v4 as uuidv4 } from "uuid";
@@ -127,7 +130,7 @@ export async function getPreviewDocsDefinition({
     const docsWorkspace = project.docsWorkspaces;
     const apiWorkspaces = project.apiWorkspaces;
     if (docsWorkspace == null) {
-        throw new Error("No docs workspace found in project");
+        throw new CliError({ message: "No docs workspace found in project", code: CliError.Code.ConfigError });
     }
 
     if (editedAbsoluteFilepaths != null && previousDocsDefinition != null) {
@@ -138,7 +141,7 @@ export async function getPreviewDocsDefinition({
 
         for (const absoluteFilePath of editedAbsoluteFilepaths) {
             const relativePath = relative(docsWorkspace.absoluteFilePath, absoluteFilePath);
-            const pageId = FdrAPI.PageId(relativePath);
+            const pageId = DocsV1Write.PageId(relativePath);
             const previousValue = previousDocsDefinition.pages[pageId];
 
             if (!(await doesPathExist(absoluteFilePath))) {
@@ -210,7 +213,7 @@ export async function getPreviewDocsDefinition({
 
             const fileIdsMap = new Map(
                 Object.entries(previousDocsDefinition.filesV2).map(([id, file]) => {
-                    const path = "/" + file.url.replace("/_local/", "");
+                    const path = "/" + (file?.url ?? "").replace("/_local/", "");
                     return [AbsoluteFilePath.of(path), id];
                 })
             );
@@ -240,8 +243,8 @@ export async function getPreviewDocsDefinition({
 
             previousDocsDefinition.pages[pageId] = {
                 markdown: stripMdxComments(finalMarkdown),
-                editThisPageUrl: previousValue.editThisPageUrl,
-                editThisPageLaunch: previousValue.editThisPageLaunch,
+                editThisPageUrl: previousValue?.editThisPageUrl,
+                editThisPageLaunch: previousValue?.editThisPageLaunch,
                 rawMarkdown: stripMdxComments(markdown)
             };
         }
@@ -295,7 +298,7 @@ export async function getPreviewDocsDefinition({
     frontmatterSidebarTitleCache.clear();
     frontmatterSlugCache.clear();
     for (const [pageId, page] of Object.entries(dbDocsDefinition.pages)) {
-        if (page.rawMarkdown != null) {
+        if (page != null && page.rawMarkdown != null) {
             const absolutePath = AbsoluteFilePath.of(`${docsWorkspace.absoluteFilePath}/${pageId.replace("api/", "")}`);
             const position = extractFrontmatterPosition(page.rawMarkdown);
             const sidebarTitle = extractFrontmatterSidebarTitle(page.rawMarkdown);
@@ -314,7 +317,7 @@ export async function getPreviewDocsDefinition({
         filesV2,
         pages: dbDocsDefinition.pages,
         jsFiles: dbDocsDefinition.jsFiles,
-        apiNameToId: {},
+        apiNameToId: apiCollector.getApiNameToId(),
         id: undefined
     };
 
@@ -336,6 +339,7 @@ type APIDefinitionID = string;
 
 class ReferencedAPICollector {
     private readonly apis: Record<APIDefinitionID, APIV1Read.ApiDefinition> = {};
+    private readonly apiNameToId: Record<string, string> = {};
 
     constructor(private readonly context: TaskContext) {}
 
@@ -343,12 +347,14 @@ class ReferencedAPICollector {
         ir,
         snippetsConfig,
         playgroundConfig,
+        apiName,
         graphqlOperations = {},
         graphqlTypes = {}
     }: {
         ir: IntermediateRepresentation;
         snippetsConfig: APIV1Write.SnippetsConfig;
         playgroundConfig?: { oauth?: boolean };
+        apiName?: string;
         graphqlOperations?: Record<APIV1Write.GraphQlOperationId, APIV1Write.GraphQlOperation>;
         graphqlTypes?: Record<APIV1Write.TypeId, APIV1Write.TypeDefinition>;
     }): APIDefinitionID {
@@ -362,7 +368,8 @@ class ReferencedAPICollector {
                     playgroundConfig,
                     graphqlOperations,
                     graphqlTypes,
-                    context: this.context
+                    context: this.context,
+                    apiNameOverride: apiName
                 }),
                 FdrAPI.ApiDefinitionId(id),
                 new SDKSnippetHolder({
@@ -377,6 +384,14 @@ class ReferencedAPICollector {
             const readApiDefinition = convertDbAPIDefinitionToRead(dbApiDefinition);
 
             this.apis[id] = readApiDefinition;
+            // Mirror the FDR publish path (registerApi.ts, publishDocs.ts), which registers
+            // each API under `apiName ?? getOriginalName(ir.apiName)`. Without this mapping,
+            // features like type resolution in MDX widgets (MergeSupportedFieldsByIntegrationWidget,
+            // etc.) that look up APIs by user-facing name fail in `fern docs dev`.
+            const resolvedApiName = apiName ?? getOriginalName(ir.apiName);
+            if (resolvedApiName) {
+                this.apiNameToId[resolvedApiName] = id;
+            }
             return id;
         } catch (e) {
             // Print Error
@@ -394,6 +409,13 @@ class ReferencedAPICollector {
 
     public getAPIsForDefinition(): Record<FdrAPI.ApiDefinitionId, APIV1Read.ApiDefinition> {
         return this.apis;
+    }
+
+    public getApiNameToId(): Record<string, DocsV1Read.ApiDefinitionId> {
+        // IDs originate from uuidv4() and are used as-is alongside this.apis (which is keyed by
+        // the same raw uuids). ApiDefinitionId branding is purely a nominal-type marker
+        // and carries no runtime information, so this cast is safe.
+        return this.apiNameToId as Record<string, DocsV1Read.ApiDefinitionId>;
     }
 }
 

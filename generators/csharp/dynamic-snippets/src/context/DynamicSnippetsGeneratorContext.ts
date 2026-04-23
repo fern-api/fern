@@ -193,7 +193,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
                 return a[0].length - b[0].length;
             })
             .forEach(([typeId, type]) => {
-                this.dynamicTypeMapper.convertToClassReference(type);
+                this.dynamicTypeMapper.convertToClassReference(type, typeId);
             });
 
         for (const [idx, request] of requests.entries()) {

@@ -27,6 +27,7 @@ export const BaseJavaCustomConfigSchema = z.object({
     "collapse-optional-nullable": z.boolean().optional(),
     "custom-readme-sections": z.array(CustomReadmeSectionSchema).optional(),
     "custom-pager-name": z.string().optional(),
+    "offset-semantics": z.enum(["item-index", "page-index"]).optional(),
     "default-timeout-in-seconds": z.number().optional(),
     "gradle-distribution-url": z.string().optional(),
     "gradle-plugin-management": z.string().optional(),
@@ -39,7 +40,8 @@ export const BaseJavaCustomConfigSchema = z.object({
     "enable-gradle-profiling": z.boolean().optional(),
 
     // Deprecated.
-    "wrapped-aliases": z.boolean().optional()
+    "wrapped-aliases": z.boolean().optional(),
+    maxRetries: z.number().int().min(0).optional()
 });
 
 export type BaseJavaCustomConfigSchema = z.infer<typeof BaseJavaCustomConfigSchema>;

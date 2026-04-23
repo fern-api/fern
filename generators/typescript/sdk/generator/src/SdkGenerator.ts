@@ -171,6 +171,7 @@ export declare namespace SdkGenerator {
         offsetSemantics: "item-index" | "page-index";
         customPagerName: string;
         resolveQueryParameterNameConflicts: boolean;
+        maxRetries: number | undefined;
     }
 }
 
@@ -189,7 +190,7 @@ export class SdkGenerator {
     private extraScripts: Record<string, string> = {};
 
     private endpointSnippets: FernGeneratorExec.Endpoint[] = [];
-    private readonly caseConverter: CaseConverter;
+    private readonly case: CaseConverter;
 
     private project: Project;
     private snippetProject: Project | undefined;
@@ -279,11 +280,12 @@ export class SdkGenerator {
         this.namespaceExport = namespaceExport;
         this.naming = naming;
         this.intermediateRepresentation = intermediateRepresentation;
-        this.caseConverter = new CaseConverter({
+        const caseConverter = new CaseConverter({
             generationLanguage: "typescript",
             keywords: intermediateRepresentation.casingsConfig?.keywords,
             smartCasing: intermediateRepresentation.casingsConfig?.smartCasing ?? true
         });
+        this.case = caseConverter;
 
         // Auto-enable generateEndpointMetadata when ENDPOINT_SECURITY is set
         // because RoutingAuthProvider requires endpoint metadata to function
@@ -323,7 +325,8 @@ export class SdkGenerator {
             relativePackagePath: this.relativePackagePath,
             relativeTestPath: this.relativeTestPath,
             generateEndpointMetadata: config.generateEndpointMetadata,
-            customPagerName: config.customPagerName
+            customPagerName: config.customPagerName,
+            maxRetries: config.maxRetries ?? undefined
         });
 
         const apiDirectory: ExportedDirectory[] = [
@@ -346,60 +349,60 @@ export class SdkGenerator {
             apiVersion: this.intermediateRepresentation.apiVersion,
             relativePackagePath: this.relativePackagePath,
             relativeTestPath: this.relativeTestPath,
-            caseConverter: this.caseConverter
+            caseConverter
         });
         this.typeDeclarationReferencer = new TypeDeclarationReferencer({
             containingDirectory: apiDirectory,
             namespaceExport,
             consolidateTypeFiles: config.consolidateTypeFiles,
-            caseConverter: this.caseConverter
+            caseConverter
         });
         this.typeSchemaDeclarationReferencer = new TypeDeclarationReferencer({
             containingDirectory: schemaDirectory,
             namespaceExport,
-            caseConverter: this.caseConverter
+            caseConverter
         });
         this.errorDeclarationReferencer = new SdkErrorDeclarationReferencer({
             containingDirectory: apiDirectory,
             namespaceExport,
-            caseConverter: this.caseConverter
+            caseConverter
         });
         this.sdkErrorSchemaDeclarationReferencer = new SdkErrorDeclarationReferencer({
             containingDirectory: schemaDirectory,
             namespaceExport,
-            caseConverter: this.caseConverter
+            caseConverter
         });
         this.sdkClientClassDeclarationReferencer = new SdkClientClassDeclarationReferencer({
             containingDirectory: apiDirectory,
             namespaceExport,
             namingOverride: naming.client,
             packageResolver: this.packageResolver,
-            caseConverter: this.caseConverter
+            caseConverter
         });
         this.endpointErrorUnionDeclarationReferencer = new EndpointDeclarationReferencer({
             containingDirectory: apiDirectory,
             namespaceExport,
             packageResolver: this.packageResolver,
-            caseConverter: this.caseConverter
+            caseConverter
         });
         this.requestWrapperDeclarationReferencer = new RequestWrapperDeclarationReferencer({
             containingDirectory: apiDirectory,
             namespaceExport,
             packageResolver: this.packageResolver,
             exportAllRequestsAtRoot: config.exportAllRequestsAtRoot,
-            caseConverter: this.caseConverter
+            caseConverter
         });
         this.sdkInlinedRequestBodySchemaDeclarationReferencer = new SdkInlinedRequestBodyDeclarationReferencer({
             containingDirectory: schemaDirectory,
             namespaceExport,
             packageResolver: this.packageResolver,
-            caseConverter: this.caseConverter
+            caseConverter
         });
         this.sdkEndpointSchemaDeclarationReferencer = new EndpointDeclarationReferencer({
             containingDirectory: schemaDirectory,
             namespaceExport,
             packageResolver: this.packageResolver,
-            caseConverter: this.caseConverter
+            caseConverter
         });
         this.environmentsDeclarationReferencer = new EnvironmentsDeclarationReferencer({
             containingDirectory: [],
@@ -410,7 +413,7 @@ export class SdkGenerator {
             environmentsConfig: intermediateRepresentation.environments ?? undefined,
             relativePackagePath: this.relativePackagePath,
             relativeTestPath: this.relativeTestPath,
-            caseConverter: this.caseConverter
+            caseConverter
         });
         this.baseClientTypeDeclarationReferencer = new BaseClientTypeDeclarationReferencer({
             containingDirectory: [],
@@ -418,7 +421,7 @@ export class SdkGenerator {
             relativePackagePath: this.relativePackagePath,
             consolidateTypeFiles: config.consolidateTypeFiles,
             generateIdempotentRequestOptions: this.hasIdempotentEndpoints(),
-            caseConverter: this.caseConverter
+            caseConverter
         });
         this.baseClientContext = new BaseClientContextImpl({
             intermediateRepresentation,
@@ -428,24 +431,24 @@ export class SdkGenerator {
             retainOriginalCasing: config.retainOriginalCasing,
             parameterNaming: config.parameterNaming,
             baseClientTypeDeclarationReferencer: this.baseClientTypeDeclarationReferencer,
-            caseConverter: this.caseConverter
+            caseConverter
         });
         this.genericAPISdkErrorDeclarationReferencer = new GenericAPISdkErrorDeclarationReferencer({
             containingDirectory: [],
             namespaceExport,
             namingOverride: naming.error,
-            caseConverter: this.caseConverter
+            caseConverter
         });
         this.timeoutSdkErrorDeclarationReferencer = new TimeoutSdkErrorDeclarationReferencer({
             containingDirectory: [],
             namespaceExport,
             namingOverride: naming.timeoutError,
-            caseConverter: this.caseConverter
+            caseConverter
         });
         this.nonStatusCodeErrorHandlerDeclarationReferencer = new NonStatusCodeErrorHandlerDeclarationReferencer({
             containingDirectory: [],
             namespaceExport,
-            caseConverter: this.caseConverter
+            caseConverter
         });
         this.jsonDeclarationReferencer = new JsonDeclarationReferencer({
             containingDirectory: [
@@ -454,12 +457,12 @@ export class SdkGenerator {
                 }
             ],
             namespaceExport: "json",
-            caseConverter: this.caseConverter
+            caseConverter
         });
         this.webhooksHelperDeclarationReferencer = new WebhooksHelperDeclarationReferencer({
             containingDirectory: [],
             namespaceExport,
-            caseConverter: this.caseConverter
+            caseConverter
         });
 
         this.versionGenerator = new VersionGenerator();
@@ -473,12 +476,12 @@ export class SdkGenerator {
             retainOriginalCasing: config.retainOriginalCasing,
             enableInlineTypes: config.enableInlineTypes,
             generateReadWriteOnlyTypes: config.generateReadWriteOnlyTypes,
-            caseConverter: this.caseConverter
+            caseConverter
         });
         this.typeSchemaGenerator = new TypeSchemaGenerator({
             includeUtilsOnUnionMembers: config.includeUtilsOnUnionMembers,
             noOptionalProperties: config.noOptionalProperties,
-            caseConverter: this.caseConverter
+            caseConverter
         });
         this.typeReferenceExampleGenerator = new TypeReferenceExampleGenerator({
             includeSerdeLayer: config.includeSerdeLayer,
@@ -499,7 +502,7 @@ export class SdkGenerator {
             noOptionalProperties: config.noOptionalProperties,
             enableInlineTypes: config.enableInlineTypes,
             generateReadWriteOnlyTypes: config.generateReadWriteOnlyTypes,
-            caseConverter: this.caseConverter
+            caseConverter
         });
         this.sdkEndpointTypeSchemasGenerator = new SdkEndpointTypeSchemasGenerator({
             errorResolver: this.errorResolver,
@@ -509,12 +512,12 @@ export class SdkGenerator {
             includeSerdeLayer: config.includeSerdeLayer,
             allowExtraFields: config.allowExtraFields,
             omitUndefined: config.omitUndefined,
-            caseConverter: this.caseConverter
+            caseConverter
         });
         this.requestWrapperGenerator = new RequestWrapperGenerator();
         this.environmentsGenerator = new EnvironmentsGenerator();
         this.sdkClientClassGenerator = new SdkClientClassGenerator({
-            caseConverter: this.caseConverter,
+            caseConverter,
             intermediateRepresentation,
             errorResolver: this.errorResolver,
             packageResolver: this.packageResolver,
@@ -611,14 +614,14 @@ export class SdkGenerator {
             containingDirectory: schemaDirectory,
             namespaceExport,
             packageResolver: this.packageResolver,
-            caseConverter: this.caseConverter
+            caseConverter
         });
 
         this.websocketSocketDeclarationReferencer = new WebsocketSocketDeclarationReferencer({
             containingDirectory: apiDirectory,
             namespaceExport,
             packageResolver: this.packageResolver,
-            caseConverter: this.caseConverter
+            caseConverter
         });
     }
 
@@ -1330,9 +1333,7 @@ export class SdkGenerator {
                 : this.referenceConfigBuilder.addSection({
                       title:
                           service.displayName ??
-                          service.name.fernFilepath.allParts
-                              .map((part) => this.caseConverter.pascalUnsafe(part))
-                              .join(" ")
+                          service.name.fernFilepath.allParts.map((part) => this.case.pascalUnsafe(part)).join(" ")
                   });
 
             const exportedFilepath = this.sdkClientClassDeclarationReferencer.getExportedFilepath(packageId);
@@ -1477,7 +1478,7 @@ export class SdkGenerator {
     }
 
     private getEndpointFunctionName(endpoint: FernIr.HttpEndpoint): string {
-        return this.caseConverter.camelUnsafe(endpoint.name);
+        return this.case.camelUnsafe(endpoint.name);
     }
 
     private getReferenceEndpointInvocationParameters({
@@ -1672,12 +1673,12 @@ export class SdkGenerator {
         // Generate named override helpers
         for (const overrideEntry of overrideEntries) {
             const [firstWebhookName] = overrideEntry.webhookNames;
-            const className = `${this.caseConverter.pascalSafe(firstWebhookName)}WebhooksHelper`;
+            const className = `${this.case.pascalSafe(firstWebhookName)}WebhooksHelper`;
             const overrideReferencer = new WebhooksHelperDeclarationReferencer({
                 containingDirectory: [],
                 namespaceExport: this.namespaceExport,
                 helperName: className,
-                caseConverter: this.caseConverter
+                caseConverter: this.case
             });
             const overrideGenerator = new WebhooksHelperGenerator(overrideEntry.config, className);
             this.withSourceFile({
@@ -2124,10 +2125,10 @@ export class SdkGenerator {
                 continue;
             }
 
-            const segments = package_.fernFilepath.packagePath.map((name) => this.caseConverter.camelSafe(name));
+            const segments = package_.fernFilepath.packagePath.map((name) => this.case.camelSafe(name));
             const subpackage = package_ as FernIr.Subpackage;
             if (subpackage.name != null) {
-                const packageName = this.caseConverter.camelSafe(subpackage.name);
+                const packageName = this.case.camelSafe(subpackage.name);
                 if (segments.length === 0 || segments[segments.length - 1] !== packageName) {
                     segments.push(packageName);
                 }

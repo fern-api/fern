@@ -1,4 +1,4 @@
-import { File, GeneratorNotificationService } from "@fern-api/base-generator";
+import { File, GeneratorError, GeneratorNotificationService } from "@fern-api/base-generator";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
@@ -45,7 +45,7 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
     }
 
     protected async publishPackage(context: SdkGeneratorContext): Promise<void> {
-        throw new Error("Method not implemented.");
+        throw GeneratorError.internalError("Method not implemented.");
     }
 
     protected async writeForGithub(context: SdkGeneratorContext): Promise<void> {
@@ -118,33 +118,45 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
                 });
                 context.logger.debug("Generated readme!");
             } catch (e) {
-                throw new Error(`Failed to generate README.md: ${extractErrorMessage(e)}`);
+                throw GeneratorError.internalError(`Failed to generate README.md: ${extractErrorMessage(e)}`);
             }
         }
 
         try {
             await this.generateReference({ context });
         } catch (error) {
-            throw new Error(`Failed to generate reference.md: ${extractErrorMessage(error)}`);
+            throw GeneratorError.internalError(`Failed to generate reference.md: ${extractErrorMessage(error)}`);
         }
 
         await this.generateWireTestFiles(context);
 
         await context.project.persist();
 
+        // Clear nix/devbox Ruby environment variables that may conflict with the
+        // project's bundled gems (e.g. RUBYLIB and GEM_PATH pointing to Ruby 3.4
+        // paths while running Ruby 3.3).
+        const rubyEnv = {
+            ...process.env,
+            RUBYLIB: undefined,
+            GEM_PATH: undefined,
+            GEM_HOME: undefined
+        };
+
+        await loggingExeca(context.logger, "bundle", ["install"], {
+            cwd: context.project.absolutePathToOutputDirectory,
+            doNotPipeOutput: true,
+            env: rubyEnv
+        });
+
         try {
-            await loggingExeca(context.logger, "rubocop", ["-A"], {
+            await loggingExeca(context.logger, "bundle", ["exec", "rubocop", "-A"], {
                 cwd: context.project.absolutePathToOutputDirectory,
-                doNotPipeOutput: true
+                doNotPipeOutput: true,
+                env: rubyEnv
             });
         } catch (_) {
             // It's okay if rubocop fails to run.
         }
-
-        await loggingExeca(context.logger, "bundle", ["install"], {
-            cwd: context.project.absolutePathToOutputDirectory,
-            doNotPipeOutput: true
-        });
     }
 
     private generateRequests(context: SdkGeneratorContext, service: FernIr.HttpService, serviceId: string) {
@@ -207,7 +219,7 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
 
         const dynamicIr = context.ir.dynamic;
         if (dynamicIr == null) {
-            throw new Error("Cannot generate dynamic snippets without dynamic IR");
+            throw GeneratorError.internalError("Cannot generate dynamic snippets without dynamic IR");
         }
 
         const dynamicSnippetsGenerator = new DynamicSnippetsGenerator({

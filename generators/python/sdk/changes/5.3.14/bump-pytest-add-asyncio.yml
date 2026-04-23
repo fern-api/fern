@@ -1,0 +1,3 @@
+- summary: |
+    Bump pytest from 7.4.4 to 9.0.3 and add pytest-asyncio for async test support.
+  type: chore

@@ -14,7 +14,7 @@
         {
             "name": {
                 "wireValue": "X-API-Version",
-                "name": "apiVersion"
+                "name": "api_version"
             },
             "valueType": {
                 "_type": "container",
@@ -26,7 +26,7 @@
                             "v1": "STRING",
                             "v2": {
                                 "type": "string",
-                                "default": "2024-02-08",
+                                "default": null,
                                 "validation": null
                             }
                         }
@@ -232,7 +232,7 @@
                                             "v1": "STRING",
                                             "v2": {
                                                 "type": "string",
-                                                "default": "100",
+                                                "default": null,
                                                 "validation": null
                                             }
                                         }
@@ -627,7 +627,7 @@
                 "name": {
                     "wireValue": "X-API-Version",
                     "name": {
-                        "originalName": "apiVersion",
+                        "originalName": "api_version",
                         "camelCase": {
                             "unsafeName": "apiVersion",
                             "safeName": "apiVersion"

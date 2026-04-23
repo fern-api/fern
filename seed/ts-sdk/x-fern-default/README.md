@@ -41,7 +41,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedApiClient } from "@fern/x-fern-default";
 
-const client = new SeedApiClient({ environment: "YOUR_BASE_URL", apiVersion: "YOUR_API_VERSION" });
+const client = new SeedApiClient({ environment: "YOUR_BASE_URL", apiVersion: "2024-02-08" });
 await client.testGet({
     region: "region"
 });

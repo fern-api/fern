@@ -1,10 +1,12 @@
-irVersion: v61
+irVersion: v66
 displayName: Ruby SDK
 language: ruby
 generatorType: SDK
 defaultOutputMode: github
-image: fernapi/fern-ruby-sdk-v2
-imageAliases: [fernapi/fern-ruby-sdk]
+defaultCustomConfig:
+  rubocopSeverity: error
+image: fernapi/fern-ruby-sdk
+imageAliases: [fernapi/fern-ruby-sdk-v2]
 changelogLocation: ../../generators/ruby-v2/sdk/versions.yml
 
 buildScripts:
@@ -22,14 +24,26 @@ test:
   podman:
     image: fernapi/fern-ruby-sdk-v2:latest
     command: pnpm turbo run podmanTagLatest --filter @fern-api/ruby-sdk
+  local:
+    workingDirectory: generators/ruby-v2
+    buildCommand:
+      - pnpm turbo run dist:cli --filter @fern-api/ruby-sdk
+    runCommand: node --enable-source-maps sdk/dist/cli.cjs {CONFIG_PATH}
 
 publish:
   preBuildCommands:
     - pnpm turbo run dist:cli --filter @fern-api/ruby-sdk
   docker:
     file: ./generators/ruby-v2/sdk/Dockerfile
-    image: fernapi/fern-ruby-sdk-v2
+    image: fernapi/fern-ruby-sdk
+    aliases:
+      - fernapi/fern-ruby-sdk-v2
     context: .
+  sentry:
+    name: fern-ruby-sdk-v2
+    project: ruby-sdk
+    sourceMaps:
+      - dir: generators/ruby-v2/sdk/dist
 
 scripts:
   - image: ruby:3.3
@@ -44,11 +58,22 @@ fixtures:
     - outputFolder: wire-tests
       customConfig:
         enableWireTests: true
+  basic-auth-pw-omitted:
+    - outputFolder: wire-tests
+      customConfig:
+        enableWireTests: true
   exhaustive:
     - outputFolder: wire-tests
       customConfig:
         enableWireTests: true
         clientModuleName: MyClient
+        maxRetries: 5
+  pagination:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        offsetSemantics: "page-index"
+      outputFolder: page-index-semantics
   pagination-custom:
     - customConfig:
         customPagerName: FooPager

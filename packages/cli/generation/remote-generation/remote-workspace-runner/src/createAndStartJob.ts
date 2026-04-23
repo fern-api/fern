@@ -7,7 +7,7 @@ import {
     migrateIntermediateRepresentationToVersionForGenerator
 } from "@fern-api/ir-migrations";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
 import { FernDefinition, FernWorkspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import axios, { AxiosError } from "axios";
@@ -34,9 +34,15 @@ export async function createAndStartJob({
     whitelabel,
     irVersionOverride,
     absolutePathToPreview,
+    fiddlePreview,
+    pushPreviewBranch,
     fernignorePath,
     skipFernignore,
-    retryRateLimited
+    retryRateLimited,
+    automationMode,
+    autoMerge,
+    skipIfNoDiff,
+    loginCommand = "fern login"
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     workspace: FernWorkspace;
@@ -50,9 +56,21 @@ export async function createAndStartJob({
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
     irVersionOverride: string | undefined;
     absolutePathToPreview: AbsoluteFilePath | undefined;
+    /** When provided, overrides the `preview` flag sent to Fiddle. When omitted, falls back to absolutePathToPreview != null. */
+    fiddlePreview?: boolean;
+    /** When true, tells Fiddle to push a preview branch to the SDK repo. Requires fiddle-sdk with pushPreviewBranch support. */
+    pushPreviewBranch?: boolean;
     fernignorePath: string | undefined;
     skipFernignore?: boolean;
     retryRateLimited: boolean;
+    automationMode?: boolean;
+    autoMerge?: boolean;
+    skipIfNoDiff?: boolean;
+    /**
+     * CLI command to reference in auth-failure hints (e.g. 'fern login' for v1,
+     * 'fern auth login' for CLI v2). Defaults to 'fern login'.
+     */
+    loginCommand?: string;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
     // Determine fernignore contents:
     // - If --skip-fernignore is set, upload an empty .fernignore so nothing is ignored
@@ -65,7 +83,9 @@ export async function createAndStartJob({
         try {
             fernignoreContents = await readFile(fernignorePath, "utf-8");
         } catch (error) {
-            context.failAndThrow(`Failed to read fernignore file at ${fernignorePath}: ${error}`);
+            context.failAndThrow(`Failed to read fernignore file at ${fernignorePath}: ${error}`, undefined, {
+                code: CliError.Code.ConfigError
+            });
         }
     }
 
@@ -82,13 +102,21 @@ export async function createAndStartJob({
                 token,
                 whitelabel,
                 absolutePathToPreview,
-                fernignoreContents
+                fiddlePreview,
+                pushPreviewBranch,
+                fernignoreContents,
+                automationMode,
+                autoMerge,
+                skipIfNoDiff,
+                loginCommand
             }),
         retryRateLimited,
         logger: context.logger,
         onRateLimitedWithoutRetry: () =>
             context.failAndThrow(
-                "Received 429 Too Many Requests. Re-run with --retry-rate-limited to automatically retry."
+                "Received 429 Too Many Requests. Re-run with --retry-rate-limited to automatically retry.",
+                undefined,
+                { code: CliError.Code.NetworkError }
             )
     });
     await startJob({ intermediateRepresentation, job, context, generatorInvocation, irVersionOverride });
@@ -106,7 +134,11 @@ async function createJob({
     token,
     whitelabel,
     absolutePathToPreview,
-    fernignoreContents
+    fiddlePreview,
+    pushPreviewBranch,
+    fernignoreContents,
+    skipIfNoDiff,
+    loginCommand
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     workspace: FernWorkspace;
@@ -118,7 +150,15 @@ async function createJob({
     token: FernToken;
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
     absolutePathToPreview: AbsoluteFilePath | undefined;
+    /** When provided, overrides the `preview` flag sent to Fiddle. When omitted, falls back to absolutePathToPreview != null. */
+    fiddlePreview?: boolean;
+    /** When true, tells Fiddle to push a preview branch to the SDK repo. Requires fiddle-sdk with pushPreviewBranch support. */
+    pushPreviewBranch?: boolean;
     fernignoreContents: string | undefined;
+    automationMode?: boolean;
+    autoMerge?: boolean;
+    skipIfNoDiff?: boolean;
+    loginCommand: string;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
     const remoteGenerationService = createFiddleService({ token: token.value });
 
@@ -142,8 +182,23 @@ async function createJob({
             shouldLogS3Url
         }),
         whitelabel,
-        preview: absolutePathToPreview != null,
-        fernignoreContents
+        // fiddlePreview overrides what we send to Fiddle as `preview`.
+        // For sdk preview: fiddlePreview=false so Fiddle doesn't set dryRun=true
+        //   (Fiddle uses `dryRun = generatePreview`, so preview=false → actual publish).
+        // For fern generate --preview: fiddlePreview is undefined, falls back to
+        //   absolutePathToPreview != null (true) → Fiddle sets dryRun=true → npm publish --dry-run.
+        // This is the only mechanism preventing dryRun for sdk preview jobs;
+        // Fiddle's dryRun logic is intentionally unchanged.
+        preview: fiddlePreview ?? absolutePathToPreview != null,
+        pushPreviewBranch,
+        fernignoreContents,
+        skipIfNoDiff
+        // TODO(FER-9671): Pass remaining automation flags to Fiddle once its API is updated:
+        //   automationMode,
+        //   autoMerge,
+        //   runId: process.env.FERN_RUN_ID
+        // Fiddle will use these for separate PRs, automerge, run_id correlation,
+        // and breaking change handling. (skipIfNoDiff is forwarded above — see fern-api/fiddle#708.)
     });
 
     if (!createResponse.ok) {
@@ -157,24 +212,36 @@ async function createJob({
         }
         return convertCreateJobError(rawError)._visit({
             illegalApiNameError: () => {
-                return context.failAndThrow("API name is invalid: " + workspace.definition.rootApiFile.contents.name);
+                return context.failAndThrow(
+                    "API name is invalid: " + workspace.definition.rootApiFile.contents.name,
+                    undefined,
+                    { code: CliError.Code.ConfigError }
+                );
             },
             illegalApiVersionError: () => {
-                return context.failAndThrow("API version is invalid: " + version);
+                return context.failAndThrow("API version is invalid: " + version, undefined, {
+                    code: CliError.Code.ConfigError
+                });
             },
             cannotPublishToNpmScope: ({ validScope, invalidScope }) => {
                 return context.failAndThrow(
-                    `You do not have permission to publish to ${invalidScope} (expected ${validScope})`
+                    `You do not have permission to publish to ${invalidScope} (expected ${validScope})`,
+                    undefined,
+                    { code: CliError.Code.AuthError }
                 );
             },
             cannotPublishToMavenGroup: ({ validGroup, invalidGroup }) => {
                 return context.failAndThrow(
-                    `You do not have permission to publish to ${invalidGroup} (expected ${validGroup})`
+                    `You do not have permission to publish to ${invalidGroup} (expected ${validGroup})`,
+                    undefined,
+                    { code: CliError.Code.AuthError }
                 );
             },
             cannotPublishPypiPackage: ({ validPrefix, invalidPackageName }) => {
                 return context.failAndThrow(
-                    `You do not have permission to publish to ${invalidPackageName} (expected ${validPrefix})`
+                    `You do not have permission to publish to ${invalidPackageName} (expected ${validPrefix})`,
+                    undefined,
+                    { code: CliError.Code.AuthError }
                 );
             },
             generatorsDoNotExistError: (value) => {
@@ -182,34 +249,49 @@ async function createJob({
                     "Generators do not exist: " +
                         value.nonExistentGenerators
                             .map((generator) => `${generator.id}@${generator.version}`)
-                            .join(", ")
+                            .join(", "),
+                    undefined,
+                    { code: CliError.Code.ConfigError }
                 );
             },
             insufficientPermissions: () => {
                 return context.failAndThrow(
-                    `You do not have permission to run this generator for organization '${organization}'. Please run 'fern login' to ensure you are logged in with the correct account.\n\n` +
-                        "Please ensure you have membership at https://dashboard.buildwithfern.com, and ask a team member for an invite if not."
+                    `You do not have permission to run this generator for organization '${organization}'. Please run '${loginCommand}' to ensure you are logged in with the correct account.\n\n` +
+                        "Please ensure you have membership at https://dashboard.buildwithfern.com, and ask a team member for an invite if not.",
+                    undefined,
+                    { code: CliError.Code.AuthError }
                 );
             },
             orgNotConfiguredForWhitelabel: () => {
                 return context.failAndThrow(
-                    "Your org is not configured for white-labeling. Please reach out to support@buildwithfern.com."
+                    "Your org is not configured for white-labeling. Please reach out to support@buildwithfern.com.",
+                    undefined,
+                    { code: CliError.Code.AuthError }
                 );
             },
             branchDoesNotExist: (value) => {
                 return context.failAndThrow(
-                    `Branch ${value.branch} does not exist in repository ${value.repositoryOwner}/${value.repositoryName}`
+                    `Branch ${value.branch} does not exist in repository ${value.repositoryOwner}/${value.repositoryName}`,
+                    undefined,
+                    { code: CliError.Code.ConfigError }
                 );
+            },
+            rateLimitExceeded: () => {
+                // Rate limits are normally caught by the raw 429 status code check above (line 191).
+                // This handler satisfies the exhaustive visitor type and acts as a fallback.
+                throw new TooManyRequestsError();
             },
             _other: (content) => {
                 context.logger.debug(`Failed to create job: ${JSON.stringify(content)}`);
                 // Try to extract a descriptive error message from the response body
                 const errorMessage = extractErrorMessage(content);
                 if (errorMessage != null) {
-                    return context.failAndThrow(errorMessage);
+                    return context.failAndThrow(errorMessage, undefined, { code: CliError.Code.NetworkError });
                 }
                 return context.failAndThrow(
-                    "Failed to create job. Please try again or contact support@buildwithfern.com for assistance."
+                    "Failed to create job. Please try again or contact support@buildwithfern.com for assistance.",
+                    undefined,
+                    { code: CliError.Code.NetworkError }
                 );
             }
         });
@@ -317,19 +399,31 @@ async function startJob({
     } catch (error) {
         const errorBody = error instanceof AxiosError ? error.response?.data : error;
         context.logger.debug(`POST ${url} failed with ${JSON.stringify(error)}`);
-        context.failAndThrow("Failed to start job", errorBody);
+        context.failAndThrow("Failed to start job", errorBody, { code: CliError.Code.NetworkError });
     }
 }
 
 /**
  * Attempts to extract a human-readable error message from the raw error response body.
  * Fiddle's ErrorBody serializes as { error: "...", content: { message: "..." } }.
- * The SDK wraps this as { content: { reason: "status-code", body: <ErrorBody> } }.
+ *
+ * Two shapes are supported because this helper is reachable from two call sites:
+ *   1. The `_other` visitor callback, which receives `core.Fetcher.Error` directly:
+ *        { reason: "status-code", statusCode: N, body: <ErrorBody> }
+ *   2. The raw `createResponse.error` wrapper from the SDK, before it is unpacked:
+ *        { content: { reason: "status-code", statusCode: N, body: <ErrorBody> } }
+ *
  * Returns undefined if no message could be extracted.
  */
 // biome-ignore lint/suspicious/noExplicitAny: the error shape from the SDK is not well-typed
-function extractErrorMessage(error: any): string | undefined {
-    const body = error?.content?.reason === "status-code" ? error.content.body : undefined;
+export function extractErrorMessage(error: any): string | undefined {
+    // biome-ignore lint/suspicious/noExplicitAny: intentional dynamic navigation
+    let body: any;
+    if (error?.reason === "status-code") {
+        body = error.body;
+    } else if (error?.content?.reason === "status-code") {
+        body = error.content.body;
+    }
     if (typeof body?.content?.message === "string") {
         return body.content.message;
     }

@@ -24,7 +24,7 @@ export abstract class AbstractGeneratedTypeSchema<
     protected getGeneratedType: () => GeneratedType<Context>;
     protected getReferenceToSchema: (context: Context) => Reference;
     protected noOptionalProperties: boolean;
-    protected caseConverter: CaseConverter;
+    protected case: CaseConverter;
     private getReferenceToGeneratedType: (context: Context) => ts.TypeNode;
 
     constructor({
@@ -42,7 +42,7 @@ export abstract class AbstractGeneratedTypeSchema<
         this.getReferenceToGeneratedType = getReferenceToGeneratedType;
         this.getReferenceToSchema = getReferenceToGeneratedTypeSchema;
         this.noOptionalProperties = noOptionalProperties;
-        this.caseConverter = caseConverter;
+        this.case = caseConverter;
     }
 
     public writeToFile(context: Context): void {

@@ -3,24 +3,30 @@ import { b as BamlClient, configureBamlClient, VersionBump } from "@fern-api/cli
 import { FERNIGNORE_FILENAME, generatorsYml, getFernIgnorePaths } from "@fern-api/configuration";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+import {
+    AutoVersioningCache,
+    AutoVersioningException,
+    AutoVersioningService,
+    AutoVersionResult,
+    CachedAnalysis,
+    countFilesInDiff,
+    formatSizeKB,
+    isAutoVersion,
+    MAX_AI_DIFF_BYTES,
+    MAX_CHUNKS,
+    MAX_RAW_DIFF_BYTES,
+    maxVersionBump
+} from "@fern-api/generator-cli/autoversion";
 import { loggingExeca } from "@fern-api/logging-execa";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
+
 import decompress from "decompress";
 import { cp, readdir, readFile, rm } from "fs/promises";
 import { tmpdir } from "os";
 import { join as pathJoin } from "path";
 import semver from "semver";
 import tmp from "tmp-promise";
-import { AutoVersioningCache, CachedAnalysis } from "./AutoVersioningCache.js";
-import {
-    AutoVersioningException,
-    AutoVersioningService,
-    AutoVersionResult,
-    countFilesInDiff,
-    formatSizeKB
-} from "./AutoVersioningService.js";
 import { sanitizeChangelogEntry } from "./sanitizeChangelogEntry.js";
-import { isAutoVersion, MAX_AI_DIFF_BYTES, MAX_CHUNKS, MAX_RAW_DIFF_BYTES, maxVersionBump } from "./VersionUtils.js";
 export declare namespace LocalTaskHandler {
     export interface Init {
         context: TaskContext;
@@ -94,6 +100,9 @@ export class LocalTaskHandler {
         autoVersioningChangelogEntry?: string;
         autoVersioningPrDescription?: string;
         autoVersioningVersionBumpReason?: string;
+        autoVersioningVersionBump?: string;
+        autoVersioningNewVersion?: string;
+        autoVersioningPreviousVersion?: string;
     }> {
         const isFernIgnorePresent = this.skipFernignore ? false : await this.isFernIgnorePresent();
         const isExistingGitRepo = await this.isGitRepository();
@@ -171,7 +180,10 @@ export class LocalTaskHandler {
                 autoVersioningCommitMessage: autoVersionResult.commitMessage,
                 autoVersioningChangelogEntry: autoVersionResult.changelogEntry,
                 autoVersioningPrDescription: autoVersionResult.prDescription,
-                autoVersioningVersionBumpReason: autoVersionResult.versionBumpReason
+                autoVersioningVersionBumpReason: autoVersionResult.versionBumpReason,
+                autoVersioningVersionBump: autoVersionResult.versionBump,
+                autoVersioningNewVersion: autoVersionResult.version,
+                autoVersioningPreviousVersion: autoVersionResult.previousVersion
             };
         }
         return { shouldCommit: true, autoVersioningCommitMessage: undefined };
@@ -200,10 +212,43 @@ export class LocalTaskHandler {
             // Extract previous version and clean diff
             // Note: this.version is the mapped magic version (e.g., "v0.0.0-fern-placeholder" for Go)
             if (!this.version) {
-                throw new Error("Version is required for auto versioning");
+                throw new CliError({
+                    message: "Version is required for auto versioning",
+                    code: CliError.Code.InternalError
+                });
             }
 
-            const previousVersion = autoVersioningService.extractPreviousVersion(diffContent, this.version);
+            let previousVersion: string | undefined;
+            try {
+                previousVersion = autoVersioningService.extractPreviousVersion(diffContent, this.version);
+            } catch (e) {
+                if (!(e instanceof AutoVersioningException) || !e.magicVersionAbsent) {
+                    throw e;
+                }
+                // Magic version not found in diff — fall back to .fern/metadata.json then git tags.
+                // This happens for generators that don't embed versions in files (e.g., Swift
+                // uses git tags for versioning via SPM, not a version field in Package.swift).
+                this.context.logger.info(`Magic version not found in diff, trying fallbacks: ${e}`);
+                previousVersion = await this.getVersionFromLocalMetadata();
+                if (previousVersion == null) {
+                    const tagVersion = await autoVersioningService.getLatestVersionFromGitTags(
+                        this.absolutePathToLocalOutput
+                    );
+                    previousVersion = this.normalizeVersionPrefix(tagVersion);
+                }
+                if (previousVersion == null) {
+                    this.context.logger.info("No git tags found — treating as new SDK repository");
+                    const initialVersion = this.version?.startsWith("v") ? "v0.0.1" : "0.0.1";
+                    const commitMessage = this.isWhitelabel
+                        ? "Initial SDK generation"
+                        : "Initial SDK generation\n\n🌿 Generated with Fern";
+                    return {
+                        version: initialVersion,
+                        commitMessage
+                    };
+                }
+                this.context.logger.debug(`Previous version from fallback: ${previousVersion}`);
+            }
             const cleanedDiff = autoVersioningService.cleanDiffForAI(diffContent, this.version);
 
             const rawDiffSizeKB = formatSizeKB(diffContent.length);
@@ -215,6 +260,22 @@ export class LocalTaskHandler {
                 `Generated diff size: ${rawDiffSizeKB}KB (${diffContent.length} chars), ${rawFileCount} files changed. ` +
                     `Cleaned diff size: ${cleanedDiffSizeKB}KB (${cleanedDiff.length} chars), ${cleanedFileCount} files remaining`
             );
+
+            // If no previous version from diff (e.g., Version.swift is a new file in an existing SDK),
+            // try .fern/metadata.json first, then git tags before falling back to initial version
+            if (previousVersion == null) {
+                previousVersion = await this.getVersionFromLocalMetadata();
+                if (previousVersion == null) {
+                    const rawTagVersion = await autoVersioningService.getLatestVersionFromGitTags(
+                        this.absolutePathToLocalOutput
+                    );
+                    const normalizedTag = this.normalizeVersionPrefix(rawTagVersion);
+                    if (normalizedTag != null) {
+                        this.context.logger.info(`No previous version from diff; using git tag: ${normalizedTag}`);
+                        previousVersion = normalizedTag;
+                    }
+                }
+            }
 
             // Handle new SDK repository with no previous version
             if (previousVersion == null) {
@@ -356,16 +417,24 @@ export class LocalTaskHandler {
                         let versionBumpReason: string | undefined = bestVersionBumpReason;
                         if (allChangelogEntries.length > 1) {
                             // Consolidate repetitive multi-chunk entries via AI rollup
-                            const rawEntries = allChangelogEntries
-                                .map((e) => (e.startsWith("- ") ? e : `- ${e}`))
-                                .join("\n");
+                            const rawEntries = allChangelogEntries.join("\n\n");
                             try {
                                 this.context.logger.debug(
                                     `Consolidating ${allChangelogEntries.length} changelog entries via AI rollup`
                                 );
+                                const projectedVersion = this.incrementVersion(
+                                    previousVersion,
+                                    bestBump as VersionBump
+                                );
                                 const rollup = await BamlClient.withOptions({
                                     clientRegistry: await this.getClientRegistry()
-                                }).ConsolidateChangelog(rawEntries, bestBump, this.generatorLanguage ?? "unknown");
+                                }).ConsolidateChangelog(
+                                    rawEntries,
+                                    bestBump,
+                                    this.generatorLanguage ?? "unknown",
+                                    previousVersion,
+                                    projectedVersion
+                                );
                                 changelogEntry = rollup.consolidated_changelog?.trim() || rawEntries;
                                 prDescription = rollup.pr_description?.trim() || undefined;
                                 versionBumpReason = rollup.version_bump_reason?.trim() || undefined;
@@ -439,7 +508,9 @@ export class LocalTaskHandler {
                 commitMessage,
                 changelogEntry,
                 prDescription,
-                versionBumpReason
+                versionBumpReason,
+                versionBump: finalBump,
+                previousVersion
             };
         } catch (error) {
             if (error instanceof AutoVersioningException) {
@@ -460,7 +531,11 @@ export class LocalTaskHandler {
             }
 
             this.context.logger.error(`Failed to perform automatic versioning: ${error}`);
-            throw new Error(`Automatic versioning failed: ${error}`);
+
+            throw new CliError({
+                message: `Automatic versioning failed: ${error}`,
+                code: error instanceof CliError ? error.code : CliError.Code.InternalError
+            });
         } finally {
             // Clean up temp diff file
             if (diffFile) {
@@ -543,7 +618,7 @@ export class LocalTaskHandler {
         // Handle 'v' prefix - semver handles this automatically
         const cleanVersion = semver.clean(version);
         if (!cleanVersion) {
-            throw new Error(`Invalid version format: ${version}`);
+            throw new CliError({ message: `Invalid version format: ${version}`, code: CliError.Code.VersionError });
         }
 
         let releaseType: semver.ReleaseType;
@@ -558,16 +633,74 @@ export class LocalTaskHandler {
                 releaseType = "patch";
                 break;
             default:
-                throw new Error(`Unsupported version bump: ${versionBump}`);
+                throw new CliError({
+                    message: `Unsupported version bump: ${versionBump}`,
+                    code: CliError.Code.VersionError
+                });
         }
 
         const newVersion = semver.inc(cleanVersion, releaseType);
         if (!newVersion) {
-            throw new Error(`Failed to increment version: ${version}`);
+            throw new CliError({
+                message: `Failed to increment version: ${version}`,
+                code: CliError.Code.VersionError
+            });
         }
 
         // Preserve 'v' prefix if original version had it
         return version.startsWith("v") ? `v${newVersion}` : newVersion;
+    }
+
+    /**
+     * Reads the SDK version from the *previously committed* `.fern/metadata.json`.
+     * Uses `git show HEAD:.fern/metadata.json` instead of reading from the filesystem
+     * because by the time auto-versioning runs, the generated files have already been
+     * copied over — the on-disk metadata.json contains the magic placeholder version,
+     * not the real previous version.
+     * Returns undefined if the file doesn't exist in HEAD (older SDKs) or can't be parsed.
+     */
+    private async getVersionFromLocalMetadata(): Promise<string | undefined> {
+        try {
+            const result = await loggingExeca(this.context.logger, "git", ["show", "HEAD:.fern/metadata.json"], {
+                cwd: this.absolutePathToLocalOutput,
+                doNotPipeOutput: true,
+                reject: false
+            });
+            if (result.exitCode !== 0) {
+                this.context.logger.debug(".fern/metadata.json not found in HEAD commit");
+                return undefined;
+            }
+            const metadata = JSON.parse(result.stdout) as { sdkVersion?: string };
+            if (metadata.sdkVersion != null) {
+                const normalized = this.normalizeVersionPrefix(metadata.sdkVersion);
+                this.context.logger.info(`Found version from .fern/metadata.json (HEAD): ${normalized}`);
+                return normalized;
+            }
+            this.context.logger.debug(".fern/metadata.json found in HEAD but no sdkVersion field");
+            return undefined;
+        } catch (error) {
+            this.context.logger.debug(`Failed to read .fern/metadata.json from HEAD: ${error}`);
+            return undefined;
+        }
+    }
+
+    /**
+     * Normalizes a version string's `v` prefix to match the convention used by
+     * the magic version (`this.version`).  Git tags may use `v1.2.3` while the
+     * magic version is `0.0.0-fern-placeholder` (no prefix) or vice-versa.
+     * Without normalization the mismatch propagates into `replaceMagicVersion`
+     * and can produce invalid versions in package manifests (e.g. `v1.3.0` in
+     * a `package.json` that expects bare semver).
+     */
+    private normalizeVersionPrefix(version: string | undefined): string | undefined {
+        if (version == null) {
+            return undefined;
+        }
+        const stripped = version.startsWith("v") ? version.slice(1) : version;
+        if (this.version?.startsWith("v")) {
+            return `v${stripped}`;
+        }
+        return stripped;
     }
 
     /**
@@ -576,10 +709,12 @@ export class LocalTaskHandler {
      */
     private async getClientRegistry(): Promise<ClientRegistry> {
         if (this.ai == null) {
-            throw new Error(
-                "No AI service configuration found in generators.yml. " +
-                    "Please add an 'ai' section with provider and model."
-            );
+            throw new CliError({
+                message:
+                    "No AI service configuration found in generators.yml. " +
+                    "Please add an 'ai' section with provider and model.",
+                code: CliError.Code.ConfigError
+            });
         }
 
         this.context.logger.debug(`Using AI service: ${this.ai.provider} with model ${this.ai.model}`);

@@ -44,6 +44,7 @@ import com.fern.java.client.generators.visitors.FilePropertyIsOptional;
 import com.fern.java.client.generators.visitors.GetFilePropertyKey;
 import com.fern.java.generators.object.EnrichedObjectProperty;
 import com.fern.java.output.GeneratedObjectMapper;
+import com.fern.java.utils.NameUtils;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
@@ -55,11 +56,13 @@ import okhttp3.*;
 
 public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
 
+    private final HttpService httpService;
     private final HttpEndpoint httpEndpoint;
     private final GeneratedWrappedRequest generatedWrappedRequest;
     private final ClientGeneratorContext clientGeneratorContext;
     private final SdkRequest sdkRequest;
     private final String requestParameterName;
+    private final DefaultValueExtractor defaultValueExtractor;
 
     public WrappedRequestEndpointWriter(
             HttpService httpService,
@@ -89,12 +92,15 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                 variables,
                 apiErrorClassName,
                 baseErrorClassName);
+        this.httpService = httpService;
         this.httpEndpoint = httpEndpoint;
         this.clientGeneratorContext = clientGeneratorContext;
         this.generatedWrappedRequest = generatedWrappedRequest;
         this.sdkRequest = sdkRequest;
-        this.requestParameterName =
-                sdkRequest.getRequestParameterName().getCamelCase().getSafeName();
+        this.requestParameterName = NameUtils.toName(sdkRequest.getRequestParameterName())
+                .getCamelCase()
+                .getSafeName();
+        this.defaultValueExtractor = new DefaultValueExtractor(clientGeneratorContext);
     }
 
     @SuppressWarnings("checkstyle:CyclomaticComplexity")
@@ -215,23 +221,42 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
             String sdkName = header.camelCaseKey();
             String headerName = generatedWrappedRequest.headerWireValues().get(sdkName);
             if (headerName == null) {
-                String wireValue = header.objectProperty().getName().getWireValue();
+                String wireValue =
+                        NameUtils.getWireValue(header.objectProperty().getName());
                 headerName = (wireValue != null && !wireValue.isEmpty())
                         ? wireValue
-                        : header.objectProperty().getName().getName().getOriginalName();
+                        : NameUtils.getName(header.objectProperty().getName()).getOriginalName();
             }
             if (typeNameIsOptional(header.poetTypeName())) {
-                requestBodyCodeBlock
-                        .beginControlFlow("if ($L.$N().isPresent())", requestParameterName, header.getterProperty())
-                        .addStatement(
-                                "$L.addHeader($S, $L)",
-                                AbstractEndpointWriter.REQUEST_BUILDER_NAME,
-                                headerName,
-                                PoetTypeNameStringifier.stringify(
-                                        CodeBlock.of("$L.$N().get()", "request", header.getterProperty())
-                                                .toString(),
-                                        header.poetTypeName()))
-                        .endControlFlow();
+                // Check if this header has a clientDefault
+                Optional<CodeBlock> headerClientDefault = findHeaderClientDefault(headerName);
+                if (headerClientDefault.isPresent()) {
+                    // Use clientDefault as fallback via .orElse()
+                    requestBodyCodeBlock.addStatement(
+                            "$L.addHeader($S, $L)",
+                            AbstractEndpointWriter.REQUEST_BUILDER_NAME,
+                            headerName,
+                            PoetTypeNameStringifier.stringify(
+                                    CodeBlock.of(
+                                                    "$L.$N().orElse($L)",
+                                                    "request",
+                                                    header.getterProperty(),
+                                                    headerClientDefault.get())
+                                            .toString(),
+                                    header.poetTypeName()));
+                } else {
+                    requestBodyCodeBlock
+                            .beginControlFlow("if ($L.$N().isPresent())", requestParameterName, header.getterProperty())
+                            .addStatement(
+                                    "$L.addHeader($S, $L)",
+                                    AbstractEndpointWriter.REQUEST_BUILDER_NAME,
+                                    headerName,
+                                    PoetTypeNameStringifier.stringify(
+                                            CodeBlock.of("$L.$N().get()", "request", header.getterProperty())
+                                                    .toString(),
+                                            header.poetTypeName()))
+                            .endControlFlow();
+                }
             } else {
                 requestBodyCodeBlock.addStatement(
                         "$L.addHeader($S, $L)",
@@ -434,8 +459,9 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
             } else if (fileUploadProperty instanceof FilePropertyContainer) {
                 FileProperty fileProperty = ((FilePropertyContainer) fileUploadProperty).fileProperty();
                 NameAndWireValue filePropertyKey = fileProperty.visit(new GetFilePropertyKey());
-                String filePropertyName =
-                        filePropertyKey.getName().getCamelCase().getUnsafeName();
+                String filePropertyName = NameUtils.toName(filePropertyKey.getName())
+                        .getCamelCase()
+                        .getUnsafeName();
                 String mimeTypeVariableName = filePropertyName + "MimeType";
                 String mediaTypeVariableName = mimeTypeVariableName + "MediaType";
                 String filePropertyParameterName =
@@ -534,6 +560,16 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                 .beginControlFlow("catch($T e)", Exception.class)
                 .addStatement("throw new $T(e)", RuntimeException.class)
                 .endControlFlow();
+    }
+
+    /** Finds the clientDefault for a header by matching on wire value across service and endpoint headers. */
+    private Optional<CodeBlock> findHeaderClientDefault(String headerWireValue) {
+        // Endpoint headers first so findFirst() prefers endpoint overrides over service headers
+        return java.util.stream.Stream.concat(httpEndpoint.getHeaders().stream(), httpService.getHeaders().stream())
+                .filter(h -> NameUtils.getWireValue(h.getName()).equals(headerWireValue))
+                .findFirst()
+                .flatMap(header -> defaultValueExtractor.extractEffectiveDefault(
+                        header.getValueType(), header.getClientDefault()));
     }
 
     private static boolean typeNameIsOptional(TypeName typeName) {

@@ -13,8 +13,10 @@ from fern_python.external_dependencies import httpx
 from fern_python.generators.sdk.client_generator.base_client_generator import (
     ConstructorParameter as BaseClientGeneratorConstructorParameter,
 )
+from fern_python.generators.sdk.client_generator.type_utilities import is_type_reference_string
 from fern_python.generators.sdk.core_utilities.core_utilities import CoreUtilities
 from fern_python.snippet.template_utils import TemplateGenerator
+from fern_python.utils import get_name_from_wire_value, get_wire_value, resolve_name
 
 import fern.ir.resources as ir_types
 
@@ -29,6 +31,9 @@ class ConstructorParameter(BaseClientGeneratorConstructorParameter):
     docs: typing.Optional[str] = None
     template: typing.Optional[Template] = None
     client_default: typing.Optional[AST.Expression] = None
+    # True when the underlying fern type is not a string and the value must be
+    # wrapped with str(...) to satisfy the Dict[str, str] headers type.
+    needs_str_conversion: bool = False
 
 
 @dataclass
@@ -585,6 +590,7 @@ class ClientWrapperGenerator:
                             if param.type_hint.is_optional:
                                 writer.outdent()
                     else:
+                        stringify = (lambda expr: f"str({expr})") if param.needs_str_conversion else (lambda expr: expr)
                         if param.getter_method is not None:
                             if param.type_hint.is_optional:
                                 writer.write_line(
@@ -593,15 +599,19 @@ class ClientWrapperGenerator:
                                 writer.write_line(f"if {param.constructor_parameter_name} is not None:")
                                 with writer.indent():
                                     writer.write_line(
-                                        f'headers["{param.header_key}"] = {param.constructor_parameter_name}'
+                                        f'headers["{param.header_key}"] = {stringify(param.constructor_parameter_name)}'
                                     )
                             else:
-                                writer.write_line(f'headers["{param.header_key}"] = self.{param.getter_method.name}()')
+                                writer.write_line(
+                                    f'headers["{param.header_key}"] = {stringify(f"self.{param.getter_method.name}()")}'
+                                )
                         elif param.private_member_name is not None:
                             if param.type_hint.is_optional:
                                 writer.write_line(f"if self.{param.private_member_name} is not None:")
                                 writer.indent()
-                            writer.write_line(f'headers["{param.header_key}"] = self.{param.private_member_name}')
+                            writer.write_line(
+                                f'headers["{param.header_key}"] = {stringify(f"self.{param.private_member_name}")}'
+                            )
                             if param.type_hint.is_optional:
                                 writer.outdent()
             for literal_header in literal_headers:
@@ -666,7 +676,7 @@ class ClientWrapperGenerator:
                     private_member_name=names.get_variable_member_name(variable),
                     type_hint=variable_type_hint,
                     initializer=AST.Expression(
-                        f'{constructor_parameter_name}="YOUR_{variable.name.screaming_snake_case.safe_name}"'
+                        f'{constructor_parameter_name}="YOUR_{resolve_name(variable.name).screaming_snake_case.safe_name}"'
                     ),
                     docs=variable.docs,
                 )
@@ -681,12 +691,16 @@ class ClientWrapperGenerator:
                         constructor_parameter_name=names.get_header_constructor_parameter_name(header),
                         private_member_name=names.get_header_private_member_name(header),
                         header=header,
-                        header_key=header.name.wire_value,
+                        header_key=get_wire_value(header.name),
                     )
                 )
                 continue
             constructor_parameter_name = names.get_header_constructor_parameter_name(header)
             client_default_initializer = self._get_client_default_initializer(header.client_default)
+            needs_str_conversion = not is_type_reference_string(
+                header.value_type,
+                self._context.pydantic_generator_context.get_declaration_for_type_id,
+            )
             parameters.append(
                 ConstructorParameter(
                     constructor_parameter_name=constructor_parameter_name,
@@ -696,12 +710,41 @@ class ClientWrapperGenerator:
                         client_default_initializer
                         if client_default_initializer is not None
                         else AST.Expression(
-                            f'{constructor_parameter_name}="YOUR_{header.name.name.screaming_snake_case.safe_name}"',
+                            f'{constructor_parameter_name}="YOUR_{resolve_name(get_name_from_wire_value(header.name)).screaming_snake_case.safe_name}"',
                         )
                     ),
-                    header_key=header.name.wire_value,
+                    header_key=get_wire_value(header.name),
                     environment_variable=header.env,
                     client_default=client_default_initializer,
+                    needs_str_conversion=needs_str_conversion,
+                )
+            )
+
+        # Header auth schemes (e.g. X-API-Key) are independent of bearer/basic/OAuth auth
+        # and must always be included — even when exclude_auth is True (OAuth token override mode).
+        # When OAuth is also present (auth: any), make them optional so users can authenticate
+        # with either OAuth or the header auth scheme alone.
+        # TODO(dsinghvi): Support suppliers for header auth schemes
+        for header_auth_scheme in self._get_header_auth_schemes():
+            constructor_parameter_name = names.get_auth_scheme_header_constructor_parameter_name(header_auth_scheme)
+            type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                header_auth_scheme.value_type
+            )
+            if self._has_oauth() and not type_hint.is_optional:
+                type_hint = AST.TypeHint.optional(type_hint)
+            parameters.append(
+                ConstructorParameter(
+                    constructor_parameter_name=constructor_parameter_name,
+                    private_member_name=names.get_auth_scheme_header_private_member_name(header_auth_scheme),
+                    type_hint=type_hint,
+                    initializer=AST.Expression(
+                        f'{constructor_parameter_name}="YOUR_{resolve_name(get_name_from_wire_value(header_auth_scheme.name)).screaming_snake_case.safe_name}"',
+                    ),
+                    header_key=get_wire_value(header_auth_scheme.name),
+                    header_prefix=header_auth_scheme.prefix,
+                    environment_variable=(
+                        header_auth_scheme.header_env_var if header_auth_scheme.header_env_var is not None else None
+                    ),
                 )
             )
 
@@ -729,27 +772,6 @@ class ClientWrapperGenerator:
                 )
             )
 
-        # TODO(dsinghvi): Support suppliers for header auth schemes
-        for header_auth_scheme in self._get_header_auth_schemes():
-            constructor_parameter_name = names.get_auth_scheme_header_constructor_parameter_name(header_auth_scheme)
-            parameters.append(
-                ConstructorParameter(
-                    constructor_parameter_name=constructor_parameter_name,
-                    private_member_name=names.get_auth_scheme_header_private_member_name(header_auth_scheme),
-                    type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                        header_auth_scheme.value_type
-                    ),
-                    initializer=AST.Expression(
-                        f'{constructor_parameter_name}="YOUR_{header_auth_scheme.name.name.screaming_snake_case.safe_name}"',
-                    ),
-                    header_key=header_auth_scheme.name.wire_value,
-                    header_prefix=header_auth_scheme.prefix,
-                    environment_variable=(
-                        header_auth_scheme.header_env_var if header_auth_scheme.header_env_var is not None else None
-                    ),
-                )
-            )
-
         bearer_auth_scheme = self._get_bearer_auth_scheme()
         if bearer_auth_scheme is not None:
             constructor_parameter_name = names.get_token_constructor_parameter_name(bearer_auth_scheme)
@@ -767,7 +789,7 @@ class ClientWrapperGenerator:
                         else ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT
                     ),
                     initializer=AST.Expression(
-                        f'{constructor_parameter_name}="YOUR_{bearer_auth_scheme.token.screaming_snake_case.safe_name}"',
+                        f'{constructor_parameter_name}="YOUR_{resolve_name(bearer_auth_scheme.token).screaming_snake_case.safe_name}"',
                     ),
                     getter_method=AST.FunctionDeclaration(
                         name=names.get_token_getter_name(bearer_auth_scheme),
@@ -819,7 +841,7 @@ class ClientWrapperGenerator:
                     else AST.TypeHint.optional(ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT)
                 ),
                 initializer=AST.Expression(
-                    f'{username_constructor_parameter_name}="YOUR_{basic_auth_scheme.username.screaming_snake_case.safe_name}"',
+                    f'{username_constructor_parameter_name}="YOUR_{resolve_name(basic_auth_scheme.username).screaming_snake_case.safe_name}"',
                 ),
                 getter_method=AST.FunctionDeclaration(
                     name=names.get_username_getter_name(basic_auth_scheme),
@@ -868,7 +890,7 @@ class ClientWrapperGenerator:
                     else AST.TypeHint.optional(ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT)
                 ),
                 initializer=AST.Expression(
-                    f'{password_constructor_parameter_name}="YOUR_{basic_auth_scheme.password.screaming_snake_case.safe_name}"',
+                    f'{password_constructor_parameter_name}="YOUR_{resolve_name(basic_auth_scheme.password).screaming_snake_case.safe_name}"',
                 ),
                 getter_method=AST.FunctionDeclaration(
                     name=names.get_password_getter_name(basic_auth_scheme),

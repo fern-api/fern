@@ -3,6 +3,7 @@ import type { Audiences } from "@fern-api/configuration";
 import type { ContainerRunner } from "@fern-api/core-utils";
 import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist, resolve } from "@fern-api/fs-utils";
+import { CliError } from "@fern-api/task-context";
 import { ValidationIssue } from "@fern-api/yaml-loader";
 import chalk from "chalk";
 import { readdir } from "fs/promises";
@@ -15,13 +16,13 @@ import { ApiSpecResolver } from "../../../api/resolver/ApiSpecResolver.js";
 import { GENERATE_COMMAND_TIMEOUT_MS } from "../../../constants.js";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
-import { CliError } from "../../../errors/CliError.js";
 import { SourcedValidationError } from "../../../errors/SourcedValidationError.js";
 import { SdkChecker } from "../../../sdk/checker/SdkChecker.js";
 import { LANGUAGES, type Language } from "../../../sdk/config/Language.js";
 import type { Target } from "../../../sdk/config/Target.js";
 import { GeneratorPipeline } from "../../../sdk/generator/GeneratorPipeline.js";
 import { SdkStageOverrides, SdkTaskGroup } from "../../../sdk/task/SdkTaskGroup.js";
+import { promptSelect } from "../../../ui/promptSelect.js";
 import type { TaskStageLabels } from "../../../ui/TaskStageLabels.js";
 import type { Workspace } from "../../../workspace/Workspace.js";
 import { WorkspaceBuilder } from "../../../workspace/WorkspaceBuilder.js";
@@ -74,6 +75,9 @@ export declare namespace GenerateCommand {
 
         /** Ignore the .fernignore file and generate all files */
         "skip-fernignore": boolean;
+
+        /** Require all referenced environment variables to be defined */
+        "require-env-vars": boolean;
     }
 }
 
@@ -115,7 +119,8 @@ export class GenerateCommand {
             };
         }
 
-        const targets = this.getTargets({
+        const targets = await this.getTargets({
+            context,
             workspace: workspaceWithOverrides,
             args,
             groupName: args.target != null ? undefined : (args.group ?? workspaceWithOverrides.sdks?.defaultGroup)
@@ -147,15 +152,19 @@ export class GenerateCommand {
             throw new CliError({
                 message:
                     `No fern.yml found, either run 'fern init' or specify all of the required flags:\n\n` +
-                    missingFlags.map((flag) => `  ${flag}`).join("\n")
+                    missingFlags.map((flag) => `  ${flag}`).join("\n"),
+                code: CliError.Code.ConfigError
             });
         }
 
-        // After validation, these are guaranteed to be defined.
-        const api = args.api as string;
-        const target = args.target as string;
-        const org = args.org as string;
-        const output = args.output as string;
+        // All four are guaranteed to be defined after the missingFlags check above.
+        if (args.api == null || args.target == null || args.org == null || args.output == null) {
+            throw new CliError({
+                message: "Internal error: required flags missing",
+                code: CliError.Code.InternalError
+            });
+        }
+        const { api, target, org, output } = args;
 
         const resolver = new ApiSpecResolver({ context });
         const resolvedSpec = await resolver.resolve({
@@ -189,7 +198,7 @@ export class GenerateCommand {
         forceLocal: boolean;
     }): Promise<void> {
         if (workspace.sdks == null) {
-            throw new Error("No SDKs configured");
+            throw new CliError({ message: "No SDKs configured", code: CliError.Code.InternalError });
         }
 
         // Check that the APIs referenced by each target are valid.
@@ -222,13 +231,13 @@ export class GenerateCommand {
                 }
             }
             if (sdkCheckResult.errorCount > 0) {
-                throw CliError.exit();
+                throw new CliError({ code: CliError.Code.ValidationError });
             }
         }
 
         const validTargets = targets.filter((t) => checkResult.validApis.has(t.api));
         if (validTargets.length === 0) {
-            throw CliError.exit();
+            throw new CliError({ code: CliError.Code.ValidationError });
         }
 
         const pipeline = new GeneratorPipeline({
@@ -274,7 +283,7 @@ export class GenerateCommand {
             if (outputPath != null) {
                 const { shouldProceed } = await this.checkOutputDirectory({ context, args, outputPath });
                 if (!shouldProceed) {
-                    throw new CliError({ message: "Generation cancelled." });
+                    throw new CliError({ message: "Generation cancelled.", code: CliError.Code.ConfigError });
                 }
             }
         }
@@ -298,7 +307,10 @@ export class GenerateCommand {
                 const task = taskGroup.getTask(target.name);
                 if (task == null) {
                     // This should be unreachable.
-                    throw new CliError({ message: `Internal error; task '${target.name}' not found` });
+                    throw new CliError({
+                        message: `Internal error; task '${target.name}' not found`,
+                        code: CliError.Code.InternalError
+                    });
                 }
 
                 task.start();
@@ -331,7 +343,8 @@ export class GenerateCommand {
                     token,
                     version: args["output-version"],
                     fernignorePath: args.fernignore,
-                    skipFernignore: args["skip-fernignore"]
+                    skipFernignore: args["skip-fernignore"],
+                    requireEnvVars: args["require-env-vars"]
                 });
                 if (!pipelineResult.success) {
                     task.stage.generator.fail(pipelineResult.error);
@@ -349,7 +362,7 @@ export class GenerateCommand {
         });
 
         if (summary.failedCount > 0) {
-            throw CliError.exit();
+            throw new CliError({ code: CliError.Code.ContainerError });
         }
     }
 
@@ -363,17 +376,27 @@ export class GenerateCommand {
         targets: Target[];
     }): void {
         if (args["container-engine"] != null && !args.local) {
-            throw new CliError({ message: "The --container-engine flag can only be used with --local" });
+            throw new CliError({
+                message: "The --container-engine flag can only be used with --local",
+                code: CliError.Code.ConfigError
+            });
         }
         if (args.group != null && args.target != null) {
-            throw new CliError({ message: "The --group and --target flags cannot be used together" });
+            throw new CliError({
+                message: "The --group and --target flags cannot be used together",
+                code: CliError.Code.ConfigError
+            });
         }
         if (targets.length > 1 && args.output != null) {
-            throw new CliError({ message: "The --output flag can only be used when generating a single target" });
+            throw new CliError({
+                message: "The --output flag can only be used when generating a single target",
+                code: CliError.Code.ConfigError
+            });
         }
         if (args["skip-fernignore"] && args.fernignore != null) {
             throw new CliError({
-                message: "The --skip-fernignore and --fernignore flags cannot be used together."
+                message: "The --skip-fernignore and --fernignore flags cannot be used together.",
+                code: CliError.Code.ConfigError
             });
         }
         const issues: ValidationIssue[] = [];
@@ -436,7 +459,8 @@ export class GenerateCommand {
                 throw new CliError({
                     message:
                         `Remote generation is not supported with a git URL for --output\n\n` +
-                        `  Use --local or specify a local filesystem path for --output`
+                        `  Use --local or specify a local filesystem path for --output`,
+                    code: CliError.Code.ConfigError
                 });
             }
             const token = process.env.GITHUB_TOKEN ?? process.env.GIT_TOKEN;
@@ -447,7 +471,8 @@ export class GenerateCommand {
                         `  Set GITHUB_TOKEN or GIT_TOKEN:\n` +
                         `    export GITHUB_TOKEN=ghp_xxx\n\n` +
                         `  Or use a local path:\n` +
-                        `    --output ./my-sdk`
+                        `    --output ./my-sdk`,
+                    code: CliError.Code.AuthError
                 });
             }
             return {
@@ -462,33 +487,106 @@ export class GenerateCommand {
         return { path: args.output };
     }
 
-    private getTargets({
+    private async getTargets({
+        context,
         workspace,
         args,
         groupName
     }: {
+        context: Context;
         workspace: Workspace;
         args: GenerateCommand.Args;
         groupName: string | undefined;
-    }): Target[] {
+    }): Promise<Target[]> {
         let matched = workspace.sdks != null ? this.filterTargetsByGroup(workspace.sdks.targets, groupName) : [];
         if (args.target != null) {
             matched = matched.filter((t) => t.name === args.target);
             if (matched.length === 0) {
-                throw new Error(`Target '${args.target}' not found`);
+                const allTargets = workspace.sdks?.targets ?? [];
+                const available = allTargets.map((t) => t.name);
+                if (available.length > 0) {
+                    throw new CliError({
+                        message: `Target '${args.target}' not found. Available targets: ${available.join(", ")}`,
+                        code: CliError.Code.ConfigError
+                    });
+                } else {
+                    throw new CliError({
+                        message: `Target '${args.target}' not found`,
+                        code: CliError.Code.ConfigError
+                    });
+                }
             }
         }
         if (matched.length === 0) {
             if (groupName != null) {
-                throw new Error(`No targets found for group '${groupName}'`);
+                throw new CliError({
+                    message: `No targets found for group '${groupName}'`,
+                    code: CliError.Code.ConfigError
+                });
             }
-            throw new Error("No targets configured in fern.yml");
+            throw new CliError({
+                message: "No targets configured in fern.yml",
+                code: CliError.Code.ConfigError
+            });
         }
+
+        // When multiple targets exist and no group/target was specified, prompt for selection.
+        // Prefer group-based selection when groups are defined; fall back to target selection otherwise.
+        if (groupName == null && args.target == null && matched.length > 1) {
+            const allGroups = this.collectGroups(matched);
+            if (allGroups.length > 1) {
+                // Multiple groups defined — prompt by group.
+                // Use undefined as the "all" sentinel to avoid any collision with real group names.
+                const selectedGroup = await promptSelect<string | undefined>({
+                    isTTY: context.isTTY,
+                    message: "Multiple SDK groups found. Select one:",
+                    choices: [
+                        { name: `all (${matched.length} targets)`, value: undefined },
+                        ...allGroups.map((g) => ({ name: g, value: g }))
+                    ],
+                    nonInteractiveError: `Multiple SDK groups found: ${allGroups.join(", ")}. Use --group to select one.`,
+                    flagHint: (value) => (value != null ? `--group ${value}` : undefined)
+                });
+                if (selectedGroup != null) {
+                    matched = this.filterTargetsByGroup(matched, selectedGroup);
+                }
+            } else {
+                // No groups defined — prompt by target name.
+                // Use undefined as the "all" sentinel to avoid any collision with real target names.
+                const targetNames = matched.map((t) => t.name);
+                const selectedTarget = await promptSelect<string | undefined>({
+                    isTTY: context.isTTY,
+                    message: "Multiple SDK targets found. Select one:",
+                    choices: [
+                        { name: `all (${matched.length} targets)`, value: undefined },
+                        ...targetNames.map((name) => ({ name, value: name }))
+                    ],
+                    nonInteractiveError: `Multiple SDK targets found: ${targetNames.join(", ")}. Use --target to select one.`,
+                    flagHint: (value) => (value != null ? `--target ${value}` : undefined)
+                });
+                if (selectedTarget != null) {
+                    matched = matched.filter((t) => t.name === selectedTarget);
+                }
+            }
+        }
+
         return matched.map((target) => ({
             ...target,
             version: args["target-version"] ?? target.version,
             output: args.output != null ? this.parseTargetOutput(args) : target.output
         }));
+    }
+
+    private collectGroups(targets: Target[]): string[] {
+        const groups = new Set<string>();
+        for (const target of targets) {
+            if (target.groups != null) {
+                for (const group of target.groups) {
+                    groups.add(group);
+                }
+            }
+        }
+        return [...groups].sort();
     }
 
     private async checkOutputDirectory({
@@ -530,11 +628,13 @@ export class GenerateCommand {
     }
 
     private resolveLanguage(target: string): Language {
-        const lang = target as Language;
-        if (LANGUAGES.includes(lang)) {
-            return lang;
+        if (isLanguage(target)) {
+            return target;
         }
-        throw new Error(`"${target}" is not a supported language. Supported: ${LANGUAGES.join(", ")}`);
+        throw new CliError({
+            message: `"${target}" is not a supported language. Supported: ${LANGUAGES.join(", ")}`,
+            code: CliError.Code.ConfigError
+        });
     }
 
     private parseAudiences(audiences: string[] | undefined): Audiences | undefined {
@@ -596,6 +696,10 @@ export class GenerateCommand {
     }
 }
 
+function isLanguage(target: string): target is Language {
+    return (LANGUAGES as readonly string[]).includes(target);
+}
+
 export function addGenerateCommand(cli: Argv<GlobalArgs>): void {
     const cmd = new GenerateCommand();
     command(
@@ -605,7 +709,13 @@ export function addGenerateCommand(cli: Argv<GlobalArgs>): void {
         async (context, args) => {
             const timeout = new Promise<never>((_, reject) => {
                 setTimeout(
-                    () => reject(new CliError({ message: "Generation timed out after 10 minutes." })),
+                    () =>
+                        reject(
+                            new CliError({
+                                message: "Generation timed out after 10 minutes.",
+                                code: CliError.Code.NetworkError
+                            })
+                        ),
                     GENERATE_COMMAND_TIMEOUT_MS
                 ).unref();
             });
@@ -683,6 +793,12 @@ export function addGenerateCommand(cli: Argv<GlobalArgs>): void {
                     default: false,
                     description:
                         "Skip the .fernignore file and generate all files. For remote generation, uploads an empty .fernignore. For local generation, skips reading .fernignore from the output directory."
+                })
+                .option("require-env-vars", {
+                    type: "boolean",
+                    default: true,
+                    description:
+                        "Require all referenced environment variables to be defined (use --no-require-env-vars to substitute empty strings for missing variables)"
                 })
     );
 }

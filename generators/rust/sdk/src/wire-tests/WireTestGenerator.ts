@@ -1,3 +1,4 @@
+import { GeneratorError } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { WireMockMapping } from "@fern-api/mock-utils";
@@ -32,7 +33,7 @@ export class WireTestGenerator {
         this.context = context;
         const dynamicIr = ir.dynamic;
         if (!dynamicIr) {
-            throw new Error("Cannot generate wire tests without dynamic IR");
+            throw GeneratorError.internalError("Cannot generate wire tests without dynamic IR");
         }
         this.dynamicIr = dynamicIr;
         this.dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
@@ -418,7 +419,7 @@ export class WireTestGenerator {
 
         const wiremockMapping = this.wireMockConfigContent[mappingKey];
         if (!wiremockMapping) {
-            throw new Error(`No wiremock mapping found for endpoint ${endpoint.id} and mappingKey "${mappingKey}"`);
+            throw GeneratorError.internalError(`No wiremock mapping found for endpoint ${endpoint.id} and mappingKey "${mappingKey}"`);
         }
 
         // Try to get path parameters from wiremock mapping first
@@ -458,8 +459,13 @@ export class WireTestGenerator {
         for (const [paramName, paramValue] of Object.entries(dynamicEndpointExample.queryParameters)) {
             if (paramValue != null) {
                 const key = JSON.stringify(paramName);
-                const value = JSON.stringify(String(paramValue));
-                queryParamEntries.push(`(${key}.to_string(), ${value}.to_string())`);
+                if (Array.isArray(paramValue) && paramValue.length > 1) {
+                    const items = paramValue.map((v: unknown) => JSON.stringify(String(v)));
+                    queryParamEntries.push(`(${key}.to_string(), json!([${items.join(", ")}]))`);
+                } else {
+                    const value = JSON.stringify(String(paramValue));
+                    queryParamEntries.push(`(${key}.to_string(), json!(${value}))`);
+                }
             }
         }
 
@@ -475,7 +481,7 @@ export class WireTestGenerator {
     // =============================================================================
 
     private getTestFunctionName(endpoint: FernIr.HttpEndpoint, serviceName: string): string {
-        const endpointName = endpoint.name.snakeCase.safeName;
+        const endpointName = this.context.case.snakeSafe(endpoint.name);
         // Normalize service name to avoid double underscores (e.g., endpoints_union_ -> endpoints_union)
         const normalizedServiceName = serviceName.replace(/_+$/, "");
         return `test_${normalizedServiceName}_${endpointName}_with_wiremock`;
@@ -493,7 +499,7 @@ export class WireTestGenerator {
         const snippetRequest = convertDynamicEndpointSnippetRequest(example);
         const response = await this.dynamicSnippetsGenerator.generate(snippetRequest);
         if (!response.snippet) {
-            throw new Error("No snippet generated for example");
+            throw GeneratorError.internalError("No snippet generated for example");
         }
         return response.snippet;
     }
@@ -510,7 +516,7 @@ export class WireTestGenerator {
     }
 
     private getFormattedServiceName(service: FernIr.HttpService): string {
-        return service.name?.fernFilepath?.allParts?.map((part) => part.snakeCase.safeName).join("_") || "root";
+        return service.name?.fernFilepath?.allParts?.map((part) => this.context.case.snakeSafe(part)).join("_") || "root";
     }
 
     private wiremockMappingKey({

@@ -1,4 +1,4 @@
-irVersion: v62
+irVersion: v66
 displayName: PHP SDK
 image: fernapi/fern-php-sdk
 changelogLocation: ../../generators/php/sdk/versions.yml
@@ -9,6 +9,11 @@ publish:
     file: ./generators/php/sdk/Dockerfile
     image: fernapi/fern-php-sdk
     context: .
+  sentry:
+    name: fern-php-sdk
+    project: php-sdk
+    sourceMaps:
+      - dir: generators/php/sdk/dist
 test:
   docker:
     image: fernapi/fern-php-sdk:latest
@@ -26,6 +31,10 @@ generatorType: SDK
 defaultOutputMode: github
 fixtures:
   basic-auth:
+    - outputFolder: wire-tests
+      customConfig:
+        enable-wire-tests: true
+  basic-auth-pw-omitted:
     - outputFolder: wire-tests
       customConfig:
         enable-wire-tests: true
@@ -76,6 +85,7 @@ fixtures:
     - outputFolder: clientName
       customConfig:
         clientName: FernClient
+        maxRetries: 5
     - outputFolder: packageName
       customConfig:
         packageName: fern-api/imdb-php
@@ -132,6 +142,9 @@ fixtures:
     - outputFolder: property-accessors
       customConfig:
         propertyAccess: private
+    - outputFolder: page-index-semantics
+      customConfig:
+        offsetSemantics: "page-index"
   unions:
     - outputFolder: no-custom-config
       customConfig: null

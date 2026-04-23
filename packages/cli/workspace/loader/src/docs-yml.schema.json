@@ -218,6 +218,16 @@
         }
       ]
     },
+    "agents": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/docs.AgentsConfig"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "metadata": {
       "oneOf": [
         {
@@ -495,16 +505,6 @@
           "oneOf": [
             {
               "$ref": "#/definitions/docs.CustomDomain"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "private": {
-          "oneOf": [
-            {
-              "type": "boolean"
             },
             {
               "type": "null"
@@ -4367,6 +4367,59 @@
       },
       "additionalProperties": false
     },
+    "docs.PageDescriptionSource": {
+      "type": "string",
+      "enum": [
+        "description",
+        "subtitle"
+      ]
+    },
+    "docs.AgentsConfig": {
+      "type": "object",
+      "properties": {
+        "page-directive": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "page-description-source": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.PageDescriptionSource"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "llms-txt": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "llms-full-txt": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
     "docs.TwitterCardSetting": {
       "type": "string",
       "enum": [
@@ -4374,6 +4427,13 @@
         "summary_large_image",
         "app",
         "player"
+      ]
+    },
+    "docs.OgDynamicLogoColor": {
+      "type": "string",
+      "enum": [
+        "dark",
+        "light"
       ]
     },
     "docs.MetadataConfig": {
@@ -4559,6 +4619,86 @@
             }
           ]
         },
+        "og:dynamic:text-color": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "og:dynamic:background-color": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "og:dynamic:logo-color": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.OgDynamicLogoColor"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "og:dynamic:show-logo": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "og:dynamic:show-section": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "og:dynamic:show-description": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "og:dynamic:show-url": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "og:dynamic:show-gradient": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "canonical-host": {
           "oneOf": [
             {
@@ -4659,6 +4799,16 @@
           ]
         },
         "valid-docs-endpoints": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.CheckRuleSeverity"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "missing-redirects": {
           "oneOf": [
             {
               "$ref": "#/definitions/docs.CheckRuleSeverity"
@@ -5366,6 +5516,16 @@
               "type": "null"
             }
           ]
+        },
+        "mobile-toc": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -5472,6 +5632,16 @@
           ]
         },
         "disable-explorer-proxy": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "disable-environment-editing": {
           "oneOf": [
             {
               "type": "boolean"
@@ -5623,7 +5793,8 @@
       "type": "string",
       "enum": [
         "default",
-        "toggle"
+        "toggle",
+        "tabs"
       ]
     },
     "docs.ThemeConfig": {

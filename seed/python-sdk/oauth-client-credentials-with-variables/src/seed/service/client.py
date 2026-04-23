@@ -40,6 +40,8 @@ class ServiceClient:
         client = SeedOauthClientCredentialsWithVariables(
             base_url="YOUR_BASE_URL",
             root_variable="YOUR_ROOT_VARIABLE",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
         client.service.post()
         """
@@ -82,6 +84,8 @@ class AsyncServiceClient:
         client = AsyncSeedOauthClientCredentialsWithVariables(
             base_url="YOUR_BASE_URL",
             root_variable="YOUR_ROOT_VARIABLE",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
 
 

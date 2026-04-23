@@ -54,7 +54,7 @@ export function buildHeader({
         headerSchema.availability = convertAvailability(header.availability);
     }
     if (header.clientDefault != null) {
-        headerSchema.default = header.clientDefault;
+        headerSchema["client-default"] = header.clientDefault;
     }
 
     return headerSchema;

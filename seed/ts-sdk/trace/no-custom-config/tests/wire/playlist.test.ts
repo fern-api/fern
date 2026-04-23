@@ -38,12 +38,7 @@ describe("PlaylistClient", () => {
                 problems: ["problems", "problems"],
             },
         });
-        expect(response).toEqual({
-            playlist_id: "playlist_id",
-            "owner-id": "owner-id",
-            name: "name",
-            problems: ["problems", "problems"],
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getPlaylists", async () => {
@@ -69,20 +64,7 @@ describe("PlaylistClient", () => {
             optionalMultipleField: "optionalMultipleField",
             multipleField: "multipleField",
         });
-        expect(response).toEqual([
-            {
-                playlist_id: "playlist_id",
-                "owner-id": "owner-id",
-                name: "name",
-                problems: ["problems", "problems"],
-            },
-            {
-                playlist_id: "playlist_id",
-                "owner-id": "owner-id",
-                name: "name",
-                problems: ["problems", "problems"],
-            },
-        ]);
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getPlaylist (1)", async () => {
@@ -110,12 +92,7 @@ describe("PlaylistClient", () => {
             .build();
 
         const response = await client.playlist.getPlaylist(1, "playlistId");
-        expect(response).toEqual({
-            playlist_id: "playlist_id",
-            "owner-id": "owner-id",
-            name: "name",
-            problems: ["problems", "problems"],
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getPlaylist (2)", async () => {
@@ -195,12 +172,7 @@ describe("PlaylistClient", () => {
             name: "name",
             problems: ["problems", "problems"],
         });
-        expect(response).toEqual({
-            playlist_id: "playlist_id",
-            "owner-id": "owner-id",
-            name: "name",
-            problems: ["problems", "problems"],
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("updatePlaylist (2)", async () => {

@@ -1,5 +1,22 @@
+import { CaseConverter } from "@fern-api/base-generator";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { formatEndpointPathForSwift } from "../format-endpoint-path-for-swift.js";
 import { EndpointPathInput } from "../parse-endpoint-path.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "swift", keywords: undefined, smartCasing: true });
+
+function makeName(original: string, camelUnsafe: string): FernIr.Name {
+    return {
+        originalName: original,
+        camelCase: { unsafeName: camelUnsafe, safeName: camelUnsafe },
+        snakeCase: { unsafeName: original, safeName: original },
+        screamingSnakeCase: { unsafeName: original.toUpperCase(), safeName: original.toUpperCase() },
+        pascalCase: {
+            unsafeName: camelUnsafe.charAt(0).toUpperCase() + camelUnsafe.slice(1),
+            safeName: camelUnsafe.charAt(0).toUpperCase() + camelUnsafe.slice(1)
+        }
+    };
+}
 
 function makeEndpoint(opts: {
     head: string;
@@ -19,10 +36,7 @@ function makeEndpoint(opts: {
             }))
         },
         allPathParameters: parts.map((p) => ({
-            name: {
-                originalName: p.paramOriginalName,
-                camelCase: { unsafeName: p.paramCamelCase }
-            },
+            name: makeName(p.paramOriginalName, p.paramCamelCase),
             docs: undefined
         }))
     };
@@ -33,7 +47,7 @@ describe("formatEndpointPathForSwift", () => {
 
     it("formats a static path with no parameters", () => {
         const endpoint = makeEndpoint({ head: "/users" });
-        expect(formatEndpointPathForSwift(endpoint)).toBe("/users");
+        expect(formatEndpointPathForSwift(endpoint, caseConverter)).toBe("/users");
     });
 
     it("formats a path with a single path parameter", () => {
@@ -41,7 +55,7 @@ describe("formatEndpointPathForSwift", () => {
             head: "/users/",
             parts: [{ paramOriginalName: "user_id", paramCamelCase: "userId", tail: "" }]
         });
-        expect(formatEndpointPathForSwift(endpoint)).toBe("/users/\\(userId)");
+        expect(formatEndpointPathForSwift(endpoint, caseConverter)).toBe("/users/\\(userId)");
     });
 
     it("formats a path with multiple path parameters", () => {
@@ -52,14 +66,14 @@ describe("formatEndpointPathForSwift", () => {
                 { paramOriginalName: "user_id", paramCamelCase: "userId", tail: "" }
             ]
         });
-        expect(formatEndpointPathForSwift(endpoint)).toBe("/organizations/\\(orgId)/users/\\(userId)");
+        expect(formatEndpointPathForSwift(endpoint, caseConverter)).toBe("/organizations/\\(orgId)/users/\\(userId)");
     });
 
     // --- Leading slash handling ---
 
     it("prepends a leading slash if missing", () => {
         const endpoint = makeEndpoint({ head: "users" });
-        expect(formatEndpointPathForSwift(endpoint)).toBe("/users");
+        expect(formatEndpointPathForSwift(endpoint, caseConverter)).toBe("/users");
     });
 
     it("prepends a leading slash when head is empty and path parameter starts the path", () => {
@@ -67,19 +81,19 @@ describe("formatEndpointPathForSwift", () => {
             head: "",
             parts: [{ paramOriginalName: "id", paramCamelCase: "id", tail: "" }]
         });
-        expect(formatEndpointPathForSwift(endpoint)).toBe("/\\(id)");
+        expect(formatEndpointPathForSwift(endpoint, caseConverter)).toBe("/\\(id)");
     });
 
     // --- Trailing slash handling ---
 
     it("strips a trailing slash", () => {
         const endpoint = makeEndpoint({ head: "/users/" });
-        expect(formatEndpointPathForSwift(endpoint)).toBe("/users");
+        expect(formatEndpointPathForSwift(endpoint, caseConverter)).toBe("/users");
     });
 
     it("preserves a single slash as the root path", () => {
         const endpoint = makeEndpoint({ head: "/" });
-        expect(formatEndpointPathForSwift(endpoint)).toBe("/");
+        expect(formatEndpointPathForSwift(endpoint, caseConverter)).toBe("/");
     });
 
     it("strips trailing slash after path parameter tail", () => {
@@ -87,14 +101,14 @@ describe("formatEndpointPathForSwift", () => {
             head: "/",
             parts: [{ paramOriginalName: "id", paramCamelCase: "id", tail: "/details/" }]
         });
-        expect(formatEndpointPathForSwift(endpoint)).toBe("/\\(id)/details");
+        expect(formatEndpointPathForSwift(endpoint, caseConverter)).toBe("/\\(id)/details");
     });
 
     // --- Empty head handling ---
 
     it("handles an empty head with no parts", () => {
         const endpoint = makeEndpoint({ head: "" });
-        expect(formatEndpointPathForSwift(endpoint)).toBe("/");
+        expect(formatEndpointPathForSwift(endpoint, caseConverter)).toBe("/");
     });
 
     // --- Missing path parameter declaration ---
@@ -107,7 +121,7 @@ describe("formatEndpointPathForSwift", () => {
             },
             allPathParameters: []
         };
-        expect(formatEndpointPathForSwift(endpoint)).toBe("/items//details");
+        expect(formatEndpointPathForSwift(endpoint, caseConverter)).toBe("/items//details");
     });
 
     // --- Consecutive path parameters ---
@@ -120,7 +134,7 @@ describe("formatEndpointPathForSwift", () => {
                 { paramOriginalName: "value", paramCamelCase: "value", tail: "" }
             ]
         });
-        expect(formatEndpointPathForSwift(endpoint)).toBe("/\\(key)\\(value)");
+        expect(formatEndpointPathForSwift(endpoint, caseConverter)).toBe("/\\(key)\\(value)");
     });
 
     // --- Tail after path parameter ---
@@ -130,7 +144,7 @@ describe("formatEndpointPathForSwift", () => {
             head: "/",
             parts: [{ paramOriginalName: "id", paramCamelCase: "id", tail: "/details" }]
         });
-        expect(formatEndpointPathForSwift(endpoint)).toBe("/\\(id)/details");
+        expect(formatEndpointPathForSwift(endpoint, caseConverter)).toBe("/\\(id)/details");
     });
 
     // --- Complex / deeply nested ---
@@ -144,7 +158,7 @@ describe("formatEndpointPathForSwift", () => {
                 { paramOriginalName: "action_id", paramCamelCase: "actionId", tail: "" }
             ]
         });
-        expect(formatEndpointPathForSwift(endpoint)).toBe(
+        expect(formatEndpointPathForSwift(endpoint, caseConverter)).toBe(
             "/api/v1/\\(tenantId)/resources/\\(resourceId)/actions/\\(actionId)"
         );
     });

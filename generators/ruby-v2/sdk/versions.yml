@@ -1,5 +1,167 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.7.1
+  changelogEntry:
+    - summary: |
+        Bump @fern-api/generator-cli to 0.9.11. The GitHub pipeline step now creates
+        signed commits via the GitHub REST API (matching fiddle's legacy InMemoryGitRepo
+        push path), restoring verified fern-api[bot] commits on replay-enabled orgs.
+      type: chore
+  createdAt: "2026-04-22"
+  irVersion: 66
+- version: 1.7.0
+  changelogEntry:
+    - summary: |
+        Add `offsetSemantics` config option. When set to `"page-index"`, offset pagination increments by 1 each page instead of by the number of items returned (`"item-index"`, the default).
+      type: feat
+  createdAt: "2026-04-22"
+  irVersion: 66
+- version: 1.6.3
+  changelogEntry:
+    - summary: |
+        Publish the Ruby SDK generator to `fernapi/fern-ruby-sdk` on Docker Hub.
+        The `fernapi/fern-ruby-sdk-v2` image is still pushed as an alias for backward compatibility.
+      type: chore
+  createdAt: "2026-04-22"
+  irVersion: 66
+- version: 1.6.2
+  changelogEntry:
+    - summary: |
+        Fix wire test verification for endpoints with multi-value array query parameters.
+      type: fix
+  createdAt: "2026-04-22"
+  irVersion: 66
+- version: 1.6.1
+  changelogEntry:
+    - summary: |
+        Add crash reporting via Sentry to the generator runtime, and classify
+        thrown errors using the new shared `GeneratorError` taxonomy so user-facing
+        failures (config, validation, auth, network, environment) are kept distinct
+        from internal Fern bugs — only the latter are forwarded to Sentry. No
+        change to generated output.
+      type: chore
+  createdAt: "2026-04-22"
+  irVersion: 66
+- version: 1.6.0
+  changelogEntry:
+    - summary: |
+        Expose HTTP response metadata (status code, headers, and raw HTTP response) on paginated iterators.
+        `CursorPageIterator`, `OffsetPageIterator`, `CustomPager`, and `ItemIterator` now expose `status_code`,
+        `headers`, and `http_response` methods that return metadata from the most recent page load.
+      type: feat
+  createdAt: "2026-04-21"
+  irVersion: 66
+- version: 1.5.0
+  changelogEntry:
+    - summary: |
+        Improve Ruby SDK generation performance by generating rubocop-compliant code directly.
+        Generator time reduced by ~49% on a large real-world OAS (122s → 62s) by fixing the
+        top rubocop offense categories so rubocop -A has very little to auto-correct.
+      type: feat
+  createdAt: "2026-04-21"
+  irVersion: 66
+- version: 1.4.4
+  changelogEntry:
+    - summary: |
+        Publish new ruby-v2 generator version.
+      type: chore
+  createdAt: "2026-04-20"
+  irVersion: 66
+- version: 1.4.3
+  changelogEntry:
+    - summary: |
+        Fix Ruby dynamic snippet generation to synthesize default values for
+        required properties missing from examples. Previously, empty objects
+        and arrays were rendered as `{}` and `[{}]`; now required fields are
+        populated with reasonable placeholder values matching the behavior of
+        the Python generator.
+      type: fix
+  createdAt: "2026-04-17"
+  irVersion: 66
+- version: 1.4.2
+  changelogEntry:
+    - summary: |
+        Bump @fern-api/generator-cli to 0.9.8. Changelog URLs in generated PRs
+        now use the commit SHA instead of the PR branch name, keeping the link
+        valid after the branch is deleted or squash-merged.
+      type: chore
+  createdAt: "2026-04-16"
+  irVersion: 66
+- version: 1.4.1
+  changelogEntry:
+    - summary: |
+        Add `Severity` to `Naming/VariableNumber` in generated `.rubocop.yml` config.
+        Defaults to `warning` for customer SDKs. Configurable via `rubocopSeverity` custom config.
+      type: chore
+  createdAt: "2026-04-15"
+  irVersion: 66
 
+- version: 1.4.0
+  changelogEntry:
+    - summary: |
+        Support omitting username or password from basic auth when configured via
+        `usernameOmit` or `passwordOmit` in the IR. Omitted fields are removed from
+        the SDK's public API and treated as empty strings internally (e.g., omitting
+        password encodes `username:`, omitting username encodes `:password`). When
+        both are omitted, the Authorization header is skipped entirely.
+      type: feat
+  createdAt: "2026-04-02"
+  irVersion: 66
+
+- version: 1.3.0-rc.1
+  changelogEntry:
+    - summary: |
+        Ensure `extraDependencies` and `extraDevDependencies` override bundled dependency
+        versions instead of creating duplicates. Previously, specifying a bundled gem
+        (e.g., `base64`, `rake`) in extra dependencies would result in duplicate entries
+        in the gemspec or Gemfile. The user-specified version now takes precedence.
+      type: fix
+  createdAt: "2026-04-03"
+  irVersion: 66
+
+- version: 1.3.0-rc.0
+  changelogEntry:
+    - summary: |
+        Upgrade to IR v66 which compresses the IR Name type, reducing IR size and increasing performance.
+      type: feat
+  createdAt: "2026-04-01"
+  irVersion: 66
+
+- version: 1.2.1
+  changelogEntry:
+    - summary: |
+        Fix rubocop not running in local mode by running `bundle install`
+        before `bundle exec rubocop -A` and clearing conflicting nix/devbox
+        Ruby environment variables. Previously, rubocop ran before dependencies
+        were installed and relied on a system-level rubocop that could be
+        broken or absent outside Docker.
+      type: fix
+  createdAt: "2026-04-04"
+  irVersion: 61
+
+- version: 1.2.0
+  changelogEntry:
+    - summary: |
+        Add `maxRetries` custom config option to override the default maximum
+        number of retries for failed requests. The default remains 2 when not
+        specified.
+      type: feat
+  createdAt: "2026-04-02"
+  irVersion: 61
+- version: 1.1.13
+  changelogEntry:
+    - summary: |
+        Remove legacy dollar-sign workaround in generated CI workflow now that Eta
+        template engine does not interpret `${}` syntax.
+      type: chore
+  createdAt: "2026-04-02"
+  irVersion: 61
+- version: 1.1.12
+  changelogEntry:
+    - summary: |
+        Migrate template engine from lodash to Eta for consistency with other generators.
+      type: chore
+  createdAt: "2026-04-02"
+  irVersion: 61
 - version: 1.1.11
   changelogEntry:
     - summary: |

@@ -3,6 +3,7 @@ import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/path-utils";
 
 import { Audiences } from "../commons/index.js";
 import {
+    AgentsConfig,
     AiChatConfig,
     AnnouncementConfig,
     Availability,
@@ -38,6 +39,11 @@ export interface ParsedPageActionsConfig {
     };
 }
 
+// TODO(kafkas): Remove this when we upgrade the fdr-sdk to latest
+interface ParsedDocsSettingsConfig extends CjsFdrSdk.docs.v1.commons.DocsSettingsConfig {
+    disableEnvironmentEditing: boolean | undefined;
+}
+
 export interface ParsedDocsConfiguration {
     instances: DocsInstance[];
     title: string | undefined;
@@ -68,8 +74,10 @@ export interface ParsedDocsConfiguration {
     colors: CjsFdrSdk.docs.v1.write.ColorsConfigV3 | undefined;
     typography: TypographyConfig | undefined;
     layout: CjsFdrSdk.docs.v1.commons.DocsLayoutConfig | undefined;
-    settings: CjsFdrSdk.docs.v1.commons.DocsSettingsConfig | undefined;
+    settings: ParsedDocsSettingsConfig | undefined;
     context7File: AbsoluteFilePath | undefined;
+    llmsTxtFile: AbsoluteFilePath | undefined;
+    llmsFullTxtFile: AbsoluteFilePath | undefined;
     languages: Language[] | undefined;
     defaultLanguage: CjsFdrSdk.docs.v1.commons.ProgrammingLanguage | undefined;
     analyticsConfig: CjsFdrSdk.docs.v1.commons.AnalyticsConfig | undefined;
@@ -84,6 +92,8 @@ export interface ParsedDocsConfiguration {
     js: JavascriptConfig | undefined;
 
     aiChatConfig: AiChatConfig | undefined;
+
+    agents: AgentsConfig | undefined;
 
     experimental: ExperimentalConfig | undefined;
 
@@ -119,6 +129,14 @@ export interface ParsedMetadataConfig
     "twitter:image": FilepathOrUrl | undefined;
     "og:dynamic": boolean | undefined;
     "og:background-image": FilepathOrUrl | undefined;
+    "og:dynamic:text-color": string | undefined;
+    "og:dynamic:background-color": string | undefined;
+    "og:dynamic:logo-color": "dark" | "light" | undefined;
+    "og:dynamic:show-logo": boolean | undefined;
+    "og:dynamic:show-section": boolean | undefined;
+    "og:dynamic:show-description": boolean | undefined;
+    "og:dynamic:show-url": boolean | undefined;
+    "og:dynamic:show-gradient": boolean | undefined;
 }
 
 export type ColorConfiguration =

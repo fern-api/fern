@@ -1,7 +1,9 @@
+import { getOriginalName, getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { go } from "@fern-api/go-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
 
+import { isPlainStringType } from "../../authUtils.js";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator.js";
 import { EndpointSignatureInfo } from "../EndpointSignatureInfo.js";
@@ -619,19 +621,48 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         const pathSuffix = this.getPathSuffix({ endpoint });
         const baseUrl = pathSuffix.length === 0 ? "baseURL" : `baseURL + "/${pathSuffix}"`;
         return go.codeblock((writer) => {
-            writer.write("endpointURL := ");
             if (endpoint.allPathParameters.length === 0) {
+                writer.write("endpointURL := ");
                 writer.write(baseUrl);
                 return;
             }
+            // Apply clientDefault fallback for path parameters before URL encoding.
+            // Use local variables to avoid mutating the caller's request struct when
+            // path params come from a wrapped request (e.g., request.Region).
+            const pathParamLocalVars: Record<string, string> = {};
+            for (const pathParameter of endpoint.allPathParameters) {
+                if (pathParameter.clientDefault != null && isPlainStringType(pathParameter.valueType)) {
+                    const ref = signature.pathParameterReferences[getOriginalName(pathParameter.name)];
+                    if (ref != null) {
+                        const localVar = `_${this.context.getFieldName(pathParameter.name)}`;
+                        writer.writeLine(`${localVar} := ${ref}`);
+                        writer.writeLine(`if ${localVar} == "" {`);
+                        writer.indent();
+                        writer.write(`${localVar} = `);
+                        writer.writeNode(this.context.getLiteralValue(pathParameter.clientDefault));
+                        writer.newLine();
+                        writer.dedent();
+                        writer.writeLine("}");
+                        pathParamLocalVars[getOriginalName(pathParameter.name)] = localVar;
+                    }
+                }
+            }
             const pathParameterReferences: go.AstNode[] = [];
             for (const pathParameter of endpoint.allPathParameters) {
-                const pathParameterReference = signature.pathParameterReferences[pathParameter.name.originalName];
+                const originalName = getOriginalName(pathParameter.name);
+                // Use the local variable if we created one for clientDefault
+                const localVar = pathParamLocalVars[originalName];
+                if (localVar != null) {
+                    pathParameterReferences.push(go.codeblock(localVar));
+                    continue;
+                }
+                const pathParameterReference = signature.pathParameterReferences[originalName];
                 if (pathParameterReference == null) {
                     continue;
                 }
                 pathParameterReferences.push(go.codeblock(pathParameterReference));
             }
+            writer.write("endpointURL := ");
             writer.writeNode(this.context.callEncodeUrl([go.codeblock(baseUrl), ...pathParameterReferences]));
         });
     }
@@ -695,6 +726,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     float: () => undefined,
                     date: () => undefined,
                     dateTime: () => undefined,
+                    dateTimeRfc2822: () => undefined,
                     uuid: () => undefined,
                     base64: () => undefined,
                     bigInteger: () => undefined,
@@ -723,7 +755,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             return undefined;
         }
 
-        // extract and populate defaults
+        // extract and populate defaults (from type-level defaults and clientDefault)
         const defaults = [];
         if (this.context.customConfig.useDefaultRequestParameterValues) {
             for (const queryParameter of endpoint.queryParameters) {
@@ -732,9 +764,36 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     continue;
                 }
                 defaults.push({
-                    key: go.TypeInstantiation.string(queryParameter.name.wireValue),
+                    key: go.TypeInstantiation.string(getWireValue(queryParameter.name)),
                     value: defaultValue
                 });
+            }
+        }
+        // Track wire values that already have type-level defaults
+        const defaultedWireValues = new Set<string>();
+        if (this.context.customConfig.useDefaultRequestParameterValues) {
+            for (const queryParameter of endpoint.queryParameters) {
+                if (this.extractDefaultValue(queryParameter.valueType) != null) {
+                    defaultedWireValues.add(getWireValue(queryParameter.name));
+                }
+            }
+        }
+        // Add clientDefault entries for query params that don't already have a type-level default.
+        // Unlike path params and headers (which use the == "" zero-value pattern and require
+        // string types), query params use a defaults map so any literal type works here.
+        for (const queryParameter of endpoint.queryParameters) {
+            if (queryParameter.clientDefault != null) {
+                const wireValue = getWireValue(queryParameter.name);
+                if (!defaultedWireValues.has(wireValue)) {
+                    const literalString =
+                        queryParameter.clientDefault.type === "string"
+                            ? queryParameter.clientDefault.string
+                            : String(queryParameter.clientDefault.boolean);
+                    defaults.push({
+                        key: go.TypeInstantiation.string(wireValue),
+                        value: go.TypeInstantiation.string(literalString)
+                    });
+                }
             }
         }
         const defaults_map = go.TypeInstantiation.map({
@@ -769,7 +828,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 if (literal != null) {
                     writer.writeNode(
                         this.addQueryValue({
-                            wireValue: queryParameter.name.wireValue,
+                            wireValue: getWireValue(queryParameter.name),
                             value: this.context.getLiteralAsString(literal)
                         })
                     );
@@ -823,13 +882,14 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 if (literal != null) {
                     writer.writeNode(
                         this.addHeaderValue({
-                            wireValue: header.name.wireValue,
+                            wireValue: getWireValue(header.name),
                             value: go.codeblock(this.context.getLiteralAsString(literal))
                         })
                     );
                     continue;
                 }
-                const headerField = `${this.getRequestParameterName({ endpoint })}.${this.context.getFieldName(header.name.name)}`;
+                const headerNameVal = header.name;
+                const headerField = `${this.getRequestParameterName({ endpoint })}.${this.context.getFieldName(headerNameVal)}`;
                 const format = this.context.goValueFormatter.convert({
                     reference: header.valueType,
                     value: go.codeblock(headerField)
@@ -839,14 +899,34 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     writer.writeLine(`if ${headerField} != nil {`);
                     writer.indent();
                     writer.writeNode(
-                        this.addHeaderValue({ wireValue: header.name.wireValue, value: format.formatted })
+                        this.addHeaderValue({ wireValue: getWireValue(header.name), value: format.formatted })
                     );
                     writer.newLine();
                     writer.dedent();
                     writer.writeLine("}");
                     continue;
                 }
-                writer.writeNode(this.addHeaderValue({ wireValue: header.name.wireValue, value: format.formatted }));
+                // Apply clientDefault fallback for non-optional string headers.
+                // Use a local variable to avoid mutating the caller's request struct.
+                if (header.clientDefault != null && isPlainStringType(header.valueType)) {
+                    const localVar = `_${this.context.getFieldName(headerNameVal)}`;
+                    writer.writeNewLineIfLastLineNot();
+                    writer.writeLine(`${localVar} := ${headerField}`);
+                    writer.writeLine(`if ${localVar} == "" {`);
+                    writer.indent();
+                    writer.write(`${localVar} = `);
+                    writer.writeNode(this.context.getLiteralValue(header.clientDefault));
+                    writer.newLine();
+                    writer.dedent();
+                    writer.writeLine("}");
+                    writer.writeNode(
+                        this.addHeaderValue({ wireValue: getWireValue(header.name), value: go.codeblock(localVar) })
+                    );
+                } else {
+                    writer.writeNode(
+                        this.addHeaderValue({ wireValue: getWireValue(header.name), value: format.formatted })
+                    );
+                }
             }
             const acceptHeader = this.getAcceptHeaderValue({ endpoint });
             if (acceptHeader != null) {
@@ -1030,7 +1110,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 if (responseProperty == null) {
                     return go.codeblock("response");
                 }
-                return go.codeblock(`response.${this.context.getFieldName(responseProperty.name.name)}`);
+                const rpNameVal = responseProperty.name;
+                return go.codeblock(`response.${this.context.getFieldName(rpNameVal)}`);
             }
             default:
                 assertNever(jsonResponse);

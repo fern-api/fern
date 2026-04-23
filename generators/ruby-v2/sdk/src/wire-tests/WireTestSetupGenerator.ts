@@ -1,6 +1,6 @@
-import { File } from "@fern-api/base-generator";
+import { File, GeneratorError } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { WireMock, WireMockStubMapping } from "@fern-api/mock-utils";
+import { isEqualToMatcher, WireMock, WireMockStubMapping } from "@fern-api/mock-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
@@ -52,12 +52,11 @@ export class WireTestSetupGenerator {
         for (const mapping of stubMapping.mappings) {
             if (mapping.request.queryParameters) {
                 for (const [, value] of Object.entries(mapping.request.queryParameters)) {
-                    const paramValue = value as { equalTo: string };
-                    if (
-                        paramValue.equalTo != null &&
-                        WireTestSetupGenerator.DATETIME_WITH_ZERO_MILLIS_REGEX.test(paramValue.equalTo)
-                    ) {
-                        paramValue.equalTo = paramValue.equalTo.replace(".000", "");
+                    if (!isEqualToMatcher(value)) {
+                        continue;
+                    }
+                    if (WireTestSetupGenerator.DATETIME_WITH_ZERO_MILLIS_REGEX.test(value.equalTo)) {
+                        value.equalTo = value.equalTo.replace(".000", "");
                     }
                 }
             }
@@ -177,7 +176,7 @@ export class WireTestSetupGenerator {
         const byte8 = bytes[8];
 
         if (byte6 === undefined || byte8 === undefined) {
-            throw new Error("Invalid byte array: missing required bytes");
+            throw GeneratorError.internalError("Invalid byte array: missing required bytes");
         }
 
         bytes[6] = (byte6 & 0x0f) | 0x40;
@@ -287,7 +286,13 @@ class WireMockTestCase < Minitest::Test
     request_body = { "method" => method, "urlPath" => url_path }
     request_body["headers"] = { "X-Test-Id" => { "equalTo" => test_id } }
     if query_params
-      request_body["queryParameters"] = query_params.transform_values { |v| { "equalTo" => v } }
+      request_body["queryParameters"] = query_params.transform_values do |v|
+        if v.is_a?(Array)
+          { "hasExactly" => v.map { |item| { "equalTo" => item } } }
+        else
+          { "equalTo" => v }
+        end
+      end
     end
 
     post_request.body = request_body.to_json
@@ -296,6 +301,31 @@ class WireMockTestCase < Minitest::Test
     requests = result["requests"] || []
 
     assert_equal expected, requests.length, "Expected #{expected} requests, found #{requests.length}"
+  end
+
+  # Verifies that the Authorization header on captured requests matches the expected value.
+  #
+  # @param test_id [String] The test ID used to filter requests
+  # @param method [String] The HTTP method (GET, POST, etc.)
+  # @param url_path [String] The URL path to match
+  # @param expected_value [String] The expected Authorization header value
+  def verify_authorization_header(test_id:, method:, url_path:, expected_value:)
+    admin_url = ENV['WIREMOCK_URL'] ? "#{ENV['WIREMOCK_URL']}/__admin" : WIREMOCK_ADMIN_URL
+    uri = URI("#{admin_url}/requests/find")
+    http = Net::HTTP.new(uri.host, uri.port)
+    post_request = Net::HTTP::Post.new(uri.path, { "Content-Type" => "application/json" })
+
+    request_body = { "method" => method, "urlPath" => url_path }
+    request_body["headers"] = { "X-Test-Id" => { "equalTo" => test_id } }
+
+    post_request.body = request_body.to_json
+    response = http.request(post_request)
+    result = JSON.parse(response.body)
+    requests = result["requests"] || []
+
+    refute_empty requests, "No requests found for test_id #{test_id}"
+    actual_header = requests.first.dig("request", "headers", "Authorization")
+    assert_equal expected_value, actual_header, "Expected Authorization header '#{expected_value}', got '#{actual_header}'"
   end
 end
 `;

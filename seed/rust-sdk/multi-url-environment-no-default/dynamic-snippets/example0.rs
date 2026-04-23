@@ -9,7 +9,7 @@ async fn main() {
     };
     let client = MultiUrlEnvironmentNoDefaultClient::new(config).expect("Failed to build client");
     client
-        .ec_2
+        .ec2
         .boot_instance(
             &BootInstanceRequest {
                 size: "size".to_string(),

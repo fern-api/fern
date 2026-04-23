@@ -2,7 +2,8 @@ import { wrapWithHttps } from "@fern-api/docs-resolver";
 import { DocsV1Read, DocsV2Read, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, dirname, doesPathExist } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
+
 import chalk from "chalk";
 import cors from "cors";
 import express from "express";
@@ -77,9 +78,10 @@ export async function runPreviewServer({
         try {
             const url = process.env.DOCS_PREVIEW_BUCKET;
             if (url == null) {
-                throw new Error(
-                    "Failed to connect to the docs preview server. Please contact support@buildwithfern.com"
-                );
+                throw new CliError({
+                    message: "Failed to connect to the docs preview server. Please contact support@buildwithfern.com",
+                    code: CliError.Code.InternalError
+                });
             }
             await downloadBundle({ bucketUrl: url, logger: context.logger, preferCached: true, tryTar: false });
         } catch (err) {
@@ -247,7 +249,7 @@ export async function runPreviewServer({
         const allowedPaths = new Set<string>();
         if (docsDefinition?.filesV2) {
             for (const file of Object.values(docsDefinition.filesV2)) {
-                if (file.type === "url") {
+                if (file != null && file.type === "url") {
                     const urlPath = file.url.replace(/^\/_local/, "");
                     allowedPaths.add(urlPath);
                 }

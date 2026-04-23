@@ -1,8 +1,14 @@
 {
   "cliVersion": "DUMMY",
   "generatorName": "fernapi/fern-swift-sdk",
-  "generatorVersion": "latest",
-  "generatorConfig": {},
+  "generatorVersion": "local",
+  "generatorConfig": {
+    "maxRetries": 5
+  },
   "originGitCommit": "DUMMY",
+  "originGitCommitIsDirty": null,
+  "invokedBy": "ci",
+  "requestedVersion": "0.0.1",
+  "ciProvider": "github",
   "sdkVersion": "0.0.1"
 }

@@ -114,6 +114,7 @@ export function visitTypeDeclaration({
                                 audiences: noop,
                                 encoding: noop,
                                 default: noop,
+                                "client-default": noop,
                                 validation: noop,
                                 access: noop
                             });
@@ -167,6 +168,7 @@ export function visitTypeDeclaration({
                     }
                 },
                 "base-properties": noop,
+                "default-variant": noop,
                 availability: noop,
                 audiences: noop,
                 encoding: noop,

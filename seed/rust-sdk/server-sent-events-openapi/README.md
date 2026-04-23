@@ -11,6 +11,7 @@ The Seed Rust library provides convenient access to the Seed APIs from Rust.
 - [Reference](#reference)
 - [Usage](#usage)
 - [Errors](#errors)
+- [Request Types](#request-types)
 - [Advanced](#advanced)
   - [Retries](#retries)
   - [Timeouts](#timeouts)
@@ -77,6 +78,18 @@ match client.stream_protocol_no_collision(None)?.await {
         println!("Other error: {:?}", e);
     }
 }
+```
+
+## Request Types
+
+The SDK exports all request types as Rust structs. Simply import them from the crate to access them:
+
+```rust
+use seed_api::prelude::{*};
+
+let request = StreamXFernStreamingConditionStreamRequest {
+    ...
+};
 ```
 
 ## Advanced

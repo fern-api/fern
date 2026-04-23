@@ -70,7 +70,7 @@ func (r *RawClient) GetWithBearer(
 	}, nil
 }
 
-func (r *RawClient) GetWithApiKey(
+func (r *RawClient) GetWithAPIKey(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) (*core.Response[[]*fern.User], error) {

@@ -5,6 +5,7 @@ import { createWriteStream } from "fs";
 import { mkdir, readdir } from "fs/promises";
 import { pipeline } from "stream";
 import { promisify } from "util";
+import { GeneratorError } from "./GeneratorError.js";
 
 const LOCAL_FILE_SCHEME = "file:///";
 const PROTOBUF_ZIP_FILENAME = "proto.zip";
@@ -136,7 +137,9 @@ export class SourceFetcher {
         this.context.logger.debug(`Downloading ${downloadURL} to ${destinationPath}`);
         const response = await fetch(downloadURL);
         if (!response.ok) {
-            throw new Error(`Failed to download source. Status: ${response.status}, ${response.statusText}`);
+            throw GeneratorError.networkError(
+                `Failed to download source. Status: ${response.status}, ${response.statusText}`
+            );
         }
         const fileStream = createWriteStream(destinationPath);
 

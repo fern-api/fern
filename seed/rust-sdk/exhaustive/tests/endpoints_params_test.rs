@@ -88,8 +88,8 @@ async fn test_endpoints_params_get_with_query_with_wiremock() {
         "GET",
         "/params",
         Some(HashMap::from([
-            ("query".to_string(), "query".to_string()),
-            ("number".to_string(), "1".to_string()),
+            ("query".to_string(), json!("query")),
+            ("number".to_string(), json!("1")),
         ])),
         1,
     )
@@ -129,8 +129,8 @@ async fn test_endpoints_params_get_with_allow_multiple_query_with_wiremock() {
         "GET",
         "/params",
         Some(HashMap::from([
-            ("query".to_string(), "query".to_string()),
-            ("number".to_string(), "1".to_string()),
+            ("query".to_string(), json!("query")),
+            ("number".to_string(), json!("1")),
         ])),
         1,
     )
@@ -169,7 +169,7 @@ async fn test_endpoints_params_get_with_path_and_query_with_wiremock() {
     wire_test_utils::verify_request_count(
         "GET",
         "/params/path-query/param",
-        Some(HashMap::from([("query".to_string(), "query".to_string())])),
+        Some(HashMap::from([("query".to_string(), json!("query"))])),
         1,
     )
     .await
@@ -207,7 +207,7 @@ async fn test_endpoints_params_get_with_inline_path_and_query_with_wiremock() {
     wire_test_utils::verify_request_count(
         "GET",
         "/params/path-query/param",
-        Some(HashMap::from([("query".to_string(), "query".to_string())])),
+        Some(HashMap::from([("query".to_string(), json!("query"))])),
         1,
     )
     .await
@@ -264,6 +264,33 @@ async fn test_endpoints_params_modify_with_inline_path_with_wiremock() {
     assert!(result.is_ok(), "Client method call should succeed");
 
     wire_test_utils::verify_request_count("PUT", "/params/path/param", None, 1)
+        .await
+        .unwrap();
+}
+
+#[tokio::test]
+#[allow(unused_variables, unreachable_code)]
+async fn test_endpoints_params_get_with_boolean_path_with_wiremock() {
+    wire_test_utils::reset_wiremock_requests().await.unwrap();
+    let wiremock_base_url = wire_test_utils::get_wiremock_base_url();
+
+    let mut config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    config.base_url = wiremock_base_url.to_string();
+    config.environment = None;
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+
+    let result = client
+        .endpoints
+        .params
+        .get_with_boolean_path(true, None)
+        .await;
+
+    assert!(result.is_ok(), "Client method call should succeed");
+
+    wire_test_utils::verify_request_count("GET", "/params/path-bool/true", None, 1)
         .await
         .unwrap();
 }

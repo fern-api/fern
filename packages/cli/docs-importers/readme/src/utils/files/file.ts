@@ -1,5 +1,6 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import { dirname } from "node:path";
+import { CliError } from "@fern-api/task-context";
 import { join } from "path";
 
 export function createFilename(
@@ -73,7 +74,10 @@ export function writePage({
             })
         );
     } catch (error) {
-        throw new Error(`${cleanedWritePath}: failed to download to disk`);
+        throw new CliError({
+            message: `${cleanedWritePath}: failed to download to disk`,
+            code: CliError.Code.NetworkError
+        });
     }
 }
 

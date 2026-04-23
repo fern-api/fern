@@ -1,4 +1,4 @@
-import { File, GeneratorNotificationService } from "@fern-api/base-generator";
+import { File, GeneratorError, GeneratorNotificationService, getWireValue } from "@fern-api/base-generator";
 import { assertNever, entries, extractErrorMessage, noop } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractSwiftGeneratorCli, SourceTemplateFiles, TestTemplateFiles } from "@fern-api/swift-base";
@@ -55,7 +55,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
     }
 
     protected async publishPackage(_context: SdkGeneratorContext): Promise<void> {
-        throw new Error("Method not implemented.");
+        throw GeneratorError.internalError("Method not implemented.");
     }
 
     protected async writeForGithub(context: SdkGeneratorContext): Promise<void> {
@@ -79,7 +79,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
         // and symbol registration between README and Reference generation.
         const dynamicIr = context.ir.dynamic;
         if (!dynamicIr) {
-            throw new Error("Cannot generate dynamic snippets without dynamic IR");
+            throw GeneratorError.internalError("Cannot generate dynamic snippets without dynamic IR");
         }
         const sharedSnippetsGenerator = new DynamicSnippetsGenerator({
             ir: convertIr(dynamicIr),
@@ -117,7 +117,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
             });
             context.project.addRootFiles(new File("README.md", RelativeFilePath.of(""), content));
         } catch (e) {
-            throw new Error(`Failed to generate README.md: ${extractErrorMessage(e)}`);
+            throw GeneratorError.internalError(`Failed to generate README.md: ${extractErrorMessage(e)}`);
         }
     }
 
@@ -130,7 +130,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
             const content = await context.generatorAgent.generateReference(builder);
             context.project.addRootFiles(new File("reference.md", RelativeFilePath.of(""), content));
         } catch (e) {
-            throw new Error(`Failed to generate reference.md: ${extractErrorMessage(e)}`);
+            throw GeneratorError.internalError(`Failed to generate reference.md: ${extractErrorMessage(e)}`);
         }
     }
 
@@ -172,6 +172,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
         this.generateSourceSchemaFiles(context);
         this.generateSourceRootClientFile(context);
         this.generateSourceEnvironmentFile(context);
+        this.generateVersionFile(context);
     }
 
     private async generateSourceAsIsFiles(context: SdkGeneratorContext): Promise<void> {
@@ -244,7 +245,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                 if (endpoint.requestBody?.type === "inlinedRequestBody") {
                     const symbol = context.project.nameRegistry.getRequestTypeSymbolOrThrow(
                         endpoint.id,
-                        endpoint.requestBody.name.pascalCase.unsafeName
+                        context.caseConverter.pascalUnsafe(endpoint.requestBody.name)
                     );
                     const generator = new ObjectGenerator({
                         symbol,
@@ -266,7 +267,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                 } else if (endpoint.requestBody?.type === "fileUpload") {
                     const requestTypeSymbol = context.project.nameRegistry.getRequestTypeSymbolOrThrow(
                         endpoint.id,
-                        endpoint.requestBody.name.pascalCase.unsafeName
+                        context.caseConverter.pascalUnsafe(endpoint.requestBody.name)
                     );
                     const referencerFromRequestType = context.createReferencer(requestTypeSymbol);
 
@@ -277,7 +278,9 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                                     return fileProperty._visit({
                                         file: (property) => {
                                             return swift.property({
-                                                unsafeName: sanitizeSelf(property.key.name.camelCase.unsafeName),
+                                                unsafeName: sanitizeSelf(
+                                                    context.caseConverter.camelUnsafe(property.key)
+                                                ),
                                                 accessLevel: "public",
                                                 declarationType: "let",
                                                 type: referencerFromRequestType.referenceAsIsType("FormFile"),
@@ -288,7 +291,9 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                                         },
                                         fileArray: (property) => {
                                             return swift.property({
-                                                unsafeName: sanitizeSelf(property.key.name.camelCase.unsafeName),
+                                                unsafeName: sanitizeSelf(
+                                                    context.caseConverter.camelUnsafe(property.key)
+                                                ),
                                                 accessLevel: "public",
                                                 declarationType: "let",
                                                 type: swift.TypeReference.array(
@@ -304,7 +309,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                                 },
                                 bodyProperty: (property) => {
                                     return swift.property({
-                                        unsafeName: sanitizeSelf(property.name.name.camelCase.unsafeName),
+                                        unsafeName: sanitizeSelf(context.caseConverter.camelUnsafe(property.name)),
                                         accessLevel: "public",
                                         declarationType: "let",
                                         type: context.getSwiftTypeReferenceFromScope(
@@ -368,12 +373,14 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                                                 arguments_: [
                                                     swift.functionArgument({
                                                         value: swift.Expression.reference(
-                                                            property.key.name.camelCase.unsafeName
+                                                            context.caseConverter.camelUnsafe(property.key)
                                                         )
                                                     }),
                                                     swift.functionArgument({
                                                         label: "fieldName",
-                                                        value: swift.Expression.stringLiteral(property.key.wireValue)
+                                                        value: swift.Expression.stringLiteral(
+                                                            getWireValue(property.key)
+                                                        )
                                                     })
                                                 ]
                                             });
@@ -384,12 +391,14 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                                                 arguments_: [
                                                     swift.functionArgument({
                                                         value: swift.Expression.reference(
-                                                            property.key.name.camelCase.unsafeName
+                                                            context.caseConverter.camelUnsafe(property.key)
                                                         )
                                                     }),
                                                     swift.functionArgument({
                                                         label: "fieldName",
-                                                        value: swift.Expression.stringLiteral(property.key.wireValue)
+                                                        value: swift.Expression.stringLiteral(
+                                                            getWireValue(property.key)
+                                                        )
                                                     })
                                                 ]
                                             });
@@ -403,12 +412,12 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                                         arguments_: [
                                             swift.functionArgument({
                                                 value: swift.Expression.reference(
-                                                    property.name.name.camelCase.unsafeName
+                                                    context.caseConverter.camelUnsafe(property.name)
                                                 )
                                             }),
                                             swift.functionArgument({
                                                 label: "fieldName",
-                                                value: swift.Expression.stringLiteral(property.name.wireValue)
+                                                value: swift.Expression.stringLiteral(getWireValue(property.name))
                                             })
                                         ]
                                     });
@@ -500,7 +509,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                     const symbol = context.project.nameRegistry.getSchemaTypeSymbolOrThrow(typeId);
                     const generator = new StringEnumGenerator({
                         name: symbol.name,
-                        source: { type: "ir", enumTypeDeclaration: etd },
+                        source: { type: "ir", enumTypeDeclaration: etd, caseConverter: context.caseConverter },
                         docsContent: typeDeclaration.docs
                     });
                     const enum_ = generator.generate();
@@ -574,6 +583,18 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
             directory: RelativeFilePath.of(""),
             contents: [rootClientClass]
         });
+    }
+
+    private generateVersionFile(context: SdkGeneratorContext): void {
+        const spmDetails = context.getSPMDetails();
+        const version = spmDetails.minVersion;
+        if (version != null) {
+            context.project.addSourceAsIsFile({
+                nameCandidateWithoutExtension: "Version",
+                directory: RelativeFilePath.of(""),
+                contents: `public let sdkVersion = "${version}"\n`
+            });
+        }
     }
 
     private generateSourceEnvironmentFile(context: SdkGeneratorContext): void {

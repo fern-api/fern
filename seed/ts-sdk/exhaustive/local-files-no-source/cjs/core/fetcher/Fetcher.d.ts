@@ -8,7 +8,13 @@ export declare namespace Fetcher {
         method: string;
         contentType?: string;
         headers?: Record<string, unknown>;
+        /**
+         * @deprecated Prefer `queryString` (produced by `core.url.queryBuilder()`).
+         * Retained for backwards compatibility with custom fetchers and callers that
+         * still construct request args with a query-parameter object.
+         */
         queryParameters?: Record<string, unknown>;
+        queryString?: string;
         body?: unknown;
         timeoutMs?: number;
         maxRetries?: number;
@@ -38,10 +44,12 @@ export declare namespace Fetcher {
     }
     interface TimeoutError {
         reason: "timeout";
+        cause?: unknown;
     }
     interface UnknownError {
         reason: "unknown";
         errorMessage: string;
+        cause?: unknown;
     }
 }
 export declare function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse<R, Fetcher.Error>>;

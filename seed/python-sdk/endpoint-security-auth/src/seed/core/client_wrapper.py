@@ -11,8 +11,8 @@ class BaseClientWrapper:
     def __init__(
         self,
         *,
+        api_key: typing.Optional[str] = None,
         auth_headers: typing.Optional[typing.Callable[[], typing.Dict[str, str]]] = None,
-        api_key: str,
         token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
@@ -21,8 +21,8 @@ class BaseClientWrapper:
         timeout: typing.Optional[float] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
-        self._auth_headers = auth_headers
         self.api_key = api_key
+        self._auth_headers = auth_headers
         self._token = token
         self._username = username
         self._password = password
@@ -47,7 +47,8 @@ class BaseClientWrapper:
         password = self._get_password()
         if username is not None and password is not None:
             headers["Authorization"] = httpx.BasicAuth(username, password)._auth_header
-        headers["X-API-Key"] = self.api_key
+        if self.api_key is not None:
+            headers["X-API-Key"] = self.api_key
         token = self._get_token()
         if token is not None:
             headers["Authorization"] = f"Bearer {token}"
@@ -87,8 +88,8 @@ class SyncClientWrapper(BaseClientWrapper):
     def __init__(
         self,
         *,
+        api_key: typing.Optional[str] = None,
         auth_headers: typing.Optional[typing.Callable[[], typing.Dict[str, str]]] = None,
-        api_key: str,
         token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
@@ -99,8 +100,8 @@ class SyncClientWrapper(BaseClientWrapper):
         httpx_client: httpx.Client,
     ):
         super().__init__(
-            auth_headers=auth_headers,
             api_key=api_key,
+            auth_headers=auth_headers,
             token=token,
             username=username,
             password=password,
@@ -122,8 +123,8 @@ class AsyncClientWrapper(BaseClientWrapper):
     def __init__(
         self,
         *,
+        api_key: typing.Optional[str] = None,
         auth_headers: typing.Optional[typing.Callable[[], typing.Dict[str, str]]] = None,
-        api_key: str,
         token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
@@ -136,8 +137,8 @@ class AsyncClientWrapper(BaseClientWrapper):
         httpx_client: httpx.AsyncClient,
     ):
         super().__init__(
-            auth_headers=auth_headers,
             api_key=api_key,
+            auth_headers=auth_headers,
             token=token,
             username=username,
             password=password,

@@ -1,7 +1,9 @@
 package com.snippets;
 
 import com.seed.exhaustive.SeedExhaustiveClient;
-import com.seed.exhaustive.resources.endpoints.pagination.requests.ListItemsRequest;
+import com.seed.exhaustive.resources.types.object.types.NestedObjectWithRequiredField;
+import com.seed.exhaustive.resources.types.object.types.ObjectWithOptionalField;
+import com.seed.exhaustive.resources.types.object.types.ObjectWithRequiredNestedObject;
 
 public class Example28 {
     public static void main(String[] args) {
@@ -11,7 +13,13 @@ public class Example28 {
                 .build();
 
         client.endpoints()
-                .pagination()
-                .listItems(ListItemsRequest.builder().cursor("cursor").limit(1).build());
+                .object()
+                .getAndReturnWithRequiredNestedObject(ObjectWithRequiredNestedObject.builder()
+                        .requiredString("hello")
+                        .requiredObject(NestedObjectWithRequiredField.builder()
+                                .string("nested")
+                                .nestedObject(ObjectWithOptionalField.builder().build())
+                                .build())
+                        .build());
     }
 }

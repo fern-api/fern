@@ -1,4 +1,4 @@
-irVersion: v65
+irVersion: v66
 displayName: Java SDK
 changelogLocation: ../../generators/java/sdk/versions.yml
 image: fernapi/fern-java-sdk
@@ -164,6 +164,7 @@ fixtures:
       outputFolder: flat-package-layout
     - customConfig:
         omit-fern-headers: true
+        maxRetries: 5
       outputFolder: omit-fern-headers
   java-custom-package-prefix:
     - customConfig:
@@ -184,6 +185,10 @@ fixtures:
     - customConfig:
         enable-wire-tests: true
       outputFolder: default
+    - customConfig:
+        enable-wire-tests: true
+        offset-semantics: "item-index"
+      outputFolder: item-index-semantics
   pagination-custom:
     - customConfig:
         custom-pager-name: "FernCustomPaginator"
@@ -360,9 +365,14 @@ fixtures:
       outputFolder: source-root
       skipScripts: true
 scripts:
-  - image: fernapi/java-seed
-    commands:
-      - source ~/.bash_profile && jenv shell 1.8 && source ~/.bash_profile && ./gradlew compileJava spotlessCheck
+  docker:
+    - image: fernapi/java-seed
+      commands:
+        - source ~/.bash_profile && jenv shell 1.8 && source ~/.bash_profile && ./gradlew compileJava spotlessCheck
+  local:
+    - commands:
+      - ./gradlew compileJava spotlessCheck
+
 allowedFailures:
   - alias-extends
   - enum:forward-compatible-enums

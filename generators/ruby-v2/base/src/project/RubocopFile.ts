@@ -23,8 +23,11 @@ export class RubocopFile {
   Enabled: false`;
         }
 
+        const severity = this.context.customConfig.rubocopSeverity ?? "warning";
+
         return `Naming/VariableNumber:
-  EnforcedStyle: ${style}`;
+  EnforcedStyle: ${style}
+  Severity: ${severity}`;
     }
 
     public async toString(): Promise<string> {

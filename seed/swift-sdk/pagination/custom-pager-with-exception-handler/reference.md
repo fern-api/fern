@@ -1933,3 +1933,83 @@ try await main()
 </dl>
 </details>
 
+<details><summary><code>client.users.<a href="/Sources/Resources/Users/UsersClient.swift">listWithAliasedData</a>(page: Int?, perPage: Int?, startingAfter: String?, requestOptions: RequestOptions?) -> ListUsersAliasedDataPaginationResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```swift
+import Foundation
+import Pagination
+
+private func main() async throws {
+    let client = PaginationClient(token: "<token>")
+
+    _ = try await client.users.listWithAliasedData(
+        page: 1,
+        perPage: 1,
+        startingAfter: "starting_after"
+    )
+}
+
+try await main()
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**page:** `Int?` — Defaults to first page
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**perPage:** `Int?` — Defaults to per page
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**startingAfter:** `String?` 
+
+The cursor used for pagination in order to fetch
+the next page of results.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+

@@ -45,7 +45,7 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
     private readonly generatedSdkClientClass: GeneratedSdkClientClassImpl;
     private readonly retainOriginalCasing: boolean;
     private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
-    private readonly caseConverter: CaseConverter;
+    private readonly case: CaseConverter;
 
     constructor({
         ir,
@@ -65,7 +65,7 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
         this.generatedSdkClientClass = generatedSdkClientClass;
         this.retainOriginalCasing = retainOriginalCasing;
         this.parameterNaming = parameterNaming;
-        this.caseConverter = caseConverter;
+        this.case = caseConverter;
 
         if (this.endpoint.sdkRequest == null) {
             throw new Error("SdkRequest is not defined for bytes endpoint");
@@ -78,7 +78,7 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
                 service,
                 endpoint,
                 sdkRequest: this.endpoint.sdkRequest,
-                caseConverter: this.caseConverter
+                caseConverter: this.case
             });
         }
     }
@@ -239,10 +239,11 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
 
     public getFetcherRequestArgs(
         context: FileContext
-    ): Pick<Fetcher.Args, "headers" | "queryParameters" | "body" | "contentType" | "requestType" | "duplex"> {
+    ): Pick<Fetcher.Args, "headers" | "body" | "contentType" | "requestType" | "duplex" | "queryString"> {
+        const queryParams = this.getQueryParams(context);
         return {
             headers: ts.factory.createIdentifier(HEADERS_VAR_NAME),
-            queryParameters: this.getQueryParams(context)?.getReferenceTo(),
+            queryString: queryParams?.getQueryStringExpression(context),
             contentType: this.requestBody.contentType,
             requestType: "bytes",
             body: ts.factory.createPropertyAccessExpression(

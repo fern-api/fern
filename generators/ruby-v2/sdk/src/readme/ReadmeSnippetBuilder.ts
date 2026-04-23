@@ -1,4 +1,4 @@
-import { AbstractReadmeSnippetBuilder } from "@fern-api/base-generator";
+import { AbstractReadmeSnippetBuilder, CaseConverter, GeneratorError } from "@fern-api/base-generator";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -17,6 +17,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENVIRONMENTS";
 
     private readonly context: SdkGeneratorContext;
+    private readonly case: CaseConverter;
     private readonly endpointsById: Record<FernIr.EndpointId, EndpointWithFilepath> = {};
     private readonly prerenderedSnippetsByEndpointId: Record<FernIr.EndpointId, string> = {};
     private readonly defaultEndpointId: FernIr.EndpointId;
@@ -34,6 +35,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }) {
         super({ endpointSnippets });
         this.context = context;
+        this.case = context.caseConverter;
 
         this.isPaginationEnabled = context.config.generatePaginatedClients ?? false;
         this.endpointsById = this.buildEndpointsById();
@@ -75,7 +77,10 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                 ? {
                       [FernGeneratorCli.StructuredFeatureId.Pagination]: {
                           renderer: this.renderPaginationSnippet.bind(this),
-                          predicate: (endpoint: EndpointWithFilepath) => endpoint.endpoint.pagination != null
+                          predicate: (endpoint: EndpointWithFilepath) => {
+                              const pagination = endpoint.endpoint.pagination;
+                              return pagination != null && pagination.type !== "uri" && pagination.type !== "path";
+                          }
                       }
                   }
                 : undefined)
@@ -117,7 +122,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                 const endpointId = endpoint.endpoint.id;
                 const snippet = this.prerenderedSnippetsByEndpointId[endpoint.endpoint.id];
                 if (snippet == null) {
-                    throw new Error(`Internal error; missing snippet for endpoint ${endpointId}`);
+                    throw GeneratorError.internalError(`Internal error; missing snippet for endpoint ${endpointId}`);
                 }
                 return snippet;
             });
@@ -243,7 +248,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
             ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} = ${this.rootPackageClientName}::${this.rootClientClassName}.new(
                 base_url: ${this.getEnvironmentURLExample()},
-                max_retries: 3  # Configure max retries (default is 2)
+                max_retries: 3  # Configure max retries (default is ${this.context.customConfig.maxRetries ?? 2})
             )
         `);
     }
@@ -345,10 +350,14 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         const snippets: Record<FernIr.EndpointId, string> = {};
         for (const endpointSnippet of Object.values(endpointSnippets)) {
             if (endpointSnippet.id.identifierOverride == null) {
-                throw new Error("Internal error; snippets must define the endpoint id to generate README.md");
+                throw GeneratorError.internalError(
+                    "Internal error; snippets must define the endpoint id to generate README.md"
+                );
             }
             if (endpointSnippet.snippet.type !== "ruby") {
-                throw new Error(`Internal error; expected ruby snippet but got: ${endpointSnippet.snippet.type}`);
+                throw GeneratorError.internalError(
+                    `Internal error; expected ruby snippet but got: ${endpointSnippet.snippet.type}`
+                );
             }
             if (snippets[endpointSnippet.id.identifierOverride] != null) {
                 continue;
@@ -361,7 +370,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private getSnippetForEndpointId(endpointId: FernIr.EndpointId): string {
         const snippet = this.prerenderedSnippetsByEndpointId[endpointId];
         if (snippet == null) {
-            throw new Error(`Internal error; missing snippet for endpoint ${endpointId}`);
+            throw GeneratorError.internalError(`Internal error; missing snippet for endpoint ${endpointId}`);
         }
         return snippet;
     }
@@ -378,7 +387,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private lookupEndpointById(endpointId: FernIr.EndpointId): EndpointWithFilepath {
         const endpoint = this.endpointsById[endpointId];
         if (endpoint == null) {
-            throw new Error(`Internal error; missing endpoint ${endpointId}`);
+            throw GeneratorError.internalError(`Internal error; missing endpoint ${endpointId}`);
         }
         return endpoint;
     }
@@ -394,14 +403,14 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
 
     private getAccessFromRootClient(fernFilepath: FernIr.FernFilepath): string {
-        const clientAccessParts = fernFilepath.allParts.map((part) => part.snakeCase.safeName);
+        const clientAccessParts = fernFilepath.allParts.map((part) => this.case.snakeSafe(part));
         return clientAccessParts.length > 0
             ? `${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME}.${clientAccessParts.join(".")}`
             : ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME;
     }
 
     private getEndpointMethodName(endpoint: FernIr.HttpEndpoint): string {
-        return endpoint.name.snakeCase.safeName;
+        return this.case.snakeSafe(endpoint.name);
     }
 
     private getDefaultEnvironmentId(): FernIr.dynamic.EnvironmentId | undefined {
@@ -433,7 +442,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             return undefined;
         }
 
-        return `${this.rootPackageClientName}::Environment::${defaultEnvironment.name.screamingSnakeCase.safeName}`;
+        return `${this.rootPackageClientName}::Environment::${this.case.screamingSnakeSafe(defaultEnvironment.name)}`;
     }
 
     private getRootPackageClientName(): string {

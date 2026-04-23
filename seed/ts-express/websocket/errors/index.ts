@@ -1,1 +1,0 @@
-export { SeedWebsocketError } from "./SeedWebsocketError";

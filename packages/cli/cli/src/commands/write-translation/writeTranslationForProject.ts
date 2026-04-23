@@ -2,13 +2,13 @@ import { docsYml } from "@fern-api/configuration";
 import { DOCS_CONFIGURATION_FILENAME } from "@fern-api/configuration-loader";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
+import { CliError } from "@fern-api/task-context";
 import chalk from "chalk";
 import cliProgress from "cli-progress";
 import { existsSync } from "fs";
 import { copyFile, mkdir, readFile, writeFile } from "fs/promises";
 import IS_CI from "is-ci";
 import path from "path";
-
 import { CliContext } from "../../cli-context/CliContext.js";
 import { isAssetFile, shouldProcessFile, transformContentForLanguage } from "./content-transformer.js";
 import { createLanguageSpecificDocsConfig } from "./docs-config-utils.js";
@@ -53,7 +53,10 @@ export async function writeTranslationForProject({
 
         const sourceLanguage = languages[0];
         if (!sourceLanguage) {
-            throw new Error("Unexpected error - first element of languages array is invalid");
+            throw new CliError({
+                message: "Unexpected error - first element of languages array is invalid",
+                code: CliError.Code.InternalError
+            });
         }
 
         if (!existsSync(translationsDirectory)) {

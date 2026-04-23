@@ -2,10 +2,10 @@ import { FernToken } from "@fern-api/auth";
 import { AbsoluteFilePath, cwd, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
 import { Project } from "@fern-api/project-loader";
+import { CliError } from "@fern-api/task-context";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import { PNG } from "pngjs";
 import { Browser, launch } from "puppeteer";
-
 import { CliContext } from "../../cli-context/CliContext.js";
 
 interface FileSlugMapping {
@@ -51,7 +51,10 @@ async function getSlugForFiles({
 
     if (!response.ok) {
         const errorText = await response.text();
-        throw new Error(`Failed to get slugs for files: ${response.status} ${response.statusText} - ${errorText}`);
+        throw new CliError({
+            message: `Failed to get slugs for files: ${response.status} ${response.statusText} - ${errorText}`,
+            code: CliError.Code.InternalError
+        });
     }
 
     return (await response.json()) as GetSlugForFileResponse;
@@ -482,12 +485,12 @@ function getProductionUrlInfo(docsConfig: {
     instances: Array<{ url: string; "custom-domain"?: string }> | undefined;
 }): ProductionUrlInfo {
     if (docsConfig.instances == null || docsConfig.instances.length === 0) {
-        throw new Error("No docs instances configured in docs.yml");
+        throw new CliError({ message: "No docs instances configured in docs.yml", code: CliError.Code.InternalError });
     }
 
     const firstInstance = docsConfig.instances[0];
     if (firstInstance == null) {
-        throw new Error("No docs instances configured in docs.yml");
+        throw new CliError({ message: "No docs instances configured in docs.yml", code: CliError.Code.InternalError });
     }
 
     // Prefer custom-domain if available, otherwise use url
@@ -525,7 +528,9 @@ export async function docsDiff({
 }): Promise<DocsDiffOutput> {
     const docsWorkspace = project.docsWorkspaces;
     if (docsWorkspace == null) {
-        cliContext.failAndThrow("No docs workspace found. Make sure you have a docs.yml file.");
+        cliContext.failAndThrow("No docs workspace found. Make sure you have a docs.yml file.", undefined, {
+            code: CliError.Code.ConfigError
+        });
         return { diffs: [] };
     }
 
@@ -534,7 +539,9 @@ export async function docsDiff({
     });
 
     if (token == null) {
-        cliContext.failAndThrow("Failed to authenticate. Please run 'fern login' first.");
+        cliContext.failAndThrow("Failed to authenticate. Please run 'fern login' first.", undefined, {
+            code: CliError.Code.AuthError
+        });
         return { diffs: [] };
     }
 

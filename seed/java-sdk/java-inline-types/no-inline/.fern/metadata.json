@@ -1,11 +1,15 @@
 {
   "cliVersion": "DUMMY",
   "generatorName": "fernapi/fern-java-sdk",
-  "generatorVersion": "latest",
+  "generatorVersion": "local",
   "generatorConfig": {
     "enable-inline-types": false,
     "wrapped-aliases": true
   },
   "originGitCommit": "DUMMY",
+  "originGitCommitIsDirty": null,
+  "invokedBy": "ci",
+  "requestedVersion": "0.0.1",
+  "ciProvider": "github",
   "sdkVersion": "0.0.1"
 }

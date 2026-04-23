@@ -1,0 +1,3 @@
+- summary: |
+    Fix wire test infrastructure to correctly handle array query parameters in WireMock stubs and test verification across all generators with wire test support.
+  type: fix

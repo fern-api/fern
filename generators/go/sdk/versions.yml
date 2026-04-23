@@ -1,4 +1,245 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.37.0
+  changelogEntry:
+    - summary: |
+        Add `clientDefault` support for headers, query parameters, and path
+        parameters. When a parameter has a `clientDefault` value (set via the
+        `x-fern-default` OpenAPI extension), the generated SDK uses that value
+        as a fallback when the caller does not provide one. Parameters with
+        `clientDefault` become optional in the client constructor and endpoint
+        signatures.
+      type: feat
+  createdAt: "2026-04-23"
+  irVersion: 66
+- version: 1.36.0
+  changelogEntry:
+    - summary: |
+        Support omitting username or password from basic auth when configured via
+        `usernameOmit`/`passwordOmit` in the IR. When a field is omitted, it is
+        removed from the SDK's public API (`WithBasicAuth` takes fewer arguments)
+        and an empty string is used internally for the auth header encoding. When
+        both fields are omitted, the `WithBasicAuth` call and Authorization header
+        are skipped entirely.
+      type: feat
+  createdAt: "2026-04-23"
+  irVersion: 66
+- version: 1.35.1
+  changelogEntry:
+    - summary: |
+        Bump @fern-api/generator-cli to 0.9.11. The GitHub pipeline step now creates
+        signed commits via the GitHub REST API (matching fiddle's legacy InMemoryGitRepo
+        push path), restoring verified fern-api[bot] commits on replay-enabled orgs.
+      type: chore
+  createdAt: "2026-04-22"
+  irVersion: 66
+- version: 1.35.0
+  changelogEntry:
+    - summary: |
+        Add `offsetSemantics` config option. When set to `"item-index"`, offset pagination increments by the number of items returned each page instead of by 1 (`"page-index"`, the default).
+      type: feat
+  createdAt: "2026-04-22"
+  irVersion: 66
+- version: 1.34.12
+  changelogEntry:
+    - summary: |
+        Fix wire test verification for endpoints with multi-value array query parameters.
+      type: fix
+  createdAt: "2026-04-22"
+  irVersion: 66
+- version: 1.34.11
+  changelogEntry:
+    - summary: |
+        Add crash reporting via Sentry to the generator runtime, and classify
+        thrown errors using the new shared `GeneratorError` taxonomy so user-facing
+        failures (config, validation, auth, network, environment) are kept distinct
+        from internal Fern bugs — only the latter are forwarded to Sentry. No
+        change to generated output.
+      type: chore
+  createdAt: "2026-04-22"
+  irVersion: 66
+- version: 1.34.10
+  changelogEntry:
+    - summary: |
+        Respect the version that the CLI provides via the IR's publish config when
+        generating for `output.location: local-file-system`. Previously the Go
+        generator only read the SDK version from its output mode, which is empty
+        for local-file-system generation — so `fern generate --version X.Y.Z
+        --local` did not stamp the generated Go SDK with the requested version.
+      type: fix
+  createdAt: "2026-04-21"
+  irVersion: 66
+- version: 1.34.9
+  changelogEntry:
+    - summary: |
+        Fix generated test files importing from the wrong package when identically-named subpackages exist under different parents (e.g., enumerate/ldap vs pentest/ldap).
+      type: fix
+  createdAt: "2026-04-20"
+  irVersion: 66
+- version: 1.34.8
+  changelogEntry:
+    - summary: |
+        Fix incorrect import paths in generated `_test.go` files for types
+        referencing nested cross-package types. Previously, only the leaf
+        package name was used (e.g., `fern/foo`), dropping intermediate path
+        segments. Now the full path is used (e.g., `fern/common/foo`),
+        matching the behavior of non-test generated files.
+      type: fix
+  createdAt: "2026-04-16"
+  irVersion: 66
+- version: 1.34.7
+  changelogEntry:
+    - summary: |
+        Enforce strict config key casing in the Go SDK generator. Config keys in
+        `generators.yml` must now use exact camelCase (e.g., `importPath`, not
+        `importpath`). Previously, miscased keys were silently accepted by the v1
+        generator but ignored by the v2 generator, causing confusing `go mod tidy`
+        failures.
+      type: fix
+  createdAt: "2026-04-16"
+  irVersion: 66
+- version: 1.34.6
+  changelogEntry:
+    - summary: |
+        Bump @fern-api/generator-cli to 0.9.8. Changelog URLs in generated PRs
+        now use the commit SHA instead of the PR branch name, keeping the link
+        valid after the branch is deleted or squash-merged.
+      type: chore
+  createdAt: "2026-04-16"
+  irVersion: 66
+- version: 1.34.5
+  changelogEntry:
+    - summary: |
+        Bump the Go toolchain in the generator Docker image from 1.23.8 to 1.26.2
+        (alpine3.23). This unblocks `go mod tidy` for generated SDKs whose modules
+        (or transitive dependencies) require a newer Go version, which previously
+        failed with `go.mod requires go >= X (running go 1.23.8; GOTOOLCHAIN=local)`.
+      type: fix
+  createdAt: "2026-04-15"
+  irVersion: 66
+- version: 1.34.4
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippets using the generator version instead of the SDK version
+        for resolving Go import paths, which caused incorrect major version suffixes
+        in wire test imports and broke go mod tidy.
+      type: fix
+  createdAt: "2026-04-15"
+  irVersion: 66
+- version: 1.34.3
+  changelogEntry:
+    - summary: |
+        Fix undiscriminated union variant matching in dynamic snippets selecting
+        incorrect variants when errors are added during conversion. The matcher
+        now checks whether errors were added (via `errors.size() > errorsBefore`)
+        alongside the existing `isNop` check, preventing empty objects from being
+        returned for union fields like `options` in generated code snippets.
+      type: fix
+  createdAt: "2026-04-09"
+  irVersion: 66
+
+- version: 1.34.2
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippet NPM package bundle pulling in Node-only `form-data`
+        dependency via a runtime import of `FernGeneratorExec.OutputMode.github()`.
+        The output mode is now constructed as a plain object literal with a
+        type-only import, preventing `Dynamic require of "fs" is not supported`
+        errors in browser/ESM environments.
+      type: fix
+  createdAt: "2026-04-09"
+  irVersion: 66
+
+- version: 1.34.1
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippet import paths receiving a spurious `/v` suffix when
+        the SDK version is empty or invalid (e.g. `""`). The major-version
+        parser now returns `undefined` for empty and bare-`v` version strings
+        instead of producing an erroneous `v` suffix.
+      type: fix
+    - summary: |
+        Fix dynamic snippet import path resolution to use Go publish info from
+        the dynamic IR's generatorConfig directly, rather than depending solely
+        on the externally-constructed FernGeneratorExec config. This ensures
+        the correct repoUrl and version are used for import paths even when the
+        external config conversion layer does not populate them correctly,
+        eliminating the spurious `/v` suffix in generated Go snippet imports.
+      type: fix
+  createdAt: "2026-04-09"
+  irVersion: 66
+
+- version: 1.34.0-rc.0
+  changelogEntry:
+    - summary: |
+        Upgrade to IR v66 which compresses the IR Name type, reducing IR size and increasing performance.
+      type: feat
+  createdAt: "2026-04-01"
+  irVersion: 66
+
+- version: 1.33.4
+  changelogEntry:
+    - summary: |
+        Fix wire test client construction to include auth options (e.g.
+        WithToken) when the endpoint requires authentication, so that
+        requests match WireMock stub header matchers.
+      type: fix
+  createdAt: "2026-04-08"
+  irVersion: 61
+
+- version: 1.33.3
+  changelogEntry:
+    - summary: |
+        Fix nil pointer dereference panic when optional file fields are not
+        provided in multipart form-data requests. The generated code now wraps
+        `WriteFile` calls for optional binary fields in a nil guard, matching
+        the existing behavior for optional non-file body properties. Required
+        file fields remain unconditional.
+      type: fix
+  createdAt: "2026-04-07"
+  irVersion: 61
+
+- version: 1.33.2
+  changelogEntry:
+    - summary: |
+        Fix custom pager interface to use `*int` instead of `*float64` for
+        `GetLimit()` and `GetCount()` return types. These fields represent
+        integer pagination values (page size and total count) and should match
+        the `*int` getters generated on concrete response types when the spec
+        defines them as `type: integer`.
+      type: fix
+  createdAt: "2026-04-06"
+  irVersion: 61
+
+- version: 1.33.1
+  changelogEntry:
+    - summary: |
+        Fix `module.imports` to merge with bundled default dependencies instead
+        of replacing them. Previously, specifying any custom module imports would
+        discard all default dependencies (uuid, testify, yaml). Now user-specified
+        versions correctly override individual bundled defaults while preserving
+        the rest, matching the v2 generator behavior.
+      type: fix
+  createdAt: "2026-04-03"
+  irVersion: 61
+- version: 1.33.0
+  changelogEntry:
+    - summary: |
+        Add `maxRetries` custom config option to override the default maximum
+        number of retries for failed requests. The default remains 1 retry
+        (2 total attempts) when not specified.
+      type: feat
+  createdAt: "2026-04-02"
+  irVersion: 61
+- version: 1.32.2
+  changelogEntry:
+    - summary: |
+        Fix doubled major version suffix in import paths when module.path
+        already contains a /vN suffix and packagePath is configured. The
+        /vN suffix is now applied to the module path before appending the
+        packagePath, preventing paths like github.com/owner/repo/v2/pkg/v2.
+      type: fix
+  createdAt: "2026-04-01"
+  irVersion: 61
 - version: 1.32.1
   changelogEntry:
     - summary: |

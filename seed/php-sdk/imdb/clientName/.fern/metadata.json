@@ -1,10 +1,15 @@
 {
   "cliVersion": "DUMMY",
   "generatorName": "fernapi/fern-php-sdk",
-  "generatorVersion": "latest",
+  "generatorVersion": "local",
   "generatorConfig": {
-    "clientName": "FernClient"
+    "clientName": "FernClient",
+    "maxRetries": 5
   },
   "originGitCommit": "DUMMY",
+  "originGitCommitIsDirty": null,
+  "invokedBy": "ci",
+  "requestedVersion": "0.0.1",
+  "ciProvider": "github",
   "sdkVersion": "0.0.1"
 }

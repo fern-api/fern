@@ -1,10 +1,14 @@
 {
     "cliVersion": "DUMMY",
     "generatorName": "fernapi/fern-typescript-sdk",
-    "generatorVersion": "latest",
+    "generatorVersion": "local",
     "generatorConfig": {
         "retainOriginalCasing": true
     },
     "originGitCommit": "DUMMY",
+    "originGitCommitIsDirty": null,
+    "invokedBy": "manual",
+    "requestedVersion": "0.0.1",
+    "ciProvider": null,
     "sdkVersion": "0.0.1"
 }

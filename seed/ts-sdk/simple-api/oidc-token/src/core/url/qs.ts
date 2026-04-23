@@ -1,5 +1,7 @@
+type ArrayFormat = "indices" | "repeat" | "comma";
+
 interface QueryStringOptions {
-    arrayFormat?: "indices" | "repeat";
+    arrayFormat?: ArrayFormat;
     encode?: boolean;
 }
 
@@ -33,18 +35,29 @@ function stringifyObject(obj: Record<string, unknown>, prefix = "", options: Req
             if (value.length === 0) {
                 continue;
             }
-            for (let i = 0; i < value.length; i++) {
-                const item = value[i];
-                if (item === undefined) {
-                    continue;
+            const effectiveFormat = options.arrayFormat;
+            if (effectiveFormat === "comma") {
+                const encodedKey = options.encode ? encodeURIComponent(fullKey) : fullKey;
+                const encodedValues = value
+                    .filter((item) => item !== undefined && item !== null)
+                    .map((item) => encodeValue(item, options.encode));
+                if (encodedValues.length > 0) {
+                    parts.push(`${encodedKey}=${encodedValues.join(",")}`);
                 }
-                if (typeof item === "object" && !Array.isArray(item) && item !== null) {
-                    const arrayKey = options.arrayFormat === "indices" ? `${fullKey}[${i}]` : fullKey;
-                    parts.push(...stringifyObject(item as Record<string, unknown>, arrayKey, options));
-                } else {
-                    const arrayKey = options.arrayFormat === "indices" ? `${fullKey}[${i}]` : fullKey;
-                    const encodedKey = options.encode ? encodeURIComponent(arrayKey) : arrayKey;
-                    parts.push(`${encodedKey}=${encodeValue(item, options.encode)}`);
+            } else {
+                for (let i = 0; i < value.length; i++) {
+                    const item = value[i];
+                    if (item === undefined) {
+                        continue;
+                    }
+                    if (typeof item === "object" && !Array.isArray(item) && item !== null) {
+                        const arrayKey = effectiveFormat === "indices" ? `${fullKey}[${i}]` : fullKey;
+                        parts.push(...stringifyObject(item as Record<string, unknown>, arrayKey, options));
+                    } else {
+                        const arrayKey = effectiveFormat === "indices" ? `${fullKey}[${i}]` : fullKey;
+                        const encodedKey = options.encode ? encodeURIComponent(arrayKey) : arrayKey;
+                        parts.push(`${encodedKey}=${encodeValue(item, options.encode)}`);
+                    }
                 }
             }
         } else if (typeof value === "object" && value !== null) {

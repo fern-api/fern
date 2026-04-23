@@ -170,6 +170,7 @@ types:
       - types.TypeReferenceDeclarationWithName
     properties:
       allow-multiple: optional<boolean>
+      explode: optional<boolean>
 
   HttpResponseSchema:
     discriminated: false

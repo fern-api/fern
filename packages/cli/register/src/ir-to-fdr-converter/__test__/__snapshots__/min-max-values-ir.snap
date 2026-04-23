@@ -63,7 +63,7 @@
       "type": {
         "_visit": [Function],
         "default": undefined,
-        "displayName": undefined,
+        "displayName": "Error",
         "fernFilepath": {
           "allParts": [],
           "file": undefined,
@@ -183,7 +183,7 @@
             "requestBodyType": {
               "_visit": [Function],
               "default": undefined,
-              "displayName": undefined,
+              "displayName": "CreateProductRequest",
               "fernFilepath": {
                 "allParts": [],
                 "file": undefined,
@@ -216,7 +216,7 @@
                 "responseBodyType": {
                   "_visit": [Function],
                   "default": undefined,
-                  "displayName": undefined,
+                  "displayName": "Product",
                   "fernFilepath": {
                     "allParts": [],
                     "file": undefined,
@@ -332,7 +332,7 @@
                 "requestBodyType": {
                   "_visit": [Function],
                   "default": undefined,
-                  "displayName": undefined,
+                  "displayName": "CreateProductRequest",
                   "fernFilepath": {
                     "allParts": [],
                     "file": undefined,
@@ -369,7 +369,7 @@
                     "responseBodyType": {
                       "_visit": [Function],
                       "default": undefined,
-                      "displayName": undefined,
+                      "displayName": "Product",
                       "fernFilepath": {
                         "allParts": [],
                         "file": undefined,
@@ -529,7 +529,7 @@
                 "responseBodyType": {
                   "_visit": [Function],
                   "default": undefined,
-                  "displayName": undefined,
+                  "displayName": "Product",
                   "fernFilepath": {
                     "allParts": [],
                     "file": undefined,
@@ -649,7 +649,7 @@
                     "responseBodyType": {
                       "_visit": [Function],
                       "default": undefined,
-                      "displayName": undefined,
+                      "displayName": "Product",
                       "fernFilepath": {
                         "allParts": [],
                         "file": undefined,

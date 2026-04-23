@@ -3,6 +3,7 @@ import type { FernToken } from "@fern-api/auth";
 import { schemas } from "@fern-api/config";
 import type { Audiences } from "@fern-api/configuration";
 import { fernConfigJson, generatorsYml, SNIPPET_JSON_FILENAME } from "@fern-api/configuration";
+import { removeDefaultDockerOrgIfPresent } from "@fern-api/configuration-loader";
 import type { ContainerRunner } from "@fern-api/core-utils";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import type { AbsoluteFilePath } from "@fern-api/fs-utils";
@@ -75,6 +76,9 @@ export namespace LegacyLocalGenerationRunner {
 
         /** Whether to ignore .fernignore and overwrite all files */
         skipFernignore?: boolean;
+
+        /** Require all referenced environment variables to be defined */
+        requireEnvVars?: boolean;
     }
 
     export interface Result {
@@ -182,7 +186,9 @@ export class LegacyLocalGenerationRunner {
             absolutePathToPreview: undefined,
             inspect: false,
             ai: undefined,
-            skipFernignore: args.skipFernignore
+            skipFernignore: args.skipFernignore,
+            requireEnvVars: args.requireEnvVars,
+            disableTelemetry: !this.context.telemetry.isTelemetryEnabled()
         });
 
         if (taskContext.getResult() === TaskResult.Failure) {
@@ -216,11 +222,15 @@ export class LegacyLocalGenerationRunner {
         generatorGroup: generatorsYml.GeneratorGroup;
         generatorInvocation: generatorsYml.GeneratorInvocation;
     }): Promise<LegacyLocalGenerationRunner.Result> {
-        const containerImage = `${args.target.image}:${args.target.version}`;
+        const imageRef = args.target.registry
+            ? `${args.target.registry}/${removeDefaultDockerOrgIfPresent(args.target.image)}`
+            : args.target.image;
+        const containerImage = `${imageRef}:${args.target.version}`;
         const executionEnvironment = new ContainerExecutionEnvironment({
             containerImage,
             keepContainer: args.keepContainer ?? false,
-            runner: args.containerEngine
+            runner: args.containerEngine,
+            disableTelemetry: !this.context.telemetry.isTelemetryEnabled()
         });
 
         const runner = new GenerationRunner(executionEnvironment);

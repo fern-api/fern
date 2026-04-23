@@ -54,7 +54,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
     private readonly generatedSdkClientClass: GeneratedSdkClientClassImpl;
     private readonly retainOriginalCasing: boolean;
     private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
-    private readonly caseConverter: CaseConverter;
+    private readonly case: CaseConverter;
 
     constructor({
         ir,
@@ -76,7 +76,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         this.generatedSdkClientClass = generatedSdkClientClass;
         this.retainOriginalCasing = retainOriginalCasing;
         this.parameterNaming = parameterNaming;
-        this.caseConverter = caseConverter;
+        this.case = caseConverter;
         this.requestParameter =
             sdkRequest != null
                 ? FernIr.SdkRequestShape._visit<RequestParameter>(sdkRequest.shape, {
@@ -120,7 +120,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
                     pathParameter,
                     retainOriginalCasing: this.retainOriginalCasing,
                     parameterNaming: this.parameterNaming,
-                    caseConverter: this.caseConverter
+                    caseConverter: this.case
                 }),
                 type: getTextOfTsNode(context.type.getReferenceToType(pathParameter.valueType).typeNode),
                 docs: pathParameter.docs
@@ -203,10 +203,11 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
 
     public getFetcherRequestArgs(
         context: FileContext
-    ): Pick<Fetcher.Args, "headers" | "queryParameters" | "body" | "contentType" | "requestType"> {
+    ): Pick<Fetcher.Args, "headers" | "body" | "contentType" | "requestType" | "queryString"> {
+        const queryParams = this.getQueryParams(context);
         return {
             headers: ts.factory.createIdentifier(HEADERS_VAR_NAME),
-            queryParameters: this.getQueryParams(context).getReferenceTo(),
+            queryString: queryParams.getQueryStringExpression(context),
             body: this.getSerializedRequestBodyWithNullCheck(context),
             contentType: this.requestBody?.contentType ?? this.getFallbackContentType(),
             requestType: this.getRequestType()

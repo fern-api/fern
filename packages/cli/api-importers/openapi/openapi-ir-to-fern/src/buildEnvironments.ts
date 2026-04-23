@@ -144,6 +144,33 @@ function extractUrlsFromEnvironmentSchema(
     }, {});
 }
 
+/**
+ * Merge WebSocket URLs onto an environment's URL map without letting a WebSocket
+ * URL that shares an `x-fern-server-name` with an existing HTTP URL silently
+ * overwrite it. On collision, the WebSocket URL is keyed with its protocol
+ * appended (e.g. `Agent_wss`) so both URLs remain addressable.
+ */
+function mergeWebsocketUrlsWithoutOverwriting(
+    urls: Record<string, string>,
+    websocketUrls: Record<string, string>,
+    context: OpenApiIrConverterContext
+): void {
+    for (const [wsName, wsUrl] of Object.entries(websocketUrls)) {
+        if (wsUrl == null) {
+            continue;
+        }
+        if (urls[wsName] != null && urls[wsName] !== wsUrl) {
+            const wsProtocol = getProtocol(wsUrl);
+            const dedupedName = wsProtocol != null ? `${wsName}_${wsProtocol}` : `${wsName}_ws`;
+            urls[dedupedName] = wsUrl;
+            context.setUrlId(wsUrl, dedupedName);
+        } else {
+            urls[wsName] = wsUrl;
+            context.setUrlId(wsUrl, wsName);
+        }
+    }
+}
+
 export function buildEnvironments(context: OpenApiIrConverterContext): void {
     if (context.environmentOverrides != null) {
         for (const [environment, environmentDeclaration] of Object.entries(
@@ -721,7 +748,81 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                 }
             }
 
-            if (apiToUrls.size > 0) {
+            // Check if endpoint-level servers reference top-level server names,
+            // indicating multiple base URLs within a single environment rather than
+            // separate environments (e.g., api.box.com + upload.box.com + dl.boxcloud.com)
+            const endpointServerNamesSet = new Set(apiToUrls.keys());
+            const topLevelServerNamesSet = new Set(Object.keys(topLevelServersWithName));
+            const endpointServersReferenceTopLevel =
+                endpointServerNamesSet.size > 0 &&
+                [...endpointServerNamesSet].every((name) => topLevelServerNamesSet.has(name));
+
+            if (
+                context.options.multiServerStrategy === "urls-per-environment" &&
+                apiToUrls.size > 0 &&
+                endpointServersReferenceTopLevel
+            ) {
+                // Top-level servers define different base URLs for a single API.
+                // Create one multi-URL environment with all servers as named URLs.
+                const entries = Object.entries(topLevelServersWithName);
+                const firstEntry = entries[0];
+                if (firstEntry) {
+                    const [envName, firstSchema] = firstEntry;
+                    const baseUrl =
+                        typeof firstSchema === "string"
+                            ? firstSchema
+                            : isRawMultipleBaseUrlsEnvironment(firstSchema)
+                              ? Object.values(firstSchema.urls)[0]
+                              : (firstSchema["default-url"] ?? firstSchema.url);
+
+                    const urls: Record<string, string> = {};
+                    if (baseUrl != null) {
+                        urls[DEFAULT_URL_NAME] = baseUrl;
+                        context.setUrlId(baseUrl, DEFAULT_URL_NAME);
+                    }
+
+                    // Add all other top-level servers as named URLs
+                    for (let i = 1; i < entries.length; i++) {
+                        const entry = entries[i];
+                        if (entry == null) {
+                            continue;
+                        }
+                        const [name, schema] = entry;
+                        const url =
+                            typeof schema === "string"
+                                ? schema
+                                : isRawMultipleBaseUrlsEnvironment(schema)
+                                  ? Object.values(schema.urls)[0]
+                                  : (schema["default-url"] ?? schema.url);
+                        if (url != null) {
+                            urls[name] = url;
+                            context.setUrlId(url, name);
+                        }
+                    }
+
+                    if (hasWebsocketServersWithName) {
+                        // Merge WebSocket servers, but do not let a WebSocket URL with
+                        // the same x-fern-server-name silently overwrite an HTTP URL we
+                        // already placed on this environment. When names collide, fall
+                        // back to a protocol-suffixed key (e.g. `Agent_wss`) so both
+                        // URLs remain addressable.
+                        mergeWebsocketUrlsWithoutOverwriting(
+                            urls,
+                            extractUrlsFromEnvironmentSchema(websocketServersWithName),
+                            context
+                        );
+                    }
+
+                    context.builder.addEnvironment({
+                        name: envName,
+                        schema: { urls }
+                    });
+                    if (context.options.inferDefaultEnvironment !== false) {
+                        context.builder.setDefaultEnvironment(envName);
+                    }
+                    context.builder.setDefaultUrl(DEFAULT_URL_NAME);
+                }
+            } else if (apiToUrls.size > 0) {
                 let firstEnvironment = true;
 
                 for (const [envName, envSchema] of Object.entries(topLevelServersWithName)) {
@@ -752,7 +853,12 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                         }
                     }
 
-                    // Include websocket servers when we have multi-API grouping
+                    // Include websocket servers when we have multi-API grouping.
+                    // Matches historical behavior: when a WebSocket server shares an
+                    // `x-fern-server-name` with an HTTP server, the WebSocket URL
+                    // silently overwrites the HTTP URL under that name. The
+                    // protocol-suffixed disambiguation lives only in the opt-in
+                    // consolidated branch (`multi-server-strategy: urls-per-environment`).
                     if (hasWebsocketServersWithName) {
                         Object.assign(urls, extractUrlsFromEnvironmentSchema(websocketServersWithName));
                     }

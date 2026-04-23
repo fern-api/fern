@@ -1,4 +1,4 @@
-import { AbstractReadmeSnippetBuilder } from "@fern-api/base-generator";
+import { AbstractReadmeSnippetBuilder, GeneratorError } from "@fern-api/base-generator";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -119,7 +119,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                 const endpointId = endpoint.endpoint.id;
                 const snippet = this.prerenderedSnippetsByEndpointId[endpoint.endpoint.id];
                 if (snippet == null) {
-                    throw new Error(`Internal error; missing snippet for endpoint ${endpointId}`);
+                    throw GeneratorError.internalError(`Internal error; missing snippet for endpoint ${endpointId}`);
                 }
                 return snippet;
             });
@@ -346,10 +346,14 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         const snippets: Record<FernIr.EndpointId, string> = {};
         for (const endpointSnippet of Object.values(endpointSnippets)) {
             if (endpointSnippet.id.identifierOverride == null) {
-                throw new Error("Internal error; snippets must define the endpoint id to generate README.md");
+                throw GeneratorError.internalError(
+                    "Internal error; snippets must define the endpoint id to generate README.md"
+                );
             }
             if (endpointSnippet.snippet.type !== "go") {
-                throw new Error(`Internal error; expected go snippet but got: ${endpointSnippet.snippet.type}`);
+                throw GeneratorError.internalError(
+                    `Internal error; expected go snippet but got: ${endpointSnippet.snippet.type}`
+                );
             }
             if (snippets[endpointSnippet.id.identifierOverride] != null) {
                 continue;
@@ -362,7 +366,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private getSnippetForEndpointId(endpointId: FernIr.EndpointId): string {
         const snippet = this.prerenderedSnippetsByEndpointId[endpointId];
         if (snippet == null) {
-            throw new Error(`Internal error; missing snippet for endpoint ${endpointId}`);
+            throw GeneratorError.internalError(`Internal error; missing snippet for endpoint ${endpointId}`);
         }
         return snippet;
     }
@@ -379,7 +383,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private lookupEndpointById(endpointId: FernIr.EndpointId): EndpointWithFilepath {
         const endpoint = this.endpointsById[endpointId];
         if (endpoint == null) {
-            throw new Error(`Internal error; missing endpoint ${endpointId}`);
+            throw GeneratorError.internalError(`Internal error; missing endpoint ${endpointId}`);
         }
         return endpoint;
     }
@@ -395,14 +399,14 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
 
     private getAccessFromRootClient(fernFilepath: FernIr.FernFilepath): string {
-        const clientAccessParts = fernFilepath.allParts.map((part) => part.pascalCase.unsafeName);
+        const clientAccessParts = fernFilepath.allParts.map((part) => this.context.caseConverter.pascalUnsafe(part));
         return clientAccessParts.length > 0
             ? `${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME}.${clientAccessParts.join(".")}`
             : ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME;
     }
 
     private getEndpointMethodName(endpoint: FernIr.HttpEndpoint): string {
-        return endpoint.name.pascalCase.unsafeName;
+        return this.context.caseConverter.pascalUnsafe(endpoint.name);
     }
 
     private getDefaultEnvironmentId(): FernIr.dynamic.EnvironmentId | undefined {
@@ -434,7 +438,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             return undefined;
         }
 
-        return `${this.rootPackageName}.Environments.${defaultEnvironment.name.pascalCase.unsafeName}`;
+        return `${this.rootPackageName}.Environments.${this.context.caseConverter.pascalUnsafe(defaultEnvironment.name)}`;
     }
 
     private getRootPackageClientName(): string {

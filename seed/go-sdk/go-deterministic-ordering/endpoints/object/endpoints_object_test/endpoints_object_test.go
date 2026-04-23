@@ -23,7 +23,7 @@ func VerifyRequestCount(
 	testId string,
 	method string,
 	urlPath string,
-	queryParams map[string]string,
+	queryParams map[string]any,
 	expected int,
 ) {
 	wiremockURL := os.Getenv("WIREMOCK_URL")
@@ -48,9 +48,23 @@ func VerifyRequestCount(
 			}
 			reqBody.WriteString(`"`)
 			reqBody.WriteString(key)
-			reqBody.WriteString(`":{"equalTo":"`)
-			reqBody.WriteString(value)
-			reqBody.WriteString(`"}`)
+			switch v := value.(type) {
+			case string:
+				reqBody.WriteString(`":{"equalTo":"`)
+				reqBody.WriteString(v)
+				reqBody.WriteString(`"}`)
+			case []string:
+				reqBody.WriteString(`":{"hasExactly":[`)
+				for i, item := range v {
+					if i > 0 {
+						reqBody.WriteString(",")
+					}
+					reqBody.WriteString(`{"equalTo":"`)
+					reqBody.WriteString(item)
+					reqBody.WriteString(`"}`)
+				}
+				reqBody.WriteString(`]}`)
+			}
 			first = false
 		}
 		reqBody.WriteString("}")
@@ -74,6 +88,7 @@ func TestEndpointsObjectGetAndReturnWithOptionalFieldWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := &types.ObjectWithOptionalField{
 		FieldString: fern.String(
@@ -101,7 +116,7 @@ func TestEndpointsObjectGetAndReturnWithOptionalFieldWithWireMock(
 				"2023-01-15",
 			),
 		),
-		Uuid: fern.UUID(
+		UUID: fern.UUID(
 			uuid.MustParse(
 				"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
 			),
@@ -144,6 +159,7 @@ func TestEndpointsObjectGetAndReturnWithRequiredFieldWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := &types.ObjectWithRequiredField{
 		FieldString: "string",
@@ -169,6 +185,7 @@ func TestEndpointsObjectGetAndReturnWithMapOfMapWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := &types.ObjectWithMapOfMap{
 		Map: map[string]map[string]string{
@@ -198,6 +215,7 @@ func TestEndpointsObjectGetAndReturnNestedWithOptionalFieldWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := &types.NestedObjectWithOptionalField{
 		FieldString: fern.String(
@@ -229,7 +247,7 @@ func TestEndpointsObjectGetAndReturnNestedWithOptionalFieldWithWireMock(
 					"2023-01-15",
 				),
 			),
-			Uuid: fern.UUID(
+			UUID: fern.UUID(
 				uuid.MustParse(
 					"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
 				),
@@ -273,6 +291,7 @@ func TestEndpointsObjectGetAndReturnNestedWithRequiredFieldWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := &types.NestedObjectWithRequiredField{
 		FieldString: "string",
@@ -302,7 +321,7 @@ func TestEndpointsObjectGetAndReturnNestedWithRequiredFieldWithWireMock(
 					"2023-01-15",
 				),
 			),
-			Uuid: fern.UUID(
+			UUID: fern.UUID(
 				uuid.MustParse(
 					"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
 				),
@@ -347,6 +366,7 @@ func TestEndpointsObjectGetAndReturnNestedWithRequiredFieldAsListWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := []*types.NestedObjectWithRequiredField{
 		&types.NestedObjectWithRequiredField{
@@ -377,7 +397,7 @@ func TestEndpointsObjectGetAndReturnNestedWithRequiredFieldAsListWithWireMock(
 						"2023-01-15",
 					),
 				),
-				Uuid: fern.UUID(
+				UUID: fern.UUID(
 					uuid.MustParse(
 						"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
 					),
@@ -428,7 +448,7 @@ func TestEndpointsObjectGetAndReturnNestedWithRequiredFieldAsListWithWireMock(
 						"2023-01-15",
 					),
 				),
-				Uuid: fern.UUID(
+				UUID: fern.UUID(
 					uuid.MustParse(
 						"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
 					),
@@ -473,6 +493,7 @@ func TestEndpointsObjectGetAndReturnWithUnknownFieldWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := &types.ObjectWithUnknownField{
 		Unknown: map[string]any{
@@ -500,6 +521,7 @@ func TestEndpointsObjectGetAndReturnWithDatetimeLikeStringWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := &types.ObjectWithDatetimeLikeString{
 		DatetimeLikeString: "2023-08-31T14:15:22Z",

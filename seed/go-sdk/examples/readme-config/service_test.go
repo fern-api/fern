@@ -10,11 +10,11 @@ import (
 )
 
 func TestSettersGetMetadataRequest(t *testing.T) {
-	t.Run("SetXApiVersion", func(t *testing.T) {
+	t.Run("SetXAPIVersion", func(t *testing.T) {
 		obj := &GetMetadataRequest{}
-		var fernTestValueXApiVersion string
-		obj.SetXApiVersion(fernTestValueXApiVersion)
-		assert.Equal(t, fernTestValueXApiVersion, obj.XApiVersion)
+		var fernTestValueXAPIVersion string
+		obj.SetXAPIVersion(fernTestValueXAPIVersion)
+		assert.Equal(t, fernTestValueXAPIVersion, obj.XAPIVersion)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -37,14 +37,14 @@ func TestSettersGetMetadataRequest(t *testing.T) {
 }
 
 func TestSettersMarkExplicitGetMetadataRequest(t *testing.T) {
-	t.Run("SetXApiVersion_MarksExplicit", func(t *testing.T) {
+	t.Run("SetXAPIVersion_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &GetMetadataRequest{}
-		var fernTestValueXApiVersion string
+		var fernTestValueXAPIVersion string
 
 		// Act
-		obj.SetXApiVersion(fernTestValueXApiVersion)
+		obj.SetXAPIVersion(fernTestValueXAPIVersion)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)

@@ -11,6 +11,7 @@
  * currentPagePath) requires that pages are rendered one at a time.
  */
 
+import { CliError } from "@fern-api/task-context";
 import type { CompoundMeta } from "../cpp/src/context.js";
 import {
     clearEntityRegistry,
@@ -244,7 +245,10 @@ function categoryFolderForCompound(collected: CollectedCompound): string {
             return "variables";
         default: {
             const _exhaustive: never = collected.compound;
-            throw new Error(`Unknown compound kind: ${JSON.stringify(_exhaustive)}`);
+            throw new CliError({
+                message: `Unknown compound kind: ${JSON.stringify(_exhaustive)}`,
+                code: CliError.Code.InternalError
+            });
         }
     }
 }

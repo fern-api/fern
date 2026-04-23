@@ -1,3 +1,4 @@
+import { getWireValue } from "@fern-api/base-generator";
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast, Writer } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
@@ -24,7 +25,7 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelGenerato
 
     private getCustomMethodName(enumDeclaration: EnumTypeDeclaration): string {
         const d = "FromCustom";
-        return enumDeclaration.values.some((v) => v.name.name.pascalCase.safeName === d) ? "FromCustom_" : d;
+        return enumDeclaration.values.some((v) => this.case.pascalSafe(v.name) === d) ? "FromCustom_" : d;
     }
 
     protected doGenerate(): CSharpFile {
@@ -58,7 +59,6 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelGenerato
             access: ast.Access.Public,
             type: ast.Class.ClassType.Class,
             static_: true,
-            namespace: stringEnum.reference.namespace,
             enclosingType: stringEnum.reference,
             summary: "Constant strings for enum values",
             annotations: [this.System.Serializable]
@@ -72,7 +72,7 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelGenerato
                 access: ast.Access.Public,
                 summary: member.docs,
                 const_: true,
-                initializer: this.csharp.codeblock(this.csharp.string_({ string: member.name.wireValue }))
+                initializer: this.csharp.codeblock(this.csharp.string_({ string: getWireValue(member.name) }))
             });
             stringEnum.addField({
                 origin: member,
@@ -230,7 +230,6 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelGenerato
             origin: serializerOrigin,
             access: ast.Access.Internal,
             type: ast.Class.ClassType.Class,
-            namespace: stringEnum.reference.namespace,
             enclosingType: stringEnum.reference,
             parentClassReference: this.csharp.classReference({
                 name: `JsonConverter<${this.classReference.name}>`,

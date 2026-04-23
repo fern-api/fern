@@ -110,6 +110,14 @@ service:
             body:
               string: "uploaded"
 
+    getWithBooleanPath:
+      docs: GET with boolean path param
+      path: /path-bool/{param}
+      path-parameters:
+        param: boolean
+      method: GET
+      response: string
+
     getWithPathAndErrors:
       docs: GET with path param that can throw errors
       path: /path/{param}

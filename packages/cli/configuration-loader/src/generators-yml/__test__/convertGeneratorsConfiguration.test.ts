@@ -1146,4 +1146,303 @@ describe("convertGeneratorsConfiguration", () => {
             expect(converted.groups[0]?.generators[0]?.apiOverride).toBeUndefined();
         });
     });
+
+    it("custom image with registry sets containerImage", async () => {
+        const context = createMockTaskContext();
+        const converted = await convertGeneratorsConfiguration({
+            absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+            rawGeneratorsConfiguration: {
+                groups: {
+                    group1: {
+                        generators: [
+                            {
+                                image: {
+                                    name: "fern-typescript-sdk",
+                                    registry: "ghcr.io/myorg"
+                                },
+                                version: "1.0.0",
+                                output: {
+                                    location: "local-file-system",
+                                    path: "/path/to/output"
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            context
+        });
+
+        const generator = converted.groups[0]?.generators[0];
+        expect(generator?.name).toBe("fernapi/fern-typescript-sdk");
+        expect(generator?.containerImage).toBe("ghcr.io/myorg/fern-typescript-sdk");
+        expect(generator?.version).toBe("1.0.0");
+    });
+
+    it("default generator with name field has undefined containerImage", async () => {
+        const context = createMockTaskContext();
+        const converted = await convertGeneratorsConfiguration({
+            absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+            rawGeneratorsConfiguration: {
+                groups: {
+                    group1: {
+                        generators: [
+                            {
+                                name: "fernapi/fern-typescript-sdk",
+                                version: "0.30.0",
+                                output: {
+                                    location: "local-file-system",
+                                    path: "/path/to/output"
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            context
+        });
+
+        const generator = converted.groups[0]?.generators[0];
+        expect(generator?.containerImage).toBeUndefined();
+        expect(generator?.name).toBe("fernapi/fern-typescript-sdk");
+    });
+
+    it("custom image generators are identifiable for remote generation guard", async () => {
+        const context = createMockTaskContext();
+        const converted = await convertGeneratorsConfiguration({
+            absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+            rawGeneratorsConfiguration: {
+                groups: {
+                    group1: {
+                        generators: [
+                            {
+                                image: {
+                                    name: "fern-typescript-sdk",
+                                    registry: "ecr.aws/myorg"
+                                },
+                                version: "2.0.0",
+                                output: {
+                                    location: "local-file-system",
+                                    path: "/out"
+                                }
+                            },
+                            {
+                                name: "fernapi/fern-python-sdk",
+                                version: "0.10.0",
+                                output: {
+                                    location: "local-file-system",
+                                    path: "/out2"
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            context
+        });
+
+        const generators = converted.groups[0]?.generators ?? [];
+        const customImageGenerators = generators.filter((g) => g.containerImage != null);
+        expect(customImageGenerators).toHaveLength(1);
+        expect(customImageGenerators[0]?.name).toBe("fernapi/fern-typescript-sdk");
+    });
+
+    it("containerImage combined with version yields correct Docker image reference", async () => {
+        const context = createMockTaskContext();
+        const converted = await convertGeneratorsConfiguration({
+            absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+            rawGeneratorsConfiguration: {
+                groups: {
+                    group1: {
+                        generators: [
+                            {
+                                image: {
+                                    name: "fern-typescript-sdk",
+                                    registry: "localhost:5000"
+                                },
+                                version: "1.2.3",
+                                output: {
+                                    location: "local-file-system",
+                                    path: "/out"
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            context
+        });
+
+        const generator = converted.groups[0]?.generators[0];
+        const expectedDockerImage = `${generator?.containerImage}:${generator?.version}`;
+        expect(expectedDockerImage).toBe("localhost:5000/fern-typescript-sdk:1.2.3");
+    });
+
+    describe("automation", () => {
+        it("defaults all automation features to true when not specified", async () => {
+            const context = createMockTaskContext();
+            const converted = await convertGeneratorsConfiguration({
+                absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+                rawGeneratorsConfiguration: {
+                    groups: {
+                        sdk: {
+                            generators: [
+                                {
+                                    name: "fernapi/fern-typescript-sdk",
+                                    version: "1.0.0"
+                                }
+                            ]
+                        }
+                    }
+                },
+                context
+            });
+
+            expect(converted.groups[0]?.generators[0]?.automation).toEqual({
+                generate: true,
+                upgrade: true,
+                preview: true,
+                verify: true
+            });
+        });
+
+        it("applies root-level automation overrides", async () => {
+            const context = createMockTaskContext();
+            const converted = await convertGeneratorsConfiguration({
+                absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+                rawGeneratorsConfiguration: {
+                    automation: {
+                        generate: true,
+                        upgrade: false,
+                        preview: false
+                    },
+                    groups: {
+                        sdk: {
+                            generators: [
+                                {
+                                    name: "fernapi/fern-typescript-sdk",
+                                    version: "1.0.0"
+                                }
+                            ]
+                        }
+                    }
+                },
+                context
+            });
+
+            expect(converted.groups[0]?.generators[0]?.automation).toEqual({
+                generate: true,
+                upgrade: false,
+                preview: false,
+                verify: true
+            });
+        });
+
+        it("group-level automation overrides root-level", async () => {
+            const context = createMockTaskContext();
+            const converted = await convertGeneratorsConfiguration({
+                absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+                rawGeneratorsConfiguration: {
+                    automation: {
+                        preview: false,
+                        verify: false
+                    },
+                    groups: {
+                        sdk: {
+                            automation: {
+                                preview: true
+                            },
+                            generators: [
+                                {
+                                    name: "fernapi/fern-typescript-sdk",
+                                    version: "1.0.0"
+                                }
+                            ]
+                        }
+                    }
+                },
+                context
+            });
+
+            expect(converted.groups[0]?.generators[0]?.automation).toEqual({
+                generate: true,
+                upgrade: true,
+                preview: true,
+                verify: false
+            });
+        });
+
+        it("generator-level automation overrides group and root", async () => {
+            const context = createMockTaskContext();
+            const converted = await convertGeneratorsConfiguration({
+                absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+                rawGeneratorsConfiguration: {
+                    automation: {
+                        generate: false,
+                        upgrade: false,
+                        preview: false,
+                        verify: false
+                    },
+                    groups: {
+                        sdk: {
+                            automation: {
+                                preview: true
+                            },
+                            generators: [
+                                {
+                                    name: "fernapi/fern-typescript-sdk",
+                                    version: "1.0.0",
+                                    automation: {
+                                        generate: true,
+                                        verify: true
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                context
+            });
+
+            expect(converted.groups[0]?.generators[0]?.automation).toEqual({
+                generate: true,
+                upgrade: false,
+                preview: true,
+                verify: true
+            });
+        });
+
+        it("different generators in the same group can have different automation configs", async () => {
+            const context = createMockTaskContext();
+            const converted = await convertGeneratorsConfiguration({
+                absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+                rawGeneratorsConfiguration: {
+                    automation: {
+                        upgrade: false
+                    },
+                    groups: {
+                        sdk: {
+                            generators: [
+                                {
+                                    name: "fernapi/fern-typescript-sdk",
+                                    version: "1.0.0",
+                                    automation: {
+                                        upgrade: true
+                                    }
+                                },
+                                {
+                                    name: "fernapi/fern-python-sdk",
+                                    version: "1.0.0"
+                                }
+                            ]
+                        }
+                    }
+                },
+                context
+            });
+
+            expect(converted.groups[0]?.generators[0]?.automation.upgrade).toBe(true);
+            expect(converted.groups[0]?.generators[1]?.automation.upgrade).toBe(false);
+        });
+    });
 });

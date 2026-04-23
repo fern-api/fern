@@ -4,10 +4,10 @@ pub use crate::prelude::*;
 pub struct SendEvent2 {
     #[serde(rename = "sendText2")]
     #[serde(default)]
-    pub send_text_2: String,
+    pub send_text2: String,
     #[serde(rename = "sendParam2")]
     #[serde(default)]
-    pub send_param_2: bool,
+    pub send_param2: bool,
 }
 
 impl SendEvent2 {
@@ -19,33 +19,33 @@ impl SendEvent2 {
 #[derive(Clone, PartialEq, Default, Debug)]
 #[non_exhaustive]
 pub struct SendEvent2Builder {
-    send_text_2: Option<String>,
-    send_param_2: Option<bool>,
+    send_text2: Option<String>,
+    send_param2: Option<bool>,
 }
 
 impl SendEvent2Builder {
-    pub fn send_text_2(mut self, value: impl Into<String>) -> Self {
-        self.send_text_2 = Some(value.into());
+    pub fn send_text2(mut self, value: impl Into<String>) -> Self {
+        self.send_text2 = Some(value.into());
         self
     }
 
-    pub fn send_param_2(mut self, value: bool) -> Self {
-        self.send_param_2 = Some(value);
+    pub fn send_param2(mut self, value: bool) -> Self {
+        self.send_param2 = Some(value);
         self
     }
 
     /// Consumes the builder and constructs a [`SendEvent2`].
     /// This method will fail if any of the following fields are not set:
-    /// - [`send_text_2`](SendEvent2Builder::send_text_2)
-    /// - [`send_param_2`](SendEvent2Builder::send_param_2)
+    /// - [`send_text2`](SendEvent2Builder::send_text2)
+    /// - [`send_param2`](SendEvent2Builder::send_param2)
     pub fn build(self) -> Result<SendEvent2, BuildError> {
         Ok(SendEvent2 {
-            send_text_2: self
-                .send_text_2
-                .ok_or_else(|| BuildError::missing_field("send_text_2"))?,
-            send_param_2: self
-                .send_param_2
-                .ok_or_else(|| BuildError::missing_field("send_param_2"))?,
+            send_text2: self
+                .send_text2
+                .ok_or_else(|| BuildError::missing_field("send_text2"))?,
+            send_param2: self
+                .send_param2
+                .ok_or_else(|| BuildError::missing_field("send_param2"))?,
         })
     }
 }

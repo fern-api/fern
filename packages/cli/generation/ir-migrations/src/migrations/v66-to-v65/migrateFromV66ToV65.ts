@@ -19,28 +19,28 @@ export const V66_TO_V65_MIGRATION: IrMigration<
         [GeneratorName.TYPESCRIPT]: "3.61.0-rc.0",
         [GeneratorName.TYPESCRIPT_SDK]: "3.61.0-rc.0",
         [GeneratorName.TYPESCRIPT_EXPRESS]: "0.20.0-rc.0",
-        [GeneratorName.JAVA]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.JAVA_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.JAVA_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.JAVA]: "4.2.0-rc.0",
+        [GeneratorName.JAVA_MODEL]: "1.9.0-rc.0",
+        [GeneratorName.JAVA_SDK]: "4.2.0-rc.0",
         [GeneratorName.JAVA_SPRING]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.OPENAPI]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.OPENAPI]: "0.4.0-rc.0",
         [GeneratorName.PYTHON_FASTAPI]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.PYTHON_PYDANTIC]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.PYTHON_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.STOPLIGHT]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.POSTMAN]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.GO_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.GO_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.RUBY_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.CSHARP_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.CSHARP_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.GO_MODEL]: "0.24.0-rc.0",
+        [GeneratorName.GO_SDK]: "1.34.0-rc.0",
+        [GeneratorName.RUBY_SDK]: "1.3.0-rc.0",
+        [GeneratorName.CSHARP_MODEL]: "0.9.0-rc.0",
+        [GeneratorName.CSHARP_SDK]: "2.57.0-rc.0",
         [GeneratorName.SWIFT_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.SWIFT_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.PHP_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.PHP_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.RUST_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.RUST_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR
+        [GeneratorName.SWIFT_SDK]: "0.32.0-rc.0",
+        [GeneratorName.PHP_MODEL]: "0.1.0-rc.0",
+        [GeneratorName.PHP_SDK]: "2.3.2-rc.0",
+        [GeneratorName.RUST_MODEL]: "0.5.0-rc.0",
+        [GeneratorName.RUST_SDK]: "0.32.0-rc.0"
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V65.IntermediateRepresentation.jsonOrThrow(ir, {
@@ -2125,11 +2125,69 @@ function inflateIr(
         serviceTypeReferenceInfo: ir.serviceTypeReferenceInfo,
         readmeConfig: ir.readmeConfig,
         sourceConfig: ir.sourceConfig,
-        publishConfig: ir.publishConfig,
+        publishConfig: ir.publishConfig != null ? convertPublishConfig(ir.publishConfig) : undefined,
         dynamic: ir.dynamic != null ? inflateDynamicIr(ir.dynamic) : undefined,
         selfHosted: ir.selfHosted,
         audiences: ir.audiences,
-        generationMetadata: ir.generationMetadata,
+        // V65 only knows about cliVersion/generatorName/generatorVersion/generatorConfig/originGitCommit.
+        // Strip the V66-only fields (originGitCommitIsDirty, invokedBy, requestedVersion, ciProvider)
+        // to preserve the V65 contract for older generators.
+        generationMetadata:
+            ir.generationMetadata != null
+                ? {
+                      cliVersion: ir.generationMetadata.cliVersion,
+                      generatorName: ir.generationMetadata.generatorName,
+                      generatorVersion: ir.generationMetadata.generatorVersion,
+                      generatorConfig: ir.generationMetadata.generatorConfig,
+                      originGitCommit: ir.generationMetadata.originGitCommit
+                  }
+                : undefined,
         apiPlayground: ir.apiPlayground
     };
+}
+
+function convertPublishConfig(
+    publishConfig: IrVersions.V66.PublishingConfig
+): IrVersions.V65.PublishingConfig | undefined {
+    return IrVersions.V66.PublishingConfig._visit<IrVersions.V65.PublishingConfig | undefined>(publishConfig, {
+        github: (github) => {
+            const convertedTarget = convertPublishTarget(github.target);
+            return convertedTarget != null
+                ? IrVersions.V65.PublishingConfig.github({
+                      ...github,
+                      target: convertedTarget
+                  })
+                : undefined;
+        },
+        direct: (direct) => {
+            const convertedTarget = convertPublishTarget(direct.target);
+            return convertedTarget != null
+                ? IrVersions.V65.PublishingConfig.direct({
+                      target: convertedTarget
+                  })
+                : undefined;
+        },
+        filesystem: (filesystem) => {
+            const convertedTarget =
+                filesystem.publishTarget != null ? convertPublishTarget(filesystem.publishTarget) : undefined;
+            return IrVersions.V65.PublishingConfig.filesystem({
+                generateFullProject: filesystem.generateFullProject,
+                publishTarget: convertedTarget
+            });
+        },
+        _other: () => undefined
+    });
+}
+
+function convertPublishTarget(target: IrVersions.V66.PublishTarget): IrVersions.V65.PublishTarget | undefined {
+    return IrVersions.V66.PublishTarget._visit<IrVersions.V65.PublishTarget | undefined>(target, {
+        postman: IrVersions.V65.PublishTarget.postman,
+        npm: IrVersions.V65.PublishTarget.npm,
+        maven: IrVersions.V65.PublishTarget.maven,
+        pypi: IrVersions.V65.PublishTarget.pypi,
+        crates: IrVersions.V65.PublishTarget.crates,
+        // go publish target is not supported in v65, return undefined
+        go: () => undefined,
+        _other: () => undefined
+    });
 }

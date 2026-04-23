@@ -38,6 +38,11 @@ trustPolicy: no-downgrade
 # attacks target the install window immediately after compromise.
 trustPolicyIgnoreAfter: 1440
 
+# Exclude @fern-api/replay from trust checks — it's first-party but published
+# without npm provenance attestation.
+trustPolicyExclude:
+  - "@fern-api/replay"
+
 # Block transitive dependencies from using exotic sources (git repos, tarball URLs).
 # Only direct dependencies may use non-registry sources.
 blockExoticSubdeps: true
@@ -52,15 +57,14 @@ catalog:
   "@boundaryml/baml": ^0.219.0
   "@bufbuild/protobuf": ^2.2.5
   "@bufbuild/protoplugin": 2.2.5
-  "@fern-api/docs-parsers": 0.0.65
   "@fern-api/fai-sdk": 0.0.6-2ee1b7e28
   "@fern-api/fdr-sdk": 1.1.13-c1ad12a2b8
-  "@fern-api/generator-cli": 0.8.0
+  "@fern-api/generator-cli": 0.9.11
   "@fern-api/ui-core-utils": 0.129.4-b6c699ad2
-  "@fern-api/venus-api-sdk": 0.17.3-3-gf696595
+  "@fern-api/venus-api-sdk": 0.22.34
   "@fern-fern/docs-config": 0.0.80
   "@fern-fern/fdr-test-sdk": ^0.0.5297
-  "@fern-fern/fiddle-sdk": 0.0.775
+  "@fern-fern/fiddle-sdk": 0.0.80
   "@fern-fern/generator-exec-sdk": ^0.0.1167
   "@fern-fern/generators-sdk": 0.114.0-5745f9e74
   "@fern-fern/ir-v53-sdk": 1.0.1
@@ -82,9 +86,7 @@ catalog:
   "@open-rpc/meta-schema": ^1.14.9
   "@redocly/openapi-core": ^1.4.1
   "@rolldown/binding-darwin-arm64": 1.0.0-rc.5
-  "@types/ajv": ^1.0.0
-  "@types/axios": ^0.14.0
-  "@types/boxen": ^3.0.1
+  "@sentry/cli": ^2.42.2
   "@types/cli-progress": ^3.11.6
   "@types/cors": ^2.8.13
   "@types/decompress": ^4.2.7
@@ -94,9 +96,7 @@ catalog:
   "@types/esutils": ^2.0.0
   "@types/express": ^4.17.21
   "@types/fast-levenshtein": ^0.0.4
-  "@types/find-up": ^4.0.0
   "@types/fs-extra": ^11.0.1
-  "@types/get-port": ^4.2.0
   "@types/hast": ^3.0.4
   "@types/inquirer": ^9.0.7
   "@types/is-ci": ^3.0.4
@@ -104,25 +104,21 @@ catalog:
   "@types/js-yaml": ^4.0.8
   "@types/json-schema": ^7.0.15
   "@types/jsonwebtoken": ^9.0.6
-  "@types/latest-version": ^4.0.1
   "@types/lodash": ^4.17.24
   "@types/lodash-es": ^4.17.12
   "@types/mdast": ^4.0.4
   "@types/mime-types": ^2.1.4
-  "@types/minimatch": ^6.0.0
-  "@types/node": 18.15.3
+  "@types/node": 22.19.17
   "@types/node-fetch": 2.6.13
   "@types/number-to-words": 1.2.3
   "@types/object-hash": ^3.0.6
   "@types/pngjs": ^6.0.5
   "@types/prettier2": npm:@types/prettier@^2.7.3
-  "@types/pretty-ms": ^5.0.1
   "@types/qs": 6.15.0
   "@types/semver": ^7.5.8
   "@types/stream-json": ^1.7.7
   "@types/swagger2openapi": ^7.0.4
   "@types/tar": ^6.1.11
-  "@types/terminal-link": ^1.2.0
   "@types/tinycolor2": ^1.4.6
   "@types/title": ^3.4.3
   "@types/ua-parser-js": ^0.7.39
@@ -137,7 +133,7 @@ catalog:
   "@wasm-fmt/ruff_fmt": ^0.6.1
   ajv-formats: ^3.0.1
   ansi-escapes: ^5.0.0
-  axios: ^1.13.6
+  axios: ^1.15.0
   boxen: ^7.1.1
   chalk: ^5.3.0
   chardet: ^2.0.0
@@ -182,8 +178,8 @@ catalog:
   jwks-rsa: ^3.1.0
   knip: ^5.84.1
   latest-version: ^9.0.0
-  lodash: ^4.17.23
-  lodash-es: ^4.17.21
+  lodash: ^4.18.1
+  lodash-es: ^4.18.1
   mdast-util-from-markdown: ^2.0.3
   mdast-util-gfm: ^3.0.0
   mdast-util-math: ^3.0.0
@@ -246,8 +242,8 @@ catalog:
   url-join: ^4.0.1
   uuid: ^9.0.1
   validate-npm-package-name: ^5.0.1
-  "@vitest/coverage-v8": 4.1.0
-  vitest: 4.1.0
+  "@vitest/coverage-v8": 4.1.4
+  vitest: 4.1.4
   watcher: ^2.3.1
   whatwg-mimetype: ^4.0.0
   ws: ^8.20.0

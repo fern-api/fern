@@ -1,4 +1,4 @@
-irVersion: v65
+irVersion: v66
 displayName: Rust SDK
 image: fernapi/fern-rust-sdk
 changelogLocation: ../../generators/rust/sdk/versions.yml
@@ -20,6 +20,11 @@ publish:
     file: ./generators/rust/sdk/Dockerfile
     image: fernapi/fern-rust-sdk
     context: .
+  sentry:
+    name: fern-rust-sdk
+    project: rust-sdk
+    sourceMaps:
+      - dir: generators/rust/sdk/dist
 
 test:
   docker:
@@ -53,6 +58,7 @@ fixtures:
   imdb:
     - customConfig:
         clientName: ImdbClient
+        maxRetries: 5
       outputFolder: imdb
     - customConfig:
         crateName: custom_imdb_sdk

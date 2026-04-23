@@ -1,0 +1,36 @@
+openapi: 3.1.0
+info:
+  title: api
+  version: 0.0.0
+paths: {}
+components:
+  schemas:
+    BaseType:
+      title: BaseType
+      type: object
+      properties:
+        child_ref:
+          anyOf:
+            - $ref: '#/components/schemas/ChildType'
+            - type: 'null'
+    ChildType:
+      title: ChildType
+      type: object
+      properties:
+        child_name:
+          type: string
+      required:
+        - child_name
+      allOf:
+        - $ref: '#/components/schemas/BaseType'
+    DerivedType:
+      title: DerivedType
+      type: object
+      properties:
+        derived_name:
+          type: string
+      required:
+        - derived_name
+      allOf:
+        - $ref: '#/components/schemas/BaseType'
+  securitySchemes: {}

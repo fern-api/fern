@@ -1,3 +1,4 @@
+import { GeneratorError } from "@fern-api/base-generator";
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast, is } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
@@ -215,7 +216,7 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
             this.bufferInMinutesField == null ||
             this.expiryProperty == null
         ) {
-            throw new Error("Caching fields should be defined when expiryProperty is not null");
+            throw GeneratorError.internalError("Caching fields should be defined when expiryProperty is not null");
         }
 
         const cachedHeadersField = this.cachedHeadersField;
@@ -330,17 +331,17 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
 
         if (responseProperty.propertyPath != null && responseProperty.propertyPath.length > 0) {
             for (const pathElement of responseProperty.propertyPath) {
-                accessor += `.${pathElement.name.pascalCase.safeName}`;
+                accessor += `.${this.case.pascalSafe(pathElement.name)}`;
             }
         }
 
-        accessor += `.${responseProperty.property.name.name.pascalCase.safeName}`;
+        accessor += `.${this.case.pascalSafe(responseProperty.property.name)}`;
 
         return accessor;
     }
 
     private getRequestType(): ast.ClassReference {
-        const requestWrapper = this.requestWrapperName();
+        const requestWrapper = this.getRequestBody();
         if (requestWrapper) {
             return this.context.getRequestWrapperReference(this.tokenEndpointReference.serviceId, requestWrapper);
         }
@@ -350,14 +351,14 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
             if (is.ClassReference(typeRef)) {
                 return typeRef;
             }
-            throw new Error(
+            throw GeneratorError.internalError(
                 `Failed to get request class reference for inferred auth token endpoint. ` +
                     `Expected ClassReference but got ${typeRef.constructor.name}. ` +
                     `Service ID: ${this.tokenEndpointReference.serviceId}, ` +
                     `Endpoint ID: ${this.tokenEndpointReference.endpointId}`
             );
         }
-        throw new Error(
+        throw GeneratorError.internalError(
             `Failed to get request type reference for inferred auth token endpoint. ` +
                 `Service ID: ${this.tokenEndpointReference.serviceId}, ` +
                 `Endpoint ID: ${this.tokenEndpointReference.endpointId}. ` +
@@ -365,19 +366,19 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
         );
     }
 
-    private requestWrapperName() {
+    private getRequestBody() {
         return (
             this.tokenEndpoint.sdkRequest?.shape._visit({
                 _other: () => undefined,
                 justRequestBody: () => undefined,
-                wrapper: (value) => value.wrapperName
+                wrapper: (value) => value
             }) ??
             this.tokenEndpoint.requestBody?._visit({
                 _other: () => undefined,
                 reference: () => undefined,
                 fileUpload: () => undefined,
                 bytes: () => undefined,
-                inlinedRequestBody: (value) => value.name
+                inlinedRequestBody: (value) => value
             })
         );
     }

@@ -137,7 +137,7 @@ describe("frontmatter availability override", () => {
             throw new Error("Failed to resolve docs root");
         }
 
-        const pageNodes = findPageNodesInTree(resolvedDocs.config.root);
+        const pageNodes = findPageNodesInTree(resolvedDocs.config.root as FernNavigation.V1.NavigationNode);
 
         const pageWithBeta = pageNodes.find((node) => node.pageId.includes("page-with-beta.mdx"));
         expect(pageWithBeta).toBeDefined();
@@ -189,7 +189,7 @@ describe("frontmatter availability override", () => {
             throw new Error("Failed to resolve docs root");
         }
 
-        const sectionNodes = findSectionNodesInTree(resolvedDocs.config.root);
+        const sectionNodes = findSectionNodesInTree(resolvedDocs.config.root as FernNavigation.V1.NavigationNode);
 
         const sectionWithOverview = sectionNodes.find((node) => node.title === "Section With Overview");
         expect(sectionWithOverview).toBeDefined();

@@ -1,9 +1,14 @@
 import {
     FernGeneratorExec,
+    GeneratorError,
     GeneratorNotificationService,
     NopGeneratorNotificationService,
     parseGeneratorConfig,
-    parseIR
+    parseIR,
+    resolveErrorCode,
+    SentryClient,
+    shouldReportToSentry,
+    shouldTrackLocalVariablesInSentry
 } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
@@ -48,18 +53,25 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
     public async runCli(options?: AbstractGeneratorCli.Options): Promise<void> {
         const pathToConfig = process.argv[process.argv.length - 1];
         if (pathToConfig == null) {
-            throw new Error("No argument for config filepath.");
+            throw GeneratorError.environmentError("No argument for config filepath.");
         }
         await this.run(pathToConfig, options);
     }
 
     public async run(pathToConfig: string, options?: AbstractGeneratorCli.Options): Promise<void> {
-        const config = await parseGeneratorConfig(pathToConfig);
-        const generatorNotificationService = options?.disableNotifications
-            ? new NopGeneratorNotificationService()
-            : new GeneratorNotificationService(config.environment);
+        let sentryClient: SentryClient | undefined;
 
+        const config = await parseGeneratorConfig(pathToConfig);
+        let generatorNotificationService: GeneratorNotificationService | NopGeneratorNotificationService =
+            options?.disableNotifications
+                ? new NopGeneratorNotificationService()
+                : new GeneratorNotificationService(config.environment);
         try {
+            sentryClient = new SentryClient({
+                workspaceName: config.workspaceName,
+                organization: config.organization,
+                shouldTrackLocalVariables: shouldTrackLocalVariablesInSentry(config)
+            });
             const logger = createLogger((level, ...message) => {
                 CONSOLE_LOGGER.log(level, ...message);
 
@@ -78,20 +90,15 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 parse: serialization.IntermediateRepresentation.parse
             });
 
-            let npmPackage: NpmPackage | undefined;
-            if (ir.selfHosted) {
-                // Try to construct package from publish config
-                npmPackage = constructNpmPackageFromArgs(
-                    npmPackageInfoFromPublishConfig(config, ir.publishConfig, this.isPackagePrivate(customConfig))
-                );
-                // Fall back to generator config if publish config doesn't have the necessary info
-                if (npmPackage == null) {
-                    npmPackage = constructNpmPackage({
-                        generatorConfig: config,
-                        isPackagePrivate: this.isPackagePrivate(customConfig)
-                    });
-                }
-            } else {
+            // First try to construct the package from the IR's publishConfig. This is how
+            // self-hosted setups thread package metadata through, and it also carries the
+            // version + package name for local-file-system output (where the generator
+            // exec output mode is `downloadFiles` and does not itself carry a version).
+            let npmPackage: NpmPackage | undefined = constructNpmPackageFromArgs(
+                npmPackageInfoFromPublishConfig(config, ir.publishConfig, this.isPackagePrivate(customConfig))
+            );
+            // Fall back to deriving the package from the generator exec config (github/publish modes).
+            if (npmPackage == null) {
                 npmPackage = constructNpmPackage({
                     generatorConfig: config,
                     isPackagePrivate: this.isPackagePrivate(customConfig)
@@ -105,12 +112,13 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 })
             );
 
-            const version = config.output?.mode._visit({
-                downloadFiles: () => undefined,
-                github: (github) => github.version,
-                publish: (publish) => publish.version,
-                _other: () => undefined
-            });
+            const version =
+                config.output?.mode._visit({
+                    downloadFiles: () => undefined,
+                    github: (github) => github.version,
+                    publish: (publish) => publish.version,
+                    _other: () => undefined
+                }) ?? npmPackage?.version;
 
             const generatorContext = new GeneratorContextImpl(logger, version);
             const codeGenStartTime = Date.now();
@@ -123,7 +131,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
             });
             logger.debug(`[TIMING] code generation took ${Date.now() - codeGenStartTime}ms`);
             if (!generatorContext.didSucceed()) {
-                throw new Error("Failed to generate TypeScript project.");
+                throw GeneratorError.internalError("Failed to generate TypeScript project.");
             }
 
             const destinationPath = join(
@@ -258,7 +266,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                     });
                 },
                 _other: ({ type }) => {
-                    throw new Error(`${type} mode is not implemented`);
+                    throw GeneratorError.internalError(`${type} mode is not implemented`);
                 }
             });
 
@@ -272,6 +280,11 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
             // biome-ignore lint/suspicious/noConsole: allow console
             console.log("Sent success event to coordinator");
         } catch (e) {
+            const errorCode = resolveErrorCode(e);
+            if (shouldReportToSentry(e)) {
+                await sentryClient?.captureException(e, { errorCode });
+            }
+
             // This call tears down generator service
             // TODO: if using in conjunction with MCP server generator, MCP server generator to tear down the service?
             // SEE: go-v2
@@ -285,6 +298,8 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
             // biome-ignore lint/suspicious/noConsole: allow console
             console.log("Sent error event to coordinator");
             throw e;
+        } finally {
+            await sentryClient?.flush();
         }
     }
 

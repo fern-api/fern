@@ -45,6 +45,7 @@ from fern_python.generators.sdk.environment_generators.multiple_base_urls_enviro
 )
 from fern_python.generators.sdk.names import get_variable_member_name
 from fern_python.snippet import SnippetWriter
+from fern_python.utils.name_resolver import get_name_from_wire_value, get_original_name, get_wire_value, resolve_name
 
 import fern.ir.resources as ir_types
 
@@ -430,7 +431,7 @@ class EndpointFunctionGenerator:
                 client_default_initializer = self._get_client_default_initializer(query_parameter.client_default)
                 parameters.append(
                     AST.NamedFunctionParameter(
-                        name=get_parameter_name(query_parameter.name.name),
+                        name=get_parameter_name(get_name_from_wire_value(query_parameter.name)),
                         docs=query_parameter.docs,
                         type_hint=self._get_typehint_for_query_param(query_parameter, query_parameter_type_hint),
                         initializer=(
@@ -454,7 +455,7 @@ class EndpointFunctionGenerator:
                     header_type_hint = AST.TypeHint.optional(header_type_hint)
                 parameters.append(
                     AST.NamedFunctionParameter(
-                        name=get_parameter_name(header.name.name),
+                        name=get_parameter_name(get_name_from_wire_value(header.name)),
                         docs=header.docs,
                         type_hint=header_type_hint,
                         initializer=self._get_header_initializer(
@@ -476,7 +477,7 @@ class EndpointFunctionGenerator:
                 if not self._is_header_literal(header):
                     parameters.append(
                         AST.NamedFunctionParameter(
-                            name=get_parameter_name(header.name.name),
+                            name=get_parameter_name(get_name_from_wire_value(header.name)),
                             docs=header.docs,
                             type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
                                 header.value_type,
@@ -874,7 +875,7 @@ class EndpointFunctionGenerator:
             # HACK: IR should provide stable ids for example
             example_id = "default"
             if example.name is not None:
-                example_id = example.name.original_name
+                example_id = get_original_name(example.name)
             snippets.append(
                 GeneratedEndpointFunctionSnippet(
                     example_id=example_id,
@@ -968,7 +969,7 @@ class EndpointFunctionGenerator:
             components += [package.fern_filepath.file]
         if len(components) == 0:
             return ""
-        return ".".join([component.snake_case.safe_name for component in components]) + "."
+        return ".".join([resolve_name(component).snake_case.safe_name for component in components]) + "."
 
     def _named_parameters_have_docs(self, named_parameters: List[AST.NamedFunctionParameter]) -> bool:
         return named_parameters is not None and any(param.docs is not None for param in named_parameters)
@@ -1026,7 +1027,7 @@ class EndpointFunctionGenerator:
 
                     writer.write("{")
                     writer.write_node(
-                        self._context.core_utilities.jsonable_encoder(
+                        self._context.core_utilities.encode_path_param(
                             self.convert_and_respect_annotation_metadata_raw(
                                 context=self._context,
                                 object_=parameter,
@@ -1047,7 +1048,7 @@ class EndpointFunctionGenerator:
         path_parameter_name: str,
     ) -> str:
         for path_parameter in endpoint.all_path_parameters:
-            if path_parameter.name.original_name == path_parameter_name:
+            if get_original_name(path_parameter.name) == path_parameter_name:
                 if path_parameter.variable is not None:
                     # path parameter is backed by variable => reference from client wrapper
                     variable = next(
@@ -1079,6 +1080,20 @@ class EndpointFunctionGenerator:
                     map_=lambda _: None,
                     literal=lambda _: None,
                 )
+            elif union.type == "named":
+                type_declaration = self._context.pydantic_generator_context.get_declaration_for_type_id(union.type_id)
+                shape = type_declaration.shape.get_as_union()
+                if shape.type == "alias":
+                    resolved_type = shape.resolved_type.get_as_union()
+                    if resolved_type.type == "container":
+                        unwrapped_type = resolved_type.container.visit(
+                            list_=lambda item_type: item_type,
+                            set_=lambda item_type: item_type,
+                            optional=lambda item_type: self._unwrap_container_types(item_type),
+                            nullable=lambda item_type: self._unwrap_container_types(item_type),
+                            map_=lambda _: None,
+                            literal=lambda _: None,
+                        )
         return unwrapped_type
 
     def _get_pagination_results_type(self, fallback_typehint: AST.TypeHint) -> AST.TypeHint:
@@ -1279,7 +1294,7 @@ class EndpointFunctionGenerator:
         raise RuntimeError(f"{union.type} streaming response is unsupported")
 
     def _get_reference_to_query_parameter(self, query_parameter: ir_types.QueryParameter) -> AST.Expression:
-        parameter_name = get_parameter_name(query_parameter.name.name)
+        parameter_name = get_parameter_name(get_name_from_wire_value(query_parameter.name))
         reference = AST.Expression(parameter_name)
 
         if self._is_datetime(query_parameter.value_type, allow_optional=True):
@@ -1292,7 +1307,9 @@ class EndpointFunctionGenerator:
 
                 def write_ternary(writer: AST.NodeWriter) -> None:
                     writer.write_node(existing_reference)
-                    writer.write(f" if {get_parameter_name(query_parameter.name.name)} is not None else None")
+                    writer.write(
+                        f" if {get_parameter_name(get_name_from_wire_value(query_parameter.name))} is not None else None"
+                    )
 
                 reference = AST.Expression(AST.CodeWriter(write_ternary))
 
@@ -1314,7 +1331,9 @@ class EndpointFunctionGenerator:
 
                 def write_ternary(writer: AST.NodeWriter) -> None:
                     writer.write_node(existing_reference2)
-                    writer.write(f" if {get_parameter_name(query_parameter.name.name)} is not None else None")
+                    writer.write(
+                        f" if {get_parameter_name(get_name_from_wire_value(query_parameter.name))} is not None else None"
+                    )
 
                 reference = AST.Expression(AST.CodeWriter(write_ternary))
 
@@ -1378,24 +1397,24 @@ class EndpointFunctionGenerator:
             if literal_header_value is not None and type(literal_header_value) is str:
                 headers.append(
                     (
-                        header.name.wire_value,
+                        get_wire_value(header.name),
                         AST.Expression(f'"{literal_header_value}"'),
                     )
                 )
             elif literal_header_value is not None and type(literal_header_value) is bool:
                 headers.append(
                     (
-                        header.name.wire_value,
+                        get_wire_value(header.name),
                         AST.Expression(f'"{str(literal_header_value).lower()}"'),
                     )
                 )
             else:
-                param_name = get_parameter_name(header.name.name)
+                param_name = get_parameter_name(get_name_from_wire_value(header.name))
                 if self._is_enum_type_with_value(header.value_type, allow_optional=True):
                     expr = AST.Expression(f"{param_name}.value if {param_name} is not None else None")
                 else:
                     expr = AST.Expression(f"str({param_name}) if {param_name} is not None else None")
-                headers.append((header.name.wire_value, expr))
+                headers.append((get_wire_value(header.name), expr))
 
         if len(headers) == 0:
             return None
@@ -1468,7 +1487,7 @@ class EndpointFunctionGenerator:
         - A scalar with allow_multiple (Union[str, Sequence[str]]), which also
           needs to handle both single values and sequences
         """
-        param_name = get_parameter_name(query_parameter.name.name)
+        param_name = get_parameter_name(get_name_from_wire_value(query_parameter.name))
         value_type = query_parameter.value_type.get_as_union()
         is_optional = value_type.type == "container" and value_type.container.get_as_union().type in (
             "optional",
@@ -1503,7 +1522,7 @@ class EndpointFunctionGenerator:
     ) -> Optional[AST.Expression]:
         query_parameters = [
             (
-                query_parameter.name.wire_value,
+                get_wire_value(query_parameter.name),
                 (
                     self._wrap_with_comma_join(self._get_query_parameter_reference(query_parameter), query_parameter)
                     if self._should_comma_join_query_parameter(query_parameter)
@@ -1924,8 +1943,8 @@ class EndpointFunctionSnippetGenerator:
         service: ir_types.HttpService,
         endpoint: ir_types.HttpEndpoint,
         example: ir_types.ExampleEndpointCall,
-        path_parameter_names: Dict[ir_types.Name, str],
-        request_parameter_names: Dict[ir_types.Name, str],
+        path_parameter_names: Dict[Union[str, ir_types.Name], str],
+        request_parameter_names: Dict[Union[str, ir_types.Name], str],
         generate_pagination: bool,
         streaming_parameter: Optional[StreamingParameterType] = None,
         is_raw_client: bool = False,
@@ -1957,7 +1976,7 @@ class EndpointFunctionSnippetGenerator:
             example_param
             for example_param in all_example_path_parameters
             if any(
-                example_param.name.original_name == endpoint_param.name.original_name
+                get_original_name(example_param.name) == get_original_name(endpoint_param.name)
                 for endpoint_param in non_variable_path_parameters
             )
         )
@@ -1968,7 +1987,7 @@ class EndpointFunctionSnippetGenerator:
                 as_request=True,
                 use_typeddict_request=self.context.custom_config.pydantic_config.use_typeddict_requests,
             )
-            if not self._is_path_literal(path_parameter.name.original_name, disqualify_optionals=True):
+            if not self._is_path_literal(get_original_name(path_parameter.name), disqualify_optionals=True):
                 args.append(
                     self.snippet_writer.get_snippet_for_named_parameter(
                         parameter_name=self.path_parameter_names[path_parameter.name],
@@ -1985,13 +2004,13 @@ class EndpointFunctionSnippetGenerator:
         # We need to include those examples when they're available.
         headers: Dict[str, ir_types.HttpHeader] = {}
         for header in self.service.headers + self.endpoint.headers:
-            headers[header.name.wire_value] = header
+            headers[get_wire_value(header.name)] = header
 
         all_example_headers = self.example.service_headers + self.example.endpoint_headers
         for example_header in all_example_headers:
             if (
-                example_header.name.wire_value in headers
-                and self.context.get_literal_header_value(headers[example_header.name.wire_value]) is not None
+                get_wire_value(example_header.name) in headers
+                and self.context.get_literal_header_value(headers[get_wire_value(example_header.name)]) is not None
             ):
                 continue
             example_header_parameter_value = self.snippet_writer.get_snippet_for_example_type_reference(
@@ -2000,12 +2019,12 @@ class EndpointFunctionSnippetGenerator:
                 use_typeddict_request=self.context.custom_config.pydantic_config.use_typeddict_requests,
             )
             if (
-                not self._is_header_literal(example_header.name.wire_value, disqualify_optionals=True)
+                not self._is_header_literal(get_wire_value(example_header.name), disqualify_optionals=True)
                 and example_header_parameter_value is not None
             ):
                 args.append(
                     self.snippet_writer.get_snippet_for_named_parameter(
-                        parameter_name=get_parameter_name(example_header.name.name),
+                        parameter_name=get_parameter_name(get_name_from_wire_value(example_header.name)),
                         value=example_header_parameter_value,
                     ),
                 )
@@ -2017,12 +2036,12 @@ class EndpointFunctionSnippetGenerator:
                 use_typeddict_request=self.context.custom_config.pydantic_config.use_typeddict_requests,
             )
             if (
-                not self._is_query_literal(query_parameter.name.wire_value, disqualify_optionals=True)
+                not self._is_query_literal(get_wire_value(query_parameter.name), disqualify_optionals=True)
                 and query_parameter_value is not None
             ):
                 args.append(
                     self.snippet_writer.get_snippet_for_named_parameter(
-                        parameter_name=get_parameter_name(query_parameter.name.name),
+                        parameter_name=get_parameter_name(get_name_from_wire_value(query_parameter.name)),
                         value=query_parameter_value,
                     ),
                 )
@@ -2117,12 +2136,12 @@ class EndpointFunctionSnippetGenerator:
                 force_include_literals=True,
             )
             if (
-                not self._is_inlined_request_literal(example_property.name.wire_value, disqualify_optionals=True)
+                not self._is_inlined_request_literal(get_wire_value(example_property.name), disqualify_optionals=True)
                 and property_value is not None
             ):
                 snippets.append(
                     self.snippet_writer.get_snippet_for_named_parameter(
-                        parameter_name=get_parameter_name(example_property.name.name),
+                        parameter_name=get_parameter_name(get_name_from_wire_value(example_property.name)),
                         value=property_value,
                     ),
                 )
@@ -2148,7 +2167,7 @@ class EndpointFunctionSnippetGenerator:
     def _get_snippet_for_request_reference_flattened(
         self,
         example_object: ir_types.ExampleObjectType,
-        request_parameter_names: Dict[ir_types.Name, str],
+        request_parameter_names: Dict[Union[str, ir_types.Name], str],
     ) -> List[AST.Expression]:
         return self.snippet_writer.get_snippet_for_object_properties(
             example_object,
@@ -2162,7 +2181,7 @@ class EndpointFunctionSnippetGenerator:
         self,
         example_type_reference: ir_types.ExampleTypeReference,
         is_optional: bool,
-        request_parameter_names: Dict[ir_types.Name, str],
+        request_parameter_names: Dict[Union[str, ir_types.Name], str],
     ) -> List[AST.Expression]:
         if self.context.custom_config.inline_request_params and not is_optional:
             union = example_type_reference.shape.get_as_union()
@@ -2179,14 +2198,14 @@ class EndpointFunctionSnippetGenerator:
     def _get_request_parameter_name(self) -> str:
         if self.endpoint.sdk_request is None:
             raise Exception("request body is referenced but SDKRequestBody is not defined")
-        return self.endpoint.sdk_request.request_parameter_name.snake_case.safe_name
+        return resolve_name(self.endpoint.sdk_request.request_parameter_name).snake_case.safe_name
 
     # We allow the option to keep literals, typically we filter them out because we default them,
     # but if they're optional we don't and so if an example is provided for that we must respect it.
     def _is_query_literal(self, query_parameter_wire_value: str, disqualify_optionals: bool) -> bool:
         param = next(
             filter(
-                lambda q: q.name.wire_value == query_parameter_wire_value,
+                lambda q: get_wire_value(q.name) == query_parameter_wire_value,
                 self.endpoint.query_parameters,
             ),
             None,
@@ -2202,7 +2221,7 @@ class EndpointFunctionSnippetGenerator:
     def _is_path_literal(self, path_parameter_original_name: str, disqualify_optionals: bool) -> bool:
         param = next(
             filter(
-                lambda p: p.name.original_name == path_parameter_original_name,
+                lambda p: get_original_name(p.name) == path_parameter_original_name,
                 self.endpoint.all_path_parameters,
             ),
             None,
@@ -2217,7 +2236,7 @@ class EndpointFunctionSnippetGenerator:
 
     def _is_header_literal(self, header_wire_value: str, disqualify_optionals: bool) -> bool:
         param = next(
-            filter(lambda h: h.name.wire_value == header_wire_value, self.endpoint.headers),
+            filter(lambda h: get_wire_value(h.name) == header_wire_value, self.endpoint.headers),
             None,
         )
         if param is not None:
@@ -2235,7 +2254,7 @@ class EndpointFunctionSnippetGenerator:
         if request_body_union.type == "inlinedRequestBody":
             param = next(
                 filter(
-                    lambda p: p.name.wire_value == property_wire_value,
+                    lambda p: get_wire_value(p.name) == property_wire_value,
                     request_body_union.properties,
                 ),
                 None,
@@ -2267,13 +2286,13 @@ class EndpointFunctionSnippetGenerator:
 
 
 def get_endpoint_name(endpoint: ir_types.HttpEndpoint) -> str:
-    if endpoint.name.original_name.lower() in ALLOWED_RESERVED_METHOD_NAMES:
-        return endpoint.name.snake_case.unsafe_name
-    return endpoint.name.snake_case.safe_name
+    if get_original_name(endpoint.name).lower() in ALLOWED_RESERVED_METHOD_NAMES:
+        return resolve_name(endpoint.name).snake_case.unsafe_name
+    return resolve_name(endpoint.name).snake_case.safe_name
 
 
-def get_parameter_name(name: ir_types.Name) -> str:
-    return name.snake_case.safe_name
+def get_parameter_name(name: Union[str, ir_types.Name]) -> str:
+    return resolve_name(name).snake_case.safe_name
 
 
 def is_endpoint_path_empty(endpoint: ir_types.HttpEndpoint) -> bool:

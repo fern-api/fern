@@ -1,6 +1,11 @@
 import { Audiences, generatorsYml, SNIPPET_TEMPLATES_JSON_FILENAME } from "@fern-api/configuration";
 import { ContainerRunner } from "@fern-api/core-utils";
 import { AbsoluteFilePath, streamObjectToFile } from "@fern-api/fs-utils";
+import {
+    AutoVersioningCache,
+    extractLanguageFromGeneratorName,
+    mapMagicVersionForLanguage
+} from "@fern-api/generator-cli/autoversion";
 import { ApiDefinitionSource, IntermediateRepresentation, SourceConfig } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace, IdentifiableSource } from "@fern-api/workspace-loader";
@@ -10,7 +15,6 @@ import { mkdir, writeFile } from "fs/promises";
 import * as path from "path";
 import { join } from "path";
 import tmp, { DirectoryResult } from "tmp-promise";
-import { AutoVersioningCache } from "./AutoVersioningCache.js";
 import { ContainerExecutionEnvironment } from "./ContainerExecutionEnvironment.js";
 import {
     CODEGEN_OUTPUT_DIRECTORY_NAME,
@@ -27,7 +31,6 @@ import { ExecutionEnvironment } from "./ExecutionEnvironment.js";
 import { getGeneratorConfig, getLicensePathFromConfig } from "./getGeneratorConfig.js";
 import { getIntermediateRepresentation } from "./getIntermediateRepresentation.js";
 import { LocalTaskHandler } from "./LocalTaskHandler.js";
-import { extractLanguageFromGeneratorName, mapMagicVersionForLanguage } from "./VersionUtils.js";
 
 export interface GeneratorRunResponse {
     ir: IntermediateRepresentation;
@@ -80,7 +83,8 @@ export async function writeFilesToDiskAndRunGenerator({
     ai,
     autoVersioningCache,
     absolutePathToSpecRepo,
-    skipFernignore
+    skipFernignore,
+    disableTelemetry
 }: {
     organization: string;
     absolutePathToFernConfig: AbsoluteFilePath | undefined;
@@ -110,6 +114,7 @@ export async function writeFilesToDiskAndRunGenerator({
     autoVersioningCache?: AutoVersioningCache;
     absolutePathToSpecRepo: AbsoluteFilePath | undefined;
     skipFernignore?: boolean;
+    disableTelemetry?: boolean;
 }): Promise<{
     ir: IntermediateRepresentation;
     generatorConfig: FernGeneratorExec.GeneratorConfig;
@@ -118,6 +123,9 @@ export async function writeFilesToDiskAndRunGenerator({
     autoVersioningChangelogEntry?: string;
     autoVersioningPrDescription?: string;
     autoVersioningVersionBumpReason?: string;
+    autoVersioningVersionBump?: string;
+    autoVersioningNewVersion?: string;
+    autoVersioningPreviousVersion?: string;
 }> {
     const { latest, migrated } = await getIntermediateRepresentation({
         workspace,
@@ -127,7 +135,7 @@ export async function writeFilesToDiskAndRunGenerator({
         irVersionOverride,
         packageName: generatorsYml.getPackageName({ generatorInvocation }),
         version: version ?? outputVersionOverride,
-        sourceConfig: getSourceConfig(workspace),
+        sourceConfig: getSourceConfig(workspace, executionEnvironment?.usesContainerPaths ?? true),
         includeOptionalRequestPropertyExamples,
         ir
     });
@@ -169,8 +177,11 @@ export async function writeFilesToDiskAndRunGenerator({
     const environment =
         executionEnvironment ??
         new ContainerExecutionEnvironment({
-            containerImage: `${generatorInvocation.name}:${generatorInvocation.version}`,
-            keepContainer: keepDocker
+            containerImage: generatorInvocation.containerImage
+                ? `${generatorInvocation.containerImage}:${generatorInvocation.version}`
+                : `${generatorInvocation.name}:${generatorInvocation.version}`,
+            keepContainer: keepDocker,
+            disableTelemetry
         });
 
     const paths = environment.usesContainerPaths
@@ -297,13 +308,16 @@ async function writeIrToFile({
     return absolutePathToIr;
 }
 
-function getSourceConfig(workspace: FernWorkspace): SourceConfig {
+function getSourceConfig(workspace: FernWorkspace, usesContainerPaths: boolean): SourceConfig {
     return {
         sources: workspace.getSources().map((source) => {
             if (source.type === "protobuf") {
+                const protoRootUrl = usesContainerPaths
+                    ? `file:///${getDockerDestinationForSource(source)}`
+                    : `file:///${source.absoluteFilePath}`;
                 return ApiDefinitionSource.proto({
                     id: source.id,
-                    protoRootUrl: `file:///${getDockerDestinationForSource(source)}`
+                    protoRootUrl
                 });
             }
             return ApiDefinitionSource.openapi();

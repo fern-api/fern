@@ -87,6 +87,7 @@ export interface APIDefinitionSettings {
     resolveAliases: generatorsYml.ResolveAliases | undefined;
     groupMultiApiEnvironments: boolean | undefined;
     groupEnvironmentsByHost: boolean | undefined;
+    multiServerStrategy: generatorsYml.MultiServerStrategy | undefined;
     inferDefaultEnvironment: boolean | undefined;
     wrapReferencesToNullableInOptional: boolean | undefined;
     coerceOptionalSchemasToNullable: boolean | undefined;
@@ -137,6 +138,17 @@ export interface GraphQLDefinitionSchema {
     path: string;
 }
 
+/**
+ * Resolved automation configuration with all fields populated.
+ * Resolution order: generator → group → root → default (all true).
+ */
+export interface ResolvedAutomationConfig {
+    generate: boolean;
+    upgrade: boolean;
+    preview: boolean;
+    verify: boolean;
+}
+
 export interface GeneratorGroup {
     groupName: string;
     audiences: Audiences;
@@ -156,7 +168,11 @@ export interface Reviewers {
 export interface GeneratorInvocation {
     raw?: GeneratorInvocationSchema;
 
+    /** Resolved automation configuration (generator → group → root → default true). */
+    automation: ResolvedAutomationConfig;
     name: string;
+    /** Fully-qualified container image for local generation (e.g., `ghcr.io/myorg/fernapi/fern-typescript-sdk`). Undefined means use Docker Hub default. */
+    containerImage: string | undefined;
     irVersionOverride: string | undefined;
     version: string;
     config: unknown;

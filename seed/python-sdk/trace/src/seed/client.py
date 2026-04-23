@@ -17,7 +17,7 @@ if typing.TYPE_CHECKING:
     from .problem.client import AsyncProblemClient, ProblemClient
     from .submission.client import AsyncSubmissionClient, SubmissionClient
     from .sysprop.client import AsyncSyspropClient, SyspropClient
-    from .v_2.client import AsyncV2Client, V2Client
+    from .v2.client import AsyncV2Client, V2Client
 
 
 class SeedTrace:
@@ -94,7 +94,7 @@ class SeedTrace:
             timeout=_defaulted_timeout,
             logging=logging,
         )
-        self._v_2: typing.Optional[V2Client] = None
+        self._v2: typing.Optional[V2Client] = None
         self._admin: typing.Optional[AdminClient] = None
         self._homepage: typing.Optional[HomepageClient] = None
         self._migration: typing.Optional[MigrationClient] = None
@@ -104,12 +104,12 @@ class SeedTrace:
         self._sysprop: typing.Optional[SyspropClient] = None
 
     @property
-    def v_2(self):
-        if self._v_2 is None:
-            from .v_2.client import V2Client  # noqa: E402
+    def v2(self):
+        if self._v2 is None:
+            from .v2.client import V2Client  # noqa: E402
 
-            self._v_2 = V2Client(client_wrapper=self._client_wrapper)
-        return self._v_2
+            self._v2 = V2Client(client_wrapper=self._client_wrapper)
+        return self._v2
 
     @property
     def admin(self):
@@ -166,6 +166,24 @@ class SeedTrace:
 
             self._sysprop = SyspropClient(client_wrapper=self._client_wrapper)
         return self._sysprop
+
+
+def _make_default_async_client(
+    timeout: typing.Optional[float],
+    follow_redirects: typing.Optional[bool],
+) -> httpx.AsyncClient:
+    try:
+        import httpx_aiohttp  # type: ignore[import-not-found]
+    except ImportError:
+        pass
+    else:
+        if follow_redirects is not None:
+            return httpx_aiohttp.HttpxAiohttpClient(timeout=timeout, follow_redirects=follow_redirects)
+        return httpx_aiohttp.HttpxAiohttpClient(timeout=timeout)
+
+    if follow_redirects is not None:
+        return httpx.AsyncClient(timeout=timeout, follow_redirects=follow_redirects)
+    return httpx.AsyncClient(timeout=timeout)
 
 
 class AsyncSeedTrace:
@@ -241,13 +259,11 @@ class AsyncSeedTrace:
             async_token=async_token,
             httpx_client=httpx_client
             if httpx_client is not None
-            else httpx.AsyncClient(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
-            if follow_redirects is not None
-            else httpx.AsyncClient(timeout=_defaulted_timeout),
+            else _make_default_async_client(timeout=_defaulted_timeout, follow_redirects=follow_redirects),
             timeout=_defaulted_timeout,
             logging=logging,
         )
-        self._v_2: typing.Optional[AsyncV2Client] = None
+        self._v2: typing.Optional[AsyncV2Client] = None
         self._admin: typing.Optional[AsyncAdminClient] = None
         self._homepage: typing.Optional[AsyncHomepageClient] = None
         self._migration: typing.Optional[AsyncMigrationClient] = None
@@ -257,12 +273,12 @@ class AsyncSeedTrace:
         self._sysprop: typing.Optional[AsyncSyspropClient] = None
 
     @property
-    def v_2(self):
-        if self._v_2 is None:
-            from .v_2.client import AsyncV2Client  # noqa: E402
+    def v2(self):
+        if self._v2 is None:
+            from .v2.client import AsyncV2Client  # noqa: E402
 
-            self._v_2 = AsyncV2Client(client_wrapper=self._client_wrapper)
-        return self._v_2
+            self._v2 = AsyncV2Client(client_wrapper=self._client_wrapper)
+        return self._v2
 
     @property
     def admin(self):

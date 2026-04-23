@@ -1,5 +1,79 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.33.3
+  changelogEntry:
+    - summary: |
+        Bump @fern-api/generator-cli to 0.9.11. The GitHub pipeline step now creates
+        signed commits via the GitHub REST API (matching fiddle's legacy InMemoryGitRepo
+        push path), restoring verified fern-api[bot] commits on replay-enabled orgs.
+      type: chore
+  createdAt: "2026-04-22"
+  irVersion: 66
+- version: 0.33.2
+  changelogEntry:
+    - summary: |
+        Fix wire test verification for endpoints with multi-value array query parameters.
+      type: fix
+  createdAt: "2026-04-22"
+  irVersion: 66
+- version: 0.33.1
+  changelogEntry:
+    - summary: |
+        Add crash reporting via Sentry to the generator runtime, and classify
+        thrown errors using the new shared `GeneratorError` taxonomy so user-facing
+        failures (config, validation, auth, network, environment) are kept distinct
+        from internal Fern bugs — only the latter are forwarded to Sentry. No
+        change to generated output.
+      type: chore
+  createdAt: "2026-04-22"
+  irVersion: 66
+- version: 0.33.0
+  changelogEntry:
+    - summary: |
+        Expose HTTP response metadata (status code, headers, and full parsed response body) on paginated results.
+        The `PaginationResult` struct now includes `status_code`, `headers`, and `response` fields, and both
+        `AsyncPaginator` and `SyncPaginator` expose accessor methods for this metadata from the most recent page load.
+        A new `RawResponse<T>` struct and `execute_request_raw` method on `HttpClient` support this functionality.
+      type: feat
+  createdAt: "2026-04-21"
+  irVersion: 66
+- version: 0.32.0
+  changelogEntry:
+    - summary: |
+        Bump @fern-api/generator-cli to 0.9.8. Changelog URLs in generated PRs
+        now use the commit SHA instead of the PR branch name, keeping the link
+        valid after the branch is deleted or squash-merged.
+      type: chore
+  createdAt: "2026-04-16"
+  irVersion: 66
 
+- version: 0.32.0-rc.0
+  changelogEntry:
+    - summary: |
+        Upgrade to IR v66 which compresses the IR Name type, reducing IR size and increasing performance.
+      type: feat
+  createdAt: "2026-04-01"
+  irVersion: 66
+
+- version: 0.31.1
+  changelogEntry:
+    - summary: |
+        Ensure extraDependencies overrides take precedence over bundled dependency
+        versions. Previously, conditional bundled deps (e.g., tokio-tungstenite,
+        reqwest-sse) were added after user overrides, reverting pinned versions.
+        Extra deps are now applied last so user-specified versions always win.
+      type: fix
+  createdAt: "2026-04-03"
+  irVersion: 65
+
+- version: 0.31.0
+  changelogEntry:
+    - summary: |
+        Add `maxRetries` custom config option to override the default maximum
+        number of retries for failed requests. The default remains 3 when not
+        specified.
+      type: feat
+  createdAt: "2026-04-02"
+  irVersion: 65
 - version: 0.30.2
   changelogEntry:
     - summary: |
@@ -8,7 +82,6 @@
       type: fix
   createdAt: "2026-03-31"
   irVersion: 65
-
 - version: 0.30.1
   changelogEntry:
     - summary: |

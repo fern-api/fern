@@ -6,7 +6,7 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import jsonable_encoder
+from ..core.jsonable_encoder import encode_path_param
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
@@ -39,7 +39,7 @@ class RawUserClient:
         HttpResponse[User]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"{jsonable_encoder(tenant_id)}/user/{jsonable_encoder(user_id)}",
+            f"{encode_path_param(tenant_id)}/user/{encode_path_param(user_id)}",
             method="GET",
             request_options=request_options,
         )
@@ -87,7 +87,7 @@ class RawUserClient:
         HttpResponse[User]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"{jsonable_encoder(tenant_id)}/user/",
+            f"{encode_path_param(tenant_id)}/user/",
             method="POST",
             json={
                 "name": name,
@@ -143,7 +143,7 @@ class RawUserClient:
         HttpResponse[User]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"{jsonable_encoder(tenant_id)}/user/{jsonable_encoder(user_id)}",
+            f"{encode_path_param(tenant_id)}/user/{encode_path_param(user_id)}",
             method="PATCH",
             json={
                 "name": name,
@@ -196,7 +196,7 @@ class RawUserClient:
         HttpResponse[typing.List[User]]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"{jsonable_encoder(tenant_id)}/user/{jsonable_encoder(user_id)}/search",
+            f"{encode_path_param(tenant_id)}/user/{encode_path_param(user_id)}/search",
             method="GET",
             params={
                 "limit": limit,
@@ -244,7 +244,7 @@ class RawUserClient:
         HttpResponse[User]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"{jsonable_encoder(tenant_id)}/user/{jsonable_encoder(user_id)}/metadata/v{jsonable_encoder(version)}",
+            f"{encode_path_param(tenant_id)}/user/{encode_path_param(user_id)}/metadata/v{encode_path_param(version)}",
             method="GET",
             request_options=request_options,
         )
@@ -297,7 +297,7 @@ class RawUserClient:
         HttpResponse[User]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"{jsonable_encoder(tenant_id)}/user/{jsonable_encoder(user_id)}/specifics/{jsonable_encoder(version)}/{jsonable_encoder(thought)}",
+            f"{encode_path_param(tenant_id)}/user/{encode_path_param(user_id)}/specifics/{encode_path_param(version)}/{encode_path_param(thought)}",
             method="GET",
             request_options=request_options,
         )
@@ -343,7 +343,7 @@ class AsyncRawUserClient:
         AsyncHttpResponse[User]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"{jsonable_encoder(tenant_id)}/user/{jsonable_encoder(user_id)}",
+            f"{encode_path_param(tenant_id)}/user/{encode_path_param(user_id)}",
             method="GET",
             request_options=request_options,
         )
@@ -391,7 +391,7 @@ class AsyncRawUserClient:
         AsyncHttpResponse[User]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"{jsonable_encoder(tenant_id)}/user/",
+            f"{encode_path_param(tenant_id)}/user/",
             method="POST",
             json={
                 "name": name,
@@ -447,7 +447,7 @@ class AsyncRawUserClient:
         AsyncHttpResponse[User]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"{jsonable_encoder(tenant_id)}/user/{jsonable_encoder(user_id)}",
+            f"{encode_path_param(tenant_id)}/user/{encode_path_param(user_id)}",
             method="PATCH",
             json={
                 "name": name,
@@ -500,7 +500,7 @@ class AsyncRawUserClient:
         AsyncHttpResponse[typing.List[User]]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"{jsonable_encoder(tenant_id)}/user/{jsonable_encoder(user_id)}/search",
+            f"{encode_path_param(tenant_id)}/user/{encode_path_param(user_id)}/search",
             method="GET",
             params={
                 "limit": limit,
@@ -548,7 +548,7 @@ class AsyncRawUserClient:
         AsyncHttpResponse[User]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"{jsonable_encoder(tenant_id)}/user/{jsonable_encoder(user_id)}/metadata/v{jsonable_encoder(version)}",
+            f"{encode_path_param(tenant_id)}/user/{encode_path_param(user_id)}/metadata/v{encode_path_param(version)}",
             method="GET",
             request_options=request_options,
         )
@@ -601,7 +601,7 @@ class AsyncRawUserClient:
         AsyncHttpResponse[User]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"{jsonable_encoder(tenant_id)}/user/{jsonable_encoder(user_id)}/specifics/{jsonable_encoder(version)}/{jsonable_encoder(thought)}",
+            f"{encode_path_param(tenant_id)}/user/{encode_path_param(user_id)}/specifics/{encode_path_param(version)}/{encode_path_param(thought)}",
             method="GET",
             request_options=request_options,
         )

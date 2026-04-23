@@ -1,7 +1,8 @@
-import { File } from "@fern-api/base-generator";
+import { File, getNameFromWireValue, getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { WireMock, WireMockStubMapping } from "@fern-api/mock-utils";
+import { isEqualToMatcher, WireMock, WireMockStubMapping } from "@fern-api/mock-utils";
+import { PYTHON_CASE_CONVERTER as caseConverter } from "@fern-api/python-base";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
@@ -53,12 +54,11 @@ export class WireTestSetupGenerator {
             // Strip from query parameters
             if (mapping.request.queryParameters) {
                 for (const [, value] of Object.entries(mapping.request.queryParameters)) {
-                    const paramValue = value as { equalTo: string };
-                    if (
-                        paramValue.equalTo != null &&
-                        WireTestSetupGenerator.DATETIME_WITH_ZERO_MILLIS_REGEX.test(paramValue.equalTo)
-                    ) {
-                        paramValue.equalTo = paramValue.equalTo.replace(".000", "");
+                    if (!isEqualToMatcher(value)) {
+                        continue;
+                    }
+                    if (WireTestSetupGenerator.DATETIME_WITH_ZERO_MILLIS_REGEX.test(value.equalTo)) {
+                        value.equalTo = value.equalTo.replace(".000", "");
                     }
                 }
             }
@@ -97,7 +97,7 @@ export class WireTestSetupGenerator {
                 const datetimeParams = new Set<string>();
                 for (const qp of endpoint.queryParameters) {
                     if (WireTestSetupGenerator.isDatetimeTypeReference(qp.valueType)) {
-                        datetimeParams.add(qp.name.wireValue);
+                        datetimeParams.add(getWireValue(qp.name));
                     }
                 }
                 datetimeParamsByEndpoint.set(key, datetimeParams);
@@ -116,12 +116,14 @@ export class WireTestSetupGenerator {
                 if (datetimeParams.has(paramName)) {
                     continue;
                 }
-                const paramValue = value as { equalTo: string };
+                if (!("equalTo" in value)) {
+                    continue;
+                }
                 if (
-                    paramValue.equalTo != null &&
-                    WireTestSetupGenerator.DATETIME_WITH_ZERO_MILLIS_REGEX.test(paramValue.equalTo)
+                    value.equalTo != null &&
+                    WireTestSetupGenerator.DATETIME_WITH_ZERO_MILLIS_REGEX.test(value.equalTo)
                 ) {
-                    paramValue.equalTo = paramValue.equalTo.replace(".000", "");
+                    value.equalTo = value.equalTo.replace(".000", "");
                 }
             }
         }
@@ -304,7 +306,7 @@ def verify_request_count(
     test_id: str,
     method: str,
     url_path: str,
-    query_params: Optional[Dict[str, str]],
+    query_params: Optional[Dict[str, Any]],
     expected: int,
 ) -> None:
     """Verifies the number of requests made to WireMock filtered by test ID for concurrency safety."""
@@ -315,7 +317,12 @@ def verify_request_count(
         "headers": {"X-Test-Id": {"equalTo": test_id}},
     }
     if query_params:
-        query_parameters = {k: {"equalTo": v} for k, v in query_params.items()}
+        query_parameters = {}
+        for k, v in query_params.items():
+            if isinstance(v, list):
+                query_parameters[k] = {"hasExactly": [{"equalTo": item} for item in v]}
+            else:
+                query_parameters[k] = {"equalTo": v}
         request_body["queryParameters"] = query_parameters
     response = httpx.post(f"{wiremock_admin_url}/requests/find", json=request_body)
     assert response.status_code == 200, "Failed to query WireMock requests"
@@ -466,6 +473,26 @@ def _is_xdist_worker(config: pytest.Config) -> bool:
     return hasattr(config, "workerinput")
 
 
+def _has_httpx_aiohttp() -> bool:
+    """Check if httpx_aiohttp is importable."""
+    try:
+        import httpx_aiohttp  # type: ignore[import-not-found]  # noqa: F401
+
+        return True
+    except ImportError:
+        return False
+
+
+def pytest_collection_modifyitems(config: pytest.Config, items: list) -> None:
+    """Auto-skip @pytest.mark.aiohttp tests when httpx_aiohttp is not installed."""
+    if _has_httpx_aiohttp():
+        return
+    skip_aiohttp = pytest.mark.skip(reason="httpx_aiohttp not installed")
+    for item in items:
+        if "aiohttp" in item.keywords:
+            item.add_marker(skip_aiohttp)
+
+
 def pytest_configure(config: pytest.Config) -> None:
     """
     Pytest hook that runs during test session setup.
@@ -569,7 +596,7 @@ def pytest_unconfigure(config: pytest.Config) -> None:
 
             // Build kwargs for all base URLs using dynamic base_url variable
             const baseUrlKwargsDynamic = envConfig.baseUrls
-                .map((baseUrl) => `${baseUrl.name.snakeCase.safeName}=base_url`)
+                .map((baseUrl) => `${caseConverter.snakeSafe(baseUrl.name)}=base_url`)
                 .join(", ");
 
             return {
@@ -606,7 +633,7 @@ def pytest_unconfigure(config: pytest.Config) -> None:
         // Process global headers that might require values
         if (this.ir.headers) {
             for (const header of this.ir.headers) {
-                const paramName = header.name.name.snakeCase.safeName;
+                const paramName = caseConverter.snakeSafe(getNameFromWireValue(header.name));
                 // Only add if not already added by auth schemes
                 if (!params.some((p) => p.startsWith(`        ${paramName}=`))) {
                     params.push(`        ${paramName}="test_${paramName}",`);
@@ -626,19 +653,19 @@ def pytest_unconfigure(config: pytest.Config) -> None:
         switch (scheme.type) {
             case "bearer":
                 // Bearer auth uses a token parameter
-                params.push(`        ${scheme.token.snakeCase.safeName}="test_token",`);
+                params.push(`        ${caseConverter.snakeSafe(scheme.token)}="test_token",`);
                 break;
 
             case "basic":
                 // Basic auth uses username and password parameters
-                params.push(`        ${scheme.username.snakeCase.safeName}="test_username",`);
-                params.push(`        ${scheme.password.snakeCase.safeName}="test_password",`);
+                params.push(`        ${caseConverter.snakeSafe(scheme.username)}="test_username",`);
+                params.push(`        ${caseConverter.snakeSafe(scheme.password)}="test_password",`);
                 break;
 
             case "header":
                 // Header auth uses a custom header parameter
                 params.push(
-                    `        ${scheme.name.name.snakeCase.safeName}="test_${scheme.name.name.snakeCase.safeName}",`
+                    `        ${caseConverter.snakeSafe(getNameFromWireValue(scheme.name))}="test_${caseConverter.snakeSafe(getNameFromWireValue(scheme.name))}",`
                 );
                 break;
 
