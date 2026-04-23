@@ -801,11 +801,15 @@ function getAuthenticationErrorMessage(
     domain: string,
     loginCommand: string
 ): string | undefined {
-    const errorObj = error as Record<string, unknown>;
-    const content = errorObj?.content as Record<string, unknown> | undefined;
+    if (typeof error !== "object" || error == null) {
+        return undefined;
+    }
+    const rawContent = (error as Record<string, unknown>).content;
+    const content: Record<string, unknown> | undefined =
+        typeof rawContent === "object" && rawContent != null ? (rawContent as Record<string, unknown>) : undefined;
 
     if (content?.reason === "status-code") {
-        const statusCode = content.statusCode as number | undefined;
+        const statusCode = typeof content.statusCode === "number" ? content.statusCode : undefined;
 
         if (statusCode === 401 || statusCode === 403) {
             return buildAuthFailureMessage(domain, organization, content, loginCommand);

@@ -233,7 +233,6 @@ function createMockLogger() {
 /** Creates an AutoVersioningService with a mock logger. */
 function createService(): AutoVersioningService {
     return new AutoVersioningService({
-        // biome-ignore lint/suspicious/noExplicitAny: test logger mock
         logger: createMockLogger() as any
     });
 }
