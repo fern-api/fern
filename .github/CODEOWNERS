@@ -1,6 +1,10 @@
 # Default catch-all — keep at top so specific rules below override it.
 * @amckinney
 
+# Catch all for generators
+
+generators/** @Swimburger @amckinney
+
 # Specific rules for generators
 generators/commons/** @Swimburger @amckinney
 generators/csharp/** @Swimburger
