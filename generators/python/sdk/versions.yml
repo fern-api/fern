@@ -1,5 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 5.5.10
+  changelogEntry:
+    - summary: |
+        Bump @fern-api/generator-cli to 0.9.12, which ships the FER-9980 autoversion
+        pipeline (AutoVersionStep runs between the [fern-generated] commit and replay
+        apply, diffing pure generator output across runs to drive a semver bump and
+        changelog entry via FAI) and pins @fern-api/replay to 0.12.0.
+      type: chore
+  createdAt: "2026-04-23"
+  irVersion: 66
 - version: 5.5.9
   changelogEntry:
     - summary: |
