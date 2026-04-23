@@ -2,7 +2,6 @@ import { SdkAddInputSchema, schemas } from "@fern-api/config";
 import { getLatestGeneratorVersion } from "@fern-api/configuration-loader";
 import type { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { CliError } from "@fern-api/task-context";
-
 import chalk from "chalk";
 import inquirer from "inquirer";
 import type { Argv } from "yargs";
@@ -59,7 +58,14 @@ export class AddCommand {
         const sdkChecker = new SdkChecker({ context });
         const sdkCheckResult = await sdkChecker.check({ workspace });
         if (sdkCheckResult.errorCount > 0) {
-            throw new CliError({ code: CliError.Code.ValidationError });
+            for (const v of sdkCheckResult.violations) {
+                const color = v.severity === "warning" ? chalk.yellow : chalk.red;
+                process.stderr.write(`${color(`${v.displayRelativeFilepath}:${v.line}:${v.column}: ${v.message}`)}\n`);
+            }
+            throw new CliError({
+                message: "Fix the errors above before adding a new target.",
+                code: CliError.Code.ValidationError
+            });
         }
 
         const existingTargets = workspace.sdks?.targets ?? [];
