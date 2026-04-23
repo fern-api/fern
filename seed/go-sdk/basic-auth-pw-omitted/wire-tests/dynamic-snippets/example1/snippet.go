@@ -14,14 +14,9 @@ func do() {
         ),
         option.WithBasicAuth(
             "<username>",
-            "<password>",
         ),
     )
-    request := map[string]any{
-        "key": "value",
-    }
-    client.BasicAuth.PostWithBasicAuth(
+    client.BasicAuth.GetWithBasicAuth(
         context.TODO(),
-        request,
     )
 }

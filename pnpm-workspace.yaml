@@ -57,7 +57,6 @@ catalog:
   "@boundaryml/baml": ^0.219.0
   "@bufbuild/protobuf": ^2.2.5
   "@bufbuild/protoplugin": 2.2.5
-  "@fern-api/docs-parsers": 0.0.65
   "@fern-api/fai-sdk": 0.0.6-2ee1b7e28
   "@fern-api/fdr-sdk": 1.1.13-c1ad12a2b8
   "@fern-api/generator-cli": 0.9.11

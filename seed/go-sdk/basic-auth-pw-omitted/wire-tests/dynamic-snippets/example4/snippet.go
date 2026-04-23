@@ -14,10 +14,13 @@ func do() {
         ),
         option.WithBasicAuth(
             "<username>",
-            "<password>",
         ),
     )
-    client.BasicAuth.GetWithBasicAuth(
+    request := map[string]any{
+        "key": "value",
+    }
+    client.BasicAuth.PostWithBasicAuth(
         context.TODO(),
+        request,
     )
 }
