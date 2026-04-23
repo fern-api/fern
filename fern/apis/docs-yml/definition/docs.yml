@@ -344,6 +344,8 @@ types:
       - chatgpt
       - claude
       - cursor
+      - value: claude-code
+        name: claude_code
       - vscode
 
   PageActionOptions:
@@ -384,6 +386,14 @@ types:
           When enabled, displays an "Open in Cursor" button that allows users to open the page content in Cursor IDE with AI-powered code assistance.
 
           @default: false
+      claude-code:
+        type: optional<boolean>
+        docs: |
+          Controls the "Connect to Claude Code" button, which copies a `claude mcp add` command to the
+          clipboard so users can register this docs site's MCP server with Claude Code. The button only
+          renders on docs sites that have Ask AI enabled; set to `false` to hide it on those sites.
+
+          @default: true
       vscode:
         type: optional<boolean>
         docs: |
