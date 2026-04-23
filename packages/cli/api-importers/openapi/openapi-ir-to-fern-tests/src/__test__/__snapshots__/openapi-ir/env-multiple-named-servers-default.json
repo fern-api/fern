@@ -27,6 +27,7 @@
   "endpoints": [
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "getStatus",
       "tags": [],
       "pathParameters": [],
@@ -82,6 +83,7 @@
     },
     {
       "audiences": [],
+      "viewers": [],
       "operationId": "getAgentThinkModels",
       "tags": [],
       "pathParameters": [],
