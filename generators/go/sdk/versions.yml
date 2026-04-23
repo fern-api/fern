@@ -1,15 +1,4 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 1.35.2
-  changelogEntry:
-    - summary: |
-        Support omitting username or password from basic auth in dynamic
-        snippets when configured via `usernameOmit`/`passwordOmit` in the IR.
-        When one field is omitted, an empty string is passed for that positional
-        argument. When both are omitted, the `WithBasicAuth` call is skipped
-        entirely.
-      type: feat
-  createdAt: "2026-04-21"
-  irVersion: 66
 - version: 1.35.1
   changelogEntry:
     - summary: |
