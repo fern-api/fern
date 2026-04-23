@@ -34,6 +34,7 @@ export interface ParsedPageActionsConfig {
         openAi: boolean;
         claude: boolean;
         cursor: boolean;
+        claudeCode: boolean;
         vscode: boolean;
         custom: ParsedCustomPageAction[];
     };
