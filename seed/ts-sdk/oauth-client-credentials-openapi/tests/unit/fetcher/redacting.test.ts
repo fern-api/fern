@@ -421,6 +421,394 @@ describe("Redacting Logic", () => {
         });
     });
 
+    describe("Query Parameter Redaction", () => {
+        it("should redact api_key query parameter", async () => {
+            const mockLogger = createMockLogger();
+            mockSuccessResponse();
+
+            await fetcherImpl({
+                url: "https://example.com/api",
+                method: "GET",
+                queryParameters: { api_key: "secret-key" },
+                responseType: "json",
+                maxRetries: 0,
+                logging: {
+                    level: "debug",
+                    logger: mockLogger,
+                    silent: false,
+                },
+            });
+
+            expect(mockLogger.debug).toHaveBeenCalledWith(
+                "Making HTTP request",
+                expect.objectContaining({
+                    queryParameters: expect.objectContaining({
+                        api_key: "[REDACTED]",
+                    }),
+                }),
+            );
+        });
+
+        it("should redact token query parameter", async () => {
+            const mockLogger = createMockLogger();
+            mockSuccessResponse();
+
+            await fetcherImpl({
+                url: "https://example.com/api",
+                method: "GET",
+                queryParameters: { token: "secret-token" },
+                responseType: "json",
+                maxRetries: 0,
+                logging: {
+                    level: "debug",
+                    logger: mockLogger,
+                    silent: false,
+                },
+            });
+
+            expect(mockLogger.debug).toHaveBeenCalledWith(
+                "Making HTTP request",
+                expect.objectContaining({
+                    queryParameters: expect.objectContaining({
+                        token: "[REDACTED]",
+                    }),
+                }),
+            );
+        });
+
+        it("should redact access_token query parameter", async () => {
+            const mockLogger = createMockLogger();
+            mockSuccessResponse();
+
+            await fetcherImpl({
+                url: "https://example.com/api",
+                method: "GET",
+                queryParameters: { access_token: "secret-access-token" },
+                responseType: "json",
+                maxRetries: 0,
+                logging: {
+                    level: "debug",
+                    logger: mockLogger,
+                    silent: false,
+                },
+            });
+
+            expect(mockLogger.debug).toHaveBeenCalledWith(
+                "Making HTTP request",
+                expect.objectContaining({
+                    queryParameters: expect.objectContaining({
+                        access_token: "[REDACTED]",
+                    }),
+                }),
+            );
+        });
+
+        it("should redact password query parameter", async () => {
+            const mockLogger = createMockLogger();
+            mockSuccessResponse();
+
+            await fetcherImpl({
+                url: "https://example.com/api",
+                method: "GET",
+                queryParameters: { password: "secret-password" },
+                responseType: "json",
+                maxRetries: 0,
+                logging: {
+                    level: "debug",
+                    logger: mockLogger,
+                    silent: false,
+                },
+            });
+
+            expect(mockLogger.debug).toHaveBeenCalledWith(
+                "Making HTTP request",
+                expect.objectContaining({
+                    queryParameters: expect.objectContaining({
+                        password: "[REDACTED]",
+                    }),
+                }),
+            );
+        });
+
+        it("should redact secret query parameter", async () => {
+            const mockLogger = createMockLogger();
+            mockSuccessResponse();
+
+            await fetcherImpl({
+                url: "https://example.com/api",
+                method: "GET",
+                queryParameters: { secret: "secret-value" },
+                responseType: "json",
+                maxRetries: 0,
+                logging: {
+                    level: "debug",
+                    logger: mockLogger,
+                    silent: false,
+                },
+            });
+
+            expect(mockLogger.debug).toHaveBeenCalledWith(
+                "Making HTTP request",
+                expect.objectContaining({
+                    queryParameters: expect.objectContaining({
+                        secret: "[REDACTED]",
+                    }),
+                }),
+            );
+        });
+
+        it("should redact session_id query parameter", async () => {
+            const mockLogger = createMockLogger();
+            mockSuccessResponse();
+
+            await fetcherImpl({
+                url: "https://example.com/api",
+                method: "GET",
+                queryParameters: { session_id: "session-123" },
+                responseType: "json",
+                maxRetries: 0,
+                logging: {
+                    level: "debug",
+                    logger: mockLogger,
+                    silent: false,
+                },
+            });
+
+            expect(mockLogger.debug).toHaveBeenCalledWith(
+                "Making HTTP request",
+                expect.objectContaining({
+                    queryParameters: expect.objectContaining({
+                        session_id: "[REDACTED]",
+                    }),
+                }),
+            );
+        });
+
+        it("should not redact non-sensitive query parameters", async () => {
+            const mockLogger = createMockLogger();
+            mockSuccessResponse();
+
+            await fetcherImpl({
+                url: "https://example.com/api",
+                method: "GET",
+                queryParameters: {
+                    page: "1",
+                    limit: "10",
+                    sort: "name",
+                },
+                responseType: "json",
+                maxRetries: 0,
+                logging: {
+                    level: "debug",
+                    logger: mockLogger,
+                    silent: false,
+                },
+            });
+
+            expect(mockLogger.debug).toHaveBeenCalledWith(
+                "Making HTTP request",
+                expect.objectContaining({
+                    queryParameters: expect.objectContaining({
+                        page: "1",
+                        limit: "10",
+                        sort: "name",
+                    }),
+                }),
+            );
+        });
+
+        it("should not redact parameters containing 'auth' substring like 'author'", async () => {
+            const mockLogger = createMockLogger();
+            mockSuccessResponse();
+
+            await fetcherImpl({
+                url: "https://example.com/api",
+                method: "GET",
+                queryParameters: {
+                    author: "john",
+                    authenticate: "false",
+                    authorization_level: "user",
+                },
+                responseType: "json",
+                maxRetries: 0,
+                logging: {
+                    level: "debug",
+                    logger: mockLogger,
+                    silent: false,
+                },
+            });
+
+            expect(mockLogger.debug).toHaveBeenCalledWith(
+                "Making HTTP request",
+                expect.objectContaining({
+                    queryParameters: expect.objectContaining({
+                        author: "john",
+                        authenticate: "false",
+                        authorization_level: "user",
+                    }),
+                }),
+            );
+        });
+
+        it("should handle undefined query parameters", async () => {
+            const mockLogger = createMockLogger();
+            mockSuccessResponse();
+
+            await fetcherImpl({
+                url: "https://example.com/api",
+                method: "GET",
+                responseType: "json",
+                maxRetries: 0,
+                logging: {
+                    level: "debug",
+                    logger: mockLogger,
+                    silent: false,
+                },
+            });
+
+            expect(mockLogger.debug).toHaveBeenCalledWith(
+                "Making HTTP request",
+                expect.objectContaining({
+                    queryParameters: undefined,
+                }),
+            );
+        });
+
+        it("should redact case-insensitive query parameters", async () => {
+            const mockLogger = createMockLogger();
+            mockSuccessResponse();
+
+            await fetcherImpl({
+                url: "https://example.com/api",
+                method: "GET",
+                queryParameters: { API_KEY: "secret-key", Token: "secret-token" },
+                responseType: "json",
+                maxRetries: 0,
+                logging: {
+                    level: "debug",
+                    logger: mockLogger,
+                    silent: false,
+                },
+            });
+
+            expect(mockLogger.debug).toHaveBeenCalledWith(
+                "Making HTTP request",
+                expect.objectContaining({
+                    queryParameters: expect.objectContaining({
+                        API_KEY: "[REDACTED]",
+                        Token: "[REDACTED]",
+                    }),
+                }),
+            );
+        });
+    });
+
+    describe("Query String Redaction", () => {
+        it("should redact api_key in queryString via URL", async () => {
+            const mockLogger = createMockLogger();
+            mockSuccessResponse();
+
+            await fetcherImpl({
+                url: "https://example.com/api",
+                method: "GET",
+                queryString: "api_key=secret-key&page=1",
+                responseType: "json",
+                maxRetries: 0,
+                logging: {
+                    level: "debug",
+                    logger: mockLogger,
+                    silent: false,
+                },
+            });
+
+            expect(mockLogger.debug).toHaveBeenCalledWith(
+                "Making HTTP request",
+                expect.objectContaining({
+                    url: "https://example.com/api?api_key=[REDACTED]&page=1",
+                }),
+            );
+        });
+
+        it("should redact multiple sensitive params in queryString", async () => {
+            const mockLogger = createMockLogger();
+            mockSuccessResponse();
+
+            await fetcherImpl({
+                url: "https://example.com/api",
+                method: "GET",
+                queryString: "token=t&password=p&page=1",
+                responseType: "json",
+                maxRetries: 0,
+                logging: {
+                    level: "debug",
+                    logger: mockLogger,
+                    silent: false,
+                },
+            });
+
+            expect(mockLogger.debug).toHaveBeenCalledWith(
+                "Making HTTP request",
+                expect.objectContaining({
+                    url: "https://example.com/api?token=[REDACTED]&password=[REDACTED]&page=1",
+                }),
+            );
+        });
+
+        it("should not redact non-sensitive params in queryString", async () => {
+            const mockLogger = createMockLogger();
+            mockSuccessResponse();
+
+            await fetcherImpl({
+                url: "https://example.com/api",
+                method: "GET",
+                queryString: "page=1&limit=10&sort=name",
+                responseType: "json",
+                maxRetries: 0,
+                logging: {
+                    level: "debug",
+                    logger: mockLogger,
+                    silent: false,
+                },
+            });
+
+            expect(mockLogger.debug).toHaveBeenCalledWith(
+                "Making HTTP request",
+                expect.objectContaining({
+                    url: "https://example.com/api?page=1&limit=10&sort=name",
+                }),
+            );
+        });
+
+        it("should prefer queryString over queryParameters when both provided", async () => {
+            const mockLogger = createMockLogger();
+            mockSuccessResponse();
+
+            await fetcherImpl({
+                url: "https://example.com/api",
+                method: "GET",
+                queryString: "page=1",
+                queryParameters: { api_key: "secret-key" },
+                responseType: "json",
+                maxRetries: 0,
+                logging: {
+                    level: "debug",
+                    logger: mockLogger,
+                    silent: false,
+                },
+            });
+
+            expect(mockLogger.debug).toHaveBeenCalledWith(
+                "Making HTTP request",
+                expect.objectContaining({
+                    url: "https://example.com/api?page=1",
+                    queryParameters: expect.objectContaining({
+                        api_key: "[REDACTED]",
+                    }),
+                }),
+            );
+        });
+    });
+
     describe("URL Redaction", () => {
         it("should redact credentials in URL", async () => {
             const mockLogger = createMockLogger();

@@ -1,6 +1,7 @@
 import { toJson } from "../json.js";
 import { createLogger, type LogConfig, type Logger } from "../logging/logger.js";
 import type { APIResponse } from "./APIResponse.js";
+import { createRequestUrl } from "./createRequestUrl.js";
 import type { EndpointMetadata } from "./EndpointMetadata.js";
 import { EndpointSupplier } from "./EndpointSupplier.js";
 import { getErrorResponseBody } from "./getErrorResponseBody.js";
@@ -20,6 +21,12 @@ export declare namespace Fetcher {
         method: string;
         contentType?: string;
         headers?: Record<string, unknown>;
+        /**
+         * @deprecated Prefer `queryString` (produced by `core.url.queryBuilder()`).
+         * Retained for backwards compatibility with custom fetchers and callers that
+         * still construct request args with a query-parameter object.
+         */
+        queryParameters?: Record<string, unknown>;
         queryString?: string;
         body?: unknown;
         timeoutMs?: number;
@@ -116,6 +123,19 @@ const SENSITIVE_QUERY_PARAMS = new Set([
     "session_id",
     "session-id",
 ]);
+
+function redactQueryParameters(
+    queryParameters: Record<string, unknown> | undefined,
+): Record<string, unknown> | undefined {
+    if (queryParameters == null) {
+        return undefined;
+    }
+    const redacted: Record<string, unknown> = {};
+    for (const [key, value] of Object.entries(queryParameters)) {
+        redacted[key] = SENSITIVE_QUERY_PARAMS.has(key.toLowerCase()) ? "[REDACTED]" : value;
+    }
+    return redacted;
+}
 
 function redactUrl(url: string): string {
     const protocolIndex = url.indexOf("://");
@@ -238,6 +258,8 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
     let url = args.url;
     if (args.queryString != null && args.queryString.length > 0) {
         url = `${url}?${args.queryString}`;
+    } else {
+        url = createRequestUrl(args.url, args.queryParameters);
     }
     const requestBody: BodyInit | undefined = await getRequestBody({
         body: args.body,
@@ -252,6 +274,7 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
             method: args.method,
             url: redactUrl(url),
             headers: redactHeaders(headers),
+            queryParameters: redactQueryParameters(args.queryParameters),
             hasBody: requestBody != null,
         };
         logger.debug("Making HTTP request", metadata);

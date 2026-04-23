@@ -13,6 +13,7 @@ exports.fetcher = void 0;
 exports.fetcherImpl = fetcherImpl;
 const json_js_1 = require("../json.js");
 const logger_js_1 = require("../logging/logger.js");
+const createRequestUrl_js_1 = require("./createRequestUrl.js");
 const EndpointSupplier_js_1 = require("./EndpointSupplier.js");
 const getErrorResponseBody_js_1 = require("./getErrorResponseBody.js");
 const getFetchFn_js_1 = require("./getFetchFn.js");
@@ -72,6 +73,16 @@ const SENSITIVE_QUERY_PARAMS = new Set([
     "session_id",
     "session-id",
 ]);
+function redactQueryParameters(queryParameters) {
+    if (queryParameters == null) {
+        return undefined;
+    }
+    const redacted = {};
+    for (const [key, value] of Object.entries(queryParameters)) {
+        redacted[key] = SENSITIVE_QUERY_PARAMS.has(key.toLowerCase()) ? "[REDACTED]" : value;
+    }
+    return redacted;
+}
 function redactUrl(url) {
     const protocolIndex = url.indexOf("://");
     if (protocolIndex === -1)
@@ -174,6 +185,9 @@ function fetcherImpl(args) {
         if (args.queryString != null && args.queryString.length > 0) {
             url = `${url}?${args.queryString}`;
         }
+        else {
+            url = (0, createRequestUrl_js_1.createRequestUrl)(args.url, args.queryParameters);
+        }
         const requestBody = yield (0, getRequestBody_js_1.getRequestBody)({
             body: args.body,
             type: (_a = args.requestType) !== null && _a !== void 0 ? _a : "other",
@@ -186,6 +200,7 @@ function fetcherImpl(args) {
                 method: args.method,
                 url: redactUrl(url),
                 headers: redactHeaders(headers),
+                queryParameters: redactQueryParameters(args.queryParameters),
                 hasBody: requestBody != null,
             };
             logger.debug("Making HTTP request", metadata);
