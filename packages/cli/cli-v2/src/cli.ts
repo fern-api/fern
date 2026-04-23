@@ -15,6 +15,7 @@ import { addDocsCommand } from "./commands/docs/index.js";
 import { addInitCommand } from "./commands/init/index.js";
 import { addOrgCommand } from "./commands/org/index.js";
 import { addReplayCommand } from "./commands/replay/index.js";
+import { addSchemaCommand } from "./commands/schema/index.js";
 import { addSdkCommand } from "./commands/sdk/index.js";
 import { addTelemetryCommand } from "./commands/telemetry/index.js";
 import { isCompletionMode } from "./completion.js";
@@ -142,6 +143,7 @@ function createCliV2(argv?: string[]): Argv<GlobalArgs> {
     addInitCommand(cli);
     addOrgCommand(cli);
     addReplayCommand(cli);
+    addSchemaCommand(cli);
     addSdkCommand(cli);
     addTelemetryCommand(cli);
 
