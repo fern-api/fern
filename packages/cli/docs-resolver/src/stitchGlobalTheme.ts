@@ -140,7 +140,7 @@ const KEBAB_TO_CAMEL: Readonly<Record<string, keyof RawDocsConfig>> = {
     "background-image": "backgroundImage",
     "navbar-links": "navbarLinks",
     "footer-links": "footerLinks",
-    "ai-search": "aiSearch",
+    "ai-search": "aiSearch"
 };
 
 // Fields the theme is allowed to override in the child docs.yml.
@@ -163,7 +163,7 @@ const THEME_ELIGIBLE_KEYS: ReadonlyArray<keyof RawDocsConfig> = [
     "navbarLinks",
     "footerLinks",
     "aiSearch",
-    "announcement",
+    "announcement"
 ];
 
 // Normalise the theme config (which arrives with kebab-case top-level keys from FDR)
@@ -221,7 +221,18 @@ export async function stitchGlobalTheme({
     const url = `${fdrOrigin}/v2/registry/themes/${organization}/${encodeURIComponent(themeName)}`;
     let themeConfig: Record<string, unknown>;
     try {
-        const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
+        const res = await fetch(url, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                // Opt out of gzip/br compression — @fastify/compress v8 sets Content-Length: 0
+                // when compressing, which causes undici to read an empty body.
+                "Accept-Encoding": "identity"
+            }
+        });
+
+        // Read as text first so we can give a useful error on empty / non-JSON bodies
+        const rawText = await res.text();
+
         if (res.status === 404) {
             taskContext.failAndThrow(
                 `Global theme "${themeName}" not found for org "${organization}". ` +
@@ -231,7 +242,39 @@ export async function stitchGlobalTheme({
         if (!res.ok) {
             taskContext.failAndThrow(`Failed to fetch global theme "${themeName}": HTTP ${res.status}`);
         }
-        const body = (await res.json()) as { config: Record<string, unknown> };
+
+        let parsed: unknown;
+        try {
+            parsed = JSON.parse(rawText);
+        } catch {
+            taskContext.failAndThrow(
+                `Failed to fetch global theme "${themeName}": unexpected response from server` +
+                    (rawText.length > 0 ? ` — ${rawText.slice(0, 200)}` : " (empty body)")
+            );
+        }
+
+        // ORPC can encode errors (e.g. NOT_FOUND) inside a 200 response body
+        const body = parsed as {
+            config?: Record<string, unknown>;
+            error?: { code?: string; message?: string };
+        };
+        if (body.error != null) {
+            if (body.error.code === "NOT_FOUND") {
+                taskContext.failAndThrow(
+                    `Global theme "${themeName}" not found for org "${organization}". ` +
+                        `Upload it first with: fern beta docs theme upload --name ${themeName}`
+                );
+            }
+            taskContext.failAndThrow(
+                `Failed to fetch global theme "${themeName}": ${body.error.message ?? body.error.code ?? "unknown error"}`
+            );
+        }
+
+        if (body.config == null) {
+            taskContext.failAndThrow(`Failed to fetch global theme "${themeName}": response missing "config" field`);
+            return docsWorkspace;
+        }
+
         themeConfig = body.config;
     } catch (err) {
         if (err instanceof Error && err.message.includes("fetch failed")) {

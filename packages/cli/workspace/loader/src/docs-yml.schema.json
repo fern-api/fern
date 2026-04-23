@@ -155,6 +155,16 @@
         }
       ]
     },
+    "global-theme": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "experimental": {
       "oneOf": [
         {

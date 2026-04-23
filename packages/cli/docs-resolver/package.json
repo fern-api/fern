@@ -49,6 +49,7 @@
     "@fern-api/register": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/ui-core-utils": "catalog:",
+    "@fern-api/workspace-loader": "workspace:*",
     "@open-rpc/meta-schema": "catalog:",
     "@types/fast-levenshtein": "catalog:",
     "dayjs": "catalog:",
@@ -58,11 +59,11 @@
     "js-yaml": "catalog:",
     "lodash-es": "catalog:",
     "openapi-types": "^12.1.3",
+    "tmp-promise": "catalog:",
     "url-join": "catalog:"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
-    "@fern-api/workspace-loader": "workspace:*",
     "@types/js-yaml": "catalog:",
     "@types/lodash-es": "catalog:",
     "@types/node": "catalog:",
