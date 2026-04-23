@@ -1,0 +1,256 @@
+import { docsYml } from "@fern-api/configuration";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { TaskContext } from "@fern-api/task-context";
+import { DocsWorkspace } from "@fern-api/workspace-loader";
+
+import { writeFile } from "fs/promises";
+import path from "path";
+import tmp from "tmp-promise";
+
+type RawDocsConfig = docsYml.RawSchemas.DocsConfiguration;
+
+// Theme-eligible fields that can contain local file paths (strings that become
+// { hash } sentinels on upload and presigned S3 URLs on GET from FDR).
+// Presigned S3 URLs are identified by the presence of "X-Amz-" in the query string.
+function isPresignedUrl(value: string): boolean {
+    return (value.startsWith("http://") || value.startsWith("https://")) && value.includes("X-Amz-");
+}
+
+function isRemoteUrl(value: string): boolean {
+    return value.startsWith("http://") || value.startsWith("https://");
+}
+
+async function downloadToTemp(url: string, tmpDir: string, index: number): Promise<string> {
+    const ext = (() => {
+        try {
+            const pathname = new URL(url).pathname;
+            const dot = pathname.lastIndexOf(".");
+            return dot >= 0 ? pathname.slice(dot) : "";
+        } catch {
+            return "";
+        }
+    })();
+    const dest = path.join(tmpDir, `theme_asset_${index}${ext}`);
+    const res = await fetch(url);
+    if (!res.ok) {
+        throw new Error(`Failed to download theme asset: ${res.status} ${url}`);
+    }
+    const buf = Buffer.from(await res.arrayBuffer());
+    await writeFile(dest, buf);
+    return dest;
+}
+
+async function resolveThemeFileUrls(
+    themeConfig: Record<string, unknown>,
+    tmpDir: string
+): Promise<Record<string, unknown>> {
+    let idx = 0;
+    // Deep clone so we don't mutate the fetched object
+    const cfg: Record<string, unknown> = JSON.parse(JSON.stringify(themeConfig));
+
+    async function maybeDownload(val: unknown): Promise<unknown> {
+        if (typeof val === "string" && isPresignedUrl(val)) {
+            return downloadToTemp(val, tmpDir, idx++);
+        }
+        return val;
+    }
+
+    // logo
+    if (cfg.logo != null && typeof cfg.logo === "object") {
+        const logo = cfg.logo as Record<string, unknown>;
+        logo.dark = await maybeDownload(logo.dark);
+        logo.light = await maybeDownload(logo.light);
+    }
+
+    // favicon
+    cfg.favicon = await maybeDownload(cfg.favicon);
+
+    // background-image
+    if (cfg["background-image"] != null && typeof cfg["background-image"] === "object") {
+        const bg = cfg["background-image"] as Record<string, unknown>;
+        bg.dark = await maybeDownload(bg.dark);
+        bg.light = await maybeDownload(bg.light);
+    }
+
+    // typography fonts
+    if (cfg.typography != null && typeof cfg.typography === "object") {
+        const typo = cfg.typography as Record<string, unknown>;
+        for (const fontKey of ["bodyFont", "headingsFont", "codeFont"]) {
+            const font = typo[fontKey];
+            if (font != null && typeof font === "object") {
+                const fontObj = font as Record<string, unknown>;
+                if (Array.isArray(fontObj.paths)) {
+                    for (const entry of fontObj.paths) {
+                        if (entry != null && typeof entry === "object") {
+                            const e = entry as Record<string, unknown>;
+                            e.path = await maybeDownload(e.path);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // css — string or array of strings; only download presigned ones, leave remote URLs as-is
+    if (typeof cfg.css === "string") {
+        cfg.css = isPresignedUrl(cfg.css) ? await downloadToTemp(cfg.css, tmpDir, idx++) : cfg.css;
+    } else if (Array.isArray(cfg.css)) {
+        cfg.css = await Promise.all(
+            (cfg.css as unknown[]).map(async (item) => {
+                if (typeof item === "string" && isPresignedUrl(item)) {
+                    return downloadToTemp(item, tmpDir, idx++);
+                }
+                return item;
+            })
+        );
+    }
+
+    // js — remote entries (url field) stay as-is; local entries (path field or plain string) get downloaded
+    const rawJs = cfg.js;
+    const jsList: unknown[] = Array.isArray(rawJs) ? rawJs : rawJs != null ? [rawJs] : [];
+    cfg.js = await Promise.all(
+        jsList.map(async (entry) => {
+            if (entry == null || typeof entry !== "object") {
+                return entry;
+            }
+            const e = entry as Record<string, unknown>;
+            // { url: "..." } → remote, leave alone
+            if (typeof e.url === "string" && isRemoteUrl(e.url)) {
+                return e;
+            }
+            // { path: "..." } → local file, may have been uploaded
+            if (typeof e.path === "string" && isPresignedUrl(e.path)) {
+                return { ...e, path: await downloadToTemp(e.path, tmpDir, idx++) };
+            }
+            return e;
+        })
+    );
+
+    // header / footer (compiled component files)
+    cfg.header = await maybeDownload(cfg.header);
+    cfg.footer = await maybeDownload(cfg.footer);
+
+    return cfg;
+}
+
+// Mapping from the kebab-case keys used in theme.yml (and stored in FDR) to the
+// camelCase keys used in DocsConfiguration (as deserialized by the Fern SDK serializer).
+// Only fields that differ between the two forms need an explicit entry here.
+const KEBAB_TO_CAMEL: Readonly<Record<string, keyof RawDocsConfig>> = {
+    "background-image": "backgroundImage",
+    "navbar-links": "navbarLinks",
+    "footer-links": "footerLinks",
+    "ai-search": "aiSearch",
+};
+
+// Fields the theme is allowed to override in the child docs.yml.
+// Navigation-scoped and identity fields stay in the child repo.
+// Keys use the camelCase form that DocsConfiguration uses internally.
+const THEME_ELIGIBLE_KEYS: ReadonlyArray<keyof RawDocsConfig> = [
+    "logo",
+    "favicon",
+    "backgroundImage",
+    "colors",
+    "typography",
+    "layout",
+    "settings",
+    "theme",
+    "integrations",
+    "css",
+    "js",
+    "header",
+    "footer",
+    "navbarLinks",
+    "footerLinks",
+    "aiSearch",
+    "announcement",
+];
+
+// Normalise the theme config (which arrives with kebab-case top-level keys from FDR)
+// into the camelCase shape expected by DocsConfiguration.
+function normalizeThemeKeys(raw: Record<string, unknown>): Record<string, unknown> {
+    const out: Record<string, unknown> = {};
+    for (const [k, v] of Object.entries(raw)) {
+        const camel = KEBAB_TO_CAMEL[k] ?? (k as keyof RawDocsConfig);
+        out[camel] = v;
+    }
+    return out;
+}
+
+function mergeThemeOverride(local: RawDocsConfig, themeOverride: Record<string, unknown>): RawDocsConfig {
+    const normalized = normalizeThemeKeys(themeOverride);
+    const merged: Record<string, unknown> = { ...(local as unknown as Record<string, unknown>) };
+    for (const key of THEME_ELIGIBLE_KEYS) {
+        if (normalized[key] !== undefined && normalized[key] !== null) {
+            merged[key] = normalized[key];
+        }
+    }
+    return merged as unknown as RawDocsConfig;
+}
+
+interface StitchGlobalThemeArgs {
+    docsWorkspace: DocsWorkspace;
+    organization: string;
+    fdrOrigin: string;
+    token: string;
+    taskContext: TaskContext;
+}
+
+/**
+ * If the docs.yml declares `global-theme: <name>`, fetches that named theme from
+ * FDR, downloads any file assets to a temp directory, and returns a new DocsWorkspace
+ * whose raw config has the theme values merged in (theme wins for branding fields).
+ *
+ * The temp directory is cleaned up on process exit.
+ * If no global-theme is declared, returns the workspace unchanged.
+ */
+export async function stitchGlobalTheme({
+    docsWorkspace,
+    organization,
+    fdrOrigin,
+    token,
+    taskContext
+}: StitchGlobalThemeArgs): Promise<DocsWorkspace> {
+    const themeName = docsWorkspace.config.globalTheme;
+    if (themeName == null) {
+        return docsWorkspace;
+    }
+
+    taskContext.logger.info(`Fetching global theme "${themeName}" for org "${organization}"...`);
+
+    const url = `${fdrOrigin}/v2/registry/themes/${organization}/${encodeURIComponent(themeName)}`;
+    let themeConfig: Record<string, unknown>;
+    try {
+        const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
+        if (res.status === 404) {
+            taskContext.failAndThrow(
+                `Global theme "${themeName}" not found for org "${organization}". ` +
+                    `Upload it first with: fern beta docs theme upload --name ${themeName}`
+            );
+        }
+        if (!res.ok) {
+            taskContext.failAndThrow(`Failed to fetch global theme "${themeName}": HTTP ${res.status}`);
+        }
+        const body = (await res.json()) as { config: Record<string, unknown> };
+        themeConfig = body.config;
+    } catch (err) {
+        if (err instanceof Error && err.message.includes("fetch failed")) {
+            taskContext.failAndThrow(`Could not reach FDR at ${fdrOrigin} to fetch global theme "${themeName}"`);
+        }
+        throw err;
+    }
+
+    // Download file assets to a temp directory that lives for the duration of the process
+    const { path: tmpDirPath } = await tmp.dir({ prefix: "fern-theme-", unsafeCleanup: true });
+    taskContext.logger.debug(`Downloading theme assets to ${tmpDirPath}`);
+
+    const resolvedConfig = await resolveThemeFileUrls(themeConfig, tmpDirPath);
+
+    const mergedRawConfig = mergeThemeOverride(docsWorkspace.config, resolvedConfig);
+
+    taskContext.logger.info(
+        `Applied global theme "${themeName}" — ${AbsoluteFilePath.of(tmpDirPath)} (cleaned up on exit)`
+    );
+
+    return { ...docsWorkspace, config: mergedRawConfig };
+}

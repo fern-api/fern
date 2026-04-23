@@ -213,6 +213,7 @@ export async function parseDocsConfiguration({
         llmsTxtFile,
         llmsFullTxtFile,
         theme: resolvedTheme,
+        globalTheme: rawDocsConfiguration.globalTheme,
         analyticsConfig: {
             ...rawDocsConfiguration.analytics,
             intercom: rawDocsConfiguration.analytics?.intercom

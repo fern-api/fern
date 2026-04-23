@@ -79,4 +79,6 @@ export interface DocsConfiguration {
      * The component must have a default export.
      */
     footer?: string;
+    /** Name of a global org-level theme stored in FDR to merge on top of this docs config. */
+    globalTheme?: string;
 }

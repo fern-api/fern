@@ -4727,6 +4727,9 @@ importers:
       dotenv:
         specifier: ^16.0.0
         version: 16.6.1
+      mime-types:
+        specifier: 'catalog:'
+        version: 2.1.35
       tmp-promise:
         specifier: 'catalog:'
         version: 3.0.3
@@ -4872,6 +4875,9 @@ importers:
       '@types/jsonwebtoken':
         specifier: 'catalog:'
         version: 9.0.10
+      '@types/mime-types':
+        specifier: 'catalog:'
+        version: 2.1.4
       '@types/node':
         specifier: 'catalog:'
         version: 22.19.17

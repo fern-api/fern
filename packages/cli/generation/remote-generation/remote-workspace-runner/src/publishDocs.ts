@@ -27,6 +27,7 @@ import * as mime from "mime-types";
 import terminalLink from "terminal-link";
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig.js";
 import { measureImageSizes } from "./measureImageSizes.js";
+import { stitchGlobalTheme } from "./stitchGlobalTheme.js";
 import { asyncPool } from "./utils/asyncPool.js";
 
 const MEASURE_IMAGE_BATCH_SIZE = 10;
@@ -216,9 +217,17 @@ export async function publishDocs({
     process.on("SIGTERM", onSignal);
 
     try {
+        const effectiveWorkspace = await stitchGlobalTheme({
+            docsWorkspace,
+            organization,
+            fdrOrigin,
+            token: token.value,
+            taskContext: context
+        });
+
         const resolver = new DocsDefinitionResolver({
             domain,
-            docsWorkspace,
+            docsWorkspace: effectiveWorkspace,
             ossWorkspaces,
             apiWorkspaces,
             taskContext: context,

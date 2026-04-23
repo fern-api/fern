@@ -89,6 +89,7 @@
     "@types/node": "catalog:",
     "@types/semver": "catalog:",
     "@types/uuid": "^9.0.7",
+    "@types/mime-types": "catalog:",
     "@types/yargs": "^17.0.28",
     "chalk": "catalog:",
     "find-up": "catalog:",
@@ -110,6 +111,7 @@
   },
   "dependencies": {
     "dotenv": "^16.0.0",
+    "mime-types": "catalog:",
     "tmp-promise": "catalog:"
   }
 }

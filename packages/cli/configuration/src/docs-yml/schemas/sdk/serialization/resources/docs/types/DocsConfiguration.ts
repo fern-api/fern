@@ -79,6 +79,7 @@ export const DocsConfiguration: core.serialization.ObjectSchema<
     js: JsConfig.optional(),
     header: core.serialization.string().optional(),
     footer: core.serialization.string().optional(),
+    globalTheme: core.serialization.property("global-theme", core.serialization.string().optional()),
 });
 
 export declare namespace DocsConfiguration {
@@ -120,5 +121,6 @@ export declare namespace DocsConfiguration {
         js?: JsConfig.Raw | null;
         header?: string | null;
         footer?: string | null;
+        "global-theme"?: string | null;
     }
 }

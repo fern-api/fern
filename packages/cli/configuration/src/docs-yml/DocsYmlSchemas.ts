@@ -979,6 +979,7 @@ export const DocsConfiguration = z.object({
     layout: LayoutConfig.optional(),
     settings: DocsSettingsConfig.optional(),
     theme: ThemeConfig.optional(),
+    "global-theme": z.string().optional(),
     integrations: IntegrationsConfig.optional(),
     css: CssConfig.optional(),
     js: JsConfig.optional(),
