@@ -24,9 +24,11 @@ import {
 } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, convertToFernHostAbsoluteFilePath, doesPathExist, relative } from "@fern-api/fs-utils";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { getOriginalName } from "@fern-api/ir-utils";
 import { Project } from "@fern-api/project-loader";
 import { convertIrToFdrApi } from "@fern-api/register";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
+
 import { readFile } from "fs/promises";
 import grayMatter from "gray-matter";
 import { v4 as uuidv4 } from "uuid";
@@ -128,7 +130,7 @@ export async function getPreviewDocsDefinition({
     const docsWorkspace = project.docsWorkspaces;
     const apiWorkspaces = project.apiWorkspaces;
     if (docsWorkspace == null) {
-        throw new Error("No docs workspace found in project");
+        throw new CliError({ message: "No docs workspace found in project", code: CliError.Code.ConfigError });
     }
 
     if (editedAbsoluteFilepaths != null && previousDocsDefinition != null) {
@@ -315,7 +317,7 @@ export async function getPreviewDocsDefinition({
         filesV2,
         pages: dbDocsDefinition.pages,
         jsFiles: dbDocsDefinition.jsFiles,
-        apiNameToId: {},
+        apiNameToId: apiCollector.getApiNameToId(),
         id: undefined
     };
 
@@ -337,6 +339,7 @@ type APIDefinitionID = string;
 
 class ReferencedAPICollector {
     private readonly apis: Record<APIDefinitionID, APIV1Read.ApiDefinition> = {};
+    private readonly apiNameToId: Record<string, string> = {};
 
     constructor(private readonly context: TaskContext) {}
 
@@ -381,6 +384,14 @@ class ReferencedAPICollector {
             const readApiDefinition = convertDbAPIDefinitionToRead(dbApiDefinition);
 
             this.apis[id] = readApiDefinition;
+            // Mirror the FDR publish path (registerApi.ts, publishDocs.ts), which registers
+            // each API under `apiName ?? getOriginalName(ir.apiName)`. Without this mapping,
+            // features like type resolution in MDX widgets (MergeSupportedFieldsByIntegrationWidget,
+            // etc.) that look up APIs by user-facing name fail in `fern docs dev`.
+            const resolvedApiName = apiName ?? getOriginalName(ir.apiName);
+            if (resolvedApiName) {
+                this.apiNameToId[resolvedApiName] = id;
+            }
             return id;
         } catch (e) {
             // Print Error
@@ -398,6 +409,13 @@ class ReferencedAPICollector {
 
     public getAPIsForDefinition(): Record<FdrAPI.ApiDefinitionId, APIV1Read.ApiDefinition> {
         return this.apis;
+    }
+
+    public getApiNameToId(): Record<string, DocsV1Read.ApiDefinitionId> {
+        // IDs originate from uuidv4() and are used as-is alongside this.apis (which is keyed by
+        // the same raw uuids). ApiDefinitionId branding is purely a nominal-type marker
+        // and carries no runtime information, so this cast is safe.
+        return this.apiNameToId as Record<string, DocsV1Read.ApiDefinitionId>;
     }
 }
 

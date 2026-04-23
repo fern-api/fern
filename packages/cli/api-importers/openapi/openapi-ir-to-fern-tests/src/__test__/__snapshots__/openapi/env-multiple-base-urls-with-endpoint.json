@@ -190,6 +190,84 @@
     openapi: ../openapi.yml
 ",
     },
+    "eventsChannel.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "channel": {
+          "auth": false,
+          "examples": [
+            {
+              "messages": [
+                {
+                  "body": "string",
+                  "type": "event",
+                },
+              ],
+            },
+          ],
+          "messages": {
+            "event": {
+              "body": "string",
+              "origin": "server",
+            },
+          },
+          "path": "/v1/events",
+          "url": "Events",
+        },
+      },
+      "rawContents": "channel:
+  path: /v1/events
+  url: Events
+  auth: false
+  messages:
+    event:
+      origin: server
+      body: string
+  examples:
+    - messages:
+        - type: event
+          body: string
+",
+    },
+    "uploadChannel.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "channel": {
+          "auth": false,
+          "examples": [
+            {
+              "messages": [
+                {
+                  "body": "string",
+                  "type": "uploadProgress",
+                },
+              ],
+            },
+          ],
+          "messages": {
+            "uploadProgress": {
+              "body": "string",
+              "origin": "server",
+            },
+          },
+          "path": "/v1/uploads",
+          "url": "Upload_wss",
+        },
+      },
+      "rawContents": "channel:
+  path: /v1/uploads
+  url: Upload_wss
+  auth: false
+  messages:
+    uploadProgress:
+      origin: server
+      body: string
+  examples:
+    - messages:
+        - type: uploadProgress
+          body: string
+",
+    },
   },
   "packageMarkers": {},
   "rootApiFile": {
@@ -203,7 +281,9 @@
             "Auth": "https://account.example.com/oauth2",
             "Base": "https://api.example.com/2.0",
             "Download": "https://dl.example.com/2.0",
+            "Events": "wss://events.example.com",
             "Upload": "https://upload.example.com/2.0",
+            "Upload_wss": "wss://upload.example.com",
           },
         },
       },
@@ -224,6 +304,8 @@ environments:
       Auth: https://account.example.com/oauth2
       Upload: https://upload.example.com/2.0
       Download: https://dl.example.com/2.0
+      Events: wss://events.example.com
+      Upload_wss: wss://upload.example.com
 default-environment: Production
 default-url: Base
 ",

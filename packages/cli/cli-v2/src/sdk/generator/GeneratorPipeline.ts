@@ -175,7 +175,9 @@ export class GeneratorPipeline {
 
     private async runRemoteGeneration(args: GeneratorPipeline.RunArgs): Promise<GeneratorPipeline.Result> {
         if (args.token == null) {
-            throw CliError.authRequired();
+            throw CliError.authRequired(
+                "Authentication required. Please run 'fern auth login' or set the FERN_TOKEN environment variable."
+            );
         }
         const runner = new LegacyRemoteGenerationRunner({
             context: this.context,

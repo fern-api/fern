@@ -1,4 +1,4 @@
-import { GeneratorNotificationService } from "@fern-api/base-generator";
+import { GeneratorNotificationService, GeneratorError } from "@fern-api/base-generator";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import {
@@ -135,7 +135,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         } catch (error) {
             const errorMessage = extractErrorMessage(error);
             context.logger.debug(`Cargo publish failed with error: ${errorMessage}`);
-            throw new Error(`Failed to publish crate: ${errorMessage}`);
+            throw GeneratorError.internalError(`Failed to publish crate: ${errorMessage}`);
         }
     }
 
@@ -833,7 +833,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
             context.logger.debug("Successfully added README.md to project");
         } catch (error) {
-            throw new Error(`Failed to generate README.md: ${extractErrorMessage(error)}`);
+            throw GeneratorError.internalError(`Failed to generate README.md: ${extractErrorMessage(error)}`);
         }
     }
 
@@ -841,7 +841,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         const endpointSnippets: FernGeneratorExec.Endpoint[] = [];
         const dynamicIr = context.ir.dynamic;
         if (!dynamicIr) {
-            throw new Error("Cannot generate FernIr.dynamic snippets without FernIr.dynamic IR");
+            throw GeneratorError.internalError("Cannot generate FernIr.dynamic snippets without FernIr.dynamic IR");
         }
         const dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
             ir: convertIr(dynamicIr),
@@ -898,7 +898,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             context.project.addSourceFiles(referenceFile);
             context.logger.debug("Successfully added reference.md to project");
         } catch (error) {
-            throw new Error(`Failed to generate reference.md: ${extractErrorMessage(error)}`);
+            throw GeneratorError.internalError(`Failed to generate reference.md: ${extractErrorMessage(error)}`);
         }
     }
 

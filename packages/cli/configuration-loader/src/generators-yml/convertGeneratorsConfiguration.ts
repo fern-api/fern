@@ -2,7 +2,8 @@ import { generatorsYml } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { parseRepository } from "@fern-api/github";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
+
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { readFile } from "fs/promises";
 import path from "path";
@@ -42,6 +43,7 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     resolveAliases: undefined,
     groupMultiApiEnvironments: undefined,
     groupEnvironmentsByHost: undefined,
+    multiServerStrategy: undefined,
     inferDefaultEnvironment: undefined,
     wrapReferencesToNullableInOptional: undefined,
     coerceOptionalSchemasToNullable: undefined,
@@ -145,6 +147,7 @@ function parseOpenApiDefinitionSettingsSchema(
         resolveAliases: settings?.["resolve-aliases"],
         groupMultiApiEnvironments: settings?.["group-multi-api-environments"],
         groupEnvironmentsByHost: settings?.["group-environments-by-host"],
+        multiServerStrategy: settings?.["multi-server-strategy"],
         defaultIntegerFormat: settings?.["default-integer-format"],
         pathParameterOrder: settings?.["path-parameter-order"]
     };
@@ -172,6 +175,7 @@ export function parseBaseApiDefinitionSettingsSchema(
         wrapReferencesToNullableInOptional: settings?.["wrap-references-to-nullable-in-optional"],
         coerceOptionalSchemasToNullable: settings?.["coerce-optional-schemas-to-nullable"],
         groupEnvironmentsByHost: settings?.["group-environments-by-host"],
+        multiServerStrategy: settings?.["multi-server-strategy"],
         inferDefaultEnvironment: settings?.["infer-default-environment"],
         groupMultiApiEnvironments:
             settings != null && "group-multi-api-environments" in settings
@@ -195,7 +199,10 @@ function parseRemoveDiscriminantsFromSchemas(
     } else if (option === "never") {
         return generatorsYml.RemoveDiscriminantsFromSchemas.Never;
     }
-    throw new Error(`Unknown value for generators.yml API setting: remove-discriminants-from-schemas: ${option}`);
+    throw new CliError({
+        message: `Unknown value for generators.yml API setting: remove-discriminants-from-schemas: ${option}`,
+        code: CliError.Code.ConfigError
+    });
 }
 
 /**
@@ -995,7 +1002,10 @@ function getGithubPublishInfo(
 ): FernFiddle.GithubPublishInfo {
     switch (output.location) {
         case "local-file-system":
-            throw new Error("Cannot use local-file-system with github publishing");
+            throw new CliError({
+                message: "Cannot use local-file-system with github publishing",
+                code: CliError.Code.ConfigError
+            });
         case "npm":
             return FernFiddle.GithubPublishInfo.npm({
                 registryUrl: output.url ?? "https://registry.npmjs.org",

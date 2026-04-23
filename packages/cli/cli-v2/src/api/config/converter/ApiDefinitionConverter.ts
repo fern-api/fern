@@ -1,6 +1,7 @@
 import type { schemas } from "@fern-api/config";
 import { AbsoluteFilePath, dirname, doesPathExist, join, RelativeFilePath, relative } from "@fern-api/fs-utils";
 import { isNullish, type Sourced } from "@fern-api/source";
+import { CliError } from "@fern-api/task-context";
 import { type ReferenceResolver, ValidationIssue } from "@fern-api/yaml-loader";
 import type { FernYmlSchemaLoader } from "../../../config/fern-yml/FernYmlSchemaLoader.js";
 import type { ApiDefinition } from "../ApiDefinition.js";
@@ -271,7 +272,10 @@ export class ApiDefinitionConverter {
             });
         }
         // Unreachable; this should never happen if the schema validation is correct.
-        throw new Error(`Unknown spec type: ${JSON.stringify(spec)}`);
+        throw new CliError({
+            message: `Unknown spec type: ${JSON.stringify(spec)}`,
+            code: CliError.Code.InternalError
+        });
     }
 
     private async convertOpenApiSpec({

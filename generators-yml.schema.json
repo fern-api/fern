@@ -800,6 +800,13 @@
         "v2"
       ]
     },
+    "generators.MultiServerStrategy": {
+      "type": "string",
+      "enum": [
+        "environment-per-server",
+        "urls-per-environment"
+      ]
+    },
     "generators.RemoveDiscriminantsFromSchemas": {
       "type": "string",
       "enum": [
@@ -911,6 +918,16 @@
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "multi-server-strategy": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.MultiServerStrategy"
             },
             {
               "type": "null"
@@ -1368,6 +1385,23 @@
           "type": "string"
         },
         "default": {
+          "oneOf": [
+            {
+              "type": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "array",
+                "null"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "client-default": {
           "oneOf": [
             {
               "type": [
@@ -1968,6 +2002,16 @@
             }
           ]
         },
+        "multi-server-strategy": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.MultiServerStrategy"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "remove-discriminants-from-schemas": {
           "oneOf": [
             {
@@ -2340,6 +2384,16 @@
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "multi-server-strategy": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.MultiServerStrategy"
             },
             {
               "type": "null"
@@ -2848,6 +2902,16 @@
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "multi-server-strategy": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.MultiServerStrategy"
             },
             {
               "type": "null"

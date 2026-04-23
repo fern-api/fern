@@ -1,7 +1,7 @@
+import { CliError } from "@fern-api/task-context";
 import axios from "axios";
 import { IncomingMessage, Server } from "http";
 import open from "open";
-
 import { createServer } from "./createServer.js";
 
 /**
@@ -127,10 +127,10 @@ async function getTokenFromCode({
     );
     const { access_token: accessToken, id_token: idToken } = response.data;
     if (accessToken == null) {
-        throw new Error("Access token is not defined");
+        throw new CliError({ message: "Access token is not defined", code: CliError.Code.AuthError });
     }
     if (idToken == null) {
-        throw new Error("ID token is not defined");
+        throw new CliError({ message: "ID token is not defined", code: CliError.Code.AuthError });
     }
     return { accessToken, idToken };
 }

@@ -16,7 +16,7 @@ import { convertIrToDynamicSnippetsIr, generateIntermediateRepresentation } from
 import { getOriginalName } from "@fern-api/ir-utils";
 import { detectAirGappedMode, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { AIExampleEnhancerConfig, convertIrToFdrApi, enhanceExamplesWithAI } from "@fern-api/register";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import axios from "axios";
 import chalk from "chalk";
@@ -130,7 +130,8 @@ export async function publishDocs({
     docsUrl,
     cliVersion,
     ciSource,
-    deployerAuthor
+    deployerAuthor,
+    loginCommand = "fern login"
 }: {
     token: FernToken;
     organization: string;
@@ -152,6 +153,11 @@ export async function publishDocs({
     cliVersion?: string;
     ciSource?: CISource;
     deployerAuthor?: { username?: string; email?: string };
+    /**
+     * CLI command to reference in auth-failure hints (e.g. 'fern login' for v1,
+     * 'fern auth login' for CLI v2). Defaults to 'fern login'.
+     */
+    loginCommand?: string;
 }): Promise<string> {
     const fdrOrigin = process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com";
     const isAirGapped = await detectAirGappedMode(`${fdrOrigin}/health`, context.logger);
@@ -321,7 +327,7 @@ export async function publishDocs({
                             previewId: previewId != null ? sanitizePreviewId(previewId) : undefined
                         });
                     } catch (error) {
-                        return await startDocsRegisterFailed(error, context, organization, domain);
+                        return await startDocsRegisterFailed(error, context, organization, domain, loginCommand);
                     }
                     urlToOutput = startDocsRegisterResponse.previewUrl;
                     docsRegistrationId = startDocsRegisterResponse.docsRegistrationId;
@@ -371,7 +377,7 @@ export async function publishDocs({
                             ...(isBasepathAware && { basepathAware: true })
                         });
                     } catch (error) {
-                        return startDocsRegisterFailed(error, context, organization, domain);
+                        return startDocsRegisterFailed(error, context, organization, domain, loginCommand);
                     }
                     docsRegistrationId = startDocsRegisterResponse.docsRegistrationId;
                     deployLocked = true;
@@ -521,12 +527,14 @@ export async function publishDocs({
                     if (apiName != null) {
                         return context.failAndThrow(
                             `Failed to publish docs because API definition (${apiName}) could not be uploaded. Please contact support@buildwithfern.com`,
-                            errorDetails
+                            errorDetails,
+                            { code: CliError.Code.NetworkError }
                         );
                     } else {
                         return context.failAndThrow(
                             `Failed to publish docs because API definition could not be uploaded. Please contact support@buildwithfern.com`,
-                            errorDetails
+                            errorDetails,
+                            { code: CliError.Code.NetworkError }
                         );
                     }
                 }
@@ -562,7 +570,7 @@ export async function publishDocs({
             const { jsFiles, ...docsWithoutJsFiles } = docsDefinition;
             const substitutedDocs = replaceEnvVariables(
                 docsWithoutJsFiles,
-                { onError: (e) => context.failAndThrow(e) },
+                { onError: (e) => context.failAndThrow(undefined, e, { code: CliError.Code.EnvironmentError }) },
                 { substituteAsEmpty: false }
             );
             docsDefinition = { ...substitutedDocs, jsFiles };
@@ -580,7 +588,9 @@ export async function publishDocs({
 
         if (docsRegistrationId == null) {
             doUnlock();
-            return context.failAndThrow("Failed to publish docs.", "Docs registration ID is missing.");
+            return context.failAndThrow("Failed to publish docs.", "Docs registration ID is missing.", {
+                code: CliError.Code.InternalError
+            });
         }
 
         context.logger.info("Publishing docs to FDR...");
@@ -593,7 +603,9 @@ export async function publishDocs({
                 ...(isBasepathAware && !preview && { basepathAware: true })
             });
         } catch (error) {
-            return context.failAndThrow("Failed to publish docs to " + domain, error);
+            return context.failAndThrow("Failed to publish docs to " + domain, error, {
+                code: CliError.Code.NetworkError
+            });
         }
 
         const publishTime = performance.now() - publishStart;
@@ -680,7 +692,9 @@ async function uploadFiles(
                     });
                 } catch (e) {
                     // file might not exist
-                    context.failAndThrow(`Failed to upload ${absoluteFilePath}`, e);
+                    context.failAndThrow(`Failed to upload ${absoluteFilePath}`, e, {
+                        code: CliError.Code.NetworkError
+                    });
                 }
             })
         );
@@ -715,7 +729,8 @@ async function startDocsRegisterFailed(
     error: unknown,
     context: TaskContext,
     organization: string,
-    domain: string
+    domain: string,
+    loginCommand: string
 ): Promise<never> {
     context.instrumentPostHogEvent({
         command: "docs-generation",
@@ -735,46 +750,69 @@ async function startDocsRegisterFailed(
         throw new DocsPublishConflictError();
     }
 
-    const authErrorMessage = getAuthenticationErrorMessage(error, organization, domain);
+    const authErrorMessage = getAuthenticationErrorMessage(error, organization, domain, loginCommand);
     if (authErrorMessage != null) {
-        return context.failAndThrow(authErrorMessage);
+        return context.failAndThrow(authErrorMessage, undefined, { code: CliError.Code.AuthError });
     }
 
     const errorType = errorObj?.error as string | undefined;
     switch (errorType) {
         case "InvalidCustomDomainError":
             return context.failAndThrow(
-                `Your docs domain should end with ${process.env.DOCS_DOMAIN_SUFFIX ?? "docs.buildwithfern.com"}`
+                `Your docs domain should end with ${process.env.DOCS_DOMAIN_SUFFIX ?? "docs.buildwithfern.com"}`,
+                undefined,
+                { code: CliError.Code.ConfigError }
             );
         case "InvalidDomainError":
             return context.failAndThrow(
-                "Please make sure that none of your custom domains are not overlapping (i.e. one is a substring of another)"
+                "Please make sure that none of your custom domains are not overlapping (i.e. one is a substring of another)",
+                undefined,
+                { code: CliError.Code.ConfigError }
             );
         case "UnauthorizedError":
-            return context.failAndThrow(buildAuthFailureMessage(domain, organization, errorContent));
+            return context.failAndThrow(
+                buildAuthFailureMessage(domain, organization, errorContent, loginCommand),
+                undefined,
+                {
+                    code: CliError.Code.AuthError
+                }
+            );
         case "UserNotInOrgError":
             return context.failAndThrow(
-                `You do not belong to organization '${organization}'. Please run 'fern login' to ensure you are logged in with the correct account.\n\n` +
-                    "Please ensure you have membership at https://dashboard.buildwithfern.com, and ask a team member for an invite if not."
+                `You do not belong to organization '${organization}'. Please run '${loginCommand}' to ensure you are logged in with the correct account.\n\n` +
+                    "Please ensure you have membership at https://dashboard.buildwithfern.com, and ask a team member for an invite if not.",
+                undefined,
+                { code: CliError.Code.AuthError }
             );
         case "UnavailableError":
             return context.failAndThrow(
-                "Failed to publish docs. Please try again later or reach out to Fern support at support@buildwithfern.com."
+                "Failed to publish docs. Please try again later or reach out to Fern support at support@buildwithfern.com.",
+                undefined,
+                { code: CliError.Code.NetworkError }
             );
         default:
-            return context.failAndThrow("Failed to publish docs.", error);
+            return context.failAndThrow("Failed to publish docs.", error, { code: CliError.Code.NetworkError });
     }
 }
 
-function getAuthenticationErrorMessage(error: unknown, organization: string, domain: string): string | undefined {
-    const errorObj = error as Record<string, unknown>;
-    const content = errorObj?.content as Record<string, unknown> | undefined;
+function getAuthenticationErrorMessage(
+    error: unknown,
+    organization: string,
+    domain: string,
+    loginCommand: string
+): string | undefined {
+    if (typeof error !== "object" || error == null) {
+        return undefined;
+    }
+    const rawContent = (error as Record<string, unknown>).content;
+    const content: Record<string, unknown> | undefined =
+        typeof rawContent === "object" && rawContent != null ? (rawContent as Record<string, unknown>) : undefined;
 
     if (content?.reason === "status-code") {
-        const statusCode = content.statusCode as number | undefined;
+        const statusCode = typeof content.statusCode === "number" ? content.statusCode : undefined;
 
         if (statusCode === 401 || statusCode === 403) {
-            return buildAuthFailureMessage(domain, organization, content);
+            return buildAuthFailureMessage(domain, organization, content, loginCommand);
         }
     }
 
@@ -784,15 +822,16 @@ function getAuthenticationErrorMessage(error: unknown, organization: string, dom
 function buildAuthFailureMessage(
     domain: string,
     organization: string,
-    errorContent: Record<string, unknown> | undefined
+    errorContent: Record<string, unknown> | undefined,
+    loginCommand: string
 ): string {
     const { code, message } = extractServerError(errorContent);
 
     switch (code) {
         case "FORBIDDEN":
-            return buildForbiddenMessage(domain, organization, message);
+            return buildForbiddenMessage(domain, organization, message, loginCommand);
         case "UNAUTHORIZED":
-            return buildUnauthorizedMessage(organization, message);
+            return buildUnauthorizedMessage(organization, message, loginCommand);
         case "INTERNAL_SERVER_ERROR":
             return `An internal server error occurred while publishing docs to '${domain}'. Please try again or reach out to support@buildwithfern.com for assistance.`;
         default:
@@ -809,7 +848,12 @@ function buildAuthFailureMessage(
 // admin contact guidance, so we pass them through directly.
 const FORBIDDEN_ORG_MEMBERSHIP_PATTERNS = ["does not belong to organization", "User does not belong"];
 
-function buildForbiddenMessage(domain: string, organization: string, message: string | undefined): string {
+function buildForbiddenMessage(
+    domain: string,
+    organization: string,
+    message: string | undefined,
+    loginCommand: string
+): string {
     if (message == null) {
         return `You do not have permission to publish docs to '${domain}' under organization '${organization}'.`;
     }
@@ -817,7 +861,7 @@ function buildForbiddenMessage(domain: string, organization: string, message: st
     if (FORBIDDEN_ORG_MEMBERSHIP_PATTERNS.some((pattern) => message.includes(pattern))) {
         return (
             `You are not a member of organization '${organization}'. ` +
-            "Please run 'fern login' to ensure you are logged in with the correct account.\n\n" +
+            `Please run '${loginCommand}' to ensure you are logged in with the correct account.\n\n` +
             "Please ensure you have membership at https://dashboard.buildwithfern.com, and ask a team member for an invite if not."
         );
     }
@@ -825,14 +869,14 @@ function buildForbiddenMessage(domain: string, organization: string, message: st
     return message;
 }
 
-function buildUnauthorizedMessage(organization: string, message: string | undefined): string {
+function buildUnauthorizedMessage(organization: string, message: string | undefined, loginCommand: string): string {
     if (message != null && message.includes("Invalid authorization token")) {
-        return "Your authentication token is invalid or expired. " + "Please run 'fern login' to re-authenticate.";
+        return "Your authentication token is invalid or expired. " + `Please run '${loginCommand}' to re-authenticate.`;
     }
 
     return (
         `You are not authorized to publish docs under organization '${organization}'. ` +
-        "Please run 'fern login' to ensure you are logged in with the correct account.\n\n" +
+        `Please run '${loginCommand}' to ensure you are logged in with the correct account.\n\n` +
         "Please ensure you have membership at https://dashboard.buildwithfern.com, and ask a team member for an invite if not."
     );
 }

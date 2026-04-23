@@ -239,14 +239,10 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
 
     public getFetcherRequestArgs(
         context: FileContext
-    ): Pick<
-        Fetcher.Args,
-        "headers" | "queryParameters" | "body" | "contentType" | "requestType" | "duplex" | "queryString"
-    > {
+    ): Pick<Fetcher.Args, "headers" | "body" | "contentType" | "requestType" | "duplex" | "queryString"> {
         const queryParams = this.getQueryParams(context);
         return {
             headers: ts.factory.createIdentifier(HEADERS_VAR_NAME),
-            queryParameters: queryParams?.getReferenceTo(),
             queryString: queryParams?.getQueryStringExpression(context),
             contentType: this.requestBody.contentType,
             requestType: "bytes",

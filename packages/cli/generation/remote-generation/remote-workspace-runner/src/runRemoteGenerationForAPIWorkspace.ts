@@ -4,7 +4,7 @@ import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
-import { TaskContext } from "@fern-api/task-context";
+import { TaskAbortSignal, TaskContext } from "@fern-api/task-context";
 import {
     AbstractAPIWorkspace,
     getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation
@@ -45,8 +45,10 @@ export async function runRemoteGenerationForAPIWorkspace({
     requireEnvVars,
     automationMode,
     autoMerge,
+    skipIfNoDiff,
     automation,
-    occurrenceTracker
+    occurrenceTracker,
+    loginCommand
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     organization: string;
@@ -78,6 +80,7 @@ export async function runRemoteGenerationForAPIWorkspace({
      */
     automationMode?: boolean;
     autoMerge?: boolean;
+    skipIfNoDiff?: boolean;
     /**
      * When provided, per-generator failures are captured via {@link AutomationRunOptions.recorder}
      * and siblings continue running instead of aborting the group. When absent, a single failure
@@ -91,6 +94,11 @@ export async function runRemoteGenerationForAPIWorkspace({
      * tracker so skipped and run generators don't collide on indices.
      */
     occurrenceTracker?: GeneratorOccurrenceTracker;
+    /**
+     * CLI command to reference in auth-failure hints (e.g. 'fern login' for v1,
+     * 'fern auth login' for CLI v2). Defaults to 'fern login'.
+     */
+    loginCommand?: string;
 }): Promise<RemoteGenerationForAPIWorkspaceResponse | null> {
     if (generatorGroup.generators.length === 0) {
         context.logger.warn("No generators specified.");
@@ -138,9 +146,11 @@ export async function runRemoteGenerationForAPIWorkspace({
                     requireEnvVars,
                     automationMode,
                     autoMerge,
+                    skipIfNoDiff,
                     automation,
                     generatorsYmlAbsolutePath,
                     occurrenceTracker: effectiveOccurrenceTracker,
+                    loginCommand,
                     onSnippetsProduced: (invocation) => snippetsProducedBy.push(invocation)
                 })
             )
@@ -148,7 +158,10 @@ export async function runRemoteGenerationForAPIWorkspace({
     );
 
     if (automation == null && results.some((didSucceed) => !didSucceed)) {
-        context.failAndThrow();
+        // Subtasks have already logged and reported their failures via their own
+        // `failAndThrow`. Throw a bare TaskAbortSignal to unwind without firing
+        // redundant logging, PostHog, or Sentry events.
+        throw new TaskAbortSignal();
     }
 
     return {
@@ -186,9 +199,11 @@ async function generateOne({
     requireEnvVars,
     automationMode,
     autoMerge,
+    skipIfNoDiff,
     automation,
     generatorsYmlAbsolutePath,
     occurrenceTracker,
+    loginCommand,
     onSnippetsProduced
 }: {
     generatorInvocation: generatorsYml.GeneratorInvocation;
@@ -215,9 +230,11 @@ async function generateOne({
     requireEnvVars: boolean;
     automationMode: boolean | undefined;
     autoMerge: boolean | undefined;
+    skipIfNoDiff: boolean | undefined;
     automation: AutomationRunOptions | undefined;
     generatorsYmlAbsolutePath: AbsoluteFilePath | undefined;
     occurrenceTracker: GeneratorOccurrenceTracker;
+    loginCommand: string | undefined;
     /** Invoked post-success when the generator produced snippets. */
     onSnippetsProduced: (invocation: generatorsYml.GeneratorInvocation) => void;
 }): Promise<void> {
@@ -295,7 +312,9 @@ async function generateOne({
             retryRateLimited,
             requireEnvVars,
             automationMode,
-            autoMerge
+            autoMerge,
+            skipIfNoDiff,
+            loginCommand
         });
 
         if (remoteTaskHandlerResponse?.createdSnippets) {
@@ -338,6 +357,33 @@ async function generateOne({
         }
     } catch (error) {
         if (automation == null) {
+            throw error;
+        }
+        // A TaskAbortSignal means the task already logged its real error and marked
+        // itself failed via `failAndThrow`. Pull the original message off the context
+        // for the summary, then re-throw so it propagates up to `runInteractiveTask`,
+        // which silently swallows it (see TaskContextImpl.failWithoutThrowing).
+        // Re-logging here would produce `[object Object]` since `TaskAbortSignal`
+        // isn't an `Error` and has no serializable message.
+        if (error instanceof TaskAbortSignal) {
+            const lineNumber =
+                generatorsYmlAbsolutePath != null
+                    ? await findGeneratorLineNumber(
+                          generatorsYmlAbsolutePath,
+                          generatorInvocation.name,
+                          occurrenceTracker.lookup(generatorInvocation)
+                      )
+                    : undefined;
+            automation.recorder.recordFailure({
+                apiName: workspace.workspaceName,
+                groupName: generatorGroup.groupName,
+                generatorName: generatorInvocation.name,
+                errorMessage: interactiveTaskContext.getLastFailureMessage() ?? "Generator failed",
+                durationMs: Date.now() - startedAt,
+                outputRepoUrl: getOutputRepoUrl(generatorInvocation),
+                generatorsYmlAbsolutePath,
+                generatorsYmlLineNumber: lineNumber
+            });
             throw error;
         }
         const message = extractErrorMessage(error);

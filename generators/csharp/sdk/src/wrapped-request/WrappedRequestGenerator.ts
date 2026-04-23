@@ -239,7 +239,18 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
                     }
                 }
             },
-            bytes: () => undefined,
+            bytes: (bytes) => {
+                class_.addField({
+                    origin: this.case.resolveNameOrString(this.wrapper.bodyKey),
+                    type: this.System.IO.Stream,
+                    access: ast.Access.Public,
+                    get: true,
+                    set: true,
+                    summary: bytes.docs,
+                    useRequired: !bytes.isOptional,
+                    annotations: [this.System.Text.Json.Serialization.JsonIgnore]
+                });
+            },
             _other: () => undefined
         });
 

@@ -32,6 +32,11 @@ publish:
     file: ./generators/rust/model/Dockerfile
     image: fernapi/fern-rust-model
     context: .
+  sentry:
+    name: fern-rust-model
+    project: rust-sdk
+    sourceMaps:
+      - dir: generators/rust/model/dist
 
 language: rust
 generatorType: MODEL

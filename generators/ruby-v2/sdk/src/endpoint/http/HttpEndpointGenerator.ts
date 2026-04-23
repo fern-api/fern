@@ -221,7 +221,11 @@ export class HttpEndpointGenerator {
                                 }),
                                 ruby.keywordArgument({
                                     name: "step",
-                                    value: endpoint.pagination.step ? ruby.trueValue() : ruby.falseValue()
+                                    value:
+                                        endpoint.pagination.step &&
+                                        this.context.customConfig.offsetSemantics !== "page-index"
+                                            ? ruby.trueValue()
+                                            : ruby.falseValue()
                                 })
                             ],
                             block: [

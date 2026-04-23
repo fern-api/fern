@@ -168,76 +168,71 @@ vi.mock("semver", () => ({
     }
 }));
 
-// Mock the AutoVersioningService
-vi.mock("../AutoVersioningService.js", () => ({
-    AutoVersioningService: class MockAutoVersioningService {
-        extractPreviousVersion() {
-            return "1.0.0";
-        }
-        cleanDiffForAI() {
-            return "cleaned diff content";
-        }
-        chunkDiff(...args: unknown[]) {
-            return mockChunkDiff(...args);
-        }
-        replaceMagicVersion() {
-            return Promise.resolve(undefined);
-        }
-    },
-    AutoVersioningException: class AutoVersioningException extends Error {
-        public readonly magicVersionAbsent: boolean;
-        constructor(message: string, options?: { cause?: Error; magicVersionAbsent?: boolean }) {
-            super(message);
-            this.name = "AutoVersioningException";
-            this.magicVersionAbsent = options?.magicVersionAbsent ?? false;
-            if (options?.cause) {
-                this.cause = options.cause;
-            }
-        }
-    },
-    countFilesInDiff: (diff: string) => {
-        return (diff.match(/diff --git/g) ?? []).length;
-    },
-    formatSizeKB: (charLength: number) => {
-        return (charLength / 1024).toFixed(1);
-    }
-}));
-
-// Mock AutoVersioningCache — provide real-ish implementation for cache tests
-vi.mock("../AutoVersioningCache.js", () => ({
-    AutoVersioningCache: class MockAutoVersioningCache {
-        private cache = new Map<string, Promise<unknown>>();
-
-        key(
-            cleanedDiff: string,
-            language: string,
-            previousVersion: string,
-            priorChangelog: string = "",
-            specCommitMessage: string = ""
-        ) {
-            return `${language}:${previousVersion}:${priorChangelog.slice(0, 4)}:${specCommitMessage.slice(0, 4)}:${cleanedDiff.slice(0, 8)}`;
-        }
-
-        getOrCompute(key: string, compute: () => Promise<unknown>) {
-            const existing = this.cache.get(key);
-            if (existing !== undefined) {
-                return { promise: existing, isHit: true };
-            }
-            const promise = compute().catch((error: unknown) => {
-                this.cache.delete(key);
-                throw error;
-            });
-            this.cache.set(key, promise);
-            return { promise, isHit: false };
-        }
-    }
-}));
-
-// Mock VersionUtils — pass through real exports, only override isAutoVersion
-vi.mock("../VersionUtils.js", async () => {
-    const actual = await vi.importActual("../VersionUtils.js");
+// Mock the autoversion subpath — replace AutoVersioningService/Cache with stubs,
+// pass through VersionUtils helpers (constants, maxVersionBump, etc.), override isAutoVersion.
+vi.mock("@fern-api/generator-cli/autoversion", async () => {
+    const actual = await vi.importActual<typeof import("@fern-api/generator-cli/autoversion")>(
+        "@fern-api/generator-cli/autoversion"
+    );
     return {
         ...actual,
+        AutoVersioningService: class MockAutoVersioningService {
+            extractPreviousVersion() {
+                return "1.0.0";
+            }
+            cleanDiffForAI() {
+                return "cleaned diff content";
+            }
+            chunkDiff(...args: unknown[]) {
+                return mockChunkDiff(...args);
+            }
+            replaceMagicVersion() {
+                return Promise.resolve(undefined);
+            }
+        },
+        AutoVersioningException: class AutoVersioningException extends Error {
+            public readonly magicVersionAbsent: boolean;
+            constructor(message: string, options?: { cause?: Error; magicVersionAbsent?: boolean }) {
+                super(message);
+                this.name = "AutoVersioningException";
+                this.magicVersionAbsent = options?.magicVersionAbsent ?? false;
+                if (options?.cause) {
+                    this.cause = options.cause;
+                }
+            }
+        },
+        countFilesInDiff: (diff: string) => {
+            return (diff.match(/diff --git/g) ?? []).length;
+        },
+        formatSizeKB: (charLength: number) => {
+            return (charLength / 1024).toFixed(1);
+        },
+        AutoVersioningCache: class MockAutoVersioningCache {
+            private cache = new Map<string, Promise<unknown>>();
+
+            key(
+                cleanedDiff: string,
+                language: string,
+                previousVersion: string,
+                priorChangelog: string = "",
+                specCommitMessage: string = ""
+            ) {
+                return `${language}:${previousVersion}:${priorChangelog.slice(0, 4)}:${specCommitMessage.slice(0, 4)}:${cleanedDiff.slice(0, 8)}`;
+            }
+
+            getOrCompute(key: string, compute: () => Promise<unknown>) {
+                const existing = this.cache.get(key);
+                if (existing !== undefined) {
+                    return { promise: existing, isHit: true };
+                }
+                const promise = compute().catch((error: unknown) => {
+                    this.cache.delete(key);
+                    throw error;
+                });
+                this.cache.set(key, promise);
+                return { promise, isHit: false };
+            }
+        },
         isAutoVersion: vi.fn().mockReturnValue(true)
     };
 });
@@ -447,7 +442,7 @@ describe("LocalTaskHandler - Unified Analysis with Cache", () => {
 
     async function createCachedTaskHandler(overrides: Record<string, unknown> = {}) {
         const { LocalTaskHandler } = await import("../LocalTaskHandler.js");
-        const { AutoVersioningCache } = await import("../AutoVersioningCache.js");
+        const { AutoVersioningCache } = await import("@fern-api/generator-cli/autoversion");
         const cache = new AutoVersioningCache();
         return {
             handler: new LocalTaskHandler({
@@ -475,7 +470,7 @@ describe("LocalTaskHandler - Unified Analysis with Cache", () => {
 
     async function createSharedCacheHandlers() {
         const { LocalTaskHandler } = await import("../LocalTaskHandler.js");
-        const { AutoVersioningCache } = await import("../AutoVersioningCache.js");
+        const { AutoVersioningCache } = await import("@fern-api/generator-cli/autoversion");
         const sharedCache = new AutoVersioningCache();
 
         const makeHandler = () =>

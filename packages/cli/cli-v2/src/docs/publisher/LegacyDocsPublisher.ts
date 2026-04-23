@@ -78,7 +78,8 @@ export class LegacyDocsPublisher {
                 previewId,
                 disableTemplates: undefined,
                 skipUpload,
-                cliVersion: process.env.CLI_VERSION
+                cliVersion: process.env.CLI_VERSION,
+                loginCommand: "fern auth login"
             });
 
             if (taskContext.getResult() === TaskResult.Failure) {

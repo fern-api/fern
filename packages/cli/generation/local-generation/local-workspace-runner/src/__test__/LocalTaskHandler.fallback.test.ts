@@ -176,82 +176,75 @@ vi.mock("semver", () => ({
     }
 }));
 
-// Mock the AutoVersioningService — extractPreviousVersion is configurable per test
-vi.mock("../AutoVersioningService.js", () => ({
-    AutoVersioningService: class MockAutoVersioningService {
-        extractPreviousVersion(...args: unknown[]) {
-            return mockExtractPreviousVersion(...args);
-        }
-        cleanDiffForAI() {
-            return "cleaned diff content";
-        }
-        chunkDiff(...args: unknown[]) {
-            return mockChunkDiff(...args);
-        }
-        replaceMagicVersion() {
-            return Promise.resolve(undefined);
-        }
-        getLatestVersionFromGitTags() {
-            // This will be overridden per-test via mockLoggingExeca behavior,
-            // but since this is the mock, we need to make it call loggingExeca
-            // through the real code path. Instead, we'll mock this directly.
-            return Promise.resolve(undefined);
-        }
-    },
-    AutoVersioningException: class AutoVersioningException extends Error {
-        public readonly magicVersionAbsent: boolean;
-        constructor(message: string, options?: { cause?: Error; magicVersionAbsent?: boolean }) {
-            super(message);
-            this.name = "AutoVersioningException";
-            this.magicVersionAbsent = options?.magicVersionAbsent ?? false;
-            if (options?.cause) {
-                this.cause = options.cause;
-            }
-        }
-    },
-    countFilesInDiff: (diff: string) => {
-        return (diff.match(/diff --git/g) ?? []).length;
-    },
-    formatSizeKB: (charLength: number) => {
-        return (charLength / 1024).toFixed(1);
-    }
-}));
-
-// Mock AutoVersioningCache
-vi.mock("../AutoVersioningCache.js", () => ({
-    AutoVersioningCache: class MockAutoVersioningCache {
-        private cache = new Map<string, Promise<unknown>>();
-
-        key(
-            cleanedDiff: string,
-            language: string,
-            previousVersion: string,
-            priorChangelog: string = "",
-            specCommitMessage: string = ""
-        ) {
-            return `${language}:${previousVersion}:${priorChangelog.slice(0, 4)}:${specCommitMessage.slice(0, 4)}:${cleanedDiff.slice(0, 8)}`;
-        }
-
-        getOrCompute(key: string, compute: () => Promise<unknown>) {
-            const existing = this.cache.get(key);
-            if (existing !== undefined) {
-                return { promise: existing, isHit: true };
-            }
-            const promise = compute().catch((error: unknown) => {
-                this.cache.delete(key);
-                throw error;
-            });
-            this.cache.set(key, promise);
-            return { promise, isHit: false };
-        }
-    }
-}));
-
-// Mock VersionUtils
-vi.mock("../VersionUtils.js", async () => {
-    const actual = await vi.importActual("../VersionUtils.js");
+// Mock the autoversion subpath — replace AutoVersioningService/Cache with stubs,
+// pass through VersionUtils helpers, override isAutoVersion. extractPreviousVersion
+// is configurable per test via mockExtractPreviousVersion.
+vi.mock("@fern-api/generator-cli/autoversion", async () => {
+    const actual = await vi.importActual<typeof import("@fern-api/generator-cli/autoversion")>(
+        "@fern-api/generator-cli/autoversion"
+    );
     return {
         ...actual,
+        AutoVersioningService: class MockAutoVersioningService {
+            extractPreviousVersion(...args: unknown[]) {
+                return mockExtractPreviousVersion(...args);
+            }
+            cleanDiffForAI() {
+                return "cleaned diff content";
+            }
+            chunkDiff(...args: unknown[]) {
+                return mockChunkDiff(...args);
+            }
+            replaceMagicVersion() {
+                return Promise.resolve(undefined);
+            }
+            getLatestVersionFromGitTags() {
+                return Promise.resolve(undefined);
+            }
+        },
+        AutoVersioningException: class AutoVersioningException extends Error {
+            public readonly magicVersionAbsent: boolean;
+            constructor(message: string, options?: { cause?: Error; magicVersionAbsent?: boolean }) {
+                super(message);
+                this.name = "AutoVersioningException";
+                this.magicVersionAbsent = options?.magicVersionAbsent ?? false;
+                if (options?.cause) {
+                    this.cause = options.cause;
+                }
+            }
+        },
+        countFilesInDiff: (diff: string) => {
+            return (diff.match(/diff --git/g) ?? []).length;
+        },
+        formatSizeKB: (charLength: number) => {
+            return (charLength / 1024).toFixed(1);
+        },
+        AutoVersioningCache: class MockAutoVersioningCache {
+            private cache = new Map<string, Promise<unknown>>();
+
+            key(
+                cleanedDiff: string,
+                language: string,
+                previousVersion: string,
+                priorChangelog: string = "",
+                specCommitMessage: string = ""
+            ) {
+                return `${language}:${previousVersion}:${priorChangelog.slice(0, 4)}:${specCommitMessage.slice(0, 4)}:${cleanedDiff.slice(0, 8)}`;
+            }
+
+            getOrCompute(key: string, compute: () => Promise<unknown>) {
+                const existing = this.cache.get(key);
+                if (existing !== undefined) {
+                    return { promise: existing, isHit: true };
+                }
+                const promise = compute().catch((error: unknown) => {
+                    this.cache.delete(key);
+                    throw error;
+                });
+                this.cache.set(key, promise);
+                return { promise, isHit: false };
+            }
+        },
         isAutoVersion: vi.fn().mockReturnValue(true)
     };
 });
@@ -315,7 +308,7 @@ describe("LocalTaskHandler - Fallback Chain (magic version absent)", () => {
     }
 
     it("falls back to .fern/metadata.json when magic version absent from diff", async () => {
-        const { AutoVersioningException } = await import("../AutoVersioningService.js");
+        const { AutoVersioningException } = await import("@fern-api/generator-cli/autoversion");
 
         // extractPreviousVersion throws — magic version not in diff (Swift case)
         mockExtractPreviousVersion.mockImplementation(() => {
@@ -353,7 +346,7 @@ describe("LocalTaskHandler - Fallback Chain (magic version absent)", () => {
     });
 
     it("falls through to initial version when both metadata.json and git tags fail", async () => {
-        const { AutoVersioningException } = await import("../AutoVersioningService.js");
+        const { AutoVersioningException } = await import("@fern-api/generator-cli/autoversion");
 
         // extractPreviousVersion throws — magic version not in diff
         mockExtractPreviousVersion.mockImplementation(() => {
@@ -383,7 +376,7 @@ describe("LocalTaskHandler - Fallback Chain (magic version absent)", () => {
     });
 
     it("preserves v prefix for Go-style magic versions in initial version", async () => {
-        const { AutoVersioningException } = await import("../AutoVersioningService.js");
+        const { AutoVersioningException } = await import("@fern-api/generator-cli/autoversion");
 
         mockExtractPreviousVersion.mockImplementation(() => {
             throw new AutoVersioningException("Magic version not found", { magicVersionAbsent: true });
@@ -400,7 +393,7 @@ describe("LocalTaskHandler - Fallback Chain (magic version absent)", () => {
     });
 
     it("does not crash when metadata.json contains invalid JSON", async () => {
-        const { AutoVersioningException } = await import("../AutoVersioningService.js");
+        const { AutoVersioningException } = await import("@fern-api/generator-cli/autoversion");
 
         mockExtractPreviousVersion.mockImplementation(() => {
             throw new AutoVersioningException("Magic version not found", { magicVersionAbsent: true });
@@ -426,7 +419,7 @@ describe("LocalTaskHandler - Fallback Chain (magic version absent)", () => {
     });
 
     it("does not crash when metadata.json has no sdkVersion field", async () => {
-        const { AutoVersioningException } = await import("../AutoVersioningService.js");
+        const { AutoVersioningException } = await import("@fern-api/generator-cli/autoversion");
 
         mockExtractPreviousVersion.mockImplementation(() => {
             throw new AutoVersioningException("Magic version not found", { magicVersionAbsent: true });
@@ -452,7 +445,7 @@ describe("LocalTaskHandler - Fallback Chain (magic version absent)", () => {
     });
 
     it("does not crash when git show throws an error", async () => {
-        const { AutoVersioningException } = await import("../AutoVersioningService.js");
+        const { AutoVersioningException } = await import("@fern-api/generator-cli/autoversion");
 
         mockExtractPreviousVersion.mockImplementation(() => {
             throw new AutoVersioningException("Magic version not found", { magicVersionAbsent: true });
@@ -490,7 +483,7 @@ describe("LocalTaskHandler - Fallback Chain (magic version absent)", () => {
     });
 
     it("falls back to initial version for AutoVersioningException with magicVersionAbsent=false", async () => {
-        const { AutoVersioningException } = await import("../AutoVersioningService.js");
+        const { AutoVersioningException } = await import("@fern-api/generator-cli/autoversion");
 
         // AutoVersioningException but NOT the magic-version-absent case
         // This re-throws from inner catch, then the outer catch handles it
@@ -511,7 +504,7 @@ describe("LocalTaskHandler - Fallback Chain (magic version absent)", () => {
     });
 
     it("adds Fern branding to initial SDK commit for non-whitelabel", async () => {
-        const { AutoVersioningException } = await import("../AutoVersioningService.js");
+        const { AutoVersioningException } = await import("@fern-api/generator-cli/autoversion");
 
         mockExtractPreviousVersion.mockImplementation(() => {
             throw new AutoVersioningException("Magic version not found", { magicVersionAbsent: true });
@@ -525,7 +518,7 @@ describe("LocalTaskHandler - Fallback Chain (magic version absent)", () => {
     });
 
     it("omits Fern branding for whitelabel initial SDK commit", async () => {
-        const { AutoVersioningException } = await import("../AutoVersioningService.js");
+        const { AutoVersioningException } = await import("@fern-api/generator-cli/autoversion");
 
         mockExtractPreviousVersion.mockImplementation(() => {
             throw new AutoVersioningException("Magic version not found", { magicVersionAbsent: true });
@@ -650,7 +643,7 @@ describe("LocalTaskHandler - normalizeVersionPrefix", () => {
     }
 
     it("strips v prefix from metadata version when magic version has no prefix", async () => {
-        const { AutoVersioningException } = await import("../AutoVersioningService.js");
+        const { AutoVersioningException } = await import("@fern-api/generator-cli/autoversion");
 
         mockExtractPreviousVersion.mockImplementation(() => {
             throw new AutoVersioningException("Magic version not found", { magicVersionAbsent: true });
@@ -683,7 +676,7 @@ describe("LocalTaskHandler - normalizeVersionPrefix", () => {
     });
 
     it("adds v prefix when magic version has v prefix but metadata version does not", async () => {
-        const { AutoVersioningException } = await import("../AutoVersioningService.js");
+        const { AutoVersioningException } = await import("@fern-api/generator-cli/autoversion");
 
         mockExtractPreviousVersion.mockImplementation(() => {
             throw new AutoVersioningException("Magic version not found", { magicVersionAbsent: true });

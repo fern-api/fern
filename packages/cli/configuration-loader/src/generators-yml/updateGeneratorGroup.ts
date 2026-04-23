@@ -1,5 +1,5 @@
 import { generatorsYml } from "@fern-api/configuration";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
 
 export async function updateGeneratorGroup({
     generatorsConfiguration,
@@ -18,9 +18,9 @@ export async function updateGeneratorGroup({
             const message =
                 "No group specified. Use the --group option:\n" +
                 availableGroups.map((name) => ` › ${name}`).join("\n");
-            return context.failAndThrow(message);
+            return context.failAndThrow(message, undefined, { code: CliError.Code.ConfigError });
         }
-        return context.failAndThrow("No group specified.");
+        return context.failAndThrow("No group specified.", undefined, { code: CliError.Code.ConfigError });
     }
     const groups = (generatorsConfiguration.groups ??= {});
 

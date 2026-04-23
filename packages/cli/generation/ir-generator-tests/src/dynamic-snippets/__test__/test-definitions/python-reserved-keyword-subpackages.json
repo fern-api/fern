@@ -1,0 +1,329 @@
+{
+    "version": "1.0.0",
+    "types": {},
+    "headers": [],
+    "endpoints": {
+        "endpoint_class.create": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "create",
+                    "camelCase": {
+                        "unsafeName": "create",
+                        "safeName": "create"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "create",
+                        "safeName": "create"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CREATE",
+                        "safeName": "CREATE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Create",
+                        "safeName": "Create"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "class",
+                            "camelCase": {
+                                "unsafeName": "class",
+                                "safeName": "class"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "class",
+                                "safeName": "class"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "CLASS",
+                                "safeName": "CLASS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Class",
+                                "safeName": "Class"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "class",
+                        "camelCase": {
+                            "unsafeName": "class",
+                            "safeName": "class"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "class",
+                            "safeName": "class"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "CLASS",
+                            "safeName": "CLASS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Class",
+                            "safeName": "Class"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/class"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": null
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_automations/import.create": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "create",
+                    "camelCase": {
+                        "unsafeName": "create",
+                        "safeName": "create"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "create",
+                        "safeName": "create"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CREATE",
+                        "safeName": "CREATE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Create",
+                        "safeName": "Create"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "automations",
+                            "camelCase": {
+                                "unsafeName": "automations",
+                                "safeName": "automations"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "automations",
+                                "safeName": "automations"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "AUTOMATIONS",
+                                "safeName": "AUTOMATIONS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Automations",
+                                "safeName": "Automations"
+                            }
+                        },
+                        {
+                            "originalName": "import",
+                            "camelCase": {
+                                "unsafeName": "import",
+                                "safeName": "import"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "import",
+                                "safeName": "import"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "IMPORT",
+                                "safeName": "IMPORT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Import",
+                                "safeName": "Import"
+                            }
+                        }
+                    ],
+                    "packagePath": [
+                        {
+                            "originalName": "automations",
+                            "camelCase": {
+                                "unsafeName": "automations",
+                                "safeName": "automations"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "automations",
+                                "safeName": "automations"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "AUTOMATIONS",
+                                "safeName": "AUTOMATIONS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Automations",
+                                "safeName": "Automations"
+                            }
+                        }
+                    ],
+                    "file": {
+                        "originalName": "import",
+                        "camelCase": {
+                            "unsafeName": "import",
+                            "safeName": "import"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "import",
+                            "safeName": "import"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "IMPORT",
+                            "safeName": "IMPORT"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Import",
+                            "safeName": "Import"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/import"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": null
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_automations/export.create": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "create",
+                    "camelCase": {
+                        "unsafeName": "create",
+                        "safeName": "create"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "create",
+                        "safeName": "create"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CREATE",
+                        "safeName": "CREATE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Create",
+                        "safeName": "Create"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "automations",
+                            "camelCase": {
+                                "unsafeName": "automations",
+                                "safeName": "automations"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "automations",
+                                "safeName": "automations"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "AUTOMATIONS",
+                                "safeName": "AUTOMATIONS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Automations",
+                                "safeName": "Automations"
+                            }
+                        },
+                        {
+                            "originalName": "export",
+                            "camelCase": {
+                                "unsafeName": "export",
+                                "safeName": "export"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "export",
+                                "safeName": "export"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "EXPORT",
+                                "safeName": "EXPORT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Export",
+                                "safeName": "Export"
+                            }
+                        }
+                    ],
+                    "packagePath": [
+                        {
+                            "originalName": "automations",
+                            "camelCase": {
+                                "unsafeName": "automations",
+                                "safeName": "automations"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "automations",
+                                "safeName": "automations"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "AUTOMATIONS",
+                                "safeName": "AUTOMATIONS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Automations",
+                                "safeName": "Automations"
+                            }
+                        }
+                    ],
+                    "file": {
+                        "originalName": "export",
+                        "camelCase": {
+                            "unsafeName": "export",
+                            "safeName": "export"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "export",
+                            "safeName": "export"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "EXPORT",
+                            "safeName": "EXPORT"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Export",
+                            "safeName": "Export"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/export"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": null
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        }
+    },
+    "pathParameters": [],
+    "environments": null,
+    "variables": null,
+    "generatorConfig": null
+}

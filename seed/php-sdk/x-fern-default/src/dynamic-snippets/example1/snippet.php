@@ -13,6 +13,6 @@ $client = new SeedClient(
 $client->testGet(
     'region',
     new TestGetRequest([
-        'limit' => '100',
+        'limit' => 'limit',
     ]),
 );

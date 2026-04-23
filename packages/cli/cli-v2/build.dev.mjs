@@ -1,4 +1,4 @@
-import { buildCli, PRODUCTION_TSUP_OVERRIDES } from "./build-utils.mjs";
+import { buildCli, buildCompletionHelper, PRODUCTION_TSUP_OVERRIDES } from "./build-utils.mjs";
 
 buildCli({
     outDir: "dist/dev",
@@ -28,3 +28,5 @@ buildCli({
     },
     tsupOverrides: PRODUCTION_TSUP_OVERRIDES
 });
+
+await buildCompletionHelper({ outDir: "dist/dev", minify: false });

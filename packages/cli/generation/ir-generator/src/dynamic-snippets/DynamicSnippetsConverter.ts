@@ -44,9 +44,9 @@ import {
     UnionTypeDeclaration
 } from "@fern-api/ir-sdk";
 import { getOriginalName, getWireValue } from "@fern-api/ir-utils";
+import { CliError } from "@fern-api/task-context";
 import urlJoin from "url-join";
 import { v4 as uuidv4 } from "uuid";
-
 import { Version } from "./version.js";
 
 interface EndpointWithFilepath extends HttpEndpoint {
@@ -225,7 +225,10 @@ export class DynamicSnippetsConverter {
             return DynamicSnippets.Request.body({ pathParameters, body: undefined });
         }
         if (endpoint.sdkRequest == null) {
-            throw new Error(`Internal error; endpoint "${endpoint.id}" has a request body but no SDK request`);
+            throw new CliError({
+                message: `Internal error; endpoint "${endpoint.id}" has a request body but no SDK request`,
+                code: CliError.Code.InternalError
+            });
         }
         switch (endpoint.sdkRequest.shape.type) {
             case "justRequestBody":
@@ -933,7 +936,7 @@ export class DynamicSnippetsConverter {
                         }))
                     }),
                 _other: () => {
-                    throw new Error("Unknown environments type");
+                    throw new CliError({ message: "Unknown environments type", code: CliError.Code.InternalError });
                 }
             })
         };
@@ -983,10 +986,16 @@ export class DynamicSnippetsConverter {
     private resolveObjectTypeOrThrow(typeId: TypeId): ObjectTypeDeclaration {
         const typeDeclaration = this.ir.types[typeId];
         if (typeDeclaration == null) {
-            throw new Error(`Internal error; type "${typeId}" not found`);
+            throw new CliError({
+                message: `Internal error; type "${typeId}" not found`,
+                code: CliError.Code.InternalError
+            });
         }
         if (typeDeclaration.shape.type !== "object") {
-            throw new Error(`Internal error; type "${typeId}" is not an object`);
+            throw new CliError({
+                message: `Internal error; type "${typeId}" is not an object`,
+                code: CliError.Code.InternalError
+            });
         }
         return typeDeclaration.shape;
     }

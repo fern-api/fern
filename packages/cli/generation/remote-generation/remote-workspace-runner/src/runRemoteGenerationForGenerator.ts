@@ -18,7 +18,7 @@ import { dynamic, FernIr, IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { getOriginalName } from "@fern-api/ir-utils";
 import { detectAirGappedMode } from "@fern-api/lazy-fern-workspace";
 import { convertIrToFdrApi } from "@fern-api/register";
-import { InteractiveTaskContext } from "@fern-api/task-context";
+import { CliError, InteractiveTaskContext } from "@fern-api/task-context";
 import { FernWorkspace, IdentifiableSource } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { createAndStartJob } from "./createAndStartJob.js";
@@ -50,7 +50,9 @@ export async function runRemoteGenerationForGenerator({
     retryRateLimited,
     requireEnvVars,
     automationMode,
-    autoMerge
+    autoMerge,
+    skipIfNoDiff,
+    loginCommand
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     organization: string;
@@ -78,6 +80,12 @@ export async function runRemoteGenerationForGenerator({
     requireEnvVars: boolean;
     automationMode?: boolean;
     autoMerge?: boolean;
+    skipIfNoDiff?: boolean;
+    /**
+     * CLI command to reference in auth-failure hints (e.g. 'fern login' for v1,
+     * 'fern auth login' for CLI v2). Defaults to 'fern login'.
+     */
+    loginCommand?: string;
 }): Promise<RemoteTaskHandler.Response | undefined> {
     const fdr = createFdrService({ token: token.value });
 
@@ -95,7 +103,9 @@ export async function runRemoteGenerationForGenerator({
             {
                 onError: (e) => {
                     if (!isPreview && requireEnvVars) {
-                        interactiveTaskContext.failAndThrow(e);
+                        interactiveTaskContext.failAndThrow(undefined, e, {
+                            code: CliError.Code.EnvironmentError
+                        });
                     }
                 }
             },
@@ -212,7 +222,9 @@ export async function runRemoteGenerationForGenerator({
 
     const sourceUploader = new SourceUploader(interactiveTaskContext, sources);
     if (sourceUploads == null && sourceUploader.sourceTypes.has("protobuf")) {
-        interactiveTaskContext.failAndThrow("Did not successfully upload Protobuf source files.");
+        interactiveTaskContext.failAndThrow("Did not successfully upload Protobuf source files.", undefined, {
+            code: CliError.Code.NetworkError
+        });
     }
 
     if (sourceUploads != null) {
@@ -230,17 +242,23 @@ export async function runRemoteGenerationForGenerator({
         );
 
         if (version == null) {
-            interactiveTaskContext.failAndThrow("Version is required for dynamic IR only mode");
+            interactiveTaskContext.failAndThrow("Version is required for dynamic IR only mode", undefined, {
+                code: CliError.Code.ConfigError
+            });
             return undefined;
         }
 
         if (generatorInvocation.language == null) {
-            interactiveTaskContext.failAndThrow("Language is required for dynamic IR only mode");
+            interactiveTaskContext.failAndThrow("Language is required for dynamic IR only mode", undefined, {
+                code: CliError.Code.ConfigError
+            });
             return undefined;
         }
 
         if (packageName == null) {
-            interactiveTaskContext.failAndThrow("Package name is required for dynamic IR only mode");
+            interactiveTaskContext.failAndThrow("Package name is required for dynamic IR only mode", undefined, {
+                code: CliError.Code.ConfigError
+            });
             return undefined;
         }
 
@@ -257,7 +275,11 @@ export async function runRemoteGenerationForGenerator({
                 context: interactiveTaskContext
             });
         } catch (error) {
-            interactiveTaskContext.failAndThrow(`Failed to upload dynamic IR: ${extractErrorMessage(error)}`);
+            interactiveTaskContext.failAndThrow(
+                `Failed to upload dynamic IR: ${extractErrorMessage(error)}`,
+                undefined,
+                { code: CliError.Code.NetworkError }
+            );
         }
 
         // Return a minimal response since no SDK generation occurred
@@ -294,13 +316,17 @@ export async function runRemoteGenerationForGenerator({
         skipFernignore,
         retryRateLimited,
         automationMode,
-        autoMerge
+        autoMerge,
+        skipIfNoDiff,
+        loginCommand
     });
     interactiveTaskContext.logger.debug(`Job ID: ${job.jobId}`);
 
     const taskId = job.taskIds[0];
     if (taskId == null) {
-        interactiveTaskContext.failAndThrow("Did not receive a task ID.");
+        interactiveTaskContext.failAndThrow("Did not receive a task ID.", undefined, {
+            code: CliError.Code.NetworkError
+        });
         return undefined;
     }
     interactiveTaskContext.logger.debug(`Task ID: ${taskId}`);

@@ -8,6 +8,7 @@ import type {
 import type { schemas } from "@fern-api/config";
 import { generatorsYml } from "@fern-api/configuration";
 import { relativize } from "@fern-api/fs-utils";
+import { CliError } from "@fern-api/task-context";
 import type { Context } from "../../context/Context.js";
 import type { ApiSpec } from "../config/ApiSpec.js";
 import type { AsyncApiSpec } from "../config/AsyncApiSpec.js";
@@ -49,7 +50,10 @@ export class LegacyApiSpecAdapter {
         if (isOpenRpcSpec(spec)) {
             return this.adaptOpenRpcSpec(spec);
         }
-        throw new Error(`Unsupported spec type: ${JSON.stringify(spec)}`);
+        throw new CliError({
+            message: `Unsupported spec type: ${JSON.stringify(spec)}`,
+            code: CliError.Code.InternalError
+        });
     }
 
     public convertAll(specs: ApiSpec[]): Spec[] {
@@ -125,6 +129,7 @@ export class LegacyApiSpecAdapter {
             optionalAdditionalProperties: settings.optionalAdditionalProperties,
             shouldUseIdiomaticRequestNames: settings.idiomaticRequestNames,
             groupEnvironmentsByHost: settings.groupEnvironmentsByHost,
+            multiServerStrategy: this.adaptMultiServerStrategy(settings.multiServerStrategy),
             removeDiscriminantsFromSchemas: this.adaptRemoveDiscriminantsFromSchemas(
                 settings.removeDiscriminantsFromSchemas
             ),
@@ -170,6 +175,7 @@ export class LegacyApiSpecAdapter {
             optionalAdditionalProperties: settings.optionalAdditionalProperties,
             shouldUseIdiomaticRequestNames: settings.idiomaticRequestNames,
             groupEnvironmentsByHost: settings.groupEnvironmentsByHost,
+            multiServerStrategy: this.adaptMultiServerStrategy(settings.multiServerStrategy),
             removeDiscriminantsFromSchemas: this.adaptRemoveDiscriminantsFromSchemas(
                 settings.removeDiscriminantsFromSchemas
             ),
@@ -195,6 +201,22 @@ export class LegacyApiSpecAdapter {
                 return generatorsYml.RemoveDiscriminantsFromSchemas.Always;
             case "never":
                 return generatorsYml.RemoveDiscriminantsFromSchemas.Never;
+            default:
+                return undefined;
+        }
+    }
+
+    private adaptMultiServerStrategy(
+        value: schemas.MultiServerStrategySchema | undefined
+    ): generatorsYml.MultiServerStrategy | undefined {
+        if (value == null) {
+            return undefined;
+        }
+        switch (value) {
+            case "environmentPerServer":
+                return generatorsYml.MultiServerStrategy.EnvironmentPerServer;
+            case "urlsPerEnvironment":
+                return generatorsYml.MultiServerStrategy.UrlsPerEnvironment;
             default:
                 return undefined;
         }

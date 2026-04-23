@@ -1,0 +1,265 @@
+{
+  "title": "Test API",
+  "servers": [
+    {
+      "url": "https://api.example.com",
+      "name": "Production"
+    },
+    {
+      "url": "https://agent.example.com",
+      "name": "Agent"
+    }
+  ],
+  "websocketServers": [
+    {
+      "name": "Production",
+      "url": "wss://api.example.com"
+    },
+    {
+      "name": "Agent",
+      "url": "wss://agent.example.com"
+    }
+  ],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "getStatus",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GetStatusRequest",
+      "response": {
+        "description": "Status",
+        "schema": {
+          "schema": {
+            "type": "string"
+          },
+          "generatedName": "GetStatusResponse",
+          "groupName": [],
+          "type": "primitive"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "GET",
+      "path": "/status",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": {
+                "value": "string",
+                "type": "string"
+              },
+              "type": "primitive"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "getAgentThinkModels",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GetAgentThinkModelsRequest",
+      "response": {
+        "description": "Agent think models",
+        "schema": {
+          "schema": {
+            "type": "string"
+          },
+          "generatedName": "GetAgentThinkModelsResponse",
+          "groupName": [],
+          "type": "primitive"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [
+        {
+          "url": "https://agent.example.com",
+          "name": "Agent"
+        }
+      ],
+      "authed": false,
+      "method": "GET",
+      "path": "/agent/think",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": {
+                "value": "string",
+                "type": "string"
+              },
+              "type": "primitive"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {
+    "transcriptionChannel": {
+      "audiences": [],
+      "handshake": {
+        "headers": [],
+        "queryParameters": [],
+        "pathParameters": []
+      },
+      "groupName": [
+        "transcriptionChannel"
+      ],
+      "messages": [
+        {
+          "origin": "client",
+          "name": "transcribe",
+          "body": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "Transcribe",
+            "groupName": [],
+            "type": "primitive"
+          }
+        }
+      ],
+      "servers": [
+        {
+          "name": "Production",
+          "url": "wss://api.example.com"
+        }
+      ],
+      "path": "/v1/listen",
+      "examples": [
+        {
+          "queryParameters": [],
+          "headers": [],
+          "messages": [
+            {
+              "messageType": "transcribe",
+              "payload": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
+        }
+      ],
+      "source": {
+        "file": "../asyncapi.yml",
+        "type": "openapi"
+      }
+    },
+    "agentChannel": {
+      "audiences": [],
+      "handshake": {
+        "headers": [],
+        "queryParameters": [],
+        "pathParameters": []
+      },
+      "groupName": [
+        "agentChannel"
+      ],
+      "messages": [
+        {
+          "origin": "client",
+          "name": "converse",
+          "body": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "Converse",
+            "groupName": [],
+            "type": "primitive"
+          }
+        }
+      ],
+      "servers": [
+        {
+          "name": "Agent",
+          "url": "wss://agent.example.com"
+        }
+      ],
+      "path": "/v1/agent/converse",
+      "examples": [
+        {
+          "queryParameters": [],
+          "headers": [],
+          "messages": [
+            {
+              "messageType": "converse",
+              "payload": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
+        }
+      ],
+      "source": {
+        "file": "../asyncapi.yml",
+        "type": "openapi"
+      }
+    }
+  },
+  "groupedSchemas": {
+    "rootSchemas": {},
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

@@ -1,7 +1,7 @@
 import { isRawProtobufSourceSchema, RawSchemas } from "@fern-api/fern-definition-schema";
 import { Transport } from "@fern-api/ir-sdk";
 import { SourceResolver } from "@fern-api/source-resolver";
-
+import { CliError } from "@fern-api/task-context";
 import { FernFileContext } from "../../FernFileContext.js";
 import { convertProtobufService } from "./convertProtobufService.js";
 
@@ -46,7 +46,10 @@ export function getTransportForEndpoint({
         return undefined;
     }
     if (isHttpService && isGrpcEndpoint) {
-        throw new Error("Cannot have a grpc endpoint on an http service");
+        throw new CliError({
+            message: "Cannot have a grpc endpoint on an http service",
+            code: CliError.Code.ValidationError
+        });
     }
     if (isGrpcService && isHttpEndpoint) {
         // if the service is grpc, but the endpoint is http, the endpoint should override the service transport
@@ -63,9 +66,10 @@ export function getTransportForEndpoint({
         }
     }
 
-    throw new Error(
-        `Internal error; failed to determine endpoint transport for\n  ${JSON.stringify(endpointDeclaration)}"`
-    );
+    throw new CliError({
+        message: `Internal error; failed to determine endpoint transport for\n  ${JSON.stringify(endpointDeclaration)}"`,
+        code: CliError.Code.InternalError
+    });
 }
 
 function createProtobufService(
@@ -79,14 +83,20 @@ function createProtobufService(
         relativeFilepath: file.relativeFilepath
     });
     if (resolvedSource == null || resolvedSource.type !== "protobuf") {
-        throw new Error(`Expected a protobuf source for ${source.proto}.`);
+        throw new CliError({
+            message: `Expected a protobuf source for ${source.proto}.`,
+            code: CliError.Code.ResolutionError
+        });
     }
     const protobufService = convertProtobufService({
         source: resolvedSource,
         serviceNameOverride
     });
     if (protobufService == null) {
-        throw new Error(`Failed to resolve service name from ${resolvedSource.relativeFilePath}.`);
+        throw new CliError({
+            message: `Failed to resolve service name from ${resolvedSource.relativeFilePath}.`,
+            code: CliError.Code.IrConversionError
+        });
     }
     return Transport.grpc({
         service: protobufService
