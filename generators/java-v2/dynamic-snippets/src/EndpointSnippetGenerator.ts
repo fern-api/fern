@@ -439,7 +439,8 @@ export class EndpointSnippetGenerator {
         auth: FernIr.dynamic.BasicAuth;
         values: FernIr.dynamic.BasicAuthValues;
     }): java.BuilderParameter[] {
-        // usernameOmit/passwordOmit may exist in newer IR versions
+        // The dynamic IR BasicAuth type from @fern-api/dynamic-ir-sdk doesn't include usernameOmit/passwordOmit
+        // fields yet (they're only in the main IR SDK). Use a Record cast to access them when present.
         const authRecord = auth as unknown as Record<string, unknown>;
         const usernameOmitted = !!authRecord.usernameOmit;
         const passwordOmitted = !!authRecord.passwordOmit;
