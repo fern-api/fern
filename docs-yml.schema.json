@@ -4042,7 +4042,7 @@
             }
           ]
         },
-        "cursor": {
+        "claude-code": {
           "oneOf": [
             {
               "type": "boolean"
@@ -4052,7 +4052,7 @@
             }
           ]
         },
-        "claude-code": {
+        "cursor": {
           "oneOf": [
             {
               "type": "boolean"
