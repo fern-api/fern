@@ -1,4 +1,49 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.35.1
+  changelogEntry:
+    - summary: |
+        Bump @fern-api/generator-cli to 0.9.11. The GitHub pipeline step now creates
+        signed commits via the GitHub REST API (matching fiddle's legacy InMemoryGitRepo
+        push path), restoring verified fern-api[bot] commits on replay-enabled orgs.
+      type: chore
+  createdAt: "2026-04-22"
+  irVersion: 66
+- version: 1.35.0
+  changelogEntry:
+    - summary: |
+        Add `offsetSemantics` config option. When set to `"item-index"`, offset pagination increments by the number of items returned each page instead of by 1 (`"page-index"`, the default).
+      type: feat
+  createdAt: "2026-04-22"
+  irVersion: 66
+- version: 1.34.12
+  changelogEntry:
+    - summary: |
+        Fix wire test verification for endpoints with multi-value array query parameters.
+      type: fix
+  createdAt: "2026-04-22"
+  irVersion: 66
+- version: 1.34.11
+  changelogEntry:
+    - summary: |
+        Add crash reporting via Sentry to the generator runtime, and classify
+        thrown errors using the new shared `GeneratorError` taxonomy so user-facing
+        failures (config, validation, auth, network, environment) are kept distinct
+        from internal Fern bugs — only the latter are forwarded to Sentry. No
+        change to generated output.
+      type: chore
+  createdAt: "2026-04-22"
+  irVersion: 66
+- version: 1.34.10
+  changelogEntry:
+    - summary: |
+        Respect the version that the CLI provides via the IR's publish config when
+        generating for `output.location: local-file-system`. Previously the Go
+        generator only read the SDK version from its output mode, which is empty
+        for local-file-system generation — so `fern generate --version X.Y.Z
+        --local` did not stamp the generated Go SDK with the requested version.
+      type: fix
+  createdAt: "2026-04-21"
+  irVersion: 66
 - version: 1.34.9
   changelogEntry:
     - summary: |

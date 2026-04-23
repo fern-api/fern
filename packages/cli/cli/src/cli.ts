@@ -44,6 +44,7 @@ import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVers
 import { GlobalCliOptions, loadProjectAndRegisterWorkspacesWithContext } from "./cliCommons.js";
 import { addGeneratorCommands, addGetOrganizationCommand } from "./cliV2.js";
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces.js";
+import { executeAutomationsGenerate } from "./commands/automations/generate/executeAutomationsGenerate.js";
 import { listPreviewGroups } from "./commands/automations/listPreviewGroups.js";
 import { diff } from "./commands/diff/diff.js";
 import { previewDocsWorkspace } from "./commands/docs-dev/devDocsWorkspace.js";
@@ -92,10 +93,22 @@ import { RUNTIME } from "./runtime.js";
 void runCli();
 
 async function runCli() {
-    getOrCreateFernRunId();
+    // Shell completion must be fast and side-effect-free. When the shell
+    // invokes `fern --get-yargs-completions …` we skip version redirection
+    // (network call) and suppress upgrade notices so TAB never produces
+    // extraneous output.
+    const isCompletion = process.argv.includes("--get-yargs-completions");
+
+    if (!isCompletion) {
+        getOrCreateFernRunId();
+    }
 
     const isLocal = process.argv.includes("--local");
     const cliContext = await CliContext.create(process.stdout, process.stderr, { isLocal });
+
+    if (isCompletion) {
+        cliContext.suppressUpgradeMessage();
+    }
 
     const exit = async () => {
         await cliContext.exit();
@@ -125,14 +138,21 @@ async function runCli() {
         if (cwd != null) {
             process.chdir(cwd);
         }
-        const versionOfCliToRun = await getIntendedVersionOfCli(cliContext);
-        if (cliContext.environment.packageVersion === versionOfCliToRun) {
+
+        // During completion, skip version redirection to avoid a slow network
+        // round-trip that blocks every TAB press.
+        if (isCompletion) {
             await tryRunCli(cliContext);
         } else {
-            await rerunFernCliAtVersion({
-                version: versionOfCliToRun,
-                cliContext
-            });
+            const versionOfCliToRun = await getIntendedVersionOfCli(cliContext);
+            if (cliContext.environment.packageVersion === versionOfCliToRun) {
+                await tryRunCli(cliContext);
+            } else {
+                await rerunFernCliAtVersion({
+                    version: versionOfCliToRun,
+                    cliContext
+                });
+            }
         }
     } catch (error) {
         cliContext.failWithoutThrowing(undefined, error);
@@ -626,8 +646,10 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
         (yargs) =>
             yargs
                 .option("api", {
-                    string: true,
-                    description: "If multiple APIs, specify the name with --api <name>. Otherwise, just --api."
+                    type: "string",
+                    array: true,
+                    description:
+                        "If multiple APIs, specify the name with --api <name>. Pass --api multiple times to generate for several APIs at once."
                 })
                 .option("docs", {
                     string: true,
@@ -649,7 +671,9 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 })
                 .option("group", {
                     type: "string",
-                    description: "The group to generate"
+                    array: true,
+                    description:
+                        "The group to generate. Pass --group multiple times to generate for several groups at once."
                 })
                 .option("generator", {
                     type: "string",
@@ -762,9 +786,15 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     default: false,
                     description:
                         "Skip the .fernignore file and generate all files. For remote generation, uploads an empty .fernignore. For local generation, skips reading .fernignore from the output directory."
+                })
+                .option("skip-if-no-diff", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Skip opening a PR / pushing when the generated output has no diff from the base branch."
                 }),
         async (argv) => {
-            if (argv.api != null && argv.docs != null) {
+            if (argv.api != null && argv.api.length > 0 && argv.docs != null) {
                 return cliContext.failWithoutThrowing(
                     "Cannot specify both --api and --docs. Please choose one.",
                     undefined,
@@ -847,7 +877,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
             const correctedGeneratorFilter =
                 argv.generator != null ? warnAndCorrectIncorrectDockerOrg(argv.generator, cliContext) : undefined;
             const { generatorName, generatorIndex } = parseGeneratorArg(correctedGeneratorFilter);
-            if (argv.api != null) {
+            if (argv.api != null && argv.api.length > 0) {
                 return await generateAPIWorkspaces({
                     project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                         commandLineApiWorkspace: argv.api,
@@ -855,7 +885,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     }),
                     cliContext,
                     version: argv.version,
-                    groupName: argv.group,
+                    groupNames: argv.group,
                     generatorName,
                     generatorIndex,
                     shouldLogS3Url: argv.printZipUrl,
@@ -873,11 +903,12 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     outputDir: argv.output,
                     noReplay: !argv.replay,
                     retryRateLimited: argv["retry-rate-limited"],
-                    requireEnvVars: argv["require-env-vars"]
+                    requireEnvVars: argv["require-env-vars"],
+                    skipIfNoDiff: argv["skip-if-no-diff"]
                 });
             }
             if (argv.docs != null) {
-                if (argv.group != null) {
+                if (argv.group != null && argv.group.length > 0) {
                     cliContext.logger.warn("--group is ignored when generating docs");
                 }
                 if (argv.generator != null) {
@@ -915,7 +946,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 }),
                 cliContext,
                 version: argv.version,
-                groupName: argv.group,
+                groupNames: argv.group,
                 generatorName,
                 generatorIndex,
                 shouldLogS3Url: argv.printZipUrl,
@@ -933,7 +964,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 outputDir: argv.output,
                 noReplay: !argv.replay,
                 retryRateLimited: argv["retry-rate-limited"],
-                requireEnvVars: argv["require-env-vars"]
+                requireEnvVars: argv["require-env-vars"],
+                skipIfNoDiff: argv["skip-if-no-diff"]
             });
         }
     );
@@ -1868,10 +1900,16 @@ function addDocsPreviewDeleteCommand(cli: Argv<GlobalCliOptions>, cliContext: Cl
                 .check((argv) => {
                     const sources = [argv.target, argv.url, argv.id].filter(Boolean);
                     if (sources.length === 0) {
-                        throw new Error("Must provide a preview URL or --id.");
+                        throw new CliError({
+                            message: "Must provide a preview URL or --id.",
+                            code: CliError.Code.ConfigError
+                        });
                     }
                     if (sources.length > 1) {
-                        throw new Error("Provide only one of: [target], --url, or --id.");
+                        throw new CliError({
+                            message: "Provide only one of: [target], --url, or --id.",
+                            code: CliError.Code.ConfigError
+                        });
                     }
                     return true;
                 }),
@@ -2400,41 +2438,47 @@ function addAutomationsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: C
 /**
  * `fern automations generate`
  *
- * Runs SDK generation for a single generator in automation mode. This command
- * is designed to be called by the `fern-api/fern-generate` GitHub Action.
+ * Runs SDK generation for every eligible generator across every API × group in the project,
+ * aggregating per-generator outcomes into a single summary. Designed to be invoked as one
+ * step inside the `fern-api/fern-generate` GitHub Action.
  *
- * Automation mode enables the following behaviors:
- *   - **Separate PRs**: Each invocation creates its own PR (no reuse of existing fern-bot PRs).
- *     This preserves 1:1 mapping between spec commits and SDK releases.
- *   - **No-diff detection**: If generation produces output identical to the SDK repo's default
- *     branch, the PR/push is skipped entirely.
- *   - **Breaking change detection**: When `--version AUTO` determines a MAJOR bump, the PR body
- *     includes a breaking changes section and automerge is not enabled.
- *   - **Automerge** (with `--auto-merge`): Enables GitHub's automerge on the PR. The SDK repo's
- *     own branch protection rules and required checks govern whether it actually merges.
- *     Skipped when breaking changes are detected.
- *   - **Run ID correlation**: If `FERN_RUN_ID` is set in the environment, it's included in the
- *     PR body for cross-repo debugging and tracing.
+ * Targeting (all optional — omit to fan out across everything):
+ *   - `--api`       Restrict to one API in a multi-API repo.
+ *   - `--group`     Restrict to one generator group. `default-group` in generators.yml is
+ *                   intentionally ignored — automation fan-out means "all groups" by default.
+ *   - `--generator` Restrict to one generator, by 0-based index or name. Indexes reject with
+ *                   an error if the targeted generator opts out of automation; names silently
+ *                   filter opted-out matches (a name can match multiple generators).
  *
- * Generator targeting:
- *   `--generator` accepts either a 0-based index or a generator name.
- *   Index-based targeting is preferred because a group can contain multiple generators with the
- *   same name (e.g. two TypeScript SDK entries publishing to different repos).
+ * Opt-out: generators with `automations.generate: false`, `autorelease: false`, or local-file-system
+ * output are silently skipped during fan-out (they never appear in the summary).
  *
- * Environment variables:
- *   - FERN_TOKEN: Required. Authenticates with Fern services.
- *   - FERN_RUN_ID: Optional. Correlation ID included in PR body for cross-repo tracing.
- *     Typically set to `${{ github.run_id }}-${{ strategy.job-index }}` in GitHub Actions.
+ * Automation-mode behaviors (inherited from `automationMode: true`, driven by Fiddle):
+ *   - Separate PRs: each invocation creates its own PR, preserving 1:1 spec→SDK mapping.
+ *   - No-diff detection: identical-to-default-branch output skips the PR/push.
+ *   - Breaking-change detection: MAJOR bumps (via `--version AUTO`) surface in the PR body
+ *     and disable automerge.
+ *   - Automerge (with `--auto-merge`): enables GitHub automerge; SDK-repo branch protection
+ *     still governs actual merge.
+ *
+ * Reporting:
+ *   - stdout: one `X succeeded · Y skipped · Z failed` line at the end.
+ *   - Markdown summary: auto-appended to `$GITHUB_STEP_SUMMARY` when that env var is set
+ *     (GitHub Actions sets it; any other CI can opt in by setting it to a writable path).
+ *   - `--json-file-output <path>`: CI-neutral JSON file with per-generator status, version, and error.
+ *   - Exit code: non-zero iff any generator fails. Siblings keep running past a failure.
+ *
+ * Environment:
+ *   - FERN_TOKEN: required. Authenticates with Fern services.
+ *   - FERN_RUN_ID: optional. Correlation ID for cross-repo tracing. Typically set to
+ *     `${{ github.run_id }}-${{ strategy.job-index }}` in GitHub Actions.
  *
  * Examples:
- *   # Generate the first generator in the 'sdk' group with auto-versioning and automerge
- *   fern automations generate --group sdk --generator 0 --version AUTO --auto-merge
+ *   # Fan out across every eligible generator in the project.
+ *   fern automations generate --version AUTO --auto-merge
  *
- *   # Generate a specific generator by name (selects ALL matching generators in the group)
- *   fern automations generate --group sdk --generator fernapi/fern-python-sdk --version AUTO
- *
- *   # Multi-API repo: target a specific API
- *   fern automations generate --api payments --group sdk --generator 0 --version AUTO
+ *   # Restrict to one API and emit a JSON summary for a non-GitHub CI.
+ *   fern automations generate --api payments --version AUTO --json-file-output ./fern-report.json
  */
 function addAutomationsGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
@@ -2445,20 +2489,23 @@ function addAutomationsGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: 
                 .option("api", {
                     type: "string",
                     description:
-                        "Target a specific API in a multi-API repo (e.g. 'foo' for fern/apis/foo/). " +
-                        "Required when the project has multiple APIs."
+                        "Filter to a specific API in a multi-API repo (e.g. 'foo' for fern/apis/foo/). " +
+                        "Omit to fan out across every API in the project."
                 })
                 .option("group", {
                     type: "string",
                     description:
-                        "The generator group to run (e.g. 'sdk'). " +
-                        "Falls back to default-group in generators.yml if omitted."
+                        "Filter to a specific generator group (e.g. 'sdk'). " +
+                        "Omit to fan out across every group. The default-group field in generators.yml " +
+                        "is intentionally ignored."
                 })
                 .option("generator", {
                     type: "string",
                     description:
                         "Target a specific generator by 0-based index (e.g. '0', '1') or by name. " +
-                        "Index is preferred for deterministic targeting when duplicate names exist."
+                        "When targeting an opted-out generator by index, the command rejects with an " +
+                        "error rather than silently skipping. Omit to fan out across every eligible " +
+                        "generator in the selected APIs and groups."
                 })
                 .option("version", {
                     type: "string",
@@ -2472,40 +2519,24 @@ function addAutomationsGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: 
                     description:
                         "Enable GitHub automerge on generated PRs. Automerge is skipped when " +
                         "breaking changes (MAJOR bump) are detected, regardless of this flag."
+                })
+                .option("json-file-output", {
+                    type: "string",
+                    description:
+                        "Write a JSON summary of per-generator results to the given path. " +
+                        "CI-neutral companion to the markdown summary auto-written to $GITHUB_STEP_SUMMARY."
                 }),
         async (argv) => {
-            const { generatorName: genName, generatorIndex: genIndex } = parseGeneratorArg(argv.generator);
-
-            await cliContext.runTask(async () => {
-                await generateAPIWorkspaces({
-                    project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                        commandLineApiWorkspace: argv.api,
-                        defaultToAllApiWorkspaces: false
-                    }),
-                    cliContext,
+            await executeAutomationsGenerate({
+                cliContext,
+                options: {
+                    api: argv.api,
+                    group: argv.group,
+                    generator: argv.generator,
                     version: argv.version,
-                    groupName: argv.group,
-                    generatorName: genName,
-                    generatorIndex: genIndex,
-                    shouldLogS3Url: false,
-                    keepDocker: false,
-                    useLocalDocker: false,
-                    preview: false,
-                    mode: undefined,
-                    force: true,
-                    runner: undefined,
-                    inspect: false,
-                    lfsOverride: undefined,
-                    fernignorePath: undefined,
-                    skipFernignore: false,
-                    dynamicIrOnly: false,
-                    outputDir: undefined,
-                    noReplay: false,
-                    retryRateLimited: false,
-                    requireEnvVars: false,
-                    automationMode: true,
-                    autoMerge: argv["auto-merge"]
-                });
+                    autoMerge: argv["auto-merge"],
+                    jsonOutputPath: argv["json-file-output"]
+                }
             });
         }
     );

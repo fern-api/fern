@@ -1,0 +1,145 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "types": {
+          "Shape": {
+            "availability": undefined,
+            "base-properties": {},
+            "default-variant": undefined,
+            "discriminant": {
+              "context": "data",
+              "value": "type",
+            },
+            "docs": undefined,
+            "encoding": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": {
+              "square": "Square",
+              "triangle": "Triangle",
+            },
+          },
+          "Square": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "sideLength": "double",
+              "type": "SquareType",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "SquareType": {
+            "enum": [
+              "square",
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "Triangle": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "base": "double",
+              "height": "double",
+              "type": "TriangleType",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "TriangleType": {
+            "enum": [
+              "triangle",
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "UndiscriminatedShape": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "Triangle",
+              "Square",
+            ],
+          },
+        },
+      },
+      "rawContents": "types:
+  Shape:
+    discriminant:
+      value: type
+      context: data
+    base-properties: {}
+    union:
+      triangle: Triangle
+      square: Square
+    source:
+      openapi: ../openapi.yml
+  UndiscriminatedShape:
+    discriminated: false
+    union:
+      - Triangle
+      - Square
+    source:
+      openapi: ../openapi.yml
+  TriangleType:
+    enum:
+      - triangle
+    inline: true
+    source:
+      openapi: ../openapi.yml
+  Triangle:
+    properties:
+      type: TriangleType
+      base: double
+      height: double
+    source:
+      openapi: ../openapi.yml
+  SquareType:
+    enum:
+      - square
+    inline: true
+    source:
+      openapi: ../openapi.yml
+  Square:
+    properties:
+      type: SquareType
+      sideLength: double
+    source:
+      openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Test x-fern-discriminated override with unions v1",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Test x-fern-discriminated override with unions v1
+",
+  },
+}

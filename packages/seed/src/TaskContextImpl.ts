@@ -34,6 +34,7 @@ export declare namespace TaskContextImpl {
 
 export class TaskContextImpl implements Startable<TaskContext>, Finishable, TaskContext {
     protected result = TaskResult.Success;
+    protected lastFailureMessage: string | undefined = undefined;
     protected logImmediately: (logs: Log[]) => void;
     protected logPrefix: string;
     protected subtasks: InteractiveTaskContextImpl[] = [];
@@ -68,6 +69,9 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
     }
 
     public finish(): void {
+        if (this.status === "finished") {
+            return;
+        }
         this.status = "finished";
         this.flushLogs();
         this.onResult?.(this.getResult());
@@ -86,8 +90,15 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
     }
 
     public failWithoutThrowing(message?: string, error?: unknown, _options?: { code?: CliError.Code }): void {
+        if (message != null) {
+            this.lastFailureMessage = message;
+        }
         logErrorMessage({ message, error, logger: this.logger });
         this.result = TaskResult.Failure;
+    }
+
+    public getLastFailureMessage(): string | undefined {
+        return this.lastFailureMessage;
     }
 
     public captureException(_error: unknown, _code?: CliError.Code): void {
@@ -214,6 +225,9 @@ export class InteractiveTaskContextImpl
     }
 
     public finish(): void {
+        if (this.status === "finished") {
+            return;
+        }
         if (this.result === TaskResult.Success) {
             this.logAtLevelWithOverrides(LogLevel.Info, ["Finished."], {
                 omitOnTTY: true

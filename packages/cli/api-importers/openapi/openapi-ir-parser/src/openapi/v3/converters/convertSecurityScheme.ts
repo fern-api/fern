@@ -1,5 +1,6 @@
 import { EnumSchema, SecurityScheme, Source } from "@fern-api/openapi-ir";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
+
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../../../getExtension.js";
 import { convertEnum } from "../../../schema/convertEnum.js";
@@ -23,9 +24,10 @@ export function convertSecurityScheme(
 ): SecurityScheme | undefined {
     if (isReferenceObject(securityScheme)) {
         if (context == null) {
-            throw new Error(
-                `Converting referenced security schemes requires context: ${JSON.stringify(securityScheme)}`
-            );
+            throw new CliError({
+                message: `Converting referenced security schemes requires context: ${JSON.stringify(securityScheme)}`,
+                code: CliError.Code.InternalError
+            });
         }
         const resolvedSecurityScheme = context.resolveSecuritySchemeReference(securityScheme);
         return convertSecuritySchemeHelper(resolvedSecurityScheme, source, taskContext);

@@ -70,6 +70,9 @@ public interface JavaSdkCustomConfig extends ICustomConfig {
     @JsonProperty("custom-pager-name")
     Optional<String> customPagerName();
 
+    @JsonProperty("offset-semantics")
+    Optional<String> offsetSemantics();
+
     @JsonProperty("default-timeout-in-seconds")
     Optional<Integer> defaultTimeoutInSeconds();
 

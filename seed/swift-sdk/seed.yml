@@ -10,6 +10,11 @@ publish:
     file: ./generators/swift/sdk/Dockerfile
     image: fernapi/fern-swift-sdk
     context: .
+  sentry:
+    name: fern-swift-sdk
+    project: swift-sdk
+    sourceMaps:
+      - dir: generators/swift/sdk/dist
 
 test:
   docker:

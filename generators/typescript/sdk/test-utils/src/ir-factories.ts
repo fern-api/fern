@@ -138,7 +138,8 @@ export function createPathParameter(
         variable: undefined,
         v2Examples: undefined,
         docs: undefined,
-        explode: undefined
+        explode: undefined,
+        clientDefault: undefined
     };
 }
 
@@ -157,7 +158,8 @@ export function createQueryParameter(
         v2Examples: undefined,
         docs: undefined,
         availability: undefined,
-        explode: undefined
+        explode: undefined,
+        clientDefault: undefined
     };
 }
 
@@ -205,7 +207,8 @@ export function createHttpHeader(
         env: opts?.env,
         v2Examples: undefined,
         docs: opts?.docs,
-        availability: undefined
+        availability: undefined,
+        clientDefault: undefined
     };
 }
 

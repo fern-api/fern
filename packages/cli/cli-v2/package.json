@@ -109,6 +109,7 @@
     "yargs": "^17.4.1"
   },
   "dependencies": {
+    "dotenv": "^16.0.0",
     "tmp-promise": "catalog:"
   }
 }

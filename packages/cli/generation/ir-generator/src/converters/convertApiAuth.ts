@@ -7,6 +7,7 @@ import {
     InferredAuthSchemeTokenEndpoint,
     OAuthConfiguration
 } from "@fern-api/ir-sdk";
+import { CliError } from "@fern-api/task-context";
 
 import { FernFileContext } from "../FernFileContext.js";
 import { EndpointResolver } from "../resolvers/EndpointResolver.js";
@@ -105,7 +106,7 @@ function convertSchemeReference({
     const convertNamedAuthSchemeReference = (reference: string, docs: string | undefined) => {
         const declaration = authSchemeDeclarations?.[reference];
         if (declaration == null) {
-            throw new Error("Unknown auth scheme: " + reference);
+            throw new CliError({ message: "Unknown auth scheme: " + reference, code: CliError.Code.ReferenceError });
         }
         return visitRawAuthSchemeDeclaration<AuthScheme>(declaration, {
             header: (rawHeader) =>
@@ -265,7 +266,10 @@ function generateOAuth({
                 )
             });
         default:
-            throw new Error(`Unknown OAuth type: '${rawScheme?.type}'`);
+            throw new CliError({
+                message: `Unknown OAuth type: '${rawScheme?.type}'`,
+                code: CliError.Code.ValidationError
+            });
     }
 }
 

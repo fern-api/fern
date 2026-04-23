@@ -1,3 +1,5 @@
+import { CliError } from "@fern-api/task-context";
+
 /**
  * Preview URLs follow the pattern: {org}-preview-{id}.docs.buildwithfern.com
  */
@@ -63,7 +65,10 @@ export function buildPreviewDomain({ orgId, previewId }: { orgId: string; previe
 
     const minIdLength = 8;
     if (availableSpace < minIdLength) {
-        throw new Error(`Organization name "${orgId}" is too long to generate a valid preview URL`);
+        throw new CliError({
+            message: `Organization name "${orgId}" is too long to generate a valid preview URL`,
+            code: CliError.Code.ValidationError
+        });
     }
 
     const truncatedId = sanitizedId.slice(0, availableSpace).replace(/-+$/, "");

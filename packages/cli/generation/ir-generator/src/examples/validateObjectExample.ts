@@ -1,8 +1,8 @@
 import { FernWorkspace, getDefinitionFile } from "@fern-api/api-workspace-commons";
 import { isPlainObject } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { CliError } from "@fern-api/task-context";
 import { keyBy } from "lodash-es";
-
 import { constructFernFileContext, FernFileContext } from "../FernFileContext.js";
 import { ExampleResolver } from "../resolvers/ExampleResolver.js";
 import { TypeResolver } from "../resolvers/TypeResolver.js";
@@ -92,7 +92,10 @@ export function validateObjectExample({
         } else {
             const definitionFile = getDefinitionFile(workspace, propertyWithPath.filepathOfDeclaration);
             if (definitionFile == null) {
-                throw new Error("Service file does not exist for property: " + propertyWithPath.wireKey);
+                throw new CliError({
+                    message: "Service file does not exist for property: " + propertyWithPath.wireKey,
+                    code: CliError.Code.InternalError
+                });
             }
             violations.push(
                 ...validateTypeReferenceExample({

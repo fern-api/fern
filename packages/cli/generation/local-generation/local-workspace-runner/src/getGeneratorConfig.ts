@@ -2,6 +2,7 @@ import { GeneratorInvocation, generatorsYml } from "@fern-api/configuration";
 import { isGithubSelfhosted } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { parseRepository } from "@fern-api/github";
+import { CliError } from "@fern-api/task-context";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { EnvironmentVariable } from "@fern-fern/generator-exec-sdk/api";
@@ -254,7 +255,10 @@ export function getGeneratorConfig({
                 push: (value) => `https://github.com/${value.owner}/${value.repo}`,
                 pullRequest: (value) => `https://github.com/${value.owner}/${value.repo}`,
                 _other: () => {
-                    throw new Error("Encountered unknown github mode");
+                    throw new CliError({
+                        message: "Encountered unknown github mode",
+                        code: CliError.Code.InternalError
+                    });
                 }
             });
             const outputConfig: FernGeneratorExec.GeneratorOutputConfig = {
@@ -275,7 +279,10 @@ export function getGeneratorConfig({
             return outputConfig;
         },
         _other: () => {
-            throw new Error("Output type did not match any of the types supported by Fern");
+            throw new CliError({
+                message: "Output type did not match any of the types supported by Fern",
+                code: CliError.Code.InternalError
+            });
         }
     });
     return {

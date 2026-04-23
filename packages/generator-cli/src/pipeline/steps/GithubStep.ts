@@ -6,6 +6,7 @@ import { join } from "path";
 import { createReplayBranch } from "../github/createReplayBranch";
 import { findExistingUpdatablePR } from "../github/findExistingUpdatablePR";
 import { parseCommitMessageForPR } from "../github/parseCommitMessage";
+import { pushSignedCommit } from "../github/pushSignedCommit";
 import type { PipelineLogger } from "../PipelineLogger";
 import { formatReplayPrBody } from "../replay-summary";
 import type { GithubStepConfig, GithubStepResult, PipelineContext, ReplayStepResult } from "../types";
@@ -158,11 +159,11 @@ export class GithubStep extends BaseStep {
             this.logger.debug(`Committed changes to local copy of GitHub repository at ${this.outputDir}`);
         }
 
-        // In automation mode, detect no-diff before pushing.
+        // When skipIfNoDiff is enabled, detect no-diff before pushing.
         // --version AUTO already returns shouldCommit=false for NO_CHANGE, which prevents the
         // pipeline from running at all. This tree-hash check is a safety net for edge cases
         // where the version changes but the generated output doesn't.
-        if (this.config.automationMode) {
+        if (shouldCheckNoDiff(this.config)) {
             const noDiff = await repository.treeHashEquals(`origin/${baseBranch}`);
             if (noDiff) {
                 this.logger.info("No changes detected after generation — skipping PR creation");
@@ -177,13 +178,18 @@ export class GithubStep extends BaseStep {
         };
 
         if (!this.config.previewMode) {
-            if (isUpdatingExistingPR) {
-                // Force push is safe: fern-bot/* branches are exclusively owned by this pipeline,
-                // and required when the clone lacks remote tracking refs (e.g., shallow clone from fiddle).
-                await repository.forcePush();
-            } else {
-                await repository.push();
-            }
+            // Create a signed commit via the GitHub API. Using the App installation token causes
+            // GitHub to sign the commit with the App's key. `force=true` when updating an existing
+            // fern-bot/* PR branch (bot-owned, pipeline-owned) — same safety posture as forcePush().
+            await pushSignedCommit({
+                repository,
+                octokit,
+                owner,
+                repo,
+                branch: prBranch,
+                force: isUpdatingExistingPR,
+                logger: this.logger
+            });
             const pushedBranch = await repository.getCurrentBranch();
             result.branchUrl = `https://github.com/${this.config.uri}/tree/${pushedBranch}`;
             this.logger.info(`Pushed branch: ${result.branchUrl}`);
@@ -304,8 +310,8 @@ export class GithubStep extends BaseStep {
         await repository.commitAllChanges(finalCommitMessage);
         this.logger.debug(`Committed changes to local copy of GitHub repository at ${this.outputDir}`);
 
-        // In automation mode, detect no-diff before pushing
-        if (this.config.automationMode) {
+        // When skipIfNoDiff is enabled, detect no-diff before pushing
+        if (shouldCheckNoDiff(this.config)) {
             const noDiff = await repository.treeHashEquals(`origin/${baseBranch}`);
             if (noDiff) {
                 this.logger.info("No changes detected after generation — skipping push");
@@ -319,7 +325,18 @@ export class GithubStep extends BaseStep {
         };
 
         if (!this.config.previewMode) {
-            await repository.pushWithRebasingRemote();
+            const octokit = new Octokit({ auth: this.config.token });
+            const { owner, repo } = parseRepository(this.config.uri);
+            await pushSignedCommit({
+                repository,
+                octokit,
+                owner,
+                repo,
+                branch: baseBranch,
+                force: false,
+                rebaseOnConflict: true,
+                logger: this.logger
+            });
 
             const pushedBranch = await repository.getCurrentBranch();
             result.branchUrl = `https://github.com/${this.config.uri}/tree/${pushedBranch}`;
@@ -403,6 +420,15 @@ export function shouldEnableAutomerge(config: {
     hasBreakingChanges?: boolean;
 }): boolean {
     return config.automationMode === true && config.autoMerge === true && config.hasBreakingChanges !== true;
+}
+
+/**
+ * Determines whether the no-diff tree-hash check should run before push/PR creation.
+ * Independent of automationMode: callers opt into this behavior explicitly via skipIfNoDiff.
+ * Exported for testing.
+ */
+export function shouldCheckNoDiff(config: { skipIfNoDiff?: boolean }): boolean {
+    return config.skipIfNoDiff === true;
 }
 
 /**

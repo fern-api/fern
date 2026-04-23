@@ -3,6 +3,7 @@ import { assertNever, MediaType } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { Endpoint, EndpointExample, Request, RetriesConfiguration, Schema, SchemaId } from "@fern-api/openapi-ir";
 import { RelativeFilePath } from "@fern-api/path-utils";
+import { CliError } from "@fern-api/task-context";
 import { buildEndpointExample } from "./buildEndpointExample.js";
 import { ERROR_DECLARATIONS_FILENAME, EXTERNAL_AUDIENCE } from "./buildFernDefinition.js";
 import { buildHeader } from "./buildHeader.js";
@@ -283,7 +284,10 @@ export function buildEndpoint({
                 };
             },
             _other: () => {
-                throw new Error("Unrecognized Response type: " + endpoint.response?.type);
+                throw new CliError({
+                    message: "Unrecognized Response type: " + endpoint.response?.type,
+                    code: CliError.Code.InternalError
+                });
             }
         });
     }

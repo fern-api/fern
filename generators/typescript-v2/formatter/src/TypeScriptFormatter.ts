@@ -1,4 +1,4 @@
-import { AbstractFormatter } from "@fern-api/base-generator";
+import { AbstractFormatter } from "@fern-api/browser-compatible-base-generator";
 import * as prettier from "prettier2";
 
 export class TypeScriptFormatter extends AbstractFormatter {
