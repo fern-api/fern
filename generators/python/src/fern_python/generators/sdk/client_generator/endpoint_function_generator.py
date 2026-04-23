@@ -790,8 +790,11 @@ class EndpointFunctionGenerator:
         # Consolidate the named parameters and path parameters in a single list.
         parameters: List[AST.NamedFunctionParameter] = []
         inline_path_params = self._context.custom_config.inline_path_params
-        # If inline_path_params is true, named_parameters already includes path params
-        parameters = self._named_parameters_from_path_parameters(path_parameters) if not inline_path_params else []
+        # If inline_path_params is true, named_parameters already includes path params.
+        # When not inlining, exclude path params with client_default since they are already in named_parameters.
+        if not inline_path_params:
+            docstring_path_params = [p for p in path_parameters if p.client_default is None]
+            parameters = self._named_parameters_from_path_parameters(docstring_path_params)
         parameters.extend(named_parameters)
 
         def write(writer: AST.NodeWriter) -> None:
