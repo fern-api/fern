@@ -15,6 +15,7 @@ export const PageActionOptions: core.serialization.ObjectSchema<
     chatgpt: core.serialization.boolean().optional(),
     claude: core.serialization.boolean().optional(),
     cursor: core.serialization.boolean().optional(),
+    claudeCode: core.serialization.property("claude-code", core.serialization.boolean().optional()),
     vscode: core.serialization.boolean().optional(),
     custom: core.serialization.list(CustomPageAction).optional(),
 });
@@ -27,6 +28,7 @@ export declare namespace PageActionOptions {
         chatgpt?: boolean | null;
         claude?: boolean | null;
         cursor?: boolean | null;
+        "claude-code"?: boolean | null;
         vscode?: boolean | null;
         custom?: CustomPageAction.Raw[] | null;
     }

@@ -3939,6 +3939,7 @@
         "chatgpt",
         "claude",
         "cursor",
+        "claude-code",
         "vscode"
       ]
     },
@@ -4042,6 +4043,16 @@
           ]
         },
         "cursor": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "claude-code": {
           "oneOf": [
             {
               "type": "boolean"

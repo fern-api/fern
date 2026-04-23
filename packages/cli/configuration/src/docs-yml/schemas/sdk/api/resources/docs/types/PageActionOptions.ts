@@ -40,6 +40,14 @@ export interface PageActionOptions {
      */
     cursor?: boolean;
     /**
+     * Controls the "Connect to Claude Code" button, which copies a `claude mcp add` command to the
+     * clipboard so users can register this docs site's MCP server with Claude Code. The button only
+     * renders on docs sites that have Ask AI enabled; set to `false` to hide it on those sites.
+     *
+     * @default: true
+     */
+    claudeCode?: boolean;
+    /**
      * When enabled, displays an "Open in VS Code" button that allows users to open the page content in Visual Studio Code for editing and development.
      *
      * @default: false

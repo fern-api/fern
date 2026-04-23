@@ -7,6 +7,7 @@ export const PageActionOption = {
     Chatgpt: "chatgpt",
     Claude: "claude",
     Cursor: "cursor",
+    ClaudeCode: "claude-code",
     Vscode: "vscode",
 } as const;
 export type PageActionOption = (typeof PageActionOption)[keyof typeof PageActionOption];
