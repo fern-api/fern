@@ -1,7 +1,5 @@
-import type { FernToken } from "@fern-api/auth";
-import { createVenusService } from "@fern-api/core";
 import { CliError } from "@fern-api/task-context";
-
+import { execSync } from "child_process";
 import { createHash } from "crypto";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
@@ -12,18 +10,29 @@ import type { Context } from "../../../../context/Context.js";
 import type { GlobalArgs } from "../../../../context/GlobalArgs.js";
 import { command } from "../../../_internal/command.js";
 
-const FDR_ORIGIN = "http://localhost:8080";
-const VENUS_ORIGIN = "http://localhost:8089";
+// FERN_FDR_ORIGIN is checked first because DEFAULT_FDR_ORIGIN is baked into the
+// prod bundle at build time and cannot be overridden at runtime.
+const FDR_ORIGIN =
+    process.env.FERN_FDR_ORIGIN ?? process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com";
 
 // ── CAS helpers ───────────────────────────────────────────────────────────────
 
+function getGitRoot(): string {
+    try {
+        return execSync("git rev-parse --show-toplevel", { encoding: "utf-8" }).trim();
+    } catch {
+        return process.cwd();
+    }
+}
+
 /**
- * Performs a CAS check + optional S3 upload, then binds the hash as the file
- * path in the files table.  Returns the 64-char hex SHA-256 hash.
+ * Performs a CAS check + optional S3 upload, then binds the hash to a
+ * repo-relative file path in the files table.  Returns the 64-char hex SHA-256 hash.
  */
 async function uploadToCas(
     content: Buffer,
     contentType: string,
+    bindPath: string,
     orgId: string,
     token: string,
     label: string
@@ -39,7 +48,8 @@ async function uploadToCas(
     if (!checkRes.ok) {
         const errorBody = await checkRes.text();
         throw new CliError({
-            message: `CAS check failed for ${label}: HTTP ${checkRes.status} — ${errorBody}`,
+            message: `CAS check failed for ${label} (URL: ${casUrl}): HTTP ${checkRes.status} — ${errorBody}`,
+
             code: CliError.Code.NetworkError
         });
     }
@@ -58,7 +68,7 @@ async function uploadToCas(
         }
     }
 
-    const bindRes = await fetch(`${FDR_ORIGIN}/v2/registry/files/${orgId}/${hash}`, {
+    const bindRes = await fetch(`${FDR_ORIGIN}/v2/registry/files/${orgId}/${bindPath}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
         body: JSON.stringify({ hash, contentType })
@@ -76,7 +86,10 @@ async function uploadToCas(
 async function uploadFileToCas(absolutePath: string, orgId: string, token: string): Promise<string> {
     const content = await readFile(absolutePath);
     const contentType = (mime.lookup(absolutePath) || "application/octet-stream") as string;
-    return uploadToCas(content, contentType, orgId, token, path.basename(absolutePath));
+    const gitRoot = getGitRoot();
+    const repoName = path.basename(gitRoot);
+    const bindPath = path.join(repoName, path.relative(gitRoot, absolutePath));
+    return uploadToCas(content, contentType, bindPath, orgId, token, path.basename(absolutePath));
 }
 
 // ── Theme config walking ──────────────────────────────────────────────────────
@@ -202,7 +215,7 @@ export declare namespace UploadThemeCommand {
 export class UploadThemeCommand {
     public async handle(context: Context, args: UploadThemeCommand.Args): Promise<void> {
         const token = await context.getTokenOrPrompt();
-        const orgId = await this.resolveOrg(context, args, token);
+        const orgId = await this.resolveOrg(context, args);
         const themeDir = args.directory
             ? path.resolve(process.cwd(), args.directory)
             : path.resolve(process.cwd(), "fern/theme");
@@ -222,9 +235,6 @@ export class UploadThemeCommand {
             throw new CliError({ message: "theme.yml must be a YAML object", code: CliError.Code.ConfigError });
         }
 
-        context.stderr.info(
-            `[debug] FDR_ORIGIN = ${FDR_ORIGIN} (DEFAULT_FDR_ORIGIN env = ${process.env["DEFAULT_FDR_ORIGIN"] ?? "(not set)"})`
-        );
         context.stdout.info(`Uploading theme "${args.name}" for org "${orgId}"...`);
 
         const processedConfig = await processThemeConfig(
@@ -237,18 +247,18 @@ export class UploadThemeCommand {
 
         const configBuffer = Buffer.from(JSON.stringify(processedConfig));
         context.stdout.debug(`  Uploading processed config...`);
-        await uploadToCas(configBuffer, "application/json", orgId, token.value, "theme config");
+        const gitRoot = getGitRoot();
+        const repoName = path.basename(gitRoot);
+        const configBindPath = path.join(repoName, path.relative(gitRoot, themeDir), "theme.json");
+        await uploadToCas(configBuffer, "application/json", configBindPath, orgId, token.value, "theme config");
 
-        const themeUrl = `${FDR_ORIGIN}/v2/registry/themes/${orgId}`;
-        context.stderr.info(`[debug] POST ${themeUrl}`);
-        const res = await fetch(themeUrl, {
+        const res = await fetch(`${FDR_ORIGIN}/v2/registry/themes/${orgId}`, {
             method: "POST",
             headers: { "Content-Type": "application/json", Authorization: `Bearer ${token.value}` },
             body: JSON.stringify({ name: args.name, config: processedConfig })
         });
         if (!res.ok) {
             const body = await res.text();
-            context.stderr.info(`[debug] Response headers: ${JSON.stringify(Object.fromEntries(res.headers))}`);
             throw new CliError({
                 message: `Failed to save theme: HTTP ${res.status} — ${body}`,
                 code: CliError.Code.NetworkError
@@ -258,55 +268,18 @@ export class UploadThemeCommand {
         context.stdout.info(`✓ Saved theme "${args.name}" for org "${orgId}"`);
     }
 
-    private async resolveOrg(context: Context, args: UploadThemeCommand.Args, token: FernToken): Promise<string> {
+    private async resolveOrg(context: Context, args: UploadThemeCommand.Args): Promise<string> {
         if (args.org != null) {
             return args.org;
         }
-
-        const workspace = await context.loadWorkspace();
-        if (workspace != null && workspace.success) {
-            return workspace.workspace.org;
+        const org = await context.loadOrg();
+        if (org != null) {
+            return org;
         }
-
-        return this.resolveOrgFromToken(token);
-    }
-
-    private async resolveOrgFromToken(token: FernToken): Promise<string> {
-        const venus = createVenusService({ token: token.value, environment: VENUS_ORIGIN });
-
-        if (token.type === "organization") {
-            const response = await venus.organization.getMyOrganizationFromScopedToken();
-            if (response.ok) {
-                return response.body.organizationId;
-            }
-            // Org-scoped call failed (e.g. local dev token against prod Venus).
-            // Fall through to the user-token path as a best-effort fallback.
-        }
-
-        const response = await venus.user.getMyOrganizations({ pageId: 1 });
-        process.stderr.write(`[debug] getMyOrganizations response: ${JSON.stringify(response)}\n`);
-        if (!response.ok) {
-            throw new CliError({
-                message: "Failed to fetch your organizations. Use --org <id> to specify it explicitly.",
-                code: CliError.Code.AuthError
-            });
-        }
-
-        const orgs = response.body.organizations;
-        if (orgs.length === 0) {
-            throw new CliError({
-                message: "You are not a member of any organizations. Use --org <id> to specify one.",
-                code: CliError.Code.ConfigError
-            });
-        }
-        if (orgs.length > 1) {
-            throw new CliError({
-                message: `You belong to multiple organizations (${orgs.join(", ")}). Use --org <id> to specify which one to use.`,
-                code: CliError.Code.ConfigError
-            });
-        }
-
-        return String(orgs[0]);
+        throw new CliError({
+            message: "Could not determine organization. Add an 'org' field to fern.yml or run from a Fern workspace.",
+            code: CliError.Code.ConfigError
+        });
     }
 }
 
