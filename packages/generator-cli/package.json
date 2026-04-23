@@ -29,6 +29,7 @@
   },
   "files": ["bin", "dist", "lib"],
   "dependencies": {
+    "@boundaryml/baml": "catalog:",
     "@fern-api/cli-ai": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/logging-execa": "workspace:*",

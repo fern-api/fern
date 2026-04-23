@@ -1,6 +1,21 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix generator-cli publish: mark `@boundaryml/baml` as external in
+        `build.mjs` so esbuild does not try to statically bundle baml's
+        platform-specific `baml.<platform>.node` bindings. baml is now listed as a
+        direct dependency of `@fern-api/generator-cli` and resolved from
+        `node_modules` at runtime. Also switch `AutoVersioningCache` to the local
+        `VersionBump` enum from `./VersionUtils` so the autoversion cache no
+        longer pulls in `@fern-api/cli-ai` just for a type. Unblocks publishing
+        `0.9.12`, whose publish failed in `dist:cli` with repeated
+        `Cannot find module './baml.<platform>.node'` errors.
+      type: fix
+  createdAt: "2026-04-23"
+  version: 0.9.13
+
+- changelogEntry:
+    - summary: |
         Implement the FER-9980 autoversion pipeline. A new `GenerationCommitStep` +
         `AutoVersionStep` run between the `[fern-generated]` commit and replay
         detect/apply, diffing prev vs new `[fern-generated]` SHAs (both pure
