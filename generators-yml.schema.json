@@ -3855,6 +3855,17 @@
         "repository": {
           "type": "string"
         },
+        "branch": {
+          "description": "If specified, commits and tags the release on this branch instead of the default branch. The branch must exist.",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "license": {
           "oneOf": [
             {

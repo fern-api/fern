@@ -11,6 +11,7 @@ export const GithubCommitAndReleaseSchema: core.serialization.ObjectSchema<
     GeneratorsYml.GithubCommitAndReleaseSchema
 > = core.serialization.object({
     repository: core.serialization.string(),
+    branch: core.serialization.string().optional(),
     license: GithubLicenseSchema.optional(),
     mode: GithubCommitAndReleaseMode.optional(),
 });
@@ -18,6 +19,7 @@ export const GithubCommitAndReleaseSchema: core.serialization.ObjectSchema<
 export declare namespace GithubCommitAndReleaseSchema {
     export interface Raw {
         repository: string;
+        branch?: string | null;
         license?: GithubLicenseSchema.Raw | null;
         mode?: GithubCommitAndReleaseMode.Raw | null;
     }
