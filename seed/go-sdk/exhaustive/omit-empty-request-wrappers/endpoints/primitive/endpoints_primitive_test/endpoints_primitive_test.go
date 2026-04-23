@@ -224,7 +224,7 @@ func TestEndpointsPrimitiveGetAndReturnDatetimeWithWireMock(
 	VerifyRequestCount(t, "TestEndpointsPrimitiveGetAndReturnDatetimeWithWireMock", "POST", "/primitive/datetime", nil, 1)
 }
 
-func TestEndpointsPrimitiveGetAndReturnUUIDWithWireMock(
+func TestEndpointsPrimitiveGetAndReturnUuidWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -238,16 +238,16 @@ func TestEndpointsPrimitiveGetAndReturnUUIDWithWireMock(
 	request := uuid.MustParse(
 		"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
 	)
-	_, invocationErr := client.Endpoints.Primitive.GetAndReturnUUID(
+	_, invocationErr := client.Endpoints.Primitive.GetAndReturnUuid(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestEndpointsPrimitiveGetAndReturnUUIDWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestEndpointsPrimitiveGetAndReturnUuidWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestEndpointsPrimitiveGetAndReturnUUIDWithWireMock", "POST", "/primitive/uuid", nil, 1)
+	VerifyRequestCount(t, "TestEndpointsPrimitiveGetAndReturnUuidWithWireMock", "POST", "/primitive/uuid", nil, 1)
 }
 
 func TestEndpointsPrimitiveGetAndReturnBase64WithWireMock(

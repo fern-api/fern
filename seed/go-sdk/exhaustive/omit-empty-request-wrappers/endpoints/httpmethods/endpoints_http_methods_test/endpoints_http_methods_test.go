@@ -79,7 +79,7 @@ func VerifyRequestCount(
 	require.Equal(t, expected, len(result.Requests))
 }
 
-func TestEndpointsHTTPMethodsTestGetWithWireMock(
+func TestEndpointsHttpMethodsTestGetWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -90,19 +90,19 @@ func TestEndpointsHTTPMethodsTestGetWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	_, invocationErr := client.Endpoints.HTTPMethods.TestGet(
+	_, invocationErr := client.Endpoints.HttpMethods.TestGet(
 		context.TODO(),
 		"id",
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestEndpointsHTTPMethodsTestGetWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestEndpointsHttpMethodsTestGetWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestEndpointsHTTPMethodsTestGetWithWireMock", "GET", "/http-methods/id", nil, 1)
+	VerifyRequestCount(t, "TestEndpointsHttpMethodsTestGetWithWireMock", "GET", "/http-methods/id", nil, 1)
 }
 
-func TestEndpointsHTTPMethodsTestPostWithWireMock(
+func TestEndpointsHttpMethodsTestPostWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -116,19 +116,19 @@ func TestEndpointsHTTPMethodsTestPostWithWireMock(
 	request := &types.ObjectWithRequiredField{
 		FieldString: "string",
 	}
-	_, invocationErr := client.Endpoints.HTTPMethods.TestPost(
+	_, invocationErr := client.Endpoints.HttpMethods.TestPost(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestEndpointsHTTPMethodsTestPostWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestEndpointsHttpMethodsTestPostWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestEndpointsHTTPMethodsTestPostWithWireMock", "POST", "/http-methods", nil, 1)
+	VerifyRequestCount(t, "TestEndpointsHttpMethodsTestPostWithWireMock", "POST", "/http-methods", nil, 1)
 }
 
-func TestEndpointsHTTPMethodsTestPutWithWireMock(
+func TestEndpointsHttpMethodsTestPutWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -142,20 +142,20 @@ func TestEndpointsHTTPMethodsTestPutWithWireMock(
 	request := &types.ObjectWithRequiredField{
 		FieldString: "string",
 	}
-	_, invocationErr := client.Endpoints.HTTPMethods.TestPut(
+	_, invocationErr := client.Endpoints.HttpMethods.TestPut(
 		context.TODO(),
 		"id",
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestEndpointsHTTPMethodsTestPutWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestEndpointsHttpMethodsTestPutWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestEndpointsHTTPMethodsTestPutWithWireMock", "PUT", "/http-methods/id", nil, 1)
+	VerifyRequestCount(t, "TestEndpointsHttpMethodsTestPutWithWireMock", "PUT", "/http-methods/id", nil, 1)
 }
 
-func TestEndpointsHTTPMethodsTestPatchWithWireMock(
+func TestEndpointsHttpMethodsTestPatchWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -192,7 +192,7 @@ func TestEndpointsHTTPMethodsTestPatchWithWireMock(
 				"2023-01-15",
 			),
 		),
-		UUID: fern.UUID(
+		Uuid: fern.UUID(
 			uuid.MustParse(
 				"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
 			),
@@ -214,20 +214,20 @@ func TestEndpointsHTTPMethodsTestPatchWithWireMock(
 			"1000000",
 		),
 	}
-	_, invocationErr := client.Endpoints.HTTPMethods.TestPatch(
+	_, invocationErr := client.Endpoints.HttpMethods.TestPatch(
 		context.TODO(),
 		"id",
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestEndpointsHTTPMethodsTestPatchWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestEndpointsHttpMethodsTestPatchWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestEndpointsHTTPMethodsTestPatchWithWireMock", "PATCH", "/http-methods/id", nil, 1)
+	VerifyRequestCount(t, "TestEndpointsHttpMethodsTestPatchWithWireMock", "PATCH", "/http-methods/id", nil, 1)
 }
 
-func TestEndpointsHTTPMethodsTestDeleteWithWireMock(
+func TestEndpointsHttpMethodsTestDeleteWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -238,14 +238,14 @@ func TestEndpointsHTTPMethodsTestDeleteWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	_, invocationErr := client.Endpoints.HTTPMethods.TestDelete(
+	_, invocationErr := client.Endpoints.HttpMethods.TestDelete(
 		context.TODO(),
 		"id",
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestEndpointsHTTPMethodsTestDeleteWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestEndpointsHttpMethodsTestDeleteWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestEndpointsHTTPMethodsTestDeleteWithWireMock", "DELETE", "/http-methods/id", nil, 1)
+	VerifyRequestCount(t, "TestEndpointsHttpMethodsTestDeleteWithWireMock", "DELETE", "/http-methods/id", nil, 1)
 }

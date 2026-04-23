@@ -76,7 +76,7 @@ func VerifyRequestCount(
 	require.Equal(t, expected, len(result.Requests))
 }
 
-func TestEndpointsURLsWithMixedCaseWithWireMock(
+func TestEndpointsUrlsWithMixedCaseWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -87,18 +87,18 @@ func TestEndpointsURLsWithMixedCaseWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	_, invocationErr := client.Endpoints.URLs.WithMixedCase(
+	_, invocationErr := client.Endpoints.Urls.WithMixedCase(
 		context.TODO(),
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestEndpointsURLsWithMixedCaseWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestEndpointsUrlsWithMixedCaseWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestEndpointsURLsWithMixedCaseWithWireMock", "GET", "/urls/MixedCase", nil, 1)
+	VerifyRequestCount(t, "TestEndpointsUrlsWithMixedCaseWithWireMock", "GET", "/urls/MixedCase", nil, 1)
 }
 
-func TestEndpointsURLsNoEndingSlashWithWireMock(
+func TestEndpointsUrlsNoEndingSlashWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -109,18 +109,18 @@ func TestEndpointsURLsNoEndingSlashWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	_, invocationErr := client.Endpoints.URLs.NoEndingSlash(
+	_, invocationErr := client.Endpoints.Urls.NoEndingSlash(
 		context.TODO(),
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestEndpointsURLsNoEndingSlashWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestEndpointsUrlsNoEndingSlashWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestEndpointsURLsNoEndingSlashWithWireMock", "GET", "/urls/no-ending-slash", nil, 1)
+	VerifyRequestCount(t, "TestEndpointsUrlsNoEndingSlashWithWireMock", "GET", "/urls/no-ending-slash", nil, 1)
 }
 
-func TestEndpointsURLsWithEndingSlashWithWireMock(
+func TestEndpointsUrlsWithEndingSlashWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -131,18 +131,18 @@ func TestEndpointsURLsWithEndingSlashWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	_, invocationErr := client.Endpoints.URLs.WithEndingSlash(
+	_, invocationErr := client.Endpoints.Urls.WithEndingSlash(
 		context.TODO(),
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestEndpointsURLsWithEndingSlashWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestEndpointsUrlsWithEndingSlashWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestEndpointsURLsWithEndingSlashWithWireMock", "GET", "/urls/with-ending-slash/", nil, 1)
+	VerifyRequestCount(t, "TestEndpointsUrlsWithEndingSlashWithWireMock", "GET", "/urls/with-ending-slash/", nil, 1)
 }
 
-func TestEndpointsURLsWithUnderscoresWithWireMock(
+func TestEndpointsUrlsWithUnderscoresWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -153,13 +153,13 @@ func TestEndpointsURLsWithUnderscoresWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	_, invocationErr := client.Endpoints.URLs.WithUnderscores(
+	_, invocationErr := client.Endpoints.Urls.WithUnderscores(
 		context.TODO(),
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestEndpointsURLsWithUnderscoresWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestEndpointsUrlsWithUnderscoresWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestEndpointsURLsWithUnderscoresWithWireMock", "GET", "/urls/with_underscores", nil, 1)
+	VerifyRequestCount(t, "TestEndpointsUrlsWithUnderscoresWithWireMock", "GET", "/urls/with_underscores", nil, 1)
 }

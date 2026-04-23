@@ -9,6 +9,7 @@ import {
     getInferredAuthScheme,
     getOAuthClientCredentialsScheme,
     getRequestPropertyFieldName,
+    isPlainStringType,
     isRequestPropertyOptional,
     isTypeReferenceOptional,
     resolveTokenEndpointBodyProperties
@@ -231,14 +232,21 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
 
     private writeHeaderEnvironmentVariables({ writer }: { writer: go.Writer }): void {
         for (const header of this.context.ir.headers) {
-            if (header.env == null) {
-                continue;
+            if (header.env != null) {
+                this.writeEnvConditional({
+                    writer,
+                    propertyReference: this.getOptionsPropertyReference(header.name),
+                    env: header.env
+                });
             }
-            this.writeEnvConditional({
-                writer,
-                propertyReference: this.getOptionsPropertyReference(header.name),
-                env: header.env
-            });
+            // After env fallback, apply clientDefault if present and type is plain string
+            if (header.clientDefault != null && isPlainStringType(header.valueType)) {
+                this.writeClientDefaultConditional({
+                    writer,
+                    propertyReference: this.getOptionsPropertyReference(header.name),
+                    clientDefault: header.clientDefault
+                });
+            }
         }
     }
 
@@ -890,6 +898,27 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         writer.writeNode(propertyReference);
         writer.write(" = ");
         writer.writeNode(this.context.callGetenv(env));
+        writer.newLine();
+        writer.dedent();
+        writer.writeLine("}");
+    }
+
+    private writeClientDefaultConditional({
+        writer,
+        propertyReference,
+        clientDefault
+    }: {
+        writer: go.Writer;
+        propertyReference: go.Selector;
+        clientDefault: FernIr.Literal;
+    }): void {
+        writer.write("if ");
+        writer.writeNode(propertyReference);
+        writer.writeLine(' == "" {');
+        writer.indent();
+        writer.writeNode(propertyReference);
+        writer.write(" = ");
+        writer.writeNode(this.context.getLiteralValue(clientDefault));
         writer.newLine();
         writer.dedent();
         writer.writeLine("}");

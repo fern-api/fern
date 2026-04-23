@@ -1,7 +1,7 @@
 {
   "cliVersion": "DUMMY",
   "generatorName": "fernapi/fern-go-sdk",
-  "generatorVersion": "local",
+  "generatorVersion": "latest",
   "generatorConfig": {
     "enableWireTests": true
   },

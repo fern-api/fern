@@ -389,7 +389,7 @@ client.Endpoints.Container.GetAndReturnOptional(
 </details>
 
 ## Endpoints ContentType
-<details><summary><code>client.Endpoints.ContentType.PostJSONPatchContentType(request) -> error</code></summary>
+<details><summary><code>client.Endpoints.ContentType.PostJsonPatchContentType(request) -> error</code></summary>
 <dl>
 <dd>
 
@@ -428,7 +428,7 @@ request := &types.ObjectWithOptionalField{
                 "2023-01-15",
             ),
         ),
-        UUID: fern.UUID(
+        Uuid: fern.UUID(
             uuid.MustParse(
                 "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             ),
@@ -450,7 +450,7 @@ request := &types.ObjectWithOptionalField{
             "1000000",
         ),
     }
-client.Endpoints.ContentType.PostJSONPatchContentType(
+client.Endpoints.ContentType.PostJsonPatchContentType(
         context.TODO(),
         request,
     )
@@ -481,7 +481,7 @@ client.Endpoints.ContentType.PostJSONPatchContentType(
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.ContentType.PostJSONPatchContentWithCharsetType(request) -> error</code></summary>
+<details><summary><code>client.Endpoints.ContentType.PostJsonPatchContentWithCharsetType(request) -> error</code></summary>
 <dl>
 <dd>
 
@@ -520,7 +520,7 @@ request := &types.ObjectWithOptionalField{
                 "2023-01-15",
             ),
         ),
-        UUID: fern.UUID(
+        Uuid: fern.UUID(
             uuid.MustParse(
                 "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             ),
@@ -542,7 +542,7 @@ request := &types.ObjectWithOptionalField{
             "1000000",
         ),
     }
-client.Endpoints.ContentType.PostJSONPatchContentWithCharsetType(
+client.Endpoints.ContentType.PostJsonPatchContentWithCharsetType(
         context.TODO(),
         request,
     )
@@ -618,8 +618,8 @@ client.Endpoints.Enum.GetAndReturnEnum(
 </dl>
 </details>
 
-## Endpoints HTTPMethods
-<details><summary><code>client.Endpoints.HTTPMethods.TestGet(ID) -> string</code></summary>
+## Endpoints HttpMethods
+<details><summary><code>client.Endpoints.HttpMethods.TestGet(Id) -> string</code></summary>
 <dl>
 <dd>
 
@@ -632,7 +632,7 @@ client.Endpoints.Enum.GetAndReturnEnum(
 <dd>
 
 ```go
-client.Endpoints.HTTPMethods.TestGet(
+client.Endpoints.HttpMethods.TestGet(
         context.TODO(),
         "id",
     )
@@ -663,7 +663,7 @@ client.Endpoints.HTTPMethods.TestGet(
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.HTTPMethods.TestPost(request) -> *types.ObjectWithOptionalField</code></summary>
+<details><summary><code>client.Endpoints.HttpMethods.TestPost(request) -> *types.ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -679,7 +679,7 @@ client.Endpoints.HTTPMethods.TestGet(
 request := &types.ObjectWithRequiredField{
         FieldString: "string",
     }
-client.Endpoints.HTTPMethods.TestPost(
+client.Endpoints.HttpMethods.TestPost(
         context.TODO(),
         request,
     )
@@ -710,7 +710,7 @@ client.Endpoints.HTTPMethods.TestPost(
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.HTTPMethods.TestPut(ID, request) -> *types.ObjectWithOptionalField</code></summary>
+<details><summary><code>client.Endpoints.HttpMethods.TestPut(Id, request) -> *types.ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -726,7 +726,7 @@ client.Endpoints.HTTPMethods.TestPost(
 request := &types.ObjectWithRequiredField{
         FieldString: "string",
     }
-client.Endpoints.HTTPMethods.TestPut(
+client.Endpoints.HttpMethods.TestPut(
         context.TODO(),
         "id",
         request,
@@ -766,7 +766,7 @@ client.Endpoints.HTTPMethods.TestPut(
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.HTTPMethods.TestPatch(ID, request) -> *types.ObjectWithOptionalField</code></summary>
+<details><summary><code>client.Endpoints.HttpMethods.TestPatch(Id, request) -> *types.ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -805,7 +805,7 @@ request := &types.ObjectWithOptionalField{
                 "2023-01-15",
             ),
         ),
-        UUID: fern.UUID(
+        Uuid: fern.UUID(
             uuid.MustParse(
                 "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             ),
@@ -827,7 +827,7 @@ request := &types.ObjectWithOptionalField{
             "1000000",
         ),
     }
-client.Endpoints.HTTPMethods.TestPatch(
+client.Endpoints.HttpMethods.TestPatch(
         context.TODO(),
         "id",
         request,
@@ -867,7 +867,7 @@ client.Endpoints.HTTPMethods.TestPatch(
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.HTTPMethods.TestDelete(ID) -> bool</code></summary>
+<details><summary><code>client.Endpoints.HttpMethods.TestDelete(Id) -> bool</code></summary>
 <dl>
 <dd>
 
@@ -880,7 +880,7 @@ client.Endpoints.HTTPMethods.TestPatch(
 <dd>
 
 ```go
-client.Endpoints.HTTPMethods.TestDelete(
+client.Endpoints.HttpMethods.TestDelete(
         context.TODO(),
         "id",
     )
@@ -951,7 +951,7 @@ request := &types.ObjectWithOptionalField{
                 "2023-01-15",
             ),
         ),
-        UUID: fern.UUID(
+        Uuid: fern.UUID(
             uuid.MustParse(
                 "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             ),
@@ -1145,7 +1145,7 @@ request := &types.NestedObjectWithOptionalField{
                     "2023-01-15",
                 ),
             ),
-            UUID: fern.UUID(
+            Uuid: fern.UUID(
                 uuid.MustParse(
                     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 ),
@@ -1240,7 +1240,7 @@ request := &types.NestedObjectWithRequiredField{
                     "2023-01-15",
                 ),
             ),
-            UUID: fern.UUID(
+            Uuid: fern.UUID(
                 uuid.MustParse(
                     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 ),
@@ -1345,7 +1345,7 @@ request := []*types.NestedObjectWithRequiredField{
                         "2023-01-15",
                     ),
                 ),
-                UUID: fern.UUID(
+                Uuid: fern.UUID(
                     uuid.MustParse(
                         "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                     ),
@@ -1396,7 +1396,7 @@ request := []*types.NestedObjectWithRequiredField{
                         "2023-01-15",
                     ),
                 ),
-                UUID: fern.UUID(
+                Uuid: fern.UUID(
                     uuid.MustParse(
                         "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                     ),
@@ -2889,7 +2889,7 @@ client.Endpoints.Primitive.GetAndReturnDate(
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Primitive.GetAndReturnUUID(request) -> uuid.UUID</code></summary>
+<details><summary><code>client.Endpoints.Primitive.GetAndReturnUuid(request) -> uuid.UUID</code></summary>
 <dl>
 <dd>
 
@@ -2902,7 +2902,7 @@ client.Endpoints.Primitive.GetAndReturnDate(
 <dd>
 
 ```go
-client.Endpoints.Primitive.GetAndReturnUUID(
+client.Endpoints.Primitive.GetAndReturnUuid(
         context.TODO(),
         request,
     )
@@ -2978,7 +2978,7 @@ client.Endpoints.Primitive.GetAndReturnBase64(
 </details>
 
 ## Endpoints Put
-<details><summary><code>client.Endpoints.Put.Add(ID) -> *endpoints.PutResponse</code></summary>
+<details><summary><code>client.Endpoints.Put.Add(Id) -> *endpoints.PutResponse</code></summary>
 <dl>
 <dd>
 
@@ -2992,7 +2992,7 @@ client.Endpoints.Primitive.GetAndReturnBase64(
 
 ```go
 request := &endpoints.PutRequest{
-        ID: "id",
+        Id: "id",
     }
 client.Endpoints.Put.Add(
         context.TODO(),
@@ -3076,8 +3076,8 @@ client.Endpoints.Union.GetAndReturnUnion(
 </dl>
 </details>
 
-## Endpoints URLs
-<details><summary><code>client.Endpoints.URLs.WithMixedCase() -> string</code></summary>
+## Endpoints Urls
+<details><summary><code>client.Endpoints.Urls.WithMixedCase() -> string</code></summary>
 <dl>
 <dd>
 
@@ -3090,7 +3090,7 @@ client.Endpoints.Union.GetAndReturnUnion(
 <dd>
 
 ```go
-client.Endpoints.URLs.WithMixedCase(
+client.Endpoints.Urls.WithMixedCase(
         context.TODO(),
     )
 }
@@ -3105,7 +3105,7 @@ client.Endpoints.URLs.WithMixedCase(
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.URLs.NoEndingSlash() -> string</code></summary>
+<details><summary><code>client.Endpoints.Urls.NoEndingSlash() -> string</code></summary>
 <dl>
 <dd>
 
@@ -3118,7 +3118,7 @@ client.Endpoints.URLs.WithMixedCase(
 <dd>
 
 ```go
-client.Endpoints.URLs.NoEndingSlash(
+client.Endpoints.Urls.NoEndingSlash(
         context.TODO(),
     )
 }
@@ -3133,7 +3133,7 @@ client.Endpoints.URLs.NoEndingSlash(
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.URLs.WithEndingSlash() -> string</code></summary>
+<details><summary><code>client.Endpoints.Urls.WithEndingSlash() -> string</code></summary>
 <dl>
 <dd>
 
@@ -3146,7 +3146,7 @@ client.Endpoints.URLs.NoEndingSlash(
 <dd>
 
 ```go
-client.Endpoints.URLs.WithEndingSlash(
+client.Endpoints.Urls.WithEndingSlash(
         context.TODO(),
     )
 }
@@ -3161,7 +3161,7 @@ client.Endpoints.URLs.WithEndingSlash(
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.URLs.WithUnderscores() -> string</code></summary>
+<details><summary><code>client.Endpoints.Urls.WithUnderscores() -> string</code></summary>
 <dl>
 <dd>
 
@@ -3174,7 +3174,7 @@ client.Endpoints.URLs.WithEndingSlash(
 <dd>
 
 ```go
-client.Endpoints.URLs.WithUnderscores(
+client.Endpoints.Urls.WithUnderscores(
         context.TODO(),
     )
 }
@@ -3246,7 +3246,7 @@ request := &fern.PostWithObjectBody{
                     "2023-01-15",
                 ),
             ),
-            UUID: fern.UUID(
+            Uuid: fern.UUID(
                 uuid.MustParse(
                     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 ),

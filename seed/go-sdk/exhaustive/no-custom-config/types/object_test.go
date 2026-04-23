@@ -997,11 +997,11 @@ func TestSettersObjectWithOptionalField(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetUUID", func(t *testing.T) {
+	t.Run("SetUuid", func(t *testing.T) {
 		obj := &ObjectWithOptionalField{}
-		var fernTestValueUUID *uuid.UUID
-		obj.SetUUID(fernTestValueUUID)
-		assert.Equal(t, fernTestValueUUID, obj.UUID)
+		var fernTestValueUuid *uuid.UUID
+		obj.SetUuid(fernTestValueUuid)
+		assert.Equal(t, fernTestValueUuid, obj.Uuid)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -1279,28 +1279,28 @@ func TestGettersObjectWithOptionalField(t *testing.T) {
 		_ = obj.GetDate() // Should return zero value
 	})
 
-	t.Run("GetUUID", func(t *testing.T) {
+	t.Run("GetUuid", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &ObjectWithOptionalField{}
 		var expected *uuid.UUID
-		obj.UUID = expected
+		obj.Uuid = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetUUID(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetUuid(), "getter should return the property value")
 	})
 
-	t.Run("GetUUID_NilValue", func(t *testing.T) {
+	t.Run("GetUuid_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &ObjectWithOptionalField{}
-		obj.UUID = nil
+		obj.Uuid = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetUUID(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetUuid(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetUUID_NilReceiver", func(t *testing.T) {
+	t.Run("GetUuid_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *ObjectWithOptionalField
 		// Should not panic - getters should handle nil receiver gracefully
@@ -1309,7 +1309,7 @@ func TestGettersObjectWithOptionalField(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetUUID() // Should return zero value
+		_ = obj.GetUuid() // Should return zero value
 	})
 
 	t.Run("GetBase64", func(t *testing.T) {
@@ -1697,14 +1697,14 @@ func TestSettersMarkExplicitObjectWithOptionalField(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetUUID_MarksExplicit", func(t *testing.T) {
+	t.Run("SetUuid_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &ObjectWithOptionalField{}
-		var fernTestValueUUID *uuid.UUID
+		var fernTestValueUuid *uuid.UUID
 
 		// Act
-		obj.SetUUID(fernTestValueUUID)
+		obj.SetUuid(fernTestValueUuid)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
