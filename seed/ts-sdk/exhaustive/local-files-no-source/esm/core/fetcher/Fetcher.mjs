@@ -9,7 +9,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import { toJson } from "../json.mjs";
 import { createLogger } from "../logging/logger.mjs";
-import { createRequestUrl } from "./createRequestUrl.mjs";
 import { EndpointSupplier } from "./EndpointSupplier.mjs";
 import { getErrorResponseBody } from "./getErrorResponseBody.mjs";
 import { getFetchFn } from "./getFetchFn.mjs";
@@ -69,21 +68,6 @@ const SENSITIVE_QUERY_PARAMS = new Set([
     "session_id",
     "session-id",
 ]);
-function redactQueryParameters(queryParameters) {
-    if (queryParameters == null) {
-        return queryParameters;
-    }
-    const redacted = {};
-    for (const [key, value] of Object.entries(queryParameters)) {
-        if (SENSITIVE_QUERY_PARAMS.has(key.toLowerCase())) {
-            redacted[key] = "[REDACTED]";
-        }
-        else {
-            redacted[key] = value;
-        }
-    }
-    return redacted;
-}
 function redactUrl(url) {
     const protocolIndex = url.indexOf("://");
     if (protocolIndex === -1)
@@ -186,9 +170,6 @@ export function fetcherImpl(args) {
         if (args.queryString != null && args.queryString.length > 0) {
             url = `${url}?${args.queryString}`;
         }
-        else {
-            url = createRequestUrl(args.url, args.queryParameters);
-        }
         const requestBody = yield getRequestBody({
             body: args.body,
             type: (_a = args.requestType) !== null && _a !== void 0 ? _a : "other",
@@ -201,7 +182,6 @@ export function fetcherImpl(args) {
                 method: args.method,
                 url: redactUrl(url),
                 headers: redactHeaders(headers),
-                queryParameters: redactQueryParameters(args.queryParameters),
                 hasBody: requestBody != null,
             };
             logger.debug("Making HTTP request", metadata);

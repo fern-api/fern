@@ -8,7 +8,6 @@ export declare namespace Fetcher {
         method: string;
         contentType?: string;
         headers?: Record<string, unknown>;
-        queryParameters?: Record<string, unknown>;
         queryString?: string;
         body?: unknown;
         timeoutMs?: number;

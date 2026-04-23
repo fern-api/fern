@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Remove the legacy `queryParameters` object from generated fetcher calls. Query parameters
+    are now serialized exclusively via `core.url.queryBuilder()` and passed as `queryString`.
+    This also removes the now-unused `queryParameters` field and redaction logic from the
+    generated runtime Fetcher. Customers passing `requestOptions.queryParams` continue to work
+    identically.
+  type: break

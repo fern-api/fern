@@ -17,8 +17,8 @@
     },
     "originGitCommit": "DUMMY",
     "originGitCommitIsDirty": null,
-    "invokedBy": "ci",
+    "invokedBy": "manual",
     "requestedVersion": "0.0.1",
-    "ciProvider": "github",
+    "ciProvider": null,
     "sdkVersion": "0.0.1"
 }
