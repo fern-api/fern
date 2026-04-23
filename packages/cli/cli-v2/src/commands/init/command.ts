@@ -1,9 +1,11 @@
+import { FernYmlSchema } from "@fern-api/config";
 import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { CliError } from "@fern-api/task-context";
 
 import chalk from "chalk";
 import { mkdir, writeFile } from "fs/promises";
+import yaml from "js-yaml";
 import path from "path";
 import type { Argv } from "yargs";
 import { FERN_YML_FILENAME } from "../../config/fern-yml/constants";
@@ -14,12 +16,18 @@ import { PETSTORE_OPENAPI_YML } from "../../init/templates/openapi.yml";
 import { Wizard } from "../../init/Wizard";
 import { Icons } from "../../ui/format";
 import { command } from "../_internal/command";
+import { readAndParseJsonInput } from "../_internal/resolveJsonInput.js";
+import { validateJsonInput } from "../_internal/validateJsonInput.js";
+
+const SCHEMA_COMMENT = "# yaml-language-server: $schema=https://schema.buildwithfern.dev/fern-yml.json";
 
 export declare namespace InitCommand {
     export interface Args extends GlobalArgs {
         org?: string;
         api?: string;
         yes: boolean;
+        /** Raw JSON payload conforming to fern-yml schema. Bypasses the wizard. */
+        input?: string;
     }
 }
 
@@ -29,6 +37,11 @@ export class InitCommand {
     public async handle(context: Context, args: InitCommand.Args): Promise<void> {
         const fernYmlPath = join(context.cwd, RelativeFilePath.of(FERN_YML_FILENAME));
         await this.validateArgs({ context, fernYmlPath, args });
+
+        if (args.input != null) {
+            await this.handleFromJsonInput({ context, fernYmlPath, inputValue: args.input });
+            return;
+        }
 
         const wizard = new Wizard({ context, args });
         const result = await wizard.run();
@@ -40,6 +53,39 @@ export class InitCommand {
         });
         await this.writeApiSpec({ context, apiSource: result.apiSource });
         this.printNextSteps({ context, result });
+    }
+
+    private async handleFromJsonInput({
+        context,
+        fernYmlPath,
+        inputValue
+    }: {
+        context: Context;
+        fernYmlPath: AbsoluteFilePath;
+        inputValue: string;
+    }): Promise<void> {
+        const parsed = await readAndParseJsonInput({
+            value: inputValue,
+            cwd: context.cwd,
+            stdin: process.stdin
+        });
+        const config = validateJsonInput({
+            value: parsed,
+            schema: FernYmlSchema,
+            schemaName: "fern-yml"
+        });
+
+        const yamlContent = yaml.dump(config, {
+            indent: 2,
+            lineWidth: 120,
+            noRefs: true,
+            sortKeys: false,
+            quotingType: '"',
+            forceQuotes: false
+        });
+        await writeFile(fernYmlPath, `${SCHEMA_COMMENT}\n${yamlContent}`, "utf-8");
+
+        context.stderr.info(`${Icons.success} Created ${FERN_YML_FILENAME} from --input`);
     }
 
     private async writeFernYml({
@@ -147,6 +193,26 @@ export class InitCommand {
                 code: CliError.Code.ConfigError
             });
         }
+
+        // --input is mutually exclusive with wizard-driven flags. When supplied
+        // it fully describes fern.yml and we skip all interactive prompts.
+        if (args.input != null) {
+            const conflicting: string[] = [];
+            if (args.org != null) {
+                conflicting.push("--org");
+            }
+            if (args.api != null) {
+                conflicting.push("--api");
+            }
+            if (conflicting.length > 0) {
+                throw new CliError({
+                    message: `--input cannot be combined with ${conflicting.join(", ")}. The JSON payload must fully describe fern.yml.`,
+                    code: CliError.Code.ConfigError
+                });
+            }
+            return;
+        }
+
         if (args.api != null) {
             const api = args.api;
             if (!api.startsWith("http://") && !api.startsWith("https://")) {
@@ -186,6 +252,13 @@ export function addInitCommand(cli: Argv<GlobalArgs>): void {
                     type: "boolean",
                     description: "Accept all defaults (non-interactive mode)",
                     default: false
+                })
+                .option("input", {
+                    type: "string",
+                    description:
+                        "Create fern.yml from a JSON payload (conforms to the `fern-yml` schema). " +
+                        "Accepts inline JSON, @path/to.json, or - to read from stdin. " +
+                        "Run 'fern schema fern-yml' to see the schema."
                 })
     );
 }

@@ -1,4 +1,4 @@
-import { schemas } from "@fern-api/config";
+import { SdkAddInputSchema, schemas } from "@fern-api/config";
 import { getLatestGeneratorVersion } from "@fern-api/configuration-loader";
 import type { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { CliError } from "@fern-api/task-context";
@@ -17,6 +17,8 @@ import type { Target } from "../../../sdk/config/Target.js";
 import { Icons } from "../../../ui/format.js";
 import { Version } from "../../../version.js";
 import { command } from "../../_internal/command.js";
+import { readAndParseJsonInput } from "../../_internal/resolveJsonInput.js";
+import { validateJsonInput } from "../../_internal/validateJsonInput.js";
 import { isGitUrl } from "../utils/gitUrl.js";
 import { isRemoteReference } from "../utils/isRemoteReference.js";
 
@@ -36,6 +38,9 @@ export declare namespace AddCommand {
 
         /** Accept all defaults (non-interactive mode). */
         yes: boolean;
+
+        /** Raw JSON payload matching the sdk-add-input schema. Bypasses prompts and flag parsing. */
+        input?: string;
     }
 }
 
@@ -59,11 +64,68 @@ export class AddCommand {
 
         const existingTargets = workspace.sdks?.targets ?? [];
 
+        if (args.input != null) {
+            return this.handleFromJsonInput({ context, args, fernYmlPath, existingTargets });
+        }
+
         if (!context.isTTY || args.yes) {
             return this.handleWithFlags({ context, args, fernYmlPath, existingTargets });
         }
 
         return this.handleInteractive({ context, args, fernYmlPath, existingTargets });
+    }
+
+    private async handleFromJsonInput({
+        context,
+        args,
+        fernYmlPath,
+        existingTargets
+    }: {
+        context: Context;
+        args: AddCommand.Args;
+        fernYmlPath: AbsoluteFilePath;
+        existingTargets: Target[];
+    }): Promise<void> {
+        if (args.target != null || args.output != null || args.group != null || args.stable) {
+            throw new CliError({
+                message:
+                    "--input cannot be combined with --target, --output, --group, or --stable. " +
+                    "The JSON payload must fully describe the target.",
+                code: CliError.Code.ConfigError
+            });
+        }
+
+        if (args.input == null) {
+            // Defensive: caller already guarded this.
+            throw new CliError({ message: "--input is required", code: CliError.Code.ConfigError });
+        }
+
+        const parsed = await readAndParseJsonInput({
+            value: args.input,
+            cwd: context.cwd,
+            stdin: process.stdin
+        });
+        const payload = validateJsonInput({
+            value: parsed,
+            schema: SdkAddInputSchema,
+            schemaName: "sdk-add-input"
+        });
+
+        if (existingTargets.some((t) => t.name === payload.name)) {
+            throw new CliError({
+                message: `Target '${payload.name}' already exists in ${FERN_YML_FILENAME}.`,
+                code: CliError.Code.ConfigError
+            });
+        }
+
+        const editor = await FernYmlEditor.load({ fernYmlPath });
+        await editor.addTarget(payload.name, {
+            ...payload.target,
+            output: this.buildOutputForYaml(payload.target.output)
+        });
+        await editor.save();
+
+        context.stderr.info(`${Icons.success} Added '${payload.name}' to ${FERN_YML_FILENAME}`);
     }
 
     private async handleWithFlags({
@@ -288,6 +350,13 @@ export function addAddCommand(cli: Argv<GlobalArgs>): void {
                     type: "boolean",
                     description: "Accept all defaults (non-interactive mode)",
                     default: false
+                })
+                .option("input", {
+                    type: "string",
+                    description:
+                        "Add a target from a JSON payload (conforms to the `sdk-add-input` schema). " +
+                        "Accepts inline JSON, @path/to.json, or - to read from stdin. " +
+                        "Run 'fern schema sdk-add-input' to see the schema."
                 })
     );
 }

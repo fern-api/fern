@@ -1,0 +1,9 @@
+- summary: |
+    Add `--input <json>` flag to `fern init` and `fern sdk add` (CLI v2). The
+    flag accepts inline JSON, `@path/to.json`, or `-` (stdin) and bypasses
+    interactive prompts, so agents can describe a fern.yml config or a new SDK
+    target as a single JSON payload instead of composing many bespoke flags.
+    Payloads are validated against the schemas exposed by `fern schema` — run
+    `fern schema fern-yml` or `fern schema sdk-add-input` to see the exact
+    shape.
+  type: feat

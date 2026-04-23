@@ -9,6 +9,18 @@ import { SdksSchema } from "./schemas/SdksSchema.js";
 import { SdkTargetSchema } from "./schemas/SdkTargetSchema.js";
 
 /**
+ * Payload accepted by `fern sdk add --params`. Names the target and supplies
+ * its configuration separately so the caller doesn't need to know that
+ * targets are stored as a keyed record in fern.yml.
+ */
+export const SdkAddInputSchema = z.object({
+    name: z.string(),
+    target: SdkTargetSchema
+});
+
+export type SdkAddInputSchema = z.infer<typeof SdkAddInputSchema>;
+
+/**
  * Name of a named JSON Schema exported by this package.
  *
  * Names mirror the dot-delimited path inside `fern.yml`. The root (the full
