@@ -65,7 +65,7 @@ export class AdminClient {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
             body: serializers.TestSubmissionStatus.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
@@ -143,7 +143,7 @@ export class AdminClient {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
             body: serializers.TestSubmissionUpdate.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
@@ -217,7 +217,7 @@ export class AdminClient {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
             body: serializers.WorkspaceSubmissionStatus.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
@@ -295,7 +295,7 @@ export class AdminClient {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
             body: serializers.WorkspaceSubmissionUpdate.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
@@ -457,7 +457,7 @@ export class AdminClient {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
             body: serializers.StoreTracedTestCaseRequest.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
@@ -608,7 +608,7 @@ export class AdminClient {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
             body: serializers.admin.storeTracedTestCaseV2.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
@@ -762,7 +762,7 @@ export class AdminClient {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
             body: serializers.StoreTracedWorkspaceRequest.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
@@ -910,7 +910,7 @@ export class AdminClient {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
             body: serializers.admin.storeTracedWorkspaceV2.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",

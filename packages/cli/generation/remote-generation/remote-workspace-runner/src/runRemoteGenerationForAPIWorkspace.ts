@@ -45,7 +45,8 @@ export async function runRemoteGenerationForAPIWorkspace({
     automationMode,
     autoMerge,
     skipIfNoDiff,
-    automation
+    automation,
+    loginCommand
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     organization: string;
@@ -84,6 +85,11 @@ export async function runRemoteGenerationForAPIWorkspace({
      * throws.
      */
     automation?: AutomationRunOptions;
+    /**
+     * CLI command to reference in auth-failure hints (e.g. 'fern login' for v1,
+     * 'fern auth login' for CLI v2). Defaults to 'fern login'.
+     */
+    loginCommand?: string;
 }): Promise<RemoteGenerationForAPIWorkspaceResponse | null> {
     if (generatorGroup.generators.length === 0) {
         context.logger.warn("No generators specified.");
@@ -123,6 +129,7 @@ export async function runRemoteGenerationForAPIWorkspace({
                     autoMerge,
                     skipIfNoDiff,
                     automation,
+                    loginCommand,
                     onSnippetsProduced: (invocation) => snippetsProducedBy.push(invocation)
                 })
             )
@@ -173,6 +180,7 @@ async function generateOne({
     autoMerge,
     skipIfNoDiff,
     automation,
+    loginCommand,
     onSnippetsProduced
 }: {
     generatorInvocation: generatorsYml.GeneratorInvocation;
@@ -201,6 +209,7 @@ async function generateOne({
     autoMerge: boolean | undefined;
     skipIfNoDiff: boolean | undefined;
     automation: AutomationRunOptions | undefined;
+    loginCommand: string | undefined;
     /** Invoked post-success when the generator produced snippets. */
     onSnippetsProduced: (invocation: generatorsYml.GeneratorInvocation) => void;
 }): Promise<void> {
@@ -279,7 +288,8 @@ async function generateOne({
             requireEnvVars,
             automationMode,
             autoMerge,
-            skipIfNoDiff
+            skipIfNoDiff,
+            loginCommand
         });
 
         if (remoteTaskHandlerResponse?.createdSnippets) {
