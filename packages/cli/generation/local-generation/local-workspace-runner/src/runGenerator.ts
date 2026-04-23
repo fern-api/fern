@@ -1,6 +1,11 @@
 import { Audiences, generatorsYml, SNIPPET_TEMPLATES_JSON_FILENAME } from "@fern-api/configuration";
 import { ContainerRunner } from "@fern-api/core-utils";
 import { AbsoluteFilePath, streamObjectToFile } from "@fern-api/fs-utils";
+import {
+    AutoVersioningCache,
+    extractLanguageFromGeneratorName,
+    mapMagicVersionForLanguage
+} from "@fern-api/generator-cli/autoversion";
 import { ApiDefinitionSource, IntermediateRepresentation, SourceConfig } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace, IdentifiableSource } from "@fern-api/workspace-loader";
@@ -10,7 +15,6 @@ import { mkdir, writeFile } from "fs/promises";
 import * as path from "path";
 import { join } from "path";
 import tmp, { DirectoryResult } from "tmp-promise";
-import { AutoVersioningCache } from "./AutoVersioningCache.js";
 import { ContainerExecutionEnvironment } from "./ContainerExecutionEnvironment.js";
 import {
     CODEGEN_OUTPUT_DIRECTORY_NAME,
@@ -27,7 +31,6 @@ import { ExecutionEnvironment } from "./ExecutionEnvironment.js";
 import { getGeneratorConfig, getLicensePathFromConfig } from "./getGeneratorConfig.js";
 import { getIntermediateRepresentation } from "./getIntermediateRepresentation.js";
 import { LocalTaskHandler } from "./LocalTaskHandler.js";
-import { extractLanguageFromGeneratorName, mapMagicVersionForLanguage } from "./VersionUtils.js";
 
 export interface GeneratorRunResponse {
     ir: IntermediateRepresentation;

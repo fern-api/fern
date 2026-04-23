@@ -1,10 +1,5 @@
 import { FernToken } from "@fern-api/auth";
-import {
-    DEFAULT_GROUP_GENERATORS_CONFIG_KEY,
-    fernConfigJson,
-    GENERATORS_CONFIGURATION_FILENAME,
-    generatorsYml
-} from "@fern-api/configuration-loader";
+import { fernConfigJson, GENERATORS_CONFIGURATION_FILENAME, generatorsYml } from "@fern-api/configuration-loader";
 import { ContainerRunner } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
@@ -12,14 +7,10 @@ import { AutomationRunOptions, runRemoteGenerationForAPIWorkspace } from "@fern-
 import { CliError, TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
-import chalk from "chalk";
 
-import { GROUP_CLI_OPTION } from "../../constants.js";
 import { isTelemetryDisabled } from "../../telemetry/isTelemetryDisabled.js";
 import { filterGenerators } from "./filterGenerators.js";
 import { GenerationMode } from "./generateAPIWorkspaces.js";
-import { resolveGroupAlias } from "./resolveGroupAlias.js";
-import { resolveGroupNamesForGeneration } from "./resolveGroupNamesForGeneration.js";
 import { buildAutomationTargeting, selectGeneratorsForAutomation } from "./selectGeneratorsForAutomation.js";
 import { shouldSkipMissingGenerator } from "./shouldSkipMissingGenerator.js";
 
@@ -28,7 +19,7 @@ export async function generateWorkspace({
     workspace,
     projectConfig,
     context,
-    groupName,
+    resolvedGroupNames,
     generatorName,
     generatorIndex,
     version,
@@ -57,7 +48,11 @@ export async function generateWorkspace({
     projectConfig: fernConfigJson.ProjectConfig;
     context: TaskContext;
     version: string | undefined;
-    groupName: string | undefined;
+    /**
+     * The resolved group names to run for this workspace, already validated and alias-expanded
+     * by the pre-flight pass in {@link generateAPIWorkspaces}. Must be non-empty.
+     */
+    resolvedGroupNames: string[];
     generatorName: string | undefined;
     generatorIndex: number | undefined;
     shouldLogS3Url: boolean;
@@ -94,13 +89,6 @@ export async function generateWorkspace({
         context.logger.warn(`This workspace has no groups specified in ${GENERATORS_CONFIGURATION_FILENAME}`);
         return;
     }
-
-    const resolvedGroupNames = resolveGroupsOrFail({
-        groupName,
-        generatorsConfiguration: workspace.generatorsConfiguration,
-        isAutomation: automation != null,
-        context
-    });
 
     const { ai, replay } = workspace.generatorsConfiguration;
 
@@ -278,85 +266,6 @@ function resolveRunnableGroup({
     }
 
     return group;
-}
-
-/**
- * Resolves the list of group names to run against, throwing a helpful `failAndThrow` for any
- * misconfiguration (missing group, unknown alias, alias pointing at a non-existent group).
- *
- * Composes two pure helpers:
- *   - `resolveGroupNamesForGeneration` — decides between fan-out / targeted / missing-group.
- *   - `resolveGroupAlias` — expands an alias to its targets, validating each.
- *
- * The helpers themselves are pure and live in their own modules; this wrapper owns the
- * error-message rendering and the throw.
- */
-function resolveGroupsOrFail({
-    groupName,
-    generatorsConfiguration,
-    isAutomation,
-    context
-}: {
-    groupName: string | undefined;
-    generatorsConfiguration: generatorsYml.GeneratorsConfiguration;
-    isAutomation: boolean;
-    context: TaskContext;
-}): string[] {
-    const resolution = resolveGroupNamesForGeneration({ groupName, generatorsConfiguration, isAutomation });
-    if (resolution.type === "fan-out") {
-        return resolution.groupNames;
-    }
-    if (resolution.type === "missing-group") {
-        const longestGroupName = Math.max(...resolution.availableGroupNames.map((name) => name.length));
-        const currentArgs = process.argv.slice(2).join(" ");
-        const suggestions = resolution.availableGroupNames
-            .map((name) => {
-                const suggestedCommand = `fern ${currentArgs} --${GROUP_CLI_OPTION} ${name}`;
-                return ` › ${chalk.bold(name.padEnd(longestGroupName))}  ${chalk.dim(suggestedCommand)}`;
-            })
-            .join("\n");
-        context.failAndThrow(
-            `No group specified. Use the --${GROUP_CLI_OPTION} option, or set "${DEFAULT_GROUP_GENERATORS_CONFIG_KEY}" in ${GENERATORS_CONFIGURATION_FILENAME}:\n${suggestions}`,
-            undefined,
-            { code: CliError.Code.NetworkError }
-        );
-        return []; // unreachable — failAndThrow throws
-    }
-
-    // resolution.type === "targeted"
-    if (resolution.fromDefaultGroup) {
-        context.logger.info(
-            chalk.dim(`Using default group '${resolution.groupName}' from ${GENERATORS_CONFIGURATION_FILENAME}`)
-        );
-    }
-    const aliasResult = resolveGroupAlias({
-        name: resolution.groupName,
-        groupAliases: generatorsConfiguration.groupAliases,
-        availableGroupNames: generatorsConfiguration.groups.map((g) => g.groupName)
-    });
-    if (aliasResult.type === "alias-references-missing-group") {
-        context.failAndThrow(
-            `Group alias '${aliasResult.alias}' references non-existent group '${aliasResult.missingGroupName}'. ` +
-                `Available groups: ${aliasResult.availableGroupNames.join(", ")}`,
-            undefined,
-            { code: CliError.Code.NetworkError }
-        );
-        return [];
-    }
-    if (aliasResult.type === "unknown") {
-        const aliasesSuffix =
-            aliasResult.availableAliasNames.length > 0
-                ? `. Available aliases: ${aliasResult.availableAliasNames.join(", ")}`
-                : "";
-        context.failAndThrow(
-            `'${aliasResult.name}' is not a valid group or alias. ` +
-                `Available groups: ${aliasResult.availableGroupNames.join(", ")}${aliasesSuffix}`,
-            undefined,
-            { code: CliError.Code.NetworkError }
-        );
-        return [];
-    }
-    return aliasResult.groupNames;
 }
 
 function applyLfsOverride(

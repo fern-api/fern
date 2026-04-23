@@ -20,8 +20,8 @@
  */
 
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { AutoVersioningService } from "../AutoVersioningService.js";
-import { MAX_AI_DIFF_BYTES, maxVersionBump, VersionBump } from "../VersionUtils.js";
+import { AutoVersioningService } from "../autoversion/AutoVersioningService.js";
+import { MAX_AI_DIFF_BYTES, maxVersionBump, VersionBump } from "../autoversion/VersionUtils.js";
 
 // ---------------------------------------------------------------------------
 // Diff generators — reusable helpers that build realistic diff content

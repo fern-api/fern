@@ -13,6 +13,12 @@
       "source": "./src/api.ts",
       "types": "./lib/api.d.ts",
       "default": "./lib/api.js"
+    },
+    "./autoversion": {
+      "development": "./src/autoversion/index.ts",
+      "source": "./src/autoversion/index.ts",
+      "types": "./lib/autoversion/index.d.ts",
+      "default": "./lib/autoversion/index.js"
     }
   },
   "main": "lib/api.js",
@@ -23,10 +29,14 @@
   },
   "files": ["bin", "dist", "lib"],
   "dependencies": {
+    "@fern-api/cli-ai": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
-    "@fern-api/replay": "0.11.0",
+    "@fern-api/logging-execa": "workspace:*",
+    "@fern-api/replay": "0.12.0",
+    "@fern-api/task-context": "workspace:*",
     "@octokit/rest": "catalog:",
     "es-toolkit": "catalog:",
+    "semver": "^7.6.3",
     "tmp-promise": "catalog:"
   },
   "scripts": {
@@ -35,6 +45,7 @@
     "depcheck": "knip --config ../../knip.json --no-config-hints",
     "dist:cli": "node build.mjs",
     "test": "vitest --run --passWithNoTests --globals --disable-console-intercept",
+    "test:e2e": "vitest --config vitest.e2e.config.ts --run",
     "test:update": "vitest -u --run --passWithNoTests --globals --disable-console-intercept"
   },
   "devDependencies": {
@@ -43,6 +54,7 @@
     "@fern-api/github": "workspace:*",
     "@types/jest": "^29.5.11",
     "@types/node": "^22.0.0",
+    "@types/semver": "catalog:",
     "@types/yargs": "^17.0.32",
     "esbuild": "catalog:",
     "execa": "^9.5.1",

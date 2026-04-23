@@ -1,5 +1,3 @@
-export type { NameInput } from "./CaseConverter.js";
-export { CaseConverter, getNameFromWireValue, getOriginalName, getWireValue } from "./CaseConverter.js";
 export type { RawGithubConfig, ResolvedGithubConfig } from "./GitHubConfig.js";
 export { resolveGitHubConfig } from "./GitHubConfig.js";
 export { parseGeneratorConfig } from "./parseGeneratorConfig.js";

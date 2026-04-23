@@ -1,4 +1,4 @@
-import { Name, NameAndWireValue } from "@fern-api/ir-sdk";
+import type { Name, NameAndWireValue } from "@fern-api/ir-sdk";
 import { CaseConverter } from "../utils/CaseConverter.js";
 import { getOriginalName, getWireValue } from "../utils/NameHelpers.js";
 

@@ -23,6 +23,14 @@ permissions:
   contents: read # Required for checkout
   id-token: write # Required for OIDC
 
+# Serialize publish runs so queued runs wait for the in-flight publish to finish
+# instead of being cancelled. Without this, a newer release push can race with an
+# in-flight publish and cause a version (e.g. whose changelog was already written
+# to docs) to be skipped on NPM.
+concurrency:
+  group: publish-cli
+  cancel-in-progress: false
+
 env:
   DO_NOT_TRACK: "1"
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}

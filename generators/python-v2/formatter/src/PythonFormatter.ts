@@ -1,4 +1,4 @@
-import { AbstractFormatter } from "@fern-api/base-generator";
+import { AbstractFormatter } from "@fern-api/browser-compatible-base-generator";
 import init, { Config, format } from "@wasm-fmt/ruff_fmt";
 
 export class PythonFormatter extends AbstractFormatter {

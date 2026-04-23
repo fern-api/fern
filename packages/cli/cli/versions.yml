@@ -1,4 +1,26 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.89.0
+  changelogEntry:
+    - summary: |
+        `fern generate` now accepts multiple `--api` flags. Previously, running
+        `fern generate --api api1 --api api2` failed because yargs collapsed the values into a single
+        comma-joined string that was then looked up as a workspace name. `--api` is now declared as an
+        array option, so each `--api <name>` value is parsed individually and the command generates for
+        the union of the specified API workspaces (de-duplicated).
+      type: feat
+  createdAt: "2026-04-22"
+  irVersion: 66
+- version: 4.88.0
+  changelogEntry:
+    - summary: |
+        `fern generate` now accepts multiple `--group` flags. Passing e.g.
+        `fern generate --group typescript --group java --group python` generates
+        for all of the listed groups instead of failing with
+        `'typescript,java,python' is not a valid group or alias`. Each value is
+        resolved independently (including aliases) and the union is generated.
+      type: feat
+  createdAt: "2026-04-22"
+  irVersion: 66
 - version: 4.87.1
   changelogEntry:
     - summary: |

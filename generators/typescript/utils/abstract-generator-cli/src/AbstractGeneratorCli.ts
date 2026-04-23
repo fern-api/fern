@@ -7,7 +7,8 @@ import {
     parseIR,
     resolveErrorCode,
     SentryClient,
-    shouldReportToSentry
+    shouldReportToSentry,
+    shouldTrackLocalVariablesInSentry
 } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
@@ -68,7 +69,8 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
         try {
             sentryClient = new SentryClient({
                 workspaceName: config.workspaceName,
-                organization: config.organization
+                organization: config.organization,
+                shouldTrackLocalVariables: shouldTrackLocalVariablesInSentry(config)
             });
             const logger = createLogger((level, ...message) => {
                 CONSOLE_LOGGER.log(level, ...message);

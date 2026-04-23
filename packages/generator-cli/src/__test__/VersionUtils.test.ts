@@ -1,14 +1,5 @@
-import { readFileSync } from "fs";
-import { dirname, resolve } from "path";
-import { fileURLToPath } from "url";
 import { describe, expect, it } from "vitest";
-import { extractLanguageFromGeneratorName } from "../VersionUtils.js";
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
-
-// Read runGenerator.ts source for call-site verification
-const runGeneratorPath = resolve(__dirname, "../runGenerator.ts");
-const runGeneratorSource = readFileSync(runGeneratorPath, "utf-8");
+import { extractLanguageFromGeneratorName } from "../autoversion/VersionUtils.js";
 
 describe("extractLanguageFromGeneratorName", () => {
     it("extracts 'typescript' from 'fernapi/fern-typescript-node-sdk'", () => {
@@ -99,22 +90,5 @@ describe("extractLanguageFromGeneratorName", () => {
 
     it("does not false-positive match 'java' in 'javascript'", () => {
         expect(extractLanguageFromGeneratorName("fernapi/fern-javascript-sdk")).toBe("unknown");
-    });
-});
-
-describe("extractLanguageFromGeneratorName integration - runGenerator.ts", () => {
-    it("computes generatorLanguage with extractLanguageFromGeneratorName fallback", () => {
-        expect(runGeneratorSource).toContain(
-            "generatorInvocation.language ?? extractLanguageFromGeneratorName(generatorInvocation.name)"
-        );
-    });
-
-    it("imports extractLanguageFromGeneratorName in runGenerator.ts", () => {
-        expect(runGeneratorSource).toContain("extractLanguageFromGeneratorName");
-        expect(runGeneratorSource).toContain('from "./VersionUtils.js"');
-    });
-
-    it("imports mapMagicVersionForLanguage in runGenerator.ts", () => {
-        expect(runGeneratorSource).toContain("mapMagicVersionForLanguage");
     });
 });

@@ -77,6 +77,10 @@ function createCliV2(argv?: string[]): Argv<GlobalArgs> {
             choices: ["debug", "info", "warn", "error"] as const,
             default: "info"
         })
+        .option("env", {
+            type: "string",
+            description: "Path to a .env file to load environment variables from"
+        })
         .completion("completion", "Generate shell completion script", completionHandler)
         .strict()
         .demandCommand()

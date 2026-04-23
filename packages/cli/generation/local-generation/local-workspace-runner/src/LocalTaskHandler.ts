@@ -3,6 +3,20 @@ import { b as BamlClient, configureBamlClient, VersionBump } from "@fern-api/cli
 import { FERNIGNORE_FILENAME, generatorsYml, getFernIgnorePaths } from "@fern-api/configuration";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+import {
+    AutoVersioningCache,
+    AutoVersioningException,
+    AutoVersioningService,
+    AutoVersionResult,
+    CachedAnalysis,
+    countFilesInDiff,
+    formatSizeKB,
+    isAutoVersion,
+    MAX_AI_DIFF_BYTES,
+    MAX_CHUNKS,
+    MAX_RAW_DIFF_BYTES,
+    maxVersionBump
+} from "@fern-api/generator-cli/autoversion";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { CliError, TaskContext } from "@fern-api/task-context";
 
@@ -12,16 +26,7 @@ import { tmpdir } from "os";
 import { join as pathJoin } from "path";
 import semver from "semver";
 import tmp from "tmp-promise";
-import { AutoVersioningCache, CachedAnalysis } from "./AutoVersioningCache.js";
-import {
-    AutoVersioningException,
-    AutoVersioningService,
-    AutoVersionResult,
-    countFilesInDiff,
-    formatSizeKB
-} from "./AutoVersioningService.js";
 import { sanitizeChangelogEntry } from "./sanitizeChangelogEntry.js";
-import { isAutoVersion, MAX_AI_DIFF_BYTES, MAX_CHUNKS, MAX_RAW_DIFF_BYTES, maxVersionBump } from "./VersionUtils.js";
 export declare namespace LocalTaskHandler {
     export interface Init {
         context: TaskContext;
