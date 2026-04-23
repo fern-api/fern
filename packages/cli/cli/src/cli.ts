@@ -1148,35 +1148,19 @@ function addFdrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     default: [] as string[],
                     description: "Filter the FDR API definition for certain audiences"
                 })
-                .option("v2", {
-                    boolean: true,
-                    description: "Use v2 format"
-                })
                 .option("from-openapi", {
                     boolean: true,
                     description: "Whether to use the new parser and go directly from OpenAPI to IR",
                     default: false
                 }),
         async (argv) => {
-            if (argv.v2) {
+            if (argv.fromOpenapi) {
                 await generateOpenApiToFdrApiDefinitionForWorkspaces({
                     project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                         commandLineApiWorkspace: argv.api,
                         defaultToAllApiWorkspaces: false
                     }),
                     outputFilepath: resolve(cwd(), argv.pathToOutput),
-                    directFromOpenapi: false,
-                    cliContext,
-                    audiences: argv.audience.length > 0 ? { type: "select", audiences: argv.audience } : { type: "all" }
-                });
-            } else if (argv.fromOpenapi) {
-                await generateOpenApiToFdrApiDefinitionForWorkspaces({
-                    project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                        commandLineApiWorkspace: argv.api,
-                        defaultToAllApiWorkspaces: false
-                    }),
-                    outputFilepath: resolve(cwd(), argv.pathToOutput),
-                    directFromOpenapi: true,
                     cliContext,
                     audiences: argv.audience.length > 0 ? { type: "select", audiences: argv.audience } : { type: "all" }
                 });
