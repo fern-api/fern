@@ -1401,6 +1401,23 @@
             }
           ]
         },
+        "client-default": {
+          "oneOf": [
+            {
+              "type": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "array",
+                "null"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "encoding": {
           "oneOf": [
             {
