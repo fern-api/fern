@@ -1301,7 +1301,10 @@
         "in-development",
         "pre-release",
         "deprecated",
-        "generally-available"
+        "generally-available",
+        "alpha",
+        "preview",
+        "legacy"
       ]
     },
     "availability.AvailabilitySchema": {
