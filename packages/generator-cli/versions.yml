@@ -1,6 +1,20 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Implement the FER-9980 autoversion pipeline. A new `GenerationCommitStep` +
+        `AutoVersionStep` run between the `[fern-generated]` commit and replay
+        detect/apply, diffing prev vs new `[fern-generated]` SHAs (both pure
+        generator output), calling Fern AI for a semver bump + changelog entry,
+        rewriting the placeholder version, prepending `changelog.md`, and committing
+        `[fern-autoversion]`. Consumes the two-phase `@fern-api/replay@0.12.0` API
+        (replay is pinned at 0.12.0). Opt-in via `config.autoVersion.enabled`; no
+        behavior change for non-replay flows.
+      type: feat
+  createdAt: "2026-04-23"
+  version: 0.9.12
+
+- changelogEntry:
+    - summary: |
         Sign commits pushed by the GitHub pipeline step. Previously, pull-request
         and push modes in the replay pipeline committed and pushed via plain git
         CLI, producing unsigned commits. Commits are now created via the GitHub
