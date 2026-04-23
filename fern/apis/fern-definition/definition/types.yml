@@ -56,6 +56,7 @@ types:
       - commons.WithAvailability
     properties:
       default: optional<unknown>
+      client-default: optional<unknown>
       encoding: optional<encoding.EncodingSchema>
       validation: optional<validation.ValidationSchema>
 
@@ -208,6 +209,7 @@ types:
       extends: optional<ObjectExtendsSchema>
       base-properties: optional<map<string, TypeReferenceSchema>>
       union: map<string, SingleUnionTypeSchema>
+      default-variant: optional<string>
 
   UnionDiscriminant:
     discriminated: false

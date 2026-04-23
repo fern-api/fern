@@ -7853,18 +7853,33 @@ importers:
 
   packages/generator-cli:
     dependencies:
+      '@boundaryml/baml':
+        specifier: 'catalog:'
+        version: 0.219.0
+      '@fern-api/cli-ai':
+        specifier: workspace:*
+        version: link:../cli/ai
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../commons/core-utils
+      '@fern-api/logging-execa':
+        specifier: workspace:*
+        version: link:../commons/logging-execa
       '@fern-api/replay':
-        specifier: 0.11.0
-        version: 0.11.0
+        specifier: 0.12.0
+        version: 0.12.0
+      '@fern-api/task-context':
+        specifier: workspace:*
+        version: link:../cli/task-context
       '@octokit/rest':
         specifier: 'catalog:'
         version: 22.0.1
       es-toolkit:
         specifier: 'catalog:'
         version: 1.45.1
+      semver:
+        specifier: ^7.6.3
+        version: 7.7.4
       tmp-promise:
         specifier: 'catalog:'
         version: 3.0.3
@@ -7884,6 +7899,9 @@ importers:
       '@types/node':
         specifier: ^22.0.0
         version: 22.19.17
+      '@types/semver':
+        specifier: 'catalog:'
+        version: 7.7.1
       '@types/yargs':
         specifier: ^17.0.32
         version: 17.0.35
@@ -9380,6 +9398,11 @@ packages:
 
   '@fern-api/replay@0.11.0':
     resolution: {integrity: sha512-RdJMZc3zpmYVHH5UM7ogstG28wycS74Vw8lInT4YD70bJ2LhjgmEnntWLtpHOBAaEhw3nCz8aTk8KUkTXTp4SA==}
+    engines: {node: '>=18'}
+    hasBin: true
+
+  '@fern-api/replay@0.12.0':
+    resolution: {integrity: sha512-vz9YbR+lSmR+lv0lX0A3Bk2CWwn+aEWfVwZUIgvmfXJ5PQ5K3U9SWnnSKlJnfChBKd/YBavroDmCmA7jxXne9Q==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -16502,6 +16525,15 @@ snapshots:
       chalk: 5.6.2
 
   '@fern-api/replay@0.11.0':
+    dependencies:
+      minimatch: 10.2.5
+      node-diff3: 3.2.0
+      simple-git: 3.35.2
+      yaml: 2.8.3
+    transitivePeerDependencies:
+      - supports-color
+
+  '@fern-api/replay@0.12.0':
     dependencies:
       minimatch: 10.2.5
       node-diff3: 3.2.0

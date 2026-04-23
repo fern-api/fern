@@ -7,8 +7,8 @@ import {
     AutoVersioningService,
     countFilesInDiff,
     formatSizeKB
-} from "../AutoVersioningService.js";
-import { MAGIC_VERSION, MAGIC_VERSION_PYTHON, mapMagicVersionForLanguage } from "../VersionUtils.js";
+} from "../autoversion/AutoVersioningService.js";
+import { MAGIC_VERSION, MAGIC_VERSION_PYTHON, mapMagicVersionForLanguage } from "../autoversion/VersionUtils.js";
 
 // Mock logger for tests
 const mockLogger = {

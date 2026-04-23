@@ -133,6 +133,19 @@ export function isAutoVersion(version: string): boolean {
 }
 
 /**
+ * True iff the string is a valid semver as accepted by `incrementVersion`.
+ *
+ * Use this to validate version strings that will flow into shell commands
+ * (e.g. `AutoVersioningService.replaceMagicVersion`, which currently runs
+ * `bash -c` with the version embedded in a single-quoted sed expression —
+ * any character outside the pattern below would escape shell quoting and
+ * enable command injection).
+ */
+export function isValidSemver(version: string): boolean {
+    return SEMVER_PATTERN.test(version);
+}
+
+/**
  * Increments a semantic version based on the version bump type.
  *
  * @param currentVersion The current version (e.g., "1.2.3" or "v1.2.3")

@@ -18,6 +18,7 @@ export const DiscriminatedUnionSchema: core.serialization.ObjectSchema<
         extends: ObjectExtendsSchema.optional(),
         "base-properties": core.serialization.record(core.serialization.string(), TypeReferenceSchema).optional(),
         union: core.serialization.record(core.serialization.string(), SingleUnionTypeSchema),
+        "default-variant": core.serialization.string().optional(),
     })
     .extend(BaseTypeDeclarationSchema);
 
@@ -27,5 +28,6 @@ export declare namespace DiscriminatedUnionSchema {
         extends?: ObjectExtendsSchema.Raw | null;
         "base-properties"?: Record<string, TypeReferenceSchema.Raw> | null;
         union: Record<string, SingleUnionTypeSchema.Raw>;
+        "default-variant"?: string | null;
     }
 }
