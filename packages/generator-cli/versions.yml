@@ -1,38 +1,9 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
 - changelogEntry:
     - summary: |
-        Fix `AutoVersionStep` shipping `0.0.0-fern-placeholder` in manifests
-        (package.json, pyproject.toml, .fern/metadata.json) and user-agent
-        strings (e.g. `X-Fern-SDK-Version`) on steady-state regenerations.
-        Previously, `handleNormalFlow` returned early without replacing the
-        magic version placeholder when (a) the raw git diff between the
-        previous and current `[fern-generated]` commits was empty, or (b) the
-        FAI analyzer returned NO_CHANGE after diff cleaning. The working tree
-        still carried the placeholder from the current generator output, so
-        the SDK shipped unreplaced. `handleNormalFlow` now funnels both
-        short-circuits through a new `finalizeNoChange` that rewrites the
-        placeholder to `previousVersion`, applies the Go v2+ module-path
-        suffix when relevant, and commits the rewrite as `[fern-autoversion]`
-        so the replay + github steps see a stable base. `previousVersion` is
-        validated with `isValidSemver` before being embedded in the
-        `replaceMagicVersion` bash/sed pipeline, mirroring the first-generation
-        path (FER-10028).
-      type: fix
-    - summary: |
-        `GithubStep` now auto-wires the `AutoVersionStep` result from
-        `PipelineContext.previousStepResults.autoVersion` when the
-        corresponding explicit config fields are unset, mirroring the existing
-        fallback policy for `skipCommit` and `replayConflictInfo`. Without
-        this, consumers that delegate autoversion to the pipeline (fiddle
-        post-FER-9982) could not populate `commitMessage`, `changelogEntry`,
-        `prDescription`, `versionBumpReason`, `previousVersion`, `newVersion`,
-        or `versionBump` at config-emission time — those fields are pipeline
-        outputs, not inputs — so PR bodies shipped without version headers,
-        changelog sections, or breaking-change warnings even on successful
-        autoversion runs. `hasBreakingChanges` is also derived from the
-        autoVersion result (`versionBump === "MAJOR"`) so automerge and the
-        automation-mode Breaking Changes section stay consistent with the
-        rendered version header (FER-10029).
+        Fix autoversion placeholder leak on NO_CHANGE runs and auto-wire
+        `GithubStep` PR body from the `AutoVersionStep` result (FER-10028,
+        FER-10029).
       type: fix
   createdAt: "2026-04-23"
   version: 0.9.15
