@@ -20,7 +20,7 @@ func do() {
     request := uuid.MustParse(
         "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     )
-    client.Endpoints.Primitive.GetAndReturnUuid(
+    client.Endpoints.Primitive.GetAndReturnUUID(
         context.TODO(),
         request,
     )

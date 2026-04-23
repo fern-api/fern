@@ -18,7 +18,7 @@ func do() {
         ),
     )
     request := &endpoints.PutRequest{
-        Id: "id",
+        ID: "id",
     }
     client.Endpoints.Put.Add(
         context.TODO(),
