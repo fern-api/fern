@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix `fern token` (and other commands that auto-create organizations)
+    returning a misleading `OrganizationAlreadyExistsError` when the
+    org-existence check against venus fails for reasons other than 404.
+    The CLI now only attempts to create an organization on a confirmed 404,
+    and surfaces the real error (unauthorized, 5xx, timeout, etc.) for any
+    other failure mode.
+  type: fix
