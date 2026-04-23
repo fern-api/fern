@@ -8,8 +8,9 @@ export type { PublishTarget };
  *   - "opted_out":    `automations.generate: false`, `autorelease: false`, or the root
  *                     `autorelease: false` applies.
  *   - "no_diff":      Fiddle ran the generator and determined the output is identical to the
- *                     current SDK repo contents. Stubbed until Fiddle surfaces the flag; kept
- *                     in the skip-reason union so callers can render it uniformly.
+ *                     current SDK repo contents. Reported today as a `recordSuccess` with
+ *                     `noChangesDetected: true`; the skip-reason is kept in the union so
+ *                     callers that prefer to classify no-diff as "skipped" can do so.
  */
 export type GeneratorSkipReason = "local_output" | "opted_out" | "no_diff";
 
@@ -42,13 +43,13 @@ export interface RemoteGeneratorRunRecorder {
             version: string | null;
             durationMs: number;
             /**
-             * URL of the pull request Fiddle opened for the generated SDK, when applicable.
-             * Stubbed — Fiddle will populate this once FinishedTaskStatus exposes it.
+             * URL of the pull request Fiddle opened for the generated SDK, when the output mode
+             * creates PRs. Undefined for push / commit-and-release / non-GitHub modes.
              */
             pullRequestUrl: string | undefined;
             /**
              * True when Fiddle reported the generation produced no changes vs. the current SDK
-             * repo. Stubbed — always undefined until Fiddle exposes the flag.
+             * repo. Undefined when the diff analyzer didn't run.
              */
             noChangesDetected: boolean | undefined;
             /**

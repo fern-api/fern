@@ -13,7 +13,7 @@ export interface GeneratorRunResult {
     skipReason: GeneratorSkipReason | null;
     version: string | null;
     pullRequestUrl: string | null;
-    /** Whether Fiddle reported zero diff against the SDK repo. Stub — always false until Fiddle surfaces it. */
+    /** Whether Fiddle reported zero diff against the SDK repo. False when the analyzer didn't run or reported changes. */
     noChangesDetected: boolean;
     /** Where the SDK was published. Null for GitHub-only / local-filesystem targets. */
     publishTarget: PublishTarget | null;

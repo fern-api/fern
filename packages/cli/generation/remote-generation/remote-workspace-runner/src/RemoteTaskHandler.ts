@@ -30,14 +30,15 @@ export declare namespace RemoteTaskHandler {
         snippetsS3PreSignedReadUrl: string | undefined;
         actualVersion: string | undefined;
         /**
-         * Populated by Fiddle when it opens a pull request for the generated SDK. The field is
-         * stubbed until Fiddle adds it to {@link FernFiddle.remoteGen.FinishedTaskStatus}; until
-         * then it's always undefined and automation-mode callers render the row without a PR link.
+         * URL of the pull request Fiddle opened against the SDK repo, when the output mode
+         * creates PRs (`github` with `makePr: true` / `githubV2.pullRequest`). Undefined for
+         * push / commit-and-release / non-GitHub modes.
          */
         pullRequestUrl: string | undefined;
         /**
-         * True when Fiddle determined the generated output is identical to the current SDK repo
-         * contents. Stubbed pending Fiddle exposing the flag on FinishedTaskStatus.
+         * True when Fiddle's diff analyzer determined the generated SDK is identical to the
+         * current SDK repo contents. Undefined when the analyzer didn't run (e.g., local-
+         * filesystem / download-files modes).
          */
         noChangesDetected: boolean | undefined;
         /**
@@ -162,6 +163,8 @@ export class RemoteTaskHandler {
                 this.#isFinished = true;
                 this.#createdSnippets = finishedStatus.createdSnippets != null ? finishedStatus.createdSnippets : false;
                 this.#snippetsS3PreSignedReadUrl = finishedStatus.snippetsS3PreSignedReadUrl;
+                this.#pullRequestUrl = finishedStatus.pullRequestUrl;
+                this.#noChangesDetected = finishedStatus.noChangesDetected;
             },
             _other: () => {
                 this.context.logger.warn("Received unknown update type: " + remoteTask.status.type);
@@ -173,9 +176,8 @@ export class RemoteTaskHandler {
                   createdSnippets: this.#createdSnippets,
                   snippetsS3PreSignedReadUrl: this.#snippetsS3PreSignedReadUrl,
                   actualVersion: this.#actualVersion,
-                  // Stubs: Fiddle will populate these once the FinishedTaskStatus schema is extended.
-                  pullRequestUrl: undefined,
-                  noChangesDetected: undefined,
+                  pullRequestUrl: this.#pullRequestUrl,
+                  noChangesDetected: this.#noChangesDetected,
                   publishTarget: this.#publishTarget
               }
             : undefined;
@@ -210,6 +212,16 @@ export class RemoteTaskHandler {
     #publishTarget: PublishTarget | undefined = undefined;
     public get publishTarget(): PublishTarget | undefined {
         return this.#publishTarget;
+    }
+
+    #pullRequestUrl: string | undefined = undefined;
+    public get pullRequestUrl(): string | undefined {
+        return this.#pullRequestUrl;
+    }
+
+    #noChangesDetected: boolean | undefined = undefined;
+    public get noChangesDetected(): boolean | undefined {
+        return this.#noChangesDetected;
     }
 }
 
