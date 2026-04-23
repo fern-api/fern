@@ -4,7 +4,7 @@ generators/csharp/* @Swimburger
 generators/go/* @amckinney
 generators/go-v2/* @amckinney
 generators/java/* @tstanmay13
-generators/openapi/* @dsinghvi @amckinney
+generators/openapi/* @Swimburger
 generators/php/* @amckinney
 generators/python/* @amckinney
 generators/python-v2/* @amckinney
@@ -15,4 +15,4 @@ generators/typescript/* @Swimburger
 generators/typescript-v2/* @Swimburger
 
 # Specific rules for packages
-packages/cli/* @dsinghvi @amckinney
+packages/cli/* @Swimburger
