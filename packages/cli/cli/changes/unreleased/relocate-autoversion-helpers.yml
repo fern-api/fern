@@ -1,7 +1,0 @@
-# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
-
-- summary: |
-    Move AutoVersioningService, AutoVersioningCache, and VersionUtils from
-    @fern-api/local-workspace-runner to @fern-api/generator-cli/autoversion.
-    No behavior change — consumers now import from the new subpath.
-  type: internal
