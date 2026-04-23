@@ -28,6 +28,7 @@ function createMockContext(tokenType: "user" | "organization" = "user") {
     return {
         stdout: createMockLogger(),
         stderr: createMockLogger(),
+        cwd: "/tmp",
         getTokenOrPrompt: vi.fn().mockResolvedValue({ type: tokenType, value: "test-token" })
     } as unknown as import("../../../../../context/Context.js").Context;
 }
@@ -178,5 +179,52 @@ describe("RemoveMemberCommand", () => {
         ).rejects.toThrow(CliError);
 
         expect(context.stderr.error).toHaveBeenCalledWith(expect.stringContaining("Failed to remove member"));
+    });
+
+    it("accepts --input with a valid JSON payload", async () => {
+        const { createVenusService } = await import("@fern-api/core");
+        const mockGet = mockOrgLookupSuccess();
+        const mockRemoveUser = vi.fn().mockResolvedValue({ ok: true });
+        vi.mocked(createVenusService).mockReturnValue({
+            organization: { get: mockGet, removeUser: mockRemoveUser }
+        } as unknown as ReturnType<typeof createVenusService>);
+
+        const context = createMockContext();
+        await cmd.handle(context, {
+            input: JSON.stringify({ userId: "user123", org: "acme" })
+        } as RemoveMemberCommand.Args);
+
+        expect(mockGet).toHaveBeenCalledWith("acme");
+        expect(mockRemoveUser).toHaveBeenCalledWith({
+            userId: "user123",
+            auth0OrgId: "org_abc123"
+        });
+    });
+
+    it("rejects --input combined with positional arguments", async () => {
+        const context = createMockContext();
+
+        await expect(
+            cmd.handle(context, {
+                userId: "user123",
+                input: JSON.stringify({ userId: "user123", org: "acme" })
+            } as RemoveMemberCommand.Args)
+        ).rejects.toMatchObject({
+            message: expect.stringContaining("--input cannot be combined"),
+            code: CliError.Code.ConfigError
+        });
+    });
+
+    it("rejects an --input payload that does not match the schema", async () => {
+        const context = createMockContext();
+
+        await expect(
+            cmd.handle(context, {
+                input: JSON.stringify({ userId: "u1" })
+            } as RemoveMemberCommand.Args)
+        ).rejects.toMatchObject({
+            message: expect.stringContaining("did not match the org-member-remove-input schema"),
+            code: CliError.Code.ValidationError
+        });
     });
 });

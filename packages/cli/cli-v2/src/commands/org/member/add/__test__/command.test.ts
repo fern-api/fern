@@ -28,6 +28,7 @@ function createMockContext(tokenType: "user" | "organization" = "user") {
     return {
         stdout: createMockLogger(),
         stderr: createMockLogger(),
+        cwd: "/tmp",
         getTokenOrPrompt: vi.fn().mockResolvedValue({ type: tokenType, value: "test-token" })
     } as unknown as import("../../../../../context/Context.js").Context;
 }
@@ -182,5 +183,52 @@ describe("InviteMemberCommand", () => {
         ).rejects.toThrow(CliError);
 
         expect(context.stderr.error).toHaveBeenCalledWith(expect.stringContaining("Failed to invite member"));
+    });
+
+    it("accepts --input with a valid JSON payload", async () => {
+        const { createVenusService } = await import("@fern-api/core");
+        const mockGet = mockOrgLookupSuccess();
+        const mockInviteUser = vi.fn().mockResolvedValue({ ok: true });
+        vi.mocked(createVenusService).mockReturnValue({
+            organization: { get: mockGet, inviteUser: mockInviteUser }
+        } as unknown as ReturnType<typeof createVenusService>);
+
+        const context = createMockContext();
+        await cmd.handle(context, {
+            input: JSON.stringify({ email: "user@example.com", org: "acme" })
+        } as InviteMemberCommand.Args);
+
+        expect(mockGet).toHaveBeenCalledWith("acme");
+        expect(mockInviteUser).toHaveBeenCalledWith({
+            emailAddress: "user@example.com",
+            auth0OrgId: "org_abc123"
+        });
+    });
+
+    it("rejects --input combined with positional arguments", async () => {
+        const context = createMockContext();
+
+        await expect(
+            cmd.handle(context, {
+                email: "user@example.com",
+                input: JSON.stringify({ email: "other@example.com", org: "acme" })
+            } as InviteMemberCommand.Args)
+        ).rejects.toMatchObject({
+            message: expect.stringContaining("--input cannot be combined"),
+            code: CliError.Code.ConfigError
+        });
+    });
+
+    it("rejects an --input payload that does not match the schema", async () => {
+        const context = createMockContext();
+
+        await expect(
+            cmd.handle(context, {
+                input: JSON.stringify({ email: "user@example.com" })
+            } as InviteMemberCommand.Args)
+        ).rejects.toMatchObject({
+            message: expect.stringContaining("did not match the org-member-invite-input schema"),
+            code: CliError.Code.ValidationError
+        });
     });
 });

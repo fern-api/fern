@@ -28,6 +28,7 @@ function createMockContext(tokenType: "user" | "organization" = "user") {
     return {
         stdout: createMockLogger(),
         stderr: createMockLogger(),
+        cwd: "/tmp",
         getTokenOrPrompt: vi.fn().mockResolvedValue({ type: tokenType, value: "test-token" })
     } as unknown as import("../../../../../context/Context.js").Context;
 }
@@ -181,5 +182,56 @@ describe("CreateTokenCommand", () => {
         await expect(cmd.handle(context, { org: "acme" } as CreateTokenCommand.Args)).rejects.toThrow(CliError);
 
         expect(context.stderr.error).toHaveBeenCalledWith(expect.stringContaining("Failed to create token"));
+    });
+
+    it("accepts --input with a valid JSON payload", async () => {
+        const { createVenusService } = await import("@fern-api/core");
+        const mockGet = mockOrgLookupSuccess();
+        const mockCreate = vi.fn().mockResolvedValue({
+            ok: true,
+            body: { tokenId: "tok_new", token: "secret" }
+        });
+        vi.mocked(createVenusService).mockReturnValue({
+            organization: { get: mockGet },
+            apiKeys: { create: mockCreate }
+        } as unknown as ReturnType<typeof createVenusService>);
+
+        const context = createMockContext();
+        await cmd.handle(context, {
+            input: JSON.stringify({ org: "acme", description: "CI token" })
+        } as CreateTokenCommand.Args);
+
+        expect(mockGet).toHaveBeenCalledWith("acme");
+        expect(mockCreate).toHaveBeenCalledWith({
+            organizationId: "org_abc123",
+            description: "CI token"
+        });
+    });
+
+    it("rejects --input combined with --description", async () => {
+        const context = createMockContext();
+
+        await expect(
+            cmd.handle(context, {
+                description: "CI",
+                input: JSON.stringify({ org: "acme" })
+            } as CreateTokenCommand.Args)
+        ).rejects.toMatchObject({
+            message: expect.stringContaining("--input cannot be combined"),
+            code: CliError.Code.ConfigError
+        });
+    });
+
+    it("rejects an --input payload that does not match the schema", async () => {
+        const context = createMockContext();
+
+        await expect(
+            cmd.handle(context, {
+                input: JSON.stringify({ description: "missing org" })
+            } as CreateTokenCommand.Args)
+        ).rejects.toMatchObject({
+            message: expect.stringContaining("did not match the org-token-create-input schema"),
+            code: CliError.Code.ValidationError
+        });
     });
 });

@@ -28,6 +28,7 @@ function createMockContext(tokenType: "user" | "organization" = "user") {
     return {
         stdout: createMockLogger(),
         stderr: createMockLogger(),
+        cwd: "/tmp",
         getTokenOrPrompt: vi.fn().mockResolvedValue({ type: tokenType, value: "test-token" })
     } as unknown as import("../../../../../context/Context.js").Context;
 }
@@ -132,5 +133,43 @@ describe("RevokeTokenCommand", () => {
         await expect(cmd.handle(context, { tokenId: "tok_123" } as RevokeTokenCommand.Args)).rejects.toThrow(CliError);
 
         expect(context.stderr.error).toHaveBeenCalledWith(expect.stringContaining("Failed to revoke token"));
+    });
+
+    it("accepts --input with a valid JSON payload", async () => {
+        const { createVenusService } = await import("@fern-api/core");
+        const mockRevoke = vi.fn().mockResolvedValue({ ok: true });
+        vi.mocked(createVenusService).mockReturnValue({
+            apiKeys: { revokeTokenById: mockRevoke }
+        } as unknown as ReturnType<typeof createVenusService>);
+
+        const context = createMockContext();
+        await cmd.handle(context, { input: JSON.stringify({ tokenId: "tok_input" }) } as RevokeTokenCommand.Args);
+
+        expect(mockRevoke).toHaveBeenCalledWith("tok_input");
+    });
+
+    it("rejects --input combined with the positional token-id", async () => {
+        const context = createMockContext();
+
+        await expect(
+            cmd.handle(context, {
+                tokenId: "tok_123",
+                input: JSON.stringify({ tokenId: "tok_input" })
+            } as RevokeTokenCommand.Args)
+        ).rejects.toMatchObject({
+            message: expect.stringContaining("--input cannot be combined"),
+            code: CliError.Code.ConfigError
+        });
+    });
+
+    it("rejects an --input payload that does not match the schema", async () => {
+        const context = createMockContext();
+
+        await expect(
+            cmd.handle(context, { input: JSON.stringify({ wrongField: "x" }) } as RevokeTokenCommand.Args)
+        ).rejects.toMatchObject({
+            message: expect.stringContaining("did not match the org-token-revoke-input schema"),
+            code: CliError.Code.ValidationError
+        });
     });
 });

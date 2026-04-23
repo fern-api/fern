@@ -21,6 +21,49 @@ export const SdkAddInputSchema = z.object({
 export type SdkAddInputSchema = z.infer<typeof SdkAddInputSchema>;
 
 /**
+ * Payload accepted by `fern org create --params`.
+ */
+export const OrgCreateInputSchema = z.object({
+    name: z.string()
+});
+export type OrgCreateInputSchema = z.infer<typeof OrgCreateInputSchema>;
+
+/**
+ * Payload accepted by `fern org member invite --params`.
+ */
+export const OrgMemberInviteInputSchema = z.object({
+    email: z.string(),
+    org: z.string()
+});
+export type OrgMemberInviteInputSchema = z.infer<typeof OrgMemberInviteInputSchema>;
+
+/**
+ * Payload accepted by `fern org member remove --params`.
+ */
+export const OrgMemberRemoveInputSchema = z.object({
+    userId: z.string(),
+    org: z.string()
+});
+export type OrgMemberRemoveInputSchema = z.infer<typeof OrgMemberRemoveInputSchema>;
+
+/**
+ * Payload accepted by `fern org token create --params`.
+ */
+export const OrgTokenCreateInputSchema = z.object({
+    org: z.string(),
+    description: z.string().optional()
+});
+export type OrgTokenCreateInputSchema = z.infer<typeof OrgTokenCreateInputSchema>;
+
+/**
+ * Payload accepted by `fern org token revoke --params`.
+ */
+export const OrgTokenRevokeInputSchema = z.object({
+    tokenId: z.string()
+});
+export type OrgTokenRevokeInputSchema = z.infer<typeof OrgTokenRevokeInputSchema>;
+
+/**
  * Name of a named JSON Schema exported by this package.
  *
  * Names mirror the dot-delimited path inside `fern.yml`. The root (the full
