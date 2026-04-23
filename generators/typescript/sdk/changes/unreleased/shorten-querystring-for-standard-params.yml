@@ -4,6 +4,6 @@
     Emit a shorter `core.url.toQueryString(...)` call at endpoint call sites when no query parameter
     uses comma formatting (`explode: false`). The existing `core.url.queryBuilder()` chain is still
     used for endpoints with comma-style parameters so per-key `style: "comma"` overrides continue to
-    work. The default `arrayFormat` in `core/url/qs.ts` is now `"repeat"` to match what the builder
-    produces (`encodeAsFormParameter` still explicitly passes `arrayFormat: "indices"`).
+    work. The call site explicitly passes `{ arrayFormat: "repeat" }` so the output matches
+    `queryBuilder().addMany()` byte-for-byte; the default in `core/url/qs.ts` is unchanged.
   type: fix
