@@ -1,9 +1,7 @@
 from dataclasses import dataclass
 from typing import Dict, List, Optional, Set, Tuple, Union
 
-import fern.ir.resources as ir_types
 from ..core_utilities.client_wrapper_generator import ClientWrapperGenerator
-
 from fern_python.codegen import AST
 from fern_python.codegen.ast.ast_node.node_writer import NodeWriter
 from fern_python.codegen.ast.nodes.docstring import escape_docstring
@@ -20,6 +18,8 @@ from fern_python.generators.sdk.environment_generators.multiple_base_urls_enviro
 )
 from fern_python.utils.name_resolver import get_name_from_wire_value, get_original_name, get_wire_value, resolve_name
 from fern_python.utils.snake_case import snake_case
+
+import fern.ir.resources as ir_types
 
 HTTPX_PRIMITIVE_DATA_TYPES = set(
     [
