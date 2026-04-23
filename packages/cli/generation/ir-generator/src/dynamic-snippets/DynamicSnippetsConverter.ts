@@ -736,20 +736,12 @@ export class DynamicSnippetsConverter {
         const scheme = auth.schemes[0];
         switch (scheme.type) {
             case "basic": {
-                const basicAuth: DynamicSnippets.BasicAuth & {
-                    usernameOmit?: boolean;
-                    passwordOmit?: boolean;
-                } = {
+                return DynamicSnippets.Auth.basic({
                     username: this.inflateName(scheme.username),
-                    password: this.inflateName(scheme.password)
-                };
-                if (scheme.usernameOmit) {
-                    basicAuth.usernameOmit = scheme.usernameOmit;
-                }
-                if (scheme.passwordOmit) {
-                    basicAuth.passwordOmit = scheme.passwordOmit;
-                }
-                return DynamicSnippets.Auth.basic(basicAuth);
+                    usernameOmit: scheme.usernameOmit,
+                    password: this.inflateName(scheme.password),
+                    passwordOmit: scheme.passwordOmit
+                });
             }
             case "bearer":
                 return DynamicSnippets.Auth.bearer({
@@ -790,8 +782,8 @@ export class DynamicSnippetsConverter {
                 });
             case "basic":
                 return DynamicSnippets.AuthValues.basic({
-                    username: "<username>",
-                    password: "<password>"
+                    username: scheme.usernameOmit ? "" : "<username>",
+                    password: scheme.passwordOmit ? "" : "<password>"
                 });
             case "header":
                 return DynamicSnippets.AuthValues.header({

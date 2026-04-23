@@ -62,7 +62,7 @@ public class Example {
     public static void main(String[] args) {
         SeedBasicAuthPwOmittedClient client = SeedBasicAuthPwOmittedClient
             .builder()
-            .credentials("<username>", "<password>")
+            .credentials("<username>")
             .build();
 
         client.basicAuth().postWithBasicAuth(new 

@@ -6,7 +6,7 @@ import java.util.HashMap;
 public class Example3 {
     public static void main(String[] args) {
         SeedBasicAuthPwOmittedClient client = SeedBasicAuthPwOmittedClient.builder()
-                .credentials("<username>", "<password>")
+                .credentials("<username>")
                 .url("https://api.fern.com")
                 .build();
 

@@ -406,10 +406,6 @@ allowedFailures:
   - inferred-auth-implicit-reference
   - endpoint-security-auth
 
-  # Dynamic snippet compilation failure: passwordOmit not yet in dynamic IR schema,
-  # so snippets generate 2-arg credentials() calls against 1-arg SDK method.
-  - basic-auth-pw-omitted
-
   # Snippet failures; many of these failures are due to the fact that a
   # required list of query parameters is not actually required by the builder.
   - any-auth
