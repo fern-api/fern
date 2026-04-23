@@ -1,6 +1,23 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix `pipeline run` crashing on stdout emission for replay-enabled runs.
+        `GenerationCommitStep`'s `preparedReplay` handle holds a live `simple-git`
+        instance whose internal `GitExecutor`/`GitExecutorChain` form a cycle, so
+        `JSON.stringify(result)` at the end of `PostGenerationPipeline` threw
+        `Converting circular structure to JSON` and the process exited non-zero
+        with empty stdout — blocking fiddle-coordinator from parsing
+        `PipelineResult` for replay-enabled orgs (FER-10026, FER-9982). The
+        `preparedReplay` field is now projected out of `result.steps.generationCommit`
+        before stdout emission while still flowing through
+        `pipelineContext.previousStepResults.generationCommit` to downstream steps
+        (AutoVersionStep, ReplayStep).
+      type: fix
+  createdAt: "2026-04-23"
+  version: 0.9.14
+
+- changelogEntry:
+    - summary: |
         Fix generator-cli publish: mark `@boundaryml/baml` as external in
         `build.mjs` so esbuild does not try to statically bundle baml's
         platform-specific `baml.<platform>.node` bindings. baml is now listed as a
