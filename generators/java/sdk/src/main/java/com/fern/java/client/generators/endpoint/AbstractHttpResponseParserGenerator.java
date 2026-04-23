@@ -1724,8 +1724,41 @@ public abstract class AbstractHttpResponseParserGenerator {
                 one = DECIMAL_ONE;
             }
 
+            // Determine offset semantics: "item-index" increments by result count,
+            // "page-index" (default) increments by 1.
+            String offsetSemantics =
+                    clientGeneratorContext.getCustomConfig().offsetSemantics().orElse("page-index");
+            boolean useItemIndex =
+                    offsetSemantics.equals("item-index") && offset.getStep().isPresent();
+
+            // Build the results extraction code (needed for both paths, but may be
+            // emitted before or after the page increment depending on semantics).
+            SnippetAndResultType resultSnippet = getNestedPropertySnippet(
+                    offset.getResults().getPropertyPath().map(path -> path.stream()
+                            .map(p -> NameUtils.toName(p.getName()))
+                            .collect(Collectors.toList())),
+                    offset.getResults().getProperty(),
+                    body.getResponseBodyType());
+            CodeBlock resultBlock = CodeBlock.builder()
+                    .add(
+                            "$T $L = $L",
+                            resultSnippet.typeName,
+                            variables.getResultVariableName(),
+                            variables.getParsedResponseVariableName())
+                    .add(resultSnippet.codeBlock)
+                    .build();
+
+            // When using item-index semantics, extract results BEFORE computing the
+            // new page number so we can use result.size() as the increment.
+            if (useItemIndex) {
+                httpResponseBuilder.addStatement(resultBlock);
+            }
+
+            // The increment expression: either "1" (page-index) or "result.size()" (item-index).
+            String incrementExpr = useItemIndex ? variables.getResultVariableName() + ".size()" : one;
+
             if (pageIsOptional) {
-                String zero = one.equals(DECIMAL_ONE) ? "0.0" : "0";
+                String fallback = useItemIndex ? variables.getResultVariableName() + ".size()" : one;
 
                 TypeName lambdaParamType = numberTypeName;
                 if (numberTypeName.isPrimitive()) {
@@ -1738,15 +1771,15 @@ public abstract class AbstractHttpResponseParserGenerator {
                         variables.getNewPageNumberVariableName(),
                         newNumberGetter,
                         lambdaParamType,
-                        one,
-                        one));
+                        incrementExpr,
+                        fallback));
             } else {
                 httpResponseBuilder.addStatement(CodeBlock.of(
                         "$T $L = $L + $L",
                         clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, pageType),
                         variables.getNewPageNumberVariableName(),
                         newNumberGetter,
-                        one));
+                        incrementExpr));
             }
 
             String propertyOverrideOnRequest = offset.getPage()
@@ -1810,21 +1843,12 @@ public abstract class AbstractHttpResponseParserGenerator {
                     propertyOverrideOnRequest,
                     propertyOverrideValueOnRequest);
 
-            SnippetAndResultType resultSnippet = getNestedPropertySnippet(
-                    offset.getResults().getPropertyPath().map(path -> path.stream()
-                            .map(p -> NameUtils.toName(p.getName()))
-                            .collect(Collectors.toList())),
-                    offset.getResults().getProperty(),
-                    body.getResponseBodyType());
-            CodeBlock resultBlock = CodeBlock.builder()
-                    .add(
-                            "$T $L = $L",
-                            resultSnippet.typeName,
-                            variables.getResultVariableName(),
-                            variables.getParsedResponseVariableName())
-                    .add(resultSnippet.codeBlock)
-                    .build();
-            httpResponseBuilder.addStatement(resultBlock);
+            // When using page-index semantics, extract results AFTER computing the
+            // new page number (the original position). For item-index semantics,
+            // results were already extracted earlier.
+            if (!useItemIndex) {
+                httpResponseBuilder.addStatement(resultBlock);
+            }
             TypeName responseType = getResponseType(httpEndpoint, clientGeneratorContext);
 
             CodeBlock paginationConstructor = CodeBlock.of(

@@ -5,7 +5,7 @@ import { assertNever, noop, visitObject } from "@fern-api/core-utils";
 import { RootApiFileSchema, YAML_SCHEMA_VERSION } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { parseVersion } from "@fern-api/semver-utils";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import axios from "axios";
 import { createWriteStream } from "fs";
@@ -134,7 +134,9 @@ async function validateLocalDependencyAndGetDefinition({
     settings?: OSSWorkspace.Settings;
 }): Promise<FernDefinition | undefined> {
     if (loadAPIWorkspace == null) {
-        context.failWithoutThrowing("Failed to load api definition");
+        context.failWithoutThrowing("Failed to load api definition", undefined, {
+            code: CliError.Code.ResolutionError
+        });
         return undefined;
     }
 
@@ -147,7 +149,9 @@ async function validateLocalDependencyAndGetDefinition({
         workspaceName: undefined
     });
     if (!loadDependencyWorkspaceResult.didSucceed) {
-        context.failWithoutThrowing("Failed to load api definition", loadDependencyWorkspaceResult.failures);
+        context.failWithoutThrowing("Failed to load api definition", loadDependencyWorkspaceResult.failures, {
+            code: CliError.Code.ResolutionError
+        });
         return undefined;
     }
 
@@ -193,16 +197,24 @@ async function validateVersionedDependencyAndGetDefinition({
         if (!response.ok) {
             response.error._visit({
                 orgDoesNotExistError: () => {
-                    context.failWithoutThrowing("Organization does not exist");
+                    context.failWithoutThrowing("Organization does not exist", undefined, {
+                        code: CliError.Code.ResolutionError
+                    });
                 },
                 apiDoesNotExistError: () => {
-                    context.failWithoutThrowing("API does not exist");
+                    context.failWithoutThrowing("API does not exist", undefined, {
+                        code: CliError.Code.ResolutionError
+                    });
                 },
                 versionDoesNotExistError: () => {
-                    context.failWithoutThrowing("Version does not exist");
+                    context.failWithoutThrowing("Version does not exist", undefined, {
+                        code: CliError.Code.ResolutionError
+                    });
                 },
                 _other: (error) => {
-                    context.failWithoutThrowing("Failed to download API manifest", error);
+                    context.failWithoutThrowing("Failed to download API manifest", error, {
+                        code: CliError.Code.NetworkError
+                    });
                 }
             });
             return undefined;
@@ -217,12 +229,16 @@ async function validateVersionedDependencyAndGetDefinition({
         if (parsedYamlVersionOfDependency != null) {
             if (parsedYamlVersionOfDependency > YAML_SCHEMA_VERSION) {
                 context.failWithoutThrowing(
-                    `${dependency.organization}/${dependency.apiName}@${dependency.version} on a higher version of fern. Upgrade this workspace to ${response.body.cliVersion}`
+                    `${dependency.organization}/${dependency.apiName}@${dependency.version} on a higher version of fern. Upgrade this workspace to ${response.body.cliVersion}`,
+                    undefined,
+                    { code: CliError.Code.VersionError }
                 );
                 return undefined;
             } else if (parsedYamlVersionOfDependency < YAML_SCHEMA_VERSION) {
                 context.failWithoutThrowing(
-                    `${dependency.organization}/${dependency.apiName}@${dependency.version} on a lower version of fern. Upgrade it to ${cliVersion}`
+                    `${dependency.organization}/${dependency.apiName}@${dependency.version} on a lower version of fern. Upgrade it to ${cliVersion}`,
+                    undefined,
+                    { code: CliError.Code.VersionError }
                 );
                 return undefined;
             }
@@ -233,7 +249,9 @@ async function validateVersionedDependencyAndGetDefinition({
             parsedCliVersion.minor !== parsedCliVersionOfDependency.minor
         ) {
             context.failWithoutThrowing(
-                `CLI version is ${response.body.cliVersion}. Expected ${parsedCliVersion.major}.${parsedCliVersion.minor}.x (to match current workspace).`
+                `CLI version is ${response.body.cliVersion}. Expected ${parsedCliVersion.major}.${parsedCliVersion.minor}.x (to match current workspace).`,
+                undefined,
+                { code: CliError.Code.VersionError }
             );
             return undefined;
         }
@@ -250,7 +268,9 @@ async function validateVersionedDependencyAndGetDefinition({
                 absolutePathToLocalOutput: pathToDefinition
             });
         } catch (error) {
-            context.failWithoutThrowing("Failed to download API", error);
+            context.failWithoutThrowing("Failed to download API", error, {
+                code: CliError.Code.NetworkError
+            });
             return undefined;
         }
 
@@ -262,7 +282,9 @@ async function validateVersionedDependencyAndGetDefinition({
     // parse workspace
     context.logger.info("Parsing...");
     if (loadAPIWorkspace == null) {
-        context.failWithoutThrowing("Failed to load API");
+        context.failWithoutThrowing("Failed to load API", undefined, {
+            code: CliError.Code.ResolutionError
+        });
         return undefined;
     }
     const loadDependencyWorkspaceResult = await loadAPIWorkspace({
@@ -275,14 +297,17 @@ async function validateVersionedDependencyAndGetDefinition({
     if (!loadDependencyWorkspaceResult.didSucceed) {
         context.failWithoutThrowing(
             "Failed to parse dependency after downloading",
-            loadDependencyWorkspaceResult.failures
+            loadDependencyWorkspaceResult.failures,
+            { code: CliError.Code.ParseError }
         );
         return undefined;
     }
 
     const workspaceOfDependency = loadDependencyWorkspaceResult.workspace;
     if (workspaceOfDependency.type === "oss") {
-        context.failWithoutThrowing("Dependency must be a fern workspace.");
+        context.failWithoutThrowing("Dependency must be a fern workspace.", undefined, {
+            code: CliError.Code.ConfigError
+        });
         return undefined;
     }
 

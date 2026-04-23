@@ -40,7 +40,8 @@ export async function createAndStartJob({
     skipFernignore,
     retryRateLimited,
     automationMode,
-    autoMerge
+    autoMerge,
+    skipIfNoDiff
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     workspace: FernWorkspace;
@@ -63,6 +64,7 @@ export async function createAndStartJob({
     retryRateLimited: boolean;
     automationMode?: boolean;
     autoMerge?: boolean;
+    skipIfNoDiff?: boolean;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
     // Determine fernignore contents:
     // - If --skip-fernignore is set, upload an empty .fernignore so nothing is ignored
@@ -98,7 +100,8 @@ export async function createAndStartJob({
                 pushPreviewBranch,
                 fernignoreContents,
                 automationMode,
-                autoMerge
+                autoMerge,
+                skipIfNoDiff
             }),
         retryRateLimited,
         logger: context.logger,
@@ -126,7 +129,8 @@ async function createJob({
     absolutePathToPreview,
     fiddlePreview,
     pushPreviewBranch,
-    fernignoreContents
+    fernignoreContents,
+    skipIfNoDiff
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     workspace: FernWorkspace;
@@ -145,6 +149,7 @@ async function createJob({
     fernignoreContents: string | undefined;
     automationMode?: boolean;
     autoMerge?: boolean;
+    skipIfNoDiff?: boolean;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
     const remoteGenerationService = createFiddleService({ token: token.value });
 
@@ -177,13 +182,14 @@ async function createJob({
         // Fiddle's dryRun logic is intentionally unchanged.
         preview: fiddlePreview ?? absolutePathToPreview != null,
         pushPreviewBranch,
-        fernignoreContents
-        // TODO(FER-9671): Pass automation flags to Fiddle once its API is updated:
+        fernignoreContents,
+        skipIfNoDiff
+        // TODO(FER-9671): Pass remaining automation flags to Fiddle once its API is updated:
         //   automationMode,
         //   autoMerge,
         //   runId: process.env.FERN_RUN_ID
-        // Fiddle will use these for server-side no-diff detection, separate PRs,
-        // automerge, run_id correlation, and breaking change handling.
+        // Fiddle will use these for separate PRs, automerge, run_id correlation,
+        // and breaking change handling. (skipIfNoDiff is forwarded above — see fern-api/fiddle#708.)
     });
 
     if (!createResponse.ok) {
@@ -391,12 +397,24 @@ async function startJob({
 /**
  * Attempts to extract a human-readable error message from the raw error response body.
  * Fiddle's ErrorBody serializes as { error: "...", content: { message: "..." } }.
- * The SDK wraps this as { content: { reason: "status-code", body: <ErrorBody> } }.
+ *
+ * Two shapes are supported because this helper is reachable from two call sites:
+ *   1. The `_other` visitor callback, which receives `core.Fetcher.Error` directly:
+ *        { reason: "status-code", statusCode: N, body: <ErrorBody> }
+ *   2. The raw `createResponse.error` wrapper from the SDK, before it is unpacked:
+ *        { content: { reason: "status-code", statusCode: N, body: <ErrorBody> } }
+ *
  * Returns undefined if no message could be extracted.
  */
 // biome-ignore lint/suspicious/noExplicitAny: the error shape from the SDK is not well-typed
-function extractErrorMessage(error: any): string | undefined {
-    const body = error?.content?.reason === "status-code" ? error.content.body : undefined;
+export function extractErrorMessage(error: any): string | undefined {
+    // biome-ignore lint/suspicious/noExplicitAny: intentional dynamic navigation
+    let body: any;
+    if (error?.reason === "status-code") {
+        body = error.body;
+    } else if (error?.content?.reason === "status-code") {
+        body = error.content.body;
+    }
     if (typeof body?.content?.message === "string") {
         return body.content.message;
     }

@@ -15,6 +15,7 @@ import { createVenusService } from "@fern-api/core";
 import { ContainerRunner, extractErrorMessage, replaceEnvVariables } from "@fern-api/core-utils";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { logReplaySummary, type PipelineLogger, PostGenerationPipeline } from "@fern-api/generator-cli";
+import { AutoVersioningCache, isAutoVersion } from "@fern-api/generator-cli/autoversion";
 import { cloneRepository, parseRepository } from "@fern-api/github";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { FernIr, PublishTarget } from "@fern-api/ir-sdk";
@@ -31,10 +32,8 @@ import * as fs from "fs/promises";
 import os from "os";
 import path from "path";
 import tmp from "tmp-promise";
-import { AutoVersioningCache } from "./AutoVersioningCache.js";
 import { getGeneratorOutputSubfolder } from "./getGeneratorOutputSubfolder.js";
 import { writeFilesToDiskAndRunGenerator } from "./runGenerator.js";
-import { isAutoVersion } from "./VersionUtils.js";
 
 export async function runLocalGenerationForWorkspace({
     token,
@@ -57,6 +56,7 @@ export async function runLocalGenerationForWorkspace({
     isPreview: isPreviewOverride,
     automationMode,
     autoMerge,
+    skipIfNoDiff,
     disableTelemetry
 }: {
     token: FernToken | undefined;
@@ -79,6 +79,7 @@ export async function runLocalGenerationForWorkspace({
     isPreview?: boolean;
     automationMode?: boolean;
     autoMerge?: boolean;
+    skipIfNoDiff?: boolean;
     disableTelemetry?: boolean;
 }): Promise<void> {
     // Fail fast: check all generators for version conflicts BEFORE starting any IR generation.
@@ -419,6 +420,7 @@ export async function runLocalGenerationForWorkspace({
                                 generatorName: generatorInvocation.name,
                                 automationMode,
                                 autoMerge,
+                                skipIfNoDiff,
                                 hasBreakingChanges,
                                 breakingChangesSummary: hasBreakingChanges ? autoVersioningPrDescription : undefined,
                                 runId: process.env.FERN_RUN_ID

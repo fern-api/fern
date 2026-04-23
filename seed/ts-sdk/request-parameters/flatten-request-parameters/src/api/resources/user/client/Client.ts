@@ -298,7 +298,7 @@ export class UserClient {
             excludeUser,
             filter,
             longParam,
-            bigIntParam: bigIntParam ?? "18446744073709551615",
+            bigIntParam,
         };
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({

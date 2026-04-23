@@ -1,6 +1,6 @@
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { entries } from "@fern-api/core-utils";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 import { writeFile } from "fs/promises";
 
@@ -25,7 +25,7 @@ export async function formatFernWorkspace({
                 context.logger.info(chalk.green(`Formatted ${chalk.bold(relativeFilepath)}`));
             } else {
                 context.logger.info(chalk.red(`Invalid formatting: ${chalk.bold(relativeFilepath)}`));
-                context.failWithoutThrowing();
+                context.failWithoutThrowing(undefined, undefined, { code: CliError.Code.ValidationError });
             }
         }
     }

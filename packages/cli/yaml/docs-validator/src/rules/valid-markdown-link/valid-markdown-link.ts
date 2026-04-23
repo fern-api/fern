@@ -6,7 +6,8 @@ import { APIV1Read, ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, join, RelativeFilePath, relative } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { createLogger } from "@fern-api/logger";
-import { createMockTaskContext } from "@fern-api/task-context";
+import { CliError, createMockTaskContext } from "@fern-api/task-context";
+
 import chalk from "chalk";
 import { randomUUID } from "crypto";
 import path from "path";
@@ -47,7 +48,7 @@ export const ValidMarkdownLinks: Rule = {
 
         const configRoot = resolvedDocsDefinition.config.root;
         if (!configRoot || !isV1RootNode(configRoot)) {
-            throw new Error("Root node not found");
+            throw new CliError({ message: "Root node not found", code: CliError.Code.InternalError });
         }
 
         // TODO: this is a bit of a hack to get the navigation tree. We should probably just use the navigation tree

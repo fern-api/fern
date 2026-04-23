@@ -93,10 +93,22 @@ import { RUNTIME } from "./runtime.js";
 void runCli();
 
 async function runCli() {
-    getOrCreateFernRunId();
+    // Shell completion must be fast and side-effect-free. When the shell
+    // invokes `fern --get-yargs-completions …` we skip version redirection
+    // (network call) and suppress upgrade notices so TAB never produces
+    // extraneous output.
+    const isCompletion = process.argv.includes("--get-yargs-completions");
+
+    if (!isCompletion) {
+        getOrCreateFernRunId();
+    }
 
     const isLocal = process.argv.includes("--local");
     const cliContext = await CliContext.create(process.stdout, process.stderr, { isLocal });
+
+    if (isCompletion) {
+        cliContext.suppressUpgradeMessage();
+    }
 
     const exit = async () => {
         await cliContext.exit();
@@ -126,14 +138,21 @@ async function runCli() {
         if (cwd != null) {
             process.chdir(cwd);
         }
-        const versionOfCliToRun = await getIntendedVersionOfCli(cliContext);
-        if (cliContext.environment.packageVersion === versionOfCliToRun) {
+
+        // During completion, skip version redirection to avoid a slow network
+        // round-trip that blocks every TAB press.
+        if (isCompletion) {
             await tryRunCli(cliContext);
         } else {
-            await rerunFernCliAtVersion({
-                version: versionOfCliToRun,
-                cliContext
-            });
+            const versionOfCliToRun = await getIntendedVersionOfCli(cliContext);
+            if (cliContext.environment.packageVersion === versionOfCliToRun) {
+                await tryRunCli(cliContext);
+            } else {
+                await rerunFernCliAtVersion({
+                    version: versionOfCliToRun,
+                    cliContext
+                });
+            }
         }
     } catch (error) {
         cliContext.failWithoutThrowing(undefined, error);
@@ -627,8 +646,10 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
         (yargs) =>
             yargs
                 .option("api", {
-                    string: true,
-                    description: "If multiple APIs, specify the name with --api <name>. Otherwise, just --api."
+                    type: "string",
+                    array: true,
+                    description:
+                        "If multiple APIs, specify the name with --api <name>. Pass --api multiple times to generate for several APIs at once."
                 })
                 .option("docs", {
                     string: true,
@@ -650,7 +671,9 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 })
                 .option("group", {
                     type: "string",
-                    description: "The group to generate"
+                    array: true,
+                    description:
+                        "The group to generate. Pass --group multiple times to generate for several groups at once."
                 })
                 .option("generator", {
                     type: "string",
@@ -763,9 +786,15 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     default: false,
                     description:
                         "Skip the .fernignore file and generate all files. For remote generation, uploads an empty .fernignore. For local generation, skips reading .fernignore from the output directory."
+                })
+                .option("skip-if-no-diff", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Skip opening a PR / pushing when the generated output has no diff from the base branch."
                 }),
         async (argv) => {
-            if (argv.api != null && argv.docs != null) {
+            if (argv.api != null && argv.api.length > 0 && argv.docs != null) {
                 return cliContext.failWithoutThrowing(
                     "Cannot specify both --api and --docs. Please choose one.",
                     undefined,
@@ -848,7 +877,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
             const correctedGeneratorFilter =
                 argv.generator != null ? warnAndCorrectIncorrectDockerOrg(argv.generator, cliContext) : undefined;
             const { generatorName, generatorIndex } = parseGeneratorArg(correctedGeneratorFilter);
-            if (argv.api != null) {
+            if (argv.api != null && argv.api.length > 0) {
                 return await generateAPIWorkspaces({
                     project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                         commandLineApiWorkspace: argv.api,
@@ -856,7 +885,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     }),
                     cliContext,
                     version: argv.version,
-                    groupName: argv.group,
+                    groupNames: argv.group,
                     generatorName,
                     generatorIndex,
                     shouldLogS3Url: argv.printZipUrl,
@@ -874,11 +903,12 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     outputDir: argv.output,
                     noReplay: !argv.replay,
                     retryRateLimited: argv["retry-rate-limited"],
-                    requireEnvVars: argv["require-env-vars"]
+                    requireEnvVars: argv["require-env-vars"],
+                    skipIfNoDiff: argv["skip-if-no-diff"]
                 });
             }
             if (argv.docs != null) {
-                if (argv.group != null) {
+                if (argv.group != null && argv.group.length > 0) {
                     cliContext.logger.warn("--group is ignored when generating docs");
                 }
                 if (argv.generator != null) {
@@ -916,7 +946,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 }),
                 cliContext,
                 version: argv.version,
-                groupName: argv.group,
+                groupNames: argv.group,
                 generatorName,
                 generatorIndex,
                 shouldLogS3Url: argv.printZipUrl,
@@ -934,7 +964,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 outputDir: argv.output,
                 noReplay: !argv.replay,
                 retryRateLimited: argv["retry-rate-limited"],
-                requireEnvVars: argv["require-env-vars"]
+                requireEnvVars: argv["require-env-vars"],
+                skipIfNoDiff: argv["skip-if-no-diff"]
             });
         }
     );
@@ -1869,10 +1900,16 @@ function addDocsPreviewDeleteCommand(cli: Argv<GlobalCliOptions>, cliContext: Cl
                 .check((argv) => {
                     const sources = [argv.target, argv.url, argv.id].filter(Boolean);
                     if (sources.length === 0) {
-                        throw new Error("Must provide a preview URL or --id.");
+                        throw new CliError({
+                            message: "Must provide a preview URL or --id.",
+                            code: CliError.Code.ConfigError
+                        });
                     }
                     if (sources.length > 1) {
-                        throw new Error("Provide only one of: [target], --url, or --id.");
+                        throw new CliError({
+                            message: "Provide only one of: [target], --url, or --id.",
+                            code: CliError.Code.ConfigError
+                        });
                     }
                     return true;
                 }),

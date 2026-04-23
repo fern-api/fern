@@ -1,4 +1,4 @@
-import { CaseConverter, File } from "@fern-api/base-generator";
+import { CaseConverter, File, GeneratorError } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { WireMockMapping } from "@fern-api/mock-utils";
 import { php } from "@fern-api/php-codegen";
@@ -29,7 +29,7 @@ export class WireTestGenerator {
         this.case = context.case;
         const dynamicIr = ir.dynamic;
         if (!dynamicIr) {
-            throw new Error("Cannot generate wire tests without FernIr.dynamic IR");
+            throw GeneratorError.internalError("Cannot generate wire tests without FernIr.dynamic IR");
         }
         this.dynamicIr = dynamicIr;
         this.wireMockConfigContent = this.getWireMockConfigContent();
@@ -398,7 +398,12 @@ export class WireTestGenerator {
 
         for (const [key, value] of Object.entries(queryParams)) {
             if (value !== null && value !== undefined) {
-                entries.push(`'${this.escapeStringForPhp(key)}' => '${this.escapeStringForPhp(String(value))}'`);
+                if (Array.isArray(value) && value.length > 1) {
+                    const items = value.map((v: unknown) => `'${this.escapeStringForPhp(String(v))}'`);
+                    entries.push(`'${this.escapeStringForPhp(key)}' => [${items.join(", ")}]`);
+                } else {
+                    entries.push(`'${this.escapeStringForPhp(key)}' => '${this.escapeStringForPhp(String(value))}'`);
+                }
             }
         }
 

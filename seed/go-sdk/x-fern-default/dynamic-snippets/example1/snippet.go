@@ -17,7 +17,7 @@ func do() {
     request := &fern.TestGetRequest{
         Region: "region",
         Limit: fern.String(
-            "100",
+            "limit",
         ),
     }
     client.TestGet(

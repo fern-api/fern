@@ -1,4 +1,4 @@
-import { GeneratorNotificationService, NameInput } from "@fern-api/base-generator";
+import { GeneratorError, GeneratorNotificationService, NameInput } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { go } from "@fern-api/go-ast";
@@ -848,12 +848,12 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             case "text":
                 return go.Type.string();
             case "bytes":
-                throw new Error("Returning bytes is not supported");
+                throw GeneratorError.internalError("Returning bytes is not supported");
             case "streaming":
             case "streamParameter": {
                 const streamingResponse = this.getStreamingResponse(httpEndpoint);
                 if (!streamingResponse) {
-                    throw new Error(
+                    throw GeneratorError.internalError(
                         `Unable to parse streaming response for endpoint ${this.caseConverter.camelSafe(httpEndpoint.name)}`
                     );
                 }
@@ -884,7 +884,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         ...methods: Omit<go.MethodInvocation.Args, "on">[]
     ): go.MethodInvocation {
         if (methods.length === 0) {
-            throw new Error("Must have methods to chain");
+            throw GeneratorError.internalError("Must have methods to chain");
         }
 
         let current: go.AstNode = baseFunc;

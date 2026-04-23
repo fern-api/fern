@@ -27,7 +27,8 @@ import {
     resolveOAuthEndpointReferences
 } from "@fern-api/openapi-to-ir";
 import { OpenRPCConverter, OpenRPCConverterContext3_1 } from "@fern-api/openrpc-to-ir";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
+
 import { ErrorCollector } from "@fern-api/v3-importer-commons";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
@@ -150,6 +151,8 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             })(),
             exampleGeneration: specs[0]?.settings?.exampleGeneration,
             groupEnvironmentsByHost: specs.some((spec) => spec.settings?.groupEnvironmentsByHost),
+            multiServerStrategy: specs.find((spec) => spec.settings?.multiServerStrategy != null)?.settings
+                ?.multiServerStrategy,
             inferDefaultEnvironment: collapseSpecBooleanSetting(specs, (s) => s?.inferDefaultEnvironment),
             defaultIntegerFormat: specs[0]?.settings?.defaultIntegerFormat,
             pathParameterOrder: specs[0]?.settings?.pathParameterOrder,
@@ -484,7 +487,10 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         }
 
         if (mergedIr === undefined) {
-            throw new Error("Failed to generate intermediate representation");
+            throw new CliError({
+                message: "Failed to generate intermediate representation",
+                code: CliError.Code.IrConversionError
+            });
         }
 
         // Resolve OAuth endpoint references after all specs have been merged,
@@ -620,7 +626,10 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
     ): Promise<Spec[]> {
         // Handle conjure schema case
         if (!Array.isArray(specsOverride)) {
-            throw new Error("Conjure specs override is not yet supported");
+            throw new CliError({
+                message: "Conjure specs override is not yet supported",
+                code: CliError.Code.InternalError
+            });
         }
 
         const specs: Spec[] = [];
@@ -672,9 +681,10 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                 specs.push(openApiSpec);
             } else {
                 // For now, only support OpenAPI specs override to keep it simple
-                throw new Error(
-                    `Spec type override not yet supported. Only OpenAPI specs are currently supported in specs override.`
-                );
+                throw new CliError({
+                    message: `Spec type override not yet supported. Only OpenAPI specs are currently supported in specs override.`,
+                    code: CliError.Code.InternalError
+                });
             }
         }
 

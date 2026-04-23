@@ -1,4 +1,4 @@
-import { ReferenceConfigBuilder } from "@fern-api/base-generator";
+import { GeneratorError, ReferenceConfigBuilder } from "@fern-api/base-generator";
 import { php } from "@fern-api/php-codegen";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
@@ -321,7 +321,7 @@ function getServiceIdForEndpoint({
             return serviceId;
         }
     }
-    throw new Error(`Could not find service for endpoint ${endpoint.id}`);
+    throw GeneratorError.referenceError(`Could not find service for endpoint ${endpoint.id}`);
 }
 
 function getServiceForEndpoint({

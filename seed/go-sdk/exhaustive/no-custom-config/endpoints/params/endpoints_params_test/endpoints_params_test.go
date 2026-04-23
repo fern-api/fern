@@ -21,7 +21,7 @@ func VerifyRequestCount(
 	testId string,
 	method string,
 	urlPath string,
-	queryParams map[string]string,
+	queryParams map[string]any,
 	expected int,
 ) {
 	wiremockURL := os.Getenv("WIREMOCK_URL")
@@ -46,9 +46,23 @@ func VerifyRequestCount(
 			}
 			reqBody.WriteString(`"`)
 			reqBody.WriteString(key)
-			reqBody.WriteString(`":{"equalTo":"`)
-			reqBody.WriteString(value)
-			reqBody.WriteString(`"}`)
+			switch v := value.(type) {
+			case string:
+				reqBody.WriteString(`":{"equalTo":"`)
+				reqBody.WriteString(v)
+				reqBody.WriteString(`"}`)
+			case []string:
+				reqBody.WriteString(`":{"hasExactly":[`)
+				for i, item := range v {
+					if i > 0 {
+						reqBody.WriteString(",")
+					}
+					reqBody.WriteString(`{"equalTo":"`)
+					reqBody.WriteString(item)
+					reqBody.WriteString(`"}`)
+				}
+				reqBody.WriteString(`]}`)
+			}
 			first = false
 		}
 		reqBody.WriteString("}")
@@ -133,7 +147,7 @@ func TestEndpointsParamsGetWithQueryWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestEndpointsParamsGetWithQueryWithWireMock", "GET", "/params", map[string]string{"query": "query", "number": "1"}, 1)
+	VerifyRequestCount(t, "TestEndpointsParamsGetWithQueryWithWireMock", "GET", "/params", map[string]interface{}{"query": "query", "number": "1"}, 1)
 }
 
 func TestEndpointsParamsGetWithQueryWithWireMock2(
@@ -160,7 +174,7 @@ func TestEndpointsParamsGetWithQueryWithWireMock2(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestEndpointsParamsGetWithQueryWithWireMock2", "GET", "/params", map[string]string{"query": "query", "number": "1"}, 1)
+	VerifyRequestCount(t, "TestEndpointsParamsGetWithQueryWithWireMock2", "GET", "/params", map[string]interface{}{"query": "query", "number": "1"}, 1)
 }
 
 func TestEndpointsParamsGetWithPathAndQueryWithWireMock(
@@ -187,7 +201,7 @@ func TestEndpointsParamsGetWithPathAndQueryWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestEndpointsParamsGetWithPathAndQueryWithWireMock", "GET", "/params/path-query/param", map[string]string{"query": "query"}, 1)
+	VerifyRequestCount(t, "TestEndpointsParamsGetWithPathAndQueryWithWireMock", "GET", "/params/path-query/param", map[string]interface{}{"query": "query"}, 1)
 }
 
 func TestEndpointsParamsGetWithPathAndQueryWithWireMock2(
@@ -214,7 +228,7 @@ func TestEndpointsParamsGetWithPathAndQueryWithWireMock2(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestEndpointsParamsGetWithPathAndQueryWithWireMock2", "GET", "/params/path-query/param", map[string]string{"query": "query"}, 1)
+	VerifyRequestCount(t, "TestEndpointsParamsGetWithPathAndQueryWithWireMock2", "GET", "/params/path-query/param", map[string]interface{}{"query": "query"}, 1)
 }
 
 func TestEndpointsParamsModifyWithPathWithWireMock(

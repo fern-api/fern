@@ -1,4 +1,4 @@
-import { getWireValue } from "@fern-api/base-generator";
+import { GeneratorError, getWireValue } from "@fern-api/base-generator";
 import { ast, WithGeneration } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
 
@@ -43,7 +43,7 @@ export class MockEndpointGenerator extends WithGeneration {
                 let jsonExampleResponse: unknown | undefined = undefined;
                 if (example.response != null) {
                     if (example.response.type !== "ok" || example.response.value.type !== "body") {
-                        throw new Error("Unexpected error response type");
+                        throw GeneratorError.internalError("Unexpected error response type");
                     }
                     const responseValue = example.response.value.value;
                     jsonExampleResponse =

@@ -1,4 +1,4 @@
-import { getOriginalName, getWireValue } from "@fern-api/base-generator";
+import { GeneratorError, getOriginalName, getWireValue } from "@fern-api/base-generator";
 import { ruby } from "@fern-api/ruby-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
 
@@ -276,7 +276,7 @@ function toExplicitArray(s: string[]): string {
 
 function toRubySymbolArray(s: string[]): string {
     if (s.some((s) => s.includes(" "))) {
-        throw new Error("Symbol array cannot contain spaces");
+        throw GeneratorError.internalError("Symbol array cannot contain spaces");
     }
     return `%i[${s.join(" ")}]`;
 }
