@@ -260,8 +260,21 @@ export class TestClassBuilder {
         switch (scheme.type) {
             case "bearer":
                 return '.token("test-token")';
-            case "basic":
-                return '.credentials("testuser", "testpass")';
+            case "basic": {
+                const usernameOmitted = !!scheme.usernameOmit;
+                const passwordOmitted = !!scheme.passwordOmit;
+                if (usernameOmitted && passwordOmitted) {
+                    return undefined;
+                }
+                const credentialParts: string[] = [];
+                if (!usernameOmitted) {
+                    credentialParts.push('"test-username"');
+                }
+                if (!passwordOmitted) {
+                    credentialParts.push('"test-password"');
+                }
+                return `.credentials(${credentialParts.join(", ")})`;
+            }
             case "header": {
                 if (scheme.name != null) {
                     const methodName = this.context.caseConverter.camelUnsafe(scheme.name);
