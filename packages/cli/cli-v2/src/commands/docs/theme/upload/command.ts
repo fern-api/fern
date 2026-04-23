@@ -2,7 +2,6 @@ import type { FernToken } from "@fern-api/auth";
 import { createVenusService } from "@fern-api/core";
 import { CliError } from "@fern-api/task-context";
 
-import { execSync } from "child_process";
 import { createHash } from "crypto";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
@@ -18,24 +17,13 @@ const VENUS_ORIGIN = "http://localhost:8089";
 
 // ── CAS helpers ───────────────────────────────────────────────────────────────
 
-/** Returns the git repository root, or the CWD if git is unavailable. */
-function getGitRoot(): string {
-    try {
-        return execSync("git rev-parse --show-toplevel", { encoding: "utf-8" }).trim();
-    } catch {
-        return process.cwd();
-    }
-}
-
 /**
- * Performs a CAS check + optional S3 upload, then binds the hash to a file path
- * in the files table.  The `bindPath` is "{repoName}/{repo-relative-path}" (e.g.
- * "dynamo/fern/theme/assets/logo.png").
+ * Performs a CAS check + optional S3 upload, then binds the hash as the file
+ * path in the files table.  Returns the 64-char hex SHA-256 hash.
  */
 async function uploadToCas(
     content: Buffer,
     contentType: string,
-    bindPath: string,
     orgId: string,
     token: string,
     label: string
@@ -70,7 +58,7 @@ async function uploadToCas(
         }
     }
 
-    const bindRes = await fetch(`${FDR_ORIGIN}/v2/registry/files/${orgId}/${bindPath}`, {
+    const bindRes = await fetch(`${FDR_ORIGIN}/v2/registry/files/${orgId}/${hash}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
         body: JSON.stringify({ hash, contentType })
@@ -87,19 +75,8 @@ async function uploadToCas(
 
 async function uploadFileToCas(absolutePath: string, orgId: string, token: string): Promise<string> {
     const content = await readFile(absolutePath);
-    const hash = createHash("sha256").update(content).digest("hex");
     const contentType = (mime.lookup(absolutePath) || "application/octet-stream") as string;
-    const gitRoot = getGitRoot();
-    const repoName = path.basename(gitRoot);
-    const bindPath = path.join(repoName, path.relative(gitRoot, absolutePath));
-
-    const casUrl = `${FDR_ORIGIN}/v2/registry/content/${hash}?orgId=${encodeURIComponent(orgId)}`;
-    process.stderr.write(`[debug] CAS check PUT ${casUrl}\n`);
-    process.stderr.write(`[debug] token prefix: ${token.slice(0, 20)}...\n`);
-    process.stderr.write(`[debug] body: ${JSON.stringify({ contentType, contentLength: content.byteLength })}\n`);
-    process.stderr.write(`[debug] bindPath: ${bindPath}\n`);
-
-    return uploadToCas(content, contentType, bindPath, orgId, token, path.basename(absolutePath));
+    return uploadToCas(content, contentType, orgId, token, path.basename(absolutePath));
 }
 
 // ── Theme config walking ──────────────────────────────────────────────────────
@@ -258,14 +235,9 @@ export class UploadThemeCommand {
             context
         );
 
-        // Upload processed config JSON to CAS and bind it to the files table so
-        // it can be looked up by its hash.
         const configBuffer = Buffer.from(JSON.stringify(processedConfig));
-        const gitRoot = getGitRoot();
-        const repoName = path.basename(gitRoot);
-        const configBindPath = path.join(repoName, path.relative(gitRoot, themeDir), "theme.json");
         context.stdout.debug(`  Uploading processed config...`);
-        await uploadToCas(configBuffer, "application/json", configBindPath, orgId, token.value, "theme config");
+        await uploadToCas(configBuffer, "application/json", orgId, token.value, "theme config");
 
         const themeUrl = `${FDR_ORIGIN}/v2/registry/themes/${orgId}`;
         context.stderr.info(`[debug] POST ${themeUrl}`);
