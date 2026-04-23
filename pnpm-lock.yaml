@@ -553,8 +553,8 @@ catalogs:
       specifier: ^5.0.0
       version: 5.1.0
     uuid:
-      specifier: ^9.0.1
-      version: 9.0.1
+      specifier: ^14.0.0
+      version: 14.0.0
     validate-npm-package-name:
       specifier: ^5.0.1
       version: 5.0.1
@@ -4925,7 +4925,7 @@ importers:
         version: 5.9.3
       uuid:
         specifier: 'catalog:'
-        version: 9.0.1
+        version: 14.0.0
       vitest:
         specifier: 'catalog:'
         version: 4.1.4(@opentelemetry/api@1.9.1)(@types/node@22.19.17)(@vitest/coverage-v8@4.1.4)(vite@7.3.2(@types/node@22.19.17)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
@@ -5363,7 +5363,7 @@ importers:
         version: 3.0.3
       uuid:
         specifier: 'catalog:'
-        version: 9.0.1
+        version: 14.0.0
       watcher:
         specifier: 'catalog:'
         version: 2.3.1
@@ -5823,7 +5823,7 @@ importers:
         version: 4.0.1
       uuid:
         specifier: 'catalog:'
-        version: 9.0.1
+        version: 14.0.0
       vitest:
         specifier: 'catalog:'
         version: 4.1.4(@opentelemetry/api@1.9.1)(@types/node@22.19.17)(@vitest/coverage-v8@4.1.4)(vite@7.3.2(@types/node@22.19.17)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
@@ -6599,7 +6599,7 @@ importers:
         version: 5.29.1(rxjs@7.8.2)
       uuid:
         specifier: 'catalog:'
-        version: 9.0.1
+        version: 14.0.0
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
@@ -7038,7 +7038,7 @@ importers:
         version: 3.0.3
       uuid:
         specifier: 'catalog:'
-        version: 9.0.1
+        version: 14.0.0
       zod:
         specifier: 'catalog:'
         version: 3.25.76
@@ -14914,6 +14914,10 @@ packages:
   utils-merge@1.0.1:
     resolution: {integrity: sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA==}
     engines: {node: '>= 0.4.0'}
+
+  uuid@14.0.0:
+    resolution: {integrity: sha512-Qo+uWgilfSmAhXCMav1uYFynlQO7fMFiMVZsQqZRMIXp0O7rR7qjkj+cPvBHLgBqi960QCoo/PH2/6ZtVqKvrg==}
+    hasBin: true
 
   uuid@9.0.1:
     resolution: {integrity: sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==}
@@ -22842,6 +22846,8 @@ snapshots:
   util-deprecate@1.0.2: {}
 
   utils-merge@1.0.1: {}
+
+  uuid@14.0.0: {}
 
   uuid@9.0.1: {}
 
