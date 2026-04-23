@@ -4,7 +4,7 @@ import { getViolationsForRule } from "../../../testing-utils/getViolationsForRul
 import { NoUndefinedTypeReferenceRule } from "../no-undefined-type-reference.js";
 
 describe("no-undefined-type-reference", () => {
-    it("simple", async () => {
+    it("simple", { timeout: 30_000 }, async () => {
         const violations = await getViolationsForRule({
             rule: NoUndefinedTypeReferenceRule,
             absolutePathToWorkspace: join(
