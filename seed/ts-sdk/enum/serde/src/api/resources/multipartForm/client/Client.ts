@@ -82,7 +82,7 @@ export class MultipartFormClient {
             ),
             method: "POST",
             headers: _headers,
-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            queryString: core.url.toQueryString(requestOptions?.queryParams),
             requestType: "file",
             duplex: _maybeEncodedRequest.duplex,
             body: _maybeEncodedRequest.body,

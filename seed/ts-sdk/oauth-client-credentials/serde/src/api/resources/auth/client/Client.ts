@@ -54,7 +54,7 @@ export class AuthClient {
             method: "POST",
             headers: _headers,
             contentType: "application/x-www-form-urlencoded",
-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            queryString: core.url.toQueryString(requestOptions?.queryParams),
             requestType: "form",
             body: {
                 ...serializers.GetTokenRequest.jsonOrThrow(request, {
@@ -127,7 +127,7 @@ export class AuthClient {
             method: "POST",
             headers: _headers,
             contentType: "application/x-www-form-urlencoded",
-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            queryString: core.url.toQueryString(requestOptions?.queryParams),
             requestType: "form",
             body: {
                 ...serializers.RefreshTokenRequest.jsonOrThrow(request, {

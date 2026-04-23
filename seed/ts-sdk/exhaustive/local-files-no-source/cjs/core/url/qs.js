@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.toQueryString = toQueryString;
 const defaultQsOptions = {
-    arrayFormat: "indices",
+    arrayFormat: "repeat",
     encode: true,
 };
 function encodeValue(value, shouldEncode) {

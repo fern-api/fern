@@ -53,7 +53,7 @@ export class InlinedRequestClient {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            queryString: core.url.toQueryString(requestOptions?.queryParams),
             requestType: "json",
             body: serializers.SendEnumInlinedRequest.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",

@@ -53,7 +53,7 @@ export class OrganizationClient {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            queryString: core.url.toQueryString(requestOptions?.queryParams),
             requestType: "json",
             body: request,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,

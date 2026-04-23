@@ -6,7 +6,7 @@ interface QueryStringOptions {
 }
 
 const defaultQsOptions: Required<QueryStringOptions> = {
-    arrayFormat: "indices",
+    arrayFormat: "repeat",
     encode: true,
 } as const;
 

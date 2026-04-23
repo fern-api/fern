@@ -1,5 +1,5 @@
 const defaultQsOptions = {
-    arrayFormat: "indices",
+    arrayFormat: "repeat",
     encode: true,
 };
 function encodeValue(value, shouldEncode) {

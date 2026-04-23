@@ -133,7 +133,7 @@ export class ProblemClient {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            queryString: core.url.toQueryString(requestOptions?.queryParams),
             requestType: "json",
             body: request,
             timeoutMs:
@@ -286,7 +286,7 @@ export class ProblemClient {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            queryString: core.url.toQueryString(requestOptions?.queryParams),
             requestType: "json",
             body: request,
             timeoutMs:
@@ -359,7 +359,7 @@ export class ProblemClient {
             ),
             method: "DELETE",
             headers: _headers,
-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            queryString: core.url.toQueryString(requestOptions?.queryParams),
             timeoutMs:
                 requestOptions?.timeoutInSeconds != null
                     ? requestOptions.timeoutInSeconds * 1000
@@ -453,7 +453,7 @@ export class ProblemClient {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            queryString: core.url.toQueryString(requestOptions?.queryParams),
             requestType: "json",
             body: request,
             timeoutMs:

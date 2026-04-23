@@ -74,11 +74,7 @@ export class PlaylistClient {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            queryString: core.url
-                .queryBuilder()
-                .addMany(_queryParams)
-                .mergeAdditional(requestOptions?.queryParams)
-                .build(),
+            queryString: core.url.toQueryString({ ..._queryParams, ...requestOptions?.queryParams }),
             requestType: "json",
             body: _body,
             timeoutMs:
@@ -170,11 +166,7 @@ export class PlaylistClient {
             ),
             method: "GET",
             headers: _headers,
-            queryString: core.url
-                .queryBuilder()
-                .addMany(_queryParams)
-                .mergeAdditional(requestOptions?.queryParams)
-                .build(),
+            queryString: core.url.toQueryString({ ..._queryParams, ...requestOptions?.queryParams }),
             timeoutMs:
                 requestOptions?.timeoutInSeconds != null
                     ? requestOptions.timeoutInSeconds * 1000
@@ -248,7 +240,7 @@ export class PlaylistClient {
             ),
             method: "GET",
             headers: _headers,
-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            queryString: core.url.toQueryString(requestOptions?.queryParams),
             timeoutMs:
                 requestOptions?.timeoutInSeconds != null
                     ? requestOptions.timeoutInSeconds * 1000
@@ -352,7 +344,7 @@ export class PlaylistClient {
             method: "PUT",
             headers: _headers,
             contentType: "application/json",
-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            queryString: core.url.toQueryString(requestOptions?.queryParams),
             requestType: "json",
             body: request,
             timeoutMs:
@@ -444,7 +436,7 @@ export class PlaylistClient {
             ),
             method: "DELETE",
             headers: _headers,
-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            queryString: core.url.toQueryString(requestOptions?.queryParams),
             timeoutMs:
                 requestOptions?.timeoutInSeconds != null
                     ? requestOptions.timeoutInSeconds * 1000

@@ -208,6 +208,17 @@ function createEndpointRequestMockContext(opts?: { shouldInlinePathParams?: bool
                             undefined,
                             []
                         )
+                },
+                toQueryString: {
+                    _invoke: (args: ts.Expression[]) =>
+                        ts.factory.createCallExpression(
+                            ts.factory.createPropertyAccessExpression(
+                                ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier("core"), "url"),
+                                "toQueryString"
+                            ),
+                            undefined,
+                            args
+                        )
                 }
             },
             auth: {

@@ -134,7 +134,7 @@ export class ProblemClient {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            queryString: core.url.toQueryString(requestOptions?.queryParams),
             requestType: "json",
             body: serializers.CreateProblemRequest.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
@@ -290,7 +290,7 @@ export class ProblemClient {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            queryString: core.url.toQueryString(requestOptions?.queryParams),
             requestType: "json",
             body: serializers.CreateProblemRequest.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
@@ -366,7 +366,7 @@ export class ProblemClient {
             ),
             method: "DELETE",
             headers: _headers,
-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            queryString: core.url.toQueryString(requestOptions?.queryParams),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -454,7 +454,7 @@ export class ProblemClient {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            queryString: core.url.toQueryString(requestOptions?.queryParams),
             requestType: "json",
             body: serializers.GetDefaultStarterFilesRequest.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
