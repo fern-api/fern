@@ -778,20 +778,20 @@ export class DynamicSnippetsConverter {
         switch (scheme.type) {
             case "bearer":
                 return DynamicSnippets.AuthValues.bearer({
-                    token: scheme.tokenPlaceholder ?? scheme.tokenEnvVar ?? "<token>"
+                    token: scheme.tokenPlaceholder ?? "<token>"
                 });
             case "basic":
                 return DynamicSnippets.AuthValues.basic({
                     username: scheme.usernameOmit
                         ? ""
-                        : (scheme.usernamePlaceholder ?? scheme.usernameEnvVar ?? "<username>"),
+                        : (scheme.usernamePlaceholder ?? "<username>"),
                     password: scheme.passwordOmit
                         ? ""
-                        : (scheme.passwordPlaceholder ?? scheme.passwordEnvVar ?? "<password>")
+                        : (scheme.passwordPlaceholder ?? "<password>")
                 });
             case "header":
                 return DynamicSnippets.AuthValues.header({
-                    value: scheme.headerPlaceholder ?? scheme.headerEnvVar ?? "<value>"
+                    value: scheme.headerPlaceholder ?? "<value>"
                 });
             case "oauth":
                 return DynamicSnippets.AuthValues.oauth({
