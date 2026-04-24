@@ -162,7 +162,7 @@ export class TypeLiteral extends AstNode {
                 break;
             }
             case "int": {
-                writer.write(formatRubyInteger(this.internalType.value));
+                writer.write(this.internalType.value.toString());
                 break;
             }
             case "float": {
@@ -285,16 +285,6 @@ export class TypeLiteral extends AstNode {
                 assertNever(this.internalType);
         }
     }
-}
-
-function formatRubyInteger(value: number): string {
-    const str = Math.abs(value).toString();
-    if (str.length <= 4) {
-        return value.toString();
-    }
-    const sign = value < 0 ? "-" : "";
-    const formatted = str.replace(/\B(?=(\d{3})+(?!\d))/g, "_");
-    return `${sign}${formatted}`;
 }
 
 /**

@@ -121,6 +121,17 @@ Layout/FirstArgumentIndentation:
 # requires a ruby-v2 major-version bump with a generator migration.
 Naming/ClassAndModuleCamelCase:
   Enabled: false
+
+# Integer literals are emitted unformatted (e.g. 1000000, not 1_000_000).
+# Rubocop has an autocorrecter for this cop, but the only caller of integer
+# emission is the dynamic-snippets path, which feeds customer-facing surfaces:
+# (1) snippet markdown in reference docs, (2) dynamic-snippets/*.rb sample
+# files. Neither is rubocop-gated (markdown isn't Ruby, dynamic-snippets/**/*
+# is excluded above), so formatting integers there would change docs/dashboard
+# output without any rubocop benefit. Disabling the cop keeps integers raw
+# everywhere and avoids customer-visible diffs.
+Style/NumericLiterals:
+  Enabled: false
 `;
     }
 }

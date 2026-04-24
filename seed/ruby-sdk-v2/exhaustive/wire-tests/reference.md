@@ -417,7 +417,7 @@ client.endpoints.container.get_and_return_optional(request: {
 client.endpoints.content_type.post_json_patch_content_type(
   string: "string",
   integer: 1,
-  long: 1_000_000,
+  long: 1000000,
   double: 1.1,
   bool: true,
   datetime: "2024-01-15T09:30:00Z",
@@ -481,7 +481,7 @@ client.endpoints.content_type.post_json_patch_content_type(
 client.endpoints.content_type.post_json_patch_content_with_charset_type(
   string: "string",
   integer: 1,
-  long: 1_000_000,
+  long: 1000000,
   double: 1.1,
   bool: true,
   datetime: "2024-01-15T09:30:00Z",
@@ -751,7 +751,7 @@ client.endpoints.http_methods.test_patch(
   id: "id",
   string: "string",
   integer: 1,
-  long: 1_000_000,
+  long: 1000000,
   double: 1.1,
   bool: true,
   datetime: "2024-01-15T09:30:00Z",
@@ -872,7 +872,7 @@ client.endpoints.http_methods.test_delete(id: "id")
 client.endpoints.object.get_and_return_with_optional_field(
   string: "string",
   integer: 1,
-  long: 1_000_000,
+  long: 1000000,
   double: 1.1,
   bool: true,
   datetime: "2024-01-15T09:30:00Z",
@@ -1038,7 +1038,7 @@ client.endpoints.object.get_and_return_nested_with_optional_field(
   nested_object: {
     string: "string",
     integer: 1,
-    long: 1_000_000,
+    long: 1000000,
     double: 1.1,
     bool: true,
     datetime: "2024-01-15T09:30:00Z",
@@ -1105,7 +1105,7 @@ client.endpoints.object.get_and_return_nested_with_required_field(
   nested_object: {
     string: "string",
     integer: 1,
-    long: 1_000_000,
+    long: 1000000,
     double: 1.1,
     bool: true,
     datetime: "2024-01-15T09:30:00Z",
@@ -1180,7 +1180,7 @@ client.endpoints.object.get_and_return_nested_with_required_field_as_list(reques
   nested_object: {
     string: "string",
     integer: 1,
-    long: 1_000_000,
+    long: 1000000,
     double: 1.1,
     bool: true,
     datetime: "2024-01-15T09:30:00Z",
@@ -1199,7 +1199,7 @@ client.endpoints.object.get_and_return_nested_with_required_field_as_list(reques
   nested_object: {
     string: "string",
     integer: 1,
-    long: 1_000_000,
+    long: 1000000,
     double: 1.1,
     bool: true,
     datetime: "2024-01-15T09:30:00Z",
@@ -2531,7 +2531,7 @@ client.endpoints.primitive.get_and_return_int(request: 1)
 <dd>
 
 ```ruby
-client.endpoints.primitive.get_and_return_long(request: 1_000_000)
+client.endpoints.primitive.get_and_return_long(request: 1000000)
 ```
 </dd>
 </dl>
@@ -3147,7 +3147,7 @@ client.inlined_requests.post_with_object_bodyand_response(
   nested_object: {
     string: "string",
     integer: 1,
-    long: 1_000_000,
+    long: 1000000,
     double: 1.1,
     bool: true,
     datetime: "2024-01-15T09:30:00Z",

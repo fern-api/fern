@@ -398,7 +398,7 @@ client.service.create_movie(
   type: "movie",
   tag: "tag-wf9as23d",
   metadata: {},
-  revenue: 1_000_000
+  revenue: 1000000
 )
 ```
 </dd>
@@ -530,7 +530,7 @@ client.service.create_big_entity(
     tag: "tag",
     book: "book",
     metadata: {},
-    revenue: 1_000_000
+    revenue: 1000000
   },
   entity: {
     type: "primitive",
