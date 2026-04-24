@@ -273,6 +273,53 @@ client.Union.NestedUnions(
 </dl>
 </details>
 
+<details><summary><code>client.Union.NestedObjectUnions(request) -> string</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &fern.OuterNestedUnion{
+        String: "string",
+    }
+client.Union.NestedObjectUnions(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `*fern.OuterNestedUnion` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.Union.TestCamelCaseProperties(request) -> string</code></summary>
 <dl>
 <dd>

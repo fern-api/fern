@@ -68,6 +68,17 @@
         },
         {
             "id": {
+                "path": "/nested-objects",
+                "method": "POST",
+                "identifier_override": "endpoint_union.nestedObjectUnions"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tundiscriminatedgo \"github.com/fern-api/undiscriminated-go\"\n\tundiscriminatedgoclient \"github.com/fern-api/undiscriminated-go/client\"\n)\n\nclient := undiscriminatedgoclient.NewClient()\nresponse, err := client.Union.NestedObjectUnions(\n\tcontext.TODO(),\n\t\u0026undiscriminatedgo.OuterNestedUnion{\n\t\tString: \"string\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/nested",
                 "method": "POST",
                 "identifier_override": "endpoint_union.nestedUnions"

@@ -245,6 +245,48 @@ $client->union->nestedUnions(
 </dl>
 </details>
 
+<details><summary><code>$client-&gt;union-&gt;nestedObjectUnions($request) -> ?string</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->union->nestedObjectUnions(
+    'string',
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$request:** `string|WrapperObject` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>$client-&gt;union-&gt;testCamelCaseProperties($request) -> ?string</code></summary>
 <dl>
 <dd>

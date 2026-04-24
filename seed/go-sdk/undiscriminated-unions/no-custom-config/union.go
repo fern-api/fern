@@ -239,6 +239,190 @@ func (k KeyType) Ptr() *KeyType {
 	return &k
 }
 
+var (
+	leafTypeAFieldAlpha = big.NewInt(1 << 0)
+	leafTypeAFieldBeta  = big.NewInt(1 << 1)
+)
+
+type LeafTypeA struct {
+	Alpha string `json:"alpha" url:"alpha"`
+	Beta  int    `json:"beta" url:"beta"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *LeafTypeA) GetAlpha() string {
+	if l == nil {
+		return ""
+	}
+	return l.Alpha
+}
+
+func (l *LeafTypeA) GetBeta() int {
+	if l == nil {
+		return 0
+	}
+	return l.Beta
+}
+
+func (l *LeafTypeA) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *LeafTypeA) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetAlpha sets the Alpha field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LeafTypeA) SetAlpha(alpha string) {
+	l.Alpha = alpha
+	l.require(leafTypeAFieldAlpha)
+}
+
+// SetBeta sets the Beta field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LeafTypeA) SetBeta(beta int) {
+	l.Beta = beta
+	l.require(leafTypeAFieldBeta)
+}
+
+func (l *LeafTypeA) UnmarshalJSON(data []byte) error {
+	type unmarshaler LeafTypeA
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = LeafTypeA(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *LeafTypeA) MarshalJSON() ([]byte, error) {
+	type embed LeafTypeA
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *LeafTypeA) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+var (
+	leafTypeBFieldGamma = big.NewInt(1 << 0)
+)
+
+type LeafTypeB struct {
+	Gamma string `json:"gamma" url:"gamma"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *LeafTypeB) GetGamma() string {
+	if l == nil {
+		return ""
+	}
+	return l.Gamma
+}
+
+func (l *LeafTypeB) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *LeafTypeB) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetGamma sets the Gamma field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LeafTypeB) SetGamma(gamma string) {
+	l.Gamma = gamma
+	l.require(leafTypeBFieldGamma)
+}
+
+func (l *LeafTypeB) UnmarshalJSON(data []byte) error {
+	type unmarshaler LeafTypeB
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = LeafTypeB(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *LeafTypeB) MarshalJSON() ([]byte, error) {
+	type embed LeafTypeB
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *LeafTypeB) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
 // Undiscriminated unions can act as a map key
 // as long as all of their values are valid keys
 // (i.e. do they have a valid string representation).
@@ -556,6 +740,70 @@ func (n *NamedMetadata) String() string {
 	return fmt.Sprintf("%#v", n)
 }
 
+// Inner union with two object variants that have disjoint required keys.
+// Tests that required-key guards work correctly inside nested union contexts.
+type NestedObjectUnion struct {
+	LeafTypeA *LeafTypeA
+	LeafTypeB *LeafTypeB
+
+	typ string
+}
+
+func (n *NestedObjectUnion) GetLeafTypeA() *LeafTypeA {
+	if n == nil {
+		return nil
+	}
+	return n.LeafTypeA
+}
+
+func (n *NestedObjectUnion) GetLeafTypeB() *LeafTypeB {
+	if n == nil {
+		return nil
+	}
+	return n.LeafTypeB
+}
+
+func (n *NestedObjectUnion) UnmarshalJSON(data []byte) error {
+	valueLeafTypeA := new(LeafTypeA)
+	if err := json.Unmarshal(data, &valueLeafTypeA); err == nil {
+		n.typ = "LeafTypeA"
+		n.LeafTypeA = valueLeafTypeA
+		return nil
+	}
+	valueLeafTypeB := new(LeafTypeB)
+	if err := json.Unmarshal(data, &valueLeafTypeB); err == nil {
+		n.typ = "LeafTypeB"
+		n.LeafTypeB = valueLeafTypeB
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, n)
+}
+
+func (n NestedObjectUnion) MarshalJSON() ([]byte, error) {
+	if n.typ == "LeafTypeA" || n.LeafTypeA != nil {
+		return json.Marshal(n.LeafTypeA)
+	}
+	if n.typ == "LeafTypeB" || n.LeafTypeB != nil {
+		return json.Marshal(n.LeafTypeB)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", n)
+}
+
+type NestedObjectUnionVisitor interface {
+	VisitLeafTypeA(*LeafTypeA) error
+	VisitLeafTypeB(*LeafTypeB) error
+}
+
+func (n *NestedObjectUnion) Accept(visitor NestedObjectUnionVisitor) error {
+	if n.typ == "LeafTypeA" || n.LeafTypeA != nil {
+		return visitor.VisitLeafTypeA(n.LeafTypeA)
+	}
+	if n.typ == "LeafTypeB" || n.LeafTypeB != nil {
+		return visitor.VisitLeafTypeB(n.LeafTypeB)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", n)
+}
+
 // Nested layer 1.
 type NestedUnionL1 struct {
 	Integer       int
@@ -830,6 +1078,70 @@ func (n *NestedUnionRoot) Accept(visitor NestedUnionRootVisitor) error {
 }
 
 type OptionalMetadata = map[string]any
+
+// Outer union where one variant is an object containing a nested union field.
+// Tests that the deserializer correctly handles transitive union deserialization.
+type OuterNestedUnion struct {
+	String        string
+	WrapperObject *WrapperObject
+
+	typ string
+}
+
+func (o *OuterNestedUnion) GetString() string {
+	if o == nil {
+		return ""
+	}
+	return o.String
+}
+
+func (o *OuterNestedUnion) GetWrapperObject() *WrapperObject {
+	if o == nil {
+		return nil
+	}
+	return o.WrapperObject
+}
+
+func (o *OuterNestedUnion) UnmarshalJSON(data []byte) error {
+	var valueString string
+	if err := json.Unmarshal(data, &valueString); err == nil {
+		o.typ = "String"
+		o.String = valueString
+		return nil
+	}
+	valueWrapperObject := new(WrapperObject)
+	if err := json.Unmarshal(data, &valueWrapperObject); err == nil {
+		o.typ = "WrapperObject"
+		o.WrapperObject = valueWrapperObject
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, o)
+}
+
+func (o OuterNestedUnion) MarshalJSON() ([]byte, error) {
+	if o.typ == "String" || o.String != "" {
+		return json.Marshal(o.String)
+	}
+	if o.typ == "WrapperObject" || o.WrapperObject != nil {
+		return json.Marshal(o.WrapperObject)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", o)
+}
+
+type OuterNestedUnionVisitor interface {
+	VisitString(string) error
+	VisitWrapperObject(*WrapperObject) error
+}
+
+func (o *OuterNestedUnion) Accept(visitor OuterNestedUnionVisitor) error {
+	if o.typ == "String" || o.String != "" {
+		return visitor.VisitString(o.String)
+	}
+	if o.typ == "WrapperObject" || o.WrapperObject != nil {
+		return visitor.VisitWrapperObject(o.WrapperObject)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", o)
+}
 
 // Tests that nested properties with camelCase wire names are properly
 // converted from snake_case Ruby keys when passed as Hash values.
@@ -1572,3 +1884,103 @@ func (u *UnionWithTypeAliases) Accept(visitor UnionWithTypeAliasesVisitor) error
 
 // A user identifier (alias for string)
 type UserID = string
+
+var (
+	wrapperObjectFieldInner = big.NewInt(1 << 0)
+	wrapperObjectFieldLabel = big.NewInt(1 << 1)
+)
+
+type WrapperObject struct {
+	Inner *NestedObjectUnion `json:"inner" url:"inner"`
+	Label string             `json:"label" url:"label"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (w *WrapperObject) GetInner() *NestedObjectUnion {
+	if w == nil {
+		return nil
+	}
+	return w.Inner
+}
+
+func (w *WrapperObject) GetLabel() string {
+	if w == nil {
+		return ""
+	}
+	return w.Label
+}
+
+func (w *WrapperObject) GetExtraProperties() map[string]interface{} {
+	if w == nil {
+		return nil
+	}
+	return w.extraProperties
+}
+
+func (w *WrapperObject) require(field *big.Int) {
+	if w.explicitFields == nil {
+		w.explicitFields = big.NewInt(0)
+	}
+	w.explicitFields.Or(w.explicitFields, field)
+}
+
+// SetInner sets the Inner field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (w *WrapperObject) SetInner(inner *NestedObjectUnion) {
+	w.Inner = inner
+	w.require(wrapperObjectFieldInner)
+}
+
+// SetLabel sets the Label field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (w *WrapperObject) SetLabel(label string) {
+	w.Label = label
+	w.require(wrapperObjectFieldLabel)
+}
+
+func (w *WrapperObject) UnmarshalJSON(data []byte) error {
+	type unmarshaler WrapperObject
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*w = WrapperObject(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *w)
+	if err != nil {
+		return err
+	}
+	w.extraProperties = extraProperties
+	w.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (w *WrapperObject) MarshalJSON() ([]byte, error) {
+	type embed WrapperObject
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*w),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, w.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (w *WrapperObject) String() string {
+	if w == nil {
+		return "<nil>"
+	}
+	if len(w.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(w.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(w); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", w)
+}

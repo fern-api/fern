@@ -127,6 +127,22 @@ func (c *Client) NestedUnions(
 	return response.Body, nil
 }
 
+func (c *Client) NestedObjectUnions(
+	ctx context.Context,
+	request *undiscriminated.OuterNestedUnion,
+	opts ...option.RequestOption,
+) (string, error) {
+	response, err := c.WithRawResponse.NestedObjectUnions(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return "", err
+	}
+	return response.Body, nil
+}
+
 func (c *Client) TestCamelCaseProperties(
 	ctx context.Context,
 	request *undiscriminated.PaymentRequest,
