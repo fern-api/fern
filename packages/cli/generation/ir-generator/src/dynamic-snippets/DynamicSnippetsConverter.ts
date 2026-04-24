@@ -782,12 +782,8 @@ export class DynamicSnippetsConverter {
                 });
             case "basic":
                 return DynamicSnippets.AuthValues.basic({
-                    username: scheme.usernameOmit
-                        ? ""
-                        : (scheme.usernamePlaceholder ?? "<username>"),
-                    password: scheme.passwordOmit
-                        ? ""
-                        : (scheme.passwordPlaceholder ?? "<password>")
+                    username: scheme.usernameOmit ? "" : (scheme.usernamePlaceholder ?? "<username>"),
+                    password: scheme.passwordOmit ? "" : (scheme.passwordPlaceholder ?? "<password>")
                 });
             case "header":
                 return DynamicSnippets.AuthValues.header({
