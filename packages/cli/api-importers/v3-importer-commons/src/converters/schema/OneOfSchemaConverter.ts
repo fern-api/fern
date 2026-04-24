@@ -406,7 +406,8 @@ export class OneOfSchemaConverter extends AbstractConverter<
                 continue;
             }
 
-            const extendedSubSchema = this.extendSubSchema(subSchema);
+            const hasSiblingProperties = Object.keys(this.schema.properties ?? {}).length > 0;
+            const extendedSubSchema = hasSiblingProperties ? undefined : this.extendSubSchema(subSchema);
 
             const schemaId = this.context.convertBreadcrumbsToName([`${this.id}_${index}`]);
             const displayName = subSchema.title;
