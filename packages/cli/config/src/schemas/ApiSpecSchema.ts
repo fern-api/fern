@@ -2,6 +2,7 @@ import { z } from "zod";
 import { AsyncApiSpecSchema } from "./specs/AsyncApiSpecSchema.js";
 import { ConjureSpecSchema } from "./specs/ConjureSpecSchema.js";
 import { FernSpecSchema } from "./specs/FernSpecSchema.js";
+import { GraphQlSpecSchema } from "./specs/GraphQlSpecSchema.js";
 import { OpenApiSpecSchema } from "./specs/OpenApiSpecSchema.js";
 import { OpenRpcSpecSchema } from "./specs/OpenRpcSpecSchema.js";
 import { ProtobufSpecSchema } from "./specs/ProtobufSpecSchema.js";
@@ -16,7 +17,8 @@ export const ApiSpecSchema = z.union([
     ProtobufSpecSchema,
     FernSpecSchema,
     ConjureSpecSchema,
-    OpenRpcSpecSchema
+    OpenRpcSpecSchema,
+    GraphQlSpecSchema
 ]);
 
 export type ApiSpecSchema = z.infer<typeof ApiSpecSchema>;

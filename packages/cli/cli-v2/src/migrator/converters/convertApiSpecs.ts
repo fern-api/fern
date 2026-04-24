@@ -181,6 +181,13 @@ function adjustSpecPaths(specs: schemas.ApiSpecSchema[], apiName: string): schem
                 overrides: spec.overrides != null ? adjustPathOrPaths(spec.overrides, apiName) : undefined
             };
         }
+        if ("graphql" in spec) {
+            return {
+                ...spec,
+                graphql: adjustPath(spec.graphql, apiName),
+                overrides: spec.overrides != null ? adjustPathOrPaths(spec.overrides, apiName) : undefined
+            };
+        }
         if ("proto" in spec) {
             return {
                 ...spec,
@@ -363,6 +370,25 @@ function convertSpec(spec: generatorsYml.SpecSchema, warnings: MigratorWarning[]
 
         return result;
     }
+    if ("graphql" in spec) {
+        const graphqlSpec = spec as generatorsYml.GraphQlSpecSchema;
+
+        const result: schemas.GraphQlSpecSchema = {
+            graphql: graphqlSpec.graphql
+        };
+
+        if (graphqlSpec.origin != null) {
+            result.origin = graphqlSpec.origin;
+        }
+        if (graphqlSpec.overrides != null) {
+            result.overrides = graphqlSpec.overrides;
+        }
+        if (graphqlSpec.name != null) {
+            result.name = graphqlSpec.name;
+        }
+
+        return result;
+    }
 
     warnings.push({
         type: "unsupported",
@@ -385,6 +411,8 @@ function convertNamespacedSpecs(
                 specs.push({ ...spec, namespace });
             } else if ("asyncapi" in spec) {
                 specs.push({ ...spec, namespace });
+            } else if ("graphql" in spec) {
+                specs.push({ ...spec, name: spec.name ?? namespace });
             } else if ("fern" in spec) {
                 // Fern specs don't have namespace in the schema, add warning.
                 warnings.push({

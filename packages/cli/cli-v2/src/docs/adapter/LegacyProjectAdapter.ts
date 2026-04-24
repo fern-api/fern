@@ -1,6 +1,8 @@
 import { AbstractAPIWorkspace } from "@fern-api/api-workspace-commons";
+import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import type { Project } from "@fern-api/project-loader";
 import { LegacyOSSWorkspaceAdapter } from "../../api/adapter/LegacyOSSWorkspaceAdapter.js";
+import { TaskContextAdapter } from "../../context/adapter/TaskContextAdapter.js";
 import type { Context } from "../../context/Context.js";
 import type { Workspace } from "../../workspace/Workspace.js";
 import { LegacyDocsWorkspaceAdapter } from "./LegacyDocsWorkspaceAdapter.js";
@@ -18,8 +20,8 @@ export class LegacyProjectAdapter {
         this.ossAdapter = new LegacyOSSWorkspaceAdapter({ context });
     }
 
-    public adapt(workspace: Workspace): Project {
-        const apiWorkspaces = this.buildApiWorkspaces(workspace);
+    public async adapt(workspace: Workspace): Promise<Project> {
+        const apiWorkspaces = await this.buildApiWorkspaces(workspace);
         const docsWorkspace =
             workspace.docs != null
                 ? this.docsAdapter.adapt({
@@ -52,8 +54,9 @@ export class LegacyProjectAdapter {
     /**
      * Bridges API definitions to legacy AbstractAPIWorkspace instances.
      */
-    private buildApiWorkspaces(workspace: Workspace): AbstractAPIWorkspace<unknown>[] {
+    private async buildApiWorkspaces(workspace: Workspace): Promise<AbstractAPIWorkspace<unknown>[]> {
         const workspaces: AbstractAPIWorkspace<unknown>[] = [];
+        const taskContext = new TaskContextAdapter({ context: this.context });
         for (const [apiName, apiDef] of Object.entries(workspace.apis)) {
             const ossWorkspace = this.ossAdapter.build({
                 definition: apiDef,
@@ -62,6 +65,10 @@ export class LegacyProjectAdapter {
                 absoluteFilePath: this.context.cwd
             });
             if (ossWorkspace != null) {
+                if (ossWorkspace instanceof OSSWorkspace) {
+                    // Resolve GraphQL specs into operations/types so docs can render them.
+                    await ossWorkspace.processGraphQLSpecs(taskContext);
+                }
                 workspaces.push(ossWorkspace);
             }
         }

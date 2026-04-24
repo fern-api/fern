@@ -133,7 +133,7 @@ export class ApiDefinitionValidator {
         const v1Specs = specAdapter.convertAll(ossSpecs);
 
         const filteredSpecs = v1Specs.filter((spec): spec is OpenAPISpec | ProtobufSpec => {
-            if (spec.type === "openrpc") {
+            if (spec.type === "openrpc" || spec.type === "graphql") {
                 return false;
             }
             if (spec.type === "protobuf" && !spec.fromOpenAPI) {

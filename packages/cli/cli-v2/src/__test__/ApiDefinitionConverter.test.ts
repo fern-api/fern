@@ -8,6 +8,7 @@ import { isAsyncApiSpec } from "../api/config/AsyncApiSpec.js";
 import { isConjureSpec } from "../api/config/ConjureSpec.js";
 import { ApiDefinitionConverter, DEFAULT_API_NAME } from "../api/config/converter/ApiDefinitionConverter.js";
 import { isFernSpec } from "../api/config/FernSpec.js";
+import { isGraphQlSpec } from "../api/config/GraphQlSpec.js";
 import { isOpenApiSpec } from "../api/config/OpenApiSpec.js";
 import { isOpenRpcSpec } from "../api/config/OpenRpcSpec.js";
 import { isProtobufSpec } from "../api/config/ProtobufSpec.js";
@@ -271,6 +272,40 @@ apis:
                 const spec = result.apis["jsonrpc-api"]?.specs[0];
                 expect(spec).toBeDefined();
                 expect(spec != null && isOpenRpcSpec(spec)).toBe(true);
+            }
+        });
+
+        it("converts GraphQL spec with name and origin", async () => {
+            await mkdir(join(testDir, "graphql"), { recursive: true });
+            await writeFile(join(testDir, "graphql/plants.graphql"), "type Query { plants: [String!]! }");
+            await writeFile(
+                join(testDir, "fern.yml"),
+                `
+edition: 2026-01-01
+org: acme
+apis:
+  graphql-api:
+    specs:
+      - graphql: graphql/plants.graphql
+        name: Plants
+        origin: https://api.example.com/plants/graphql
+`
+            );
+
+            const fernYml = await loadFernYml({ cwd: testDir });
+            const result = await createConverter().convert({ fernYml });
+
+            expect(result.success).toBe(true);
+            if (result.success) {
+                const spec = result.apis["graphql-api"]?.specs[0];
+                expect(spec).toBeDefined();
+                if (spec != null && isGraphQlSpec(spec)) {
+                    expect(spec.graphql).toContain("plants.graphql");
+                    expect(spec.name).toBe("Plants");
+                    expect(spec.origin).toBe("https://api.example.com/plants/graphql");
+                } else {
+                    expect.fail("Expected GraphQL spec");
+                }
             }
         });
 

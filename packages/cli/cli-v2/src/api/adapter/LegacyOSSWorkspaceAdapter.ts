@@ -45,7 +45,7 @@ export class LegacyOSSWorkspaceAdapter {
         const v1Specs = this.specAdapter.convertAll(ossSpecs);
 
         const filteredSpecs = v1Specs.filter((spec): spec is OpenAPISpec | ProtobufSpec => {
-            if (spec.type === "openrpc") {
+            if (spec.type === "openrpc" || spec.type === "graphql") {
                 return false;
             }
             if (spec.type === "protobuf" && !spec.fromOpenAPI) {
@@ -61,7 +61,12 @@ export class LegacyOSSWorkspaceAdapter {
             return true;
         });
 
-        if (filteredSpecs.length === 0) {
+        const hasGraphQlSpec = allSpecs.some((spec) => spec.type === "graphql");
+
+        // If there are no IR-generating specs, skip the workspace — unless there
+        // is at least one GraphQL spec, which is docs-only and must still be
+        // surfaced so `fern docs` can render it.
+        if (filteredSpecs.length === 0 && !hasGraphQlSpec) {
             return undefined;
         }
 

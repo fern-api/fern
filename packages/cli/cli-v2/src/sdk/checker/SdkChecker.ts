@@ -1,6 +1,7 @@
 import { type ValidationViolation } from "@fern-api/fern-definition-validator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FernRegistryClient as GeneratorsClient } from "@fern-fern/generators-sdk";
+import { isGraphQlSpec } from "../../api/config/GraphQlSpec.js";
 import type { Context } from "../../context/Context.js";
 import type { Workspace } from "../../workspace/Workspace.js";
 import { getGeneratorIdFromImage } from "../config/converter/getGeneratorIdFromImage.js";
@@ -73,6 +74,7 @@ export class SdkChecker {
         this.validateTargetApiReferences({ workspace, sdks, violations });
         this.validateDefaultGroup({ sdks, fernYmlRelativePath, violations });
         this.validateEmptyVersions({ sdks, violations });
+        this.validateGraphQlSpecs({ workspace, sdks, violations });
         await this.validateVersions({ sdks, violations });
 
         return {
@@ -191,6 +193,40 @@ export class SdkChecker {
                     column: target.sourceLocation.column
                 });
             }
+        }
+    }
+
+    /**
+     * Emits a warning for any target whose referenced API contains a GraphQL spec.
+     * GraphQL SDKs are not supported; the graphql specs will be skipped during generation.
+     */
+    private validateGraphQlSpecs({
+        workspace,
+        sdks,
+        violations
+    }: {
+        workspace: Workspace;
+        sdks: SdkConfig;
+        violations: SdkChecker.ResolvedViolation[];
+    }): void {
+        for (const target of sdks.targets) {
+            const api = workspace.apis[target.api];
+            if (api == null) {
+                continue;
+            }
+            const hasGraphQl = api.specs.some(isGraphQlSpec);
+            if (!hasGraphQl) {
+                continue;
+            }
+            violations.push({
+                severity: "warning",
+                relativeFilepath: target.sourceLocation.relativeFilePath,
+                nodePath: ["sdks", "targets", target.name, "api"],
+                message: `API '${target.api}' contains a GraphQL spec. GraphQL SDKs are not supported and graphql specs will be skipped for this target.`,
+                displayRelativeFilepath: target.sourceLocation.relativeFilePath,
+                line: target.sourceLocation.line,
+                column: target.sourceLocation.column
+            });
         }
     }
 

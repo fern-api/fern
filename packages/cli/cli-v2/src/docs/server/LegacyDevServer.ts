@@ -40,7 +40,7 @@ export class LegacyDevServer {
         logLevel: LogLevel;
     }): Promise<void> {
         const workspace = await this.context.loadWorkspaceOrThrow();
-        const initialProject = this.adapter.adapt(workspace);
+        const initialProject = await this.adapter.adapt(workspace);
         const taskContext = new TaskContextAdapter({ context: this.context, logLevel });
 
         // TODO: Use a spinner here.
@@ -65,7 +65,7 @@ export class LegacyDevServer {
      */
     private async reloadProject(): Promise<Project> {
         const workspace = await this.context.loadWorkspaceOrThrow();
-        return this.adapter.adapt(workspace);
+        return await this.adapter.adapt(workspace);
     }
 
     /**

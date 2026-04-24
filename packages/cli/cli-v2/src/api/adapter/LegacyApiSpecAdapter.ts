@@ -2,6 +2,7 @@ import type {
     OpenAPISettings,
     OpenAPISpec,
     Spec,
+    GraphQLSpec as V1GraphQLSpec,
     OpenRPCSpec as V1OpenRPCSpec,
     ProtobufSpec as V1ProtobufSpec
 } from "@fern-api/api-workspace-commons";
@@ -13,6 +14,8 @@ import type { Context } from "../../context/Context.js";
 import type { ApiSpec } from "../config/ApiSpec.js";
 import type { AsyncApiSpec } from "../config/AsyncApiSpec.js";
 import { isAsyncApiSpec } from "../config/AsyncApiSpec.js";
+import type { GraphQlSpec } from "../config/GraphQlSpec.js";
+import { isGraphQlSpec } from "../config/GraphQlSpec.js";
 import type { OpenApiSpec } from "../config/OpenApiSpec.js";
 import { isOpenApiSpec } from "../config/OpenApiSpec.js";
 import type { OpenRpcSpec } from "../config/OpenRpcSpec.js";
@@ -49,6 +52,9 @@ export class LegacyApiSpecAdapter {
         }
         if (isOpenRpcSpec(spec)) {
             return this.adaptOpenRpcSpec(spec);
+        }
+        if (isGraphQlSpec(spec)) {
+            return this.adaptGraphQlSpec(spec);
         }
         throw new CliError({
             message: `Unsupported spec type: ${JSON.stringify(spec)}`,
@@ -111,6 +117,15 @@ export class LegacyApiSpecAdapter {
             absoluteFilepath: spec.openrpc,
             absoluteFilepathToOverrides: spec.overrides,
             namespace: undefined
+        };
+    }
+
+    private adaptGraphQlSpec(spec: GraphQlSpec): V1GraphQLSpec {
+        return {
+            type: "graphql" as const,
+            absoluteFilepath: spec.graphql,
+            absoluteFilepathToOverrides: spec.overrides,
+            namespace: spec.name
         };
     }
 

@@ -97,7 +97,10 @@ export class ApiSpecResolver {
     }
 
     private inferExtension({ url, contentType }: { url: string; contentType: string }): string {
-        const urlPath = new URL(url).pathname;
+        const urlPath = new URL(url).pathname.toLowerCase();
+        if (urlPath.endsWith(".graphql") || urlPath.endsWith(".graphqls") || urlPath.endsWith(".gql")) {
+            return ".graphql";
+        }
         if (urlPath.endsWith(".json")) {
             return ".json";
         }
@@ -124,9 +127,11 @@ export class ApiSpecResolver {
                 return { openapi: absoluteFilePath, origin };
             case "asyncapi":
                 return { asyncapi: absoluteFilePath, origin };
+            case "graphql":
+                return { graphql: absoluteFilePath, origin };
             default:
                 throw new CliError({
-                    message: `Unsupported spec type for flags mode: "${specType}". Supported: openapi, asyncapi`,
+                    message: `Unsupported spec type for flags mode: "${specType}". Supported: openapi, asyncapi, graphql`,
                     code: CliError.Code.ConfigError
                 });
         }
