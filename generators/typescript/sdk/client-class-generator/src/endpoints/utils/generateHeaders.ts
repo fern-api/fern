@@ -169,7 +169,7 @@ export function generateHeaders({
                         )
                     )
                 ],
-                ts.NodeFlags.Let
+                ts.NodeFlags.Const
             )
         )
     );

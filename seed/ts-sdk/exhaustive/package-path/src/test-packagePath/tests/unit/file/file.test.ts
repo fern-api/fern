@@ -8,7 +8,7 @@ describe("toBinaryUploadRequest", () => {
     const TEST_FILE_SIZE = fs.statSync(TEST_FILE_PATH).size.toString();
 
     beforeEach(() => {
-        vi.clearAllMocks();
+        jest.clearAllMocks();
     });
 
     describe("Buffer input", () => {
