@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Introduce a simpler TtyAwareLogger local to `cli-v2`. The new logger drops
+    legacy behaviours that cli-v2 did not use (`omitOnTTY`, `FERN_SPINNER_STATUS`,
+    dynamic `finish` reassignment, `ora` dependency) and exposes a minimal
+    `register` / `write` / `takeOverTerminal` / `finish` surface against a
+    generic `Paintable` interface. Box-frame rendering moves into `TaskGroup`.
+    The legacy `TtyAwareLogger` in `@fern-api/cli-logger` is untouched.
+  type: internal

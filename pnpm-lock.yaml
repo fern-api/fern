@@ -4743,9 +4743,6 @@ importers:
       '@fern-api/casings-generator':
         specifier: workspace:*
         version: link:../../commons/casings-generator
-      '@fern-api/cli-logger':
-        specifier: workspace:*
-        version: link:../cli-logger
       '@fern-api/cli-source-resolver':
         specifier: workspace:*
         version: link:../cli-source-resolver
@@ -4881,6 +4878,9 @@ importers:
       '@types/yargs':
         specifier: ^17.0.28
         version: 17.0.35
+      ansi-escapes:
+        specifier: 'catalog:'
+        version: 5.0.0
       chalk:
         specifier: 'catalog:'
         version: 5.6.2
