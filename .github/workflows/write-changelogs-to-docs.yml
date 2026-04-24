@@ -10,9 +10,11 @@ permissions:
   pull-requests: write
   contents: write
 
+# Idempotent: always checks out latest main and regenerates all changelogs,
+# so cancelling a pending run in favor of a newer one is safe.
 concurrency:
   group: write-changelogs-to-docs
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 env:
   DO_NOT_TRACK: "1"

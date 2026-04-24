@@ -14,9 +14,9 @@ on:
   workflow_call:
   workflow_dispatch:
 
-# Cancel previous workflows on previous push
-# On main: runs queue (no cancellation) so every merge gets tested
-# On PRs: previous runs are cancelled when new commits are pushed
+# On PRs: previous runs are cancelled when new commits are pushed.
+# On main: the running job is protected, but a pending run can still be
+# cancelled if a third push arrives (GitHub allows only 1 pending per group).
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
