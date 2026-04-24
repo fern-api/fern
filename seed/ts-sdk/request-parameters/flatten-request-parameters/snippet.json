@@ -1,4 +1,5 @@
 {
+    "types": {},
     "endpoints": [
         {
             "id": {
@@ -7,8 +8,8 @@
                 "identifier_override": "endpoint_user.createUsername"
             },
             "snippet": {
-                "type": "typescript",
-                "client": "import { SeedRequestParametersClient } from \"@fern/request-parameters\";\n\nconst client = new SeedRequestParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.createUsername({\n    tags: [\"tags\", \"tags\"],\n    username: \"username\",\n    password: \"password\",\n    name: \"test\"\n});\n"
+                "client": "import { SeedRequestParametersClient } from \"@fern/request-parameters\";\n\nconst client = new SeedRequestParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.createUsername({\n    tags: [\"tags\", \"tags\"],\n    username: \"username\",\n    password: \"password\",\n    name: \"test\"\n});\n",
+                "type": "typescript"
             }
         },
         {
@@ -18,8 +19,8 @@
                 "identifier_override": "endpoint_user.createUsernameWithReferencedType"
             },
             "snippet": {
-                "type": "typescript",
-                "client": "import { SeedRequestParametersClient } from \"@fern/request-parameters\";\n\nconst client = new SeedRequestParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.createUsernameWithReferencedType({\n    tags: [\"tags\", \"tags\"],\n    username: \"username\",\n    password: \"password\",\n    name: \"test\"\n});\n"
+                "client": "import { SeedRequestParametersClient } from \"@fern/request-parameters\";\n\nconst client = new SeedRequestParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.createUsernameWithReferencedType({\n    tags: [\"tags\", \"tags\"],\n    username: \"username\",\n    password: \"password\",\n    name: \"test\"\n});\n",
+                "type": "typescript"
             }
         },
         {
@@ -29,8 +30,8 @@
                 "identifier_override": "endpoint_user.createUsernameOptional"
             },
             "snippet": {
-                "type": "typescript",
-                "client": "import { SeedRequestParameters, SeedRequestParametersClient } from \"@fern/request-parameters\";\n\nconst client = new SeedRequestParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.createUsernameOptional();\n"
+                "client": "import { SeedRequestParameters, SeedRequestParametersClient } from \"@fern/request-parameters\";\n\nconst client = new SeedRequestParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.createUsernameOptional();\n",
+                "type": "typescript"
             },
             "example_identifier": "empty-object"
         },
@@ -41,10 +42,9 @@
                 "identifier_override": "endpoint_user.getUsername"
             },
             "snippet": {
-                "type": "typescript",
-                "client": "import { SeedRequestParametersClient } from \"@fern/request-parameters\";\n\nconst client = new SeedRequestParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.getUsername({\n    limit: 1,\n    id: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    date: \"2023-01-15\",\n    deadline: \"2024-01-15T09:30:00Z\",\n    bytes: \"SGVsbG8gd29ybGQh\",\n    user: {\n        name: \"name\",\n        tags: [\"tags\", \"tags\"]\n    },\n    userList: [{\n            name: \"name\",\n            tags: [\"tags\", \"tags\"]\n        }, {\n            name: \"name\",\n            tags: [\"tags\", \"tags\"]\n        }],\n    optionalDeadline: \"2024-01-15T09:30:00Z\",\n    keyValue: {\n        \"keyValue\": \"keyValue\"\n    },\n    optionalString: \"optionalString\",\n    nestedUser: {\n        name: \"name\",\n        user: {\n            name: \"name\",\n            tags: [\"tags\", \"tags\"]\n        }\n    },\n    optionalUser: {\n        name: \"name\",\n        tags: [\"tags\", \"tags\"]\n    },\n    excludeUser: {\n        name: \"name\",\n        tags: [\"tags\", \"tags\"]\n    },\n    filter: \"filter\",\n    longParam: 1000000,\n    bigIntParam: \"1000000\"\n});\n"
+                "client": "import { SeedRequestParametersClient } from \"@fern/request-parameters\";\n\nconst client = new SeedRequestParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.getUsername({\n    limit: 1,\n    id: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    date: \"2023-01-15\",\n    deadline: \"2024-01-15T09:30:00Z\",\n    bytes: \"SGVsbG8gd29ybGQh\",\n    user: {\n        name: \"name\",\n        tags: [\"tags\", \"tags\"]\n    },\n    userList: [{\n            name: \"name\",\n            tags: [\"tags\", \"tags\"]\n        }, {\n            name: \"name\",\n            tags: [\"tags\", \"tags\"]\n        }],\n    optionalDeadline: \"2024-01-15T09:30:00Z\",\n    keyValue: {\n        \"keyValue\": \"keyValue\"\n    },\n    optionalString: \"optionalString\",\n    nestedUser: {\n        name: \"name\",\n        user: {\n            name: \"name\",\n            tags: [\"tags\", \"tags\"]\n        }\n    },\n    optionalUser: {\n        name: \"name\",\n        tags: [\"tags\", \"tags\"]\n    },\n    excludeUser: {\n        name: \"name\",\n        tags: [\"tags\", \"tags\"]\n    },\n    filter: \"filter\",\n    longParam: 1000000,\n    bigIntParam: \"1000000\"\n});\n",
+                "type": "typescript"
             }
         }
-    ],
-    "types": {}
+    ]
 }

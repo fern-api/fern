@@ -1,4 +1,5 @@
 {
+    "types": {},
     "endpoints": [
         {
             "id": {
@@ -7,8 +8,8 @@
                 "identifier_override": "endpoint_auth.getToken"
             },
             "snippet": {
-                "type": "typescript",
-                "client": "import { SeedOauthClientCredentialsReferenceClient } from \"@fern/oauth-client-credentials-reference\";\n\nconst client = new SeedOauthClientCredentialsReferenceClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.auth.getToken({\n    client_id: \"client_id\",\n    client_secret: \"client_secret\"\n});\n"
+                "client": "import { SeedOauthClientCredentialsReferenceClient } from \"@fern/oauth-client-credentials-reference\";\n\nconst client = new SeedOauthClientCredentialsReferenceClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.auth.getToken({\n    client_id: \"client_id\",\n    client_secret: \"client_secret\"\n});\n",
+                "type": "typescript"
             }
         },
         {
@@ -18,10 +19,9 @@
                 "identifier_override": "endpoint_simple.getSomething"
             },
             "snippet": {
-                "type": "typescript",
-                "client": "import { SeedOauthClientCredentialsReferenceClient } from \"@fern/oauth-client-credentials-reference\";\n\nconst client = new SeedOauthClientCredentialsReferenceClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.simple.getSomething();\n"
+                "client": "import { SeedOauthClientCredentialsReferenceClient } from \"@fern/oauth-client-credentials-reference\";\n\nconst client = new SeedOauthClientCredentialsReferenceClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.simple.getSomething();\n",
+                "type": "typescript"
             }
         }
-    ],
-    "types": {}
+    ]
 }

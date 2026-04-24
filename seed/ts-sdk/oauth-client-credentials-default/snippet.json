@@ -1,4 +1,5 @@
 {
+    "types": {},
     "endpoints": [
         {
             "id": {
@@ -7,8 +8,8 @@
                 "identifier_override": "endpoint_auth.getToken"
             },
             "snippet": {
-                "type": "typescript",
-                "client": "import { SeedOauthClientCredentialsDefaultClient } from \"@fern/oauth-client-credentials-default\";\n\nconst client = new SeedOauthClientCredentialsDefaultClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.auth.getToken({\n    client_id: \"client_id\",\n    client_secret: \"client_secret\"\n});\n"
+                "client": "import { SeedOauthClientCredentialsDefaultClient } from \"@fern/oauth-client-credentials-default\";\n\nconst client = new SeedOauthClientCredentialsDefaultClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.auth.getToken({\n    client_id: \"client_id\",\n    client_secret: \"client_secret\"\n});\n",
+                "type": "typescript"
             }
         },
         {
@@ -18,8 +19,8 @@
                 "identifier_override": "endpoint_nested-no-auth/api.getSomething"
             },
             "snippet": {
-                "type": "typescript",
-                "client": "import { SeedOauthClientCredentialsDefaultClient } from \"@fern/oauth-client-credentials-default\";\n\nconst client = new SeedOauthClientCredentialsDefaultClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.nestedNoAuth.api.getSomething();\n"
+                "client": "import { SeedOauthClientCredentialsDefaultClient } from \"@fern/oauth-client-credentials-default\";\n\nconst client = new SeedOauthClientCredentialsDefaultClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.nestedNoAuth.api.getSomething();\n",
+                "type": "typescript"
             }
         },
         {
@@ -29,8 +30,8 @@
                 "identifier_override": "endpoint_nested/api.getSomething"
             },
             "snippet": {
-                "type": "typescript",
-                "client": "import { SeedOauthClientCredentialsDefaultClient } from \"@fern/oauth-client-credentials-default\";\n\nconst client = new SeedOauthClientCredentialsDefaultClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.nested.api.getSomething();\n"
+                "client": "import { SeedOauthClientCredentialsDefaultClient } from \"@fern/oauth-client-credentials-default\";\n\nconst client = new SeedOauthClientCredentialsDefaultClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.nested.api.getSomething();\n",
+                "type": "typescript"
             }
         },
         {
@@ -40,10 +41,9 @@
                 "identifier_override": "endpoint_simple.getSomething"
             },
             "snippet": {
-                "type": "typescript",
-                "client": "import { SeedOauthClientCredentialsDefaultClient } from \"@fern/oauth-client-credentials-default\";\n\nconst client = new SeedOauthClientCredentialsDefaultClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.simple.getSomething();\n"
+                "client": "import { SeedOauthClientCredentialsDefaultClient } from \"@fern/oauth-client-credentials-default\";\n\nconst client = new SeedOauthClientCredentialsDefaultClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.simple.getSomething();\n",
+                "type": "typescript"
             }
         }
-    ],
-    "types": {}
+    ]
 }

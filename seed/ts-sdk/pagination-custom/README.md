@@ -51,7 +51,6 @@ const pageableResponse = await client.users.listWithCustomPager({
 for await (const item of pageableResponse) {
     console.log(item);
 }
-
 // Or you can manually iterate page-by-page
 let page = await client.users.listWithCustomPager({
     limit: 1,
@@ -60,7 +59,6 @@ let page = await client.users.listWithCustomPager({
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
-
 // You can also access the underlying response
 const response = page.response;
 ```
@@ -113,7 +111,6 @@ const pageableResponse = await client.users.listWithCustomPager({
 for await (const item of pageableResponse) {
     console.log(item);
 }
-
 // Or you can manually iterate page-by-page
 let page = await client.users.listWithCustomPager({
     limit: 1,
@@ -122,7 +119,6 @@ let page = await client.users.listWithCustomPager({
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
-
 // You can also access the underlying response
 const response = page.response;
 ```

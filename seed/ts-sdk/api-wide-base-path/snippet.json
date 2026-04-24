@@ -1,4 +1,5 @@
 {
+    "types": {},
     "endpoints": [
         {
             "id": {
@@ -7,10 +8,9 @@
                 "identifier_override": "endpoint_service.post"
             },
             "snippet": {
-                "type": "typescript",
-                "client": "import { SeedApiWideBasePathClient } from \"@fern/api-wide-base-path\";\n\nconst client = new SeedApiWideBasePathClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.post(\"serviceParam\", 1, \"resourceParam\");\n"
+                "client": "import { SeedApiWideBasePathClient } from \"@fern/api-wide-base-path\";\n\nconst client = new SeedApiWideBasePathClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.post(\"serviceParam\", 1, \"resourceParam\");\n",
+                "type": "typescript"
             }
         }
-    ],
-    "types": {}
+    ]
 }

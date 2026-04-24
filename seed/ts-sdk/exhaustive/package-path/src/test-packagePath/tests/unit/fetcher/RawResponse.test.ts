@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { toRawResponse } from "../../../core/fetcher/RawResponse";
+import { toRawResponse } from "../../../core/fetcher/RawResponse.js";
 
 describe("RawResponse", () => {
     describe("toRawResponse", () => {

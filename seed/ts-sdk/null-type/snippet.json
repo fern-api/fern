@@ -1,4 +1,5 @@
 {
+    "types": {},
     "endpoints": [
         {
             "id": {
@@ -7,8 +8,8 @@
                 "identifier_override": "endpoint_conversations.outboundCall"
             },
             "snippet": {
-                "type": "typescript",
-                "client": "import { SeedApiClient } from \"@fern/null-type\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.conversations.outboundCall({\n    to_phone_number: \"to_phone_number\"\n});\n"
+                "client": "import { SeedApiClient } from \"@fern/null-type\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.conversations.outboundCall({\n    to_phone_number: \"to_phone_number\"\n});\n",
+                "type": "typescript"
             }
         },
         {
@@ -18,10 +19,9 @@
                 "identifier_override": "endpoint_users.get"
             },
             "snippet": {
-                "type": "typescript",
-                "client": "import { SeedApiClient } from \"@fern/null-type\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.users.get({\n    id: \"id\"\n});\n"
+                "client": "import { SeedApiClient } from \"@fern/null-type\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.users.get({\n    id: \"id\"\n});\n",
+                "type": "typescript"
             }
         }
-    ],
-    "types": {}
+    ]
 }

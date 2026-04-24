@@ -1,4 +1,5 @@
 {
+    "types": {},
     "endpoints": [
         {
             "id": {
@@ -7,8 +8,8 @@
                 "identifier_override": "endpoint_auth.getTokenWithClientCredentials"
             },
             "snippet": {
-                "type": "typescript",
-                "client": "import { SeedInferredAuthImplicitClient } from \"@fern/inferred-auth-implicit\";\n\nconst client = new SeedInferredAuthImplicitClient({ environment: \"YOUR_BASE_URL\" });\nawait client.auth.getTokenWithClientCredentials({\n    \"X-Api-Key\": \"X-Api-Key\",\n    client_id: \"client_id\",\n    client_secret: \"client_secret\",\n    scope: \"scope\"\n});\n"
+                "client": "import { SeedInferredAuthImplicitClient } from \"@fern/inferred-auth-implicit\";\n\nconst client = new SeedInferredAuthImplicitClient({ environment: \"YOUR_BASE_URL\" });\nawait client.auth.getTokenWithClientCredentials({\n    \"X-Api-Key\": \"X-Api-Key\",\n    client_id: \"client_id\",\n    client_secret: \"client_secret\",\n    scope: \"scope\"\n});\n",
+                "type": "typescript"
             }
         },
         {
@@ -18,8 +19,8 @@
                 "identifier_override": "endpoint_auth.refreshToken"
             },
             "snippet": {
-                "type": "typescript",
-                "client": "import { SeedInferredAuthImplicitClient } from \"@fern/inferred-auth-implicit\";\n\nconst client = new SeedInferredAuthImplicitClient({ environment: \"YOUR_BASE_URL\" });\nawait client.auth.refreshToken({\n    \"X-Api-Key\": \"X-Api-Key\",\n    client_id: \"client_id\",\n    client_secret: \"client_secret\",\n    refresh_token: \"refresh_token\",\n    scope: \"scope\"\n});\n"
+                "client": "import { SeedInferredAuthImplicitClient } from \"@fern/inferred-auth-implicit\";\n\nconst client = new SeedInferredAuthImplicitClient({ environment: \"YOUR_BASE_URL\" });\nawait client.auth.refreshToken({\n    \"X-Api-Key\": \"X-Api-Key\",\n    client_id: \"client_id\",\n    client_secret: \"client_secret\",\n    refresh_token: \"refresh_token\",\n    scope: \"scope\"\n});\n",
+                "type": "typescript"
             }
         },
         {
@@ -29,8 +30,8 @@
                 "identifier_override": "endpoint_nested-no-auth/api.getSomething"
             },
             "snippet": {
-                "type": "typescript",
-                "client": "import { SeedInferredAuthImplicitClient } from \"@fern/inferred-auth-implicit\";\n\nconst client = new SeedInferredAuthImplicitClient({ environment: \"YOUR_BASE_URL\" });\nawait client.nestedNoAuth.api.getSomething();\n"
+                "client": "import { SeedInferredAuthImplicitClient } from \"@fern/inferred-auth-implicit\";\n\nconst client = new SeedInferredAuthImplicitClient({ environment: \"YOUR_BASE_URL\" });\nawait client.nestedNoAuth.api.getSomething();\n",
+                "type": "typescript"
             }
         },
         {
@@ -40,8 +41,8 @@
                 "identifier_override": "endpoint_nested/api.getSomething"
             },
             "snippet": {
-                "type": "typescript",
-                "client": "import { SeedInferredAuthImplicitClient } from \"@fern/inferred-auth-implicit\";\n\nconst client = new SeedInferredAuthImplicitClient({ environment: \"YOUR_BASE_URL\" });\nawait client.nested.api.getSomething();\n"
+                "client": "import { SeedInferredAuthImplicitClient } from \"@fern/inferred-auth-implicit\";\n\nconst client = new SeedInferredAuthImplicitClient({ environment: \"YOUR_BASE_URL\" });\nawait client.nested.api.getSomething();\n",
+                "type": "typescript"
             }
         },
         {
@@ -51,10 +52,9 @@
                 "identifier_override": "endpoint_simple.getSomething"
             },
             "snippet": {
-                "type": "typescript",
-                "client": "import { SeedInferredAuthImplicitClient } from \"@fern/inferred-auth-implicit\";\n\nconst client = new SeedInferredAuthImplicitClient({ environment: \"YOUR_BASE_URL\" });\nawait client.simple.getSomething();\n"
+                "client": "import { SeedInferredAuthImplicitClient } from \"@fern/inferred-auth-implicit\";\n\nconst client = new SeedInferredAuthImplicitClient({ environment: \"YOUR_BASE_URL\" });\nawait client.simple.getSomething();\n",
+                "type": "typescript"
             }
         }
-    ],
-    "types": {}
+    ]
 }

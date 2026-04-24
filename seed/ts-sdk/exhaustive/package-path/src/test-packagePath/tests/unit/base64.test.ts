@@ -1,4 +1,4 @@
-import { base64Decode, base64Encode } from "../../core/base64";
+import { base64Decode, base64Encode } from "../../core/base64.js";
 
 describe("base64", () => {
     describe("base64Encode", () => {

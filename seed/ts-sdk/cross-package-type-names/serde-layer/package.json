@@ -22,17 +22,6 @@
             },
             "default": "./dist/cjs/index.js"
         },
-        "./serialization": {
-            "import": {
-                "types": "./dist/esm/serialization/index.d.mts",
-                "default": "./dist/esm/serialization/index.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/serialization/index.d.ts",
-                "default": "./dist/cjs/serialization/index.js"
-            },
-            "default": "./dist/cjs/serialization/index.js"
-        },
         "./folderA": {
             "import": {
                 "types": "./dist/esm/api/resources/folderA/exports.d.mts",

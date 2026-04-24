@@ -1,10 +1,10 @@
 import { type DefaultBodyType, type HttpHandler, HttpResponse, type HttpResponseResolver, http } from "msw";
 
-import { url } from "../../core";
-import { toJson } from "../../core/json";
-import { type WithFormUrlEncodedOptions, withFormUrlEncoded } from "./withFormUrlEncoded";
-import { withHeaders } from "./withHeaders";
-import { type WithJsonOptions, withJson } from "./withJson";
+import { url } from "../../core/index.js";
+import { toJson } from "../../core/json.js";
+import { type WithFormUrlEncodedOptions, withFormUrlEncoded } from "./withFormUrlEncoded.js";
+import { withHeaders } from "./withHeaders.js";
+import { type WithJsonOptions, withJson } from "./withJson.js";
 
 type HttpMethod = "all" | "get" | "post" | "put" | "delete" | "patch" | "options" | "head";
 

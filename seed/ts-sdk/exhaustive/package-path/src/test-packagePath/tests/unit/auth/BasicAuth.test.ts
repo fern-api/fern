@@ -1,4 +1,4 @@
-import { BasicAuth } from "../../../core/auth/BasicAuth";
+import { BasicAuth } from "../../../core/auth/BasicAuth.js";
 
 describe("BasicAuth", () => {
     interface ToHeaderTestCase {

@@ -1,9 +1,9 @@
+import { Mock } from "vitest";
 import {
     makeRequest,
     isCacheNoStoreSupported,
     resetCacheNoStoreSupported,
 } from "../../../src/core/fetcher/makeRequest";
-import { Mock } from "vitest";
 
 describe("Test makeRequest", () => {
     const mockPostUrl = "https://httpbin.org/post";

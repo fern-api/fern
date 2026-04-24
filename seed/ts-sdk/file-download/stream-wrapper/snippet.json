@@ -1,4 +1,5 @@
 {
+    "types": {},
     "endpoints": [
         {
             "id": {
@@ -7,10 +8,9 @@
                 "identifier_override": "endpoint_service.simple"
             },
             "snippet": {
-                "type": "typescript",
-                "client": "import { SeedFileDownloadClient } from \"@fern/file-download\";\n\nconst client = new SeedFileDownloadClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.simple();\n"
+                "client": "import { SeedFileDownloadClient } from \"@fern/file-download\";\n\nconst client = new SeedFileDownloadClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.simple();\n",
+                "type": "typescript"
             }
         }
-    ],
-    "types": {}
+    ]
 }

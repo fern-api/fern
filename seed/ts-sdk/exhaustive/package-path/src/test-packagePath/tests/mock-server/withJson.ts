@@ -1,6 +1,6 @@
 import { type HttpResponseResolver, passthrough } from "msw";
 
-import { fromJson, toJson } from "../../core/json";
+import { fromJson, toJson } from "../../core/json.js";
 
 export interface WithJsonOptions {
     /**

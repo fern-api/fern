@@ -1,4 +1,5 @@
 {
+    "types": {},
     "endpoints": [
         {
             "id": {
@@ -7,8 +8,8 @@
                 "identifier_override": "endpoint_user.head"
             },
             "snippet": {
-                "type": "typescript",
-                "client": "import { SeedHttpHeadClient } from \"@fern/http-head\";\n\nconst client = new SeedHttpHeadClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.head();\n"
+                "client": "import { SeedHttpHeadClient } from \"@fern/http-head\";\n\nconst client = new SeedHttpHeadClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.head();\n",
+                "type": "typescript"
             }
         },
         {
@@ -18,10 +19,9 @@
                 "identifier_override": "endpoint_user.list"
             },
             "snippet": {
-                "type": "typescript",
-                "client": "import { SeedHttpHeadClient } from \"@fern/http-head\";\n\nconst client = new SeedHttpHeadClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.list({\n    limit: 1\n});\n"
+                "client": "import { SeedHttpHeadClient } from \"@fern/http-head\";\n\nconst client = new SeedHttpHeadClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.list({\n    limit: 1\n});\n",
+                "type": "typescript"
             }
         }
-    ],
-    "types": {}
+    ]
 }

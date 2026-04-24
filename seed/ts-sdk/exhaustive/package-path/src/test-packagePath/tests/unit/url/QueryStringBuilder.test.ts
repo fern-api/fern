@@ -1,4 +1,4 @@
-import { queryBuilder } from "../../../core/url/QueryStringBuilder";
+import { queryBuilder } from "../../../core/url/QueryStringBuilder.js";
 
 describe("QueryStringBuilder", () => {
     describe("add() — default repeat format", () => {

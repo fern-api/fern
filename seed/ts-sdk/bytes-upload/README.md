@@ -41,9 +41,9 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { createReadStream } from "fs";
 import { SeedBytesUploadClient } from "@fern/bytes-upload";
 
+import { createReadStream } from "fs";
 const client = new SeedBytesUploadClient({ environment: "YOUR_BASE_URL" });
 await client.service.upload(createReadStream("path/to/file"));
 ```

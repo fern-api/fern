@@ -1,5 +1,5 @@
-import { makePassthroughRequest } from "../../../src/core/fetcher/makePassthroughRequest";
 import { Mock } from "vitest";
+import { makePassthroughRequest } from "../../../src/core/fetcher/makePassthroughRequest";
 
 describe("makePassthroughRequest", () => {
     let mockFetch: Mock;
@@ -139,7 +139,11 @@ describe("makePassthroughRequest", () => {
         it("should handle Headers object in init", async () => {
             const initHeaders = new Headers();
             initHeaders.set("X-From-Headers-Object", "value");
-            await makePassthroughRequest("https://api.example.com", { headers: initHeaders }, { fetch: mockFetch });
+            await makePassthroughRequest(
+                "https://api.example.com",
+                { headers: initHeaders },
+                { fetch: mockFetch },
+            );
             const [, calledOptions] = mockFetch.mock.calls[0];
             expect(calledOptions.headers["x-from-headers-object"]).toBe("value");
         });
@@ -297,19 +301,19 @@ describe("makePassthroughRequest", () => {
 
     describe("credentials", () => {
         it("should pass credentials include when set", async () => {
-            await makePassthroughRequest("https://api.example.com", { credentials: "include" }, { fetch: mockFetch });
+            await makePassthroughRequest(
+                "https://api.example.com",
+                { credentials: "include" },
+                { fetch: mockFetch },
+            );
             const [, calledOptions] = mockFetch.mock.calls[0];
             expect(calledOptions.credentials).toBe("include");
         });
 
         it("should not pass credentials when not set to include", async () => {
-            await makePassthroughRequest(
-                "https://api.example.com",
-                { credentials: "same-origin" },
-                {
-                    fetch: mockFetch,
-                },
-            );
+            await makePassthroughRequest("https://api.example.com", { credentials: "same-origin" }, {
+                fetch: mockFetch,
+            });
             const [, calledOptions] = mockFetch.mock.calls[0];
             expect(calledOptions.credentials).toBeUndefined();
         });

@@ -1,4 +1,5 @@
 {
+    "types": {},
     "endpoints": [
         {
             "id": {
@@ -7,10 +8,9 @@
                 "identifier_override": "endpoint_.getAccount"
             },
             "snippet": {
-                "type": "typescript",
-                "client": "import { SeedApiClient } from \"@fern/simple-fhir\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.getAccount(\"account_id\");\n"
+                "client": "import { SeedApiClient } from \"@fern/simple-fhir\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.getAccount(\"account_id\");\n",
+                "type": "typescript"
             }
         }
-    ],
-    "types": {}
+    ]
 }

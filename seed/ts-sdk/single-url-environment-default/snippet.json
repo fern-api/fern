@@ -1,4 +1,5 @@
 {
+    "types": {},
     "endpoints": [
         {
             "id": {
@@ -7,10 +8,9 @@
                 "identifier_override": "endpoint_dummy.getDummy"
             },
             "snippet": {
-                "type": "typescript",
-                "client": "import { SeedSingleUrlEnvironmentDefaultClient } from \"@fern/single-url-environment-default\";\n\nconst client = new SeedSingleUrlEnvironmentDefaultClient({ token: \"YOUR_TOKEN\" });\nawait client.dummy.getDummy();\n"
+                "client": "import { SeedSingleUrlEnvironmentDefaultClient } from \"@fern/single-url-environment-default\";\n\nconst client = new SeedSingleUrlEnvironmentDefaultClient({ token: \"YOUR_TOKEN\" });\nawait client.dummy.getDummy();\n",
+                "type": "typescript"
             }
         }
-    ],
-    "types": {}
+    ]
 }

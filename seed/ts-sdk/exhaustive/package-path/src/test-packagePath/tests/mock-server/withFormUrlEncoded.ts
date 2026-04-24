@@ -1,6 +1,6 @@
 import { type HttpResponseResolver, passthrough } from "msw";
 
-import { toJson } from "../../core/json";
+import { toJson } from "../../core/json.js";
 
 export interface WithFormUrlEncodedOptions {
     /**

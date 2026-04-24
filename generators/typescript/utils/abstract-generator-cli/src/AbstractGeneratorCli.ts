@@ -4,6 +4,7 @@ import {
     GeneratorNotificationService,
     NopGeneratorNotificationService,
     parseGeneratorConfig,
+    parseIR,
     resolveErrorCode,
     SentryClient,
     shouldReportToSentry,
@@ -12,7 +13,7 @@ import {
 import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { CONSOLE_LOGGER, createLogger, Logger, LogLevel } from "@fern-api/logger";
-import { FernIr } from "@fern-fern/ir-sdk";
+import { FernIr, serialization } from "@fern-fern/ir-sdk";
 import {
     constructNpmPackage,
     constructNpmPackageArgs,
@@ -25,7 +26,6 @@ import { execFile } from "child_process";
 import { copyFile, readFile, writeFile } from "fs/promises";
 import tmp from "tmp-promise";
 
-import { fastParseIR } from "./fastParseIR.js";
 import { publishPackage } from "./publishPackage.js";
 import { writeGenerationMetadata } from "./writeGenerationMetadata.js";
 import { writeGitHubWorkflows } from "./writeGitHubWorkflows.js";
@@ -89,7 +89,10 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
             });
             const customConfig = this.parseCustomConfig(config.customConfig, logger);
 
-            const ir = await fastParseIR<FernIr.IntermediateRepresentation>(AbsoluteFilePath.of(config.irFilepath));
+            const ir = await parseIR({
+                absolutePathToIR: AbsoluteFilePath.of(config.irFilepath),
+                parse: serialization.IntermediateRepresentation.parse
+            });
 
             // First try to construct the package from the IR's publishConfig. This is how
             // self-hosted setups thread package metadata through, and it also carries the

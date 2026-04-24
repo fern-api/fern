@@ -1,4 +1,5 @@
 {
+    "types": {},
     "endpoints": [
         {
             "id": {
@@ -7,10 +8,9 @@
                 "identifier_override": "endpoint_service.endpoint"
             },
             "snippet": {
-                "type": "typescript",
-                "client": "import { SeedAcceptClient } from \"@fern/accept-header\";\n\nconst client = new SeedAcceptClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.service.endpoint();\n"
+                "client": "import { SeedAcceptClient } from \"@fern/accept-header\";\n\nconst client = new SeedAcceptClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.service.endpoint();\n",
+                "type": "typescript"
             }
         }
-    ],
-    "types": {}
+    ]
 }

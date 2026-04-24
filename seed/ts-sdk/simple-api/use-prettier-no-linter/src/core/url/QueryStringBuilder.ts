@@ -36,7 +36,7 @@ class QueryStringBuilder {
         }
         const serialized = toQueryString(
             { [key]: value },
-            { arrayFormat: options?.style === "comma" ? "comma" : "repeat" },
+            { arrayFormat: options?.style === "comma" ? "comma" : "repeat" }
         );
         if (serialized.length > 0) {
             this.parts.set(key, serialized);
