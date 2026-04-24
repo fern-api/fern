@@ -18,3 +18,12 @@ groups:
           mode: push
           uri: fern-api/go-sdk-tests
           branch: basic-auth-pw-omitted
+  java-sdk:
+    generators:
+      - name: fernapi/fern-java-sdk
+        version: latest
+        github:
+          token: ${GITHUB_TOKEN}
+          mode: push
+          uri: fern-api/java-sdk-tests
+          branch: basic-auth-pw-omitted

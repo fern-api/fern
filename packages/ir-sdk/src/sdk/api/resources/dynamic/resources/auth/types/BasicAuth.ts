@@ -4,5 +4,9 @@ import type * as FernIr from "../../../../../index.js";
 
 export interface BasicAuth {
     username: FernIr.dynamic.Name;
+    /** If true, the username will be omitted from the SDK. */
+    usernameOmit: boolean | undefined;
     password: FernIr.dynamic.Name;
+    /** If true, the password will be omitted from the SDK. */
+    passwordOmit: boolean | undefined;
 }

@@ -45,7 +45,7 @@ python = "^3.10"
 aiohttp = { version = ">=3.13.4,<4", optional = true, python = ">=3.9"}
 httpx = ">=0.21.2"
 httpx-aiohttp = { version = "0.1.8", optional = true, python = ">=3.9"}
-pydantic = "^1.10"
+pydantic = ">= 1.9.2"
 pydantic-core = ">=2.18.2,<2.44.0"
 typing_extensions = ">= 4.0.0"
 

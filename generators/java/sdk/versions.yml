@@ -83,7 +83,6 @@
       type: fix
   createdAt: "2026-04-14"
   irVersion: 66
-
 - version: 4.2.0
   changelogEntry:
     - summary: |
@@ -107,7 +106,6 @@
       type: feat
   createdAt: "2026-04-10"
   irVersion: 66
-
 - version: 4.2.0-rc.0
   changelogEntry:
     - summary: |
@@ -137,7 +135,6 @@
       type: fix
   createdAt: "2026-04-09"
   irVersion: 65
-
 - version: 4.1.2
   changelogEntry:
     - summary: |
@@ -148,7 +145,6 @@
       type: fix
   createdAt: "2026-04-08"
   irVersion: 65
-
 - version: 4.1.1
   changelogEntry:
     - summary: |

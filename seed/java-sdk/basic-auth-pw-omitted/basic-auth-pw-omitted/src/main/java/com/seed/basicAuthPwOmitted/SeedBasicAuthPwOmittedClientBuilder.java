@@ -21,17 +21,14 @@ public class SeedBasicAuthPwOmittedClientBuilder {
 
     private String username = null;
 
-    private String password = null;
-
     private Environment environment;
 
     private OkHttpClient httpClient;
 
     private Optional<LogConfig> logging = Optional.empty();
 
-    public SeedBasicAuthPwOmittedClientBuilder credentials(String username, String password) {
+    public SeedBasicAuthPwOmittedClientBuilder credentials(String username) {
         this.username = username;
-        this.password = password;
         return this;
     }
 
@@ -126,8 +123,8 @@ public class SeedBasicAuthPwOmittedClientBuilder {
      * }</pre>
      */
     protected void setAuthentication(ClientOptions.Builder builder) {
-        if (this.username != null && this.password != null) {
-            String unencodedToken = this.username + ":" + this.password;
+        if (this.username != null) {
+            String unencodedToken = this.username + ":" + "";
             String encodedToken = Base64.getEncoder().encodeToString(unencodedToken.getBytes());
             builder.addHeader("Authorization", "Basic " + encodedToken);
         }
@@ -220,9 +217,6 @@ public class SeedBasicAuthPwOmittedClientBuilder {
     public SeedBasicAuthPwOmittedClient build() {
         if (this.username == null) {
             throw new RuntimeException("Please provide username");
-        }
-        if (this.password == null) {
-            throw new RuntimeException("Please provide password");
         }
         validateConfiguration();
         return new SeedBasicAuthPwOmittedClient(buildClientOptions());

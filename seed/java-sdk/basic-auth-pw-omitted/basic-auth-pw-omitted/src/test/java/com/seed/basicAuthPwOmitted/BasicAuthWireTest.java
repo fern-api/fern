@@ -1,8 +1,8 @@
-package com.seed.basicAuth;
+package com.seed.basicAuthPwOmitted;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.seed.basicAuth.core.ObjectMappers;
+import com.seed.basicAuthPwOmitted.core.ObjectMappers;
 import java.util.HashMap;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
@@ -14,16 +14,16 @@ import org.junit.jupiter.api.Test;
 
 public class BasicAuthWireTest {
     private MockWebServer server;
-    private SeedBasicAuthClient client;
+    private SeedBasicAuthPwOmittedClient client;
     private ObjectMapper objectMapper = ObjectMappers.JSON_MAPPER;
 
     @BeforeEach
     public void setup() throws Exception {
         server = new MockWebServer();
         server.start();
-        client = SeedBasicAuthClient.builder()
+        client = SeedBasicAuthPwOmittedClient.builder()
                 .url(server.url("/").toString())
-                .credentials("test-username", "test-password")
+                .credentials("test-username")
                 .build();
     }
 
@@ -42,7 +42,7 @@ public class BasicAuthWireTest {
 
         // Validate Basic Auth Authorization header
         Assertions.assertEquals(
-                "Basic dGVzdC11c2VybmFtZTp0ZXN0LXBhc3N3b3Jk",
+                "Basic dGVzdC11c2VybmFtZTo=",
                 request.getHeader("Authorization"),
                 "Basic Auth Authorization header should contain correct encoded credentials");
 
@@ -95,7 +95,7 @@ public class BasicAuthWireTest {
 
         // Validate Basic Auth Authorization header
         Assertions.assertEquals(
-                "Basic dGVzdC11c2VybmFtZTp0ZXN0LXBhc3N3b3Jk",
+                "Basic dGVzdC11c2VybmFtZTo=",
                 request.getHeader("Authorization"),
                 "Basic Auth Authorization header should contain correct encoded credentials");
         // Validate request body
