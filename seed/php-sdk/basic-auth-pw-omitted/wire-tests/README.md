@@ -40,7 +40,6 @@ use Seed\SeedClient;
 
 $client = new SeedClient(
     username: '<username>',
-    password: '<password>',
 );
 $client->basicAuth->postWithBasicAuth(
     [
