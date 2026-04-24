@@ -48,15 +48,15 @@ public final class UndiscriminatedUnionDeserializationTestGenerator extends Abst
 
     public UndiscriminatedUnionDeserializationTestGenerator(AbstractGeneratorContext<?, ?> generatorContext) {
         super(
-                ClassName.get(
-                        generatorContext.getPoetClassNameFactory().getRootPackage(), TEST_CLASS_NAME),
+                ClassName.get(generatorContext.getPoetClassNameFactory().getRootPackage(), TEST_CLASS_NAME),
                 generatorContext);
     }
 
     @Override
     public GeneratedJavaFile generateFile() {
         ClassName testAnnotation = ClassName.get("org.junit.jupiter.api", "Test");
-        ClassName objectMappersClassName = generatorContext.getPoetClassNameFactory().getObjectMapperClassName();
+        ClassName objectMappersClassName =
+                generatorContext.getPoetClassNameFactory().getObjectMapperClassName();
 
         List<MethodSpec> testMethods = new ArrayList<>();
 
@@ -77,14 +77,14 @@ public final class UndiscriminatedUnionDeserializationTestGenerator extends Abst
             }
 
             for (TestableVariant variant : testableVariants) {
-                Optional<MethodSpec> method =
-                        buildTestMethod(testAnnotation, objectMappersClassName, unionClassName, variant, testableVariants);
+                Optional<MethodSpec> method = buildTestMethod(
+                        testAnnotation, objectMappersClassName, unionClassName, variant, testableVariants);
                 method.ifPresent(testMethods::add);
             }
         }
 
-        TypeSpec.Builder testClassBuilder = TypeSpec.classBuilder(TEST_CLASS_NAME)
-                .addModifiers(Modifier.PUBLIC, Modifier.FINAL);
+        TypeSpec.Builder testClassBuilder =
+                TypeSpec.classBuilder(TEST_CLASS_NAME).addModifiers(Modifier.PUBLIC, Modifier.FINAL);
 
         for (MethodSpec method : testMethods) {
             testClassBuilder.addMethod(method);
@@ -187,7 +187,8 @@ public final class UndiscriminatedUnionDeserializationTestGenerator extends Abst
                 continue;
             }
             TypeId typeId = member.getType().getNamed().get().getTypeId();
-            TypeDeclaration typeDeclaration = generatorContext.getTypeDeclarations().get(typeId);
+            TypeDeclaration typeDeclaration =
+                    generatorContext.getTypeDeclarations().get(typeId);
             if (typeDeclaration == null) {
                 continue;
             }
@@ -215,8 +216,8 @@ public final class UndiscriminatedUnionDeserializationTestGenerator extends Abst
     }
 
     /**
-     * Collects required wire keys and their JSON test values. Returns false if any required property
-     * has a type we cannot generate a safe test value for.
+     * Collects required wire keys and their JSON test values. Returns false if any required property has a type we
+     * cannot generate a safe test value for.
      */
     private boolean collectRequiredJsonKeyValues(
             ObjectTypeDeclaration objectType, Map<String, String> jsonKeyValues, Set<String> requiredKeys) {
