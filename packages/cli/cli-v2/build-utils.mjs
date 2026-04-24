@@ -118,3 +118,27 @@ export async function buildCli(config) {
     // Run npm pkg fix to format and fix the package.json
     await execAsync("npm pkg fix", { cwd: outDirAbs });
 }
+
+/**
+ * Build the tiny completion helper binary (complete.cjs).
+ *
+ * This bundles only completion-main.ts → complete.cjs, which is ~200KB
+ * instead of the full 29MB CLI bundle. The shell completion script calls
+ * this binary directly for content-aware flag completions so TAB is fast.
+ *
+ * @param {Object} config
+ * @param {string} config.outDir - Output directory (same as the CLI build)
+ * @param {boolean} config.minify - Whether to minify the output
+ */
+export async function buildCompletionHelper({ outDir, minify }) {
+    await tsup.build({
+        entry: { complete: "src/completion-main.ts" },
+        format: ["cjs"],
+        minify,
+        outDir,
+        sourcemap: true,
+        clean: false,
+        platform: "node",
+        target: "node18"
+    });
+}

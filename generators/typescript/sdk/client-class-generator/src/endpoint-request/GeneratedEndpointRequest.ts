@@ -10,7 +10,7 @@ export interface GeneratedEndpointRequest {
     getEndpointParameters(context: FileContext): OptionalKind<ParameterDeclarationStructure & { docs?: string }>[];
     getFetcherRequestArgs: (
         context: FileContext
-    ) => Pick<Fetcher.Args, "headers" | "queryParameters" | "body" | "contentType" | "requestType" | "queryString">;
+    ) => Pick<Fetcher.Args, "headers" | "body" | "contentType" | "requestType" | "queryString">;
     getReferenceToRequestBody: (context: FileContext) => ts.Expression | undefined;
     getReferenceToPathParameter: (pathParameterKey: string, context: FileContext) => ts.Expression;
     getReferenceToQueryParameter: (queryParameterKey: string, context: FileContext) => ts.Expression;

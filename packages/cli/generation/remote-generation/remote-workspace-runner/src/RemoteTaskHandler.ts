@@ -15,6 +15,8 @@ import terminalLink from "terminal-link";
 import tmp from "tmp-promise";
 import yauzl from "yauzl";
 
+import { extractPublishTarget, PublishTarget } from "./publishTarget.js";
+
 export declare namespace RemoteTaskHandler {
     export interface Init {
         job: FernFiddle.remoteGen.CreateJobResponse;
@@ -27,6 +29,24 @@ export declare namespace RemoteTaskHandler {
         createdSnippets: boolean;
         snippetsS3PreSignedReadUrl: string | undefined;
         actualVersion: string | undefined;
+        /**
+         * URL of the pull request Fiddle opened against the SDK repo, when the output mode
+         * creates PRs (`github` with `makePr: true` / `githubV2.pullRequest`). Undefined for
+         * push / commit-and-release / non-GitHub modes.
+         */
+        pullRequestUrl: string | undefined;
+        /**
+         * True when Fiddle's diff analyzer determined the generated SDK is identical to the
+         * current SDK repo contents. Undefined when the analyzer didn't run (e.g., local-
+         * filesystem / download-files modes).
+         */
+        noChangesDetected: boolean | undefined;
+        /**
+         * Where the SDK was published, derived from `remoteTask.packages[0].coordinate`. Undefined
+         * for GitHub-only output modes (PR / push / commit-and-release without a registry) and for
+         * local-file-system downloads.
+         */
+        publishTarget: PublishTarget | undefined;
     }
 }
 
@@ -74,6 +94,13 @@ export class RemoteTaskHandler {
                 crates: (cratesPackage) => cratesPackage.version,
                 _other: () => undefined
             });
+        }
+
+        // Structured publish target for the automation step summary. Computed lazily — only the
+        // first coordinate we see wins, so if Fiddle reports additional coordinates in later
+        // polls (rare, but possible with multi-registry publishes) we keep the primary one.
+        if (this.#publishTarget == null) {
+            this.#publishTarget = extractPublishTarget(remoteTask.packages);
         }
 
         if (this.absolutePathToPreview == null) {
@@ -138,6 +165,8 @@ export class RemoteTaskHandler {
                 this.#isFinished = true;
                 this.#createdSnippets = finishedStatus.createdSnippets != null ? finishedStatus.createdSnippets : false;
                 this.#snippetsS3PreSignedReadUrl = finishedStatus.snippetsS3PreSignedReadUrl;
+                this.#pullRequestUrl = finishedStatus.pullRequestUrl;
+                this.#noChangesDetected = finishedStatus.noChangesDetected;
             },
             _other: () => {
                 this.context.logger.warn("Received unknown update type: " + remoteTask.status.type);
@@ -148,7 +177,10 @@ export class RemoteTaskHandler {
             ? {
                   createdSnippets: this.#createdSnippets,
                   snippetsS3PreSignedReadUrl: this.#snippetsS3PreSignedReadUrl,
-                  actualVersion: this.#actualVersion
+                  actualVersion: this.#actualVersion,
+                  pullRequestUrl: this.#pullRequestUrl,
+                  noChangesDetected: this.#noChangesDetected,
+                  publishTarget: this.#publishTarget
               }
             : undefined;
     }
@@ -177,6 +209,21 @@ export class RemoteTaskHandler {
     #actualVersion: string | undefined = undefined;
     public get actualVersion(): string | undefined {
         return this.#actualVersion;
+    }
+
+    #publishTarget: PublishTarget | undefined = undefined;
+    public get publishTarget(): PublishTarget | undefined {
+        return this.#publishTarget;
+    }
+
+    #pullRequestUrl: string | undefined = undefined;
+    public get pullRequestUrl(): string | undefined {
+        return this.#pullRequestUrl;
+    }
+
+    #noChangesDetected: boolean | undefined = undefined;
+    public get noChangesDetected(): boolean | undefined {
+        return this.#noChangesDetected;
     }
 }
 

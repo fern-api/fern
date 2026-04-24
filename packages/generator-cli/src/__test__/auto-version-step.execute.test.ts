@@ -271,15 +271,13 @@ describe("AutoVersionStep.execute() — normal MINOR flow", () => {
         expect(pkg.version).toBe("1.0.1");
     });
 
-    it("returns NO_CHANGE without creating a new commit", async () => {
+    it("on NO_CHANGE, rewrites the placeholder to previousVersion and commits [fern-autoversion]", async () => {
         mockAnalyzeSdkDiff.mockResolvedValue({
             version_bump: "NO_CHANGE",
             message: "",
             changelog_entry: "",
             version_bump_reason: ""
         });
-
-        const headBefore = gitExec(["rev-parse", "HEAD"], repo.repoPath);
 
         const step = new AutoVersionStep(repo.repoPath, makeLogger(), baseConfig);
         const prepared = fakePreparedReplay({
@@ -290,11 +288,20 @@ describe("AutoVersionStep.execute() — normal MINOR flow", () => {
 
         const result = await step.execute(makeContext(prepared));
 
+        expect(result.success).toBe(true);
         expect(result.versionBump).toBe("NO_CHANGE");
-        expect(result.commitSha).toBeUndefined();
+        expect(result.version).toBe("1.0.0");
+        expect(result.previousVersion).toBe("1.0.0");
+        expect(result.commitSha).toMatch(/^[0-9a-f]{40}$/);
+        expect(result.commitMessage).toContain("SDK regeneration");
 
-        const headAfter = gitExec(["rev-parse", "HEAD"], repo.repoPath);
-        expect(headAfter).toBe(headBefore);
+        const pkg = JSON.parse(readFileSync(join(repo.repoPath, "package.json"), "utf-8")) as {
+            version: string;
+        };
+        expect(pkg.version).toBe("1.0.0");
+
+        const head = gitExec(["log", "-1", "--format=%B"], repo.repoPath);
+        expect(head).toContain("[fern-autoversion]");
     });
 
     it("omits the Fern trailer when isWhitelabel is true", async () => {

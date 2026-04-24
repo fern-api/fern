@@ -6,7 +6,7 @@ private func main() async throws {
 
     _ = try await client.testGet(
         region: "region",
-        limit: "100"
+        limit: "limit"
     )
 }
 

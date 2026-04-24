@@ -366,14 +366,10 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
 
     public getFetcherRequestArgs(
         context: FileContext
-    ): Pick<
-        Fetcher.Args,
-        "headers" | "queryParameters" | "body" | "contentType" | "requestType" | "duplex" | "queryString"
-    > {
+    ): Pick<Fetcher.Args, "headers" | "body" | "contentType" | "requestType" | "duplex" | "queryString"> {
         const queryParams = this.getQueryParams(context);
         return {
             headers: ts.factory.createIdentifier(HEADERS_VAR_NAME),
-            queryParameters: queryParams != null ? queryParams.getReferenceTo() : undefined,
             queryString: queryParams?.getQueryStringExpression(context),
             requestType: "file",
             body: context.coreUtilities.formDataUtils.getBody({

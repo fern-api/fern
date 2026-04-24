@@ -71,7 +71,7 @@ export class ContentTypeClient {
             method: "POST",
             headers: _headers,
             contentType: "application/json-patch+json",
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
             body: serializers.types.ObjectWithOptionalField.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
@@ -149,7 +149,7 @@ export class ContentTypeClient {
             method: "POST",
             headers: _headers,
             contentType: "application/json-patch+json; charset=utf-8",
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
             body: serializers.types.ObjectWithOptionalField.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",

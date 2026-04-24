@@ -1,7 +1,7 @@
 import type { generatorsYml } from "@fern-api/configuration-loader";
+import type { GeneratorSkipReason } from "@fern-api/remote-workspace-runner";
 
-import { describeSkipReason } from "./describeSkipReason.js";
-import { shouldSkipGenerator } from "./shouldSkipGenerator.js";
+import { classifySkipReason, describeSkipReason } from "./describeSkipReason.js";
 
 /**
  * How the caller targeted generators, and any metadata needed to surface a useful error:
@@ -32,11 +32,18 @@ export function buildAutomationTargeting({
     return { type: "none" };
 }
 
+export interface SkippedGenerator {
+    generator: generatorsYml.GeneratorInvocation;
+    reason: GeneratorSkipReason;
+}
+
 export type SelectGeneratorsResult =
     | {
           type: "run";
           /** Generators that should actually execute. */
           generators: generatorsYml.GeneratorInvocation[];
+          /** Generators filtered out by the opt-out check; the caller should record them as skipped. */
+          skipped: SkippedGenerator[];
       }
     | {
           type: "reject-opted-out";
@@ -50,6 +57,8 @@ export type SelectGeneratorsResult =
     | {
           /** Every generator was filtered out by the opt-out check; the caller should silently skip. */
           type: "empty-after-skip";
+          /** Generators that were dropped; the caller should record each as skipped. */
+          skipped: SkippedGenerator[];
       };
 
 /**
@@ -65,6 +74,9 @@ export type SelectGeneratorsResult =
  *   (e.g. an internal variant disabled from automation) — filtering is the expected behavior.
  *   If the group has nothing left, signal `"empty-after-skip"` so the caller can return from
  *   the group without noise in the summary.
+ *
+ * In both the "run" and "empty-after-skip" paths, the skipped generators are returned alongside
+ * the runnable ones so the caller can record each as a skip in the automation summary.
  */
 export function selectGeneratorsForAutomation({
     generators,
@@ -84,12 +96,21 @@ export function selectGeneratorsForAutomation({
                 return { type: "reject-opted-out", generatorName: g.name, index: targeting.index, reason };
             }
         }
-        return { type: "run", generators };
+        return { type: "run", generators, skipped: [] };
     }
 
-    const eligible = generators.filter((g) => !shouldSkipGenerator({ generator: g, rootAutorelease }));
-    if (eligible.length === 0) {
-        return { type: "empty-after-skip" };
+    const eligible: generatorsYml.GeneratorInvocation[] = [];
+    const skipped: SkippedGenerator[] = [];
+    for (const g of generators) {
+        const reason = classifySkipReason(g, rootAutorelease);
+        if (reason == null) {
+            eligible.push(g);
+        } else {
+            skipped.push({ generator: g, reason });
+        }
     }
-    return { type: "run", generators: eligible };
+    if (eligible.length === 0) {
+        return { type: "empty-after-skip", skipped };
+    }
+    return { type: "run", generators: eligible, skipped };
 }

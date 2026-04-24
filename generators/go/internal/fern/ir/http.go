@@ -4100,7 +4100,8 @@ var (
 	httpHeaderFieldName         = big.NewInt(1 << 2)
 	httpHeaderFieldValueType    = big.NewInt(1 << 3)
 	httpHeaderFieldEnv          = big.NewInt(1 << 4)
-	httpHeaderFieldV2Examples   = big.NewInt(1 << 5)
+	httpHeaderFieldV2Examples    = big.NewInt(1 << 5)
+	httpHeaderFieldClientDefault = big.NewInt(1 << 6)
 )
 
 type HttpHeader struct {
@@ -4109,7 +4110,8 @@ type HttpHeader struct {
 	Name         *common.NameAndWireValue `json:"name" url:"name"`
 	ValueType    *TypeReference           `json:"valueType" url:"valueType"`
 	Env          *string                  `json:"env,omitempty" url:"env,omitempty"`
-	V2Examples   *V2SchemaExamples        `json:"v2Examples,omitempty" url:"v2Examples,omitempty"`
+	V2Examples    *V2SchemaExamples        `json:"v2Examples,omitempty" url:"v2Examples,omitempty"`
+	ClientDefault *Literal                 `json:"clientDefault,omitempty" url:"clientDefault,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -4157,6 +4159,13 @@ func (h *HttpHeader) GetV2Examples() *V2SchemaExamples {
 		return nil
 	}
 	return h.V2Examples
+}
+
+func (h *HttpHeader) GetClientDefault() *Literal {
+	if h == nil {
+		return nil
+	}
+	return h.ClientDefault
 }
 
 func (h *HttpHeader) GetExtraProperties() map[string]interface{} {
@@ -4210,6 +4219,13 @@ func (h *HttpHeader) SetEnv(env *string) {
 func (h *HttpHeader) SetV2Examples(v2Examples *V2SchemaExamples) {
 	h.V2Examples = v2Examples
 	h.require(httpHeaderFieldV2Examples)
+}
+
+// SetClientDefault sets the ClientDefault field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (h *HttpHeader) SetClientDefault(clientDefault *Literal) {
+	h.ClientDefault = clientDefault
+	h.require(httpHeaderFieldClientDefault)
 }
 
 func (h *HttpHeader) UnmarshalJSON(data []byte) error {
@@ -6484,7 +6500,8 @@ var (
 	pathParameterFieldValueType  = big.NewInt(1 << 2)
 	pathParameterFieldLocation   = big.NewInt(1 << 3)
 	pathParameterFieldVariable   = big.NewInt(1 << 4)
-	pathParameterFieldV2Examples = big.NewInt(1 << 5)
+	pathParameterFieldV2Examples    = big.NewInt(1 << 5)
+	pathParameterFieldClientDefault = big.NewInt(1 << 6)
 )
 
 type PathParameter struct {
@@ -6493,7 +6510,8 @@ type PathParameter struct {
 	ValueType  *TypeReference        `json:"valueType" url:"valueType"`
 	Location   PathParameterLocation `json:"location" url:"location"`
 	Variable   *VariableId           `json:"variable,omitempty" url:"variable,omitempty"`
-	V2Examples *V2SchemaExamples     `json:"v2Examples,omitempty" url:"v2Examples,omitempty"`
+	V2Examples    *V2SchemaExamples     `json:"v2Examples,omitempty" url:"v2Examples,omitempty"`
+	ClientDefault *Literal              `json:"clientDefault,omitempty" url:"clientDefault,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -6541,6 +6559,13 @@ func (p *PathParameter) GetV2Examples() *V2SchemaExamples {
 		return nil
 	}
 	return p.V2Examples
+}
+
+func (p *PathParameter) GetClientDefault() *Literal {
+	if p == nil {
+		return nil
+	}
+	return p.ClientDefault
 }
 
 func (p *PathParameter) GetExtraProperties() map[string]interface{} {
@@ -6594,6 +6619,13 @@ func (p *PathParameter) SetVariable(variable *VariableId) {
 func (p *PathParameter) SetV2Examples(v2Examples *V2SchemaExamples) {
 	p.V2Examples = v2Examples
 	p.require(pathParameterFieldV2Examples)
+}
+
+// SetClientDefault sets the ClientDefault field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PathParameter) SetClientDefault(clientDefault *Literal) {
+	p.ClientDefault = clientDefault
+	p.require(pathParameterFieldClientDefault)
 }
 
 func (p *PathParameter) UnmarshalJSON(data []byte) error {
@@ -6819,6 +6851,7 @@ var (
 	queryParameterFieldValueType     = big.NewInt(1 << 3)
 	queryParameterFieldAllowMultiple = big.NewInt(1 << 4)
 	queryParameterFieldV2Examples    = big.NewInt(1 << 5)
+	queryParameterFieldClientDefault = big.NewInt(1 << 6)
 )
 
 type QueryParameter struct {
@@ -6828,6 +6861,7 @@ type QueryParameter struct {
 	ValueType     *TypeReference           `json:"valueType" url:"valueType"`
 	AllowMultiple bool                     `json:"allowMultiple" url:"allowMultiple"`
 	V2Examples    *V2SchemaExamples        `json:"v2Examples,omitempty" url:"v2Examples,omitempty"`
+	ClientDefault *Literal                 `json:"clientDefault,omitempty" url:"clientDefault,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -6875,6 +6909,13 @@ func (q *QueryParameter) GetV2Examples() *V2SchemaExamples {
 		return nil
 	}
 	return q.V2Examples
+}
+
+func (q *QueryParameter) GetClientDefault() *Literal {
+	if q == nil {
+		return nil
+	}
+	return q.ClientDefault
 }
 
 func (q *QueryParameter) GetExtraProperties() map[string]interface{} {
@@ -6928,6 +6969,13 @@ func (q *QueryParameter) SetAllowMultiple(allowMultiple bool) {
 func (q *QueryParameter) SetV2Examples(v2Examples *V2SchemaExamples) {
 	q.V2Examples = v2Examples
 	q.require(queryParameterFieldV2Examples)
+}
+
+// SetClientDefault sets the ClientDefault field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (q *QueryParameter) SetClientDefault(clientDefault *Literal) {
+	q.ClientDefault = clientDefault
+	q.require(queryParameterFieldClientDefault)
 }
 
 func (q *QueryParameter) UnmarshalJSON(data []byte) error {

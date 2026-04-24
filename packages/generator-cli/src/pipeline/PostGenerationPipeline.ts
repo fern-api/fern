@@ -121,8 +121,16 @@ export class PostGenerationPipeline {
                 const stepResult = await step.execute(pipelineContext);
 
                 if (step.name === "generationCommit") {
-                    result.steps.generationCommit = stepResult as GenerationCommitStepResult;
-                    pipelineContext.previousStepResults.generationCommit = stepResult as GenerationCommitStepResult;
+                    const gcResult = stepResult as GenerationCommitStepResult;
+                    // `preparedReplay` holds a live `simple-git` instance whose internal
+                    // `GitExecutor`/`GitExecutorChain` form a circular reference, which
+                    // causes `JSON.stringify(result)` at stdout emission to throw. Keep
+                    // the full object in the pipeline context so downstream steps
+                    // (AutoVersionStep, ReplayStep) still receive it, but strip it from
+                    // the serializable `result.steps.generationCommit`.
+                    const { preparedReplay: _preparedReplay, ...serializable } = gcResult;
+                    result.steps.generationCommit = serializable as GenerationCommitStepResult;
+                    pipelineContext.previousStepResults.generationCommit = gcResult;
                 } else if (step.name === "replay") {
                     result.steps.replay = stepResult as ReplayStepResult;
                     pipelineContext.previousStepResults.replay = stepResult as ReplayStepResult;

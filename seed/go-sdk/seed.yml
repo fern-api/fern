@@ -304,6 +304,10 @@ fixtures:
   inferred-auth-implicit-reference:
     - outputFolder: .
       customConfig: null
+  basic-auth-pw-omitted:
+    - outputFolder: wire-tests
+      customConfig:
+        enableWireTests: true
   go-nested-cross-package:
     - outputFolder: .
       customConfig: null

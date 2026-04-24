@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.65.5
+  changelogEntry:
+    - summary: |
+        Stop emitting the legacy `queryParameters` object at endpoint call sites. Query parameters
+        are now passed exclusively via `queryString` (produced by `core.url.queryBuilder()`).
+        The runtime `Fetcher.Args.queryParameters` field is retained (marked deprecated) for
+        custom-fetcher back-compat, and both `queryParameters` and `queryString` receive equivalent
+        log metadata and redaction of sensitive keys.
+      type: fix
+  createdAt: "2026-04-23"
+  irVersion: 66
 - version: 3.65.4
   changelogEntry:
     - summary: |
