@@ -562,6 +562,25 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 			}
 			continue
 		}
+		if header.ClientDefault != nil {
+			formatValue := `fmt.Sprintf("%v",` + literalToValue(header.ClientDefault) + ")"
+			f.P(header.Name.Name.CamelCase.SafeName, " := ", formatValue)
+			if header.Env != nil {
+				f.P(`if envValue := os.Getenv("`, *header.Env, `"); envValue != "" {`)
+				f.P(header.Name.Name.CamelCase.SafeName, " = envValue")
+				f.P("}")
+			}
+			value := valueTypeFormat.Prefix + "r." + header.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
+			if valueTypeFormat.IsOptional {
+				f.P("if r.", header.Name.Name.PascalCase.UnsafeName, " != nil {")
+			} else {
+				f.P("if r.", header.Name.Name.PascalCase.UnsafeName, " != ", valueTypeFormat.ZeroValue, " {")
+			}
+			f.P(header.Name.Name.CamelCase.SafeName, ` = fmt.Sprintf("%v", `, value, ")")
+			f.P("}")
+			f.P(`header.Set("`, header.Name.WireValue, `", `, header.Name.Name.CamelCase.SafeName, ")")
+			continue
+		}
 		value := valueTypeFormat.Prefix + "r." + header.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
 		if valueTypeFormat.IsOptional {
 			f.P("if r.", header.Name.Name.PascalCase.UnsafeName, " != nil {")
@@ -1380,7 +1399,11 @@ func (f *fileWriter) WriteClient(
 			f.P("if options.", header.Name.Name.PascalCase.UnsafeName, ` == "" {`)
 			f.P("options. ", header.Name.Name.PascalCase.UnsafeName, ` = os.Getenv("`, *header.Env, `")`)
 			f.P("}")
-			continue
+		}
+		if header.ClientDefault != nil && isStringType(header.ValueType) {
+			f.P("if options.", header.Name.Name.PascalCase.UnsafeName, ` == "" {`)
+			f.P("options. ", header.Name.Name.PascalCase.UnsafeName, ` = fmt.Sprintf("%v", `, literalToValue(header.ClientDefault), `)`)
+			f.P("}")
 		}
 	}
 	if oauthClientCredentials != nil {
@@ -1474,6 +1497,14 @@ func (f *fileWriter) WriteClient(
 		if len(endpoint.PathSuffix) > 0 {
 			baseURLVariable = `baseURL + ` + fmt.Sprintf(`"/%s"`, endpoint.PathSuffix)
 		}
+		for _, ppd := range endpoint.PathParameterDefaults {
+			if ppd.InitExpr != "" {
+				f.P(ppd.VarExpr, " := ", ppd.InitExpr)
+			}
+			f.P("if ", ppd.VarExpr, ` == "" {`)
+			f.P(ppd.VarExpr, " = fmt.Sprintf(\"%v\", ", ppd.DefaultVal, ")")
+			f.P("}")
+		}
 		if len(endpoint.PathParameterNames) > 0 {
 			f.P("endpointURL := internal.EncodeURL(")
 			f.P(baseURLVariable, ", ")
@@ -1492,6 +1523,12 @@ func (f *fileWriter) WriteClient(
 			for _, queryParameter := range endpoint.QueryParameters {
 				if isLiteral := (queryParameter.ValueType.Container != nil && queryParameter.ValueType.Container.Literal != nil); isLiteral {
 					f.P(`queryParams.Add("`, queryParameter.Name.WireValue, `", fmt.Sprintf("%v", `, literalToValue(queryParameter.ValueType.Container.Literal), "))")
+				} else if queryParameter.ClientDefault != nil {
+					// Add clientDefault for query params not already set by user.
+					// Use map indexing instead of Has() for Go <1.17 compatibility.
+					f.P(`if _, ok := queryParams["`, queryParameter.Name.WireValue, `"]; !ok {`)
+					f.P(`queryParams.Add("`, queryParameter.Name.WireValue, `", fmt.Sprintf("%v", `, literalToValue(queryParameter.ClientDefault), "))")
+					f.P("}")
 				}
 			}
 			if endpoint.PaginationInfo == nil {
@@ -1511,7 +1548,19 @@ func (f *fileWriter) WriteClient(
 			for _, header := range endpoint.Headers {
 				valueTypeFormat := formatForValueType(header.ValueType, f.types)
 				requestField := valueTypeFormat.Prefix + endpoint.RequestParameterName + "." + header.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
-				if valueTypeFormat.IsOptional {
+				if header.ClientDefault != nil && !isLiteralType(header.ValueType, f.types) {
+					// Use clientDefault as fallback for endpoint headers.
+					formatValue := `fmt.Sprintf("%v",` + literalToValue(header.ClientDefault) + ")"
+					f.P(header.Name.Name.CamelCase.SafeName, " := ", formatValue)
+					if valueTypeFormat.IsOptional {
+						f.P("if ", endpoint.RequestParameterName, ".", header.Name.Name.PascalCase.UnsafeName, " != nil {")
+					} else {
+						f.P("if ", endpoint.RequestParameterName, ".", header.Name.Name.PascalCase.UnsafeName, " != ", valueTypeFormat.ZeroValue, " {")
+					}
+					f.P(header.Name.Name.CamelCase.SafeName, ` = fmt.Sprintf("%v", `, requestField, ")")
+					f.P("}")
+					f.P(`headers.Add("`, header.Name.WireValue, `", `, header.Name.Name.CamelCase.SafeName, ")")
+				} else if valueTypeFormat.IsOptional {
 					f.P("if ", endpoint.RequestParameterName, ".", header.Name.Name.PascalCase.UnsafeName, "!= nil {")
 					f.P(`headers.Add("`, header.Name.WireValue, `", fmt.Sprintf("%v", `, requestField, "))")
 					f.P("}")
@@ -2686,6 +2735,12 @@ func filePropertyToInfo(fileProperty *ir.FileProperty) (*filePropertyInfo, error
 //
 // All of the fields are pre-formatted so that they can all be simple
 // strings.
+type pathParameterDefault struct {
+	VarExpr    string // Go local variable to check and assign (e.g., "_region")
+	InitExpr   string // Go expression to initialize VarExpr from (e.g., "request.Region"), empty if VarExpr is already the source
+	DefaultVal string // Go expression for the default value
+}
+
 type endpoint struct {
 	Name                        *common.Name
 	Docs                        *string
@@ -2701,6 +2756,7 @@ type endpoint struct {
 	ResponseInitializerFormat   string
 	ResponseIsOptionalParameter bool
 	PathParameterNames          []string
+	PathParameterDefaults       []pathParameterDefault
 	SignatureParameters         []*signatureParameter
 	ReturnValues                string
 	SuccessfulReturnValues      string
@@ -2759,10 +2815,23 @@ func (f *fileWriter) endpointFromIR(
 		pathParameterNames  []string
 		signatureParameters = []*signatureParameter{{parameter: "ctx context.Context"}}
 	)
+	var pathParameterDefaults []pathParameterDefault
 	if includePathParametersInWrappedRequest(irEndpoint, inlinePathParameters) {
 		requestParameterName := irEndpoint.SdkRequest.RequestParameterName.CamelCase.SafeName
 		for _, pathParameter := range irEndpoint.AllPathParameters {
-			pathParameterNames = append(pathParameterNames, fmt.Sprintf("%s.%s", requestParameterName, pathParameter.Name.PascalCase.UnsafeName))
+			requestFieldExpr := fmt.Sprintf("%s.%s", requestParameterName, pathParameter.Name.PascalCase.UnsafeName)
+			if pathParameter.ClientDefault != nil && isStringType(pathParameter.ValueType) {
+				// Use a local variable to avoid mutating the caller's request struct.
+				localVar := "_" + pathParameter.Name.CamelCase.SafeName
+				pathParameterNames = append(pathParameterNames, localVar)
+				pathParameterDefaults = append(pathParameterDefaults, pathParameterDefault{
+					VarExpr:    localVar,
+					InitExpr:   requestFieldExpr,
+					DefaultVal: literalToValue(pathParameter.ClientDefault),
+				})
+			} else {
+				pathParameterNames = append(pathParameterNames, requestFieldExpr)
+			}
 		}
 	} else {
 		for _, part := range irEndpoint.FullPath.Parts {
@@ -2782,6 +2851,12 @@ func (f *fileWriter) endpointFromIR(
 			pathParameterName := scope.Add(pathParameter.Name.CamelCase.SafeName)
 			pathParameterNames = append(pathParameterNames, pathParameterName)
 			pathParameterToScopedName[part.PathParameter] = pathParameterName
+			if pathParameter.ClientDefault != nil && isStringType(pathParameter.ValueType) {
+				pathParameterDefaults = append(pathParameterDefaults, pathParameterDefault{
+					VarExpr:    pathParameterName,
+					DefaultVal: literalToValue(pathParameter.ClientDefault),
+				})
+			}
 		}
 
 		// Preserve the order of path parameters specified in the API in the function signature.
@@ -3113,6 +3188,7 @@ func (f *fileWriter) endpointFromIR(
 		ResponseInitializerFormat:   responseInitializerFormat,
 		ResponseIsOptionalParameter: responseIsOptionalParameter,
 		PathParameterNames:          pathParameterNames,
+		PathParameterDefaults:       pathParameterDefaults,
 		SignatureParameters:         signatureParameters,
 		ReturnValues:                signatureReturnValues,
 		SuccessfulReturnValues:      successfulReturnValues,
@@ -4155,6 +4231,17 @@ func maybePrimitive(typeReference *ir.TypeReference) *ir.PrimitiveType {
 		return maybePrimitive(optionalOrNullableContainer)
 	}
 	return nil
+}
+
+// isStringType returns true if the given type reference is a non-optional string primitive.
+// This is used to guard clientDefault generation, since the `== ""` zero-value check
+// and `fmt.Sprintf` assignment only compile for Go `string` types (not `*string`).
+func isStringType(valueType *ir.TypeReference) bool {
+	if getOptionalOrNullableContainer(valueType) != nil {
+		return false
+	}
+	primitive := maybePrimitive(valueType)
+	return primitive != nil && primitive.V1 == common.PrimitiveTypeV1String
 }
 
 // isPrimitiveInteger returns true if the given primitive type is an integer.

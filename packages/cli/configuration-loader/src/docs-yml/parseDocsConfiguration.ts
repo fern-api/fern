@@ -385,6 +385,7 @@ function convertPageActions(
             openAi: pageActions.options?.chatgpt ?? true,
             claude: pageActions.options?.claude ?? true,
             cursor: pageActions.options?.cursor ?? true,
+            claudeCode: pageActions.options?.claudeCode ?? true,
             vscode: pageActions.options?.vscode ?? false,
             custom: (pageActions.options?.custom ?? []).map((action) =>
                 convertCustomPageAction(action, absoluteFilepathToDocsConfig)
@@ -409,6 +410,8 @@ function convertPageActionOption(
             return "claude";
         case "cursor":
             return "cursor";
+        case "claude-code":
+            return "claudeCode";
         case "vscode":
             return "vscode";
         default:

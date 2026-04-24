@@ -1,4 +1,46 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.93.0
+  changelogEntry:
+    - summary: |
+        Expose `claude-code` under `page-actions` in `docs.yml` so docs sites can toggle the
+        "Connect to Claude Code" button (e.g. `page-actions.options.claude-code: false` or
+        `page-actions.default: claude-code`).
+      type: feat
+  createdAt: "2026-04-24"
+  irVersion: 66
+- version: 4.92.0
+  changelogEntry:
+    - summary: |
+        `fern automations generate` now writes a richer GitHub Actions step
+        summary. The summary is an HTML table grouped by API and generator group
+        (with rowspan cells), a heading that shows the succeeded/total count on
+        failure, a duration column, and a links column with the PR, SDK repo, and
+        generators.yml entry (the latter deep-linked to the exact line when running
+        under GitHub Actions). Generators excluded from automation now surface as
+        explicit skipped rows with reasons (`Skipped - local output`, `Skipped -
+        opted out`), replacing the silent drop.
+      type: feat
+  createdAt: "2026-04-24"
+  irVersion: 66
+- version: 4.91.1
+  changelogEntry:
+    - summary: |
+        Update CLI v2 authentication error messages to reference `fern auth login` instead of `fern login`.
+        This covers SDK generation permission errors, docs publish auth failures, and missing-token hints
+        produced by CLI v2 code paths. The legacy `fern login` wording is preserved for the v1 CLI.
+      type: fix
+  createdAt: "2026-04-23"
+  irVersion: 66
+- version: 4.91.0
+  changelogEntry:
+    - summary: |
+        Remove the abandoned `@fern-api/docs-parsers` dependency from `@fern-api/docs-resolver` and drop
+        the hidden `fern fdr <path> --v2` code path that was the only remaining consumer. The upstream
+        package was deleted from fern-platform in https://github.com/fern-api/fern-platform/pull/2420
+        and hasn't been published since; removing it clears the transitive `uuid@9.0.1` from the lockfile.
+      type: internal
+  createdAt: "2026-04-23"
+  irVersion: 66
 - version: 4.90.0
   changelogEntry:
     - summary: |

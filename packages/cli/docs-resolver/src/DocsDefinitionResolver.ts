@@ -2138,6 +2138,7 @@ export class DocsDefinitionResolver {
                 openAi: this.parsedDocsConfig.pageActions.options.openAi,
                 claude: this.parsedDocsConfig.pageActions.options.claude,
                 cursor: this.parsedDocsConfig.pageActions.options.cursor,
+                claudeCode: this.parsedDocsConfig.pageActions.options.claudeCode,
                 vscode: this.parsedDocsConfig.pageActions.options.vscode,
                 custom: this.parsedDocsConfig.pageActions.options.custom.map((customAction) => ({
                     title: customAction.title,

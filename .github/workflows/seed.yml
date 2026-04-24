@@ -960,6 +960,7 @@ jobs:
           done
 
       - name: Upload PR results
+        if: always()
         uses: actions/upload-artifact@v6
         with:
           name: benchmark-pr-${{ matrix.generator }}
@@ -992,56 +993,75 @@ jobs:
           path: benchmark-pr-results
           merge-multiple: true
 
-      - name: Download baseline from latest nightly artifacts
+      - name: Download baseline from recent nightly artifacts
         env:
           GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
-          mkdir -p benchmark-baseline-results
+          mkdir -p benchmark-baseline-results/history
 
-          # Find the latest successful run of benchmark-baseline.yml on main
-          LATEST_RUN=$(gh api "repos/${{ github.repository }}/actions/workflows/benchmark-baseline.yml/runs?status=success&per_page=1&branch=main" \
-            --jq '.workflow_runs[0]' 2>/dev/null || true)
+          BASELINE_RUNS_TO_FETCH=5
 
-          if [ -z "$LATEST_RUN" ] || [ "$LATEST_RUN" = "null" ]; then
-            echo "::warning::No successful nightly baseline run found. Report will show N/A for main timings."
+          # Fetch the last N successful runs of benchmark-baseline.yml on main
+          RUNS=$(gh api "repos/${{ github.repository }}/actions/workflows/benchmark-baseline.yml/runs?status=success&per_page=${BASELINE_RUNS_TO_FETCH}&branch=main" \
+            --jq '.workflow_runs' 2>/dev/null || echo "[]")
+
+          RUN_COUNT=$(echo "$RUNS" | jq 'length')
+          if [ "$RUN_COUNT" -eq 0 ]; then
+            echo "::warning::No successful nightly baseline runs found. Report will show N/A for main timings."
             echo "Trigger the benchmark-baseline workflow manually to generate initial baselines."
             exit 0
           fi
 
-          RUN_ID=$(echo "$LATEST_RUN" | jq -r '.id')
-          RUN_DATE=$(echo "$LATEST_RUN" | jq -r '.created_at')
-          RUN_SHA=$(echo "$LATEST_RUN" | jq -r '.head_sha')
-          echo "Using baseline from nightly run ${RUN_ID} (${RUN_DATE}, sha: ${RUN_SHA})"
+          echo "Found ${RUN_COUNT} successful nightly baseline run(s)"
 
-          # Save metadata for the report footer
-          echo "{\"latest_timestamp\":\"${RUN_DATE}\",\"sha\":\"${RUN_SHA}\",\"run_id\":\"${RUN_ID}\"}" \
+          # Save metadata from the latest run for the report footer
+          LATEST_DATE=$(echo "$RUNS" | jq -r '.[0].created_at')
+          LATEST_SHA=$(echo "$RUNS" | jq -r '.[0].head_sha')
+          LATEST_RUN_ID=$(echo "$RUNS" | jq -r '.[0].id')
+          echo "{\"latest_timestamp\":\"${LATEST_DATE}\",\"sha\":\"${LATEST_SHA}\",\"run_id\":\"${LATEST_RUN_ID}\"}" \
             > benchmark-baseline-results/_metadata.json
 
-          # Download generator-only baseline artifacts
-          echo "Downloading generator-only baseline artifacts..."
-          gh run download "$RUN_ID" --repo "${{ github.repository }}" --pattern "benchmark-baseline-*" --dir /tmp/baseline-gen/ 2>/dev/null || true
-          for f in /tmp/baseline-gen/*/*.jsonl; do
-            [ -f "$f" ] && cp "$f" benchmark-baseline-results/
-          done
+          # Download artifacts from each run into history/<run-id>/
+          for i in $(seq 0 $(( RUN_COUNT - 1 ))); do
+            RUN_ID=$(echo "$RUNS" | jq -r ".[$i].id")
+            RUN_DATE=$(echo "$RUNS" | jq -r ".[$i].created_at")
+            RUN_DIR="benchmark-baseline-results/history/${RUN_ID}"
+            mkdir -p "${RUN_DIR}/e2e"
 
-          # Download E2E baseline artifacts
-          echo "Downloading E2E baseline artifacts..."
-          mkdir -p benchmark-baseline-results/e2e
-          gh run download "$RUN_ID" --repo "${{ github.repository }}" --pattern "benchmark-e2e-*" --dir /tmp/baseline-e2e/ 2>/dev/null || true
-          for f in /tmp/baseline-e2e/*/*.jsonl; do
-            [ -f "$f" ] && cp "$f" benchmark-baseline-results/e2e/
+            echo "Downloading baseline from run ${RUN_ID} (${RUN_DATE})..."
+
+            # Download generator-only baseline artifacts
+            gh run download "$RUN_ID" --repo "${{ github.repository }}" --pattern "benchmark-baseline-*" --dir "/tmp/baseline-gen-${RUN_ID}/" 2>/dev/null || true
+            for f in /tmp/baseline-gen-${RUN_ID}/*/*.jsonl; do
+              [ -f "$f" ] && cp "$f" "${RUN_DIR}/"
+            done
+
+            # Download E2E baseline artifacts
+            gh run download "$RUN_ID" --repo "${{ github.repository }}" --pattern "benchmark-e2e-*" --dir "/tmp/baseline-e2e-${RUN_ID}/" 2>/dev/null || true
+            for f in /tmp/baseline-e2e-${RUN_ID}/*/*.jsonl; do
+              [ -f "$f" ] && cp "$f" "${RUN_DIR}/e2e/"
+            done
+
+            # Remove empty run directories (check both generator and E2E artifacts)
+            if ! ls "${RUN_DIR}"/*.jsonl 1>/dev/null 2>&1 && ! ls "${RUN_DIR}"/e2e/*.jsonl 1>/dev/null 2>&1; then
+              echo "::warning::No artifacts found for run ${RUN_ID}, skipping"
+              rm -rf "${RUN_DIR}"
+            fi
           done
 
           # Check if we got any results
-          if ! ls benchmark-baseline-results/*.jsonl 1>/dev/null 2>&1; then
-            echo "::warning::No baseline artifacts found in run ${RUN_ID}. Artifacts may have expired."
+          HISTORY_COUNT=$(ls -d benchmark-baseline-results/history/*/ 2>/dev/null | wc -l)
+          if [ "$HISTORY_COUNT" -eq 0 ]; then
+            echo "::warning::No baseline artifacts found across ${RUN_COUNT} runs. Artifacts may have expired."
             echo "Trigger the benchmark-baseline workflow to generate fresh baselines."
             rm -f benchmark-baseline-results/_metadata.json
+            rm -rf benchmark-baseline-results/history
           else
-            echo "Baseline artifacts downloaded successfully:"
-            ls -la benchmark-baseline-results/
-            ls -la benchmark-baseline-results/e2e/ 2>/dev/null || echo "(no E2E results)"
+            echo "Baseline artifacts downloaded from ${HISTORY_COUNT} nightly run(s):"
+            for d in benchmark-baseline-results/history/*/; do
+              echo "  $(basename "$d"): $(ls "$d"/*.jsonl 2>/dev/null | wc -l) generator(s), $(ls "$d"/e2e/*.jsonl 2>/dev/null | wc -l) E2E"
+            done
           fi
 
       - name: Generate benchmark report
@@ -1228,40 +1248,62 @@ jobs:
           path: docs-pr-results
           merge-multiple: true
 
-      - name: Download docs baseline from latest nightly artifacts
+      - name: Download docs baseline from recent nightly artifacts
         env:
           GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
-          mkdir -p docs-baseline-results
+          mkdir -p docs-baseline-results/history
 
-          # Find the latest successful run of benchmark-baseline.yml on main
-          LATEST_RUN=$(gh api "repos/${{ github.repository }}/actions/workflows/benchmark-baseline.yml/runs?status=success&per_page=1&branch=main" \
-            --jq '.workflow_runs[0]' 2>/dev/null || true)
+          BASELINE_RUNS_TO_FETCH=5
 
-          if [ -z "$LATEST_RUN" ] || [ "$LATEST_RUN" = "null" ]; then
-            echo "::warning::No successful nightly baseline run found. Report will show N/A for main timings."
+          # Fetch the last N successful runs of benchmark-baseline.yml on main
+          RUNS=$(gh api "repos/${{ github.repository }}/actions/workflows/benchmark-baseline.yml/runs?status=success&per_page=${BASELINE_RUNS_TO_FETCH}&branch=main" \
+            --jq '.workflow_runs' 2>/dev/null || echo "[]")
+
+          RUN_COUNT=$(echo "$RUNS" | jq 'length')
+          if [ "$RUN_COUNT" -eq 0 ]; then
+            echo "::warning::No successful nightly baseline runs found. Report will show N/A for main timings."
             exit 0
           fi
 
-          RUN_ID=$(echo "$LATEST_RUN" | jq -r '.id')
-          RUN_DATE=$(echo "$LATEST_RUN" | jq -r '.created_at')
-          echo "Using baseline from nightly run ${RUN_ID} (${RUN_DATE})"
+          echo "Found ${RUN_COUNT} successful nightly baseline run(s)"
 
-          echo "{\"latest_timestamp\":\"${RUN_DATE}\",\"run_id\":\"${RUN_ID}\"}" \
+          # Save metadata from the latest run for the report footer
+          LATEST_DATE=$(echo "$RUNS" | jq -r '.[0].created_at')
+          LATEST_RUN_ID=$(echo "$RUNS" | jq -r '.[0].id')
+          echo "{\"latest_timestamp\":\"${LATEST_DATE}\",\"run_id\":\"${LATEST_RUN_ID}\"}" \
             > docs-baseline-results/_metadata.json
 
-          # Download docs baseline artifact
-          gh run download "$RUN_ID" --repo "${{ github.repository }}" --pattern "benchmark-docs-baseline" --dir /tmp/docs-baseline/ 2>/dev/null || true
-          for f in /tmp/docs-baseline/*/*.jsonl /tmp/docs-baseline/*.jsonl; do
-            [ -f "$f" ] && cp "$f" docs-baseline-results/
+          # Download docs baseline artifacts from each run into history/<run-id>/
+          for i in $(seq 0 $(( RUN_COUNT - 1 ))); do
+            RUN_ID=$(echo "$RUNS" | jq -r ".[$i].id")
+            RUN_DATE=$(echo "$RUNS" | jq -r ".[$i].created_at")
+            RUN_DIR="docs-baseline-results/history/${RUN_ID}"
+            mkdir -p "${RUN_DIR}"
+
+            echo "Downloading docs baseline from run ${RUN_ID} (${RUN_DATE})..."
+
+            gh run download "$RUN_ID" --repo "${{ github.repository }}" --pattern "benchmark-docs-baseline" --dir "/tmp/docs-baseline-${RUN_ID}/" 2>/dev/null || true
+            for f in /tmp/docs-baseline-${RUN_ID}/*/*.jsonl /tmp/docs-baseline-${RUN_ID}/*.jsonl; do
+              [ -f "$f" ] && cp "$f" "${RUN_DIR}/"
+            done
+
+            # Remove empty run directories
+            if ! ls "${RUN_DIR}"/*.jsonl 1>/dev/null 2>&1; then
+              echo "::warning::No docs artifacts found for run ${RUN_ID}, skipping"
+              rm -rf "${RUN_DIR}"
+            fi
           done
 
-          if ! ls docs-baseline-results/*.jsonl 1>/dev/null 2>&1; then
-            echo "::warning::No docs baseline artifacts found in run ${RUN_ID}."
+          # Check if we got any results
+          HISTORY_COUNT=$(ls -d docs-baseline-results/history/*/ 2>/dev/null | wc -l)
+          if [ "$HISTORY_COUNT" -eq 0 ]; then
+            echo "::warning::No docs baseline artifacts found across ${RUN_COUNT} runs."
             rm -f docs-baseline-results/_metadata.json
+            rm -rf docs-baseline-results/history
           else
-            echo "Docs baseline artifacts downloaded successfully"
+            echo "Docs baseline artifacts downloaded from ${HISTORY_COUNT} nightly run(s)"
           fi
 
       - name: Generate docs benchmark report

@@ -16,7 +16,7 @@ function makeGenerator(
 }
 
 const automationOn: AutomationRunOptions = {
-    recorder: { recordSuccess: () => undefined, recordFailure: () => undefined }
+    recorder: { recordSuccess: () => undefined, recordFailure: () => undefined, recordSkipped: () => undefined }
 };
 
 describe("shouldPreflightGenerator", () => {
