@@ -11,7 +11,7 @@
 //! async fn main() {
 //!     let config = ClientConfig {
 //!         username: Some("<username>".to_string()),
-//!         password: Some("<password>".to_string()),
+//!         password: Some("".to_string()),
 //!         ..Default::default()
 //!     };
 //!     let client = BasicAuthPwOmittedClient::new(config).expect("Failed to build client");
