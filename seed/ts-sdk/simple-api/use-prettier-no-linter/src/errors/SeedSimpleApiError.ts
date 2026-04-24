@@ -9,13 +9,19 @@ export class SeedSimpleApiError extends Error {
     public readonly rawResponse?: core.RawResponse;
     public readonly cause?: unknown;
 
-    constructor({ message, statusCode, body, rawResponse, cause }: {
-            message?: string;
-            statusCode?: number;
-            body?: unknown;
-            rawResponse?: core.RawResponse;
-            cause?: unknown;
-        }) {
+    constructor({
+        message,
+        statusCode,
+        body,
+        rawResponse,
+        cause,
+    }: {
+        message?: string;
+        statusCode?: number;
+        body?: unknown;
+        rawResponse?: core.RawResponse;
+        cause?: unknown;
+    }) {
         super(buildMessage({ message, statusCode, body }));
         Object.setPrototypeOf(this, new.target.prototype);
         if (Error.captureStackTrace) {
@@ -32,11 +38,15 @@ export class SeedSimpleApiError extends Error {
     }
 }
 
-function buildMessage({ message, statusCode, body }: {
-        message: string | undefined;
-        statusCode: number | undefined;
-        body: unknown | undefined;
-    }): string {
+function buildMessage({
+    message,
+    statusCode,
+    body,
+}: {
+    message: string | undefined;
+    statusCode: number | undefined;
+    body: unknown | undefined;
+}): string {
     let lines: string[] = [];
     if (message != null) {
         lines.push(message);

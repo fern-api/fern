@@ -1,14 +1,14 @@
 import fs from "fs";
 import { join } from "path";
 import { Readable } from "stream";
-import { toBinaryUploadRequest, type Uploadable } from "../../../core/file/index.js";
+import { toBinaryUploadRequest, type Uploadable } from "../../../core/file/index";
 
 describe("toBinaryUploadRequest", () => {
     const TEST_FILE_PATH = join(__dirname, "..", "test-file.txt");
     const TEST_FILE_SIZE = fs.statSync(TEST_FILE_PATH).size.toString();
 
     beforeEach(() => {
-        jest.clearAllMocks();
+        vi.clearAllMocks();
     });
 
     describe("Buffer input", () => {

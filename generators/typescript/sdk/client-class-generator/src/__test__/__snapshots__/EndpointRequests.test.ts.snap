@@ -2,7 +2,7 @@
 
 exports[`GeneratedBytesEndpointRequest > getBuildRequestStatements > generates binary upload request construction 1`] = `
 "const _binaryUploadRequest = core.toBinaryUploadRequest(uploadable);
-const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, _binaryUploadRequest.headers, requestOptions?.headers);"
+let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, _binaryUploadRequest.headers, requestOptions?.headers);"
 `;
 
 exports[`GeneratedDefaultEndpointRequest > getBuildRequestStatements > generates wrapper destructuring for wrapper sdkRequest 1`] = `
@@ -10,14 +10,14 @@ exports[`GeneratedDefaultEndpointRequest > getBuildRequestStatements > generates
 const _queryParams: Record<string, unknown> = {
     limit
 };
-const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);"
+let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);"
 `;
 
 exports[`GeneratedFileUploadEndpointRequest > getBuildRequestStatements > generates form data construction for single file 1`] = `
 "const _body = core.newFormData();
 _body.appendFile("document", document);
 const _maybeEncodedRequest = await core.getFormDataRequest(_body);
-const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ ...(_maybeEncodedRequest.headers) }), requestOptions?.headers);"
+let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ ...(_maybeEncodedRequest.headers) }), requestOptions?.headers);"
 `;
 
 exports[`GeneratedFileUploadEndpointRequest > getBuildRequestStatements > generates form data construction with body property 1`] = `
@@ -25,5 +25,5 @@ exports[`GeneratedFileUploadEndpointRequest > getBuildRequestStatements > genera
 _body.appendFile("document", document);
 _body.append("description", request.description.toString());
 const _maybeEncodedRequest = await core.getFormDataRequest(_body);
-const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ ...(_maybeEncodedRequest.headers) }), requestOptions?.headers);"
+let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ ...(_maybeEncodedRequest.headers) }), requestOptions?.headers);"
 `;

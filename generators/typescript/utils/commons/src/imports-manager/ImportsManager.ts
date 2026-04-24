@@ -153,20 +153,18 @@ export class ImportsManager {
         const sourcePathSegments = sourceFileDirPath.split("/").filter((segment) => segment.length > 0);
 
         // Pre-compute final module specifiers and sort using Biome's rules
-        const importsWithResolvedSpecifiers = Object.entries(this.imports).map(
+        const resolvedImports = Object.entries(this.imports).map(
             ([originalModuleSpecifier, combinedImportDeclarations]) => ({
                 moduleSpecifier: this.resolveModuleSpecifier(originalModuleSpecifier, sourcePathSegments),
                 combinedImportDeclarations
             })
         );
 
-        const sortedImports = importsWithResolvedSpecifiers.sort((a, b) =>
-            compareModuleSpecifiers(a.moduleSpecifier, b.moduleSpecifier)
-        );
+        resolvedImports.sort((a, b) => compareModuleSpecifiers(a.moduleSpecifier, b.moduleSpecifier));
 
         const importLines: string[] = [];
 
-        for (const { moduleSpecifier, combinedImportDeclarations } of sortedImports) {
+        for (const { moduleSpecifier, combinedImportDeclarations } of resolvedImports) {
             const namespaceImports = [...combinedImportDeclarations.namespaceImports];
             if (namespaceImports.length > 1) {
                 throw new Error(

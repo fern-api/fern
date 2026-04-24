@@ -39,7 +39,7 @@ export class UserClient {
 
     private async __get(id: string, requestOptions?: UserClient.RequestOptions): Promise<core.WithRawResponse<SeedSimpleApi.User>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(_authRequest.headers, this._options?.headers, requestOptions?.headers);
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(_authRequest.headers, this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), `/users/${core.url.encodePathParam(id)}`),
             method: "GET",

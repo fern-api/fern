@@ -38,7 +38,7 @@ export class UserClient {
         requestOptions?: UserClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedSimpleApi.User>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
             requestOptions?.headers,
