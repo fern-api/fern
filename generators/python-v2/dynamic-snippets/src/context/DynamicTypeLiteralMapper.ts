@@ -230,7 +230,7 @@ export class DynamicTypeLiteralMapper {
         }
         if (typedDictRequests) {
             const discriminantEntry: python.NamedValue = {
-                name: discriminatedUnion.discriminant.wireValue,
+                name: this.context.getPropertyName(discriminatedUnion.discriminant.name),
                 value: python.TypeInstantiation.str(discriminatedUnionTypeInstance.discriminantValue.wireValue)
             };
             return python.TypeInstantiation.typedDict([discriminantEntry, ...unionProperties], { multiline: true });
