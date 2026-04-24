@@ -542,9 +542,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                         // Escape any interpolation markers in the spec-supplied prefix so it
                         // cannot inject arbitrary Ruby code at SDK init time.
                         const safePrefix = header.prefix.replace(/#(?=[{$@])/g, "\\#");
-                        headerValueNode = ruby.TypeLiteral.interpolatedString(
-                            `${safePrefix} #{${headerParamName}}`
-                        );
+                        headerValueNode = ruby.TypeLiteral.interpolatedString(`${safePrefix} #{${headerParamName}}`);
                     } else {
                         // No prefix means the value is a single interpolation. Emit the
                         // parameter with `.to_s` directly instead of wrapping it in a

@@ -921,9 +921,7 @@ export class EndpointSnippetGenerator {
  * match that behavior here so the emitted snippet is both correct and free of
  * Lint/DuplicateHashKey offenses.
  */
-function dedupeKeywordArguments(
-    kwargs: ruby.KeywordArgument[] | undefined
-): ruby.KeywordArgument[] | undefined {
+function dedupeKeywordArguments(kwargs: ruby.KeywordArgument[] | undefined): ruby.KeywordArgument[] | undefined {
     if (kwargs == null || kwargs.length <= 1) {
         return kwargs;
     }
