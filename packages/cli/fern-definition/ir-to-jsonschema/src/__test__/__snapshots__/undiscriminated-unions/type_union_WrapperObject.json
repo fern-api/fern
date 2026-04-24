@@ -1,0 +1,56 @@
+{
+  "type": "object",
+  "properties": {
+    "inner": {
+      "$ref": "#/definitions/union.NestedObjectUnion"
+    },
+    "label": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "inner",
+    "label"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "union.LeafTypeA": {
+      "type": "object",
+      "properties": {
+        "alpha": {
+          "type": "string"
+        },
+        "beta": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "alpha",
+        "beta"
+      ],
+      "additionalProperties": false
+    },
+    "union.LeafTypeB": {
+      "type": "object",
+      "properties": {
+        "gamma": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "gamma"
+      ],
+      "additionalProperties": false
+    },
+    "union.NestedObjectUnion": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/union.LeafTypeA"
+        },
+        {
+          "$ref": "#/definitions/union.LeafTypeB"
+        }
+      ]
+    }
+  }
+}
