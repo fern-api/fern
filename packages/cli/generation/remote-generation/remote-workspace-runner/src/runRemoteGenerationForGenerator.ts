@@ -286,7 +286,10 @@ export async function runRemoteGenerationForGenerator({
         return {
             createdSnippets: false,
             snippetsS3PreSignedReadUrl: undefined,
-            actualVersion: version
+            actualVersion: version,
+            pullRequestUrl: undefined,
+            noChangesDetected: undefined,
+            publishTarget: undefined
         };
     }
 
