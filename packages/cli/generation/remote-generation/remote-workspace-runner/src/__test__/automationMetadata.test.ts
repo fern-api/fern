@@ -91,6 +91,16 @@ describe("findGeneratorLineNumber", () => {
         expect(await findGeneratorLineNumber(path, "fern-typescript-sdk", 0)).toBe(4);
     });
 
+    it("tolerates trailing YAML comments on the generator's name line", async () => {
+        const path = writeYml(`groups:
+  x:
+    generators:
+      - name: fern-typescript-sdk  # TODO: bump major
+        version: 3.0.0
+`);
+        expect(await findGeneratorLineNumber(path, "fernapi/fern-typescript-sdk", 0)).toBe(4);
+    });
+
     it("ignores list-item `name:` values that contain disallowed characters", async () => {
         // A publisher / package with a multi-word name could masquerade as a `- name:` entry.
         // Generator names are slugs — anything with whitespace is rejected.
