@@ -125,19 +125,19 @@ public final class UndiscriminatedUnionDeserializationTestGenerator extends Abst
             TestableVariant variant,
             List<TestableVariant> allVariants) {
 
-        // Only generate a test when this variant can be distinguished from at least one earlier variant
-        boolean isDistinguishable = false;
+        // Only generate a test when every earlier variant's guard will fail for this variant's payload.
+        // A guard fails when the payload is missing at least one of that variant's required keys.
+        boolean isDistinguishable = true;
         for (TestableVariant other : allVariants) {
             if (other == variant) {
                 break;
             }
-            if (!other.requiredKeys.containsAll(variant.requiredKeys)
-                    || !variant.requiredKeys.containsAll(other.requiredKeys)) {
-                isDistinguishable = true;
+            if (variant.requiredKeys.containsAll(other.requiredKeys)) {
+                isDistinguishable = false;
                 break;
             }
         }
-        if (!isDistinguishable && allVariants.indexOf(variant) > 0) {
+        if (!isDistinguishable) {
             return Optional.empty();
         }
 
