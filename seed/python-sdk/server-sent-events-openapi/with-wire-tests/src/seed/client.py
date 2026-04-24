@@ -7,6 +7,8 @@ from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .core.logging import LogConfig, Logger
 from .core.request_options import RequestOptions
 from .raw_client import AsyncRawSeedApi, RawSeedApi
+from .types.completion_full_response import CompletionFullResponse
+from .types.completion_stream_chunk import CompletionStreamChunk
 from .types.event import Event
 from .types.stream_data_context_response import StreamDataContextResponse
 from .types.stream_data_context_with_envelope_schema_response import StreamDataContextWithEnvelopeSchemaResponse
@@ -14,6 +16,9 @@ from .types.stream_no_context_response import StreamNoContextResponse
 from .types.stream_protocol_collision_response import StreamProtocolCollisionResponse
 from .types.stream_protocol_no_collision_response import StreamProtocolNoCollisionResponse
 from .types.stream_protocol_with_flat_schema_response import StreamProtocolWithFlatSchemaResponse
+from .types.stream_x_fern_streaming_union_request import StreamXFernStreamingUnionRequest
+from .types.stream_x_fern_streaming_union_stream_request import StreamXFernStreamingUnionStreamRequest
+from .types.validate_union_request_response import ValidateUnionRequestResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -313,6 +318,428 @@ class SeedApi:
             yield chunk
         """
         with self._raw_client.stream_oas_spec_native(query=query, request_options=request_options) as r:
+            yield from r.data
+
+    def stream_x_fern_streaming_condition_stream(
+        self, *, query: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Iterator[CompletionStreamChunk]:
+        """
+        Uses x-fern-streaming extension with stream-condition to split into streaming and non-streaming variants based on a request body field. The request body is a $ref to a named schema. The response and response-stream point to different schemas.
+
+        Parameters
+        ----------
+        query : str
+            The prompt or query to complete.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.Iterator[CompletionStreamChunk]
+
+
+        Examples
+        --------
+        from seed import SeedApi
+
+        client = SeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        response = client.stream_x_fern_streaming_condition_stream(
+            query="query",
+        )
+        for chunk in response:
+            yield chunk
+        """
+        with self._raw_client.stream_x_fern_streaming_condition_stream(
+            query=query, request_options=request_options
+        ) as r:
+            yield from r.data
+
+    def stream_x_fern_streaming_condition(
+        self, *, query: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> CompletionFullResponse:
+        """
+        Uses x-fern-streaming extension with stream-condition to split into streaming and non-streaming variants based on a request body field. The request body is a $ref to a named schema. The response and response-stream point to different schemas.
+
+        Parameters
+        ----------
+        query : str
+            The prompt or query to complete.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        CompletionFullResponse
+
+
+        Examples
+        --------
+        from seed import SeedApi
+
+        client = SeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.stream_x_fern_streaming_condition(
+            query="query",
+        )
+        """
+        _response = self._raw_client.stream_x_fern_streaming_condition(query=query, request_options=request_options)
+        return _response.data
+
+    def stream_x_fern_streaming_shared_schema_stream(
+        self, *, prompt: str, model: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Iterator[CompletionStreamChunk]:
+        """
+        Uses x-fern-streaming with stream-condition. The request body $ref (SharedCompletionRequest) is also referenced by a separate non-streaming endpoint (/validate-completion). This tests that the shared request schema is not excluded from the context during streaming processing.
+
+        Parameters
+        ----------
+        prompt : str
+            The prompt to complete.
+
+        model : str
+            The model to use.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.Iterator[CompletionStreamChunk]
+
+
+        Examples
+        --------
+        from seed import SeedApi
+
+        client = SeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        response = client.stream_x_fern_streaming_shared_schema_stream(
+            prompt="prompt",
+            model="model",
+        )
+        for chunk in response:
+            yield chunk
+        """
+        with self._raw_client.stream_x_fern_streaming_shared_schema_stream(
+            prompt=prompt, model=model, request_options=request_options
+        ) as r:
+            yield from r.data
+
+    def stream_x_fern_streaming_shared_schema(
+        self, *, prompt: str, model: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> CompletionFullResponse:
+        """
+        Uses x-fern-streaming with stream-condition. The request body $ref (SharedCompletionRequest) is also referenced by a separate non-streaming endpoint (/validate-completion). This tests that the shared request schema is not excluded from the context during streaming processing.
+
+        Parameters
+        ----------
+        prompt : str
+            The prompt to complete.
+
+        model : str
+            The model to use.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        CompletionFullResponse
+
+
+        Examples
+        --------
+        from seed import SeedApi
+
+        client = SeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.stream_x_fern_streaming_shared_schema(
+            prompt="prompt",
+            model="model",
+        )
+        """
+        _response = self._raw_client.stream_x_fern_streaming_shared_schema(
+            prompt=prompt, model=model, request_options=request_options
+        )
+        return _response.data
+
+    def validate_completion(
+        self,
+        *,
+        prompt: str,
+        model: str,
+        stream: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> CompletionFullResponse:
+        """
+        A non-streaming endpoint that references the same SharedCompletionRequest schema as endpoint 10. Ensures the shared $ref schema remains available and is not excluded during the streaming endpoint's processing.
+
+        Parameters
+        ----------
+        prompt : str
+            The prompt to complete.
+
+        model : str
+            The model to use.
+
+        stream : typing.Optional[bool]
+            Whether to stream the response.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        CompletionFullResponse
+            Validation result
+
+        Examples
+        --------
+        from seed import SeedApi
+
+        client = SeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.validate_completion(
+            prompt="prompt",
+            model="model",
+        )
+        """
+        _response = self._raw_client.validate_completion(
+            prompt=prompt, model=model, stream=stream, request_options=request_options
+        )
+        return _response.data
+
+    def stream_x_fern_streaming_union_stream(
+        self,
+        *,
+        request: StreamXFernStreamingUnionStreamRequest,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Iterator[CompletionStreamChunk]:
+        """
+        Uses x-fern-streaming with stream-condition where the request body is a discriminated union (oneOf) whose variants inherit the stream condition field (stream_response) from a shared base schema via allOf. Tests that the stream condition property is not duplicated in the generated output when the base schema is expanded into each variant.
+
+        Parameters
+        ----------
+        request : StreamXFernStreamingUnionStreamRequest
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.Iterator[CompletionStreamChunk]
+
+
+        Examples
+        --------
+        from seed import SeedApi, StreamXFernStreamingUnionStreamRequest_Message
+
+        client = SeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        response = client.stream_x_fern_streaming_union_stream(
+            request=StreamXFernStreamingUnionStreamRequest_Message(
+                prompt="prompt",
+                message="message",
+                stream_response=True,
+            ),
+        )
+        for chunk in response:
+            yield chunk
+        """
+        with self._raw_client.stream_x_fern_streaming_union_stream(
+            request=request, request_options=request_options
+        ) as r:
+            yield from r.data
+
+    def stream_x_fern_streaming_union(
+        self, *, request: StreamXFernStreamingUnionRequest, request_options: typing.Optional[RequestOptions] = None
+    ) -> CompletionFullResponse:
+        """
+        Uses x-fern-streaming with stream-condition where the request body is a discriminated union (oneOf) whose variants inherit the stream condition field (stream_response) from a shared base schema via allOf. Tests that the stream condition property is not duplicated in the generated output when the base schema is expanded into each variant.
+
+        Parameters
+        ----------
+        request : StreamXFernStreamingUnionRequest
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        CompletionFullResponse
+
+
+        Examples
+        --------
+        from seed import SeedApi, StreamXFernStreamingUnionRequest_Message
+
+        client = SeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.stream_x_fern_streaming_union(
+            request=StreamXFernStreamingUnionRequest_Message(
+                prompt="prompt",
+                message="message",
+                stream_response=False,
+            ),
+        )
+        """
+        _response = self._raw_client.stream_x_fern_streaming_union(request=request, request_options=request_options)
+        return _response.data
+
+    def validate_union_request(
+        self,
+        *,
+        prompt: str,
+        stream_response: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ValidateUnionRequestResponse:
+        """
+        References UnionStreamRequestBase directly, ensuring the base schema cannot be excluded from the context. This endpoint exists to verify that shared base schemas used in discriminated union variants with stream-condition remain available.
+
+        Parameters
+        ----------
+        prompt : str
+            The input prompt.
+
+        stream_response : typing.Optional[bool]
+            Whether to stream the response.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ValidateUnionRequestResponse
+            Validation result
+
+        Examples
+        --------
+        from seed import SeedApi
+
+        client = SeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.validate_union_request(
+            prompt="prompt",
+        )
+        """
+        _response = self._raw_client.validate_union_request(
+            prompt=prompt, stream_response=stream_response, request_options=request_options
+        )
+        return _response.data
+
+    def stream_x_fern_streaming_nullable_condition_stream(
+        self, *, query: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Iterator[CompletionStreamChunk]:
+        """
+        Uses x-fern-streaming with stream-condition where the stream field is nullable (type: ["boolean", "null"] in OAS 3.1). Previously, the spread order in the importer caused the nullable type array to overwrite the const literal, producing stream?: true | null instead of stream: true. The const/type override must be spread after the original property.
+
+        Parameters
+        ----------
+        query : str
+            The prompt or query to complete.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.Iterator[CompletionStreamChunk]
+
+
+        Examples
+        --------
+        from seed import SeedApi
+
+        client = SeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        response = client.stream_x_fern_streaming_nullable_condition_stream(
+            query="query",
+        )
+        for chunk in response:
+            yield chunk
+        """
+        with self._raw_client.stream_x_fern_streaming_nullable_condition_stream(
+            query=query, request_options=request_options
+        ) as r:
+            yield from r.data
+
+    def stream_x_fern_streaming_nullable_condition(
+        self, *, query: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> CompletionFullResponse:
+        """
+        Uses x-fern-streaming with stream-condition where the stream field is nullable (type: ["boolean", "null"] in OAS 3.1). Previously, the spread order in the importer caused the nullable type array to overwrite the const literal, producing stream?: true | null instead of stream: true. The const/type override must be spread after the original property.
+
+        Parameters
+        ----------
+        query : str
+            The prompt or query to complete.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        CompletionFullResponse
+
+
+        Examples
+        --------
+        from seed import SeedApi
+
+        client = SeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.stream_x_fern_streaming_nullable_condition(
+            query="query",
+        )
+        """
+        _response = self._raw_client.stream_x_fern_streaming_nullable_condition(
+            query=query, request_options=request_options
+        )
+        return _response.data
+
+    def stream_x_fern_streaming_sse_only(
+        self, *, query: typing.Optional[str] = OMIT, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Iterator[str]:
+        """
+        Uses x-fern-streaming with format: sse but no stream-condition. This represents a stream-only endpoint that always returns SSE. There is no non-streaming variant, and the response is always a stream of chunks.
+
+        Parameters
+        ----------
+        query : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.Iterator[str]
+            SSE stream of completion chunks
+
+        Examples
+        --------
+        from seed import SeedApi
+
+        client = SeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        response = client.stream_x_fern_streaming_sse_only()
+        for chunk in response:
+            yield chunk
+        """
+        with self._raw_client.stream_x_fern_streaming_sse_only(query=query, request_options=request_options) as r:
             yield from r.data
 
 
@@ -688,5 +1115,524 @@ class AsyncSeedApi:
         asyncio.run(main())
         """
         async with self._raw_client.stream_oas_spec_native(query=query, request_options=request_options) as r:
+            async for _chunk in r.data:
+                yield _chunk
+
+    async def stream_x_fern_streaming_condition_stream(
+        self, *, query: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.AsyncIterator[CompletionStreamChunk]:
+        """
+        Uses x-fern-streaming extension with stream-condition to split into streaming and non-streaming variants based on a request body field. The request body is a $ref to a named schema. The response and response-stream point to different schemas.
+
+        Parameters
+        ----------
+        query : str
+            The prompt or query to complete.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.AsyncIterator[CompletionStreamChunk]
+
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedApi
+
+        client = AsyncSeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            response = await client.stream_x_fern_streaming_condition_stream(
+                query="query",
+            )
+            async for chunk in response:
+                yield chunk
+
+
+        asyncio.run(main())
+        """
+        async with self._raw_client.stream_x_fern_streaming_condition_stream(
+            query=query, request_options=request_options
+        ) as r:
+            async for _chunk in r.data:
+                yield _chunk
+
+    async def stream_x_fern_streaming_condition(
+        self, *, query: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> CompletionFullResponse:
+        """
+        Uses x-fern-streaming extension with stream-condition to split into streaming and non-streaming variants based on a request body field. The request body is a $ref to a named schema. The response and response-stream point to different schemas.
+
+        Parameters
+        ----------
+        query : str
+            The prompt or query to complete.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        CompletionFullResponse
+
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedApi
+
+        client = AsyncSeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.stream_x_fern_streaming_condition(
+                query="query",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.stream_x_fern_streaming_condition(
+            query=query, request_options=request_options
+        )
+        return _response.data
+
+    async def stream_x_fern_streaming_shared_schema_stream(
+        self, *, prompt: str, model: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.AsyncIterator[CompletionStreamChunk]:
+        """
+        Uses x-fern-streaming with stream-condition. The request body $ref (SharedCompletionRequest) is also referenced by a separate non-streaming endpoint (/validate-completion). This tests that the shared request schema is not excluded from the context during streaming processing.
+
+        Parameters
+        ----------
+        prompt : str
+            The prompt to complete.
+
+        model : str
+            The model to use.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.AsyncIterator[CompletionStreamChunk]
+
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedApi
+
+        client = AsyncSeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            response = await client.stream_x_fern_streaming_shared_schema_stream(
+                prompt="prompt",
+                model="model",
+            )
+            async for chunk in response:
+                yield chunk
+
+
+        asyncio.run(main())
+        """
+        async with self._raw_client.stream_x_fern_streaming_shared_schema_stream(
+            prompt=prompt, model=model, request_options=request_options
+        ) as r:
+            async for _chunk in r.data:
+                yield _chunk
+
+    async def stream_x_fern_streaming_shared_schema(
+        self, *, prompt: str, model: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> CompletionFullResponse:
+        """
+        Uses x-fern-streaming with stream-condition. The request body $ref (SharedCompletionRequest) is also referenced by a separate non-streaming endpoint (/validate-completion). This tests that the shared request schema is not excluded from the context during streaming processing.
+
+        Parameters
+        ----------
+        prompt : str
+            The prompt to complete.
+
+        model : str
+            The model to use.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        CompletionFullResponse
+
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedApi
+
+        client = AsyncSeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.stream_x_fern_streaming_shared_schema(
+                prompt="prompt",
+                model="model",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.stream_x_fern_streaming_shared_schema(
+            prompt=prompt, model=model, request_options=request_options
+        )
+        return _response.data
+
+    async def validate_completion(
+        self,
+        *,
+        prompt: str,
+        model: str,
+        stream: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> CompletionFullResponse:
+        """
+        A non-streaming endpoint that references the same SharedCompletionRequest schema as endpoint 10. Ensures the shared $ref schema remains available and is not excluded during the streaming endpoint's processing.
+
+        Parameters
+        ----------
+        prompt : str
+            The prompt to complete.
+
+        model : str
+            The model to use.
+
+        stream : typing.Optional[bool]
+            Whether to stream the response.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        CompletionFullResponse
+            Validation result
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedApi
+
+        client = AsyncSeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.validate_completion(
+                prompt="prompt",
+                model="model",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.validate_completion(
+            prompt=prompt, model=model, stream=stream, request_options=request_options
+        )
+        return _response.data
+
+    async def stream_x_fern_streaming_union_stream(
+        self,
+        *,
+        request: StreamXFernStreamingUnionStreamRequest,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.AsyncIterator[CompletionStreamChunk]:
+        """
+        Uses x-fern-streaming with stream-condition where the request body is a discriminated union (oneOf) whose variants inherit the stream condition field (stream_response) from a shared base schema via allOf. Tests that the stream condition property is not duplicated in the generated output when the base schema is expanded into each variant.
+
+        Parameters
+        ----------
+        request : StreamXFernStreamingUnionStreamRequest
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.AsyncIterator[CompletionStreamChunk]
+
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedApi, StreamXFernStreamingUnionStreamRequest_Message
+
+        client = AsyncSeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            response = await client.stream_x_fern_streaming_union_stream(
+                request=StreamXFernStreamingUnionStreamRequest_Message(
+                    prompt="prompt",
+                    message="message",
+                    stream_response=True,
+                ),
+            )
+            async for chunk in response:
+                yield chunk
+
+
+        asyncio.run(main())
+        """
+        async with self._raw_client.stream_x_fern_streaming_union_stream(
+            request=request, request_options=request_options
+        ) as r:
+            async for _chunk in r.data:
+                yield _chunk
+
+    async def stream_x_fern_streaming_union(
+        self, *, request: StreamXFernStreamingUnionRequest, request_options: typing.Optional[RequestOptions] = None
+    ) -> CompletionFullResponse:
+        """
+        Uses x-fern-streaming with stream-condition where the request body is a discriminated union (oneOf) whose variants inherit the stream condition field (stream_response) from a shared base schema via allOf. Tests that the stream condition property is not duplicated in the generated output when the base schema is expanded into each variant.
+
+        Parameters
+        ----------
+        request : StreamXFernStreamingUnionRequest
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        CompletionFullResponse
+
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedApi, StreamXFernStreamingUnionRequest_Message
+
+        client = AsyncSeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.stream_x_fern_streaming_union(
+                request=StreamXFernStreamingUnionRequest_Message(
+                    prompt="prompt",
+                    message="message",
+                    stream_response=False,
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.stream_x_fern_streaming_union(
+            request=request, request_options=request_options
+        )
+        return _response.data
+
+    async def validate_union_request(
+        self,
+        *,
+        prompt: str,
+        stream_response: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ValidateUnionRequestResponse:
+        """
+        References UnionStreamRequestBase directly, ensuring the base schema cannot be excluded from the context. This endpoint exists to verify that shared base schemas used in discriminated union variants with stream-condition remain available.
+
+        Parameters
+        ----------
+        prompt : str
+            The input prompt.
+
+        stream_response : typing.Optional[bool]
+            Whether to stream the response.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ValidateUnionRequestResponse
+            Validation result
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedApi
+
+        client = AsyncSeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.validate_union_request(
+                prompt="prompt",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.validate_union_request(
+            prompt=prompt, stream_response=stream_response, request_options=request_options
+        )
+        return _response.data
+
+    async def stream_x_fern_streaming_nullable_condition_stream(
+        self, *, query: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.AsyncIterator[CompletionStreamChunk]:
+        """
+        Uses x-fern-streaming with stream-condition where the stream field is nullable (type: ["boolean", "null"] in OAS 3.1). Previously, the spread order in the importer caused the nullable type array to overwrite the const literal, producing stream?: true | null instead of stream: true. The const/type override must be spread after the original property.
+
+        Parameters
+        ----------
+        query : str
+            The prompt or query to complete.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.AsyncIterator[CompletionStreamChunk]
+
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedApi
+
+        client = AsyncSeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            response = await client.stream_x_fern_streaming_nullable_condition_stream(
+                query="query",
+            )
+            async for chunk in response:
+                yield chunk
+
+
+        asyncio.run(main())
+        """
+        async with self._raw_client.stream_x_fern_streaming_nullable_condition_stream(
+            query=query, request_options=request_options
+        ) as r:
+            async for _chunk in r.data:
+                yield _chunk
+
+    async def stream_x_fern_streaming_nullable_condition(
+        self, *, query: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> CompletionFullResponse:
+        """
+        Uses x-fern-streaming with stream-condition where the stream field is nullable (type: ["boolean", "null"] in OAS 3.1). Previously, the spread order in the importer caused the nullable type array to overwrite the const literal, producing stream?: true | null instead of stream: true. The const/type override must be spread after the original property.
+
+        Parameters
+        ----------
+        query : str
+            The prompt or query to complete.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        CompletionFullResponse
+
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedApi
+
+        client = AsyncSeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.stream_x_fern_streaming_nullable_condition(
+                query="query",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.stream_x_fern_streaming_nullable_condition(
+            query=query, request_options=request_options
+        )
+        return _response.data
+
+    async def stream_x_fern_streaming_sse_only(
+        self, *, query: typing.Optional[str] = OMIT, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.AsyncIterator[str]:
+        """
+        Uses x-fern-streaming with format: sse but no stream-condition. This represents a stream-only endpoint that always returns SSE. There is no non-streaming variant, and the response is always a stream of chunks.
+
+        Parameters
+        ----------
+        query : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.AsyncIterator[str]
+            SSE stream of completion chunks
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedApi
+
+        client = AsyncSeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            response = await client.stream_x_fern_streaming_sse_only()
+            async for chunk in response:
+                yield chunk
+
+
+        asyncio.run(main())
+        """
+        async with self._raw_client.stream_x_fern_streaming_sse_only(query=query, request_options=request_options) as r:
             async for _chunk in r.data:
                 yield _chunk
