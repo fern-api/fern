@@ -4,7 +4,7 @@ import { ValidationViolation } from "../../../ValidationViolation.js";
 import { ValidNavigationRule } from "../valid-navigation.js";
 
 describe("valid-navigation", () => {
-    it("simple", { timeout: 30_000 }, async () => {
+    it("simple", async () => {
         const violations = await getViolationsForRule({
             rule: ValidNavigationRule,
             absolutePathToWorkspace: join(

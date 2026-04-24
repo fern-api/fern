@@ -4,7 +4,7 @@ import { ValidationViolation } from "../../../ValidationViolation.js";
 import { ValidExampleTypeRule } from "../valid-example-type.js";
 
 describe("valid-example-type", () => {
-    it("simple", { timeout: 30_000 }, async () => {
+    it("simple", async () => {
         const violations = await getViolationsForRule({
             rule: ValidExampleTypeRule,
             absolutePathToWorkspace: join(
