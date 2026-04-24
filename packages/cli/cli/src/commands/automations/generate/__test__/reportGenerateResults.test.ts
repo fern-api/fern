@@ -68,6 +68,44 @@ describe("renderMarkdownSummary", () => {
         expect(md).toContain("## ❌ SDK generation failed (1/2 succeeded)");
     });
 
+    it("excludes skipped generators from the failure heading's denominator", () => {
+        // Denominator is attempted (succeeded + failed), not total results. With 4 succeeded,
+        // 2 failed, 4 skipped the heading reads "4/6 succeeded, 4 skipped" — not "4/10".
+        const makeSuccess = (name: string) => successResult({ generatorName: name });
+        const makeFailure = (name: string) =>
+            successResult({ generatorName: name, status: "failed", errorMessage: "boom" });
+        const makeSkipped = (name: string) =>
+            successResult({
+                generatorName: name,
+                status: "skipped",
+                skipReason: "local_output",
+                version: null,
+                pullRequestUrl: null
+            });
+        const md = renderMarkdownSummary([
+            makeSuccess("a"),
+            makeSuccess("b"),
+            makeSuccess("c"),
+            makeSuccess("d"),
+            makeFailure("e"),
+            makeFailure("f"),
+            makeSkipped("g"),
+            makeSkipped("h"),
+            makeSkipped("i"),
+            makeSkipped("j")
+        ]);
+        expect(md).toContain("## ❌ SDK generation failed (4/6 succeeded, 4 skipped)");
+    });
+
+    it("omits the skipped-count suffix from the failure heading when there are no skipped rows", () => {
+        const md = renderMarkdownSummary([
+            successResult(),
+            successResult({ generatorName: "other", status: "failed", errorMessage: "boom" })
+        ]);
+        expect(md).toContain("## ❌ SDK generation failed (1/2 succeeded)");
+        expect(md).not.toContain("skipped)");
+    });
+
     it("emits a 'skipped' heading when every generator was skipped (no successes, no failures)", () => {
         const md = renderMarkdownSummary([
             successResult({

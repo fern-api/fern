@@ -36,7 +36,7 @@ export function renderMarkdownSummary(results: readonly GeneratorRunResult[]): s
 
     const counts = countResults(results);
     const lines: string[] = [];
-    lines.push(renderHeading(counts, results.length));
+    lines.push(renderHeading(counts));
     lines.push("");
 
     const isMultiApi = new Set(results.map((r) => r.apiName).filter((n) => n != null)).size > 1;
@@ -138,9 +138,13 @@ function formatCounts(counts: GeneratorRunCounts): string {
     return `${counts.succeeded} succeeded · ${counts.skipped} skipped · ${counts.failed} failed`;
 }
 
-function renderHeading(counts: GeneratorRunCounts, total: number): string {
+function renderHeading(counts: GeneratorRunCounts): string {
+    // Denominator is `succeeded + failed` — skipped generators never ran, so including them
+    // would read as "6 failed out of 10" when only 2 actually failed.
+    const attempted = counts.succeeded + counts.failed;
     if (counts.failed > 0) {
-        return `## ❌ SDK generation failed (${counts.succeeded}/${total} succeeded)`;
+        const skipSuffix = counts.skipped > 0 ? `, ${counts.skipped} skipped` : "";
+        return `## ❌ SDK generation failed (${counts.succeeded}/${attempted} succeeded${skipSuffix})`;
     }
     // Avoid a misleading "succeeded" heading when every generator was skipped (e.g. all
     // configured for local-file-system output, or auto-release disabled at the root).
