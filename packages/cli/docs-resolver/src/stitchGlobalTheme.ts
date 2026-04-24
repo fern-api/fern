@@ -218,7 +218,7 @@ export async function stitchGlobalTheme({
 
     taskContext.logger.info(`Fetching global theme "${themeName}" for org "${organization}"...`);
 
-    const url = `${fdrOrigin}/v2/registry/themes/${organization}/${encodeURIComponent(themeName)}`;
+    const url = `${fdrOrigin}/v2/registry/themes/${encodeURIComponent(organization)}/${encodeURIComponent(themeName)}`;
     let themeConfig: Record<string, unknown>;
     try {
         const res = await fetch(url, {
@@ -272,7 +272,7 @@ export async function stitchGlobalTheme({
 
         if (body.config == null) {
             taskContext.failAndThrow(`Failed to fetch global theme "${themeName}": response missing "config" field`);
-            return docsWorkspace;
+            return docsWorkspace; // unreachable — TS needs this for definite-assignment of themeConfig
         }
 
         themeConfig = body.config;
@@ -287,7 +287,14 @@ export async function stitchGlobalTheme({
     const { path: tmpDirPath } = await tmp.dir({ prefix: "fern-theme-", unsafeCleanup: true });
     taskContext.logger.debug(`Downloading theme assets to ${tmpDirPath}`);
 
-    const resolvedConfig = await resolveThemeFileUrls(themeConfig, tmpDirPath);
+    let resolvedConfig: Record<string, unknown>;
+    try {
+        resolvedConfig = await resolveThemeFileUrls(themeConfig, tmpDirPath);
+    } catch (err) {
+        const detail = err instanceof Error ? `: ${err.message}` : "";
+        taskContext.failAndThrow(`Failed to download assets for global theme "${themeName}"${detail}`);
+        return docsWorkspace; // unreachable — TS needs this for definite-assignment of resolvedConfig
+    }
 
     const mergedRawConfig = mergeThemeOverride(docsWorkspace.config, resolvedConfig);
 

@@ -356,7 +356,10 @@ async function applyGlobalThemeIfNeeded(
         );
         return docsWorkspace;
     }
-    const fdrOrigin = process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com";
+    // FERN_FDR_ORIGIN is checked first because DEFAULT_FDR_ORIGIN is baked into the
+    // prod bundle at build time and cannot be overridden at runtime.
+    const fdrOrigin =
+        process.env.FERN_FDR_ORIGIN ?? process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com";
     return stitchGlobalTheme({ docsWorkspace, organization, fdrOrigin, token, taskContext: context });
 }
 
