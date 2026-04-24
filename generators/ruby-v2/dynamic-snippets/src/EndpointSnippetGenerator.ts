@@ -920,6 +920,12 @@ export class EndpointSnippetGenerator {
  * receives them via `**params`, so only the last value survives at runtime. We
  * match that behavior here so the emitted snippet is both correct and free of
  * Lint/DuplicateHashKey offenses.
+ *
+ * When a collision is detected we log a warning: the snippet is now valid, but
+ * the collision indicates a latent issue in the SDK surface itself
+ * (`**params` silently drops one of the arguments at runtime), which should be
+ * fixed at the Ruby-generator level (e.g. disambiguating colliding names like
+ * `string_path` vs `string_body`).
  */
 function dedupeKeywordArguments(kwargs: ruby.KeywordArgument[] | undefined): ruby.KeywordArgument[] | undefined {
     if (kwargs == null || kwargs.length <= 1) {
@@ -929,5 +935,17 @@ function dedupeKeywordArguments(kwargs: ruby.KeywordArgument[] | undefined): rub
     kwargs.forEach((arg, index) => {
         lastIndexByName.set(arg.name, index);
     });
-    return kwargs.filter((arg, index) => lastIndexByName.get(arg.name) === index);
+    const deduped = kwargs.filter((arg, index) => lastIndexByName.get(arg.name) === index);
+    if (deduped.length !== kwargs.length) {
+        const droppedNames = Array.from(
+            new Set(kwargs.map((arg) => arg.name).filter((name, index) => lastIndexByName.get(name) !== index))
+        );
+        // biome-ignore lint/suspicious/noConsole: surface collision to generator logs for follow-up
+        console.warn(
+            `[ruby-v2 dynamic-snippets] duplicate keyword argument name(s) [${droppedNames.join(
+                ", "
+            )}] in a generated snippet; keeping last occurrence to match **params runtime behavior. This indicates a latent name collision in the Ruby SDK method signature that should be disambiguated at the generator level.`
+        );
+    }
+    return deduped;
 }

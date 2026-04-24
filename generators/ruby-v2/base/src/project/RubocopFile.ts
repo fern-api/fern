@@ -106,8 +106,12 @@ Layout/FirstHashElementIndentation:
 
 # Match Layout/FirstHashElementIndentation: indent the first argument 2 spaces
 # from the start of the method call's line, regardless of parenthesis position.
+# Dynamic snippets are code samples, not standalone Ruby files; exclude them to
+# keep this config symmetric with Layout/FirstHashElementIndentation above.
 Layout/FirstArgumentIndentation:
   EnforcedStyle: consistent
+  Exclude:
+    - "dynamic-snippets/**/*"
 
 # The generator emits non-idiomatic class names (e.g. Get_With_Query, JSON_)
 # derived from IR type names whose wire form contains underscores or digits.

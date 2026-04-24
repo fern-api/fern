@@ -293,30 +293,37 @@ export class InferredAuthProviderGenerator extends FileGenerator<RubyFile, SdkCu
             returnType: ruby.Type.hash(ruby.Type.string(), ruby.Type.string())
         });
 
+        const hashEntries: { key: ruby.AstNode; value: ruby.AstNode }[] = [];
+        for (const header of authenticatedRequestHeaders) {
+            if (header == null) {
+                continue;
+            }
+            const headerName = header.headerName;
+            const valuePrefix = header.valuePrefix;
+
+            let valueNode: ruby.AstNode;
+            if (valuePrefix != null) {
+                // valuePrefix is API-spec-controlled; sanitize Ruby interpolation
+                // sigils so a spec cannot inject executable code (e.g.
+                // "Bearer #{Kernel.system(...)} ") into the generated
+                // auth_headers method. Matches RootClientGenerator.getRawClientHeaders.
+                const safePrefix = valuePrefix.replace(/#(?=[{$@])/g, "\\#");
+                valueNode = ruby.TypeLiteral.interpolatedString(`${safePrefix}#{access_token}`);
+            } else {
+                valueNode = ruby.codeblock("access_token");
+            }
+
+            hashEntries.push({
+                key: ruby.TypeLiteral.string(headerName),
+                value: valueNode
+            });
+        }
+
         method.addStatement(
             ruby.codeblock((writer) => {
                 writer.writeLine("access_token = token");
-                writer.writeLine("{");
-                writer.indent();
-
-                for (let i = 0; i < authenticatedRequestHeaders.length; i++) {
-                    const header = authenticatedRequestHeaders[i];
-                    if (header == null) {
-                        continue;
-                    }
-                    const headerName = header.headerName;
-                    const valuePrefix = header.valuePrefix;
-                    const comma = i < authenticatedRequestHeaders.length - 1 ? "," : "";
-
-                    if (valuePrefix != null) {
-                        writer.writeLine(`"${headerName}" => "${valuePrefix}#{access_token}"${comma}`);
-                    } else {
-                        writer.writeLine(`"${headerName}" => access_token${comma}`);
-                    }
-                }
-
-                writer.dedent();
-                writer.writeLine("}");
+                writer.writeNode(ruby.TypeLiteral.hash(hashEntries));
+                writer.writeNewLineIfLastLineNot();
             })
         );
 

@@ -77,8 +77,9 @@ export class TypeLiteral extends AstNode {
     public getDedupKey(): string | undefined {
         switch (this.internalType.type) {
             case "str":
-            case "interpolatedStr":
                 return `str:${this.internalType.value}`;
+            case "interpolatedStr":
+                return `istr:${this.internalType.value}`;
             case "int":
                 return `int:${this.internalType.value}`;
             case "float":

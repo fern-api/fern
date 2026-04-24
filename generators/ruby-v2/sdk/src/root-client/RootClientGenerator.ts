@@ -1,4 +1,5 @@
 import { getWireValue } from "@fern-api/base-generator";
+import { assertNever } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { FileGenerator, RubyFile } from "@fern-api/ruby-base";
@@ -559,8 +560,15 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     // Basic auth header is added conditionally in the constructor body
                     // to guard against nil credentials when auth is optional.
                     break;
-                default:
+                case "oauth":
+                case "inferred":
+                    // OAuth and inferred auth schemes attach their Authorization
+                    // headers via their own providers (OAuthProviderGenerator,
+                    // InferredAuthProviderGenerator) rather than the raw client's
+                    // default header hash, so there's nothing to add here.
                     break;
+                default:
+                    assertNever(header);
             }
         }
 
