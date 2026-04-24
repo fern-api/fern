@@ -84,6 +84,23 @@ components:
               title: Phone Number
             - type: "null"
               title: "Null"
+        one-of-with-sibling-properties:
+          description: A oneOf with sibling properties that become baseProperties on the undiscriminated union.
+          $ref: "#/components/schemas/ContactMethod"
+    ContactMethod:
+      title: ContactMethod
+      properties:
+        category:
+          type: string
+          description: The category of the contact method.
+        id:
+          type: string
+          description: A unique identifier for the contact method.
+      required:
+        - category
+      oneOf:
+        - $ref: "#/components/schemas/EmailObject"
+        - $ref: "#/components/schemas/PhoneNumberObject"
     SquareObject:
       title: Square
       type: object
