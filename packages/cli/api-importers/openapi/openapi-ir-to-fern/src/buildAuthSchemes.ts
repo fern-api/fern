@@ -47,6 +47,15 @@ export function buildAuthSchemes(context: OpenApiIrConverterContext): void {
                     basicAuthScheme.username.env = securityScheme.usernameEnvVar;
                 }
             }
+            if (securityScheme.usernamePlaceholder != null) {
+                if (basicAuthScheme.username === undefined) {
+                    basicAuthScheme.username = {
+                        placeholder: securityScheme.usernamePlaceholder
+                    };
+                } else {
+                    basicAuthScheme.username.placeholder = securityScheme.usernamePlaceholder;
+                }
+            }
 
             if (securityScheme.passwordVariableName != null) {
                 if (basicAuthScheme.password === undefined) {
@@ -64,6 +73,15 @@ export function buildAuthSchemes(context: OpenApiIrConverterContext): void {
                     };
                 } else {
                     basicAuthScheme.password.env = securityScheme.passwordEnvVar;
+                }
+            }
+            if (securityScheme.passwordPlaceholder != null) {
+                if (basicAuthScheme.password === undefined) {
+                    basicAuthScheme.password = {
+                        placeholder: securityScheme.passwordPlaceholder
+                    };
+                } else {
+                    basicAuthScheme.password.placeholder = securityScheme.passwordPlaceholder;
                 }
             }
 
@@ -98,6 +116,15 @@ export function buildAuthSchemes(context: OpenApiIrConverterContext): void {
                     bearerAuthScheme.token.env = securityScheme.tokenEnvVar;
                 }
             }
+            if (securityScheme.tokenPlaceholder != null) {
+                if (bearerAuthScheme.token === undefined) {
+                    bearerAuthScheme.token = {
+                        placeholder: securityScheme.tokenPlaceholder
+                    };
+                } else {
+                    bearerAuthScheme.token.placeholder = securityScheme.tokenPlaceholder;
+                }
+            }
 
             context.builder.addAuthScheme({
                 name: id,
@@ -119,6 +146,9 @@ export function buildAuthSchemes(context: OpenApiIrConverterContext): void {
                 }
                 if (securityScheme.prefix != null) {
                     schema.prefix = securityScheme.prefix;
+                }
+                if (securityScheme.headerPlaceholder != null) {
+                    schema.placeholder = securityScheme.headerPlaceholder;
                 }
                 context.builder.addAuthScheme({
                     name: id,

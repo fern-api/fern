@@ -10,6 +10,7 @@ export const AuthVariable: core.serialization.ObjectSchema<serializers.AuthVaria
     core.serialization
         .object({
             omit: core.serialization.boolean().optional(),
+            placeholder: core.serialization.string().optional(),
         })
         .extend(WithEnvironmentVariable)
         .extend(WithName);
@@ -17,5 +18,6 @@ export const AuthVariable: core.serialization.ObjectSchema<serializers.AuthVaria
 export declare namespace AuthVariable {
     export interface Raw extends WithEnvironmentVariable.Raw, WithName.Raw {
         omit?: boolean | null;
+        placeholder?: string | null;
     }
 }

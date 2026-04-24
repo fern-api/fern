@@ -10,11 +10,13 @@ export const BearerSecurityScheme: core.serialization.ObjectSchema<
 > = core.serialization.objectWithoutOptionalProperties({
     tokenVariableName: core.serialization.string().optional(),
     tokenEnvVar: core.serialization.string().optional(),
+    tokenPlaceholder: core.serialization.string().optional(),
 });
 
 export declare namespace BearerSecurityScheme {
     export interface Raw {
         tokenVariableName?: string | null;
         tokenEnvVar?: string | null;
+        tokenPlaceholder?: string | null;
     }
 }
