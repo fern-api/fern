@@ -1,0 +1,10 @@
+- summary: |
+    `fern automations generate` now writes a richer GitHub Actions step
+    summary. The summary is an HTML table grouped by API and generator group
+    (with rowspan cells), a heading that shows the succeeded/total count on
+    failure, a duration column, and a links column with the PR, SDK repo, and
+    generators.yml entry (the latter deep-linked to the exact line when running
+    under GitHub Actions). Generators excluded from automation now surface as
+    explicit skipped rows with reasons (`Skipped - local output`, `Skipped -
+    opted out`), replacing the silent drop.
+  type: feat

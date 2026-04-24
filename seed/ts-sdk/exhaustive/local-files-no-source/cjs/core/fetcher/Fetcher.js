@@ -75,16 +75,11 @@ const SENSITIVE_QUERY_PARAMS = new Set([
 ]);
 function redactQueryParameters(queryParameters) {
     if (queryParameters == null) {
-        return queryParameters;
+        return undefined;
     }
     const redacted = {};
     for (const [key, value] of Object.entries(queryParameters)) {
-        if (SENSITIVE_QUERY_PARAMS.has(key.toLowerCase())) {
-            redacted[key] = "[REDACTED]";
-        }
-        else {
-            redacted[key] = value;
-        }
+        redacted[key] = SENSITIVE_QUERY_PARAMS.has(key.toLowerCase()) ? "[REDACTED]" : value;
     }
     return redacted;
 }

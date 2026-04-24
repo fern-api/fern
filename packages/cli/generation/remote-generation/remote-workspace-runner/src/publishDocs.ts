@@ -130,7 +130,8 @@ export async function publishDocs({
     docsUrl,
     cliVersion,
     ciSource,
-    deployerAuthor
+    deployerAuthor,
+    loginCommand = "fern login"
 }: {
     token: FernToken;
     organization: string;
@@ -152,6 +153,11 @@ export async function publishDocs({
     cliVersion?: string;
     ciSource?: CISource;
     deployerAuthor?: { username?: string; email?: string };
+    /**
+     * CLI command to reference in auth-failure hints (e.g. 'fern login' for v1,
+     * 'fern auth login' for CLI v2). Defaults to 'fern login'.
+     */
+    loginCommand?: string;
 }): Promise<string> {
     const fdrOrigin = process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com";
     const isAirGapped = await detectAirGappedMode(`${fdrOrigin}/health`, context.logger);
@@ -321,7 +327,7 @@ export async function publishDocs({
                             previewId: previewId != null ? sanitizePreviewId(previewId) : undefined
                         });
                     } catch (error) {
-                        return await startDocsRegisterFailed(error, context, organization, domain);
+                        return await startDocsRegisterFailed(error, context, organization, domain, loginCommand);
                     }
                     urlToOutput = startDocsRegisterResponse.previewUrl;
                     docsRegistrationId = startDocsRegisterResponse.docsRegistrationId;
@@ -371,7 +377,7 @@ export async function publishDocs({
                             ...(isBasepathAware && { basepathAware: true })
                         });
                     } catch (error) {
-                        return startDocsRegisterFailed(error, context, organization, domain);
+                        return startDocsRegisterFailed(error, context, organization, domain, loginCommand);
                     }
                     docsRegistrationId = startDocsRegisterResponse.docsRegistrationId;
                     deployLocked = true;
@@ -723,7 +729,8 @@ async function startDocsRegisterFailed(
     error: unknown,
     context: TaskContext,
     organization: string,
-    domain: string
+    domain: string,
+    loginCommand: string
 ): Promise<never> {
     context.instrumentPostHogEvent({
         command: "docs-generation",
@@ -743,7 +750,7 @@ async function startDocsRegisterFailed(
         throw new DocsPublishConflictError();
     }
 
-    const authErrorMessage = getAuthenticationErrorMessage(error, organization, domain);
+    const authErrorMessage = getAuthenticationErrorMessage(error, organization, domain, loginCommand);
     if (authErrorMessage != null) {
         return context.failAndThrow(authErrorMessage, undefined, { code: CliError.Code.AuthError });
     }
@@ -763,12 +770,16 @@ async function startDocsRegisterFailed(
                 { code: CliError.Code.ConfigError }
             );
         case "UnauthorizedError":
-            return context.failAndThrow(buildAuthFailureMessage(domain, organization, errorContent), undefined, {
-                code: CliError.Code.AuthError
-            });
+            return context.failAndThrow(
+                buildAuthFailureMessage(domain, organization, errorContent, loginCommand),
+                undefined,
+                {
+                    code: CliError.Code.AuthError
+                }
+            );
         case "UserNotInOrgError":
             return context.failAndThrow(
-                `You do not belong to organization '${organization}'. Please run 'fern login' to ensure you are logged in with the correct account.\n\n` +
+                `You do not belong to organization '${organization}'. Please run '${loginCommand}' to ensure you are logged in with the correct account.\n\n` +
                     "Please ensure you have membership at https://dashboard.buildwithfern.com, and ask a team member for an invite if not.",
                 undefined,
                 { code: CliError.Code.AuthError }
@@ -784,15 +795,24 @@ async function startDocsRegisterFailed(
     }
 }
 
-function getAuthenticationErrorMessage(error: unknown, organization: string, domain: string): string | undefined {
-    const errorObj = error as Record<string, unknown>;
-    const content = errorObj?.content as Record<string, unknown> | undefined;
+function getAuthenticationErrorMessage(
+    error: unknown,
+    organization: string,
+    domain: string,
+    loginCommand: string
+): string | undefined {
+    if (typeof error !== "object" || error == null) {
+        return undefined;
+    }
+    const rawContent = (error as Record<string, unknown>).content;
+    const content: Record<string, unknown> | undefined =
+        typeof rawContent === "object" && rawContent != null ? (rawContent as Record<string, unknown>) : undefined;
 
     if (content?.reason === "status-code") {
-        const statusCode = content.statusCode as number | undefined;
+        const statusCode = typeof content.statusCode === "number" ? content.statusCode : undefined;
 
         if (statusCode === 401 || statusCode === 403) {
-            return buildAuthFailureMessage(domain, organization, content);
+            return buildAuthFailureMessage(domain, organization, content, loginCommand);
         }
     }
 
@@ -802,15 +822,16 @@ function getAuthenticationErrorMessage(error: unknown, organization: string, dom
 function buildAuthFailureMessage(
     domain: string,
     organization: string,
-    errorContent: Record<string, unknown> | undefined
+    errorContent: Record<string, unknown> | undefined,
+    loginCommand: string
 ): string {
     const { code, message } = extractServerError(errorContent);
 
     switch (code) {
         case "FORBIDDEN":
-            return buildForbiddenMessage(domain, organization, message);
+            return buildForbiddenMessage(domain, organization, message, loginCommand);
         case "UNAUTHORIZED":
-            return buildUnauthorizedMessage(organization, message);
+            return buildUnauthorizedMessage(organization, message, loginCommand);
         case "INTERNAL_SERVER_ERROR":
             return `An internal server error occurred while publishing docs to '${domain}'. Please try again or reach out to support@buildwithfern.com for assistance.`;
         default:
@@ -827,7 +848,12 @@ function buildAuthFailureMessage(
 // admin contact guidance, so we pass them through directly.
 const FORBIDDEN_ORG_MEMBERSHIP_PATTERNS = ["does not belong to organization", "User does not belong"];
 
-function buildForbiddenMessage(domain: string, organization: string, message: string | undefined): string {
+function buildForbiddenMessage(
+    domain: string,
+    organization: string,
+    message: string | undefined,
+    loginCommand: string
+): string {
     if (message == null) {
         return `You do not have permission to publish docs to '${domain}' under organization '${organization}'.`;
     }
@@ -835,7 +861,7 @@ function buildForbiddenMessage(domain: string, organization: string, message: st
     if (FORBIDDEN_ORG_MEMBERSHIP_PATTERNS.some((pattern) => message.includes(pattern))) {
         return (
             `You are not a member of organization '${organization}'. ` +
-            "Please run 'fern login' to ensure you are logged in with the correct account.\n\n" +
+            `Please run '${loginCommand}' to ensure you are logged in with the correct account.\n\n` +
             "Please ensure you have membership at https://dashboard.buildwithfern.com, and ask a team member for an invite if not."
         );
     }
@@ -843,14 +869,14 @@ function buildForbiddenMessage(domain: string, organization: string, message: st
     return message;
 }
 
-function buildUnauthorizedMessage(organization: string, message: string | undefined): string {
+function buildUnauthorizedMessage(organization: string, message: string | undefined, loginCommand: string): string {
     if (message != null && message.includes("Invalid authorization token")) {
-        return "Your authentication token is invalid or expired. " + "Please run 'fern login' to re-authenticate.";
+        return "Your authentication token is invalid or expired. " + `Please run '${loginCommand}' to re-authenticate.`;
     }
 
     return (
         `You are not authorized to publish docs under organization '${organization}'. ` +
-        "Please run 'fern login' to ensure you are logged in with the correct account.\n\n" +
+        `Please run '${loginCommand}' to ensure you are logged in with the correct account.\n\n` +
         "Please ensure you have membership at https://dashboard.buildwithfern.com, and ask a team member for an invite if not."
     );
 }

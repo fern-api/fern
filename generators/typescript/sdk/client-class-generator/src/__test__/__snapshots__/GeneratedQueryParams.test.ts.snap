@@ -97,7 +97,3 @@ exports[`GeneratedQueryParams > getBuildStatements > uses originalName when reta
     filter_data: serializer.jsonOrThrow(filter_data)
 };"
 `;
-
-exports[`GeneratedQueryParams > getReferenceTo > returns only requestOptions queryParams when no parameters 1`] = `"requestOptions?.queryParams"`;
-
-exports[`GeneratedQueryParams > getReferenceTo > returns spread with query params when parameters exist 1`] = `"{ ..._queryParams, ...requestOptions?.queryParams }"`;
