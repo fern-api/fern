@@ -77,6 +77,10 @@ fixtures:
     - outputFolder: package-path
       customConfig:
         packagePath: src/test-packagePath
+    - outputFolder: package-path-esm
+      customConfig:
+        packagePath: src/test-packagePath
+        useLegacyExports: false
     - outputFolder: no-custom-config
       customConfig: null
     - outputFolder: with-audiences
