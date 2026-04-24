@@ -1,12 +1,12 @@
 import { CliError } from "@fern-api/task-context";
 
 import { copyFile, mkdir, readFile, writeFile } from "fs/promises";
-import path from "path";
 import yaml from "js-yaml";
+import path from "path";
 import type { Argv } from "yargs";
-import { command } from "../../../_internal/command.js";
 import type { Context } from "../../../../context/Context.js";
 import type { GlobalArgs } from "../../../../context/GlobalArgs.js";
+import { command } from "../../../_internal/command.js";
 
 const THEME_ELIGIBLE_KEYS = new Set([
     "logo",
@@ -17,6 +17,7 @@ const THEME_ELIGIBLE_KEYS = new Set([
     "navbar-links",
     "footer-links",
     "background-image",
+    "theme",
     "css",
     "js",
     "header",

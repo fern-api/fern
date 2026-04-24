@@ -1,7 +1,7 @@
 import { CliError } from "@fern-api/task-context";
 import { execSync } from "child_process";
 import { createHash } from "crypto";
-import { readFile } from "fs/promises";
+import { access, readFile } from "fs/promises";
 import yaml from "js-yaml";
 import mime from "mime-types";
 import path from "path";
@@ -23,6 +23,13 @@ function getGitRoot(): string {
     } catch {
         return process.cwd();
     }
+}
+
+/** Build a forward-slash bind path regardless of OS. */
+function posixBindPath(gitRoot: string, absolutePath: string): string {
+    const repoName = path.basename(gitRoot);
+    const relative = path.relative(gitRoot, absolutePath);
+    return [repoName, ...relative.split(path.sep)].join("/");
 }
 
 /**
@@ -48,8 +55,7 @@ async function uploadToCas(
     if (!checkRes.ok) {
         const errorBody = await checkRes.text();
         throw new CliError({
-            message: `CAS check failed for ${label} (URL: ${casUrl}): HTTP ${checkRes.status} — ${errorBody}`,
-
+            message: `CAS check failed for ${label}: HTTP ${checkRes.status} — ${errorBody}`,
             code: CliError.Code.NetworkError
         });
     }
@@ -83,12 +89,18 @@ async function uploadToCas(
     return hash;
 }
 
-async function uploadFileToCas(absolutePath: string, orgId: string, token: string): Promise<string> {
+async function uploadFileToCas(absolutePath: string, orgId: string, token: string, gitRoot: string): Promise<string> {
+    try {
+        await access(absolutePath);
+    } catch {
+        throw new CliError({
+            message: `Referenced file not found: ${absolutePath}`,
+            code: CliError.Code.ConfigError
+        });
+    }
     const content = await readFile(absolutePath);
     const contentType = (mime.lookup(absolutePath) || "application/octet-stream") as string;
-    const gitRoot = getGitRoot();
-    const repoName = path.basename(gitRoot);
-    const bindPath = path.join(repoName, path.relative(gitRoot, absolutePath));
+    const bindPath = posixBindPath(gitRoot, absolutePath);
     return uploadToCas(content, contentType, bindPath, orgId, token, path.basename(absolutePath));
 }
 
@@ -99,6 +111,7 @@ async function processFileField(
     themeDir: string,
     orgId: string,
     token: string,
+    gitRoot: string,
     context: Context
 ): Promise<string | { hash: string } | undefined> {
     if (value == null) {
@@ -109,7 +122,7 @@ async function processFileField(
     }
     const abs = path.resolve(themeDir, value);
     context.stdout.debug(`  Uploading ${value}...`);
-    const hash = await uploadFileToCas(abs, orgId, token);
+    const hash = await uploadFileToCas(abs, orgId, token, gitRoot);
     return { hash };
 }
 
@@ -118,23 +131,25 @@ async function processThemeConfig(
     themeDir: string,
     orgId: string,
     token: string,
+    gitRoot: string,
     context: Context
 ): Promise<Record<string, unknown>> {
     const cfg: Record<string, unknown> = { ...raw };
+    const field = (v: string | undefined) => processFileField(v, themeDir, orgId, token, gitRoot, context);
 
     if (cfg.logo != null && typeof cfg.logo === "object") {
         const logo = { ...(cfg.logo as Record<string, unknown>) };
-        logo.dark = await processFileField(logo.dark as string | undefined, themeDir, orgId, token, context);
-        logo.light = await processFileField(logo.light as string | undefined, themeDir, orgId, token, context);
+        logo.dark = await field(logo.dark as string | undefined);
+        logo.light = await field(logo.light as string | undefined);
         cfg.logo = logo;
     }
 
-    cfg.favicon = await processFileField(cfg.favicon as string | undefined, themeDir, orgId, token, context);
+    cfg.favicon = await field(cfg.favicon as string | undefined);
 
     if (cfg["background-image"] != null && typeof cfg["background-image"] === "object") {
         const bg = { ...(cfg["background-image"] as Record<string, unknown>) };
-        bg.dark = await processFileField(bg.dark as string | undefined, themeDir, orgId, token, context);
-        bg.light = await processFileField(bg.light as string | undefined, themeDir, orgId, token, context);
+        bg.dark = await field(bg.dark as string | undefined);
+        bg.light = await field(bg.light as string | undefined);
         cfg["background-image"] = bg;
     }
 
@@ -151,8 +166,7 @@ async function processThemeConfig(
                             if (p == null) {
                                 return entry;
                             }
-                            const uploaded = await processFileField(p, themeDir, orgId, token, context);
-                            return { ...entry, path: uploaded };
+                            return { ...entry, path: await field(p) };
                         })
                     );
                 }
@@ -162,42 +176,35 @@ async function processThemeConfig(
         cfg.typography = typo;
     }
 
-    if (typeof cfg.css === "string") {
-        cfg.css = await processFileField(cfg.css, themeDir, orgId, token, context);
-    } else if (Array.isArray(cfg.css)) {
-        cfg.css = await Promise.all(
-            (cfg.css as unknown[]).map((item) => {
-                if (typeof item === "string") {
-                    return processFileField(item, themeDir, orgId, token, context);
+    if (cfg.css != null) {
+        const cssList: unknown[] = Array.isArray(cfg.css) ? cfg.css : [cfg.css];
+        cfg.css = await Promise.all(cssList.map((item) => (typeof item === "string" ? field(item) : item)));
+    }
+
+    if (cfg.js != null) {
+        const jsList: unknown[] = Array.isArray(cfg.js) ? cfg.js : [cfg.js];
+        cfg.js = await Promise.all(
+            jsList.map(async (entry) => {
+                if (typeof entry === "string") {
+                    return field(entry);
                 }
-                return item;
+                if (entry != null && typeof entry === "object") {
+                    const e = { ...(entry as Record<string, unknown>) };
+                    if (typeof e.url === "string") {
+                        return e;
+                    }
+                    if (typeof e.path === "string") {
+                        e.path = await field(e.path);
+                    }
+                    return e;
+                }
+                return entry;
             })
         );
     }
 
-    const rawJs = cfg.js;
-    const jsList: unknown[] = Array.isArray(rawJs) ? rawJs : rawJs != null ? [rawJs] : [];
-    cfg.js = await Promise.all(
-        jsList.map(async (entry) => {
-            if (typeof entry === "string") {
-                return processFileField(entry, themeDir, orgId, token, context);
-            }
-            if (entry != null && typeof entry === "object") {
-                const e = { ...(entry as Record<string, unknown>) };
-                if (typeof e.url === "string") {
-                    return e;
-                }
-                if (typeof e.path === "string") {
-                    e.path = await processFileField(e.path, themeDir, orgId, token, context);
-                }
-                return e;
-            }
-            return entry;
-        })
-    );
-
-    cfg.header = await processFileField(cfg.header as string | undefined, themeDir, orgId, token, context);
-    cfg.footer = await processFileField(cfg.footer as string | undefined, themeDir, orgId, token, context);
+    cfg.header = await field(cfg.header as string | undefined);
+    cfg.footer = await field(cfg.footer as string | undefined);
 
     return cfg;
 }
@@ -216,6 +223,7 @@ export class UploadThemeCommand {
     public async handle(context: Context, args: UploadThemeCommand.Args): Promise<void> {
         const token = await context.getTokenOrPrompt();
         const orgId = await this.resolveOrg(context, args);
+        const gitRoot = getGitRoot();
         const themeDir = args.directory
             ? path.resolve(process.cwd(), args.directory)
             : path.resolve(process.cwd(), "fern/theme");
@@ -224,7 +232,7 @@ export class UploadThemeCommand {
         let rawYaml: unknown;
         try {
             const content = await readFile(themeYmlPath, "utf-8");
-            rawYaml = yaml.load(content);
+            rawYaml = yaml.load(content, { schema: yaml.JSON_SCHEMA });
         } catch {
             throw new CliError({
                 message: `Could not read theme.yml at ${themeYmlPath}`,
@@ -242,15 +250,9 @@ export class UploadThemeCommand {
             themeDir,
             orgId,
             token.value,
+            gitRoot,
             context
         );
-
-        const configBuffer = Buffer.from(JSON.stringify(processedConfig));
-        context.stdout.debug(`  Uploading processed config...`);
-        const gitRoot = getGitRoot();
-        const repoName = path.basename(gitRoot);
-        const configBindPath = path.join(repoName, path.relative(gitRoot, themeDir), "theme.json");
-        await uploadToCas(configBuffer, "application/json", configBindPath, orgId, token.value, "theme config");
 
         const res = await fetch(`${FDR_ORIGIN}/v2/registry/themes/${orgId}`, {
             method: "POST",
