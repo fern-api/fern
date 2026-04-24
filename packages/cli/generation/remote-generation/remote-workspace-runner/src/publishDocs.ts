@@ -11,6 +11,7 @@ type DynamicIRUpload = APIV1Write.DynamicIRUpload;
 type SnippetsConfig = APIV1Write.SnippetsConfig;
 type DocsDefinition = DocsV1Write.DocsDefinition;
 
+import { stitchGlobalTheme } from "@fern-api/docs-resolver";
 import { AbsoluteFilePath, convertToFernHostRelativeFilePath, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { convertIrToDynamicSnippetsIr, generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { getOriginalName } from "@fern-api/ir-utils";
@@ -222,9 +223,17 @@ export async function publishDocs({
     process.on("SIGTERM", onSignal);
 
     try {
+        const effectiveWorkspace = await stitchGlobalTheme({
+            docsWorkspace,
+            organization,
+            fdrOrigin,
+            token: token.value,
+            taskContext: context
+        });
+
         const resolver = new DocsDefinitionResolver({
             domain,
-            docsWorkspace,
+            docsWorkspace: effectiveWorkspace,
             ossWorkspaces,
             apiWorkspaces,
             taskContext: context,
