@@ -84,6 +84,7 @@ import com.fern.java.generators.TypesGenerator;
 import com.fern.java.generators.TypesGenerator.Result;
 import com.fern.java.generators.WrappedAliasGenerator;
 import com.fern.java.generators.tests.QueryStringMapperTestGenerator;
+import com.fern.java.generators.tests.UndiscriminatedUnionDeserializationTestGenerator;
 import com.fern.java.output.GeneratedFile;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedObjectMapper;
@@ -833,6 +834,11 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         this.addGeneratedFile(testGenerator.generateFile());
         StreamTestGenerator streamTestGenerator = new StreamTestGenerator(context);
         this.addGeneratedFile(streamTestGenerator.generateFile());
+        UndiscriminatedUnionDeserializationTestGenerator unionDeserializationTestGenerator =
+                new UndiscriminatedUnionDeserializationTestGenerator(context);
+        if (unionDeserializationTestGenerator.hasTests()) {
+            this.addGeneratedFile(unionDeserializationTestGenerator.generateFile());
+        }
 
         // Generate wire tests if enabled
         if (customConfig.enableWireTests()) {
