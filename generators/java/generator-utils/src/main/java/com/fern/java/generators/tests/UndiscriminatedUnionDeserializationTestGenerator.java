@@ -138,8 +138,6 @@ public final class UndiscriminatedUnionDeserializationTestGenerator extends Abst
             }
         }
         if (!isDistinguishable && allVariants.indexOf(variant) > 0) {
-            // First variant is always testable; later ones only if distinguishable
-        } else if (allVariants.indexOf(variant) > 0 && !isDistinguishable) {
             return Optional.empty();
         }
 
