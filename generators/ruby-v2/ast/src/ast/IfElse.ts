@@ -1,9 +1,9 @@
 import { Begin } from "./Begin.js";
 import { Class_ } from "./Class.js";
-import { Method } from "./Method.js";
-import { Module_ } from "./Module.js";
 import { AstNode } from "./core/AstNode.js";
 import { Writer } from "./core/Writer.js";
+import { Method } from "./Method.js";
+import { Module_ } from "./Module.js";
 
 /**
  * Represents an if-else statement in the AST.
