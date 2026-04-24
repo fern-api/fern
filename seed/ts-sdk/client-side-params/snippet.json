@@ -1,5 +1,4 @@
 {
-    "types": {},
     "endpoints": [
         {
             "id": {
@@ -8,8 +7,8 @@
                 "identifier_override": "endpoint_service.listResources"
             },
             "snippet": {
-                "client": "import { SeedClientSideParamsClient } from \"@fern/client-side-params\";\n\nconst client = new SeedClientSideParamsClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.service.listResources({\n    page: 1,\n    per_page: 1,\n    sort: \"created_at\",\n    order: \"desc\",\n    include_totals: true,\n    fields: \"fields\",\n    search: \"search\"\n});\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedClientSideParamsClient } from \"@fern/client-side-params\";\n\nconst client = new SeedClientSideParamsClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.service.listResources({\n    page: 1,\n    per_page: 1,\n    sort: \"created_at\",\n    order: \"desc\",\n    include_totals: true,\n    fields: \"fields\",\n    search: \"search\"\n});\n"
             }
         },
         {
@@ -19,8 +18,8 @@
                 "identifier_override": "endpoint_service.getResource"
             },
             "snippet": {
-                "client": "import { SeedClientSideParamsClient } from \"@fern/client-side-params\";\n\nconst client = new SeedClientSideParamsClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.service.getResource(\"resourceId\", {\n    include_metadata: true,\n    format: \"json\"\n});\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedClientSideParamsClient } from \"@fern/client-side-params\";\n\nconst client = new SeedClientSideParamsClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.service.getResource(\"resourceId\", {\n    include_metadata: true,\n    format: \"json\"\n});\n"
             }
         },
         {
@@ -30,8 +29,8 @@
                 "identifier_override": "endpoint_service.searchResources"
             },
             "snippet": {
-                "client": "import { SeedClientSideParamsClient } from \"@fern/client-side-params\";\n\nconst client = new SeedClientSideParamsClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.service.searchResources({\n    limit: 1,\n    offset: 1,\n    query: \"query\",\n    filters: {\n        \"filters\": {\n            \"key\": \"value\"\n        }\n    }\n});\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedClientSideParamsClient } from \"@fern/client-side-params\";\n\nconst client = new SeedClientSideParamsClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.service.searchResources({\n    limit: 1,\n    offset: 1,\n    query: \"query\",\n    filters: {\n        \"filters\": {\n            \"key\": \"value\"\n        }\n    }\n});\n"
             }
         },
         {
@@ -41,8 +40,8 @@
                 "identifier_override": "endpoint_service.listUsers"
             },
             "snippet": {
-                "client": "import { SeedClientSideParamsClient } from \"@fern/client-side-params\";\n\nconst client = new SeedClientSideParamsClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.service.listUsers({\n    page: 1,\n    per_page: 1,\n    include_totals: true,\n    sort: \"sort\",\n    connection: \"connection\",\n    q: \"q\",\n    search_engine: \"search_engine\",\n    fields: \"fields\"\n});\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedClientSideParamsClient } from \"@fern/client-side-params\";\n\nconst client = new SeedClientSideParamsClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.service.listUsers({\n    page: 1,\n    per_page: 1,\n    include_totals: true,\n    sort: \"sort\",\n    connection: \"connection\",\n    q: \"q\",\n    search_engine: \"search_engine\",\n    fields: \"fields\"\n});\n"
             }
         },
         {
@@ -52,8 +51,8 @@
                 "identifier_override": "endpoint_service.getUserById"
             },
             "snippet": {
-                "client": "import { SeedClientSideParamsClient } from \"@fern/client-side-params\";\n\nconst client = new SeedClientSideParamsClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.service.getUserById(\"userId\", {\n    fields: \"fields\",\n    include_fields: true\n});\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedClientSideParamsClient } from \"@fern/client-side-params\";\n\nconst client = new SeedClientSideParamsClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.service.getUserById(\"userId\", {\n    fields: \"fields\",\n    include_fields: true\n});\n"
             }
         },
         {
@@ -63,8 +62,8 @@
                 "identifier_override": "endpoint_service.createUser"
             },
             "snippet": {
-                "client": "import { SeedClientSideParamsClient } from \"@fern/client-side-params\";\n\nconst client = new SeedClientSideParamsClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.service.createUser({\n    email: \"email\",\n    email_verified: true,\n    username: \"username\",\n    password: \"password\",\n    phone_number: \"phone_number\",\n    phone_verified: true,\n    user_metadata: {\n        \"user_metadata\": {\n            \"key\": \"value\"\n        }\n    },\n    app_metadata: {\n        \"app_metadata\": {\n            \"key\": \"value\"\n        }\n    },\n    connection: \"connection\"\n});\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedClientSideParamsClient } from \"@fern/client-side-params\";\n\nconst client = new SeedClientSideParamsClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.service.createUser({\n    email: \"email\",\n    email_verified: true,\n    username: \"username\",\n    password: \"password\",\n    phone_number: \"phone_number\",\n    phone_verified: true,\n    user_metadata: {\n        \"user_metadata\": {\n            \"key\": \"value\"\n        }\n    },\n    app_metadata: {\n        \"app_metadata\": {\n            \"key\": \"value\"\n        }\n    },\n    connection: \"connection\"\n});\n"
             }
         },
         {
@@ -74,8 +73,8 @@
                 "identifier_override": "endpoint_service.updateUser"
             },
             "snippet": {
-                "client": "import { SeedClientSideParamsClient } from \"@fern/client-side-params\";\n\nconst client = new SeedClientSideParamsClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.service.updateUser(\"userId\", {\n    email: \"email\",\n    email_verified: true,\n    username: \"username\",\n    phone_number: \"phone_number\",\n    phone_verified: true,\n    user_metadata: {\n        \"user_metadata\": {\n            \"key\": \"value\"\n        }\n    },\n    app_metadata: {\n        \"app_metadata\": {\n            \"key\": \"value\"\n        }\n    },\n    password: \"password\",\n    blocked: true\n});\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedClientSideParamsClient } from \"@fern/client-side-params\";\n\nconst client = new SeedClientSideParamsClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.service.updateUser(\"userId\", {\n    email: \"email\",\n    email_verified: true,\n    username: \"username\",\n    phone_number: \"phone_number\",\n    phone_verified: true,\n    user_metadata: {\n        \"user_metadata\": {\n            \"key\": \"value\"\n        }\n    },\n    app_metadata: {\n        \"app_metadata\": {\n            \"key\": \"value\"\n        }\n    },\n    password: \"password\",\n    blocked: true\n});\n"
             }
         },
         {
@@ -85,8 +84,8 @@
                 "identifier_override": "endpoint_service.deleteUser"
             },
             "snippet": {
-                "client": "import { SeedClientSideParamsClient } from \"@fern/client-side-params\";\n\nconst client = new SeedClientSideParamsClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.service.deleteUser(\"userId\");\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedClientSideParamsClient } from \"@fern/client-side-params\";\n\nconst client = new SeedClientSideParamsClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.service.deleteUser(\"userId\");\n"
             }
         },
         {
@@ -96,8 +95,8 @@
                 "identifier_override": "endpoint_service.listConnections"
             },
             "snippet": {
-                "client": "import { SeedClientSideParamsClient } from \"@fern/client-side-params\";\n\nconst client = new SeedClientSideParamsClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.service.listConnections({\n    strategy: \"strategy\",\n    name: \"name\",\n    fields: \"fields\"\n});\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedClientSideParamsClient } from \"@fern/client-side-params\";\n\nconst client = new SeedClientSideParamsClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.service.listConnections({\n    strategy: \"strategy\",\n    name: \"name\",\n    fields: \"fields\"\n});\n"
             }
         },
         {
@@ -107,8 +106,8 @@
                 "identifier_override": "endpoint_service.getConnection"
             },
             "snippet": {
-                "client": "import { SeedClientSideParamsClient } from \"@fern/client-side-params\";\n\nconst client = new SeedClientSideParamsClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.service.getConnection(\"connectionId\", {\n    fields: \"fields\"\n});\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedClientSideParamsClient } from \"@fern/client-side-params\";\n\nconst client = new SeedClientSideParamsClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.service.getConnection(\"connectionId\", {\n    fields: \"fields\"\n});\n"
             }
         },
         {
@@ -118,8 +117,8 @@
                 "identifier_override": "endpoint_service.listClients"
             },
             "snippet": {
-                "client": "import { SeedClientSideParamsClient } from \"@fern/client-side-params\";\n\nconst client = new SeedClientSideParamsClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.service.listClients({\n    fields: \"fields\",\n    include_fields: true,\n    page: 1,\n    per_page: 1,\n    include_totals: true,\n    is_global: true,\n    is_first_party: true,\n    app_type: [\"app_type\", \"app_type\"]\n});\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedClientSideParamsClient } from \"@fern/client-side-params\";\n\nconst client = new SeedClientSideParamsClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.service.listClients({\n    fields: \"fields\",\n    include_fields: true,\n    page: 1,\n    per_page: 1,\n    include_totals: true,\n    is_global: true,\n    is_first_party: true,\n    app_type: [\"app_type\", \"app_type\"]\n});\n"
             }
         },
         {
@@ -129,9 +128,10 @@
                 "identifier_override": "endpoint_service.getClient"
             },
             "snippet": {
-                "client": "import { SeedClientSideParamsClient } from \"@fern/client-side-params\";\n\nconst client = new SeedClientSideParamsClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.service.getClient(\"clientId\", {\n    fields: \"fields\",\n    include_fields: true\n});\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedClientSideParamsClient } from \"@fern/client-side-params\";\n\nconst client = new SeedClientSideParamsClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.service.getClient(\"clientId\", {\n    fields: \"fields\",\n    include_fields: true\n});\n"
             }
         }
-    ]
+    ],
+    "types": {}
 }

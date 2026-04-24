@@ -1,5 +1,4 @@
 {
-    "types": {},
     "endpoints": [
         {
             "id": {
@@ -8,9 +7,10 @@
                 "identifier_override": "endpoint_dummy.getDummy"
             },
             "snippet": {
-                "client": "import { SeedSingleUrlEnvironmentNoDefaultClient, SeedSingleUrlEnvironmentNoDefaultEnvironment } from \"@fern/single-url-environment-no-default\";\n\nconst client = new SeedSingleUrlEnvironmentNoDefaultClient({ environment: SeedSingleUrlEnvironmentNoDefaultEnvironment.Production, token: \"YOUR_TOKEN\" });\nawait client.dummy.getDummy();\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedSingleUrlEnvironmentNoDefaultClient, SeedSingleUrlEnvironmentNoDefaultEnvironment } from \"@fern/single-url-environment-no-default\";\n\nconst client = new SeedSingleUrlEnvironmentNoDefaultClient({ environment: SeedSingleUrlEnvironmentNoDefaultEnvironment.Production, token: \"YOUR_TOKEN\" });\nawait client.dummy.getDummy();\n"
             }
         }
-    ]
+    ],
+    "types": {}
 }

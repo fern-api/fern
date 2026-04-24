@@ -1,5 +1,4 @@
 {
-    "types": {},
     "endpoints": [
         {
             "id": {
@@ -8,8 +7,8 @@
                 "identifier_override": "endpoint_.getUsers"
             },
             "snippet": {
-                "client": "import { SeedApiClient } from \"@fern/server-url-templating\";\n\nconst client = new SeedApiClient;\nawait client.getUsers();\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/server-url-templating\";\n\nconst client = new SeedApiClient;\nawait client.getUsers();\n"
             }
         },
         {
@@ -19,8 +18,8 @@
                 "identifier_override": "endpoint_.getUser"
             },
             "snippet": {
-                "client": "import { SeedApiClient } from \"@fern/server-url-templating\";\n\nconst client = new SeedApiClient;\nawait client.getUser({\n    userId: \"userId\"\n});\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/server-url-templating\";\n\nconst client = new SeedApiClient;\nawait client.getUser({\n    userId: \"userId\"\n});\n"
             }
         },
         {
@@ -30,9 +29,10 @@
                 "identifier_override": "endpoint_.getToken"
             },
             "snippet": {
-                "client": "import { SeedApiClient } from \"@fern/server-url-templating\";\n\nconst client = new SeedApiClient;\nawait client.getToken({\n    client_id: \"client_id\",\n    client_secret: \"client_secret\"\n});\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/server-url-templating\";\n\nconst client = new SeedApiClient;\nawait client.getToken({\n    client_id: \"client_id\",\n    client_secret: \"client_secret\"\n});\n"
             }
         }
-    ]
+    ],
+    "types": {}
 }

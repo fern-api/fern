@@ -1,4 +1,4 @@
-import { anySignal, getTimeoutSignal } from "../../../core/fetcher/signals.js";
+import { anySignal, getTimeoutSignal } from "../../../core/fetcher/signals";
 
 describe("Test getTimeoutSignal", () => {
     beforeEach(() => {

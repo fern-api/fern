@@ -1,5 +1,4 @@
 {
-    "types": {},
     "endpoints": [
         {
             "id": {
@@ -8,8 +7,8 @@
                 "identifier_override": "endpoint_.searchRuleTypes"
             },
             "snippet": {
-                "client": "import { SeedApiClient } from \"@fern/allof\";\n\nconst client = new SeedApiClient;\nawait client.searchRuleTypes();\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/allof\";\n\nconst client = new SeedApiClient;\nawait client.searchRuleTypes();\n"
             }
         },
         {
@@ -19,8 +18,8 @@
                 "identifier_override": "endpoint_.createRule"
             },
             "snippet": {
-                "client": "import { SeedApiClient } from \"@fern/allof\";\n\nconst client = new SeedApiClient;\nawait client.createRule({\n    name: \"name\",\n    executionContext: \"prod\"\n});\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/allof\";\n\nconst client = new SeedApiClient;\nawait client.createRule({\n    name: \"name\",\n    executionContext: \"prod\"\n});\n"
             }
         },
         {
@@ -30,8 +29,8 @@
                 "identifier_override": "endpoint_.listUsers"
             },
             "snippet": {
-                "client": "import { SeedApiClient } from \"@fern/allof\";\n\nconst client = new SeedApiClient;\nawait client.listUsers();\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/allof\";\n\nconst client = new SeedApiClient;\nawait client.listUsers();\n"
             }
         },
         {
@@ -41,8 +40,8 @@
                 "identifier_override": "endpoint_.getEntity"
             },
             "snippet": {
-                "client": "import { SeedApiClient } from \"@fern/allof\";\n\nconst client = new SeedApiClient;\nawait client.getEntity();\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/allof\";\n\nconst client = new SeedApiClient;\nawait client.getEntity();\n"
             }
         },
         {
@@ -52,9 +51,10 @@
                 "identifier_override": "endpoint_.getOrganization"
             },
             "snippet": {
-                "client": "import { SeedApiClient } from \"@fern/allof\";\n\nconst client = new SeedApiClient;\nawait client.getOrganization();\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/allof\";\n\nconst client = new SeedApiClient;\nawait client.getOrganization();\n"
             }
         }
-    ]
+    ],
+    "types": {}
 }

@@ -1,5 +1,5 @@
-import { Mock } from "vitest";
 import { makePassthroughRequest } from "../../../src/core/fetcher/makePassthroughRequest";
+import { Mock } from "vitest";
 
 describe("makePassthroughRequest", () => {
     let mockFetch: Mock;

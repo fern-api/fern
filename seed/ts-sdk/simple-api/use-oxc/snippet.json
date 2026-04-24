@@ -1,5 +1,4 @@
 {
-    "types": {},
     "endpoints": [
         {
             "id": {
@@ -8,9 +7,10 @@
                 "identifier_override": "endpoint_user.get"
             },
             "snippet": {
-                "client": "import { SeedSimpleApiClient, SeedSimpleApiEnvironment } from \"@fern/simple-api\";\n\nconst client = new SeedSimpleApiClient({ environment: SeedSimpleApiEnvironment.Production, token: \"YOUR_TOKEN\" });\nawait client.user.get(\"id\");\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedSimpleApiClient, SeedSimpleApiEnvironment } from \"@fern/simple-api\";\n\nconst client = new SeedSimpleApiClient({ environment: SeedSimpleApiEnvironment.Production, token: \"YOUR_TOKEN\" });\nawait client.user.get(\"id\");\n"
             }
         }
-    ]
+    ],
+    "types": {}
 }

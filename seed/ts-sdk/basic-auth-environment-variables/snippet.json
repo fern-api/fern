@@ -1,5 +1,4 @@
 {
-    "types": {},
     "endpoints": [
         {
             "id": {
@@ -8,8 +7,8 @@
                 "identifier_override": "endpoint_basic-auth.getWithBasicAuth"
             },
             "snippet": {
-                "client": "import { SeedBasicAuthEnvironmentVariablesClient } from \"@fern/basic-auth-environment-variables\";\n\nconst client = new SeedBasicAuthEnvironmentVariablesClient({ environment: \"YOUR_BASE_URL\", username: \"YOUR_USERNAME\", accessToken: \"YOUR_ACCESS_TOKEN\" });\nawait client.basicAuth.getWithBasicAuth();\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedBasicAuthEnvironmentVariablesClient } from \"@fern/basic-auth-environment-variables\";\n\nconst client = new SeedBasicAuthEnvironmentVariablesClient({ environment: \"YOUR_BASE_URL\", username: \"YOUR_USERNAME\", accessToken: \"YOUR_ACCESS_TOKEN\" });\nawait client.basicAuth.getWithBasicAuth();\n"
             }
         },
         {
@@ -19,9 +18,10 @@
                 "identifier_override": "endpoint_basic-auth.postWithBasicAuth"
             },
             "snippet": {
-                "client": "import { SeedBasicAuthEnvironmentVariablesClient } from \"@fern/basic-auth-environment-variables\";\n\nconst client = new SeedBasicAuthEnvironmentVariablesClient({ environment: \"YOUR_BASE_URL\", username: \"YOUR_USERNAME\", accessToken: \"YOUR_ACCESS_TOKEN\" });\nawait client.basicAuth.postWithBasicAuth({\n    \"key\": \"value\"\n});\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedBasicAuthEnvironmentVariablesClient } from \"@fern/basic-auth-environment-variables\";\n\nconst client = new SeedBasicAuthEnvironmentVariablesClient({ environment: \"YOUR_BASE_URL\", username: \"YOUR_USERNAME\", accessToken: \"YOUR_ACCESS_TOKEN\" });\nawait client.basicAuth.postWithBasicAuth({\n    \"key\": \"value\"\n});\n"
             }
         }
-    ]
+    ],
+    "types": {}
 }

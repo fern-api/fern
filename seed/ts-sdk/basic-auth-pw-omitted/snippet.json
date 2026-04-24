@@ -1,5 +1,4 @@
 {
-    "types": {},
     "endpoints": [
         {
             "id": {
@@ -8,8 +7,8 @@
                 "identifier_override": "endpoint_basic-auth.getWithBasicAuth"
             },
             "snippet": {
-                "client": "import { SeedBasicAuthPwOmittedClient } from \"@fern/basic-auth-pw-omitted\";\n\nconst client = new SeedBasicAuthPwOmittedClient({ environment: \"YOUR_BASE_URL\", username: \"YOUR_USERNAME\" });\nawait client.basicAuth.getWithBasicAuth();\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedBasicAuthPwOmittedClient } from \"@fern/basic-auth-pw-omitted\";\n\nconst client = new SeedBasicAuthPwOmittedClient({ environment: \"YOUR_BASE_URL\", username: \"YOUR_USERNAME\" });\nawait client.basicAuth.getWithBasicAuth();\n"
             }
         },
         {
@@ -19,9 +18,10 @@
                 "identifier_override": "endpoint_basic-auth.postWithBasicAuth"
             },
             "snippet": {
-                "client": "import { SeedBasicAuthPwOmittedClient } from \"@fern/basic-auth-pw-omitted\";\n\nconst client = new SeedBasicAuthPwOmittedClient({ environment: \"YOUR_BASE_URL\", username: \"YOUR_USERNAME\" });\nawait client.basicAuth.postWithBasicAuth({\n    \"key\": \"value\"\n});\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedBasicAuthPwOmittedClient } from \"@fern/basic-auth-pw-omitted\";\n\nconst client = new SeedBasicAuthPwOmittedClient({ environment: \"YOUR_BASE_URL\", username: \"YOUR_USERNAME\" });\nawait client.basicAuth.postWithBasicAuth({\n    \"key\": \"value\"\n});\n"
             }
         }
-    ]
+    ],
+    "types": {}
 }

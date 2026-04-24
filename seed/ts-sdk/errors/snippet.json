@@ -1,5 +1,4 @@
 {
-    "types": {},
     "endpoints": [
         {
             "id": {
@@ -8,8 +7,8 @@
                 "identifier_override": "endpoint_simple.fooWithoutEndpointError"
             },
             "snippet": {
-                "client": "import { SeedErrorsClient } from \"@fern/errors\";\n\nconst client = new SeedErrorsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.simple.fooWithoutEndpointError({\n    bar: \"bar\"\n});\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedErrorsClient } from \"@fern/errors\";\n\nconst client = new SeedErrorsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.simple.fooWithoutEndpointError({\n    bar: \"bar\"\n});\n"
             }
         },
         {
@@ -19,8 +18,8 @@
                 "identifier_override": "endpoint_simple.foo"
             },
             "snippet": {
-                "client": "import { SeedErrorsClient } from \"@fern/errors\";\n\nconst client = new SeedErrorsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.simple.foo({\n    bar: \"bar\"\n});\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedErrorsClient } from \"@fern/errors\";\n\nconst client = new SeedErrorsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.simple.foo({\n    bar: \"bar\"\n});\n"
             }
         },
         {
@@ -30,8 +29,8 @@
                 "identifier_override": "endpoint_simple.fooWithExamples"
             },
             "snippet": {
-                "client": "import { SeedErrorsClient } from \"@fern/errors\";\n\nconst client = new SeedErrorsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.simple.fooWithExamples({\n    bar: \"hello\"\n});\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedErrorsClient } from \"@fern/errors\";\n\nconst client = new SeedErrorsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.simple.fooWithExamples({\n    bar: \"hello\"\n});\n"
             }
         },
         {
@@ -41,8 +40,8 @@
                 "identifier_override": "endpoint_simple.fooWithExamples"
             },
             "snippet": {
-                "client": "import { SeedErrorsClient } from \"@fern/errors\";\n\nconst client = new SeedErrorsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.simple.fooWithExamples({\n    bar: \"hello\"\n});\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedErrorsClient } from \"@fern/errors\";\n\nconst client = new SeedErrorsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.simple.fooWithExamples({\n    bar: \"hello\"\n});\n"
             }
         },
         {
@@ -52,9 +51,10 @@
                 "identifier_override": "endpoint_simple.fooWithExamples"
             },
             "snippet": {
-                "client": "import { SeedErrorsClient } from \"@fern/errors\";\n\nconst client = new SeedErrorsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.simple.fooWithExamples({\n    bar: \"hello\"\n});\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedErrorsClient } from \"@fern/errors\";\n\nconst client = new SeedErrorsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.simple.fooWithExamples({\n    bar: \"hello\"\n});\n"
             }
         }
-    ]
+    ],
+    "types": {}
 }

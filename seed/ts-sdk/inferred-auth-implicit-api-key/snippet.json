@@ -1,5 +1,4 @@
 {
-    "types": {},
     "endpoints": [
         {
             "id": {
@@ -8,8 +7,8 @@
                 "identifier_override": "endpoint_auth.getToken"
             },
             "snippet": {
-                "client": "import { SeedInferredAuthImplicitApiKeyClient } from \"@fern/inferred-auth-implicit-api-key\";\n\nconst client = new SeedInferredAuthImplicitApiKeyClient({ environment: \"YOUR_BASE_URL\" });\nawait client.auth.getToken({\n    \"X-Api-Key\": \"api_key\"\n});\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedInferredAuthImplicitApiKeyClient } from \"@fern/inferred-auth-implicit-api-key\";\n\nconst client = new SeedInferredAuthImplicitApiKeyClient({ environment: \"YOUR_BASE_URL\" });\nawait client.auth.getToken({\n    \"X-Api-Key\": \"api_key\"\n});\n"
             }
         },
         {
@@ -19,8 +18,8 @@
                 "identifier_override": "endpoint_nested-no-auth/api.getSomething"
             },
             "snippet": {
-                "client": "import { SeedInferredAuthImplicitApiKeyClient } from \"@fern/inferred-auth-implicit-api-key\";\n\nconst client = new SeedInferredAuthImplicitApiKeyClient({ environment: \"YOUR_BASE_URL\" });\nawait client.nestedNoAuth.api.getSomething();\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedInferredAuthImplicitApiKeyClient } from \"@fern/inferred-auth-implicit-api-key\";\n\nconst client = new SeedInferredAuthImplicitApiKeyClient({ environment: \"YOUR_BASE_URL\" });\nawait client.nestedNoAuth.api.getSomething();\n"
             }
         },
         {
@@ -30,8 +29,8 @@
                 "identifier_override": "endpoint_nested/api.getSomething"
             },
             "snippet": {
-                "client": "import { SeedInferredAuthImplicitApiKeyClient } from \"@fern/inferred-auth-implicit-api-key\";\n\nconst client = new SeedInferredAuthImplicitApiKeyClient({ environment: \"YOUR_BASE_URL\" });\nawait client.nested.api.getSomething();\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedInferredAuthImplicitApiKeyClient } from \"@fern/inferred-auth-implicit-api-key\";\n\nconst client = new SeedInferredAuthImplicitApiKeyClient({ environment: \"YOUR_BASE_URL\" });\nawait client.nested.api.getSomething();\n"
             }
         },
         {
@@ -41,9 +40,10 @@
                 "identifier_override": "endpoint_simple.getSomething"
             },
             "snippet": {
-                "client": "import { SeedInferredAuthImplicitApiKeyClient } from \"@fern/inferred-auth-implicit-api-key\";\n\nconst client = new SeedInferredAuthImplicitApiKeyClient({ environment: \"YOUR_BASE_URL\" });\nawait client.simple.getSomething();\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedInferredAuthImplicitApiKeyClient } from \"@fern/inferred-auth-implicit-api-key\";\n\nconst client = new SeedInferredAuthImplicitApiKeyClient({ environment: \"YOUR_BASE_URL\" });\nawait client.simple.getSomething();\n"
             }
         }
-    ]
+    ],
+    "types": {}
 }

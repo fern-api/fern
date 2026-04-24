@@ -1,5 +1,4 @@
 {
-    "types": {},
     "endpoints": [
         {
             "id": {
@@ -8,8 +7,8 @@
                 "identifier_override": "endpoint_auth.getTokenWithClientCredentials"
             },
             "snippet": {
-                "client": "import { SeedOauthClientCredentialsWithVariablesClient } from \"@fern/oauth-client-credentials-with-variables\";\n\nconst client = new SeedOauthClientCredentialsWithVariablesClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\", rootVariable: \"YOUR_ROOT_VARIABLE\" });\nawait client.auth.getTokenWithClientCredentials({\n    client_id: \"client_id\",\n    client_secret: \"client_secret\",\n    scope: \"scope\"\n});\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedOauthClientCredentialsWithVariablesClient } from \"@fern/oauth-client-credentials-with-variables\";\n\nconst client = new SeedOauthClientCredentialsWithVariablesClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\", rootVariable: \"YOUR_ROOT_VARIABLE\" });\nawait client.auth.getTokenWithClientCredentials({\n    client_id: \"client_id\",\n    client_secret: \"client_secret\",\n    scope: \"scope\"\n});\n"
             }
         },
         {
@@ -19,8 +18,8 @@
                 "identifier_override": "endpoint_auth.refreshToken"
             },
             "snippet": {
-                "client": "import { SeedOauthClientCredentialsWithVariablesClient } from \"@fern/oauth-client-credentials-with-variables\";\n\nconst client = new SeedOauthClientCredentialsWithVariablesClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\", rootVariable: \"YOUR_ROOT_VARIABLE\" });\nawait client.auth.refreshToken({\n    client_id: \"client_id\",\n    client_secret: \"client_secret\",\n    refresh_token: \"refresh_token\",\n    scope: \"scope\"\n});\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedOauthClientCredentialsWithVariablesClient } from \"@fern/oauth-client-credentials-with-variables\";\n\nconst client = new SeedOauthClientCredentialsWithVariablesClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\", rootVariable: \"YOUR_ROOT_VARIABLE\" });\nawait client.auth.refreshToken({\n    client_id: \"client_id\",\n    client_secret: \"client_secret\",\n    refresh_token: \"refresh_token\",\n    scope: \"scope\"\n});\n"
             }
         },
         {
@@ -30,8 +29,8 @@
                 "identifier_override": "endpoint_nested-no-auth/api.getSomething"
             },
             "snippet": {
-                "client": "import { SeedOauthClientCredentialsWithVariablesClient } from \"@fern/oauth-client-credentials-with-variables\";\n\nconst client = new SeedOauthClientCredentialsWithVariablesClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\", rootVariable: \"YOUR_ROOT_VARIABLE\" });\nawait client.nestedNoAuth.api.getSomething();\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedOauthClientCredentialsWithVariablesClient } from \"@fern/oauth-client-credentials-with-variables\";\n\nconst client = new SeedOauthClientCredentialsWithVariablesClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\", rootVariable: \"YOUR_ROOT_VARIABLE\" });\nawait client.nestedNoAuth.api.getSomething();\n"
             }
         },
         {
@@ -41,8 +40,8 @@
                 "identifier_override": "endpoint_nested/api.getSomething"
             },
             "snippet": {
-                "client": "import { SeedOauthClientCredentialsWithVariablesClient } from \"@fern/oauth-client-credentials-with-variables\";\n\nconst client = new SeedOauthClientCredentialsWithVariablesClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\", rootVariable: \"YOUR_ROOT_VARIABLE\" });\nawait client.nested.api.getSomething();\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedOauthClientCredentialsWithVariablesClient } from \"@fern/oauth-client-credentials-with-variables\";\n\nconst client = new SeedOauthClientCredentialsWithVariablesClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\", rootVariable: \"YOUR_ROOT_VARIABLE\" });\nawait client.nested.api.getSomething();\n"
             }
         },
         {
@@ -52,8 +51,8 @@
                 "identifier_override": "endpoint_service.post"
             },
             "snippet": {
-                "client": "import { SeedOauthClientCredentialsWithVariablesClient } from \"@fern/oauth-client-credentials-with-variables\";\n\nconst client = new SeedOauthClientCredentialsWithVariablesClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\", rootVariable: \"YOUR_ROOT_VARIABLE\" });\nawait client.service.post();\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedOauthClientCredentialsWithVariablesClient } from \"@fern/oauth-client-credentials-with-variables\";\n\nconst client = new SeedOauthClientCredentialsWithVariablesClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\", rootVariable: \"YOUR_ROOT_VARIABLE\" });\nawait client.service.post();\n"
             }
         },
         {
@@ -63,9 +62,10 @@
                 "identifier_override": "endpoint_simple.getSomething"
             },
             "snippet": {
-                "client": "import { SeedOauthClientCredentialsWithVariablesClient } from \"@fern/oauth-client-credentials-with-variables\";\n\nconst client = new SeedOauthClientCredentialsWithVariablesClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\", rootVariable: \"YOUR_ROOT_VARIABLE\" });\nawait client.simple.getSomething();\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedOauthClientCredentialsWithVariablesClient } from \"@fern/oauth-client-credentials-with-variables\";\n\nconst client = new SeedOauthClientCredentialsWithVariablesClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\", rootVariable: \"YOUR_ROOT_VARIABLE\" });\nawait client.simple.getSomething();\n"
             }
         }
-    ]
+    ],
+    "types": {}
 }

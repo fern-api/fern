@@ -1,5 +1,4 @@
 {
-    "types": {},
     "endpoints": [
         {
             "id": {
@@ -8,10 +7,11 @@
                 "identifier_override": "endpoint_dummy.generate"
             },
             "snippet": {
-                "client": "import { SeedStreamingClient } from \"@fern/streaming-parameter\";\n\nconst client = new SeedStreamingClient({ environment: \"YOUR_BASE_URL\" });\nconst response = await client.dummy.generate({\n    stream: false,\n    num_events: 5\n});\nfor await (const item of response) {\n    console.log(item);\n}\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedStreamingClient } from \"@fern/streaming-parameter\";\n\nconst client = new SeedStreamingClient({ environment: \"YOUR_BASE_URL\" });\nconst response = await client.dummy.generate({\n    stream: false,\n    num_events: 5\n});\nfor await (const item of response) {\n    console.log(item);\n}\n"
             },
             "example_identifier": "Default"
         }
-    ]
+    ],
+    "types": {}
 }

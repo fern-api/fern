@@ -133,6 +133,7 @@ const pageableResponse = await client.endpoints.pagination.listItems({
 for await (const item of pageableResponse) {
     console.log(item);
 }
+
 // Or you can manually iterate page-by-page
 let page = await client.endpoints.pagination.listItems({
     cursor: "cursor",
@@ -141,6 +142,7 @@ let page = await client.endpoints.pagination.listItems({
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
 // You can also access the underlying response
 const response = page.response;
 ```

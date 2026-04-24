@@ -1,4 +1,4 @@
-import { createRequestUrl } from "../../../core/fetcher/createRequestUrl.js";
+import { createRequestUrl } from "../../../core/fetcher/createRequestUrl";
 
 describe("Test createRequestUrl", () => {
     const BASE_URL = "https://api.example.com";

@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { HttpResponsePromise } from "../../../core/fetcher/HttpResponsePromise.js";
-import type { RawResponse, WithRawResponse } from "../../../core/fetcher/RawResponse.js";
+import { HttpResponsePromise } from "../../../core/fetcher/HttpResponsePromise";
+import type { RawResponse, WithRawResponse } from "../../../core/fetcher/RawResponse";
 
 describe("HttpResponsePromise", () => {
     const mockRawResponse: RawResponse = {

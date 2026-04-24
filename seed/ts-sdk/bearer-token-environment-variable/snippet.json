@@ -1,5 +1,4 @@
 {
-    "types": {},
     "endpoints": [
         {
             "id": {
@@ -8,9 +7,10 @@
                 "identifier_override": "endpoint_service.getWithBearerToken"
             },
             "snippet": {
-                "client": "import { SeedBearerTokenEnvironmentVariableClient } from \"@fern/bearer-token-environment-variable\";\n\nconst client = new SeedBearerTokenEnvironmentVariableClient({ environment: \"YOUR_BASE_URL\", apiKey: \"YOUR_API_KEY\" });\nawait client.service.getWithBearerToken();\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedBearerTokenEnvironmentVariableClient } from \"@fern/bearer-token-environment-variable\";\n\nconst client = new SeedBearerTokenEnvironmentVariableClient({ environment: \"YOUR_BASE_URL\", apiKey: \"YOUR_API_KEY\" });\nawait client.service.getWithBearerToken();\n"
             }
         }
-    ]
+    ],
+    "types": {}
 }

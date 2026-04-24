@@ -1,5 +1,4 @@
 {
-    "types": {},
     "endpoints": [
         {
             "id": {
@@ -8,9 +7,10 @@
                 "identifier_override": "endpoint_.uploadJsonDocument"
             },
             "snippet": {
-                "client": "import { SeedApiClient } from \"@fern/multiple-request-bodies\";\n\nconst client = new SeedApiClient({ token: \"YOUR_TOKEN\" });\nawait client.uploadJsonDocument();\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/multiple-request-bodies\";\n\nconst client = new SeedApiClient({ token: \"YOUR_TOKEN\" });\nawait client.uploadJsonDocument();\n"
             }
         }
-    ]
+    ],
+    "types": {}
 }

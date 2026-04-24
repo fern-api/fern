@@ -41,9 +41,9 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
+import { createReadStream } from "fs";
 import { SeedApiClient } from "@fern/file-upload-openapi";
 
-import { createReadStream } from "fs";
 const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
 await client.fileUploadExample.uploadFile({
     name: "name"
@@ -88,9 +88,9 @@ try {
 You can upload files using the client:
 
 ```typescript
+import { createReadStream } from "fs";
 import { SeedApiClient } from "@fern/file-upload-openapi";
 
-import { createReadStream } from "fs";
 const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
 await client.fileUploadExample.uploadFile({
     name: "name"

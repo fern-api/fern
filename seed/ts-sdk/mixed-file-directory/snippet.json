@@ -1,5 +1,4 @@
 {
-    "types": {},
     "endpoints": [
         {
             "id": {
@@ -8,8 +7,8 @@
                 "identifier_override": "endpoint_organization.create"
             },
             "snippet": {
-                "client": "import { SeedMixedFileDirectoryClient } from \"@fern/mixed-file-directory\";\n\nconst client = new SeedMixedFileDirectoryClient({ environment: \"YOUR_BASE_URL\" });\nawait client.organization.create({\n    name: \"name\"\n});\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedMixedFileDirectoryClient } from \"@fern/mixed-file-directory\";\n\nconst client = new SeedMixedFileDirectoryClient({ environment: \"YOUR_BASE_URL\" });\nawait client.organization.create({\n    name: \"name\"\n});\n"
             }
         },
         {
@@ -19,8 +18,8 @@
                 "identifier_override": "endpoint_user.list"
             },
             "snippet": {
-                "client": "import { SeedMixedFileDirectoryClient } from \"@fern/mixed-file-directory\";\n\nconst client = new SeedMixedFileDirectoryClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.list({\n    limit: 1\n});\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedMixedFileDirectoryClient } from \"@fern/mixed-file-directory\";\n\nconst client = new SeedMixedFileDirectoryClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.list({\n    limit: 1\n});\n"
             }
         },
         {
@@ -30,8 +29,8 @@
                 "identifier_override": "endpoint_user/events.listEvents"
             },
             "snippet": {
-                "client": "import { SeedMixedFileDirectoryClient } from \"@fern/mixed-file-directory\";\n\nconst client = new SeedMixedFileDirectoryClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.events.listEvents({\n    limit: 1\n});\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedMixedFileDirectoryClient } from \"@fern/mixed-file-directory\";\n\nconst client = new SeedMixedFileDirectoryClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.events.listEvents({\n    limit: 1\n});\n"
             }
         },
         {
@@ -41,9 +40,10 @@
                 "identifier_override": "endpoint_user/events/metadata.getMetadata"
             },
             "snippet": {
-                "client": "import { SeedMixedFileDirectoryClient } from \"@fern/mixed-file-directory\";\n\nconst client = new SeedMixedFileDirectoryClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.events.metadata.getMetadata({\n    id: \"id\"\n});\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedMixedFileDirectoryClient } from \"@fern/mixed-file-directory\";\n\nconst client = new SeedMixedFileDirectoryClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.events.metadata.getMetadata({\n    id: \"id\"\n});\n"
             }
         }
-    ]
+    ],
+    "types": {}
 }

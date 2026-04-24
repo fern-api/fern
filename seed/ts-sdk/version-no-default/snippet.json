@@ -1,5 +1,4 @@
 {
-    "types": {},
     "endpoints": [
         {
             "id": {
@@ -8,9 +7,10 @@
                 "identifier_override": "endpoint_user.getUser"
             },
             "snippet": {
-                "client": "import { SeedVersionClient } from \"@fern/version-no-default\";\n\nconst client = new SeedVersionClient({ environment: \"YOUR_BASE_URL\", xApiVersion: \"1.0.0\" });\nawait client.user.getUser(\"userId\");\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedVersionClient } from \"@fern/version-no-default\";\n\nconst client = new SeedVersionClient({ environment: \"YOUR_BASE_URL\", xApiVersion: \"1.0.0\" });\nawait client.user.getUser(\"userId\");\n"
             }
         }
-    ]
+    ],
+    "types": {}
 }

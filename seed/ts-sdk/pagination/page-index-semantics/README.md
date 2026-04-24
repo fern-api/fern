@@ -58,6 +58,7 @@ const pageableResponse = await client.complex.search("index", {
 for await (const item of pageableResponse) {
     console.log(item);
 }
+
 // Or you can manually iterate page-by-page
 let page = await client.complex.search("index", {
     pagination: {
@@ -73,6 +74,7 @@ let page = await client.complex.search("index", {
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
 // You can also access the underlying response
 const response = page.response;
 ```
@@ -132,6 +134,7 @@ const pageableResponse = await client.complex.search("index", {
 for await (const item of pageableResponse) {
     console.log(item);
 }
+
 // Or you can manually iterate page-by-page
 let page = await client.complex.search("index", {
     pagination: {
@@ -147,6 +150,7 @@ let page = await client.complex.search("index", {
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
 // You can also access the underlying response
 const response = page.response;
 ```

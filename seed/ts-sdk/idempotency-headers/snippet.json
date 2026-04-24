@@ -1,5 +1,4 @@
 {
-    "types": {},
     "endpoints": [
         {
             "id": {
@@ -8,8 +7,8 @@
                 "identifier_override": "endpoint_payment.create"
             },
             "snippet": {
-                "client": "import { SeedIdempotencyHeadersClient } from \"@fern/idempotency-headers\";\n\nconst client = new SeedIdempotencyHeadersClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.payment.create({\n    amount: 1,\n    currency: \"USD\"\n});\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedIdempotencyHeadersClient } from \"@fern/idempotency-headers\";\n\nconst client = new SeedIdempotencyHeadersClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.payment.create({\n    amount: 1,\n    currency: \"USD\"\n});\n"
             }
         },
         {
@@ -19,9 +18,10 @@
                 "identifier_override": "endpoint_payment.delete"
             },
             "snippet": {
-                "client": "import { SeedIdempotencyHeadersClient } from \"@fern/idempotency-headers\";\n\nconst client = new SeedIdempotencyHeadersClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.payment.delete(\"paymentId\");\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedIdempotencyHeadersClient } from \"@fern/idempotency-headers\";\n\nconst client = new SeedIdempotencyHeadersClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.payment.delete(\"paymentId\");\n"
             }
         }
-    ]
+    ],
+    "types": {}
 }

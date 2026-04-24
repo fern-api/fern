@@ -1,6 +1,6 @@
-import { getResponseBody } from "../../../core/fetcher/getResponseBody.js";
+import { getResponseBody } from "../../../core/fetcher/getResponseBody";
 
-import { RUNTIME } from "../../../core/runtime/index.js";
+import { RUNTIME } from "../../../core/runtime";
 
 describe("Test getResponseBody", () => {
     interface SimpleTestCase {

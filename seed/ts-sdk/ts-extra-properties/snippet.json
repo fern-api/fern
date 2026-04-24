@@ -1,5 +1,4 @@
 {
-    "types": {},
     "endpoints": [
         {
             "id": {
@@ -8,8 +7,8 @@
                 "identifier_override": "endpoint_.getUser"
             },
             "snippet": {
-                "client": "import { SeedApiClient } from \"@fern/ts-extra-properties\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.getUser();\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/ts-extra-properties\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.getUser();\n"
             }
         },
         {
@@ -19,9 +18,10 @@
                 "identifier_override": "endpoint_.createUser"
             },
             "snippet": {
-                "client": "import { SeedApiClient } from \"@fern/ts-extra-properties\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.createUser({\n    userName: \"user_name\"\n});\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/ts-extra-properties\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.createUser({\n    userName: \"user_name\"\n});\n"
             }
         }
-    ]
+    ],
+    "types": {}
 }

@@ -1,15 +1,15 @@
 {
-  "cliVersion": "DUMMY",
-  "generatorName": "fernapi/fern-typescript-sdk",
-  "generatorVersion": "latest",
-  "generatorConfig": {
-    "formatter": "prettier",
-    "linter": "none"
-  },
-  "originGitCommit": "DUMMY",
-  "originGitCommitIsDirty": null,
-  "invokedBy": "manual",
-  "requestedVersion": "0.0.1",
-  "ciProvider": null,
-  "sdkVersion": "0.0.1"
+    "cliVersion": "DUMMY",
+    "generatorName": "fernapi/fern-typescript-sdk",
+    "generatorVersion": "local",
+    "generatorConfig": {
+        "formatter": "prettier",
+        "linter": "none"
+    },
+    "originGitCommit": "DUMMY",
+    "originGitCommitIsDirty": null,
+    "invokedBy": "ci",
+    "requestedVersion": "0.0.1",
+    "ciProvider": "github",
+    "sdkVersion": "0.0.1"
 }

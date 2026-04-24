@@ -41,10 +41,10 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
+import { createReadStream } from "fs";
 import * as fs from "fs";
 import { SeedFileUploadClient } from "@fern/file-upload";
 
-import { createReadStream } from "fs";
 const client = new SeedFileUploadClient({ environment: "YOUR_BASE_URL" });
 await client.service.justFile({
     file: fs.createReadStream("/path/to/your/file")
@@ -89,10 +89,10 @@ try {
 You can upload files using the client:
 
 ```typescript
+import { createReadStream } from "fs";
 import * as fs from "fs";
 import { SeedFileUploadClient } from "@fern/file-upload";
 
-import { createReadStream } from "fs";
 const client = new SeedFileUploadClient({ environment: "YOUR_BASE_URL" });
 await client.service.justFile({
     file: fs.createReadStream("/path/to/your/file")

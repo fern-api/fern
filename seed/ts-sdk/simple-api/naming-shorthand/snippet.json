@@ -1,5 +1,4 @@
 {
-    "types": {},
     "endpoints": [
         {
             "id": {
@@ -8,9 +7,10 @@
                 "identifier_override": "endpoint_user.get"
             },
             "snippet": {
-                "client": "import { AcmeClient, AcmeEnvironment } from \"@fern/simple-api\";\n\nconst client = new AcmeClient({ environment: AcmeEnvironment.Production, token: \"YOUR_TOKEN\" });\nawait client.user.get(\"id\");\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { AcmeClient, AcmeEnvironment } from \"@fern/simple-api\";\n\nconst client = new AcmeClient({ environment: AcmeEnvironment.Production, token: \"YOUR_TOKEN\" });\nawait client.user.get(\"id\");\n"
             }
         }
-    ]
+    ],
+    "types": {}
 }

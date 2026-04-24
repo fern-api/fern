@@ -1,4 +1,4 @@
-import { join } from "../../../core/url/index.js";
+import { join } from "../../../core/url/index";
 
 describe("join", () => {
     interface TestCase {

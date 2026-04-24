@@ -1,4 +1,4 @@
-import { toQueryString } from "../../../core/url/index.js";
+import { toQueryString } from "../../../core/url/index";
 
 describe("Test qs toQueryString", () => {
     interface BasicTestCase {

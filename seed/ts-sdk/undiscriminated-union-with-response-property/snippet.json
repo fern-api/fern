@@ -1,5 +1,4 @@
 {
-    "types": {},
     "endpoints": [
         {
             "id": {
@@ -8,8 +7,8 @@
                 "identifier_override": "endpoint_.getUnion"
             },
             "snippet": {
-                "client": "import { SeedUndiscriminatedUnionWithResponsePropertyClient } from \"@fern/undiscriminated-union-with-response-property\";\n\nconst client = new SeedUndiscriminatedUnionWithResponsePropertyClient({ environment: \"YOUR_BASE_URL\" });\nawait client.getUnion();\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedUndiscriminatedUnionWithResponsePropertyClient } from \"@fern/undiscriminated-union-with-response-property\";\n\nconst client = new SeedUndiscriminatedUnionWithResponsePropertyClient({ environment: \"YOUR_BASE_URL\" });\nawait client.getUnion();\n"
             }
         },
         {
@@ -19,9 +18,10 @@
                 "identifier_override": "endpoint_.listUnions"
             },
             "snippet": {
-                "client": "import { SeedUndiscriminatedUnionWithResponsePropertyClient } from \"@fern/undiscriminated-union-with-response-property\";\n\nconst client = new SeedUndiscriminatedUnionWithResponsePropertyClient({ environment: \"YOUR_BASE_URL\" });\nawait client.listUnions();\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedUndiscriminatedUnionWithResponsePropertyClient } from \"@fern/undiscriminated-union-with-response-property\";\n\nconst client = new SeedUndiscriminatedUnionWithResponsePropertyClient({ environment: \"YOUR_BASE_URL\" });\nawait client.listUnions();\n"
             }
         }
-    ]
+    ],
+    "types": {}
 }

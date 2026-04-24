@@ -1,5 +1,4 @@
 {
-    "types": {},
     "endpoints": [
         {
             "id": {
@@ -8,8 +7,8 @@
                 "identifier_override": "endpoint_.streamProtocolNoCollision"
             },
             "snippet": {
-                "client": "import { SeedApi, SeedApiClient } from \"@fern/server-sent-events-openapi\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nconst response = await client.streamProtocolNoCollision({});\nfor await (const item of response) {\n    console.log(item);\n}\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedApi, SeedApiClient } from \"@fern/server-sent-events-openapi\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nconst response = await client.streamProtocolNoCollision({});\nfor await (const item of response) {\n    console.log(item);\n}\n"
             }
         },
         {
@@ -19,8 +18,8 @@
                 "identifier_override": "endpoint_.streamProtocolCollision"
             },
             "snippet": {
-                "client": "import { SeedApi, SeedApiClient } from \"@fern/server-sent-events-openapi\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nconst response = await client.streamProtocolCollision({});\nfor await (const item of response) {\n    console.log(item);\n}\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedApi, SeedApiClient } from \"@fern/server-sent-events-openapi\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nconst response = await client.streamProtocolCollision({});\nfor await (const item of response) {\n    console.log(item);\n}\n"
             }
         },
         {
@@ -30,8 +29,8 @@
                 "identifier_override": "endpoint_.streamDataContext"
             },
             "snippet": {
-                "client": "import { SeedApi, SeedApiClient } from \"@fern/server-sent-events-openapi\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nconst response = await client.streamDataContext({});\nfor await (const item of response) {\n    console.log(item);\n}\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedApi, SeedApiClient } from \"@fern/server-sent-events-openapi\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nconst response = await client.streamDataContext({});\nfor await (const item of response) {\n    console.log(item);\n}\n"
             }
         },
         {
@@ -41,8 +40,8 @@
                 "identifier_override": "endpoint_.streamNoContext"
             },
             "snippet": {
-                "client": "import { SeedApi, SeedApiClient } from \"@fern/server-sent-events-openapi\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nconst response = await client.streamNoContext({});\nfor await (const item of response) {\n    console.log(item);\n}\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedApi, SeedApiClient } from \"@fern/server-sent-events-openapi\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nconst response = await client.streamNoContext({});\nfor await (const item of response) {\n    console.log(item);\n}\n"
             }
         },
         {
@@ -52,8 +51,8 @@
                 "identifier_override": "endpoint_.streamProtocolWithFlatSchema"
             },
             "snippet": {
-                "client": "import { SeedApi, SeedApiClient } from \"@fern/server-sent-events-openapi\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nconst response = await client.streamProtocolWithFlatSchema({});\nfor await (const item of response) {\n    console.log(item);\n}\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedApi, SeedApiClient } from \"@fern/server-sent-events-openapi\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nconst response = await client.streamProtocolWithFlatSchema({});\nfor await (const item of response) {\n    console.log(item);\n}\n"
             }
         },
         {
@@ -63,8 +62,8 @@
                 "identifier_override": "endpoint_.streamDataContextWithEnvelopeSchema"
             },
             "snippet": {
-                "client": "import { SeedApi, SeedApiClient } from \"@fern/server-sent-events-openapi\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nconst response = await client.streamDataContextWithEnvelopeSchema({});\nfor await (const item of response) {\n    console.log(item);\n}\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedApi, SeedApiClient } from \"@fern/server-sent-events-openapi\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nconst response = await client.streamDataContextWithEnvelopeSchema({});\nfor await (const item of response) {\n    console.log(item);\n}\n"
             }
         },
         {
@@ -74,8 +73,8 @@
                 "identifier_override": "endpoint_.streamOasSpecNative"
             },
             "snippet": {
-                "client": "import { SeedApi, SeedApiClient } from \"@fern/server-sent-events-openapi\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nconst response = await client.streamOasSpecNative({});\nfor await (const item of response) {\n    console.log(item);\n}\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedApi, SeedApiClient } from \"@fern/server-sent-events-openapi\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nconst response = await client.streamOasSpecNative({});\nfor await (const item of response) {\n    console.log(item);\n}\n"
             }
         },
         {
@@ -85,8 +84,8 @@
                 "identifier_override": "endpoint_.streamXFernStreamingCondition_stream"
             },
             "snippet": {
-                "client": "import { SeedApiClient } from \"@fern/server-sent-events-openapi\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nconst response = await client.streamXFernStreamingConditionStream({\n    query: \"query\"\n});\nfor await (const item of response) {\n    console.log(item);\n}\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/server-sent-events-openapi\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nconst response = await client.streamXFernStreamingConditionStream({\n    query: \"query\"\n});\nfor await (const item of response) {\n    console.log(item);\n}\n"
             }
         },
         {
@@ -96,8 +95,8 @@
                 "identifier_override": "endpoint_.streamXFernStreamingCondition"
             },
             "snippet": {
-                "client": "import { SeedApiClient } from \"@fern/server-sent-events-openapi\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.streamXFernStreamingCondition({\n    query: \"query\"\n});\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/server-sent-events-openapi\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.streamXFernStreamingCondition({\n    query: \"query\"\n});\n"
             }
         },
         {
@@ -107,8 +106,8 @@
                 "identifier_override": "endpoint_.streamXFernStreamingSharedSchema_stream"
             },
             "snippet": {
-                "client": "import { SeedApiClient } from \"@fern/server-sent-events-openapi\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nconst response = await client.streamXFernStreamingSharedSchemaStream({\n    prompt: \"prompt\",\n    model: \"model\"\n});\nfor await (const item of response) {\n    console.log(item);\n}\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/server-sent-events-openapi\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nconst response = await client.streamXFernStreamingSharedSchemaStream({\n    prompt: \"prompt\",\n    model: \"model\"\n});\nfor await (const item of response) {\n    console.log(item);\n}\n"
             }
         },
         {
@@ -118,8 +117,8 @@
                 "identifier_override": "endpoint_.streamXFernStreamingSharedSchema"
             },
             "snippet": {
-                "client": "import { SeedApiClient } from \"@fern/server-sent-events-openapi\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.streamXFernStreamingSharedSchema({\n    prompt: \"prompt\",\n    model: \"model\"\n});\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/server-sent-events-openapi\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.streamXFernStreamingSharedSchema({\n    prompt: \"prompt\",\n    model: \"model\"\n});\n"
             }
         },
         {
@@ -129,8 +128,8 @@
                 "identifier_override": "endpoint_.validateCompletion"
             },
             "snippet": {
-                "client": "import { SeedApiClient } from \"@fern/server-sent-events-openapi\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.validateCompletion({\n    prompt: \"prompt\",\n    model: \"model\"\n});\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/server-sent-events-openapi\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.validateCompletion({\n    prompt: \"prompt\",\n    model: \"model\"\n});\n"
             }
         },
         {
@@ -140,8 +139,8 @@
                 "identifier_override": "endpoint_.streamXFernStreamingUnion_stream"
             },
             "snippet": {
-                "client": "import { SeedApiClient } from \"@fern/server-sent-events-openapi\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nconst response = await client.streamXFernStreamingUnionStream({\n    type: \"message\",\n    stream_response: true,\n    prompt: \"prompt\",\n    message: \"message\",\n    stream_response: true\n});\nfor await (const item of response) {\n    console.log(item);\n}\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/server-sent-events-openapi\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nconst response = await client.streamXFernStreamingUnionStream({\n    type: \"message\",\n    stream_response: true,\n    prompt: \"prompt\",\n    message: \"message\",\n    stream_response: true\n});\nfor await (const item of response) {\n    console.log(item);\n}\n"
             }
         },
         {
@@ -151,8 +150,8 @@
                 "identifier_override": "endpoint_.streamXFernStreamingUnion"
             },
             "snippet": {
-                "client": "import { SeedApiClient } from \"@fern/server-sent-events-openapi\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.streamXFernStreamingUnion({\n    type: \"message\",\n    stream_response: false,\n    prompt: \"prompt\",\n    message: \"message\",\n    stream_response: false\n});\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/server-sent-events-openapi\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.streamXFernStreamingUnion({\n    type: \"message\",\n    stream_response: false,\n    prompt: \"prompt\",\n    message: \"message\",\n    stream_response: false\n});\n"
             }
         },
         {
@@ -162,8 +161,8 @@
                 "identifier_override": "endpoint_.validateUnionRequest"
             },
             "snippet": {
-                "client": "import { SeedApiClient } from \"@fern/server-sent-events-openapi\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.validateUnionRequest({\n    prompt: \"prompt\"\n});\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/server-sent-events-openapi\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.validateUnionRequest({\n    prompt: \"prompt\"\n});\n"
             }
         },
         {
@@ -173,8 +172,8 @@
                 "identifier_override": "endpoint_.streamXFernStreamingNullableCondition_stream"
             },
             "snippet": {
-                "client": "import { SeedApiClient } from \"@fern/server-sent-events-openapi\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nconst response = await client.streamXFernStreamingNullableConditionStream({\n    query: \"query\"\n});\nfor await (const item of response) {\n    console.log(item);\n}\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/server-sent-events-openapi\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nconst response = await client.streamXFernStreamingNullableConditionStream({\n    query: \"query\"\n});\nfor await (const item of response) {\n    console.log(item);\n}\n"
             }
         },
         {
@@ -184,8 +183,8 @@
                 "identifier_override": "endpoint_.streamXFernStreamingNullableCondition"
             },
             "snippet": {
-                "client": "import { SeedApiClient } from \"@fern/server-sent-events-openapi\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.streamXFernStreamingNullableCondition({\n    query: \"query\"\n});\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/server-sent-events-openapi\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.streamXFernStreamingNullableCondition({\n    query: \"query\"\n});\n"
             }
         },
         {
@@ -195,9 +194,10 @@
                 "identifier_override": "endpoint_.streamXFernStreamingSseOnly"
             },
             "snippet": {
-                "client": "import { SeedApi, SeedApiClient } from \"@fern/server-sent-events-openapi\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nconst response = await client.streamXFernStreamingSseOnly({});\nfor await (const item of response) {\n    console.log(item);\n}\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedApi, SeedApiClient } from \"@fern/server-sent-events-openapi\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nconst response = await client.streamXFernStreamingSseOnly({});\nfor await (const item of response) {\n    console.log(item);\n}\n"
             }
         }
-    ]
+    ],
+    "types": {}
 }

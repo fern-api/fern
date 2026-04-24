@@ -1,5 +1,4 @@
 {
-    "types": {},
     "endpoints": [
         {
             "id": {
@@ -8,8 +7,8 @@
                 "identifier_override": "endpoint_service.patch"
             },
             "snippet": {
-                "client": "import { SeedContentTypesClient } from \"@fern/content-type\";\n\nconst client = new SeedContentTypesClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.patch({\n    application: \"application\",\n    require_auth: true\n});\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedContentTypesClient } from \"@fern/content-type\";\n\nconst client = new SeedContentTypesClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.patch({\n    application: \"application\",\n    require_auth: true\n});\n"
             }
         },
         {
@@ -19,8 +18,8 @@
                 "identifier_override": "endpoint_service.patchComplex"
             },
             "snippet": {
-                "client": "import { SeedContentTypesClient } from \"@fern/content-type\";\n\nconst client = new SeedContentTypesClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.patchComplex(\"id\", {\n    name: \"name\",\n    age: 1,\n    active: true,\n    metadata: {\n        \"metadata\": {\n            \"key\": \"value\"\n        }\n    },\n    tags: [\"tags\", \"tags\"],\n    email: \"email\",\n    nickname: \"nickname\",\n    bio: \"bio\",\n    profileImageUrl: \"profileImageUrl\",\n    settings: {\n        \"settings\": {\n            \"key\": \"value\"\n        }\n    }\n});\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedContentTypesClient } from \"@fern/content-type\";\n\nconst client = new SeedContentTypesClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.patchComplex(\"id\", {\n    name: \"name\",\n    age: 1,\n    active: true,\n    metadata: {\n        \"metadata\": {\n            \"key\": \"value\"\n        }\n    },\n    tags: [\"tags\", \"tags\"],\n    email: \"email\",\n    nickname: \"nickname\",\n    bio: \"bio\",\n    profileImageUrl: \"profileImageUrl\",\n    settings: {\n        \"settings\": {\n            \"key\": \"value\"\n        }\n    }\n});\n"
             }
         },
         {
@@ -30,8 +29,8 @@
                 "identifier_override": "endpoint_service.namedPatchWithMixed"
             },
             "snippet": {
-                "client": "import { SeedContentTypesClient } from \"@fern/content-type\";\n\nconst client = new SeedContentTypesClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.namedPatchWithMixed(\"id\", {\n    appId: \"appId\",\n    instructions: \"instructions\",\n    active: true\n});\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedContentTypesClient } from \"@fern/content-type\";\n\nconst client = new SeedContentTypesClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.namedPatchWithMixed(\"id\", {\n    appId: \"appId\",\n    instructions: \"instructions\",\n    active: true\n});\n"
             }
         },
         {
@@ -41,8 +40,8 @@
                 "identifier_override": "endpoint_service.optionalMergePatchTest"
             },
             "snippet": {
-                "client": "import { SeedContentTypesClient } from \"@fern/content-type\";\n\nconst client = new SeedContentTypesClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.optionalMergePatchTest({\n    requiredField: \"requiredField\",\n    optionalString: \"optionalString\",\n    optionalInteger: 1,\n    optionalBoolean: true,\n    nullableString: \"nullableString\"\n});\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedContentTypesClient } from \"@fern/content-type\";\n\nconst client = new SeedContentTypesClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.optionalMergePatchTest({\n    requiredField: \"requiredField\",\n    optionalString: \"optionalString\",\n    optionalInteger: 1,\n    optionalBoolean: true,\n    nullableString: \"nullableString\"\n});\n"
             }
         },
         {
@@ -52,9 +51,10 @@
                 "identifier_override": "endpoint_service.regularPatch"
             },
             "snippet": {
-                "client": "import { SeedContentTypesClient } from \"@fern/content-type\";\n\nconst client = new SeedContentTypesClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.regularPatch(\"id\", {\n    field1: \"field1\",\n    field2: 1\n});\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedContentTypesClient } from \"@fern/content-type\";\n\nconst client = new SeedContentTypesClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.regularPatch(\"id\", {\n    field1: \"field1\",\n    field2: 1\n});\n"
             }
         }
-    ]
+    ],
+    "types": {}
 }

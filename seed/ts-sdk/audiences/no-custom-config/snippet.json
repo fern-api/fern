@@ -1,5 +1,4 @@
 {
-    "types": {},
     "endpoints": [
         {
             "id": {
@@ -8,8 +7,8 @@
                 "identifier_override": "endpoint_folder-a/service.getDirectThread"
             },
             "snippet": {
-                "client": "import { SeedAudiencesClient, SeedAudiencesEnvironment } from \"@fern/audiences\";\n\nconst client = new SeedAudiencesClient({ environment: SeedAudiencesEnvironment.EnvironmentA });\nawait client.folderA.service.getDirectThread({\n    ids: \"ids\",\n    tags: \"tags\"\n});\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedAudiencesClient, SeedAudiencesEnvironment } from \"@fern/audiences\";\n\nconst client = new SeedAudiencesClient({ environment: SeedAudiencesEnvironment.EnvironmentA });\nawait client.folderA.service.getDirectThread({\n    ids: \"ids\",\n    tags: \"tags\"\n});\n"
             }
         },
         {
@@ -19,8 +18,8 @@
                 "identifier_override": "endpoint_folder-d/service.getDirectThread"
             },
             "snippet": {
-                "client": "import { SeedAudiencesClient, SeedAudiencesEnvironment } from \"@fern/audiences\";\n\nconst client = new SeedAudiencesClient({ environment: SeedAudiencesEnvironment.EnvironmentA });\nawait client.folderD.service.getDirectThread();\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedAudiencesClient, SeedAudiencesEnvironment } from \"@fern/audiences\";\n\nconst client = new SeedAudiencesClient({ environment: SeedAudiencesEnvironment.EnvironmentA });\nawait client.folderD.service.getDirectThread();\n"
             }
         },
         {
@@ -30,9 +29,10 @@
                 "identifier_override": "endpoint_foo.find"
             },
             "snippet": {
-                "client": "import { SeedAudiencesClient, SeedAudiencesEnvironment } from \"@fern/audiences\";\n\nconst client = new SeedAudiencesClient({ environment: SeedAudiencesEnvironment.EnvironmentA });\nawait client.foo.find({\n    optionalString: \"optionalString\",\n    publicProperty: \"publicProperty\",\n    privateProperty: 1\n});\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedAudiencesClient, SeedAudiencesEnvironment } from \"@fern/audiences\";\n\nconst client = new SeedAudiencesClient({ environment: SeedAudiencesEnvironment.EnvironmentA });\nawait client.foo.find({\n    optionalString: \"optionalString\",\n    publicProperty: \"publicProperty\",\n    privateProperty: 1\n});\n"
             }
         }
-    ]
+    ],
+    "types": {}
 }

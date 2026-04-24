@@ -1,5 +1,4 @@
 {
-    "types": {},
     "endpoints": [
         {
             "id": {
@@ -8,9 +7,10 @@
                 "identifier_override": "endpoint_.bulkUpdateTasks"
             },
             "snippet": {
-                "client": "import { SeedApiClient } from \"@fern/query-param-name-conflict\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.bulkUpdateTasks();\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/query-param-name-conflict\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.bulkUpdateTasks();\n"
             }
         }
-    ]
+    ],
+    "types": {}
 }

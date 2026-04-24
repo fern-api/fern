@@ -1,5 +1,4 @@
 {
-    "types": {},
     "endpoints": [
         {
             "id": {
@@ -8,9 +7,10 @@
                 "identifier_override": "endpoint_.extendedInlineRequestBody"
             },
             "snippet": {
-                "client": "import { SeedAliasExtendsClient } from \"@fern/alias-extends\";\n\nconst client = new SeedAliasExtendsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.extendedInlineRequestBody({\n    child: \"child\",\n    parent: \"parent\"\n});\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedAliasExtendsClient } from \"@fern/alias-extends\";\n\nconst client = new SeedAliasExtendsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.extendedInlineRequestBody({\n    child: \"child\",\n    parent: \"parent\"\n});\n"
             }
         }
-    ]
+    ],
+    "types": {}
 }

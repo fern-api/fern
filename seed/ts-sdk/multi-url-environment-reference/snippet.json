@@ -1,5 +1,4 @@
 {
-    "types": {},
     "endpoints": [
         {
             "id": {
@@ -8,8 +7,8 @@
                 "identifier_override": "endpoint_items.listItems"
             },
             "snippet": {
-                "client": "import { SeedApiClient } from \"@fern/multi-url-environment-reference\";\n\nconst client = new SeedApiClient({ token: \"YOUR_TOKEN\" });\nawait client.items.listItems();\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/multi-url-environment-reference\";\n\nconst client = new SeedApiClient({ token: \"YOUR_TOKEN\" });\nawait client.items.listItems();\n"
             }
         },
         {
@@ -19,8 +18,8 @@
                 "identifier_override": "endpoint_auth.gettoken"
             },
             "snippet": {
-                "client": "import { SeedApiClient } from \"@fern/multi-url-environment-reference\";\n\nconst client = new SeedApiClient({ token: \"YOUR_TOKEN\" });\nawait client.auth.gettoken({\n    client_id: \"client_id\",\n    client_secret: \"client_secret\"\n});\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/multi-url-environment-reference\";\n\nconst client = new SeedApiClient({ token: \"YOUR_TOKEN\" });\nawait client.auth.gettoken({\n    client_id: \"client_id\",\n    client_secret: \"client_secret\"\n});\n"
             }
         },
         {
@@ -30,9 +29,10 @@
                 "identifier_override": "endpoint_files.upload"
             },
             "snippet": {
-                "client": "import { SeedApiClient } from \"@fern/multi-url-environment-reference\";\n\nconst client = new SeedApiClient({ token: \"YOUR_TOKEN\" });\nawait client.files.upload({\n    name: \"name\",\n    parent_id: \"parent_id\"\n});\n",
-                "type": "typescript"
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/multi-url-environment-reference\";\n\nconst client = new SeedApiClient({ token: \"YOUR_TOKEN\" });\nawait client.files.upload({\n    name: \"name\",\n    parent_id: \"parent_id\"\n});\n"
             }
         }
-    ]
+    ],
+    "types": {}
 }

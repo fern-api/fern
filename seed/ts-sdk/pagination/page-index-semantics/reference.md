@@ -27,6 +27,7 @@ const pageableResponse = await client.complex.search("index", {
 for await (const item of pageableResponse) {
     console.log(item);
 }
+
 // Or you can manually iterate page-by-page
 let page = await client.complex.search("index", {
     pagination: {
@@ -42,6 +43,7 @@ let page = await client.complex.search("index", {
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
 // You can also access the underlying response
 const response = page.response;
 
@@ -110,6 +112,7 @@ const pageableResponse = await client.inlineUsers.inlineUsers.listWithCursorPagi
 for await (const item of pageableResponse) {
     console.log(item);
 }
+
 // Or you can manually iterate page-by-page
 let page = await client.inlineUsers.inlineUsers.listWithCursorPagination({
     page: 1,
@@ -120,6 +123,7 @@ let page = await client.inlineUsers.inlineUsers.listWithCursorPagination({
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
 // You can also access the underlying response
 const response = page.response;
 
@@ -176,6 +180,7 @@ const pageableResponse = await client.inlineUsers.inlineUsers.listWithMixedTypeC
 for await (const item of pageableResponse) {
     console.log(item);
 }
+
 // Or you can manually iterate page-by-page
 let page = await client.inlineUsers.inlineUsers.listWithMixedTypeCursorPagination({
     cursor: "cursor"
@@ -183,6 +188,7 @@ let page = await client.inlineUsers.inlineUsers.listWithMixedTypeCursorPaginatio
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
 // You can also access the underlying response
 const response = page.response;
 
@@ -241,6 +247,7 @@ const pageableResponse = await client.inlineUsers.inlineUsers.listWithBodyCursor
 for await (const item of pageableResponse) {
     console.log(item);
 }
+
 // Or you can manually iterate page-by-page
 let page = await client.inlineUsers.inlineUsers.listWithBodyCursorPagination({
     pagination: {
@@ -250,6 +257,7 @@ let page = await client.inlineUsers.inlineUsers.listWithBodyCursorPagination({
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
 // You can also access the underlying response
 const response = page.response;
 
@@ -309,6 +317,7 @@ const pageableResponse = await client.inlineUsers.inlineUsers.listWithOffsetPagi
 for await (const item of pageableResponse) {
     console.log(item);
 }
+
 // Or you can manually iterate page-by-page
 let page = await client.inlineUsers.inlineUsers.listWithOffsetPagination({
     page: 1,
@@ -319,6 +328,7 @@ let page = await client.inlineUsers.inlineUsers.listWithOffsetPagination({
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
 // You can also access the underlying response
 const response = page.response;
 
@@ -378,6 +388,7 @@ const pageableResponse = await client.inlineUsers.inlineUsers.listWithDoubleOffs
 for await (const item of pageableResponse) {
     console.log(item);
 }
+
 // Or you can manually iterate page-by-page
 let page = await client.inlineUsers.inlineUsers.listWithDoubleOffsetPagination({
     page: 1.1,
@@ -388,6 +399,7 @@ let page = await client.inlineUsers.inlineUsers.listWithDoubleOffsetPagination({
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
 // You can also access the underlying response
 const response = page.response;
 
@@ -446,6 +458,7 @@ const pageableResponse = await client.inlineUsers.inlineUsers.listWithBodyOffset
 for await (const item of pageableResponse) {
     console.log(item);
 }
+
 // Or you can manually iterate page-by-page
 let page = await client.inlineUsers.inlineUsers.listWithBodyOffsetPagination({
     pagination: {
@@ -455,6 +468,7 @@ let page = await client.inlineUsers.inlineUsers.listWithBodyOffsetPagination({
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
 // You can also access the underlying response
 const response = page.response;
 
@@ -513,6 +527,7 @@ const pageableResponse = await client.inlineUsers.inlineUsers.listWithOffsetStep
 for await (const item of pageableResponse) {
     console.log(item);
 }
+
 // Or you can manually iterate page-by-page
 let page = await client.inlineUsers.inlineUsers.listWithOffsetStepPagination({
     page: 1,
@@ -522,6 +537,7 @@ let page = await client.inlineUsers.inlineUsers.listWithOffsetStepPagination({
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
 // You can also access the underlying response
 const response = page.response;
 
@@ -580,6 +596,7 @@ const pageableResponse = await client.inlineUsers.inlineUsers.listWithOffsetPagi
 for await (const item of pageableResponse) {
     console.log(item);
 }
+
 // Or you can manually iterate page-by-page
 let page = await client.inlineUsers.inlineUsers.listWithOffsetPaginationHasNextPage({
     page: 1,
@@ -589,6 +606,7 @@ let page = await client.inlineUsers.inlineUsers.listWithOffsetPaginationHasNextP
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
 // You can also access the underlying response
 const response = page.response;
 
@@ -645,6 +663,7 @@ const pageableResponse = await client.inlineUsers.inlineUsers.listWithExtendedRe
 for await (const item of pageableResponse) {
     console.log(item);
 }
+
 // Or you can manually iterate page-by-page
 let page = await client.inlineUsers.inlineUsers.listWithExtendedResults({
     cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
@@ -652,6 +671,7 @@ let page = await client.inlineUsers.inlineUsers.listWithExtendedResults({
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
 // You can also access the underlying response
 const response = page.response;
 
@@ -708,6 +728,7 @@ const pageableResponse = await client.inlineUsers.inlineUsers.listWithExtendedRe
 for await (const item of pageableResponse) {
     console.log(item);
 }
+
 // Or you can manually iterate page-by-page
 let page = await client.inlineUsers.inlineUsers.listWithExtendedResultsAndOptionalData({
     cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
@@ -715,6 +736,7 @@ let page = await client.inlineUsers.inlineUsers.listWithExtendedResultsAndOption
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
 // You can also access the underlying response
 const response = page.response;
 
@@ -771,6 +793,7 @@ const pageableResponse = await client.inlineUsers.inlineUsers.listUsernames({
 for await (const item of pageableResponse) {
     console.log(item);
 }
+
 // Or you can manually iterate page-by-page
 let page = await client.inlineUsers.inlineUsers.listUsernames({
     starting_after: "starting_after"
@@ -778,6 +801,7 @@ let page = await client.inlineUsers.inlineUsers.listUsernames({
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
 // You can also access the underlying response
 const response = page.response;
 
@@ -834,6 +858,7 @@ const pageableResponse = await client.inlineUsers.inlineUsers.listWithGlobalConf
 for await (const item of pageableResponse) {
     console.log(item);
 }
+
 // Or you can manually iterate page-by-page
 let page = await client.inlineUsers.inlineUsers.listWithGlobalConfig({
     offset: 1
@@ -841,6 +866,7 @@ let page = await client.inlineUsers.inlineUsers.listWithGlobalConfig({
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
 // You can also access the underlying response
 const response = page.response;
 
@@ -901,6 +927,7 @@ const pageableResponse = await client.users.listWithCursorPagination({
 for await (const item of pageableResponse) {
     console.log(item);
 }
+
 // Or you can manually iterate page-by-page
 let page = await client.users.listWithCursorPagination({
     page: 1,
@@ -911,6 +938,7 @@ let page = await client.users.listWithCursorPagination({
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
 // You can also access the underlying response
 const response = page.response;
 
@@ -967,6 +995,7 @@ const pageableResponse = await client.users.listWithMixedTypeCursorPagination({
 for await (const item of pageableResponse) {
     console.log(item);
 }
+
 // Or you can manually iterate page-by-page
 let page = await client.users.listWithMixedTypeCursorPagination({
     cursor: "cursor"
@@ -974,6 +1003,7 @@ let page = await client.users.listWithMixedTypeCursorPagination({
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
 // You can also access the underlying response
 const response = page.response;
 
@@ -1032,6 +1062,7 @@ const pageableResponse = await client.users.listWithBodyCursorPagination({
 for await (const item of pageableResponse) {
     console.log(item);
 }
+
 // Or you can manually iterate page-by-page
 let page = await client.users.listWithBodyCursorPagination({
     pagination: {
@@ -1041,6 +1072,7 @@ let page = await client.users.listWithBodyCursorPagination({
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
 // You can also access the underlying response
 const response = page.response;
 
@@ -1114,6 +1146,7 @@ const pageableResponse = await client.users.listWithTopLevelBodyCursorPagination
 for await (const item of pageableResponse) {
     console.log(item);
 }
+
 // Or you can manually iterate page-by-page
 let page = await client.users.listWithTopLevelBodyCursorPagination({
     cursor: "initial_cursor",
@@ -1122,6 +1155,7 @@ let page = await client.users.listWithTopLevelBodyCursorPagination({
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
 // You can also access the underlying response
 const response = page.response;
 
@@ -1181,6 +1215,7 @@ const pageableResponse = await client.users.listWithOffsetPagination({
 for await (const item of pageableResponse) {
     console.log(item);
 }
+
 // Or you can manually iterate page-by-page
 let page = await client.users.listWithOffsetPagination({
     page: 1,
@@ -1191,6 +1226,7 @@ let page = await client.users.listWithOffsetPagination({
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
 // You can also access the underlying response
 const response = page.response;
 
@@ -1250,6 +1286,7 @@ const pageableResponse = await client.users.listWithDoubleOffsetPagination({
 for await (const item of pageableResponse) {
     console.log(item);
 }
+
 // Or you can manually iterate page-by-page
 let page = await client.users.listWithDoubleOffsetPagination({
     page: 1.1,
@@ -1260,6 +1297,7 @@ let page = await client.users.listWithDoubleOffsetPagination({
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
 // You can also access the underlying response
 const response = page.response;
 
@@ -1318,6 +1356,7 @@ const pageableResponse = await client.users.listWithBodyOffsetPagination({
 for await (const item of pageableResponse) {
     console.log(item);
 }
+
 // Or you can manually iterate page-by-page
 let page = await client.users.listWithBodyOffsetPagination({
     pagination: {
@@ -1327,6 +1366,7 @@ let page = await client.users.listWithBodyOffsetPagination({
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
 // You can also access the underlying response
 const response = page.response;
 
@@ -1385,6 +1425,7 @@ const pageableResponse = await client.users.listWithOffsetStepPagination({
 for await (const item of pageableResponse) {
     console.log(item);
 }
+
 // Or you can manually iterate page-by-page
 let page = await client.users.listWithOffsetStepPagination({
     page: 1,
@@ -1394,6 +1435,7 @@ let page = await client.users.listWithOffsetStepPagination({
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
 // You can also access the underlying response
 const response = page.response;
 
@@ -1452,6 +1494,7 @@ const pageableResponse = await client.users.listWithOffsetPaginationHasNextPage(
 for await (const item of pageableResponse) {
     console.log(item);
 }
+
 // Or you can manually iterate page-by-page
 let page = await client.users.listWithOffsetPaginationHasNextPage({
     page: 1,
@@ -1461,6 +1504,7 @@ let page = await client.users.listWithOffsetPaginationHasNextPage({
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
 // You can also access the underlying response
 const response = page.response;
 
@@ -1517,6 +1561,7 @@ const pageableResponse = await client.users.listWithExtendedResults({
 for await (const item of pageableResponse) {
     console.log(item);
 }
+
 // Or you can manually iterate page-by-page
 let page = await client.users.listWithExtendedResults({
     cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
@@ -1524,6 +1569,7 @@ let page = await client.users.listWithExtendedResults({
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
 // You can also access the underlying response
 const response = page.response;
 
@@ -1580,6 +1626,7 @@ const pageableResponse = await client.users.listWithExtendedResultsAndOptionalDa
 for await (const item of pageableResponse) {
     console.log(item);
 }
+
 // Or you can manually iterate page-by-page
 let page = await client.users.listWithExtendedResultsAndOptionalData({
     cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
@@ -1587,6 +1634,7 @@ let page = await client.users.listWithExtendedResultsAndOptionalData({
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
 // You can also access the underlying response
 const response = page.response;
 
@@ -1643,6 +1691,7 @@ const pageableResponse = await client.users.listUsernames({
 for await (const item of pageableResponse) {
     console.log(item);
 }
+
 // Or you can manually iterate page-by-page
 let page = await client.users.listUsernames({
     starting_after: "starting_after"
@@ -1650,6 +1699,7 @@ let page = await client.users.listUsernames({
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
 // You can also access the underlying response
 const response = page.response;
 
@@ -1706,6 +1756,7 @@ const pageableResponse = await client.users.listUsernamesWithOptionalResponse({
 for await (const item of pageableResponse) {
     console.log(item);
 }
+
 // Or you can manually iterate page-by-page
 let page = await client.users.listUsernamesWithOptionalResponse({
     starting_after: "starting_after"
@@ -1713,6 +1764,7 @@ let page = await client.users.listUsernamesWithOptionalResponse({
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
 // You can also access the underlying response
 const response = page.response;
 
@@ -1769,6 +1821,7 @@ const pageableResponse = await client.users.listWithGlobalConfig({
 for await (const item of pageableResponse) {
     console.log(item);
 }
+
 // Or you can manually iterate page-by-page
 let page = await client.users.listWithGlobalConfig({
     offset: 1
@@ -1776,6 +1829,7 @@ let page = await client.users.listWithGlobalConfig({
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
 // You can also access the underlying response
 const response = page.response;
 
@@ -1832,6 +1886,7 @@ const pageableResponse = await client.users.listWithOptionalData({
 for await (const item of pageableResponse) {
     console.log(item);
 }
+
 // Or you can manually iterate page-by-page
 let page = await client.users.listWithOptionalData({
     page: 1
@@ -1839,6 +1894,7 @@ let page = await client.users.listWithOptionalData({
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
 // You can also access the underlying response
 const response = page.response;
 
@@ -1897,6 +1953,7 @@ const pageableResponse = await client.users.listWithAliasedData({
 for await (const item of pageableResponse) {
     console.log(item);
 }
+
 // Or you can manually iterate page-by-page
 let page = await client.users.listWithAliasedData({
     page: 1,
@@ -1906,6 +1963,7 @@ let page = await client.users.listWithAliasedData({
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
 // You can also access the underlying response
 const response = page.response;
 
