@@ -256,6 +256,48 @@ client.union().nestedUnions(
 </dl>
 </details>
 
+<details><summary><code>client.union.nestedObjectUnions(request) -> String</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.union().nestedObjectUnions(
+    OuterNestedUnion.of("string")
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `OuterNestedUnion` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.union.testCamelCaseProperties(request) -> String</code></summary>
 <dl>
 <dd>

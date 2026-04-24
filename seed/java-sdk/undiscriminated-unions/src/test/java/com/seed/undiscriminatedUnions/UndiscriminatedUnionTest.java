@@ -7,6 +7,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import com.seed.undiscriminatedUnions.core.ObjectMappers;
 import com.seed.undiscriminatedUnions.resources.union.types.ConvertToken;
+import com.seed.undiscriminatedUnions.resources.union.types.LeafTypeA;
+import com.seed.undiscriminatedUnions.resources.union.types.LeafTypeB;
+import com.seed.undiscriminatedUnions.resources.union.types.NestedObjectUnion;
 import com.seed.undiscriminatedUnions.resources.union.types.PaymentMethodUnion;
 import com.seed.undiscriminatedUnions.resources.union.types.TokenizeCard;
 import org.junit.jupiter.api.Test;
@@ -24,5 +27,19 @@ public final class UndiscriminatedUnionTest {
         String json = "{\"method\":\"test\",\"tokenId\":\"test\"}";
         PaymentMethodUnion union = ObjectMappers.JSON_MAPPER.readValue(json, PaymentMethodUnion.class);
         assertTrue(union.get() instanceof ConvertToken, "Expected ConvertToken but got different variant");
+    }
+
+    @Test
+    public void testNestedObjectUnion_LeafTypeA() throws Exception {
+        String json = "{\"alpha\":\"test\",\"beta\":1}";
+        NestedObjectUnion union = ObjectMappers.JSON_MAPPER.readValue(json, NestedObjectUnion.class);
+        assertTrue(union.get() instanceof LeafTypeA, "Expected LeafTypeA but got different variant");
+    }
+
+    @Test
+    public void testNestedObjectUnion_LeafTypeB() throws Exception {
+        String json = "{\"gamma\":\"test\"}";
+        NestedObjectUnion union = ObjectMappers.JSON_MAPPER.readValue(json, NestedObjectUnion.class);
+        assertTrue(union.get() instanceof LeafTypeB, "Expected LeafTypeB but got different variant");
     }
 }

@@ -56,6 +56,12 @@ service:
       request: NestedUnionRoot
       response: string
 
+    nestedObjectUnions:
+      path: "/nested-objects"
+      method: POST
+      request: OuterNestedUnion
+      response: string
+
     testCamelCaseProperties:
       path: "/camel-case"
       method: POST
@@ -245,3 +251,36 @@ types:
       - string
       - UserId
       - Name
+
+  # Test cases for nested undiscriminated unions with object variants
+  LeafTypeA:
+    properties:
+      alpha: string
+      beta: integer
+
+  LeafTypeB:
+    properties:
+      gamma: string
+
+  NestedObjectUnion:
+    docs: |
+      Inner union with two object variants that have disjoint required keys.
+      Tests that required-key guards work correctly inside nested union contexts.
+    discriminated: false
+    union:
+      - LeafTypeA
+      - LeafTypeB
+
+  WrapperObject:
+    properties:
+      inner: NestedObjectUnion
+      label: string
+
+  OuterNestedUnion:
+    docs: |
+      Outer union where one variant is an object containing a nested union field.
+      Tests that the deserializer correctly handles transitive union deserialization.
+    discriminated: false
+    union:
+      - string
+      - WrapperObject
