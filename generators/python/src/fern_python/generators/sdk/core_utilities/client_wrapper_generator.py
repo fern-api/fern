@@ -529,8 +529,8 @@ class ClientWrapperGenerator:
             writer.write_newline_if_last_line_not()
             basic_auth_scheme = self._get_basic_auth_scheme()
             if basic_auth_scheme is not None:
-                username_omitted = getattr(basic_auth_scheme, "username_omit", None) is True
-                password_omitted = getattr(basic_auth_scheme, "password_omit", None) is True
+                username_omitted = basic_auth_scheme.username_omit is True
+                password_omitted = basic_auth_scheme.password_omit is True
 
                 if not self._context.ir.sdk_config.is_auth_mandatory:
                     # Build condition and args based on which fields are omitted vs present
@@ -861,8 +861,8 @@ class ClientWrapperGenerator:
 
         basic_auth_scheme = self._get_basic_auth_scheme()
         if basic_auth_scheme is not None:
-            username_omitted = getattr(basic_auth_scheme, "username_omit", None) is True
-            password_omitted = getattr(basic_auth_scheme, "password_omit", None) is True
+            username_omitted = basic_auth_scheme.username_omit is True
+            password_omitted = basic_auth_scheme.password_omit is True
 
             # When omit is true, the field is completely removed from the end-user API.
             # Only add non-omitted fields to constructor parameters.
