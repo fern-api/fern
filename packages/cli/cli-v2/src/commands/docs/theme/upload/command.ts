@@ -15,6 +15,45 @@ import { command } from "../../../_internal/command.js";
 const FDR_ORIGIN =
     process.env.FERN_FDR_ORIGIN ?? process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com";
 
+// ── Network helpers ──────────────────────────────────────────────────────────
+
+/**
+ * Node's native `fetch` throws a bare `TypeError("fetch failed")` for network-
+ * level errors (DNS, TLS, connection refused, etc.).  The actual root cause is
+ * stashed in `error.cause`.  This helper extracts it into a human-readable
+ * string so callers can surface an actionable message.
+ */
+function describeFetchError(error: unknown): string {
+    if (!(error instanceof Error)) {
+        return String(error);
+    }
+    const cause = (error as Error & { cause?: unknown }).cause;
+    if (cause instanceof Error) {
+        // e.g. "getaddrinfo ENOTFOUND registry.buildwithfern.com"
+        //      "connect ECONNREFUSED 127.0.0.1:443"
+        return cause.message;
+    }
+    return error.message;
+}
+
+/**
+ * Attempt to extract a human-readable message from a JSON error response body.
+ * Returns `undefined` if the body isn't parseable JSON or has no recognisable
+ * message field, so the caller can fall back to the raw text.
+ */
+function parseErrorDetail(body: string): string | undefined {
+    try {
+        const parsed = JSON.parse(body) as Record<string, unknown>;
+        const message = parsed.message ?? (parsed.error as Record<string, unknown> | undefined)?.message;
+        if (typeof message === "string") {
+            return message;
+        }
+    } catch {
+        // not JSON
+    }
+    return undefined;
+}
+
 // ── CAS helpers ───────────────────────────────────────────────────────────────
 
 function getGitRoot(): string {
@@ -42,46 +81,80 @@ async function uploadToCas(
     bindPath: string,
     orgId: string,
     token: string,
-    label: string
+    label: string,
+    context: Context
 ): Promise<string> {
     const hash = createHash("sha256").update(content).digest("hex");
 
     const casUrl = `${FDR_ORIGIN}/v2/registry/content/${hash}?orgId=${encodeURIComponent(orgId)}`;
-    const checkRes = await fetch(casUrl, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
-        body: JSON.stringify({ contentType, contentLength: content.byteLength })
-    });
+    context.stdout.debug(`  CAS check: PUT ${casUrl} (${contentType}, ${content.byteLength} bytes)`);
+    let checkRes: Response;
+    try {
+        checkRes = await fetch(casUrl, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+            body: JSON.stringify({ contentType, contentLength: content.byteLength })
+        });
+    } catch (err) {
+        throw new CliError({
+            message: `CAS check for ${label} failed — could not reach ${FDR_ORIGIN}: ${describeFetchError(err)}`,
+            code: CliError.Code.NetworkError
+        });
+    }
     if (!checkRes.ok) {
         const errorBody = await checkRes.text();
+        const detail = parseErrorDetail(errorBody) ?? errorBody;
         throw new CliError({
-            message: `CAS check failed for ${label}: HTTP ${checkRes.status} — ${errorBody}`,
+            message: `CAS check failed for ${label}: HTTP ${checkRes.status} — ${detail}`,
             code: CliError.Code.NetworkError
         });
     }
     const checkBody = (await checkRes.json()) as { status: string; uploadUrl?: string };
+    context.stdout.debug(`  CAS status for ${label}: ${checkBody.status}`);
+
     if (checkBody.status === "upload_required" && checkBody.uploadUrl != null) {
-        const uploadRes = await fetch(checkBody.uploadUrl, {
-            method: "PUT",
-            headers: { "Content-Type": contentType },
-            body: new Uint8Array(content.buffer as ArrayBuffer, content.byteOffset, content.byteLength)
-        });
-        if (!uploadRes.ok) {
+        context.stdout.debug(`  Uploading ${label} to S3 (${content.byteLength} bytes)...`);
+        let uploadRes: Response;
+        try {
+            uploadRes = await fetch(checkBody.uploadUrl, {
+                method: "PUT",
+                headers: { "Content-Type": contentType },
+                body: new Uint8Array(content.buffer as ArrayBuffer, content.byteOffset, content.byteLength)
+            });
+        } catch (err) {
             throw new CliError({
-                message: `S3 upload failed for ${label}: HTTP ${uploadRes.status}`,
+                message: `S3 upload for ${label} failed — could not reach upload URL: ${describeFetchError(err)}`,
+                code: CliError.Code.NetworkError
+            });
+        }
+        if (!uploadRes.ok) {
+            const errorBody = await uploadRes.text().catch(() => "");
+            throw new CliError({
+                message: `S3 upload failed for ${label}: HTTP ${uploadRes.status}${errorBody ? ` — ${errorBody}` : ""}`,
                 code: CliError.Code.NetworkError
             });
         }
     }
 
-    const bindRes = await fetch(`${FDR_ORIGIN}/v2/registry/files/${orgId}/${bindPath}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
-        body: JSON.stringify({ hash, contentType })
-    });
-    if (!bindRes.ok) {
+    const bindUrl = `${FDR_ORIGIN}/v2/registry/files/${orgId}/${bindPath}`;
+    context.stdout.debug(`  Binding ${label} → ${bindPath}`);
+    let bindRes: Response;
+    try {
+        bindRes = await fetch(bindUrl, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+            body: JSON.stringify({ hash, contentType })
+        });
+    } catch (err) {
         throw new CliError({
-            message: `File bind failed for ${label}: HTTP ${bindRes.status}`,
+            message: `File bind for ${label} failed — could not reach ${FDR_ORIGIN}: ${describeFetchError(err)}`,
+            code: CliError.Code.NetworkError
+        });
+    }
+    if (!bindRes.ok) {
+        const errorBody = await bindRes.text().catch(() => "");
+        throw new CliError({
+            message: `File bind failed for ${label}: HTTP ${bindRes.status}${errorBody ? ` — ${errorBody}` : ""}`,
             code: CliError.Code.NetworkError
         });
     }
@@ -89,7 +162,13 @@ async function uploadToCas(
     return hash;
 }
 
-async function uploadFileToCas(absolutePath: string, orgId: string, token: string, gitRoot: string): Promise<string> {
+async function uploadFileToCas(
+    absolutePath: string,
+    orgId: string,
+    token: string,
+    gitRoot: string,
+    context: Context
+): Promise<string> {
     try {
         await access(absolutePath);
     } catch {
@@ -101,7 +180,7 @@ async function uploadFileToCas(absolutePath: string, orgId: string, token: strin
     const content = await readFile(absolutePath);
     const contentType = (mime.lookup(absolutePath) || "application/octet-stream") as string;
     const bindPath = posixBindPath(gitRoot, absolutePath);
-    return uploadToCas(content, contentType, bindPath, orgId, token, path.basename(absolutePath));
+    return uploadToCas(content, contentType, bindPath, orgId, token, path.basename(absolutePath), context);
 }
 
 // ── Theme config walking ──────────────────────────────────────────────────────
@@ -122,7 +201,7 @@ async function processFileField(
     }
     const abs = path.resolve(themeDir, value);
     context.stdout.debug(`  Uploading ${value}...`);
-    const hash = await uploadFileToCas(abs, orgId, token, gitRoot);
+    const hash = await uploadFileToCas(abs, orgId, token, gitRoot, context);
     return { hash };
 }
 
@@ -133,20 +212,33 @@ async function processThemeConfig(
     token: string,
     gitRoot: string,
     context: Context
-): Promise<Record<string, unknown>> {
+): Promise<{ config: Record<string, unknown>; filesUploaded: number }> {
     const cfg: Record<string, unknown> = { ...raw };
-    const field = (v: string | undefined) => processFileField(v, themeDir, orgId, token, gitRoot, context);
+    let filesUploaded = 0;
+
+    const field = async (v: string | undefined): Promise<string | { hash: string } | undefined> => {
+        const result = await processFileField(v, themeDir, orgId, token, gitRoot, context);
+        if (result != null && typeof result === "object") {
+            filesUploaded++;
+        }
+        return result;
+    };
 
     if (cfg.logo != null && typeof cfg.logo === "object") {
+        context.stdout.debug("Processing logo...");
         const logo = { ...(cfg.logo as Record<string, unknown>) };
         logo.dark = await field(logo.dark as string | undefined);
         logo.light = await field(logo.light as string | undefined);
         cfg.logo = logo;
     }
 
+    if (cfg.favicon != null) {
+        context.stdout.debug("Processing favicon...");
+    }
     cfg.favicon = await field(cfg.favicon as string | undefined);
 
     if (cfg["background-image"] != null && typeof cfg["background-image"] === "object") {
+        context.stdout.debug("Processing background-image...");
         const bg = { ...(cfg["background-image"] as Record<string, unknown>) };
         bg.dark = await field(bg.dark as string | undefined);
         bg.light = await field(bg.light as string | undefined);
@@ -154,6 +246,7 @@ async function processThemeConfig(
     }
 
     if (cfg.typography != null && typeof cfg.typography === "object") {
+        context.stdout.debug("Processing typography fonts...");
         const typo = { ...(cfg.typography as Record<string, unknown>) };
         for (const fontKey of ["bodyFont", "headingsFont", "codeFont"]) {
             const font = typo[fontKey];
@@ -178,11 +271,13 @@ async function processThemeConfig(
 
     if (cfg.css != null) {
         const cssList: unknown[] = Array.isArray(cfg.css) ? cfg.css : [cfg.css];
+        context.stdout.debug(`Processing ${cssList.length} CSS file(s)...`);
         cfg.css = await Promise.all(cssList.map((item) => (typeof item === "string" ? field(item) : item)));
     }
 
     if (cfg.js != null) {
         const jsList: unknown[] = Array.isArray(cfg.js) ? cfg.js : [cfg.js];
+        context.stdout.debug(`Processing ${jsList.length} JS file(s)...`);
         cfg.js = await Promise.all(
             jsList.map(async (entry) => {
                 if (typeof entry === "string") {
@@ -203,10 +298,18 @@ async function processThemeConfig(
         );
     }
 
+    if (cfg.header != null) {
+        context.stdout.debug("Processing header component...");
+    }
     cfg.header = await field(cfg.header as string | undefined);
+
+    if (cfg.footer != null) {
+        context.stdout.debug("Processing footer component...");
+    }
     cfg.footer = await field(cfg.footer as string | undefined);
 
     if (cfg.metadata != null && typeof cfg.metadata === "object") {
+        context.stdout.debug("Processing metadata images...");
         const meta = { ...(cfg.metadata as Record<string, unknown>) };
         for (const imgKey of ["og:image", "twitter:image", "og:background-image", "og:logo"]) {
             if (typeof meta[imgKey] === "string") {
@@ -216,7 +319,7 @@ async function processThemeConfig(
         cfg.metadata = meta;
     }
 
-    return cfg;
+    return { config: cfg, filesUploaded };
 }
 
 // ── Command ───────────────────────────────────────────────────────────────────
@@ -254,8 +357,10 @@ export class UploadThemeCommand {
         }
 
         context.stdout.info(`Uploading theme "${args.name}" for org "${orgId}"...`);
+        context.stdout.debug(`FDR origin: ${FDR_ORIGIN}`);
+        context.stdout.debug(`Theme directory: ${themeDir}`);
 
-        const processedConfig = await processThemeConfig(
+        const { config: processedConfig, filesUploaded } = await processThemeConfig(
             rawYaml as Record<string, unknown>,
             themeDir,
             orgId,
@@ -264,15 +369,30 @@ export class UploadThemeCommand {
             context
         );
 
-        const res = await fetch(`${FDR_ORIGIN}/v2/registry/themes/${orgId}`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json", Authorization: `Bearer ${token.value}` },
-            body: JSON.stringify({ name: args.name, config: processedConfig })
-        });
+        if (filesUploaded > 0) {
+            context.stdout.info(`Uploaded ${filesUploaded} file asset(s) to CAS`);
+        }
+
+        const saveUrl = `${FDR_ORIGIN}/v2/registry/themes/${orgId}`;
+        context.stdout.debug(`Saving theme to ${saveUrl}`);
+        let res: Response;
+        try {
+            res = await fetch(saveUrl, {
+                method: "POST",
+                headers: { "Content-Type": "application/json", Authorization: `Bearer ${token.value}` },
+                body: JSON.stringify({ name: args.name, config: processedConfig })
+            });
+        } catch (err) {
+            throw new CliError({
+                message: `Failed to save theme "${args.name}" — could not reach ${FDR_ORIGIN}: ${describeFetchError(err)}`,
+                code: CliError.Code.NetworkError
+            });
+        }
         if (!res.ok) {
             const body = await res.text();
+            const detail = parseErrorDetail(body) ?? body;
             throw new CliError({
-                message: `Failed to save theme: HTTP ${res.status} — ${body}`,
+                message: `Failed to save theme "${args.name}": HTTP ${res.status} — ${detail}`,
                 code: CliError.Code.NetworkError
             });
         }
