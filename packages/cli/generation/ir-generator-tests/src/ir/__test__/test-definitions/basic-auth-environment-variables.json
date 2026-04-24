@@ -818,6 +818,7 @@
                             "safeName": "Username"
                         }
                     },
+                    "usernameOmit": null,
                     "password": {
                         "originalName": "accessToken",
                         "camelCase": {
@@ -836,7 +837,8 @@
                             "unsafeName": "AccessToken",
                             "safeName": "AccessToken"
                         }
-                    }
+                    },
+                    "passwordOmit": null
                 },
                 "declaration": {
                     "name": {
@@ -938,6 +940,7 @@
                             "safeName": "Username"
                         }
                     },
+                    "usernameOmit": null,
                     "password": {
                         "originalName": "accessToken",
                         "camelCase": {
@@ -956,7 +959,8 @@
                             "unsafeName": "AccessToken",
                             "safeName": "AccessToken"
                         }
-                    }
+                    },
+                    "passwordOmit": null
                 },
                 "declaration": {
                     "name": {
