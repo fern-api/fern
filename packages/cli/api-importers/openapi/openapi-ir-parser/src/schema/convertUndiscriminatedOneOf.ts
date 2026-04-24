@@ -251,10 +251,11 @@ function processSubtypes({
     source: Source;
     commonProperties?: CommonPropertyWithExample[];
 }): SchemaWithExample {
+    const hasCommonProperties = commonProperties != null && commonProperties.length > 0;
     const everySubTypeIsLiteral = Object.entries(uniqueSubtypes).every(([_, schema]) => {
         return schema.type === "literal";
     });
-    if (everySubTypeIsLiteral) {
+    if (everySubTypeIsLiteral && !hasCommonProperties) {
         const enumDescriptions: Record<string, { description: string }> = {};
         const enumValues: string[] = [];
         Object.entries(uniqueSubtypes).forEach(([_, schema]) => {
@@ -287,7 +288,7 @@ function processSubtypes({
         });
     }
 
-    if (uniqueSubtypes.length === 1 && uniqueSubtypes[0] != null && !context.options.preserveSingleSchemaOneOf) {
+    if (uniqueSubtypes.length === 1 && uniqueSubtypes[0] != null && !context.options.preserveSingleSchemaOneOf && !hasCommonProperties) {
         let result = uniqueSubtypes[0];
         if (wrapAsNullable) {
             result = SchemaWithExample.nullable({
