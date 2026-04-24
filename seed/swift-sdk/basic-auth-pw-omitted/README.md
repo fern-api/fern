@@ -53,7 +53,7 @@ import BasicAuthPwOmitted
 private func main() async throws {
     let client = BasicAuthPwOmittedClient(
         username: "<username>",
-        password: "<password>"
+        password: ""
     )
 
     _ = try await client.basicAuth.postWithBasicAuth(request: .object([

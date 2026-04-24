@@ -17450,6 +17450,7 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                             "safeName": "ClientId"
                         }
                     },
+                    "usernameOmit": null,
                     "password": {
                         "originalName": "clientSecret",
                         "camelCase": {
@@ -17468,7 +17469,8 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                             "unsafeName": "ClientSecret",
                             "safeName": "ClientSecret"
                         }
-                    }
+                    },
+                    "passwordOmit": null
                 },
                 "declaration": {
                     "name": {

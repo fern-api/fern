@@ -55,6 +55,6 @@
     "dedent": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:",
-    "@fern-api/dynamic-ir-sdk": "65.5.0"
+    "@fern-api/dynamic-ir-sdk": "66.1.0"
   }
 }

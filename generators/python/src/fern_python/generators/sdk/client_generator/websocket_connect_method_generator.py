@@ -7,7 +7,10 @@ from fern_python.codegen.ast.ast_node.node_writer import NodeWriter
 from fern_python.codegen.ast.nodes.docstring import escape_docstring
 from fern_python.external_dependencies import Contextlib, UrlLibParse, Websockets
 from fern_python.generators.pydantic_model.model_utilities import can_tr_be_fern_model
-from fern_python.generators.sdk.client_generator.endpoint_function_generator import EndpointFunctionGenerator
+from fern_python.generators.sdk.client_generator.endpoint_function_generator import (
+    EndpointFunctionGenerator,
+    filter_variable_path_parameters,
+)
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
 from fern_python.generators.sdk.environment_generators.multiple_base_urls_environment_generator import (
     get_base_url,
@@ -111,7 +114,15 @@ class WebsocketConnectMethodGenerator:
             return AST.ReferenceNode(reference=Contextlib.contextmanager())
 
     def _get_overridden_parameter_types(self) -> List[AST.NamedFunctionParameter]:
-        return self._named_parameters_raw
+        named_parameters = self._named_parameters_raw.copy()
+        # Path params with client_default are skipped from positional params,
+        # so they need to be added as named params with their default value
+        non_variable_path_params = filter_variable_path_parameters(self._websocket.path_parameters)
+        client_default_path_params = [p for p in non_variable_path_params if p.client_default is not None]
+        if client_default_path_params:
+            named_path_parameters = self._named_parameters_from_path_parameters(client_default_path_params)
+            named_parameters = named_path_parameters + named_parameters
+        return named_parameters
 
     def _get_websocket_return_type(self) -> AST.TypeHint:
         if self._is_async:
@@ -132,8 +143,12 @@ class WebsocketConnectMethodGenerator:
 
     def _get_websocket_path_parameters(self) -> List[AST.FunctionParameter]:
         parameters: List[AST.FunctionParameter] = []
-        for path_parameter in self._websocket.path_parameters:
+        non_variable_path_params = filter_variable_path_parameters(self._websocket.path_parameters)
+        for path_parameter in non_variable_path_params:
             if not self._is_type_literal(path_parameter.value_type):
+                # Path parameters with client defaults are moved to named parameters
+                if path_parameter.client_default is not None:
+                    continue
                 name = self._path_parameter_names[get_parameter_name(path_parameter.name)]
                 parameters.append(
                     AST.FunctionParameter(
@@ -159,13 +174,18 @@ class WebsocketConnectMethodGenerator:
                     query_parameter.value_type,
                     in_endpoint=True,
                 )
+                client_default_initializer = self._get_client_default_initializer(query_parameter.client_default)
                 parameters.append(
                     AST.NamedFunctionParameter(
                         name=get_parameter_name(get_name_from_wire_value(query_parameter.name)),
                         docs=query_parameter.docs,
                         type_hint=self._get_typehint_for_query_param(query_parameter, query_parameter_type_hint),
-                        initializer=self._context.pydantic_generator_context.get_initializer_for_type_reference(
-                            query_parameter.value_type
+                        initializer=(
+                            client_default_initializer
+                            if client_default_initializer is not None
+                            else self._context.pydantic_generator_context.get_initializer_for_type_reference(
+                                query_parameter.value_type
+                            )
                         ),
                     ),
                 )
@@ -176,24 +196,16 @@ class WebsocketConnectMethodGenerator:
                     header.value_type,
                     in_endpoint=True,
                 )
+                client_default_initializer = self._get_client_default_initializer(header.client_default)
                 header_type_hint = AST.TypeHint.optional(header_type_hint)
                 parameters.append(
                     AST.NamedFunctionParameter(
                         name=get_parameter_name(get_name_from_wire_value(header.name)),
                         docs=header.docs,
                         type_hint=header_type_hint,
-                        initializer=(
-                            AST.Expression(
-                                AST.FunctionInvocation(
-                                    function_definition=AST.Reference(
-                                        import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
-                                        qualified_name_excluding_import=("getenv",),
-                                    ),
-                                    args=[AST.Expression(f'"{header.env}"')],
-                                )
-                            )
-                            if header.env is not None
-                            else None
+                        initializer=self._get_header_initializer(
+                            env=header.env,
+                            client_default_initializer=client_default_initializer,
                         ),
                     ),
                 )
@@ -226,6 +238,7 @@ class WebsocketConnectMethodGenerator:
         for path_parameter in self._websocket.path_parameters:
             if not self._is_type_literal(path_parameter.value_type):
                 name = self._path_parameter_names[get_parameter_name(path_parameter.name)]
+                client_default_initializer = self._get_client_default_initializer(path_parameter.client_default)
                 parameters.append(
                     AST.NamedFunctionParameter(
                         name=name,
@@ -233,6 +246,7 @@ class WebsocketConnectMethodGenerator:
                             path_parameter.value_type,
                             in_endpoint=True,
                         ),
+                        initializer=client_default_initializer,
                     ),
                 )
 
@@ -242,13 +256,18 @@ class WebsocketConnectMethodGenerator:
                     query_parameter.value_type,
                     in_endpoint=True,
                 )
+                client_default_initializer = self._get_client_default_initializer(query_parameter.client_default)
                 parameters.append(
                     AST.NamedFunctionParameter(
                         name=get_parameter_name(get_name_from_wire_value(query_parameter.name)),
                         docs=query_parameter.docs,
                         type_hint=self._get_typehint_for_query_param(query_parameter, query_parameter_type_hint),
-                        initializer=self._context.pydantic_generator_context.get_initializer_for_type_reference(
-                            query_parameter.value_type
+                        initializer=(
+                            client_default_initializer
+                            if client_default_initializer is not None
+                            else self._context.pydantic_generator_context.get_initializer_for_type_reference(
+                                query_parameter.value_type
+                            )
                         ),
                     ),
                 )
@@ -444,8 +463,11 @@ class WebsocketConnectMethodGenerator:
             return None
 
         # Consolidate the named parameters and path parameters in a single list.
+        # Filter out path params with client_default since they're already in named_parameters
+        # (added by _get_overridden_parameter_types)
+        non_default_path_params = [p for p in path_parameters if p.client_default is None]
         parameters: List[AST.NamedFunctionParameter] = []
-        parameters = self._named_parameters_from_path_parameters(path_parameters)
+        parameters = self._named_parameters_from_path_parameters(non_default_path_params)
         parameters.extend(named_parameters)
 
         def write(writer: AST.NodeWriter) -> None:
@@ -498,6 +520,7 @@ class WebsocketConnectMethodGenerator:
         for path_parameter in path_parameters:
             if not self._is_type_literal(path_parameter.value_type):
                 name = self._path_parameter_names[get_parameter_name(path_parameter.name)]
+                client_default_initializer = self._get_client_default_initializer(path_parameter.client_default)
                 named_parameters.append(
                     AST.NamedFunctionParameter(
                         name=name,
@@ -506,6 +529,7 @@ class WebsocketConnectMethodGenerator:
                             path_parameter.value_type,
                             in_endpoint=True,
                         ),
+                        initializer=client_default_initializer,
                     ),
                 )
         return named_parameters
@@ -766,6 +790,35 @@ class WebsocketConnectMethodGenerator:
 
     def _is_header_literal(self, header: ir_types.HttpHeader) -> bool:
         return self._context.get_literal_header_value(header) is not None
+
+    def _get_client_default_initializer(self, client_default: Optional[ir_types.Literal]) -> Optional[AST.Expression]:
+        if client_default is None:
+            return None
+        return client_default.visit(
+            string=lambda value: AST.Expression(repr(value)),
+            boolean=lambda value: AST.Expression(f"{value}"),
+        )
+
+    def _get_header_initializer(
+        self,
+        *,
+        env: Optional[str],
+        client_default_initializer: Optional[AST.Expression],
+    ) -> Optional[AST.Expression]:
+        if env is not None:
+            getenv_args = [AST.Expression(f'"{env}"')]
+            if client_default_initializer is not None:
+                getenv_args.append(client_default_initializer)
+            return AST.Expression(
+                AST.FunctionInvocation(
+                    function_definition=AST.Reference(
+                        import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
+                        qualified_name_excluding_import=("getenv",),
+                    ),
+                    args=getenv_args,
+                )
+            )
+        return client_default_initializer
 
     def _is_enum_type_with_value(
         self,

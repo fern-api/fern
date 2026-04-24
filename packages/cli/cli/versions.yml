@@ -1,4 +1,59 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.94.2
+  changelogEntry:
+    - summary: |
+        Fix Python dynamic snippet generation to respect the `use_typeddict_requests`
+        configuration option. When enabled, dynamic snippets now generate dict literals
+        instead of Pydantic model constructors for object and discriminated union types.
+      type: fix
+  createdAt: "2026-04-24"
+  irVersion: 66
+- version: 4.94.1
+  changelogEntry:
+    - summary: |
+        Fix global theme asset downloads preserving original filenames and extensions.
+        Previously, assets downloaded from S3 CAS URLs (whose pathname is a raw content
+        hash) were saved without a file extension, breaking downstream MIME type detection.
+        The CLI now reads the filename from the presigned URL's response-content-disposition
+        query parameter, falling back to the Content-Disposition response header, then
+        Content-Type, so files land on disk with their correct names (e.g. logo.svg).
+      type: fix
+  createdAt: "2026-04-24"
+  irVersion: 66
+- version: 4.94.0
+  changelogEntry:
+    - summary: |
+        Add consumer-side support for the `global-theme` key in docs.yml. When a docs site
+        declares `global-theme: <name>`, the CLI fetches the named theme from Fern's cloud
+        registry and merges it into the docs configuration before building (theme values win
+        for branding fields). Works with `fern generate --docs`, `fern generate --docs --preview`,
+        and `fern docs dev` (dev mode requires FERN_TOKEN to be set).
+      type: feat
+  createdAt: "2026-04-24"
+  irVersion: 66
+- version: 4.93.0
+  changelogEntry:
+    - summary: |
+        Expose `claude-code` under `page-actions` in `docs.yml` so docs sites can toggle the
+        "Connect to Claude Code" button (e.g. `page-actions.options.claude-code: false` or
+        `page-actions.default: claude-code`).
+      type: feat
+  createdAt: "2026-04-24"
+  irVersion: 66
+- version: 4.92.0
+  changelogEntry:
+    - summary: |
+        `fern automations generate` now writes a richer GitHub Actions step
+        summary. The summary is an HTML table grouped by API and generator group
+        (with rowspan cells), a heading that shows the succeeded/total count on
+        failure, a duration column, and a links column with the PR, SDK repo, and
+        generators.yml entry (the latter deep-linked to the exact line when running
+        under GitHub Actions). Generators excluded from automation now surface as
+        explicit skipped rows with reasons (`Skipped - local output`, `Skipped -
+        opted out`), replacing the silent drop.
+      type: feat
+  createdAt: "2026-04-24"
+  irVersion: 66
 - version: 4.91.1
   changelogEntry:
     - summary: |

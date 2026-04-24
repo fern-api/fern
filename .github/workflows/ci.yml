@@ -91,10 +91,13 @@ jobs:
           pnpm fern:build
           pnpm jsonschema
 
+      - name: Generate docs SDK
+        run: pnpm docs:generate
+
       - name: Format
         run: pnpm format:check
         
-      - name: Ensure no changes to git-tracked files
+      - name: Ensure no changes to git-tracked files (run `pnpm update:docs` and `pnpm jsonschema` locally and commit the result if this fails)
         run: git --no-pager diff --exit-code
 
   biome:

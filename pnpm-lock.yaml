@@ -550,8 +550,8 @@ catalogs:
       specifier: ^5.0.0
       version: 5.1.0
     uuid:
-      specifier: ^9.0.1
-      version: 9.0.1
+      specifier: ^14.0.0
+      version: 14.0.0
     validate-npm-package-name:
       specifier: ^5.0.1
       version: 5.0.1
@@ -751,8 +751,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/commons/core-utils
       '@fern-api/dynamic-ir-sdk':
-        specifier: 65.5.0
-        version: 65.5.0
+        specifier: 66.1.0
+        version: 66.1.0
       '@fern-api/fern-definition-schema':
         specifier: workspace:*
         version: link:../../packages/cli/fern-definition/schema
@@ -833,8 +833,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
       '@fern-api/dynamic-ir-sdk':
-        specifier: 65.5.0
-        version: 65.5.0
+        specifier: 66.1.0
+        version: 66.1.0
       '@fern-fern/ir-sdk':
         specifier: 66.0.0
         version: 66.0.0
@@ -876,8 +876,8 @@ importers:
         specifier: workspace:*
         version: link:../codegen
       '@fern-api/dynamic-ir-sdk':
-        specifier: 65.5.0
-        version: 65.5.0
+        specifier: 66.1.0
+        version: 66.1.0
       '@fern-api/path-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/path-utils
@@ -1093,8 +1093,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
       '@fern-api/dynamic-ir-sdk':
-        specifier: 65.5.0
-        version: 65.5.0
+        specifier: 66.1.0
+        version: 66.1.0
       '@fern-api/go-ast':
         specifier: workspace:*
         version: link:../ast
@@ -1181,8 +1181,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
       '@fern-api/dynamic-ir-sdk':
-        specifier: 65.5.0
-        version: 65.5.0
+        specifier: 66.1.0
+        version: 66.1.0
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/fs-utils
@@ -1293,8 +1293,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
       '@fern-api/dynamic-ir-sdk':
-        specifier: 65.5.0
-        version: 65.5.0
+        specifier: 66.1.0
+        version: 66.1.0
       '@fern-api/java-ast':
         specifier: workspace:*
         version: link:../ast
@@ -1501,8 +1501,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
       '@fern-api/dynamic-ir-sdk':
-        specifier: 65.5.0
-        version: 65.5.0
+        specifier: 66.1.0
+        version: 66.1.0
       '@fern-api/path-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/path-utils
@@ -1573,8 +1573,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
       '@fern-api/dynamic-ir-sdk':
-        specifier: 65.5.0
-        version: 65.5.0
+        specifier: 66.1.0
+        version: 66.1.0
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/fs-utils
@@ -1721,8 +1721,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
       '@fern-api/dynamic-ir-sdk':
-        specifier: 65.5.0
-        version: 65.5.0
+        specifier: 66.1.0
+        version: 66.1.0
       '@fern-api/path-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/path-utils
@@ -1956,8 +1956,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
       '@fern-api/dynamic-ir-sdk':
-        specifier: 65.5.0
-        version: 65.5.0
+        specifier: 66.1.0
+        version: 66.1.0
       '@fern-api/path-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/path-utils
@@ -2157,8 +2157,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/configs
       '@fern-api/dynamic-ir-sdk':
-        specifier: 65.5.0
-        version: 65.5.0
+        specifier: 66.1.0
+        version: 66.1.0
       '@fern-api/path-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/path-utils
@@ -2230,8 +2230,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
       '@fern-api/dynamic-ir-sdk':
-        specifier: 65.5.0
-        version: 65.5.0
+        specifier: 66.1.0
+        version: 66.1.0
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/fs-utils
@@ -2351,8 +2351,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
       '@fern-api/dynamic-ir-sdk':
-        specifier: 65.5.0
-        version: 65.5.0
+        specifier: 66.1.0
+        version: 66.1.0
       '@fern-api/path-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/path-utils
@@ -2557,8 +2557,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
       '@fern-api/dynamic-ir-sdk':
-        specifier: 65.5.0
-        version: 65.5.0
+        specifier: 66.1.0
+        version: 66.1.0
       '@fern-api/path-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/path-utils
@@ -4724,6 +4724,9 @@ importers:
       dotenv:
         specifier: ^16.0.0
         version: 16.6.1
+      mime-types:
+        specifier: 'catalog:'
+        version: 2.1.35
       tmp-promise:
         specifier: 'catalog:'
         version: 3.0.3
@@ -4869,6 +4872,9 @@ importers:
       '@types/jsonwebtoken':
         specifier: 'catalog:'
         version: 9.0.10
+      '@types/mime-types':
+        specifier: 'catalog:'
+        version: 2.1.4
       '@types/node':
         specifier: 'catalog:'
         version: 22.19.17
@@ -4922,7 +4928,7 @@ importers:
         version: 5.9.3
       uuid:
         specifier: 'catalog:'
-        version: 9.0.1
+        version: 14.0.0
       vitest:
         specifier: 'catalog:'
         version: 4.1.4(@opentelemetry/api@1.9.1)(@types/node@22.19.17)(@vitest/coverage-v8@4.1.4)(vite@7.3.2(@types/node@22.19.17)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
@@ -5360,7 +5366,7 @@ importers:
         version: 3.0.3
       uuid:
         specifier: 'catalog:'
-        version: 9.0.1
+        version: 14.0.0
       watcher:
         specifier: 'catalog:'
         version: 2.3.1
@@ -5458,6 +5464,9 @@ importers:
       '@fern-api/ui-core-utils':
         specifier: 0.145.12-b50d999d1
         version: 0.145.12-b50d999d1
+      '@fern-api/workspace-loader':
+        specifier: workspace:*
+        version: link:../workspace/loader
       '@open-rpc/meta-schema':
         specifier: 'catalog:'
         version: 1.14.9
@@ -5482,9 +5491,15 @@ importers:
       lodash-es:
         specifier: 'catalog:'
         version: 4.18.1
+      mime-types:
+        specifier: 'catalog:'
+        version: 2.1.35
       openapi-types:
         specifier: ^12.1.3
         version: 12.1.3
+      tmp-promise:
+        specifier: 'catalog:'
+        version: 3.0.3
       url-join:
         specifier: ^4.0.1
         version: 4.0.1
@@ -5492,15 +5507,15 @@ importers:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../configs
-      '@fern-api/workspace-loader':
-        specifier: workspace:*
-        version: link:../workspace/loader
       '@types/js-yaml':
         specifier: 'catalog:'
         version: 4.0.9
       '@types/lodash-es':
         specifier: 'catalog:'
         version: 4.17.12
+      '@types/mime-types':
+        specifier: 'catalog:'
+        version: 2.1.4
       '@types/node':
         specifier: 'catalog:'
         version: 22.19.17
@@ -5817,7 +5832,7 @@ importers:
         version: 4.0.1
       uuid:
         specifier: 'catalog:'
-        version: 9.0.1
+        version: 14.0.0
       vitest:
         specifier: 'catalog:'
         version: 4.1.4(@opentelemetry/api@1.9.1)(@types/node@22.19.17)(@vitest/coverage-v8@4.1.4)(vite@7.3.2(@types/node@22.19.17)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
@@ -6593,7 +6608,7 @@ importers:
         version: 5.29.1(rxjs@7.8.2)
       uuid:
         specifier: 'catalog:'
-        version: 9.0.1
+        version: 14.0.0
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
@@ -7032,7 +7047,7 @@ importers:
         version: 3.0.3
       uuid:
         specifier: 'catalog:'
-        version: 9.0.1
+        version: 14.0.0
       zod:
         specifier: 'catalog:'
         version: 3.25.76
@@ -9366,8 +9381,8 @@ packages:
   '@fern-api/dynamic-ir-sdk@62.6.0':
     resolution: {integrity: sha512-l7I5/pZ6REsNyt4mC3ws+SqlEQ1UBy1hlQOrYL3fxKjsSlRKsZS5uOSQuzIkAHpbpYKNvYattc0LhONhySYoQA==}
 
-  '@fern-api/dynamic-ir-sdk@65.5.0':
-    resolution: {integrity: sha512-D7dBfdbWfH/ESdOFC8Fm/gHDfgswMbeeBDjCi+3Z5rK6XuAvNZa6oFrryYNoTB2uGV5Kgp+VqEigrtGHVZN4Cw==}
+  '@fern-api/dynamic-ir-sdk@66.1.0':
+    resolution: {integrity: sha512-ILT96PcT+HV1pVGVNg3cs6xnb/JRdKCJ1Tk1AO+sTxQFRRHoIwqr1KUfEQVW9iuvBsbgiApRZHfw42e5r/uMlA==}
     engines: {node: '>=18.0.0'}
 
   '@fern-api/fai-sdk@0.0.6-2ee1b7e28':
@@ -14893,8 +14908,8 @@ packages:
     resolution: {integrity: sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA==}
     engines: {node: '>= 0.4.0'}
 
-  uuid@9.0.1:
-    resolution: {integrity: sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==}
+  uuid@14.0.0:
+    resolution: {integrity: sha512-Qo+uWgilfSmAhXCMav1uYFynlQO7fMFiMVZsQqZRMIXp0O7rR7qjkj+cPvBHLgBqi960QCoo/PH2/6ZtVqKvrg==}
     hasBin: true
 
   v8-compile-cache@2.4.0:
@@ -16435,7 +16450,7 @@ snapshots:
 
   '@fern-api/dynamic-ir-sdk@62.6.0': {}
 
-  '@fern-api/dynamic-ir-sdk@65.5.0': {}
+  '@fern-api/dynamic-ir-sdk@66.1.0': {}
 
   '@fern-api/fai-sdk@0.0.6-2ee1b7e28': {}
 
@@ -22793,7 +22808,7 @@ snapshots:
 
   utils-merge@1.0.1: {}
 
-  uuid@9.0.1: {}
+  uuid@14.0.0: {}
 
   v8-compile-cache@2.4.0: {}
 
