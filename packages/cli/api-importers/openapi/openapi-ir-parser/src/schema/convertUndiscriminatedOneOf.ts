@@ -288,7 +288,12 @@ function processSubtypes({
         });
     }
 
-    if (uniqueSubtypes.length === 1 && uniqueSubtypes[0] != null && !context.options.preserveSingleSchemaOneOf && !hasCommonProperties) {
+    if (
+        uniqueSubtypes.length === 1 &&
+        uniqueSubtypes[0] != null &&
+        !context.options.preserveSingleSchemaOneOf &&
+        !hasCommonProperties
+    ) {
         let result = uniqueSubtypes[0];
         if (wrapAsNullable) {
             result = SchemaWithExample.nullable({
