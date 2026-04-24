@@ -35,14 +35,10 @@ module Seed
             value: params[:integer]
           )
         end
-        body.add_part(params[:file].to_form_data_part(name: "file"))
-         if params[:file]
-        body.add_part(params[:file_list].to_form_data_part(name: "file_list"))
-         if params[:file_list]
-        body.add_part(params[:maybe_file].to_form_data_part(name: "maybe_file"))
-         if params[:maybe_file]
-        body.add_part(params[:maybe_file_list].to_form_data_part(name: "maybe_file_list"))
-         if params[:maybe_file_list]
+        body.add_part(params[:file].to_form_data_part(name: "file")) if params[:file]
+        body.add_part(params[:file_list].to_form_data_part(name: "file_list")) if params[:file_list]
+        body.add_part(params[:maybe_file].to_form_data_part(name: "maybe_file")) if params[:maybe_file]
+        body.add_part(params[:maybe_file_list].to_form_data_part(name: "maybe_file_list")) if params[:maybe_file_list]
         if params[:maybe_integer]
           body.add(
             name: "maybe_integer",
@@ -130,8 +126,7 @@ module Seed
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
-        body.add_part(params[:file].to_form_data_part(name: "file"))
-         if params[:file]
+        body.add_part(params[:file].to_form_data_part(name: "file")) if params[:file]
 
         request = Seed::Internal::Multipart::Request.new(
           base_url: request_options[:base_url],
@@ -170,8 +165,7 @@ module Seed
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
-        body.add_part(params[:file].to_form_data_part(name: "file"))
-         if params[:file]
+        body.add_part(params[:file].to_form_data_part(name: "file")) if params[:file]
 
         request = Seed::Internal::Multipart::Request.new(
           base_url: request_options[:base_url],
@@ -207,8 +201,7 @@ module Seed
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
-        body.add_part(params[:file].to_form_data_part(name: "file"))
-         if params[:file]
+        body.add_part(params[:file].to_form_data_part(name: "file")) if params[:file]
 
         request = Seed::Internal::Multipart::Request.new(
           base_url: request_options[:base_url],
@@ -242,8 +235,7 @@ module Seed
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
-        body.add_part(params[:file].to_form_data_part(name: "file"))
-         if params[:file]
+        body.add_part(params[:file].to_form_data_part(name: "file")) if params[:file]
         if params[:foo]
           body.add(
             name: "foo",
@@ -297,8 +289,7 @@ module Seed
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
-        body.add_part(params[:file].to_form_data_part(name: "file"))
-         if params[:file]
+        body.add_part(params[:file].to_form_data_part(name: "file")) if params[:file]
         if params[:foo]
           body.add(
             name: "foo",
@@ -356,14 +347,10 @@ module Seed
             value: params[:integer]
           )
         end
-        body.add_part(params[:file].to_form_data_part(name: "file"))
-         if params[:file]
-        body.add_part(params[:file_list].to_form_data_part(name: "file_list"))
-         if params[:file_list]
-        body.add_part(params[:maybe_file].to_form_data_part(name: "maybe_file"))
-         if params[:maybe_file]
-        body.add_part(params[:maybe_file_list].to_form_data_part(name: "maybe_file_list"))
-         if params[:maybe_file_list]
+        body.add_part(params[:file].to_form_data_part(name: "file")) if params[:file]
+        body.add_part(params[:file_list].to_form_data_part(name: "file_list")) if params[:file_list]
+        body.add_part(params[:maybe_file].to_form_data_part(name: "maybe_file")) if params[:maybe_file]
+        body.add_part(params[:maybe_file_list].to_form_data_part(name: "maybe_file_list")) if params[:maybe_file_list]
         if params[:maybe_integer]
           body.add(
             name: "maybe_integer",
@@ -457,8 +444,7 @@ module Seed
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
-        body.add_part(params[:image_file].to_form_data_part(name: "image_file"))
-         if params[:image_file]
+        body.add_part(params[:image_file].to_form_data_part(name: "image_file")) if params[:image_file]
         if params[:request]
           body.add(
             name: "request",
@@ -499,8 +485,7 @@ module Seed
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
-        body.add_part(params[:file].to_form_data_part(name: "file"))
-         if params[:file]
+        body.add_part(params[:file].to_form_data_part(name: "file")) if params[:file]
         if params[:request]
           body.add(
             name: "request",
@@ -540,8 +525,7 @@ module Seed
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
-        body.add_part(params[:file].to_form_data_part(name: "file"))
-         if params[:file]
+        body.add_part(params[:file].to_form_data_part(name: "file")) if params[:file]
         if params[:json]
           body.add(
             name: "json",
@@ -609,8 +593,7 @@ module Seed
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
-        body.add_part(params[:file].to_form_data_part(name: "file"))
-         if params[:file]
+        body.add_part(params[:file].to_form_data_part(name: "file")) if params[:file]
         if params[:model_type]
           body.add(
             name: "model_type",

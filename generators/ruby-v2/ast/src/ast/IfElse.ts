@@ -33,15 +33,11 @@ export class IfElse extends AstNode {
     }
 
     public write(writer: Writer): void {
-        if (this.shouldWriteAsModifier(writer)) {
-            const [stmt] = this.ifBranch.thenBody;
-            if (stmt != null) {
-                stmt.write(writer);
-                writer.write(" if ");
-                this.ifBranch.condition.write(writer);
-                writer.writeNewLineIfLastLineNot();
-                return;
-            }
+        const modifier = this.renderAsModifier(writer);
+        if (modifier != null) {
+            writer.write(modifier);
+            writer.writeNewLineIfLastLineNot();
+            return;
         }
 
         // Write the primary if branch
@@ -83,42 +79,46 @@ export class IfElse extends AstNode {
     }
 
     /**
-     * Returns true when this if can be written in Ruby's modifier form (`stmt if cond`):
+     * Returns the modifier-form rendering (`stmt if cond`) when this if is
+     * eligible:
      *   - exactly one statement in the then-body
      *   - no elsif and no else
      *   - the single statement and the condition both render as a single line
      *
+     * Returns undefined when the shape isn't eligible, in which case the caller
+     * falls back to explicit if/end form.
+     *
      * The generator's .rubocop.yml disables Layout/LineLength, so rubocop's
-     * Style/IfUnlessModifier accepts modifier form at any line length. That means
-     * we don't need to gate on a max-line-length budget here — shape is enough.
+     * Style/IfUnlessModifier accepts modifier form at any line length. Shape
+     * eligibility is therefore sufficient.
      */
-    private shouldWriteAsModifier(writer: Writer): boolean {
+    private renderAsModifier(writer: Writer): string | undefined {
         if (this.ifBranch.thenBody.length !== 1) {
-            return false;
+            return undefined;
         }
         if (this.elseIfs.length > 0) {
-            return false;
+            return undefined;
         }
         if (this.elseBody != null && this.elseBody.length > 0) {
-            return false;
+            return undefined;
         }
         const stmt = this.ifBranch.thenBody[0];
         if (stmt == null) {
-            return false;
+            return undefined;
         }
 
         const stmtRendered = renderNode(stmt, writer);
         const conditionRendered = renderNode(this.ifBranch.condition, writer);
         if (stmtRendered == null || conditionRendered == null) {
-            return false;
+            return undefined;
         }
         // Modifier form requires the statement and condition to each render as a
         // single line; multi-line bodies (begin/rescue, nested blocks, etc.) stay
         // in explicit if/end form.
         if (stmtRendered.includes("\n") || conditionRendered.includes("\n")) {
-            return false;
+            return undefined;
         }
-        return true;
+        return `${stmtRendered} if ${conditionRendered}`;
     }
 }
 
