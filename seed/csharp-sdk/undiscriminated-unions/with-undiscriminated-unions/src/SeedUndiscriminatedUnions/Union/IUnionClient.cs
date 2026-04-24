@@ -37,6 +37,12 @@ public partial interface IUnionClient
         CancellationToken cancellationToken = default
     );
 
+    WithRawResponseTask<string> NestedObjectUnionsAsync(
+        OuterNestedUnion request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
     WithRawResponseTask<string> TestCamelCasePropertiesAsync(
         PaymentRequest request,
         RequestOptions? options = null,

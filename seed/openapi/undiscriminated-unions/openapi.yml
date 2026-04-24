@@ -133,6 +133,25 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/NestedUnionRoot'
+  /nested-objects:
+    post:
+      operationId: union_nestedObjectUnions
+      tags:
+        - Union
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OuterNestedUnion'
   /camel-case:
     post:
       operationId: union_testCamelCaseProperties
@@ -369,4 +388,55 @@ components:
           public static implicit operator UnionWithTypeAliases(string value) => ...
           public static implicit operator UnionWithTypeAliases(string value) => ...
         causing CS0557 compiler error.
+    LeafTypeA:
+      title: LeafTypeA
+      type: object
+      properties:
+        alpha:
+          type: string
+        beta:
+          type: integer
+      required:
+        - alpha
+        - beta
+    LeafTypeB:
+      title: LeafTypeB
+      type: object
+      properties:
+        gamma:
+          type: string
+      required:
+        - gamma
+    NestedObjectUnion:
+      title: NestedObjectUnion
+      oneOf:
+        - $ref: '#/components/schemas/LeafTypeA'
+        - $ref: '#/components/schemas/LeafTypeB'
+      description: >-
+        Inner union with two object variants that have disjoint required keys.
+
+        Tests that required-key guards work correctly inside nested union
+        contexts.
+    WrapperObject:
+      title: WrapperObject
+      type: object
+      properties:
+        inner:
+          $ref: '#/components/schemas/NestedObjectUnion'
+        label:
+          type: string
+      required:
+        - inner
+        - label
+    OuterNestedUnion:
+      title: OuterNestedUnion
+      oneOf:
+        - type: string
+        - $ref: '#/components/schemas/WrapperObject'
+      description: >-
+        Outer union where one variant is an object containing a nested union
+        field.
+
+        Tests that the deserializer correctly handles transitive union
+        deserialization.
   securitySchemes: {}

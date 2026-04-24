@@ -76,6 +76,18 @@
         {
             "example_identifier": null,
             "id": {
+                "path": "/nested-objects",
+                "method": "POST",
+                "identifier_override": "endpoint_union.nestedObjectUnions"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedUndiscriminatedUnions;\n\nvar client = new SeedUndiscriminatedUnionsClient();\nawait client.Union.NestedObjectUnionsAsync(\"string\");\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
                 "path": "/camel-case",
                 "method": "POST",
                 "identifier_override": "endpoint_union.testCamelCaseProperties"

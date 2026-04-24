@@ -233,6 +233,43 @@ async fn main() {
 </dl>
 </details>
 
+<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">nested_object_unions</a>(request: OuterNestedUnion) -> Result&lt;String, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_undiscriminated_unions::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        ..Default::default()
+    };
+    let client = UndiscriminatedUnionsClient::new(config).expect("Failed to build client");
+    client
+        .union_
+        .nested_object_unions(&OuterNestedUnion::String("string".to_string()), None)
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">test_camel_case_properties</a>(request: PaymentRequest) -> Result&lt;String, ApiError&gt;</code></summary>
 <dl>
 <dd>
