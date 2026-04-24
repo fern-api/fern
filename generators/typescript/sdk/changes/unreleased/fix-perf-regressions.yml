@@ -1,0 +1,26 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix `fixImportsForEsm` to respect `packagePath` custom config. Previously the
+    ESM rewrite hardcoded `src/` as the source directory, which silently produced
+    invalid ESM output for any SDK that combined `useLegacyExports: false` with a
+    non-default `packagePath`.
+  type: fix
+
+- summary: |
+    Restore `deleteGitIgnoredFiles` to the `git init` + `git clean -fdx` flow so
+    full `.gitignore` semantics (nested globs, directory patterns like `.yarn/*`,
+    negation entries) are honored on every generated SDK.
+  type: fix
+
+- summary: |
+    Drop `--no-optional` from pnpm lockfile generation. The flag made lockfiles
+    drop `optionalDependencies`, which would cause pnpm to re-resolve and mutate
+    the committed lockfile on the first consumer install.
+  type: fix
+
+- summary: |
+    Re-enable external source maps for the bundled SDK generator CLI. The minified
+    bundle stays, but stack traces from production generator runs are once again
+    resolvable against the original sources.
+  type: internal

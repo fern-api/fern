@@ -333,7 +333,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
         // Run in parallel — they operate on different directories (src/ vs tests/)
         await Promise.all([
             customConfig.useLegacyExports === false
-                ? fixImportsForEsm(persistedTypescriptProject.getRootDirectory())
+                ? fixImportsForEsm(persistedTypescriptProject.getSrcDirectory())
                 : undefined,
             customConfig.testFramework === "vitest"
                 ? convertJestImportsToVitest(

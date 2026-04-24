@@ -155,13 +155,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                             await new Promise<void>((resolve, reject) => {
                                 execFile(
                                     pm,
-                                    [
-                                        "install",
-                                        "--lockfile-only",
-                                        "--ignore-scripts",
-                                        "--prefer-offline",
-                                        "--no-optional"
-                                    ],
+                                    ["install", "--lockfile-only", "--ignore-scripts", "--prefer-offline"],
                                     {
                                         cwd: tmpDir,
                                         env: { ...process.env, PNPM_FROZEN_LOCKFILE: "false" }

@@ -12,14 +12,13 @@ import path from "path";
  * This implementation uses fast text-based processing instead of ts-morph AST parsing.
  * Files are processed in parallel batches for better I/O throughput.
  *
- * @param pathToProject - The absolute path to the root of the TypeScript project.
+ * @param srcDirectory - The absolute path to the source directory of the TypeScript project
+ *                      (respects `packagePath`, defaults to `<project>/src` when unset).
  */
-export async function fixImportsForEsm(pathToProject: AbsoluteFilePath): Promise<void> {
-    const srcDir = path.join(pathToProject, "src");
-
-    // Build file existence set from src/ only (all imports resolve within src/)
+export async function fixImportsForEsm(srcDirectory: AbsoluteFilePath): Promise<void> {
+    // Build file existence set from the source directory only (all relative imports resolve within it)
     const allFiles = new Set<string>();
-    await collectFiles(srcDir, allFiles);
+    await collectFiles(srcDirectory, allFiles);
 
     // Regex to match import/export from "..." and dynamic import("...")
     // Captures: the prefix (from/import), the quote char, and the module specifier
