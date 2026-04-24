@@ -794,7 +794,10 @@ export class DocsDefinitionResolver {
                     ? {
                           model: this.parsedDocsConfig.aiChatConfig.model,
                           systemPrompt: this.parsedDocsConfig.aiChatConfig.systemPrompt,
-                          location: this.parsedDocsConfig.aiChatConfig.location as ("slack" | "docs")[] | undefined,
+                          // Filter out 'discord' which is no longer supported by fdr-sdk
+                          location: this.parsedDocsConfig.aiChatConfig.location?.filter(
+                              (loc): loc is "slack" | "docs" => loc === "slack" || loc === "docs"
+                          ),
                           datasources: this.parsedDocsConfig.aiChatConfig.datasources?.map((ds) => ({
                               url: ds.url,
                               title: ds.title

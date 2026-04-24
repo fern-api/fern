@@ -635,6 +635,13 @@ export async function publishDocs({
                         // Build a translated DocsDefinition by taking the base definition,
                         // overriding translated pages, and updating the nav tree to reflect
                         // any sidebar-title / slug frontmatter in the translated pages.
+                        //
+                        // TODO(translations-alpha): Translated pages are currently sent as raw markdown
+                        // without running through the MDX transformation pipeline that default-locale
+                        // pages go through in DocsDefinitionResolver (stripMdxComments, replaceReferencedMarkdown,
+                        // replaceReferencedCode, transformAtPrefixImports, replaceImagePathsAndUrls).
+                        // This means relative images, MDX includes, and comments won't be processed.
+                        // Extract those transformations into a reusable helper and apply them here.
                         const translatedPages = {
                             ...docsDefinition.pages,
                             ...Object.fromEntries(
