@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Introduce a shared stdin/stdout abstraction in cli-v2 so commands can uniformly
+    honor the Unix `-` marker on I/O flags (stdin for inputs, stdout for outputs),
+    including a "- used at most once per command" guard and a JSON-or-path input
+    helper that parses inline JSON first and falls back to a file read. `fern api
+    compile --output -` is migrated onto the new helper as the first consumer;
+    follow-up work will migrate the remaining commands.
+  type: internal

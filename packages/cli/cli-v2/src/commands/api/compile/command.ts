@@ -1,15 +1,14 @@
 import { Audiences } from "@fern-api/configuration";
-import { streamObjectToFile } from "@fern-api/fs-utils";
 import { CliError } from "@fern-api/task-context";
 
 import chalk from "chalk";
-import { JsonStreamStringify } from "json-stream-stringify";
 import type { Argv } from "yargs";
 import { ApiChecker } from "../../../api/checker/ApiChecker.js";
 import { IrCompiler } from "../../../api/compiler/IrCompiler.js";
 import type { ApiDefinition } from "../../../api/config/ApiDefinition.js";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
+import { isStdioMarker, StdioMarkerGuard, writeOutputJson } from "../../../io/stdio.js";
 import { LANGUAGES } from "../../../sdk/config/Language.js";
 import type { Workspace } from "../../../workspace/Workspace.js";
 import { command } from "../../_internal/command.js";
@@ -37,6 +36,11 @@ export class CompileCommand {
                 message: `--output requires --api when multiple APIs are configured`,
                 code: CliError.Code.ConfigError
             });
+        }
+
+        const stdio = new StdioMarkerGuard();
+        if (isStdioMarker(args.output)) {
+            stdio.claimStdout("output");
         }
 
         const compiler = new IrCompiler({
@@ -120,23 +124,19 @@ export class CompileCommand {
     }
 
     private async writeOutput(context: Context, args: CompileCommand.Args, object: unknown): Promise<void> {
-        if (args.output === "-") {
-            const stream = new JsonStreamStringify(object, undefined, 2);
-            stream.pipe(process.stdout);
-            return new Promise((resolve, reject) => {
-                stream.on("end", resolve);
-                stream.on("error", reject);
-            });
-        }
-        if (args.output != null) {
-            const outputPath = context.resolveOutputFilePath(args.output);
-            if (outputPath != null) {
-                await streamObjectToFile(outputPath, object, { pretty: true });
-                context.stderr.debug(chalk.dim(`  Wrote IR to ${outputPath}`));
-            }
+        if (args.output == null) {
+            // No output specified — just compile and validate.
             return;
         }
-        // No output specified — just compile and validate.
+        if (isStdioMarker(args.output)) {
+            await writeOutputJson(args.output, object, { pretty: true });
+            return;
+        }
+        const outputPath = context.resolveOutputFilePath(args.output);
+        if (outputPath != null) {
+            await writeOutputJson(outputPath, object, { pretty: true });
+            context.stderr.debug(chalk.dim(`  Wrote IR to ${outputPath}`));
+        }
     }
 }
 
