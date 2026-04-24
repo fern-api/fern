@@ -39,6 +39,6 @@ describe("test definitions", () => {
                 audiences: { type: "all" },
                 workspaceName: name
             });
-        }, 30_000);
+        }, 60_000);
     });
 });

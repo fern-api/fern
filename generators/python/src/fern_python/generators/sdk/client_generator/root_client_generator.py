@@ -567,19 +567,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 RootClientConstructorParameter(
                     constructor_parameter_name=param.constructor_parameter_name,
                     type_hint=parm_type_hint,
-                    initializer=(
-                        AST.Expression(
-                            AST.FunctionInvocation(
-                                function_definition=AST.Reference(
-                                    import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
-                                    qualified_name_excluding_import=("getenv",),
-                                ),
-                                args=[AST.Expression(f'"{param.environment_variable}"')],
-                            )
-                        )
-                        if param.environment_variable is not None
-                        else None
-                    ),
+                    initializer=self._get_root_client_param_initializer(param),
                     docs=param.docs,
                     validation_check=(
                         AST.Expression(
@@ -797,6 +785,26 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         parameters.extend(self._get_literal_header_parameters())
 
         return parameters
+
+    def _get_root_client_param_initializer(self, param: ConstructorParameter) -> Optional[AST.Expression]:
+        if param.environment_variable is not None:
+            getenv_args = [AST.Expression(f'"{param.environment_variable}"')]
+            # Only use client_default as os.getenv fallback, NOT the generic initializer
+            # (which may be a snippet placeholder like token="YOUR_TOKEN")
+            if param.client_default is not None:
+                getenv_args.append(param.client_default)
+            return AST.Expression(
+                AST.FunctionInvocation(
+                    function_definition=AST.Reference(
+                        import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
+                        qualified_name_excluding_import=("getenv",),
+                    ),
+                    args=getenv_args,
+                )
+            )
+        if param.client_default is not None:
+            return param.client_default
+        return None
 
     def _get_parameter_validation_writer(self, *, param_name: str, environment_variable: str) -> CodeWriterFunction:
         def _write_parameter_validation(writer: AST.NodeWriter) -> None:

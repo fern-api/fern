@@ -34,6 +34,7 @@ export interface ParsedPageActionsConfig {
         openAi: boolean;
         claude: boolean;
         cursor: boolean;
+        claudeCode: boolean;
         vscode: boolean;
         custom: ParsedCustomPageAction[];
     };
@@ -83,6 +84,7 @@ export interface ParsedDocsConfiguration {
     analyticsConfig: CjsFdrSdk.docs.v1.commons.AnalyticsConfig | undefined;
     announcement: AnnouncementConfig | undefined;
     theme: ThemeConfig | undefined;
+    globalTheme: string | undefined;
 
     /* integrations */
     integrations: CjsFdrSdk.docs.v1.commons.IntegrationsConfig | undefined;

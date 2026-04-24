@@ -240,7 +240,7 @@ catalog:
   unified: ^11.0.5
   unist-util-visit: ^5.0.0
   url-join: ^4.0.1
-  uuid: ^9.0.1
+  uuid: ^14.0.0
   validate-npm-package-name: ^5.0.1
   "@vitest/coverage-v8": 4.1.4
   vitest: 4.1.4
