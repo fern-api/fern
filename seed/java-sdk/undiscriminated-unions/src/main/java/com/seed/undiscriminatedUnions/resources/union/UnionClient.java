@@ -10,6 +10,7 @@ import com.seed.undiscriminatedUnions.resources.union.types.Key;
 import com.seed.undiscriminatedUnions.resources.union.types.MetadataUnion;
 import com.seed.undiscriminatedUnions.resources.union.types.MyUnion;
 import com.seed.undiscriminatedUnions.resources.union.types.NestedUnionRoot;
+import com.seed.undiscriminatedUnions.resources.union.types.OuterNestedUnion;
 import com.seed.undiscriminatedUnions.resources.union.types.Request;
 import com.seed.undiscriminatedUnions.resources.union.types.UnionWithDuplicateTypes;
 import java.util.Map;
@@ -85,6 +86,14 @@ public class UnionClient {
 
     public String nestedUnions(NestedUnionRoot request, RequestOptions requestOptions) {
         return this.rawClient.nestedUnions(request, requestOptions).body();
+    }
+
+    public String nestedObjectUnions(OuterNestedUnion request) {
+        return this.rawClient.nestedObjectUnions(request).body();
+    }
+
+    public String nestedObjectUnions(OuterNestedUnion request, RequestOptions requestOptions) {
+        return this.rawClient.nestedObjectUnions(request, requestOptions).body();
     }
 
     public String testCamelCaseProperties(PaymentRequest request) {
