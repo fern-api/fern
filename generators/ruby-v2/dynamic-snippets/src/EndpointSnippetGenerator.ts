@@ -391,6 +391,8 @@ export class EndpointSnippetGenerator {
             invokeMethodArgs.keywordArguments.push(requestOptions);
         }
 
+        invokeMethodArgs.keywordArguments = dedupeKeywordArguments(invokeMethodArgs.keywordArguments);
+
         return ruby.invokeMethod(invokeMethodArgs);
     }
 
@@ -434,6 +436,8 @@ export class EndpointSnippetGenerator {
             invokeMethodArgs.keywordArguments = invokeMethodArgs.keywordArguments ?? [];
             invokeMethodArgs.keywordArguments.push(requestOptions);
         }
+
+        invokeMethodArgs.keywordArguments = dedupeKeywordArguments(invokeMethodArgs.keywordArguments);
 
         return ruby.invokeMethod(invokeMethodArgs);
     }
@@ -907,4 +911,25 @@ export class EndpointSnippetGenerator {
         }
         return this.context.getMethodName(endpoint.declaration.name);
     }
+}
+
+/**
+ * Deduplicates keyword arguments by name, keeping the last occurrence. When the
+ * IR declares overlapping parameter names across positions (e.g. a path param
+ * named `string` and a body property also named `string`), the Ruby SDK method
+ * receives them via `**params`, so only the last value survives at runtime. We
+ * match that behavior here so the emitted snippet is both correct and free of
+ * Lint/DuplicateHashKey offenses.
+ */
+function dedupeKeywordArguments(
+    kwargs: ruby.KeywordArgument[] | undefined
+): ruby.KeywordArgument[] | undefined {
+    if (kwargs == null || kwargs.length <= 1) {
+        return kwargs;
+    }
+    const lastIndexByName = new Map<string, number>();
+    kwargs.forEach((arg, index) => {
+        lastIndexByName.set(arg.name, index);
+    });
+    return kwargs.filter((arg, index) => lastIndexByName.get(arg.name) === index);
 }

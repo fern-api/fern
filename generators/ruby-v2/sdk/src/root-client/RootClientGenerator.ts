@@ -156,7 +156,11 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                             // Both fields omitted — skip auth header entirely when auth is non-mandatory
                             continue;
                         }
-                        if (isAuthOptional || basicAuthSchemes.length > 1) {
+                        const authHeaderStmt = `headers["Authorization"] = "Basic #{Base64.strict_encode64(${credentialStr})}"`;
+                        if (basicAuthSchemes.length > 1) {
+                            // Multiple basic-auth schemes: emit as an if/elsif chain so
+                            // only one scheme is applied at runtime. Modifier form isn't
+                            // applicable when there are alternative branches.
                             if (isFirstBlock) {
                                 writer.writeLine(`if ${condition}`);
                             } else {
@@ -164,16 +168,19 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                             }
                             isFirstBlock = false;
                             emittedAnyBlock = true;
-                            writer.writeLine(
-                                `  headers["Authorization"] = "Basic #{Base64.strict_encode64(${credentialStr})}"`
-                            );
+                            writer.writeLine(`  ${authHeaderStmt}`);
+                        } else if (isAuthOptional) {
+                            // Single optional basic-auth scheme: emit in modifier form so
+                            // rubocop's Style/IfUnlessModifier is satisfied without needing
+                            // a post-emit autocorrect pass.
+                            writer.writeLine(`${authHeaderStmt} if ${condition}`);
                         } else {
-                            writer.writeLine(
-                                `headers["Authorization"] = "Basic #{Base64.strict_encode64(${credentialStr})}"`
-                            );
+                            // Mandatory auth: credentials are always present, so emit the
+                            // header unconditionally.
+                            writer.writeLine(authHeaderStmt);
                         }
                     }
-                    if (emittedAnyBlock && (isAuthOptional || basicAuthSchemes.length > 1)) {
+                    if (emittedAnyBlock && basicAuthSchemes.length > 1) {
                         writer.writeLine(`end`);
                     }
                 }
@@ -530,11 +537,23 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                 case "header": {
                     const headerParamName = this.case.snakeSafe(header.name);
                     const headerName = getWireValue(header.name);
-                    const headerValue =
-                        header.prefix != null ? `${header.prefix} #{${headerParamName}}` : `#{${headerParamName}}`;
+                    let headerValueNode: ruby.AstNode;
+                    if (header.prefix != null) {
+                        // Escape any interpolation markers in the spec-supplied prefix so it
+                        // cannot inject arbitrary Ruby code at SDK init time.
+                        const safePrefix = header.prefix.replace(/#(?=[{$@])/g, "\\#");
+                        headerValueNode = ruby.TypeLiteral.interpolatedString(
+                            `${safePrefix} #{${headerParamName}}`
+                        );
+                    } else {
+                        // No prefix means the value is a single interpolation. Emit the
+                        // parameter with `.to_s` directly instead of wrapping it in a
+                        // redundant interpolated string.
+                        headerValueNode = ruby.codeblock(`${headerParamName}.to_s`);
+                    }
                     headers.push({
                         key: ruby.TypeLiteral.string(headerName),
-                        value: ruby.TypeLiteral.interpolatedString(headerValue)
+                        value: headerValueNode
                     });
                     break;
                 }

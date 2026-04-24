@@ -16,14 +16,14 @@ class EndpointsPaginationWireTest < WireMockTestCase
     test_id = "endpoints.pagination.list_items.0"
 
     result = @client.endpoints.pagination.list_items(
-        cursor: "cursor",
-        limit: 1,
-        request_options: {
-          additional_headers: {
-            "X-Test-Id" => "endpoints.pagination.list_items.0"
-          }
+      cursor: "cursor",
+      limit: 1,
+      request_options: {
+        additional_headers: {
+          "X-Test-Id" => "endpoints.pagination.list_items.0"
         }
-      )
+      }
+    )
     result.pages.next_page
 
     verify_request_count(

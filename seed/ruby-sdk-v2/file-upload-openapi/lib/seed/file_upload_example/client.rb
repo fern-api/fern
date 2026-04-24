@@ -31,9 +31,8 @@ module Seed
             value: params[:name]
           )
         end
-        if params[:file]
-          body.add_part(params[:file].to_form_data_part(name: "file"))
-        end
+        body.add_part(params[:file].to_form_data_part(name: "file"))
+         if params[:file]
 
         request = Seed::Internal::Multipart::Request.new(
           base_url: request_options[:base_url],

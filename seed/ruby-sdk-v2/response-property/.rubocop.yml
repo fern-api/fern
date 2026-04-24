@@ -65,27 +65,24 @@ Style/FrozenStringLiteralComment:
   Exclude:
     - "dynamic-snippets/**/*"
 
+# Indent hash elements 2 spaces from the start of the enclosing line rather than
+# aligning with the preceding paren or bracket. Generated code nests hashes inside
+# arrays and method calls; the "consistent" style is more readable there.
 Layout/FirstHashElementIndentation:
+  EnforcedStyle: consistent
   Exclude:
     - "dynamic-snippets/**/*"
-    - "test/wire/**/*"
 
+# Match Layout/FirstHashElementIndentation: indent the first argument 2 spaces
+# from the start of the method call's line, regardless of parenthesis position.
 Layout/FirstArgumentIndentation:
-  Exclude:
-    - "test/wire/**/*"
+  EnforcedStyle: consistent
 
-# IR-derived type names (e.g. Get_With_Query) follow API spec conventions, not Ruby naming.
+# The generator emits non-idiomatic class names (e.g. Get_With_Query, JSON_)
+# derived from IR type names whose wire form contains underscores or digits.
+# Rubocop never auto-corrected these (naming cops have no autocorrecter), so
+# disabling the cop keeps CI green without changing customer output. Fixing at
+# source would rename public types across every existing SDK and therefore
+# requires a ruby-v2 major-version bump with a generator migration.
 Naming/ClassAndModuleCamelCase:
-  Enabled: false
-
-# Generated code may have duplicate hash keys when the API spec defines overlapping field names.
-Lint/DuplicateHashKey:
-  Enabled: false
-
-# Single path-parameter URLs produce "#{expr}" which is equivalent to expr.to_s.
-Style/RedundantInterpolation:
-  Enabled: false
-
-# Generated code uses multi-line if blocks for clarity; modifier form is a style preference.
-Style/IfUnlessModifier:
   Enabled: false

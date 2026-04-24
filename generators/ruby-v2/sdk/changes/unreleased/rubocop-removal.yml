@@ -4,7 +4,13 @@
     double-quoted Ruby strings.
   type: fix
 - summary: |
-    Generate fully rubocop-compliant code, eliminating all remaining rubocop offenses
-    in generated output. This enables removing rubocop -A auto-correction from the
-    generation pipeline. Added rubocop check-only as a CI regression gate.
+    Generate fully rubocop-compliant code at emitter level, eliminating all remaining
+    rubocop offenses in generated output so `rubocop -A` is no longer needed at
+    generation time. Covers Style/IfUnlessModifier (modifier-form detection added to
+    ruby.IfElse AST), Style/RedundantInterpolation (bare .to_s for single-interpolation
+    URL paths and header values), Lint/DuplicateHashKey (dedupe by key in TypeLiteral
+    hash emit and by name in dynamic-snippet keyword arguments), and
+    Layout/FirstHashElementIndentation / Layout/FirstArgumentIndentation (EnforcedStyle:
+    consistent + correct wire-test pagination continuation indent). Rubocop runs as a
+    CI regression gate (check-only, no -A).
   type: feat

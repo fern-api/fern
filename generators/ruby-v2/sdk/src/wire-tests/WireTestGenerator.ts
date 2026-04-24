@@ -334,10 +334,14 @@ export class WireTestGenerator {
                 for (let i = 0; i < snippetLines.length; i++) {
                     const line = snippetLines[i] ?? "";
                     if (line.trim()) {
+                        // Continuation lines keep the snippet's own 2-space indent and get
+                        // the same 4-space test-method prefix as the `result =` line, so
+                        // multi-line method calls indent one step past the method start
+                        // (matching rubocop's Layout/FirstArgumentIndentation).
                         if (i === 0) {
                             lines.push(`    result = ${line}`);
                         } else {
-                            lines.push(`      ${line}`);
+                            lines.push(`    ${line}`);
                         }
                     }
                 }
