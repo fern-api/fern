@@ -206,6 +206,16 @@ async function processThemeConfig(
     cfg.header = await field(cfg.header as string | undefined);
     cfg.footer = await field(cfg.footer as string | undefined);
 
+    if (cfg.metadata != null && typeof cfg.metadata === "object") {
+        const meta = { ...(cfg.metadata as Record<string, unknown>) };
+        for (const imgKey of ["og:image", "twitter:image", "og:background-image", "og:logo"]) {
+            if (typeof meta[imgKey] === "string") {
+                meta[imgKey] = await field(meta[imgKey] as string);
+            }
+        }
+        cfg.metadata = meta;
+    }
+
     return cfg;
 }
 

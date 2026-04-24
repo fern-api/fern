@@ -41,6 +41,12 @@ export interface DocsConfiguration {
     navbarLinks?: FernDocsConfig.NavbarLink[];
     footerLinks?: FernDocsConfig.FooterLinksConfig;
     pageActions?: FernDocsConfig.PageActionsConfig;
+    /**
+     * Name of a global theme stored in Fern's cloud to apply to this documentation site.
+     * Theme values override local branding configuration (colors, typography, logo, fonts, JS, CSS, etc.).
+     * Upload a theme first with: fern beta docs theme upload --name <theme-name>
+     */
+    globalTheme?: string;
     experimental?: FernDocsConfig.ExperimentalConfig;
     /**
      * Sets the default language displayed by code snippets in the API Reference.
@@ -79,6 +85,4 @@ export interface DocsConfiguration {
      * The component must have a default export.
      */
     footer?: string;
-    /** Name of a global org-level theme stored in FDR to merge on top of this docs config. */
-    globalTheme?: string;
 }

@@ -21,7 +21,8 @@ const THEME_ELIGIBLE_KEYS = new Set([
     "css",
     "js",
     "header",
-    "footer"
+    "footer",
+    "metadata"
 ]);
 
 export declare namespace ExportThemeCommand {

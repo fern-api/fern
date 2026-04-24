@@ -130,18 +130,16 @@ async function resolveThemeFileUrls(
     cfg.header = await maybeDownload(cfg.header);
     cfg.footer = await maybeDownload(cfg.footer);
 
+    // metadata image fields
+    if (cfg.metadata != null && typeof cfg.metadata === "object") {
+        const meta = cfg.metadata as Record<string, unknown>;
+        for (const imgKey of ["og:image", "twitter:image", "og:background-image", "og:logo"]) {
+            meta[imgKey] = await maybeDownload(meta[imgKey]);
+        }
+    }
+
     return cfg;
 }
-
-// Mapping from the kebab-case keys used in theme.yml (and stored in FDR) to the
-// camelCase keys used in DocsConfiguration (as deserialized by the Fern SDK serializer).
-// Only fields that differ between the two forms need an explicit entry here.
-const KEBAB_TO_CAMEL: Readonly<Record<string, keyof RawDocsConfig>> = {
-    "background-image": "backgroundImage",
-    "navbar-links": "navbarLinks",
-    "footer-links": "footerLinks",
-    "ai-search": "aiSearch"
-};
 
 // "global" — the theme value always wins; local docs.yml cannot override it.
 // "local"  — the local docs.yml value wins when present; theme is the fallback.
@@ -167,7 +165,8 @@ const THEME_FIELD_POLICIES: Readonly<Record<string, ThemeFieldPolicy>> = {
     navbarLinks: "global",
     footerLinks: "global",
     aiSearch: "global",
-    announcement: "global"
+    announcement: "global",
+    metadata: "global"
 };
 
 const THEME_ELIGIBLE_KEYS = Object.keys(THEME_FIELD_POLICIES) as ReadonlyArray<keyof RawDocsConfig>;
@@ -188,7 +187,7 @@ function deepNormalizeKeys(value: unknown): unknown {
     }
     const out: Record<string, unknown> = {};
     for (const [k, v] of Object.entries(value as Record<string, unknown>)) {
-        const camel = KEBAB_TO_CAMEL[k] ?? kebabToCamel(k);
+        const camel = kebabToCamel(k);
         out[camel] = deepNormalizeKeys(v);
     }
     return out;
