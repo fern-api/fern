@@ -657,9 +657,13 @@ def pytest_unconfigure(config: pytest.Config) -> None:
                 break;
 
             case "basic":
-                // Basic auth uses username and password parameters
-                params.push(`        ${caseConverter.snakeSafe(scheme.username)}="test_username",`);
-                params.push(`        ${caseConverter.snakeSafe(scheme.password)}="test_password",`);
+                // Basic auth uses username and password parameters (skip omitted fields)
+                if (!scheme.usernameOmit) {
+                    params.push(`        ${caseConverter.snakeSafe(scheme.username)}="test_username",`);
+                }
+                if (!scheme.passwordOmit) {
+                    params.push(`        ${caseConverter.snakeSafe(scheme.password)}="test_password",`);
+                }
                 break;
 
             case "header":
