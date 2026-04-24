@@ -96,9 +96,11 @@ public final class UndiscriminatedUnionTypeWithAliasVariant {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(value, AliasVariantType.class));
             } catch (RuntimeException e) {
             }
-            try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, NonAliasVariant.class));
-            } catch (RuntimeException e) {
+            if (value instanceof Map<?, ?> && ((Map<?, ?>) value).containsKey("prop")) {
+                try {
+                    return of(ObjectMappers.JSON_MAPPER.convertValue(value, NonAliasVariant.class));
+                } catch (RuntimeException e) {
+                }
             }
             throw new JsonParseException(p, "Failed to deserialize");
         }

@@ -29,6 +29,8 @@ import com.fern.ir.model.commons.TypeId;
 import com.fern.ir.model.types.ContainerType;
 import com.fern.ir.model.types.DeclaredTypeName;
 import com.fern.ir.model.types.Literal;
+import com.fern.ir.model.types.ObjectProperty;
+import com.fern.ir.model.types.ObjectTypeDeclaration;
 import com.fern.ir.model.types.PrimitiveType;
 import com.fern.ir.model.types.PrimitiveTypeV1;
 import com.fern.ir.model.types.TypeDeclaration;
@@ -54,6 +56,7 @@ import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import com.squareup.javapoet.TypeVariableName;
+import com.squareup.javapoet.WildcardTypeName;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -604,6 +607,28 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
             if (typeName.isPrimitive() || typeName.isBoxedPrimitive()) {
                 continue;
             }
+            List<String> requiredKeys = getRequiredWireKeys(member);
+            boolean hasRequiredKeyGuard = !requiredKeys.isEmpty();
+            if (hasRequiredKeyGuard) {
+                ParameterizedTypeName mapWildcard = ParameterizedTypeName.get(
+                        ClassName.get(Map.class),
+                        WildcardTypeName.subtypeOf(Object.class),
+                        WildcardTypeName.subtypeOf(Object.class));
+                StringBuilder guard = new StringBuilder();
+                guard.append("$L instanceof $T");
+                for (String key : requiredKeys) {
+                    guard.append(" && (($T) $L).containsKey($S)");
+                }
+                List<Object> guardArgs = new ArrayList<>();
+                guardArgs.add(VALUE_FIELD_SPEC.name);
+                guardArgs.add(mapWildcard);
+                for (String key : requiredKeys) {
+                    guardArgs.add(mapWildcard);
+                    guardArgs.add(VALUE_FIELD_SPEC.name);
+                    guardArgs.add(key);
+                }
+                deserializeMethod.beginControlFlow("if (" + guard.toString() + ")", guardArgs.toArray());
+            }
             if (shouldDeserializeWithTypeReference(member)) {
                 deserializeMethod
                         .beginControlFlow("try")
@@ -628,6 +653,9 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
                                 typeName)
                         .nextControlFlow("catch($T e)", RuntimeException.class)
                         .endControlFlow();
+            }
+            if (hasRequiredKeyGuard) {
+                deserializeMethod.endControlFlow();
             }
         }
         deserializeMethod.addStatement("throw new $T(p, $S)", JsonParseException.class, "Failed to deserialize");
@@ -657,6 +685,62 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
                             .isContainer();
         }
         return false;
+    }
+
+    /**
+     * Returns the wire keys of all required (non-optional, non-nullable, non-literal) properties for an object-typed
+     * union member. Returns an empty list for non-object members. This is used to emit key-presence guards in the
+     * deserializer so that trial-order deserialization doesn't misclassify payloads when the Jackson builder silently
+     * accepts missing fields.
+     */
+    private List<String> getRequiredWireKeys(UndiscriminatedUnionMember member) {
+        if (!member.getType().isNamed()) {
+            return Collections.emptyList();
+        }
+        TypeId typeId = member.getType().getNamed().get().getTypeId();
+        TypeDeclaration typeDeclaration = generatorContext.getTypeDeclarations().get(typeId);
+        if (typeDeclaration == null) {
+            return Collections.emptyList();
+        }
+        // Follow aliases to their resolved type
+        if (typeDeclaration.getShape().isAlias()) {
+            return Collections.emptyList();
+        }
+        if (!typeDeclaration.getShape().isObject()) {
+            return Collections.emptyList();
+        }
+        ObjectTypeDeclaration objectType =
+                typeDeclaration.getShape().getObject().get();
+        List<String> requiredKeys = new ArrayList<>();
+        collectRequiredWireKeys(objectType, requiredKeys);
+        return requiredKeys;
+    }
+
+    private void collectRequiredWireKeys(ObjectTypeDeclaration objectType, List<String> requiredKeys) {
+        for (ObjectProperty property : objectType.getProperties()) {
+            if (isRequiredProperty(property)) {
+                requiredKeys.add(NameUtils.getWireValue(property.getName()));
+            }
+        }
+        // Include required properties from extended types
+        for (DeclaredTypeName extendedType : objectType.getExtends()) {
+            TypeDeclaration extDeclaration =
+                    generatorContext.getTypeDeclarations().get(extendedType.getTypeId());
+            if (extDeclaration != null && extDeclaration.getShape().isObject()) {
+                collectRequiredWireKeys(extDeclaration.getShape().getObject().get(), requiredKeys);
+            }
+        }
+    }
+
+    private static boolean isRequiredProperty(ObjectProperty property) {
+        com.fern.ir.model.types.TypeReference valueType = property.getValueType();
+        if (valueType.isContainer()) {
+            ContainerType container = valueType.getContainer().get();
+            if (container.isOptional() || container.isNullable() || container.isLiteral()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private static String visitorName(Set<String> reservedTypeNames) {
