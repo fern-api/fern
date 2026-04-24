@@ -293,8 +293,11 @@ export class EndpointSnippetGenerator {
         auth: FernIr.dynamic.BasicAuth;
         values: FernIr.dynamic.BasicAuthValues;
     }): python.NamedValue[] {
-        const usernameOmitted = auth.usernameOmit === true;
-        const passwordOmitted = auth.passwordOmit === true;
+        // usernameOmit/passwordOmit are not yet in the published @fern-api/dynamic-ir-sdk type;
+        // access them via a Record cast until the next IR SDK release includes them.
+        const authRecord = auth as unknown as Record<string, unknown>;
+        const usernameOmitted = !!authRecord.usernameOmit;
+        const passwordOmitted = !!authRecord.passwordOmit;
         const args: python.NamedValue[] = [];
         if (!usernameOmitted) {
             args.push({
