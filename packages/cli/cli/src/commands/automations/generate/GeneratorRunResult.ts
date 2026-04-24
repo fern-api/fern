@@ -1,3 +1,5 @@
+import { assertNever } from "@fern-api/core-utils";
+
 import type { GeneratorSkipReason, PublishTarget, RemoteGeneratorRunRecorder } from "@fern-api/remote-workspace-runner";
 
 export type { GeneratorSkipReason, PublishTarget };
@@ -51,6 +53,8 @@ export function countResults(results: readonly GeneratorRunResult[]): GeneratorR
             case "skipped":
                 skipped++;
                 break;
+            default:
+                assertNever(r.status);
         }
     }
     return { succeeded, failed, skipped };
@@ -87,19 +91,7 @@ export function buildGeneratorsYmlUrl(absolutePath: string | undefined, lineNumb
 export class GeneratorRunCollector implements RemoteGeneratorRunRecorder {
     readonly #results: GeneratorRunResult[] = [];
 
-    public recordSuccess(args: {
-        apiName: string | undefined;
-        groupName: string;
-        generatorName: string;
-        version: string | null;
-        durationMs: number;
-        pullRequestUrl: string | undefined;
-        noChangesDetected: boolean | undefined;
-        publishTarget: PublishTarget | undefined;
-        outputRepoUrl: string | undefined;
-        generatorsYmlAbsolutePath: string | undefined;
-        generatorsYmlLineNumber: number | undefined;
-    }): void {
+    public recordSuccess(args: Parameters<RemoteGeneratorRunRecorder["recordSuccess"]>[0]): void {
         this.#results.push({
             apiName: args.apiName,
             groupName: args.groupName,
@@ -117,16 +109,7 @@ export class GeneratorRunCollector implements RemoteGeneratorRunRecorder {
         });
     }
 
-    public recordFailure(args: {
-        apiName: string | undefined;
-        groupName: string;
-        generatorName: string;
-        errorMessage: string;
-        durationMs: number;
-        outputRepoUrl: string | undefined;
-        generatorsYmlAbsolutePath: string | undefined;
-        generatorsYmlLineNumber: number | undefined;
-    }): void {
+    public recordFailure(args: Parameters<RemoteGeneratorRunRecorder["recordFailure"]>[0]): void {
         this.#results.push({
             apiName: args.apiName,
             groupName: args.groupName,
@@ -144,15 +127,7 @@ export class GeneratorRunCollector implements RemoteGeneratorRunRecorder {
         });
     }
 
-    public recordSkipped(args: {
-        apiName: string | undefined;
-        groupName: string;
-        generatorName: string;
-        reason: GeneratorSkipReason;
-        outputRepoUrl: string | undefined;
-        generatorsYmlAbsolutePath: string | undefined;
-        generatorsYmlLineNumber: number | undefined;
-    }): void {
+    public recordSkipped(args: Parameters<RemoteGeneratorRunRecorder["recordSkipped"]>[0]): void {
         this.#results.push({
             apiName: args.apiName,
             groupName: args.groupName,

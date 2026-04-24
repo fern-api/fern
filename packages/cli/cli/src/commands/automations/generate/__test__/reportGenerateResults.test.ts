@@ -68,6 +68,27 @@ describe("renderMarkdownSummary", () => {
         expect(md).toContain("## ❌ SDK generation failed (1/2 succeeded)");
     });
 
+    it("emits a 'skipped' heading when every generator was skipped (no successes, no failures)", () => {
+        const md = renderMarkdownSummary([
+            successResult({
+                generatorName: "a",
+                status: "skipped",
+                skipReason: "local_output",
+                version: null,
+                pullRequestUrl: null
+            }),
+            successResult({
+                generatorName: "b",
+                status: "skipped",
+                skipReason: "opted_out",
+                version: null,
+                pullRequestUrl: null
+            })
+        ]);
+        expect(md).toContain("## ⏭️ SDK generation skipped");
+        expect(md).not.toContain("succeeded");
+    });
+
     it("omits the API column when only one API is represented", () => {
         const md = renderMarkdownSummary([successResult(), successResult({ generatorName: "other" })]);
         expect(md).not.toMatch(/<th[^>]*>API</);

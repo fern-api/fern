@@ -142,6 +142,11 @@ function renderHeading(counts: GeneratorRunCounts, total: number): string {
     if (counts.failed > 0) {
         return `## ❌ SDK generation failed (${counts.succeeded}/${total} succeeded)`;
     }
+    // Avoid a misleading "succeeded" heading when every generator was skipped (e.g. all
+    // configured for local-file-system output, or auto-release disabled at the root).
+    if (counts.succeeded === 0 && counts.skipped > 0) {
+        return "## ⏭️ SDK generation skipped";
+    }
     return "## ✅ SDK generation succeeded";
 }
 

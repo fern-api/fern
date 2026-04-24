@@ -76,6 +76,34 @@ describe("findGeneratorLineNumber", () => {
         const path = writeYml(`groups:\n  x:\n    generators:\n      - name: other\n`);
         expect(await findGeneratorLineNumber(path, "missing", 0)).toBeUndefined();
     });
+
+    it("ignores nested non-list-item `name:` keys that happen to equal a generator name", async () => {
+        // publishInfo has a `name:` key. Only `- name: <slug>` list items count as generator
+        // entries, so the generator's `name:` line (4) wins over the nested one (7).
+        const path = writeYml(`groups:
+  x:
+    generators:
+      - name: fern-typescript-sdk
+        version: 1.0.0
+        publishInfo:
+          name: fern-typescript-sdk
+`);
+        expect(await findGeneratorLineNumber(path, "fern-typescript-sdk", 0)).toBe(4);
+    });
+
+    it("ignores list-item `name:` values that contain disallowed characters", async () => {
+        // A publisher / package with a multi-word name could masquerade as a `- name:` entry.
+        // Generator names are slugs — anything with whitespace is rejected.
+        const path = writeYml(`random-list:
+  - name: Fern Demo Reviewers
+groups:
+  x:
+    generators:
+      - name: fern-typescript-sdk
+        version: 1.0.0
+`);
+        expect(await findGeneratorLineNumber(path, "fern-typescript-sdk", 0)).toBe(6);
+    });
 });
 
 describe("GeneratorOccurrenceTracker", () => {
