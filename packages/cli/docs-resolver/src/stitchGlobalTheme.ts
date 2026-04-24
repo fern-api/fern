@@ -143,46 +143,87 @@ const KEBAB_TO_CAMEL: Readonly<Record<string, keyof RawDocsConfig>> = {
     "ai-search": "aiSearch"
 };
 
-// Fields the theme is allowed to override in the child docs.yml.
-// Navigation-scoped and identity fields stay in the child repo.
-// Keys use the camelCase form that DocsConfiguration uses internally.
-const THEME_ELIGIBLE_KEYS: ReadonlyArray<keyof RawDocsConfig> = [
-    "logo",
-    "favicon",
-    "backgroundImage",
-    "colors",
-    "typography",
-    "layout",
-    "settings",
-    "theme",
-    "integrations",
-    "css",
-    "js",
-    "header",
-    "footer",
-    "navbarLinks",
-    "footerLinks",
-    "aiSearch",
-    "announcement"
-];
+// "global" — the theme value always wins; local docs.yml cannot override it.
+// "local"  — the local docs.yml value wins when present; theme is the fallback.
+type ThemeFieldPolicy = "global" | "local";
 
-// Normalise the theme config (which arrives with kebab-case top-level keys from FDR)
-// into the camelCase shape expected by DocsConfiguration.
-function normalizeThemeKeys(raw: Record<string, unknown>): Record<string, unknown> {
+// Controls, per eligible key, whether the global theme takes precedence or the
+// local docs.yml can override. Add new theme-eligible keys here.
+// Keys use the camelCase form that DocsConfiguration uses internally.
+const THEME_FIELD_POLICIES: Readonly<Record<string, ThemeFieldPolicy>> = {
+    logo: "global",
+    favicon: "global",
+    backgroundImage: "global",
+    colors: "global",
+    typography: "global",
+    layout: "global",
+    settings: "global",
+    theme: "global",
+    integrations: "global",
+    css: "global",
+    js: "global",
+    header: "global",
+    footer: "global",
+    navbarLinks: "global",
+    footerLinks: "global",
+    aiSearch: "global",
+    announcement: "global"
+};
+
+const THEME_ELIGIBLE_KEYS = Object.keys(THEME_FIELD_POLICIES) as ReadonlyArray<keyof RawDocsConfig>;
+
+function kebabToCamel(str: string): string {
+    return str.replace(/-([a-z])/g, (_, c: string) => c.toUpperCase());
+}
+
+// Recursively convert kebab-case object keys to camelCase. The theme config
+// from FDR uses kebab-case at every nesting level, but DocsConfiguration
+// (the Fern SDK parsed type) expects camelCase throughout.
+function deepNormalizeKeys(value: unknown): unknown {
+    if (value == null || typeof value !== "object") {
+        return value;
+    }
+    if (Array.isArray(value)) {
+        return value.map(deepNormalizeKeys);
+    }
     const out: Record<string, unknown> = {};
-    for (const [k, v] of Object.entries(raw)) {
-        const camel = KEBAB_TO_CAMEL[k] ?? (k as keyof RawDocsConfig);
-        out[camel] = v;
+    for (const [k, v] of Object.entries(value as Record<string, unknown>)) {
+        const camel = KEBAB_TO_CAMEL[k] ?? kebabToCamel(k);
+        out[camel] = deepNormalizeKeys(v);
     }
     return out;
 }
 
+// Normalise the theme config (which arrives with kebab-case keys from FDR)
+// into the camelCase shape expected by DocsConfiguration.
+function normalizeThemeKeys(raw: Record<string, unknown>): Record<string, unknown> {
+    return deepNormalizeKeys(raw) as Record<string, unknown>;
+}
+
 function mergeThemeOverride(local: RawDocsConfig, themeOverride: Record<string, unknown>): RawDocsConfig {
     const normalized = normalizeThemeKeys(themeOverride);
-    const merged: Record<string, unknown> = { ...(local as unknown as Record<string, unknown>) };
+    const localRecord = local as unknown as Record<string, unknown>;
+    const merged: Record<string, unknown> = { ...localRecord };
     for (const key of THEME_ELIGIBLE_KEYS) {
-        if (normalized[key] !== undefined && normalized[key] !== null) {
-            merged[key] = normalized[key];
+        const themeValue = normalized[key];
+        const localValue = localRecord[key];
+        const policy = THEME_FIELD_POLICIES[key] ?? "global";
+
+        const themeHasValue = themeValue !== undefined && themeValue !== null;
+        const localHasValue = localValue !== undefined && localValue !== null;
+
+        if (policy === "global") {
+            // Theme wins when present, otherwise keep the local value.
+            if (themeHasValue) {
+                merged[key] = themeValue;
+            }
+        } else {
+            // "local" — local wins when present, otherwise fall back to theme
+            if (localHasValue) {
+                merged[key] = localValue;
+            } else if (themeHasValue) {
+                merged[key] = themeValue;
+            }
         }
     }
     return merged as unknown as RawDocsConfig;
@@ -301,6 +342,9 @@ export async function stitchGlobalTheme({
     taskContext.logger.info(
         `Applied global theme "${themeName}" — ${AbsoluteFilePath.of(tmpDirPath)} (cleaned up on exit)`
     );
+    const stitchedPath = path.join(tmpDirPath, "stitched-docs.yml.json");
+    await writeFile(stitchedPath, JSON.stringify(mergedRawConfig, null, 2));
+    taskContext.logger.debug(`Stitched docs.yml after importing theme written to: ${stitchedPath}`);
 
     return { ...docsWorkspace, config: mergedRawConfig };
 }
