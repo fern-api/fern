@@ -27,6 +27,7 @@ export function convertUndiscriminatedUnionTypeDeclaration({
     });
 
     return Type.undiscriminatedUnion({
+        baseProperties: undefined,
         members: uniqueMembers.map((member) => {
             const parsedType = file.parseTypeReference(typeof member === "string" ? member : member.type);
 

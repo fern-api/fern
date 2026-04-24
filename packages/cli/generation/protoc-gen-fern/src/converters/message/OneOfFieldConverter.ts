@@ -55,7 +55,8 @@ export class OneOfFieldConverter extends AbstractConverter<ProtofileConverterCon
 
         return {
             type: Type.undiscriminatedUnion({
-                members: unionTypes
+                members: unionTypes,
+                baseProperties: undefined
             }),
             referencedTypes: new Set<TypeId>(),
             inlinedTypes: {},

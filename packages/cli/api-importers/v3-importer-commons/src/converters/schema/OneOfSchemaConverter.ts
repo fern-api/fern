@@ -457,12 +457,35 @@ export class OneOfSchemaConverter extends AbstractConverter<
             }
         }
 
+        const {
+            convertedProperties: siblingProperties,
+            referencedTypes: siblingReferencedTypes,
+            inlinedTypesFromProperties: siblingInlinedTypes
+        } = convertProperties({
+            properties: this.schema.properties ?? {},
+            required: this.schema.required ?? [],
+            breadcrumbs: this.breadcrumbs,
+            context: this.context,
+            errorCollector: this.context.errorCollector
+        });
+
+        for (const typeId of Object.keys(siblingInlinedTypes)) {
+            referencedTypes.add(typeId);
+        }
+        for (const ref of siblingReferencedTypes) {
+            referencedTypes.add(ref);
+        }
+
         return {
             type: Type.undiscriminatedUnion({
-                members: unionTypes
+                members: unionTypes,
+                baseProperties: siblingProperties.length > 0 ? siblingProperties : undefined
             }),
             referencedTypes,
-            inlinedTypes
+            inlinedTypes: {
+                ...inlinedTypes,
+                ...siblingInlinedTypes
+            }
         };
     }
 

@@ -1,0 +1,5 @@
+- summary: |
+    Add optional `baseProperties` field to `UndiscriminatedUnionTypeDeclaration` in the IR schema.
+    This allows undiscriminated unions to carry sibling properties extracted from OpenAPI `oneOf`
+    schemas, improving fidelity of the IR representation.
+  type: feat
