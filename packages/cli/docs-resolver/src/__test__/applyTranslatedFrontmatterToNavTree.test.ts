@@ -1,6 +1,17 @@
+import { FernNavigation } from "@fern-api/fdr-sdk";
 import { describe, expect, it } from "vitest";
 
 import { applyTranslatedFrontmatterToNavTree } from "../applyTranslatedFrontmatterToNavTree.js";
+
+// Helper to cast test objects to RootNode
+function asRoot(obj: unknown): FernNavigation.V1.RootNode {
+    return obj as FernNavigation.V1.RootNode;
+}
+
+// Helper to access nested properties on result
+function getChild(result: FernNavigation.V1.RootNode | undefined): Record<string, unknown> {
+    return (result as unknown as { child: Record<string, unknown> }).child;
+}
 
 describe("applyTranslatedFrontmatterToNavTree", () => {
     it("returns undefined when root is undefined", () => {
@@ -18,7 +29,7 @@ describe("applyTranslatedFrontmatterToNavTree", () => {
                 slug: "getting-started"
             }
         };
-        const result = applyTranslatedFrontmatterToNavTree(root as any, {});
+        const result = applyTranslatedFrontmatterToNavTree(asRoot(root), {});
         expect(result).toEqual(root);
     });
 
@@ -39,7 +50,7 @@ sidebar-title: Premiers pas
 # Premiers pas`
         };
 
-        const result = applyTranslatedFrontmatterToNavTree(root as any, translatedPages);
+        const result = applyTranslatedFrontmatterToNavTree(asRoot(root), translatedPages);
 
         expect(result).toEqual({
             type: "root",
@@ -66,7 +77,7 @@ sidebar-title: Premiers pas
             "pages/intro.mdx": `# Translated content without frontmatter`
         };
 
-        const result = applyTranslatedFrontmatterToNavTree(root as any, translatedPages);
+        const result = applyTranslatedFrontmatterToNavTree(asRoot(root), translatedPages);
 
         expect(result).toEqual(root);
     });
@@ -102,10 +113,12 @@ sidebar-title: Installation
 ---`
         };
 
-        const result = applyTranslatedFrontmatterToNavTree(root as any, translatedPages);
+        const result = applyTranslatedFrontmatterToNavTree(asRoot(root), translatedPages);
+        const child = getChild(result);
+        const children = child.children as Array<{ title: string }>;
 
-        expect((result as any).child.children[0].title).toBe("Vue d'ensemble");
-        expect((result as any).child.children[1].title).toBe("Installation");
+        expect(children[0].title).toBe("Vue d'ensemble");
+        expect(children[1].title).toBe("Installation");
     });
 
     it("ignores pages that don't match any node in the tree", () => {
@@ -124,7 +137,7 @@ sidebar-title: Should be ignored
 ---`
         };
 
-        const result = applyTranslatedFrontmatterToNavTree(root as any, translatedPages);
+        const result = applyTranslatedFrontmatterToNavTree(asRoot(root), translatedPages);
 
         expect(result).toEqual(root);
     });
@@ -145,10 +158,10 @@ sidebar-title: ""
 ---`
         };
 
-        const result = applyTranslatedFrontmatterToNavTree(root as any, translatedPages);
+        const result = applyTranslatedFrontmatterToNavTree(asRoot(root), translatedPages);
 
         // Empty sidebar-title should not override
-        expect((result as any).child.title).toBe("Test");
+        expect(getChild(result).title).toBe("Test");
     });
 
     it("trims whitespace from sidebar-title", () => {
@@ -167,9 +180,9 @@ sidebar-title: "  Prueba  "
 ---`
         };
 
-        const result = applyTranslatedFrontmatterToNavTree(root as any, translatedPages);
+        const result = applyTranslatedFrontmatterToNavTree(asRoot(root), translatedPages);
 
-        expect((result as any).child.title).toBe("Prueba");
+        expect(getChild(result).title).toBe("Prueba");
     });
 
     it("handles invalid frontmatter gracefully", () => {
@@ -190,8 +203,8 @@ invalid yaml: [
         };
 
         // Should not throw, just return original structure
-        const result = applyTranslatedFrontmatterToNavTree(root as any, translatedPages);
-        expect((result as any).child.title).toBe("Test");
+        const result = applyTranslatedFrontmatterToNavTree(asRoot(root), translatedPages);
+        expect(getChild(result).title).toBe("Test");
     });
 
     it("applies sidebar-title override to section nodes with overviewPageId", () => {
@@ -219,11 +232,13 @@ sidebar-title: Guide du SDK
 # Guide du SDK`
         };
 
-        const result = applyTranslatedFrontmatterToNavTree(root as any, translatedPages);
+        const result = applyTranslatedFrontmatterToNavTree(asRoot(root), translatedPages);
+        const child = getChild(result);
+        const children = child.children as Array<{ title: string }>;
 
-        expect((result as any).child.title).toBe("Guide du SDK");
+        expect(child.title).toBe("Guide du SDK");
         // Child page title should remain unchanged
-        expect((result as any).child.children[0].title).toBe("Installation");
+        expect(children[0].title).toBe("Installation");
     });
 
     it("does not override section title when overview page has no sidebar-title", () => {
@@ -241,8 +256,8 @@ sidebar-title: Guide du SDK
             "pages/api/index.mdx": `# API Reference content without frontmatter`
         };
 
-        const result = applyTranslatedFrontmatterToNavTree(root as any, translatedPages);
+        const result = applyTranslatedFrontmatterToNavTree(asRoot(root), translatedPages);
 
-        expect((result as any).child.title).toBe("API Reference");
+        expect(getChild(result).title).toBe("API Reference");
     });
 });
