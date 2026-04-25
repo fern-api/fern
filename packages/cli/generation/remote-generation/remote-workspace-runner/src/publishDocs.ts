@@ -6,6 +6,8 @@ import { MediaType, replaceEnvVariables } from "@fern-api/core-utils";
 import {
     applyTranslatedFrontmatterToNavTree,
     DocsDefinitionResolver,
+    replaceImagePathsAndUrls,
+    stripMdxComments,
     UploadedFile,
     wrapWithHttps
 } from "@fern-api/docs-resolver";
@@ -637,19 +639,31 @@ export async function publishDocs({
                         // overriding translated pages, and updating the nav tree to reflect
                         // any sidebar-title / slug frontmatter in the translated pages.
                         //
-                        // TODO(translations-alpha): Translated pages are currently sent as raw markdown
-                        // without running through the MDX transformation pipeline that default-locale
-                        // pages go through in DocsDefinitionResolver (stripMdxComments, replaceReferencedMarkdown,
-                        // replaceReferencedCode, transformAtPrefixImports, replaceImagePathsAndUrls).
-                        // This means relative images, MDX includes, and comments won't be processed.
-                        // Extract those transformations into a reusable helper and apply them here.
+                        // For each translated page, we:
+                        // 1. Strip MDX comments to prevent leakage
+                        // 2. Preserve editThisPageUrl/editThisPageLaunch from the base page
+                        //
+                        // TODO(translations-alpha): Translated pages still need:
+                        // - replaceReferencedMarkdown/Code for <Markdown src="..."/> and <CodeBlock src="..."/>
+                        // - transformAtPrefixImports for @/... and @components/... imports
+                        // - replaceImagePathsAndUrls for relative image paths (complex: needs path remapping)
                         const translatedPages = {
                             ...docsDefinition.pages,
                             ...Object.fromEntries(
-                                Object.entries(localePages).map(([path, markdown]) => [
-                                    path,
-                                    { markdown, rawMarkdown: markdown }
-                                ])
+                                Object.entries(localePages).map(([path, rawMarkdown]) => {
+                                    const basePage = docsDefinition.pages[path as DocsV1Write.PageId];
+                                    const processedMarkdown = stripMdxComments(rawMarkdown);
+                                    return [
+                                        path,
+                                        {
+                                            markdown: processedMarkdown,
+                                            rawMarkdown: processedMarkdown,
+                                            // Preserve edit page links from the base page
+                                            editThisPageUrl: basePage?.editThisPageUrl,
+                                            editThisPageLaunch: basePage?.editThisPageLaunch
+                                        }
+                                    ];
+                                })
                             )
                         };
                         const updatedRoot = applyTranslatedFrontmatterToNavTree(
