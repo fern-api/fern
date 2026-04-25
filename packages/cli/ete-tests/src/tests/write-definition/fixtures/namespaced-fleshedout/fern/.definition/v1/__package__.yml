@@ -399,7 +399,7 @@ service:
             safety_mode:
               audiences:
                 - public
-              availability: pre-release
+              availability: beta
               docs: >
                 Used to select the [safety instruction](/docs/safety-modes)
                 inserted into the prompt. Defaults to `CONTEXTUAL`.
