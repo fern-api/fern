@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v66.2.0] - 2026-04-25
+- Feature: Add optional `placeholder` fields to auth schemes (`tokenPlaceholder` on bearer,
+  `usernamePlaceholder`/`passwordPlaceholder` on basic, `headerPlaceholder` on header).
+  When set, these values are used as example placeholders in dynamic code snippets instead
+  of generic defaults like `<token>` or `<username>`. Configurable via Fern definition YAML
+  and OpenAPI extensions (`x-fern-basic`, `x-fern-bearer`, `x-fern-header`).
+
 ## [v66.1.0] - 2026-04-08
 - Feature: Add optional `default` field to `UnionTypeDeclaration`. When set, specifies the default union
   variant to fall back to when the discriminant field is missing from input. Populated from OpenAPI specs
