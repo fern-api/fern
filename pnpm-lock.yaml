@@ -2097,8 +2097,8 @@ importers:
         specifier: workspace:*
         version: link:../codegen
       '@fern-fern/ir-sdk':
-        specifier: 66.0.0
-        version: 66.0.0
+        specifier: 66.2.0
+        version: 66.2.0
       lodash-es:
         specifier: 'catalog:'
         version: 4.18.1
@@ -2199,8 +2199,8 @@ importers:
         specifier: 'catalog:'
         version: 0.0.1167
       '@fern-fern/ir-sdk':
-        specifier: 66.0.0
-        version: 66.0.0
+        specifier: 66.2.0
+        version: 66.2.0
       '@types/node':
         specifier: 'catalog:'
         version: 22.19.17
@@ -2257,8 +2257,8 @@ importers:
         specifier: 'catalog:'
         version: 0.0.1167
       '@fern-fern/ir-sdk':
-        specifier: 66.0.0
-        version: 66.0.0
+        specifier: 66.2.0
+        version: 66.2.0
       '@types/node':
         specifier: 'catalog:'
         version: 22.19.17
