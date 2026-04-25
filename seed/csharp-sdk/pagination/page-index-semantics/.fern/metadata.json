@@ -6,7 +6,6 @@
     "offset-semantics": "page-index"
   },
   "originGitCommit": "DUMMY",
-  "originGitCommitIsDirty": null,
   "invokedBy": "ci",
   "requestedVersion": "0.0.1",
   "ciProvider": "github",
