@@ -53,9 +53,9 @@ public class RealtimeWebSocketClient implements AutoCloseable {
 
     private ReconnectingWebSocketListener reconnectingListener;
 
-    private volatile Consumer<ConversationHistoryMessage> historyHandler;
+    private volatile Consumer<ConversationHistoryMessage> conversationHistoryHandler;
 
-    private volatile Consumer<FunctionCallHistoryMessage> historyHandler;
+    private volatile Consumer<FunctionCallHistoryMessage> functionCallHistoryHandler;
 
     private volatile Consumer<ConversationTextMessage> conversationTextHandler;
 
@@ -180,16 +180,16 @@ public class RealtimeWebSocketClient implements AutoCloseable {
      * Registers a handler for ConversationHistory messages from the server.
      * @param handler the handler to invoke when a message is received
      */
-    public void onHistory(Consumer<ConversationHistoryMessage> handler) {
-        this.historyHandler = handler;
+    public void onConversationHistory(Consumer<ConversationHistoryMessage> handler) {
+        this.conversationHistoryHandler = handler;
     }
 
     /**
      * Registers a handler for FunctionCallHistory messages from the server.
      * @param handler the handler to invoke when a message is received
      */
-    public void onHistory(Consumer<FunctionCallHistoryMessage> handler) {
-        this.historyHandler = handler;
+    public void onFunctionCallHistory(Consumer<FunctionCallHistoryMessage> handler) {
+        this.functionCallHistoryHandler = handler;
     }
 
     /**
@@ -295,8 +295,8 @@ public class RealtimeWebSocketClient implements AutoCloseable {
                 try {
                     ConversationHistoryMessage event = objectMapper.treeToValue(node, ConversationHistoryMessage.class);
                     if (event != null) {
-                        if (historyHandler != null) {
-                            historyHandler.accept(event);
+                        if (conversationHistoryHandler != null) {
+                            conversationHistoryHandler.accept(event);
                         }
                         return;
                     }
@@ -321,8 +321,8 @@ public class RealtimeWebSocketClient implements AutoCloseable {
                 try {
                     FunctionCallHistoryMessage event = objectMapper.treeToValue(node, FunctionCallHistoryMessage.class);
                     if (event != null) {
-                        if (historyHandler != null) {
-                            historyHandler.accept(event);
+                        if (functionCallHistoryHandler != null) {
+                            functionCallHistoryHandler.accept(event);
                         }
                         return;
                     }

@@ -55,6 +55,7 @@ import com.squareup.javapoet.TypeSpec;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -107,6 +108,11 @@ public abstract class AbstractWebSocketChannelWriter {
     private static final Set<String> RESERVED_CONSUMER_METHOD_NAMES = Set.of("onError", "onDisconnected");
 
     private static final String DISCRIMINANT_FIELD = "type";
+
+    // Wire discriminant values shared by more than one server message.
+    // When a collision exists, handler/method names fall back to the message type ID
+    // instead of the wire discriminant value to avoid duplicate field declarations.
+    private final Set<String> collidingDiscriminantValues;
 
     // Connect options class name (present when channel has query parameters)
     protected final Optional<ClassName> connectOptionsClassName;
@@ -198,6 +204,21 @@ public abstract class AbstractWebSocketChannelWriter {
         this.reconnectOptionsField = FieldSpec.builder(
                         reconnectOptionsClassName, "reconnectOptions", Modifier.PRIVATE, Modifier.VOLATILE)
                 .build();
+
+        // Detect wire discriminant value collisions among server messages
+        Map<String, Integer> discriminantCounts = new HashMap<>();
+        for (WebSocketMessage message : websocketChannel.getMessages()) {
+            if (message.getOrigin() == WebSocketMessageOrigin.SERVER) {
+                String wireValue = getWireDiscriminantValue(message);
+                discriminantCounts.merge(wireValue, 1, Integer::sum);
+            }
+        }
+        this.collidingDiscriminantValues = new HashSet<>();
+        for (Map.Entry<String, Integer> entry : discriminantCounts.entrySet()) {
+            if (entry.getValue() > 1) {
+                this.collidingDiscriminantValues.add(entry.getKey());
+            }
+        }
     }
 
     public GeneratedJavaFile generateFile() {
@@ -426,11 +447,10 @@ public abstract class AbstractWebSocketChannelWriter {
     }
 
     /**
-     * Generates the handleIncomingMessage method that dispatches incoming WebSocket frames
-     * using shape-based trial deserialization. Instead of switching on a single "type" field,
-     * each message schema's required keys and literal values are checked against the JSON
-     * payload. Messages are tried in order of specificity (most constraints first) so that
-     * more specific schemas match before less specific ones.
+     * Generates the handleIncomingMessage method that dispatches incoming WebSocket frames using shape-based trial
+     * deserialization. Instead of switching on a single "type" field, each message schema's required keys and literal
+     * values are checked against the JSON payload. Messages are tried in order of specificity (most constraints first)
+     * so that more specific schemas match before less specific ones.
      */
     protected MethodSpec generateHandleIncomingMessageHelper() {
         MethodSpec.Builder builder = MethodSpec.methodBuilder("handleIncomingMessage")
@@ -490,10 +510,7 @@ public abstract class AbstractWebSocketChannelWriter {
 
             builder.beginControlFlow("try")
                     .addStatement(
-                            "$T event = $N.treeToValue(node, $T.class)",
-                            messageType,
-                            objectMapperField,
-                            messageType)
+                            "$T event = $N.treeToValue(node, $T.class)", messageType, objectMapperField, messageType)
                     .beginControlFlow("if (event != null)")
                     .beginControlFlow("if ($L != null)", handlerFieldName)
                     .addStatement("$L.accept(event)", handlerFieldName)
@@ -554,8 +571,8 @@ public abstract class AbstractWebSocketChannelWriter {
     }
 
     /**
-     * Returns the non-literal required wire keys for a WebSocket message body.
-     * These are properties that must be present in the JSON for the message to match.
+     * Returns the non-literal required wire keys for a WebSocket message body. These are properties that must be
+     * present in the JSON for the message to match.
      */
     private List<String> getMessageRequiredWireKeys(WebSocketMessage message) {
         return message.getBody().visit(new WebSocketMessageBody.Visitor<List<String>>() {
@@ -586,8 +603,8 @@ public abstract class AbstractWebSocketChannelWriter {
     }
 
     /**
-     * Returns literal property values for a WebSocket message body.
-     * Maps wire key to expected string value (e.g., "type" -> "transcript").
+     * Returns literal property values for a WebSocket message body. Maps wire key to expected string value (e.g.,
+     * "type" -> "transcript").
      */
     private Map<String, String> getMessageLiteralValues(WebSocketMessage message) {
         return message.getBody().visit(new WebSocketMessageBody.Visitor<Map<String, String>>() {
@@ -651,8 +668,7 @@ public abstract class AbstractWebSocketChannelWriter {
         try {
             TypeDeclaration extDeclaration = clientGeneratorContext.getTypeDeclaration(extendedType.getTypeId());
             if (extDeclaration != null && extDeclaration.getShape().isObject()) {
-                collectRequiredWireKeys(
-                        extDeclaration.getShape().getObject().get(), keys);
+                collectRequiredWireKeys(extDeclaration.getShape().getObject().get(), keys);
             }
         } catch (IllegalArgumentException e) {
             // Type not found in IR declarations
@@ -693,8 +709,7 @@ public abstract class AbstractWebSocketChannelWriter {
         try {
             TypeDeclaration extDeclaration = clientGeneratorContext.getTypeDeclaration(extendedType.getTypeId());
             if (extDeclaration != null && extDeclaration.getShape().isObject()) {
-                collectLiteralValues(
-                        extDeclaration.getShape().getObject().get(), literals);
+                collectLiteralValues(extDeclaration.getShape().getObject().get(), literals);
             }
         } catch (IllegalArgumentException e) {
             // Type not found in IR declarations
@@ -718,9 +733,7 @@ public abstract class AbstractWebSocketChannelWriter {
         if (!typeRef.isContainer()) {
             return Optional.empty();
         }
-        return typeRef.getContainer()
-                .flatMap(ContainerType::getLiteral)
-                .flatMap(Literal::getString);
+        return typeRef.getContainer().flatMap(ContainerType::getLiteral).flatMap(Literal::getString);
     }
 
     /**
@@ -1023,12 +1036,15 @@ public abstract class AbstractWebSocketChannelWriter {
         // Use custom methodName if available, otherwise fall back to wire discriminant value
         String baseName;
         if (message.getMethodName().isPresent()) {
-            // methodName is already the desired name (e.g., "sendSettings", "onFunctionCallResponse")
             baseName = toCamelCase(message.getMethodName().get());
         } else {
-            // Use the wire discriminant value (e.g., "Welcome" → "welcome", not "AgentV1Welcome")
             String wireValue = getWireDiscriminantValue(message);
-            baseName = decapitalize(toCamelCase(wireValue));
+            if (collidingDiscriminantValues.contains(wireValue)) {
+                // Multiple messages share this wire value — use message type ID to disambiguate
+                baseName = decapitalize(toCamelCase(message.getType().get()));
+            } else {
+                baseName = decapitalize(toCamelCase(wireValue));
+            }
         }
         return baseName + "Handler";
     }
@@ -1120,8 +1136,13 @@ public abstract class AbstractWebSocketChannelWriter {
         if (message.getMethodName().isPresent()) {
             baseName = toCamelCase(message.getMethodName().get());
         } else {
-            // Use the wire discriminant value (e.g., "Welcome" instead of "AgentV1Welcome")
-            baseName = "on" + toPascalCase(getWireDiscriminantValue(message));
+            String wireValue = getWireDiscriminantValue(message);
+            if (collidingDiscriminantValues.contains(wireValue)) {
+                // Multiple messages share this wire value — use message type ID to disambiguate
+                baseName = "on" + toPascalCase(message.getType().get());
+            } else {
+                baseName = "on" + toPascalCase(wireValue);
+            }
         }
         if (RESERVED_CONSUMER_METHOD_NAMES.contains(baseName)) {
             return baseName + "Message";
