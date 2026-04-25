@@ -7738,8 +7738,8 @@ importers:
         specifier: workspace:*
         version: link:../ir-utils
       '@fern-fern/ir-sdk':
-        specifier: ^66.2.0
-        version: 66.2.0
+        specifier: ^66.0.0
+        version: 66.0.0
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
