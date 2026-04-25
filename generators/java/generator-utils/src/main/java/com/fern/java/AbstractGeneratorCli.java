@@ -57,6 +57,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import org.immutables.value.Value;
 import org.slf4j.Logger;
@@ -105,45 +108,65 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
     /**
      * Loads and preprocesses the IR from file, handling integer overflow values and v66 compressed name
      * deserialization.
+     *
+     * <p>Uses a two-phase approach: first extracts casingsConfig via partial tree parse, then deserializes the full IR
+     * directly from bytes (avoiding full tree allocation).
      */
     private static IntermediateRepresentation getIr(GeneratorConfig generatorConfig) {
         try {
             File irFile = new File(generatorConfig.getIrFilepath());
 
-            JsonNode rootNode = ObjectMappers.JSON_MAPPER.readTree(irFile);
+            // Read file into bytes once to avoid double I/O
+            byte[] irBytes = Files.readAllBytes(irFile.toPath());
 
-            IntegerOverflowProcessor processor = new IntegerOverflowProcessor();
-            processor.processNodeInPlace(rootNode);
+            // Phase 1: Extract casingsConfig from a partial tree parse.
+            // Only parses the top-level casingsConfig field, not the full tree.
+            CasingConfiguration casingConfig = extractCasingConfig(irBytes);
 
-            if (processor.getConversions() > 0) {
-                log.info("Converted {} integer overflow value(s) to long type in IR", processor.getConversions());
-            }
-
-            // Extract casingsConfig from IR JSON before full deserialization,
-            // then register custom deserializers for v66 compressed names.
-            // The generated Name and NameAndWireValue classes have @JsonDeserialize(builder=...)
-            // annotations that take precedence over module-level addDeserializer() calls.
-            // We use mix-in annotations to override those class-level annotations,
-            // clearing the builder configuration so our custom deserializers are used instead.
-            CasingConfiguration casingConfig = CasingConfiguration.fromIrJson(rootNode);
-
+            // Phase 2: Configure mapper with custom Name deserializers and deserialize directly.
             SimpleModule nameModule = new SimpleModule("NameOrStringModule");
             nameModule.addDeserializer(Name.class, new NameDeserializer.RawNameDeserializer(casingConfig));
             nameModule.addDeserializer(NameOrString.class, new NameDeserializer(casingConfig));
             nameModule.addDeserializer(NameAndWireValueOrString.class, new NameAndWireValueDeserializer(casingConfig));
 
             ObjectMapper irMapper = ObjectMappers.JSON_MAPPER.copy();
-            // Mix-in annotations override class-level @JsonDeserialize(builder=...) annotations,
-            // allowing the module-level custom deserializers to take effect.
             irMapper.addMixIn(Name.class, NameOrStringMixIn.class);
             irMapper.addMixIn(NameOrString.class, NameOrStringMixIn.class);
             irMapper.addMixIn(NameAndWireValueOrString.class, NameOrStringMixIn.class);
             irMapper.registerModule(nameModule);
 
-            return irMapper.treeToValue(rootNode, IntermediateRepresentation.class);
+            // Direct deserialization from bytes — single pass, no intermediate tree
+            return irMapper.readValue(irBytes, IntermediateRepresentation.class);
         } catch (IOException e) {
             throw new RuntimeException("Failed to read ir", e);
         }
+    }
+
+    /**
+     * Extracts the casingsConfig from IR JSON bytes using a streaming approach. Only parses the top-level
+     * "casingsConfig" field to minimize work.
+     */
+    private static CasingConfiguration extractCasingConfig(byte[] irBytes) throws IOException {
+        // Use a tree read just for the casingsConfig field extraction
+        com.fasterxml.jackson.core.JsonParser parser =
+                ObjectMappers.JSON_MAPPER.getFactory().createParser(irBytes);
+        parser.nextToken(); // START_OBJECT
+        while (parser.nextToken() != com.fasterxml.jackson.core.JsonToken.END_OBJECT) {
+            String fieldName = parser.currentName();
+            parser.nextToken(); // move to value
+            if ("casingsConfig".equals(fieldName)) {
+                JsonNode casingsNode = parser.readValueAsTree();
+                parser.close();
+                // Build a minimal root node with just casingsConfig
+                ObjectNode rootStub = new ObjectNode(JsonNodeFactory.instance);
+                rootStub.set("casingsConfig", casingsNode);
+                return CasingConfiguration.fromIrJson(rootStub);
+            }
+            parser.skipChildren();
+        }
+        parser.close();
+        // No casingsConfig found — use defaults
+        return CasingConfiguration.fromIrJson(new ObjectNode(JsonNodeFactory.instance));
     }
 
     /**
@@ -350,7 +373,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
         }
     }
 
-    private final List<GeneratedFile> generatedFiles = new ArrayList<>();
+    private final List<GeneratedFile> generatedFiles = java.util.Collections.synchronizedList(new ArrayList<>());
 
     private Path outputDirectory = null;
 
@@ -361,8 +384,29 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
         GeneratorConfig generatorConfig = getGeneratorConfig(pluginPath);
         DefaultGeneratorExecClient generatorExecClient = new DefaultGeneratorExecClient(generatorConfig);
         try {
+            long t0 = System.currentTimeMillis();
             log(generatorExecClient, "Starting Java SDK generation");
+
+            // Start v2 generator asynchronously — it reads the config/IR independently
+            // and generates docs (README, reference, snippets) which don't depend on v1 output.
+            Thread v2Thread = new Thread(
+                    () -> {
+                        try {
+                            long v2Start = System.currentTimeMillis();
+                            runV2Generator(generatorExecClient, args);
+                            log.info("[perf] v2 generator: {}ms", System.currentTimeMillis() - v2Start);
+                        } catch (Exception e) {
+                            throw new RuntimeException("V2 generator failed", e);
+                        }
+                    },
+                    "java-v2-generator");
+            v2Thread.start();
+
+            long t1 = System.currentTimeMillis();
             IntermediateRepresentation ir = getIr(generatorConfig);
+            log.info("[perf] IR deserialization: {}ms", System.currentTimeMillis() - t1);
+
+            long t2 = System.currentTimeMillis();
             this.outputDirectory = Paths.get(generatorConfig.getOutput().getPath());
             generatorConfig
                     .getOutput()
@@ -398,8 +442,18 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                             throw new RuntimeException("Encountered unknown output mode: " + unknownType);
                         }
                     });
+            log.info("[perf] v1 generation + file write: {}ms", System.currentTimeMillis() - t2);
             log(generatorExecClient, "Completed Java v1 SDK generation");
-            runV2Generator(generatorExecClient, args);
+
+            // Wait for v2 to complete
+            long t3 = System.currentTimeMillis();
+            v2Thread.join(300_000); // 5 minute timeout
+            if (v2Thread.isAlive()) {
+                throw new RuntimeException("V2 generator timed out after 5 minutes");
+            }
+            log.info("[perf] v2 join wait: {}ms", System.currentTimeMillis() - t3);
+            log.info("[perf] total container: {}ms", System.currentTimeMillis() - t0);
+
             generatorExecClient.sendUpdate(GeneratorUpdate.exitStatusUpdate(
                     ExitStatusUpdate.successful(SuccessfulStatusUpdate.builder().build())));
         } catch (Exception e) {
@@ -533,8 +587,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                     customConfig.gradleCentralDependencyManagement());
         }
         ICustomConfig.OutputDirectory outputDirectoryMode = customConfig.outputDirectory();
-        generatedFiles.forEach(generatedFile ->
-                generatedFile.write(outputDirectory, true, customConfig.packagePrefix(), outputDirectoryMode));
+        writeFilesInParallel(outputDirectory, true, customConfig.packagePrefix(), outputDirectoryMode);
         copyLicenseFile(generatorConfig);
         if (publishResult.generateFullProject()) {
             copyGradleWrapperFromResources(outputDirectory, customConfig.gradleDistributionUrl());
@@ -583,8 +636,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                 mavenGithubPublishInfo.map(MavenGithubPublishInfo::getRegistryUrl),
                 mavenGithubPublishInfo.flatMap(MavenGithubPublishInfo::getSignature)));
         // write files to disk
-        generatedFiles.forEach(generatedFile -> generatedFile.write(
-                outputDirectory, false, Optional.empty(), ICustomConfig.OutputDirectory.PROJECT_ROOT));
+        writeFilesInParallel(outputDirectory, false, Optional.empty(), ICustomConfig.OutputDirectory.PROJECT_ROOT);
         copyLicenseFile(generatorConfig);
         copyGradleWrapperFromResources(outputDirectory, customConfig.gradleDistributionUrl());
     }
@@ -629,8 +681,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                 customConfig.gradlePluginManagement(),
                 customConfig.gradleCentralDependencyManagement());
 
-        generatedFiles.forEach(generatedFile -> generatedFile.write(
-                outputDirectory, false, Optional.empty(), ICustomConfig.OutputDirectory.PROJECT_ROOT));
+        writeFilesInParallel(outputDirectory, false, Optional.empty(), ICustomConfig.OutputDirectory.PROJECT_ROOT);
         copyLicenseFile(generatorConfig);
         copyGradleWrapperFromResources(outputDirectory, customConfig.gradleDistributionUrl());
 
@@ -692,6 +743,43 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
 
     protected final void addGeneratedFile(GeneratedFile generatedFile) {
         generatedFiles.add(generatedFile);
+    }
+
+    private void writeFilesInParallel(
+            Path directory,
+            boolean isLocal,
+            Optional<String> existingPrefix,
+            ICustomConfig.OutputDirectory outputDirectoryMode) {
+        long writeStart = System.currentTimeMillis();
+        int numThreads = Math.min(generatedFiles.size(), Runtime.getRuntime().availableProcessors() * 2);
+        ExecutorService executor = Executors.newFixedThreadPool(numThreads);
+        List<java.util.concurrent.Future<?>> futures = new ArrayList<>(generatedFiles.size());
+        for (GeneratedFile file : generatedFiles) {
+            futures.add(executor.submit(() -> file.write(directory, isLocal, existingPrefix, outputDirectoryMode)));
+        }
+        executor.shutdown();
+        try {
+            executor.awaitTermination(5, TimeUnit.MINUTES);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new RuntimeException("Interrupted while writing files", e);
+        }
+        // Check for write failures — propagate the first exception
+        for (java.util.concurrent.Future<?> future : futures) {
+            try {
+                future.get();
+            } catch (java.util.concurrent.ExecutionException e) {
+                throw new RuntimeException("File write failed", e.getCause());
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                throw new RuntimeException("Interrupted while checking file writes", e);
+            }
+        }
+        log.info(
+                "[perf] writeFiles ({} files, {} threads): {}ms",
+                generatedFiles.size(),
+                numThreads,
+                System.currentTimeMillis() - writeStart);
     }
 
     private void addRootProjectFiles(

@@ -16,9 +16,7 @@ public abstract class GeneratedFile {
         Path effectiveDirectory = directory;
         if (directoryPrefix().isPresent()) {
             effectiveDirectory = directory.resolve(directoryPrefix().get());
-            if (!effectiveDirectory.toFile().exists()) {
-                effectiveDirectory.toFile().mkdirs();
-            }
+            effectiveDirectory.toFile().mkdirs();
         }
         try {
             writeToFile(effectiveDirectory, isLocal, existingPrefix, outputDirectoryMode);

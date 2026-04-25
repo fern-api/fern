@@ -94,7 +94,6 @@ import com.fern.java.output.gradle.GradleDependencyType;
 import com.fern.java.output.gradle.GradlePlugin;
 import com.fern.java.output.gradle.ParsedGradleDependency;
 import com.fern.java.utils.NameUtils;
-import com.palantir.common.streams.KeyedStream;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 import java.util.ArrayList;
@@ -263,6 +262,7 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
             IntermediateRepresentation ir,
             DefaultGeneratorExecClient generatorExecClient) {
 
+        long genStart = System.currentTimeMillis();
         log(generatorExecClient, "Generating core SDK files");
 
         // core
@@ -537,23 +537,24 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         this.addGeneratedFile(generatedMediaTypesFile);
 
         // types
+        long coreTime = System.currentTimeMillis() - genStart;
+        long typesStart = System.currentTimeMillis();
         log(generatorExecClient, "Generating data types and models");
         TypesGenerator typesGenerator = new TypesGenerator(context);
         Result generatedTypes = typesGenerator.generateFiles();
         generatedTypes.getTypes().values().forEach(this::addGeneratedFile);
         generatedTypes.getInterfaces().values().forEach(this::addGeneratedFile);
+        log.info("[perf] types generation: {}ms", System.currentTimeMillis() - typesStart);
 
-        // errors
-        Map<ErrorId, GeneratedJavaFile> generatedErrors = KeyedStream.stream(
-                        context.getIr().getErrors())
-                .map(errorDeclaration -> {
+        // errors (parallelized — each error class is independent)
+        Map<ErrorId, GeneratedJavaFile> generatedErrors = context.getIr().getErrors().entrySet().parallelStream()
+                .collect(java.util.stream.Collectors.toConcurrentMap(Map.Entry::getKey, entry -> {
                     ErrorGenerator errorGenerator =
-                            new ErrorGenerator(context, generatedApiErrorFile, errorDeclaration);
+                            new ErrorGenerator(context, generatedApiErrorFile, entry.getValue());
                     GeneratedJavaFile exception = errorGenerator.generateFile();
                     this.addGeneratedFile(exception);
                     return exception;
-                })
-                .collectToMap();
+                }));
 
         Optional<OAuthScheme> maybeOAuthScheme = context.getResolvedAuthSchemes().stream()
                 .map(AuthScheme::getOauth)
@@ -580,9 +581,10 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
 
         generatedInferredAuthTokenSupplier.ifPresent(this::addGeneratedFile);
 
-        // subpackage clients and their WebSocket channels
+        // subpackage clients and their WebSocket channels (parallelized across subpackages)
+        long clientsStart = System.currentTimeMillis();
         log(generatorExecClient, "Generating API client classes");
-        ir.getSubpackages().values().forEach(subpackage -> {
+        ir.getSubpackages().values().parallelStream().forEach(subpackage -> {
             // Generate subpackage clients if there are endpoints or WebSocket channels
             if (subpackage.getHasEndpointsInTree() || subpackage.getWebsocket().isPresent()) {
                 AbstractSubpackageClientGenerator syncServiceClientGenerator = new SyncSubpackageClientGenerator(
@@ -653,42 +655,59 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
             }
         }
 
-        // root clients
-        AbstractRootClientGenerator syncRootClientGenerator = new SyncRootClientGenerator(
-                context,
-                objectMapper,
-                context,
-                generatedClientOptions,
-                generatedSuppliersFile,
-                generatedEnvironmentsClass,
-                generatedRequestOptions,
-                generatedTypes.getInterfaces(),
-                generatedOAuthTokenSupplier,
-                generatedInferredAuthTokenSupplier,
-                generatedErrors);
-        GeneratedRootClient generatedSyncRootClient = syncRootClientGenerator.generateFile();
+        // root clients (sync + async generated in parallel)
+        java.util.concurrent.CompletableFuture<GeneratedRootClient> syncRootFuture =
+                java.util.concurrent.CompletableFuture.supplyAsync(() -> {
+                    AbstractRootClientGenerator syncRootClientGenerator = new SyncRootClientGenerator(
+                            context,
+                            objectMapper,
+                            context,
+                            generatedClientOptions,
+                            generatedSuppliersFile,
+                            generatedEnvironmentsClass,
+                            generatedRequestOptions,
+                            generatedTypes.getInterfaces(),
+                            generatedOAuthTokenSupplier,
+                            generatedInferredAuthTokenSupplier,
+                            generatedErrors);
+                    return syncRootClientGenerator.generateFile();
+                });
+        java.util.concurrent.CompletableFuture<GeneratedRootClient> asyncRootFuture =
+                java.util.concurrent.CompletableFuture.supplyAsync(() -> {
+                    AbstractRootClientGenerator asyncRootClientGenerator = new AsyncRootClientGenerator(
+                            context,
+                            objectMapper,
+                            context,
+                            generatedClientOptions,
+                            generatedSuppliersFile,
+                            generatedEnvironmentsClass,
+                            generatedRequestOptions,
+                            generatedTypes.getInterfaces(),
+                            generatedOAuthTokenSupplier,
+                            generatedInferredAuthTokenSupplier,
+                            generatedErrors);
+                    return asyncRootClientGenerator.generateFile();
+                });
+        GeneratedRootClient generatedSyncRootClient = syncRootFuture.join();
         this.addGeneratedFile(generatedSyncRootClient);
         this.addGeneratedFile(generatedSyncRootClient.builderClass());
         generatedSyncRootClient.rawClient().ifPresent(this::addGeneratedFile);
         generatedSyncRootClient.wrappedRequests().forEach(this::addGeneratedFile);
 
-        AbstractRootClientGenerator asyncRootClientGenerator = new AsyncRootClientGenerator(
-                context,
-                objectMapper,
-                context,
-                generatedClientOptions,
-                generatedSuppliersFile,
-                generatedEnvironmentsClass,
-                generatedRequestOptions,
-                generatedTypes.getInterfaces(),
-                generatedOAuthTokenSupplier,
-                generatedInferredAuthTokenSupplier,
-                generatedErrors);
-        GeneratedRootClient generatedAsyncRootClient = asyncRootClientGenerator.generateFile();
+        GeneratedRootClient generatedAsyncRootClient = asyncRootFuture.join();
         this.addGeneratedFile(generatedAsyncRootClient);
         this.addGeneratedFile(generatedAsyncRootClient.builderClass());
         generatedAsyncRootClient.rawClient().ifPresent(this::addGeneratedFile);
         generatedAsyncRootClient.wrappedRequests().forEach(this::addGeneratedFile);
+
+        long clientsTime = System.currentTimeMillis() - clientsStart;
+        long typesTime = clientsStart - typesStart;
+        log.info(
+                "[perf] generateClient — core: {}ms, types+errors: {}ms, clients: {}ms, total: {}ms",
+                coreTime,
+                typesTime,
+                clientsTime,
+                System.currentTimeMillis() - genStart);
 
         context.getCustomConfig().customDependencies().ifPresent(deps -> {
             for (String dep : deps) {

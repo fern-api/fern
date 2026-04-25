@@ -102,7 +102,7 @@ RUN cd / \
     && tar -xvf sdk.tar \
     && rm -rf sdk.tar
 
-ENV JAVA_TOOL_OPTIONS="-Xmx4g -Dfile.encoding=UTF8"
+ENV JAVA_TOOL_OPTIONS="-Xmx4g -Dfile.encoding=UTF8 -XX:TieredStopAtLevel=1 -XX:CICompilerCount=1 -XX:-UsePerfData"
 
 # Copy over node contents to be able to run the compiled CLI
 COPY --from=node /usr/local/bin/node /usr/local/bin/

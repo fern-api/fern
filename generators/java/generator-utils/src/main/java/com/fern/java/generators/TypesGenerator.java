@@ -23,9 +23,9 @@ import com.fern.ir.model.types.TypeDeclaration;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedJavaInterface;
-import com.palantir.common.streams.KeyedStream;
 import com.squareup.javapoet.ClassName;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
@@ -44,11 +44,14 @@ public final class TypesGenerator {
 
     public Result generateFiles() {
         Map<TypeId, GeneratedJavaInterface> generatedInterfaces = getGeneratedInterfaces(generatorContext);
-        Map<TypeId, GeneratedJavaFile> generatedTypes = KeyedStream.stream(typeDeclarations)
-                .map(typeDeclaration -> {
+        // Parallel type generation: each type is independent after interfaces are pre-generated.
+        // The generator context and interfaces map are read-only, so this is thread-safe.
+        Map<TypeId, GeneratedJavaFile> generatedTypes = typeDeclarations.entrySet().parallelStream()
+                .map(entry -> {
+                    TypeDeclaration typeDeclaration = entry.getValue();
                     if (generatorContext.getCustomConfig().enableInlineTypes()
                             && typeDeclaration.getInline().orElse(false)) {
-                        return Optional.<GeneratedJavaFile>empty();
+                        return null;
                     }
 
                     ClassName className =
@@ -63,18 +66,19 @@ public final class TypesGenerator {
                                     false,
                                     Set.of(className.simpleName()),
                                     true));
-                    return maybeGeneratedJavaFile.map(AbstractTypeGenerator::generateFile);
+                    return maybeGeneratedJavaFile
+                            .map(gen -> Map.entry(entry.getKey(), gen.generateFile()))
+                            .orElse(null);
                 })
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .collectToMap();
+                .filter(Objects::nonNull)
+                .collect(Collectors.toConcurrentMap(Map.Entry::getKey, Map.Entry::getValue));
         return new Result(generatedInterfaces, generatedTypes);
     }
 
     public static Map<TypeId, GeneratedJavaInterface> getGeneratedInterfaces(
             AbstractGeneratorContext<?, ?> generatorContext) {
         Set<TypeId> interfaceCandidates = generatorContext.getInterfaceIds();
-        return interfaceCandidates.stream().collect(Collectors.toMap(Function.identity(), typeId -> {
+        return interfaceCandidates.parallelStream().collect(Collectors.toConcurrentMap(Function.identity(), typeId -> {
             TypeDeclaration typeDeclaration =
                     generatorContext.getTypeDeclarations().get(typeId);
             ObjectTypeDeclaration objectTypeDeclaration = typeDeclaration

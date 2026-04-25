@@ -34,8 +34,9 @@ export class SdkWireTestGenerator {
 
     /**
      * Main entry point for generating wire tests.
+     * @param sharedSnippetsGenerator Optional pre-built generator to reuse (avoids duplicate IR conversion).
      */
-    public async generate(): Promise<void> {
+    public async generate(sharedSnippetsGenerator?: DynamicSnippetsGenerator): Promise<void> {
         const enableWireTests = this.context.customConfig["enable-wire-tests"] !== false;
         if (!enableWireTests) {
             this.context.logger.debug("Wire tests are disabled (enable-wire-tests flag is explicitly set to false)");
@@ -50,14 +51,19 @@ export class SdkWireTestGenerator {
             return;
         }
 
-        // Type cast needed: java-v2/sdk uses ir-sdk@65.4.0, dynamic-snippets uses dynamic-ir-sdk@61.7.0.
-        // Runtime data shapes are compatible; only TS types diverge across SDK versions.
-        // biome-ignore lint/suspicious/noExplicitAny: version boundary cast
-        const convertedIr: any = convertIr(dynamicIr);
-        const dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
-            ir: convertedIr,
-            config: this.context.config
-        });
+        let dynamicSnippetsGenerator: DynamicSnippetsGenerator;
+        if (sharedSnippetsGenerator != null) {
+            dynamicSnippetsGenerator = sharedSnippetsGenerator;
+        } else {
+            // Type cast needed: java-v2/sdk uses ir-sdk@65.4.0, dynamic-snippets uses dynamic-ir-sdk@61.7.0.
+            // Runtime data shapes are compatible; only TS types diverge across SDK versions.
+            // biome-ignore lint/suspicious/noExplicitAny: version boundary cast
+            const convertedIr: any = convertIr(dynamicIr);
+            dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
+                ir: convertedIr,
+                config: this.context.config
+            });
+        }
 
         await this.generateTestFiles(dynamicIr, dynamicSnippetsGenerator);
 

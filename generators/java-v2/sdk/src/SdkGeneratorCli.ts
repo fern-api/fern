@@ -47,20 +47,21 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
     }
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
+        let sharedSnippetsGenerator: DynamicSnippetsGenerator | undefined;
+
         if (context.config.output.snippetFilepath != null) {
             const dynamicIr = context.ir.dynamic;
             if (!dynamicIr) {
                 throw GeneratorError.internalError("Cannot generate dynamic snippets without dynamic IR");
             }
 
-            // Single IR conversion and generator instance shared across all snippet consumers.
-            // Previously, populateSnippetsCache() and generateSnippets() each created their own
-            // DynamicSnippetsGenerator (duplicating convertIr() and constructor work).
+            // Single IR conversion and generator instance shared across all snippet consumers
+            // (snippets, README, reference, and wire tests).
             // Type cast needed: java-v2/sdk uses ir-sdk@65.4.0, dynamic-snippets uses dynamic-ir-sdk@61.7.0.
             // Runtime data shapes are compatible; only TS types diverge across SDK versions.
             // biome-ignore lint/suspicious/noExplicitAny: version boundary cast
             const convertedIr: any = convertIr(dynamicIr);
-            const sharedSnippetsGenerator = new DynamicSnippetsGenerator({
+            sharedSnippetsGenerator = new DynamicSnippetsGenerator({
                 ir: convertedIr,
                 config: context.config
             });
@@ -111,7 +112,7 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
         }
 
         const wireTestGenerator = new SdkWireTestGenerator(context);
-        await wireTestGenerator.generate();
+        await wireTestGenerator.generate(sharedSnippetsGenerator);
 
         await context.project.persist();
     }

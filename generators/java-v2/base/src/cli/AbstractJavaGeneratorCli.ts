@@ -15,6 +15,17 @@ export abstract class AbstractJavaGeneratorCli<
      * @returns
      */
     protected async parseIntermediateRepresentation(irFilepath: string): Promise<FernIr.IntermediateRepresentation> {
+        const fullIrPath = process.env.FULL_IR_PATH;
+        if (fullIrPath != null && fullIrPath.length > 0) {
+            // Full IR is written in raw camelCase format by the orchestrator — read directly
+            // without Zod parsing (which would redundantly convert camelCase → camelCase).
+            return await parseIR<FernIr.IntermediateRepresentation>({
+                absolutePathToIR: AbsoluteFilePath.of(fullIrPath),
+                parse: (raw) => ({ ok: true as const, value: raw as FernIr.IntermediateRepresentation })
+            });
+        }
+        // Fallback: read from main IR path with Zod parse (e.g., Docker mode where
+        // FULL_IR_PATH is not set and the IR is in wire format)
         return await parseIR<FernIr.IntermediateRepresentation>({
             absolutePathToIR: AbsoluteFilePath.of(irFilepath),
             parse: IrSerialization.IntermediateRepresentation.parse
