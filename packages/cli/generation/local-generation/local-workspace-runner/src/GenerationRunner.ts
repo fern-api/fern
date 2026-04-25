@@ -98,6 +98,14 @@ export class GenerationRunner {
                                 interactiveTaskContext.logger.info(
                                     `Dynamic snippet tests were pre-generated (${preGeneratedFiles.length} files)`
                                 );
+                                // Run spotlessApply on the pre-generated snippet files
+                                if (generatorInvocation.absolutePathToLocalOutput != null) {
+                                    await DynamicSnippetsJavaTestGenerator.runSpotlessApply({
+                                        context: interactiveTaskContext,
+                                        outputDir: generatorInvocation.absolutePathToLocalOutput,
+                                        generatorConfig
+                                    });
+                                }
                             } else if (shouldGenerateDynamicSnippetTests && generatorInvocation.language != null) {
                                 interactiveTaskContext.logger.info(
                                     `Generating dynamic snippet tests for ${generatorInvocation.language}...`
