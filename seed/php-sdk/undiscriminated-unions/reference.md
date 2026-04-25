@@ -245,7 +245,7 @@ $client->union->nestedUnions(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;union-&gt;nestedObjectUnions($request) -> ?string</code></summary>
+<details><summary><code>$client-&gt;union-&gt;getWithBaseProperties($request) -> NamedMetadata|array|null</code></summary>
 <dl>
 <dd>
 
@@ -258,8 +258,15 @@ $client->union->nestedUnions(
 <dd>
 
 ```php
-$client->union->nestedObjectUnions(
-    'string',
+$client->union->getWithBaseProperties(
+    new NamedMetadata([
+        'name' => 'name',
+        'value' => [
+            'value' => [
+                'key' => "value",
+            ],
+        ],
+    ]),
 );
 ```
 </dd>
@@ -275,7 +282,7 @@ $client->union->nestedObjectUnions(
 <dl>
 <dd>
 
-**$request:** `string|WrapperObject` 
+**$request:** `NamedMetadata|array|null` 
     
 </dd>
 </dl>

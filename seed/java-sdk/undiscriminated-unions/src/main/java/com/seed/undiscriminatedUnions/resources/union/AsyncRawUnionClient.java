@@ -17,7 +17,7 @@ import com.seed.undiscriminatedUnions.resources.union.types.Key;
 import com.seed.undiscriminatedUnions.resources.union.types.MetadataUnion;
 import com.seed.undiscriminatedUnions.resources.union.types.MyUnion;
 import com.seed.undiscriminatedUnions.resources.union.types.NestedUnionRoot;
-import com.seed.undiscriminatedUnions.resources.union.types.OuterNestedUnion;
+import com.seed.undiscriminatedUnions.resources.union.types.UnionWithBaseProperties;
 import com.seed.undiscriminatedUnions.resources.union.types.UnionWithDuplicateTypes;
 import java.io.IOException;
 import java.util.Map;
@@ -434,16 +434,16 @@ public class AsyncRawUnionClient {
         return future;
     }
 
-    public CompletableFuture<SeedUndiscriminatedUnionsHttpResponse<String>> nestedObjectUnions(
-            OuterNestedUnion request) {
-        return nestedObjectUnions(request, null);
+    public CompletableFuture<SeedUndiscriminatedUnionsHttpResponse<UnionWithBaseProperties>> getWithBaseProperties(
+            UnionWithBaseProperties request) {
+        return getWithBaseProperties(request, null);
     }
 
-    public CompletableFuture<SeedUndiscriminatedUnionsHttpResponse<String>> nestedObjectUnions(
-            OuterNestedUnion request, RequestOptions requestOptions) {
+    public CompletableFuture<SeedUndiscriminatedUnionsHttpResponse<UnionWithBaseProperties>> getWithBaseProperties(
+            UnionWithBaseProperties request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("nested-objects");
+                .addPathSegments("with-base-properties");
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -467,7 +467,8 @@ public class AsyncRawUnionClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<SeedUndiscriminatedUnionsHttpResponse<String>> future = new CompletableFuture<>();
+        CompletableFuture<SeedUndiscriminatedUnionsHttpResponse<UnionWithBaseProperties>> future =
+                new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -475,7 +476,8 @@ public class AsyncRawUnionClient {
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new SeedUndiscriminatedUnionsHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response));
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, UnionWithBaseProperties.class),
+                                response));
                         return;
                     }
                     Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);

@@ -17,7 +17,7 @@ import com.seed.undiscriminatedUnions.resources.union.types.Key;
 import com.seed.undiscriminatedUnions.resources.union.types.MetadataUnion;
 import com.seed.undiscriminatedUnions.resources.union.types.MyUnion;
 import com.seed.undiscriminatedUnions.resources.union.types.NestedUnionRoot;
-import com.seed.undiscriminatedUnions.resources.union.types.OuterNestedUnion;
+import com.seed.undiscriminatedUnions.resources.union.types.UnionWithBaseProperties;
 import com.seed.undiscriminatedUnions.resources.union.types.UnionWithDuplicateTypes;
 import java.io.IOException;
 import java.util.Map;
@@ -337,15 +337,16 @@ public class RawUnionClient {
         }
     }
 
-    public SeedUndiscriminatedUnionsHttpResponse<String> nestedObjectUnions(OuterNestedUnion request) {
-        return nestedObjectUnions(request, null);
+    public SeedUndiscriminatedUnionsHttpResponse<UnionWithBaseProperties> getWithBaseProperties(
+            UnionWithBaseProperties request) {
+        return getWithBaseProperties(request, null);
     }
 
-    public SeedUndiscriminatedUnionsHttpResponse<String> nestedObjectUnions(
-            OuterNestedUnion request, RequestOptions requestOptions) {
+    public SeedUndiscriminatedUnionsHttpResponse<UnionWithBaseProperties> getWithBaseProperties(
+            UnionWithBaseProperties request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("nested-objects");
+                .addPathSegments("with-base-properties");
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -374,7 +375,8 @@ public class RawUnionClient {
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new SeedUndiscriminatedUnionsHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, UnionWithBaseProperties.class),
+                        response);
             }
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedUndiscriminatedUnionsApiException(

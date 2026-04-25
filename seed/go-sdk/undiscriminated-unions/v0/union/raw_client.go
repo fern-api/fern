@@ -275,23 +275,23 @@ func (r *RawClient) NestedUnions(
 	}, nil
 }
 
-func (r *RawClient) NestedObjectUnions(
+func (r *RawClient) GetWithBaseProperties(
 	ctx context.Context,
-	request *fern.OuterNestedUnion,
+	request *fern.UnionWithBaseProperties,
 	opts ...option.RequestOption,
-) (*core.Response[string], error) {
+) (*core.Response[*fern.UnionWithBaseProperties], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
 		r.baseURL,
 		"",
 	)
-	endpointURL := baseURL + "/nested-objects"
+	endpointURL := baseURL + "/with-base-properties"
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response string
+	var response *fern.UnionWithBaseProperties
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -309,7 +309,7 @@ func (r *RawClient) NestedObjectUnions(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[string]{
+	return &core.Response[*fern.UnionWithBaseProperties]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,

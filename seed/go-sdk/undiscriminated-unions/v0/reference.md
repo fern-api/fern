@@ -273,7 +273,7 @@ client.Union.NestedUnions(
 </dl>
 </details>
 
-<details><summary><code>client.Union.NestedObjectUnions(request) -> string</code></summary>
+<details><summary><code>client.Union.GetWithBaseProperties(request) -> *fern.UnionWithBaseProperties</code></summary>
 <dl>
 <dd>
 
@@ -286,10 +286,17 @@ client.Union.NestedUnions(
 <dd>
 
 ```go
-request := &fern.OuterNestedUnion{
-        String: "string",
+request := &fern.UnionWithBaseProperties{
+        NamedMetadata: &fern.NamedMetadata{
+            Name: "name",
+            Value: map[string]any{
+                "value": map[string]any{
+                    "key": "value",
+                },
+            },
+        },
     }
-client.Union.NestedObjectUnions(
+client.Union.GetWithBaseProperties(
         context.TODO(),
         request,
     )
@@ -308,7 +315,7 @@ client.Union.NestedObjectUnions(
 <dl>
 <dd>
 
-**request:** `*fern.OuterNestedUnion` 
+**request:** `*fern.UnionWithBaseProperties` 
     
 </dd>
 </dl>

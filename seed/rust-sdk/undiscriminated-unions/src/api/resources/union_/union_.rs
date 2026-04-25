@@ -102,15 +102,15 @@ impl UnionClient {
             .await
     }
 
-    pub async fn nested_object_unions(
+    pub async fn get_with_base_properties(
         &self,
-        request: &OuterNestedUnion,
+        request: &UnionWithBaseProperties,
         options: Option<RequestOptions>,
-    ) -> Result<String, ApiError> {
+    ) -> Result<UnionWithBaseProperties, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
-                "/nested-objects",
+                "/with-base-properties",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,

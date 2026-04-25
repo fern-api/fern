@@ -14,8 +14,8 @@ from .types.metadata import Metadata
 from .types.metadata_union import MetadataUnion
 from .types.my_union import MyUnion
 from .types.nested_union_root import NestedUnionRoot
-from .types.outer_nested_union import OuterNestedUnion
 from .types.payment_method_union import PaymentMethodUnion
+from .types.union_with_base_properties import UnionWithBaseProperties
 from .types.union_with_duplicate_types import UnionWithDuplicateTypes
 from pydantic import ValidationError
 
@@ -274,26 +274,26 @@ class RawUnionClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def nested_object_unions(
-        self, *, request: OuterNestedUnion, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[str]:
+    def get_with_base_properties(
+        self, *, request: UnionWithBaseProperties, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[UnionWithBaseProperties]:
         """
         Parameters
         ----------
-        request : OuterNestedUnion
+        request : UnionWithBaseProperties
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[str]
+        HttpResponse[UnionWithBaseProperties]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "nested-objects",
+            "with-base-properties",
             method="POST",
             json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=OuterNestedUnion, direction="write"
+                object_=request, annotation=UnionWithBaseProperties, direction="write"
             ),
             request_options=request_options,
             omit=OMIT,
@@ -301,9 +301,9 @@ class RawUnionClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    str,
+                    UnionWithBaseProperties,
                     parse_obj_as(
-                        type_=str,  # type: ignore
+                        type_=UnionWithBaseProperties,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -616,26 +616,26 @@ class AsyncRawUnionClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def nested_object_unions(
-        self, *, request: OuterNestedUnion, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[str]:
+    async def get_with_base_properties(
+        self, *, request: UnionWithBaseProperties, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[UnionWithBaseProperties]:
         """
         Parameters
         ----------
-        request : OuterNestedUnion
+        request : UnionWithBaseProperties
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[str]
+        AsyncHttpResponse[UnionWithBaseProperties]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "nested-objects",
+            "with-base-properties",
             method="POST",
             json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=OuterNestedUnion, direction="write"
+                object_=request, annotation=UnionWithBaseProperties, direction="write"
             ),
             request_options=request_options,
             omit=OMIT,
@@ -643,9 +643,9 @@ class AsyncRawUnionClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    str,
+                    UnionWithBaseProperties,
                     parse_obj_as(
-                        type_=str,  # type: ignore
+                        type_=UnionWithBaseProperties,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

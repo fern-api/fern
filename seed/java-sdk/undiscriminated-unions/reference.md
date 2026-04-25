@@ -256,7 +256,7 @@ client.union().nestedUnions(
 </dl>
 </details>
 
-<details><summary><code>client.union.nestedObjectUnions(request) -> String</code></summary>
+<details><summary><code>client.union.getWithBaseProperties(request) -> UnionWithBaseProperties</code></summary>
 <dl>
 <dd>
 
@@ -269,8 +269,20 @@ client.union().nestedUnions(
 <dd>
 
 ```java
-client.union().nestedObjectUnions(
-    OuterNestedUnion.of("string")
+client.union().getWithBaseProperties(
+    UnionWithBaseProperties.of(
+        NamedMetadata
+            .builder()
+            .name("name")
+            .value(
+                new HashMap<String, Object>() {{
+                    put("value", new 
+                    HashMap<String, Object>() {{put("key", "value");
+                    }});
+                }}
+            )
+            .build()
+    )
 );
 ```
 </dd>
@@ -286,7 +298,7 @@ client.union().nestedObjectUnions(
 <dl>
 <dd>
 
-**request:** `OuterNestedUnion` 
+**request:** `UnionWithBaseProperties` 
     
 </dd>
 </dl>

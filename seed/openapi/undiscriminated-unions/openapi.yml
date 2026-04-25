@@ -133,9 +133,9 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/NestedUnionRoot'
-  /nested-objects:
+  /with-base-properties:
     post:
-      operationId: union_nestedObjectUnions
+      operationId: union_getWithBaseProperties
       tags:
         - Union
       parameters: []
@@ -145,13 +145,13 @@ paths:
           content:
             application/json:
               schema:
-                type: string
+                $ref: '#/components/schemas/UnionWithBaseProperties'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/OuterNestedUnion'
+              $ref: '#/components/schemas/UnionWithBaseProperties'
   /camel-case:
     post:
       operationId: union_testCamelCaseProperties
@@ -309,6 +309,14 @@ components:
       enum:
         - name
         - value
+    UnionWithBaseProperties:
+      title: UnionWithBaseProperties
+      oneOf:
+        - $ref: '#/components/schemas/NamedMetadata'
+        - $ref: '#/components/schemas/OptionalMetadata'
+      description: |-
+        Tests that base-properties on an undiscriminated union are correctly
+        represented in the IR and generated code.
     UnionWithIdenticalStrings:
       title: UnionWithIdenticalStrings
       oneOf:
@@ -388,55 +396,4 @@ components:
           public static implicit operator UnionWithTypeAliases(string value) => ...
           public static implicit operator UnionWithTypeAliases(string value) => ...
         causing CS0557 compiler error.
-    LeafTypeA:
-      title: LeafTypeA
-      type: object
-      properties:
-        alpha:
-          type: string
-        beta:
-          type: integer
-      required:
-        - alpha
-        - beta
-    LeafTypeB:
-      title: LeafTypeB
-      type: object
-      properties:
-        gamma:
-          type: string
-      required:
-        - gamma
-    NestedObjectUnion:
-      title: NestedObjectUnion
-      oneOf:
-        - $ref: '#/components/schemas/LeafTypeA'
-        - $ref: '#/components/schemas/LeafTypeB'
-      description: >-
-        Inner union with two object variants that have disjoint required keys.
-
-        Tests that required-key guards work correctly inside nested union
-        contexts.
-    WrapperObject:
-      title: WrapperObject
-      type: object
-      properties:
-        inner:
-          $ref: '#/components/schemas/NestedObjectUnion'
-        label:
-          type: string
-      required:
-        - inner
-        - label
-    OuterNestedUnion:
-      title: OuterNestedUnion
-      oneOf:
-        - type: string
-        - $ref: '#/components/schemas/WrapperObject'
-      description: >-
-        Outer union where one variant is an object containing a nested union
-        field.
-
-        Tests that the deserializer correctly handles transitive union
-        deserialization.
   securitySchemes: {}

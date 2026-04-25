@@ -280,7 +280,7 @@ client.union.nested_unions(request: "string")
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="/lib/seed/union/client.rb">nested_object_unions</a>(request) -> String</code></summary>
+<details><summary><code>client.union.<a href="/lib/seed/union/client.rb">get_with_base_properties</a>(request) -> Seed::Union::Types::UnionWithBaseProperties</code></summary>
 <dl>
 <dd>
 
@@ -293,7 +293,10 @@ client.union.nested_unions(request: "string")
 <dd>
 
 ```ruby
-client.union.nested_object_unions(request: "string")
+client.union.get_with_base_properties(
+  name: "name",
+  value: {}
+)
 ```
 </dd>
 </dl>
@@ -308,7 +311,7 @@ client.union.nested_object_unions(request: "string")
 <dl>
 <dd>
 
-**request:** `Seed::Union::Types::OuterNestedUnion` 
+**request:** `Seed::Union::Types::UnionWithBaseProperties` 
     
 </dd>
 </dl>

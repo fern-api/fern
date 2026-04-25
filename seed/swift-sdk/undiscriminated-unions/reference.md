@@ -354,7 +354,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="/Sources/Resources/Union/UnionClient.swift">nestedObjectUnions</a>(request: OuterNestedUnion, requestOptions: RequestOptions?) -> String</code></summary>
+<details><summary><code>client.union.<a href="/Sources/Resources/Union/UnionClient.swift">getWithBaseProperties</a>(request: UnionWithBaseProperties, requestOptions: RequestOptions?) -> UnionWithBaseProperties</code></summary>
 <dl>
 <dd>
 
@@ -373,8 +373,15 @@ import UndiscriminatedUnions
 private func main() async throws {
     let client = UndiscriminatedUnionsClient()
 
-    _ = try await client.union.nestedObjectUnions(request: OuterNestedUnion.string(
-        "string"
+    _ = try await client.union.getWithBaseProperties(request: UnionWithBaseProperties.namedMetadata(
+        NamedMetadata(
+            name: "name",
+            value: [
+                "value": .object([
+                    "key": .string("value")
+                ])
+            ]
+        )
     ))
 }
 
@@ -393,7 +400,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `OuterNestedUnion` 
+**request:** `UnionWithBaseProperties` 
     
 </dd>
 </dl>

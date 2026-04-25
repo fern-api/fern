@@ -118,16 +118,16 @@
             }
         },
         {
-            "example_identifier": "7ae22e69",
+            "example_identifier": "9577442f",
             "id": {
                 "method": "POST",
-                "path": "/nested-objects",
-                "identifier_override": "endpoint_union.nestedObjectUnions"
+                "path": "/with-base-properties",
+                "identifier_override": "endpoint_union.getWithBaseProperties"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.undiscriminatedUnions.SeedUndiscriminatedUnionsClient;\nimport com.seed.undiscriminatedUnions.resources.union.types.OuterNestedUnion;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedUndiscriminatedUnionsClient client = SeedUndiscriminatedUnionsClient\n            .builder()\n            .build();\n\n        client.union().nestedObjectUnions(\n            OuterNestedUnion.of(\"string\")\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.undiscriminatedUnions.SeedUndiscriminatedUnionsClient;\nimport com.seed.undiscriminatedUnions.resources.union.types.OuterNestedUnion;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedUndiscriminatedUnionsClient client = SeedUndiscriminatedUnionsClient\n            .builder()\n            .build();\n\n        client.union().nestedObjectUnions(\n            OuterNestedUnion.of(\"string\")\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.undiscriminatedUnions.SeedUndiscriminatedUnionsClient;\nimport com.seed.undiscriminatedUnions.resources.union.types.NamedMetadata;\nimport com.seed.undiscriminatedUnions.resources.union.types.UnionWithBaseProperties;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedUndiscriminatedUnionsClient client = SeedUndiscriminatedUnionsClient\n            .builder()\n            .build();\n\n        client.union().getWithBaseProperties(\n            UnionWithBaseProperties.of(\n                NamedMetadata\n                    .builder()\n                    .name(\"name\")\n                    .value(\n                        new HashMap<String, Object>() {{\n                            put(\"value\", new \n                            HashMap<String, Object>() {{put(\"key\", \"value\");\n                            }});\n                        }}\n                    )\n                    .build()\n            )\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.undiscriminatedUnions.SeedUndiscriminatedUnionsClient;\nimport com.seed.undiscriminatedUnions.resources.union.types.NamedMetadata;\nimport com.seed.undiscriminatedUnions.resources.union.types.UnionWithBaseProperties;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedUndiscriminatedUnionsClient client = SeedUndiscriminatedUnionsClient\n            .builder()\n            .build();\n\n        client.union().getWithBaseProperties(\n            UnionWithBaseProperties.of(\n                NamedMetadata\n                    .builder()\n                    .name(\"name\")\n                    .value(\n                        new HashMap<String, Object>() {{\n                            put(\"value\", new \n                            HashMap<String, Object>() {{put(\"key\", \"value\");\n                            }});\n                        }}\n                    )\n                    .build()\n            )\n        );\n    }\n}\n"
             }
         },
         {

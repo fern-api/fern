@@ -127,18 +127,18 @@ func (c *Client) NestedUnions(
 	return response.Body, nil
 }
 
-func (c *Client) NestedObjectUnions(
+func (c *Client) GetWithBaseProperties(
 	ctx context.Context,
-	request *fern.OuterNestedUnion,
+	request *fern.UnionWithBaseProperties,
 	opts ...option.RequestOption,
-) (string, error) {
-	response, err := c.WithRawResponse.NestedObjectUnions(
+) (*fern.UnionWithBaseProperties, error) {
+	response, err := c.WithRawResponse.GetWithBaseProperties(
 		ctx,
 		request,
 		opts...,
 	)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 	return response.Body, nil
 }

@@ -66,13 +66,13 @@ public final class UnionClient: Sendable {
         )
     }
 
-    public func nestedObjectUnions(request: OuterNestedUnion, requestOptions: RequestOptions? = nil) async throws -> String {
+    public func getWithBaseProperties(request: UnionWithBaseProperties, requestOptions: RequestOptions? = nil) async throws -> UnionWithBaseProperties {
         return try await httpClient.performRequest(
             method: .post,
-            path: "/nested-objects",
+            path: "/with-base-properties",
             body: request,
             requestOptions: requestOptions,
-            responseType: String.self
+            responseType: UnionWithBaseProperties.self
         )
     }
 

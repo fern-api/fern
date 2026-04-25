@@ -233,7 +233,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">nested_object_unions</a>(request: OuterNestedUnion) -> Result&lt;String, ApiError&gt;</code></summary>
+<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">get_with_base_properties</a>(request: UnionWithBaseProperties) -> Result&lt;UnionWithBaseProperties, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -256,7 +256,14 @@ async fn main() {
     let client = UndiscriminatedUnionsClient::new(config).expect("Failed to build client");
     client
         .union_
-        .nested_object_unions(&OuterNestedUnion::String("string".to_string()), None)
+        .get_with_base_properties(
+            &UnionWithBaseProperties::NamedMetadata(NamedMetadata {
+                name: "name".to_string(),
+                value: HashMap::from([("value".to_string(), serde_json::json!({"key":"value"}))]),
+                ..Default::default()
+            }),
+            None,
+        )
         .await;
 }
 ```

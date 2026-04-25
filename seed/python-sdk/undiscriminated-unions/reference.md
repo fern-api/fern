@@ -336,7 +336,7 @@ client.union.nested_unions(
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="src/seed/union/client.py">nested_object_unions</a>(...) -> str</code></summary>
+<details><summary><code>client.union.<a href="src/seed/union/client.py">get_with_base_properties</a>(...) -> UnionWithBaseProperties</code></summary>
 <dl>
 <dd>
 
@@ -350,13 +350,19 @@ client.union.nested_unions(
 
 ```python
 from seed import SeedUndiscriminatedUnions
+from seed.union import NamedMetadata
 
 client = SeedUndiscriminatedUnions(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.union.nested_object_unions(
-    request="string",
+client.union.get_with_base_properties(
+    request=NamedMetadata(
+        name="name",
+        value={
+            "value": {"key": "value"}
+        },
+    ),
 )
 
 ```
@@ -373,7 +379,7 @@ client.union.nested_object_unions(
 <dl>
 <dd>
 
-**request:** `OuterNestedUnion` 
+**request:** `UnionWithBaseProperties` 
     
 </dd>
 </dl>

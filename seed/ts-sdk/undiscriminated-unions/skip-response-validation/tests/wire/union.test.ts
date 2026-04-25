@@ -121,22 +121,29 @@ describe("UnionClient", () => {
         expect(response).toEqual(rawResponseBody);
     });
 
-    test("nestedObjectUnions", async () => {
+    test("getWithBaseProperties", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedUndiscriminatedUnionsClient({ maxRetries: 0, environment: server.baseUrl });
-        const rawRequestBody = "string";
-        const rawResponseBody = "string";
+        const rawRequestBody = { name: "name", value: { value: { key: "value" } } };
+        const rawResponseBody = { name: "name", value: { value: { key: "value" } } };
 
         server
             .mockEndpoint()
-            .post("/nested-objects")
+            .post("/with-base-properties")
             .jsonBody(rawRequestBody)
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)
             .build();
 
-        const response = await client.union.nestedObjectUnions("string");
+        const response = await client.union.getWithBaseProperties({
+            name: "name",
+            value: {
+                value: {
+                    key: "value",
+                },
+            },
+        });
         expect(response).toEqual(rawResponseBody);
     });
 

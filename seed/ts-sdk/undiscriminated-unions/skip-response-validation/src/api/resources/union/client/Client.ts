@@ -339,29 +339,36 @@ export class UnionClient {
     }
 
     /**
-     * @param {SeedUndiscriminatedUnions.OuterNestedUnion} request
+     * @param {SeedUndiscriminatedUnions.UnionWithBaseProperties} request
      * @param {UnionClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.union.nestedObjectUnions("string")
+     *     await client.union.getWithBaseProperties({
+     *         name: "name",
+     *         value: {
+     *             "value": {
+     *                 "key": "value"
+     *             }
+     *         }
+     *     })
      */
-    public nestedObjectUnions(
-        request: SeedUndiscriminatedUnions.OuterNestedUnion,
+    public getWithBaseProperties(
+        request: SeedUndiscriminatedUnions.UnionWithBaseProperties,
         requestOptions?: UnionClient.RequestOptions,
-    ): core.HttpResponsePromise<string> {
-        return core.HttpResponsePromise.fromPromise(this.__nestedObjectUnions(request, requestOptions));
+    ): core.HttpResponsePromise<SeedUndiscriminatedUnions.UnionWithBaseProperties> {
+        return core.HttpResponsePromise.fromPromise(this.__getWithBaseProperties(request, requestOptions));
     }
 
-    private async __nestedObjectUnions(
-        request: SeedUndiscriminatedUnions.OuterNestedUnion,
+    private async __getWithBaseProperties(
+        request: SeedUndiscriminatedUnions.UnionWithBaseProperties,
         requestOptions?: UnionClient.RequestOptions,
-    ): Promise<core.WithRawResponse<string>> {
+    ): Promise<core.WithRawResponse<SeedUndiscriminatedUnions.UnionWithBaseProperties>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/nested-objects",
+                "/with-base-properties",
             ),
             method: "POST",
             headers: _headers,
@@ -376,7 +383,10 @@ export class UnionClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as string, rawResponse: _response.rawResponse };
+            return {
+                data: _response.body as SeedUndiscriminatedUnions.UnionWithBaseProperties,
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -387,7 +397,7 @@ export class UnionClient {
             });
         }
 
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/nested-objects");
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/with-base-properties");
     }
 
     /**
