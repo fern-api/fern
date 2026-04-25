@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.96.0
+  changelogEntry:
+    - summary: |
+        Add optional `baseProperties` field to `UndiscriminatedUnionTypeDeclaration` in the IR schema.
+        Both the V3 importer and the legacy OpenAPI importer now extract sibling properties from
+        `oneOf`/`anyOf` schemas and populate `baseProperties` on undiscriminated unions.
+      type: feat
+  createdAt: "2026-04-25"
+  irVersion: 66
 - version: 4.95.0
   changelogEntry:
     - summary: |
