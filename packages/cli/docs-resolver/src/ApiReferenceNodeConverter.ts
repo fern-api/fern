@@ -272,7 +272,7 @@ export class ApiReferenceNodeConverter {
         return toPageNode({
             page: {
                 ...page,
-                availability: convertDocsAvailability(page.availability ?? parentAvailability)
+                availability: page.availability ?? parentAvailability
             },
             parentSlug,
             docsWorkspace: this.docsWorkspace,
