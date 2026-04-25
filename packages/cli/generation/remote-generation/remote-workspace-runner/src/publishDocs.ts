@@ -700,7 +700,8 @@ export async function publishDocs({
                         const updatedRoot = applyTranslatedFrontmatterToNavTree(
                             docsDefinition.config.root,
                             // localePages is Record<RelativeFilePath, string> (path -> raw markdown)
-                            localePages as Record<string, string>
+                            localePages as Record<string, string>,
+                            context
                         );
                         const translatedDefinition: DocsDefinition = {
                             ...docsDefinition,
@@ -719,7 +720,8 @@ export async function publishDocs({
                             method: "POST",
                             headers: {
                                 "Content-Type": "application/json",
-                                Authorization: `Bearer ${token.value}`
+                                Authorization: `Bearer ${token.value}`,
+                                ...headers // Include telemetry headers (X-CLI-Version, X-CI-Source, etc.)
                             },
                             body: JSON.stringify({
                                 domain,

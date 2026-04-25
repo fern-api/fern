@@ -1,4 +1,5 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
+import { TaskContext } from "@fern-api/task-context";
 import matter from "gray-matter";
 
 interface FrontmatterOverride {
@@ -7,7 +8,12 @@ interface FrontmatterOverride {
     // is a fully-qualified path that requires proper composition with parent slugs.
 }
 
-function parseFrontmatterOverrides(markdown: string): FrontmatterOverride {
+interface ParseResult {
+    override: FrontmatterOverride;
+    error?: string;
+}
+
+function parseFrontmatterOverrides(markdown: string): ParseResult {
     try {
         const { data } = matter(markdown);
         const result: FrontmatterOverride = {};
@@ -16,9 +22,9 @@ function parseFrontmatterOverrides(markdown: string): FrontmatterOverride {
             result.sidebarTitle = sidebarTitle.trim();
         }
         // TODO(translations-alpha): slug parsing removed until proper composition is implemented
-        return result;
-    } catch {
-        return {};
+        return { override: result };
+    } catch (e) {
+        return { override: {}, error: e instanceof Error ? e.message : String(e) };
     }
 }
 
@@ -32,10 +38,12 @@ function parseFrontmatterOverrides(markdown: string): FrontmatterOverride {
  *
  * @param root - the base navigation tree (from the original docsDefinition)
  * @param translatedPages - map of pageId (relative file path) to translated markdown
+ * @param context - optional task context for logging parse errors
  */
 export function applyTranslatedFrontmatterToNavTree(
     root: FernNavigation.V1.RootNode | undefined,
-    translatedPages: Record<string, string>
+    translatedPages: Record<string, string>,
+    context?: TaskContext
 ): FernNavigation.V1.RootNode | undefined {
     if (root == null) {
         return undefined;
@@ -44,9 +52,15 @@ export function applyTranslatedFrontmatterToNavTree(
     // Build a map of pageId -> frontmatter overrides (only for pages that have overrides)
     const overrides = new Map<string, FrontmatterOverride>();
     for (const [pageId, markdown] of Object.entries(translatedPages)) {
-        const fm = parseFrontmatterOverrides(markdown);
-        if (fm.sidebarTitle != null) {
-            overrides.set(pageId, fm);
+        const { override, error } = parseFrontmatterOverrides(markdown);
+        if (error != null) {
+            context?.logger.warn(
+                `Failed to parse frontmatter in translated page "${pageId}": ${error}. ` +
+                    `Sidebar title override will be skipped.`
+            );
+        }
+        if (override.sidebarTitle != null) {
+            overrides.set(pageId, override);
         }
     }
 
