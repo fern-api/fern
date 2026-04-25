@@ -309,8 +309,8 @@ export class PersistedTypescriptProject {
             const pkgJson = JSON.parse(raw);
             const checkFixCmd = this.checkFixCommand[0];
             scriptContent = checkFixCmd != null ? pkgJson.scripts?.[checkFixCmd] : undefined;
-        } catch {
-            // Fall through to fallback
+        } catch (e) {
+            logger.debug(`checkFixDirect: failed to read package.json: ${e}`);
         }
 
         if (typeof scriptContent !== "string" || /[;&|]/.test(scriptContent)) {
@@ -390,8 +390,8 @@ export class PersistedTypescriptProject {
             const pkgJson = JSON.parse(raw);
             const checkFixCmd = this.checkFixCommand[0];
             scriptContent = checkFixCmd != null ? pkgJson.scripts?.[checkFixCmd] : undefined;
-        } catch {
-            // Fall through to fallback
+        } catch (e) {
+            logger.debug(`checkFixViaDlx: failed to read package.json: ${e}`);
         }
 
         if (typeof scriptContent !== "string" || /[;&|]/.test(scriptContent)) {

@@ -290,16 +290,25 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                             packageManager: this.getPackageManager(customConfig)
                         });
                     });
-                    // Run lockfile generation and check:fix in parallel.
-                    // When tools are on PATH, invoke them directly (bypasses
-                    // pnpm script runner overhead).  Otherwise use pnpm dlx.
+                    // Run lockfile generation and check:fix in parallel only when
+                    // the check:fix tools are available on PATH and we can invoke
+                    // them directly. checkFixViaDlx (and its installCheckFixDependencies
+                    // fallback) call `pnpm add --save-dev` / `pnpm dlx`, both of
+                    // which mutate pnpm-lock.yaml in the same directory that
+                    // generateLockfile is writing — running them concurrently can
+                    // corrupt the lockfile, so we serialize that path.
                     const toolsAvailable = await typescriptProject.areCheckFixToolsAvailable(logger);
-                    await Promise.all([
-                        lockfileReady ? Promise.resolve() : typescriptProject.generateLockfile(logger),
-                        toolsAvailable
-                            ? typescriptProject.checkFixDirect(logger)
-                            : typescriptProject.checkFixViaDlx(logger)
-                    ]);
+                    if (toolsAvailable) {
+                        await Promise.all([
+                            lockfileReady ? Promise.resolve() : typescriptProject.generateLockfile(logger),
+                            typescriptProject.checkFixDirect(logger)
+                        ]);
+                    } else {
+                        if (!lockfileReady) {
+                            await typescriptProject.generateLockfile(logger);
+                        }
+                        await typescriptProject.checkFixViaDlx(logger);
+                    }
                     await typescriptProject.deleteGitIgnoredFiles(logger);
                     if (this.outputSrcOnly(customConfig)) {
                         await typescriptProject.copySrcContentsTo({

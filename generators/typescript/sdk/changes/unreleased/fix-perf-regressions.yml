@@ -48,3 +48,20 @@
     optimization dead. The warning now reports exactly which deps drifted so
     the prediction can be re-synced.
   type: internal
+
+- summary: |
+    Serialize `generateLockfile` and `checkFixViaDlx` in the GitHub output
+    path. `checkFixViaDlx` (and its `installCheckFixDependencies` fallback)
+    invoke `pnpm dlx` / `pnpm add --save-dev` in the project directory, which
+    write to `pnpm-lock.yaml` concurrently with `generateLockfile`'s
+    `pnpm install --lockfile-only` and could corrupt the generated lockfile.
+    `checkFixDirect` is still parallelized with `generateLockfile` because it
+    invokes the tool binary directly and does not touch the lockfile.
+  type: fix
+
+- summary: |
+    Log the underlying error when `checkFixDirect` / `checkFixViaDlx` fail to
+    read the project `package.json` instead of swallowing it silently, so the
+    cause of any unexpected fallback to the slower path is visible in
+    debug logs.
+  type: internal
