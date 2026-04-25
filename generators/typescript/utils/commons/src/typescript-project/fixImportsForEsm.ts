@@ -20,9 +20,14 @@ export async function fixImportsForEsm(srcDirectory: AbsoluteFilePath): Promise<
     const allFiles = new Set<string>();
     await collectFiles(srcDirectory, allFiles);
 
-    // Regex to match import/export from "..." and dynamic import("...")
-    // Captures: the prefix (from/import), the quote char, and the module specifier
-    const importExportRegex = /(?:from\s+|import\s*\(\s*)(["'])(\.[^"']+)\1/g;
+    // Regex matches every place an ESM relative specifier can appear in source:
+    //   1. `from "./x"`     — named/default/namespace imports and re-exports
+    //   2. `import("./x")`  — dynamic imports
+    //   3. `import "./x"`   — bare side-effect imports (statement-level only;
+    //                         anchored to start-of-string, newline, or `;` so we
+    //                         don't match `someProp.import "./x"` style code)
+    // Captures: the quote char and the module specifier.
+    const importExportRegex = /(?:\bfrom\s+|\bimport\s*\(\s*|(?:^|[\n\r;])\s*import\s+)(["'])(\.[^"']+)\1/gm;
 
     // Only process .ts files (all files in srcDir are already under src/)
     const tsFiles = [...allFiles].filter((f) => f.endsWith(".ts"));
