@@ -192,7 +192,7 @@ ${this.context.getClientVariableName()} = new ${this.context.getRootClientClassN
                 namespace: this.context.getRootNamespace()
             });
 
-            const tokenPlaceholder = this.getAuthTokenPlaceholder();
+            const tokenPlaceholder = this.escapePhpSingleQuote(this.getAuthTokenPlaceholder());
             const clientInstantiation = php.instantiateClass({
                 classReference: clientClassReference,
                 arguments_: [php.codeblock((w) => w.write(`'${tokenPlaceholder}'`)), optionsArray],
@@ -419,7 +419,7 @@ use ${this.context.getRootNamespace()}\\${this.context.getRootClientClassName()}
 use ${this.context.getRootNamespace()}\\${this.context.getEnvironmentsClassReference().name};
 
 ${this.context.getClientVariableName()} = new ${this.context.getRootClientClassName()}(
-    token: '${this.getAuthTokenPlaceholder()}',
+    token: '${this.escapePhpSingleQuote(this.getAuthTokenPlaceholder())}',
     options: [
         'baseUrl' => ${this.context.getEnvironmentsClassReference().name}::Staging->value
     ]
@@ -491,7 +491,7 @@ use ${this.context.getRootNamespace()}\\${this.context.getRootClientClassName()}
 use ${this.context.getRootNamespace()}\\${this.context.getEnvironmentsClassReference().name};
 
 ${this.context.getClientVariableName()} = new ${this.context.getRootClientClassName()}(
-    token: '${this.getAuthTokenPlaceholder()}',
+    token: '${this.escapePhpSingleQuote(this.getAuthTokenPlaceholder())}',
     environment: ${this.context.getEnvironmentsClassReference().name}::Staging()
 );
 \`\`\`
@@ -500,7 +500,7 @@ You can also create a custom environment with your own URLs:
 
 \`\`\`php
 ${this.context.getClientVariableName()} = new ${this.context.getRootClientClassName()}(
-    token: '${this.getAuthTokenPlaceholder()}',
+    token: '${this.escapePhpSingleQuote(this.getAuthTokenPlaceholder())}',
     environment: ${this.context.getEnvironmentsClassReference().name}::custom(
         ${customEnvParams}
     )
@@ -532,6 +532,10 @@ ${this.context.getClientVariableName()} = new ${this.context.getRootClientClassN
             }
         }
         return "<YOUR_TOKEN>";
+    }
+
+    private escapePhpSingleQuote(value: string): string {
+        return value.replace(/'/g, "\\'");
     }
 
     private writeCode(s: string): string {
