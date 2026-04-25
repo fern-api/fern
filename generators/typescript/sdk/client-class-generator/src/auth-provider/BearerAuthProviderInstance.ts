@@ -25,7 +25,10 @@ export class BearerAuthProviderInstance implements AuthProviderInstance {
         return [
             ts.factory.createPropertyAssignment(
                 getPropertyKey(tokenKey),
-                ts.factory.createStringLiteral(`YOUR_${context.case.screamingSnakeUnsafe(this.authScheme.token)}`)
+                ts.factory.createStringLiteral(
+                    this.authScheme.tokenPlaceholder ??
+                        `YOUR_${context.case.screamingSnakeUnsafe(this.authScheme.token)}`
+                )
             )
         ];
     }

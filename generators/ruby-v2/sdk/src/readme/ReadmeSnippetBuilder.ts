@@ -1,4 +1,5 @@
 import { AbstractReadmeSnippetBuilder, CaseConverter, GeneratorError } from "@fern-api/base-generator";
+import { assertNever } from "@fern-api/core-utils";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -15,6 +16,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static CLIENT_VARIABLE_NAME = "client";
 
     private static ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENVIRONMENTS";
+    private static DEFAULT_AUTH_PLACEHOLDER = "<YOUR_API_KEY>";
 
     private readonly context: SdkGeneratorContext;
     private readonly case: CaseConverter;
@@ -202,11 +204,12 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
 
     private renderRequestOptionsSnippet(endpoint: EndpointWithFilepath): string {
+        const placeholder = this.getAuthPlaceholder();
         return this.writeCode(dedent`require "${this.rootPackageName}"
 
             # Specify default options applied on every request.
             ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} = ${this.rootPackageClientName}.new(
-                token: "<YOUR_API_KEY>",
+                token: "${placeholder}",
                 http_client: HTTP::Client.new(
                     timeout: 5
                 )
@@ -215,7 +218,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             # Specify options for an individual request.
             response = ${this.getMethodCall(endpoint)}(
                 ...,
-                token: "<YOUR_API_KEY>"
+                token: "${placeholder}"
             )
         `);
     }
@@ -447,6 +450,34 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
     private getRootPackageClientName(): string {
         return this.context.getRootFolderName();
+    }
+
+    private getAuthPlaceholder(): string {
+        for (const scheme of this.context.ir.auth.schemes) {
+            switch (scheme.type) {
+                case "bearer":
+                    if (scheme.tokenPlaceholder != null) {
+                        return scheme.tokenPlaceholder;
+                    }
+                    break;
+                case "basic":
+                    if (scheme.usernamePlaceholder != null) {
+                        return scheme.usernamePlaceholder;
+                    }
+                    break;
+                case "header":
+                    if (scheme.headerPlaceholder != null) {
+                        return scheme.headerPlaceholder;
+                    }
+                    break;
+                case "oauth":
+                case "inferred":
+                    break;
+                default:
+                    assertNever(scheme);
+            }
+        }
+        return ReadmeSnippetBuilder.DEFAULT_AUTH_PLACEHOLDER;
     }
 
     private writeCode(s: string): string {

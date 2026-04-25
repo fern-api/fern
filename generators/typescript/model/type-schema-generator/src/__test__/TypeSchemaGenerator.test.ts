@@ -353,6 +353,7 @@ describe("TypeSchemaGenerator", () => {
             extends: [],
             types: [],
             baseProperties: [],
+            default: undefined,
             discriminatorContext: undefined
         });
         const schema = generator.generateTypeSchema({
@@ -374,7 +375,8 @@ describe("TypeSchemaGenerator", () => {
         });
 
         const shape = FernIr.Type.undiscriminatedUnion({
-            members: []
+            members: [],
+            baseProperties: undefined
         });
         const schema = generator.generateTypeSchema({
             typeName: "Value",
@@ -427,6 +429,7 @@ describe("TypeSchemaGenerator", () => {
             extends: [],
             types: [],
             baseProperties: [],
+            default: undefined,
             discriminatorContext: undefined
         });
         const schema = generator.generateTypeSchema({
@@ -786,7 +789,7 @@ describe("GeneratedUndiscriminatedUnionTypeSchemaImpl", () => {
     }) {
         return new GeneratedUndiscriminatedUnionTypeSchemaImpl({
             typeName: opts.typeName,
-            shape: { members: opts.members },
+            shape: { members: opts.members, baseProperties: undefined },
             getGeneratedType: createMockGeneratedUndiscriminatedUnionType,
             getReferenceToGeneratedType: () => ts.factory.createTypeReferenceNode(opts.typeName),
             getReferenceToGeneratedTypeSchema: () => createMockReference(`${opts.typeName}Schema`),
@@ -892,6 +895,7 @@ describe("GeneratedUnionTypeSchemaImpl", () => {
                 extends: [],
                 types: opts.types ?? [],
                 baseProperties: opts.baseProperties ?? [],
+                default: undefined,
                 discriminatorContext: undefined
             },
             getGeneratedType: createMockGeneratedUnionType,
