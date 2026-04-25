@@ -57,9 +57,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.stream.Collectors;
 import org.immutables.value.Value;
 import org.slf4j.Logger;
@@ -109,8 +112,9 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
      * Loads and preprocesses the IR from file, handling integer overflow values and v66 compressed name
      * deserialization.
      *
-     * <p>Uses a two-phase approach: first extracts casingsConfig via partial tree parse, then deserializes the full IR
-     * directly from bytes (avoiding full tree allocation).
+     * <p>Uses a three-phase approach: (1) extracts casingsConfig via partial streaming parse, (2) parses the full tree
+     * and processes integer overflow values in-place, (3) deserializes the processed tree with custom Name
+     * deserializers.
      */
     private static IntermediateRepresentation getIr(GeneratorConfig generatorConfig) {
         try {
@@ -120,10 +124,19 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
             byte[] irBytes = Files.readAllBytes(irFile.toPath());
 
             // Phase 1: Extract casingsConfig from a partial tree parse.
-            // Only parses the top-level casingsConfig field, not the full tree.
             CasingConfiguration casingConfig = extractCasingConfig(irBytes);
 
-            // Phase 2: Configure mapper with custom Name deserializers and deserialize directly.
+            // Phase 2: Parse full tree and process integer overflow values in-place.
+            // This converts {"integer": <overflow_value>} → {"long": <value>} to prevent
+            // Java deserialization failures for large integer example values (e.g., Unix timestamps).
+            JsonNode rootNode = ObjectMappers.JSON_MAPPER.readTree(irBytes);
+            IntegerOverflowProcessor overflowProcessor = new IntegerOverflowProcessor();
+            overflowProcessor.processNodeInPlace(rootNode);
+            if (overflowProcessor.getConversions() > 0) {
+                log.info("Converted {} integer overflow values to long type", overflowProcessor.getConversions());
+            }
+
+            // Phase 3: Configure mapper with custom Name deserializers and deserialize from tree.
             SimpleModule nameModule = new SimpleModule("NameOrStringModule");
             nameModule.addDeserializer(Name.class, new NameDeserializer.RawNameDeserializer(casingConfig));
             nameModule.addDeserializer(NameOrString.class, new NameDeserializer(casingConfig));
@@ -135,8 +148,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
             irMapper.addMixIn(NameAndWireValueOrString.class, NameOrStringMixIn.class);
             irMapper.registerModule(nameModule);
 
-            // Direct deserialization from bytes — single pass, no intermediate tree
-            return irMapper.readValue(irBytes, IntermediateRepresentation.class);
+            return irMapper.treeToValue(rootNode, IntermediateRepresentation.class);
         } catch (IOException e) {
             throw new RuntimeException("Failed to read ir", e);
         }
@@ -389,18 +401,12 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
 
             // Start v2 generator asynchronously — it reads the config/IR independently
             // and generates docs (README, reference, snippets) which don't depend on v1 output.
-            Thread v2Thread = new Thread(
-                    () -> {
-                        try {
-                            long v2Start = System.currentTimeMillis();
-                            runV2Generator(generatorExecClient, args);
-                            log.info("[perf] v2 generator: {}ms", System.currentTimeMillis() - v2Start);
-                        } catch (Exception e) {
-                            throw new RuntimeException("V2 generator failed", e);
-                        }
-                    },
-                    "java-v2-generator");
-            v2Thread.start();
+            // Uses CompletableFuture instead of raw Thread so exceptions propagate via .get().
+            CompletableFuture<Void> v2Future = CompletableFuture.runAsync(() -> {
+                long v2Start = System.currentTimeMillis();
+                runV2Generator(generatorExecClient, args);
+                log.info("[perf] v2 generator: {}ms", System.currentTimeMillis() - v2Start);
+            });
 
             long t1 = System.currentTimeMillis();
             IntermediateRepresentation ir = getIr(generatorConfig);
@@ -445,11 +451,15 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
             log.info("[perf] v1 generation + file write: {}ms", System.currentTimeMillis() - t2);
             log(generatorExecClient, "Completed Java v1 SDK generation");
 
-            // Wait for v2 to complete
+            // Wait for v2 to complete — .get() propagates any v2 exception
             long t3 = System.currentTimeMillis();
-            v2Thread.join(300_000); // 5 minute timeout
-            if (v2Thread.isAlive()) {
-                throw new RuntimeException("V2 generator timed out after 5 minutes");
+            try {
+                v2Future.get(300, TimeUnit.SECONDS);
+            } catch (TimeoutException te) {
+                v2Future.cancel(true);
+                throw new RuntimeException("V2 generator timed out after 5 minutes", te);
+            } catch (ExecutionException ee) {
+                throw new RuntimeException("V2 generator failed", ee.getCause());
             }
             log.info("[perf] v2 join wait: {}ms", System.currentTimeMillis() - t3);
             log.info("[perf] total container: {}ms", System.currentTimeMillis() - t0);
@@ -751,6 +761,10 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
             Optional<String> existingPrefix,
             ICustomConfig.OutputDirectory outputDirectoryMode) {
         long writeStart = System.currentTimeMillis();
+        if (generatedFiles.isEmpty()) {
+            log.warn("No files to write — skipping parallel write");
+            return;
+        }
         int numThreads = Math.min(generatedFiles.size(), Runtime.getRuntime().availableProcessors() * 2);
         ExecutorService executor = Executors.newFixedThreadPool(numThreads);
         List<java.util.concurrent.Future<?>> futures = new ArrayList<>(generatedFiles.size());
