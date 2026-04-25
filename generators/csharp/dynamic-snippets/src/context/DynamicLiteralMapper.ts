@@ -597,13 +597,18 @@ export class DynamicLiteralMapper extends WithGeneration {
         }
         visited.add(typeId);
 
+        const classReference = this.csharp.classReference({
+            origin: object_.declaration,
+            namespace: this.context.getNamespace(object_.declaration.fernFilepath)
+        });
+
         const fields: { name: string; value: ast.Literal }[] = [];
         for (const property of object_.properties) {
             if (this.isRequiredProperty(property.typeReference)) {
                 const defaultValue = this.getDefaultLiteralForType(property.typeReference, visited);
                 if (defaultValue != null) {
                     fields.push({
-                        name: this.context.getClassName(property.name.name),
+                        name: this.context.resolvePropertyName(classReference, property.name.name),
                         value: defaultValue
                     });
                 }
@@ -613,10 +618,7 @@ export class DynamicLiteralMapper extends WithGeneration {
         visited.delete(typeId);
 
         return this.csharp.Literal.class_({
-            reference: this.csharp.classReference({
-                origin: object_.declaration,
-                namespace: this.context.getNamespace(object_.declaration.fernFilepath)
-            }),
+            reference: classReference,
             fields
         });
     }
