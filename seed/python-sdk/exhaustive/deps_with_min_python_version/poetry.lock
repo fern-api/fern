@@ -952,13 +952,13 @@ tiktoken = ">=0.7.0,<1.0.0"
 
 [[package]]
 name = "langchain-protocol"
-version = "0.0.11"
+version = "0.0.12"
 description = "Python bindings for the LangChain agent streaming protocol"
 optional = false
 python-versions = "<4.0.0,>=3.10.0"
 files = [
-    {file = "langchain_protocol-0.0.11-py3-none-any.whl", hash = "sha256:364da1faf6f5d3001413bede792c1a822c0f23ae55d1ce1266ca7d8e80e79011"},
-    {file = "langchain_protocol-0.0.11.tar.gz", hash = "sha256:c276e2373b5ac691fc7ac9a72019d55182444ce8e89385c3f7e9f0185d0aace7"},
+    {file = "langchain_protocol-0.0.12-py3-none-any.whl", hash = "sha256:402b61f42d4139692528cf37226c367bb6efc8ff8165b29380accb0abfece7b2"},
+    {file = "langchain_protocol-0.0.12.tar.gz", hash = "sha256:5e14c434290a705c9510fdb1a83ecf7561a5e6e0dfd053930ade80dba069269f"},
 ]
 
 [package.dependencies]
