@@ -122,7 +122,7 @@ export class RemoteTaskHandler {
             if (this.#actualVersion == null) {
                 const tagMatch = newLog.message.match(/Tagging release (v?\d+\.\d+\.\d+(?:-[\w.]+)?)/);
                 if (tagMatch) {
-                    this.#actualVersion = tagMatch[1];
+                    this.#actualVersion = tagMatch[1]?.replace(/^v/, "");
                 }
             }
         }
