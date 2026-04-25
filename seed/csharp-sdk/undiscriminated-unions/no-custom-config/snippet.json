@@ -76,6 +76,18 @@
         {
             "example_identifier": null,
             "id": {
+                "path": "/with-base-properties",
+                "method": "POST",
+                "identifier_override": "endpoint_union.getWithBaseProperties"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedUndiscriminatedUnions;\n\nvar client = new SeedUndiscriminatedUnionsClient();\nawait client.Union.GetWithBasePropertiesAsync(\n    new NamedMetadata\n    {\n        Name = \"name\",\n        Value = new Dictionary<string, object?>()\n        {\n            {\n                \"value\",\n                new Dictionary<object, object?>() { { \"key\", \"value\" } }\n            },\n        },\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
                 "path": "/camel-case",
                 "method": "POST",
                 "identifier_override": "endpoint_union.testCamelCaseProperties"

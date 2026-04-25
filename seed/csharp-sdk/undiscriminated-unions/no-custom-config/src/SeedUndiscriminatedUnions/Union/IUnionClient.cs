@@ -66,6 +66,14 @@ public partial interface IUnionClient
         CancellationToken cancellationToken = default
     );
 
+    WithRawResponseTask<
+        OneOf<NamedMetadata, Dictionary<string, object?>?>
+    > GetWithBasePropertiesAsync(
+        OneOf<NamedMetadata, Dictionary<string, object?>?> request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
     WithRawResponseTask<string> TestCamelCasePropertiesAsync(
         PaymentRequest request,
         RequestOptions? options = null,
