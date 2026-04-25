@@ -1979,14 +1979,15 @@ async function loadTranslationPages({
 
     await Promise.all(
         translations.map(async ({ lang }) => {
+            // The default locale's pages live in the top-level `pages/` directory,
+            // not in `translations/<lang>/`. Always skip it, even if the directory exists.
+            if (lang === defaultLocale) {
+                return;
+            }
+
             const langDir = path.join(translationsRootDir, lang) as AbsoluteFilePath;
 
             if (!(await doesPathExist(langDir))) {
-                // The default locale's pages live in the top-level `pages/` directory,
-                // not in `translations/<lang>/`. Skip it silently.
-                if (lang === defaultLocale) {
-                    return;
-                }
                 context.failAndThrow(
                     `Translation directory for locale "${lang}" not found.`,
                     `Expected a directory at: ${langDir}\n` +

@@ -673,13 +673,24 @@ export async function publishDocs({
                                         },
                                         context
                                     );
+                                    // Rewrite editThisPageUrl to point to the translated file
+                                    // URL format: .../fern/${path}?plain=1 -> .../fern/translations/${locale}/${path}?plain=1
+                                    let editThisPageUrl = basePage?.editThisPageUrl;
+                                    if (editThisPageUrl != null) {
+                                        // Replace /fern/${path} with /fern/translations/${locale}/${path}
+                                        const fernPathPattern = `/fern/${path}`;
+                                        const translatedPath = `/fern/translations/${locale}/${path}`;
+                                        editThisPageUrl = editThisPageUrl.replace(
+                                            fernPathPattern,
+                                            translatedPath
+                                        ) as typeof editThisPageUrl;
+                                    }
                                     return [
                                         path,
                                         {
                                             markdown: processedMarkdown,
                                             rawMarkdown: processedMarkdown,
-                                            // Preserve edit page links from the base page
-                                            editThisPageUrl: basePage?.editThisPageUrl,
+                                            editThisPageUrl,
                                             editThisPageLaunch: basePage?.editThisPageLaunch
                                         }
                                     ];

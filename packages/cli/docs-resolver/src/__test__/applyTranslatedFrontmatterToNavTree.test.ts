@@ -193,4 +193,56 @@ invalid yaml: [
         const result = applyTranslatedFrontmatterToNavTree(root as any, translatedPages);
         expect((result as any).child.title).toBe("Test");
     });
+
+    it("applies sidebar-title override to section nodes with overviewPageId", () => {
+        const root = {
+            type: "root" as const,
+            child: {
+                type: "section" as const,
+                title: "SDK Guide",
+                overviewPageId: "pages/sdk/overview.mdx",
+                slug: "sdk",
+                children: [
+                    {
+                        type: "page" as const,
+                        pageId: "pages/sdk/install.mdx",
+                        title: "Installation",
+                        slug: "sdk/install"
+                    }
+                ]
+            }
+        };
+        const translatedPages = {
+            "pages/sdk/overview.mdx": `---
+sidebar-title: Guide du SDK
+---
+# Guide du SDK`
+        };
+
+        const result = applyTranslatedFrontmatterToNavTree(root as any, translatedPages);
+
+        expect((result as any).child.title).toBe("Guide du SDK");
+        // Child page title should remain unchanged
+        expect((result as any).child.children[0].title).toBe("Installation");
+    });
+
+    it("does not override section title when overview page has no sidebar-title", () => {
+        const root = {
+            type: "root" as const,
+            child: {
+                type: "section" as const,
+                title: "API Reference",
+                overviewPageId: "pages/api/index.mdx",
+                slug: "api",
+                children: []
+            }
+        };
+        const translatedPages = {
+            "pages/api/index.mdx": `# API Reference content without frontmatter`
+        };
+
+        const result = applyTranslatedFrontmatterToNavTree(root as any, translatedPages);
+
+        expect((result as any).child.title).toBe("API Reference");
+    });
 });

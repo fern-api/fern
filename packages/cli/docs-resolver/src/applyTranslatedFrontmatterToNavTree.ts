@@ -85,5 +85,13 @@ function walkNode(node: unknown, overrides: Map<string, FrontmatterOverride>): u
         }
     }
 
+    // Apply overrides to section nodes with an overview page that matches a translated page
+    if (updated["type"] === "section" && typeof updated["overviewPageId"] === "string") {
+        const override = overrides.get(updated["overviewPageId"]);
+        if (override != null && override.sidebarTitle != null) {
+            updated["title"] = override.sidebarTitle;
+        }
+    }
+
     return updated;
 }
