@@ -24,3 +24,27 @@
     bundle stays, but stack traces from production generator runs are once again
     resolvable against the original sources.
   type: internal
+
+- summary: |
+    Extend `fixImportsForEsm` regex to cover bare side-effect imports
+    (`import "./polyfill"`). Previously only `from "..."` and `import("...")`
+    forms were rewritten, leaving any side-effect import without a `.js`
+    extension and unresolvable under Node ESM.
+  type: fix
+
+- summary: |
+    Extract the manual snippet wire serializer from `SdkGenerator` into
+    `serializeEndpointSnippetsForWire` and pin its output to Zurg's
+    `FernGeneratorExecSerializers.Snippets.jsonOrThrow` via a unit test, so
+    schema drift on `Endpoint` / `EndpointIdentifier` / per-language
+    `EndpointSnippet` variants is caught at test time rather than producing
+    silently-incorrect snippet payloads.
+  type: internal
+
+- summary: |
+    Surface early-lockfile dependency-prediction drift via `logger.warn`. When
+    `getEarlyLockfileConfig` falls out of sync with the real generator deps the
+    pre-computed lockfile was previously discarded silently, leaving the
+    optimization dead. The warning now reports exactly which deps drifted so
+    the prediction can be re-synced.
+  type: internal

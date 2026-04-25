@@ -194,16 +194,32 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                             await readFile(`${typescriptProject.getRootDirectory()}/package.json`, "utf-8")
                         );
                         const expectedConfig = this.getEarlyLockfileConfig(customConfig);
-                        if (
-                            expectedConfig &&
-                            depsMatch(actualPkg.dependencies ?? {}, expectedConfig.dependencies ?? {}) &&
-                            depsMatch(actualPkg.devDependencies ?? {}, expectedConfig.devDependencies)
-                        ) {
+                        const depsDiff = expectedConfig
+                            ? diffDeps(actualPkg.dependencies ?? {}, expectedConfig.dependencies ?? {})
+                            : ["expectedConfig is undefined"];
+                        const devDepsDiff = expectedConfig
+                            ? diffDeps(actualPkg.devDependencies ?? {}, expectedConfig.devDependencies ?? {})
+                            : ["expectedConfig is undefined"];
+                        if (expectedConfig && depsDiff.length === 0 && devDepsDiff.length === 0) {
                             await copyFile(lockfilePath, `${typescriptProject.getRootDirectory()}/pnpm-lock.yaml`);
                             lockfileReady = true;
                             logger.debug("[TIMING] early lockfile used successfully");
                         } else {
-                            logger.debug("[TIMING] early lockfile deps mismatch, will regenerate");
+                            // Surface drift loudly: when getEarlyLockfileConfig falls
+                            // out of sync with the real generator deps, the early
+                            // lockfile is silently discarded and the optimization
+                            // becomes dead code. A warn here makes that observable
+                            // in customer logs so it can be re-synced quickly.
+                            const summary = [
+                                ...depsDiff.map((d) => `dependencies: ${d}`),
+                                ...devDepsDiff.map((d) => `devDependencies: ${d}`)
+                            ].join("; ");
+                            logger.warn(
+                                `Early lockfile prediction is out of sync with the generated package.json — ` +
+                                    `falling back to full lockfile generation. ` +
+                                    `Update getEarlyLockfileConfig in AbstractGeneratorCli to restore the perf optimization. ` +
+                                    `Drift: ${summary}`
+                            );
                         }
                     } catch (e) {
                         logger.debug(`Early lockfile copy failed: ${e}`);
@@ -489,23 +505,27 @@ function npmPackageInfoFromPublishConfig(
     };
 }
 
-function depsMatch(actual: Record<string, string>, expected: Record<string, string>): boolean {
-    const actualKeys = Object.keys(actual).sort();
-    const expectedKeys = Object.keys(expected).sort();
-    if (actualKeys.length !== expectedKeys.length) {
-        return false;
-    }
-    for (let i = 0; i < actualKeys.length; i++) {
-        const actualKey = actualKeys[i];
-        const expectedKey = expectedKeys[i];
-        if (
-            actualKey !== expectedKey ||
-            (actualKey != null && expectedKey != null && actual[actualKey] !== expected[expectedKey])
-        ) {
-            return false;
+/**
+ * Returns a list of human-readable diffs between two dependency maps. Empty
+ * list means the maps are identical (matches the old depsMatch === true).
+ * Non-empty list is used to surface drift in customer logs so that
+ * getEarlyLockfileConfig can be brought back into sync.
+ */
+function diffDeps(actual: Record<string, string>, expected: Record<string, string>): string[] {
+    const diffs: string[] = [];
+    const allKeys = new Set([...Object.keys(actual), ...Object.keys(expected)]);
+    for (const key of [...allKeys].sort()) {
+        const actualVersion = actual[key];
+        const expectedVersion = expected[key];
+        if (actualVersion == null) {
+            diffs.push(`missing from prediction: ${key}@${expectedVersion}`);
+        } else if (expectedVersion == null) {
+            diffs.push(`unexpected in actual: ${key}@${actualVersion}`);
+        } else if (actualVersion !== expectedVersion) {
+            diffs.push(`${key}: predicted ${expectedVersion}, actual ${actualVersion}`);
         }
     }
-    return true;
+    return diffs;
 }
 
 class GeneratorContextImpl implements GeneratorContext {
