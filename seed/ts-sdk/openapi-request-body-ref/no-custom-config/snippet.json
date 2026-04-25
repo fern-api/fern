@@ -1,0 +1,60 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/vendors/{vendor_id}",
+                "method": "PUT",
+                "identifier_override": "endpoint_vendor.updateVendor"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/openapi-request-body-ref\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.vendor.updateVendor({\n    vendor_id: \"vendor_id\",\n    body: {\n        name: \"name\"\n    }\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/vendors",
+                "method": "POST",
+                "identifier_override": "endpoint_vendor.createVendor"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/openapi-request-body-ref\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.vendor.createVendor({\n    name: \"name\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/catalog/images",
+                "method": "POST",
+                "identifier_override": "endpoint_catalog.createCatalogImage"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { createReadStream } from \"fs\";\nimport { SeedApiClient } from \"@fern/openapi-request-body-ref\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.catalog.createCatalogImage({\n    request: {\n        catalog_object_id: \"catalog_object_id\"\n    }\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/catalog/images/{image_id}",
+                "method": "GET",
+                "identifier_override": "endpoint_catalog.getCatalogImage"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/openapi-request-body-ref\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.catalog.getCatalogImage({\n    image_id: \"image_id\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/team-members/{team_member_id}",
+                "method": "PUT",
+                "identifier_override": "endpoint_teamMember.updateTeamMember"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/openapi-request-body-ref\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.teamMember.updateTeamMember({\n    team_member_id: \"team_member_id\"\n});\n"
+            }
+        }
+    ],
+    "types": {}
+}

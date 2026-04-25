@@ -1,0 +1,6 @@
+- summary: |
+    Fix OpenAPI importer generating duplicate type names when an operation's
+    request body $refs a top-level components.schemas.X schema whose name
+    collides with the auto-generated request wrapper name. The wrapper is now
+    disambiguated by using "Body" instead of "Request" in the generated name.
+  type: fix
