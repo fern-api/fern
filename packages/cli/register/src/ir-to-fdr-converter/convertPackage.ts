@@ -468,6 +468,7 @@ export function convertIrAvailability(availability: Ir.Availability | undefined)
             // TODO: switch to FdrCjsSdk.Availability.Legacy once the next fdr-sdk release includes it
             return FdrCjsSdk.Availability.Deprecated;
         case "PRE_RELEASE":
+        case "BETA":
             return FdrCjsSdk.Availability.Beta;
         case "GENERAL_AVAILABILITY":
             return FdrCjsSdk.Availability.GenerallyAvailable;

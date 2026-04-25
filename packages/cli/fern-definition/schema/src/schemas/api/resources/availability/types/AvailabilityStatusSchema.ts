@@ -6,6 +6,7 @@ export const AvailabilityStatusSchema = {
     Deprecated: "deprecated",
     GenerallyAvailable: "generally-available",
     Alpha: "alpha",
+    Beta: "beta",
     Preview: "preview",
     Legacy: "legacy",
 } as const;

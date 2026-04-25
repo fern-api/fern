@@ -48,7 +48,7 @@
                     "type": "optional<DeprecatedParam>",
                   },
                   "x-fern-availability_header": {
-                    "availability": "pre-release",
+                    "availability": "beta",
                     "docs": "active beta header",
                     "name": "fernAvailabilityHeader",
                     "type": "optional<string>",
@@ -67,7 +67,7 @@
                     "type": "string",
                   },
                   "x-fern-availability_path_param": {
-                    "availability": "pre-release",
+                    "availability": "beta",
                     "docs": "active beta header",
                     "type": "string",
                   },
@@ -84,7 +84,7 @@
                   },
                   "deprecated_ref_lang": "optional<DeprecatedParam>",
                   "x-fern-availability_query_param": {
-                    "availability": "pre-release",
+                    "availability": "beta",
                     "docs": "active beta query param",
                     "type": "optional<string>",
                   },
@@ -139,7 +139,7 @@
             },
             "postSuccessInlineBetaBody": {
               "auth": undefined,
-              "availability": "pre-release",
+              "availability": "beta",
               "docs": undefined,
               "examples": [
                 {
@@ -426,7 +426,7 @@
           x-fern-availability_path_param:
             type: string
             docs: active beta header
-            availability: pre-release
+            availability: beta
         query-parameters:
           deprecated_lang:
             type: optional<string>
@@ -439,7 +439,7 @@
           x-fern-availability_query_param:
             type: optional<string>
             docs: active beta query param
-            availability: pre-release
+            availability: beta
         headers:
           X-Deprecated-Header:
             type: optional<string>
@@ -457,7 +457,7 @@
             type: optional<string>
             name: fernAvailabilityHeader
             docs: active beta header
-            availability: pre-release
+            availability: beta
       response:
         docs: OK
         type: WholeDeprecatedSettings
@@ -553,7 +553,7 @@
         docs: OK
         type: NotDeprecatedSettings
         status-code: 200
-      availability: pre-release
+      availability: beta
       examples:
         - request: {}
           response:

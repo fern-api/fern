@@ -8,6 +8,7 @@ type RawAvailabilityStatus =
     | "generally-available"
     | "deprecated"
     | "alpha"
+    | "beta"
     | "preview"
     | "legacy";
 interface RawAvailability {

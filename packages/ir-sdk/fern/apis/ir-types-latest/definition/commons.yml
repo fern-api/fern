@@ -95,6 +95,7 @@ types:
       - GENERAL_AVAILABILITY
       - DEPRECATED
       - ALPHA
+      - BETA
       - PREVIEW
       - LEGACY
 

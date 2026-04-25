@@ -181,7 +181,7 @@ function inflateIr(
     };
 
     // ===== Availability =====
-    // V65 does not know about ALPHA, PREVIEW, or LEGACY, so map them to the closest
+    // V65 does not know about ALPHA, BETA, PREVIEW, or LEGACY, so map them to the closest
     // pre-existing v65 availability status for backward compatibility with older generators.
     const inflateAvailability = (
         availability: IrVersions.V66.Availability | undefined
@@ -203,6 +203,7 @@ function inflateIr(
             case "ALPHA":
                 return IrVersions.V65.AvailabilityStatus.InDevelopment;
             case "PRE_RELEASE":
+            case "BETA":
             case "PREVIEW":
                 return IrVersions.V65.AvailabilityStatus.PreRelease;
             case "GENERAL_AVAILABILITY":

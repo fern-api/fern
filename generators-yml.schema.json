@@ -1345,6 +1345,7 @@
         "deprecated",
         "generally-available",
         "alpha",
+        "beta",
         "preview",
         "legacy"
       ]

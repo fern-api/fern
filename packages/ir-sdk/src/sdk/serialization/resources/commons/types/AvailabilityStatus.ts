@@ -13,6 +13,7 @@ export const AvailabilityStatus: core.serialization.Schema<
     "GENERAL_AVAILABILITY",
     "DEPRECATED",
     "ALPHA",
+    "BETA",
     "PREVIEW",
     "LEGACY",
 ]);
@@ -24,6 +25,7 @@ export declare namespace AvailabilityStatus {
         | "GENERAL_AVAILABILITY"
         | "DEPRECATED"
         | "ALPHA"
+        | "BETA"
         | "PREVIEW"
         | "LEGACY";
 }

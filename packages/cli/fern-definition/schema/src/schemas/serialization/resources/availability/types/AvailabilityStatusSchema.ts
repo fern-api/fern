@@ -13,6 +13,7 @@ export const AvailabilityStatusSchema: core.serialization.Schema<
     "deprecated",
     "generally-available",
     "alpha",
+    "beta",
     "preview",
     "legacy",
 ]);
@@ -24,6 +25,7 @@ export declare namespace AvailabilityStatusSchema {
         | "deprecated"
         | "generally-available"
         | "alpha"
+        | "beta"
         | "preview"
         | "legacy";
 }

@@ -8,7 +8,7 @@ export function convertAvailability(
         case Availability.Deprecated:
             return "deprecated";
         case Availability.Beta:
-            return "pre-release";
+            return "beta";
         case Availability.GenerallyAvailable:
             return "generally-available";
         case Availability.Alpha:

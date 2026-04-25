@@ -6,6 +6,7 @@ const AvailabilityStatusValues = {
     GeneralAvailability: "GENERAL_AVAILABILITY",
     Deprecated: "DEPRECATED",
     Alpha: "ALPHA",
+    Beta: "BETA",
     Preview: "PREVIEW",
     Legacy: "LEGACY",
 } as const;
@@ -26,6 +27,8 @@ export const AvailabilityStatus: typeof AvailabilityStatusValues & {
                 return visitor.deprecated();
             case AvailabilityStatus.Alpha:
                 return visitor.alpha();
+            case AvailabilityStatus.Beta:
+                return visitor.beta();
             case AvailabilityStatus.Preview:
                 return visitor.preview();
             case AvailabilityStatus.Legacy:
@@ -43,6 +46,7 @@ export namespace AvailabilityStatus {
         generalAvailability: () => R;
         deprecated: () => R;
         alpha: () => R;
+        beta: () => R;
         preview: () => R;
         legacy: () => R;
         _other: () => R;

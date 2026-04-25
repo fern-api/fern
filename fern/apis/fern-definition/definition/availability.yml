@@ -20,5 +20,6 @@ types:
       - value: generally-available
         name: GenerallyAvailable
       - alpha
+      - beta
       - preview
       - legacy

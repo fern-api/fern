@@ -272,7 +272,7 @@
             {
               "docs": "active beta header",
               "availability": {
-                "status": "PRE_RELEASE"
+                "status": "BETA"
               },
               "name": "x-fern-availability_path_param",
               "valueType": {
@@ -351,7 +351,7 @@
             {
               "docs": "active beta header",
               "availability": {
-                "status": "PRE_RELEASE"
+                "status": "BETA"
               },
               "name": "x-fern-availability_path_param",
               "valueType": {
@@ -448,7 +448,7 @@
             {
               "docs": "active beta query param",
               "availability": {
-                "status": "PRE_RELEASE"
+                "status": "BETA"
               },
               "name": "x-fern-availability_query_param",
               "valueType": {
@@ -557,7 +557,7 @@
             {
               "docs": "active beta header",
               "availability": {
-                "status": "PRE_RELEASE"
+                "status": "BETA"
               },
               "name": {
                 "wireValue": "x-fern-availability_header",
@@ -929,7 +929,7 @@
         },
         {
           "availability": {
-            "status": "PRE_RELEASE"
+            "status": "BETA"
           },
           "id": "endpoint_.postSuccessInlineBetaBody",
           "name": "postSuccessInlineBetaBody",

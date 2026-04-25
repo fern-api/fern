@@ -14,6 +14,18 @@ service:
             random:
               type: string
               availability: pre-release
+            random-alpha:
+              type: string
+              availability: alpha
+            random-beta:
+              type: string
+              availability: beta
+            random-preview:
+              type: string
+              availability: preview
+            random-legacy:
+              type: string
+              availability: legacy
       response: string
 
 types:
@@ -22,3 +34,15 @@ types:
       id:
         type: string
         availability: pre-release
+      alpha-prop:
+        type: string
+        availability: alpha
+      beta-prop:
+        type: string
+        availability: beta
+      preview-prop:
+        type: string
+        availability: preview
+      legacy-prop:
+        type: string
+        availability: legacy
