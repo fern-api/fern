@@ -462,6 +462,76 @@ public partial class UnionClient : IUnionClient
         }
     }
 
+    private async Task<
+        WithRawResponse<OneOf<NamedMetadata, Dictionary<string, object?>?>>
+    > GetWithBasePropertiesAsyncCore(
+        OneOf<NamedMetadata, Dictionary<string, object?>?> request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _headers = await new SeedUndiscriminatedUnions.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    Method = HttpMethod.Post,
+                    Path = "/with-base-properties",
+                    Body = request,
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            try
+            {
+                var responseData = JsonUtils.Deserialize<
+                    OneOf<NamedMetadata, Dictionary<string, object?>?>
+                >(responseBody)!;
+                return new WithRawResponse<OneOf<NamedMetadata, Dictionary<string, object?>?>>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
+            }
+            catch (JsonException e)
+            {
+                throw new SeedUndiscriminatedUnionsApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
+            }
+        }
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            throw new SeedUndiscriminatedUnionsApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
     private async Task<WithRawResponse<string>> TestCamelCasePropertiesAsyncCore(
         PaymentRequest request,
         RequestOptions? options = null,
@@ -659,6 +729,34 @@ public partial class UnionClient : IUnionClient
     {
         return new WithRawResponseTask<string>(
             NestedUnionsAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    /// <example><code>
+    /// await client.Union.GetWithBasePropertiesAsync(
+    ///     new NamedMetadata
+    ///     {
+    ///         Name = "name",
+    ///         Value = new Dictionary&lt;string, object?&gt;()
+    ///         {
+    ///             {
+    ///                 "value",
+    ///                 new Dictionary&lt;object, object?&gt;() { { "key", "value" } }
+    ///             },
+    ///         },
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<
+        OneOf<NamedMetadata, Dictionary<string, object?>?>
+    > GetWithBasePropertiesAsync(
+        OneOf<NamedMetadata, Dictionary<string, object?>?> request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<OneOf<NamedMetadata, Dictionary<string, object?>?>>(
+            GetWithBasePropertiesAsyncCore(request, options, cancellationToken)
         );
     }
 
