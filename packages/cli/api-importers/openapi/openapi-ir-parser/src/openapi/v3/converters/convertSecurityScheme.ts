@@ -53,7 +53,8 @@ function convertSecuritySchemeHelper(
                 headerVariableName:
                     headerNames?.name ??
                     getExtension<string>(securityScheme, FernOpenAPIExtension.HEADER_VARIABLE_NAME),
-                headerEnvVar: headerNames?.env
+                headerEnvVar: headerNames?.env,
+                headerPlaceholder: headerNames?.placeholder
             });
         } else if (securityScheme.type === "http" && securityScheme.scheme?.toLowerCase() === "bearer") {
             // ^ case insensitivity for securityScheme.scheme required in OAS
@@ -65,7 +66,8 @@ function convertSecuritySchemeHelper(
                 tokenVariableName:
                     bearerNames?.name ??
                     getExtension<string>(securityScheme, FernOpenAPIExtension.BEARER_TOKEN_VARIABLE_NAME),
-                tokenEnvVar: bearerNames?.env
+                tokenEnvVar: bearerNames?.env,
+                tokenPlaceholder: bearerNames?.placeholder
             });
         } else if (securityScheme.type === "http" && securityScheme.scheme?.toLowerCase() === "basic") {
             // ^ case insensitivity for securityScheme.scheme required in OAS
@@ -75,14 +77,17 @@ function convertSecuritySchemeHelper(
                 usernameVariableName:
                     basicSecuritySchemeNamingAndEnvvar?.username?.name ?? basicSecuritySchemeNaming.usernameVariable,
                 usernameEnvVar: basicSecuritySchemeNamingAndEnvvar?.username?.env,
+                usernamePlaceholder: basicSecuritySchemeNamingAndEnvvar?.username?.placeholder,
                 passwordVariableName:
                     basicSecuritySchemeNamingAndEnvvar?.password?.name ?? basicSecuritySchemeNaming.passwordVariable,
-                passwordEnvVar: basicSecuritySchemeNamingAndEnvvar?.password?.env
+                passwordEnvVar: basicSecuritySchemeNamingAndEnvvar?.password?.env,
+                passwordPlaceholder: basicSecuritySchemeNamingAndEnvvar?.password?.placeholder
             });
         } else if (securityScheme.type === "openIdConnect") {
             return SecurityScheme.bearer({
                 tokenVariableName: undefined,
-                tokenEnvVar: undefined
+                tokenEnvVar: undefined,
+                tokenPlaceholder: undefined
             });
         } else if (securityScheme.type === "oauth2") {
             return SecurityScheme.oauth({

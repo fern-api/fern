@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix global theme asset downloads preserving original filenames and extensions.
+    Previously, assets downloaded from S3 CAS URLs (whose pathname is a raw content
+    hash) were saved without a file extension, breaking downstream MIME type detection.
+    The CLI now reads the filename from the presigned URL's response-content-disposition
+    query parameter, falling back to the Content-Disposition response header, then
+    Content-Type, so files land on disk with their correct names (e.g. logo.svg).
+  type: fix

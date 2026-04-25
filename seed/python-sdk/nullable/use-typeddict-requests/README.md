@@ -35,7 +35,6 @@ Instantiate and use the client with the following:
 
 ```python
 from seed import SeedNullable
-from seed.nullable import Metadata, Status_Active
 import datetime
 
 client = SeedNullable(
@@ -48,16 +47,18 @@ client.nullable.create_user(
         "tags",
         "tags"
     ],
-    metadata=Metadata(
-        created_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-        updated_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-        avatar="avatar",
-        activated=True,
-        status=Status_Active(),
-        values={
-            "values": "values"
+    metadata={
+        "created_at": datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+        "updated_at": datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+        "avatar": "avatar",
+        "activated": True,
+        "status": {
+            "type": "active"
         },
-    ),
+        "values": {
+            "values": "values"
+        }
+    },
     avatar="avatar",
 )
 ```
@@ -68,7 +69,6 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 
 ```python
 import asyncio
-from seed.nullable import Metadata, Status_Active
 import datetime
 
 from seed import AsyncSeedNullable
@@ -85,16 +85,18 @@ async def main() -> None:
             "tags",
             "tags"
         ],
-        metadata=Metadata(
-            created_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-            updated_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-            avatar="avatar",
-            activated=True,
-            status=Status_Active(),
-            values={
-                "values": "values"
+        metadata={
+            "created_at": datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+            "updated_at": datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+            "avatar": "avatar",
+            "activated": True,
+            "status": {
+                "type": "active"
             },
-        ),
+            "values": {
+                "values": "values"
+            }
+        },
         avatar="avatar",
     )
 

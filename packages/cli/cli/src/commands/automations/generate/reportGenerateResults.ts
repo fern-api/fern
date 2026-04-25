@@ -139,8 +139,9 @@ function formatCounts(counts: GeneratorRunCounts): string {
 }
 
 function renderHeading(counts: GeneratorRunCounts): string {
-    // Denominator is `succeeded + failed` — skipped generators never ran, so including them
-    // would read as "6 failed out of 10" when only 2 actually failed.
+    // Denominator is `succeeded + failed` (not `results.length`) — skipped rows shouldn't
+    // drag the ratio down. Otherwise 4 successes + 2 failures + 4 skipped reads as "4/10
+    // succeeded" (implying 6 failed) instead of the truthful "4/6 succeeded, 4 skipped".
     const attempted = counts.succeeded + counts.failed;
     if (counts.failed > 0) {
         const skipSuffix = counts.skipped > 0 ? `, ${counts.skipped} skipped` : "";

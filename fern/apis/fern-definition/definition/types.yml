@@ -240,6 +240,7 @@ types:
     extends: BaseTypeDeclarationSchema
     properties:
       discriminated: literal<false>
+      "base-properties": optional<map<string, TypeReferenceSchema>>
       union: list<SingleUndiscriminatedUnionTypeSchema>
 
   SingleUndiscriminatedUnionTypeSchema:

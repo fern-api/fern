@@ -18,6 +18,9 @@ export const UnDiscriminatedOneOfSchemaWithExample: core.serialization.ObjectSch
     FernOpenapiIr.UnDiscriminatedOneOfSchemaWithExample
 > = core.serialization
     .objectWithoutOptionalProperties({
+        commonProperties: core.serialization.list(
+            core.serialization.lazyObject(() => serializers.CommonPropertyWithExample),
+        ).optional(),
         schemas: core.serialization.list(core.serialization.lazy(() => serializers.SchemaWithExample)),
     })
     .extend(WithSdkGroupName)
@@ -41,6 +44,7 @@ export declare namespace UnDiscriminatedOneOfSchemaWithExample {
             WithSource.Raw,
             WithTitle.Raw,
             WithInline.Raw {
+        commonProperties?: serializers.CommonPropertyWithExample.Raw[] | null;
         schemas: serializers.SchemaWithExample.Raw[];
     }
 }

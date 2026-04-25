@@ -15,6 +15,7 @@
         "key": "bearerAuth",
         "token": "customToken",
         "tokenEnvVar": "CUSTOM_TOKEN_ENV",
+        "tokenPlaceholder": undefined,
         "type": "bearer",
       },
     ],

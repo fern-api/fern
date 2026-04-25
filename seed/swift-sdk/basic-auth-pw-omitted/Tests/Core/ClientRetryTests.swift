@@ -17,7 +17,7 @@ import Testing
         let client = BasicAuthPwOmittedClient(
             baseURL: "https://api.fern.com",
             username: "<username>",
-            password: "<password>",
+            password: "",
             urlSession: stub.urlSession
         )
 
@@ -43,7 +43,7 @@ import Testing
         let client = BasicAuthPwOmittedClient(
             baseURL: "https://api.fern.com",
             username: "<username>",
-            password: "<password>",
+            password: "",
             urlSession: stub.urlSession
         )
 
@@ -69,7 +69,7 @@ import Testing
         let client = BasicAuthPwOmittedClient(
             baseURL: "https://api.fern.com",
             username: "<username>",
-            password: "<password>",
+            password: "",
             urlSession: stub.urlSession
         )
 
@@ -94,7 +94,7 @@ import Testing
         let client = BasicAuthPwOmittedClient(
             baseURL: "https://api.fern.com",
             username: "<username>",
-            password: "<password>",
+            password: "",
             urlSession: stub.urlSession
         )
 
@@ -118,7 +118,7 @@ import Testing
         let client = BasicAuthPwOmittedClient(
             baseURL: "https://api.fern.com",
             username: "<username>",
-            password: "<password>",
+            password: "",
             urlSession: stub.urlSession
         )
 
@@ -143,7 +143,7 @@ import Testing
         let client = BasicAuthPwOmittedClient(
             baseURL: "https://api.fern.com",
             username: "<username>",
-            password: "<password>",
+            password: "",
             urlSession: stub.urlSession
         )
 
@@ -168,7 +168,7 @@ import Testing
         let client = BasicAuthPwOmittedClient(
             baseURL: "https://api.fern.com",
             username: "<username>",
-            password: "<password>",
+            password: "",
             urlSession: stub.urlSession
         )
 
@@ -197,7 +197,7 @@ import Testing
         let client = BasicAuthPwOmittedClient(
             baseURL: "https://api.fern.com",
             username: "<username>",
-            password: "<password>",
+            password: "",
             urlSession: stub.urlSession
         )
 
@@ -237,7 +237,7 @@ import Testing
         let client = BasicAuthPwOmittedClient(
             baseURL: "https://api.fern.com",
             username: "<username>",
-            password: "<password>",
+            password: "",
             urlSession: stub.urlSession
         )
 
@@ -273,7 +273,7 @@ import Testing
         let client = BasicAuthPwOmittedClient(
             baseURL: "https://api.fern.com",
             username: "<username>",
-            password: "<password>",
+            password: "",
             urlSession: stub.urlSession
         )
 
@@ -321,7 +321,7 @@ import Testing
         let client = BasicAuthPwOmittedClient(
             baseURL: "https://api.fern.com",
             username: "<username>",
-            password: "<password>",
+            password: "",
             urlSession: stub.urlSession
         )
 
@@ -342,7 +342,7 @@ import Testing
         let client = BasicAuthPwOmittedClient(
             baseURL: "https://api.fern.com",
             username: "<username>",
-            password: "<password>",
+            password: "",
             urlSession: stub.urlSession
         )
 
@@ -367,7 +367,7 @@ import Testing
         let client = BasicAuthPwOmittedClient(
             baseURL: "https://api.fern.com",
             username: "<username>",
-            password: "<password>",
+            password: "",
             urlSession: stub.urlSession
         )
 

@@ -10,4 +10,6 @@ export interface HeaderAuthSchemeSchema
     /** Defaults to string */
     type?: string;
     prefix?: string;
+    /** The placeholder value to use in code snippets (e.g., "YOUR_API_KEY"). */
+    placeholder?: string;
 }

@@ -13,6 +13,7 @@ import { getTokenFromAuth0 } from "@fern-api/login";
 import { CliError } from "@fern-api/task-context";
 
 import chalk from "chalk";
+import { readFile } from "fs/promises";
 import inquirer from "inquirer";
 import { CredentialStore, TokenService } from "../auth/index.js";
 import { Cache } from "../cache/index.js";
@@ -89,6 +90,30 @@ export class Context {
      */
     public get isTTY(): boolean {
         return this.ttyAwareLogger.isTTY;
+    }
+
+    /**
+     * Resolves the org from the local Fern config. Tries `fern.yml` first
+     * (`org` field), then falls back to `fern/fern.config.json` (`organization`
+     * field) for repos that haven't migrated yet.
+     * Returns `undefined` if neither file exists or neither contains an org.
+     *
+     * @deprecated Remove the fern.config.json fallback once all repos have migrated to fern.yml.
+     */
+    public async loadOrg(): Promise<string | undefined> {
+        const fernYmlResult = await new FernYmlSchemaLoader({ cwd: this.cwd }).load();
+        if (fernYmlResult.type === "success") {
+            return fernYmlResult.data.org;
+        }
+
+        try {
+            const configPath = join(this.cwd, RelativeFilePath.of("fern/fern.config.json"));
+            const raw = await readFile(configPath, "utf-8");
+            const config = JSON.parse(raw) as Record<string, unknown>;
+            return typeof config.organization === "string" ? config.organization : undefined;
+        } catch {
+            return undefined;
+        }
     }
 
     public async loadWorkspaceOrThrow(): Promise<Workspace> {

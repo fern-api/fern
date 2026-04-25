@@ -155,6 +155,16 @@
         }
       ]
     },
+    "global-theme": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "experimental": {
       "oneOf": [
         {
@@ -3945,6 +3955,7 @@
         "chatgpt",
         "claude",
         "cursor",
+        "claude-code",
         "vscode"
       ]
     },
@@ -4038,6 +4049,16 @@
           ]
         },
         "claude": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "claude-code": {
           "oneOf": [
             {
               "type": "boolean"

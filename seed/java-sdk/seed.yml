@@ -286,6 +286,10 @@ fixtures:
     - customConfig:
         enable-wire-tests: true
       outputFolder: basic-auth
+  basic-auth-pw-omitted:
+    - customConfig:
+        enable-wire-tests: true
+      outputFolder: basic-auth-pw-omitted
   oauth-client-credentials:
     - customConfig:
         enable-wire-tests: true

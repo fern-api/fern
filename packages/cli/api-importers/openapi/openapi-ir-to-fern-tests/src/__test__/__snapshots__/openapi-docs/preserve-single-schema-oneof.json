@@ -37,6 +37,7 @@
         },
         "types": {
           "InnerOneOf": {
+            "base-properties": undefined,
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
@@ -59,6 +60,7 @@
             },
           },
           "OuterOneOf": {
+            "base-properties": undefined,
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
