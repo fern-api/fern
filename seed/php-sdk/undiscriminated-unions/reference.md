@@ -245,6 +245,55 @@ $client->union->nestedUnions(
 </dl>
 </details>
 
+<details><summary><code>$client-&gt;union-&gt;getWithBaseProperties($request) -> NamedMetadata|array|null</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->union->getWithBaseProperties(
+    new NamedMetadata([
+        'name' => 'name',
+        'value' => [
+            'value' => [
+                'key' => "value",
+            ],
+        ],
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$request:** `NamedMetadata|array|null` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>$client-&gt;union-&gt;testCamelCaseProperties($request) -> ?string</code></summary>
 <dl>
 <dd>

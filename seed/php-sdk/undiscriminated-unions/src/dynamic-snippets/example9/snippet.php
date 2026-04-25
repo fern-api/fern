@@ -3,19 +3,20 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Union\Requests\PaymentRequest;
-use Seed\Union\Types\TokenizeCard;
+use Seed\Union\Types\NamedMetadata;
 
 $client = new SeedClient(
     options: [
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->union->testCamelCaseProperties(
-    new PaymentRequest([
-        'paymentMethod' => new TokenizeCard([
-            'method' => 'card',
-            'cardNumber' => '1234567890123456',
-        ]),
+$client->union->getWithBaseProperties(
+    new NamedMetadata([
+        'name' => 'name',
+        'value' => [
+            'value' => [
+                'key' => "value",
+            ],
+        ],
     ]),
 );
