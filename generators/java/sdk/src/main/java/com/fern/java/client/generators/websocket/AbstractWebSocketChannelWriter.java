@@ -508,17 +508,23 @@ public abstract class AbstractWebSocketChannelWriter {
                 builder.beginControlFlow("if ($L)", condition);
             }
 
+            // Declare event variable outside try-catch so handler invocation is not
+            // wrapped in the deserialization catch block (user handler exceptions must propagate).
+            builder.addStatement("$T $L = null", messageType, handlerFieldName + "Event");
             builder.beginControlFlow("try")
                     .addStatement(
-                            "$T event = $N.treeToValue(node, $T.class)", messageType, objectMapperField, messageType)
-                    .beginControlFlow("if (event != null)")
-                    .beginControlFlow("if ($L != null)", handlerFieldName)
-                    .addStatement("$L.accept(event)", handlerFieldName)
-                    .endControlFlow()
-                    .addStatement("return")
-                    .endControlFlow()
+                            "$L = $N.treeToValue(node, $T.class)",
+                            handlerFieldName + "Event",
+                            objectMapperField,
+                            messageType)
                     .nextControlFlow("catch ($T e)", Exception.class)
                     .endControlFlow(); // end try-catch
+            builder.beginControlFlow("if ($L != null)", handlerFieldName + "Event")
+                    .beginControlFlow("if ($L != null)", handlerFieldName)
+                    .addStatement("$L.accept($L)", handlerFieldName, handlerFieldName + "Event")
+                    .endControlFlow()
+                    .addStatement("return")
+                    .endControlFlow();
 
             if (hasGuards) {
                 builder.endControlFlow(); // end if guard

@@ -289,15 +289,16 @@ public class RealtimeWebSocketClient implements AutoCloseable {
                 throw new IllegalArgumentException("Received null or invalid JSON message");
             }
             if (node.has("data") && node.has("timestamp")) {
+                ReceiveEvent receiveHandlerEvent = null;
                 try {
-                    ReceiveEvent event = objectMapper.treeToValue(node, ReceiveEvent.class);
-                    if (event != null) {
-                        if (receiveHandler != null) {
-                            receiveHandler.accept(event);
-                        }
-                        return;
-                    }
+                    receiveHandlerEvent = objectMapper.treeToValue(node, ReceiveEvent.class);
                 } catch (Exception e) {
+                }
+                if (receiveHandlerEvent != null) {
+                    if (receiveHandler != null) {
+                        receiveHandler.accept(receiveHandlerEvent);
+                    }
+                    return;
                 }
             }
             if (onErrorHandler != null) {

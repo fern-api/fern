@@ -292,41 +292,44 @@ public class RealtimeWebSocketClient implements AutoCloseable {
             if (node.has("role")
                     && node.has("content")
                     && "History".equals(node.path("type").asText())) {
+                ConversationHistoryMessage conversationHistoryHandlerEvent = null;
                 try {
-                    ConversationHistoryMessage event = objectMapper.treeToValue(node, ConversationHistoryMessage.class);
-                    if (event != null) {
-                        if (conversationHistoryHandler != null) {
-                            conversationHistoryHandler.accept(event);
-                        }
-                        return;
-                    }
+                    conversationHistoryHandlerEvent = objectMapper.treeToValue(node, ConversationHistoryMessage.class);
                 } catch (Exception e) {
+                }
+                if (conversationHistoryHandlerEvent != null) {
+                    if (conversationHistoryHandler != null) {
+                        conversationHistoryHandler.accept(conversationHistoryHandlerEvent);
+                    }
+                    return;
                 }
             }
             if (node.has("text")
                     && node.has("confidence")
                     && "ConversationText".equals(node.path("type").asText())) {
+                ConversationTextMessage conversationTextHandlerEvent = null;
                 try {
-                    ConversationTextMessage event = objectMapper.treeToValue(node, ConversationTextMessage.class);
-                    if (event != null) {
-                        if (conversationTextHandler != null) {
-                            conversationTextHandler.accept(event);
-                        }
-                        return;
-                    }
+                    conversationTextHandlerEvent = objectMapper.treeToValue(node, ConversationTextMessage.class);
                 } catch (Exception e) {
+                }
+                if (conversationTextHandlerEvent != null) {
+                    if (conversationTextHandler != null) {
+                        conversationTextHandler.accept(conversationTextHandlerEvent);
+                    }
+                    return;
                 }
             }
             if (node.has("function_calls") && "History".equals(node.path("type").asText())) {
+                FunctionCallHistoryMessage functionCallHistoryHandlerEvent = null;
                 try {
-                    FunctionCallHistoryMessage event = objectMapper.treeToValue(node, FunctionCallHistoryMessage.class);
-                    if (event != null) {
-                        if (functionCallHistoryHandler != null) {
-                            functionCallHistoryHandler.accept(event);
-                        }
-                        return;
-                    }
+                    functionCallHistoryHandlerEvent = objectMapper.treeToValue(node, FunctionCallHistoryMessage.class);
                 } catch (Exception e) {
+                }
+                if (functionCallHistoryHandlerEvent != null) {
+                    if (functionCallHistoryHandler != null) {
+                        functionCallHistoryHandler.accept(functionCallHistoryHandlerEvent);
+                    }
+                    return;
                 }
             }
             if (onErrorHandler != null) {

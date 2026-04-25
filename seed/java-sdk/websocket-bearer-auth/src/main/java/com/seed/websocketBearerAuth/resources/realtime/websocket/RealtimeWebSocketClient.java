@@ -346,51 +346,55 @@ public class RealtimeWebSocketClient implements AutoCloseable {
                 throw new IllegalArgumentException("Received null or invalid JSON message");
             }
             if (node.has("gamma") && node.has("delta") && node.has("epsilon")) {
+                ReceiveEvent2 receive2HandlerEvent = null;
                 try {
-                    ReceiveEvent2 event = objectMapper.treeToValue(node, ReceiveEvent2.class);
-                    if (event != null) {
-                        if (receive2Handler != null) {
-                            receive2Handler.accept(event);
-                        }
-                        return;
-                    }
+                    receive2HandlerEvent = objectMapper.treeToValue(node, ReceiveEvent2.class);
                 } catch (Exception e) {
+                }
+                if (receive2HandlerEvent != null) {
+                    if (receive2Handler != null) {
+                        receive2Handler.accept(receive2HandlerEvent);
+                    }
+                    return;
                 }
             }
             if (node.has("alpha") && node.has("beta")) {
+                ReceiveEvent receiveHandlerEvent = null;
                 try {
-                    ReceiveEvent event = objectMapper.treeToValue(node, ReceiveEvent.class);
-                    if (event != null) {
-                        if (receiveHandler != null) {
-                            receiveHandler.accept(event);
-                        }
-                        return;
-                    }
+                    receiveHandlerEvent = objectMapper.treeToValue(node, ReceiveEvent.class);
                 } catch (Exception e) {
+                }
+                if (receiveHandlerEvent != null) {
+                    if (receiveHandler != null) {
+                        receiveHandler.accept(receiveHandlerEvent);
+                    }
+                    return;
                 }
             }
             if (node.has("receive_text") && node.has("receive_int")) {
+                ReceiveSnakeCase receiveSnakeCaseHandlerEvent = null;
                 try {
-                    ReceiveSnakeCase event = objectMapper.treeToValue(node, ReceiveSnakeCase.class);
-                    if (event != null) {
-                        if (receiveSnakeCaseHandler != null) {
-                            receiveSnakeCaseHandler.accept(event);
-                        }
-                        return;
-                    }
+                    receiveSnakeCaseHandlerEvent = objectMapper.treeToValue(node, ReceiveSnakeCase.class);
                 } catch (Exception e) {
+                }
+                if (receiveSnakeCaseHandlerEvent != null) {
+                    if (receiveSnakeCaseHandler != null) {
+                        receiveSnakeCaseHandler.accept(receiveSnakeCaseHandlerEvent);
+                    }
+                    return;
                 }
             }
             if (node.has("receiveText3")) {
+                ReceiveEvent3 receive3HandlerEvent = null;
                 try {
-                    ReceiveEvent3 event = objectMapper.treeToValue(node, ReceiveEvent3.class);
-                    if (event != null) {
-                        if (receive3Handler != null) {
-                            receive3Handler.accept(event);
-                        }
-                        return;
-                    }
+                    receive3HandlerEvent = objectMapper.treeToValue(node, ReceiveEvent3.class);
                 } catch (Exception e) {
+                }
+                if (receive3HandlerEvent != null) {
+                    if (receive3Handler != null) {
+                        receive3Handler.accept(receive3HandlerEvent);
+                    }
+                    return;
                 }
             }
             if (onErrorHandler != null) {
