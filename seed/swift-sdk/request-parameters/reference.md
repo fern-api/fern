@@ -99,11 +99,11 @@ private func main() async throws {
             "tags",
             "tags"
         ],
-        request: .init(body: CreateUsernameBody(
+        request: CreateUsernameBody(
             username: "username",
             password: "password",
             name: "test"
-        ))
+        )
     )
 }
 
