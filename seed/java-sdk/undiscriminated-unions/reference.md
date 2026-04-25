@@ -256,6 +256,60 @@ client.union().nestedUnions(
 </dl>
 </details>
 
+<details><summary><code>client.union.getWithBaseProperties(request) -> UnionWithBaseProperties</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.union().getWithBaseProperties(
+    UnionWithBaseProperties.of(
+        NamedMetadata
+            .builder()
+            .name("name")
+            .value(
+                new HashMap<String, Object>() {{
+                    put("value", new 
+                    HashMap<String, Object>() {{put("key", "value");
+                    }});
+                }}
+            )
+            .build()
+    )
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `UnionWithBaseProperties` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.union.testCamelCaseProperties(request) -> String</code></summary>
 <dl>
 <dd>

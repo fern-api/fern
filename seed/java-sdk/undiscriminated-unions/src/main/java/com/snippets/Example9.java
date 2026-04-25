@@ -1,9 +1,9 @@
 package com.snippets;
 
 import com.seed.undiscriminatedUnions.SeedUndiscriminatedUnionsClient;
-import com.seed.undiscriminatedUnions.resources.union.requests.PaymentRequest;
-import com.seed.undiscriminatedUnions.resources.union.types.PaymentMethodUnion;
-import com.seed.undiscriminatedUnions.resources.union.types.TokenizeCard;
+import com.seed.undiscriminatedUnions.resources.union.types.NamedMetadata;
+import com.seed.undiscriminatedUnions.resources.union.types.UnionWithBaseProperties;
+import java.util.HashMap;
 
 public class Example9 {
     public static void main(String[] args) {
@@ -12,11 +12,17 @@ public class Example9 {
                 .build();
 
         client.union()
-                .testCamelCaseProperties(PaymentRequest.builder()
-                        .paymentMethod(PaymentMethodUnion.of(TokenizeCard.builder()
-                                .method("card")
-                                .cardNumber("1234567890123456")
-                                .build()))
-                        .build());
+                .getWithBaseProperties(UnionWithBaseProperties.of(NamedMetadata.builder()
+                        .name("name")
+                        .value(new HashMap<String, Object>() {
+                            {
+                                put("value", new HashMap<String, Object>() {
+                                    {
+                                        put("key", "value");
+                                    }
+                                });
+                            }
+                        })
+                        .build()));
     }
 }

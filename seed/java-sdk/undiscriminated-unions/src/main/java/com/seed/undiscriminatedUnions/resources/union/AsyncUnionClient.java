@@ -11,6 +11,7 @@ import com.seed.undiscriminatedUnions.resources.union.types.MetadataUnion;
 import com.seed.undiscriminatedUnions.resources.union.types.MyUnion;
 import com.seed.undiscriminatedUnions.resources.union.types.NestedUnionRoot;
 import com.seed.undiscriminatedUnions.resources.union.types.Request;
+import com.seed.undiscriminatedUnions.resources.union.types.UnionWithBaseProperties;
 import com.seed.undiscriminatedUnions.resources.union.types.UnionWithDuplicateTypes;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -87,6 +88,15 @@ public class AsyncUnionClient {
 
     public CompletableFuture<String> nestedUnions(NestedUnionRoot request, RequestOptions requestOptions) {
         return this.rawClient.nestedUnions(request, requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<UnionWithBaseProperties> getWithBaseProperties(UnionWithBaseProperties request) {
+        return this.rawClient.getWithBaseProperties(request).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<UnionWithBaseProperties> getWithBaseProperties(
+            UnionWithBaseProperties request, RequestOptions requestOptions) {
+        return this.rawClient.getWithBaseProperties(request, requestOptions).thenApply(response -> response.body());
     }
 
     public CompletableFuture<String> testCamelCaseProperties(PaymentRequest request) {
