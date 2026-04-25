@@ -163,7 +163,7 @@ export class ApiReferenceNodeConverter {
                 hidden: this.hideChildren
             }),
             children: this.#children,
-            availability: this.apiSection.availability ?? this.parentAvailability,
+            availability: convertDocsAvailability(this.apiSection.availability ?? this.parentAvailability),
             pointsTo,
             noindex: undefined,
             playground: this.#convertPlaygroundSettings(this.apiSection.playground),
@@ -272,7 +272,7 @@ export class ApiReferenceNodeConverter {
         return toPageNode({
             page: {
                 ...page,
-                availability: page.availability ?? parentAvailability
+                availability: convertDocsAvailability(page.availability ?? parentAvailability)
             },
             parentSlug,
             docsWorkspace: this.docsWorkspace,
@@ -345,7 +345,7 @@ export class ApiReferenceNodeConverter {
                 overviewPageId,
                 collapsible: undefined,
                 collapsedByDefault: undefined,
-                availability: pkgAvailability,
+                availability: convertDocsAvailability(pkgAvailability),
                 apiDefinitionId: this.apiDefinitionId,
                 pointsTo: undefined,
                 noindex: undefined,
@@ -378,7 +378,7 @@ export class ApiReferenceNodeConverter {
                 overviewPageId: explicitOverviewPageId,
                 collapsible: undefined,
                 collapsedByDefault: undefined,
-                availability: pkgAvailability,
+                availability: convertDocsAvailability(pkgAvailability),
                 apiDefinitionId: this.apiDefinitionId,
                 pointsTo: undefined,
                 noindex: undefined,
@@ -464,7 +464,7 @@ export class ApiReferenceNodeConverter {
             collapsed: section.collapsed,
             collapsible: section.collapsible,
             collapsedByDefault: section.collapsedByDefault,
-            availability: sectionAvailability,
+            availability: convertDocsAvailability(sectionAvailability),
             apiDefinitionId: this.apiDefinitionId,
             pointsTo: undefined,
             noindex,
