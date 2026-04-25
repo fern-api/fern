@@ -740,6 +740,35 @@ exports[`snippets (default) > single-url-environment-default > 'invalid environm
 ]"
 `;
 
+exports[`snippets (missing auth placeholders) > basic auth with no auth in request 1`] = `
+"<?php
+
+namespace Example;
+
+use Acme\\AcmeClient;
+
+$client = new AcmeClient(
+    username: 'YOUR_USERNAME',
+    password: 'YOUR_PASSWORD',
+);
+$client->basicAuth->getWithBasicAuth();
+"
+`;
+
+exports[`snippets (missing auth placeholders) > basic auth with passwordOmit flag 1`] = `
+"<?php
+
+namespace Example;
+
+use Acme\\AcmeClient;
+
+$client = new AcmeClient(
+    username: 'YOUR_USERNAME',
+);
+$client->basicAuth->getWithBasicAuth();
+"
+`;
+
 exports[`snippets (missing auth placeholders) > bearer auth with no auth in request 1`] = `
 "<?php
 
@@ -760,6 +789,20 @@ $client->service->getMetadata(
         'xAPIVersion' => '0.0.1',
     ]),
 );
+"
+`;
+
+exports[`snippets (missing auth placeholders) > header auth with no auth in request 1`] = `
+"<?php
+
+namespace Example;
+
+use Acme\\AcmeClient;
+
+$client = new AcmeClient(
+    headerTokenAuth: 'YOUR_AUTH_TOKEN',
+);
+$client->service->getWithBearerToken();
 "
 `;
 

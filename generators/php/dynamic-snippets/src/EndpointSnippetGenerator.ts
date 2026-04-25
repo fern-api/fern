@@ -301,18 +301,14 @@ export class EndpointSnippetGenerator {
                     auth,
                     values: { clientId: "YOUR_CLIENT_ID", clientSecret: "YOUR_CLIENT_SECRET" }
                 });
-            case "basic": {
-                const authRecord = auth as unknown as Record<string, unknown>;
-                const usernameOmitted = !!authRecord.usernameOmit;
-                const passwordOmitted = !!authRecord.passwordOmit;
+            case "basic":
                 return this.getConstructorBasicAuthArgs({
                     auth,
                     values: {
-                        username: usernameOmitted ? "" : "YOUR_USERNAME",
-                        password: passwordOmitted ? "" : "YOUR_PASSWORD"
+                        username: "YOUR_USERNAME",
+                        password: "YOUR_PASSWORD"
                     }
                 });
-            }
             case "header":
                 return this.getConstructorHeaderAuthArgs({
                     auth,
