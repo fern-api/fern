@@ -34,7 +34,7 @@ import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -198,7 +198,7 @@ public final class UndiscriminatedUnionDeserializationTestGenerator extends Abst
             }
             ObjectTypeDeclaration objectType =
                     typeDeclaration.getShape().getObject().get();
-            Map<String, String> jsonKeyValues = new HashMap<>();
+            Map<String, String> jsonKeyValues = new LinkedHashMap<>();
             Set<String> requiredKeys = new LinkedHashSet<>();
             if (!collectRequiredJsonKeyValues(objectType, jsonKeyValues, requiredKeys)) {
                 continue;
