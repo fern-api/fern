@@ -14,7 +14,7 @@
 
 ```java
 client.service().justFile(
-    Optional.empty(),
+    null,
     JustFileRequest
         .builder()
         .build()
@@ -44,7 +44,7 @@ client.service().justFile(
 
 ```java
 client.service().optionalArgs(
-    Optional.empty(),
+    null,
     OptionalArgsRequest
         .builder()
         .build()
@@ -74,7 +74,7 @@ client.service().optionalArgs(
 
 ```java
 client.service().withRefBody(
-    Optional.empty(),
+    null,
     WithRefBodyRequest
         .builder()
         .request(

@@ -420,8 +420,6 @@ allowedFailures:
   # Bug with how java-sdk creates nightly balanced files
   - java-pagination-deep-cursor-path
 
-  # Staged builder snippets don't provide required file arguments (separate from positional shift fix)
-  - file-upload:inline-file-properties
 
 
   # Optional wire tests have snippet generation bug with optional(nullable(T))

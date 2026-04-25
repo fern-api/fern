@@ -2,7 +2,6 @@ package com.snippets;
 
 import com.seed.api.SeedApiClient;
 import com.seed.api.resources.fileuploadexample.requests.UploadFileRequest;
-import java.util.Optional;
 
 public class Example0 {
     public static void main(String[] args) {
@@ -10,8 +9,6 @@ public class Example0 {
                 SeedApiClient.builder().url("https://api.fern.com").build();
 
         client.fileUploadExample()
-                .uploadFile(
-                        Optional.empty(),
-                        UploadFileRequest.builder().name("name").build());
+                .uploadFile(null, UploadFileRequest.builder().name("name").build());
     }
 }
