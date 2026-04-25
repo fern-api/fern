@@ -1,0 +1,7 @@
+- summary: |
+    Optimize local Java SDK generation performance: parallelize type/client
+    generation, defer example injection to overlap with Docker execution,
+    consolidate bind mounts, add JVM tuning flags, and skip Spotless for
+    dynamic snippet tests. Reduces end-to-end generation time by ~83% for
+    large APIs (Square API benchmark: 28.5s → 4.8s).
+  type: internal
