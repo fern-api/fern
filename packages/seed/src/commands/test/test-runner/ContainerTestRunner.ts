@@ -117,7 +117,8 @@ export class ContainerTestRunner extends TestRunner {
         }
 
         // Remove the local Docker image unless the user passed --keep-docker
-        if (!this.keepContainer) {
+        // or the build was skipped (we didn't create the image, so don't remove it)
+        if (!this.keepContainer && !this.skipBuild) {
             const localImage = this.getContainerImageName();
             try {
                 await loggingExeca(undefined, this.runner, ["rmi", localImage], {

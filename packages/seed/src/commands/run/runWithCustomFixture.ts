@@ -1,7 +1,10 @@
 import { GeneratorGroup, GeneratorInvocation, PROJECT_CONFIG_FILENAME } from "@fern-api/configuration";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { LogLevel } from "@fern-api/logger";
-import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
+import {
+    AbstractAPIWorkspace,
+    getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation
+} from "@fern-api/workspace-loader";
 import { readFile } from "fs/promises";
 import path from "path";
 import tmp from "tmp-promise";
@@ -19,6 +22,7 @@ export async function runWithCustomFixture({
     workspace,
     logLevel,
     skipScripts,
+    skipBuild,
     outputPath,
     inspect,
     local,
@@ -29,6 +33,7 @@ export async function runWithCustomFixture({
     workspace: GeneratorWorkspace;
     logLevel: LogLevel;
     skipScripts: boolean;
+    skipBuild?: boolean;
     outputPath?: AbsoluteFilePath;
     inspect: boolean;
     local: boolean;
@@ -70,6 +75,7 @@ export async function runWithCustomFixture({
             lock,
             taskContextFactory,
             skipScripts,
+            skipBuild,
             scriptRunner,
             keepContainer,
             inspect,
@@ -81,6 +87,7 @@ export async function runWithCustomFixture({
             lock,
             taskContextFactory,
             skipScripts,
+            skipBuild,
             keepContainer,
             scriptRunner,
             inspect,
@@ -120,6 +127,18 @@ export async function runWithCustomFixture({
             return;
         }
 
+        // Convert to FernWorkspace once here to avoid duplicate loading in TestRunner.run()
+        const workspaceSettings = getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(generatorGroup.invocation);
+        const fernWorkspace = await apiWorkspace.toFernWorkspace(
+            { context: taskContext },
+            workspaceSettings,
+            generatorGroup.invocation.apiOverride?.specs
+        );
+        if (fernWorkspace == null) {
+            taskContext.logger.error("Failed to convert API workspace to Fern workspace.");
+            return;
+        }
+
         const runFixtureConfig: FixtureConfigurations = {
             ...customFixtureConfig,
             customConfig: {
@@ -134,7 +153,9 @@ export async function runWithCustomFixture({
             JSON.stringify(runFixtureConfig, undefined, 2)
         );
 
-        await testRunner.build();
+        if (!skipBuild) {
+            await testRunner.build();
+        }
 
         const result = await testRunner.run({
             fixture: "custom",
@@ -146,7 +167,8 @@ export async function runWithCustomFixture({
             organization: projectConfig?.organization,
             absolutePathToFernConfig: projectConfig?.absolutePathToFernConfig,
             lenient: true,
-            skipAutogenerationIfManualExamplesExist
+            skipAutogenerationIfManualExamplesExist,
+            fernWorkspace
         });
 
         printTestCases([result]);
