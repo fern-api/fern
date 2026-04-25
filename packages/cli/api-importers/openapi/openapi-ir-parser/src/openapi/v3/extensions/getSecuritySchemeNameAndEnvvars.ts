@@ -7,10 +7,12 @@ export interface HeaderSecuritySchemeNames {
     name?: string;
     env?: string;
     prefix?: string;
+    placeholder?: string;
 }
 export interface SecuritySchemeNames {
     name?: string;
     env?: string;
+    placeholder?: string;
 }
 export interface BasicSecuritySchemeNames {
     username?: SecuritySchemeNames;

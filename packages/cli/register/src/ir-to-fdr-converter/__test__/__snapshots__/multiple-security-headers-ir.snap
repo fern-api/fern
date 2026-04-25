@@ -13,6 +13,7 @@
         "_visit": [Function],
         "docs": "The web3 wallet of the end user",
         "headerEnvVar": undefined,
+        "headerPlaceholder": undefined,
         "key": "wallet",
         "name": {
           "name": "apiKey",
@@ -46,6 +47,7 @@
         "_visit": [Function],
         "docs": "The blockchain associated with the end user",
         "headerEnvVar": undefined,
+        "headerPlaceholder": undefined,
         "key": "blockchain",
         "name": {
           "name": "apiKey",
@@ -79,6 +81,7 @@
         "_visit": [Function],
         "docs": "The external identifier of the end user",
         "headerEnvVar": undefined,
+        "headerPlaceholder": undefined,
         "key": "userId",
         "name": {
           "name": "apiKey",
@@ -112,6 +115,7 @@
         "_visit": [Function],
         "docs": "The API key of the merchant",
         "headerEnvVar": undefined,
+        "headerPlaceholder": undefined,
         "key": "merchant",
         "name": {
           "name": "apiKey",
@@ -145,6 +149,7 @@
         "_visit": [Function],
         "docs": undefined,
         "headerEnvVar": undefined,
+        "headerPlaceholder": undefined,
         "key": "admin",
         "name": {
           "name": "apiKey",

@@ -4,6 +4,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { DocsWorkspace } from "@fern-api/workspace-loader";
 
 import { writeFile } from "fs/promises";
+import mime from "mime-types";
 import path from "path";
 import tmp from "tmp-promise";
 
@@ -20,21 +21,75 @@ function isRemoteUrl(value: string): boolean {
     return value.startsWith("http://") || value.startsWith("https://");
 }
 
+function parseFilenameFromDisposition(value: string | null): string | undefined {
+    if (value == null) {
+        return undefined;
+    }
+    // e.g. attachment; filename="NVIDIA_symbol.svg"
+    const match = value.match(/filename\*?=(?:"([^"]+)"|([^;]+))/i);
+    const name = match?.[1] ?? match?.[2]?.trim();
+    // Only return the name if it carries a recognisable extension — a bare hash
+    // (no dot) isn't useful as a filename.
+    return name != null && path.extname(name) !== "" ? name : undefined;
+}
+
+function filenameFromUrl(url: string): string | undefined {
+    try {
+        // S3 presigned URLs encode the intended filename in the
+        // `response-content-disposition` query param, e.g.:
+        //   response-content-disposition=attachment%3B%20filename%3D%22NVIDIA_symbol.svg%22
+        const params = new URL(url).searchParams;
+        const rcd = params.get("response-content-disposition");
+        return parseFilenameFromDisposition(rcd);
+    } catch {
+        return undefined;
+    }
+}
+
 async function downloadToTemp(url: string, tmpDir: string, index: number): Promise<string> {
-    const ext = (() => {
-        try {
-            const pathname = new URL(url).pathname;
-            const dot = pathname.lastIndexOf(".");
-            return dot >= 0 ? pathname.slice(dot) : "";
-        } catch {
-            return "";
-        }
-    })();
-    const dest = path.join(tmpDir, `theme_asset_${index}${ext}`);
+    // Check the URL itself first — S3 presigned URLs embed the intended filename
+    // in `response-content-disposition` before we even make the request.
+    const urlFilename = filenameFromUrl(url);
+
     const res = await fetch(url);
     if (!res.ok) {
         throw new Error(`Failed to download theme asset: ${res.status} ${url}`);
     }
+
+    // Determine the best filename. Priority:
+    //   1. filename from the URL's response-content-disposition query param
+    //   2. filename from the Content-Disposition response header (with extension)
+    //   3. extension from Content-Type + generic theme_asset_N base name
+    //   4. extension from the URL pathname (last resort — CAS paths are bare hashes)
+    const cdFilename = parseFilenameFromDisposition(res.headers.get("content-disposition"));
+    const filename =
+        urlFilename ??
+        cdFilename ??
+        (() => {
+            const ext =
+                (() => {
+                    const contentType = res.headers.get("content-type")?.split(";")[0]?.trim();
+                    if (contentType) {
+                        const mapped = mime.extension(contentType);
+                        if (mapped) {
+                            return `.${mapped}`;
+                        }
+                    }
+                    return "";
+                })() ||
+                (() => {
+                    try {
+                        const pathname = new URL(url).pathname;
+                        const dot = pathname.lastIndexOf(".");
+                        return dot >= 0 ? pathname.slice(dot) : "";
+                    } catch {
+                        return "";
+                    }
+                })();
+            return `theme_asset_${index}${ext}`;
+        })();
+
+    const dest = path.join(tmpDir, filename);
     const buf = Buffer.from(await res.arrayBuffer());
     await writeFile(dest, buf);
     return dest;

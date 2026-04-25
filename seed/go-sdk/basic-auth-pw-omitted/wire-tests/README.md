@@ -40,7 +40,6 @@ func do() {
     client := client.NewClient(
         option.WithBasicAuth(
             "<username>",
-            "<password>",
         ),
     )
     request := map[string]any{

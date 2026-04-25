@@ -60,21 +60,33 @@ public final class BasicAuthProviderGenerator extends AbstractFileGenerator {
         ParameterizedTypeName stringSupplierType =
                 ParameterizedTypeName.get(ClassName.get(Supplier.class), ClassName.get(String.class));
 
-        FieldSpec usernameSupplierField = FieldSpec.builder(
-                        stringSupplierType, "usernameSupplier", Modifier.PRIVATE, Modifier.FINAL)
-                .build();
-        FieldSpec passwordSupplierField = FieldSpec.builder(
-                        stringSupplierType, "passwordSupplier", Modifier.PRIVATE, Modifier.FINAL)
-                .build();
+        boolean usernameOmitted = basicAuthScheme.getUsernameOmit().orElse(false);
+        boolean passwordOmitted = basicAuthScheme.getPasswordOmit().orElse(false);
+
+        FieldSpec usernameSupplierField = usernameOmitted
+                ? null
+                : FieldSpec.builder(stringSupplierType, "usernameSupplier", Modifier.PRIVATE, Modifier.FINAL)
+                        .build();
+        FieldSpec passwordSupplierField = passwordOmitted
+                ? null
+                : FieldSpec.builder(stringSupplierType, "passwordSupplier", Modifier.PRIVATE, Modifier.FINAL)
+                        .build();
 
         String usernameEnvVar =
                 basicAuthScheme.getUsernameEnvVar().map(ev -> ev.get()).orElse(null);
         String passwordEnvVar =
                 basicAuthScheme.getPasswordEnvVar().map(ev -> ev.get()).orElse(null);
 
-        String errorMessage = "Please provide username and password when initializing the client";
+        String errorMessage;
+        if (usernameOmitted && !passwordOmitted) {
+            errorMessage = "Please provide password when initializing the client";
+        } else if (!usernameOmitted && passwordOmitted) {
+            errorMessage = "Please provide username when initializing the client";
+        } else {
+            errorMessage = "Please provide username and password when initializing the client";
+        }
 
-        TypeSpec basicAuthProviderClass = TypeSpec.classBuilder(className)
+        TypeSpec.Builder classBuilder = TypeSpec.classBuilder(className)
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                 .addSuperinterface(authProviderClassName)
                 .addJavadoc("Auth provider for Basic authentication.\n")
@@ -89,16 +101,23 @@ public final class BasicAuthProviderGenerator extends AbstractFileGenerator {
                                 Modifier.STATIC,
                                 Modifier.FINAL)
                         .initializer("$S", errorMessage)
-                        .build())
-                .addField(usernameSupplierField)
-                .addField(passwordSupplierField)
-                .addMethod(MethodSpec.constructorBuilder()
-                        .addModifiers(Modifier.PUBLIC)
-                        .addParameter(stringSupplierType, "usernameSupplier")
-                        .addParameter(stringSupplierType, "passwordSupplier")
-                        .addStatement("this.$N = usernameSupplier", usernameSupplierField)
-                        .addStatement("this.$N = passwordSupplier", passwordSupplierField)
-                        .build())
+                        .build());
+
+        // Only add fields and constructor params for non-omitted fields
+        MethodSpec.Builder constructorBuilder = MethodSpec.constructorBuilder().addModifiers(Modifier.PUBLIC);
+        if (!usernameOmitted) {
+            classBuilder.addField(usernameSupplierField);
+            constructorBuilder.addParameter(stringSupplierType, "usernameSupplier");
+            constructorBuilder.addStatement("this.$N = usernameSupplier", usernameSupplierField);
+        }
+        if (!passwordOmitted) {
+            classBuilder.addField(passwordSupplierField);
+            constructorBuilder.addParameter(stringSupplierType, "passwordSupplier");
+            constructorBuilder.addStatement("this.$N = passwordSupplier", passwordSupplierField);
+        }
+
+        TypeSpec basicAuthProviderClass = classBuilder
+                .addMethod(constructorBuilder.build())
                 .addMethod(buildGetAuthHeaders(endpointMetadataClassName, usernameSupplierField, passwordSupplierField))
                 .addMethod(buildCanCreateMethod(usernameEnvVar, passwordEnvVar))
                 .build();
@@ -114,18 +133,37 @@ public final class BasicAuthProviderGenerator extends AbstractFileGenerator {
 
     private MethodSpec buildGetAuthHeaders(
             ClassName endpointMetadataClassName, FieldSpec usernameSupplierField, FieldSpec passwordSupplierField) {
-        return MethodSpec.methodBuilder("getAuthHeaders")
+        boolean usernameOmitted = basicAuthScheme.getUsernameOmit().orElse(false);
+        boolean passwordOmitted = basicAuthScheme.getPasswordOmit().orElse(false);
+
+        MethodSpec.Builder builder = MethodSpec.methodBuilder("getAuthHeaders")
                 .addModifiers(Modifier.PUBLIC)
                 .addAnnotation(Override.class)
                 .addParameter(endpointMetadataClassName, "endpointMetadata")
-                .returns(ParameterizedTypeName.get(Map.class, String.class, String.class))
-                .addStatement("String username = $N.get()", usernameSupplierField)
-                .addStatement("String password = $N.get()", passwordSupplierField)
-                .beginControlFlow("if (username == null || password == null)")
-                .addStatement("throw new $T(AUTH_CONFIG_ERROR_MESSAGE)", RuntimeException.class)
-                .endControlFlow()
-                .addStatement("String credentials = username + \":\" + password")
-                .addStatement(
+                .returns(ParameterizedTypeName.get(Map.class, String.class, String.class));
+
+        // Get values: omitted fields use empty string directly, non-omitted fields read from supplier
+        if (usernameOmitted) {
+            builder.addStatement("String username = \"\"");
+        } else {
+            builder.addStatement("String username = $N.get()", usernameSupplierField);
+            builder.beginControlFlow("if (username == null)")
+                    .addStatement("throw new $T(AUTH_CONFIG_ERROR_MESSAGE)", RuntimeException.class)
+                    .endControlFlow();
+        }
+
+        if (passwordOmitted) {
+            builder.addStatement("String password = \"\"");
+        } else {
+            builder.addStatement("String password = $N.get()", passwordSupplierField);
+            builder.beginControlFlow("if (password == null)")
+                    .addStatement("throw new $T(AUTH_CONFIG_ERROR_MESSAGE)", RuntimeException.class)
+                    .endControlFlow();
+        }
+
+        builder.addStatement("String credentials = username + \":\" + password");
+
+        return builder.addStatement(
                         "String encoded = $T.getEncoder().encodeToString(credentials.getBytes($T.UTF_8))",
                         Base64.class,
                         StandardCharsets.class)
@@ -136,26 +174,43 @@ public final class BasicAuthProviderGenerator extends AbstractFileGenerator {
     }
 
     private MethodSpec buildCanCreateMethod(String usernameEnvVar, String passwordEnvVar) {
+        boolean usernameOmitted = basicAuthScheme.getUsernameOmit().orElse(false);
+        boolean passwordOmitted = basicAuthScheme.getPasswordOmit().orElse(false);
+
         ParameterizedTypeName stringSupplierType =
                 ParameterizedTypeName.get(ClassName.get(Supplier.class), ClassName.get(String.class));
 
+        // Only non-omitted fields appear as parameters
         MethodSpec.Builder builder = MethodSpec.methodBuilder("canCreate")
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .addJavadoc("Checks if this provider can be created with the given suppliers.\n")
-                .addParameter(stringSupplierType, "usernameSupplier")
-                .addParameter(stringSupplierType, "passwordSupplier")
                 .returns(boolean.class);
 
+        // Build per-field checks: omitted fields are always satisfied (true)
         StringBuilder condition = new StringBuilder();
-        condition.append("(usernameSupplier != null");
-        if (usernameEnvVar != null) {
-            condition.append(" || System.getenv(\"").append(usernameEnvVar).append("\") != null");
+        if (!usernameOmitted) {
+            builder.addParameter(stringSupplierType, "usernameSupplier");
+            condition.append("(usernameSupplier != null");
+            if (usernameEnvVar != null) {
+                condition.append(" || System.getenv(\"").append(usernameEnvVar).append("\") != null");
+            }
+            condition.append(")");
+        } else {
+            condition.append("true");
         }
-        condition.append(") && (passwordSupplier != null");
-        if (passwordEnvVar != null) {
-            condition.append(" || System.getenv(\"").append(passwordEnvVar).append("\") != null");
+
+        condition.append(" && ");
+
+        if (!passwordOmitted) {
+            builder.addParameter(stringSupplierType, "passwordSupplier");
+            condition.append("(passwordSupplier != null");
+            if (passwordEnvVar != null) {
+                condition.append(" || System.getenv(\"").append(passwordEnvVar).append("\") != null");
+            }
+            condition.append(")");
+        } else {
+            condition.append("true");
         }
-        condition.append(")");
 
         builder.addStatement("return " + condition);
 

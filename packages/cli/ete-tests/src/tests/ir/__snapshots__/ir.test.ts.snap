@@ -30,6 +30,7 @@ exports[`ir > {"name":"auth-header-prefix"} 1`] = `
                 },
                 "prefix": "ApiKey",
                 "headerEnvVar": null,
+                "headerPlaceholder": null,
                 "key": "ApiKey",
                 "docs": null
             }
@@ -125,6 +126,7 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
                 "_type": "bearer",
                 "token": "token",
                 "tokenEnvVar": null,
+                "tokenPlaceholder": null,
                 "key": "bearer",
                 "docs": null
             }
@@ -16276,9 +16278,11 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                 "username": "clientId",
                 "usernameEnvVar": null,
                 "usernameOmit": null,
+                "usernamePlaceholder": null,
                 "password": "clientSecret",
                 "passwordEnvVar": null,
                 "passwordOmit": null,
+                "passwordPlaceholder": null,
                 "key": "MyBasicAuth",
                 "docs": null
             }
@@ -17450,6 +17454,7 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                             "safeName": "ClientId"
                         }
                     },
+                    "usernameOmit": null,
                     "password": {
                         "originalName": "clientSecret",
                         "camelCase": {
@@ -17468,7 +17473,8 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                             "unsafeName": "ClientSecret",
                             "safeName": "ClientSecret"
                         }
-                    }
+                    },
+                    "passwordOmit": null
                 },
                 "declaration": {
                     "name": {

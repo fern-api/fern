@@ -13,6 +13,7 @@
         "_visit": [Function],
         "docs": "User authentication token",
         "headerEnvVar": undefined,
+        "headerPlaceholder": undefined,
         "key": "user",
         "name": {
           "name": "apiKey",
@@ -46,6 +47,7 @@
         "_visit": [Function],
         "docs": "Operator API key",
         "headerEnvVar": undefined,
+        "headerPlaceholder": undefined,
         "key": "operator",
         "name": {
           "name": "apiKey",
@@ -79,6 +81,7 @@
         "_visit": [Function],
         "docs": "Admin API key",
         "headerEnvVar": undefined,
+        "headerPlaceholder": undefined,
         "key": "admin",
         "name": {
           "name": "apiKey",
