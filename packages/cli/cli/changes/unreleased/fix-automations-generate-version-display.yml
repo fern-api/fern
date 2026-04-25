@@ -1,0 +1,6 @@
+- summary: |
+    Fix `fern automations generate` step summary not displaying SDK versions.
+    The version column now falls back to the locally-resolved version when
+    Fiddle does not echo it back (e.g. GitHub PR/push modes without a
+    registry publish).
+  type: fix

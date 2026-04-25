@@ -375,6 +375,11 @@ export async function runRemoteGenerationForGenerator({
         }
     }
 
+    // Fall back to the locally-resolved version when Fiddle doesn't echo it back
+    // (e.g. GitHub PR / push modes where no registry publish or release tag occurs).
+    if (result != null && result.actualVersion == null && resolvedVersion != null) {
+        return { ...result, actualVersion: resolvedVersion };
+    }
     return result;
 }
 
