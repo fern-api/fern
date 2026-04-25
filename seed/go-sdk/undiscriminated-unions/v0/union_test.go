@@ -1269,6 +1269,65 @@ func TestSettersMarkExplicitTypeWithOptionalUnion(t *testing.T) {
 
 }
 
+func TestGettersUnionWithBaseProperties(t *testing.T) {
+	t.Run("GetNamedMetadata", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UnionWithBaseProperties{}
+		var expected *NamedMetadata
+		obj.NamedMetadata = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetNamedMetadata(), "getter should return the property value")
+	})
+
+	t.Run("GetNamedMetadata_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UnionWithBaseProperties{}
+		obj.NamedMetadata = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetNamedMetadata(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetNamedMetadata_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UnionWithBaseProperties
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetNamedMetadata() // Should return zero value
+	})
+
+	t.Run("GetOptionalMetadata", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UnionWithBaseProperties{}
+		var expected OptionalMetadata
+		obj.OptionalMetadata = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetOptionalMetadata(), "getter should return the property value")
+	})
+
+	t.Run("GetOptionalMetadata_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UnionWithBaseProperties
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetOptionalMetadata() // Should return zero value
+	})
+
+}
+
 func TestGettersUnionWithDuplicateTypes(t *testing.T) {
 	t.Run("GetString", func(t *testing.T) {
 		t.Parallel()
