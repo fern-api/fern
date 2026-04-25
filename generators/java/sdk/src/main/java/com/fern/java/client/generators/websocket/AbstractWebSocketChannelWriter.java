@@ -739,7 +739,16 @@ public abstract class AbstractWebSocketChannelWriter {
         if (!typeRef.isContainer()) {
             return Optional.empty();
         }
-        return typeRef.getContainer().flatMap(ContainerType::getLiteral).flatMap(Literal::getString);
+        return typeRef.getContainer().flatMap(ContainerType::getLiteral).flatMap(literal -> {
+            // Handle string literals directly
+            Optional<String> str = literal.getString();
+            if (str.isPresent()) {
+                return str;
+            }
+            // Handle boolean literals by converting to their string representation
+            // so they can be checked via node.path("key").asText()
+            return literal.getBoolean().map(b -> b.toString());
+        });
     }
 
     /**
