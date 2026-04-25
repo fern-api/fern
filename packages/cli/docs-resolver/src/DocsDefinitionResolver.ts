@@ -57,6 +57,7 @@ interface LibraryNavNode {
 import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter.js";
 import { ChangelogNodeConverter } from "./ChangelogNodeConverter.js";
 import { NodeIdGenerator } from "./NodeIdGenerator.js";
+import { convertDocsAvailability } from "./utils/convertDocsAvailability.js";
 import { convertDocsSnippetsConfigToFdr } from "./utils/convertDocsSnippetsConfigToFdr.js";
 import { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition.js";
 import { collectFilesFromDocsConfig } from "./utils/getImageFilepathsToUpload.js";
@@ -1885,7 +1886,7 @@ export class DocsDefinitionResolver {
             authed: undefined,
             noindex: item.noindex || this.markdownFilesToNoIndex.get(item.absolutePath),
             featureFlags: item.featureFlags,
-            availability: frontmatterAvailability ?? item.availability ?? parentAvailability
+            availability: convertDocsAvailability(frontmatterAvailability ?? item.availability ?? parentAvailability)
         };
     }
 
@@ -1969,7 +1970,7 @@ export class DocsDefinitionResolver {
             pointsTo: undefined,
             noindex,
             featureFlags: item.featureFlags,
-            availability: frontmatterAvailability ?? item.availability ?? parentAvailability
+            availability: convertDocsAvailability(frontmatterAvailability ?? item.availability ?? parentAvailability)
         };
     }
 
@@ -2343,6 +2344,15 @@ function convertAvailability(
             return FernNavigation.V1.NavigationV1Availability.GenerallyAvailable;
         case "stable":
             return FernNavigation.V1.NavigationV1Availability.Stable;
+        case "alpha":
+            // TODO: switch to NavigationV1Availability.Alpha once the next fdr-sdk release includes it
+            return FernNavigation.V1.NavigationV1Availability.Beta;
+        case "preview":
+            // TODO: switch to NavigationV1Availability.Preview once the next fdr-sdk release includes it
+            return FernNavigation.V1.NavigationV1Availability.Beta;
+        case "legacy":
+            // TODO: switch to NavigationV1Availability.Legacy once the next fdr-sdk release includes it
+            return FernNavigation.V1.NavigationV1Availability.Deprecated;
         default:
             assertNever(availability);
     }

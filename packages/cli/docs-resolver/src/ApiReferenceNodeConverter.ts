@@ -19,6 +19,7 @@ type ApiPackageNodeWithCollapsibleConfig = FernNavigation.V1.ApiPackageNode & {
 import { ApiDefinitionHolder } from "./ApiDefinitionHolder.js";
 import { ChangelogNodeConverter } from "./ChangelogNodeConverter.js";
 import { NodeIdGenerator } from "./NodeIdGenerator.js";
+import { convertDocsAvailability } from "./utils/convertDocsAvailability.js";
 import { convertPlaygroundSettings } from "./utils/convertPlaygroundSettings.js";
 import { enrichApiPackageChild } from "./utils/enrichApiPackageChild.js";
 import { cannotFindSubpackageByLocatorError, packageReuseError } from "./utils/errorMessages.js";
@@ -513,7 +514,7 @@ export class ApiReferenceNodeConverter {
                 overviewPageId: this.createTagDescriptionPageId(subpackage, unknownIdentifier),
                 collapsible: undefined,
                 collapsedByDefault: undefined,
-                availability: parentAvailability,
+                availability: convertDocsAvailability(parentAvailability),
                 apiDefinitionId: this.apiDefinitionId,
                 pointsTo: undefined,
                 noindex: undefined,
@@ -581,9 +582,9 @@ export class ApiReferenceNodeConverter {
                     endpointId,
                     apiDefinitionId: this.apiDefinitionId,
                     availability:
-                        endpointItem.availability ??
+                        convertDocsAvailability(endpointItem.availability) ??
                         FernNavigation.V1.convertAvailability(endpoint.availability) ??
-                        parentAvailability,
+                        convertDocsAvailability(parentAvailability),
                     isResponseStream: endpoint.response?.type.type === "stream",
                     title: endpointItem.title ?? endpoint.name ?? stringifyEndpointPathParts(endpoint.path.parts),
                     slug: endpointSlug.get(),
@@ -634,9 +635,9 @@ export class ApiReferenceNodeConverter {
                     hidden: this.hideChildren || endpointItem.hidden,
                     apiDefinitionId: this.apiDefinitionId,
                     availability:
-                        endpointItem.availability ??
+                        convertDocsAvailability(endpointItem.availability) ??
                         FernNavigation.V1.convertAvailability(webSocket.availability) ??
-                        parentAvailability,
+                        convertDocsAvailability(parentAvailability),
                     playground: this.#convertPlaygroundSettings(endpointItem.playground),
                     authed: undefined,
                     viewers: endpointItem.viewers,
@@ -677,9 +678,9 @@ export class ApiReferenceNodeConverter {
                     hidden: this.hideChildren || endpointItem.hidden,
                     apiDefinitionId: this.apiDefinitionId,
                     availability:
-                        endpointItem.availability ??
+                        convertDocsAvailability(endpointItem.availability) ??
                         FernNavigation.V1.convertAvailability(webhook.availability) ??
-                        parentAvailability,
+                        convertDocsAvailability(parentAvailability),
                     authed: undefined,
                     viewers: endpointItem.viewers,
                     orphaned: endpointItem.orphaned,
@@ -715,7 +716,7 @@ export class ApiReferenceNodeConverter {
                 operationType: graphqlOperation.operationType,
                 graphqlOperationId: APIV1Read.GraphQlOperationId(graphqlOperation.id),
                 apiDefinitionId: this.apiDefinitionId,
-                availability: endpointItem.availability ?? parentAvailability,
+                availability: convertDocsAvailability(endpointItem.availability ?? parentAvailability),
                 title:
                     endpointItem.title ?? graphqlOperation.displayName ?? graphqlOperation.name ?? graphqlOperation.id,
                 slug: operationSlug.get(),
@@ -867,7 +868,7 @@ export class ApiReferenceNodeConverter {
             operationType: graphqlOperation.operationType,
             graphqlOperationId: APIV1Read.GraphQlOperationId(graphqlOperation.id),
             apiDefinitionId: this.apiDefinitionId,
-            availability: operationItem.availability ?? parentAvailability,
+            availability: convertDocsAvailability(operationItem.availability ?? parentAvailability),
             title: operationItem.title ?? graphqlOperation.displayName ?? graphqlOperation.name ?? graphqlOperation.id,
             slug: operationSlug.get(),
             icon: undefined,
@@ -940,7 +941,7 @@ export class ApiReferenceNodeConverter {
                     title: endpoint.name ?? stringifyEndpointPathParts(endpoint.path.parts),
                     method: endpoint.protocol?.methodType ?? "UNARY",
                     apiDefinitionId: this.apiDefinitionId,
-                    availability: parentAvailability,
+                    availability: convertDocsAvailability(parentAvailability),
                     slug: grpcSlug.get(),
                     icon: undefined,
                     hidden: undefined,
@@ -969,7 +970,9 @@ export class ApiReferenceNodeConverter {
                     method: endpoint.method,
                     endpointId,
                     apiDefinitionId: this.apiDefinitionId,
-                    availability: FernNavigation.V1.convertAvailability(endpoint.availability) ?? parentAvailability,
+                    availability:
+                        FernNavigation.V1.convertAvailability(endpoint.availability) ??
+                        convertDocsAvailability(parentAvailability),
                     isResponseStream: endpoint.response?.type.type === "stream",
                     title: endpoint.name ?? stringifyEndpointPathParts(endpoint.path.parts),
                     slug: endpointSlug.get(),
@@ -1003,7 +1006,9 @@ export class ApiReferenceNodeConverter {
                 icon: undefined,
                 hidden: this.hideChildren,
                 apiDefinitionId: this.apiDefinitionId,
-                availability: FernNavigation.V1.convertAvailability(webSocket.availability) ?? parentAvailability,
+                availability:
+                    FernNavigation.V1.convertAvailability(webSocket.availability) ??
+                    convertDocsAvailability(parentAvailability),
                 playground: undefined,
                 authed: undefined,
                 viewers: undefined,
@@ -1032,7 +1037,9 @@ export class ApiReferenceNodeConverter {
                 icon: undefined,
                 hidden: this.hideChildren,
                 apiDefinitionId: this.apiDefinitionId,
-                availability: FernNavigation.V1.convertAvailability(webhook.availability) ?? parentAvailability,
+                availability:
+                    FernNavigation.V1.convertAvailability(webhook.availability) ??
+                    convertDocsAvailability(parentAvailability),
                 authed: undefined,
                 viewers: undefined,
                 orphaned: undefined,
@@ -1087,7 +1094,7 @@ export class ApiReferenceNodeConverter {
                     overviewPageId: tagDescriptionPageId,
                     collapsible: undefined,
                     collapsedByDefault: undefined,
-                    availability: parentAvailability,
+                    availability: convertDocsAvailability(parentAvailability),
                     apiDefinitionId: this.apiDefinitionId,
                     pointsTo: undefined,
                     noindex: undefined,
@@ -1190,7 +1197,7 @@ export class ApiReferenceNodeConverter {
                         operationType: operation.operationType,
                         graphqlOperationId: APIV1Read.GraphQlOperationId(operation.id),
                         apiDefinitionId: this.apiDefinitionId,
-                        availability: parentAvailability,
+                        availability: convertDocsAvailability(parentAvailability),
                         title: operation.displayName ?? operation.name ?? operation.id,
                         slug: operationSlug.get(),
                         icon: undefined,
@@ -1215,7 +1222,7 @@ export class ApiReferenceNodeConverter {
                     overviewPageId: undefined,
                     collapsible: undefined,
                     collapsedByDefault: undefined,
-                    availability: parentAvailability,
+                    availability: convertDocsAvailability(parentAvailability),
                     apiDefinitionId: this.apiDefinitionId,
                     pointsTo: undefined,
                     noindex: undefined,
@@ -1242,7 +1249,7 @@ export class ApiReferenceNodeConverter {
                 overviewPageId: undefined,
                 collapsible: undefined,
                 collapsedByDefault: undefined,
-                availability: parentAvailability,
+                availability: convertDocsAvailability(parentAvailability),
                 apiDefinitionId: this.apiDefinitionId,
                 pointsTo: undefined,
                 noindex: undefined,
@@ -1275,7 +1282,7 @@ export class ApiReferenceNodeConverter {
                     operationType: operation.operationType,
                     graphqlOperationId: APIV1Read.GraphQlOperationId(operation.id),
                     apiDefinitionId: this.apiDefinitionId,
-                    availability: parentAvailability,
+                    availability: convertDocsAvailability(parentAvailability),
                     title: operation.displayName ?? operation.name ?? operation.id,
                     slug: operationSlug.get(),
                     icon: undefined,
@@ -1300,7 +1307,7 @@ export class ApiReferenceNodeConverter {
                 overviewPageId: undefined,
                 collapsible: undefined,
                 collapsedByDefault: undefined,
-                availability: parentAvailability,
+                availability: convertDocsAvailability(parentAvailability),
                 apiDefinitionId: this.apiDefinitionId,
                 pointsTo: undefined,
                 noindex: undefined,

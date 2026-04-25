@@ -473,6 +473,7 @@ export function convertIrAvailability(availability: Ir.Availability | undefined)
         case "GENERAL_AVAILABILITY":
             return FdrCjsSdk.Availability.GenerallyAvailable;
         case "IN_DEVELOPMENT":
+            return FdrCjsSdk.Availability.Beta;
         case "ALPHA":
             // TODO: switch to FdrCjsSdk.Availability.Alpha once the next fdr-sdk release includes it
             return FdrCjsSdk.Availability.Beta;
