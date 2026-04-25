@@ -155,9 +155,7 @@ export async function writeFilesToDiskAndRunGenerator({
     // - v1 reads only from the regular IR path and doesn't use either field
     // Non-Java generators get the unmodified IR.
     const migrationIr =
-        deferredExampleGeneration != null
-            ? (stripExamplesAndDynamicFromIr(ir) as IntermediateRepresentation)
-            : ir;
+        deferredExampleGeneration != null ? (stripExamplesAndDynamicFromIr(ir) as IntermediateRepresentation) : ir;
     context.logger.info(`[perf] prepareIR: ${Date.now() - t0}ms`);
 
     const t1 = Date.now();
@@ -384,7 +382,9 @@ export async function writeFilesToDiskAndRunGenerator({
                 await writeFile(absolutePath, content);
             })
         );
-        context.logger.info(`[perf] writePreGeneratedSnippets: ${Date.now() - wStart}ms (${preGeneratedFiles.length} files)`);
+        context.logger.info(
+            `[perf] writePreGeneratedSnippets: ${Date.now() - wStart}ms (${preGeneratedFiles.length} files)`
+        );
     }
 
     return {
