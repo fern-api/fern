@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v66.2.0] - 2026-04-24
+- Feature: Add optional `baseProperties` field to `UndiscriminatedUnionTypeDeclaration`. When present, contains
+  a list of `ObjectProperty` representing sibling properties defined alongside `oneOf`/`anyOf` in OpenAPI specs.
+  Enables generators to render shared fields on undiscriminated union types. Populated by both the V3 Importer
+  and Legacy Importer when sibling properties are detected.
+
 ## [v66.1.0] - 2026-04-08
 - Feature: Add optional `default` field to `UnionTypeDeclaration`. When set, specifies the default union
   variant to fall back to when the discriminant field is missing from input. Populated from OpenAPI specs
