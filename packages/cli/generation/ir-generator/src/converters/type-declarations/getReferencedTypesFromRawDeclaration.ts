@@ -103,13 +103,24 @@ export function getReferencedTypesFromRawDeclaration({
             return types;
         },
         undiscriminatedUnion: (unionDeclaration) => {
-            return Object.values(unionDeclaration.union).reduce<string[]>((types, unionMember) => {
-                const rawType = typeof unionMember === "string" ? unionMember : unionMember.type;
-                if (typeof rawType === "string") {
-                    types.push(rawType);
-                }
-                return types;
-            }, []);
+            const types: string[] = [];
+            if (unionDeclaration["base-properties"] != null) {
+                types.push(
+                    ...Object.values(unionDeclaration["base-properties"]).map((property) =>
+                        typeof property === "string" ? property : property.type
+                    )
+                );
+            }
+            types.push(
+                ...Object.values(unionDeclaration.union).reduce<string[]>((memberTypes, unionMember) => {
+                    const rawType = typeof unionMember === "string" ? unionMember : unionMember.type;
+                    if (typeof rawType === "string") {
+                        memberTypes.push(rawType);
+                    }
+                    return memberTypes;
+                }, [])
+            );
+            return types;
         },
         enum: () => []
     });

@@ -1218,7 +1218,10 @@ jobs:
       - name: Upload PR docs benchmark results
         uses: actions/upload-artifact@v6
         with:
-          name: benchmark-pr-docs
+          # Must not match the `benchmark-pr-*` pattern used by the SDK
+          # benchmark report download, or docs jsonl rows (which have no
+          # .generator field) leak into the SDK benchmark table.
+          name: benchmark-docs-pr
           path: benchmark-results/
           retention-days: 5
 
@@ -1244,7 +1247,7 @@ jobs:
       - name: Download PR docs benchmark artifacts
         uses: actions/download-artifact@v7
         with:
-          pattern: benchmark-pr-docs
+          pattern: benchmark-docs-pr
           path: docs-pr-results
           merge-multiple: true
 

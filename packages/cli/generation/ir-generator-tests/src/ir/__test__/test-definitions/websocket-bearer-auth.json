@@ -12,6 +12,7 @@
                 "_type": "bearer",
                 "token": "apiKey",
                 "tokenEnvVar": "SEED_API_KEY",
+                "tokenPlaceholder": null,
                 "key": "Bearer",
                 "docs": null
             }

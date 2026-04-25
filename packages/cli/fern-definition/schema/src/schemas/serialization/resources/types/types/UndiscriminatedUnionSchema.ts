@@ -5,6 +5,7 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { BaseTypeDeclarationSchema } from "./BaseTypeDeclarationSchema.js";
 import { SingleUndiscriminatedUnionTypeSchema } from "./SingleUndiscriminatedUnionTypeSchema.js";
+import { TypeReferenceSchema } from "./TypeReferenceSchema.js";
 
 export const UndiscriminatedUnionSchema: core.serialization.ObjectSchema<
     serializers.UndiscriminatedUnionSchema.Raw,
@@ -12,6 +13,7 @@ export const UndiscriminatedUnionSchema: core.serialization.ObjectSchema<
 > = core.serialization
     .object({
         discriminated: core.serialization.booleanLiteral(false),
+        "base-properties": core.serialization.record(core.serialization.string(), TypeReferenceSchema).optional(),
         union: core.serialization.list(SingleUndiscriminatedUnionTypeSchema),
     })
     .extend(BaseTypeDeclarationSchema);
@@ -19,6 +21,7 @@ export const UndiscriminatedUnionSchema: core.serialization.ObjectSchema<
 export declare namespace UndiscriminatedUnionSchema {
     export interface Raw extends BaseTypeDeclarationSchema.Raw {
         discriminated: false;
+        "base-properties"?: Record<string, TypeReferenceSchema.Raw> | null;
         union: SingleUndiscriminatedUnionTypeSchema.Raw[];
     }
 }

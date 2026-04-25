@@ -8,4 +8,6 @@ export interface HeaderAuthScheme extends FernIr.BaseAuthScheme {
     prefix: string | undefined;
     /** The environment variable the SDK should use to read the header. */
     headerEnvVar: FernIr.EnvironmentVariable | undefined;
+    /** The placeholder value to use in code snippets for the header (e.g., "YOUR_API_KEY"). */
+    headerPlaceholder: string | undefined;
 }

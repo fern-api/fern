@@ -12,6 +12,7 @@
                 "_type": "bearer",
                 "token": "token",
                 "tokenEnvVar": null,
+                "tokenPlaceholder": null,
                 "key": "BearerAuthScheme",
                 "docs": null
             }
@@ -259,6 +260,7 @@
             },
             "shape": {
                 "_type": "undiscriminatedUnion",
+                "baseProperties": null,
                 "members": [
                     {
                         "type": {

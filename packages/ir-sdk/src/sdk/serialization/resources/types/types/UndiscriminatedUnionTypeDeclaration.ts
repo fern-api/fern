@@ -3,6 +3,7 @@
 import type * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
+import { ObjectProperty } from "./ObjectProperty.js";
 import { UndiscriminatedUnionMember } from "./UndiscriminatedUnionMember.js";
 
 export const UndiscriminatedUnionTypeDeclaration: core.serialization.ObjectSchema<
@@ -10,10 +11,12 @@ export const UndiscriminatedUnionTypeDeclaration: core.serialization.ObjectSchem
     FernIr.UndiscriminatedUnionTypeDeclaration
 > = core.serialization.objectWithoutOptionalProperties({
     members: core.serialization.list(UndiscriminatedUnionMember),
+    baseProperties: core.serialization.list(ObjectProperty).optional(),
 });
 
 export declare namespace UndiscriminatedUnionTypeDeclaration {
     export interface Raw {
         members: UndiscriminatedUnionMember.Raw[];
+        baseProperties?: ObjectProperty.Raw[] | null;
     }
 }

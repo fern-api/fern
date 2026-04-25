@@ -186,6 +186,7 @@ types:
   UndiscriminatedUnionTypeDeclaration:
     properties:
       members: list<UndiscriminatedUnionMember>
+      baseProperties: optional<list<ObjectProperty>>
 
   UndiscriminatedUnionMember:
     extends: commons.WithDocs

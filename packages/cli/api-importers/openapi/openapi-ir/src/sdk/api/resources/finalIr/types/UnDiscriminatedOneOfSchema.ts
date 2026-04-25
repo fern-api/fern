@@ -12,5 +12,6 @@ export interface UnDiscriminatedOneOfSchema
         FernOpenapiIr.WithSource,
         FernOpenapiIr.WithTitle,
         FernOpenapiIr.WithInline {
+    commonProperties: FernOpenapiIr.CommonProperty[] | undefined;
     schemas: FernOpenapiIr.Schema[];
 }

@@ -12,6 +12,7 @@
                 "_type": "bearer",
                 "token": "token",
                 "tokenEnvVar": "MY_TOKEN",
+                "tokenPlaceholder": null,
                 "key": "Bearer",
                 "docs": null
             },
@@ -34,6 +35,7 @@
                 },
                 "prefix": null,
                 "headerEnvVar": "MY_API_KEY",
+                "headerPlaceholder": null,
                 "key": "ApiKey",
                 "docs": null
             },
@@ -217,9 +219,11 @@
                 "username": "username",
                 "usernameEnvVar": "MY_USERNAME",
                 "usernameOmit": null,
+                "usernamePlaceholder": null,
                 "password": "password",
                 "passwordEnvVar": "MY_PASSWORD",
                 "passwordOmit": null,
+                "passwordPlaceholder": null,
                 "key": "Basic",
                 "docs": null
             },

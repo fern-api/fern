@@ -552,6 +552,7 @@
       },
       "shape": {
         "_visit": [Function],
+        "baseProperties": undefined,
         "members": [
           {
             "docs": "AnyOf error variant A",
@@ -751,6 +752,7 @@
       },
       "shape": {
         "_visit": [Function],
+        "baseProperties": undefined,
         "members": [
           {
             "docs": "First variant for anyOf without title",
