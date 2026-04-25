@@ -1,3 +1,4 @@
+// TEMP: trigger php-sdk benchmark to validate post-lockfile-fix wiring; reverted in same PR.
 import { SdkGeneratorCLI } from "./SdkGeneratorCli.js";
 
 void runCli();
