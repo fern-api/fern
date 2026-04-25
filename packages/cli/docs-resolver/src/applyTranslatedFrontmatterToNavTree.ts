@@ -3,7 +3,8 @@ import matter from "gray-matter";
 
 interface FrontmatterOverride {
     sidebarTitle?: string;
-    slug?: string;
+    // TODO(translations-alpha): slug overrides are not yet supported because PageNode.slug
+    // is a fully-qualified path that requires proper composition with parent slugs.
 }
 
 function parseFrontmatterOverrides(markdown: string): FrontmatterOverride {
@@ -14,10 +15,7 @@ function parseFrontmatterOverrides(markdown: string): FrontmatterOverride {
         if (typeof sidebarTitle === "string" && sidebarTitle.trim().length > 0) {
             result.sidebarTitle = sidebarTitle.trim();
         }
-        const slug = data["slug"];
-        if (typeof slug === "string" && slug.trim().length > 0) {
-            result.slug = slug.trim();
-        }
+        // TODO(translations-alpha): slug parsing removed until proper composition is implemented
         return result;
     } catch {
         return {};
@@ -25,9 +23,12 @@ function parseFrontmatterOverrides(markdown: string): FrontmatterOverride {
 }
 
 /**
- * Walks the navigation tree and applies sidebar-title and slug overrides from
+ * Walks the navigation tree and applies sidebar-title overrides from
  * translated page frontmatter. The CLI calls this before sending a translated
  * DocsDefinition to FDR so that the server receives a fully-computed nav tree.
+ *
+ * Note: slug overrides are not yet supported because PageNode.slug is a fully-qualified
+ * path that requires proper composition with parent slugs.
  *
  * @param root - the base navigation tree (from the original docsDefinition)
  * @param translatedPages - map of pageId (relative file path) to translated markdown
@@ -44,7 +45,7 @@ export function applyTranslatedFrontmatterToNavTree(
     const overrides = new Map<string, FrontmatterOverride>();
     for (const [pageId, markdown] of Object.entries(translatedPages)) {
         const fm = parseFrontmatterOverrides(markdown);
-        if (fm.sidebarTitle != null || fm.slug != null) {
+        if (fm.sidebarTitle != null) {
             overrides.set(pageId, fm);
         }
     }
@@ -77,9 +78,10 @@ function walkNode(node: unknown, overrides: Map<string, FrontmatterOverride>): u
             if (override.sidebarTitle != null) {
                 updated["title"] = override.sidebarTitle;
             }
-            if (override.slug != null) {
-                updated["slug"] = override.slug;
-            }
+            // TODO(translations-alpha): Slug overrides are intentionally skipped for now.
+            // PageNode.slug is a fully-qualified path (e.g. "fr/sdks/getting-started"),
+            // but frontmatter slug is just a leaf segment. Composing them properly requires
+            // extracting the SlugGenerator logic from DocsDefinitionResolver.
         }
     }
 

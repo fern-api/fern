@@ -626,8 +626,9 @@ export async function publishDocs({
         context.logger.debug(`Docs published to FDR in ${publishTime.toFixed(0)}ms`);
 
         // Register translated page content for each configured locale.
+        // Skip translation registration in preview mode to avoid overwriting production translations.
         const translationPages = resolver.getTranslationPages();
-        if (translationPages != null && Object.keys(translationPages).length > 0) {
+        if (!preview && translationPages != null && Object.keys(translationPages).length > 0) {
             context.logger.info(`Registering translations for ${Object.keys(translationPages).length} locale(s)...`);
             await Promise.all(
                 Object.entries(translationPages).map(async ([locale, localePages]) => {

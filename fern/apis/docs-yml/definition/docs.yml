@@ -292,7 +292,7 @@ types:
           translations:
             - lang: en
               default: true
-            - lang: jp
+            - lang: ja
             - lang: fr
           ```
 
