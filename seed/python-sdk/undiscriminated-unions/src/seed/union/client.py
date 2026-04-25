@@ -10,6 +10,7 @@ from .types.metadata_union import MetadataUnion
 from .types.my_union import MyUnion
 from .types.nested_union_root import NestedUnionRoot
 from .types.payment_method_union import PaymentMethodUnion
+from .types.union_with_base_properties import UnionWithBaseProperties
 from .types.union_with_duplicate_types import UnionWithDuplicateTypes
 
 # this is used as the default value for optional parameters
@@ -195,6 +196,39 @@ class UnionClient:
         )
         """
         _response = self._raw_client.nested_unions(request=request, request_options=request_options)
+        return _response.data
+
+    def get_with_base_properties(
+        self, *, request: UnionWithBaseProperties, request_options: typing.Optional[RequestOptions] = None
+    ) -> UnionWithBaseProperties:
+        """
+        Parameters
+        ----------
+        request : UnionWithBaseProperties
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        UnionWithBaseProperties
+
+        Examples
+        --------
+        from seed import SeedUndiscriminatedUnions
+        from seed.union import NamedMetadata
+
+        client = SeedUndiscriminatedUnions(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.union.get_with_base_properties(
+            request=NamedMetadata(
+                name="name",
+                value={"value": {"key": "value"}},
+            ),
+        )
+        """
+        _response = self._raw_client.get_with_base_properties(request=request, request_options=request_options)
         return _response.data
 
     def test_camel_case_properties(
@@ -460,6 +494,47 @@ class AsyncUnionClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.nested_unions(request=request, request_options=request_options)
+        return _response.data
+
+    async def get_with_base_properties(
+        self, *, request: UnionWithBaseProperties, request_options: typing.Optional[RequestOptions] = None
+    ) -> UnionWithBaseProperties:
+        """
+        Parameters
+        ----------
+        request : UnionWithBaseProperties
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        UnionWithBaseProperties
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedUndiscriminatedUnions
+        from seed.union import NamedMetadata
+
+        client = AsyncSeedUndiscriminatedUnions(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.union.get_with_base_properties(
+                request=NamedMetadata(
+                    name="name",
+                    value={"value": {"key": "value"}},
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_with_base_properties(request=request, request_options=request_options)
         return _response.data
 
     async def test_camel_case_properties(
