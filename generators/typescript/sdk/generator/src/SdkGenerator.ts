@@ -65,6 +65,7 @@ import { WebsocketSocketDeclarationReferencer } from "./declaration-referencers/
 import { WebsocketTypeSchemaDeclarationReferencer } from "./declaration-referencers/WebsocketTypeSchemaDeclarationReferencer.js";
 import { NonStatusCodeErrorHandlerGenerator } from "./non-status-code-error-handler/NonStatusCodeErrorHandlerGenerator.js";
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder.js";
+import { serializeEndpointSnippetsForWire } from "./serializeEndpointSnippetsForWire.js";
 import { TypeScriptGeneratorAgent } from "./TypeScriptGeneratorAgent.js";
 import { TestGenerator } from "./test-generator/TestGenerator.js";
 import { VersionFileGenerator } from "./version/VersionFileGenerator.js";
@@ -726,28 +727,12 @@ export class SdkGenerator {
 
         if (this.config.snippetFilepath != null) {
             this.generateSnippets();
-            // Serialize snippets manually instead of going through the Zurg
-            // serializer.  The only transforms jsonOrThrow applied were
-            // camelCase → snake_case renames (exampleIdentifier → example_identifier,
-            // identifierOverride → identifier_override).  Doing it inline avoids
-            // the recursive async validation overhead.
-            const serializedEndpoints = this.endpointSnippets.map((ep) => {
-                const entry: Record<string, unknown> = {
-                    id: {
-                        path: ep.id.path,
-                        method: ep.id.method,
-                        ...(ep.id.identifierOverride != null ? { identifier_override: ep.id.identifierOverride } : {})
-                    },
-                    snippet: ep.snippet
-                };
-                if (ep.exampleIdentifier != null) {
-                    entry.example_identifier = ep.exampleIdentifier;
-                }
-                return entry;
-            });
+            // Hand-rolled serializer in serializeEndpointSnippetsForWire avoids
+            // Zurg's recursive async validation overhead. Parity with Zurg is
+            // pinned by serializeEndpointSnippetsForWire.test.ts.
             await writeFile(
                 this.config.snippetFilepath,
-                JSON.stringify({ types: {}, endpoints: serializedEndpoints }, undefined, 4)
+                JSON.stringify(serializeEndpointSnippetsForWire(this.endpointSnippets), undefined, 4)
             );
             this.context.logger.debug("Generated snippets");
 
