@@ -9443,20 +9443,8 @@ packages:
     resolution: {integrity: sha512-BKtpmuyK98GagBSZ5CMe3oAkkwG5l3MId+/VyyyGbUV+HRrqIS+htIBlGmsNBW6fzuKK6hgOGn+Kyb2N4+Mejg==}
     engines: {node: '>=18.0.0'}
 
-  '@fern-fern/ir-sdk@66.3.0':
-    resolution: {integrity: sha512-BKtpmuyK98GagBSZ5CMe3oAkkwG5l3MId+/VyyyGbUV+HRrqIS+htIBlGmsNBW6fzuKK6hgOGn+Kyb2N4+Mejg==}
-    engines: {node: '>=18.0.0'}
-
-  '@fern-fern/ir-sdk@66.3.0':
-    resolution: {integrity: sha512-BKtpmuyK98GagBSZ5CMe3oAkkwG5l3MId+/VyyyGbUV+HRrqIS+htIBlGmsNBW6fzuKK6hgOGn+Kyb2N4+Mejg==}
-    engines: {node: '>=18.0.0'}
-
   '@fern-fern/ir-sdk@66.2.0':
     resolution: {integrity: sha512-xTDCg4mecJyOIfhVeWmZ5rquDxkBChEWO31mjWZrwo1tOQhsnFUb8gj5rLW5E0G525TfLGr/MKi3kbzq7E1uNw==}
-    engines: {node: '>=18.0.0'}
-
-  '@fern-fern/ir-sdk@66.3.0':
-    resolution: {integrity: sha512-BKtpmuyK98GagBSZ5CMe3oAkkwG5l3MId+/VyyyGbUV+HRrqIS+htIBlGmsNBW6fzuKK6hgOGn+Kyb2N4+Mejg==}
     engines: {node: '>=18.0.0'}
 
   '@fern-fern/ir-v53-sdk@1.0.1':
@@ -16593,13 +16581,7 @@ snapshots:
 
   '@fern-fern/ir-sdk@66.3.0': {}
 
-  '@fern-fern/ir-sdk@66.3.0': {}
-
-  '@fern-fern/ir-sdk@66.3.0': {}
-
   '@fern-fern/ir-sdk@66.2.0': {}
-
-  '@fern-fern/ir-sdk@66.3.0': {}
 
   '@fern-fern/ir-v53-sdk@1.0.1': {}
 
