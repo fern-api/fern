@@ -21,9 +21,9 @@ import { loggingExeca } from "@fern-api/logging-execa";
 import { CliError, TaskContext } from "@fern-api/task-context";
 
 import decompress from "decompress";
-import { cp, mkdir, readdir, readFile, rename, rm } from "fs/promises";
+import { cp, readdir, readFile, rm } from "fs/promises";
 import { tmpdir } from "os";
-import { dirname, join as pathJoin } from "path";
+import { join as pathJoin } from "path";
 import semver from "semver";
 import tmp from "tmp-promise";
 import { sanitizeChangelogEntry } from "./sanitizeChangelogEntry.js";
@@ -856,26 +856,7 @@ export class LocalTaskHandler {
         this.context.logger.debug(`rm -rf ${this.absolutePathToLocalOutput}`);
         await rm(this.absolutePathToLocalOutput, { force: true, recursive: true });
 
-        // EXP-043: Use rename (O(1) on same filesystem) instead of recursive cp (~2153 files).
-        // Only for non-zip output; zip requires decompress which rename can't do.
-        const contents = await readdir(this.absolutePathToTmpOutputDirectory);
-        const isZipOutput = contents.length > 0 && contents[0]?.endsWith(".zip");
-
-        if (!isZipOutput) {
-            try {
-                // Ensure parent directory exists (first run may not have created it yet)
-                const parentDir = dirname(this.absolutePathToLocalOutput);
-                await mkdir(parentDir, { recursive: true });
-                await rename(this.absolutePathToTmpOutputDirectory, this.absolutePathToLocalOutput);
-                return;
-            } catch (error: unknown) {
-                if ((error as NodeJS.ErrnoException).code !== "EXDEV") {
-                    throw error;
-                }
-                // Cross-device: fall through to recursive cp
-            }
-        }
-
+        // Copy generated files
         await this.copyGeneratedFilesToDirectory(this.absolutePathToLocalOutput);
     }
 
