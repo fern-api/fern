@@ -11,6 +11,7 @@ export declare namespace ExecutionEnvironment {
     interface ExecuteArgs {
         generatorName: string;
         irPath: AbsoluteFilePath;
+        fullIrPath?: AbsoluteFilePath;
         configPath: AbsoluteFilePath;
         outputPath: AbsoluteFilePath;
         snippetPath?: AbsoluteFilePath;
@@ -20,6 +21,8 @@ export declare namespace ExecutionEnvironment {
         context: TaskContext;
         inspect: boolean;
         runner: ContainerRunner | undefined;
+        /** EXP-044: When set, mount this single directory as /fern instead of individual file mounts. */
+        workspaceTempDir?: string;
     }
 }
 

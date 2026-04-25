@@ -1,5 +1,4 @@
-import { createWriteStream } from "fs";
-import { JsonStreamStringify } from "json-stream-stringify";
+import { writeFile } from "fs/promises";
 
 import { AbsoluteFilePath } from "./AbsoluteFilePath.js";
 
@@ -8,8 +7,6 @@ export async function streamObjectToFile(
     obj: unknown,
     { pretty = false }: { pretty?: boolean } = {}
 ): Promise<void> {
-    const stream = new JsonStreamStringify(obj, undefined, pretty ? 4 : undefined);
-    return new Promise((resolve, reject) => {
-        stream.pipe(createWriteStream(filepath)).on("error", reject).on("finish", resolve);
-    });
+    const json = JSON.stringify(obj, undefined, pretty ? 4 : undefined);
+    await writeFile(filepath, json);
 }

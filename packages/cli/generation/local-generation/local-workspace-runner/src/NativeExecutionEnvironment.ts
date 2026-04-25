@@ -30,6 +30,7 @@ export class NativeExecutionEnvironment implements ExecutionEnvironment {
     public async execute({
         generatorName,
         irPath,
+        fullIrPath,
         configPath,
         outputPath,
         snippetPath,
@@ -80,6 +81,7 @@ export class NativeExecutionEnvironment implements ExecutionEnvironment {
                         ...process.env,
                         ...this.env,
                         IR_PATH: irPath,
+                        ...(fullIrPath != null ? { FULL_IR_PATH: fullIrPath } : {}),
                         CONFIG_PATH: configPath,
                         OUTPUT_PATH: outputPath,
                         SNIPPET_PATH: snippetPath || "",

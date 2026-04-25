@@ -3,7 +3,9 @@ import { runContainer } from "@fern-api/docker-utils";
 import { CliError } from "@fern-api/task-context";
 import {
     CONTAINER_CODEGEN_OUTPUT_DIRECTORY,
+    CONTAINER_FERN_DIRECTORY,
     CONTAINER_GENERATOR_CONFIG_PATH,
+    CONTAINER_PATH_TO_FULL_IR,
     CONTAINER_PATH_TO_IR,
     CONTAINER_PATH_TO_SNIPPET,
     CONTAINER_PATH_TO_SNIPPET_TEMPLATES,
@@ -45,6 +47,7 @@ export class ContainerExecutionEnvironment implements ExecutionEnvironment {
     public async execute({
         generatorName,
         irPath,
+        fullIrPath,
         configPath,
         outputPath,
         snippetPath,
@@ -53,21 +56,31 @@ export class ContainerExecutionEnvironment implements ExecutionEnvironment {
         sourceMounts,
         context,
         inspect,
-        runner
+        runner,
+        workspaceTempDir
     }: ExecutionEnvironment.ExecuteArgs): Promise<void> {
         context.logger.info(`Executing generator ${generatorName} using container image: ${this.containerImage}`);
 
-        const binds = [
-            `${configPath}:${CONTAINER_GENERATOR_CONFIG_PATH}:ro`,
-            `${irPath}:${CONTAINER_PATH_TO_IR}:ro`,
-            `${outputPath}:${CONTAINER_CODEGEN_OUTPUT_DIRECTORY}`
-        ];
-
-        if (snippetPath) {
-            binds.push(`${snippetPath}:${CONTAINER_PATH_TO_SNIPPET}`);
-        }
-        if (snippetTemplatePath) {
-            binds.push(`${snippetTemplatePath}:${CONTAINER_PATH_TO_SNIPPET_TEMPLATES}`);
+        // EXP-044: When all files are in one temp dir, use a single bind mount
+        // instead of 5-6 individual file mounts to reduce Docker setup overhead.
+        const binds: string[] = [];
+        if (workspaceTempDir != null) {
+            binds.push(`${workspaceTempDir}:${CONTAINER_FERN_DIRECTORY}`);
+        } else {
+            binds.push(
+                `${configPath}:${CONTAINER_GENERATOR_CONFIG_PATH}:ro`,
+                `${irPath}:${CONTAINER_PATH_TO_IR}:ro`,
+                `${outputPath}:${CONTAINER_CODEGEN_OUTPUT_DIRECTORY}`
+            );
+            if (snippetPath) {
+                binds.push(`${snippetPath}:${CONTAINER_PATH_TO_SNIPPET}`);
+            }
+            if (snippetTemplatePath) {
+                binds.push(`${snippetTemplatePath}:${CONTAINER_PATH_TO_SNIPPET_TEMPLATES}`);
+            }
+            if (fullIrPath) {
+                binds.push(`${fullIrPath}:${CONTAINER_PATH_TO_FULL_IR}:ro`);
+            }
         }
 
         if (licenseFilePath) {
@@ -79,6 +92,9 @@ export class ContainerExecutionEnvironment implements ExecutionEnvironment {
         }
 
         const envVars: Record<string, string> = {};
+        if (fullIrPath) {
+            envVars["FULL_IR_PATH"] = CONTAINER_PATH_TO_FULL_IR;
+        }
         const ports: Record<string, string> = {};
         if (inspect) {
             envVars["NODE_OPTIONS"] = `--inspect-brk=0.0.0.0:${DEFAULT_NODE_DEBUG_PORT}`;

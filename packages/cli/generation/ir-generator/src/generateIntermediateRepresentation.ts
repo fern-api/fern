@@ -562,15 +562,17 @@ export function generateIntermediateRepresentation({
         readmeConfig
     });
 
+    const dynamic = convertIrToDynamicSnippetsIr({
+        ir: finalIR,
+        generatorConfig: dynamicGeneratorConfig,
+        disableExamples: disableDynamicExamples,
+        generationLanguage,
+        smartCasing
+    });
+
     return {
         ...finalIR,
-        dynamic: convertIrToDynamicSnippetsIr({
-            ir: finalIR,
-            generatorConfig: dynamicGeneratorConfig,
-            disableExamples: disableDynamicExamples,
-            generationLanguage,
-            smartCasing
-        })
+        dynamic
     };
 }
 

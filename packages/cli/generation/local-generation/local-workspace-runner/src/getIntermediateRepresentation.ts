@@ -97,10 +97,13 @@ export async function getIntermediateRepresentation({
     };
 
     context.logger.debug("Generated IR");
-    const irVersionFromFdr = await getIrVersionForGenerator(generatorInvocation).then((version) =>
-        version == null ? undefined : "v" + version.toString()
-    );
-    const resolvedIrVersionOverride = irVersionOverride ?? irVersionFromFdr;
+    let resolvedIrVersionOverride = irVersionOverride;
+    if (resolvedIrVersionOverride == null) {
+        const irVersionFromFdr = await getIrVersionForGenerator(generatorInvocation).then((version) =>
+            version == null ? undefined : "v" + version.toString()
+        );
+        resolvedIrVersionOverride = irVersionFromFdr;
+    }
     const migratedIntermediateRepresentation =
         resolvedIrVersionOverride != null
             ? await migrateIntermediateRepresentationThroughVersion({

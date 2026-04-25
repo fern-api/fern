@@ -14,6 +14,8 @@ import { CliError, TaskAbortSignal, TaskContext } from "@fern-api/task-context";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import chalk from "chalk";
 import { generateDynamicSnippetTests } from "./dynamic-snippets/generateDynamicSnippetTests.js";
+import { generateDynamicSnippetsTestSuite } from "./dynamic-snippets/generateDynamicSnippetsTestSuite.js";
+import { DynamicSnippetsJavaTestGenerator } from "./dynamic-snippets/java/DynamicSnippetsJavaTestGenerator.js";
 import { ExecutionEnvironment } from "./ExecutionEnvironment.js";
 import { writeFilesToDiskAndRunGenerator } from "./runGenerator.js";
 import { getWorkspaceTempDir } from "./runLocalGenerationForWorkspace.js";
@@ -71,7 +73,7 @@ export class GenerationRunner {
                         }
 
                         try {
-                            const { ir, generatorConfig } = await this.executeGenerator({
+                            const { ir, generatorConfig, preGeneratedFiles } = await this.executeGenerator({
                                 generatorGroup,
                                 generatorInvocation,
                                 context: interactiveTaskContext,
@@ -82,14 +84,21 @@ export class GenerationRunner {
                                 absolutePathToFernConfig,
                                 inspect,
                                 skipFernignore,
-                                skipAutogenerationIfManualExamplesExist
+                                skipAutogenerationIfManualExamplesExist,
+                                shouldGenerateDynamicSnippetTests,
+                                skipUnstableDynamicSnippetTests
                             });
 
                             interactiveTaskContext.logger.info(
                                 chalk.green("Wrote files to " + generatorInvocation.absolutePathToLocalOutput)
                             );
 
-                            if (shouldGenerateDynamicSnippetTests && generatorInvocation.language != null) {
+                            // EXP-042: Skip separate snippet generation if pre-generated during Docker execution
+                            if (preGeneratedFiles != null && preGeneratedFiles.length > 0) {
+                                interactiveTaskContext.logger.info(
+                                    `Dynamic snippet tests were pre-generated (${preGeneratedFiles.length} files)`
+                                );
+                            } else if (shouldGenerateDynamicSnippetTests && generatorInvocation.language != null) {
                                 interactiveTaskContext.logger.info(
                                     `Generating dynamic snippet tests for ${generatorInvocation.language}...`
                                 );
@@ -134,7 +143,9 @@ export class GenerationRunner {
         absolutePathToFernConfig,
         inspect,
         skipFernignore,
-        skipAutogenerationIfManualExamplesExist
+        skipAutogenerationIfManualExamplesExist,
+        shouldGenerateDynamicSnippetTests,
+        skipUnstableDynamicSnippetTests
     }: {
         generatorGroup: generatorsYml.GeneratorGroup;
         generatorInvocation: generatorsYml.GeneratorInvocation;
@@ -147,9 +158,12 @@ export class GenerationRunner {
         inspect: boolean;
         skipFernignore?: boolean;
         skipAutogenerationIfManualExamplesExist?: boolean;
+        shouldGenerateDynamicSnippetTests?: boolean;
+        skipUnstableDynamicSnippetTests?: boolean;
     }): Promise<{
         ir: IntermediateRepresentation;
         generatorConfig: FernGeneratorExec.GeneratorConfig;
+        preGeneratedFiles?: Array<{ absolutePath: string; content: string }>;
         shouldCommit: boolean;
         autoVersioningCommitMessage?: string;
         autoVersioningChangelogEntry?: string;
@@ -162,18 +176,27 @@ export class GenerationRunner {
             throw new CliError({ message: "Output path is required for generation", code: CliError.Code.ConfigError });
         }
 
-        // Generate IR once here
+        // EXP-022: Defer example generation to overlap with container execution.
+        // Generate base IR without examples (~400ms instead of ~1550ms), then
+        // run example generation (~1150ms) in parallel with container execution.
+        const exampleGeneration = {
+            includeOptionalRequestPropertyExamples: true,
+            disabled: generatorInvocation.disableExamples ?? false,
+            skipAutogenerationIfManualExamplesExist: skipAutogenerationIfManualExamplesExist ?? false
+        };
+        // Only defer examples for Java generators that support FULL_IR_PATH recovery.
+        // Non-Java generators must receive the full IR with examples and dynamic field.
+        const isJavaGenerator = generatorInvocation.language === "java";
+        const shouldDeferExamples = isJavaGenerator && !exampleGeneration.disabled;
+
+        const irStart = Date.now();
         const rawIr = generateIntermediateRepresentation({
             workspace,
             audiences: generatorGroup.audiences,
             generationLanguage: generatorInvocation.language,
             keywords: generatorInvocation.keywords,
             smartCasing: generatorInvocation.smartCasing,
-            exampleGeneration: {
-                includeOptionalRequestPropertyExamples: true,
-                disabled: generatorInvocation.disableExamples,
-                skipAutogenerationIfManualExamplesExist: skipAutogenerationIfManualExamplesExist ?? false
-            },
+            exampleGeneration: shouldDeferExamples ? { ...exampleGeneration, disabled: true } : exampleGeneration,
             readme: generatorInvocation.readme,
             version: outputVersionOverride,
             packageName: generatorsYml.getPackageName({ generatorInvocation }),
@@ -191,10 +214,10 @@ export class GenerationRunner {
                 ciProvider: detectCiProvider()
             }
         });
+        context.logger.info(`[perf] generateIR: ${Date.now() - irStart}ms`);
 
         const workspaceTempDir = await getWorkspaceTempDir();
 
-        // Pass the generated IR to writeFilesToDiskAndRunGenerator
         return writeFilesToDiskAndRunGenerator({
             organization,
             absolutePathToFernConfig,
@@ -224,7 +247,35 @@ export class GenerationRunner {
             runner: undefined,
             ai: workspace.generatorsConfiguration?.ai,
             absolutePathToSpecRepo: undefined,
-            skipFernignore
+            skipFernignore,
+            deferredExampleGeneration: shouldDeferExamples
+                ? {
+                      exampleGeneration,
+                      generationLanguage: generatorInvocation.language,
+                      smartCasing: generatorInvocation.smartCasing
+                  }
+                : undefined,
+            // EXP-042: Pre-generate Java snippet tests during Docker execution.
+            // After deferred IR work completes (examples + dynamic ready), the snippet
+            // generation runs concurrently with Docker container, saving ~755ms.
+            onDeferredWorkComplete:
+                shouldDeferExamples &&
+                shouldGenerateDynamicSnippetTests &&
+                generatorInvocation.language === "java" &&
+                generatorInvocation.absolutePathToLocalOutput != null
+                    ? async (ir, config) => {
+                          const testSuite = await generateDynamicSnippetsTestSuite({ ir, config });
+                          const generator = new DynamicSnippetsJavaTestGenerator(
+                              context,
+                              testSuite.ir,
+                              testSuite.config
+                          );
+                          return generator.generateSnippetsInMemory({
+                              outputDir: generatorInvocation.absolutePathToLocalOutput!,
+                              requests: testSuite.requests
+                          });
+                      }
+                    : undefined
         });
     }
 }

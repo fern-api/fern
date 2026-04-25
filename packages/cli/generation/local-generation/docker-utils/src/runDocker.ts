@@ -115,10 +115,13 @@ async function tryRunContainer({
     if (process.env["FERN_STACK_TRACK"]) {
         envVars["FERN_STACK_TRACK"] = process.env["FERN_STACK_TRACK"];
     }
+    const hasPortMappings = Object.keys(ports).length > 0;
     const containerArgs = [
         "run",
         "--user",
         "root",
+        // Skip network namespace setup when no ports are needed (saves ~100-200ms Docker overhead)
+        ...(!hasPortMappings ? ["--network", "none"] : []),
         ...binds.flatMap((bind) => ["-v", bind]),
         ...Object.entries(envVars).flatMap(([key, value]) => ["-e", `${key}=\"${value}\"`]),
         ...Object.entries(ports).flatMap(([hostPort, containerPort]) => ["-p", `${hostPort}:${containerPort}`]),

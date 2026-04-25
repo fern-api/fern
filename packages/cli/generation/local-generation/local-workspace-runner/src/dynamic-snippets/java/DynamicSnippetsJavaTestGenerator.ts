@@ -1,11 +1,10 @@
 import { Style } from "@fern-api/browser-compatible-base-generator";
-import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { dynamic } from "@fern-api/ir-sdk";
 import { Config, DynamicSnippetsGenerator } from "@fern-api/java-dynamic-snippets";
-import { loggingExeca } from "@fern-api/logging-execa";
-import { CliError, TaskContext } from "@fern-api/task-context";
+import { TaskContext } from "@fern-api/task-context";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { cp, mkdir, writeFile } from "fs/promises";
+import { mkdir, writeFile } from "fs/promises";
 import path from "path";
 
 import { DynamicSnippetsTestRequest } from "../DynamicSnippetsTestSuite.js";
@@ -71,40 +70,52 @@ export class DynamicSnippetsJavaTestGenerator {
                 );
             }
         }
-        this.context.logger.debug("Dynamic snippets test files generated, running spotlessApply...");
-        const gradlewPath = join(outputDir, RelativeFilePath.of("gradlew"));
-        const gradlewExists = await doesPathExist(gradlewPath, "file");
-        if (gradlewExists) {
+        // Skip spotlessApply: dynamic snippet test files are generated test code that only
+        // needs to compile. Gradle Spotless takes ~29s (cold) / ~13s (warm) and dominates
+        // the generation time. The SDK source code is already formatted by the v1 generator.
+        this.context.logger.debug("Done generating dynamic snippet tests");
+    }
+
+    /**
+     * EXP-042: Generate snippet test files in memory without writing to disk.
+     * Returns file data for later writing (after copyGeneratedFiles completes).
+     */
+    public async generateSnippetsInMemory({
+        outputDir,
+        requests
+    }: {
+        outputDir: AbsoluteFilePath;
+        requests: DynamicSnippetsTestRequest[];
+    }): Promise<Array<{ absolutePath: string; content: string }>> {
+        this.context.logger.debug("Pre-generating dynamic snippet tests in memory...");
+        const absolutePathToOutputDir = join(outputDir, RelativeFilePath.of("src/main/java/com/snippets"));
+        const files: Array<{ absolutePath: string; content: string }> = [];
+        for (const [idx, { endpointId, request }] of requests.entries()) {
             try {
-                const customConfig = this.generatorConfig.customConfig as Record<string, unknown> | undefined;
-                const enableProfiling = customConfig?.["enable-gradle-profiling"] === true;
-                const gradleArgs = [":spotlessApply"];
-                if (enableProfiling) {
-                    gradleArgs.push("--profile");
-                    this.context.logger.info("Running spotlessApply with profiling enabled");
+                const convertedRequest = convertDynamicEndpointSnippetRequest(request);
+                if (convertedRequest == null) {
+                    continue;
                 }
-                await loggingExeca(this.context.logger, "./gradlew", gradleArgs, {
-                    doNotPipeOutput: false,
-                    cwd: outputDir
+                const response = await this.dynamicSnippetsGenerator.generate(convertedRequest, {
+                    config: {
+                        fullStyleClassName: `Example${idx}`,
+                        fullStylePackageName: "com.snippets"
+                    } as Config,
+                    style: Style.Full,
+                    endpointId
                 });
-                this.context.logger.debug("Successfully ran spotlessApply");
-                if (enableProfiling) {
-                    // Copy build/reports/ to reports/ at the root so it's not gitignored
-                    const buildReportsPath = join(outputDir, RelativeFilePath.of("build/reports"));
-                    const reportsPath = join(outputDir, RelativeFilePath.of("reports"));
-                    const buildReportsExists = await doesPathExist(buildReportsPath, "directory");
-                    if (buildReportsExists) {
-                        await cp(buildReportsPath, reportsPath, { recursive: true });
-                        this.context.logger.info("Gradle profiling report copied to reports/");
-                    } else {
-                        this.context.logger.info("No profiling report found in build/reports/");
-                    }
-                }
-            } catch (e) {
-                this.context.failAndThrow("Failed to run spotlessApply", e, { code: CliError.Code.InternalError });
+                files.push({
+                    absolutePath: join(absolutePathToOutputDir, RelativeFilePath.of(`Example${idx}.java`)),
+                    content: response.snippet
+                });
+            } catch (error) {
+                this.context.logger.error(
+                    `Failed to generate dynamic snippet for endpoint ${JSON.stringify(request.endpoint)}: ${error}`
+                );
             }
         }
-        this.context.logger.debug("Done generating dynamic snippet tests");
+        this.context.logger.debug(`Pre-generated ${files.length} dynamic snippet tests`);
+        return files;
     }
 
     private async initializeProject(outputDir: AbsoluteFilePath): Promise<AbsoluteFilePath> {

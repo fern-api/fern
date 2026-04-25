@@ -34,7 +34,6 @@
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/path-utils": "workspace:*",
     "glob": "catalog:",
-    "json-stream-stringify": "catalog:",
     "stream-json": "catalog:",
     "tmp-promise": "catalog:"
   },
