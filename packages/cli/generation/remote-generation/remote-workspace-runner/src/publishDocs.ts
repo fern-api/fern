@@ -639,20 +639,40 @@ export async function publishDocs({
                         // overriding translated pages, and updating the nav tree to reflect
                         // any sidebar-title / slug frontmatter in the translated pages.
                         //
-                        // For each translated page, we:
+                        // For each translated page, we apply the same transformations as default locale pages:
                         // 1. Strip MDX comments to prevent leakage
-                        // 2. Preserve editThisPageUrl/editThisPageLaunch from the base page
+                        // 2. Replace relative image paths with file IDs (using base page path for resolution)
+                        // 3. Preserve editThisPageUrl/editThisPageLaunch from the base page
                         //
                         // TODO(translations-alpha): Translated pages still need:
                         // - replaceReferencedMarkdown/Code for <Markdown src="..."/> and <CodeBlock src="..."/>
                         // - transformAtPrefixImports for @/... and @components/... imports
-                        // - replaceImagePathsAndUrls for relative image paths (complex: needs path remapping)
+                        const collectedFileIds = resolver.getCollectedFileIds();
+                        const docsWorkspacePath = resolver.getDocsWorkspacePath();
+
                         const translatedPages = {
                             ...docsDefinition.pages,
                             ...Object.fromEntries(
                                 Object.entries(localePages).map(([path, rawMarkdown]) => {
                                     const basePage = docsDefinition.pages[path as DocsV1Write.PageId];
-                                    const processedMarkdown = stripMdxComments(rawMarkdown);
+                                    // Strip MDX comments first
+                                    let processedMarkdown = stripMdxComments(rawMarkdown);
+                                    // Replace image paths using the base page's location for resolution
+                                    // (translated pages reference the same images as the default locale)
+                                    const absolutePathToMarkdownFile = resolve(
+                                        docsWorkspacePath,
+                                        RelativeFilePath.of(path)
+                                    );
+                                    processedMarkdown = replaceImagePathsAndUrls(
+                                        processedMarkdown,
+                                        collectedFileIds,
+                                        {}, // markdownFilesToPathName not needed for translations
+                                        {
+                                            absolutePathToMarkdownFile,
+                                            absolutePathToFernFolder: docsWorkspacePath
+                                        },
+                                        context
+                                    );
                                     return [
                                         path,
                                         {
