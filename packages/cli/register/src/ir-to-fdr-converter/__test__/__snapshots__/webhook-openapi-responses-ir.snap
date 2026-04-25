@@ -911,7 +911,7 @@
       {
         "availability": {
           "message": undefined,
-          "status": "PRE_RELEASE",
+          "status": "BETA",
         },
         "displayName": "Document uploaded webhook (multipart)",
         "docs": "Webhook triggered when a document is uploaded via multipart form",

@@ -5,8 +5,27 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
 export const Availability: core.serialization.Schema<serializers.Availability.Raw, FernDocsConfig.Availability> =
-    core.serialization.enum_(["stable", "generally-available", "in-development", "pre-release", "deprecated", "beta"]);
+    core.serialization.enum_([
+        "stable",
+        "generally-available",
+        "in-development",
+        "pre-release",
+        "deprecated",
+        "beta",
+        "alpha",
+        "preview",
+        "legacy",
+    ]);
 
 export declare namespace Availability {
-    export type Raw = "stable" | "generally-available" | "in-development" | "pre-release" | "deprecated" | "beta";
+    export type Raw =
+        | "stable"
+        | "generally-available"
+        | "in-development"
+        | "pre-release"
+        | "deprecated"
+        | "beta"
+        | "alpha"
+        | "preview"
+        | "legacy";
 }

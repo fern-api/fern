@@ -7,8 +7,8 @@ import type * as serializers from "../../../index.js";
 export const VersionAvailability: core.serialization.Schema<
     serializers.VersionAvailability.Raw,
     FernDocsConfig.VersionAvailability
-> = core.serialization.enum_(["deprecated", "ga", "stable", "beta"]);
+> = core.serialization.enum_(["deprecated", "legacy", "ga", "stable", "beta", "alpha", "preview"]);
 
 export declare namespace VersionAvailability {
-    export type Raw = "deprecated" | "ga" | "stable" | "beta";
+    export type Raw = "deprecated" | "legacy" | "ga" | "stable" | "beta" | "alpha" | "preview";
 }

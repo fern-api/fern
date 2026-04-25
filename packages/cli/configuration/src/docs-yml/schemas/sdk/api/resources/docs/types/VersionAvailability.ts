@@ -2,8 +2,11 @@
 
 export const VersionAvailability = {
     Deprecated: "deprecated",
+    Legacy: "legacy",
     Ga: "ga",
     Stable: "stable",
     Beta: "beta",
+    Alpha: "alpha",
+    Preview: "preview",
 } as const;
 export type VersionAvailability = (typeof VersionAvailability)[keyof typeof VersionAvailability];

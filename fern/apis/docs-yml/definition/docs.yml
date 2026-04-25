@@ -587,13 +587,22 @@ types:
         value: deprecated
       - name: Beta
         value: beta
+      - name: Alpha
+        value: alpha
+      - name: Preview
+        value: preview
+      - name: Legacy
+        value: legacy
 
   VersionAvailability:
     enum:
-      - deprecated # TODO: should we support `legacy`?
+      - deprecated
+      - legacy
       - ga
       - stable
       - beta
+      - alpha
+      - preview
 
   VersionFileConfig:
     properties:
