@@ -785,7 +785,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                             reference: scheme.valueType
                         }),
                         environmentVariable: scheme.headerEnvVar,
-                        exampleValue: this.case.screamingSnakeSafe(scheme.name)
+                        exampleValue: scheme.headerPlaceholder ?? this.case.screamingSnakeSafe(scheme.name)
                     }
                 ];
             }
@@ -810,7 +810,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         }),
                         type: this.Primitive.string,
                         environmentVariable: scheme.tokenEnvVar,
-                        exampleValue: this.case.screamingSnakeSafe(scheme.token)
+                        exampleValue: scheme.tokenPlaceholder ?? this.case.screamingSnakeSafe(scheme.token)
                     }
                 ];
             }
@@ -836,7 +836,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         }),
                         type: this.Primitive.string,
                         environmentVariable: scheme.usernameEnvVar,
-                        exampleValue: this.case.screamingSnakeSafe(scheme.username)
+                        exampleValue: scheme.usernamePlaceholder ?? this.case.screamingSnakeSafe(scheme.username)
                     });
                 }
                 if (!passwordOmitted) {
@@ -853,7 +853,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         }),
                         type: this.Primitive.string,
                         environmentVariable: scheme.passwordEnvVar,
-                        exampleValue: this.case.screamingSnakeSafe(scheme.password)
+                        exampleValue: scheme.passwordPlaceholder ?? this.case.screamingSnakeSafe(scheme.password)
                     });
                 }
                 return params;
