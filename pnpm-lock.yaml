@@ -1501,8 +1501,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
       '@fern-api/dynamic-ir-sdk':
-        specifier: 66.1.0
-        version: 66.1.0
+        specifier: 66.3.0
+        version: 66.3.0
       '@fern-api/path-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/path-utils
@@ -9385,6 +9385,10 @@ packages:
     resolution: {integrity: sha512-ILT96PcT+HV1pVGVNg3cs6xnb/JRdKCJ1Tk1AO+sTxQFRRHoIwqr1KUfEQVW9iuvBsbgiApRZHfw42e5r/uMlA==}
     engines: {node: '>=18.0.0'}
 
+  '@fern-api/dynamic-ir-sdk@66.3.0':
+    resolution: {integrity: sha512-hOfcPPkfhC5vhiZdDVxlsaAPfMQlWdswnpvQoDRhjDN+zGK+ctLiPF7jyKqwIBynG5GyS3SalI2/2r/IgcaFpA==}
+    engines: {node: '>=18.0.0'}
+
   '@fern-api/fai-sdk@0.0.6-2ee1b7e28':
     resolution: {integrity: sha512-3qhAAuc4ZJWLaFtyZzaYXfF9OQ5iviNrvLDXtjKScKUNS134fR3v3c3xedCidTq5KedapuBECziUaOmmd6KXVA==}
     engines: {node: '>=18.0.0'}
@@ -9439,12 +9443,12 @@ packages:
     resolution: {integrity: sha512-uo1+fMnJOw5ApWVmKzb5wcLggjS4te3N8QorMClttA6DcBpgn0x1HbSl823oSyFvdqNV9U7GjmeQ+kzX1lWJUg==}
     engines: {node: '>=18.0.0'}
 
-  '@fern-fern/ir-sdk@66.3.0':
-    resolution: {integrity: sha512-BKtpmuyK98GagBSZ5CMe3oAkkwG5l3MId+/VyyyGbUV+HRrqIS+htIBlGmsNBW6fzuKK6hgOGn+Kyb2N4+Mejg==}
-    engines: {node: '>=18.0.0'}
-
   '@fern-fern/ir-sdk@66.2.0':
     resolution: {integrity: sha512-xTDCg4mecJyOIfhVeWmZ5rquDxkBChEWO31mjWZrwo1tOQhsnFUb8gj5rLW5E0G525TfLGr/MKi3kbzq7E1uNw==}
+    engines: {node: '>=18.0.0'}
+
+  '@fern-fern/ir-sdk@66.3.0':
+    resolution: {integrity: sha512-BKtpmuyK98GagBSZ5CMe3oAkkwG5l3MId+/VyyyGbUV+HRrqIS+htIBlGmsNBW6fzuKK6hgOGn+Kyb2N4+Mejg==}
     engines: {node: '>=18.0.0'}
 
   '@fern-fern/ir-v53-sdk@1.0.1':
@@ -16456,6 +16460,8 @@ snapshots:
 
   '@fern-api/dynamic-ir-sdk@66.1.0': {}
 
+  '@fern-api/dynamic-ir-sdk@66.3.0': {}
+
   '@fern-api/fai-sdk@0.0.6-2ee1b7e28': {}
 
   '@fern-api/fdr-sdk@1.1.13-c1ad12a2b8(@opentelemetry/api@1.9.1)(typescript@5.9.3)':
@@ -16579,9 +16585,9 @@ snapshots:
 
   '@fern-fern/ir-sdk@66.0.0': {}
 
-  '@fern-fern/ir-sdk@66.3.0': {}
-
   '@fern-fern/ir-sdk@66.2.0': {}
+
+  '@fern-fern/ir-sdk@66.3.0': {}
 
   '@fern-fern/ir-v53-sdk@1.0.1': {}
 
