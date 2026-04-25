@@ -264,6 +264,10 @@ export class GenerationRunner {
                 generatorInvocation.language === "java" &&
                 generatorInvocation.absolutePathToLocalOutput != null
                     ? async (ir, config) => {
+                          const outputDir = generatorInvocation.absolutePathToLocalOutput;
+                          if (outputDir == null) {
+                              return [];
+                          }
                           const testSuite = await generateDynamicSnippetsTestSuite({ ir, config });
                           const generator = new DynamicSnippetsJavaTestGenerator(
                               context,
@@ -271,7 +275,7 @@ export class GenerationRunner {
                               testSuite.config
                           );
                           return generator.generateSnippetsInMemory({
-                              outputDir: generatorInvocation.absolutePathToLocalOutput!,
+                              outputDir,
                               requests: testSuite.requests
                           });
                       }
