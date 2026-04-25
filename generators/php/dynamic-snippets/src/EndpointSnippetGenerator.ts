@@ -211,24 +211,7 @@ export class EndpointSnippetGenerator {
             if (snippet.auth != null) {
                 authArgs.push(...this.getConstructorAuthArgs({ auth: endpoint.auth, values: snippet.auth }));
             } else {
-                // Provide default auth values for endpoints that require authentication
-                if (endpoint.auth.type === "inferred") {
-                    // For inferred auth, provide default test values
-                    const defaultInferredAuthValues: FernIr.dynamic.InferredAuthValues = {
-                        values: undefined
-                    };
-                    authArgs.push(
-                        ...this.getConstructorInferredAuthArgs({
-                            auth: endpoint.auth,
-                            values: defaultInferredAuthValues
-                        })
-                    );
-                } else {
-                    this.context.errors.add({
-                        severity: Severity.Warning,
-                        message: `Auth with ${endpoint.auth.type} configuration is required for this endpoint`
-                    });
-                }
+                authArgs.push(...this.getDefaultAuthArgs({ auth: endpoint.auth }));
             }
         }
 
@@ -301,6 +284,45 @@ export class EndpointSnippetGenerator {
                 return values.type === "oauth" ? this.getConstructorOAuthArgs({ auth, values }) : [];
             case "inferred":
                 return values.type === "inferred" ? this.getConstructorInferredAuthArgs({ auth, values }) : [];
+            default:
+                assertNever(auth);
+        }
+    }
+
+    private getDefaultAuthArgs({ auth }: { auth: FernIr.dynamic.Auth }): NamedArgument[] {
+        switch (auth.type) {
+            case "bearer":
+                return this.getConstructorBearerAuthArgs({
+                    auth,
+                    values: { token: "YOUR_TOKEN" }
+                });
+            case "oauth":
+                return this.getConstructorOAuthArgs({
+                    auth,
+                    values: { clientId: "YOUR_CLIENT_ID", clientSecret: "YOUR_CLIENT_SECRET" }
+                });
+            case "basic": {
+                const authRecord = auth as unknown as Record<string, unknown>;
+                const usernameOmitted = !!authRecord.usernameOmit;
+                const passwordOmitted = !!authRecord.passwordOmit;
+                return this.getConstructorBasicAuthArgs({
+                    auth,
+                    values: {
+                        username: usernameOmitted ? "" : "YOUR_USERNAME",
+                        password: passwordOmitted ? "" : "YOUR_PASSWORD"
+                    }
+                });
+            }
+            case "header":
+                return this.getConstructorHeaderAuthArgs({
+                    auth,
+                    values: { value: "YOUR_AUTH_TOKEN" }
+                });
+            case "inferred":
+                return this.getConstructorInferredAuthArgs({
+                    auth,
+                    values: { values: undefined }
+                });
             default:
                 assertNever(auth);
         }
