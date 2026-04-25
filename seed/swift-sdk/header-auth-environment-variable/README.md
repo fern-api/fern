@@ -51,7 +51,7 @@ import Foundation
 import HeaderTokenEnvironmentVariable
 
 private func main() async throws {
-    let client = HeaderTokenEnvironmentVariableClient(headerTokenAuth: "<value>")
+    let client = HeaderTokenEnvironmentVariableClient(headerTokenAuth: "YOUR_HEADER_VALUE")
 
     _ = try await client.service.getWithBearerToken()
 }

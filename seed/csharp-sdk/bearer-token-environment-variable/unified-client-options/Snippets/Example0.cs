@@ -5,7 +5,7 @@ public partial class Examples
     public async Task Example0() {
         var client = new SeedBearerTokenEnvironmentVariableClient(
             clientOptions: new ClientOptions {
-                ApiKey = "<token>",
+                ApiKey = "YOUR_API_KEY",
                 BaseUrl = "https://api.fern.com"
             }
         );

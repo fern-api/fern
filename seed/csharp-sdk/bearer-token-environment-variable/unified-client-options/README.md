@@ -42,7 +42,7 @@ Instantiate and use the client with the following:
 using SeedBearerTokenEnvironmentVariable;
 
 var client = new SeedBearerTokenEnvironmentVariableClient(
-    clientOptions: new ClientOptions { ApiKey = "API_KEY" }
+    clientOptions: new ClientOptions { ApiKey = "YOUR_API_KEY" }
 );
 await client.Service.GetWithBearerTokenAsync();
 ```

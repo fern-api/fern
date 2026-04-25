@@ -5,7 +5,7 @@ namespace Example;
 use Seed\SeedClient;
 
 $client = new SeedClient(
-    apiKey: '<token>',
+    apiKey: 'YOUR_API_KEY',
     options: [
         'baseUrl' => 'https://api.fern.com',
     ],

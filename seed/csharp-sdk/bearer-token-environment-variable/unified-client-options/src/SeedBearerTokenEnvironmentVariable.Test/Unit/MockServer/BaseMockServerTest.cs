@@ -26,7 +26,7 @@ public class BaseMockServerTest
         Client = new SeedBearerTokenEnvironmentVariableClient(
             clientOptions: new ClientOptions
             {
-                ApiKey = "API_KEY",
+                ApiKey = "YOUR_API_KEY",
                 BaseUrl = Server.Urls[0],
                 MaxRetries = 0,
             }
