@@ -118,9 +118,9 @@ export class RemoteTaskHandler {
         for (const newLog of remoteTask.logs.slice(this.lengthOfLastLogs)) {
             this.context.logger.log(convertLogLevel(newLog.level), newLog.message);
 
-            // extract version from log messages as fallback (e.g., "Tagging release 0.0.9")
+            // extract version from log messages as fallback (e.g., "Tagging release 0.0.9" or "Tagging release v0.2.0")
             if (this.#actualVersion == null) {
-                const tagMatch = newLog.message.match(/Tagging release (\d+\.\d+\.\d+)/);
+                const tagMatch = newLog.message.match(/Tagging release (v?\d+\.\d+\.\d+(?:-[\w.]+)?)/);
                 if (tagMatch) {
                     this.#actualVersion = tagMatch[1];
                 }

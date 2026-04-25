@@ -376,8 +376,11 @@ export async function runRemoteGenerationForGenerator({
     }
 
     // Fall back to the locally-resolved version when Fiddle doesn't echo it back
-    // (e.g. GitHub PR / push modes where no registry publish or release tag occurs).
-    if (result != null && result.actualVersion == null && resolvedVersion != null) {
+    // (e.g. GitHub push modes where no registry publish or release tag occurs).
+    // Skip the fallback when the version is AUTO — Fiddle determines the real version
+    // via AI-based semantic analysis, and resolvedVersion would be the literal "AUTO" string.
+    const isAutoVersioning = resolvedVersion?.toUpperCase() === "AUTO";
+    if (result != null && result.actualVersion == null && resolvedVersion != null && !isAutoVersioning) {
         return { ...result, actualVersion: resolvedVersion };
     }
     return result;
