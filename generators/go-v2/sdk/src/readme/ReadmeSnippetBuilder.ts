@@ -318,24 +318,10 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
 
     private getOAuthClientIdPlaceholder(): string {
-        if (this.context.ir.auth != null) {
-            for (const scheme of this.context.ir.auth.schemes) {
-                if (scheme.type === "basic" && scheme.usernamePlaceholder != null) {
-                    return scheme.usernamePlaceholder;
-                }
-            }
-        }
         return "YOUR_CLIENT_ID";
     }
 
     private getOAuthClientSecretPlaceholder(): string {
-        if (this.context.ir.auth != null) {
-            for (const scheme of this.context.ir.auth.schemes) {
-                if (scheme.type === "basic" && scheme.passwordPlaceholder != null) {
-                    return scheme.passwordPlaceholder;
-                }
-            }
-        }
         return "YOUR_CLIENT_SECRET";
     }
 
