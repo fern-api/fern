@@ -336,6 +336,69 @@ client.union.nested_unions(
 </dl>
 </details>
 
+<details><summary><code>client.union.<a href="src/seed/union/client.py">get_with_base_properties</a>(...) -> UnionWithBaseProperties</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import SeedUndiscriminatedUnions
+from seed.union import NamedMetadata
+
+client = SeedUndiscriminatedUnions(
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.union.get_with_base_properties(
+    request=NamedMetadata(
+        name="name",
+        value={
+            "value": {"key": "value"}
+        },
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `UnionWithBaseProperties` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.union.<a href="src/seed/union/client.py">test_camel_case_properties</a>(...) -> str</code></summary>
 <dl>
 <dd>
