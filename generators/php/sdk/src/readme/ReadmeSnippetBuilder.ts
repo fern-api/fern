@@ -535,7 +535,7 @@ ${this.context.getClientVariableName()} = new ${this.context.getRootClientClassN
     }
 
     private escapePhpSingleQuote(value: string): string {
-        return value.replace(/'/g, "\\'");
+        return value.replace(/\\/g, "\\\\").replace(/'/g, "\\'");
     }
 
     private writeCode(s: string): string {
