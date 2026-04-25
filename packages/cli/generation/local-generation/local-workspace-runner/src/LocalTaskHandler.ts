@@ -21,9 +21,9 @@ import { loggingExeca } from "@fern-api/logging-execa";
 import { CliError, TaskContext } from "@fern-api/task-context";
 
 import decompress from "decompress";
-import { cp, readdir, readFile, rename, rm } from "fs/promises";
+import { cp, mkdir, readdir, readFile, rename, rm } from "fs/promises";
 import { tmpdir } from "os";
-import { join as pathJoin } from "path";
+import { dirname, join as pathJoin } from "path";
 import semver from "semver";
 import tmp from "tmp-promise";
 import { sanitizeChangelogEntry } from "./sanitizeChangelogEntry.js";
@@ -863,6 +863,9 @@ export class LocalTaskHandler {
 
         if (!isZipOutput) {
             try {
+                // Ensure parent directory exists (first run may not have created it yet)
+                const parentDir = dirname(this.absolutePathToLocalOutput);
+                await mkdir(parentDir, { recursive: true });
                 await rename(this.absolutePathToTmpOutputDirectory, this.absolutePathToLocalOutput);
                 return;
             } catch (error: unknown) {
