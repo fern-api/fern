@@ -213,6 +213,31 @@ service:
         status-code: 200
         type: string
 
+    withRefBody:
+      path: /with-ref-body
+      method: POST
+      request:
+        body:
+          properties:
+            image_file:
+              content-type: image/jpeg
+              type: optional<file>
+            request:
+              content-type: application/json; charset=utf-8
+              style: json
+              type: MyObject
+        content-type: multipart/form-data
+        name: WithRefBodyRequest
+      response:
+        status-code: 200
+        type: string
+      examples:
+        - request:
+            request:
+              foo: "bar"
+          response:
+            body: "Success"
+
     simple:
       path: "/snippet"
       method: POST

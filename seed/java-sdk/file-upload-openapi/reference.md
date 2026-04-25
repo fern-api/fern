@@ -28,6 +28,7 @@ Upload a file to the database
 
 ```java
 client.fileUploadExample().uploadFile(
+    Optional.empty(),
     UploadFileRequest
         .builder()
         .name("name")

@@ -16,6 +16,7 @@ import com.seed.fileUpload.resources.service.requests.OptionalArgsRequest;
 import com.seed.fileUpload.resources.service.requests.WithContentTypeRequest;
 import com.seed.fileUpload.resources.service.requests.WithFormEncodingRequest;
 import com.seed.fileUpload.resources.service.requests.WithJsonPropertyRequest;
+import com.seed.fileUpload.resources.service.requests.WithRefBodyRequest;
 import java.io.InputStream;
 import okhttp3.MediaType;
 
@@ -233,6 +234,32 @@ public class ServiceClient {
             InputStream stream, String filename, MediaType mediaType, RequestOptions requestOptions) {
         return this.rawClient
                 .withJsonProperty(stream, filename, mediaType, requestOptions)
+                .body();
+    }
+
+    public String withRefBody(WithRefBodyRequest request) {
+        return this.rawClient.withRefBody(request).body();
+    }
+
+    public String withRefBody(WithRefBodyRequest request, RequestOptions requestOptions) {
+        return this.rawClient.withRefBody(request, requestOptions).body();
+    }
+
+    public String withRefBody(InputStream stream, String filename) {
+        return this.rawClient.withRefBody(stream, filename).body();
+    }
+
+    public String withRefBody(InputStream stream, String filename, MediaType mediaType) {
+        return this.rawClient.withRefBody(stream, filename, mediaType).body();
+    }
+
+    public String withRefBody(InputStream stream, String filename, RequestOptions requestOptions) {
+        return this.rawClient.withRefBody(stream, filename, requestOptions).body();
+    }
+
+    public String withRefBody(InputStream stream, String filename, MediaType mediaType, RequestOptions requestOptions) {
+        return this.rawClient
+                .withRefBody(stream, filename, mediaType, requestOptions)
                 .body();
     }
 

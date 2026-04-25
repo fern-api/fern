@@ -14,6 +14,7 @@
 
 ```java
 client.service().justFile(
+    Optional.empty(),
     JustFileRequest
         .builder()
         .build()
@@ -43,8 +44,45 @@ client.service().justFile(
 
 ```java
 client.service().optionalArgs(
+    Optional.empty(),
     OptionalArgsRequest
         .builder()
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.service.withRefBody(request) -> String</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.service().withRefBody(
+    Optional.empty(),
+    WithRefBodyRequest
+        .builder()
+        .request(
+            MyObject
+                .builder()
+                .foo("bar")
+                .build()
+        )
         .build()
 );
 ```
