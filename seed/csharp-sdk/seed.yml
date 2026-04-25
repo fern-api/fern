@@ -353,6 +353,9 @@ fixtures:
         client-class-name: Seed
         experimental-fully-qualified-namespaces: true
       outputFolder: client-class-name-matches-namespace-root
+  csharp-property-name-collision:
+    - customConfig: null
+      outputFolder: no-custom-config
   csharp-system-collision:
     - customConfig:
         client-class-name: System
