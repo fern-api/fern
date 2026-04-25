@@ -354,6 +354,72 @@ try await main()
 </dl>
 </details>
 
+<details><summary><code>client.union.<a href="/Sources/Resources/Union/UnionClient.swift">getWithBaseProperties</a>(request: UnionWithBaseProperties, requestOptions: RequestOptions?) -> UnionWithBaseProperties</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```swift
+import Foundation
+import UndiscriminatedUnions
+
+private func main() async throws {
+    let client = UndiscriminatedUnionsClient()
+
+    _ = try await client.union.getWithBaseProperties(request: UnionWithBaseProperties.namedMetadata(
+        NamedMetadata(
+            name: "name",
+            value: [
+                "value": .object([
+                    "key": .string("value")
+                ])
+            ]
+        )
+    ))
+}
+
+try await main()
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `UnionWithBaseProperties` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.union.<a href="/Sources/Resources/Union/UnionClient.swift">testCamelCaseProperties</a>(request: Requests.PaymentRequest, requestOptions: RequestOptions?) -> String</code></summary>
 <dl>
 <dd>
