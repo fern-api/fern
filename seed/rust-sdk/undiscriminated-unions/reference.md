@@ -233,6 +233,50 @@ async fn main() {
 </dl>
 </details>
 
+<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">get_with_base_properties</a>(request: UnionWithBaseProperties) -> Result&lt;UnionWithBaseProperties, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_undiscriminated_unions::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        ..Default::default()
+    };
+    let client = UndiscriminatedUnionsClient::new(config).expect("Failed to build client");
+    client
+        .union_
+        .get_with_base_properties(
+            &UnionWithBaseProperties::NamedMetadata(NamedMetadata {
+                name: "name".to_string(),
+                value: HashMap::from([("value".to_string(), serde_json::json!({"key":"value"}))]),
+                ..Default::default()
+            }),
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">test_camel_case_properties</a>(request: PaymentRequest) -> Result&lt;String, ApiError&gt;</code></summary>
 <dl>
 <dd>

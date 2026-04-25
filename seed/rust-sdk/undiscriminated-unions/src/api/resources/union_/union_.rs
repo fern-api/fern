@@ -102,6 +102,22 @@ impl UnionClient {
             .await
     }
 
+    pub async fn get_with_base_properties(
+        &self,
+        request: &UnionWithBaseProperties,
+        options: Option<RequestOptions>,
+    ) -> Result<UnionWithBaseProperties, ApiError> {
+        self.http_client
+            .execute_request(
+                Method::POST,
+                "/with-base-properties",
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+            )
+            .await
+    }
+
     pub async fn test_camel_case_properties(
         &self,
         request: &PaymentRequest,
