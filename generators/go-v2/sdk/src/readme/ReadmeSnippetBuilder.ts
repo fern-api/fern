@@ -303,7 +303,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         `);
     }
 
-    private getTokenPlaceholder({ defaultValue = "YOUR_API_KEY" }: { defaultValue?: string } = {}): string {
+    private getTokenPlaceholder({ defaultValue = "<YOUR_API_KEY>" }: { defaultValue?: string } = {}): string {
         if (this.context.ir.auth != null) {
             for (const scheme of this.context.ir.auth.schemes) {
                 if (scheme.type === "bearer" && scheme.tokenPlaceholder != null) {
@@ -318,11 +318,11 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
 
     private getOAuthClientIdPlaceholder(): string {
-        return "YOUR_CLIENT_ID";
+        return "<YOUR_CLIENT_ID>";
     }
 
     private getOAuthClientSecretPlaceholder(): string {
-        return "YOUR_CLIENT_SECRET";
+        return "<YOUR_CLIENT_SECRET>";
     }
 
     private hasOAuthScheme(): boolean {
@@ -344,7 +344,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
             // Option 2: Use a pre-fetched token directly
             ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} := ${this.rootPackageClientName}.NewClient(
-                option.WithToken("${this.getTokenPlaceholder({ defaultValue: "YOUR_ACCESS_TOKEN" })}"),
+                option.WithToken("${this.getTokenPlaceholder({ defaultValue: "<YOUR_ACCESS_TOKEN>" })}"),
             )
         `);
     }
