@@ -12,5 +12,6 @@ export interface UnDiscriminatedOneOfSchemaWithExample
         FernOpenapiIr.WithSource,
         FernOpenapiIr.WithTitle,
         FernOpenapiIr.WithInline {
+    commonProperties: FernOpenapiIr.CommonPropertyWithExample[] | undefined;
     schemas: FernOpenapiIr.SchemaWithExample[];
 }

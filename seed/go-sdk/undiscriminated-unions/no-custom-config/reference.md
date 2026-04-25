@@ -273,6 +273,60 @@ client.Union.NestedUnions(
 </dl>
 </details>
 
+<details><summary><code>client.Union.GetWithBaseProperties(request) -> *undiscriminated.UnionWithBaseProperties</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &undiscriminated.UnionWithBaseProperties{
+        NamedMetadata: &undiscriminated.NamedMetadata{
+            Name: "name",
+            Value: map[string]any{
+                "value": map[string]any{
+                    "key": "value",
+                },
+            },
+        },
+    }
+client.Union.GetWithBaseProperties(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `*undiscriminated.UnionWithBaseProperties` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.Union.TestCamelCaseProperties(request) -> string</code></summary>
 <dl>
 <dd>

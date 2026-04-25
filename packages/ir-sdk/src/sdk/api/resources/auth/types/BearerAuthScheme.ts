@@ -6,4 +6,6 @@ export interface BearerAuthScheme extends FernIr.BaseAuthScheme {
     token: FernIr.NameOrString;
     /** The environment variable the SDK should use to read the token. */
     tokenEnvVar: FernIr.EnvironmentVariable | undefined;
+    /** The placeholder value to use in code snippets (e.g., "YOUR_API_KEY"). */
+    tokenPlaceholder: string | undefined;
 }

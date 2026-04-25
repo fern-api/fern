@@ -61,8 +61,9 @@ export async function findGeneratorLineNumber(
     let matchCount = 0;
     // Require the `- name:` list-item form so we don't accidentally hit a nested non-generator
     // `name:` key (reviewers, license info, etc.). The capture is tight enough to reject
-    // free-form values — generator names are slashed identifiers, never sentences.
-    const namePattern = /^\s*-\s+name:\s*["']?([A-Za-z0-9/_.\-@]+)["']?\s*$/;
+    // free-form values — generator names are slashed identifiers, never sentences. Trailing
+    // YAML comments (` # …`) are tolerated.
+    const namePattern = /^\s*-\s+name:\s*["']?([A-Za-z0-9/_.\-@]+)["']?\s*(#.*)?$/;
     for (let i = 0; i < lines.length; i++) {
         const line = lines[i];
         if (line == null) {

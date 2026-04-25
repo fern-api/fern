@@ -29,6 +29,7 @@ export class WireTestSetupGenerator {
     }
 
     public static getWiremockConfigContent(ir: FernIr.IntermediateRepresentation) {
+        // @ts-expect-error ir-sdk 66.2.0 (this package) vs 66.0.0 (mock-utils) have nominally incompatible visitor types
         return new WireMock().convertToWireMock(ir);
     }
 

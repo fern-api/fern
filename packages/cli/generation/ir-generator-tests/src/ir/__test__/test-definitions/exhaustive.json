@@ -2335,6 +2335,7 @@
             },
             "shape": {
                 "_type": "undiscriminatedUnion",
+                "baseProperties": null,
                 "members": [
                     {
                         "type": {

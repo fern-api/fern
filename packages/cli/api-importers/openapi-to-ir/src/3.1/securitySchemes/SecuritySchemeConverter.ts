@@ -7,6 +7,7 @@ import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1.js";
 interface SecuritySchemeNames {
     name?: string;
     env?: string;
+    placeholder?: string;
 }
 
 interface BasicSecuritySchemeExtension {
@@ -17,12 +18,14 @@ interface BasicSecuritySchemeExtension {
 interface BearerSecuritySchemeExtension {
     name?: string;
     env?: string;
+    placeholder?: string;
 }
 
 interface HeaderSecuritySchemeExtension {
     name?: string;
     env?: string;
     prefix?: string;
+    placeholder?: string;
 }
 
 export declare namespace SecuritySchemeConverter {
@@ -55,10 +58,12 @@ export class SecuritySchemeConverter extends AbstractConverter<OpenAPIConverterC
                     const bearerExtension = this.getExtension<BearerSecuritySchemeExtension>("x-fern-bearer");
                     const tokenName = bearerExtension?.name ?? "token";
                     const tokenEnvVar = bearerExtension?.env;
+                    const tokenPlaceholder = bearerExtension?.placeholder;
                     return AuthScheme.bearer({
                         key: this.schemeId,
                         token: this.context.casingsGenerator.generateName(tokenName),
                         tokenEnvVar,
+                        tokenPlaceholder,
                         docs: this.securityScheme.description
                     });
                 }
@@ -68,6 +73,8 @@ export class SecuritySchemeConverter extends AbstractConverter<OpenAPIConverterC
                     const passwordName = basicExtension?.password?.name ?? "password";
                     const usernameEnvVar = basicExtension?.username?.env;
                     const passwordEnvVar = basicExtension?.password?.env;
+                    const usernamePlaceholder = basicExtension?.username?.placeholder;
+                    const passwordPlaceholder = basicExtension?.password?.placeholder;
                     return AuthScheme.basic({
                         key: this.schemeId,
                         username: this.context.casingsGenerator.generateName(usernameName),
@@ -76,6 +83,8 @@ export class SecuritySchemeConverter extends AbstractConverter<OpenAPIConverterC
                         passwordEnvVar,
                         usernameOmit: false,
                         passwordOmit: false,
+                        usernamePlaceholder,
+                        passwordPlaceholder,
                         docs: this.securityScheme.description
                     });
                 }
@@ -87,6 +96,7 @@ export class SecuritySchemeConverter extends AbstractConverter<OpenAPIConverterC
                     const headerName = headerExtension?.name ?? "apiKey";
                     const headerEnvVar = headerExtension?.env;
                     const prefix = headerExtension?.prefix;
+                    const headerPlaceholder = headerExtension?.placeholder;
                     return AuthScheme.header({
                         key: this.schemeId,
                         name: {
@@ -96,6 +106,7 @@ export class SecuritySchemeConverter extends AbstractConverter<OpenAPIConverterC
                         valueType: AbstractConverter.OPTIONAL_STRING,
                         prefix,
                         headerEnvVar,
+                        headerPlaceholder,
                         docs: this.securityScheme.description
                     });
                 }
@@ -107,6 +118,7 @@ export class SecuritySchemeConverter extends AbstractConverter<OpenAPIConverterC
                     key: this.schemeId,
                     token: this.context.casingsGenerator.generateName("token"),
                     tokenEnvVar: undefined,
+                    tokenPlaceholder: undefined,
                     docs: this.securityScheme.description
                 });
             }

@@ -86,6 +86,9 @@ types:
       tokenEnvVar:
         type: optional<EnvironmentVariable>
         docs: The environment variable the SDK should use to read the token.
+      tokenPlaceholder:
+        type: optional<string>
+        docs: The placeholder value to use in code snippets (e.g., "YOUR_API_KEY").
 
   OAuthScheme:
     extends: BaseAuthScheme
@@ -150,6 +153,9 @@ types:
       usernameOmit:
         type: optional<boolean>
         docs: If true, the username will be omitted from the SDK.
+      usernamePlaceholder:
+        type: optional<string>
+        docs: The placeholder value to use in code snippets for the username (e.g., "YOUR_USERNAME").
       password: commons.NameOrString
       passwordEnvVar:
         type: optional<EnvironmentVariable>
@@ -157,6 +163,9 @@ types:
       passwordOmit:
         type: optional<boolean>
         docs: If true, the password will be omitted from the SDK.
+      passwordPlaceholder:
+        type: optional<string>
+        docs: The placeholder value to use in code snippets for the password (e.g., "YOUR_PASSWORD").
 
   HeaderAuthScheme:
     extends: BaseAuthScheme
@@ -167,3 +176,6 @@ types:
       headerEnvVar:
         type: optional<EnvironmentVariable>
         docs: The environment variable the SDK should use to read the header.
+      headerPlaceholder:
+        type: optional<string>
+        docs: The placeholder value to use in code snippets for the header (e.g., "YOUR_API_KEY").

@@ -76,6 +76,17 @@
                 "type": "go",
                 "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/undiscriminated-unions/fern\"\n\tfernclient \"github.com/undiscriminated-unions/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Union.NestedUnions(\n\tcontext.TODO(),\n\tfern.NewNestedUnionRootFromString(\n\t\t\"string\",\n\t),\n)\n"
             }
+        },
+        {
+            "id": {
+                "path": "/with-base-properties",
+                "method": "POST",
+                "identifier_override": "endpoint_union.getWithBaseProperties"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/undiscriminated-unions/fern\"\n\tfernclient \"github.com/undiscriminated-unions/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Union.GetWithBaseProperties(\n\tcontext.TODO(),\n\tfern.NewUnionWithBasePropertiesFromNamedMetadata(\n\t\t\u0026fern.NamedMetadata{\n\t\t\tName: \"name\",\n\t\t\tValue: map[string]any{\n\t\t\t\t\"value\": map[string]interface{}{\n\t\t\t\t\t\"key\": \"value\",\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t),\n)\n"
+            }
         }
     ]
 }

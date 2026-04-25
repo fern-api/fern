@@ -1,0 +1,57 @@
+openapi: 3.0.3
+info:
+  title: Undiscriminated Unions API
+  version: 1.0.0
+paths:
+  /pet:
+    get:
+      operationId: getPet
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PetOrPerson"
+  /resource:
+    get:
+      operationId: getResource
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResourceWithSiblingProperties"
+components:
+  schemas:
+    Dog:
+      type: object
+      properties:
+        breed:
+          type: string
+      required:
+        - breed
+    Cat:
+      type: object
+      properties:
+        color:
+          type: string
+      required:
+        - color
+    PetOrPerson:
+      oneOf:
+        - $ref: "#/components/schemas/Dog"
+        - $ref: "#/components/schemas/Cat"
+    ResourceWithSiblingProperties:
+      type: object
+      properties:
+        id:
+          type: string
+        category:
+          type: string
+      required:
+        - id
+      oneOf:
+        - $ref: "#/components/schemas/Dog"
+        - $ref: "#/components/schemas/Cat"

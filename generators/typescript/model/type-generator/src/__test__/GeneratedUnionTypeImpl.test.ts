@@ -99,6 +99,7 @@ function createUnionDeclaration(opts: {
         types: opts.types,
         baseProperties: opts.baseProperties ?? [],
         extends: opts.extends ?? [],
+        default: undefined,
         discriminatorContext: undefined
     };
 }

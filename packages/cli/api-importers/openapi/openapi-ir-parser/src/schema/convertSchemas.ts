@@ -1167,7 +1167,9 @@ export function convertSchemaObject(
                     encoding,
                     namespace,
                     groupName,
-                    source
+                    source,
+                    properties: schema.properties,
+                    required: schema.required
                 });
             }
         }
@@ -1264,7 +1266,9 @@ export function convertSchemaObject(
                 encoding,
                 namespace,
                 groupName,
-                source
+                source,
+                properties: schema.properties,
+                required: schema.required
             });
         }
 

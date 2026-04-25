@@ -1,4 +1,21 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.7.0
+  changelogEntry:
+    - summary: |
+        Use auth scheme placeholder values in README snippets when configured via
+        `placeholder` field on auth schemes.
+      type: feat
+  createdAt: "2026-04-25"
+  irVersion: 66
+- version: 5.6.1
+  changelogEntry:
+    - summary: |
+        Fix `@fern-api/python-dynamic-snippets` to respect the `use_typeddict_requests`
+        configuration option. When enabled, dynamic snippets now generate dict literals
+        instead of Pydantic model constructors for object and discriminated union types.
+      type: fix
+  createdAt: "2026-04-24"
+  irVersion: 66
 - version: 5.6.0
   changelogEntry:
     - summary: |

@@ -1,5 +1,6 @@
 import {
     Availability,
+    CommonPropertyWithExample,
     convertNumberToSnakeCase,
     Encoding,
     isSchemaEqual,
@@ -41,7 +42,8 @@ export function constructUndiscriminatedOneOf({
     namespace,
     groupName,
     encoding,
-    source
+    source,
+    commonProperties
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -58,6 +60,7 @@ export function constructUndiscriminatedOneOf({
     encoding: Encoding | undefined;
     source: Source;
     subtypeSuffixOverrides?: UndiscriminatedOneOfSuffix[];
+    commonProperties?: CommonPropertyWithExample[];
 }): SchemaWithExample {
     const uniqueSubtypes = deduplicateSubtypes(subtypes);
     return processSubtypes({
@@ -73,7 +76,8 @@ export function constructUndiscriminatedOneOf({
         groupName,
         context,
         encoding,
-        source
+        source,
+        commonProperties
     });
 }
 
@@ -92,7 +96,9 @@ export function convertUndiscriminatedOneOf({
     groupName,
     encoding,
     source,
-    subtypeSuffixOverrides
+    subtypeSuffixOverrides,
+    properties,
+    required
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -109,6 +115,8 @@ export function convertUndiscriminatedOneOf({
     encoding: Encoding | undefined;
     source: Source;
     subtypeSuffixOverrides?: UndiscriminatedOneOfSuffix[];
+    properties?: Record<string, OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject>;
+    required?: string[];
 }): SchemaWithExample {
     const derivedSubtypeSuffixes = getUniqueSubTypeNames({ schemas: subtypes });
 
@@ -152,6 +160,28 @@ export function convertUndiscriminatedOneOf({
         ];
     });
 
+    const convertedCommonProperties: CommonPropertyWithExample[] | undefined =
+        properties != null && Object.keys(properties).length > 0
+            ? Object.entries(properties).map(([propertyName, propertySchema]) => {
+                  const isRequired = required != null && required.includes(propertyName);
+                  const [isOptional, isNullable] = context.options.coerceOptionalSchemasToNullable
+                      ? [false, !isRequired]
+                      : [!isRequired, false];
+                  return {
+                      key: propertyName,
+                      schema: convertSchema(
+                          propertySchema,
+                          isOptional,
+                          isNullable,
+                          context,
+                          [...breadcrumbs, propertyName],
+                          source,
+                          namespace
+                      )
+                  };
+              })
+            : undefined;
+
     const uniqueSubtypes = deduplicateSubtypes(convertedSubtypes);
     return processSubtypes({
         uniqueSubtypes,
@@ -166,7 +196,8 @@ export function convertUndiscriminatedOneOf({
         groupName,
         context,
         encoding,
-        source
+        source,
+        commonProperties: convertedCommonProperties
     });
 }
 
@@ -202,7 +233,8 @@ function processSubtypes({
     groupName,
     context,
     encoding,
-    source
+    source,
+    commonProperties
 }: {
     uniqueSubtypes: SchemaWithExample[];
     nameOverride: string | undefined;
@@ -217,11 +249,13 @@ function processSubtypes({
     context: SchemaParserContext;
     encoding: Encoding | undefined;
     source: Source;
+    commonProperties?: CommonPropertyWithExample[];
 }): SchemaWithExample {
+    const hasCommonProperties = commonProperties != null && commonProperties.length > 0;
     const everySubTypeIsLiteral = Object.entries(uniqueSubtypes).every(([_, schema]) => {
         return schema.type === "literal";
     });
-    if (everySubTypeIsLiteral) {
+    if (everySubTypeIsLiteral && !hasCommonProperties) {
         const enumDescriptions: Record<string, { description: string }> = {};
         const enumValues: string[] = [];
         Object.entries(uniqueSubtypes).forEach(([_, schema]) => {
@@ -254,7 +288,12 @@ function processSubtypes({
         });
     }
 
-    if (uniqueSubtypes.length === 1 && uniqueSubtypes[0] != null && !context.options.preserveSingleSchemaOneOf) {
+    if (
+        uniqueSubtypes.length === 1 &&
+        uniqueSubtypes[0] != null &&
+        !context.options.preserveSingleSchemaOneOf &&
+        !hasCommonProperties
+    ) {
         let result = uniqueSubtypes[0];
         if (wrapAsNullable) {
             result = SchemaWithExample.nullable({
@@ -297,7 +336,8 @@ function processSubtypes({
         namespace,
         groupName,
         encoding,
-        source
+        source,
+        commonProperties
     });
 }
 
@@ -496,7 +536,8 @@ export function wrapUndiscriminatedOneOf({
     namespace,
     groupName,
     encoding,
-    source
+    source,
+    commonProperties
 }: {
     wrapAsOptional: boolean;
     wrapAsNullable: boolean;
@@ -510,6 +551,7 @@ export function wrapUndiscriminatedOneOf({
     groupName: SdkGroupName | undefined;
     encoding: Encoding | undefined;
     source: Source;
+    commonProperties?: CommonPropertyWithExample[];
 }): SchemaWithExample {
     let result: SchemaWithExample = SchemaWithExample.oneOf(
         OneOfSchemaWithExample.undiscriminated({
@@ -518,6 +560,7 @@ export function wrapUndiscriminatedOneOf({
             nameOverride,
             generatedName,
             title,
+            commonProperties: commonProperties != null && commonProperties.length > 0 ? commonProperties : undefined,
             schemas: subtypes,
             namespace,
             groupName,

@@ -8,12 +8,14 @@ import { casingsGenerator, createNameAndWireValue } from "./casings.js";
 export function createBearerAuthScheme(opts?: {
     tokenName?: string;
     tokenEnvVar?: string;
+    tokenPlaceholder?: string;
     docs?: string;
 }): FernIr.BearerAuthScheme {
     return {
         docs: opts?.docs,
         token: casingsGenerator.generateName(opts?.tokenName ?? "token"),
         tokenEnvVar: opts?.tokenEnvVar,
+        tokenPlaceholder: opts?.tokenPlaceholder,
         key: "Bearer"
     };
 }
@@ -26,6 +28,8 @@ export function createBasicAuthScheme(opts?: {
     password?: string;
     usernameEnvVar?: string;
     passwordEnvVar?: string;
+    usernamePlaceholder?: string;
+    passwordPlaceholder?: string;
     docs?: string;
 }): FernIr.BasicAuthScheme {
     return {
@@ -33,9 +37,11 @@ export function createBasicAuthScheme(opts?: {
         username: casingsGenerator.generateName(opts?.username ?? "username"),
         usernameEnvVar: opts?.usernameEnvVar,
         usernameOmit: undefined,
+        usernamePlaceholder: opts?.usernamePlaceholder,
         password: casingsGenerator.generateName(opts?.password ?? "password"),
         passwordEnvVar: opts?.passwordEnvVar,
         passwordOmit: undefined,
+        passwordPlaceholder: opts?.passwordPlaceholder,
         key: "BasicAuth"
     };
 }
@@ -47,6 +53,7 @@ export function createHeaderAuthScheme(opts?: {
     name?: string;
     wireValue?: string;
     headerEnvVar?: string;
+    headerPlaceholder?: string;
     docs?: string;
     prefix?: string;
     key?: string;
@@ -57,6 +64,7 @@ export function createHeaderAuthScheme(opts?: {
         valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
         prefix: opts?.prefix,
         headerEnvVar: opts?.headerEnvVar,
+        headerPlaceholder: opts?.headerPlaceholder,
         key: opts?.key ?? "ApiKey"
     };
 }

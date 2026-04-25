@@ -1,4 +1,61 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.96.0
+  changelogEntry:
+    - summary: |
+        Add optional `baseProperties` field to `UndiscriminatedUnionTypeDeclaration` in the IR schema.
+        Both the V3 importer and the legacy OpenAPI importer now extract sibling properties from
+        `oneOf`/`anyOf` schemas and populate `baseProperties` on undiscriminated unions.
+      type: feat
+  createdAt: "2026-04-25"
+  irVersion: 66
+- version: 4.95.0
+  changelogEntry:
+    - summary: |
+        Add `placeholder` field to auth scheme configuration (basic, bearer, header) for controlling
+        example values in dynamic code snippets. The fallback chain is: explicit placeholder > generic placeholder.
+        Configurable via Fern definition YAML and OpenAPI extensions (x-fern-basic, x-fern-bearer, x-fern-header).
+      type: feat
+  createdAt: "2026-04-25"
+  irVersion: 66
+- version: 4.94.3
+  changelogEntry:
+    - summary: |
+        Polish the `fern automations generate` step-summary heading and the
+        `generators.yml` deep-link lookup.
+
+        - The failure heading now excludes skipped generators from the
+          denominator. A run of 4 succeeded, 2 failed, 4 skipped previously read
+          `❌ SDK generation failed (4/10 succeeded)` — implying 6 failures. It
+          now reads `❌ SDK generation failed (4/6 succeeded, 4 skipped)`.
+        - Added a distinct `⏭️ SDK generation skipped` heading for runs where
+          every generator was skipped. Previously these printed the cheerful
+          `✅ SDK generation succeeded` heading despite nothing having run.
+        - Tightened the `generators.yml` line-number regex to only match
+          `- name: <slug>` list-item entries. Nested `name:` keys (e.g. inside
+          `publishInfo`) and free-form values (e.g. a reviewer's full name) no
+          longer collide with generator lookups. Trailing YAML comments on the
+          `name:` line are tolerated.
+        - Added an `assertNever` exhaustiveness check on the generator-status
+          switch so a future status variant fails at compile time instead of
+          silently miscounting.
+      type: chore
+    - summary: |
+        Re-publish CLI after the 4.94.2 production publish failed in CI. The dev
+        version had already been published in an earlier job, so the prod job's
+        dev re-publish step errored out and prevented the prod publish from
+        running.
+      type: chore
+  createdAt: "2026-04-24"
+  irVersion: 66
+- version: 4.94.2
+  changelogEntry:
+    - summary: |
+        Fix Python dynamic snippet generation to respect the `use_typeddict_requests`
+        configuration option. When enabled, dynamic snippets now generate dict literals
+        instead of Pydantic model constructors for object and discriminated union types.
+      type: fix
+  createdAt: "2026-04-24"
+  irVersion: 66
 - version: 4.94.1
   changelogEntry:
     - summary: |

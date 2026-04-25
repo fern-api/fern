@@ -12,6 +12,7 @@ export const HeaderSecurityScheme: core.serialization.ObjectSchema<
     prefix: core.serialization.string().optional(),
     headerVariableName: core.serialization.string().optional(),
     headerEnvVar: core.serialization.string().optional(),
+    headerPlaceholder: core.serialization.string().optional(),
 });
 
 export declare namespace HeaderSecurityScheme {
@@ -20,5 +21,6 @@ export declare namespace HeaderSecurityScheme {
         prefix?: string | null;
         headerVariableName?: string | null;
         headerEnvVar?: string | null;
+        headerPlaceholder?: string | null;
     }
 }

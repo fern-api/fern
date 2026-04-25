@@ -23,14 +23,6 @@ permissions:
   contents: read # Required for checkout
   id-token: write # Required for OIDC
 
-# Serialize publish runs so queued runs wait for the in-flight publish to finish
-# instead of being cancelled. Without this, a newer release push can race with an
-# in-flight publish and cause a version (e.g. whose changelog was already written
-# to docs) to be skipped on NPM.
-concurrency:
-  group: publish-cli
-  cancel-in-progress: false
-
 env:
   DO_NOT_TRACK: "1"
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
@@ -62,6 +54,9 @@ jobs:
   dev:
     needs: [detect-release-bump]
     if: ${{ inputs.version == null && github.repository == 'fern-api/fern' && needs.detect-release-bump.outputs.is_release_bump == 'false' }}
+    concurrency:
+      group: publish-cli-dev
+      cancel-in-progress: true
     runs-on: ubuntu-latest
     env:
       AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
@@ -125,6 +120,9 @@ jobs:
   prod:
     needs: [live-test, detect-release-bump]
     if: ${{ inputs.version == null && needs.detect-release-bump.outputs.is_release_bump == 'true' }}
+    concurrency:
+      group: publish-cli-release
+      cancel-in-progress: false
     runs-on: ubuntu-latest
     env:
       AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
@@ -178,6 +176,9 @@ jobs:
   manual:
     runs-on: ubuntu-latest
     if: ${{ inputs.version != null }}
+    concurrency:
+      group: publish-cli-release
+      cancel-in-progress: false
     env:
       AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
       AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
