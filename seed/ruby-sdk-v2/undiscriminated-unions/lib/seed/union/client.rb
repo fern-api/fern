@@ -11,7 +11,7 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param params [Seed::Union::Types::MyUnion]
+      # @param _params [Seed::Union::Types::MyUnion]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -19,8 +19,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Seed::Union::Types::MyUnion]
-      def get(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+      def get(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
@@ -43,7 +42,7 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param params [Hash]
+      # @param _params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -51,8 +50,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Hash[Seed::Union::Types::Key, String]]
-      def get_metadata(request_options: {}, **params)
-        Seed::Internal::Types::Utils.normalize_keys(params)
+      def get_metadata(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
@@ -74,7 +72,7 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param params [Seed::Union::Types::MetadataUnion]
+      # @param _params [Seed::Union::Types::MetadataUnion]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -82,8 +80,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Boolean]
-      def update_metadata(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+      def update_metadata(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PUT",
@@ -104,7 +101,7 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param params [Seed::Union::Types::Request]
+      # @param _params [Seed::Union::Types::Request]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -112,8 +109,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Boolean]
-      def call(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+      def call(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
@@ -134,7 +130,7 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param params [Seed::Union::Types::UnionWithDuplicateTypes]
+      # @param _params [Seed::Union::Types::UnionWithDuplicateTypes]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -142,8 +138,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Seed::Union::Types::UnionWithDuplicateTypes]
-      def duplicate_types_union(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+      def duplicate_types_union(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
@@ -166,7 +161,7 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param params [Seed::Union::Types::NestedUnionRoot]
+      # @param _params [Seed::Union::Types::NestedUnionRoot]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -174,8 +169,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [String]
-      def nested_unions(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+      def nested_unions(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
@@ -196,7 +190,7 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param params [Seed::Union::Types::UnionWithBaseProperties]
+      # @param _params [Seed::Union::Types::UnionWithBaseProperties]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -204,8 +198,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Seed::Union::Types::UnionWithBaseProperties]
-      def get_with_base_properties(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+      def get_with_base_properties(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
@@ -228,7 +221,7 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param params [Seed::Union::Types::PaymentRequest]
+      # @param _params [Seed::Union::Types::PaymentRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -236,8 +229,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [String]
-      def test_camel_case_properties(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+      def test_camel_case_properties(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
