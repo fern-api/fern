@@ -15,7 +15,7 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param _params [Seed::Auth::Types::AuthGetTokenRequest]
+      # @param params [Seed::Auth::Types::AuthGetTokenRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -23,7 +23,8 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Seed::Auth::Types::AuthGetTokenResponse]
-      def gettoken(request_options: {}, **_params)
+      def gettoken(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url] || @base_url || @environment&.dig(:auth),
           method: "POST",

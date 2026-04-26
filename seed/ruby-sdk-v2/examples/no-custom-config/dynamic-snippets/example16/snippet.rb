@@ -15,5 +15,5 @@ client.service.create_movie(
   tag: "tag",
   book: "book",
   metadata: {},
-  revenue: 1_000_000
+  revenue: 1000000
 )

@@ -57,9 +57,13 @@ export class HttpEndpointGenerator {
         const headerParameterCodeBlock = request?.getHeaderParameterCodeBlock();
         const pathParameterReferences = this.getPathParameterReferences({ endpoint });
 
+        // params is referenced whenever a request body is emitted (the body reference
+        // string itself uses `params` even when no separate code block is generated),
+        // and whenever query/header/path code blocks emit references to it.
         const paramsUsed =
-            requestBodyCodeBlock?.code != null ||
-            queryParameterCodeBlock?.code != null ||
+            endpoint.requestBody != null ||
+            endpoint.queryParameters.length > 0 ||
+            endpoint.headers.length > 0 ||
             Object.keys(pathParameterReferences).length > 0;
 
         if (paramsUsed) {

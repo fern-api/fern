@@ -240,7 +240,7 @@ module Seed
       # Create a new user
       #
       # @param request_options [Hash]
-      # @param _params [Seed::Types::Types::CreateUserRequest]
+      # @param params [Seed::Types::Types::CreateUserRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -248,7 +248,8 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Seed::Types::Types::User]
-      def create_user(request_options: {}, **_params)
+      def create_user(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",

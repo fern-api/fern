@@ -53,7 +53,7 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param _params [Seed::Nullable::Types::CreateUserRequest]
+      # @param params [Seed::Nullable::Types::CreateUserRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -61,7 +61,8 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Seed::Nullable::Types::User]
-      def create_user(request_options: {}, **_params)
+      def create_user(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
@@ -84,7 +85,7 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param _params [Seed::Nullable::Types::DeleteUserRequest]
+      # @param params [Seed::Nullable::Types::DeleteUserRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -92,7 +93,8 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Boolean]
-      def delete_user(request_options: {}, **_params)
+      def delete_user(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "DELETE",

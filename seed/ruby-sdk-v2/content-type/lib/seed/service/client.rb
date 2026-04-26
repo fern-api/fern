@@ -11,7 +11,7 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param _params [Seed::Service::Types::PatchProxyRequest]
+      # @param params [Seed::Service::Types::PatchProxyRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -19,7 +19,8 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [untyped]
-      def patch(request_options: {}, **_params)
+      def patch(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PATCH",
@@ -123,7 +124,7 @@ module Seed
       # 2. Not NPE when fields are explicitly null in JSON (tests Nulls.SKIP)
       #
       # @param request_options [Hash]
-      # @param _params [Seed::Service::Types::OptionalMergePatchRequest]
+      # @param params [Seed::Service::Types::OptionalMergePatchRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -131,7 +132,8 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [untyped]
-      def optional_merge_patch_test(request_options: {}, **_params)
+      def optional_merge_patch_test(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PATCH",

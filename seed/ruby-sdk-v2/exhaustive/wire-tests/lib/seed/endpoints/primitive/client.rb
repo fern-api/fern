@@ -12,7 +12,7 @@ module Seed
         end
 
         # @param request_options [Hash]
-        # @param _params [Hash]
+        # @param params [Hash]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
         # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -20,7 +20,8 @@ module Seed
         # @option request_options [Integer] :timeout_in_seconds
         #
         # @return [String]
-        def get_and_return_string(request_options: {}, **_params)
+        def get_and_return_string(request_options: {}, **params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
@@ -41,7 +42,7 @@ module Seed
         end
 
         # @param request_options [Hash]
-        # @param _params [Hash]
+        # @param params [Hash]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
         # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -49,7 +50,8 @@ module Seed
         # @option request_options [Integer] :timeout_in_seconds
         #
         # @return [Integer]
-        def get_and_return_int(request_options: {}, **_params)
+        def get_and_return_int(request_options: {}, **params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
@@ -70,7 +72,7 @@ module Seed
         end
 
         # @param request_options [Hash]
-        # @param _params [Hash]
+        # @param params [Hash]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
         # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -78,7 +80,8 @@ module Seed
         # @option request_options [Integer] :timeout_in_seconds
         #
         # @return [Integer]
-        def get_and_return_long(request_options: {}, **_params)
+        def get_and_return_long(request_options: {}, **params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
@@ -99,7 +102,7 @@ module Seed
         end
 
         # @param request_options [Hash]
-        # @param _params [Hash]
+        # @param params [Hash]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
         # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -107,7 +110,8 @@ module Seed
         # @option request_options [Integer] :timeout_in_seconds
         #
         # @return [Integer]
-        def get_and_return_double(request_options: {}, **_params)
+        def get_and_return_double(request_options: {}, **params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
@@ -128,7 +132,7 @@ module Seed
         end
 
         # @param request_options [Hash]
-        # @param _params [Hash]
+        # @param params [Hash]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
         # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -136,7 +140,8 @@ module Seed
         # @option request_options [Integer] :timeout_in_seconds
         #
         # @return [Boolean]
-        def get_and_return_bool(request_options: {}, **_params)
+        def get_and_return_bool(request_options: {}, **params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
@@ -157,7 +162,7 @@ module Seed
         end
 
         # @param request_options [Hash]
-        # @param _params [Hash]
+        # @param params [Hash]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
         # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -165,7 +170,8 @@ module Seed
         # @option request_options [Integer] :timeout_in_seconds
         #
         # @return [String]
-        def get_and_return_datetime(request_options: {}, **_params)
+        def get_and_return_datetime(request_options: {}, **params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
@@ -186,7 +192,7 @@ module Seed
         end
 
         # @param request_options [Hash]
-        # @param _params [Hash]
+        # @param params [Hash]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
         # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -194,7 +200,8 @@ module Seed
         # @option request_options [Integer] :timeout_in_seconds
         #
         # @return [String]
-        def get_and_return_date(request_options: {}, **_params)
+        def get_and_return_date(request_options: {}, **params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
@@ -215,7 +222,7 @@ module Seed
         end
 
         # @param request_options [Hash]
-        # @param _params [Hash]
+        # @param params [Hash]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
         # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -223,7 +230,8 @@ module Seed
         # @option request_options [Integer] :timeout_in_seconds
         #
         # @return [String]
-        def get_and_return_uuid(request_options: {}, **_params)
+        def get_and_return_uuid(request_options: {}, **params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
@@ -244,7 +252,7 @@ module Seed
         end
 
         # @param request_options [Hash]
-        # @param _params [Hash]
+        # @param params [Hash]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
         # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -252,7 +260,8 @@ module Seed
         # @option request_options [Integer] :timeout_in_seconds
         #
         # @return [String]
-        def get_and_return_base64(request_options: {}, **_params)
+        def get_and_return_base64(request_options: {}, **params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",

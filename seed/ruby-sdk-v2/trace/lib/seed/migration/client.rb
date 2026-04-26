@@ -11,7 +11,7 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param _params [Hash]
+      # @param params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -20,7 +20,8 @@ module Seed
       # @option params [String] :admin_key_header
       #
       # @return [Array[Seed::Migration::Types::Migration]]
-      def get_attempted_migrations(request_options: {}, **_params)
+      def get_attempted_migrations(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         headers = {}
         headers["admin-key-header"] = params[:admin_key_header] if params[:admin_key_header]
 

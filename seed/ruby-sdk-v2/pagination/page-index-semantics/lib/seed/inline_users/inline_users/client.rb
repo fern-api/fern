@@ -106,7 +106,7 @@ module Seed
         end
 
         # @param request_options [Hash]
-        # @param _params [Seed::InlineUsers::InlineUsers::Types::ListUsersBodyCursorPaginationRequest]
+        # @param params [Seed::InlineUsers::InlineUsers::Types::ListUsersBodyCursorPaginationRequest]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
         # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -114,7 +114,8 @@ module Seed
         # @option request_options [Integer] :timeout_in_seconds
         #
         # @return [Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse]
-        def list_with_body_cursor_pagination(request_options: {}, **_params)
+        def list_with_body_cursor_pagination(request_options: {}, **params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
           Seed::Internal::CursorItemIterator.new(
             cursor_field: :starting_after,
             item_field: :users,
@@ -247,7 +248,7 @@ module Seed
         end
 
         # @param request_options [Hash]
-        # @param _params [Seed::InlineUsers::InlineUsers::Types::ListUsersBodyOffsetPaginationRequest]
+        # @param params [Seed::InlineUsers::InlineUsers::Types::ListUsersBodyOffsetPaginationRequest]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
         # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -255,7 +256,8 @@ module Seed
         # @option request_options [Integer] :timeout_in_seconds
         #
         # @return [Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse]
-        def list_with_body_offset_pagination(request_options: {}, **_params)
+        def list_with_body_offset_pagination(request_options: {}, **params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
           Seed::Internal::OffsetItemIterator.new(
             initial_page: query_params["page"],
             item_field: :users,

@@ -15,7 +15,7 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param _params [Seed::Files::Types::FilesUploadRequest]
+      # @param params [Seed::Files::Types::FilesUploadRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -23,7 +23,8 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [String]
-      def upload(request_options: {}, **_params)
+      def upload(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url] || @base_url || @environment&.dig(:upload),
           method: "POST",

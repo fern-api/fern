@@ -11,7 +11,7 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param _params [Seed::Completions::Types::StreamCompletionRequest]
+      # @param params [Seed::Completions::Types::StreamCompletionRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -19,7 +19,8 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [untyped]
-      def stream(request_options: {}, **_params)
+      def stream(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
@@ -40,7 +41,7 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param _params [Seed::Completions::Types::StreamEventsRequest]
+      # @param params [Seed::Completions::Types::StreamEventsRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -48,7 +49,8 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [untyped]
-      def stream_events(request_options: {}, **_params)
+      def stream_events(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
@@ -69,7 +71,7 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param _params [Seed::Completions::Types::StreamEventsContextProtocolRequest]
+      # @param params [Seed::Completions::Types::StreamEventsContextProtocolRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -77,7 +79,8 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [untyped]
-      def stream_events_context_protocol(request_options: {}, **_params)
+      def stream_events_context_protocol(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",

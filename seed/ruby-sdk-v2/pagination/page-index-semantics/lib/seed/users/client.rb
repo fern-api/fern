@@ -105,7 +105,7 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param _params [Seed::Users::Types::ListUsersBodyCursorPaginationRequest]
+      # @param params [Seed::Users::Types::ListUsersBodyCursorPaginationRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -113,7 +113,8 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Seed::Users::Types::ListUsersPaginationResponse]
-      def list_with_body_cursor_pagination(request_options: {}, **_params)
+      def list_with_body_cursor_pagination(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         Seed::Internal::CursorItemIterator.new(
           cursor_field: :starting_after,
           item_field: :data,
@@ -148,7 +149,7 @@ module Seed
       # when getNextPage() is called with a different cursor value.
       #
       # @param request_options [Hash]
-      # @param _params [Seed::Users::Types::ListUsersTopLevelBodyCursorPaginationRequest]
+      # @param params [Seed::Users::Types::ListUsersTopLevelBodyCursorPaginationRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -156,7 +157,8 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Seed::Users::Types::ListUsersTopLevelCursorPaginationResponse]
-      def list_with_top_level_body_cursor_pagination(request_options: {}, **_params)
+      def list_with_top_level_body_cursor_pagination(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         Seed::Internal::CursorItemIterator.new(
           cursor_field: :next_cursor,
           item_field: :data,
@@ -289,7 +291,7 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param _params [Seed::Users::Types::ListUsersBodyOffsetPaginationRequest]
+      # @param params [Seed::Users::Types::ListUsersBodyOffsetPaginationRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -297,7 +299,8 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Seed::Users::Types::ListUsersPaginationResponse]
-      def list_with_body_offset_pagination(request_options: {}, **_params)
+      def list_with_body_offset_pagination(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         Seed::Internal::OffsetItemIterator.new(
           initial_page: query_params["page"],
           item_field: :data,

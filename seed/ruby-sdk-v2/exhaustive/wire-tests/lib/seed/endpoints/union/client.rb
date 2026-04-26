@@ -12,7 +12,7 @@ module Seed
         end
 
         # @param request_options [Hash]
-        # @param _params [Seed::Types::Union::Types::Animal]
+        # @param params [Seed::Types::Union::Types::Animal]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
         # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -20,7 +20,8 @@ module Seed
         # @option request_options [Integer] :timeout_in_seconds
         #
         # @return [Seed::Types::Union::Types::Animal]
-        def get_and_return_union(request_options: {}, **_params)
+        def get_and_return_union(request_options: {}, **params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",

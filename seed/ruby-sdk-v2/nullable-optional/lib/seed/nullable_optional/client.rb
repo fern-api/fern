@@ -47,7 +47,7 @@ module Seed
       # Create a new user
       #
       # @param request_options [Hash]
-      # @param _params [Seed::NullableOptional::Types::CreateUserRequest]
+      # @param params [Seed::NullableOptional::Types::CreateUserRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -55,7 +55,8 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Seed::NullableOptional::Types::UserResponse]
-      def create_user(request_options: {}, **_params)
+      def create_user(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
@@ -199,7 +200,7 @@ module Seed
       # Create a complex profile to test nullable enums and unions
       #
       # @param request_options [Hash]
-      # @param _params [Seed::NullableOptional::Types::ComplexProfile]
+      # @param params [Seed::NullableOptional::Types::ComplexProfile]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -207,7 +208,8 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Seed::NullableOptional::Types::ComplexProfile]
-      def create_complex_profile(request_options: {}, **_params)
+      def create_complex_profile(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
@@ -305,7 +307,7 @@ module Seed
       # Test endpoint for validating null deserialization
       #
       # @param request_options [Hash]
-      # @param _params [Seed::NullableOptional::Types::DeserializationTestRequest]
+      # @param params [Seed::NullableOptional::Types::DeserializationTestRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -313,7 +315,8 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Seed::NullableOptional::Types::DeserializationTestResponse]
-      def test_deserialization(request_options: {}, **_params)
+      def test_deserialization(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
@@ -447,7 +450,7 @@ module Seed
       # Get search results with nullable unions
       #
       # @param request_options [Hash]
-      # @param _params [Seed::NullableOptional::Types::SearchRequest]
+      # @param params [Seed::NullableOptional::Types::SearchRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -455,7 +458,8 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Array[Seed::NullableOptional::Types::SearchResult], nil]
-      def get_search_results(request_options: {}, **_params)
+      def get_search_results(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
