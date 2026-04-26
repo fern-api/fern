@@ -698,22 +698,39 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
             return Collections.emptyList();
         }
         TypeId typeId = member.getType().getNamed().get().getTypeId();
-        TypeDeclaration typeDeclaration = generatorContext.getTypeDeclarations().get(typeId);
-        if (typeDeclaration == null) {
-            return Collections.emptyList();
+        // Walk alias chains until we hit a non-alias type declaration. Guards against alias cycles
+        // with a visited-set keyed by TypeId.
+        Set<TypeId> visited = new HashSet<>();
+        while (typeId != null && visited.add(typeId)) {
+            TypeDeclaration typeDeclaration =
+                    generatorContext.getTypeDeclarations().get(typeId);
+            if (typeDeclaration == null) {
+                return Collections.emptyList();
+            }
+            if (typeDeclaration.getShape().isObject()) {
+                ObjectTypeDeclaration objectType =
+                        typeDeclaration.getShape().getObject().get();
+                List<String> requiredKeys = new ArrayList<>();
+                collectRequiredWireKeys(objectType, requiredKeys);
+                return requiredKeys;
+            }
+            if (!typeDeclaration.getShape().isAlias()) {
+                // Enum / union / undiscriminated union / etc. — convertValue will reject a JSON
+                // object naturally for these, so no presence guard is needed.
+                return Collections.emptyList();
+            }
+            com.fern.ir.model.types.ResolvedTypeReference resolved = typeDeclaration
+                    .getShape()
+                    .getAlias()
+                    .get()
+                    .getResolvedType();
+            if (!resolved.isNamed()) {
+                // Resolved to primitive / container / unknown — not an object shape.
+                return Collections.emptyList();
+            }
+            typeId = resolved.getNamed().get().getName().getTypeId();
         }
-        // Follow aliases to their resolved type
-        if (typeDeclaration.getShape().isAlias()) {
-            return Collections.emptyList();
-        }
-        if (!typeDeclaration.getShape().isObject()) {
-            return Collections.emptyList();
-        }
-        ObjectTypeDeclaration objectType =
-                typeDeclaration.getShape().getObject().get();
-        List<String> requiredKeys = new ArrayList<>();
-        collectRequiredWireKeys(objectType, requiredKeys);
-        return requiredKeys;
+        return Collections.emptyList();
     }
 
     private void collectRequiredWireKeys(ObjectTypeDeclaration objectType, List<String> requiredKeys) {

@@ -184,20 +184,22 @@ public final class UndiscriminatedUnionDeserializationTestGenerator extends Abst
             if (!member.getType().isNamed()) {
                 continue;
             }
-            TypeId typeId = member.getType().getNamed().get().getTypeId();
-            TypeDeclaration typeDeclaration =
-                    generatorContext.getTypeDeclarations().get(typeId);
-            if (typeDeclaration == null) {
+            // Walk alias chains until we land on an object declaration (or bail).
+            // The original named type is used for the generated test's class name so that
+            // the deserializer round-trips through the alias-typed variant.
+            TypeDeclaration originalDeclaration = generatorContext
+                    .getTypeDeclarations()
+                    .get(member.getType().getNamed().get().getTypeId());
+            if (originalDeclaration == null) {
                 continue;
             }
-            if (typeDeclaration.getShape().isAlias()) {
-                continue;
-            }
-            if (!typeDeclaration.getShape().isObject()) {
+            TypeDeclaration objectDeclaration = resolveToObjectDeclaration(
+                    member.getType().getNamed().get().getTypeId());
+            if (objectDeclaration == null) {
                 continue;
             }
             ObjectTypeDeclaration objectType =
-                    typeDeclaration.getShape().getObject().get();
+                    objectDeclaration.getShape().getObject().get();
             Map<String, String> jsonKeyValues = new LinkedHashMap<>();
             Set<String> requiredKeys = new LinkedHashSet<>();
             if (!collectRequiredJsonKeyValues(objectType, jsonKeyValues, requiredKeys)) {
@@ -207,10 +209,42 @@ public final class UndiscriminatedUnionDeserializationTestGenerator extends Abst
                 continue;
             }
             ClassName variantClassName =
-                    generatorContext.getPoetClassNameFactory().getTypeClassName(typeDeclaration.getName());
+                    generatorContext.getPoetClassNameFactory().getTypeClassName(originalDeclaration.getName());
             variants.add(new TestableVariant(variantClassName, requiredKeys, jsonKeyValues));
         }
         return variants;
+    }
+
+    /**
+     * Walks alias chains starting at {@code typeId}, returning the first object-shaped declaration
+     * encountered. Returns {@code null} if the chain ends in a non-object shape (primitive,
+     * container, enum, union, etc.). Guards against alias cycles with a visited-set on TypeId.
+     */
+    private TypeDeclaration resolveToObjectDeclaration(TypeId typeId) {
+        Set<TypeId> visited = new LinkedHashSet<>();
+        while (typeId != null && visited.add(typeId)) {
+            TypeDeclaration typeDeclaration =
+                    generatorContext.getTypeDeclarations().get(typeId);
+            if (typeDeclaration == null) {
+                return null;
+            }
+            if (typeDeclaration.getShape().isObject()) {
+                return typeDeclaration;
+            }
+            if (!typeDeclaration.getShape().isAlias()) {
+                return null;
+            }
+            com.fern.ir.model.types.ResolvedTypeReference resolved = typeDeclaration
+                    .getShape()
+                    .getAlias()
+                    .get()
+                    .getResolvedType();
+            if (!resolved.isNamed()) {
+                return null;
+            }
+            typeId = resolved.getNamed().get().getName().getTypeId();
+        }
+        return null;
     }
 
     /**
