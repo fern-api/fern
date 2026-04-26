@@ -52,6 +52,9 @@ import { docsDiff } from "./commands/docs-diff/docsDiff.js";
 import { generateLibraryDocs } from "./commands/docs-md-generate/generateLibraryDocs.js";
 import { deleteDocsPreview } from "./commands/docs-preview/deleteDocsPreview.js";
 import { listDocsPreview } from "./commands/docs-preview/listDocsPreview.js";
+import { exportDocsTheme } from "./commands/docs-theme/exportDocsTheme.js";
+import { listDocsThemes } from "./commands/docs-theme/listDocsThemes.js";
+import { uploadDocsTheme } from "./commands/docs-theme/uploadDocsTheme.js";
 import { downgrade } from "./commands/downgrade/downgrade.js";
 import { generateOpenAPIForWorkspaces } from "./commands/export/generateOpenAPIForWorkspaces.js";
 import { formatWorkspaces } from "./commands/format/formatWorkspaces.js";
@@ -1740,8 +1743,86 @@ function addDocsCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
         addDocsPreviewCommand(yargs, cliContext);
         addDocsDiffCommand(yargs, cliContext);
         addDocsMdCommand(yargs, cliContext);
+        addDocsThemeCommand(yargs, cliContext);
         return yargs;
     });
+}
+
+function addDocsThemeCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command("theme", "Manage org-level themes for your documentation", (yargs) => {
+        addDocsThemeExportCommand(yargs, cliContext);
+        addDocsThemeListCommand(yargs, cliContext);
+        addDocsThemeUploadCommand(yargs, cliContext);
+        return yargs;
+    });
+}
+
+function addDocsThemeExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "export",
+        "Export theme-eligible fields from docs.yml into a standalone theme directory",
+        (yargs) =>
+            yargs
+                .option("output", {
+                    alias: "o",
+                    type: "string",
+                    description: "Directory to export the theme into (default: ./fern/theme)"
+                })
+                .example("$0 docs theme export", "Export theme from docs.yml to ./fern/theme")
+                .example("$0 docs theme export --output ./my-theme", "Export to a custom directory"),
+        async (argv) => {
+            cliContext.instrumentPostHogEvent({ command: "fern docs theme export" });
+            await exportDocsTheme({ cliContext, output: argv.output });
+        }
+    );
+}
+
+function addDocsThemeListCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "list",
+        "List all themes for an org",
+        (yargs) =>
+            yargs
+                .option("org", {
+                    type: "string",
+                    description: "Override the org ID from fern.config.json"
+                })
+                .option("json", {
+                    type: "boolean",
+                    description: "Output themes as a JSON array (includes updatedAt)"
+                })
+                .example("$0 docs theme list", "List all themes for the current org")
+                .example("$0 docs theme list --json", "Output themes as JSON"),
+        async (argv) => {
+            cliContext.instrumentPostHogEvent({ command: "fern docs theme list" });
+            await listDocsThemes({ cliContext, org: argv.org, json: argv.json });
+        }
+    );
+}
+
+function addDocsThemeUploadCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "upload",
+        "Upload a theme to Fern's cloud (creates or updates)",
+        (yargs) =>
+            yargs
+                .option("name", {
+                    alias: "n",
+                    type: "string",
+                    description: 'Theme name (default: "default")',
+                    default: "default"
+                })
+                .option("org", {
+                    type: "string",
+                    description: "Override the org ID from fern.config.json"
+                })
+                .example("$0 docs theme upload", 'Upload theme from ./fern/theme as "default"')
+                .example("$0 docs theme upload --name dark", "Upload a named theme variant"),
+        async (argv) => {
+            cliContext.instrumentPostHogEvent({ command: "fern docs theme upload" });
+            await uploadDocsTheme({ cliContext, name: argv.name, org: argv.org });
+        }
+    );
 }
 
 function addDocsMdCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
