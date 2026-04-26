@@ -57,13 +57,16 @@ export class HttpEndpointGenerator {
         const headerParameterCodeBlock = request?.getHeaderParameterCodeBlock();
         const pathParameterReferences = this.getPathParameterReferences({ endpoint });
 
-        // params is referenced whenever a request body is emitted (the body reference
-        // string itself uses `params` even when no separate code block is generated),
-        // and whenever query/header/path code blocks emit references to it.
+        // params is referenced whenever the request emits a body/query/header code
+        // block (each reference produced by these blocks uses `params` either in a
+        // standalone code statement or in the body reference string itself), or when
+        // path parameters are extracted from params. Bytes-upload endpoints have a
+        // requestBody but no `request` object (getEndpointRequest returns undefined
+        // for them), so they correctly skip the params normalization.
         const paramsUsed =
-            endpoint.requestBody != null ||
-            endpoint.queryParameters.length > 0 ||
-            endpoint.headers.length > 0 ||
+            requestBodyCodeBlock != null ||
+            queryParameterCodeBlock != null ||
+            headerParameterCodeBlock != null ||
             Object.keys(pathParameterReferences).length > 0;
 
         if (paramsUsed) {
