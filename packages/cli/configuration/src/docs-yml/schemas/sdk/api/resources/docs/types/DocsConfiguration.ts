@@ -54,6 +54,20 @@ export interface DocsConfiguration {
      */
     defaultLanguage?: FernDocsConfig.ProgrammingLanguage;
     languages?: FernDocsConfig.Language[];
+    /**
+     * Configuration for multi-language documentation. Each entry defines a locale
+     * that the documentation supports. Use the `translations/` directory alongside
+     * `docs.yml` to provide per-language content.
+     *
+     * Example:
+     * ```yaml
+     * translations:
+     *   - lang: en
+     *     default: true
+     *   - lang: ja
+     *   - lang: fr
+     * ```
+     */
     translations?: FernDocsConfig.TranslationConfig[];
     aiChat?: FernDocsConfig.AiChatConfig;
     aiSearch?: FernDocsConfig.AiChatConfig;

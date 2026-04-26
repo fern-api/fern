@@ -4,5 +4,6 @@ import type * as FernDocsConfig from "../../../index.js";
 
 export interface TranslationConfig {
     lang: FernDocsConfig.Language;
+    /** Whether this language is the default. At most one entry should be marked as default. */
     default?: boolean;
 }
