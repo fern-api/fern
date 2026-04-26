@@ -79,8 +79,9 @@ describe("parseDocsConfiguration — translation pages loading", () => {
         await writeFile(path.join(frDir, "getting-started.mdx"), "# Démarrage rapide");
 
         // Build a raw config that references the page
+        // Note: Must include a default locale (en) so that "fr" is treated as a translation
         const config = makeMinimalRawConfig({
-            translations: [{ lang: "fr" }],
+            translations: [{ lang: "en", default: true }, { lang: "fr" }],
             navigation: [
                 {
                     page: "Getting Started",
@@ -116,8 +117,9 @@ describe("parseDocsConfiguration — translation pages loading", () => {
         const jaDir = path.join(tmpDir, "translations", "ja");
         await mkdir(jaDir, { recursive: true });
 
+        // Note: Must include a default locale (en) so that "ja" is treated as a translation
         const config = makeMinimalRawConfig({
-            translations: [{ lang: "ja" }],
+            translations: [{ lang: "en", default: true }, { lang: "ja" }],
             navigation: [
                 {
                     page: "Getting Started",
@@ -168,8 +170,9 @@ describe("parseDocsConfiguration — translation pages loading", () => {
             await writeFile(path.join(dir, "index.mdx"), content);
         }
 
+        // Note: Must include a default locale (en) so that "fr" and "ja" are treated as translations
         const config = makeMinimalRawConfig({
-            translations: [{ lang: "fr" }, { lang: "ja" }],
+            translations: [{ lang: "en", default: true }, { lang: "fr" }, { lang: "ja" }],
             navigation: [{ page: "Home", path: "pages/index.mdx" }] as docsYml.RawSchemas.NavigationConfig
         });
 

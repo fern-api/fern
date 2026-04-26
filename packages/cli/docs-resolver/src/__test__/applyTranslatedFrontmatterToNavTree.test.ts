@@ -117,8 +117,8 @@ sidebar-title: Installation
         const child = getChild(result);
         const children = child.children as Array<{ title: string }>;
 
-        expect(children[0].title).toBe("Vue d'ensemble");
-        expect(children[1].title).toBe("Installation");
+        expect(children[0]?.title).toBe("Vue d'ensemble");
+        expect(children[1]?.title).toBe("Installation");
     });
 
     it("ignores pages that don't match any node in the tree", () => {
@@ -238,7 +238,7 @@ sidebar-title: Guide du SDK
 
         expect(child.title).toBe("Guide du SDK");
         // Child page title should remain unchanged
-        expect(children[0].title).toBe("Installation");
+        expect(children[0]?.title).toBe("Installation");
     });
 
     it("does not override section title when overview page has no sidebar-title", () => {
