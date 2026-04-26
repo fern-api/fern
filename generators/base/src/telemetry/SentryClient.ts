@@ -1,10 +1,18 @@
 import * as Sentry from "@sentry/node";
 import { resolveErrorCode } from "../GeneratorError.js";
 
+export namespace SentryClient {
+    export interface Options {
+        workspaceName: string;
+        organization: string;
+        shouldTrackLocalVariables?: boolean;
+    }
+}
+
 export class SentryClient {
     private readonly sentry: Sentry.NodeClient | undefined;
 
-    constructor({ workspaceName, organization }: { workspaceName: string; organization: string }) {
+    constructor({ workspaceName, organization, shouldTrackLocalVariables = false }: SentryClient.Options) {
         const isTelemetryEnabled = process.env.FERN_DISABLE_TELEMETRY !== "true";
         const sentryDsn = process.env.SENTRY_DSN;
         if (isTelemetryEnabled && sentryDsn != null && sentryDsn.length > 0) {
@@ -38,12 +46,23 @@ export class SentryClient {
                 // separate instrument.js entrypoint.
                 // linkedErrors chains .cause so wrapped errors stay traceable.
                 // nodeContext adds Node.js version and OS to every event.
+                // localVariables attaches local variable values to each stack
+                // frame (via the V8 inspector). We only enable it for remote
+                // executions because the process runs in an isolated container
+                // where there's no risk of leaking user-machine secrets, and
+                // we want every bit of context we can get to debug generator
+                // failures without a repro. Local (user-machine) runs skip it
+                // to avoid serializing values that may contain tokens, env
+                // vars, or customer spec contents.
                 integrations: [
                     Sentry.rewriteFramesIntegration(),
                     Sentry.onUncaughtExceptionIntegration(),
                     Sentry.onUnhandledRejectionIntegration(),
                     Sentry.linkedErrorsIntegration(),
-                    Sentry.nodeContextIntegration()
+                    Sentry.nodeContextIntegration(),
+                    ...(shouldTrackLocalVariables
+                        ? [Sentry.localVariablesIntegration({ captureAllExceptions: true })]
+                        : [])
                 ],
                 // Generators don't emit transactions; disable performance
                 // sampling entirely to avoid unnecessary overhead.

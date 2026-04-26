@@ -15,6 +15,7 @@ from .types.metadata_union import MetadataUnion
 from .types.my_union import MyUnion
 from .types.nested_union_root import NestedUnionRoot
 from .types.payment_method_union import PaymentMethodUnion
+from .types.union_with_base_properties import UnionWithBaseProperties
 from .types.union_with_duplicate_types import UnionWithDuplicateTypes
 from pydantic import ValidationError
 
@@ -260,6 +261,49 @@ class RawUnionClient:
                     str,
                     parse_obj_as(
                         type_=str,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def get_with_base_properties(
+        self, *, request: UnionWithBaseProperties, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[UnionWithBaseProperties]:
+        """
+        Parameters
+        ----------
+        request : UnionWithBaseProperties
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[UnionWithBaseProperties]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "with-base-properties",
+            method="POST",
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=UnionWithBaseProperties, direction="write"
+            ),
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    UnionWithBaseProperties,
+                    parse_obj_as(
+                        type_=UnionWithBaseProperties,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -559,6 +603,49 @@ class AsyncRawUnionClient:
                     str,
                     parse_obj_as(
                         type_=str,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def get_with_base_properties(
+        self, *, request: UnionWithBaseProperties, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[UnionWithBaseProperties]:
+        """
+        Parameters
+        ----------
+        request : UnionWithBaseProperties
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[UnionWithBaseProperties]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "with-base-properties",
+            method="POST",
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=UnionWithBaseProperties, direction="write"
+            ),
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    UnionWithBaseProperties,
+                    parse_obj_as(
+                        type_=UnionWithBaseProperties,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

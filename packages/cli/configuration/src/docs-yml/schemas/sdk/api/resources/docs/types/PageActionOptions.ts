@@ -22,21 +22,33 @@ export interface PageActionOptions {
      */
     askAi?: boolean;
     /**
-     * When enabled, displays an "Open in ChatGPT" button that allows users to send the page content to ChatGPT for further exploration and Q&A.
+     * Controls the "Open in ChatGPT" button, which sends the page content to ChatGPT for further
+     * exploration and Q&A. Set to `false` to hide it.
      *
-     * @default: false
+     * @default: true
      */
     chatgpt?: boolean;
     /**
-     * When enabled, displays an "Open in Claude" button that allows users to send the page content to Claude for further exploration and Q&A.
+     * Controls the "Open in Claude" button, which sends the page content to Claude for further
+     * exploration and Q&A. Set to `false` to hide it.
      *
-     * @default: false
+     * @default: true
      */
     claude?: boolean;
     /**
-     * When enabled, displays an "Open in Cursor" button that allows users to open the page content in Cursor IDE with AI-powered code assistance.
+     * Controls the "Connect to Claude Code" button, which copies a `claude mcp add` command to the
+     * clipboard so users can register this docs site's MCP server with Claude Code. The button only
+     * renders on docs sites that have Ask AI enabled; set to `false` to hide it on those sites.
      *
-     * @default: false
+     * @default: true
+     */
+    claudeCode?: boolean;
+    /**
+     * Controls the "Connect to Cursor" button, which installs this docs site's MCP server in
+     * Cursor via a deeplink. The button only renders on docs sites that have Ask AI enabled; set
+     * to `false` to hide it on those sites.
+     *
+     * @default: true
      */
     cursor?: boolean;
     /**

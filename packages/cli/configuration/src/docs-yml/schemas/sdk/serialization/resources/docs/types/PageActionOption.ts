@@ -7,8 +7,25 @@ import type * as serializers from "../../../index.js";
 export const PageActionOption: core.serialization.Schema<
     serializers.PageActionOption.Raw,
     FernDocsConfig.PageActionOption
-> = core.serialization.enum_(["copy-page", "view-as-markdown", "ask-ai", "chatgpt", "claude", "cursor", "vscode"]);
+> = core.serialization.enum_([
+    "copy-page",
+    "view-as-markdown",
+    "ask-ai",
+    "chatgpt",
+    "claude",
+    "cursor",
+    "claude-code",
+    "vscode",
+]);
 
 export declare namespace PageActionOption {
-    export type Raw = "copy-page" | "view-as-markdown" | "ask-ai" | "chatgpt" | "claude" | "cursor" | "vscode";
+    export type Raw =
+        | "copy-page"
+        | "view-as-markdown"
+        | "ask-ai"
+        | "chatgpt"
+        | "claude"
+        | "cursor"
+        | "claude-code"
+        | "vscode";
 }

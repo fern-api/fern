@@ -1,4 +1,33 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.62.0
+  changelogEntry:
+    - summary: |
+        Use auth scheme placeholder values in snippets when configured via
+        `placeholder` field on auth schemes.
+      type: feat
+  createdAt: "2026-04-25"
+  irVersion: 66
+- version: 2.61.2
+  changelogEntry:
+    - summary: |
+        Bump @fern-api/generator-cli to 0.9.11. The GitHub pipeline step now creates
+        signed commits via the GitHub REST API (matching fiddle's legacy InMemoryGitRepo
+        push path), restoring verified fern-api[bot] commits on replay-enabled orgs.
+      type: chore
+  createdAt: "2026-04-22"
+  irVersion: 66
+- version: 2.61.1
+  changelogEntry:
+    - summary: |
+        Emit a `Body` property of type `System.IO.Stream` on wrapped request records
+        for endpoints whose request body is `bytes`. Previously the endpoint client
+        method emitted `Body = request.Body` but the generated request record did
+        not declare a `Body` property, producing a CS1061 compile error on any
+        endpoint that combined a binary body with other wrapped parameters
+        (e.g. query parameters, headers, or path parameters).
+      type: fix
+  createdAt: "2026-04-22"
+  irVersion: 66
 - version: 2.61.0
   changelogEntry:
     - summary: |

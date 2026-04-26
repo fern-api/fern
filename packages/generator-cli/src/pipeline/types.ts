@@ -15,10 +15,35 @@ export interface PipelineConfig {
 
 export interface PipelineContext {
     previousStepResults: {
+        generationCommit?: GenerationCommitStepResult;
         replay?: ReplayStepResult;
         autoVersion?: AutoVersionStepResult;
         fernignore?: FernignoreStepResult;
     };
+}
+
+export interface GenerationCommitStepConfig {
+    enabled: boolean;
+    /** Passed to replayPrepare — commits generation, skips detect/apply in phase 2. */
+    skipApplication?: boolean;
+}
+
+/**
+ * Result of running replayPrepare(). Holds the opaque PreparedReplay handle that
+ * downstream steps (AutoVersionStep, ReplayStep) consume.
+ *
+ * `preparedReplay` is null when replay isn't initialized for this repo (no
+ * lockfile) or when prepare failed — the pipeline proceeds without replay in
+ * both cases.
+ */
+export interface GenerationCommitStepResult extends StepResult {
+    /** Opaque handle consumed by ReplayStep's apply phase. Imported at the import site to avoid circular deps. */
+    preparedReplay?: import("../replay/replay-run").PreparedReplay | null;
+    previousGenerationSha?: string;
+    currentGenerationSha?: string;
+    baseBranchHead?: string;
+    /** Flow selected by the replay service during prepare. */
+    flow?: "first-generation" | "no-patches" | "normal-regeneration" | "skip-application";
 }
 
 export interface ReplayStepConfig {
@@ -33,10 +58,30 @@ export interface AutoVersionStepConfig {
     language: string;
     /** Existing changelog content passed to the AI for context. */
     priorChangelog?: string;
-    /** Fallback version when no prior generation exists (first run). */
+    /** Fallback version when no prior generation exists (first run). Defaults to "0.0.1" (or "v0.0.1" for Go). */
     baseVersion?: string;
-    /** Fern token used to authorize the FAI (AnalyzeSdkDiff) call. */
-    fernToken: string;
+    /**
+     * BAML AI service configuration (provider + model). Required when `enabled: true` — without it,
+     * AnalyzeSdkDiff calls will fail and the step will fall back to a PATCH bump.
+     * Shape matches `generatorsYml.AiServicesSchema` from @fern-api/configuration; typed structurally
+     * to avoid pulling the configuration package into generator-cli's dep graph.
+     */
+    ai?: AutoVersionAiConfig;
+    /** Optional Fern API token passed through to BAML client configuration if needed by the provider. */
+    fernToken?: string;
+    /** Spec repository commit message included as additional AI context. */
+    specCommitMessage?: string;
+    /** When true, strips "🌿 Generated with Fern" trailers from commit messages (whitelabel customers). */
+    isWhitelabel?: boolean;
+}
+
+/**
+ * Minimal shape for the BAML AI service configuration. Structural equivalent of
+ * `generatorsYml.AiServicesSchema` from @fern-api/configuration.
+ */
+export interface AutoVersionAiConfig {
+    provider: string;
+    model: string;
 }
 
 export interface FernignoreStepConfig {
@@ -96,6 +141,7 @@ export interface GithubStepConfig {
 export interface PipelineResult {
     success: boolean;
     steps: {
+        generationCommit?: GenerationCommitStepResult;
         replay?: ReplayStepResult;
         autoVersion?: AutoVersionStepResult;
         fernignore?: FernignoreStepResult;

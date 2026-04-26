@@ -910,23 +910,23 @@ ${clientClassName} client = ${clientClassName}.builder()
                     authScheme.token != null ? this.context.caseConverter.camelUnsafe(authScheme.token) : "token";
                 builderParameters.push({
                     name: tokenName,
-                    value: java.TypeLiteral.string("<token>")
+                    value: java.TypeLiteral.string(authScheme.tokenPlaceholder ?? "<token>")
                 });
             } else if (authScheme?.type === "basic") {
                 builderParameters.push({
                     name: "username",
-                    value: java.TypeLiteral.string("<username>")
+                    value: java.TypeLiteral.string(authScheme.usernamePlaceholder ?? "<username>")
                 });
                 builderParameters.push({
                     name: "password",
-                    value: java.TypeLiteral.string("<password>")
+                    value: java.TypeLiteral.string(authScheme.passwordPlaceholder ?? "<password>")
                 });
             } else if (authScheme?.type === "header") {
                 const headerName =
                     authScheme.name != null ? this.context.caseConverter.camelUnsafe(authScheme.name) : "apiKey";
                 builderParameters.push({
                     name: headerName,
-                    value: java.TypeLiteral.string("<api-key>")
+                    value: java.TypeLiteral.string(authScheme.headerPlaceholder ?? "<api-key>")
                 });
             }
         }

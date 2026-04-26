@@ -9,7 +9,6 @@
     "use_inheritance_for_extended_models": false
   },
   "originGitCommit": "DUMMY",
-  "originGitCommitIsDirty": null,
   "invokedBy": "ci",
   "requestedVersion": "0.0.1",
   "ciProvider": "github",

@@ -30,6 +30,7 @@ class ConstructorParameter(BaseClientGeneratorConstructorParameter):
     is_basic: bool = False
     docs: typing.Optional[str] = None
     template: typing.Optional[Template] = None
+    client_default: typing.Optional[AST.Expression] = None
     # True when the underlying fern type is not a string and the value must be
     # wrapped with str(...) to satisfy the Dict[str, str] headers type.
     needs_str_conversion: bool = False
@@ -695,6 +696,7 @@ class ClientWrapperGenerator:
                 )
                 continue
             constructor_parameter_name = names.get_header_constructor_parameter_name(header)
+            client_default_initializer = self._get_client_default_initializer(header.client_default)
             needs_str_conversion = not is_type_reference_string(
                 header.value_type,
                 self._context.pydantic_generator_context.get_declaration_for_type_id,
@@ -704,11 +706,16 @@ class ClientWrapperGenerator:
                     constructor_parameter_name=constructor_parameter_name,
                     private_member_name=names.get_header_private_member_name(header),
                     type_hint=type_hint,
-                    initializer=AST.Expression(
-                        f'{constructor_parameter_name}="YOUR_{resolve_name(get_name_from_wire_value(header.name)).screaming_snake_case.safe_name}"',
+                    initializer=(
+                        client_default_initializer
+                        if client_default_initializer is not None
+                        else AST.Expression(
+                            f'{constructor_parameter_name}="YOUR_{resolve_name(get_name_from_wire_value(header.name)).screaming_snake_case.safe_name}"',
+                        )
                     ),
                     header_key=get_wire_value(header.name),
                     environment_variable=header.env,
+                    client_default=client_default_initializer,
                     needs_str_conversion=needs_str_conversion,
                 )
             )
@@ -935,6 +942,16 @@ class ClientWrapperGenerator:
         return ConstructorInfo(
             constructor_parameters=parameters,
             literal_headers=literal_headers,
+        )
+
+    def _get_client_default_initializer(
+        self, client_default: typing.Optional[ir_types.Literal]
+    ) -> typing.Optional[AST.Expression]:
+        if client_default is None:
+            return None
+        return client_default.visit(
+            string=lambda value: AST.Expression(repr(value)),
+            boolean=lambda value: AST.Expression(f"{value}"),
         )
 
     def _get_optional_getter_body_writer(self, *, member_name: str) -> AST.CodeWriterFunction:

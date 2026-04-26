@@ -8,7 +8,7 @@ import {
     stripMdxComments,
     transformAtPrefixImports
 } from "@fern-api/docs-markdown-utils";
-import { DocsDefinitionResolver, filterOssWorkspaces } from "@fern-api/docs-resolver";
+import { DocsDefinitionResolver, filterOssWorkspaces, stitchGlobalTheme } from "@fern-api/docs-resolver";
 import {
     APIV1Read,
     APIV1Write,
@@ -24,6 +24,7 @@ import {
 } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, convertToFernHostAbsoluteFilePath, doesPathExist, relative } from "@fern-api/fs-utils";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { getOriginalName } from "@fern-api/ir-utils";
 import { Project } from "@fern-api/project-loader";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { CliError, TaskContext } from "@fern-api/task-context";
@@ -255,6 +256,10 @@ export async function getPreviewDocsDefinition({
 
     const ossWorkspaces = await filterOssWorkspaces(project);
 
+    // Apply global theme if configured. Requires FERN_TOKEN env var; warns and proceeds
+    // without the theme if the token is absent (common in local dev without cloud auth).
+    const effectiveWorkspace = await applyGlobalThemeIfNeeded(docsWorkspace, project.config.organization, context);
+
     const apiCollector = new ReferencedAPICollector(context);
     const apiCollectorV2 = new ReferencedAPICollectorV2(context);
 
@@ -262,7 +267,7 @@ export async function getPreviewDocsDefinition({
 
     const resolver = new DocsDefinitionResolver({
         domain,
-        docsWorkspace,
+        docsWorkspace: effectiveWorkspace,
         ossWorkspaces,
         apiWorkspaces,
         taskContext: context,
@@ -316,7 +321,7 @@ export async function getPreviewDocsDefinition({
         filesV2,
         pages: dbDocsDefinition.pages,
         jsFiles: dbDocsDefinition.jsFiles,
-        apiNameToId: {},
+        apiNameToId: apiCollector.getApiNameToId(),
         id: undefined
     };
 
@@ -334,10 +339,35 @@ export async function getPreviewDocsDefinition({
     return docsDefinition;
 }
 
+async function applyGlobalThemeIfNeeded(
+    docsWorkspace: NonNullable<Project["docsWorkspaces"]>,
+    organization: string,
+    context: TaskContext
+): Promise<NonNullable<Project["docsWorkspaces"]>> {
+    const themeName = docsWorkspace.config.globalTheme;
+    if (themeName == null) {
+        return docsWorkspace;
+    }
+    const token = process.env.FERN_TOKEN;
+    if (token == null) {
+        context.logger.warn(
+            `docs.yml declares global-theme "${themeName}" but FERN_TOKEN is not set — ` +
+                "theme will not be applied in dev mode. Set FERN_TOKEN or run 'fern login' to enable it."
+        );
+        return docsWorkspace;
+    }
+    // FERN_FDR_ORIGIN is checked first because DEFAULT_FDR_ORIGIN is baked into the
+    // prod bundle at build time and cannot be overridden at runtime.
+    const fdrOrigin =
+        process.env.FERN_FDR_ORIGIN ?? process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com";
+    return stitchGlobalTheme({ docsWorkspace, organization, fdrOrigin, token, taskContext: context });
+}
+
 type APIDefinitionID = string;
 
 class ReferencedAPICollector {
     private readonly apis: Record<APIDefinitionID, APIV1Read.ApiDefinition> = {};
+    private readonly apiNameToId: Record<string, string> = {};
 
     constructor(private readonly context: TaskContext) {}
 
@@ -382,6 +412,14 @@ class ReferencedAPICollector {
             const readApiDefinition = convertDbAPIDefinitionToRead(dbApiDefinition);
 
             this.apis[id] = readApiDefinition;
+            // Mirror the FDR publish path (registerApi.ts, publishDocs.ts), which registers
+            // each API under `apiName ?? getOriginalName(ir.apiName)`. Without this mapping,
+            // features like type resolution in MDX widgets (MergeSupportedFieldsByIntegrationWidget,
+            // etc.) that look up APIs by user-facing name fail in `fern docs dev`.
+            const resolvedApiName = apiName ?? getOriginalName(ir.apiName);
+            if (resolvedApiName) {
+                this.apiNameToId[resolvedApiName] = id;
+            }
             return id;
         } catch (e) {
             // Print Error
@@ -399,6 +437,13 @@ class ReferencedAPICollector {
 
     public getAPIsForDefinition(): Record<FdrAPI.ApiDefinitionId, APIV1Read.ApiDefinition> {
         return this.apis;
+    }
+
+    public getApiNameToId(): Record<string, DocsV1Read.ApiDefinitionId> {
+        // IDs originate from uuidv4() and are used as-is alongside this.apis (which is keyed by
+        // the same raw uuids). ApiDefinitionId branding is purely a nominal-type marker
+        // and carries no runtime information, so this cast is safe.
+        return this.apiNameToId as Record<string, DocsV1Read.ApiDefinitionId>;
     }
 }
 

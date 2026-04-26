@@ -12,7 +12,8 @@ describe("resolvePosthogCommandLabel", () => {
         const automation: AutomationRunOptions = {
             recorder: {
                 recordSuccess: () => undefined,
-                recordFailure: () => undefined
+                recordFailure: () => undefined,
+                recordSkipped: () => undefined
             }
         };
         expect(resolvePosthogCommandLabel(automation)).toBe("fern automations generate");

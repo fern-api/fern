@@ -406,7 +406,8 @@ export class OneOfSchemaConverter extends AbstractConverter<
                 continue;
             }
 
-            const extendedSubSchema = this.extendSubSchema(subSchema);
+            const hasSiblingProperties = Object.keys(this.schema.properties ?? {}).length > 0;
+            const extendedSubSchema = hasSiblingProperties ? undefined : this.extendSubSchema(subSchema);
 
             const schemaId = this.context.convertBreadcrumbsToName([`${this.id}_${index}`]);
             const displayName = subSchema.title;
@@ -457,12 +458,35 @@ export class OneOfSchemaConverter extends AbstractConverter<
             }
         }
 
+        const {
+            convertedProperties: siblingProperties,
+            referencedTypes: siblingReferencedTypes,
+            inlinedTypesFromProperties: siblingInlinedTypes
+        } = convertProperties({
+            properties: this.schema.properties ?? {},
+            required: this.schema.required ?? [],
+            breadcrumbs: this.breadcrumbs,
+            context: this.context,
+            errorCollector: this.context.errorCollector
+        });
+
+        for (const typeId of Object.keys(siblingInlinedTypes)) {
+            referencedTypes.add(typeId);
+        }
+        for (const ref of siblingReferencedTypes) {
+            referencedTypes.add(ref);
+        }
+
         return {
             type: Type.undiscriminatedUnion({
-                members: unionTypes
+                members: unionTypes,
+                baseProperties: siblingProperties.length > 0 ? siblingProperties : undefined
             }),
             referencedTypes,
-            inlinedTypes
+            inlinedTypes: {
+                ...inlinedTypes,
+                ...siblingInlinedTypes
+            }
         };
     }
 

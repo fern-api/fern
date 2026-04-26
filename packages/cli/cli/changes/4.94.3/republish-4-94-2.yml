@@ -1,0 +1,6 @@
+- summary: |
+    Re-publish CLI after the 4.94.2 production publish failed in CI. The dev
+    version had already been published in an earlier job, so the prod job's
+    dev re-publish step errored out and prevented the prod publish from
+    running.
+  type: chore

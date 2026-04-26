@@ -1247,6 +1247,78 @@ func (t *TypeWithOptionalUnion) String() string {
 	return fmt.Sprintf("%#v", t)
 }
 
+// Tests that base-properties on an undiscriminated union are correctly
+// represented in the IR and generated code.
+type UnionWithBaseProperties struct {
+	NamedMetadata    *NamedMetadata
+	OptionalMetadata OptionalMetadata
+
+	typ string
+}
+
+func NewUnionWithBasePropertiesFromNamedMetadata(value *NamedMetadata) *UnionWithBaseProperties {
+	return &UnionWithBaseProperties{typ: "NamedMetadata", NamedMetadata: value}
+}
+
+func NewUnionWithBasePropertiesFromOptionalMetadata(value OptionalMetadata) *UnionWithBaseProperties {
+	return &UnionWithBaseProperties{typ: "OptionalMetadata", OptionalMetadata: value}
+}
+
+func (u *UnionWithBaseProperties) GetNamedMetadata() *NamedMetadata {
+	if u == nil {
+		return nil
+	}
+	return u.NamedMetadata
+}
+
+func (u *UnionWithBaseProperties) GetOptionalMetadata() OptionalMetadata {
+	if u == nil {
+		return nil
+	}
+	return u.OptionalMetadata
+}
+
+func (u *UnionWithBaseProperties) UnmarshalJSON(data []byte) error {
+	valueNamedMetadata := new(NamedMetadata)
+	if err := json.Unmarshal(data, &valueNamedMetadata); err == nil {
+		u.typ = "NamedMetadata"
+		u.NamedMetadata = valueNamedMetadata
+		return nil
+	}
+	var valueOptionalMetadata OptionalMetadata
+	if err := json.Unmarshal(data, &valueOptionalMetadata); err == nil {
+		u.typ = "OptionalMetadata"
+		u.OptionalMetadata = valueOptionalMetadata
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, u)
+}
+
+func (u UnionWithBaseProperties) MarshalJSON() ([]byte, error) {
+	if u.typ == "NamedMetadata" || u.NamedMetadata != nil {
+		return json.Marshal(u.NamedMetadata)
+	}
+	if u.typ == "OptionalMetadata" || u.OptionalMetadata != nil {
+		return json.Marshal(u.OptionalMetadata)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", u)
+}
+
+type UnionWithBasePropertiesVisitor interface {
+	VisitNamedMetadata(*NamedMetadata) error
+	VisitOptionalMetadata(OptionalMetadata) error
+}
+
+func (u *UnionWithBaseProperties) Accept(visitor UnionWithBasePropertiesVisitor) error {
+	if u.typ == "NamedMetadata" || u.NamedMetadata != nil {
+		return visitor.VisitNamedMetadata(u.NamedMetadata)
+	}
+	if u.typ == "OptionalMetadata" || u.OptionalMetadata != nil {
+		return visitor.VisitOptionalMetadata(u.OptionalMetadata)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", u)
+}
+
 // Duplicate types.
 type UnionWithDuplicateTypes struct {
 	String     string

@@ -34,6 +34,7 @@ export interface ParsedPageActionsConfig {
         openAi: boolean;
         claude: boolean;
         cursor: boolean;
+        claudeCode: boolean;
         vscode: boolean;
         custom: ParsedCustomPageAction[];
     };
@@ -83,6 +84,7 @@ export interface ParsedDocsConfiguration {
     analyticsConfig: CjsFdrSdk.docs.v1.commons.AnalyticsConfig | undefined;
     announcement: AnnouncementConfig | undefined;
     theme: ThemeConfig | undefined;
+    globalTheme: string | undefined;
 
     /* integrations */
     integrations: CjsFdrSdk.docs.v1.commons.IntegrationsConfig | undefined;
@@ -129,6 +131,14 @@ export interface ParsedMetadataConfig
     "twitter:image": FilepathOrUrl | undefined;
     "og:dynamic": boolean | undefined;
     "og:background-image": FilepathOrUrl | undefined;
+    "og:dynamic:text-color": string | undefined;
+    "og:dynamic:background-color": string | undefined;
+    "og:dynamic:logo-color": "dark" | "light" | undefined;
+    "og:dynamic:show-logo": boolean | undefined;
+    "og:dynamic:show-section": boolean | undefined;
+    "og:dynamic:show-description": boolean | undefined;
+    "og:dynamic:show-url": boolean | undefined;
+    "og:dynamic:show-gradient": boolean | undefined;
 }
 
 export type ColorConfiguration =

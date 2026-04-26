@@ -56,6 +56,12 @@ service:
       request: NestedUnionRoot
       response: string
 
+    getWithBaseProperties:
+      path: "/with-base-properties"
+      method: POST
+      request: UnionWithBaseProperties
+      response: UnionWithBaseProperties
+
     testCamelCaseProperties:
       path: "/camel-case"
       method: POST
@@ -169,6 +175,19 @@ types:
     enum:
       - name
       - value
+
+  # Test case for undiscriminated unions with base properties (sibling properties alongside oneOf)
+  UnionWithBaseProperties:
+    docs: |
+      Tests that base-properties on an undiscriminated union are correctly
+      represented in the IR and generated code.
+    discriminated: false
+    base-properties:
+      id: string
+      category: optional<string>
+    union:
+      - NamedMetadata
+      - OptionalMetadata
 
   # Test cases for undiscriminated unions with identical underlying Java types
   UnionWithIdenticalStrings:

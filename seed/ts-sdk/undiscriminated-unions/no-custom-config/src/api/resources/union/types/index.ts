@@ -14,6 +14,7 @@ export * from "./PaymentMethodUnion.js";
 export * from "./Request.js";
 export * from "./TokenizeCard.js";
 export * from "./TypeWithOptionalUnion.js";
+export * from "./UnionWithBaseProperties.js";
 export * from "./UnionWithDuplicateTypes.js";
 export * from "./UnionWithIdenticalPrimitives.js";
 export * from "./UnionWithIdenticalStrings.js";

@@ -4,4 +4,5 @@ import type * as FernIr from "../../../index.js";
 
 export interface UndiscriminatedUnionTypeDeclaration {
     members: FernIr.UndiscriminatedUnionMember[];
+    baseProperties: FernIr.ObjectProperty[] | undefined;
 }

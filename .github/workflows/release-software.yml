@@ -37,7 +37,12 @@ on:
           - swift
           - typescript
 
-# Prevent concurrent release runs to avoid git conflicts
+# Prevent concurrent release runs to avoid git conflicts.
+# NOTE: cancel-in-progress: false protects the running job, but GitHub still
+# cancels any *pending* run when a newer one arrives (only 1 pending slot per
+# group). This is acceptable because the workflow checks out latest main and
+# processes ALL unreleased change files, so a cancelled pending run's changes
+# are picked up by the run that replaces it.
 concurrency:
   group: release-software
   cancel-in-progress: false

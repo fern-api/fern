@@ -880,7 +880,8 @@ export class DocsDefinitionResolver {
                           "page-actions": this.parsedDocsConfig.theme.pageActions,
                           footerNav: this.parsedDocsConfig.theme.footerNav,
                           "language-switcher": this.parsedDocsConfig.theme.languageSwitcher,
-                          "product-switcher": this.parsedDocsConfig.theme.productSwitcher
+                          "product-switcher": this.parsedDocsConfig.theme
+                              .productSwitcher as DocsV1Write.DocsThemeConfig["product-switcher"]
                       }
                     : undefined,
             // deprecated
@@ -2137,6 +2138,7 @@ export class DocsDefinitionResolver {
                 openAi: this.parsedDocsConfig.pageActions.options.openAi,
                 claude: this.parsedDocsConfig.pageActions.options.claude,
                 cursor: this.parsedDocsConfig.pageActions.options.cursor,
+                claudeCode: this.parsedDocsConfig.pageActions.options.claudeCode,
                 vscode: this.parsedDocsConfig.pageActions.options.vscode,
                 custom: this.parsedDocsConfig.pageActions.options.custom.map((customAction) => ({
                     title: customAction.title,

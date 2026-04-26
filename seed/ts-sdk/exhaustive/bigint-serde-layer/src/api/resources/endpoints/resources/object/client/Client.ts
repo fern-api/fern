@@ -71,7 +71,7 @@ export class ObjectClient {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
             body: serializers.types.ObjectWithOptionalField.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
@@ -147,7 +147,7 @@ export class ObjectClient {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
             body: serializers.types.ObjectWithRequiredField.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
@@ -227,7 +227,7 @@ export class ObjectClient {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
             body: serializers.types.ObjectWithMapOfMap.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
@@ -322,7 +322,7 @@ export class ObjectClient {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
             body: serializers.types.NestedObjectWithOptionalField.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
@@ -420,7 +420,7 @@ export class ObjectClient {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
             body: serializers.types.NestedObjectWithRequiredField.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
@@ -534,7 +534,7 @@ export class ObjectClient {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
             body: serializers.endpoints.object.getAndReturnNestedWithRequiredFieldAsList.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
@@ -612,7 +612,7 @@ export class ObjectClient {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
             body: serializers.types.ObjectWithUnknownField.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
@@ -692,7 +692,7 @@ export class ObjectClient {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
             body: serializers.types.ObjectWithDocumentedUnknownType.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
@@ -772,7 +772,7 @@ export class ObjectClient {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
             body: serializers.types.MapOfDocumentedUnknownType.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
@@ -856,7 +856,7 @@ export class ObjectClient {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
             body: serializers.types.ObjectWithMixedRequiredAndOptionalFields.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
@@ -943,7 +943,7 @@ export class ObjectClient {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
             body: serializers.types.ObjectWithRequiredNestedObject.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
@@ -1024,7 +1024,7 @@ export class ObjectClient {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
             body: serializers.types.ObjectWithDatetimeLikeString.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",

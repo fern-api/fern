@@ -79,6 +79,21 @@ export function getRequestPropertyValueType(requestProperty: FernIr.RequestPrope
 }
 
 /**
+ * Returns true if the given type reference is a non-optional, non-nullable string primitive.
+ * Used to guard clientDefault generation, since the `== ""` zero-value check
+ * and string assignment only compile for Go `string` types (not `*string`).
+ */
+export function isPlainStringType(typeRef: FernIr.TypeReference): boolean {
+    if (typeRef.type === "container") {
+        return false;
+    }
+    if (typeRef.type === "primitive") {
+        return typeRef.primitive.v1 === FernIr.PrimitiveTypeV1.String;
+    }
+    return false;
+}
+
+/**
  * Checks if a type reference is optional.
  */
 export function isTypeReferenceOptional(typeRef: FernIr.TypeReference | undefined): boolean {

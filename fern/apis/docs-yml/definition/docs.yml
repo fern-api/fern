@@ -258,6 +258,12 @@ types:
       "navbar-links": optional<list<NavbarLink>>
       "footer-links": optional<FooterLinksConfig>
       "page-actions": optional<PageActionsConfig>
+      "global-theme":
+        type: optional<string>
+        docs: |
+          Name of a global theme stored in Fern's cloud to apply to this documentation site.
+          Theme values override local branding configuration (colors, typography, logo, fonts, JS, CSS, etc.).
+          Upload a theme first with: fern beta docs theme upload --name <theme-name>
       experimental: optional<ExperimentalConfig>
       "default-language":
         type: optional<ProgrammingLanguage>
@@ -344,6 +350,8 @@ types:
       - chatgpt
       - claude
       - cursor
+      - value: claude-code
+        name: claude_code
       - vscode
 
   PageActionOptions:
@@ -369,21 +377,33 @@ types:
       chatgpt:
         type: optional<boolean>
         docs: |
-          When enabled, displays an "Open in ChatGPT" button that allows users to send the page content to ChatGPT for further exploration and Q&A.
+          Controls the "Open in ChatGPT" button, which sends the page content to ChatGPT for further
+          exploration and Q&A. Set to `false` to hide it.
 
-          @default: false
+          @default: true
       claude:
         type: optional<boolean>
         docs: |
-          When enabled, displays an "Open in Claude" button that allows users to send the page content to Claude for further exploration and Q&A.
+          Controls the "Open in Claude" button, which sends the page content to Claude for further
+          exploration and Q&A. Set to `false` to hide it.
 
-          @default: false
+          @default: true
+      claude-code:
+        type: optional<boolean>
+        docs: |
+          Controls the "Connect to Claude Code" button, which copies a `claude mcp add` command to the
+          clipboard so users can register this docs site's MCP server with Claude Code. The button only
+          renders on docs sites that have Ask AI enabled; set to `false` to hide it on those sites.
+
+          @default: true
       cursor:
         type: optional<boolean>
         docs: |
-          When enabled, displays an "Open in Cursor" button that allows users to open the page content in Cursor IDE with AI-powered code assistance.
+          Controls the "Connect to Cursor" button, which installs this docs site's MCP server in
+          Cursor via a deeplink. The button only renders on docs sites that have Ask AI enabled; set
+          to `false` to hide it on those sites.
 
-          @default: false
+          @default: true
       vscode:
         type: optional<boolean>
         docs: |
@@ -926,6 +946,7 @@ types:
     enum:
       - default
       - toggle
+      - tabs
 
   LanguageSwitcherThemeConfig:
     enum:
@@ -1956,6 +1977,30 @@ types:
       "og:background-image":
         type: optional<string>
         docs: A custom background image for dynamically generated OG images. Can be a URL or a file path.
+      "og:dynamic:text-color":
+        type: optional<string>
+        docs: Override the text color for dynamically generated OG images. Accepts any valid CSS color value (e.g., "#1a1a1a").
+      "og:dynamic:background-color":
+        type: optional<string>
+        docs: Override the background color for dynamically generated OG images. Accepts any valid CSS color value (e.g., "#ffffff").
+      "og:dynamic:logo-color":
+        type: optional<OgDynamicLogoColor>
+        docs: Choose which logo variant from docs.yml to render in dynamically generated OG images. Defaults to `dark`.
+      "og:dynamic:show-logo":
+        type: optional<boolean>
+        docs: Toggle visibility of the logo in dynamically generated OG images. Defaults to true when og:dynamic is enabled.
+      "og:dynamic:show-section":
+        type: optional<boolean>
+        docs: Toggle visibility of the section title in dynamically generated OG images. Defaults to true when og:dynamic is enabled.
+      "og:dynamic:show-description":
+        type: optional<boolean>
+        docs: Toggle visibility of the page description in dynamically generated OG images. Defaults to true when og:dynamic is enabled.
+      "og:dynamic:show-url":
+        type: optional<boolean>
+        docs: Toggle visibility of the page URL in dynamically generated OG images. Defaults to true when og:dynamic is enabled.
+      "og:dynamic:show-gradient":
+        type: optional<boolean>
+        docs: Toggle visibility of the accent gradient overlay in dynamically generated OG images. Defaults to true when og:dynamic is enabled.
       canonical-host:
         type: optional<string>
         docs: |
@@ -1968,6 +2013,11 @@ types:
       - summary_large_image
       - app
       - player
+
+  OgDynamicLogoColor:
+    enum:
+      - dark
+      - light
 
   RedirectConfig:
     availability: in-development

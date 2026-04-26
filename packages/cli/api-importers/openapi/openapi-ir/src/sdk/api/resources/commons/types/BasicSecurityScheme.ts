@@ -3,6 +3,8 @@
 export interface BasicSecurityScheme {
     usernameVariableName: string | undefined;
     usernameEnvVar: string | undefined;
+    usernamePlaceholder: string | undefined;
     passwordVariableName: string | undefined;
     passwordEnvVar: string | undefined;
+    passwordPlaceholder: string | undefined;
 }

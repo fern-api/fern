@@ -244,6 +244,54 @@ import UndiscriminatedUnions
         try #require(response == expectedResponse)
     }
 
+    @Test func getWithBaseProperties1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                """
+                {
+                  "name": "name",
+                  "value": {
+                    "value": {
+                      "key": "value"
+                    }
+                  }
+                }
+                """.utf8
+            )
+        )
+        let client = UndiscriminatedUnionsClient(
+            baseURL: "https://api.fern.com",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = UnionWithBaseProperties.namedMetadata(
+            NamedMetadata(
+                name: "name",
+                value: [
+                    "value": JSONValue.object(
+                        [
+                            "key": JSONValue.string("value")
+                        ]
+                    )
+                ]
+            )
+        )
+        let response = try await client.union.getWithBaseProperties(
+            request: UnionWithBaseProperties.namedMetadata(
+                NamedMetadata(
+                    name: "name",
+                    value: [
+                        "value": .object([
+                            "key": .string("value")
+                        ])
+                    ]
+                )
+            ),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
+
     @Test func testCamelCaseProperties1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(

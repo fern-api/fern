@@ -15,7 +15,7 @@ function join(...segments: string[]): string {
     return segments.filter(Boolean).join("/");
 }
 
-import { CaseConverter } from "@fern-api/base-generator";
+import { CaseConverter } from "@fern-api/browser-compatible-base-generator";
 import * as ast from "../ast/index.js";
 import { ClassReference } from "../ast/types/ClassReference.js";
 import { Type } from "../ast/types/IType.js";

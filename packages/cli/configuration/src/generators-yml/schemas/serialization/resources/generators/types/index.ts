@@ -23,6 +23,7 @@ export * from "./GeneratorsOpenApiSchema.js";
 export * from "./GraphQlSpecSchema.js";
 export * from "./Language.js";
 export * from "./MessageNamingSettingsSchema.js";
+export * from "./MultiServerStrategy.js";
 export * from "./NamespacedApiConfigurationSchema.js";
 export * from "./OpenApiExampleGenerationSchema.js";
 export * from "./OpenApiFilterSchema.js";

@@ -1,0 +1,5 @@
+- summary: |
+    Fix Python dynamic snippet generation to respect the `use_typeddict_requests`
+    configuration option. When enabled, dynamic snippets now generate dict literals
+    instead of Pydantic model constructors for object and discriminated union types.
+  type: fix

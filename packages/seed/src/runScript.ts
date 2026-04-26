@@ -17,9 +17,10 @@ export async function runScript({
     env?: Record<string, string>;
 }): Promise<loggingExeca.ReturnValue> {
     const scriptFile = await tmp.file();
-    await writeFile(scriptFile.path, [`cd ${workingDir}`, ...commands].join("\n"));
+    await writeFile(scriptFile.path, ["set -euo pipefail", `cd ${workingDir}`, ...commands].join("\n"));
     return await loggingExeca(logger, "bash", [scriptFile.path], {
         doNotPipeOutput,
+        reject: false,
         env: {
             ...process.env,
             ...env

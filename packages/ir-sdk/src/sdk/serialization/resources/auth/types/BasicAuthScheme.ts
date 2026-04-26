@@ -13,9 +13,11 @@ export const BasicAuthScheme: core.serialization.ObjectSchema<serializers.BasicA
             username: NameOrString,
             usernameEnvVar: EnvironmentVariable.optional(),
             usernameOmit: core.serialization.boolean().optional(),
+            usernamePlaceholder: core.serialization.string().optional(),
             password: NameOrString,
             passwordEnvVar: EnvironmentVariable.optional(),
             passwordOmit: core.serialization.boolean().optional(),
+            passwordPlaceholder: core.serialization.string().optional(),
         })
         .extend(BaseAuthScheme);
 
@@ -24,8 +26,10 @@ export declare namespace BasicAuthScheme {
         username: NameOrString.Raw;
         usernameEnvVar?: EnvironmentVariable.Raw | null;
         usernameOmit?: boolean | null;
+        usernamePlaceholder?: string | null;
         password: NameOrString.Raw;
         passwordEnvVar?: EnvironmentVariable.Raw | null;
         passwordOmit?: boolean | null;
+        passwordPlaceholder?: string | null;
     }
 }

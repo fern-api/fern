@@ -51,7 +51,8 @@ export async function runRemoteGenerationForGenerator({
     requireEnvVars,
     automationMode,
     autoMerge,
-    skipIfNoDiff
+    skipIfNoDiff,
+    loginCommand
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     organization: string;
@@ -80,6 +81,11 @@ export async function runRemoteGenerationForGenerator({
     automationMode?: boolean;
     autoMerge?: boolean;
     skipIfNoDiff?: boolean;
+    /**
+     * CLI command to reference in auth-failure hints (e.g. 'fern login' for v1,
+     * 'fern auth login' for CLI v2). Defaults to 'fern login'.
+     */
+    loginCommand?: string;
 }): Promise<RemoteTaskHandler.Response | undefined> {
     const fdr = createFdrService({ token: token.value });
 
@@ -280,7 +286,10 @@ export async function runRemoteGenerationForGenerator({
         return {
             createdSnippets: false,
             snippetsS3PreSignedReadUrl: undefined,
-            actualVersion: version
+            actualVersion: version,
+            pullRequestUrl: undefined,
+            noChangesDetected: undefined,
+            publishTarget: undefined
         };
     }
 
@@ -308,7 +317,8 @@ export async function runRemoteGenerationForGenerator({
         retryRateLimited,
         automationMode,
         autoMerge,
-        skipIfNoDiff
+        skipIfNoDiff,
+        loginCommand
     });
     interactiveTaskContext.logger.debug(`Job ID: ${job.jobId}`);
 

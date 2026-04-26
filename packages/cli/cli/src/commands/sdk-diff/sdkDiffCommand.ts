@@ -19,7 +19,7 @@ import {
     MAX_CHUNKS,
     MAX_RAW_DIFF_BYTES,
     maxVersionBump
-} from "@fern-api/local-workspace-runner";
+} from "@fern-api/generator-cli/autoversion";
 import { Project } from "@fern-api/project-loader";
 import { CliError, TaskAbortSignal, TaskContext } from "@fern-api/task-context";
 import { exec } from "child_process";
