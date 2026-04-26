@@ -1,4 +1,6 @@
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
+import { DocsWorkspace } from "@fern-api/workspace-loader";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { ThemeConfigProcessor } from "../commands/docs-theme/ThemeConfigProcessor.js";
 
@@ -57,9 +59,17 @@ const EXPECTED_PATHS = [
     "og-logo.jpg"
 ];
 
+const MOCK_DOCS_WORKSPACE: DocsWorkspace = {
+    type: "docs",
+    workspaceName: undefined,
+    absoluteFilePath: AbsoluteFilePath.of("/fake"),
+    absoluteFilepathToDocsConfig: AbsoluteFilePath.of("/fake/docs.yml"),
+    config: { instances: [] }
+};
+
 function makeProcessor(): ThemeConfigProcessor {
     return new ThemeConfigProcessor({
-        themeDir: "/fake/theme",
+        docsWorkspace: MOCK_DOCS_WORKSPACE,
         orgId: "test-org",
         token: "test-token",
         context: createMockTaskContext()

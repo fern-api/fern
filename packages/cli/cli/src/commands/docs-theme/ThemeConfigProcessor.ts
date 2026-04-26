@@ -1,5 +1,6 @@
 import { isURL } from "@fern-api/fs-utils";
 import { CliError, TaskContext } from "@fern-api/task-context";
+import { DocsWorkspace } from "@fern-api/workspace-loader";
 import { execSync } from "child_process";
 import { createHash } from "crypto";
 import { access, readFile } from "fs/promises";
@@ -34,17 +35,17 @@ export class ThemeConfigProcessor {
     private readonly context: TaskContext;
 
     public constructor({
-        themeDir,
+        docsWorkspace,
         orgId,
         token,
         context
     }: {
-        themeDir: string;
+        docsWorkspace: DocsWorkspace;
         orgId: string;
         token: string;
         context: TaskContext;
     }) {
-        this.themeDir = themeDir;
+        this.themeDir = path.join(docsWorkspace.absoluteFilePath, "theme");
         this.orgId = orgId;
         this.token = token;
         this.gitRoot = getGitRoot();
@@ -312,7 +313,8 @@ export class ThemeConfigProcessor {
             }
         }
 
-        const bindUrl = `${FDR_ORIGIN}/v2/registry/files/${this.orgId}/${bindPath}`;
+        const encodedPath = bindPath.split("/").map(encodeURIComponent).join("/");
+        const bindUrl = `${FDR_ORIGIN}/v2/registry/files/${encodeURIComponent(this.orgId)}/${encodedPath}`;
         this.context.logger.debug(`  Binding ${label} → ${bindPath}`);
 
         let bindRes: Response;

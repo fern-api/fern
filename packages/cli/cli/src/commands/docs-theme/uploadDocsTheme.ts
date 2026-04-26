@@ -45,8 +45,7 @@ export async function uploadDocsTheme({
     }
 
     const orgId = org ?? project.config.organization;
-    const themeDir = path.join(docsWorkspace.absoluteFilePath, "theme");
-    const themeYmlPath = path.join(themeDir, "theme.yml");
+    const themeYmlPath = path.join(docsWorkspace.absoluteFilePath, "theme", "theme.yml");
 
     await cliContext.runTask(async (context) => {
         let rawYaml: unknown;
@@ -71,9 +70,8 @@ export async function uploadDocsTheme({
 
         context.logger.info(`Uploading theme "${name}" for org "${orgId}"...`);
         context.logger.debug(`FDR origin: ${FDR_ORIGIN}`);
-        context.logger.debug(`Theme directory: ${themeDir}`);
 
-        const processor = new ThemeConfigProcessor({ themeDir, orgId, token: token.value, context });
+        const processor = new ThemeConfigProcessor({ docsWorkspace, orgId, token: token.value, context });
         const { config: processedConfig, filesUploaded } = await processor.process(rawYaml as Record<string, unknown>);
 
         if (filesUploaded > 0) {
