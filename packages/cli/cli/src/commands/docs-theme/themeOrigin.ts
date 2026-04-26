@@ -1,5 +1,8 @@
 export const FDR_ORIGIN =
-    process.env.FERN_FDR_ORIGIN ?? process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com";
+    process.env.FERN_FDR_ORIGIN ??
+    process.env.OVERRIDE_FDR_ORIGIN ??
+    process.env.DEFAULT_FDR_ORIGIN ??
+    "https://registry.buildwithfern.com";
 
 export function describeFetchError(error: unknown): string {
     if (!(error instanceof Error)) {
