@@ -75,12 +75,26 @@ function downcastAvailabilityStatus(status: IrVersions.V67.AvailabilityStatus): 
     }
 }
 
+const V67_AVAILABILITY_STATUSES = new Set<string>([
+    "IN_DEVELOPMENT",
+    "PRE_RELEASE",
+    "GENERAL_AVAILABILITY",
+    "DEPRECATED",
+    "ALPHA",
+    "BETA",
+    "PREVIEW",
+    "LEGACY"
+]);
+
+// Restricted to the known V67 enum values so we do not match user JSON payloads
+// (e.g. raw `jsonExample` fields) that happen to contain an `availability` key
+// with an unrelated `status` string.
 function isAvailabilityShape(value: unknown): value is { status: IrVersions.V67.AvailabilityStatus; message?: string } {
     if (value == null || typeof value !== "object") {
         return false;
     }
     const status = (value as { status?: unknown }).status;
-    return typeof status === "string";
+    return typeof status === "string" && V67_AVAILABILITY_STATUSES.has(status);
 }
 
 // The only structural difference between V67 and V66 is the AvailabilityStatus enum
