@@ -6,16 +6,18 @@ package com.seed.object;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.seed.object.core.ObjectMappers;
+import com.seed.object.types.AliasVariantType;
 import com.seed.object.types.ReferenceType;
 import com.seed.object.types.UndiscriminatedUnion1;
 import com.seed.object.types.UndiscriminatedUnion1InlineType1;
 import com.seed.object.types.UndiscriminatedUnion1InlineType2;
+import com.seed.object.types.UndiscriminatedUnionTypeWithAliasVariant;
 import org.junit.jupiter.api.Test;
 
 public final class UndiscriminatedUnionTest {
     @Test
     public void testUndiscriminatedUnion1_UndiscriminatedUnion1InlineType1() throws Exception {
-        String json = "{\"bar\":{},\"ref\":{},\"foo\":\"test\"}";
+        String json = "{\"foo\":\"test\",\"bar\":{},\"ref\":{}}";
         UndiscriminatedUnion1 union = ObjectMappers.JSON_MAPPER.readValue(json, UndiscriminatedUnion1.class);
         assertTrue(
                 union.get() instanceof UndiscriminatedUnion1InlineType1,
@@ -24,7 +26,7 @@ public final class UndiscriminatedUnionTest {
 
     @Test
     public void testUndiscriminatedUnion1_UndiscriminatedUnion1InlineType2() throws Exception {
-        String json = "{\"ref\":{},\"baz\":\"test\"}";
+        String json = "{\"baz\":\"test\",\"ref\":{}}";
         UndiscriminatedUnion1 union = ObjectMappers.JSON_MAPPER.readValue(json, UndiscriminatedUnion1.class);
         assertTrue(
                 union.get() instanceof UndiscriminatedUnion1InlineType2,
@@ -36,5 +38,13 @@ public final class UndiscriminatedUnionTest {
         String json = "{\"foo\":\"test\"}";
         UndiscriminatedUnion1 union = ObjectMappers.JSON_MAPPER.readValue(json, UndiscriminatedUnion1.class);
         assertTrue(union.get() instanceof ReferenceType, "Expected ReferenceType but got different variant");
+    }
+
+    @Test
+    public void testUndiscriminatedUnionTypeWithAliasVariant_AliasVariantType() throws Exception {
+        String json = "{\"prop\":\"test\"}";
+        UndiscriminatedUnionTypeWithAliasVariant union =
+                ObjectMappers.JSON_MAPPER.readValue(json, UndiscriminatedUnionTypeWithAliasVariant.class);
+        assertTrue(union.get() instanceof AliasVariantType, "Expected AliasVariantType but got different variant");
     }
 }

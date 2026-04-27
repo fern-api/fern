@@ -6,7 +6,10 @@ package com.seed.undiscriminatedUnions;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.seed.undiscriminatedUnions.core.ObjectMappers;
+import com.seed.undiscriminatedUnions.resources.union.types.AliasedObjectUnion;
 import com.seed.undiscriminatedUnions.resources.union.types.ConvertToken;
+import com.seed.undiscriminatedUnions.resources.union.types.LeafObjectA;
+import com.seed.undiscriminatedUnions.resources.union.types.LeafObjectB;
 import com.seed.undiscriminatedUnions.resources.union.types.LeafTypeA;
 import com.seed.undiscriminatedUnions.resources.union.types.LeafTypeB;
 import com.seed.undiscriminatedUnions.resources.union.types.NestedObjectUnion;
@@ -41,5 +44,19 @@ public final class UndiscriminatedUnionTest {
         String json = "{\"gamma\":\"test\"}";
         NestedObjectUnion union = ObjectMappers.JSON_MAPPER.readValue(json, NestedObjectUnion.class);
         assertTrue(union.get() instanceof LeafTypeB, "Expected LeafTypeB but got different variant");
+    }
+
+    @Test
+    public void testAliasedObjectUnion_LeafObjectA() throws Exception {
+        String json = "{\"onlyInA\":\"test\",\"sharedNumber\":1}";
+        AliasedObjectUnion union = ObjectMappers.JSON_MAPPER.readValue(json, AliasedObjectUnion.class);
+        assertTrue(union.get() instanceof LeafObjectA, "Expected LeafObjectA but got different variant");
+    }
+
+    @Test
+    public void testAliasedObjectUnion_LeafObjectB() throws Exception {
+        String json = "{\"onlyInB\":\"test\"}";
+        AliasedObjectUnion union = ObjectMappers.JSON_MAPPER.readValue(json, AliasedObjectUnion.class);
+        assertTrue(union.get() instanceof LeafObjectB, "Expected LeafObjectB but got different variant");
     }
 }
