@@ -226,6 +226,9 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                 }
                 writer.dedent();
                 writer.writeLine(`)`);
+                if (this.context.ir.rootPackage.service != null) {
+                    writer.writeLine(`@client = @raw_client`);
+                }
             })
         );
 

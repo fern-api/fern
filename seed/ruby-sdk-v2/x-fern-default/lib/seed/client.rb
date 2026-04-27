@@ -54,6 +54,7 @@ module Seed
           "X-API-Version" => api_version.to_s
         }
       )
+      @client = @raw_client
     end
   end
 end
