@@ -5614,6 +5614,13 @@
         }
       ]
     },
+    "docs.WebSocketOneofDisplay": {
+      "type": "string",
+      "enum": [
+        "flat",
+        "grouped"
+      ]
+    },
     "docs.DocsSettingsConfig": {
       "type": "object",
       "properties": {
@@ -5741,6 +5748,16 @@
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "websocket-oneof-display": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.WebSocketOneofDisplay"
             },
             {
               "type": "null"
