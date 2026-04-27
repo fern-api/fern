@@ -120,10 +120,7 @@ export class RemoteTaskHandler {
 
             // extract version from log messages as fallback (e.g., "Tagging release 0.0.9" or "Tagging release v0.2.0-rc.1")
             if (this.#actualVersion == null) {
-                const tagMatch = newLog.message.match(/Tagging release (v?\d+\.\d+\.\d+(?:-[\w.]+)?)/);
-                if (tagMatch) {
-                    this.#actualVersion = tagMatch[1]?.replace(/^v/, "");
-                }
+                this.#actualVersion = extractVersionFromLogMessage(newLog.message) ?? this.#actualVersion;
             }
         }
         this.lengthOfLastLogs = remoteTask.logs.length;
@@ -229,6 +226,21 @@ export class RemoteTaskHandler {
     public get noChangesDetected(): boolean | undefined {
         return this.#noChangesDetected;
     }
+}
+
+const VERSION_TAG_REGEX = /Tagging release (v?\d+\.\d+\.\d+(?:-[\w.]+)?)/;
+
+/**
+ * Extracts a semver version from a log message matching "Tagging release X.Y.Z".
+ * Handles optional v-prefix (Go generators) and pre-release suffixes.
+ * Returns `undefined` when no version is found.
+ */
+export function extractVersionFromLogMessage(message: string): string | undefined {
+    const match = message.match(VERSION_TAG_REGEX);
+    if (match?.[1] == null) {
+        return undefined;
+    }
+    return match[1].replace(/^v/, "");
 }
 
 async function downloadFilesForTask({
