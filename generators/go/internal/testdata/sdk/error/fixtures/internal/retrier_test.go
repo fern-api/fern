@@ -93,6 +93,16 @@ func TestRetrier(t *testing.T) {
 			giveAttempts:    1,
 			giveStatusCodes: []int{http.StatusInternalServerError},
 		},
+		{
+			description:     "retries occur on status code 501",
+			giveAttempts:    2,
+			giveStatusCodes: []int{501, http.StatusOK},
+		},
+		{
+			description:     "retries occur on status code 599",
+			giveAttempts:    2,
+			giveStatusCodes: []int{599, http.StatusOK},
+		},
 	}
 
 	for _, tc := range tests {
