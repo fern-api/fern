@@ -9,7 +9,8 @@
     "maxRetries": 5
   },
   "originGitCommit": "DUMMY",
-  "invokedBy": "manual",
+  "invokedBy": "ci",
   "requestedVersion": "0.0.1",
+  "ciProvider": "github",
   "sdkVersion": "0.0.1"
 }
