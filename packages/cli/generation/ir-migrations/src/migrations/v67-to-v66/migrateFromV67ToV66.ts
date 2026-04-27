@@ -113,6 +113,12 @@ function downcastAvailabilityRecursive<T>(value: T): T {
     if (value instanceof Map) {
         return new Map(Array.from(value, ([k, v]) => [k, downcastAvailabilityRecursive(v)] as const)) as unknown as T;
     }
+    // Preserve non-plain objects (Date, Buffer, URL, etc.) as-is so that downstream
+    // serialization keeps their runtime type rather than turning them into `{}`.
+    const proto = Object.getPrototypeOf(value);
+    if (proto !== null && proto !== Object.prototype) {
+        return value;
+    }
     const result: Record<string, unknown> = {};
     for (const [key, child] of Object.entries(value as Record<string, unknown>)) {
         if (key === "availability" && isAvailabilityShape(child)) {
