@@ -66,6 +66,26 @@ public final class UnionClient: Sendable {
         )
     }
 
+    public func nestedObjectUnions(request: OuterNestedUnion, requestOptions: RequestOptions? = nil) async throws -> String {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/nested-objects",
+            body: request,
+            requestOptions: requestOptions,
+            responseType: String.self
+        )
+    }
+
+    public func aliasedObjectUnion(request: AliasedObjectUnion, requestOptions: RequestOptions? = nil) async throws -> String {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/aliased-object",
+            body: request,
+            requestOptions: requestOptions,
+            responseType: String.self
+        )
+    }
+
     public func getWithBaseProperties(request: UnionWithBaseProperties, requestOptions: RequestOptions? = nil) async throws -> UnionWithBaseProperties {
         return try await httpClient.performRequest(
             method: .post,

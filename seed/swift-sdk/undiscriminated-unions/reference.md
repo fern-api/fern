@@ -354,6 +354,127 @@ try await main()
 </dl>
 </details>
 
+<details><summary><code>client.union.<a href="/Sources/Resources/Union/UnionClient.swift">nestedObjectUnions</a>(request: OuterNestedUnion, requestOptions: RequestOptions?) -> String</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```swift
+import Foundation
+import UndiscriminatedUnions
+
+private func main() async throws {
+    let client = UndiscriminatedUnionsClient()
+
+    _ = try await client.union.nestedObjectUnions(request: OuterNestedUnion.string(
+        "string"
+    ))
+}
+
+try await main()
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `OuterNestedUnion` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.union.<a href="/Sources/Resources/Union/UnionClient.swift">aliasedObjectUnion</a>(request: AliasedObjectUnion, requestOptions: RequestOptions?) -> String</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```swift
+import Foundation
+import UndiscriminatedUnions
+
+private func main() async throws {
+    let client = UndiscriminatedUnionsClient()
+
+    _ = try await client.union.aliasedObjectUnion(request: AliasedObjectUnion.aliasedLeafA(
+        LeafObjectA(
+            onlyInA: "onlyInA",
+            sharedNumber: 1
+        )
+    ))
+}
+
+try await main()
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `AliasedObjectUnion` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.union.<a href="/Sources/Resources/Union/UnionClient.swift">getWithBaseProperties</a>(request: UnionWithBaseProperties, requestOptions: RequestOptions?) -> UnionWithBaseProperties</code></summary>
 <dl>
 <dd>

@@ -244,6 +244,55 @@ import UndiscriminatedUnions
         try #require(response == expectedResponse)
     }
 
+    @Test func nestedObjectUnions1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                """
+                string
+                """.utf8
+            )
+        )
+        let client = UndiscriminatedUnionsClient(
+            baseURL: "https://api.fern.com",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = "string"
+        let response = try await client.union.nestedObjectUnions(
+            request: OuterNestedUnion.string(
+                "string"
+            ),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
+
+    @Test func aliasedObjectUnion1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                """
+                string
+                """.utf8
+            )
+        )
+        let client = UndiscriminatedUnionsClient(
+            baseURL: "https://api.fern.com",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = "string"
+        let response = try await client.union.aliasedObjectUnion(
+            request: AliasedObjectUnion.aliasedLeafA(
+                LeafObjectA(
+                    onlyInA: "onlyInA",
+                    sharedNumber: 1
+                )
+            ),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
+
     @Test func getWithBaseProperties1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
