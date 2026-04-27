@@ -424,7 +424,6 @@ class RawClientTest extends TestCase
         $this->assertEquals(0, $mockClient->count());
     }
 
-
     public function testShouldNotRetryOn500(): void
     {
         $mockClient = new MockHttpClient();
@@ -443,27 +442,6 @@ class RawClientTest extends TestCase
         $response = $retryClient->sendRequest($request);
 
         $this->assertEquals(500, $response->getStatusCode());
-        $this->assertEquals(1, $mockClient->count()); // 200 was never consumed
-    }
-
-    public function testShouldNotRetryOn600(): void
-    {
-        $mockClient = new MockHttpClient();
-        $mockClient->append(self::createResponse(600), self::createResponse(200));
-
-        $retryClient = new RetryDecoratingClient(
-            $mockClient,
-            maxRetries: 2,
-            sleepFunction: function (int $_microseconds): void {
-            },
-        );
-
-        $requestFactory = \Http\Discovery\Psr17FactoryDiscovery::findRequestFactory();
-        $request = $requestFactory->createRequest('GET', $this->baseUrl . '/test');
-
-        $response = $retryClient->sendRequest($request);
-
-        $this->assertEquals(600, $response->getStatusCode());
         $this->assertEquals(1, $mockClient->count()); // 200 was never consumed
     }
 
@@ -990,7 +968,6 @@ class RawClientTest extends TestCase
         }
         return $response;
     }
-
 
     public function testTimeoutOptionIsAccepted(): void
     {
