@@ -3,6 +3,7 @@ import type { MigrationModule } from "@fern-api/migrations-base";
 import { migration_1_0_0 } from "./1.0.0.js";
 import { migration_2_0_0 } from "./2.0.0.js";
 import { migration_3_0_0 } from "./3.0.0.js";
+import { migration_4_0_0 } from "./4.0.0.js";
 
 /**
  * Migration module for TypeScript SDK generators.
@@ -19,7 +20,7 @@ import { migration_3_0_0 } from "./3.0.0.js";
  * `fern generator upgrade --generator typescript-sdk`
  */
 const migrationModule: MigrationModule = {
-    migrations: [migration_1_0_0, migration_2_0_0, migration_3_0_0]
+    migrations: [migration_1_0_0, migration_2_0_0, migration_3_0_0, migration_4_0_0]
 };
 
 export default migrationModule;

@@ -55,6 +55,7 @@ export class CoreUtilitiesManager {
     private readonly generateEndpointMetadata: boolean;
     private readonly customPagerName: string;
     private readonly maxRetries: number | undefined;
+    private readonly retryStatusCodes: "legacy" | "recommended";
 
     constructor({
         streamType,
@@ -64,7 +65,8 @@ export class CoreUtilitiesManager {
         relativeTestPath = DEFAULT_TEST_PATH,
         generateEndpointMetadata,
         customPagerName,
-        maxRetries
+        maxRetries,
+        retryStatusCodes = "legacy"
     }: {
         streamType: "wrapper" | "web";
         formDataSupport: "Node16" | "Node18";
@@ -74,6 +76,7 @@ export class CoreUtilitiesManager {
         generateEndpointMetadata: boolean;
         customPagerName: string;
         maxRetries?: number;
+        retryStatusCodes?: "legacy" | "recommended";
     }) {
         this.streamType = streamType;
         this.formDataSupport = formDataSupport;
@@ -83,6 +86,7 @@ export class CoreUtilitiesManager {
         this.generateEndpointMetadata = generateEndpointMetadata;
         this.customPagerName = customPagerName;
         this.maxRetries = maxRetries;
+        this.retryStatusCodes = retryStatusCodes;
     }
 
     public getCoreUtilities({
@@ -243,8 +247,8 @@ export class CoreUtilitiesManager {
             })
         );
 
-        // Handle maxRetries override in requestWithRetries.ts
-        if (this.maxRetries != null && this.referencedCoreUtilities["fetcher"] != null) {
+        // Handle maxRetries and retryStatusCodes overrides in requestWithRetries.ts
+        if (this.referencedCoreUtilities["fetcher"] != null) {
             const requestWithRetriesPath = path.join(
                 pathToRoot,
                 this.relativePackagePath,
@@ -254,10 +258,18 @@ export class CoreUtilitiesManager {
             );
             try {
                 let contents = await readFile(requestWithRetriesPath, "utf8");
-                contents = contents.replace(
-                    /const DEFAULT_MAX_RETRIES = \d+;/,
-                    `const DEFAULT_MAX_RETRIES = ${this.maxRetries};`
-                );
+                if (this.maxRetries != null) {
+                    contents = contents.replace(
+                        /const DEFAULT_MAX_RETRIES = \d+;/,
+                        `const DEFAULT_MAX_RETRIES = ${this.maxRetries};`
+                    );
+                }
+                if (this.retryStatusCodes === "recommended") {
+                    contents = contents.replace(
+                        /const RETRY_STATUS_CODES = "legacy";/,
+                        `const RETRY_STATUS_CODES = "recommended";`
+                    );
+                }
                 await writeFile(requestWithRetriesPath, contents, { encoding: "utf8" });
             } catch (_error) {
                 // File may not exist if fetcher utility doesn't include requestWithRetries

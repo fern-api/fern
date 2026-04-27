@@ -1,7 +1,17 @@
 const INITIAL_RETRY_DELAY = 1000; // in milliseconds
 const MAX_RETRY_DELAY = 60000; // in milliseconds
-const DEFAULT_MAX_RETRIES = 5;
+const DEFAULT_MAX_RETRIES = 2;
 const JITTER_FACTOR = 0.2; // 20% random jitter
+const RETRY_STATUS_CODES = "legacy";
+
+const RECOMMENDED_RETRY_STATUS_CODES = new Set([408, 429, 502, 503, 504]);
+
+function isRetryableStatusCode(statusCode: number): boolean {
+    if (RETRY_STATUS_CODES === "recommended") {
+        return RECOMMENDED_RETRY_STATUS_CODES.has(statusCode);
+    }
+    return [408, 429].includes(statusCode) || statusCode >= 500;
+}
 
 function addPositiveJitter(delay: number): number {
     const jitterMultiplier = 1 + Math.random() * JITTER_FACTOR;
@@ -51,10 +61,7 @@ export async function requestWithRetries(
     let response: Response = await requestFn();
 
     for (let i = 0; i < maxRetries; ++i) {
-        if (
-            [408, 429].includes(response.status) ||
-            (response.status >= 501 && response.status < 600)
-        ) {
+        if (isRetryableStatusCode(response.status)) {
             const delay = getRetryDelayFromHeaders(response, i);
 
             await new Promise((resolve) => setTimeout(resolve, delay));

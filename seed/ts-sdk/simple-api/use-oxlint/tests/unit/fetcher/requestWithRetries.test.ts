@@ -1,5 +1,5 @@
+import type { Mock, MockInstance } from "vitest";
 import { requestWithRetries } from "../../../src/core/fetcher/requestWithRetries";
-import { Mock, MockInstance } from "vitest";
 
 describe("requestWithRetries", () => {
     let mockFetch: Mock;
@@ -36,13 +36,13 @@ describe("requestWithRetries", () => {
         vi.clearAllTimers();
     });
 
-    it("should retry on retryable status codes", async () => {
+    it("should retry on retryable status codes (legacy mode)", async () => {
         setTimeoutSpy = vi.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
             process.nextTick(callback);
             return null as any;
         });
 
-        const retryableStatuses = [408, 429, 501, 502, 503, 504, 505];
+        const retryableStatuses = [408, 429, 500, 501, 502, 503, 504, 505];
         let callCount = 0;
 
         mockFetch.mockImplementation(async () => {
@@ -57,6 +57,24 @@ describe("requestWithRetries", () => {
         const response = await responsePromise;
 
         expect(mockFetch).toHaveBeenCalledTimes(retryableStatuses.length + 1);
+        expect(response.status).toBe(200);
+    });
+
+    it("should retry on 500 Internal Server Error in legacy mode", async () => {
+        setTimeoutSpy = vi.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
+            process.nextTick(callback);
+            return null as any;
+        });
+
+        mockFetch
+            .mockResolvedValueOnce(new Response("", { status: 500 }))
+            .mockResolvedValueOnce(new Response("", { status: 200 }));
+
+        const responsePromise = requestWithRetries(() => mockFetch(), 3);
+        await vi.runAllTimersAsync();
+        const response = await responsePromise;
+
+        expect(mockFetch).toHaveBeenCalledTimes(2);
         expect(response.status).toBe(200);
     });
 
@@ -77,23 +95,7 @@ describe("requestWithRetries", () => {
         expect(response.status).toBe(503);
     });
 
-    it("should not retry on 500 Internal Server Error", async () => {
-        setTimeoutSpy = vi.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
-            process.nextTick(callback);
-            return null as any;
-        });
-
-        mockFetch.mockResolvedValueOnce(new Response("", { status: 500 }));
-
-        const responsePromise = requestWithRetries(() => mockFetch(), 3);
-        await vi.runAllTimersAsync();
-        const response = await responsePromise;
-
-        expect(mockFetch).toHaveBeenCalledTimes(1);
-        expect(response.status).toBe(500);
-    });
-
-    it("should retry on status 599 (upper boundary of retryable 5xx)", async () => {
+    it("should retry on status 599 (upper boundary of retryable 5xx in legacy mode)", async () => {
         setTimeoutSpy = vi.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
             process.nextTick(callback);
             return null as any;
@@ -109,6 +111,22 @@ describe("requestWithRetries", () => {
 
         expect(mockFetch).toHaveBeenCalledTimes(2);
         expect(response.status).toBe(200);
+    });
+
+    it("should not retry on status 600 (boundary above 5xx range)", async () => {
+        setTimeoutSpy = vi.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
+            process.nextTick(callback);
+            return null as any;
+        });
+
+        mockFetch.mockResolvedValueOnce(new Response("", { status: 600 }));
+
+        const responsePromise = requestWithRetries(() => mockFetch(), 3);
+        await vi.runAllTimersAsync();
+        const response = await responsePromise;
+
+        expect(mockFetch).toHaveBeenCalledTimes(1);
+        expect(response.status).toBe(600);
     });
 
     it("should not retry on success status codes", async () => {
