@@ -118,11 +118,11 @@ export class RemoteTaskHandler {
         for (const newLog of remoteTask.logs.slice(this.lengthOfLastLogs)) {
             this.context.logger.log(convertLogLevel(newLog.level), newLog.message);
 
-            // extract version from log messages as fallback (e.g., "Tagging release 0.0.9")
+            // extract version from log messages as fallback (e.g., "Tagging release 0.0.9" or "Tagging release v0.2.0-rc.1")
             if (this.#actualVersion == null) {
-                const tagMatch = newLog.message.match(/Tagging release (\d+\.\d+\.\d+)/);
+                const tagMatch = newLog.message.match(/Tagging release (v?\d+\.\d+\.\d+(?:-[\w.]+)?)/);
                 if (tagMatch) {
-                    this.#actualVersion = tagMatch[1];
+                    this.#actualVersion = tagMatch[1]?.replace(/^v/, "");
                 }
             }
         }
@@ -167,6 +167,10 @@ export class RemoteTaskHandler {
                 this.#snippetsS3PreSignedReadUrl = finishedStatus.snippetsS3PreSignedReadUrl;
                 this.#pullRequestUrl = finishedStatus.pullRequestUrl;
                 this.#noChangesDetected = finishedStatus.noChangesDetected;
+                // Prefer the dedicated actualVersion field from Fiddle over log-regex heuristics
+                if (finishedStatus.actualVersion != null) {
+                    this.#actualVersion = finishedStatus.actualVersion;
+                }
             },
             _other: () => {
                 this.context.logger.warn("Received unknown update type: " + remoteTask.status.type);
