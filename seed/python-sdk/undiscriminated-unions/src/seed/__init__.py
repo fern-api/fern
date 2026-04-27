@@ -10,9 +10,15 @@ if typing.TYPE_CHECKING:
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .client import AsyncSeedUndiscriminatedUnions, SeedUndiscriminatedUnions
     from .union import (
+        AliasToLeafB,
+        AliasedLeafA,
+        AliasedLeafB,
+        AliasedObjectUnion,
         ConvertToken,
         Key,
         KeyType,
+        LeafObjectA,
+        LeafObjectB,
         LeafTypeA,
         LeafTypeB,
         Metadata,
@@ -41,12 +47,18 @@ if typing.TYPE_CHECKING:
     )
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
+    "AliasToLeafB": ".union",
+    "AliasedLeafA": ".union",
+    "AliasedLeafB": ".union",
+    "AliasedObjectUnion": ".union",
     "AsyncSeedUndiscriminatedUnions": ".client",
     "ConvertToken": ".union",
     "DefaultAioHttpClient": "._default_clients",
     "DefaultAsyncHttpxClient": "._default_clients",
     "Key": ".union",
     "KeyType": ".union",
+    "LeafObjectA": ".union",
+    "LeafObjectB": ".union",
     "LeafTypeA": ".union",
     "LeafTypeB": ".union",
     "Metadata": ".union",
@@ -100,12 +112,18 @@ def __dir__():
 
 
 __all__ = [
+    "AliasToLeafB",
+    "AliasedLeafA",
+    "AliasedLeafB",
+    "AliasedObjectUnion",
     "AsyncSeedUndiscriminatedUnions",
     "ConvertToken",
     "DefaultAioHttpClient",
     "DefaultAsyncHttpxClient",
     "Key",
     "KeyType",
+    "LeafObjectA",
+    "LeafObjectB",
     "LeafTypeA",
     "LeafTypeB",
     "Metadata",

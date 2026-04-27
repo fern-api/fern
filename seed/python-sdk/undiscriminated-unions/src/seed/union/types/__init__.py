@@ -6,9 +6,15 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
+    from .alias_to_leaf_b import AliasToLeafB
+    from .aliased_leaf_a import AliasedLeafA
+    from .aliased_leaf_b import AliasedLeafB
+    from .aliased_object_union import AliasedObjectUnion
     from .convert_token import ConvertToken
     from .key import Key
     from .key_type import KeyType
+    from .leaf_object_a import LeafObjectA
+    from .leaf_object_b import LeafObjectB
     from .leaf_type_a import LeafTypeA
     from .leaf_type_b import LeafTypeB
     from .metadata import Metadata
@@ -35,9 +41,15 @@ if typing.TYPE_CHECKING:
     from .user_id import UserId
     from .wrapper_object import WrapperObject
 _dynamic_imports: typing.Dict[str, str] = {
+    "AliasToLeafB": ".alias_to_leaf_b",
+    "AliasedLeafA": ".aliased_leaf_a",
+    "AliasedLeafB": ".aliased_leaf_b",
+    "AliasedObjectUnion": ".aliased_object_union",
     "ConvertToken": ".convert_token",
     "Key": ".key",
     "KeyType": ".key_type",
+    "LeafObjectA": ".leaf_object_a",
+    "LeafObjectB": ".leaf_object_b",
     "LeafTypeA": ".leaf_type_a",
     "LeafTypeB": ".leaf_type_b",
     "Metadata": ".metadata",
@@ -88,9 +100,15 @@ def __dir__():
 
 
 __all__ = [
+    "AliasToLeafB",
+    "AliasedLeafA",
+    "AliasedLeafB",
+    "AliasedObjectUnion",
     "ConvertToken",
     "Key",
     "KeyType",
+    "LeafObjectA",
+    "LeafObjectB",
     "LeafTypeA",
     "LeafTypeB",
     "Metadata",

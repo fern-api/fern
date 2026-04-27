@@ -84,6 +84,32 @@
         {
             "example_identifier": "default",
             "id": {
+                "path": "/nested-objects",
+                "method": "POST",
+                "identifier_override": "endpoint_union.nestedObjectUnions"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedUndiscriminatedUnions\n\nclient = SeedUndiscriminatedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.union.nested_object_unions(\n    request=\"string\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedUndiscriminatedUnions\n\nclient = AsyncSeedUndiscriminatedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.union.nested_object_unions(\n        request=\"string\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/aliased-object",
+                "method": "POST",
+                "identifier_override": "endpoint_union.aliasedObjectUnion"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedUndiscriminatedUnions\nfrom seed.union import LeafObjectA\n\nclient = SeedUndiscriminatedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.union.aliased_object_union(\n    request=LeafObjectA(\n        only_in_a=\"onlyInA\",\n        shared_number=1,\n    ),\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedUndiscriminatedUnions\nfrom seed.union import LeafObjectA\n\nclient = AsyncSeedUndiscriminatedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.union.aliased_object_union(\n        request=LeafObjectA(\n            only_in_a=\"onlyInA\",\n            shared_number=1,\n        ),\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
                 "path": "/with-base-properties",
                 "method": "POST",
                 "identifier_override": "endpoint_union.getWithBaseProperties"

@@ -7,9 +7,15 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import (
+        AliasToLeafB,
+        AliasedLeafA,
+        AliasedLeafB,
+        AliasedObjectUnion,
         ConvertToken,
         Key,
         KeyType,
+        LeafObjectA,
+        LeafObjectB,
         LeafTypeA,
         LeafTypeB,
         Metadata,
@@ -37,9 +43,15 @@ if typing.TYPE_CHECKING:
         WrapperObject,
     )
 _dynamic_imports: typing.Dict[str, str] = {
+    "AliasToLeafB": ".types",
+    "AliasedLeafA": ".types",
+    "AliasedLeafB": ".types",
+    "AliasedObjectUnion": ".types",
     "ConvertToken": ".types",
     "Key": ".types",
     "KeyType": ".types",
+    "LeafObjectA": ".types",
+    "LeafObjectB": ".types",
     "LeafTypeA": ".types",
     "LeafTypeB": ".types",
     "Metadata": ".types",
@@ -90,9 +102,15 @@ def __dir__():
 
 
 __all__ = [
+    "AliasToLeafB",
+    "AliasedLeafA",
+    "AliasedLeafB",
+    "AliasedObjectUnion",
     "ConvertToken",
     "Key",
     "KeyType",
+    "LeafObjectA",
+    "LeafObjectB",
     "LeafTypeA",
     "LeafTypeB",
     "Metadata",
