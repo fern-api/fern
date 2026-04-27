@@ -36,6 +36,7 @@ import { RoleId } from "./RoleId.js";
 import { TabConfig } from "./TabConfig.js";
 import { TabId } from "./TabId.js";
 import { ThemeConfig } from "./ThemeConfig.js";
+import { TranslationConfig } from "./TranslationConfig.js";
 import { VersionConfig } from "./VersionConfig.js";
 
 export const DocsConfiguration: core.serialization.ObjectSchema<
@@ -60,6 +61,7 @@ export const DocsConfiguration: core.serialization.ObjectSchema<
     experimental: ExperimentalConfig.optional(),
     defaultLanguage: core.serialization.property("default-language", ProgrammingLanguage.optional()),
     languages: core.serialization.list(Language).optional(),
+    translations: core.serialization.list(TranslationConfig).optional(),
     aiChat: core.serialization.property("ai-chat", AiChatConfig.optional()),
     aiSearch: core.serialization.property("ai-search", AiChatConfig.optional()),
     aiExamples: core.serialization.property("ai-examples", AiExamplesConfig.optional()),
@@ -102,6 +104,7 @@ export declare namespace DocsConfiguration {
         experimental?: ExperimentalConfig.Raw | null;
         "default-language"?: ProgrammingLanguage.Raw | null;
         languages?: Language.Raw[] | null;
+        translations?: TranslationConfig.Raw[] | null;
         "ai-chat"?: AiChatConfig.Raw | null;
         "ai-search"?: AiChatConfig.Raw | null;
         "ai-examples"?: AiExamplesConfig.Raw | null;

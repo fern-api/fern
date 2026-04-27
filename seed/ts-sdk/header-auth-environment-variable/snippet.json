@@ -8,7 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedHeaderTokenEnvironmentVariableClient } from \"@fern/header-auth-environment-variable\";\n\nconst client = new SeedHeaderTokenEnvironmentVariableClient({ environment: \"YOUR_BASE_URL\", headerTokenAuth: \"YOUR_HEADER_TOKEN_AUTH\" });\nawait client.service.getWithBearerToken();\n"
+                "client": "import { SeedHeaderTokenEnvironmentVariableClient } from \"@fern/header-auth-environment-variable\";\n\nconst client = new SeedHeaderTokenEnvironmentVariableClient({ environment: \"YOUR_BASE_URL\", headerTokenAuth: \"YOUR_HEADER_VALUE\" });\nawait client.service.getWithBearerToken();\n"
             }
         }
     ],

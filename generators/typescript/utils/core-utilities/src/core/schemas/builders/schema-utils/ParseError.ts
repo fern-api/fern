@@ -4,6 +4,7 @@ import { stringifyValidationError } from "./stringifyValidationErrors";
 export class ParseError extends Error {
     constructor(public readonly errors: ValidationError[]) {
         super(errors.map(stringifyValidationError).join("; "));
-        Object.setPrototypeOf(this, ParseError.prototype);
+        Object.setPrototypeOf(this, new.target.prototype);
+        this.name = this.constructor.name;
     }
 }

@@ -418,7 +418,8 @@ describe("appendPropertyToFormData", () => {
                         { type: LIST_STRING_TYPE, docs: undefined },
                         { type: SET_STRING_TYPE, docs: undefined },
                         { type: STRING_TYPE, docs: undefined }
-                    ]
+                    ],
+                    baseProperties: undefined
                 })
             );
             const property = createBodyProperty("mixed", unionType);
@@ -428,7 +429,8 @@ describe("appendPropertyToFormData", () => {
                         { type: LIST_STRING_TYPE, docs: undefined },
                         { type: SET_STRING_TYPE, docs: undefined },
                         { type: STRING_TYPE, docs: undefined }
-                    ]
+                    ],
+                    baseProperties: undefined
                 })
             });
             const stmt = appendPropertyToFormData({
@@ -497,7 +499,8 @@ describe("appendPropertyToFormData", () => {
                     members: [
                         { type: SET_STRING_TYPE, docs: undefined },
                         { type: STRING_TYPE, docs: undefined }
-                    ]
+                    ],
+                    baseProperties: undefined
                 })
             );
             const property = createBodyProperty("setOrString", unionType);
@@ -506,7 +509,8 @@ describe("appendPropertyToFormData", () => {
                     members: [
                         { type: SET_STRING_TYPE, docs: undefined },
                         { type: STRING_TYPE, docs: undefined }
-                    ]
+                    ],
+                    baseProperties: undefined
                 })
             });
             const stmt = appendPropertyToFormData({
@@ -531,7 +535,8 @@ describe("appendPropertyToFormData", () => {
                     members: [
                         { type: LIST_STRING_TYPE, docs: undefined },
                         { type: STRING_TYPE, docs: undefined }
-                    ]
+                    ],
+                    baseProperties: undefined
                 })
             );
             const property = createBodyProperty("listOrString", unionType);
@@ -540,7 +545,8 @@ describe("appendPropertyToFormData", () => {
                     members: [
                         { type: LIST_STRING_TYPE, docs: undefined },
                         { type: STRING_TYPE, docs: undefined }
-                    ]
+                    ],
+                    baseProperties: undefined
                 })
             });
             const stmt = appendPropertyToFormData({
@@ -566,7 +572,8 @@ describe("appendPropertyToFormData", () => {
                     members: [
                         { type: LIST_STRING_TYPE, docs: undefined },
                         { type: SET_STRING_TYPE, docs: undefined }
-                    ]
+                    ],
+                    baseProperties: undefined
                 })
             );
             const property = createBodyProperty("allIterable", unionType);
@@ -575,7 +582,8 @@ describe("appendPropertyToFormData", () => {
                     members: [
                         { type: LIST_STRING_TYPE, docs: undefined },
                         { type: SET_STRING_TYPE, docs: undefined }
-                    ]
+                    ],
+                    baseProperties: undefined
                 })
             });
             const stmt = appendPropertyToFormData({
@@ -672,6 +680,7 @@ describe("appendPropertyToFormData", () => {
                     extends: [],
                     baseProperties: [],
                     types: [],
+                    default: undefined,
                     discriminatorContext: undefined
                 })
             );
@@ -682,6 +691,7 @@ describe("appendPropertyToFormData", () => {
                     extends: [],
                     baseProperties: [],
                     types: [],
+                    default: undefined,
                     discriminatorContext: undefined
                 })
             });

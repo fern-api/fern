@@ -11,10 +11,10 @@ import (
 )
 
 var (
-	streamXfernStreamingConditionRequestFieldQuery = big.NewInt(1 << 0)
+	streamXFernStreamingConditionRequestFieldQuery = big.NewInt(1 << 0)
 )
 
-type StreamXfernStreamingConditionRequest struct {
+type StreamXFernStreamingConditionRequest struct {
 	// The prompt or query to complete.
 	Query  string `json:"query" url:"-"`
 	stream bool
@@ -23,11 +23,11 @@ type StreamXfernStreamingConditionRequest struct {
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (s *StreamXfernStreamingConditionRequest) Stream() bool {
+func (s *StreamXFernStreamingConditionRequest) Stream() bool {
 	return s.stream
 }
 
-func (s *StreamXfernStreamingConditionRequest) require(field *big.Int) {
+func (s *StreamXFernStreamingConditionRequest) require(field *big.Int) {
 	if s.explicitFields == nil {
 		s.explicitFields = big.NewInt(0)
 	}
@@ -36,24 +36,24 @@ func (s *StreamXfernStreamingConditionRequest) require(field *big.Int) {
 
 // SetQuery sets the Query field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *StreamXfernStreamingConditionRequest) SetQuery(query string) {
+func (s *StreamXFernStreamingConditionRequest) SetQuery(query string) {
 	s.Query = query
-	s.require(streamXfernStreamingConditionRequestFieldQuery)
+	s.require(streamXFernStreamingConditionRequestFieldQuery)
 }
 
-func (s *StreamXfernStreamingConditionRequest) UnmarshalJSON(data []byte) error {
-	type unmarshaler StreamXfernStreamingConditionRequest
+func (s *StreamXFernStreamingConditionRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler StreamXFernStreamingConditionRequest
 	var body unmarshaler
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
-	*s = StreamXfernStreamingConditionRequest(body)
+	*s = StreamXFernStreamingConditionRequest(body)
 	s.stream = false
 	return nil
 }
 
-func (s *StreamXfernStreamingConditionRequest) MarshalJSON() ([]byte, error) {
-	type embed StreamXfernStreamingConditionRequest
+func (s *StreamXFernStreamingConditionRequest) MarshalJSON() ([]byte, error) {
+	type embed StreamXFernStreamingConditionRequest
 	var marshaler = struct {
 		embed
 		Stream bool `json:"stream"`
@@ -66,10 +66,10 @@ func (s *StreamXfernStreamingConditionRequest) MarshalJSON() ([]byte, error) {
 }
 
 var (
-	streamXfernStreamingConditionStreamRequestFieldQuery = big.NewInt(1 << 0)
+	streamXFernStreamingConditionStreamRequestFieldQuery = big.NewInt(1 << 0)
 )
 
-type StreamXfernStreamingConditionStreamRequest struct {
+type StreamXFernStreamingConditionStreamRequest struct {
 	// The prompt or query to complete.
 	Query  string `json:"query" url:"-"`
 	stream bool
@@ -78,11 +78,11 @@ type StreamXfernStreamingConditionStreamRequest struct {
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (s *StreamXfernStreamingConditionStreamRequest) Stream() bool {
+func (s *StreamXFernStreamingConditionStreamRequest) Stream() bool {
 	return s.stream
 }
 
-func (s *StreamXfernStreamingConditionStreamRequest) require(field *big.Int) {
+func (s *StreamXFernStreamingConditionStreamRequest) require(field *big.Int) {
 	if s.explicitFields == nil {
 		s.explicitFields = big.NewInt(0)
 	}
@@ -91,24 +91,24 @@ func (s *StreamXfernStreamingConditionStreamRequest) require(field *big.Int) {
 
 // SetQuery sets the Query field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *StreamXfernStreamingConditionStreamRequest) SetQuery(query string) {
+func (s *StreamXFernStreamingConditionStreamRequest) SetQuery(query string) {
 	s.Query = query
-	s.require(streamXfernStreamingConditionStreamRequestFieldQuery)
+	s.require(streamXFernStreamingConditionStreamRequestFieldQuery)
 }
 
-func (s *StreamXfernStreamingConditionStreamRequest) UnmarshalJSON(data []byte) error {
-	type unmarshaler StreamXfernStreamingConditionStreamRequest
+func (s *StreamXFernStreamingConditionStreamRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler StreamXFernStreamingConditionStreamRequest
 	var body unmarshaler
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
-	*s = StreamXfernStreamingConditionStreamRequest(body)
+	*s = StreamXFernStreamingConditionStreamRequest(body)
 	s.stream = true
 	return nil
 }
 
-func (s *StreamXfernStreamingConditionStreamRequest) MarshalJSON() ([]byte, error) {
-	type embed StreamXfernStreamingConditionStreamRequest
+func (s *StreamXFernStreamingConditionStreamRequest) MarshalJSON() ([]byte, error) {
+	type embed StreamXFernStreamingConditionStreamRequest
 	var marshaler = struct {
 		embed
 		Stream bool `json:"stream"`
@@ -121,10 +121,10 @@ func (s *StreamXfernStreamingConditionStreamRequest) MarshalJSON() ([]byte, erro
 }
 
 var (
-	streamXfernStreamingNullableConditionRequestFieldQuery = big.NewInt(1 << 0)
+	streamXFernStreamingNullableConditionRequestFieldQuery = big.NewInt(1 << 0)
 )
 
-type StreamXfernStreamingNullableConditionRequest struct {
+type StreamXFernStreamingNullableConditionRequest struct {
 	// The prompt or query to complete.
 	Query  string `json:"query" url:"-"`
 	stream bool
@@ -133,11 +133,11 @@ type StreamXfernStreamingNullableConditionRequest struct {
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (s *StreamXfernStreamingNullableConditionRequest) Stream() bool {
+func (s *StreamXFernStreamingNullableConditionRequest) Stream() bool {
 	return s.stream
 }
 
-func (s *StreamXfernStreamingNullableConditionRequest) require(field *big.Int) {
+func (s *StreamXFernStreamingNullableConditionRequest) require(field *big.Int) {
 	if s.explicitFields == nil {
 		s.explicitFields = big.NewInt(0)
 	}
@@ -146,24 +146,24 @@ func (s *StreamXfernStreamingNullableConditionRequest) require(field *big.Int) {
 
 // SetQuery sets the Query field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *StreamXfernStreamingNullableConditionRequest) SetQuery(query string) {
+func (s *StreamXFernStreamingNullableConditionRequest) SetQuery(query string) {
 	s.Query = query
-	s.require(streamXfernStreamingNullableConditionRequestFieldQuery)
+	s.require(streamXFernStreamingNullableConditionRequestFieldQuery)
 }
 
-func (s *StreamXfernStreamingNullableConditionRequest) UnmarshalJSON(data []byte) error {
-	type unmarshaler StreamXfernStreamingNullableConditionRequest
+func (s *StreamXFernStreamingNullableConditionRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler StreamXFernStreamingNullableConditionRequest
 	var body unmarshaler
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
-	*s = StreamXfernStreamingNullableConditionRequest(body)
+	*s = StreamXFernStreamingNullableConditionRequest(body)
 	s.stream = false
 	return nil
 }
 
-func (s *StreamXfernStreamingNullableConditionRequest) MarshalJSON() ([]byte, error) {
-	type embed StreamXfernStreamingNullableConditionRequest
+func (s *StreamXFernStreamingNullableConditionRequest) MarshalJSON() ([]byte, error) {
+	type embed StreamXFernStreamingNullableConditionRequest
 	var marshaler = struct {
 		embed
 		Stream bool `json:"stream"`
@@ -176,10 +176,10 @@ func (s *StreamXfernStreamingNullableConditionRequest) MarshalJSON() ([]byte, er
 }
 
 var (
-	streamXfernStreamingNullableConditionStreamRequestFieldQuery = big.NewInt(1 << 0)
+	streamXFernStreamingNullableConditionStreamRequestFieldQuery = big.NewInt(1 << 0)
 )
 
-type StreamXfernStreamingNullableConditionStreamRequest struct {
+type StreamXFernStreamingNullableConditionStreamRequest struct {
 	// The prompt or query to complete.
 	Query  string `json:"query" url:"-"`
 	stream bool
@@ -188,11 +188,11 @@ type StreamXfernStreamingNullableConditionStreamRequest struct {
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (s *StreamXfernStreamingNullableConditionStreamRequest) Stream() bool {
+func (s *StreamXFernStreamingNullableConditionStreamRequest) Stream() bool {
 	return s.stream
 }
 
-func (s *StreamXfernStreamingNullableConditionStreamRequest) require(field *big.Int) {
+func (s *StreamXFernStreamingNullableConditionStreamRequest) require(field *big.Int) {
 	if s.explicitFields == nil {
 		s.explicitFields = big.NewInt(0)
 	}
@@ -201,24 +201,24 @@ func (s *StreamXfernStreamingNullableConditionStreamRequest) require(field *big.
 
 // SetQuery sets the Query field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *StreamXfernStreamingNullableConditionStreamRequest) SetQuery(query string) {
+func (s *StreamXFernStreamingNullableConditionStreamRequest) SetQuery(query string) {
 	s.Query = query
-	s.require(streamXfernStreamingNullableConditionStreamRequestFieldQuery)
+	s.require(streamXFernStreamingNullableConditionStreamRequestFieldQuery)
 }
 
-func (s *StreamXfernStreamingNullableConditionStreamRequest) UnmarshalJSON(data []byte) error {
-	type unmarshaler StreamXfernStreamingNullableConditionStreamRequest
+func (s *StreamXFernStreamingNullableConditionStreamRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler StreamXFernStreamingNullableConditionStreamRequest
 	var body unmarshaler
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
-	*s = StreamXfernStreamingNullableConditionStreamRequest(body)
+	*s = StreamXFernStreamingNullableConditionStreamRequest(body)
 	s.stream = true
 	return nil
 }
 
-func (s *StreamXfernStreamingNullableConditionStreamRequest) MarshalJSON() ([]byte, error) {
-	type embed StreamXfernStreamingNullableConditionStreamRequest
+func (s *StreamXFernStreamingNullableConditionStreamRequest) MarshalJSON() ([]byte, error) {
+	type embed StreamXFernStreamingNullableConditionStreamRequest
 	var marshaler = struct {
 		embed
 		Stream bool `json:"stream"`
@@ -231,11 +231,11 @@ func (s *StreamXfernStreamingNullableConditionStreamRequest) MarshalJSON() ([]by
 }
 
 var (
-	streamXfernStreamingSharedSchemaRequestFieldPrompt = big.NewInt(1 << 0)
-	streamXfernStreamingSharedSchemaRequestFieldModel  = big.NewInt(1 << 1)
+	streamXFernStreamingSharedSchemaRequestFieldPrompt = big.NewInt(1 << 0)
+	streamXFernStreamingSharedSchemaRequestFieldModel  = big.NewInt(1 << 1)
 )
 
-type StreamXfernStreamingSharedSchemaRequest struct {
+type StreamXFernStreamingSharedSchemaRequest struct {
 	// The prompt to complete.
 	Prompt string `json:"prompt" url:"-"`
 	// The model to use.
@@ -246,11 +246,11 @@ type StreamXfernStreamingSharedSchemaRequest struct {
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (s *StreamXfernStreamingSharedSchemaRequest) Stream() bool {
+func (s *StreamXFernStreamingSharedSchemaRequest) Stream() bool {
 	return s.stream
 }
 
-func (s *StreamXfernStreamingSharedSchemaRequest) require(field *big.Int) {
+func (s *StreamXFernStreamingSharedSchemaRequest) require(field *big.Int) {
 	if s.explicitFields == nil {
 		s.explicitFields = big.NewInt(0)
 	}
@@ -259,31 +259,31 @@ func (s *StreamXfernStreamingSharedSchemaRequest) require(field *big.Int) {
 
 // SetPrompt sets the Prompt field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *StreamXfernStreamingSharedSchemaRequest) SetPrompt(prompt string) {
+func (s *StreamXFernStreamingSharedSchemaRequest) SetPrompt(prompt string) {
 	s.Prompt = prompt
-	s.require(streamXfernStreamingSharedSchemaRequestFieldPrompt)
+	s.require(streamXFernStreamingSharedSchemaRequestFieldPrompt)
 }
 
 // SetModel sets the Model field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *StreamXfernStreamingSharedSchemaRequest) SetModel(model string) {
+func (s *StreamXFernStreamingSharedSchemaRequest) SetModel(model string) {
 	s.Model = model
-	s.require(streamXfernStreamingSharedSchemaRequestFieldModel)
+	s.require(streamXFernStreamingSharedSchemaRequestFieldModel)
 }
 
-func (s *StreamXfernStreamingSharedSchemaRequest) UnmarshalJSON(data []byte) error {
-	type unmarshaler StreamXfernStreamingSharedSchemaRequest
+func (s *StreamXFernStreamingSharedSchemaRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler StreamXFernStreamingSharedSchemaRequest
 	var body unmarshaler
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
-	*s = StreamXfernStreamingSharedSchemaRequest(body)
+	*s = StreamXFernStreamingSharedSchemaRequest(body)
 	s.stream = false
 	return nil
 }
 
-func (s *StreamXfernStreamingSharedSchemaRequest) MarshalJSON() ([]byte, error) {
-	type embed StreamXfernStreamingSharedSchemaRequest
+func (s *StreamXFernStreamingSharedSchemaRequest) MarshalJSON() ([]byte, error) {
+	type embed StreamXFernStreamingSharedSchemaRequest
 	var marshaler = struct {
 		embed
 		Stream bool `json:"stream"`
@@ -296,11 +296,11 @@ func (s *StreamXfernStreamingSharedSchemaRequest) MarshalJSON() ([]byte, error) 
 }
 
 var (
-	streamXfernStreamingSharedSchemaStreamRequestFieldPrompt = big.NewInt(1 << 0)
-	streamXfernStreamingSharedSchemaStreamRequestFieldModel  = big.NewInt(1 << 1)
+	streamXFernStreamingSharedSchemaStreamRequestFieldPrompt = big.NewInt(1 << 0)
+	streamXFernStreamingSharedSchemaStreamRequestFieldModel  = big.NewInt(1 << 1)
 )
 
-type StreamXfernStreamingSharedSchemaStreamRequest struct {
+type StreamXFernStreamingSharedSchemaStreamRequest struct {
 	// The prompt to complete.
 	Prompt string `json:"prompt" url:"-"`
 	// The model to use.
@@ -311,11 +311,11 @@ type StreamXfernStreamingSharedSchemaStreamRequest struct {
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (s *StreamXfernStreamingSharedSchemaStreamRequest) Stream() bool {
+func (s *StreamXFernStreamingSharedSchemaStreamRequest) Stream() bool {
 	return s.stream
 }
 
-func (s *StreamXfernStreamingSharedSchemaStreamRequest) require(field *big.Int) {
+func (s *StreamXFernStreamingSharedSchemaStreamRequest) require(field *big.Int) {
 	if s.explicitFields == nil {
 		s.explicitFields = big.NewInt(0)
 	}
@@ -324,31 +324,31 @@ func (s *StreamXfernStreamingSharedSchemaStreamRequest) require(field *big.Int) 
 
 // SetPrompt sets the Prompt field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *StreamXfernStreamingSharedSchemaStreamRequest) SetPrompt(prompt string) {
+func (s *StreamXFernStreamingSharedSchemaStreamRequest) SetPrompt(prompt string) {
 	s.Prompt = prompt
-	s.require(streamXfernStreamingSharedSchemaStreamRequestFieldPrompt)
+	s.require(streamXFernStreamingSharedSchemaStreamRequestFieldPrompt)
 }
 
 // SetModel sets the Model field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *StreamXfernStreamingSharedSchemaStreamRequest) SetModel(model string) {
+func (s *StreamXFernStreamingSharedSchemaStreamRequest) SetModel(model string) {
 	s.Model = model
-	s.require(streamXfernStreamingSharedSchemaStreamRequestFieldModel)
+	s.require(streamXFernStreamingSharedSchemaStreamRequestFieldModel)
 }
 
-func (s *StreamXfernStreamingSharedSchemaStreamRequest) UnmarshalJSON(data []byte) error {
-	type unmarshaler StreamXfernStreamingSharedSchemaStreamRequest
+func (s *StreamXFernStreamingSharedSchemaStreamRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler StreamXFernStreamingSharedSchemaStreamRequest
 	var body unmarshaler
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
-	*s = StreamXfernStreamingSharedSchemaStreamRequest(body)
+	*s = StreamXFernStreamingSharedSchemaStreamRequest(body)
 	s.stream = true
 	return nil
 }
 
-func (s *StreamXfernStreamingSharedSchemaStreamRequest) MarshalJSON() ([]byte, error) {
-	type embed StreamXfernStreamingSharedSchemaStreamRequest
+func (s *StreamXFernStreamingSharedSchemaStreamRequest) MarshalJSON() ([]byte, error) {
+	type embed StreamXFernStreamingSharedSchemaStreamRequest
 	var marshaler = struct {
 		embed
 		Stream bool `json:"stream"`
@@ -2945,7 +2945,7 @@ func (s *StreamRequest) String() string {
 }
 
 // A discriminated union request matching the Vectara pattern (FER-9556). Each variant inherits stream_response from UnionStreamRequestBase via allOf. The importer pins stream_response to Literal[True/False] at this union level, but the allOf inheritance re-introduces it as boolean in each variant, causing the type conflict.
-type StreamXfernStreamingUnionRequest struct {
+type StreamXFernStreamingUnionRequest struct {
 	Type           string
 	Message        *UnionStreamMessageVariant
 	Interrupt      *UnionStreamInterruptVariant
@@ -2953,42 +2953,42 @@ type StreamXfernStreamingUnionRequest struct {
 	streamResponse bool
 }
 
-func (s *StreamXfernStreamingUnionRequest) GetType() string {
+func (s *StreamXFernStreamingUnionRequest) GetType() string {
 	if s == nil {
 		return ""
 	}
 	return s.Type
 }
 
-func (s *StreamXfernStreamingUnionRequest) GetMessage() *UnionStreamMessageVariant {
+func (s *StreamXFernStreamingUnionRequest) GetMessage() *UnionStreamMessageVariant {
 	if s == nil {
 		return nil
 	}
 	return s.Message
 }
 
-func (s *StreamXfernStreamingUnionRequest) GetInterrupt() *UnionStreamInterruptVariant {
+func (s *StreamXFernStreamingUnionRequest) GetInterrupt() *UnionStreamInterruptVariant {
 	if s == nil {
 		return nil
 	}
 	return s.Interrupt
 }
 
-func (s *StreamXfernStreamingUnionRequest) GetCompact() *UnionStreamCompactVariant {
+func (s *StreamXFernStreamingUnionRequest) GetCompact() *UnionStreamCompactVariant {
 	if s == nil {
 		return nil
 	}
 	return s.Compact
 }
 
-func (s *StreamXfernStreamingUnionRequest) StreamResponse() bool {
+func (s *StreamXFernStreamingUnionRequest) StreamResponse() bool {
 	if s == nil {
 		return false
 	}
 	return s.streamResponse
 }
 
-func (s *StreamXfernStreamingUnionRequest) UnmarshalJSON(data []byte) error {
+func (s *StreamXFernStreamingUnionRequest) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type           string `json:"type"`
 		StreamResponse bool   `json:"stream_response"`
@@ -3027,7 +3027,7 @@ func (s *StreamXfernStreamingUnionRequest) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (s StreamXfernStreamingUnionRequest) MarshalJSON() ([]byte, error) {
+func (s StreamXFernStreamingUnionRequest) MarshalJSON() ([]byte, error) {
 	if err := s.validate(); err != nil {
 		return nil, err
 	}
@@ -3043,13 +3043,13 @@ func (s StreamXfernStreamingUnionRequest) MarshalJSON() ([]byte, error) {
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", s)
 }
 
-type StreamXfernStreamingUnionRequestVisitor interface {
+type StreamXFernStreamingUnionRequestVisitor interface {
 	VisitMessage(*UnionStreamMessageVariant) error
 	VisitInterrupt(*UnionStreamInterruptVariant) error
 	VisitCompact(*UnionStreamCompactVariant) error
 }
 
-func (s *StreamXfernStreamingUnionRequest) Accept(visitor StreamXfernStreamingUnionRequestVisitor) error {
+func (s *StreamXFernStreamingUnionRequest) Accept(visitor StreamXFernStreamingUnionRequestVisitor) error {
 	if s.Message != nil {
 		return visitor.VisitMessage(s.Message)
 	}
@@ -3062,7 +3062,7 @@ func (s *StreamXfernStreamingUnionRequest) Accept(visitor StreamXfernStreamingUn
 	return fmt.Errorf("type %T does not define a non-empty union type", s)
 }
 
-func (s *StreamXfernStreamingUnionRequest) validate() error {
+func (s *StreamXFernStreamingUnionRequest) validate() error {
 	if s == nil {
 		return fmt.Errorf("type %T is nil", s)
 	}
@@ -3100,7 +3100,7 @@ func (s *StreamXfernStreamingUnionRequest) validate() error {
 }
 
 // A discriminated union request matching the Vectara pattern (FER-9556). Each variant inherits stream_response from UnionStreamRequestBase via allOf. The importer pins stream_response to Literal[True/False] at this union level, but the allOf inheritance re-introduces it as boolean in each variant, causing the type conflict.
-type StreamXfernStreamingUnionStreamRequest struct {
+type StreamXFernStreamingUnionStreamRequest struct {
 	Type           string
 	Message        *UnionStreamMessageVariant
 	Interrupt      *UnionStreamInterruptVariant
@@ -3108,42 +3108,42 @@ type StreamXfernStreamingUnionStreamRequest struct {
 	streamResponse bool
 }
 
-func (s *StreamXfernStreamingUnionStreamRequest) GetType() string {
+func (s *StreamXFernStreamingUnionStreamRequest) GetType() string {
 	if s == nil {
 		return ""
 	}
 	return s.Type
 }
 
-func (s *StreamXfernStreamingUnionStreamRequest) GetMessage() *UnionStreamMessageVariant {
+func (s *StreamXFernStreamingUnionStreamRequest) GetMessage() *UnionStreamMessageVariant {
 	if s == nil {
 		return nil
 	}
 	return s.Message
 }
 
-func (s *StreamXfernStreamingUnionStreamRequest) GetInterrupt() *UnionStreamInterruptVariant {
+func (s *StreamXFernStreamingUnionStreamRequest) GetInterrupt() *UnionStreamInterruptVariant {
 	if s == nil {
 		return nil
 	}
 	return s.Interrupt
 }
 
-func (s *StreamXfernStreamingUnionStreamRequest) GetCompact() *UnionStreamCompactVariant {
+func (s *StreamXFernStreamingUnionStreamRequest) GetCompact() *UnionStreamCompactVariant {
 	if s == nil {
 		return nil
 	}
 	return s.Compact
 }
 
-func (s *StreamXfernStreamingUnionStreamRequest) StreamResponse() bool {
+func (s *StreamXFernStreamingUnionStreamRequest) StreamResponse() bool {
 	if s == nil {
 		return false
 	}
 	return s.streamResponse
 }
 
-func (s *StreamXfernStreamingUnionStreamRequest) UnmarshalJSON(data []byte) error {
+func (s *StreamXFernStreamingUnionStreamRequest) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type           string `json:"type"`
 		StreamResponse bool   `json:"stream_response"`
@@ -3182,7 +3182,7 @@ func (s *StreamXfernStreamingUnionStreamRequest) UnmarshalJSON(data []byte) erro
 	return nil
 }
 
-func (s StreamXfernStreamingUnionStreamRequest) MarshalJSON() ([]byte, error) {
+func (s StreamXFernStreamingUnionStreamRequest) MarshalJSON() ([]byte, error) {
 	if err := s.validate(); err != nil {
 		return nil, err
 	}
@@ -3198,13 +3198,13 @@ func (s StreamXfernStreamingUnionStreamRequest) MarshalJSON() ([]byte, error) {
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", s)
 }
 
-type StreamXfernStreamingUnionStreamRequestVisitor interface {
+type StreamXFernStreamingUnionStreamRequestVisitor interface {
 	VisitMessage(*UnionStreamMessageVariant) error
 	VisitInterrupt(*UnionStreamInterruptVariant) error
 	VisitCompact(*UnionStreamCompactVariant) error
 }
 
-func (s *StreamXfernStreamingUnionStreamRequest) Accept(visitor StreamXfernStreamingUnionStreamRequestVisitor) error {
+func (s *StreamXFernStreamingUnionStreamRequest) Accept(visitor StreamXFernStreamingUnionStreamRequestVisitor) error {
 	if s.Message != nil {
 		return visitor.VisitMessage(s.Message)
 	}
@@ -3217,7 +3217,7 @@ func (s *StreamXfernStreamingUnionStreamRequest) Accept(visitor StreamXfernStrea
 	return fmt.Errorf("type %T does not define a non-empty union type", s)
 }
 
-func (s *StreamXfernStreamingUnionStreamRequest) validate() error {
+func (s *StreamXFernStreamingUnionStreamRequest) validate() error {
 	if s == nil {
 		return fmt.Errorf("type %T is nil", s)
 	}

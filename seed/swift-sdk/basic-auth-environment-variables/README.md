@@ -52,8 +52,8 @@ import BasicAuthEnvironmentVariables
 
 private func main() async throws {
     let client = BasicAuthEnvironmentVariablesClient(
-        username: "<username>",
-        accessToken: "<password>"
+        username: "YOUR_USERNAME",
+        accessToken: "YOUR_PASSWORD"
     )
 
     _ = try await client.basicAuth.postWithBasicAuth(request: .object([

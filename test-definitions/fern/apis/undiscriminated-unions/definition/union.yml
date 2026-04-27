@@ -56,6 +56,18 @@ service:
       request: NestedUnionRoot
       response: string
 
+    nestedObjectUnions:
+      path: "/nested-objects"
+      method: POST
+      request: OuterNestedUnion
+      response: string
+
+    aliasedObjectUnion:
+      path: "/aliased-object"
+      method: POST
+      request: AliasedObjectUnion
+      response: string
+
     getWithBaseProperties:
       path: "/with-base-properties"
       method: POST
@@ -264,3 +276,71 @@ types:
       - string
       - UserId
       - Name
+
+  # Test cases for nested undiscriminated unions with object variants
+  LeafTypeA:
+    properties:
+      alpha: string
+      beta: integer
+
+  LeafTypeB:
+    properties:
+      gamma: string
+
+  NestedObjectUnion:
+    docs: |
+      Inner union with two object variants that have disjoint required keys.
+      Tests that required-key guards work correctly inside nested union contexts.
+    discriminated: false
+    union:
+      - LeafTypeA
+      - LeafTypeB
+
+  WrapperObject:
+    properties:
+      inner: NestedObjectUnion
+      label: string
+
+  OuterNestedUnion:
+    docs: |
+      Outer union where one variant is an object containing a nested union field.
+      Tests that the deserializer correctly handles transitive union deserialization.
+    discriminated: false
+    union:
+      - string
+      - WrapperObject
+
+  # Test cases for undiscriminated unions with alias-typed object members.
+  # Under wrappedAliases: false (the Java default), PoetTypeNameMapper unwraps these
+  # aliases to the underlying object's class, so the deserializer would emit an
+  # unguarded convertValue and the alias variant would silently win with all-null
+  # fields. These fixtures verify that getRequiredWireKeys walks alias chains.
+  AliasedLeafA:
+    docs: An alias around LeafObjectA.
+    type: LeafObjectA
+
+  AliasedLeafB:
+    docs: An alias around an alias around LeafObjectB, to exercise the alias-walk loop.
+    type: AliasToLeafB
+
+  AliasToLeafB:
+    type: LeafObjectB
+
+  LeafObjectA:
+    properties:
+      onlyInA: string
+      sharedNumber: integer
+
+  LeafObjectB:
+    properties:
+      onlyInB: string
+
+  AliasedObjectUnion:
+    docs: |
+      Undiscriminated union whose members are named aliases of object types
+      (including an alias-of-alias). Required keys are disjoint, so a correct
+      deserializer must emit containsKey() guards for each alias variant.
+    discriminated: false
+    union:
+      - AliasedLeafA
+      - AliasedLeafB

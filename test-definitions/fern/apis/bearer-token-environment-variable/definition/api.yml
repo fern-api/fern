@@ -6,6 +6,7 @@ auth-schemes:
     token:
       name: apiKey
       env: COURIER_API_KEY
+      placeholder: YOUR_API_KEY
 headers:
   X-API-Version:
     name: version

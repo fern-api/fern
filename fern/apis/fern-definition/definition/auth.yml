@@ -67,6 +67,9 @@ types:
       omit:
         type: optional<boolean>
         docs: If true, the auth variable will be omitted from the SDK.
+      placeholder:
+        type: optional<string>
+        docs: The placeholder value to use in code snippets (e.g., "YOUR_API_KEY").
 
   HeaderAuthSchemeSchema:
     extends:
@@ -79,6 +82,9 @@ types:
         type: optional<string>
         docs: Defaults to string
       prefix: optional<string>
+      placeholder:
+        type: optional<string>
+        docs: The placeholder value to use in code snippets (e.g., "YOUR_API_KEY").
 
   BasicAuthSchemeSchema:
     extends:

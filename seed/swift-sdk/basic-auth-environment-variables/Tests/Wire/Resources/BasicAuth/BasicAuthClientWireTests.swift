@@ -14,8 +14,8 @@ import BasicAuthEnvironmentVariables
         )
         let client = BasicAuthEnvironmentVariablesClient(
             baseURL: "https://api.fern.com",
-            username: "<username>",
-            accessToken: "<password>",
+            username: "YOUR_USERNAME",
+            accessToken: "YOUR_PASSWORD",
             urlSession: stub.urlSession
         )
         let expectedResponse = true
@@ -34,8 +34,8 @@ import BasicAuthEnvironmentVariables
         )
         let client = BasicAuthEnvironmentVariablesClient(
             baseURL: "https://api.fern.com",
-            username: "<username>",
-            accessToken: "<password>",
+            username: "YOUR_USERNAME",
+            accessToken: "YOUR_PASSWORD",
             urlSession: stub.urlSession
         )
         let expectedResponse = true

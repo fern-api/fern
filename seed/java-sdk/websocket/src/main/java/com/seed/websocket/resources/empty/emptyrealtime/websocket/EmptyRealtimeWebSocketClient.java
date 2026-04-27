@@ -246,18 +246,10 @@ public class EmptyRealtimeWebSocketClient implements AutoCloseable {
             if (node == null || node.isNull()) {
                 throw new IllegalArgumentException("Received null or invalid JSON message");
             }
-            JsonNode typeNode = node.get("type");
-            if (typeNode == null || typeNode.isNull()) {
-                throw new IllegalArgumentException("Message missing 'type' field");
-            }
-            String type = typeNode.asText();
-            switch (type) {
-                default:
-                    if (onErrorHandler != null) {
-                        onErrorHandler.accept(new RuntimeException("Unknown WebSocket message type: '" + type
-                                + "'. Update your SDK version to support new message types."));
-                    }
-                    break;
+            if (onErrorHandler != null) {
+                onErrorHandler.accept(new RuntimeException(
+                        "Unrecognized WebSocket message: " + json.substring(0, Math.min(200, json.length()))
+                                + "... Update your SDK version to support new message types."));
             }
         } catch (Exception e) {
             if (onErrorHandler != null) {

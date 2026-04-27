@@ -1,0 +1,64 @@
+pub use crate::prelude::*;
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[serde(untagged)]
+pub enum UnionWithBaseProperties {
+    NamedMetadata(NamedMetadata),
+
+    OptionalMetadata(OptionalMetadata),
+}
+
+impl UnionWithBaseProperties {
+    pub fn is_named_metadata(&self) -> bool {
+        matches!(self, Self::NamedMetadata(_))
+    }
+
+    pub fn is_optional_metadata(&self) -> bool {
+        matches!(self, Self::OptionalMetadata(_))
+    }
+
+    pub fn as_named_metadata(&self) -> Option<&NamedMetadata> {
+        match self {
+            Self::NamedMetadata(value) => Some(value),
+            _ => None,
+        }
+    }
+
+    pub fn into_named_metadata(self) -> Option<NamedMetadata> {
+        match self {
+            Self::NamedMetadata(value) => Some(value),
+            _ => None,
+        }
+    }
+
+    pub fn as_optional_metadata(&self) -> Option<&OptionalMetadata> {
+        match self {
+            Self::OptionalMetadata(value) => Some(value),
+            _ => None,
+        }
+    }
+
+    pub fn into_optional_metadata(self) -> Option<OptionalMetadata> {
+        match self {
+            Self::OptionalMetadata(value) => Some(value),
+            _ => None,
+        }
+    }
+}
+
+impl fmt::Display for UnionWithBaseProperties {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Self::NamedMetadata(value) => write!(
+                f,
+                "{}",
+                serde_json::to_string(value).unwrap_or_else(|_| format!("{:?}", value))
+            ),
+            Self::OptionalMetadata(value) => write!(
+                f,
+                "{}",
+                serde_json::to_string(value).unwrap_or_else(|_| format!("{:?}", value))
+            ),
+        }
+    }
+}

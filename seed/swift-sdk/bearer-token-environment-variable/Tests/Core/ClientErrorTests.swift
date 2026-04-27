@@ -15,7 +15,7 @@ import Testing
 
         let client = BearerTokenEnvironmentVariableClient(
             baseURL: "https://api.fern.com",
-            apiKey: "<token>",
+            apiKey: "YOUR_API_KEY",
             urlSession: stub.urlSession
         )
 
@@ -46,7 +46,7 @@ import Testing
 
         let client = BearerTokenEnvironmentVariableClient(
             baseURL: "https://api.fern.com",
-            apiKey: "<token>",
+            apiKey: "YOUR_API_KEY",
             urlSession: stub.urlSession
         )
 
@@ -77,7 +77,7 @@ import Testing
 
         let client = BearerTokenEnvironmentVariableClient(
             baseURL: "https://api.fern.com",
-            apiKey: "<token>",
+            apiKey: "YOUR_API_KEY",
             urlSession: stub.urlSession
         )
 
@@ -110,7 +110,7 @@ import Testing
 
         let client = BearerTokenEnvironmentVariableClient(
             baseURL: "https://api.fern.com",
-            apiKey: "<token>",
+            apiKey: "YOUR_API_KEY",
             urlSession: stub.urlSession
         )
 
@@ -141,7 +141,7 @@ import Testing
 
         let client = BearerTokenEnvironmentVariableClient(
             baseURL: "https://api.fern.com",
-            apiKey: "<token>",
+            apiKey: "YOUR_API_KEY",
             urlSession: stub.urlSession
         )
 
@@ -174,7 +174,7 @@ import Testing
 
         let client = BearerTokenEnvironmentVariableClient(
             baseURL: "https://api.fern.com",
-            apiKey: "<token>",
+            apiKey: "YOUR_API_KEY",
             urlSession: stub.urlSession
         )
 
@@ -205,7 +205,7 @@ import Testing
 
         let client = BearerTokenEnvironmentVariableClient(
             baseURL: "https://api.fern.com",
-            apiKey: "<token>",
+            apiKey: "YOUR_API_KEY",
             urlSession: stub.urlSession
         )
 

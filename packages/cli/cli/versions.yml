@@ -1,4 +1,83 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.100.2
+  changelogEntry:
+    - summary: |
+        Fix `fern docs dev` to serve translated page content when viewing localized pages.
+      type: fix
+  createdAt: "2026-04-27"
+  irVersion: 66
+- version: 4.100.1
+  changelogEntry:
+    - summary: |
+        Fix `fern automations generate` step summary not displaying SDK versions.
+        Upgrade Fiddle SDK to consume the new `actualVersion` field from
+        `FinishedTaskStatus`, which Fiddle now returns for both AUTO and explicit
+        versioning modes. Falls back to log-regex parsing and locally-resolved
+        version for backward compatibility.
+      type: fix
+    - summary: |
+        Fix `fern docs dev` to serve translated page content when viewing localized pages.
+      type: fix
+  createdAt: "2026-04-27"
+  irVersion: 66
+- version: 4.100.0
+  changelogEntry:
+    - summary: |
+        Suppress Sentry false positives caused by user- and environment-provoked errors being misclassified as `InternalError`:
+          - Add a generic `ErrnoException` classifier in `resolveErrorCode` that maps filesystem errors (`ENOENT`, `EACCES`, `ENOSPC`, `EPIPE`, …) to `EnvironmentError` and network errors (`ENOTFOUND`, `ECONNREFUSED`, `ETIMEDOUT`, …) to `NetworkError`, both of which are non-reportable.
+          - Register an `error` listener on `process.stdout`/`process.stderr` in `TtyAwareLogger` to swallow `EPIPE` at the source before it reaches Sentry's uncaught-exception integration (triggered when piping CLI output into `head`, `jq`, etc.).
+          - Make `ContainerError` non-reportable and replace the aggregate `CliError({ ContainerError })` throw in the `sdk generate` and `docs publish` commands with `TaskAbortSignal` to prevent double-reporting individual task failures.
+          - Fix `JsonError`, `ParseError`, and `GeneratorError` class names surviving esbuild minification by explicitly setting `this.name` in their constructors, so `isSchemaValidationError` can reliably classify them as `ParseError`.
+          - Wrap `yaml.load` in `loadOpenAPI` to translate `YAMLException` into a user-readable `CliError({ ParseError })` with file, line, and column context.
+          - Wrap `swagger2openapi` conversion failures in `convertOpenAPIV2ToV3` as `CliError({ ParseError })`.
+          - Pass explicit `ValidationError` / `NetworkError` codes in `createOrganizationIfDoesNotExist` instead of letting them fall through to `InternalError`.
+          - Reclassify "Generator not found" in the upgrade message helper from `InternalError` to `ConfigError` (user's `generators.yml` references an image not in FDR).
+          - Use `TaskAbortSignal` in `rerunFernCliAtVersion` failure path instead of reporting a spurious `InternalError`.
+      type: internal
+  createdAt: "2026-04-27"
+  irVersion: 66
+- version: 4.99.0
+  changelogEntry:
+    - summary: |
+        [Alpha] Add support for a `translations` block in `docs.yml` to configure multi-language documentation.
+        Each entry specifies a locale (`lang`) and optionally marks it as the default language.
+      type: feat
+    - summary: |
+        Include docs translation metadata in the docs definition published to FDR so generated `fdr.json`
+        advertises configured locales alongside uploaded translation files.
+      type: fix
+  createdAt: "2026-04-27"
+  irVersion: 66
+- version: 4.98.0
+  changelogEntry:
+    - summary: |
+        Move docs theme commands (export, list, upload) from CLI v2 to CLI v1.
+        Commands are now available as `fern docs theme export`, `fern docs theme list`, and `fern docs theme upload`.
+        Uses DocsWorkspace for path resolution, v1 auth, and validates all file references before uploading.
+      type: feat
+  createdAt: "2026-04-27"
+  irVersion: 66
+- version: 4.97.0
+  changelogEntry:
+    - summary: |
+        [Alpha] Add support for a `translations` block in `docs.yml` to configure multi-language documentation.
+        Each entry specifies a locale (`lang`) and optionally marks it as the default language.
+      type: feat
+    - summary: |
+        Include docs translation metadata in the docs definition published to FDR so generated `fdr.json`
+        advertises configured locales alongside uploaded translation files.
+      type: fix
+  createdAt: "2026-04-27"
+  irVersion: 66
+- version: 4.96.0
+  changelogEntry:
+    - summary: |
+        Add optional `baseProperties` field to `UndiscriminatedUnionTypeDeclaration` in the IR schema.
+        Both the V3 importer and the legacy OpenAPI importer now extract sibling properties from
+        `oneOf`/`anyOf` schemas and populate `baseProperties` on undiscriminated unions.
+      type: feat
+  createdAt: "2026-04-25"
+  irVersion: 66
 - version: 4.95.0
   changelogEntry:
     - summary: |

@@ -39,7 +39,7 @@ import (
 func do() {
     client := client.NewClient(
         option.WithHeaderTokenAuth(
-            "<value>",
+            "YOUR_HEADER_VALUE",
         ),
     )
     client.Service.GetWithBearerToken(
@@ -90,7 +90,7 @@ specified on the client so that they're applied on every request, or for an indi
 ```go
 // Specify default options applied on every request.
 client := client.NewClient(
-    option.WithToken("<YOUR_API_KEY>"),
+    option.WithToken("YOUR_HEADER_VALUE"),
     option.WithHTTPClient(
         &http.Client{
             Timeout: 5 * time.Second,
@@ -101,7 +101,7 @@ client := client.NewClient(
 // Specify options for an individual request.
 response, err := client.Service.GetWithBearerToken(
     ...,
-    option.WithToken("<YOUR_API_KEY>"),
+    option.WithToken("YOUR_HEADER_VALUE"),
 )
 ```
 

@@ -3,7 +3,14 @@ import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { docsYml, generatorsYml } from "@fern-api/configuration";
 import { createFdrService } from "@fern-api/core";
 import { MediaType, replaceEnvVariables } from "@fern-api/core-utils";
-import { DocsDefinitionResolver, UploadedFile, wrapWithHttps } from "@fern-api/docs-resolver";
+import {
+    applyTranslatedFrontmatterToNavTree,
+    DocsDefinitionResolver,
+    replaceImagePathsAndUrls,
+    stripMdxComments,
+    UploadedFile,
+    wrapWithHttps
+} from "@fern-api/docs-resolver";
 import { APIV1Write, FdrAPI as CjsFdrSdk, DocsV1Write, DocsV2Write, FdrClient } from "@fern-api/fdr-sdk";
 
 type DynamicIr = APIV1Write.DynamicIr;
@@ -619,6 +626,121 @@ export async function publishDocs({
 
         const publishTime = performance.now() - publishStart;
         context.logger.debug(`Docs published to FDR in ${publishTime.toFixed(0)}ms`);
+
+        // Register translated page content for each configured locale.
+        // Skip translation registration in preview mode to avoid overwriting production translations.
+        const translationPages = resolver.getTranslationPages();
+        if (!preview && translationPages != null && Object.keys(translationPages).length > 0) {
+            context.logger.info(`Registering translations for ${Object.keys(translationPages).length} locale(s)...`);
+            await Promise.all(
+                Object.entries(translationPages).map(async ([locale, localePages]) => {
+                    try {
+                        // Build a translated DocsDefinition by taking the base definition,
+                        // overriding translated pages, and updating the nav tree to reflect
+                        // any sidebar-title / slug frontmatter in the translated pages.
+                        //
+                        // For each translated page, we apply the same transformations as default locale pages:
+                        // 1. Strip MDX comments to prevent leakage
+                        // 2. Replace relative image paths with file IDs (using base page path for resolution)
+                        // 3. Preserve editThisPageUrl/editThisPageLaunch from the base page
+                        //
+                        // TODO(translations-alpha): Translated pages still need:
+                        // - replaceReferencedMarkdown/Code for <Markdown src="..."/> and <CodeBlock src="..."/>
+                        // - transformAtPrefixImports for @/... and @components/... imports
+                        const collectedFileIds = resolver.getCollectedFileIds();
+                        const docsWorkspacePath = resolver.getDocsWorkspacePath();
+
+                        const translatedPages = {
+                            ...docsDefinition.pages,
+                            ...Object.fromEntries(
+                                Object.entries(localePages).map(([path, rawMarkdown]) => {
+                                    const basePage = docsDefinition.pages[path as DocsV1Write.PageId];
+                                    // Strip MDX comments first
+                                    let processedMarkdown = stripMdxComments(rawMarkdown);
+                                    // Replace image paths using the base page's location for resolution
+                                    // (translated pages reference the same images as the default locale)
+                                    const absolutePathToMarkdownFile = resolve(
+                                        docsWorkspacePath,
+                                        RelativeFilePath.of(path)
+                                    );
+                                    processedMarkdown = replaceImagePathsAndUrls(
+                                        processedMarkdown,
+                                        collectedFileIds,
+                                        {}, // markdownFilesToPathName not needed for translations
+                                        {
+                                            absolutePathToMarkdownFile,
+                                            absolutePathToFernFolder: docsWorkspacePath
+                                        },
+                                        context
+                                    );
+                                    // Rewrite editThisPageUrl to point to the translated file
+                                    // URL format: .../fern/${path}?plain=1 -> .../fern/translations/${locale}/${path}?plain=1
+                                    let editThisPageUrl = basePage?.editThisPageUrl;
+                                    if (editThisPageUrl != null) {
+                                        // Replace /fern/${path} with /fern/translations/${locale}/${path}
+                                        const fernPathPattern = `/fern/${path}`;
+                                        const translatedPath = `/fern/translations/${locale}/${path}`;
+                                        editThisPageUrl = editThisPageUrl.replace(
+                                            fernPathPattern,
+                                            translatedPath
+                                        ) as typeof editThisPageUrl;
+                                    }
+                                    return [
+                                        path,
+                                        {
+                                            markdown: processedMarkdown,
+                                            rawMarkdown: processedMarkdown,
+                                            editThisPageUrl,
+                                            editThisPageLaunch: basePage?.editThisPageLaunch
+                                        }
+                                    ];
+                                })
+                            )
+                        };
+                        const updatedRoot = applyTranslatedFrontmatterToNavTree(
+                            docsDefinition.config.root,
+                            // localePages is Record<RelativeFilePath, string> (path -> raw markdown)
+                            localePages as Record<string, string>,
+                            context
+                        );
+                        const translatedDefinition: DocsDefinition = {
+                            ...docsDefinition,
+                            pages: translatedPages,
+                            config: {
+                                ...docsDefinition.config,
+                                root: updatedRoot
+                            }
+                        };
+                        context.logger.info(
+                            `Sending translation for locale "${locale}": pages=${JSON.stringify(Object.keys(localePages))}`
+                        );
+                        // Use a raw fetch instead of the oRPC client to send `docsDefinition`
+                        // (the live server expects that field; the published fdr-sdk still uses `content`).
+                        const translationResponse = await fetch(`${fdrOrigin}/v2/registry/docs/translations/register`, {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                Authorization: `Bearer ${token.value}`,
+                                ...headers // Include telemetry headers (X-CLI-Version, X-CI-Source, etc.)
+                            },
+                            body: JSON.stringify({
+                                domain,
+                                orgId: organization,
+                                locale,
+                                docsDefinition: translatedDefinition
+                            })
+                        });
+                        if (!translationResponse.ok) {
+                            const body = await translationResponse.text();
+                            throw new Error(`HTTP ${translationResponse.status}: ${body}`);
+                        }
+                        context.logger.debug(`Registered translations for locale "${locale}"`);
+                    } catch (error) {
+                        context.logger.warn(`Failed to register translations for locale "${locale}": ${String(error)}`);
+                    }
+                })
+            );
+        }
 
         const url = wrapWithHttps(urlToOutput);
         await updateAiChatFromDocsDefinition({

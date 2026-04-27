@@ -13,7 +13,7 @@ import (
 func TestSettersFoo(t *testing.T) {
 	t.Run("SetFoo", func(t *testing.T) {
 		obj := &Foo{}
-		var fernTestValueFoo *folderc.FolderCfoo
+		var fernTestValueFoo *folderc.FolderCFoo
 		obj.SetFoo(fernTestValueFoo)
 		assert.Equal(t, fernTestValueFoo, obj.Foo)
 		assert.NotNil(t, obj.explicitFields)
@@ -26,7 +26,7 @@ func TestGettersFoo(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &Foo{}
-		var expected *folderc.FolderCfoo
+		var expected *folderc.FolderCFoo
 		obj.Foo = expected
 
 		// Act & Assert
@@ -62,7 +62,7 @@ func TestSettersMarkExplicitFoo(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &Foo{}
-		var fernTestValueFoo *folderc.FolderCfoo
+		var fernTestValueFoo *folderc.FolderCFoo
 
 		// Act
 		obj.SetFoo(fernTestValueFoo)

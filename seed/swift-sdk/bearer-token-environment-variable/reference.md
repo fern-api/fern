@@ -31,7 +31,7 @@ import Foundation
 import BearerTokenEnvironmentVariable
 
 private func main() async throws {
-    let client = BearerTokenEnvironmentVariableClient(apiKey: "<token>")
+    let client = BearerTokenEnvironmentVariableClient(apiKey: "YOUR_API_KEY")
 
     _ = try await client.service.getWithBearerToken()
 }
