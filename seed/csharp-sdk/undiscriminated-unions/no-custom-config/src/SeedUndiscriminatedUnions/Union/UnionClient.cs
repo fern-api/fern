@@ -528,6 +528,72 @@ public partial class UnionClient : IUnionClient
         }
     }
 
+    private async Task<WithRawResponse<string>> AliasedObjectUnionAsyncCore(
+        OneOf<LeafObjectA, LeafObjectB> request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _headers = await new SeedUndiscriminatedUnions.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    Method = HttpMethod.Post,
+                    Path = "/aliased-object",
+                    Body = request,
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            try
+            {
+                var responseData = JsonUtils.Deserialize<string>(responseBody)!;
+                return new WithRawResponse<string>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
+            }
+            catch (JsonException e)
+            {
+                throw new SeedUndiscriminatedUnionsApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
+            }
+        }
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            throw new SeedUndiscriminatedUnionsApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
     private async Task<
         WithRawResponse<OneOf<NamedMetadata, Dictionary<string, object?>?>>
     > GetWithBasePropertiesAsyncCore(
@@ -809,6 +875,22 @@ public partial class UnionClient : IUnionClient
     {
         return new WithRawResponseTask<string>(
             NestedObjectUnionsAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    /// <example><code>
+    /// await client.Union.AliasedObjectUnionAsync(
+    ///     new LeafObjectA { OnlyInA = "onlyInA", SharedNumber = 1 }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<string> AliasedObjectUnionAsync(
+        OneOf<LeafObjectA, LeafObjectB> request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<string>(
+            AliasedObjectUnionAsyncCore(request, options, cancellationToken)
         );
     }
 

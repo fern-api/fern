@@ -2,7 +2,7 @@ using SeedUndiscriminatedUnions;
 
 public partial class Examples
 {
-    public async Task Example12() {
+    public async Task Example13() {
         var client = new SeedUndiscriminatedUnionsClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
@@ -12,8 +12,8 @@ public partial class Examples
         await client.Union.TestCamelCasePropertiesAsync(
             new PaymentRequest {
                 PaymentMethod = new TokenizeCard {
-                    Method = "card",
-                    CardNumber = "1234567890123456"
+                    Method = "method",
+                    CardNumber = "cardNumber"
                 }
             }
         );

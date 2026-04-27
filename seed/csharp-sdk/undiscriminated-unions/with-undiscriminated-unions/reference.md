@@ -284,6 +284,48 @@ await client.Union.NestedObjectUnionsAsync("string");
 </dl>
 </details>
 
+<details><summary><code>client.Union.<a href="/src/SeedUndiscriminatedUnions/Union/UnionClient.cs">AliasedObjectUnionAsync</a>(AliasedObjectUnion { ... }) -> WithRawResponseTask&lt;string&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Union.AliasedObjectUnionAsync(
+    new LeafObjectA { OnlyInA = "onlyInA", SharedNumber = 1 }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `AliasedObjectUnion` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.Union.<a href="/src/SeedUndiscriminatedUnions/Union/UnionClient.cs">GetWithBasePropertiesAsync</a>(UnionWithBaseProperties { ... }) -> WithRawResponseTask&lt;UnionWithBaseProperties&gt;</code></summary>
 <dl>
 <dd>

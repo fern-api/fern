@@ -88,6 +88,18 @@
         {
             "example_identifier": null,
             "id": {
+                "path": "/aliased-object",
+                "method": "POST",
+                "identifier_override": "endpoint_union.aliasedObjectUnion"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedUndiscriminatedUnions;\n\nvar client = new SeedUndiscriminatedUnionsClient();\nawait client.Union.AliasedObjectUnionAsync(\n    new LeafObjectA { OnlyInA = \"onlyInA\", SharedNumber = 1 }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
                 "path": "/with-base-properties",
                 "method": "POST",
                 "identifier_override": "endpoint_union.getWithBaseProperties"
