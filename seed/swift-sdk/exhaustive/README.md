@@ -70,7 +70,7 @@ The SDK throws a single error enum for all failures. Client-side issues encoding
 ```swift
 import Exhaustive
 
-let client = ExhaustiveClient(...)
+let client = ExhaustiveClient(token: "YOUR_API_KEY")
 
 do {
     let response = try await client.endpoints.container.getAndReturnListOfPrimitives(...)
@@ -150,7 +150,7 @@ import Foundation
 import Exhaustive
 
 let client = ExhaustiveClient(
-    ...,
+    token: "YOUR_API_KEY",
     urlSession: // Provide your implementation here
 )
 ```

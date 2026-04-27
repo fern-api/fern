@@ -69,7 +69,7 @@ The SDK throws a single error enum for all failures. Client-side issues encoding
 ```swift
 import Api
 
-let client = ApiClient(...)
+let client = ApiClient(token: "YOUR_API_KEY")
 
 do {
     let response = try await client.imdb.createMovie(...)
@@ -137,7 +137,7 @@ import Foundation
 import Api
 
 let client = ApiClient(
-    ...,
+    token: "YOUR_API_KEY",
     urlSession: // Provide your implementation here
 )
 ```

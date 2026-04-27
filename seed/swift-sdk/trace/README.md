@@ -72,7 +72,7 @@ This SDK allows you to configure different environments for API requests.
 import Trace
 
 let client = TraceClient(
-    ...,
+    token: "YOUR_API_KEY",
     environment: .prod
 )
 ```
@@ -84,7 +84,7 @@ The SDK throws a single error enum for all failures. Client-side issues encoding
 ```swift
 import Trace
 
-let client = TraceClient(...)
+let client = TraceClient(token: "YOUR_API_KEY")
 
 do {
     let response = try await client.admin.updateTestSubmissionStatus(...)
@@ -164,7 +164,7 @@ import Foundation
 import Trace
 
 let client = TraceClient(
-    ...,
+    token: "YOUR_API_KEY",
     urlSession: // Provide your implementation here
 )
 ```
