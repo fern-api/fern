@@ -451,6 +451,7 @@ impl HttpClient {
             match self.client.execute(cloned_request).await {
                 Ok(response) if response.status().is_success() => return Ok(response),
                 Ok(response) if attempt < max_retries && Self::is_retryable_status(response.status().as_u16()) => {
+                    drop(response);
                     // Exponential backoff for retryable HTTP status codes
                     let delay = std::time::Duration::from_millis(100 * 2_u64.pow(attempt));
                     tokio::time::sleep(delay).await;
@@ -654,3 +655,34 @@ impl HttpClient {
     }
 
 {{SSE_METHOD}}}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_is_retryable_status() {
+        // Retryable 4xx
+        assert!(HttpClient::is_retryable_status(408));
+        assert!(HttpClient::is_retryable_status(429));
+
+        // Retryable 5xx (501–599)
+        assert!(HttpClient::is_retryable_status(501));
+        assert!(HttpClient::is_retryable_status(502));
+        assert!(HttpClient::is_retryable_status(503));
+        assert!(HttpClient::is_retryable_status(504));
+        assert!(HttpClient::is_retryable_status(599));
+
+        // 500 is NOT retryable
+        assert!(!HttpClient::is_retryable_status(500));
+
+        // Above 5xx range is NOT retryable
+        assert!(!HttpClient::is_retryable_status(600));
+
+        // Success and other 4xx codes are NOT retryable
+        assert!(!HttpClient::is_retryable_status(200));
+        assert!(!HttpClient::is_retryable_status(400));
+        assert!(!HttpClient::is_retryable_status(401));
+        assert!(!HttpClient::is_retryable_status(404));
+    }
+}
