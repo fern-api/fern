@@ -1,5 +1,10 @@
 import { extractErrorMessage } from "@fern-api/core-utils";
-import { wrapWithHttps } from "@fern-api/docs-resolver";
+import {
+    applyTranslatedFrontmatterToNavTree,
+    replaceImagePathsAndUrls,
+    stripMdxComments,
+    wrapWithHttps
+} from "@fern-api/docs-resolver";
 import { DocsV1Read, DocsV2Read, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, dirname, doesPathExist, listFiles, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { runExeca } from "@fern-api/logging-execa";
@@ -21,7 +26,7 @@ import { type BunServer, createBunServer } from "./createBunServer.js";
 import { DebugLogger } from "./DebugLogger.js";
 import { downloadBundle, getPathToBundleFolder, getPathToPreviewFolder } from "./downloadLocalDocsBundle.js";
 import { writeNodePolyfillScript } from "./nodePolyfills.js";
-import { getPreviewDocsDefinition } from "./previewDocs.js";
+import { getPreviewDocsDefinition, type PreviewDocsResult } from "./previewDocs.js";
 
 const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
     pages: {},
@@ -685,7 +690,9 @@ export async function runAppPreviewServer({
     );
 
     let project = initialProject;
-    let docsDefinition: DocsV1Read.DocsDefinition | undefined;
+    let previewResult: PreviewDocsResult | undefined;
+    // Pre-computed translated definitions for each locale (excluding default)
+    let translatedDefinitions: Map<string, DocsV1Read.DocsDefinition> = new Map();
 
     // Initialize the snippet dependency tracker
     const snippetTracker = new SnippetDependencyTracker(context);
@@ -697,6 +704,87 @@ export async function runAppPreviewServer({
     let reloadTimer: NodeJS.Timeout | null = null;
     let isReloading = false;
     const RELOAD_DEBOUNCE_MS = 1000;
+
+    /**
+     * Computes translated definitions for each locale.
+     * Similar to what publishDocs.ts does for production, but for local preview.
+     */
+    function computeTranslatedDefinitions(result: PreviewDocsResult): Map<string, DocsV1Read.DocsDefinition> {
+        const translations = new Map<string, DocsV1Read.DocsDefinition>();
+        const { docsDefinition, translationPages, collectedFileIds, docsWorkspacePath } = result;
+
+        if (translationPages == null || Object.keys(translationPages).length === 0) {
+            return translations;
+        }
+
+        const defaultLocale = docsDefinition.config.translations?.defaultLocale;
+
+        for (const [locale, localePages] of Object.entries(translationPages)) {
+            // Skip the default locale - we use the base definition for that
+            if (locale === defaultLocale) {
+                continue;
+            }
+
+            try {
+                // Build translated pages by merging base pages with locale-specific pages
+                // Start by copying all defined pages from the base definition
+                const translatedPages: Record<string, DocsV1Read.PageContent> = {};
+                for (const [pageId, page] of Object.entries(docsDefinition.pages)) {
+                    if (page != null) {
+                        translatedPages[pageId] = page;
+                    }
+                }
+
+                for (const [pagePath, rawMarkdown] of Object.entries(localePages)) {
+                    const basePage = translatedPages[pagePath];
+                    // Strip MDX comments first
+                    let processedMarkdown = stripMdxComments(rawMarkdown);
+                    // Replace image paths using collected file IDs
+                    const absolutePathToMarkdownFile = resolve(docsWorkspacePath, RelativeFilePath.of(pagePath));
+                    processedMarkdown = replaceImagePathsAndUrls(
+                        processedMarkdown,
+                        collectedFileIds,
+                        {}, // markdownFilesToPathName not needed for translations
+                        {
+                            absolutePathToMarkdownFile,
+                            absolutePathToFernFolder: docsWorkspacePath
+                        },
+                        context
+                    );
+
+                    translatedPages[pagePath] = {
+                        markdown: processedMarkdown,
+                        rawMarkdown: processedMarkdown,
+                        editThisPageUrl: basePage?.editThisPageUrl,
+                        editThisPageLaunch: basePage?.editThisPageLaunch
+                    };
+                }
+
+                // Apply translated frontmatter to nav tree
+                const updatedRoot = applyTranslatedFrontmatterToNavTree(
+                    docsDefinition.config.root,
+                    localePages as Record<string, string>,
+                    context
+                );
+
+                const translatedDefinition: DocsV1Read.DocsDefinition = {
+                    ...docsDefinition,
+                    pages: translatedPages,
+                    config: {
+                        ...docsDefinition.config,
+                        root: updatedRoot
+                    }
+                };
+
+                translations.set(locale, translatedDefinition);
+                context.logger.debug(`Computed translated definition for locale "${locale}"`);
+            } catch (error) {
+                context.logger.warn(`Failed to compute translation for locale "${locale}": ${String(error)}`);
+            }
+        }
+
+        return translations;
+    }
 
     const reloadDocsDefinition = async (editedAbsoluteFilepaths?: AbsoluteFilePath[]) => {
         context.logger.info("Reloading docs...");
@@ -729,12 +817,13 @@ export async function runAppPreviewServer({
                 });
 
             const docsGenStartTime = Date.now();
-            const newDocsDefinition = await getPreviewDocsDefinition({
+            const newPreviewResult = await getPreviewDocsDefinition({
                 domain: `${instance.host}${instance.pathname}`,
                 project,
                 context,
-                previousDocsDefinition: docsDefinition,
-                editedAbsoluteFilepaths
+                previousDocsDefinition: previewResult?.docsDefinition,
+                editedAbsoluteFilepaths,
+                previousPreviewResult: previewResult
             });
             const docsGenTime = Date.now() - docsGenStartTime;
 
@@ -753,7 +842,7 @@ export async function runAppPreviewServer({
             });
             void debugLogger.logCliMemory();
 
-            return newDocsDefinition;
+            return newPreviewResult;
         } catch (err) {
             const totalTime = Date.now() - startTime;
 
@@ -764,7 +853,7 @@ export async function runAppPreviewServer({
             });
             void debugLogger.logCliMemory();
 
-            if (docsDefinition == null) {
+            if (previewResult == null) {
                 context.logger.error("Failed to read docs configuration. Rendering blank page.");
             } else {
                 context.logger.error("Failed to read docs configuration. Rendering last successful configuration.");
@@ -775,15 +864,23 @@ export async function runAppPreviewServer({
                     context.logger.debug(`Stack Trace:\n${err.stack}`);
                 }
             }
-            return docsDefinition;
+            return previewResult;
         }
     };
 
-    docsDefinition = await reloadDocsDefinition();
+    previewResult = await reloadDocsDefinition();
+
+    // Compute translated definitions after loading
+    if (previewResult != null) {
+        translatedDefinitions = computeTranslatedDefinitions(previewResult);
+        if (translatedDefinitions.size > 0) {
+            context.logger.info(`Computed translations for ${translatedDefinitions.size} locale(s)`);
+        }
+    }
 
     // Initialize slug mappings from the initial docs definition
-    if (docsDefinition) {
-        slugTracker.initialize(docsDefinition);
+    if (previewResult?.docsDefinition) {
+        slugTracker.initialize(previewResult.docsDefinition);
     }
 
     const additionalFilepaths = project.apiWorkspaces.flatMap((workspace) => workspace.getAbsoluteFilePaths());
@@ -798,10 +895,44 @@ export async function runAppPreviewServer({
 
     const editedAbsoluteFilepaths: AbsoluteFilePath[] = [];
 
-    function buildDocsLoadResponse(): DocsV2Read.LoadDocsForUrlResponse {
+    /**
+     * Extracts the locale from a URL path.
+     * E.g., "/fr/getting-started" -> "fr", "/getting-started" -> undefined
+     */
+    function extractLocaleFromPath(urlPath: string | undefined): string | undefined {
+        if (urlPath == null) {
+            return undefined;
+        }
+        const defaultLocale = previewResult?.docsDefinition.config.translations?.defaultLocale;
+        const availableLocales = previewResult?.docsDefinition.config.translations?.translations;
+
+        if (availableLocales == null || availableLocales.length === 0) {
+            return undefined;
+        }
+
+        // Check if path starts with a locale prefix
+        const pathParts = urlPath.split("/").filter((p) => p.length > 0);
+        if (pathParts.length > 0) {
+            const firstPart = pathParts[0];
+            if (firstPart != null && availableLocales.includes(firstPart) && firstPart !== defaultLocale) {
+                return firstPart;
+            }
+        }
+        return undefined;
+    }
+
+    function buildDocsLoadResponse(locale?: string): DocsV2Read.LoadDocsForUrlResponse {
         // Fall back to empty definition if the initial load failed
-        const definition = docsDefinition ?? EMPTY_DOCS_DEFINITION;
-        const translationsConfig = definition.config.translations;
+        const baseDefinition = previewResult?.docsDefinition ?? EMPTY_DOCS_DEFINITION;
+
+        // Use translated definition if available for the requested locale
+        let definition = baseDefinition;
+        if (locale != null && translatedDefinitions.has(locale)) {
+            definition = translatedDefinitions.get(locale) ?? baseDefinition;
+            context.logger.debug(`Serving translated definition for locale "${locale}"`);
+        }
+
+        const translationsConfig = baseDefinition.config.translations;
         return {
             baseUrl: { domain: instance.host, basePath: instance.pathname },
             definition,
@@ -813,10 +944,18 @@ export async function runAppPreviewServer({
         };
     }
 
+    // Parse JSON body middleware for the load-with-url endpoint
+    app.use(express.json());
+
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
-    app.post("/v2/registry/docs/load-with-url", async (_, res) => {
+    app.post("/v2/registry/docs/load-with-url", async (req, res) => {
         try {
-            res.send(buildDocsLoadResponse());
+            // Extract locale from the request body URL if present
+            const requestBody = req.body as { url?: string } | undefined;
+            const urlPath = requestBody?.url;
+            const locale = extractLocaleFromPath(urlPath);
+
+            res.send(buildDocsLoadResponse(locale));
         } catch (error) {
             context.logger.error("Stack trace:", (error as Error).stack ?? "");
             context.logger.error("Error loading docs", (error as Error).message);
@@ -832,7 +971,12 @@ export async function runAppPreviewServer({
     //
     // In Bun, http.createServer does not emit the 'upgrade' event that
     // the ws package relies on (re: oven-sh/bun#5951).
-    const bunHandle = createBunServer({ port: backendPort, debugLogger, getDocsLoadResponse: buildDocsLoadResponse });
+    const bunHandle = createBunServer({
+        port: backendPort,
+        debugLogger,
+        getDocsLoadResponse: buildDocsLoadResponse,
+        extractLocaleFromPath
+    });
     if (bunHandle != null) {
         sendData = bunHandle.sendData;
         bunServer = bunHandle;
@@ -968,7 +1112,7 @@ export async function runAppPreviewServer({
                     type: "startReload"
                 });
 
-                const reloadedDocsDefinition = await reloadDocsDefinition(filesToReload);
+                const reloadedPreviewResult = await reloadDocsDefinition(filesToReload);
 
                 editedAbsoluteFilepaths.length = 0;
 
@@ -979,11 +1123,17 @@ export async function runAppPreviewServer({
                     type: "finishReload"
                 });
 
-                if (reloadedDocsDefinition != null) {
+                if (reloadedPreviewResult != null) {
                     // Detect slug changes before updating the docs definition
-                    const slugChanges = slugTracker.updateAndDetectChanges(reloadedDocsDefinition);
+                    const slugChanges = slugTracker.updateAndDetectChanges(reloadedPreviewResult.docsDefinition);
 
-                    docsDefinition = reloadedDocsDefinition;
+                    previewResult = reloadedPreviewResult;
+
+                    // Recompute translated definitions
+                    translatedDefinitions = computeTranslatedDefinitions(reloadedPreviewResult);
+                    if (translatedDefinitions.size > 0) {
+                        context.logger.debug(`Recomputed translations for ${translatedDefinitions.size} locale(s)`);
+                    }
 
                     // Send navigateToSlug events for any slug changes
                     if (slugChanges.length > 0) {

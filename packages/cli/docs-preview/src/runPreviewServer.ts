@@ -1,6 +1,11 @@
-import { wrapWithHttps } from "@fern-api/docs-resolver";
+import {
+    applyTranslatedFrontmatterToNavTree,
+    replaceImagePathsAndUrls,
+    stripMdxComments,
+    wrapWithHttps
+} from "@fern-api/docs-resolver";
 import { DocsV1Read, DocsV2Read, FernNavigation } from "@fern-api/fdr-sdk";
-import { AbsoluteFilePath, dirname, doesPathExist } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, dirname, doesPathExist, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
 import { CliError, TaskContext } from "@fern-api/task-context";
 
@@ -13,7 +18,7 @@ import Watcher from "watcher";
 import { type WebSocket, WebSocketServer } from "ws";
 
 import { downloadBundle, getPathToBundleFolder } from "./downloadLocalDocsBundle.js";
-import { getPreviewDocsDefinition } from "./previewDocs.js";
+import { getPreviewDocsDefinition, type PreviewDocsResult } from "./previewDocs.js";
 
 const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
     pages: {},
@@ -126,11 +131,93 @@ export async function runPreviewServer({
     );
 
     let project = initialProject;
-    let docsDefinition: DocsV1Read.DocsDefinition | undefined;
+    let previewResult: PreviewDocsResult | undefined;
+    // Pre-computed translated definitions for each locale (excluding default)
+    let translatedDefinitions: Map<string, DocsV1Read.DocsDefinition> = new Map();
 
     let reloadTimer: NodeJS.Timeout | null = null;
     let isReloading = false;
     const RELOAD_DEBOUNCE_MS = 1000;
+
+    /**
+     * Computes translated definitions for each locale.
+     */
+    function computeTranslatedDefinitions(result: PreviewDocsResult): Map<string, DocsV1Read.DocsDefinition> {
+        const translations = new Map<string, DocsV1Read.DocsDefinition>();
+        const { docsDefinition, translationPages, collectedFileIds, docsWorkspacePath } = result;
+
+        if (translationPages == null || Object.keys(translationPages).length === 0) {
+            return translations;
+        }
+
+        const defaultLocale = docsDefinition.config.translations?.defaultLocale;
+
+        for (const [locale, localePages] of Object.entries(translationPages)) {
+            // Skip the default locale - we use the base definition for that
+            if (locale === defaultLocale) {
+                continue;
+            }
+
+            try {
+                // Build translated pages by merging base pages with locale-specific pages
+                // Start by copying all defined pages from the base definition
+                const translatedPages: Record<string, DocsV1Read.PageContent> = {};
+                for (const [pageId, page] of Object.entries(docsDefinition.pages)) {
+                    if (page != null) {
+                        translatedPages[pageId] = page;
+                    }
+                }
+
+                for (const [pagePath, rawMarkdown] of Object.entries(localePages)) {
+                    const basePage = translatedPages[pagePath];
+                    // Strip MDX comments first
+                    let processedMarkdown = stripMdxComments(rawMarkdown);
+                    // Replace image paths using collected file IDs
+                    const absolutePathToMarkdownFile = resolve(docsWorkspacePath, RelativeFilePath.of(pagePath));
+                    processedMarkdown = replaceImagePathsAndUrls(
+                        processedMarkdown,
+                        collectedFileIds,
+                        {}, // markdownFilesToPathName not needed for translations
+                        {
+                            absolutePathToMarkdownFile,
+                            absolutePathToFernFolder: docsWorkspacePath
+                        },
+                        context
+                    );
+
+                    translatedPages[pagePath] = {
+                        markdown: processedMarkdown,
+                        rawMarkdown: processedMarkdown,
+                        editThisPageUrl: basePage?.editThisPageUrl,
+                        editThisPageLaunch: basePage?.editThisPageLaunch
+                    };
+                }
+
+                // Apply translated frontmatter to nav tree
+                const updatedRoot = applyTranslatedFrontmatterToNavTree(
+                    docsDefinition.config.root,
+                    localePages as Record<string, string>,
+                    context
+                );
+
+                const translatedDefinition: DocsV1Read.DocsDefinition = {
+                    ...docsDefinition,
+                    pages: translatedPages,
+                    config: {
+                        ...docsDefinition.config,
+                        root: updatedRoot
+                    }
+                };
+
+                translations.set(locale, translatedDefinition);
+                context.logger.debug(`Computed translated definition for locale "${locale}"`);
+            } catch (error) {
+                context.logger.warn(`Failed to compute translation for locale "${locale}": ${String(error)}`);
+            }
+        }
+
+        return translations;
+    }
 
     const reloadDocsDefinition = async (editedAbsoluteFilepaths?: AbsoluteFilePath[]) => {
         context.logger.info("Reloading docs...");
@@ -139,17 +226,18 @@ export async function runPreviewServer({
             project = await reloadProject();
             context.logger.info("Validating docs...");
             await validateProject(project);
-            const newDocsDefinition = await getPreviewDocsDefinition({
+            const newPreviewResult = await getPreviewDocsDefinition({
                 domain: `${instance.host}${instance.pathname}`,
                 project,
                 context,
-                previousDocsDefinition: docsDefinition,
-                editedAbsoluteFilepaths
+                previousDocsDefinition: previewResult?.docsDefinition,
+                editedAbsoluteFilepaths,
+                previousPreviewResult: previewResult
             });
             context.logger.info(`Reload completed in ${Date.now() - startTime}ms`);
-            return newDocsDefinition;
+            return newPreviewResult;
         } catch (err) {
-            if (docsDefinition == null) {
+            if (previewResult == null) {
                 context.logger.error("Failed to read docs configuration. Rendering blank page.");
             } else {
                 context.logger.error("Failed to read docs configuration. Rendering last successful configuration.");
@@ -160,12 +248,20 @@ export async function runPreviewServer({
                     context.logger.debug(`Stack Trace:\n${err.stack}`);
                 }
             }
-            return docsDefinition;
+            return previewResult;
         }
     };
 
     // initialize docs definition
-    docsDefinition = await reloadDocsDefinition();
+    previewResult = await reloadDocsDefinition();
+
+    // Compute translated definitions after loading
+    if (previewResult != null) {
+        translatedDefinitions = computeTranslatedDefinitions(previewResult);
+        if (translatedDefinitions.size > 0) {
+            context.logger.info(`Computed translations for ${translatedDefinitions.size} locale(s)`);
+        }
+    }
 
     const additionalFilepaths = project.apiWorkspaces.flatMap((workspace) => workspace.getAbsoluteFilePaths());
     const bundleRoot = bundlePath ? AbsoluteFilePath.of(path.resolve(bundlePath)) : getPathToBundleFolder({});
@@ -204,9 +300,14 @@ export async function runPreviewServer({
                     type: "startReload"
                 });
 
-                const reloadedDocsDefinition = await reloadDocsDefinition(editedAbsoluteFilepaths);
-                if (reloadedDocsDefinition != null) {
-                    docsDefinition = reloadedDocsDefinition;
+                const reloadedPreviewResult = await reloadDocsDefinition(editedAbsoluteFilepaths);
+                if (reloadedPreviewResult != null) {
+                    previewResult = reloadedPreviewResult;
+                    // Recompute translated definitions
+                    translatedDefinitions = computeTranslatedDefinitions(reloadedPreviewResult);
+                    if (translatedDefinitions.size > 0) {
+                        context.logger.debug(`Recomputed translations for ${translatedDefinitions.size} locale(s)`);
+                    }
                 }
 
                 editedAbsoluteFilepaths.length = 0;
@@ -220,12 +321,55 @@ export async function runPreviewServer({
         }, RELOAD_DEBOUNCE_MS);
     });
 
+    /**
+     * Extracts the locale from a URL path.
+     * E.g., "/fr/getting-started" -> "fr", "/getting-started" -> undefined
+     */
+    function extractLocaleFromPath(urlPath: string | undefined): string | undefined {
+        if (urlPath == null) {
+            return undefined;
+        }
+        const baseDefinition = previewResult?.docsDefinition;
+        const defaultLocale = baseDefinition?.config.translations?.defaultLocale;
+        const availableLocales = baseDefinition?.config.translations?.translations;
+
+        if (availableLocales == null || availableLocales.length === 0) {
+            return undefined;
+        }
+
+        // Check if path starts with a locale prefix
+        const pathParts = urlPath.split("/").filter((p) => p.length > 0);
+        if (pathParts.length > 0) {
+            const firstPart = pathParts[0];
+            if (firstPart != null && availableLocales.includes(firstPart) && firstPart !== defaultLocale) {
+                return firstPart;
+            }
+        }
+        return undefined;
+    }
+
+    // Parse JSON body middleware
+    app.use(express.json());
+
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
-    app.post("/v2/registry/docs/load-with-url", async (_, res) => {
+    app.post("/v2/registry/docs/load-with-url", async (req, res) => {
         try {
-            // set to empty in case docsDefinition is null which happens when the initial docs definition is invalid
-            const definition = docsDefinition ?? EMPTY_DOCS_DEFINITION;
-            const translationsConfig = definition.config.translations;
+            // set to empty in case previewResult is null which happens when the initial docs definition is invalid
+            const baseDefinition = previewResult?.docsDefinition ?? EMPTY_DOCS_DEFINITION;
+
+            // Extract locale from the request body URL if present
+            const requestBody = req.body as { url?: string } | undefined;
+            const urlPath = requestBody?.url;
+            const locale = extractLocaleFromPath(urlPath);
+
+            // Use translated definition if available for the requested locale
+            let definition = baseDefinition;
+            if (locale != null && translatedDefinitions.has(locale)) {
+                definition = translatedDefinitions.get(locale) ?? baseDefinition;
+                context.logger.debug(`Serving translated definition for locale "${locale}"`);
+            }
+
+            const translationsConfig = baseDefinition.config.translations;
             const response: DocsV2Read.LoadDocsForUrlResponse = {
                 baseUrl: {
                     domain: instance.host,
@@ -251,8 +395,8 @@ export async function runPreviewServer({
 
         // Build a set of allowed file paths from the docs definition
         const allowedPaths = new Set<string>();
-        if (docsDefinition?.filesV2) {
-            for (const file of Object.values(docsDefinition.filesV2)) {
+        if (previewResult?.docsDefinition?.filesV2) {
+            for (const file of Object.values(previewResult.docsDefinition.filesV2)) {
                 if (file != null && file.type === "url") {
                     const urlPath = file.url.replace(/^\/_local/, "");
                     allowedPaths.add(urlPath);
