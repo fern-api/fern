@@ -83,7 +83,7 @@ export function createBunServer(options: BunServerOptions): BunServer | undefine
 
     const server = bun.serve<WsData>({
         port,
-        fetch(req, bunHttpServer) {
+        async fetch(req, bunHttpServer) {
             if (req.method === "OPTIONS") {
                 return new Response(null, { status: 204, headers: CORS_HEADERS });
             }
@@ -98,22 +98,18 @@ export function createBunServer(options: BunServerOptions): BunServer | undefine
 
             // POST /v2/registry/docs/load-with-url
             if (req.method === "POST" && url.pathname === "/v2/registry/docs/load-with-url") {
-                // Parse request body to extract locale from URL if present
-                return req
-                    .json()
-                    .then((body: { url?: string } | undefined) => {
-                        const urlPath = body?.url;
-                        const locale = extractLocaleFromPath?.(urlPath);
-                        return new Response(JSON.stringify(getDocsLoadResponse(locale)), {
-                            headers: { "Content-Type": "application/json", ...CORS_HEADERS }
-                        });
-                    })
-                    .catch(() => {
-                        // If JSON parsing fails, just return the default response
-                        return new Response(JSON.stringify(getDocsLoadResponse()), {
-                            headers: { "Content-Type": "application/json", ...CORS_HEADERS }
-                        });
+                try {
+                    const body = (await req.json()) as { url?: string } | undefined;
+                    const locale = extractLocaleFromPath?.(body?.url);
+                    return new Response(JSON.stringify(getDocsLoadResponse(locale)), {
+                        headers: { "Content-Type": "application/json", ...CORS_HEADERS }
                     });
+                } catch {
+                    // If JSON parsing fails, just return the default response
+                    return new Response(JSON.stringify(getDocsLoadResponse()), {
+                        headers: { "Content-Type": "application/json", ...CORS_HEADERS }
+                    });
+                }
             }
 
             // GET /_local/...
