@@ -63,11 +63,11 @@ import Testing
         try #require(stub.getRequestCount() == 3)
     }
 
-    @Test func testRetryOn500InternalServerError() async throws {
+    @Test func testRetryOn502BadGateway() async throws {
         let stub = HTTPStub()
         stub.setResponseSequence([
-            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
-            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
+            (statusCode: 502, headers: ["Content-Type": "application/json"], body: Data()),
+            (statusCode: 502, headers: ["Content-Type": "application/json"], body: Data()),
             (
                 statusCode: 200, headers: ["Content-Type": "application/json"],
                 body: Data("true".utf8)
@@ -91,6 +91,32 @@ import Testing
         } catch {
         }
         try #require(stub.getRequestCount() == 3)
+    }
+
+
+    @Test func testNoRetryOn500InternalServerError() async throws {
+        let stub = HTTPStub()
+        stub.setResponseSequence([
+            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data())
+        ])
+
+        let client = AliasExtendsClient(
+            baseURL: "https://api.fern.com",
+            urlSession: stub.urlSession
+        )
+
+        do {
+            _ = try await client.extendedInlineRequestBody(
+                request: .init(
+                    parent: "parent",
+                    child: "child"
+                ),
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
+
+        } catch {
+        }
+        try #require(stub.getRequestCount() == 1)
     }
 
     @Test func testRetryOn503ServiceUnavailable() async throws {
@@ -183,10 +209,10 @@ import Testing
     @Test func testMaxRetriesExhausted() async throws {
         let stub = HTTPStub()
         stub.setResponseSequence([
-            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
-            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
-            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
-            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
+            (statusCode: 502, headers: ["Content-Type": "application/json"], body: Data()),
+            (statusCode: 502, headers: ["Content-Type": "application/json"], body: Data()),
+            (statusCode: 502, headers: ["Content-Type": "application/json"], body: Data()),
+            (statusCode: 502, headers: ["Content-Type": "application/json"], body: Data()),
         ])
 
         let client = AliasExtendsClient(
@@ -333,23 +359,23 @@ import Testing
         let stub = HTTPStub()
         stub.setResponseSequence([
             (
-                statusCode: 500,
+                statusCode: 502,
                 headers: ["Content-Type": "application/json", "Retry-After": "0.1"], body: Data()
             ),
             (
-                statusCode: 500,
+                statusCode: 502,
                 headers: ["Content-Type": "application/json", "Retry-After": "0.1"], body: Data()
             ),
             (
-                statusCode: 500,
+                statusCode: 502,
                 headers: ["Content-Type": "application/json", "Retry-After": "0.1"], body: Data()
             ),
             (
-                statusCode: 500,
+                statusCode: 502,
                 headers: ["Content-Type": "application/json", "Retry-After": "0.1"], body: Data()
             ),
             (
-                statusCode: 500,
+                statusCode: 502,
                 headers: ["Content-Type": "application/json", "Retry-After": "0.1"], body: Data()
             ),
             (
@@ -380,7 +406,7 @@ import Testing
     @Test func testEndpointLevelMaxRetriesZero() async throws {
         let stub = HTTPStub()
         stub.setResponseSequence([
-            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data())
+            (statusCode: 502, headers: ["Content-Type": "application/json"], body: Data())
         ])
 
         let client = AliasExtendsClient(
