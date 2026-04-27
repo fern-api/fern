@@ -266,8 +266,8 @@ export class CoreUtilitiesManager {
                 }
                 if (this.retryStatusCodes === "recommended") {
                     contents = contents.replace(
-                        /const RETRY_STATUS_CODES = "legacy";/,
-                        `const RETRY_STATUS_CODES = "recommended";`
+                        /const RETRY_STATUS_CODES: string = "legacy";/,
+                        `const RETRY_STATUS_CODES: string = "recommended";`
                     );
                 }
                 await writeFile(requestWithRetriesPath, contents, { encoding: "utf8" });
