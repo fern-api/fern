@@ -225,6 +225,7 @@ export async function runPreviewServer({
         try {
             // set to empty in case docsDefinition is null which happens when the initial docs definition is invalid
             const definition = docsDefinition ?? EMPTY_DOCS_DEFINITION;
+            const translationsConfig = definition.config.translations;
             const response: DocsV2Read.LoadDocsForUrlResponse = {
                 baseUrl: {
                     domain: instance.host,
@@ -232,7 +233,10 @@ export async function runPreviewServer({
                 },
                 definition,
                 lightModeEnabled: definition.config.colorsV3?.type !== "dark",
-                orgId: FernNavigation.OrgId(initialProject.config.organization)
+                orgId: FernNavigation.OrgId(initialProject.config.organization),
+                // Include translations config for language switcher support in preview mode
+                defaultLocale: translationsConfig?.defaultLocale,
+                translations: translationsConfig?.translations
             };
             res.send(response);
         } catch (error) {

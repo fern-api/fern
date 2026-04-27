@@ -801,11 +801,15 @@ export async function runAppPreviewServer({
     function buildDocsLoadResponse(): DocsV2Read.LoadDocsForUrlResponse {
         // Fall back to empty definition if the initial load failed
         const definition = docsDefinition ?? EMPTY_DOCS_DEFINITION;
+        const translationsConfig = definition.config.translations;
         return {
             baseUrl: { domain: instance.host, basePath: instance.pathname },
             definition,
             lightModeEnabled: definition.config.colorsV3?.type !== "dark",
-            orgId: FernNavigation.OrgId(initialProject.config.organization)
+            orgId: FernNavigation.OrgId(initialProject.config.organization),
+            // Include translations config for language switcher support in preview mode
+            defaultLocale: translationsConfig?.defaultLocale,
+            translations: translationsConfig?.translations
         };
     }
 
