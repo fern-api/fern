@@ -121,6 +121,47 @@ describe("UnionClient", () => {
         expect(response).toEqual(rawResponseBody);
     });
 
+    test("nestedObjectUnions", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedUndiscriminatedUnionsClient({ maxRetries: 0, environment: server.baseUrl });
+        const rawRequestBody = "string";
+        const rawResponseBody = "string";
+
+        server
+            .mockEndpoint()
+            .post("/nested-objects")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.union.nestedObjectUnions("string");
+        expect(response).toEqual(rawResponseBody);
+    });
+
+    test("aliasedObjectUnion", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedUndiscriminatedUnionsClient({ maxRetries: 0, environment: server.baseUrl });
+        const rawRequestBody = { onlyInA: "onlyInA", sharedNumber: 1 };
+        const rawResponseBody = "string";
+
+        server
+            .mockEndpoint()
+            .post("/aliased-object")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.union.aliasedObjectUnion({
+            onlyInA: "onlyInA",
+            sharedNumber: 1,
+        });
+        expect(response).toEqual(rawResponseBody);
+    });
+
     test("getWithBaseProperties", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedUndiscriminatedUnionsClient({ maxRetries: 0, environment: server.baseUrl });
