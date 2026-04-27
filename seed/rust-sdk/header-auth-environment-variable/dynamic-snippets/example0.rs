@@ -4,7 +4,7 @@ use seed_header_token_environment_variable::prelude::*;
 async fn main() {
     let config = ClientConfig {
         base_url: "https://api.fern.com".to_string(),
-        api_key: Some("<value>".to_string()),
+        api_key: Some("YOUR_HEADER_VALUE".to_string()),
         ..Default::default()
     };
     let client = HeaderTokenEnvironmentVariableClient::new(config).expect("Failed to build client");
