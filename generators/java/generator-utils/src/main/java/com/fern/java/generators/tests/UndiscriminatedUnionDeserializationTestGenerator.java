@@ -187,8 +187,8 @@ public final class UndiscriminatedUnionDeserializationTestGenerator extends Abst
             // Walk alias chains until we land on an object declaration (or bail).
             // Use the resolved object declaration's name for variantClassName because
             // when wrappedAliases is false (the default), alias types have no generated class.
-            TypeDeclaration objectDeclaration = resolveToObjectDeclaration(
-                    member.getType().getNamed().get().getTypeId());
+            TypeDeclaration objectDeclaration =
+                    resolveToObjectDeclaration(member.getType().getNamed().get().getTypeId());
             if (objectDeclaration == null) {
                 continue;
             }
@@ -210,9 +210,9 @@ public final class UndiscriminatedUnionDeserializationTestGenerator extends Abst
     }
 
     /**
-     * Walks alias chains starting at {@code typeId}, returning the first object-shaped declaration
-     * encountered. Returns {@code null} if the chain ends in a non-object shape (primitive,
-     * container, enum, union, etc.). Guards against alias cycles with a visited-set on TypeId.
+     * Walks alias chains starting at {@code typeId}, returning the first object-shaped declaration encountered. Returns
+     * {@code null} if the chain ends in a non-object shape (primitive, container, enum, union, etc.). Guards against
+     * alias cycles with a visited-set on TypeId.
      */
     private TypeDeclaration resolveToObjectDeclaration(TypeId typeId) {
         Set<TypeId> visited = new LinkedHashSet<>();
@@ -228,11 +228,8 @@ public final class UndiscriminatedUnionDeserializationTestGenerator extends Abst
             if (!typeDeclaration.getShape().isAlias()) {
                 return null;
             }
-            com.fern.ir.model.types.ResolvedTypeReference resolved = typeDeclaration
-                    .getShape()
-                    .getAlias()
-                    .get()
-                    .getResolvedType();
+            com.fern.ir.model.types.ResolvedTypeReference resolved =
+                    typeDeclaration.getShape().getAlias().get().getResolvedType();
             if (!resolved.isNamed()) {
                 return null;
             }

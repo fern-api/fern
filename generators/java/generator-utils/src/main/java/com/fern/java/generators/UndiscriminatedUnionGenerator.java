@@ -719,11 +719,8 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
                 // object naturally for these, so no presence guard is needed.
                 return Collections.emptyList();
             }
-            com.fern.ir.model.types.ResolvedTypeReference resolved = typeDeclaration
-                    .getShape()
-                    .getAlias()
-                    .get()
-                    .getResolvedType();
+            com.fern.ir.model.types.ResolvedTypeReference resolved =
+                    typeDeclaration.getShape().getAlias().get().getResolvedType();
             if (!resolved.isNamed()) {
                 // Resolved to primitive / container / unknown — not an object shape.
                 return Collections.emptyList();
