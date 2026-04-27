@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix boolean `clientDefault` values being incorrectly wrapped in quotes in the
+    generated PHP SDK constructor. Boolean literals now emit bare `true`/`false` instead
+    of string `'true'`/`'false'`.
+  type: fix
+- summary: |
+    Fix inline path parameters with `clientDefault` in wrapped request classes.
+    The field type is no longer made optional, which preserves the `clientDefault`
+    initializer in the generated constructor instead of discarding it with `?? null`.
+  type: fix
