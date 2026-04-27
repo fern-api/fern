@@ -153,7 +153,6 @@ import Foundation
 import InferredAuthImplicitNoExpiry
 
 let client = InferredAuthImplicitNoExpiryClient(
-    ...,
     urlSession: // Provide your implementation here
 )
 ```

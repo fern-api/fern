@@ -153,7 +153,6 @@ import Foundation
 import OauthClientCredentialsMandatoryAuth
 
 let client = OauthClientCredentialsMandatoryAuthClient(
-    ...,
     urlSession: // Provide your implementation here
 )
 ```

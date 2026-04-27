@@ -1,4 +1,5 @@
 import { AbstractReadmeSnippetBuilder, GeneratorError } from "@fern-api/base-generator";
+import { assertNever } from "@fern-api/core-utils";
 import { SwiftFile } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
@@ -101,10 +102,11 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         const details = this.context.getEndpointMethodDetails(endpoint);
         const errorTypeName = `${moduleSymbol.name}Error`;
 
+        const authArgs = this.getAuthInitString();
         const snippetLines = [
             `import ${moduleSymbol.name}`,
             ``,
-            `let client = ${rootClientSymbol.name}(...)`,
+            `let client = ${rootClientSymbol.name}(${authArgs})`,
             ``,
             `do {`,
             `    let response = try await client.${details.fullyQualifiedMethodName}(...)`,
@@ -306,7 +308,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                 value: swift.Expression.structInitialization({
                     unsafeName: rootClientSymbol.name,
                     arguments_: [
-                        swift.functionArgument({ value: swift.Expression.rawValue("...") }),
+                        ...this.getAuthInitArguments(),
                         swift.functionArgument({
                             label: "urlSession",
                             value: swift.Expression.rawValue("// Provide your implementation here")
@@ -341,7 +343,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                 value: swift.Expression.structInitialization({
                     unsafeName: rootClientSymbol.name,
                     arguments_: [
-                        swift.functionArgument({ value: swift.Expression.rawValue("...") }),
+                        ...this.getAuthInitArguments(),
                         swift.functionArgument({
                             label: "environment",
                             value: swift.Expression.rawValue(`.${defaultEnvName}`)
@@ -366,6 +368,101 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         }
         const firstName = envs[0]?.name;
         return firstName != null ? this.context.caseConverter.camelUnsafe(firstName) : undefined;
+    }
+
+    private getAuthInitArguments(): swift.FunctionArgument[] {
+        const args: swift.FunctionArgument[] = [];
+        for (const scheme of this.context.ir.auth.schemes) {
+            switch (scheme.type) {
+                case "bearer": {
+                    const tokenName = this.context.caseConverter.camelUnsafe(scheme.token);
+                    const placeholder = scheme.tokenPlaceholder ?? "YOUR_API_KEY";
+                    args.push(
+                        swift.functionArgument({
+                            label: tokenName,
+                            value: swift.Expression.stringLiteral(placeholder)
+                        })
+                    );
+                    break;
+                }
+                case "basic": {
+                    const usernameName = this.context.caseConverter.camelUnsafe(scheme.username);
+                    const passwordName = this.context.caseConverter.camelUnsafe(scheme.password);
+                    const usernamePlaceholder = scheme.usernamePlaceholder ?? "YOUR_USERNAME";
+                    const passwordPlaceholder = scheme.passwordPlaceholder ?? "YOUR_PASSWORD";
+                    args.push(
+                        swift.functionArgument({
+                            label: usernameName,
+                            value: swift.Expression.stringLiteral(usernamePlaceholder)
+                        })
+                    );
+                    args.push(
+                        swift.functionArgument({
+                            label: passwordName,
+                            value: swift.Expression.stringLiteral(passwordPlaceholder)
+                        })
+                    );
+                    break;
+                }
+                case "header": {
+                    const headerName = this.context.caseConverter.camelUnsafe(scheme.name);
+                    const placeholder = scheme.headerPlaceholder ?? "YOUR_API_KEY";
+                    args.push(
+                        swift.functionArgument({
+                            label: headerName,
+                            value: swift.Expression.stringLiteral(placeholder)
+                        })
+                    );
+                    break;
+                }
+                case "oauth":
+                    break;
+                case "inferred":
+                    break;
+                default:
+                    assertNever(scheme);
+            }
+        }
+        return args;
+    }
+
+    private getAuthInitString(): string {
+        const parts: string[] = [];
+        for (const scheme of this.context.ir.auth.schemes) {
+            switch (scheme.type) {
+                case "bearer": {
+                    const tokenName = this.context.caseConverter.camelUnsafe(scheme.token);
+                    const placeholder = scheme.tokenPlaceholder ?? "YOUR_API_KEY";
+                    parts.push(`${tokenName}: "${placeholder}"`);
+                    break;
+                }
+                case "basic": {
+                    const usernameName = this.context.caseConverter.camelUnsafe(scheme.username);
+                    const passwordName = this.context.caseConverter.camelUnsafe(scheme.password);
+                    const usernamePlaceholder = scheme.usernamePlaceholder ?? "YOUR_USERNAME";
+                    const passwordPlaceholder = scheme.passwordPlaceholder ?? "YOUR_PASSWORD";
+                    parts.push(`${usernameName}: "${usernamePlaceholder}"`);
+                    parts.push(`${passwordName}: "${passwordPlaceholder}"`);
+                    break;
+                }
+                case "header": {
+                    const headerName = this.context.caseConverter.camelUnsafe(scheme.name);
+                    const placeholder = scheme.headerPlaceholder ?? "YOUR_API_KEY";
+                    parts.push(`${headerName}: "${placeholder}"`);
+                    break;
+                }
+                case "oauth":
+                    break;
+                case "inferred":
+                    break;
+                default:
+                    assertNever(scheme);
+            }
+        }
+        if (parts.length === 0) {
+            return "...";
+        }
+        return parts.join(", ");
     }
 
     private getUsageSnippetForEndpoint(endpointId: string) {

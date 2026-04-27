@@ -134,7 +134,6 @@ import Foundation
 import InferredAuthImplicitApiKey
 
 let client = InferredAuthImplicitApiKeyClient(
-    ...,
     urlSession: // Provide your implementation here
 )
 ```

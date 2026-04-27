@@ -137,7 +137,6 @@ import Foundation
 import OauthClientCredentialsReference
 
 let client = OauthClientCredentialsReferenceClient(
-    ...,
     urlSession: // Provide your implementation here
 )
 ```

@@ -153,7 +153,6 @@ import Foundation
 import WebsocketAuth
 
 let client = WebsocketAuthClient(
-    ...,
     urlSession: // Provide your implementation here
 )
 ```
