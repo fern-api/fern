@@ -8,6 +8,7 @@ from core_utilities.shared.http_client import (
     AsyncHttpClient,
     HttpClient,
     _build_url,
+    _should_retry,
     get_request_body,
     remove_none_from_dict,
 )
@@ -658,3 +659,40 @@ async def test_async_base_max_retries_used_as_default(mock_sleep: AsyncMock) -> 
     assert response.status_code == 200
     # 1 initial + 3 retries = 4 total attempts
     assert mock_client.request.call_count == 4
+
+
+# ---------------------------------------------------------------------------
+# _should_retry unit tests
+# ---------------------------------------------------------------------------
+
+
+def _make_response(status_code: int) -> httpx.Response:
+    return httpx.Response(status_code=status_code, content=b"")
+
+
+@pytest.mark.parametrize(
+    "status_code",
+    [408, 409, 429, 501, 502, 503, 504, 599],
+)
+def test_should_retry_retryable_status_codes(status_code: int) -> None:
+    assert _should_retry(_make_response(status_code)) is True
+
+
+@pytest.mark.parametrize(
+    "status_code",
+    [200, 201, 301, 400, 401, 403, 404, 500, 600],
+)
+def test_should_not_retry_non_retryable_status_codes(status_code: int) -> None:
+    assert _should_retry(_make_response(status_code)) is False
+
+
+def test_should_not_retry_500_internal_server_error() -> None:
+    assert _should_retry(_make_response(500)) is False
+
+
+def test_should_retry_599_upper_boundary() -> None:
+    assert _should_retry(_make_response(599)) is True
+
+
+def test_should_not_retry_600_above_5xx_range() -> None:
+    assert _should_retry(_make_response(600)) is False
