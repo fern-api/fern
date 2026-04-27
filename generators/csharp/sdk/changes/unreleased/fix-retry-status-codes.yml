@@ -1,0 +1,5 @@
+- summary: |
+    Only retry requests on 408, 429, and 5xx status codes except 500 Internal
+    Server Error. Previously all 5xx errors were retried, but 500 is typically
+    not transient and retrying can cause idempotency issues.
+  type: fix
