@@ -90,6 +90,9 @@ catalogs:
     '@fern-fern/ir-v65-sdk':
       specifier: 0.0.5
       version: 0.0.5
+    '@fern-fern/ir-v66-sdk':
+      specifier: 0.0.1
+      version: 0.0.1
     '@fern-fern/legacy-docs-config':
       specifier: 0.0.58
       version: 0.0.58
@@ -5960,6 +5963,9 @@ importers:
       '@fern-fern/ir-v65-sdk':
         specifier: 'catalog:'
         version: 0.0.5
+      '@fern-fern/ir-v66-sdk':
+        specifier: 'catalog:'
+        version: 0.0.1
       lodash-es:
         specifier: 'catalog:'
         version: 4.18.1
@@ -9500,6 +9506,10 @@ packages:
 
   '@fern-fern/ir-v65-sdk@0.0.5':
     resolution: {integrity: sha512-IjHhwXZVhpf3sPbUCnHR3JqgnXbhSSNLc9ZkSwE0mM9GNg0UtJNJTZyGp60ophclgEErwFJ8RIcY5GyALtGftw==}
+    engines: {node: '>=18.0.0'}
+
+  '@fern-fern/ir-v66-sdk@0.0.1':
+    resolution: {integrity: sha512-QqUmalb1Y5ugEA68Hf2kjaqx4o7oW6LvYOFdOEUPOuxS/c3SwIz7TXXL6gRurtf6Ndr44TJdD0G48iZSO6CTBg==}
     engines: {node: '>=18.0.0'}
 
   '@fern-fern/legacy-docs-config@0.0.58':
@@ -16555,6 +16565,8 @@ snapshots:
   '@fern-fern/ir-v63-sdk@1.0.2': {}
 
   '@fern-fern/ir-v65-sdk@0.0.5': {}
+
+  '@fern-fern/ir-v66-sdk@0.0.1': {}
 
   '@fern-fern/legacy-docs-config@0.0.58': {}
 
