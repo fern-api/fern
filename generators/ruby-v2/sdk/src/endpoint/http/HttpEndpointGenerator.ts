@@ -385,7 +385,7 @@ export class HttpEndpointGenerator {
             const clientDefault = defaultExtractor.extractClientDefault(pathParam.clientDefault);
             if (clientDefault != null) {
                 pathParameterReferences[getOriginalName(pathParam.name)] =
-                    `(${PARAMS_VN}[:${parameterName}] || ${clientDefault})`;
+                    `${PARAMS_VN}.fetch(:${parameterName}, ${clientDefault})`;
             } else {
                 pathParameterReferences[getOriginalName(pathParam.name)] = `${PARAMS_VN}[:${parameterName}]`;
             }
