@@ -390,10 +390,20 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                     break;
                 }
                 case "basic": {
-                    const usernameName = this.context.caseConverter.camelUnsafe(scheme.username);
-                    const passwordName = this.context.caseConverter.camelUnsafe(scheme.password);
-                    basicArgs.push({ label: usernameName, placeholder: scheme.usernamePlaceholder ?? "YOUR_USERNAME" });
-                    basicArgs.push({ label: passwordName, placeholder: scheme.passwordPlaceholder ?? "YOUR_PASSWORD" });
+                    if (!scheme.usernameOmit) {
+                        const usernameName = this.context.caseConverter.camelUnsafe(scheme.username);
+                        basicArgs.push({
+                            label: usernameName,
+                            placeholder: scheme.usernamePlaceholder ?? "YOUR_USERNAME"
+                        });
+                    }
+                    if (!scheme.passwordOmit) {
+                        const passwordName = this.context.caseConverter.camelUnsafe(scheme.password);
+                        basicArgs.push({
+                            label: passwordName,
+                            placeholder: scheme.passwordPlaceholder ?? "YOUR_PASSWORD"
+                        });
+                    }
                     break;
                 }
                 case "header": {
