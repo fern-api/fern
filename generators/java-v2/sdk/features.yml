@@ -39,7 +39,7 @@ features:
 
       - [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
       - [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
-      - 5XX (All server errors except [500](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) Internal Server Error)
+      - [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#server_error_responses) (All server errors except [500](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) Internal Server Error)
 
       Use the `maxRetries` client option to configure this behavior.
 
