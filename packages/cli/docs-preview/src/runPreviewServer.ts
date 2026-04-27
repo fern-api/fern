@@ -322,8 +322,8 @@ export async function runPreviewServer({
     });
 
     /**
-     * Extracts the locale from a URL path.
-     * E.g., "/fr/getting-started" -> "fr", "/getting-started" -> undefined
+     * Extracts the locale from a URL or path.
+     * E.g., "/fr/getting-started" -> "fr", "http://localhost:3000/ja/intro" -> "ja"
      */
     function extractLocaleFromPath(urlPath: string | undefined): string | undefined {
         if (urlPath == null) {
@@ -337,8 +337,16 @@ export async function runPreviewServer({
             return undefined;
         }
 
+        // Parse as URL if it's a full URL, otherwise treat as path
+        let pathname = urlPath;
+        try {
+            pathname = new URL(urlPath).pathname;
+        } catch {
+            // urlPath is already a bare path (e.g. "/fr/getting-started")
+        }
+
         // Check if path starts with a locale prefix
-        const pathParts = urlPath.split("/").filter((p) => p.length > 0);
+        const pathParts = pathname.split("/").filter((p) => p.length > 0);
         if (pathParts.length > 0) {
             const firstPart = pathParts[0];
             if (firstPart != null && availableLocales.includes(firstPart) && firstPart !== defaultLocale) {
