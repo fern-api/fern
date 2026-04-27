@@ -1,9 +1,8 @@
 package com.snippets;
 
 import com.seed.undiscriminatedUnions.SeedUndiscriminatedUnionsClient;
-import com.seed.undiscriminatedUnions.resources.union.requests.PaymentRequest;
-import com.seed.undiscriminatedUnions.resources.union.types.PaymentMethodUnion;
-import com.seed.undiscriminatedUnions.resources.union.types.TokenizeCard;
+import com.seed.undiscriminatedUnions.resources.union.types.AliasedObjectUnion;
+import com.seed.undiscriminatedUnions.resources.union.types.LeafObjectA;
 
 public class Example10 {
     public static void main(String[] args) {
@@ -12,11 +11,7 @@ public class Example10 {
                 .build();
 
         client.union()
-                .testCamelCaseProperties(PaymentRequest.builder()
-                        .paymentMethod(PaymentMethodUnion.of(TokenizeCard.builder()
-                                .method("card")
-                                .cardNumber("1234567890123456")
-                                .build()))
-                        .build());
+                .aliasedObjectUnion(AliasedObjectUnion.of(
+                        LeafObjectA.builder().onlyInA("onlyInA").sharedNumber(1).build()));
     }
 }

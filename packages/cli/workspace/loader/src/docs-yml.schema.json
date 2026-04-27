@@ -198,6 +198,19 @@
         }
       ]
     },
+    "translations": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/docs.TranslationConfig"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "ai-chat": {
       "oneOf": [
         {
@@ -4264,6 +4277,28 @@
         "sv",
         "tr"
       ]
+    },
+    "docs.TranslationConfig": {
+      "type": "object",
+      "properties": {
+        "lang": {
+          "$ref": "#/definitions/docs.Language"
+        },
+        "default": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "lang"
+      ],
+      "additionalProperties": false
     },
     "docs.AIChatModel": {
       "type": "string",

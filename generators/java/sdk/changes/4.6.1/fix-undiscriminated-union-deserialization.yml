@@ -1,0 +1,7 @@
+- summary: |
+    Fix undiscriminated union deserializer misclassifying payloads. The generated
+    deserializer now checks that all required wire keys are present in the JSON
+    object before attempting to convert to each variant, preventing the first
+    variant from always winning when Jackson's builder silently accepts missing
+    required fields.
+  type: fix

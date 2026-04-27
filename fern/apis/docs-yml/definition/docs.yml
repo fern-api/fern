@@ -42,6 +42,13 @@ types:
       - sv
       - tr
 
+  TranslationConfig:
+    properties:
+      lang: Language
+      default:
+        type: optional<boolean>
+        docs: Whether this language is the default. At most one entry should be marked as default.
+
   AnalyticsConfig:
     properties:
       segment: optional<SegmentConfig>
@@ -272,6 +279,22 @@ types:
           Options include: typescript, python, java, go, ruby, csharp, php, swift, curl
 
       languages: optional<list<Language>>
+
+      translations:
+        type: optional<list<TranslationConfig>>
+        docs: |
+          Configuration for multi-language documentation. Each entry defines a locale
+          that the documentation supports. Use the `translations/` directory alongside
+          `docs.yml` to provide per-language content.
+
+          Example:
+          ```yaml
+          translations:
+            - lang: en
+              default: true
+            - lang: ja
+            - lang: fr
+          ```
 
       # Deprecated
       "ai-chat": optional<AIChatConfig>

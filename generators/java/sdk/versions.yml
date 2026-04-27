@@ -1,4 +1,22 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.6.1
+  changelogEntry:
+    - summary: |
+        Fix undiscriminated union deserializer misclassifying payloads. The generated
+        deserializer now checks that all required wire keys are present in the JSON
+        object before attempting to convert to each variant, preventing the first
+        variant from always winning when Jackson's builder silently accepts missing
+        required fields.
+      type: fix
+    - summary: |
+        Replace switch-on-type WebSocket message dispatch with shape-based trial
+        deserialization. Messages are now matched by checking required-field presence
+        and literal values before attempting Jackson conversion. This correctly handles
+        AsyncAPI channels where multiple message schemas share the same discriminator
+        value (e.g., two "History" variants with disjoint required fields).
+      type: fix
+  createdAt: "2026-04-27"
+  irVersion: 66
 - version: 4.6.0
   changelogEntry:
     - summary: |

@@ -56,6 +56,10 @@ fixtures:
     - customConfig:
         use_inheritance_for_extended_models: false
       outputFolder: no-inheritance-for-extended-models
+  basic-auth-pw-omitted:
+    - customConfig:
+        enable_wire_tests: true
+      outputFolder: with-wire-tests
   allof:
     - outputFolder: no-custom-config
       customConfig:
@@ -211,7 +215,7 @@ fixtures:
     - customConfig:
         pyproject_python_version: "^3.8.1"
         extra_dependencies:
-          boto3: 1.28.57
+          boto3: 1.35.76
           numpy:
             version: "^2.0"
             python: ">=3.10"
@@ -229,13 +233,13 @@ fixtures:
             version: "^0.4.3"
             extras: ["toml"]
         extra_dependencies:
-          boto3: 1.28.57
+          boto3: 1.35.76
       outputFolder: deps_with_min_python_version
     - customConfig:
         extra_dev_dependencies:
           requests_mock: 1.12.1
         extra_dependencies:
-          boto3: 1.28.57
+          boto3: 1.35.76
       outputFolder: extra_dev_dependencies
     - customConfig:
         pyproject_python_version: "^3.8.1"

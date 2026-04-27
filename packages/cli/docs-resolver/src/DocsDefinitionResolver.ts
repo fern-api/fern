@@ -54,6 +54,17 @@ interface LibraryNavNode {
     children?: LibraryNavNode[];
 }
 
+interface DocsTranslationsConfig {
+    defaultLocale: string;
+    translations: string[] | undefined;
+}
+
+// TODO: Remove this shim once the published @fern-api/fdr-sdk type for
+// DocsV1Write.DocsConfig includes the translations field.
+interface DocsConfigWithTranslations extends DocsV1Write.DocsConfig {
+    translations: DocsTranslationsConfig | undefined;
+}
+
 import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter.js";
 import { ChangelogNodeConverter } from "./ChangelogNodeConverter.js";
 import { NodeIdGenerator } from "./NodeIdGenerator.js";
@@ -250,6 +261,47 @@ export class DocsDefinitionResolver {
             throw new CliError({ message: "parsedDocsConfig is not set", code: CliError.Code.InternalError });
         }
         return this._parsedDocsConfig;
+    }
+
+    /**
+     * Returns per-locale translated page content loaded from `translations/<lang>/` directories.
+     * Must be called after `resolve()`.
+     */
+    public getTranslationPages(): Record<string, Record<RelativeFilePath, string>> | undefined {
+        return this._parsedDocsConfig?.translationPages;
+    }
+
+    /**
+     * Returns the map of absolute file paths to uploaded file IDs.
+     * Used by translation processing to rewrite image paths in translated pages.
+     * Must be called after `resolve()`.
+     */
+    public getCollectedFileIds(): ReadonlyMap<AbsoluteFilePath, string> {
+        return this.collectedFileIds;
+    }
+
+    /**
+     * Returns the absolute path to the docs workspace (fern folder).
+     */
+    public getDocsWorkspacePath(): AbsoluteFilePath {
+        return this.docsWorkspace.absoluteFilePath;
+    }
+
+    private getDocsTranslationsConfig(): DocsConfigWithTranslations["translations"] {
+        const translations = this.parsedDocsConfig.translations;
+        if (translations == null || translations.length === 0) {
+            return undefined;
+        }
+
+        const defaultTranslation = translations.find((translation) => translation.default === true) ?? translations[0];
+        if (defaultTranslation == null) {
+            return undefined;
+        }
+
+        return {
+            defaultLocale: defaultTranslation.lang,
+            translations: translations.map((translation) => translation.lang)
+        };
     }
     private collectedFileIds = new Map<AbsoluteFilePath, string>();
     private markdownFilesToFullSlugs: Map<AbsoluteFilePath, string> = new Map();
@@ -752,13 +804,16 @@ export class DocsDefinitionResolver {
                       context7: this.getFileId(this.parsedDocsConfig.context7File)
                   } as DocsV1Write.DocsConfig["integrations"])
                 : undefined;
-        const config: DocsV1Write.DocsConfig = {
+        const config: DocsConfigWithTranslations = {
             aiChatConfig:
                 this.parsedDocsConfig.aiChatConfig != null
                     ? {
                           model: this.parsedDocsConfig.aiChatConfig.model,
                           systemPrompt: this.parsedDocsConfig.aiChatConfig.systemPrompt,
-                          location: this.parsedDocsConfig.aiChatConfig.location,
+                          // Filter out 'discord' which is no longer supported by fdr-sdk
+                          location: this.parsedDocsConfig.aiChatConfig.location?.filter(
+                              (loc): loc is "slack" | "docs" => loc === "slack" || loc === "docs"
+                          ),
                           datasources: this.parsedDocsConfig.aiChatConfig.datasources?.map((ds) => ({
                               url: ds.url,
                               title: ds.title
@@ -808,7 +863,6 @@ export class DocsDefinitionResolver {
             settings: this.parsedDocsConfig.settings,
             css: this.parsedDocsConfig.css,
             js: this.convertJavascriptConfiguration(),
-            // @ts-expect-error - Remove this when the fdr-sdk upgraded to the latest version
             agents:
                 this.parsedDocsConfig.agents != null ||
                 this.parsedDocsConfig.llmsTxtFile != null ||
@@ -828,6 +882,8 @@ export class DocsDefinitionResolver {
             })),
             defaultLanguage: this.parsedDocsConfig.defaultLanguage,
             languages: this.parsedDocsConfig.languages,
+
+            translations: this.getDocsTranslationsConfig(),
             analyticsConfig: {
                 ...this.parsedDocsConfig.analyticsConfig,
                 segment: this.parsedDocsConfig.analyticsConfig?.segment,

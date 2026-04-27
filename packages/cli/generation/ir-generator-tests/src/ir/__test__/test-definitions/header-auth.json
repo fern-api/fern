@@ -27,6 +27,7 @@
                 },
                 "prefix": "test_prefix",
                 "headerEnvVar": null,
+                "headerPlaceholder": null,
                 "key": "Header",
                 "docs": null
             }

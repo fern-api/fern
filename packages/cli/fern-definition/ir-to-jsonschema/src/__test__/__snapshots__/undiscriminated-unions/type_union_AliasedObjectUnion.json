@@ -1,0 +1,49 @@
+{
+  "anyOf": [
+    {
+      "$ref": "#/definitions/union.AliasedLeafA"
+    },
+    {
+      "$ref": "#/definitions/union.AliasedLeafB"
+    }
+  ],
+  "definitions": {
+    "union.LeafObjectA": {
+      "type": "object",
+      "properties": {
+        "onlyInA": {
+          "type": "string"
+        },
+        "sharedNumber": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "onlyInA",
+        "sharedNumber"
+      ],
+      "additionalProperties": false
+    },
+    "union.AliasedLeafA": {
+      "$ref": "#/definitions/union.LeafObjectA"
+    },
+    "union.LeafObjectB": {
+      "type": "object",
+      "properties": {
+        "onlyInB": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "onlyInB"
+      ],
+      "additionalProperties": false
+    },
+    "union.AliasToLeafB": {
+      "$ref": "#/definitions/union.LeafObjectB"
+    },
+    "union.AliasedLeafB": {
+      "$ref": "#/definitions/union.AliasToLeafB"
+    }
+  }
+}

@@ -141,13 +141,22 @@ public final class UndiscriminatedUnion1 {
         @java.lang.Override
         public UndiscriminatedUnion1 deserialize(JsonParser p, DeserializationContext context) throws IOException {
             Object value = p.readValueAs(Object.class);
-            try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, UndiscriminatedUnion1InlineType1.class));
-            } catch (RuntimeException e) {
+            if (value instanceof Map<?, ?>
+                    && ((Map<?, ?>) value).containsKey("foo")
+                    && ((Map<?, ?>) value).containsKey("bar")
+                    && ((Map<?, ?>) value).containsKey("ref")) {
+                try {
+                    return of(ObjectMappers.JSON_MAPPER.convertValue(value, UndiscriminatedUnion1InlineType1.class));
+                } catch (RuntimeException e) {
+                }
             }
-            try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, UndiscriminatedUnion1InlineType2.class));
-            } catch (RuntimeException e) {
+            if (value instanceof Map<?, ?>
+                    && ((Map<?, ?>) value).containsKey("baz")
+                    && ((Map<?, ?>) value).containsKey("ref")) {
+                try {
+                    return of(ObjectMappers.JSON_MAPPER.convertValue(value, UndiscriminatedUnion1InlineType2.class));
+                } catch (RuntimeException e) {
+                }
             }
             try {
                 return of(
@@ -177,9 +186,11 @@ public final class UndiscriminatedUnion1 {
                         value, new TypeReference<Map<String, UndiscriminatedUnion1InlineMapItem1>>() {}));
             } catch (RuntimeException e) {
             }
-            try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, ReferenceType.class));
-            } catch (RuntimeException e) {
+            if (value instanceof Map<?, ?> && ((Map<?, ?>) value).containsKey("foo")) {
+                try {
+                    return of(ObjectMappers.JSON_MAPPER.convertValue(value, ReferenceType.class));
+                } catch (RuntimeException e) {
+                }
             }
             throw new JsonParseException(p, "Failed to deserialize");
         }

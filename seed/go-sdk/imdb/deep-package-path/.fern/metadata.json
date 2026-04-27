@@ -7,7 +7,6 @@
     "packagePath": "all/the/way/in/here/please"
   },
   "originGitCommit": "DUMMY",
-  "originGitCommitIsDirty": null,
   "invokedBy": "ci",
   "requestedVersion": "0.0.1",
   "ciProvider": "github",

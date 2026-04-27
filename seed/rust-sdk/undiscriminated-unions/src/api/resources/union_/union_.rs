@@ -102,6 +102,38 @@ impl UnionClient {
             .await
     }
 
+    pub async fn nested_object_unions(
+        &self,
+        request: &OuterNestedUnion,
+        options: Option<RequestOptions>,
+    ) -> Result<String, ApiError> {
+        self.http_client
+            .execute_request(
+                Method::POST,
+                "/nested-objects",
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+            )
+            .await
+    }
+
+    pub async fn aliased_object_union(
+        &self,
+        request: &AliasedObjectUnion,
+        options: Option<RequestOptions>,
+    ) -> Result<String, ApiError> {
+        self.http_client
+            .execute_request(
+                Method::POST,
+                "/aliased-object",
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+            )
+            .await
+    }
+
     pub async fn get_with_base_properties(
         &self,
         request: &UnionWithBaseProperties,

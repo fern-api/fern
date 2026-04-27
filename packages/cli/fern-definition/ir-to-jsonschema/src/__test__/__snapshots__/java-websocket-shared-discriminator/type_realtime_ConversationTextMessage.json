@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "const": "ConversationText"
+    },
+    "text": {
+      "type": "string"
+    },
+    "confidence": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "type",
+    "text",
+    "confidence"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}
