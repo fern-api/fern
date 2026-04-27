@@ -5,7 +5,7 @@ import com.seed.headerTokenEnvironmentVariable.SeedHeaderTokenEnvironmentVariabl
 public class Example0 {
     public static void main(String[] args) {
         SeedHeaderTokenEnvironmentVariableClient client = SeedHeaderTokenEnvironmentVariableClient.builder()
-                .headerTokenAuth("<value>")
+                .headerTokenAuth("YOUR_HEADER_VALUE")
                 .url("https://api.fern.com")
                 .build();
 
