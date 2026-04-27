@@ -61,6 +61,57 @@ describe("requestWithRetries", () => {
         expect(response.status).toBe(503);
     });
 
+    it("should not retry on 500 Internal Server Error", async () => {
+        setTimeoutSpy = vi.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
+            process.nextTick(callback);
+            return null as any;
+        });
+
+        mockFetch.mockResolvedValueOnce(new Response("", { status: 500 }));
+
+        const responsePromise = requestWithRetries(() => mockFetch(), 3);
+        await vi.runAllTimersAsync();
+        const response = await responsePromise;
+
+        expect(mockFetch).toHaveBeenCalledTimes(1);
+        expect(response.status).toBe(500);
+    });
+
+    it("should retry on status 599 (upper boundary of retryable 5xx)", async () => {
+        setTimeoutSpy = vi.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
+            process.nextTick(callback);
+            return null as any;
+        });
+
+        mockFetch
+            .mockResolvedValueOnce(new Response("", { status: 599 }))
+            .mockResolvedValueOnce(new Response("", { status: 200 }));
+
+        const responsePromise = requestWithRetries(() => mockFetch(), 3);
+        await vi.runAllTimersAsync();
+        const response = await responsePromise;
+
+        expect(mockFetch).toHaveBeenCalledTimes(2);
+        expect(response.status).toBe(200);
+    });
+
+    it("should not retry on status 600 (above retryable 5xx range)", async () => {
+        setTimeoutSpy = vi.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
+            process.nextTick(callback);
+            return null as any;
+        });
+
+        mockFetch.mockResolvedValueOnce(new Response("", { status: 600 }));
+
+        const responsePromise = requestWithRetries(() => mockFetch(), 3);
+        await vi.runAllTimersAsync();
+        const response = await responsePromise;
+
+        expect(mockFetch).toHaveBeenCalledTimes(1);
+        expect(response.status).toBe(600);
+    });
+
+
     it("should not retry on success status codes", async () => {
         setTimeoutSpy = jest.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
             process.nextTick(callback);
