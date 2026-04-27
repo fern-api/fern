@@ -22,7 +22,6 @@ class SeedBasicAuthPwOmitted:
         The base url to use for requests from the client.
 
     username : typing.Union[str, typing.Callable[[], str]]
-    password : typing.Union[str, typing.Callable[[], str]]
     headers : typing.Optional[typing.Dict[str, str]]
         Additional headers to send with every request.
 
@@ -44,7 +43,6 @@ class SeedBasicAuthPwOmitted:
 
     client = SeedBasicAuthPwOmitted(
         username="YOUR_USERNAME",
-        password="YOUR_PASSWORD",
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -54,7 +52,6 @@ class SeedBasicAuthPwOmitted:
         *,
         base_url: str,
         username: typing.Union[str, typing.Callable[[], str]],
-        password: typing.Union[str, typing.Callable[[], str]],
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
@@ -67,7 +64,6 @@ class SeedBasicAuthPwOmitted:
         self._client_wrapper = SyncClientWrapper(
             base_url=base_url,
             username=username,
-            password=password,
             headers=headers,
             httpx_client=httpx_client
             if httpx_client is not None
@@ -116,7 +112,6 @@ class AsyncSeedBasicAuthPwOmitted:
         The base url to use for requests from the client.
 
     username : typing.Union[str, typing.Callable[[], str]]
-    password : typing.Union[str, typing.Callable[[], str]]
     headers : typing.Optional[typing.Dict[str, str]]
         Additional headers to send with every request.
 
@@ -138,7 +133,6 @@ class AsyncSeedBasicAuthPwOmitted:
 
     client = AsyncSeedBasicAuthPwOmitted(
         username="YOUR_USERNAME",
-        password="YOUR_PASSWORD",
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -148,7 +142,6 @@ class AsyncSeedBasicAuthPwOmitted:
         *,
         base_url: str,
         username: typing.Union[str, typing.Callable[[], str]],
-        password: typing.Union[str, typing.Callable[[], str]],
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
@@ -161,7 +154,6 @@ class AsyncSeedBasicAuthPwOmitted:
         self._client_wrapper = AsyncClientWrapper(
             base_url=base_url,
             username=username,
-            password=password,
             headers=headers,
             httpx_client=httpx_client
             if httpx_client is not None

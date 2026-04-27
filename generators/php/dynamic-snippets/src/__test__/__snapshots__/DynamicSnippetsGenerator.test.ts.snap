@@ -739,3 +739,87 @@ exports[`snippets (default) > single-url-environment-default > 'invalid environm
   }
 ]"
 `;
+
+exports[`snippets (missing auth placeholders) > basic auth with no auth in request 1`] = `
+"<?php
+
+namespace Example;
+
+use Acme\\AcmeClient;
+
+$client = new AcmeClient(
+    username: 'YOUR_USERNAME',
+    password: 'YOUR_PASSWORD',
+);
+$client->basicAuth->getWithBasicAuth();
+"
+`;
+
+exports[`snippets (missing auth placeholders) > basic auth with passwordOmit flag 1`] = `
+"<?php
+
+namespace Example;
+
+use Acme\\AcmeClient;
+
+$client = new AcmeClient(
+    username: 'YOUR_USERNAME',
+);
+$client->basicAuth->getWithBasicAuth();
+"
+`;
+
+exports[`snippets (missing auth placeholders) > bearer auth with no auth in request 1`] = `
+"<?php
+
+namespace Example;
+
+use Acme\\AcmeClient;
+use Acme\\Service\\Requests\\GetMetadataRequest;
+
+$client = new AcmeClient(
+    token: 'YOUR_TOKEN',
+);
+$client->service->getMetadata(
+    new GetMetadataRequest([
+        'shallow' => false,
+        'tag' => [
+            'development',
+        ],
+        'xAPIVersion' => '0.0.1',
+    ]),
+);
+"
+`;
+
+exports[`snippets (missing auth placeholders) > header auth with no auth in request 1`] = `
+"<?php
+
+namespace Example;
+
+use Acme\\AcmeClient;
+
+$client = new AcmeClient(
+    headerTokenAuth: 'YOUR_AUTH_TOKEN',
+);
+$client->service->getWithBearerToken();
+"
+`;
+
+exports[`snippets (missing auth placeholders) > oauth auth with no auth in request 1`] = `
+"<?php
+
+namespace Example;
+
+use Seed\\AcmeClient;
+
+$client = new AcmeClient(
+    clientID: 'YOUR_CLIENT_ID',
+    clientSecret: 'YOUR_CLIENT_SECRET',
+    options: [
+        'baseUrl' => 'https://api.fern.com',
+    ],
+);
+$client->simple->getSomething();
+"
+`;

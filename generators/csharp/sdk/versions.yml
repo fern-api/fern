@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.62.0
+  changelogEntry:
+    - summary: |
+        Use auth scheme placeholder values in snippets when configured via
+        `placeholder` field on auth schemes.
+      type: feat
+  createdAt: "2026-04-25"
+  irVersion: 66
 - version: 2.61.2
   changelogEntry:
     - summary: |

@@ -658,9 +658,14 @@ def pytest_unconfigure(config: pytest.Config) -> None:
                 break;
 
             case "basic":
-                // Basic auth uses username and password parameters
-                params.push(`        ${caseConverter.snakeSafe(scheme.username)}="test_username",`);
-                params.push(`        ${caseConverter.snakeSafe(scheme.password)}="test_password",`);
+                // Basic auth uses username and password parameters (skip omitted fields).
+                // Values must use hyphens ("test-username") to match mock-utils WireMock stubs.
+                if (!scheme.usernameOmit) {
+                    params.push(`        ${caseConverter.snakeSafe(scheme.username)}="test-username",`);
+                }
+                if (!scheme.passwordOmit) {
+                    params.push(`        ${caseConverter.snakeSafe(scheme.password)}="test-password",`);
+                }
                 break;
 
             case "header":

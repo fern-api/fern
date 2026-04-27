@@ -12,14 +12,12 @@ class BaseClientWrapper:
         self,
         *,
         username: typing.Union[str, typing.Callable[[], str]],
-        password: typing.Union[str, typing.Callable[[], str]],
         headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
         self._username = username
-        self._password = password
         self._headers = headers
         self._base_url = base_url
         self._timeout = timeout
@@ -37,7 +35,7 @@ class BaseClientWrapper:
             "X-Fern-SDK-Version": "0.0.1",
             **(self.get_custom_headers() or {}),
         }
-        headers["Authorization"] = httpx.BasicAuth(self._get_username(), self._get_password())._auth_header
+        headers["Authorization"] = httpx.BasicAuth(self._get_username(), "")._auth_header
         return headers
 
     def _get_username(self) -> str:
@@ -45,12 +43,6 @@ class BaseClientWrapper:
             return self._username
         else:
             return self._username()
-
-    def _get_password(self) -> str:
-        if isinstance(self._password, str):
-            return self._password
-        else:
-            return self._password()
 
     def get_custom_headers(self) -> typing.Optional[typing.Dict[str, str]]:
         return self._headers
@@ -67,16 +59,13 @@ class SyncClientWrapper(BaseClientWrapper):
         self,
         *,
         username: typing.Union[str, typing.Callable[[], str]],
-        password: typing.Union[str, typing.Callable[[], str]],
         headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
         httpx_client: httpx.Client,
     ):
-        super().__init__(
-            username=username, password=password, headers=headers, base_url=base_url, timeout=timeout, logging=logging
-        )
+        super().__init__(username=username, headers=headers, base_url=base_url, timeout=timeout, logging=logging)
         self.httpx_client = HttpClient(
             httpx_client=httpx_client,
             base_headers=self.get_headers,
@@ -91,7 +80,6 @@ class AsyncClientWrapper(BaseClientWrapper):
         self,
         *,
         username: typing.Union[str, typing.Callable[[], str]],
-        password: typing.Union[str, typing.Callable[[], str]],
         headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
@@ -99,9 +87,7 @@ class AsyncClientWrapper(BaseClientWrapper):
         async_token: typing.Optional[typing.Callable[[], typing.Awaitable[str]]] = None,
         httpx_client: httpx.AsyncClient,
     ):
-        super().__init__(
-            username=username, password=password, headers=headers, base_url=base_url, timeout=timeout, logging=logging
-        )
+        super().__init__(username=username, headers=headers, base_url=base_url, timeout=timeout, logging=logging)
         self._async_token = async_token
         self.httpx_client = AsyncHttpClient(
             httpx_client=httpx_client,
