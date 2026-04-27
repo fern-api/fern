@@ -5,10 +5,12 @@ import typing
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
 from .raw_client import AsyncRawUnionClient, RawUnionClient
+from .types.aliased_object_union import AliasedObjectUnion
 from .types.metadata import Metadata
 from .types.metadata_union import MetadataUnion
 from .types.my_union import MyUnion
 from .types.nested_union_root import NestedUnionRoot
+from .types.outer_nested_union import OuterNestedUnion
 from .types.payment_method_union import PaymentMethodUnion
 from .types.union_with_base_properties import UnionWithBaseProperties
 from .types.union_with_duplicate_types import UnionWithDuplicateTypes
@@ -196,6 +198,68 @@ class UnionClient:
         )
         """
         _response = self._raw_client.nested_unions(request=request, request_options=request_options)
+        return _response.data
+
+    def nested_object_unions(
+        self, *, request: OuterNestedUnion, request_options: typing.Optional[RequestOptions] = None
+    ) -> str:
+        """
+        Parameters
+        ----------
+        request : OuterNestedUnion
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+
+        Examples
+        --------
+        from seed import SeedUndiscriminatedUnions
+
+        client = SeedUndiscriminatedUnions(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.union.nested_object_unions(
+            request="string",
+        )
+        """
+        _response = self._raw_client.nested_object_unions(request=request, request_options=request_options)
+        return _response.data
+
+    def aliased_object_union(
+        self, *, request: AliasedObjectUnion, request_options: typing.Optional[RequestOptions] = None
+    ) -> str:
+        """
+        Parameters
+        ----------
+        request : AliasedObjectUnion
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+
+        Examples
+        --------
+        from seed import SeedUndiscriminatedUnions
+        from seed.union import LeafObjectA
+
+        client = SeedUndiscriminatedUnions(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.union.aliased_object_union(
+            request=LeafObjectA(
+                only_in_a="onlyInA",
+                shared_number=1,
+            ),
+        )
+        """
+        _response = self._raw_client.aliased_object_union(request=request, request_options=request_options)
         return _response.data
 
     def get_with_base_properties(
@@ -494,6 +558,84 @@ class AsyncUnionClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.nested_unions(request=request, request_options=request_options)
+        return _response.data
+
+    async def nested_object_unions(
+        self, *, request: OuterNestedUnion, request_options: typing.Optional[RequestOptions] = None
+    ) -> str:
+        """
+        Parameters
+        ----------
+        request : OuterNestedUnion
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedUndiscriminatedUnions
+
+        client = AsyncSeedUndiscriminatedUnions(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.union.nested_object_unions(
+                request="string",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.nested_object_unions(request=request, request_options=request_options)
+        return _response.data
+
+    async def aliased_object_union(
+        self, *, request: AliasedObjectUnion, request_options: typing.Optional[RequestOptions] = None
+    ) -> str:
+        """
+        Parameters
+        ----------
+        request : AliasedObjectUnion
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedUndiscriminatedUnions
+        from seed.union import LeafObjectA
+
+        client = AsyncSeedUndiscriminatedUnions(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.union.aliased_object_union(
+                request=LeafObjectA(
+                    only_in_a="onlyInA",
+                    shared_number=1,
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.aliased_object_union(request=request, request_options=request_options)
         return _response.data
 
     async def get_with_base_properties(

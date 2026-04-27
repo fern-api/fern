@@ -14,15 +14,17 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.PaymentRequest{
-        PaymentMethod: &fern.PaymentMethodUnion{
-            TokenizeCard: &fern.TokenizeCard{
-                Method: "method",
-                CardNumber: "cardNumber",
+    request := &fern.UnionWithBaseProperties{
+        NamedMetadata: &fern.NamedMetadata{
+            Name: "name",
+            Value: map[string]any{
+                "value": map[string]any{
+                    "key": "value",
+                },
             },
         },
     }
-    client.Union.TestCamelCaseProperties(
+    client.Union.GetWithBaseProperties(
         context.TODO(),
         request,
     )

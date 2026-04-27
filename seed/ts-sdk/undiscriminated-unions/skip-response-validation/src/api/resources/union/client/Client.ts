@@ -339,6 +339,113 @@ export class UnionClient {
     }
 
     /**
+     * @param {SeedUndiscriminatedUnions.OuterNestedUnion} request
+     * @param {UnionClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.union.nestedObjectUnions("string")
+     */
+    public nestedObjectUnions(
+        request: SeedUndiscriminatedUnions.OuterNestedUnion,
+        requestOptions?: UnionClient.RequestOptions,
+    ): core.HttpResponsePromise<string> {
+        return core.HttpResponsePromise.fromPromise(this.__nestedObjectUnions(request, requestOptions));
+    }
+
+    private async __nestedObjectUnions(
+        request: SeedUndiscriminatedUnions.OuterNestedUnion,
+        requestOptions?: UnionClient.RequestOptions,
+    ): Promise<core.WithRawResponse<string>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/nested-objects",
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            requestType: "json",
+            body: request,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as string, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedUndiscriminatedUnionsError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/nested-objects");
+    }
+
+    /**
+     * @param {SeedUndiscriminatedUnions.AliasedObjectUnion} request
+     * @param {UnionClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.union.aliasedObjectUnion({
+     *         onlyInA: "onlyInA",
+     *         sharedNumber: 1
+     *     })
+     */
+    public aliasedObjectUnion(
+        request: SeedUndiscriminatedUnions.AliasedObjectUnion,
+        requestOptions?: UnionClient.RequestOptions,
+    ): core.HttpResponsePromise<string> {
+        return core.HttpResponsePromise.fromPromise(this.__aliasedObjectUnion(request, requestOptions));
+    }
+
+    private async __aliasedObjectUnion(
+        request: SeedUndiscriminatedUnions.AliasedObjectUnion,
+        requestOptions?: UnionClient.RequestOptions,
+    ): Promise<core.WithRawResponse<string>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/aliased-object",
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            requestType: "json",
+            body: request,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as string, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedUndiscriminatedUnionsError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/aliased-object");
+    }
+
+    /**
      * @param {SeedUndiscriminatedUnions.UnionWithBaseProperties} request
      * @param {UnionClient.RequestOptions} requestOptions - Request-specific configuration.
      *

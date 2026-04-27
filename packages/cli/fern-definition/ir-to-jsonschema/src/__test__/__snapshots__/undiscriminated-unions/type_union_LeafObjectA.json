@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "onlyInA": {
+      "type": "string"
+    },
+    "sharedNumber": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "onlyInA",
+    "sharedNumber"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

@@ -273,6 +273,103 @@ client.Union.NestedUnions(
 </dl>
 </details>
 
+<details><summary><code>client.Union.NestedObjectUnions(request) -> string</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &fern.OuterNestedUnion{
+        String: "string",
+    }
+client.Union.NestedObjectUnions(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `*fern.OuterNestedUnion` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Union.AliasedObjectUnion(request) -> string</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &fern.AliasedObjectUnion{
+        AliasedLeafA: &fern.LeafObjectA{
+            OnlyInA: "onlyInA",
+            SharedNumber: 1,
+        },
+    }
+client.Union.AliasedObjectUnion(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `*fern.AliasedObjectUnion` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.Union.GetWithBaseProperties(request) -> *fern.UnionWithBaseProperties</code></summary>
 <dl>
 <dd>

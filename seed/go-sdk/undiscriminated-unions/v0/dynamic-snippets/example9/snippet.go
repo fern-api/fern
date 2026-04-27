@@ -14,17 +14,10 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.UnionWithBaseProperties{
-        NamedMetadata: &fern.NamedMetadata{
-            Name: "name",
-            Value: map[string]any{
-                "value": map[string]any{
-                    "key": "value",
-                },
-            },
-        },
+    request := &fern.OuterNestedUnion{
+        String: "string",
     }
-    client.Union.GetWithBaseProperties(
+    client.Union.NestedObjectUnions(
         context.TODO(),
         request,
     )

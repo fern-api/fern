@@ -14,15 +14,13 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.PaymentRequest{
-        PaymentMethod: &fern.PaymentMethodUnion{
-            TokenizeCard: &fern.TokenizeCard{
-                Method: "card",
-                CardNumber: "1234567890123456",
-            },
+    request := &fern.AliasedObjectUnion{
+        AliasedLeafA: &fern.LeafObjectA{
+            OnlyInA: "onlyInA",
+            SharedNumber: 1,
         },
     }
-    client.Union.TestCamelCaseProperties(
+    client.Union.AliasedObjectUnion(
         context.TODO(),
         request,
     )

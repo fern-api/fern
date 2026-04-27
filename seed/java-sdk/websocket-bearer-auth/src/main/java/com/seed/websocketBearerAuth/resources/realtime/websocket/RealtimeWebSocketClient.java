@@ -345,50 +345,62 @@ public class RealtimeWebSocketClient implements AutoCloseable {
             if (node == null || node.isNull()) {
                 throw new IllegalArgumentException("Received null or invalid JSON message");
             }
-            JsonNode typeNode = node.get("type");
-            if (typeNode == null || typeNode.isNull()) {
-                throw new IllegalArgumentException("Message missing 'type' field");
-            }
-            String type = typeNode.asText();
-            switch (type) {
-                case "receive":
-                    if (receiveHandler != null) {
-                        ReceiveEvent event = objectMapper.treeToValue(node, ReceiveEvent.class);
-                        if (event != null) {
-                            receiveHandler.accept(event);
-                        }
-                    }
-                    break;
-                case "receive_snake_case":
-                    if (receiveSnakeCaseHandler != null) {
-                        ReceiveSnakeCase event = objectMapper.treeToValue(node, ReceiveSnakeCase.class);
-                        if (event != null) {
-                            receiveSnakeCaseHandler.accept(event);
-                        }
-                    }
-                    break;
-                case "receive2":
+            if (node.has("gamma") && node.has("delta") && node.has("epsilon")) {
+                ReceiveEvent2 receive2HandlerEvent = null;
+                try {
+                    receive2HandlerEvent = objectMapper.treeToValue(node, ReceiveEvent2.class);
+                } catch (Exception e) {
+                }
+                if (receive2HandlerEvent != null) {
                     if (receive2Handler != null) {
-                        ReceiveEvent2 event = objectMapper.treeToValue(node, ReceiveEvent2.class);
-                        if (event != null) {
-                            receive2Handler.accept(event);
-                        }
+                        receive2Handler.accept(receive2HandlerEvent);
                     }
-                    break;
-                case "receive3":
+                    return;
+                }
+            }
+            if (node.has("alpha") && node.has("beta")) {
+                ReceiveEvent receiveHandlerEvent = null;
+                try {
+                    receiveHandlerEvent = objectMapper.treeToValue(node, ReceiveEvent.class);
+                } catch (Exception e) {
+                }
+                if (receiveHandlerEvent != null) {
+                    if (receiveHandler != null) {
+                        receiveHandler.accept(receiveHandlerEvent);
+                    }
+                    return;
+                }
+            }
+            if (node.has("receive_text") && node.has("receive_int")) {
+                ReceiveSnakeCase receiveSnakeCaseHandlerEvent = null;
+                try {
+                    receiveSnakeCaseHandlerEvent = objectMapper.treeToValue(node, ReceiveSnakeCase.class);
+                } catch (Exception e) {
+                }
+                if (receiveSnakeCaseHandlerEvent != null) {
+                    if (receiveSnakeCaseHandler != null) {
+                        receiveSnakeCaseHandler.accept(receiveSnakeCaseHandlerEvent);
+                    }
+                    return;
+                }
+            }
+            if (node.has("receiveText3")) {
+                ReceiveEvent3 receive3HandlerEvent = null;
+                try {
+                    receive3HandlerEvent = objectMapper.treeToValue(node, ReceiveEvent3.class);
+                } catch (Exception e) {
+                }
+                if (receive3HandlerEvent != null) {
                     if (receive3Handler != null) {
-                        ReceiveEvent3 event = objectMapper.treeToValue(node, ReceiveEvent3.class);
-                        if (event != null) {
-                            receive3Handler.accept(event);
-                        }
+                        receive3Handler.accept(receive3HandlerEvent);
                     }
-                    break;
-                default:
-                    if (onErrorHandler != null) {
-                        onErrorHandler.accept(new RuntimeException("Unknown WebSocket message type: '" + type
-                                + "'. Update your SDK version to support new message types."));
-                    }
-                    break;
+                    return;
+                }
+            }
+            if (onErrorHandler != null) {
+                onErrorHandler.accept(new RuntimeException(
+                        "Unrecognized WebSocket message: " + json.substring(0, Math.min(200, json.length()))
+                                + "... Update your SDK version to support new message types."));
             }
         } catch (Exception e) {
             if (onErrorHandler != null) {

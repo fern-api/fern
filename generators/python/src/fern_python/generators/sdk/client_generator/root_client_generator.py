@@ -1697,11 +1697,11 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             self._async_init_parameters: Optional[List[ConstructorParameter]] = (
                 list(async_init_parameters) if async_init_parameters is not None else None
             )
+            self._sync_constructor_overloads = sync_constructor_overloads
+            self._async_constructor_overloads = async_constructor_overloads
             self._oauth_token_override = oauth_token_override
             self._use_kwargs_snippets = use_kwargs_snippets
             self._base_url_example_value = base_url_example_value
-            self._sync_constructor_overloads = sync_constructor_overloads
-            self._async_constructor_overloads = async_constructor_overloads
 
         def build(self) -> GeneratedRootClient:
             def create_class_reference(class_name: str) -> AST.ClassReference:

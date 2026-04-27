@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.seed.object.core.ObjectMappers;
 import java.io.IOException;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonDeserialize(using = UndiscriminatedUnionTypeWithAliasVariant.Deserializer.class)
@@ -83,13 +84,17 @@ public final class UndiscriminatedUnionTypeWithAliasVariant {
         public UndiscriminatedUnionTypeWithAliasVariant deserialize(JsonParser p, DeserializationContext context)
                 throws IOException {
             Object value = p.readValueAs(Object.class);
-            try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, AliasVariant.class));
-            } catch (RuntimeException e) {
+            if (value instanceof Map<?, ?> && ((Map<?, ?>) value).containsKey("prop")) {
+                try {
+                    return of(ObjectMappers.JSON_MAPPER.convertValue(value, AliasVariant.class));
+                } catch (RuntimeException e) {
+                }
             }
-            try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, NonAliasVariant.class));
-            } catch (RuntimeException e) {
+            if (value instanceof Map<?, ?> && ((Map<?, ?>) value).containsKey("prop")) {
+                try {
+                    return of(ObjectMappers.JSON_MAPPER.convertValue(value, NonAliasVariant.class));
+                } catch (RuntimeException e) {
+                }
             }
             throw new JsonParseException(p, "Failed to deserialize");
         }

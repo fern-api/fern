@@ -1,4 +1,25 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.98.0
+  changelogEntry:
+    - summary: |
+        Move docs theme commands (export, list, upload) from CLI v2 to CLI v1.
+        Commands are now available as `fern docs theme export`, `fern docs theme list`, and `fern docs theme upload`.
+        Uses DocsWorkspace for path resolution, v1 auth, and validates all file references before uploading.
+      type: feat
+  createdAt: "2026-04-27"
+  irVersion: 66
+- version: 4.97.0
+  changelogEntry:
+    - summary: |
+        [Alpha] Add support for a `translations` block in `docs.yml` to configure multi-language documentation.
+        Each entry specifies a locale (`lang`) and optionally marks it as the default language.
+      type: feat
+    - summary: |
+        Include docs translation metadata in the docs definition published to FDR so generated `fdr.json`
+        advertises configured locales alongside uploaded translation files.
+      type: fix
+  createdAt: "2026-04-27"
+  irVersion: 66
 - version: 4.96.0
   changelogEntry:
     - summary: |

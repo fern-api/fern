@@ -6,18 +6,28 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
+    from .alias_to_leaf_b import AliasToLeafB
+    from .aliased_leaf_a import AliasedLeafA
+    from .aliased_leaf_b import AliasedLeafB
+    from .aliased_object_union import AliasedObjectUnion
     from .convert_token import ConvertToken
     from .key import Key
     from .key_type import KeyType
+    from .leaf_object_a import LeafObjectA
+    from .leaf_object_b import LeafObjectB
+    from .leaf_type_a import LeafTypeA
+    from .leaf_type_b import LeafTypeB
     from .metadata import Metadata
     from .metadata_union import MetadataUnion
     from .my_union import MyUnion
     from .name import Name
     from .named_metadata import NamedMetadata
+    from .nested_object_union import NestedObjectUnion
     from .nested_union_l1 import NestedUnionL1
     from .nested_union_l2 import NestedUnionL2
     from .nested_union_root import NestedUnionRoot
     from .optional_metadata import OptionalMetadata
+    from .outer_nested_union import OuterNestedUnion
     from .payment_method_union import PaymentMethodUnion
     from .request import Request
     from .tokenize_card import TokenizeCard
@@ -29,19 +39,30 @@ if typing.TYPE_CHECKING:
     from .union_with_reserved_names import UnionWithReservedNames
     from .union_with_type_aliases import UnionWithTypeAliases
     from .user_id import UserId
+    from .wrapper_object import WrapperObject
 _dynamic_imports: typing.Dict[str, str] = {
+    "AliasToLeafB": ".alias_to_leaf_b",
+    "AliasedLeafA": ".aliased_leaf_a",
+    "AliasedLeafB": ".aliased_leaf_b",
+    "AliasedObjectUnion": ".aliased_object_union",
     "ConvertToken": ".convert_token",
     "Key": ".key",
     "KeyType": ".key_type",
+    "LeafObjectA": ".leaf_object_a",
+    "LeafObjectB": ".leaf_object_b",
+    "LeafTypeA": ".leaf_type_a",
+    "LeafTypeB": ".leaf_type_b",
     "Metadata": ".metadata",
     "MetadataUnion": ".metadata_union",
     "MyUnion": ".my_union",
     "Name": ".name",
     "NamedMetadata": ".named_metadata",
+    "NestedObjectUnion": ".nested_object_union",
     "NestedUnionL1": ".nested_union_l1",
     "NestedUnionL2": ".nested_union_l2",
     "NestedUnionRoot": ".nested_union_root",
     "OptionalMetadata": ".optional_metadata",
+    "OuterNestedUnion": ".outer_nested_union",
     "PaymentMethodUnion": ".payment_method_union",
     "Request": ".request",
     "TokenizeCard": ".tokenize_card",
@@ -53,6 +74,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UnionWithReservedNames": ".union_with_reserved_names",
     "UnionWithTypeAliases": ".union_with_type_aliases",
     "UserId": ".user_id",
+    "WrapperObject": ".wrapper_object",
 }
 
 
@@ -78,18 +100,28 @@ def __dir__():
 
 
 __all__ = [
+    "AliasToLeafB",
+    "AliasedLeafA",
+    "AliasedLeafB",
+    "AliasedObjectUnion",
     "ConvertToken",
     "Key",
     "KeyType",
+    "LeafObjectA",
+    "LeafObjectB",
+    "LeafTypeA",
+    "LeafTypeB",
     "Metadata",
     "MetadataUnion",
     "MyUnion",
     "Name",
     "NamedMetadata",
+    "NestedObjectUnion",
     "NestedUnionL1",
     "NestedUnionL2",
     "NestedUnionRoot",
     "OptionalMetadata",
+    "OuterNestedUnion",
     "PaymentMethodUnion",
     "Request",
     "TokenizeCard",
@@ -101,4 +133,5 @@ __all__ = [
     "UnionWithReservedNames",
     "UnionWithTypeAliases",
     "UserId",
+    "WrapperObject",
 ]
