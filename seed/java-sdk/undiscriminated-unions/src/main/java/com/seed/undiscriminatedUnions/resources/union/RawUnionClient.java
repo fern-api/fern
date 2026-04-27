@@ -13,10 +13,12 @@ import com.seed.undiscriminatedUnions.core.SeedUndiscriminatedUnionsApiException
 import com.seed.undiscriminatedUnions.core.SeedUndiscriminatedUnionsException;
 import com.seed.undiscriminatedUnions.core.SeedUndiscriminatedUnionsHttpResponse;
 import com.seed.undiscriminatedUnions.resources.union.requests.PaymentRequest;
+import com.seed.undiscriminatedUnions.resources.union.types.AliasedObjectUnion;
 import com.seed.undiscriminatedUnions.resources.union.types.Key;
 import com.seed.undiscriminatedUnions.resources.union.types.MetadataUnion;
 import com.seed.undiscriminatedUnions.resources.union.types.MyUnion;
 import com.seed.undiscriminatedUnions.resources.union.types.NestedUnionRoot;
+import com.seed.undiscriminatedUnions.resources.union.types.OuterNestedUnion;
 import com.seed.undiscriminatedUnions.resources.union.types.UnionWithBaseProperties;
 import com.seed.undiscriminatedUnions.resources.union.types.UnionWithDuplicateTypes;
 import java.io.IOException;
@@ -299,6 +301,100 @@ public class RawUnionClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("nested");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (JsonProcessingException e) {
+            throw new SeedUndiscriminatedUnionsException("Failed to serialize request", e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl.build())
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            if (response.isSuccessful()) {
+                return new SeedUndiscriminatedUnionsHttpResponse<>(
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response);
+            }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new SeedUndiscriminatedUnionsApiException(
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (IOException e) {
+            throw new SeedUndiscriminatedUnionsException("Network error executing HTTP request", e);
+        }
+    }
+
+    public SeedUndiscriminatedUnionsHttpResponse<String> nestedObjectUnions(OuterNestedUnion request) {
+        return nestedObjectUnions(request, null);
+    }
+
+    public SeedUndiscriminatedUnionsHttpResponse<String> nestedObjectUnions(
+            OuterNestedUnion request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("nested-objects");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (JsonProcessingException e) {
+            throw new SeedUndiscriminatedUnionsException("Failed to serialize request", e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl.build())
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            if (response.isSuccessful()) {
+                return new SeedUndiscriminatedUnionsHttpResponse<>(
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response);
+            }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new SeedUndiscriminatedUnionsApiException(
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (IOException e) {
+            throw new SeedUndiscriminatedUnionsException("Network error executing HTTP request", e);
+        }
+    }
+
+    public SeedUndiscriminatedUnionsHttpResponse<String> aliasedObjectUnion(AliasedObjectUnion request) {
+        return aliasedObjectUnion(request, null);
+    }
+
+    public SeedUndiscriminatedUnionsHttpResponse<String> aliasedObjectUnion(
+            AliasedObjectUnion request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("aliased-object");
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);

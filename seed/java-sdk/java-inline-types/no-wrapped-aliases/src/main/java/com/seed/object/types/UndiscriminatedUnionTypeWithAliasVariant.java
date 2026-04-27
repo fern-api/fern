@@ -92,9 +92,11 @@ public final class UndiscriminatedUnionTypeWithAliasVariant {
         public UndiscriminatedUnionTypeWithAliasVariant deserialize(JsonParser p, DeserializationContext context)
                 throws IOException {
             Object value = p.readValueAs(Object.class);
-            try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, AliasVariantType.class));
-            } catch (RuntimeException e) {
+            if (value instanceof Map<?, ?> && ((Map<?, ?>) value).containsKey("prop")) {
+                try {
+                    return of(ObjectMappers.JSON_MAPPER.convertValue(value, AliasVariantType.class));
+                } catch (RuntimeException e) {
+                }
             }
             if (value instanceof Map<?, ?> && ((Map<?, ?>) value).containsKey("prop")) {
                 try {

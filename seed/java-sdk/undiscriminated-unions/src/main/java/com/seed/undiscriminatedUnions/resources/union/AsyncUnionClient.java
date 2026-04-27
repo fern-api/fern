@@ -6,10 +6,12 @@ package com.seed.undiscriminatedUnions.resources.union;
 import com.seed.undiscriminatedUnions.core.ClientOptions;
 import com.seed.undiscriminatedUnions.core.RequestOptions;
 import com.seed.undiscriminatedUnions.resources.union.requests.PaymentRequest;
+import com.seed.undiscriminatedUnions.resources.union.types.AliasedObjectUnion;
 import com.seed.undiscriminatedUnions.resources.union.types.Key;
 import com.seed.undiscriminatedUnions.resources.union.types.MetadataUnion;
 import com.seed.undiscriminatedUnions.resources.union.types.MyUnion;
 import com.seed.undiscriminatedUnions.resources.union.types.NestedUnionRoot;
+import com.seed.undiscriminatedUnions.resources.union.types.OuterNestedUnion;
 import com.seed.undiscriminatedUnions.resources.union.types.Request;
 import com.seed.undiscriminatedUnions.resources.union.types.UnionWithBaseProperties;
 import com.seed.undiscriminatedUnions.resources.union.types.UnionWithDuplicateTypes;
@@ -88,6 +90,22 @@ public class AsyncUnionClient {
 
     public CompletableFuture<String> nestedUnions(NestedUnionRoot request, RequestOptions requestOptions) {
         return this.rawClient.nestedUnions(request, requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> nestedObjectUnions(OuterNestedUnion request) {
+        return this.rawClient.nestedObjectUnions(request).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> nestedObjectUnions(OuterNestedUnion request, RequestOptions requestOptions) {
+        return this.rawClient.nestedObjectUnions(request, requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> aliasedObjectUnion(AliasedObjectUnion request) {
+        return this.rawClient.aliasedObjectUnion(request).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> aliasedObjectUnion(AliasedObjectUnion request, RequestOptions requestOptions) {
+        return this.rawClient.aliasedObjectUnion(request, requestOptions).thenApply(response -> response.body());
     }
 
     public CompletableFuture<UnionWithBaseProperties> getWithBaseProperties(UnionWithBaseProperties request) {
