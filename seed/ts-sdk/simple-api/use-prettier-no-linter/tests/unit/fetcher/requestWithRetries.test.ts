@@ -1,5 +1,5 @@
-import type { Mock, MockInstance } from "vitest";
 import { requestWithRetries } from "../../../src/core/fetcher/requestWithRetries";
+import { Mock, MockInstance } from "vitest";
 
 describe("requestWithRetries", () => {
     let mockFetch: Mock;
