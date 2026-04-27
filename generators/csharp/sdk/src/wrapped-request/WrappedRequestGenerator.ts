@@ -93,9 +93,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
                 if (bodyPropertyPascalNames.has(this.case.pascalSafe(pathParameter.name))) {
                     continue;
                 }
-                const pathDefaultValue = this.defaultValueExtractor.extractClientDefault(
-                    pathParameter.clientDefault
-                );
+                const pathDefaultValue = this.defaultValueExtractor.extractClientDefault(pathParameter.clientDefault);
                 class_.addField({
                     origin: pathParameter,
                     type: this.context.csharpTypeMapper.convert({

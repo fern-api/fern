@@ -222,9 +222,11 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
                         this.csharp.parameter({
                             docs: pathParam.docs,
                             name: parameterName,
-                            type: this.context.csharpTypeMapper.convert({
-                                reference: pathParam.valueType
-                            }).asOptional(),
+                            type: this.context.csharpTypeMapper
+                                .convert({
+                                    reference: pathParam.valueType
+                                })
+                                .asOptional(),
                             initializer: "null"
                         })
                     );
