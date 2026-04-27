@@ -67,9 +67,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                         requestParameterName: this.requestParameterName,
                         propertyName: query.name
                     });
-                    const clientDefaultWire = DefaultValueExtractor.getClientDefaultStringValue(
-                        query.clientDefault
-                    );
+                    const clientDefaultWire = DefaultValueExtractor.getClientDefaultStringValue(query.clientDefault);
                     if (clientDefaultWire != null) {
                         const escaped = clientDefaultWire.replace(/\\/g, "\\\\").replace(/'/g, "\\'");
                         writer.writeTextStatement(
@@ -112,9 +110,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                         requestParameterName: this.requestParameterName,
                         propertyName: header.name
                     });
-                    const clientDefaultWire = DefaultValueExtractor.getClientDefaultStringValue(
-                        header.clientDefault
-                    );
+                    const clientDefaultWire = DefaultValueExtractor.getClientDefaultStringValue(header.clientDefault);
                     if (clientDefaultWire != null) {
                         const escaped = clientDefaultWire.replace(/\\/g, "\\\\").replace(/'/g, "\\'");
                         writer.writeTextStatement(

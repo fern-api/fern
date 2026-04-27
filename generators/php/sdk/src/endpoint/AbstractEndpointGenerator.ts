@@ -62,9 +62,7 @@ export abstract class AbstractEndpointGenerator {
                 includePathParametersInEndpointSignature: includePathParametersInSignature
             });
             if (includePathParametersInSignature) {
-                const clientDefaultInit = DefaultValueExtractor.extractClientDefaultCodeBlock(
-                    pathParam.clientDefault
-                );
+                const clientDefaultInit = DefaultValueExtractor.extractClientDefaultCodeBlock(pathParam.clientDefault);
                 const type = this.context.phpTypeMapper.convert({ reference: pathParam.valueType });
                 pathParameters.push(
                     php.parameter({
