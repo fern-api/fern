@@ -1,0 +1,4 @@
+- summary: |
+    Add HTTP status code-based retry logic for 408, 429, and all 5xx except
+    500 Internal Server Error. Previously only network errors were retried.
+  type: fix

@@ -453,6 +453,11 @@ impl HttpClient {
 
             match self.client.execute(cloned_request).await {
                 Ok(response) if response.status().is_success() => return Ok(response),
+                Ok(response) if attempt < max_retries && Self::is_retryable_status(response.status().as_u16()) => {
+                    // Exponential backoff for retryable HTTP status codes
+                    let delay = std::time::Duration::from_millis(100 * 2_u64.pow(attempt));
+                    tokio::time::sleep(delay).await;
+                }
                 Ok(response) => {
                     let status_code = response.status().as_u16();
                     let body = response.text().await.ok();
@@ -469,6 +474,10 @@ impl HttpClient {
         }
 
         Err(ApiError::Network(last_error.unwrap()))
+    }
+
+    fn is_retryable_status(status_code: u16) -> bool {
+        status_code == 408 || status_code == 429 || (status_code >= 501 && status_code < 600)
     }
 
     async fn parse_response<T>(&self, response: Response) -> Result<T, ApiError>
