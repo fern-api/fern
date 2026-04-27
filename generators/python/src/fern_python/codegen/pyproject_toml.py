@@ -245,23 +245,8 @@ packages = [
                 pytest_version = "^7.4.0"
                 pytest_asyncio_version = "^0.23.5"
 
-            # Pin urllib3 as a dev dependency to keep it out of the SDK's runtime
-            # dependency set while constraining `poetry lock` resolution so the
-            # generated lock file never picks up a vulnerable version.
-            #
-            # For projects targeting Python >= 3.9, require urllib3 >= 2.6.3
-            # which addresses CVE-2026-21441 (decompression-bomb bypass on
-            # redirects), CVE-2024-37891 (auth header leak), and several
-            # additional HIGH-severity advisories affecting all of 1.x and
-            # 2.x < 2.6.3.  urllib3 2.x requires Python >= 3.9, so projects
-            # still supporting Python 3.8 fall back to the tightest safe
-            # constraint available for the 1.x line (>= 1.26.20, which is the
-            # latest 1.x release — no fully patched 1.x exists).
-            if min_minor >= 9:
-                urllib3_constraint = ">=2.6.3,<3.0.0"
-            else:
-                urllib3_constraint = ">=1.26.20,<2.0.0 || >=2.6.3,<3.0.0"
-
+            # Pin urllib3 >= 2.6.3 as a dev dependency to address CVE-2026-21441
+            # and related HIGH-severity advisories affecting < 2.6.3.
             return f"""
 [tool.poetry.dependencies]
 python = "{self.python_version}"
@@ -273,7 +258,7 @@ pytest-asyncio = "{pytest_asyncio_version}"
 pytest-xdist = "^3.6.1"
 python-dateutil = "^2.9.0"
 types-python-dateutil = "^2.9.0.20240316"
-urllib3 = "{urllib3_constraint}"
+urllib3 = ">=2.6.3,<3.0.0"
 {wire_test_deps}{dev_deps}"""
 
     @dataclass(frozen=True)
