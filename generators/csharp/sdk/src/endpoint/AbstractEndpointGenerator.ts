@@ -113,8 +113,12 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
             default:
                 assertNever(endpointType);
         }
+        const requiredPathParameters = pathParameters.filter((p) => p.initializer == null);
+        const optionalPathParameters = pathParameters.filter((p) => p.initializer != null);
         return {
-            baseParameters: [...pathParameters, requestParameter].filter((p): p is ast.Parameter => p != null),
+            baseParameters: [...requiredPathParameters, requestParameter, ...optionalPathParameters].filter(
+                (p): p is ast.Parameter => p != null
+            ),
             pathParameters,
             pathParameterReferences,
             request,
