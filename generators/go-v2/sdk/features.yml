@@ -65,7 +65,7 @@ features:
 
       - [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
       - [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
-      - [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
+      - 5XX (All server errors except [500](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) Internal Server Error)
 
       If the `Retry-After` header is present in the response, the SDK will prioritize respecting its value exactly
       over the default exponential backoff.

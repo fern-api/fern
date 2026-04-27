@@ -84,9 +84,14 @@ func TestRetrier(t *testing.T) {
 			giveStatusCodes: []int{http.StatusRequestTimeout, http.StatusOK},
 		},
 		{
-			description:     "retries occur on status code 500",
+			description:     "retries occur on status code 502",
 			giveAttempts:    2,
-			giveStatusCodes: []int{http.StatusInternalServerError, http.StatusOK},
+			giveStatusCodes: []int{http.StatusBadGateway, http.StatusOK},
+		},
+		{
+			description:     "no retries on status code 500",
+			giveAttempts:    1,
+			giveStatusCodes: []int{http.StatusInternalServerError},
 		},
 	}
 
