@@ -26,7 +26,7 @@ describe("requestWithRetries", () => {
             return null as any;
         });
 
-        const retryableStatuses = [408, 429, 500, 502];
+        const retryableStatuses = [408, 429, 502, 503];
         let callCount = 0;
 
         mockFetch.mockImplementation(async () => {
@@ -51,7 +51,7 @@ describe("requestWithRetries", () => {
         });
 
         const maxRetries = 2;
-        mockFetch.mockResolvedValue(new Response("", { status: 500 }));
+        mockFetch.mockResolvedValue(new Response("", { status: 503 }));
 
         const responsePromise = requestWithRetries(() => mockFetch(), maxRetries);
         await jest.runAllTimersAsync();
@@ -150,7 +150,7 @@ describe("requestWithRetries", () => {
             return null as any;
         });
 
-        mockFetch.mockResolvedValue(new Response("", { status: 500 }));
+        mockFetch.mockResolvedValue(new Response("", { status: 502 }));
         const maxRetries = 3;
         const expectedDelays = [1000, 2000, 4000];
 
@@ -174,8 +174,8 @@ describe("requestWithRetries", () => {
         });
 
         mockFetch
-            .mockResolvedValueOnce(new Response("", { status: 500 }))
-            .mockResolvedValueOnce(new Response("", { status: 500 }))
+            .mockResolvedValueOnce(new Response("", { status: 502 }))
+            .mockResolvedValueOnce(new Response("", { status: 502 }))
             .mockResolvedValueOnce(new Response("", { status: 200 }))
             .mockResolvedValueOnce(new Response("", { status: 200 }));
 

@@ -1,0 +1,5 @@
+- summary: |
+    Only retry requests on 408, 429, 502, 503, and 504 status codes instead of
+    all 5xx errors. This avoids retrying on 500 Internal Server Error, which is
+    typically not transient and can cause idempotency issues.
+  type: fix

@@ -26,7 +26,7 @@ describe("requestWithRetries", () => {
             return null as any;
         });
 
-        const retryableStatuses = [408, 429, 500, 502];
+        const retryableStatuses = [408, 429, 502, 503];
         let callCount = 0;
 
         mockFetch.mockImplementation(async () => {
@@ -51,14 +51,36 @@ describe("requestWithRetries", () => {
         });
 
         const maxRetries = 2;
-        mockFetch.mockResolvedValue(new Response("", { status: 500 }));
+        mockFetch.mockResolvedValue(new Response("", { status: 503 }));
 
         const responsePromise = requestWithRetries(() => mockFetch(), maxRetries);
         await jest.runAllTimersAsync();
         const response = await responsePromise;
 
         expect(mockFetch).toHaveBeenCalledTimes(maxRetries + 1);
-        expect(response.status).toBe(500);
+        expect(response.status).toBe(503);
+    });
+
+    it("should not retry on non-retryable 5xx status codes", async () => {
+        setTimeoutSpy = jest.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
+            process.nextTick(callback);
+            return null as any;
+        });
+
+        const nonRetryableStatuses = [500, 501, 505];
+
+        for (const status of nonRetryableStatuses) {
+            mockFetch.mockReset();
+            setTimeoutSpy.mockClear();
+            mockFetch.mockResolvedValueOnce(new Response("", { status }));
+
+            const responsePromise = requestWithRetries(() => mockFetch(), 3);
+            await jest.runAllTimersAsync();
+            const response = await responsePromise;
+
+            expect(mockFetch).toHaveBeenCalledTimes(1);
+            expect(response.status).toBe(status);
+        }
     });
 
     it("should not retry on success status codes", async () => {
@@ -150,7 +172,7 @@ describe("requestWithRetries", () => {
             return null as any;
         });
 
-        mockFetch.mockResolvedValue(new Response("", { status: 500 }));
+        mockFetch.mockResolvedValue(new Response("", { status: 502 }));
         const maxRetries = 3;
         const expectedDelays = [1000, 2000, 4000];
 
@@ -174,8 +196,8 @@ describe("requestWithRetries", () => {
         });
 
         mockFetch
-            .mockResolvedValueOnce(new Response("", { status: 500 }))
-            .mockResolvedValueOnce(new Response("", { status: 500 }))
+            .mockResolvedValueOnce(new Response("", { status: 502 }))
+            .mockResolvedValueOnce(new Response("", { status: 502 }))
             .mockResolvedValueOnce(new Response("", { status: 200 }))
             .mockResolvedValueOnce(new Response("", { status: 200 }));
 
