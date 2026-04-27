@@ -1,5 +1,6 @@
 - summary: |
-    Only retry requests on 408, 429, and 5xx status codes except 500 Internal
-    Server Error. Previously a fixed list including 500, 521, 522, 524 was used.
-    Now retries all 5xx except 500 which is typically not transient.
+    Stop retrying on 500 Internal Server Error. Previously a fixed list including
+    500, 521, 522, 524 was used, but 500 is typically not transient and retrying
+    can cause idempotency issues. 501-599 continue to be retried, along with 408
+    and 429.
   type: fix
