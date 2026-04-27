@@ -10,9 +10,9 @@ import (
 	testing "testing"
 )
 
-func TestSettersFolderCfoo(t *testing.T) {
+func TestSettersFolderCFoo(t *testing.T) {
 	t.Run("SetBarProperty", func(t *testing.T) {
-		obj := &FolderCfoo{}
+		obj := &FolderCFoo{}
 		var fernTestValueBarProperty uuid.UUID
 		obj.SetBarProperty(fernTestValueBarProperty)
 		assert.Equal(t, fernTestValueBarProperty, obj.BarProperty)
@@ -21,11 +21,11 @@ func TestSettersFolderCfoo(t *testing.T) {
 
 }
 
-func TestGettersFolderCfoo(t *testing.T) {
+func TestGettersFolderCFoo(t *testing.T) {
 	t.Run("GetBarProperty", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &FolderCfoo{}
+		obj := &FolderCFoo{}
 		var expected uuid.UUID
 		obj.BarProperty = expected
 
@@ -35,7 +35,7 @@ func TestGettersFolderCfoo(t *testing.T) {
 
 	t.Run("GetBarProperty_NilReceiver", func(t *testing.T) {
 		t.Parallel()
-		var obj *FolderCfoo
+		var obj *FolderCFoo
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
@@ -47,11 +47,11 @@ func TestGettersFolderCfoo(t *testing.T) {
 
 }
 
-func TestSettersMarkExplicitFolderCfoo(t *testing.T) {
+func TestSettersMarkExplicitFolderCFoo(t *testing.T) {
 	t.Run("SetBarProperty_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &FolderCfoo{}
+		obj := &FolderCFoo{}
 		var fernTestValueBarProperty uuid.UUID
 
 		// Act
@@ -81,11 +81,11 @@ func TestSettersMarkExplicitFolderCfoo(t *testing.T) {
 
 }
 
-func TestJSONMarshalingFolderCfoo(t *testing.T) {
+func TestJSONMarshalingFolderCFoo(t *testing.T) {
 	t.Run("MarshalUnmarshal", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &FolderCfoo{}
+		obj := &FolderCFoo{}
 
 		// Act - Marshal to JSON
 		data, err := json.Marshal(obj)
@@ -94,46 +94,46 @@ func TestJSONMarshalingFolderCfoo(t *testing.T) {
 		assert.NotEmpty(t, data, "marshaled data should not be empty")
 
 		// Unmarshal back and verify round-trip
-		var unmarshaled FolderCfoo
+		var unmarshaled FolderCFoo
 		err = json.Unmarshal(data, &unmarshaled)
 		assert.NoError(t, err, "round-trip unmarshal should succeed")
 	})
 
 	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
 		t.Parallel()
-		var obj FolderCfoo
+		var obj FolderCFoo
 		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
 		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
 	})
 
 	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
 		t.Parallel()
-		var obj FolderCfoo
+		var obj FolderCFoo
 		err := json.Unmarshal([]byte(`{}`), &obj)
 		assert.NoError(t, err, "unmarshaling empty object should succeed")
 	})
 }
 
-func TestStringFolderCfoo(t *testing.T) {
+func TestStringFolderCFoo(t *testing.T) {
 	t.Run("StringMethod", func(t *testing.T) {
 		t.Parallel()
-		obj := &FolderCfoo{}
+		obj := &FolderCFoo{}
 		result := obj.String()
 		assert.NotEmpty(t, result, "String() should return a non-empty representation")
 	})
 
 	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
 		t.Parallel()
-		var obj *FolderCfoo
+		var obj *FolderCFoo
 		result := obj.String()
 		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
 	})
 }
 
-func TestExtraPropertiesFolderCfoo(t *testing.T) {
+func TestExtraPropertiesFolderCFoo(t *testing.T) {
 	t.Run("GetExtraProperties", func(t *testing.T) {
 		t.Parallel()
-		obj := &FolderCfoo{}
+		obj := &FolderCFoo{}
 		// Should not panic when calling GetExtraProperties()
 		defer func() {
 			if r := recover(); r != nil {
@@ -147,7 +147,7 @@ func TestExtraPropertiesFolderCfoo(t *testing.T) {
 
 	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
 		t.Parallel()
-		var obj *FolderCfoo
+		var obj *FolderCFoo
 		extraProps := obj.GetExtraProperties()
 		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
 	})
