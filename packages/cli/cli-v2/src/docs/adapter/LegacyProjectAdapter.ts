@@ -1,5 +1,4 @@
 import { AbstractAPIWorkspace } from "@fern-api/api-workspace-commons";
-import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import type { Project } from "@fern-api/project-loader";
 import { LegacyOSSWorkspaceAdapter } from "../../api/adapter/LegacyOSSWorkspaceAdapter.js";
 import { TaskContextAdapter } from "../../context/adapter/TaskContextAdapter.js";
@@ -65,10 +64,8 @@ export class LegacyProjectAdapter {
                 absoluteFilePath: this.context.cwd
             });
             if (ossWorkspace != null) {
-                if (ossWorkspace instanceof OSSWorkspace) {
-                    // Resolve GraphQL specs into operations/types so docs can render them.
-                    await ossWorkspace.processGraphQLSpecs(taskContext);
-                }
+                // Resolve GraphQL specs into operations/types so docs can render them.
+                await ossWorkspace.processGraphQLSpecs(taskContext);
                 workspaces.push(ossWorkspace);
             }
         }

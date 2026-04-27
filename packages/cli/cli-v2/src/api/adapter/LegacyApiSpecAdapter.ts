@@ -6,6 +6,38 @@ import type {
     OpenRPCSpec as V1OpenRPCSpec,
     ProtobufSpec as V1ProtobufSpec
 } from "@fern-api/api-workspace-commons";
+
+/**
+ * Partitions v1 specs into two groups:
+ *
+ * - `filteredSpecs`: IR-generating specs (OpenAPI, AsyncAPI, protobuf-from-openapi).
+ *   Docs-only types (graphql, openrpc) and raw protobuf are excluded.
+ * - `allSpecs`: All specs except protobuf-from-openapi (used by OSSWorkspace for doc rendering).
+ */
+export function partitionV1Specs(v1Specs: Spec[]): {
+    filteredSpecs: (OpenAPISpec | V1ProtobufSpec)[];
+    allSpecs: Spec[];
+} {
+    const filteredSpecs = v1Specs.filter((spec): spec is OpenAPISpec | V1ProtobufSpec => {
+        if (spec.type === "openrpc" || spec.type === "graphql") {
+            return false;
+        }
+        if (spec.type === "protobuf" && !spec.fromOpenAPI) {
+            return false;
+        }
+        return true;
+    });
+
+    const allSpecs = v1Specs.filter((spec) => {
+        if (spec.type === "protobuf" && spec.fromOpenAPI) {
+            return false;
+        }
+        return true;
+    });
+
+    return { filteredSpecs, allSpecs };
+}
+
 import type { schemas } from "@fern-api/config";
 import { generatorsYml } from "@fern-api/configuration";
 import { relativize } from "@fern-api/fs-utils";

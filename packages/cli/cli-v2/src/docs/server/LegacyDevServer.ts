@@ -65,7 +65,7 @@ export class LegacyDevServer {
      */
     private async reloadProject(): Promise<Project> {
         const workspace = await this.context.loadWorkspaceOrThrow();
-        return await this.adapter.adapt(workspace);
+        return this.adapter.adapt(workspace);
     }
 
     /**
