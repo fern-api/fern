@@ -58,7 +58,7 @@ describe("requestWithRetries", () => {
         const response = await responsePromise;
 
         expect(mockFetch).toHaveBeenCalledTimes(maxRetries + 1);
-        expect(response.status).toBe(500);
+        expect(response.status).toBe(503);
     });
 
     it("should not retry on success status codes", async () => {
