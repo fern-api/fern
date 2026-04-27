@@ -153,6 +153,7 @@ import Foundation
 import OauthClientCredentialsWithVariables
 
 let client = OauthClientCredentialsWithVariablesClient(
+    ...,
     urlSession: // Provide your implementation here
 )
 ```

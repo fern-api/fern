@@ -150,6 +150,7 @@ import Foundation
 import Api
 
 let client = ApiClient(
+    ...,
     urlSession: // Provide your implementation here
 )
 ```

@@ -370,49 +370,35 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         return firstName != null ? this.context.caseConverter.camelUnsafe(firstName) : undefined;
     }
 
-    private getAuthInitArguments(): swift.FunctionArgument[] {
-        const args: swift.FunctionArgument[] = [];
+    /**
+     * Collects auth params ordered to match the generated convenience initializer:
+     * header → bearer → basic (see RootClientGenerator.getConvenienceInitializerParams).
+     */
+    private getOrderedAuthParams(): {
+        headerArgs: { label: string; placeholder: string }[];
+        bearerArgs: { label: string; placeholder: string }[];
+        basicArgs: { label: string; placeholder: string }[];
+    } {
+        const headerArgs: { label: string; placeholder: string }[] = [];
+        const bearerArgs: { label: string; placeholder: string }[] = [];
+        const basicArgs: { label: string; placeholder: string }[] = [];
         for (const scheme of this.context.ir.auth.schemes) {
             switch (scheme.type) {
                 case "bearer": {
                     const tokenName = this.context.caseConverter.camelUnsafe(scheme.token);
-                    const placeholder = scheme.tokenPlaceholder ?? "YOUR_API_KEY";
-                    args.push(
-                        swift.functionArgument({
-                            label: tokenName,
-                            value: swift.Expression.stringLiteral(placeholder)
-                        })
-                    );
+                    bearerArgs.push({ label: tokenName, placeholder: scheme.tokenPlaceholder ?? "YOUR_API_KEY" });
                     break;
                 }
                 case "basic": {
                     const usernameName = this.context.caseConverter.camelUnsafe(scheme.username);
                     const passwordName = this.context.caseConverter.camelUnsafe(scheme.password);
-                    const usernamePlaceholder = scheme.usernamePlaceholder ?? "YOUR_USERNAME";
-                    const passwordPlaceholder = scheme.passwordPlaceholder ?? "YOUR_PASSWORD";
-                    args.push(
-                        swift.functionArgument({
-                            label: usernameName,
-                            value: swift.Expression.stringLiteral(usernamePlaceholder)
-                        })
-                    );
-                    args.push(
-                        swift.functionArgument({
-                            label: passwordName,
-                            value: swift.Expression.stringLiteral(passwordPlaceholder)
-                        })
-                    );
+                    basicArgs.push({ label: usernameName, placeholder: scheme.usernamePlaceholder ?? "YOUR_USERNAME" });
+                    basicArgs.push({ label: passwordName, placeholder: scheme.passwordPlaceholder ?? "YOUR_PASSWORD" });
                     break;
                 }
                 case "header": {
                     const headerName = this.context.caseConverter.camelUnsafe(scheme.name);
-                    const placeholder = scheme.headerPlaceholder ?? "YOUR_API_KEY";
-                    args.push(
-                        swift.functionArgument({
-                            label: headerName,
-                            value: swift.Expression.stringLiteral(placeholder)
-                        })
-                    );
+                    headerArgs.push({ label: headerName, placeholder: scheme.headerPlaceholder ?? "YOUR_API_KEY" });
                     break;
                 }
                 case "oauth":
@@ -423,46 +409,30 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                     assertNever(scheme);
             }
         }
-        return args;
+        return { headerArgs, bearerArgs, basicArgs };
+    }
+
+    private getAuthInitArguments(): swift.FunctionArgument[] {
+        const { headerArgs, bearerArgs, basicArgs } = this.getOrderedAuthParams();
+        const allArgs = [...headerArgs, ...bearerArgs, ...basicArgs];
+        if (allArgs.length === 0) {
+            return [swift.functionArgument({ value: swift.Expression.rawValue("...") })];
+        }
+        return allArgs.map((arg) =>
+            swift.functionArgument({
+                label: arg.label,
+                value: swift.Expression.stringLiteral(arg.placeholder)
+            })
+        );
     }
 
     private getAuthInitString(): string {
-        const parts: string[] = [];
-        for (const scheme of this.context.ir.auth.schemes) {
-            switch (scheme.type) {
-                case "bearer": {
-                    const tokenName = this.context.caseConverter.camelUnsafe(scheme.token);
-                    const placeholder = scheme.tokenPlaceholder ?? "YOUR_API_KEY";
-                    parts.push(`${tokenName}: "${placeholder}"`);
-                    break;
-                }
-                case "basic": {
-                    const usernameName = this.context.caseConverter.camelUnsafe(scheme.username);
-                    const passwordName = this.context.caseConverter.camelUnsafe(scheme.password);
-                    const usernamePlaceholder = scheme.usernamePlaceholder ?? "YOUR_USERNAME";
-                    const passwordPlaceholder = scheme.passwordPlaceholder ?? "YOUR_PASSWORD";
-                    parts.push(`${usernameName}: "${usernamePlaceholder}"`);
-                    parts.push(`${passwordName}: "${passwordPlaceholder}"`);
-                    break;
-                }
-                case "header": {
-                    const headerName = this.context.caseConverter.camelUnsafe(scheme.name);
-                    const placeholder = scheme.headerPlaceholder ?? "YOUR_API_KEY";
-                    parts.push(`${headerName}: "${placeholder}"`);
-                    break;
-                }
-                case "oauth":
-                    break;
-                case "inferred":
-                    break;
-                default:
-                    assertNever(scheme);
-            }
-        }
-        if (parts.length === 0) {
+        const { headerArgs, bearerArgs, basicArgs } = this.getOrderedAuthParams();
+        const allArgs = [...headerArgs, ...bearerArgs, ...basicArgs];
+        if (allArgs.length === 0) {
             return "...";
         }
-        return parts.join(", ");
+        return allArgs.map((arg) => `${arg.label}: "${arg.placeholder}"`).join(", ");
     }
 
     private getUsageSnippetForEndpoint(endpointId: string) {

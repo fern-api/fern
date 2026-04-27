@@ -140,6 +140,7 @@ import Foundation
 import InferredAuthImplicit
 
 let client = InferredAuthImplicitClient(
+    ...,
     urlSession: // Provide your implementation here
 )
 ```

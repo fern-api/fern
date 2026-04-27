@@ -151,6 +151,7 @@ import Foundation
 import OauthClientCredentialsDefault
 
 let client = OauthClientCredentialsDefaultClient(
+    ...,
     urlSession: // Provide your implementation here
 )
 ```
