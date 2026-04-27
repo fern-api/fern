@@ -273,6 +273,103 @@ client.Union.NestedUnions(
 </dl>
 </details>
 
+<details><summary><code>client.Union.NestedObjectUnions(request) -> string</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &undiscriminated.OuterNestedUnion{
+        String: "string",
+    }
+client.Union.NestedObjectUnions(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `*undiscriminated.OuterNestedUnion` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Union.AliasedObjectUnion(request) -> string</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &undiscriminated.AliasedObjectUnion{
+        AliasedLeafA: &undiscriminated.LeafObjectA{
+            OnlyInA: "onlyInA",
+            SharedNumber: 1,
+        },
+    }
+client.Union.AliasedObjectUnion(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `*undiscriminated.AliasedObjectUnion` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.Union.GetWithBaseProperties(request) -> *undiscriminated.UnionWithBaseProperties</code></summary>
 <dl>
 <dd>

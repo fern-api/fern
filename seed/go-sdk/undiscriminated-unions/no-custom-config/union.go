@@ -55,6 +55,79 @@ func (p *PaymentRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(explicitMarshaler)
 }
 
+type AliasToLeafB = *LeafObjectB
+
+// An alias around LeafObjectA.
+type AliasedLeafA = *LeafObjectA
+
+// An alias around an alias around LeafObjectB, to exercise the alias-walk loop.
+type AliasedLeafB = AliasToLeafB
+
+// Undiscriminated union whose members are named aliases of object types
+// (including an alias-of-alias). Required keys are disjoint, so a correct
+// deserializer must emit containsKey() guards for each alias variant.
+type AliasedObjectUnion struct {
+	AliasedLeafA AliasedLeafA
+	AliasedLeafB AliasedLeafB
+
+	typ string
+}
+
+func (a *AliasedObjectUnion) GetAliasedLeafA() AliasedLeafA {
+	if a == nil {
+		return nil
+	}
+	return a.AliasedLeafA
+}
+
+func (a *AliasedObjectUnion) GetAliasedLeafB() AliasedLeafB {
+	if a == nil {
+		return nil
+	}
+	return a.AliasedLeafB
+}
+
+func (a *AliasedObjectUnion) UnmarshalJSON(data []byte) error {
+	var valueAliasedLeafA AliasedLeafA
+	if err := json.Unmarshal(data, &valueAliasedLeafA); err == nil {
+		a.typ = "AliasedLeafA"
+		a.AliasedLeafA = valueAliasedLeafA
+		return nil
+	}
+	var valueAliasedLeafB AliasedLeafB
+	if err := json.Unmarshal(data, &valueAliasedLeafB); err == nil {
+		a.typ = "AliasedLeafB"
+		a.AliasedLeafB = valueAliasedLeafB
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, a)
+}
+
+func (a AliasedObjectUnion) MarshalJSON() ([]byte, error) {
+	if a.typ == "AliasedLeafA" || a.AliasedLeafA != nil {
+		return json.Marshal(a.AliasedLeafA)
+	}
+	if a.typ == "AliasedLeafB" || a.AliasedLeafB != nil {
+		return json.Marshal(a.AliasedLeafB)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", a)
+}
+
+type AliasedObjectUnionVisitor interface {
+	VisitAliasedLeafA(AliasedLeafA) error
+	VisitAliasedLeafB(AliasedLeafB) error
+}
+
+func (a *AliasedObjectUnion) Accept(visitor AliasedObjectUnionVisitor) error {
+	if a.typ == "AliasedLeafA" || a.AliasedLeafA != nil {
+		return visitor.VisitAliasedLeafA(a.AliasedLeafA)
+	}
+	if a.typ == "AliasedLeafB" || a.AliasedLeafB != nil {
+		return visitor.VisitAliasedLeafB(a.AliasedLeafB)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", a)
+}
+
 var (
 	convertTokenFieldMethod  = big.NewInt(1 << 0)
 	convertTokenFieldTokenID = big.NewInt(1 << 1)
@@ -237,6 +310,190 @@ func NewKeyTypeFromString(s string) (KeyType, error) {
 
 func (k KeyType) Ptr() *KeyType {
 	return &k
+}
+
+var (
+	leafObjectAFieldOnlyInA      = big.NewInt(1 << 0)
+	leafObjectAFieldSharedNumber = big.NewInt(1 << 1)
+)
+
+type LeafObjectA struct {
+	OnlyInA      string `json:"onlyInA" url:"onlyInA"`
+	SharedNumber int    `json:"sharedNumber" url:"sharedNumber"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *LeafObjectA) GetOnlyInA() string {
+	if l == nil {
+		return ""
+	}
+	return l.OnlyInA
+}
+
+func (l *LeafObjectA) GetSharedNumber() int {
+	if l == nil {
+		return 0
+	}
+	return l.SharedNumber
+}
+
+func (l *LeafObjectA) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *LeafObjectA) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetOnlyInA sets the OnlyInA field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LeafObjectA) SetOnlyInA(onlyInA string) {
+	l.OnlyInA = onlyInA
+	l.require(leafObjectAFieldOnlyInA)
+}
+
+// SetSharedNumber sets the SharedNumber field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LeafObjectA) SetSharedNumber(sharedNumber int) {
+	l.SharedNumber = sharedNumber
+	l.require(leafObjectAFieldSharedNumber)
+}
+
+func (l *LeafObjectA) UnmarshalJSON(data []byte) error {
+	type unmarshaler LeafObjectA
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = LeafObjectA(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *LeafObjectA) MarshalJSON() ([]byte, error) {
+	type embed LeafObjectA
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *LeafObjectA) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+var (
+	leafObjectBFieldOnlyInB = big.NewInt(1 << 0)
+)
+
+type LeafObjectB struct {
+	OnlyInB string `json:"onlyInB" url:"onlyInB"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *LeafObjectB) GetOnlyInB() string {
+	if l == nil {
+		return ""
+	}
+	return l.OnlyInB
+}
+
+func (l *LeafObjectB) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *LeafObjectB) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetOnlyInB sets the OnlyInB field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LeafObjectB) SetOnlyInB(onlyInB string) {
+	l.OnlyInB = onlyInB
+	l.require(leafObjectBFieldOnlyInB)
+}
+
+func (l *LeafObjectB) UnmarshalJSON(data []byte) error {
+	type unmarshaler LeafObjectB
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = LeafObjectB(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *LeafObjectB) MarshalJSON() ([]byte, error) {
+	type embed LeafObjectB
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *LeafObjectB) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
 }
 
 var (

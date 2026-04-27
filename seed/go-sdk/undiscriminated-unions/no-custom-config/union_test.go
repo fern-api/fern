@@ -54,6 +54,55 @@ func TestSettersMarkExplicitPaymentRequest(t *testing.T) {
 
 }
 
+func TestGettersAliasedObjectUnion(t *testing.T) {
+	t.Run("GetAliasedLeafA", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AliasedObjectUnion{}
+		var expected AliasedLeafA
+		obj.AliasedLeafA = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAliasedLeafA(), "getter should return the property value")
+	})
+
+	t.Run("GetAliasedLeafA_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AliasedObjectUnion
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAliasedLeafA() // Should return zero value
+	})
+
+	t.Run("GetAliasedLeafB", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AliasedObjectUnion{}
+		var expected AliasedLeafB
+		obj.AliasedLeafB = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAliasedLeafB(), "getter should return the property value")
+	})
+
+	t.Run("GetAliasedLeafB_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AliasedObjectUnion
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAliasedLeafB() // Should return zero value
+	})
+
+}
+
 func TestSettersConvertToken(t *testing.T) {
 	t.Run("SetMethod", func(t *testing.T) {
 		obj := &ConvertToken{}
@@ -209,6 +258,210 @@ func TestGettersKey(t *testing.T) {
 			}
 		}()
 		_ = obj.GetKeyType() // Should return zero value
+	})
+
+}
+
+func TestSettersLeafObjectA(t *testing.T) {
+	t.Run("SetOnlyInA", func(t *testing.T) {
+		obj := &LeafObjectA{}
+		var fernTestValueOnlyInA string
+		obj.SetOnlyInA(fernTestValueOnlyInA)
+		assert.Equal(t, fernTestValueOnlyInA, obj.OnlyInA)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetSharedNumber", func(t *testing.T) {
+		obj := &LeafObjectA{}
+		var fernTestValueSharedNumber int
+		obj.SetSharedNumber(fernTestValueSharedNumber)
+		assert.Equal(t, fernTestValueSharedNumber, obj.SharedNumber)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersLeafObjectA(t *testing.T) {
+	t.Run("GetOnlyInA", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &LeafObjectA{}
+		var expected string
+		obj.OnlyInA = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetOnlyInA(), "getter should return the property value")
+	})
+
+	t.Run("GetOnlyInA_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *LeafObjectA
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetOnlyInA() // Should return zero value
+	})
+
+	t.Run("GetSharedNumber", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &LeafObjectA{}
+		var expected int
+		obj.SharedNumber = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetSharedNumber(), "getter should return the property value")
+	})
+
+	t.Run("GetSharedNumber_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *LeafObjectA
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetSharedNumber() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitLeafObjectA(t *testing.T) {
+	t.Run("SetOnlyInA_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &LeafObjectA{}
+		var fernTestValueOnlyInA string
+
+		// Act
+		obj.SetOnlyInA(fernTestValueOnlyInA)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetSharedNumber_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &LeafObjectA{}
+		var fernTestValueSharedNumber int
+
+		// Act
+		obj.SetSharedNumber(fernTestValueSharedNumber)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersLeafObjectB(t *testing.T) {
+	t.Run("SetOnlyInB", func(t *testing.T) {
+		obj := &LeafObjectB{}
+		var fernTestValueOnlyInB string
+		obj.SetOnlyInB(fernTestValueOnlyInB)
+		assert.Equal(t, fernTestValueOnlyInB, obj.OnlyInB)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersLeafObjectB(t *testing.T) {
+	t.Run("GetOnlyInB", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &LeafObjectB{}
+		var expected string
+		obj.OnlyInB = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetOnlyInB(), "getter should return the property value")
+	})
+
+	t.Run("GetOnlyInB_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *LeafObjectB
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetOnlyInB() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitLeafObjectB(t *testing.T) {
+	t.Run("SetOnlyInB_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &LeafObjectB{}
+		var fernTestValueOnlyInB string
+
+		// Act
+		obj.SetOnlyInB(fernTestValueOnlyInB)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
 }
@@ -2147,6 +2400,72 @@ func TestJSONMarshalingConvertToken(t *testing.T) {
 	})
 }
 
+func TestJSONMarshalingLeafObjectA(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &LeafObjectA{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled LeafObjectA
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj LeafObjectA
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj LeafObjectA
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingLeafObjectB(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &LeafObjectB{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled LeafObjectB
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj LeafObjectB
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj LeafObjectB
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
 func TestJSONMarshalingLeafTypeA(t *testing.T) {
 	t.Run("MarshalUnmarshal", func(t *testing.T) {
 		t.Parallel()
@@ -2394,6 +2713,38 @@ func TestStringConvertToken(t *testing.T) {
 	})
 }
 
+func TestStringLeafObjectA(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &LeafObjectA{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *LeafObjectA
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringLeafObjectB(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &LeafObjectB{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *LeafObjectB
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
 func TestStringLeafTypeA(t *testing.T) {
 	t.Run("StringMethod", func(t *testing.T) {
 		t.Parallel()
@@ -2553,6 +2904,52 @@ func TestExtraPropertiesConvertToken(t *testing.T) {
 	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *ConvertToken
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesLeafObjectA(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &LeafObjectA{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *LeafObjectA
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesLeafObjectB(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &LeafObjectB{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *LeafObjectB
 		extraProps := obj.GetExtraProperties()
 		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
 	})
