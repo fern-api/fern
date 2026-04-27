@@ -97,20 +97,20 @@ describe("requestWithRetries", () => {
         expect(response.status).toBe(200);
     });
 
-    it("should not retry on status 600 (boundary above 5xx range)", async () => {
+    it("should not retry on non-retryable client error (400)", async () => {
         setTimeoutSpy = jest.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
             process.nextTick(callback);
             return null as any;
         });
 
-        mockFetch.mockResolvedValueOnce(new Response("", { status: 600 }));
+        mockFetch.mockResolvedValueOnce(new Response("", { status: 400 }));
 
         const responsePromise = requestWithRetries(() => mockFetch(), 3);
         await jest.runAllTimersAsync();
         const response = await responsePromise;
 
         expect(mockFetch).toHaveBeenCalledTimes(1);
-        expect(response.status).toBe(600);
+        expect(response.status).toBe(400);
     });
 
     it("should not retry on success status codes", async () => {
