@@ -4,6 +4,7 @@ import { ruby } from "@fern-api/ruby-ast";
 import { FileGenerator, RubyFile } from "@fern-api/ruby-base";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { DefaultValueExtractor } from "../DefaultValueExtractor.js";
+import { RawClient } from "../endpoint/http/RawClient.js";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { astNodeToCodeBlockWithComments } from "../utils/astNodeToCodeBlockWithComments.js";
@@ -31,6 +32,22 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             }
             class_.addMethod(this.getSubpackageClientGetter(subpackage, rootModule));
         }
+
+        // Add root service endpoint methods directly on the root client
+        const rootServiceId = this.context.ir.rootPackage.service;
+        if (rootServiceId != null) {
+            const rootService = this.context.getHttpServiceOrThrow(rootServiceId);
+            for (const endpoint of rootService.endpoints) {
+                const generatedMethods = this.context.endpointGenerator.generate({
+                    endpoint,
+                    serviceId: rootServiceId,
+                    rawClientReference: "",
+                    rawClient: new RawClient(this.context)
+                });
+                class_.addStatements(generatedMethods);
+            }
+        }
+
         rootModule.addStatement(class_);
         return new RubyFile({
             node: astNodeToCodeBlockWithComments(rootModule, [Comments.FrozenStringLiteral]),
