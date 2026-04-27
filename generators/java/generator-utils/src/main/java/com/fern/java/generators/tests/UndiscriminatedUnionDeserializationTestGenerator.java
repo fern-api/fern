@@ -185,14 +185,8 @@ public final class UndiscriminatedUnionDeserializationTestGenerator extends Abst
                 continue;
             }
             // Walk alias chains until we land on an object declaration (or bail).
-            // The original named type is used for the generated test's class name so that
-            // the deserializer round-trips through the alias-typed variant.
-            TypeDeclaration originalDeclaration = generatorContext
-                    .getTypeDeclarations()
-                    .get(member.getType().getNamed().get().getTypeId());
-            if (originalDeclaration == null) {
-                continue;
-            }
+            // Use the resolved object declaration's name for variantClassName because
+            // when wrappedAliases is false (the default), alias types have no generated class.
             TypeDeclaration objectDeclaration = resolveToObjectDeclaration(
                     member.getType().getNamed().get().getTypeId());
             if (objectDeclaration == null) {
@@ -209,7 +203,7 @@ public final class UndiscriminatedUnionDeserializationTestGenerator extends Abst
                 continue;
             }
             ClassName variantClassName =
-                    generatorContext.getPoetClassNameFactory().getTypeClassName(originalDeclaration.getName());
+                    generatorContext.getPoetClassNameFactory().getTypeClassName(objectDeclaration.getName());
             variants.add(new TestableVariant(variantClassName, requiredKeys, jsonKeyValues));
         }
         return variants;

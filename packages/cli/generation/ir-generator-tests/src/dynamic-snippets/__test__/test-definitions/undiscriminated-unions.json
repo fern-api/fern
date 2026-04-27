@@ -2631,6 +2631,528 @@
                     "value": "type_union:WrapperObject"
                 }
             ]
+        },
+        "type_union:AliasedLeafA": {
+            "type": "alias",
+            "declaration": {
+                "name": {
+                    "originalName": "AliasedLeafA",
+                    "camelCase": {
+                        "unsafeName": "aliasedLeafA",
+                        "safeName": "aliasedLeafA"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "aliased_leaf_a",
+                        "safeName": "aliased_leaf_a"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "ALIASED_LEAF_A",
+                        "safeName": "ALIASED_LEAF_A"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "AliasedLeafA",
+                        "safeName": "AliasedLeafA"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "union",
+                            "camelCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "UNION",
+                                "safeName": "UNION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Union",
+                                "safeName": "Union"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "union",
+                        "camelCase": {
+                            "unsafeName": "union",
+                            "safeName": "union"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "union",
+                            "safeName": "union"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "UNION",
+                            "safeName": "UNION"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Union",
+                            "safeName": "Union"
+                        }
+                    }
+                }
+            },
+            "typeReference": {
+                "type": "named",
+                "value": "type_union:LeafObjectA"
+            }
+        },
+        "type_union:AliasedLeafB": {
+            "type": "alias",
+            "declaration": {
+                "name": {
+                    "originalName": "AliasedLeafB",
+                    "camelCase": {
+                        "unsafeName": "aliasedLeafB",
+                        "safeName": "aliasedLeafB"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "aliased_leaf_b",
+                        "safeName": "aliased_leaf_b"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "ALIASED_LEAF_B",
+                        "safeName": "ALIASED_LEAF_B"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "AliasedLeafB",
+                        "safeName": "AliasedLeafB"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "union",
+                            "camelCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "UNION",
+                                "safeName": "UNION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Union",
+                                "safeName": "Union"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "union",
+                        "camelCase": {
+                            "unsafeName": "union",
+                            "safeName": "union"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "union",
+                            "safeName": "union"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "UNION",
+                            "safeName": "UNION"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Union",
+                            "safeName": "Union"
+                        }
+                    }
+                }
+            },
+            "typeReference": {
+                "type": "named",
+                "value": "type_union:AliasToLeafB"
+            }
+        },
+        "type_union:AliasToLeafB": {
+            "type": "alias",
+            "declaration": {
+                "name": {
+                    "originalName": "AliasToLeafB",
+                    "camelCase": {
+                        "unsafeName": "aliasToLeafB",
+                        "safeName": "aliasToLeafB"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "alias_to_leaf_b",
+                        "safeName": "alias_to_leaf_b"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "ALIAS_TO_LEAF_B",
+                        "safeName": "ALIAS_TO_LEAF_B"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "AliasToLeafB",
+                        "safeName": "AliasToLeafB"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "union",
+                            "camelCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "UNION",
+                                "safeName": "UNION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Union",
+                                "safeName": "Union"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "union",
+                        "camelCase": {
+                            "unsafeName": "union",
+                            "safeName": "union"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "union",
+                            "safeName": "union"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "UNION",
+                            "safeName": "UNION"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Union",
+                            "safeName": "Union"
+                        }
+                    }
+                }
+            },
+            "typeReference": {
+                "type": "named",
+                "value": "type_union:LeafObjectB"
+            }
+        },
+        "type_union:LeafObjectA": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "LeafObjectA",
+                    "camelCase": {
+                        "unsafeName": "leafObjectA",
+                        "safeName": "leafObjectA"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "leaf_object_a",
+                        "safeName": "leaf_object_a"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "LEAF_OBJECT_A",
+                        "safeName": "LEAF_OBJECT_A"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "LeafObjectA",
+                        "safeName": "LeafObjectA"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "union",
+                            "camelCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "UNION",
+                                "safeName": "UNION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Union",
+                                "safeName": "Union"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "union",
+                        "camelCase": {
+                            "unsafeName": "union",
+                            "safeName": "union"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "union",
+                            "safeName": "union"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "UNION",
+                            "safeName": "UNION"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Union",
+                            "safeName": "Union"
+                        }
+                    }
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "onlyInA",
+                        "name": {
+                            "originalName": "onlyInA",
+                            "camelCase": {
+                                "unsafeName": "onlyInA",
+                                "safeName": "onlyInA"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "only_in_a",
+                                "safeName": "only_in_a"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ONLY_IN_A",
+                                "safeName": "ONLY_IN_A"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "OnlyInA",
+                                "safeName": "OnlyInA"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "sharedNumber",
+                        "name": {
+                            "originalName": "sharedNumber",
+                            "camelCase": {
+                                "unsafeName": "sharedNumber",
+                                "safeName": "sharedNumber"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "shared_number",
+                                "safeName": "shared_number"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SHARED_NUMBER",
+                                "safeName": "SHARED_NUMBER"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "SharedNumber",
+                                "safeName": "SharedNumber"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "INTEGER"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        },
+        "type_union:LeafObjectB": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "LeafObjectB",
+                    "camelCase": {
+                        "unsafeName": "leafObjectB",
+                        "safeName": "leafObjectB"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "leaf_object_b",
+                        "safeName": "leaf_object_b"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "LEAF_OBJECT_B",
+                        "safeName": "LEAF_OBJECT_B"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "LeafObjectB",
+                        "safeName": "LeafObjectB"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "union",
+                            "camelCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "UNION",
+                                "safeName": "UNION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Union",
+                                "safeName": "Union"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "union",
+                        "camelCase": {
+                            "unsafeName": "union",
+                            "safeName": "union"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "union",
+                            "safeName": "union"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "UNION",
+                            "safeName": "UNION"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Union",
+                            "safeName": "Union"
+                        }
+                    }
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "onlyInB",
+                        "name": {
+                            "originalName": "onlyInB",
+                            "camelCase": {
+                                "unsafeName": "onlyInB",
+                                "safeName": "onlyInB"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "only_in_b",
+                                "safeName": "only_in_b"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ONLY_IN_B",
+                                "safeName": "ONLY_IN_B"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "OnlyInB",
+                                "safeName": "OnlyInB"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        },
+        "type_union:AliasedObjectUnion": {
+            "type": "undiscriminatedUnion",
+            "declaration": {
+                "name": {
+                    "originalName": "AliasedObjectUnion",
+                    "camelCase": {
+                        "unsafeName": "aliasedObjectUnion",
+                        "safeName": "aliasedObjectUnion"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "aliased_object_union",
+                        "safeName": "aliased_object_union"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "ALIASED_OBJECT_UNION",
+                        "safeName": "ALIASED_OBJECT_UNION"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "AliasedObjectUnion",
+                        "safeName": "AliasedObjectUnion"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "union",
+                            "camelCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "UNION",
+                                "safeName": "UNION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Union",
+                                "safeName": "Union"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "union",
+                        "camelCase": {
+                            "unsafeName": "union",
+                            "safeName": "union"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "union",
+                            "safeName": "union"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "UNION",
+                            "safeName": "UNION"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Union",
+                            "safeName": "Union"
+                        }
+                    }
+                }
+            },
+            "types": [
+                {
+                    "type": "named",
+                    "value": "type_union:AliasedLeafA"
+                },
+                {
+                    "type": "named",
+                    "value": "type_union:AliasedLeafB"
+                }
+            ]
         }
     },
     "headers": [],
@@ -3223,6 +3745,92 @@
                     "value": {
                         "type": "named",
                         "value": "type_union:OuterNestedUnion"
+                    }
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_union.aliasedObjectUnion": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "aliasedObjectUnion",
+                    "camelCase": {
+                        "unsafeName": "aliasedObjectUnion",
+                        "safeName": "aliasedObjectUnion"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "aliased_object_union",
+                        "safeName": "aliased_object_union"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "ALIASED_OBJECT_UNION",
+                        "safeName": "ALIASED_OBJECT_UNION"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "AliasedObjectUnion",
+                        "safeName": "AliasedObjectUnion"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "union",
+                            "camelCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "UNION",
+                                "safeName": "UNION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Union",
+                                "safeName": "Union"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "union",
+                        "camelCase": {
+                            "unsafeName": "union",
+                            "safeName": "union"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "union",
+                            "safeName": "union"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "UNION",
+                            "safeName": "UNION"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Union",
+                            "safeName": "Union"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/aliased-object"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": {
+                    "type": "typeReference",
+                    "value": {
+                        "type": "named",
+                        "value": "type_union:AliasedObjectUnion"
                     }
                 }
             },
