@@ -246,7 +246,7 @@ describe("makePassthroughRequest", () => {
         });
 
         it("should use requestOptions maxRetries over client maxRetries", async () => {
-            mockFetch.mockResolvedValue(new Response("", { status: 500 }));
+            mockFetch.mockResolvedValue(new Response("", { status: 502 }));
             vi.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
                 process.nextTick(callback);
                 return null as any;
