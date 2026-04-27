@@ -42,8 +42,10 @@ jobs:
         run: |
           gh release upload local-cli-latest \
             packages/cli/cli/dist/local/cli.cjs \
+            packages/cli/cli/dist/local/package.json \
             --clobber \
           || gh release create local-cli-latest \
             packages/cli/cli/dist/local/cli.cjs \
+            packages/cli/cli/dist/local/package.json \
             --title "Local CLI (latest)" \
-            --notes "Rolling release of the pre-built local Fern CLI for local stack testing. Updated automatically on every push to main that touches CLI packages."
+            --notes "Rolling release of the pre-built local Fern CLI for local stack testing. Updated automatically on every push to main that touches CLI packages. After downloading, run 'npm install --ignore-scripts' in the download directory to install native dependencies (@boundaryml/baml)."
