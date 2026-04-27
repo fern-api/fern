@@ -39,8 +39,9 @@ features:
       A request is deemed retryable when any of the following HTTP status codes is returned:
 
       - [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+      - [409](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/409) (Conflict)
       - [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
-      - [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
+      - 5XX (All server errors except [500](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) Internal Server Error)
 
       Use the `max_retries` request option to configure this behavior.
 
