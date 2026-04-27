@@ -631,7 +631,7 @@ export class EndpointSnippetGenerator {
     }: {
         filePropertyInfo: FilePropertyInfo;
     }): ts.ObjectField[] {
-        if (this.context.customConfig?.inlineFileProperties) {
+        if (this.context.customConfig?.inlineFileProperties ?? true) {
             return [...filePropertyInfo.fileFields, ...filePropertyInfo.bodyPropertyFields];
         }
         return filePropertyInfo.bodyPropertyFields;
