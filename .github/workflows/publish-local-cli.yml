@@ -1,0 +1,49 @@
+name: Publish Local CLI Artifact
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "packages/cli/**"
+      - "packages/commons/**"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+env:
+  DO_NOT_TRACK: "1"
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: "buildwithfern"
+  TURBO_NO_UPDATE_NOTIFIER: "1"
+  TURBO_DAEMON: "false"
+
+jobs:
+  build-and-upload:
+    if: ${{ github.repository == 'fern-api/fern' }}
+    runs-on: ubuntu-latest
+    concurrency:
+      group: publish-local-cli
+      cancel-in-progress: true
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Build local CLI
+        run: pnpm fern-local:build
+
+      - name: Upload to GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release upload local-cli-latest \
+            packages/cli/cli/dist/local/cli.cjs \
+            --clobber \
+          || gh release create local-cli-latest \
+            packages/cli/cli/dist/local/cli.cjs \
+            --title "Local CLI (latest)" \
+            --notes "Rolling release of the pre-built local Fern CLI for local stack testing. Updated automatically on every push to main that touches CLI packages."
