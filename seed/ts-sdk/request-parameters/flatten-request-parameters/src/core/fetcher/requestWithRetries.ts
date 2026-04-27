@@ -51,7 +51,10 @@ export async function requestWithRetries(
     let response: Response = await requestFn();
 
     for (let i = 0; i < maxRetries; ++i) {
-        if ([408, 429, 502, 503, 504].includes(response.status)) {
+        if (
+            [408, 429].includes(response.status) ||
+            (response.status >= 501 && response.status < 600)
+        ) {
             const delay = getRetryDelayFromHeaders(response, i);
 
             await new Promise((resolve) => setTimeout(resolve, delay));

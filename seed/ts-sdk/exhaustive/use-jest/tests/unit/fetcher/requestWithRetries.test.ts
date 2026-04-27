@@ -26,7 +26,7 @@ describe("requestWithRetries", () => {
             return null as any;
         });
 
-        const retryableStatuses = [408, 429, 502, 503];
+        const retryableStatuses = [408, 429, 501, 502, 503, 504, 505];
         let callCount = 0;
 
         mockFetch.mockImplementation(async () => {

@@ -92,9 +92,7 @@ features:
 
       - [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
       - [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
-      - [502](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/502) (Bad Gateway)
-      - [503](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/503) (Service Unavailable)
-      - [504](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504) (Gateway Timeout)
+      - 5XX (All server errors except [500](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) Internal Server Error)
 
       Use the `maxRetries` request option to configure this behavior.
 

@@ -26,7 +26,7 @@ describe("requestWithRetries", () => {
             return null as any;
         });
 
-        const retryableStatuses = [408, 429, 502, 503];
+        const retryableStatuses = [408, 429, 501, 502, 503, 504, 505];
         let callCount = 0;
 
         mockFetch.mockImplementation(async () => {
@@ -61,26 +61,20 @@ describe("requestWithRetries", () => {
         expect(response.status).toBe(503);
     });
 
-    it("should not retry on non-retryable 5xx status codes", async () => {
+    it("should not retry on 500 Internal Server Error", async () => {
         setTimeoutSpy = jest.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
             process.nextTick(callback);
             return null as any;
         });
 
-        const nonRetryableStatuses = [500, 501, 505];
+        mockFetch.mockResolvedValueOnce(new Response("", { status: 500 }));
 
-        for (const status of nonRetryableStatuses) {
-            mockFetch.mockReset();
-            setTimeoutSpy.mockClear();
-            mockFetch.mockResolvedValueOnce(new Response("", { status }));
+        const responsePromise = requestWithRetries(() => mockFetch(), 3);
+        await jest.runAllTimersAsync();
+        const response = await responsePromise;
 
-            const responsePromise = requestWithRetries(() => mockFetch(), 3);
-            await jest.runAllTimersAsync();
-            const response = await responsePromise;
-
-            expect(mockFetch).toHaveBeenCalledTimes(1);
-            expect(response.status).toBe(status);
-        }
+        expect(mockFetch).toHaveBeenCalledTimes(1);
+        expect(response.status).toBe(500);
     });
 
     it("should not retry on success status codes", async () => {
