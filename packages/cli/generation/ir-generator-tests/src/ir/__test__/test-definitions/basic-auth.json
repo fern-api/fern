@@ -13,9 +13,11 @@
                 "username": "username",
                 "usernameEnvVar": null,
                 "usernameOmit": null,
+                "usernamePlaceholder": null,
                 "password": "password",
                 "passwordEnvVar": null,
                 "passwordOmit": null,
+                "passwordPlaceholder": null,
                 "key": "basic",
                 "docs": null
             }
