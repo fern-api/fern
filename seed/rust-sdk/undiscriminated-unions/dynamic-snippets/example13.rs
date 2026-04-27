@@ -9,12 +9,14 @@ async fn main() {
     let client = UndiscriminatedUnionsClient::new(config).expect("Failed to build client");
     client
         .union_
-        .aliased_object_union(
-            &AliasedObjectUnion::AliasedLeafA(AliasedLeafA(LeafObjectA {
-                only_in_a: "onlyInA".to_string(),
-                shared_number: 1,
-                ..Default::default()
-            })),
+        .test_camel_case_properties(
+            &PaymentRequest {
+                payment_method: PaymentMethodUnion::TokenizeCard(TokenizeCard {
+                    method: "method".to_string(),
+                    card_number: "cardNumber".to_string(),
+                    ..Default::default()
+                }),
+            },
             None,
         )
         .await;
