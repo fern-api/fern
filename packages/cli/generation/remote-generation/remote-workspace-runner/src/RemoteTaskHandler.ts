@@ -228,7 +228,7 @@ export class RemoteTaskHandler {
     }
 }
 
-const VERSION_TAG_REGEX = /Tagging release (v?\d+\.\d+\.\d+(?:-[\w.]+)?)/;
+const VERSION_TAG_REGEX = /Tagging release (v?\d+\.\d+\.\d+(?:-[\w.-]+)?)/;
 
 /**
  * Extracts a semver version from a log message matching "Tagging release X.Y.Z".

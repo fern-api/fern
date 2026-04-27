@@ -27,6 +27,14 @@ describe("extractVersionFromLogMessage", () => {
         expect(extractVersionFromLogMessage("Tagging release 0.1.0-alpha")).toBe("0.1.0-alpha");
     });
 
+    it("captures hyphen-separated pre-release identifiers", () => {
+        expect(extractVersionFromLogMessage("Tagging release 1.0.0-rc-1")).toBe("1.0.0-rc-1");
+    });
+
+    it("captures complex pre-release with mixed separators", () => {
+        expect(extractVersionFromLogMessage("Tagging release 1.0.0-pre-release.2")).toBe("1.0.0-pre-release.2");
+    });
+
     it("extracts the version when the message has surrounding text", () => {
         expect(extractVersionFromLogMessage("[INFO] Tagging release 3.1.4 on main branch")).toBe("3.1.4");
     });
