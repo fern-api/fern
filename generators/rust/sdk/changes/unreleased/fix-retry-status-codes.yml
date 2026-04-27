@@ -1,4 +1,5 @@
 - summary: |
-    Add HTTP status code-based retry logic for 408, 429, and all 5xx except
-    500 Internal Server Error. Previously only network errors were retried.
+    Stop retrying on 500 Internal Server Error. Previously only network errors
+    were retried. Now retries on 408, 429, and 501-599 status codes, but not 500
+    which is typically not transient and retrying can cause idempotency issues.
   type: fix
