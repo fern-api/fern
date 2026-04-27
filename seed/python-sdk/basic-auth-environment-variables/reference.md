@@ -30,8 +30,8 @@ GET request with basic auth scheme
 from seed import SeedBasicAuthEnvironmentVariables
 
 client = SeedBasicAuthEnvironmentVariables(
-    username="<username>",
-    access_token="<password>",
+    username="YOUR_USERNAME",
+    access_token="YOUR_PASSWORD",
     base_url="https://yourhost.com/path/to/api",
 )
 
@@ -93,8 +93,8 @@ POST request with basic auth scheme
 from seed import SeedBasicAuthEnvironmentVariables
 
 client = SeedBasicAuthEnvironmentVariables(
-    username="<username>",
-    access_token="<password>",
+    username="YOUR_USERNAME",
+    access_token="YOUR_PASSWORD",
     base_url="https://yourhost.com/path/to/api",
 )
 

@@ -39,7 +39,7 @@ import (
 func do() {
     client := client.NewClient(
         option.WithHeaderTokenAuth(
-            "<value>",
+            "YOUR_API_KEY",
         ),
     )
     client.Service.GetWithBearerToken(

@@ -37,8 +37,8 @@ Instantiate and use the client with the following:
 from seed import SeedBasicAuthEnvironmentVariables
 
 client = SeedBasicAuthEnvironmentVariables(
-    username="<username>",
-    access_token="<password>",
+    username="YOUR_USERNAME",
+    access_token="YOUR_PASSWORD",
     base_url="https://yourhost.com/path/to/api",
 )
 
@@ -57,8 +57,8 @@ import asyncio
 from seed import AsyncSeedBasicAuthEnvironmentVariables
 
 client = AsyncSeedBasicAuthEnvironmentVariables(
-    username="<username>",
-    access_token="<password>",
+    username="YOUR_USERNAME",
+    access_token="YOUR_PASSWORD",
     base_url="https://yourhost.com/path/to/api",
 )
 
