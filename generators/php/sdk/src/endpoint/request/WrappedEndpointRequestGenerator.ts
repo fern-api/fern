@@ -62,10 +62,7 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
                 const clientDefaultInit = DefaultValueExtractor.extractClientDefaultCodeBlock(
                     pathParameter.clientDefault
                 );
-                let type = this.context.phpTypeMapper.convert({ reference: pathParameter.valueType });
-                if (clientDefaultInit != null && !this.context.isOptional(pathParameter.valueType)) {
-                    type = php.Type.optional(type);
-                }
+                const type = this.context.phpTypeMapper.convert({ reference: pathParameter.valueType });
                 this.addFieldWithMethods({
                     clazz,
                     name: pathParameter.name,

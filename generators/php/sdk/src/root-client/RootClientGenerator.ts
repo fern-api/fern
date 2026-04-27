@@ -319,11 +319,10 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 for (const param of constructorParameters.optional) {
                     if (param.environmentVariable != null) {
                         if (param.clientDefault != null) {
-                            const defaultWire = this.getClientDefaultLiteralWireValue(param.clientDefault);
-                            const escaped = defaultWire.replace(/\\/g, "\\\\").replace(/'/g, "\\'");
+                            const phpLiteral = this.getClientDefaultPhpLiteral(param.clientDefault);
                             writer.writeLine(`$envValue = getenv('${param.environmentVariable}');`);
                             writer.writeTextStatement(
-                                `$${param.name} ??= ($envValue !== false ? $envValue : '${escaped}')`
+                                `$${param.name} ??= ($envValue !== false ? $envValue : ${phpLiteral})`
                             );
                         } else {
                             writer.write(`$${param.name} ??= `);
@@ -344,9 +343,8 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
 
                 for (const param of constructorParameters.optional) {
                     if (param.clientDefault != null && param.environmentVariable == null) {
-                        const defaultWire = this.getClientDefaultLiteralWireValue(param.clientDefault);
-                        const escaped = defaultWire.replace(/\\/g, "\\\\").replace(/'/g, "\\'");
-                        writer.writeTextStatement(`$${param.name} ??= '${escaped}'`);
+                        const phpLiteral = this.getClientDefaultPhpLiteral(param.clientDefault);
+                        writer.writeTextStatement(`$${param.name} ??= ${phpLiteral}`);
                     }
                 }
 
@@ -788,6 +786,19 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         switch (literal.type) {
             case "string":
                 return literal.string;
+            case "boolean":
+                return literal.boolean ? "true" : "false";
+            default:
+                assertNever(literal);
+        }
+    }
+
+    private getClientDefaultPhpLiteral(literal: FernIr.Literal): string {
+        switch (literal.type) {
+            case "string": {
+                const escaped = literal.string.replace(/\\/g, "\\\\").replace(/'/g, "\\'");
+                return `'${escaped}'`;
+            }
             case "boolean":
                 return literal.boolean ? "true" : "false";
             default:
