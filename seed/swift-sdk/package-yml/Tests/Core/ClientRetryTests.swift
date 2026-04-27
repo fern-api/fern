@@ -123,6 +123,66 @@ import Testing
         try #require(stub.getRequestCount() == 1)
     }
 
+    @Test func testRetryOn501NotImplemented() async throws {
+        let stub = HTTPStub()
+        stub.setResponseSequence([
+            (statusCode: 501, headers: ["Content-Type": "application/json"], body: Data()),
+            (
+                statusCode: 200, headers: ["Content-Type": "application/json"],
+                body: Data("true".utf8)
+            ),
+        ])
+
+        let client = PackageYmlClient(
+            baseURL: "https://api.fern.com",
+            urlSession: stub.urlSession
+        )
+
+        do {
+            _ = try await client.echo(
+                id: "id-ksfd9c1",
+                request: EchoRequest(
+                    name: "Hello world!",
+                    size: 20
+                ),
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
+
+        } catch {
+        }
+        try #require(stub.getRequestCount() == 2)
+    }
+
+    @Test func testRetryOn599UpperBoundary() async throws {
+        let stub = HTTPStub()
+        stub.setResponseSequence([
+            (statusCode: 599, headers: ["Content-Type": "application/json"], body: Data()),
+            (
+                statusCode: 200, headers: ["Content-Type": "application/json"],
+                body: Data("true".utf8)
+            ),
+        ])
+
+        let client = PackageYmlClient(
+            baseURL: "https://api.fern.com",
+            urlSession: stub.urlSession
+        )
+
+        do {
+            _ = try await client.echo(
+                id: "id-ksfd9c1",
+                request: EchoRequest(
+                    name: "Hello world!",
+                    size: 20
+                ),
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
+
+        } catch {
+        }
+        try #require(stub.getRequestCount() == 2)
+    }
+
     @Test func testRetryOn503ServiceUnavailable() async throws {
         let stub = HTTPStub()
         stub.setResponseSequence([
