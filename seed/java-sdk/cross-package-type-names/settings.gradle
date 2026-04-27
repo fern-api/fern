@@ -1,3 +1,0 @@
-rootProject.name = 'cross-package-type-names'
-
-include 'sample-app'

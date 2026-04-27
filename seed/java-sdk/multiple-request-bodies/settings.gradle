@@ -1,3 +1,0 @@
-rootProject.name = 'multiple-request-bodies'
-
-include 'sample-app'

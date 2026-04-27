@@ -1,3 +1,0 @@
-rootProject.name = 'endpoint-security-auth'
-
-include 'sample-app'
