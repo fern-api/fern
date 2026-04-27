@@ -141,6 +141,7 @@ export * from "./VersionAvailability.js";
 export * from "./VersionConfig.js";
 export * from "./VersionedSnippetLanguageConfiguration.js";
 export * from "./VersionFileConfig.js";
+export * from "./WebSocketOneofDisplay.js";
 export * from "./WithFeatureFlags.js";
 export * from "./WithPermissions.js";
 export * from "./WithViewers.js";

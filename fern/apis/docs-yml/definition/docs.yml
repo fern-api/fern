@@ -954,6 +954,14 @@ types:
           Use \$\{VAR\} to escape and output literal ${VAR} without substitution.
 
           @default: false
+      websocket-oneof-display:
+        type: optional<WebSocketOneofDisplay>
+        docs: |
+          Controls how WebSocket messages with oneOf bodies are displayed in the API Reference.
+          - `flat` (default): Each variant in the oneOf is shown as a separate top-level entry.
+          - `grouped`: Messages are shown as a single parent entry with nested variants.
+
+          @default: flat
 
   ThemeConfig:
     properties:
@@ -1295,6 +1303,11 @@ types:
     enum:
       - frontmatter
       - filename
+
+  WebSocketOneofDisplay:
+    enum:
+      - flat
+      - grouped
 
   CollapsedValue:
     discriminated: false
