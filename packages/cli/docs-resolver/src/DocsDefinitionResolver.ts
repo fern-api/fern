@@ -283,6 +283,15 @@ export class DocsDefinitionResolver {
     }
 
     /**
+     * Returns per-locale translated API definitions loaded from `translations/<lang>/apis/` directories.
+     * Each entry maps locale → { apiName → JSON definition }.
+     * Must be called after `resolve()`.
+     */
+    public getTranslationApiDefinitions(): Record<string, Record<string, unknown>> | undefined {
+        return this._parsedDocsConfig?.translationApiDefinitions;
+    }
+
+    /**
      * Returns the map of absolute file paths to uploaded file IDs.
      * Used by translation processing to rewrite image paths in translated pages.
      * Must be called after `resolve()`.

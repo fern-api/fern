@@ -60,6 +60,9 @@ export interface ParsedDocsConfiguration {
     /* per-locale translated navigation overlays: locale → NavigationOverlay */
     translationNavigationOverlays: Record<string, TranslationNavigationOverlay> | undefined;
 
+    /* per-locale translated API definitions: locale → { apiName → JSON definition } */
+    translationApiDefinitions: Record<string, Record<string, unknown>> | undefined;
+
     /* RBAC declaration */
     roles: string[] | undefined;
 

@@ -634,6 +634,7 @@ export async function publishDocs({
         // so that translated docs are visible in preview without overwriting production translations.
         const translationPages = resolver.getTranslationPages();
         const translationNavigationOverlays = resolver.getTranslationNavigationOverlays();
+        const translationApiDefinitions = resolver.getTranslationApiDefinitions();
         const translationDomain = preview ? urlToOutput : domain;
         if (translationPages != null && Object.keys(translationPages).length > 0) {
             context.logger.info(`Registering translations for ${Object.keys(translationPages).length} locale(s)...`);
@@ -727,12 +728,15 @@ export async function publishDocs({
                                 announcement: translatedAnnouncement
                             }
                         };
-                        const pageCount = Object.keys(localePages).length;
-                        context.logger.debug(
-                            `Sending translation for locale "${locale}" (${pageCount} page${pageCount === 1 ? "" : "s"})`
-                        );
                         // Use a raw fetch instead of the oRPC client to send `docsDefinition`
                         // (the live server expects that field; the published fdr-sdk still uses `content`).
+                        const localeApiDefs = translationApiDefinitions?.[locale];
+                        const pageCount = Object.keys(localePages).length;
+                        const apiDefNames = localeApiDefs != null ? Object.keys(localeApiDefs) : [];
+                        context.logger.debug(
+                            `Sending translation for locale "${locale}" (${pageCount} page${pageCount === 1 ? "" : "s"})` +
+                                (apiDefNames.length > 0 ? `, apiDefinitions=${JSON.stringify(apiDefNames)}` : "")
+                        );
                         const translationResponse = await fetch(`${fdrOrigin}/v2/registry/docs/translations/register`, {
                             method: "POST",
                             headers: {
@@ -744,7 +748,8 @@ export async function publishDocs({
                                 domain: translationDomain,
                                 orgId: organization,
                                 locale,
-                                docsDefinition: translatedDefinition
+                                docsDefinition: translatedDefinition,
+                                ...(localeApiDefs != null ? { apiDefinitions: localeApiDefs } : {})
                             })
                         });
                         if (!translationResponse.ok) {

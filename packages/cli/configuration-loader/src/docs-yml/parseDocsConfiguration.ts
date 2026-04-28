@@ -171,6 +171,14 @@ export async function parseDocsConfiguration({
         context
     });
 
+    const translationLocales =
+        rawDocsConfiguration.translations?.map((t) => docsYml.DocsYmlSchemas.normalizeTranslationConfig(t).lang) ?? [];
+    const translationApiDefinitionsPromise = loadTranslationApiDefinitions({
+        locales: translationLocales,
+        defaultLocale,
+        absolutePathToFernFolder,
+        context
+    });
     const [
         navigation,
         pages,
@@ -182,7 +190,8 @@ export async function parseDocsConfiguration({
         llmsTxtFile,
         llmsFullTxtFile,
         translationPages,
-        translationNavigationOverlays
+        translationNavigationOverlays,
+        translationApiDefinitions
     ] = await Promise.all([
         convertedNavigationPromise,
         pagesPromise,
@@ -194,7 +203,8 @@ export async function parseDocsConfiguration({
         llmsTxtFilePromise,
         llmsFullTxtFilePromise,
         translationPagesPromise,
-        translationNavigationOverlaysPromise
+        translationNavigationOverlaysPromise,
+        translationApiDefinitionsPromise
     ]);
 
     // Validate incompatible tabs configuration: sidebar placement + center alignment
@@ -226,6 +236,9 @@ export async function parseDocsConfiguration({
 
         /* per-locale translated navigation overlays */
         translationNavigationOverlays,
+
+        /* per-locale translated API definitions */
+        translationApiDefinitions,
 
         /* navigation */
         landingPage,
@@ -2041,6 +2054,7 @@ async function loadTranslationPages({
 
     return result;
 }
+<<<<<<< HEAD
 
 /**
  * Loads translated navigation overlay YAML files from `translations/<lang>/fern/` directories.
@@ -2320,4 +2334,78 @@ function parseVariantOverlays(variants: unknown[]): docsYml.VariantOverlay[] {
         });
     }
     return result;
+}
+
+
+/**
+ * Loads translated API definition JSON files from `translations/<lang>/apis/` directories.
+ *
+ * For each locale declared in `translations`, this function:
+ * 1. Checks for a `translations/<lang>/apis/` directory.
+ * 2. Reads all `.json` files from that directory.
+ * 3. Returns a map of locale → { apiName → parsed JSON definition }.
+ *
+ * The apiName is derived from the filename (e.g., `my-api.json` → `my-api`).
+ */
+async function loadTranslationApiDefinitions({
+    locales,
+    defaultLocale,
+    absolutePathToFernFolder,
+    context
+}: {
+    locales: string[];
+    defaultLocale: string | undefined;
+    absolutePathToFernFolder: AbsoluteFilePath;
+    context: TaskContext;
+}): Promise<Record<string, Record<string, unknown>> | undefined> {
+    if (locales.length === 0) {
+        return undefined;
+    }
+
+    const translationsRootDir = path.join(absolutePathToFernFolder, "translations") as AbsoluteFilePath;
+
+    const result: Record<string, Record<string, unknown>> = {};
+    let hasAny = false;
+
+    await Promise.all(
+        locales.map(async (lang) => {
+            if (lang === defaultLocale) {
+                return;
+            }
+
+            const apisDir = path.join(translationsRootDir, lang, "apis") as AbsoluteFilePath;
+
+            if (!(await doesPathExist(apisDir))) {
+                return;
+            }
+
+            const jsonFiles = await listFiles(apisDir, "json");
+            if (jsonFiles.length === 0) {
+                return;
+            }
+
+            const apiDefs: Record<string, unknown> = {};
+            await Promise.all(
+                jsonFiles.map(async (filePath) => {
+                    const filename = path.basename(filePath);
+                    const apiName = filename.replace(/\.json$/, "");
+                    try {
+                        const content = await readFile(filePath, "utf-8");
+                        apiDefs[apiName] = JSON.parse(content);
+                    } catch (error) {
+                        context.logger.warn(
+                            `Failed to parse translated API definition at translations/${lang}/apis/${filename}: ${String(error)}`
+                        );
+                    }
+                })
+            );
+
+            if (Object.keys(apiDefs).length > 0) {
+                result[lang] = apiDefs;
+                hasAny = true;
+            }
+        })
+    );
+
+    return hasAny ? result : undefined;
 }

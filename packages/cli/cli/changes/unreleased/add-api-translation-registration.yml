@@ -1,0 +1,5 @@
+- summary: |
+    Support registering translated API definitions alongside translated docs pages.
+    Users can place translated API definition JSON files in `translations/<lang>/apis/<api-name>.json`
+    and they will be included in the translation registration request to FDR.
+  type: feat
