@@ -8,7 +8,7 @@ import {
 import { Logger } from "@fern-api/logger";
 import { Project } from "@fern-api/project-loader";
 import { isVersionAhead } from "@fern-api/semver-utils";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 
 import { ReleaseType } from "@fern-fern/generators-sdk/api/resources/generators";
@@ -203,10 +203,15 @@ export function processGeneratorGroups(
     for (const [groupName, group] of Object.entries(groups)) {
         for (const [generatorName, generatorVersions] of Object.entries(group)) {
             logger.debug(`Checking if ${generatorName} in group ${groupName} has an upgrade available...`);
-            const isUpgradeAvailable = isVersionAhead(
-                generatorVersions.latestVersion,
-                generatorVersions.previousVersion
-            );
+            let isUpgradeAvailable: boolean;
+            try {
+                isUpgradeAvailable = isVersionAhead(generatorVersions.latestVersion, generatorVersions.previousVersion);
+            } catch {
+                throw new CliError({
+                    message: `Generator "${generatorName}" has an invalid version "${generatorVersions.previousVersion}" in generators.yml. Use an exact version like 1.2.3.`,
+                    code: CliError.Code.ConfigError
+                });
+            }
 
             logger.debug(
                 `Latest version: ${generatorVersions.latestVersion}. ` +

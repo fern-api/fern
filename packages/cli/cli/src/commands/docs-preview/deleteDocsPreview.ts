@@ -18,7 +18,9 @@ async function resolvePreviewUrlFromId({
     if (fernDirectory == null) {
         return cliContext.failAndThrow(
             "No fern directory found. The --id flag requires a Fern project to resolve the organization.\n" +
-                "Run this command from within a Fern project directory, or use the URL argument instead."
+                "Run this command from within a Fern project directory, or use the URL argument instead.",
+            undefined,
+            { code: CliError.Code.ValidationError }
         );
     }
 

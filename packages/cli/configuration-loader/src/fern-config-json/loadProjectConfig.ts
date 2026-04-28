@@ -1,6 +1,7 @@
 import { fernConfigJson, PROJECT_CONFIG_FILENAME } from "@fern-api/configuration";
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 
 import { validateSchema } from "../commons/validateSchema.js";
@@ -15,7 +16,15 @@ export async function loadProjectConfig({
 }): Promise<fernConfigJson.ProjectConfig> {
     const pathToConfig = join(directory, RelativeFilePath.of(PROJECT_CONFIG_FILENAME));
     const projectConfigStr = await readFile(pathToConfig);
-    const projectConfigParsed = JSON.parse(projectConfigStr.toString()) as unknown;
+    let projectConfigParsed: unknown;
+    try {
+        projectConfigParsed = JSON.parse(projectConfigStr.toString()) as unknown;
+    } catch (error) {
+        throw new CliError({
+            message: `Failed to parse ${PROJECT_CONFIG_FILENAME}: ${extractErrorMessage(error)}`,
+            code: CliError.Code.ParseError
+        });
+    }
     const rawProjectConfig = await validateSchema({
         schema: ProjectConfigSchema,
         value: projectConfigParsed,

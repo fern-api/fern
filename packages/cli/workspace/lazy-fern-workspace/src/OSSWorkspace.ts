@@ -72,6 +72,17 @@ function collapseSpecBooleanSetting(
     return values.every((v) => v == null || v === true);
 }
 
+function toRelativePath(raw: string, field: string): RelativeFilePath {
+    try {
+        return RelativeFilePath.of(raw);
+    } catch {
+        throw new CliError({
+            message: `"${field}: ${raw}" must be a relative path, not an absolute one.`,
+            code: CliError.Code.ConfigError
+        });
+    }
+}
+
 function convertRemoveDiscriminantsFromSchemas(
     specs: (OpenAPISpec | ProtobufSpec)[]
 ): generatorsYml.RemoveDiscriminantsFromSchemas {
@@ -636,7 +647,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
 
         for (const spec of specsOverride) {
             if (generatorsYml.isOpenApiSpecSchema(spec)) {
-                const absoluteFilepath = join(this.absoluteFilePath, RelativeFilePath.of(spec.openapi));
+                const absoluteFilepath = join(this.absoluteFilePath, toRelativePath(spec.openapi, "openapi"));
                 // Handle both single override path and array of override paths
                 let absoluteFilepathToOverrides: AbsoluteFilePath | AbsoluteFilePath[] | undefined;
                 const specOverridePaths: AbsoluteFilePath[] = [];
@@ -646,11 +657,13 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                     if (Array.isArray(spec.overrides)) {
                         specOverridePaths.push(
                             ...spec.overrides.map((override) =>
-                                join(this.absoluteFilePath, RelativeFilePath.of(override))
+                                join(this.absoluteFilePath, toRelativePath(override, "overrides"))
                             )
                         );
                     } else {
-                        specOverridePaths.push(join(this.absoluteFilePath, RelativeFilePath.of(spec.overrides)));
+                        specOverridePaths.push(
+                            join(this.absoluteFilePath, toRelativePath(spec.overrides, "overrides"))
+                        );
                     }
                 }
 
@@ -660,7 +673,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                         specOverridePaths.length === 1 ? specOverridePaths[0] : specOverridePaths;
                 }
                 const absoluteFilepathToOverlays = spec.overlays
-                    ? join(this.absoluteFilePath, RelativeFilePath.of(spec.overlays))
+                    ? join(this.absoluteFilePath, toRelativePath(spec.overlays, "overlays"))
                     : undefined;
 
                 // Create a minimal OpenAPI spec with default settings
