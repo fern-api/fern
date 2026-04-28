@@ -152,8 +152,8 @@ describe("applyTranslatedNavigationOverlays", () => {
         const overlay: docsYml.TranslationNavigationOverlay = {
             ...emptyOverlay(),
             tabs: {
-                documentation: { displayName: "ドキュメント" },
-                "api-reference": { displayName: "APIリファレンス" }
+                documentation: { displayName: "ドキュメント", slug: undefined },
+                "api-reference": { displayName: "APIリファレンス", slug: undefined }
             }
         };
 
@@ -209,7 +209,7 @@ describe("applyTranslatedNavigationOverlays", () => {
         const overlay: docsYml.TranslationNavigationOverlay = {
             ...emptyOverlay(),
             tabs: {
-                documentation: { displayName: "ドキュメント" }
+                documentation: { displayName: "ドキュメント", slug: undefined }
             },
             navigation: [
                 {
@@ -245,6 +245,63 @@ describe("applyTranslatedNavigationOverlays", () => {
 
         const sectionChildren = section.children as Array<Record<string, unknown>>;
         expect(sectionChildren[0]?.title).toBe("概要");
+    });
+
+    it("matches tabs by overlay slug when tab ID differs from nav slug", () => {
+        const root = {
+            type: "root",
+            child: {
+                type: "unversioned",
+                child: {
+                    type: "tabbed",
+                    children: [
+                        {
+                            type: "tab",
+                            title: "Documentation",
+                            slug: "home/documentation",
+                            child: {
+                                type: "sidebarRoot",
+                                children: [
+                                    {
+                                        type: "page",
+                                        title: "Getting Started",
+                                        slug: "home/documentation/getting-started",
+                                        pageId: "pages/getting-started.mdx"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            }
+        };
+        const overlay: docsYml.TranslationNavigationOverlay = {
+            ...emptyOverlay(),
+            tabs: {
+                docs: { displayName: "ドキュメント", slug: "documentation" }
+            },
+            navigation: [
+                {
+                    type: "tab",
+                    tabId: "docs",
+                    layout: [
+                        { type: "page", title: "はじめに", slug: "getting-started" }
+                    ],
+                    variants: undefined
+                }
+            ]
+        };
+
+        const result = applyTranslatedNavigationOverlays(asRoot(root), overlay);
+        const unversioned = (result as unknown as Record<string, unknown>).child as Record<string, unknown>;
+        const tabbed = unversioned.child as Record<string, unknown>;
+        const tabs = tabbed.children as Array<Record<string, unknown>>;
+        const tab = tabs[0] as Record<string, unknown>;
+        expect(tab.title).toBe("ドキュメント");
+
+        const sidebarRoot = tab.child as Record<string, unknown>;
+        const sidebarChildren = sidebarRoot.children as Array<Record<string, unknown>>;
+        expect(sidebarChildren[0]?.title).toBe("はじめに");
     });
 
     it("applies product announcement override", () => {

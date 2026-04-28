@@ -561,6 +561,7 @@ export interface TranslationNavigationOverlay {
 
 export interface TabOverlay {
     displayName: string | undefined;
+    slug: string | undefined;
 }
 
 export interface ProductOverlay {

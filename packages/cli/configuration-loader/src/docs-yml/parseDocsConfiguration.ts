@@ -2243,7 +2243,8 @@ function parseTabOverlays(tabsObj: Record<string, unknown>): Record<string, docs
         if (isPlainObject(tabConfig)) {
             const tabConfigObj = tabConfig as Record<string, unknown>;
             result[tabId] = {
-                displayName: typeof tabConfigObj["display-name"] === "string" ? tabConfigObj["display-name"] : undefined
+                displayName: typeof tabConfigObj["display-name"] === "string" ? tabConfigObj["display-name"] : undefined,
+                slug: typeof tabConfigObj.slug === "string" ? tabConfigObj.slug : undefined
             };
         }
     }

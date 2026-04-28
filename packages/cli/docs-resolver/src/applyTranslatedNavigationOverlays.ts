@@ -226,9 +226,11 @@ function applyTabOverlayToNode(node: Record<string, unknown>, overlay: docsYml.T
 
     // Look up tab display-name override from overlay.tabs
     if (overlay.tabs != null && tabSlug != null) {
-        // Try matching by slug (tab ID is typically the slug)
         for (const [tabId, tabOverlay] of Object.entries(overlay.tabs)) {
-            if (tabId === tabSlug && tabOverlay.displayName != null) {
+            // Match by tab ID (YAML key) against nav tree slug segment, or
+            // by the overlay's explicit slug field against the slug segment
+            const isMatch = tabId === tabSlug || (tabOverlay.slug != null && tabOverlay.slug === tabSlug);
+            if (isMatch && tabOverlay.displayName != null) {
                 node["title"] = tabOverlay.displayName;
                 break;
             }
@@ -280,7 +282,14 @@ function findTabNavOverlay(
         if (tabSlug != null && navItem.tabId === tabSlug) {
             return navItem;
         }
-        // Match by tab ID against a tab slug from the tabs map
+        // Match by overlay tab's explicit slug field against the nav tree slug
+        if (tabSlug != null && overlay.tabs != null) {
+            const tabConfig = overlay.tabs[navItem.tabId];
+            if (tabConfig?.slug != null && tabConfig.slug === tabSlug) {
+                return navItem;
+            }
+        }
+        // Fallback: match by overlay tab's display name against the nav tree title
         if (overlay.tabs != null) {
             const tabConfig = overlay.tabs[navItem.tabId];
             if (tabConfig?.displayName != null && tabConfig.displayName === tabTitle) {
