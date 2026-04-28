@@ -14,10 +14,8 @@ module Seed
     # @return [Seed::Types::RuleTypeSearchResponse]
     def search_rule_types(request_options: {}, **params)
       params = Seed::Internal::Types::Utils.normalize_keys(params)
-      query_param_names = %i[query]
       query_params = {}
       query_params["query"] = params[:query] if params.key?(:query)
-      params.except(*query_param_names)
 
       request = Seed::Internal::JSON::Request.new(
         base_url: request_options[:base_url],
@@ -73,7 +71,7 @@ module Seed
     end
 
     # @param request_options [Hash]
-    # @param params [Hash]
+    # @param _params [Hash]
     # @option request_options [String] :base_url
     # @option request_options [Hash{String => Object}] :additional_headers
     # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -81,8 +79,7 @@ module Seed
     # @option request_options [Integer] :timeout_in_seconds
     #
     # @return [Seed::Types::UserSearchResponse]
-    def list_users(request_options: {}, **params)
-      Seed::Internal::Types::Utils.normalize_keys(params)
+    def list_users(request_options: {}, **_params)
       request = Seed::Internal::JSON::Request.new(
         base_url: request_options[:base_url],
         method: "GET",
@@ -104,7 +101,7 @@ module Seed
     end
 
     # @param request_options [Hash]
-    # @param params [Hash]
+    # @param _params [Hash]
     # @option request_options [String] :base_url
     # @option request_options [Hash{String => Object}] :additional_headers
     # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -112,8 +109,7 @@ module Seed
     # @option request_options [Integer] :timeout_in_seconds
     #
     # @return [Seed::Types::CombinedEntity]
-    def get_entity(request_options: {}, **params)
-      Seed::Internal::Types::Utils.normalize_keys(params)
+    def get_entity(request_options: {}, **_params)
       request = Seed::Internal::JSON::Request.new(
         base_url: request_options[:base_url],
         method: "GET",
@@ -135,7 +131,7 @@ module Seed
     end
 
     # @param request_options [Hash]
-    # @param params [Hash]
+    # @param _params [Hash]
     # @option request_options [String] :base_url
     # @option request_options [Hash{String => Object}] :additional_headers
     # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -143,8 +139,7 @@ module Seed
     # @option request_options [Integer] :timeout_in_seconds
     #
     # @return [Seed::Types::Organization]
-    def get_organization(request_options: {}, **params)
-      Seed::Internal::Types::Utils.normalize_keys(params)
+    def get_organization(request_options: {}, **_params)
       request = Seed::Internal::JSON::Request.new(
         base_url: request_options[:base_url],
         method: "GET",

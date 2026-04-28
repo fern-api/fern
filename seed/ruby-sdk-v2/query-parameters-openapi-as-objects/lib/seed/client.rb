@@ -31,7 +31,6 @@ module Seed
     # @return [Seed::Types::SearchResponse]
     def search(request_options: {}, **params)
       params = Seed::Internal::Types::Utils.normalize_keys(params)
-      query_param_names = %i[limit id date deadline bytes user user_list optional_deadline key_value optional_string nested_user optional_user exclude_user filter tags optional_tags neighbor neighbor_required]
       query_params = {}
       query_params["limit"] = params[:limit] if params.key?(:limit)
       query_params["id"] = params[:id] if params.key?(:id)
@@ -51,7 +50,6 @@ module Seed
       query_params["optionalTags"] = params[:optional_tags] if params.key?(:optional_tags)
       query_params["neighbor"] = params[:neighbor] if params.key?(:neighbor)
       query_params["neighborRequired"] = params[:neighbor_required] if params.key?(:neighbor_required)
-      params.except(*query_param_names)
 
       request = Seed::Internal::JSON::Request.new(
         base_url: request_options[:base_url],

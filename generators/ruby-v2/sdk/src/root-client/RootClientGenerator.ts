@@ -648,7 +648,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             const wireValue = getWireValue(header.name);
             headers.push({
                 key: ruby.TypeLiteral.string(wireValue),
-                value: ruby.TypeLiteral.string(`#{${paramName}}`)
+                value: ruby.codeblock(`${paramName}.to_s`)
             });
         }
 

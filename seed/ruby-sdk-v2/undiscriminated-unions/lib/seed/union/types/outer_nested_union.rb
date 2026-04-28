@@ -9,6 +9,7 @@ module Seed
         extend Seed::Internal::Types::Union
 
         member -> { String }
+
         member -> { Seed::Union::Types::WrapperObject }
       end
     end
