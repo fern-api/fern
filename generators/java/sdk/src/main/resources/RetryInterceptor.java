@@ -13,7 +13,6 @@ public class RetryInterceptor implements Interceptor {
     private static final Duration INITIAL_RETRY_DELAY = Duration.ofMillis(1000);
     private static final Duration MAX_RETRY_DELAY = Duration.ofMillis(60000);
     private static final double JITTER_FACTOR = 0.2;
-    private static final String RETRY_STATUS_CODES = "legacy";
 
     private final int maxRetries;
     private final Random random = new Random();
@@ -151,9 +150,6 @@ public class RetryInterceptor implements Interceptor {
     }
 
     private static boolean shouldRetry(int statusCode) {
-        if ("recommended".equals(RETRY_STATUS_CODES)) {
-            return statusCode == 408 || statusCode == 429 || statusCode == 502 || statusCode == 503 || statusCode == 504;
-        }
         return statusCode == 408 || statusCode == 429 || statusCode >= 500;
     }
 
