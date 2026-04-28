@@ -68,10 +68,7 @@ export async function buildGenerator(dirname, options = {}) {
     // generators never trigger the code path that uses it (autoversioning), so
     // marking it external is safe. Merge with any caller-supplied externals.
     const callerExternal = tsupOptions.external ?? [];
-    const mergedExternal = [
-        "@boundaryml/baml",
-        ...(Array.isArray(callerExternal) ? callerExternal : [callerExternal])
-    ];
+    const mergedExternal = ["@boundaryml/baml", ...(Array.isArray(callerExternal) ? callerExternal : [callerExternal])];
 
     // Build with tsup (merge default options with custom ones)
     const defaultTsupOptions = {
