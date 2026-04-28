@@ -57,6 +57,10 @@ async function createGitRepoWithRemote(): Promise<{ bareDir: string; cloneDir: s
     git(`clone ${bareDir} ${cloneDir}`, os.tmpdir());
     git('config user.email "test@test.com"', cloneDir);
     git('config user.name "Test"', cloneDir);
+    // Prevent GPG/SSH commit signing from hijacking the terminal for a password / Touch ID
+    // prompt when the developer running tests has a signing key configured globally.
+    git("config commit.gpgsign false", cloneDir);
+    git("config tag.gpgsign false", cloneDir);
 
     // Initial commit
     await fs.writeFile(path.join(cloneDir, "README.md"), "# Test\n");
@@ -73,6 +77,8 @@ async function createLocalOnlyRepo(): Promise<string> {
     git("init --initial-branch=main", dir);
     git('config user.email "test@test.com"', dir);
     git('config user.name "Test"', dir);
+    git("config commit.gpgsign false", dir);
+    git("config tag.gpgsign false", dir);
 
     await fs.writeFile(path.join(dir, "README.md"), "# Test\n");
     git("add .", dir);

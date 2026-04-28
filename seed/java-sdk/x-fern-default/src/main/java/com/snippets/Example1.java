@@ -8,6 +8,6 @@ public class Example1 {
         SeedApiClient client =
                 SeedApiClient.builder().url("https://api.fern.com").build();
 
-        client.testGet("region", TestGetRequest.builder().limit("100").build());
+        client.testGet("region", TestGetRequest.builder().limit("limit").build());
     }
 }

@@ -57,9 +57,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
             return undefined;
         }
 
-        const defaultExtractor = this.context.customConfig.useDefaultRequestParameterValues
-            ? new DefaultValueExtractor(this.context)
-            : undefined;
+        const defaultExtractor = new DefaultValueExtractor(this.context);
 
         return {
             code: ruby.codeblock((writer) => {
@@ -70,14 +68,17 @@ export class WrappedEndpointRequest extends EndpointRequest {
                     const snakeCaseName = this.case.snakeSafe(queryParam.name);
                     const wireValue = getWireValue(queryParam.name);
 
-                    const extracted =
-                        defaultExtractor != null && !queryParam.allowMultiple
+                    // clientDefault always applies; type-level defaults only when config is on
+                    const clientDefault = defaultExtractor.extractClientDefault(queryParam.clientDefault);
+                    const typeDefault =
+                        this.context.customConfig.useDefaultRequestParameterValues && !queryParam.allowMultiple
                             ? defaultExtractor.extractDefault(queryParam.valueType)
                             : undefined;
+                    const effectiveDefault = clientDefault ?? typeDefault?.value;
 
-                    if (extracted != null) {
+                    if (effectiveDefault != null) {
                         writer.writeLine(
-                            `${queryParameterBagName}["${wireValue}"] = params.fetch(:${snakeCaseName}, ${extracted.value})`
+                            `${queryParameterBagName}["${wireValue}"] = params.fetch(:${snakeCaseName}, ${effectiveDefault})`
                         );
                     } else {
                         writer.writeLine(
@@ -96,9 +97,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
             return undefined;
         }
 
-        const defaultExtractor = this.context.customConfig.useDefaultRequestParameterValues
-            ? new DefaultValueExtractor(this.context)
-            : undefined;
+        const defaultExtractor = new DefaultValueExtractor(this.context);
 
         return {
             code: ruby.codeblock((writer) => {
@@ -107,11 +106,16 @@ export class WrappedEndpointRequest extends EndpointRequest {
                     const snakeCaseName = this.case.snakeSafe(header.name);
                     const wireValue = getWireValue(header.name);
 
-                    const extracted = defaultExtractor?.extractDefault(header.valueType);
+                    // clientDefault always applies; type-level defaults only when config is on
+                    const clientDefault = defaultExtractor.extractClientDefault(header.clientDefault);
+                    const typeDefault = this.context.customConfig.useDefaultRequestParameterValues
+                        ? defaultExtractor.extractDefault(header.valueType)
+                        : undefined;
+                    const effectiveDefault = clientDefault ?? typeDefault?.value;
 
-                    if (extracted != null) {
+                    if (effectiveDefault != null) {
                         writer.writeLine(
-                            `${HEADER_BAG_NAME}["${wireValue}"] = params.fetch(:${snakeCaseName}, ${extracted.value})`
+                            `${HEADER_BAG_NAME}["${wireValue}"] = params.fetch(:${snakeCaseName}, ${effectiveDefault})`
                         );
                     } else {
                         writer.writeLine(

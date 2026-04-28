@@ -245,13 +245,8 @@ packages = [
                 pytest_version = "^7.4.0"
                 pytest_asyncio_version = "^0.23.5"
 
-            # Exclude the vulnerable urllib3 range (>=2.0.0,<2.2.2) addressed by
-            # CVE-2024-37891 (GHSA-34jh-p97f-mpxf). Pinning as a dev dependency
-            # keeps urllib3 out of the SDK's runtime dependency set while
-            # constraining `poetry lock` resolution so the generated lock file
-            # can never pick up the vulnerable range — even when transitively
-            # pulled in by user-supplied `extra_dependencies` such as older
-            # pinned versions of boto3 whose botocore caps urllib3 at < 2.1.
+            # Pin urllib3 >= 2.6.3 as a dev dependency to address CVE-2026-21441
+            # and related HIGH-severity advisories affecting < 2.6.3.
             return f"""
 [tool.poetry.dependencies]
 python = "{self.python_version}"
@@ -263,7 +258,7 @@ pytest-asyncio = "{pytest_asyncio_version}"
 pytest-xdist = "^3.6.1"
 python-dateutil = "^2.9.0"
 types-python-dateutil = "^2.9.0.20240316"
-urllib3 = ">=1.26.19,<2.0.0 || >=2.2.2,<3.0.0"
+urllib3 = ">=2.6.3,<3.0.0"
 {wire_test_deps}{dev_deps}"""
 
     @dataclass(frozen=True)

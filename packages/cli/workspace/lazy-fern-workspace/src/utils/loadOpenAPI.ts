@@ -1,6 +1,7 @@
+import path from "node:path";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernOpenAPIExtension, OpenAPIExtension } from "@fern-api/openapi-ir-parser";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import { OpenAPI } from "openapi-types";
@@ -67,7 +68,23 @@ export async function loadOpenAPI({
     // Inline `description: { $ref: "./*.md" }` pointers before Redocly's bundler
     // sees them — otherwise it tries to YAML-parse the markdown and mangles it.
     const rawSpecContents = await readFile(absolutePathToOpenAPI, "utf-8");
-    const rawSpec = yaml.load(rawSpecContents) as OpenAPI.Document;
+    let rawSpec: OpenAPI.Document;
+    try {
+        rawSpec = yaml.load(rawSpecContents) as OpenAPI.Document;
+    } catch (e) {
+        if (!(e instanceof yaml.YAMLException)) {
+            throw e;
+        }
+        const relativePath = path.relative(process.cwd(), absolutePathToOpenAPI);
+        let errorMessage = `Failed to parse ${relativePath}: ${e.reason}`;
+        if (e.mark != null) {
+            errorMessage += `\n  at line ${e.mark.line + 1}, column ${e.mark.column + 1}`;
+            if (e.mark.snippet) {
+                errorMessage += `\n\n${e.mark.snippet}`;
+            }
+        }
+        throw new CliError({ message: errorMessage, code: CliError.Code.ParseError });
+    }
     await resolveDescriptionMarkdownRefs(rawSpec, dirname(absolutePathToOpenAPI), context);
     const parsed = await parseOpenAPI({
         absolutePathToOpenAPI,

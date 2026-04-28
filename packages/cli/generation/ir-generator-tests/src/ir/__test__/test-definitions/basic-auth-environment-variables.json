@@ -13,9 +13,11 @@
                 "username": "username",
                 "usernameEnvVar": "USERNAME",
                 "usernameOmit": null,
+                "usernamePlaceholder": "YOUR_USERNAME",
                 "password": "accessToken",
                 "passwordEnvVar": "PASSWORD",
                 "passwordOmit": null,
+                "passwordPlaceholder": "YOUR_PASSWORD",
                 "key": "Basic",
                 "docs": null
             }
@@ -821,6 +823,7 @@
                             "safeName": "Username"
                         }
                     },
+                    "usernameOmit": null,
                     "password": {
                         "originalName": "accessToken",
                         "camelCase": {
@@ -839,7 +842,8 @@
                             "unsafeName": "AccessToken",
                             "safeName": "AccessToken"
                         }
-                    }
+                    },
+                    "passwordOmit": null
                 },
                 "declaration": {
                     "name": {
@@ -941,6 +945,7 @@
                             "safeName": "Username"
                         }
                     },
+                    "usernameOmit": null,
                     "password": {
                         "originalName": "accessToken",
                         "camelCase": {
@@ -959,7 +964,8 @@
                             "unsafeName": "AccessToken",
                             "safeName": "AccessToken"
                         }
-                    }
+                    },
+                    "passwordOmit": null
                 },
                 "declaration": {
                     "name": {

@@ -857,6 +857,16 @@
               "type": "null"
             }
           ]
+        },
+        "placeholder": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -891,6 +901,16 @@
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "placeholder": {
+          "oneOf": [
+            {
+              "type": "string"
             },
             {
               "type": "null"

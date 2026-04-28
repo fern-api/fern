@@ -3,6 +3,8 @@ import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { FileGenerator, RubyFile } from "@fern-api/ruby-base";
 import { FernIr } from "@fern-fern/ir-sdk";
+import { DefaultValueExtractor } from "../DefaultValueExtractor.js";
+import { RawClient } from "../endpoint/http/RawClient.js";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { astNodeToCodeBlockWithComments } from "../utils/astNodeToCodeBlockWithComments.js";
@@ -30,6 +32,22 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             }
             class_.addMethod(this.getSubpackageClientGetter(subpackage, rootModule));
         }
+
+        // Add root service endpoint methods directly on the root client
+        const rootServiceId = this.context.ir.rootPackage.service;
+        if (rootServiceId != null) {
+            const rootService = this.context.getHttpServiceOrThrow(rootServiceId);
+            for (const endpoint of rootService.endpoints) {
+                const generatedMethods = this.context.endpointGenerator.generate({
+                    endpoint,
+                    serviceId: rootServiceId,
+                    rawClientReference: "",
+                    rawClient: new RawClient(this.context)
+                });
+                class_.addStatements(generatedMethods);
+            }
+        }
+
         rootModule.addStatement(class_);
         return new RubyFile({
             node: astNodeToCodeBlockWithComments(rootModule, [Comments.FrozenStringLiteral]),
@@ -76,6 +94,9 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
 
         const authenticationParameters = this.getAuthenticationParameters();
         parameters.push(...authenticationParameters);
+
+        const globalHeaderParameters = this.getGlobalHeaderParameters();
+        parameters.push(...globalHeaderParameters);
 
         const method = ruby.method({
             name: "initialize",
@@ -426,6 +447,47 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         return parameters;
     }
 
+    /**
+     * Returns constructor keyword parameters for global headers that have a clientDefault.
+     * For headers with env AND clientDefault, precedence is: caller > env var > clientDefault.
+     */
+    private getGlobalHeaderParameters(): ruby.KeywordParameter[] {
+        const parameters: ruby.KeywordParameter[] = [];
+        const defaultExtractor = new DefaultValueExtractor(this.context);
+
+        for (const header of this.context.ir.headers) {
+            // Skip literal-typed headers (they're always sent with the literal value)
+            if (this.maybeLiteral(header.valueType) != null) {
+                continue;
+            }
+
+            const clientDefault = defaultExtractor.extractClientDefault(header.clientDefault);
+            if (clientDefault == null) {
+                continue;
+            }
+
+            const paramName = this.case.snakeSafe(header.name);
+            let initializer: ruby.CodeBlock;
+            if (header.env != null) {
+                // Precedence: caller > env var > clientDefault
+                initializer = ruby.codeblock(`ENV.fetch("${header.env}", ${clientDefault})`);
+            } else {
+                initializer = ruby.codeblock(clientDefault);
+            }
+
+            parameters.push(
+                ruby.parameters.keyword({
+                    name: paramName,
+                    type: ruby.Type.nilable(ruby.Type.string()),
+                    initializer,
+                    docs: undefined
+                })
+            );
+        }
+
+        return parameters;
+    }
+
     private getParametersForInferredAuth(scheme: FernIr.InferredAuthScheme): InferredAuthParameter[] {
         const parameters: InferredAuthParameter[] = [];
 
@@ -538,6 +600,24 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                 default:
                     break;
             }
+        }
+
+        // Add global headers that have clientDefault values
+        const defaultExtractor = new DefaultValueExtractor(this.context);
+        for (const header of this.context.ir.headers) {
+            if (this.maybeLiteral(header.valueType) != null) {
+                continue;
+            }
+            const clientDefault = defaultExtractor.extractClientDefault(header.clientDefault);
+            if (clientDefault == null) {
+                continue;
+            }
+            const paramName = this.case.snakeSafe(header.name);
+            const wireValue = getWireValue(header.name);
+            headers.push({
+                key: ruby.TypeLiteral.string(wireValue),
+                value: ruby.TypeLiteral.string(`#{${paramName}}`)
+            });
         }
 
         return ruby.TypeLiteral.hash(headers);

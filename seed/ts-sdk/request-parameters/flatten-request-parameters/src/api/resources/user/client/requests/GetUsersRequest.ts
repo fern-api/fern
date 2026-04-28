@@ -62,5 +62,5 @@ export interface GetUsersRequest {
     excludeUser: SeedRequestParameters.User | SeedRequestParameters.User[];
     filter: string | string[];
     longParam: number;
-    bigIntParam?: string;
+    bigIntParam: string;
 }

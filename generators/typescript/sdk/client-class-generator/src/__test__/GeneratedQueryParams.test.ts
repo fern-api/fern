@@ -506,34 +506,4 @@ describe("GeneratedQueryParams", () => {
             expect(text).toMatchSnapshot();
         });
     });
-
-    describe("getReferenceTo", () => {
-        it("returns spread with query params when parameters exist", () => {
-            const queryParams = [
-                createQueryParameter("name", FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }))
-            ];
-
-            const generator = new GeneratedQueryParams({
-                queryParameters: queryParams,
-                referenceToQueryParameterProperty: defaultReferenceToQueryParameterProperty
-            });
-
-            const result = generator.getReferenceTo();
-            assert(result != null, "expected getReferenceTo to return an expression when parameters exist");
-            const text = getTextOfTsNode(result);
-            expect(text).toMatchSnapshot();
-        });
-
-        it("returns only requestOptions queryParams when no parameters", () => {
-            const generator = new GeneratedQueryParams({
-                queryParameters: undefined,
-                referenceToQueryParameterProperty: defaultReferenceToQueryParameterProperty
-            });
-
-            const result = generator.getReferenceTo();
-            assert(result != null, "expected getReferenceTo to return an expression when no parameters");
-            const text = getTextOfTsNode(result);
-            expect(text).toMatchSnapshot();
-        });
-    });
 });

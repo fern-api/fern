@@ -181,6 +181,7 @@ export function visitTypeDeclaration({
             visitObject(union, {
                 docs: createDocsVisitor(visitor, nodePathForType),
                 discriminated: noop,
+                "base-properties": noop,
                 union: (unionMembers) => {
                     for (const [index, unionMember] of unionMembers.entries()) {
                         const nodePathForUnionType = [...nodePathForType, `union[${index}]`];

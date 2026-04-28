@@ -35,7 +35,8 @@ export async function runRemoteGenerationForDocsWorkspace({
     skipUpload,
     cliVersion,
     ciSource,
-    deployerAuthor
+    deployerAuthor,
+    loginCommand
 }: {
     organization: string;
     apiWorkspaces: AbstractAPIWorkspace<unknown>[];
@@ -51,6 +52,11 @@ export async function runRemoteGenerationForDocsWorkspace({
     cliVersion?: string;
     ciSource?: CISource;
     deployerAuthor?: { username?: string; email?: string };
+    /**
+     * CLI command to reference in auth-failure hints (e.g. 'fern login' for v1,
+     * 'fern auth login' for CLI v2). Defaults to 'fern login'.
+     */
+    loginCommand?: string;
 }): Promise<string | undefined> {
     // Substitute templated environment variables:
     // If substitute-env-vars is enabled, we'll attempt to read and replace the templated
@@ -144,7 +150,8 @@ export async function runRemoteGenerationForDocsWorkspace({
                 docsUrl: maybeInstance.url,
                 cliVersion,
                 ciSource,
-                deployerAuthor
+                deployerAuthor,
+                loginCommand
             });
 
         for (let attempt = 0; ; attempt++) {

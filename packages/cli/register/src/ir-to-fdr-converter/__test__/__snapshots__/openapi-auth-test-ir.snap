@@ -15,6 +15,7 @@
         "key": "bearerAuth",
         "token": "token",
         "tokenEnvVar": undefined,
+        "tokenPlaceholder": undefined,
         "type": "bearer",
       },
     ],

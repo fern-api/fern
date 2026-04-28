@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "@fern-api/base-generator": "workspace:*",
-    "@fern-fern/ir-sdk": "66.0.0",
+    "@fern-fern/ir-sdk": "66.3.0",
     "@fern-typescript/abstract-schema-generator": "workspace:*",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/contexts": "workspace:*",

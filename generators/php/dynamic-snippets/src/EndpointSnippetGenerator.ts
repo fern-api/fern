@@ -211,24 +211,7 @@ export class EndpointSnippetGenerator {
             if (snippet.auth != null) {
                 authArgs.push(...this.getConstructorAuthArgs({ auth: endpoint.auth, values: snippet.auth }));
             } else {
-                // Provide default auth values for endpoints that require authentication
-                if (endpoint.auth.type === "inferred") {
-                    // For inferred auth, provide default test values
-                    const defaultInferredAuthValues: FernIr.dynamic.InferredAuthValues = {
-                        values: undefined
-                    };
-                    authArgs.push(
-                        ...this.getConstructorInferredAuthArgs({
-                            auth: endpoint.auth,
-                            values: defaultInferredAuthValues
-                        })
-                    );
-                } else {
-                    this.context.errors.add({
-                        severity: Severity.Warning,
-                        message: `Auth with ${endpoint.auth.type} configuration is required for this endpoint`
-                    });
-                }
+                authArgs.push(...this.getDefaultAuthArgs({ auth: endpoint.auth }));
             }
         }
 
@@ -306,6 +289,41 @@ export class EndpointSnippetGenerator {
         }
     }
 
+    private getDefaultAuthArgs({ auth }: { auth: FernIr.dynamic.Auth }): NamedArgument[] {
+        switch (auth.type) {
+            case "bearer":
+                return this.getConstructorBearerAuthArgs({
+                    auth,
+                    values: { token: "YOUR_TOKEN" }
+                });
+            case "oauth":
+                return this.getConstructorOAuthArgs({
+                    auth,
+                    values: { clientId: "YOUR_CLIENT_ID", clientSecret: "YOUR_CLIENT_SECRET" }
+                });
+            case "basic":
+                return this.getConstructorBasicAuthArgs({
+                    auth,
+                    values: {
+                        username: "YOUR_USERNAME",
+                        password: "YOUR_PASSWORD"
+                    }
+                });
+            case "header":
+                return this.getConstructorHeaderAuthArgs({
+                    auth,
+                    values: { value: "YOUR_AUTH_TOKEN" }
+                });
+            case "inferred":
+                return this.getConstructorInferredAuthArgs({
+                    auth,
+                    values: { values: undefined }
+                });
+            default:
+                assertNever(auth);
+        }
+    }
+
     private addError(message: string): void {
         this.context.errors.add({ severity: Severity.Critical, message });
     }
@@ -321,18 +339,14 @@ export class EndpointSnippetGenerator {
         auth: FernIr.dynamic.BasicAuth;
         values: FernIr.dynamic.BasicAuthValues;
     }): NamedArgument[] {
-        // usernameOmit/passwordOmit may exist in newer IR versions
-        const authRecord = auth as unknown as Record<string, unknown>;
-        const usernameOmitted = !!authRecord.usernameOmit;
-        const passwordOmitted = !!authRecord.passwordOmit;
         const args: NamedArgument[] = [];
-        if (!usernameOmitted) {
+        if (!auth.usernameOmit) {
             args.push({
                 name: this.context.getPropertyName(auth.username),
                 assignment: php.TypeLiteral.string(values.username)
             });
         }
-        if (!passwordOmitted) {
+        if (!auth.passwordOmit) {
             args.push({
                 name: this.context.getPropertyName(auth.password),
                 assignment: php.TypeLiteral.string(values.password)

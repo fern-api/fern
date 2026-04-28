@@ -41,7 +41,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedHeaderTokenEnvironmentVariableClient } from "@fern/header-auth-environment-variable";
 
-const client = new SeedHeaderTokenEnvironmentVariableClient({ environment: "YOUR_BASE_URL", headerTokenAuth: "YOUR_HEADER_TOKEN_AUTH" });
+const client = new SeedHeaderTokenEnvironmentVariableClient({ environment: "YOUR_BASE_URL", headerTokenAuth: "YOUR_HEADER_VALUE" });
 await client.service.getWithBearerToken();
 ```
 

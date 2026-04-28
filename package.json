@@ -155,7 +155,7 @@
       "minimatch": ">=10.2.3",
       "qs": "6.15.0",
       "url-join": "^4.0.1",
-      "@fern-api/fdr-sdk": "1.1.13-c1ad12a2b8",
+      "@fern-api/fdr-sdk": "1.1.23-d25ead8e05",
       "form-data": "^4.0.4",
       "@fern-api/ui-core-utils": "0.145.12-b50d999d1",
       "vite": "^7.3.2",

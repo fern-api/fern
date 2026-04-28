@@ -69,9 +69,6 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
                 return;
             }
 
-            const rootClient = new RootClientGenerator(context);
-            context.project.addRawFiles(rootClient.generate());
-
             const subClient = new SubPackageClientGenerator({
                 subpackageId,
                 context,
@@ -83,6 +80,16 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
                 this.generateRequests(context, service, subpackage.service);
             }
         });
+
+        // Generate root client (always, regardless of subpackages)
+        const rootClient = new RootClientGenerator(context);
+        context.project.addRawFiles(rootClient.generate());
+
+        // Generate requests for root service
+        if (context.ir.rootPackage.service != null) {
+            const rootService = context.getHttpServiceOrThrow(context.ir.rootPackage.service);
+            this.generateRequests(context, rootService, context.ir.rootPackage.service);
+        }
 
         context.ir.environments?.environments._visit({
             singleBaseUrl: (value) => {

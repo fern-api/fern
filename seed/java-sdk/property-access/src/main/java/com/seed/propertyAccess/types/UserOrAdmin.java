@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.seed.propertyAccess.core.ObjectMappers;
 import java.io.IOException;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonDeserialize(using = UserOrAdmin.Deserializer.class)
@@ -81,13 +82,26 @@ public final class UserOrAdmin {
         @java.lang.Override
         public UserOrAdmin deserialize(JsonParser p, DeserializationContext context) throws IOException {
             Object value = p.readValueAs(Object.class);
-            try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, User.class));
-            } catch (RuntimeException e) {
+            if (value instanceof Map<?, ?>
+                    && ((Map<?, ?>) value).containsKey("id")
+                    && ((Map<?, ?>) value).containsKey("email")
+                    && ((Map<?, ?>) value).containsKey("password")
+                    && ((Map<?, ?>) value).containsKey("profile")) {
+                try {
+                    return of(ObjectMappers.JSON_MAPPER.convertValue(value, User.class));
+                } catch (RuntimeException e) {
+                }
             }
-            try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, Admin.class));
-            } catch (RuntimeException e) {
+            if (value instanceof Map<?, ?>
+                    && ((Map<?, ?>) value).containsKey("adminLevel")
+                    && ((Map<?, ?>) value).containsKey("id")
+                    && ((Map<?, ?>) value).containsKey("email")
+                    && ((Map<?, ?>) value).containsKey("password")
+                    && ((Map<?, ?>) value).containsKey("profile")) {
+                try {
+                    return of(ObjectMappers.JSON_MAPPER.convertValue(value, Admin.class));
+                } catch (RuntimeException e) {
+                }
             }
             throw new JsonParseException(p, "Failed to deserialize");
         }

@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "const": "History"
+    },
+    "role": {
+      "type": "string"
+    },
+    "content": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "type",
+    "role",
+    "content"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

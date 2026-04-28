@@ -51,7 +51,8 @@ export async function runRemoteGenerationForGenerator({
     requireEnvVars,
     automationMode,
     autoMerge,
-    skipIfNoDiff
+    skipIfNoDiff,
+    loginCommand
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     organization: string;
@@ -80,6 +81,11 @@ export async function runRemoteGenerationForGenerator({
     automationMode?: boolean;
     autoMerge?: boolean;
     skipIfNoDiff?: boolean;
+    /**
+     * CLI command to reference in auth-failure hints (e.g. 'fern login' for v1,
+     * 'fern auth login' for CLI v2). Defaults to 'fern login'.
+     */
+    loginCommand?: string;
 }): Promise<RemoteTaskHandler.Response | undefined> {
     const fdr = createFdrService({ token: token.value });
 
@@ -280,7 +286,10 @@ export async function runRemoteGenerationForGenerator({
         return {
             createdSnippets: false,
             snippetsS3PreSignedReadUrl: undefined,
-            actualVersion: version
+            actualVersion: version,
+            pullRequestUrl: undefined,
+            noChangesDetected: undefined,
+            publishTarget: undefined
         };
     }
 
@@ -308,7 +317,8 @@ export async function runRemoteGenerationForGenerator({
         retryRateLimited,
         automationMode,
         autoMerge,
-        skipIfNoDiff
+        skipIfNoDiff,
+        loginCommand
     });
     interactiveTaskContext.logger.debug(`Job ID: ${job.jobId}`);
 
@@ -329,12 +339,23 @@ export async function runRemoteGenerationForGenerator({
         absolutePathToPreview
     });
 
-    const result = await pollJobAndReportStatus({
+    let result = await pollJobAndReportStatus({
         job,
         taskHandler,
         taskId,
         context: interactiveTaskContext
     });
+
+    // Fall back to the locally-resolved version when Fiddle doesn't echo it back
+    // (e.g. GitHub push modes where no registry publish or release tag occurs).
+    // Skip the fallback when the version is AUTO — Fiddle determines the real version
+    // via AI-based semantic analysis, and resolvedVersion would be the literal "AUTO" string.
+    if (result != null && result.actualVersion == null) {
+        const fallback = resolveVersionFallback(resolvedVersion);
+        if (fallback != null) {
+            result = { ...result, actualVersion: fallback };
+        }
+    }
 
     // use the actual version from the generation result, fallback to pre-computed version
     const actualVersionForUpload = result?.actualVersion ?? resolvedVersion;
@@ -499,4 +520,19 @@ async function uploadDynamicIRForSdkGeneration({
     } else {
         context.logger.warn(`Failed to upload dynamic IR for ${language}: ${uploadResponse.status}`);
     }
+}
+
+/**
+ * Returns `resolvedVersion` when it is a concrete version string that should be
+ * used as fallback. Returns `undefined` when the version is AUTO (Fiddle owns
+ * the final version) or when no version was provided at all.
+ */
+export function resolveVersionFallback(resolvedVersion: string | undefined): string | undefined {
+    if (resolvedVersion == null) {
+        return undefined;
+    }
+    if (resolvedVersion.toUpperCase() === "AUTO") {
+        return undefined;
+    }
+    return resolvedVersion;
 }

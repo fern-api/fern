@@ -4,7 +4,13 @@ export class CliError extends Error {
 
     constructor({ message, code, docsLink }: { code: CliError.Code; message?: string; docsLink?: string }) {
         super(message);
-        Object.setPrototypeOf(this, CliError.prototype);
+
+        Object.setPrototypeOf(this, new.target.prototype);
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, this.constructor);
+        }
+        this.name = this.constructor.name;
+
         this.code = code;
         this.docsLink = docsLink;
     }
@@ -66,8 +72,8 @@ const SENTRY_REPORTABLE: Record<CliError.Code, boolean> = {
     [CliError.Code.InternalError]: true,
     [CliError.Code.ResolutionError]: true,
     [CliError.Code.IrConversionError]: true,
-    [CliError.Code.ContainerError]: true,
-    [CliError.Code.VersionError]: true,
+    [CliError.Code.ContainerError]: false,
+    [CliError.Code.VersionError]: false,
     [CliError.Code.ParseError]: false,
     [CliError.Code.EnvironmentError]: false,
     [CliError.Code.ReferenceError]: false,
@@ -83,13 +89,52 @@ export function shouldReportToSentry(code: CliError.Code): boolean {
 }
 
 function isSchemaValidationError(error: unknown): boolean {
-    return (
-        error instanceof Error && (error.constructor.name === "ParseError" || error.constructor.name === "JsonError")
-    );
+    return error instanceof Error && (error.name === "ParseError" || error.name === "JsonError");
 }
 
 function isNodeVersionError(error: unknown): boolean {
     return error instanceof Error && error.message.includes("globalThis");
+}
+
+// Node `ErrnoException` codes that represent a problem with the user's
+// environment (missing file, bad perms, full disk, closed pipe, …).
+// None of these indicate a Fern bug, so they map to EnvironmentError
+// which is non-reportable to Sentry.
+const USER_ENVIRONMENT_ERRNOS: ReadonlySet<string> = new Set([
+    "ENOENT",
+    "EACCES",
+    "EPERM",
+    "EISDIR",
+    "ENOTDIR",
+    "EEXIST",
+    "EPIPE",
+    "ENOSPC",
+    "EROFS",
+    "EMFILE",
+    "ENFILE",
+    "EBUSY"
+]);
+
+// `ErrnoException` codes from `node:net` / `node:dns` / `undici` that mean
+// the user cannot reach a remote service. Classified as NetworkError
+// (also non-reportable).
+const NETWORK_ERRNOS: ReadonlySet<string> = new Set([
+    "ENOTFOUND",
+    "ECONNREFUSED",
+    "ECONNRESET",
+    "ETIMEDOUT",
+    "EHOSTUNREACH",
+    "ENETUNREACH",
+    "EAI_AGAIN",
+    "EPROTO"
+]);
+
+function errnoCode(error: unknown): string | undefined {
+    if (!(error instanceof Error)) {
+        return undefined;
+    }
+    const code = (error as NodeJS.ErrnoException).code;
+    return typeof code === "string" ? code : undefined;
 }
 
 /**
@@ -109,6 +154,15 @@ export function resolveErrorCode(error: unknown, explicitCode?: CliError.Code): 
     }
     if (isNodeVersionError(error)) {
         return CliError.Code.EnvironmentError;
+    }
+    const errno = errnoCode(error);
+    if (errno != null) {
+        if (USER_ENVIRONMENT_ERRNOS.has(errno)) {
+            return CliError.Code.EnvironmentError;
+        }
+        if (NETWORK_ERRNOS.has(errno)) {
+            return CliError.Code.NetworkError;
+        }
     }
     return CliError.Code.InternalError;
 }

@@ -12,6 +12,7 @@
                 "_type": "bearer",
                 "token": "token",
                 "tokenEnvVar": null,
+                "tokenPlaceholder": null,
                 "key": "BearerAuth",
                 "docs": null
             }

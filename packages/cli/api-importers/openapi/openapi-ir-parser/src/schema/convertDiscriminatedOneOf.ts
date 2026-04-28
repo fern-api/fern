@@ -11,10 +11,12 @@ import { OpenAPIV3 } from "openapi-types";
 
 import { getExtension } from "../getExtension.js";
 import { FernOpenAPIExtension } from "../openapi/v3/extensions/fernExtensions.js";
+import { getAllProperties } from "./convertObject.js";
 import { convertReferenceObject, convertSchema, convertSchemaObject } from "./convertSchemas.js";
 import { inferDiscriminatorContextFromVariants, resolveDiscriminatorContext } from "./inferDiscriminatorContext.js";
 import { SchemaParserContext } from "./SchemaParserContext.js";
 import { isReferenceObject } from "./utils/isReferenceObject.js";
+import { isSchemaWithExampleEqual } from "./utils/isSchemaWithExampleEqual.js";
 
 export function convertDiscriminatedOneOf({
     nameOverride,
@@ -101,6 +103,21 @@ export function convertDiscriminatedOneOf({
                 schema
             };
         });
+    if (context.options.shouldInferDiscriminatedUnionBaseProperties) {
+        const variantSchemas: Array<OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject> = Object.values(
+            discriminator.mapping ?? {}
+        ).map(($ref) => ({ $ref }));
+        const inferredCommonProperties = inferCommonPropertiesFromVariants({
+            variants: variantSchemas,
+            discriminant,
+            existingPropertyNames: new Set(convertedProperties.map((p) => p.key)),
+            context,
+            breadcrumbs,
+            source,
+            namespace
+        });
+        convertedProperties.push(...inferredCommonProperties);
+    }
     return wrapDiscriminatedOneOf({
         nameOverride,
         generatedName,
@@ -214,6 +231,18 @@ export function convertDiscriminatedOneOfWithVariants({
                 schema
             };
         });
+    if (context.options.shouldInferDiscriminatedUnionBaseProperties) {
+        const inferredCommonProperties = inferCommonPropertiesFromVariants({
+            variants: Object.values(variants),
+            discriminant,
+            existingPropertyNames: new Set(convertedProperties.map((p) => p.key)),
+            context,
+            breadcrumbs,
+            source,
+            namespace
+        });
+        convertedProperties.push(...inferredCommonProperties);
+    }
     return wrapDiscriminatedOneOf({
         nameOverride,
         generatedName,
@@ -314,6 +343,64 @@ export function wrapDiscriminatedOneOf({
             availability,
             inline: undefined
         });
+    }
+    return result;
+}
+
+/**
+ * Compute properties that are present in every variant of a discriminated union
+ * (after `allOf`/`$ref` flattening) and whose schemas are structurally equal across
+ * all variants. The discriminant property and any properties already declared at the
+ * union's top level are excluded. This lets SDKs expose shared fields directly on
+ * the union type instead of forcing a cast to a concrete variant.
+ */
+function inferCommonPropertiesFromVariants({
+    variants,
+    discriminant,
+    existingPropertyNames,
+    context,
+    breadcrumbs,
+    source,
+    namespace
+}: {
+    variants: Array<OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject>;
+    discriminant: string;
+    existingPropertyNames: Set<string>;
+    context: SchemaParserContext;
+    breadcrumbs: string[];
+    source: Source;
+    namespace: string | undefined;
+}): CommonPropertyWithExample[] {
+    if (variants.length === 0) {
+        return [];
+    }
+    const variantPropertyMaps = variants.map((variant) =>
+        getAllProperties({ schema: variant, context, breadcrumbs, source, namespace })
+    );
+    const firstVariantProps = variantPropertyMaps[0];
+    if (firstVariantProps == null) {
+        return [];
+    }
+    const result: CommonPropertyWithExample[] = [];
+    for (const [propertyName, firstSchema] of Object.entries(firstVariantProps)) {
+        if (propertyName === discriminant) {
+            continue;
+        }
+        if (existingPropertyNames.has(propertyName)) {
+            continue;
+        }
+        let presentInAll = true;
+        for (let i = 1; i < variantPropertyMaps.length; i++) {
+            const map = variantPropertyMaps[i];
+            const otherSchema = map?.[propertyName];
+            if (otherSchema == null || !isSchemaWithExampleEqual(firstSchema, otherSchema)) {
+                presentInAll = false;
+                break;
+            }
+        }
+        if (presentInAll) {
+            result.push({ key: propertyName, schema: firstSchema });
+        }
     }
     return result;
 }

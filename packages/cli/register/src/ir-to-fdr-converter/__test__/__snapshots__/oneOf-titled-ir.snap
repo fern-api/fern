@@ -562,6 +562,7 @@
       },
       "shape": {
         "_visit": [Function],
+        "baseProperties": undefined,
         "members": [
           {
             "docs": "Error variant A with title",
@@ -768,6 +769,7 @@
       },
       "shape": {
         "_visit": [Function],
+        "baseProperties": undefined,
         "members": [
           {
             "docs": "First variant for oneOf with title",

@@ -55,7 +55,7 @@ export class ServiceClient {
             method: "POST",
             headers: _headers,
             contentType: "application/octet-stream",
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "bytes",
             duplex: "half",
             body: _binaryUploadRequest.body,
@@ -123,7 +123,6 @@ export class ServiceClient {
             method: "POST",
             headers: _headers,
             contentType: "application/octet-stream",
-            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
             queryString: core.url
                 .queryBuilder()
                 .addMany(_queryParams)

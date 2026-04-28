@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 import { shouldSkipMissingGenerator } from "../shouldSkipMissingGenerator.js";
 
 const automationOn: AutomationRunOptions = {
-    recorder: { recordSuccess: () => undefined, recordFailure: () => undefined }
+    recorder: { recordSuccess: () => undefined, recordFailure: () => undefined, recordSkipped: () => undefined }
 };
 
 describe("shouldSkipMissingGenerator", () => {

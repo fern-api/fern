@@ -293,22 +293,22 @@ asyncio.run(main())`
             switch (scheme.type) {
                 case "bearer":
                     args.push(
-                        `    ${caseConverter.snakeUnsafe(scheme.token)}="YOUR_${caseConverter.screamingSnakeUnsafe(scheme.token)}",`
+                        `    ${caseConverter.snakeUnsafe(scheme.token)}="${scheme.tokenPlaceholder ?? `YOUR_${caseConverter.screamingSnakeUnsafe(scheme.token)}`}",`
                     );
                     break;
                 case "basic":
                     args.push(
-                        `    ${caseConverter.snakeUnsafe(scheme.username)}="YOUR_${caseConverter.screamingSnakeUnsafe(scheme.username)}",`
+                        `    ${caseConverter.snakeUnsafe(scheme.username)}="${scheme.usernamePlaceholder ?? `YOUR_${caseConverter.screamingSnakeUnsafe(scheme.username)}`}",`
                     );
                     args.push(
-                        `    ${caseConverter.snakeUnsafe(scheme.password)}="YOUR_${caseConverter.screamingSnakeUnsafe(scheme.password)}",`
+                        `    ${caseConverter.snakeUnsafe(scheme.password)}="${scheme.passwordPlaceholder ?? `YOUR_${caseConverter.screamingSnakeUnsafe(scheme.password)}`}",`
                     );
                     break;
                 case "header": {
                     const schemeName = getNameFromWireValue(scheme.name);
                     const headerName = caseConverter.snakeUnsafe(schemeName);
                     const headerScreaming = caseConverter.screamingSnakeUnsafe(schemeName);
-                    args.push(`    ${headerName}="YOUR_${headerScreaming}",`);
+                    args.push(`    ${headerName}="${scheme.headerPlaceholder ?? `YOUR_${headerScreaming}`}",`);
                     break;
                 }
                 case "oauth":

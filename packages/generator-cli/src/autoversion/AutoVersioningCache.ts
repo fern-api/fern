@@ -1,5 +1,6 @@
-import { VersionBump } from "@fern-api/cli-ai";
 import crypto from "crypto";
+
+import { VersionBump } from "./VersionUtils.js";
 
 /**
  * The raw AI analysis result cached by AutoVersioningCache.

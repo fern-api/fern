@@ -9,13 +9,8 @@ public partial class Examples
             }
         );
 
-        await client.Union.TestCamelCasePropertiesAsync(
-            new PaymentRequest {
-                PaymentMethod = new TokenizeCard {
-                    Method = "card",
-                    CardNumber = "1234567890123456"
-                }
-            }
+        await client.Union.NestedObjectUnionsAsync(
+            "string"
         );
     }
 

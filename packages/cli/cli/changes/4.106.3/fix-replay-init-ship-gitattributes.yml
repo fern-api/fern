@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Send `gitattributesEntries` to Fiddle on `fern replay init` so the
+    generated PR marks `.fern/replay.lock` as `linguist-generated=true`.
+    Previously the entries were written into a temp clone that was discarded
+    and never reached the server. Requires a matching Fiddle server change
+    to consume the new field.
+  type: fix

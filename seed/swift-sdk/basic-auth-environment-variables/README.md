@@ -52,8 +52,8 @@ import BasicAuthEnvironmentVariables
 
 private func main() async throws {
     let client = BasicAuthEnvironmentVariablesClient(
-        username: "<username>",
-        accessToken: "<password>"
+        username: "YOUR_USERNAME",
+        accessToken: "YOUR_PASSWORD"
     )
 
     _ = try await client.basicAuth.postWithBasicAuth(request: .object([
@@ -71,7 +71,7 @@ The SDK throws a single error enum for all failures. Client-side issues encoding
 ```swift
 import BasicAuthEnvironmentVariables
 
-let client = BasicAuthEnvironmentVariablesClient(...)
+let client = BasicAuthEnvironmentVariablesClient(username: "YOUR_USERNAME", accessToken: "YOUR_PASSWORD")
 
 do {
     let response = try await client.basicAuth.postWithBasicAuth(...)
@@ -139,7 +139,8 @@ import Foundation
 import BasicAuthEnvironmentVariables
 
 let client = BasicAuthEnvironmentVariablesClient(
-    ...,
+    username: "YOUR_USERNAME",
+    accessToken: "YOUR_PASSWORD",
     urlSession: // Provide your implementation here
 )
 ```

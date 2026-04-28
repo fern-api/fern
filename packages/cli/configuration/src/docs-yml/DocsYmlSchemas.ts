@@ -34,23 +34,18 @@ export const ProgrammingLanguage = z.enum([
     "js"
 ]);
 
-export const Language = z.enum([
-    "en",
-    "es",
-    "fr",
-    "de",
-    "it",
-    "pt",
-    "ja",
-    "zh",
-    "ko",
-    "el",
-    "no",
-    "pl",
-    "ru",
-    "sv",
-    "tr"
-]);
+/**
+ * BCP 47 language tag validator for docs localization.
+ * Accepts simple codes like "en", "ja" as well as regional variants
+ * like "ja-JP", "pt-BR", "zh-Hans", "zh-Hans-CN".
+ * See: https://www.rfc-editor.org/rfc/rfc5646
+ */
+export const Language = z
+    .string()
+    .regex(
+        /^[a-zA-Z]{2,8}(-[a-zA-Z0-9]{1,8})*$/,
+        "Language must be a valid BCP 47 language tag (e.g. 'en', 'ja', 'ja-JP', 'pt-BR', 'zh-Hans-CN')"
+    );
 
 export const PageActionOption = z.enum([
     "copy-page",
@@ -325,7 +320,8 @@ export const DocsSettingsConfig = z.object({
     "disable-analytics": z.boolean().optional(),
     language: Language.optional(),
     "folder-title-source": TitleSource.optional(),
-    "substitute-env-vars": z.boolean().optional()
+    "substitute-env-vars": z.boolean().optional(),
+    "websocket-oneof-display": z.enum(["flat", "grouped"]).optional()
 });
 
 // ===== Colors =====
@@ -944,6 +940,25 @@ export const ProductFileConfig = z.object({
     navigation: NavigationConfig
 });
 
+// ===== Translations =====
+
+export const TranslationConfigObject = z.object({
+    lang: Language,
+    default: z.boolean().optional()
+});
+
+export const TranslationConfig = z.union([Language, TranslationConfigObject]);
+
+export function normalizeTranslationConfig(config: z.infer<typeof TranslationConfig>): {
+    lang: string;
+    default?: boolean;
+} {
+    if (typeof config === "string") {
+        return { lang: config };
+    }
+    return config;
+}
+
 // ===== Main DocsConfiguration =====
 
 export const DocsConfiguration = z.object({
@@ -964,6 +979,22 @@ export const DocsConfiguration = z.object({
     experimental: ExperimentalConfig.optional(),
     "default-language": ProgrammingLanguage.optional(),
     languages: z.array(Language).optional(),
+    translations: z
+        .array(TranslationConfig)
+        .optional()
+        .superRefine((translations, ctx) => {
+            if (translations == null) {
+                return;
+            }
+            const normalizedTranslations = translations.map(normalizeTranslationConfig);
+            const defaultCount = normalizedTranslations.filter((t) => t.default === true).length;
+            if (defaultCount > 1) {
+                ctx.addIssue({
+                    code: z.ZodIssueCode.custom,
+                    message: `Only one translation entry can be marked as default, but ${defaultCount} were found`
+                });
+            }
+        }),
     "ai-chat": AIChatConfig.optional(),
     "ai-search": AIChatConfig.optional(),
     "ai-examples": AiExamplesConfig.optional(),
@@ -979,6 +1010,7 @@ export const DocsConfiguration = z.object({
     layout: LayoutConfig.optional(),
     settings: DocsSettingsConfig.optional(),
     theme: ThemeConfig.optional(),
+    "global-theme": z.string().optional(),
     integrations: IntegrationsConfig.optional(),
     css: CssConfig.optional(),
     js: JsConfig.optional(),

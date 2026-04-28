@@ -9,7 +9,7 @@
  */
 export interface GetResourceRequest {
     /** Include metadata in response */
-    include_metadata?: boolean;
+    include_metadata: boolean;
     /** Response format */
-    format?: string;
+    format: string;
 }

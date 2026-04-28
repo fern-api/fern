@@ -29,13 +29,25 @@ export const MetadataConfig: core.serialization.ObjectSchema<
     ogDynamic: core.serialization.property("og:dynamic", core.serialization.boolean().optional()),
     ogBackgroundImage: core.serialization.property("og:background-image", core.serialization.string().optional()),
     ogDynamicTextColor: core.serialization.property("og:dynamic:text-color", core.serialization.string().optional()),
-    ogDynamicBackgroundColor: core.serialization.property("og:dynamic:background-color", core.serialization.string().optional()),
+    ogDynamicBackgroundColor: core.serialization.property(
+        "og:dynamic:background-color",
+        core.serialization.string().optional(),
+    ),
     ogDynamicLogoColor: core.serialization.property("og:dynamic:logo-color", OgDynamicLogoColor.optional()),
     ogDynamicShowLogo: core.serialization.property("og:dynamic:show-logo", core.serialization.boolean().optional()),
-    ogDynamicShowSection: core.serialization.property("og:dynamic:show-section", core.serialization.boolean().optional()),
-    ogDynamicShowDescription: core.serialization.property("og:dynamic:show-description", core.serialization.boolean().optional()),
+    ogDynamicShowSection: core.serialization.property(
+        "og:dynamic:show-section",
+        core.serialization.boolean().optional(),
+    ),
+    ogDynamicShowDescription: core.serialization.property(
+        "og:dynamic:show-description",
+        core.serialization.boolean().optional(),
+    ),
     ogDynamicShowUrl: core.serialization.property("og:dynamic:show-url", core.serialization.boolean().optional()),
-    ogDynamicShowGradient: core.serialization.property("og:dynamic:show-gradient", core.serialization.boolean().optional()),
+    ogDynamicShowGradient: core.serialization.property(
+        "og:dynamic:show-gradient",
+        core.serialization.boolean().optional(),
+    ),
     canonicalHost: core.serialization.property("canonical-host", core.serialization.string().optional()),
 });
 

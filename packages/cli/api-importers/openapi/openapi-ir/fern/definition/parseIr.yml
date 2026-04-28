@@ -446,6 +446,7 @@ types:
       - commons.WithTitle
       - commons.WithInline
     properties:
+      commonProperties: optional<list<CommonPropertyWithExample>>
       schemas: list<SchemaWithExample>
 
   PrimitiveSchemaWithExample:

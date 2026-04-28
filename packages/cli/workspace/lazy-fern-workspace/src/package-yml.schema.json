@@ -1458,6 +1458,19 @@
         "discriminated": {
           "const": false
         },
+        "base-properties": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/types.TypeReferenceSchema"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "union": {
           "type": "array",
           "items": {

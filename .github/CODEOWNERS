@@ -1,18 +1,22 @@
-# Specific rules for generators
-generators/commons/* @Swimburger
-generators/csharp/* @Swimburger
-generators/go/* @amckinney
-generators/go-v2/* @amckinney
-generators/java/* @tstanmay13
-generators/openapi/* @dsinghvi @amckinney
-generators/php/* @amckinney
-generators/python/* @amckinney
-generators/python-v2/* @amckinney
-generators/ruby-v2/* @iamnamananand996
-generators/rust/* @iamnamananand996
-generators/swift/* @kafkas
-generators/typescript/* @Swimburger
-generators/typescript-v2/* @Swimburger
+# Default catch-all — keep at top so specific rules below override it.
+* @amckinney
 
-# Specific rules for packages
-packages/cli/* @dsinghvi @amckinney
+# Catch all for generators
+
+generators/** @Swimburger @amckinney
+
+# Specific rules for generators
+generators/commons/** @Swimburger @amckinney
+generators/csharp/** @Swimburger
+generators/go/** @amckinney
+generators/go-v2/** @amckinney
+generators/java/** @tstanmay13
+generators/openapi/** @Swimburger
+generators/php/** @amckinney
+generators/python/** @amckinney
+generators/python-v2/** @amckinney
+generators/ruby-v2/** @iamnamananand996
+generators/rust/** @iamnamananand996
+generators/swift/** @kafkas
+generators/typescript/** @Swimburger
+generators/typescript-v2/** @Swimburger

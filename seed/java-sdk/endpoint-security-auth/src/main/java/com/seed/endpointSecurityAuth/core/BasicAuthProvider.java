@@ -30,8 +30,11 @@ public final class BasicAuthProvider implements AuthProvider {
     @Override
     public Map<String, String> getAuthHeaders(EndpointMetadata endpointMetadata) {
         String username = usernameSupplier.get();
+        if (username == null) {
+            throw new RuntimeException(AUTH_CONFIG_ERROR_MESSAGE);
+        }
         String password = passwordSupplier.get();
-        if (username == null || password == null) {
+        if (password == null) {
             throw new RuntimeException(AUTH_CONFIG_ERROR_MESSAGE);
         }
         String credentials = username + ":" + password;
