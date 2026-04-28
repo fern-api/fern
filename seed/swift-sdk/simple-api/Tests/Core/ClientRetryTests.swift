@@ -59,11 +59,11 @@ import Testing
         try #require(stub.getRequestCount() == 3)
     }
 
-    @Test func testRetryOn502BadGateway() async throws {
+    @Test func testRetryOn500InternalServerError() async throws {
         let stub = HTTPStub()
         stub.setResponseSequence([
-            (statusCode: 502, headers: ["Content-Type": "application/json"], body: Data()),
-            (statusCode: 502, headers: ["Content-Type": "application/json"], body: Data()),
+            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
+            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
             (
                 statusCode: 200, headers: ["Content-Type": "application/json"],
                 body: Data("true".utf8)
@@ -85,84 +85,6 @@ import Testing
         } catch {
         }
         try #require(stub.getRequestCount() == 3)
-    }
-
-
-    @Test func testNoRetryOn500InternalServerError() async throws {
-        let stub = HTTPStub()
-        stub.setResponseSequence([
-            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data())
-        ])
-
-        let client = SimpleApiClient(
-            baseURL: "https://api.fern.com",
-            token: "<token>",
-            urlSession: stub.urlSession
-        )
-
-        do {
-            _ = try await client.user.get(
-                id: "id",
-                requestOptions: RequestOptions(additionalHeaders: stub.headers)
-            )
-
-        } catch {
-        }
-        try #require(stub.getRequestCount() == 1)
-    }
-
-    @Test func testRetryOn501NotImplemented() async throws {
-        let stub = HTTPStub()
-        stub.setResponseSequence([
-            (statusCode: 501, headers: ["Content-Type": "application/json"], body: Data()),
-            (
-                statusCode: 200, headers: ["Content-Type": "application/json"],
-                body: Data("true".utf8)
-            ),
-        ])
-
-        let client = SimpleApiClient(
-            baseURL: "https://api.fern.com",
-            token: "<token>",
-            urlSession: stub.urlSession
-        )
-
-        do {
-            _ = try await client.user.get(
-                id: "id",
-                requestOptions: RequestOptions(additionalHeaders: stub.headers)
-            )
-
-        } catch {
-        }
-        try #require(stub.getRequestCount() == 2)
-    }
-
-    @Test func testRetryOn599UpperBoundary() async throws {
-        let stub = HTTPStub()
-        stub.setResponseSequence([
-            (statusCode: 599, headers: ["Content-Type": "application/json"], body: Data()),
-            (
-                statusCode: 200, headers: ["Content-Type": "application/json"],
-                body: Data("true".utf8)
-            ),
-        ])
-
-        let client = SimpleApiClient(
-            baseURL: "https://api.fern.com",
-            token: "<token>",
-            urlSession: stub.urlSession
-        )
-
-        do {
-            _ = try await client.user.get(
-                id: "id",
-                requestOptions: RequestOptions(additionalHeaders: stub.headers)
-            )
-
-        } catch {
-        }
-        try #require(stub.getRequestCount() == 2)
     }
 
     @Test func testRetryOn503ServiceUnavailable() async throws {
@@ -249,10 +171,10 @@ import Testing
     @Test func testMaxRetriesExhausted() async throws {
         let stub = HTTPStub()
         stub.setResponseSequence([
-            (statusCode: 502, headers: ["Content-Type": "application/json"], body: Data()),
-            (statusCode: 502, headers: ["Content-Type": "application/json"], body: Data()),
-            (statusCode: 502, headers: ["Content-Type": "application/json"], body: Data()),
-            (statusCode: 502, headers: ["Content-Type": "application/json"], body: Data()),
+            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
+            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
+            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
+            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
         ])
 
         let client = SimpleApiClient(
@@ -391,23 +313,23 @@ import Testing
         let stub = HTTPStub()
         stub.setResponseSequence([
             (
-                statusCode: 502,
+                statusCode: 500,
                 headers: ["Content-Type": "application/json", "Retry-After": "0.1"], body: Data()
             ),
             (
-                statusCode: 502,
+                statusCode: 500,
                 headers: ["Content-Type": "application/json", "Retry-After": "0.1"], body: Data()
             ),
             (
-                statusCode: 502,
+                statusCode: 500,
                 headers: ["Content-Type": "application/json", "Retry-After": "0.1"], body: Data()
             ),
             (
-                statusCode: 502,
+                statusCode: 500,
                 headers: ["Content-Type": "application/json", "Retry-After": "0.1"], body: Data()
             ),
             (
-                statusCode: 502,
+                statusCode: 500,
                 headers: ["Content-Type": "application/json", "Retry-After": "0.1"], body: Data()
             ),
             (
@@ -436,7 +358,7 @@ import Testing
     @Test func testEndpointLevelMaxRetriesZero() async throws {
         let stub = HTTPStub()
         stub.setResponseSequence([
-            (statusCode: 502, headers: ["Content-Type": "application/json"], body: Data())
+            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data())
         ])
 
         let client = SimpleApiClient(

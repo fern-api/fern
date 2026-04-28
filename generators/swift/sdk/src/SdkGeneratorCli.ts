@@ -194,7 +194,15 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                 const rawContents = await template.loadContents();
                 const templateData = templateDataGenerator.generateSourceTemplateData(templateId);
                 if (templateData) {
-                    const contents = this.renderTemplate(rawContents, templateData);
+                    let contents = this.renderTemplate(rawContents, templateData);
+
+                    if (templateId === "HTTPClient" && context.customConfig.retryStatusCodes === "recommended") {
+                        contents = contents.replace(
+                            "return statusCode == 408 || statusCode == 429 || statusCode >= 500",
+                            "return statusCode == 408 || statusCode == 429 || statusCode == 502 || statusCode == 503 || statusCode == 504"
+                        );
+                    }
+
                     context.project.addSourceAsIsFile({
                         nameCandidateWithoutExtension: template.filenameWithoutExtension(templateData),
                         directory: template.directory,

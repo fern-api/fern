@@ -162,6 +162,34 @@ describe("@fern-api/generator-migrations", () => {
         });
     });
 
+    describe("Swift SDK migrations", () => {
+        it("includes Swift SDK migration entries", () => {
+            expect(migrations["fernapi/fern-swift-sdk"]).toBeDefined();
+            expect(migrations["fernapi/fern-swift-sdk"]?.migrations).toBeDefined();
+            expect(Array.isArray(migrations["fernapi/fern-swift-sdk"]?.migrations)).toBe(true);
+        });
+
+        it("Swift SDK migrations have correct structure", () => {
+            const module = migrations["fernapi/fern-swift-sdk"];
+
+            expect(module).toBeDefined();
+            expect(module?.migrations.length).toBeGreaterThan(0);
+
+            for (const migration of module?.migrations ?? []) {
+                expect(migration).toHaveProperty("version");
+                expect(migration).toHaveProperty("migrateGeneratorConfig");
+                expect(migration).toHaveProperty("migrateGeneratorsYml");
+            }
+        });
+
+        it("Swift SDK migrations are in semver order", () => {
+            const module = migrations["fernapi/fern-swift-sdk"];
+            const versions = module?.migrations.map((m) => m.version) ?? [];
+
+            expect(versions).toEqual(["1.0.0"]);
+        });
+    });
+
     describe("generator name lookup", () => {
         it("returns undefined for generators without migrations", () => {
             expect(migrations["fernapi/fern-go-sdk"]).toBeUndefined();

@@ -159,11 +159,11 @@ import Testing
         try #require(stub.getRequestCount() == 3)
     }
 
-    @Test func testRetryOn502BadGateway() async throws {
+    @Test func testRetryOn500InternalServerError() async throws {
         let stub = HTTPStub()
         stub.setResponseSequence([
-            (statusCode: 502, headers: ["Content-Type": "application/json"], body: Data()),
-            (statusCode: 502, headers: ["Content-Type": "application/json"], body: Data()),
+            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
+            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
             (
                 statusCode: 200, headers: ["Content-Type": "application/json"],
                 body: Data("true".utf8)
@@ -235,234 +235,6 @@ import Testing
         } catch {
         }
         try #require(stub.getRequestCount() == 3)
-    }
-
-
-    @Test func testNoRetryOn500InternalServerError() async throws {
-        let stub = HTTPStub()
-        stub.setResponseSequence([
-            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data())
-        ])
-
-        let client = ApiClient(
-            baseURL: "https://api.fern.com",
-            urlSession: stub.urlSession
-        )
-
-        do {
-            _ = try await client.search(
-                limit: 1,
-                id: "id",
-                date: CalendarDate("2023-01-15")!,
-                deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                bytes: "bytes",
-                user: User(
-                    name: "name",
-                    tags: [
-                        "tags",
-                        "tags"
-                    ]
-                ),
-                optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                keyValue: [
-                    "keyValue": "keyValue"
-                ],
-                optionalString: "optionalString",
-                nestedUser: NestedUser(
-                    name: "name",
-                    user: User(
-                        name: "name",
-                        tags: [
-                            "tags",
-                            "tags"
-                        ]
-                    )
-                ),
-                optionalUser: User(
-                    name: "name",
-                    tags: [
-                        "tags",
-                        "tags"
-                    ]
-                ),
-                neighbor: SearchRequestNeighbor.user(
-                    User(
-                        name: "name",
-                        tags: [
-                            "tags",
-                            "tags"
-                        ]
-                    )
-                ),
-                neighborRequired: SearchRequestNeighborRequired.user(
-                    User(
-                        name: "name",
-                        tags: [
-                            "tags",
-                            "tags"
-                        ]
-                    )
-                ),
-                requestOptions: RequestOptions(additionalHeaders: stub.headers)
-            )
-
-        } catch {
-        }
-        try #require(stub.getRequestCount() == 1)
-    }
-
-    @Test func testRetryOn501NotImplemented() async throws {
-        let stub = HTTPStub()
-        stub.setResponseSequence([
-            (statusCode: 501, headers: ["Content-Type": "application/json"], body: Data()),
-            (
-                statusCode: 200, headers: ["Content-Type": "application/json"],
-                body: Data("true".utf8)
-            ),
-        ])
-
-        let client = ApiClient(
-            baseURL: "https://api.fern.com",
-            urlSession: stub.urlSession
-        )
-
-        do {
-            _ = try await client.search(
-                limit: 1,
-                id: "id",
-                date: CalendarDate("2023-01-15")!,
-                deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                bytes: "bytes",
-                user: User(
-                    name: "name",
-                    tags: [
-                        "tags",
-                        "tags"
-                    ]
-                ),
-                optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                keyValue: [
-                    "keyValue": "keyValue"
-                ],
-                optionalString: "optionalString",
-                nestedUser: NestedUser(
-                    name: "name",
-                    user: User(
-                        name: "name",
-                        tags: [
-                            "tags",
-                            "tags"
-                        ]
-                    )
-                ),
-                optionalUser: User(
-                    name: "name",
-                    tags: [
-                        "tags",
-                        "tags"
-                    ]
-                ),
-                neighbor: SearchRequestNeighbor.user(
-                    User(
-                        name: "name",
-                        tags: [
-                            "tags",
-                            "tags"
-                        ]
-                    )
-                ),
-                neighborRequired: SearchRequestNeighborRequired.user(
-                    User(
-                        name: "name",
-                        tags: [
-                            "tags",
-                            "tags"
-                        ]
-                    )
-                ),
-                requestOptions: RequestOptions(additionalHeaders: stub.headers)
-            )
-
-        } catch {
-        }
-        try #require(stub.getRequestCount() == 2)
-    }
-
-    @Test func testRetryOn599UpperBoundary() async throws {
-        let stub = HTTPStub()
-        stub.setResponseSequence([
-            (statusCode: 599, headers: ["Content-Type": "application/json"], body: Data()),
-            (
-                statusCode: 200, headers: ["Content-Type": "application/json"],
-                body: Data("true".utf8)
-            ),
-        ])
-
-        let client = ApiClient(
-            baseURL: "https://api.fern.com",
-            urlSession: stub.urlSession
-        )
-
-        do {
-            _ = try await client.search(
-                limit: 1,
-                id: "id",
-                date: CalendarDate("2023-01-15")!,
-                deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                bytes: "bytes",
-                user: User(
-                    name: "name",
-                    tags: [
-                        "tags",
-                        "tags"
-                    ]
-                ),
-                optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                keyValue: [
-                    "keyValue": "keyValue"
-                ],
-                optionalString: "optionalString",
-                nestedUser: NestedUser(
-                    name: "name",
-                    user: User(
-                        name: "name",
-                        tags: [
-                            "tags",
-                            "tags"
-                        ]
-                    )
-                ),
-                optionalUser: User(
-                    name: "name",
-                    tags: [
-                        "tags",
-                        "tags"
-                    ]
-                ),
-                neighbor: SearchRequestNeighbor.user(
-                    User(
-                        name: "name",
-                        tags: [
-                            "tags",
-                            "tags"
-                        ]
-                    )
-                ),
-                neighborRequired: SearchRequestNeighborRequired.user(
-                    User(
-                        name: "name",
-                        tags: [
-                            "tags",
-                            "tags"
-                        ]
-                    )
-                ),
-                requestOptions: RequestOptions(additionalHeaders: stub.headers)
-            )
-
-        } catch {
-        }
-        try #require(stub.getRequestCount() == 2)
     }
 
     @Test func testRetryOn503ServiceUnavailable() async throws {
@@ -699,10 +471,10 @@ import Testing
     @Test func testMaxRetriesExhausted() async throws {
         let stub = HTTPStub()
         stub.setResponseSequence([
-            (statusCode: 502, headers: ["Content-Type": "application/json"], body: Data()),
-            (statusCode: 502, headers: ["Content-Type": "application/json"], body: Data()),
-            (statusCode: 502, headers: ["Content-Type": "application/json"], body: Data()),
-            (statusCode: 502, headers: ["Content-Type": "application/json"], body: Data()),
+            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
+            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
+            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
+            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
         ])
 
         let client = ApiClient(
@@ -1041,23 +813,23 @@ import Testing
         let stub = HTTPStub()
         stub.setResponseSequence([
             (
-                statusCode: 502,
+                statusCode: 500,
                 headers: ["Content-Type": "application/json", "Retry-After": "0.1"], body: Data()
             ),
             (
-                statusCode: 502,
+                statusCode: 500,
                 headers: ["Content-Type": "application/json", "Retry-After": "0.1"], body: Data()
             ),
             (
-                statusCode: 502,
+                statusCode: 500,
                 headers: ["Content-Type": "application/json", "Retry-After": "0.1"], body: Data()
             ),
             (
-                statusCode: 502,
+                statusCode: 500,
                 headers: ["Content-Type": "application/json", "Retry-After": "0.1"], body: Data()
             ),
             (
-                statusCode: 502,
+                statusCode: 500,
                 headers: ["Content-Type": "application/json", "Retry-After": "0.1"], body: Data()
             ),
             (
@@ -1136,7 +908,7 @@ import Testing
     @Test func testEndpointLevelMaxRetriesZero() async throws {
         let stub = HTTPStub()
         stub.setResponseSequence([
-            (statusCode: 502, headers: ["Content-Type": "application/json"], body: Data())
+            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data())
         ])
 
         let client = ApiClient(

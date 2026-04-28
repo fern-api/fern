@@ -8,7 +8,8 @@ export const BaseSwiftCustomConfigSchema = z.object({
     customReadmeSections: z.array(CustomReadmeSectionSchema).optional(),
     enableWireTests: z.boolean().optional(),
     nullableAsOptional: z.boolean().optional(),
-    maxRetries: z.number().int().min(0).optional()
+    maxRetries: z.number().int().min(0).optional(),
+    retryStatusCodes: z.optional(z.enum(["legacy", "recommended"]))
 });
 
 export type BaseSwiftCustomConfigSchema = z.infer<typeof BaseSwiftCustomConfigSchema>;

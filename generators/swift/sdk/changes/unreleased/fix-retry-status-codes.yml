@@ -1,5 +1,6 @@
 - summary: |
-    Stop retrying on 500 Internal Server Error. Previously all 5xx errors were
-    retried, but 500 is typically not transient and retrying can cause idempotency
-    issues. 501-599 continue to be retried, along with 408 and 429.
-  type: fix
+    Add `retryStatusCodes` configuration option (`"legacy"` | `"recommended"`).
+    Legacy (default) preserves existing behavior (408, 429, >= 500).
+    Recommended retries only transient codes (408, 429, 502, 503, 504), excluding
+    500 Internal Server Error to avoid retrying non-idempotent failures.
+  type: feat
