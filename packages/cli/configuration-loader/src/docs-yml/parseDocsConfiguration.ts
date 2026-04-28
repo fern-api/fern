@@ -2071,8 +2071,10 @@ async function loadTranslationNavigationOverlays({
     const translationsRootDir = path.join(absolutePathToFernFolder, "translations") as AbsoluteFilePath;
     const result: Record<string, docsYml.TranslationNavigationOverlay> = {};
 
+    const normalizedTranslations = translations.map((t) => docsYml.DocsYmlSchemas.normalizeTranslationConfig(t));
+
     await Promise.all(
-        translations.map(async ({ lang }) => {
+        normalizedTranslations.map(async ({ lang }) => {
             if (lang === defaultLocale) {
                 return;
             }
@@ -2183,7 +2185,16 @@ async function parseNavigationOverlayFromDocsYml({
 
             // If this product references a nav file, load its tab/navigation overrides
             if (typeof productObj.path === "string") {
-                const navFilePath = path.join(langFernDir, productObj.path) as AbsoluteFilePath;
+                // Validate path to prevent path traversal attacks
+                const resolvedNavFilePath = path.resolve(langFernDir, productObj.path) as AbsoluteFilePath;
+                if (!resolvedNavFilePath.startsWith(langFernDir)) {
+                    context.logger.warn(
+                        `Invalid path in product overlay: "${productObj.path}" escapes the translations directory. Skipping.`
+                    );
+                    overlay.products.push(productOverlay);
+                    continue;
+                }
+                const navFilePath = resolvedNavFilePath;
                 if (await doesPathExist(navFilePath)) {
                     try {
                         const navContent = yaml.load(await readFile(navFilePath, "utf-8"));

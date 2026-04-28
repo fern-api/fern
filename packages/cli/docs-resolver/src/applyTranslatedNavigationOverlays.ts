@@ -384,14 +384,18 @@ function matchSectionOverlay(
 ): docsYml.NavigationItemOverlay.Section | undefined {
     const sectionSlug = extractLastSlugSegment(section["slug"] as string | undefined);
 
+    // First, try to match by slug
     for (const o of overlays) {
         if (o.slug != null && o.slug === sectionSlug) {
             return o;
         }
     }
 
-    if (positionIndex < overlays.length) {
-        return overlays[positionIndex];
+    // Positional fallback: only use overlays that don't have a slug defined,
+    // to avoid incorrectly applying a slug-targeted overlay to the wrong sibling.
+    const noSlugOverlays = overlays.filter((o) => o.slug == null);
+    if (positionIndex < noSlugOverlays.length) {
+        return noSlugOverlays[positionIndex];
     }
     return undefined;
 }
@@ -403,14 +407,18 @@ function matchPageOverlay(
 ): docsYml.NavigationItemOverlay.Page | undefined {
     const pageSlug = extractLastSlugSegment(page["slug"] as string | undefined);
 
+    // First, try to match by slug
     for (const o of overlays) {
         if (o.slug != null && o.slug === pageSlug) {
             return o;
         }
     }
 
-    if (positionIndex < overlays.length) {
-        return overlays[positionIndex];
+    // Positional fallback: only use overlays that don't have a slug defined,
+    // to avoid incorrectly applying a slug-targeted overlay to the wrong sibling.
+    const noSlugOverlays = overlays.filter((o) => o.slug == null);
+    if (positionIndex < noSlugOverlays.length) {
+        return noSlugOverlays[positionIndex];
     }
     return undefined;
 }
