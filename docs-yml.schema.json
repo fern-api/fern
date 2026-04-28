@@ -4278,7 +4278,7 @@
         "tr"
       ]
     },
-    "docs.TranslationConfig": {
+    "docs.TranslationConfigObject": {
       "type": "object",
       "properties": {
         "lang": {
@@ -4299,6 +4299,16 @@
         "lang"
       ],
       "additionalProperties": false
+    },
+    "docs.TranslationConfig": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/docs.Language"
+        },
+        {
+          "$ref": "#/definitions/docs.TranslationConfigObject"
+        }
+      ]
     },
     "docs.AIChatModel": {
       "type": "string",

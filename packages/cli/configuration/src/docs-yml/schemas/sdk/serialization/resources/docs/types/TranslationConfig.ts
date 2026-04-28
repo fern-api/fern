@@ -4,18 +4,13 @@ import type * as FernDocsConfig from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { Language } from "./Language.js";
+import { TranslationConfigObject } from "./TranslationConfigObject.js";
 
-export const TranslationConfig: core.serialization.ObjectSchema<
+export const TranslationConfig: core.serialization.Schema<
     serializers.TranslationConfig.Raw,
     FernDocsConfig.TranslationConfig
-> = core.serialization.object({
-    lang: Language,
-    default: core.serialization.boolean().optional(),
-});
+> = core.serialization.undiscriminatedUnion([Language, TranslationConfigObject]);
 
 export declare namespace TranslationConfig {
-    export interface Raw {
-        lang: Language.Raw;
-        default?: boolean | null;
-    }
+    export type Raw = Language.Raw | TranslationConfigObject.Raw;
 }

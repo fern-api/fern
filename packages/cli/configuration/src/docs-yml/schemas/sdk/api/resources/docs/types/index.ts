@@ -135,6 +135,7 @@ export * from "./Target.js";
 export * from "./ThemeConfig.js";
 export * from "./TitleSource.js";
 export * from "./TranslationConfig.js";
+export * from "./TranslationConfigObject.js";
 export * from "./TwitterCardSetting.js";
 export * from "./UntabbedNavigationConfig.js";
 export * from "./VersionAvailability.js";
