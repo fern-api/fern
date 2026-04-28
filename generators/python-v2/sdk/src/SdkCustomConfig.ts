@@ -62,6 +62,7 @@ export const SdkCustomConfigSchema = z.object({
     client: ClientConfigSchema.optional(),
     client_class_name: z.string().optional(),
     inline_request_params: z.boolean().optional(),
+    flatten_union_request_bodies: z.boolean().optional(),
     wire_tests: WireTestsConfigSchema.optional(),
     custom_readme_sections: z.array(CustomReadmeSectionSchema).optional(),
     /**
