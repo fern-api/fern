@@ -27,7 +27,7 @@
                 },
                 "prefix": "test_prefix",
                 "headerEnvVar": "HEADER_TOKEN_ENV_VAR",
-                "headerPlaceholder": null,
+                "headerPlaceholder": "YOUR_HEADER_VALUE",
                 "key": "Header",
                 "docs": null
             }

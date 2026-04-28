@@ -2,6 +2,7 @@ import { CaseConverter, getOriginalName, getWireValue } from "@fern-api/base-gen
 import { assertNever } from "@fern-api/core-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
+import { DefaultValueExtractor } from "../../DefaultValueExtractor.js";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { getEndpointRequest } from "../utils/getEndpointRequest.js";
 import { getEndpointReturnType } from "../utils/getEndpointReturnType.js";
@@ -376,11 +377,18 @@ export class HttpEndpointGenerator {
 
     private getPathParameterReferences({ endpoint }: { endpoint: FernIr.HttpEndpoint }): Record<string, string> {
         const pathParameterReferences: Record<string, string> = {};
+        const defaultExtractor = new DefaultValueExtractor(this.context);
         for (const pathParam of endpoint.allPathParameters) {
             const parameterName = this.getPathParameterName({
                 pathParameter: pathParam
             });
-            pathParameterReferences[getOriginalName(pathParam.name)] = `${PARAMS_VN}[:${parameterName}]`;
+            const clientDefault = defaultExtractor.extractClientDefault(pathParam.clientDefault);
+            if (clientDefault != null) {
+                pathParameterReferences[getOriginalName(pathParam.name)] =
+                    `${PARAMS_VN}.fetch(:${parameterName}, ${clientDefault})`;
+            } else {
+                pathParameterReferences[getOriginalName(pathParam.name)] = `${PARAMS_VN}[:${parameterName}]`;
+            }
         }
         return pathParameterReferences;
     }

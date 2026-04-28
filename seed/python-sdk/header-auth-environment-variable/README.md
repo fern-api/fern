@@ -37,7 +37,7 @@ Instantiate and use the client with the following:
 from seed import SeedHeaderTokenEnvironmentVariable
 
 client = SeedHeaderTokenEnvironmentVariable(
-    header_token_auth="<value>",
+    header_token_auth="YOUR_HEADER_VALUE",
     base_url="https://yourhost.com/path/to/api",
 )
 
@@ -54,7 +54,7 @@ import asyncio
 from seed import AsyncSeedHeaderTokenEnvironmentVariable
 
 client = AsyncSeedHeaderTokenEnvironmentVariable(
-    header_token_auth="<value>",
+    header_token_auth="YOUR_HEADER_VALUE",
     base_url="https://yourhost.com/path/to/api",
 )
 

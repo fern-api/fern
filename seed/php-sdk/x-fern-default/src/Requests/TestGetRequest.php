@@ -9,7 +9,7 @@ class TestGetRequest extends JsonSerializableType
     /**
      * @var ?string $limit
      */
-    public ?string $limit;
+    public ?string $limit = '100';
 
     /**
      * @param array{

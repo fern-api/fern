@@ -41,7 +41,7 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedHeaderTokenEnvironmentVariable;
 
-var client = new SeedHeaderTokenEnvironmentVariableClient("HEADER_TOKEN_AUTH");
+var client = new SeedHeaderTokenEnvironmentVariableClient("YOUR_HEADER_VALUE");
 await client.Service.GetWithBearerTokenAsync();
 ```
 

@@ -12,7 +12,7 @@
                 "_type": "bearer",
                 "token": "apiKey",
                 "tokenEnvVar": "COURIER_API_KEY",
-                "tokenPlaceholder": null,
+                "tokenPlaceholder": "YOUR_API_KEY",
                 "key": "Bearer",
                 "docs": null
             }

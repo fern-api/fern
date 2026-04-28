@@ -70,7 +70,7 @@ The SDK throws a single error enum for all failures. Client-side issues encoding
 ```swift
 import IdempotencyHeaders
 
-let client = IdempotencyHeadersClient(...)
+let client = IdempotencyHeadersClient(token: "YOUR_API_KEY")
 
 do {
     let response = try await client.payment.create(...)
@@ -150,7 +150,7 @@ import Foundation
 import IdempotencyHeaders
 
 let client = IdempotencyHeadersClient(
-    ...,
+    token: "YOUR_API_KEY",
     urlSession: // Provide your implementation here
 )
 ```

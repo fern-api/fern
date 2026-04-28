@@ -78,7 +78,7 @@ private func main() async throws {
 
     _ = try await client.service.uploadWithQueryParams(
         model: "nova-2",
-        request: .init(body: Data("data".utf8))
+        request: Data("data".utf8)
     )
 }
 

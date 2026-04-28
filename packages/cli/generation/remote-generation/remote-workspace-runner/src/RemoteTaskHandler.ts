@@ -118,12 +118,9 @@ export class RemoteTaskHandler {
         for (const newLog of remoteTask.logs.slice(this.lengthOfLastLogs)) {
             this.context.logger.log(convertLogLevel(newLog.level), newLog.message);
 
-            // extract version from log messages as fallback (e.g., "Tagging release 0.0.9")
+            // extract version from log messages as fallback (e.g., "Tagging release 0.0.9" or "Tagging release v0.2.0-rc.1")
             if (this.#actualVersion == null) {
-                const tagMatch = newLog.message.match(/Tagging release (\d+\.\d+\.\d+)/);
-                if (tagMatch) {
-                    this.#actualVersion = tagMatch[1];
-                }
+                this.#actualVersion = extractVersionFromLogMessage(newLog.message) ?? this.#actualVersion;
             }
         }
         this.lengthOfLastLogs = remoteTask.logs.length;
@@ -167,6 +164,10 @@ export class RemoteTaskHandler {
                 this.#snippetsS3PreSignedReadUrl = finishedStatus.snippetsS3PreSignedReadUrl;
                 this.#pullRequestUrl = finishedStatus.pullRequestUrl;
                 this.#noChangesDetected = finishedStatus.noChangesDetected;
+                // Prefer the dedicated actualVersion field from Fiddle over log-regex heuristics
+                if (finishedStatus.actualVersion != null) {
+                    this.#actualVersion = finishedStatus.actualVersion;
+                }
             },
             _other: () => {
                 this.context.logger.warn("Received unknown update type: " + remoteTask.status.type);
@@ -225,6 +226,21 @@ export class RemoteTaskHandler {
     public get noChangesDetected(): boolean | undefined {
         return this.#noChangesDetected;
     }
+}
+
+const VERSION_TAG_REGEX = /Tagging release (v?\d+\.\d+\.\d+(?:-[\w.-]+)?)/;
+
+/**
+ * Extracts a semver version from a log message matching "Tagging release X.Y.Z".
+ * Handles optional v-prefix (Go generators) and pre-release suffixes.
+ * Returns `undefined` when no version is found.
+ */
+export function extractVersionFromLogMessage(message: string): string | undefined {
+    const match = message.match(VERSION_TAG_REGEX);
+    if (match?.[1] == null) {
+        return undefined;
+    }
+    return match[1].replace(/^v/, "");
 }
 
 async function downloadFilesForTask({

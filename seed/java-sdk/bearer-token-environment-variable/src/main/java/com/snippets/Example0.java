@@ -5,7 +5,7 @@ import com.seed.bearerTokenEnvironmentVariable.SeedBearerTokenEnvironmentVariabl
 public class Example0 {
     public static void main(String[] args) {
         SeedBearerTokenEnvironmentVariableClient client = SeedBearerTokenEnvironmentVariableClient.builder()
-                .apiKey("<token>")
+                .apiKey("YOUR_API_KEY")
                 .url("https://api.fern.com")
                 .build();
 

@@ -272,6 +272,17 @@ export class DocsDefinitionResolver {
     }
 
     /**
+     * Returns per-locale translated navigation overlays loaded from
+     * `translations/<lang>/fern/docs.yml` and referenced nav YAML files.
+     * Must be called after `resolve()`.
+     */
+    public getTranslationNavigationOverlays():
+        | Record<string, import("@fern-api/configuration").docsYml.TranslationNavigationOverlay>
+        | undefined {
+        return this._parsedDocsConfig?.translationNavigationOverlays;
+    }
+
+    /**
      * Returns the map of absolute file paths to uploaded file IDs.
      * Used by translation processing to rewrite image paths in translated pages.
      * Must be called after `resolve()`.
@@ -293,14 +304,16 @@ export class DocsDefinitionResolver {
             return undefined;
         }
 
-        const defaultTranslation = translations.find((translation) => translation.default === true) ?? translations[0];
+        const normalizedTranslations = translations.map((t) => docsYml.DocsYmlSchemas.normalizeTranslationConfig(t));
+        const defaultTranslation =
+            normalizedTranslations.find((translation) => translation.default === true) ?? normalizedTranslations[0];
         if (defaultTranslation == null) {
             return undefined;
         }
 
         return {
             defaultLocale: defaultTranslation.lang,
-            translations: translations.map((translation) => translation.lang)
+            translations: normalizedTranslations.map((translation) => translation.lang)
         };
     }
     private collectedFileIds = new Map<AbsoluteFilePath, string>();
@@ -860,6 +873,7 @@ export class DocsDefinitionResolver {
             }),
             typographyV2: this.convertDocsTypographyConfiguration(),
             layout: this.parsedDocsConfig.layout,
+            // @ts-expect-error -- BCP 47: Language type widened to string, @fern-api/fdr-sdk not yet updated
             settings: this.parsedDocsConfig.settings,
             css: this.parsedDocsConfig.css,
             js: this.convertJavascriptConfiguration(),
@@ -881,6 +895,7 @@ export class DocsDefinitionResolver {
                 value: DocsV1Write.Url(footerLink.value)
             })),
             defaultLanguage: this.parsedDocsConfig.defaultLanguage,
+            // @ts-expect-error -- BCP 47: Language[] widened to string[], @fern-api/fdr-sdk not yet updated
             languages: this.parsedDocsConfig.languages,
 
             translations: this.getDocsTranslationsConfig(),

@@ -60,10 +60,10 @@ private func main() async throws {
             name: "name"
         )),
         queryParamInteger: .value(1),
-        request: .init(body: .value(PlainObject(
+        request: .value(PlainObject(
             id: "id",
             name: "name"
-        )))
+        ))
     )
 }
 

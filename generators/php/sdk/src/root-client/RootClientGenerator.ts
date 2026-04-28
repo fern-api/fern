@@ -22,6 +22,7 @@ interface ConstructorParameter {
     docs?: string;
     header?: HeaderInfo;
     environmentVariable?: string;
+    clientDefault?: FernIr.Literal;
 }
 
 interface LiteralParameter {
@@ -181,10 +182,14 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
 
         const parameters: php.Parameter[] = [];
         for (const param of [...constructorParameters.required, ...constructorParameters.optional]) {
+            let type = this.context.phpTypeMapper.convert({ reference: param.typeReference });
+            if (param.clientDefault != null && !this.context.isOptional(param.typeReference)) {
+                type = php.Type.optional(type);
+            }
             parameters.push(
                 php.parameter({
                     name: param.name,
-                    type: this.context.phpTypeMapper.convert({ reference: param.typeReference }),
+                    type,
                     docs: param.docs
                 })
             );
@@ -313,18 +318,35 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             body: php.codeblock((writer) => {
                 for (const param of constructorParameters.optional) {
                     if (param.environmentVariable != null) {
-                        writer.write(`$${param.name} ??= `);
-                        writer.writeNodeStatement(
-                            php.invokeMethod({
-                                method: `$this->${GET_FROM_ENV_OR_THROW}`,
-                                arguments_: [
-                                    php.codeblock(`'${param.environmentVariable}'`),
-                                    php.codeblock(
-                                        `'Please pass in ${param.name} or set the environment variable ${param.environmentVariable}.'`
-                                    )
-                                ]
-                            })
-                        );
+                        if (param.clientDefault != null) {
+                            const defaultWire = this.getClientDefaultLiteralWireValue(param.clientDefault);
+                            const escaped = defaultWire.replace(/\\/g, "\\\\").replace(/'/g, "\\'");
+                            writer.writeLine(`$envValue = getenv('${param.environmentVariable}');`);
+                            writer.writeTextStatement(
+                                `$${param.name} ??= ($envValue !== false ? $envValue : '${escaped}')`
+                            );
+                        } else {
+                            writer.write(`$${param.name} ??= `);
+                            writer.writeNodeStatement(
+                                php.invokeMethod({
+                                    method: `$this->${GET_FROM_ENV_OR_THROW}`,
+                                    arguments_: [
+                                        php.codeblock(`'${param.environmentVariable}'`),
+                                        php.codeblock(
+                                            `'Please pass in ${param.name} or set the environment variable ${param.environmentVariable}.'`
+                                        )
+                                    ]
+                                })
+                            );
+                        }
+                    }
+                }
+
+                for (const param of constructorParameters.optional) {
+                    if (param.clientDefault != null && param.environmentVariable == null) {
+                        const defaultWire = this.getClientDefaultLiteralWireValue(param.clientDefault);
+                        const escaped = defaultWire.replace(/\\/g, "\\\\").replace(/'/g, "\\'");
+                        writer.writeTextStatement(`$${param.name} ??= '${escaped}'`);
                     }
                 }
 
@@ -555,7 +577,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         }
 
         for (const param of allParameters) {
-            if (param.isOptional || param.environmentVariable != null) {
+            if (param.isOptional || param.environmentVariable != null || param.clientDefault != null) {
                 optionalParameters.push(param);
                 continue;
             }
@@ -716,7 +738,8 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             },
             docs: header.docs,
             isOptional: this.context.isOptional(header.valueType),
-            typeReference: header.valueType
+            typeReference: header.valueType,
+            clientDefault: header.clientDefault
         };
     }
 
@@ -759,6 +782,17 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
 
     private getAuthParameterDocs({ docs, name }: { docs: string | undefined; name: string }): string {
         return docs ?? `The ${name} to use for authentication.`;
+    }
+
+    private getClientDefaultLiteralWireValue(literal: FernIr.Literal): string {
+        switch (literal.type) {
+            case "string":
+                return literal.string;
+            case "boolean":
+                return literal.boolean ? "true" : "false";
+            default:
+                assertNever(literal);
+        }
     }
 
     /**
