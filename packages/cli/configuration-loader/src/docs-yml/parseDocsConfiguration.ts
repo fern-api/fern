@@ -1982,8 +1982,10 @@ async function loadTranslationPages({
 
     const result: Record<string, Record<RelativeFilePath, string>> = {};
 
+    const normalizedTranslations = translations.map((t) => docsYml.DocsYmlSchemas.normalizeTranslationConfig(t));
+
     await Promise.all(
-        translations.map(async ({ lang }) => {
+        normalizedTranslations.map(async ({ lang }) => {
             // The default locale's pages live in the top-level `pages/` directory,
             // not in `translations/<lang>/`. Always skip it, even if the directory exists.
             if (lang === defaultLocale) {
