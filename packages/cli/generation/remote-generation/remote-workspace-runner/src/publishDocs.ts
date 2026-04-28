@@ -628,9 +628,11 @@ export async function publishDocs({
         context.logger.debug(`Docs published to FDR in ${publishTime.toFixed(0)}ms`);
 
         // Register translated page content for each configured locale.
-        // Skip translation registration in preview mode to avoid overwriting production translations.
+        // In preview mode, register translations against the preview URL (not the production domain)
+        // so that translated docs are visible in preview without overwriting production translations.
         const translationPages = resolver.getTranslationPages();
-        if (!preview && translationPages != null && Object.keys(translationPages).length > 0) {
+        const translationDomain = preview ? urlToOutput : domain;
+        if (translationPages != null && Object.keys(translationPages).length > 0) {
             context.logger.info(`Registering translations for ${Object.keys(translationPages).length} locale(s)...`);
             await Promise.all(
                 Object.entries(translationPages).map(async ([locale, localePages]) => {
@@ -724,7 +726,7 @@ export async function publishDocs({
                                 ...headers // Include telemetry headers (X-CLI-Version, X-CI-Source, etc.)
                             },
                             body: JSON.stringify({
-                                domain,
+                                domain: translationDomain,
                                 orgId: organization,
                                 locale,
                                 docsDefinition: translatedDefinition
