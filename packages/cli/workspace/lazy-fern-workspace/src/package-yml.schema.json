@@ -3134,6 +3134,19 @@
               "type": "null"
             }
           ]
+        },
+        "viewers": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -3243,6 +3256,19 @@
           "oneOf": [
             {
               "$ref": "#/definitions/source.SourceSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "viewers": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
             },
             {
               "type": "null"
@@ -3792,6 +3818,19 @@
               "type": "array",
               "items": {
                 "$ref": "#/definitions/examples.ExampleWebhookCallSchema"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "viewers": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
               }
             },
             {

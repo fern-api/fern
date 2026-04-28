@@ -19,6 +19,7 @@ types:
       response: optional<services.HttpResponseSchema>
       response-stream: optional<services.HttpResponseStreamSchema>
       examples: optional<list<examples.ExampleWebhookCallSchema>>
+      viewers: optional<list<string>>
 
   WebhookMethodSchema:
     enum:

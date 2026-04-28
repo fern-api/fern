@@ -1,0 +1,5 @@
+- summary: |
+    Add `viewers` field to Fern Definition meta-schema (HttpService, HttpEndpoint,
+    Webhook) so YAML-based API definitions can declare RBAC viewers. Endpoints
+    inherit viewers from their parent service when not set explicitly.
+  type: feat

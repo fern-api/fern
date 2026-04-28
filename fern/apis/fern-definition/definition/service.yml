@@ -21,6 +21,7 @@ types:
       headers: optional<map<string, types.TypeReferenceSchema>>
       transport: optional<ServiceTransport>
       source: optional<source.SourceSchema>
+      viewers: optional<list<string>>
       endpoints: map<string, HttpEndpointSchema>
 
   ServiceTransport:
@@ -55,6 +56,7 @@ types:
       transport: optional<ServiceTransport>
       source: optional<source.SourceSchema>
       retries: optional<RetriesConfiguration>
+      viewers: optional<list<string>>
 
   HttpEndpointAuth:
     discriminated: false

@@ -271,7 +271,7 @@ export function convertHttpService({
                 v2Examples: undefined,
                 source: undefined,
                 audiences: endpoint.audiences,
-                viewers: endpoint.viewers,
+                viewers: endpoint.viewers ?? serviceDefinition.viewers,
                 retries: convertRetries({
                     endpointSchema: endpoint
                 }),
