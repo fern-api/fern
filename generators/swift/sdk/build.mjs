@@ -4,5 +4,8 @@ await buildGenerator(getDirname(import.meta.url), {
     copy: [
         { from: "../base/src/asIs", to: "./dist/asIs" },
         { from: "../base/src/template", to: "./dist/template" }
-    ]
+    ],
+    tsupOptions: {
+        external: ["@boundaryml/baml"]
+    }
 });
