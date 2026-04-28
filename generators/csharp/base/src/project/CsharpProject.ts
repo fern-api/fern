@@ -617,7 +617,7 @@ dotnet_diagnostic.IDE0005.severity = error
 
     private async createAsIsTestFile({ filename, namespace }: { filename: string; namespace: string }): Promise<File> {
         const contents = (await readFile(getAsIsFilepath(filename))).toString();
-        let rendered = replaceTemplate({
+        const rendered = replaceTemplate({
             contents,
             variables: {
                 grpc: this.context.hasGrpcEndpoints(),
@@ -628,16 +628,10 @@ dotnet_diagnostic.IDE0005.severity = error
                 additionalProperties: true,
                 context: this.context,
                 namespaces: this.namespaces,
-                clientOptionsRequiredDefaults: this.getClientOptionsRequiredDefaults()
+                clientOptionsRequiredDefaults: this.getClientOptionsRequiredDefaults(),
+                retryStatusCodes: this.context.settings.retryStatusCodes ?? "legacy"
             }
         });
-        if (
-            filename === AsIsFiles.Test.RawClientTests.RetriesTests &&
-            this.context.settings.retryStatusCodes === "recommended"
-        ) {
-            rendered = rendered.replaceAll("WithStatusCode(500)", "WithStatusCode(503)");
-            rendered = rendered.replace("[TestCase(500)]", "[TestCase(503)]");
-        }
         return new File(filename.replace("test/", "").replace(".Template", ""), RelativeFilePath.of(""), rendered);
     }
 
@@ -693,7 +687,7 @@ dotnet_diagnostic.IDE0005.severity = error
 
     private async createAsIsFile({ filename, namespace }: { filename: string; namespace: string }): Promise<File> {
         const contents = (await readFile(getAsIsFilepath(filename))).toString();
-        let rendered = replaceTemplate({
+        const rendered = replaceTemplate({
             contents,
             variables: {
                 grpc: this.context.hasGrpcEndpoints(),
@@ -702,15 +696,10 @@ dotnet_diagnostic.IDE0005.severity = error
                 namespace,
                 additionalProperties: true,
                 context: this.context,
-                namespaces: this.namespaces
+                namespaces: this.namespaces,
+                retryStatusCodes: this.context.settings.retryStatusCodes ?? "legacy"
             }
         });
-        if (filename === AsIsFiles.RawClient && this.context.settings.retryStatusCodes === "recommended") {
-            rendered = rendered.replace(
-                "return statusCode is 408 or 429 or (>= 500);",
-                "return statusCode is 408 or 429 or 502 or 503 or 504;"
-            );
-        }
         return new File(filename.replace(".Template", ""), RelativeFilePath.of(""), rendered);
     }
 
