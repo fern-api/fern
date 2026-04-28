@@ -11,7 +11,7 @@ the generated JSON body).
 """
 
 from dataclasses import dataclass, field
-from typing import Callable, Dict, List, Optional
+from typing import Dict, List, Optional, Set
 
 from ...context.sdk_generator_context import SdkGeneratorContext
 from fern_python.codegen import AST
@@ -144,7 +144,7 @@ def _emit(acc: _AccumulatedField) -> AST.NamedFunctionParameter:
 def _add_object_property(
     prop: ir_types.ObjectProperty,
     context: SdkGeneratorContext,
-    deconflict: set,
+    deconflict: Set[str],
     accumulator: Dict[str, _AccumulatedField],
 ) -> None:
     wire = get_wire_value(prop.name)
@@ -167,7 +167,7 @@ def _add_object_property(
 def _add_referenced_object_properties(
     type_name: ir_types.DeclaredTypeName,
     context: SdkGeneratorContext,
-    deconflict: set,
+    deconflict: Set[str],
     accumulator: Dict[str, _AccumulatedField],
 ) -> None:
     for prop in context.pydantic_generator_context.get_all_properties_including_extensions(type_name.type_id):
@@ -177,7 +177,7 @@ def _add_referenced_object_properties(
 def _add_single_property(
     single_prop: ir_types.SingleUnionTypeProperty,
     context: SdkGeneratorContext,
-    deconflict: set,
+    deconflict: Set[str],
     accumulator: Dict[str, _AccumulatedField],
 ) -> None:
     wire = get_wire_value(single_prop.name)
@@ -197,7 +197,7 @@ def _add_single_property(
     )
 
 
-def _python_name(wire_or_name, deconflict: set) -> str:  # type: ignore[no-untyped-def]
+def _python_name(wire_or_name, deconflict: Set[str]) -> str:  # type: ignore[no-untyped-def]
     resolved = resolve_name(get_name_from_wire_value(wire_or_name)).snake_case.safe_name
     if resolved in deconflict:
         return f"request_{resolved}"
