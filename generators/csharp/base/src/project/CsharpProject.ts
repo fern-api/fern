@@ -628,11 +628,14 @@ dotnet_diagnostic.IDE0005.severity = error
                 additionalProperties: true,
                 context: this.context,
                 namespaces: this.namespaces,
-                clientOptionsRequiredDefaults: this.getClientOptionsRequiredDefaults(),
-                retryStatusCodes: this.context.settings.retryStatusCodes ?? "legacy"
+                clientOptionsRequiredDefaults: this.getClientOptionsRequiredDefaults()
             }
         });
-        return new File(filename.replace("test/", "").replace(".Template", ""), RelativeFilePath.of(""), rendered);
+        const retryTestStatusCode =
+            this.context.settings.retryStatusCodes === "recommended" ? "503" : "500";
+        const resolvedTestContents = rendered
+            .replace(/\{\{RETRY_TEST_STATUS_CODE\}\}/g, retryTestStatusCode);
+        return new File(filename.replace("test/", "").replace(".Template", ""), RelativeFilePath.of(""), resolvedTestContents);
     }
 
     private cachedClientOptionsRequiredDefaults: string | undefined;
@@ -696,11 +699,16 @@ dotnet_diagnostic.IDE0005.severity = error
                 namespace,
                 additionalProperties: true,
                 context: this.context,
-                namespaces: this.namespaces,
-                retryStatusCodes: this.context.settings.retryStatusCodes ?? "legacy"
+                namespaces: this.namespaces
             }
         });
-        return new File(filename.replace(".Template", ""), RelativeFilePath.of(""), rendered);
+        const retryStatusCheck =
+            this.context.settings.retryStatusCodes === "recommended"
+                ? "statusCode is 408 or 429 or 502 or 503 or 504"
+                : "statusCode is 408 or 429 or (>= 500)";
+        const resolvedContents = rendered
+            .replace(/\{\{RETRY_STATUS_CHECK\}\}/g, retryStatusCheck);
+        return new File(filename.replace(".Template", ""), RelativeFilePath.of(""), resolvedContents);
     }
 
     private async createCustomPagerAsIsFiles(): Promise<File[]> {

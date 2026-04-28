@@ -165,11 +165,7 @@ internal partial class RawClient(ClientOptions clientOptions)
     private static bool ShouldRetry(HttpResponseMessage response)
     {
         var statusCode = (int)response.StatusCode;
-<% if (retryStatusCodes === "recommended") { %>
-        return statusCode is 408 or 429 or 502 or 503 or 504;
-<% } else { %>
-        return statusCode is 408 or 429 or (>= 500);
-<% } %>
+        return {{RETRY_STATUS_CHECK}};
     }
 
     private static int AddPositiveJitter(int delayMs)
