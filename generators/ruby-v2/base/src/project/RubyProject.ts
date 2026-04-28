@@ -232,23 +232,17 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         maxRetries?: number;
         retryStatusCodes?: string;
     }): Promise<File> {
-        let rendered = replaceTemplate({
+        const rendered = replaceTemplate({
             contents: (await readFile(getAsIsFilepath(filename))).toString(),
             variables: getTemplateVariables({
                 gemNamespace,
                 rootFolderName,
                 customPagerClassName,
                 omitFernHeaders,
-                maxRetries
+                maxRetries,
+                retryStatusCodes
             })
         });
-
-        if (filename === AsIsFiles.HttpRawClient && retryStatusCodes === "recommended") {
-            rendered = rendered.replace(
-                "RETRYABLE_STATUSES = [408, 429, 500, 502, 503, 504, 521, 522, 524].freeze",
-                "RETRYABLE_STATUSES = [408, 429, 502, 503, 504].freeze"
-            );
-        }
 
         return new File(this.getAsIsOutputFilename(filename), this.getAsIsOutputDirectory(filename), rendered);
     }
@@ -300,13 +294,15 @@ function getTemplateVariables({
     rootFolderName,
     customPagerClassName,
     omitFernHeaders,
-    maxRetries
+    maxRetries,
+    retryStatusCodes
 }: {
     gemNamespace: string;
     rootFolderName: string;
     customPagerClassName?: string;
     omitFernHeaders?: boolean;
     maxRetries?: number;
+    retryStatusCodes?: string;
 }): Record<string, unknown> {
     return {
         gem_namespace: gemNamespace,
@@ -316,7 +312,8 @@ function getTemplateVariables({
         rootFolderName,
         custom_pager_class_name: customPagerClassName ?? "CustomPager",
         omitFernHeaders: omitFernHeaders ?? false,
-        defaultMaxRetries: maxRetries ?? 2
+        defaultMaxRetries: maxRetries ?? 2,
+        retryStatusCodes: retryStatusCodes ?? "legacy"
     };
 }
 
