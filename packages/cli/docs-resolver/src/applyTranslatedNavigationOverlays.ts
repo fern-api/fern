@@ -105,7 +105,8 @@ function applyChildOverlays(
                 return walkAndApply(child, overlay);
             }
             if (childObj["type"] === "tab") {
-                return applyTabOverlayToNode(childObj, overlay);
+                const walked = walkAndApply(child, overlay) as Record<string, unknown>;
+                return applyTabOverlayToNode(walked, overlay);
             }
             return walkAndApply(child, overlay);
         });

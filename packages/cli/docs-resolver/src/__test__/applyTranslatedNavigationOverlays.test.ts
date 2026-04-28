@@ -338,6 +338,63 @@ describe("applyTranslatedNavigationOverlays", () => {
         const announcement = products[0]?.announcement as Record<string, unknown>;
         expect(announcement.text).toBe("v2がリリースされました！");
     });
+
+    it("does not mutate the original root when applying tab overlays", () => {
+        const root = {
+            type: "root",
+            child: {
+                type: "productgroup",
+                children: [
+                    {
+                        type: "product",
+                        title: "Home",
+                        slug: "home",
+                        children: [
+                            {
+                                type: "tabbed",
+                                children: [
+                                    {
+                                        type: "tab",
+                                        title: "Documentation",
+                                        slug: "home/documentation",
+                                        children: []
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        };
+        const overlay: docsYml.TranslationNavigationOverlay = {
+            ...emptyOverlay(),
+            tabs: {
+                docs: {
+                    displayName: "ドキュメント",
+                    slug: "documentation"
+                }
+            }
+        };
+
+        // Apply overlay — this should NOT mutate the original root
+        const result = applyTranslatedNavigationOverlays(asRoot(root), overlay);
+
+        // The result should have the translated title
+        const resultProduct = (result as unknown as Record<string, unknown>).child as Record<string, unknown>;
+        const resultTabbed = (resultProduct.children as Array<Record<string, unknown>>)[0]?.children as Array<
+            Record<string, unknown>
+        >;
+        const resultTab = (resultTabbed[0]?.children as Array<Record<string, unknown>>)[0];
+        expect(resultTab?.title).toBe("ドキュメント");
+
+        // The ORIGINAL root must still have the English title
+        const origProduct = root.child as Record<string, unknown>;
+        const origTabbed = (origProduct.children as Array<Record<string, unknown>>)[0]?.children as Array<
+            Record<string, unknown>
+        >;
+        const origTab = (origTabbed[0]?.children as Array<Record<string, unknown>>)[0];
+        expect(origTab?.title).toBe("Documentation");
+    });
 });
 
 describe("getTranslatedAnnouncement", () => {
