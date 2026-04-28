@@ -8,7 +8,12 @@ import {
     stripMdxComments,
     transformAtPrefixImports
 } from "@fern-api/docs-markdown-utils";
-import { DocsDefinitionResolver, filterOssWorkspaces, stitchGlobalTheme } from "@fern-api/docs-resolver";
+import {
+    DocsDefinitionResolver,
+    filterOssWorkspaces,
+    stitchGlobalTheme,
+    type TranslationNavigationOverlay
+} from "@fern-api/docs-resolver";
 import {
     APIV1Read,
     APIV1Write,
@@ -135,9 +140,7 @@ export interface PreviewDocsResult {
      * Per-locale translated navigation overlays from translations/<lang>/fern/ YAML files.
      * Key is locale, value is a parsed overlay with translated display-names, titles, etc.
      */
-    translationNavigationOverlays:
-        | Record<string, import("@fern-api/configuration").docsYml.TranslationNavigationOverlay>
-        | undefined;
+    translationNavigationOverlays: Record<string, TranslationNavigationOverlay> | undefined;
     /**
      * File IDs collected during docs resolution, needed for image path replacement
      * in translated pages.

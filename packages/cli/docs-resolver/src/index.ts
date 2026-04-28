@@ -5,6 +5,8 @@ export {
     applyTranslatedNavigationOverlays,
     getTranslatedAnnouncement
 } from "./applyTranslatedNavigationOverlays.js";
+import { type docsYml } from "@fern-api/configuration";
+export type TranslationNavigationOverlay = docsYml.TranslationNavigationOverlay;
 export { DocsDefinitionResolver, type UploadedFile } from "./DocsDefinitionResolver.js";
 export { stitchGlobalTheme } from "./stitchGlobalTheme.js";
 export { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition.js";
