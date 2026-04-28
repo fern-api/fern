@@ -631,11 +631,13 @@ dotnet_diagnostic.IDE0005.severity = error
                 clientOptionsRequiredDefaults: this.getClientOptionsRequiredDefaults()
             }
         });
-        const retryTestStatusCode =
-            this.context.settings.retryStatusCodes === "recommended" ? "503" : "500";
-        const resolvedTestContents = rendered
-            .replace(/\{\{RETRY_TEST_STATUS_CODE\}\}/g, retryTestStatusCode);
-        return new File(filename.replace("test/", "").replace(".Template", ""), RelativeFilePath.of(""), resolvedTestContents);
+        const retryTestStatusCode = this.context.settings.retryStatusCodes === "recommended" ? "503" : "500";
+        const resolvedTestContents = rendered.replace(/\{\{RETRY_TEST_STATUS_CODE\}\}/g, retryTestStatusCode);
+        return new File(
+            filename.replace("test/", "").replace(".Template", ""),
+            RelativeFilePath.of(""),
+            resolvedTestContents
+        );
     }
 
     private cachedClientOptionsRequiredDefaults: string | undefined;
@@ -706,8 +708,7 @@ dotnet_diagnostic.IDE0005.severity = error
             this.context.settings.retryStatusCodes === "recommended"
                 ? "statusCode is 408 or 429 or 502 or 503 or 504"
                 : "statusCode is 408 or 429 or (>= 500)";
-        const resolvedContents = rendered
-            .replace(/\{\{RETRY_STATUS_CHECK\}\}/g, retryStatusCheck);
+        const resolvedContents = rendered.replace(/\{\{RETRY_STATUS_CHECK\}\}/g, retryStatusCheck);
         return new File(filename.replace(".Template", ""), RelativeFilePath.of(""), resolvedContents);
     }
 
