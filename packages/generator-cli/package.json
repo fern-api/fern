@@ -39,7 +39,7 @@
     "@fern-api/cli-ai": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/logging-execa": "workspace:*",
-    "@fern-api/replay": "0.12.0",
+    "@fern-api/replay": "0.13.0",
     "@fern-api/task-context": "workspace:*",
     "@octokit/rest": "catalog:",
     "es-toolkit": "catalog:",
