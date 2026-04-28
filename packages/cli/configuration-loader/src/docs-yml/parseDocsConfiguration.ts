@@ -274,12 +274,7 @@ export async function parseDocsConfiguration({
         },
 
         /* integrations */
-        integrations: {
-            ...integrations,
-            // context7 is handled separately via context7File (resolved to AbsoluteFilePath)
-            context7: undefined,
-            intercom: integrations?.intercom ? integrations.intercom : undefined
-        },
+        integrations: integrations != null ? { intercom: integrations.intercom ?? undefined } : undefined,
 
         /* scripts */
         css,
