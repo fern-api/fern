@@ -58,7 +58,11 @@ export class TemplateDataGenerator {
     private generateTemplateDataForHTTPClient() {
         const errorEnumSymbol = this.context.project.nameRegistry.getErrorEnumSymbolOrThrow();
         return {
-            errorEnumName: errorEnumSymbol.name
+            errorEnumName: errorEnumSymbol.name,
+            retryStatusCheck:
+                this.context.customConfig.retryStatusCodes === "recommended"
+                    ? "statusCode == 408 || statusCode == 429 || statusCode == 502 || statusCode == 503 || statusCode == 504"
+                    : "statusCode == 408 || statusCode == 429 || statusCode >= 500"
         };
     }
 
