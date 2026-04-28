@@ -233,6 +233,87 @@ async fn main() {
 </dl>
 </details>
 
+<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">nested_object_unions</a>(request: OuterNestedUnion) -> Result&lt;String, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_undiscriminated_unions::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        ..Default::default()
+    };
+    let client = UndiscriminatedUnionsClient::new(config).expect("Failed to build client");
+    client
+        .union_
+        .nested_object_unions(&OuterNestedUnion::String("string".to_string()), None)
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">aliased_object_union</a>(request: AliasedObjectUnion) -> Result&lt;String, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_undiscriminated_unions::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        ..Default::default()
+    };
+    let client = UndiscriminatedUnionsClient::new(config).expect("Failed to build client");
+    client
+        .union_
+        .aliased_object_union(
+            &AliasedObjectUnion::AliasedLeafA(AliasedLeafA(LeafObjectA {
+                only_in_a: "onlyInA".to_string(),
+                shared_number: 1,
+                ..Default::default()
+            })),
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">get_with_base_properties</a>(request: UnionWithBaseProperties) -> Result&lt;UnionWithBaseProperties, ApiError&gt;</code></summary>
 <dl>
 <dd>

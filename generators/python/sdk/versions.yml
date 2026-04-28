@@ -1,4 +1,36 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.8.2
+  changelogEntry:
+    - summary: |
+        Bump @fern-api/generator-cli to 0.9.16, which bundles the autoversion
+        pipeline's private workspace deps (@fern-api/logging-execa,
+        @fern-api/task-context, @fern-api/cli-ai) into the published dist/api.js
+        so consumers no longer hit ERR_MODULE_NOT_FOUND on
+        logging-execa/src/createLoggingExecutable.js under Vite/Vitest.
+      type: chore
+  createdAt: "2026-04-28"
+  irVersion: 66
+- version: 5.8.1
+  changelogEntry:
+    - summary: |
+        Tighten the generated `urllib3` dev-dependency pin to `>=2.6.3,<3.0.0`
+        (Python >= 3.9) to address CVE-2026-21441 and several additional
+        HIGH-severity urllib3 advisories. Projects still supporting Python 3.8
+        fall back to the tightest safe constraint available for the 1.x line.
+      type: chore
+  createdAt: "2026-04-27"
+  irVersion: 66
+- version: 5.8.0
+  changelogEntry:
+    - summary: |
+        Support omitting username or password from basic auth when configured via
+        `usernameOmit` or `passwordOmit` in the IR. Omitted fields are removed from
+        the SDK's public API and treated as empty strings internally (e.g., omitting
+        password encodes `username:`, omitting username encodes `:password`). When
+        both are omitted, the Authorization header is skipped entirely.
+      type: feat
+  createdAt: "2026-04-27"
+  irVersion: 66
 - version: 5.7.0
   changelogEntry:
     - summary: |

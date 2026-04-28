@@ -68,7 +68,7 @@ This SDK allows you to configure different environments for API requests.
 import SingleUrlEnvironmentDefault
 
 let client = SingleUrlEnvironmentDefaultClient(
-    ...,
+    token: "YOUR_API_KEY",
     environment: .production
 )
 ```
@@ -80,7 +80,7 @@ The SDK throws a single error enum for all failures. Client-side issues encoding
 ```swift
 import SingleUrlEnvironmentDefault
 
-let client = SingleUrlEnvironmentDefaultClient(...)
+let client = SingleUrlEnvironmentDefaultClient(token: "YOUR_API_KEY")
 
 do {
     let response = try await client.dummy.getDummy(...)
@@ -148,7 +148,7 @@ import Foundation
 import SingleUrlEnvironmentDefault
 
 let client = SingleUrlEnvironmentDefaultClient(
-    ...,
+    token: "YOUR_API_KEY",
     urlSession: // Provide your implementation here
 )
 ```

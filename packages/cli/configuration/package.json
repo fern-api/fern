@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "@fern-api/core-utils": "workspace:*",
-    "@fern-api/fdr-sdk": "catalog:",
+    "@fern-api/fdr-sdk": "1.1.23-d25ead8e05",
     "@fern-api/fern-definition-schema": "workspace:*",
     "@fern-api/path-utils": "workspace:*",
     "@fern-fern/fiddle-sdk": "catalog:",

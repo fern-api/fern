@@ -9,11 +9,11 @@ import {
     Availability,
     DocsInstance,
     ExperimentalConfig,
-    Language,
     LibraryLanguage,
     PlaygroundSettings,
     Target,
     ThemeConfig,
+    TranslationConfig,
     VersionAvailability
 } from "./schemas/index.js";
 
@@ -41,8 +41,10 @@ export interface ParsedPageActionsConfig {
 }
 
 // TODO(kafkas): Remove this when we upgrade the fdr-sdk to latest
-interface ParsedDocsSettingsConfig extends CjsFdrSdk.docs.v1.commons.DocsSettingsConfig {
+interface ParsedDocsSettingsConfig extends Omit<CjsFdrSdk.docs.v1.commons.DocsSettingsConfig, "language"> {
+    language: string | undefined;
     disableEnvironmentEditing: boolean | undefined;
+    websocketOneofDisplay: "flat" | "grouped" | undefined;
 }
 
 export interface ParsedDocsConfiguration {
@@ -51,6 +53,9 @@ export interface ParsedDocsConfiguration {
 
     /* filepath of page to contents */
     pages: Record<RelativeFilePath, string>;
+
+    /* per-locale translated page content: locale → { relativeFilePath → markdown } */
+    translationPages: Record<string, Record<RelativeFilePath, string>> | undefined;
 
     /* RBAC declaration */
     roles: string[] | undefined;
@@ -79,7 +84,8 @@ export interface ParsedDocsConfiguration {
     context7File: AbsoluteFilePath | undefined;
     llmsTxtFile: AbsoluteFilePath | undefined;
     llmsFullTxtFile: AbsoluteFilePath | undefined;
-    languages: Language[] | undefined;
+    languages: string[] | undefined;
+    translations: TranslationConfig[] | undefined;
     defaultLanguage: CjsFdrSdk.docs.v1.commons.ProgrammingLanguage | undefined;
     analyticsConfig: CjsFdrSdk.docs.v1.commons.AnalyticsConfig | undefined;
     announcement: AnnouncementConfig | undefined;

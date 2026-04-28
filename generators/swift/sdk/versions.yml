@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.33.0
+  changelogEntry:
+    - summary: |
+        Show explicit auth parameters in README snippets (errors, custom networking,
+        environments sections) instead of eliding with `(...)`. Uses IR `placeholder`
+        fields when configured, with sensible defaults.
+      type: feat
+  createdAt: "2026-04-27"
+  irVersion: 66
 - version: 0.32.2
   changelogEntry:
     - summary: |

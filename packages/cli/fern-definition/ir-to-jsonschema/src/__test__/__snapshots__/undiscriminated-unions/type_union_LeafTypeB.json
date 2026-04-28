@@ -1,0 +1,13 @@
+{
+  "type": "object",
+  "properties": {
+    "gamma": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "gamma"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

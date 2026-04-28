@@ -111,12 +111,12 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
     }
 
     protected getFilepath(): RelativeFilePath {
-        const subpackage = this.context.getSubpackageForServiceId(this.serviceId);
+        const pkg = this.context.getPackageForServiceId(this.serviceId);
         const serviceDir = RelativeFilePath.of(
             [
                 "lib",
                 this.context.getRootFolderName(),
-                ...subpackage.fernFilepath.allParts.map((path) => this.case.snakeSafe(path)),
+                ...pkg.fernFilepath.allParts.map((path) => this.case.snakeSafe(path)),
                 "types"
             ].join("/")
         );

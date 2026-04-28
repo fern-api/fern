@@ -1,6 +1,24 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Bundle the private workspace deps used by the autoversion pipeline
+        (`@fern-api/logging-execa`, `@fern-api/task-context`, `@fern-api/cli-ai`)
+        into the published `dist/api.js`. They were added to generator-cli as
+        `workspace:*` deps for autoversion, but `build.mjs` only force-bundled
+        `@fern-api/github`, `@fern-api/fs-utils`, and `@fern-api/core-utils`,
+        so tsup externalized the new ones. The workspace filter in `build.mjs`
+        strips `workspace:*` entries from the published `package.json`, so
+        consumers received an `api.js` doing `require("@fern-api/logging-execa")`
+        (etc.) with no matching entry in `dependencies`. pnpm `install` papered
+        over this via hoisting, but Vite/Vitest's ESM resolution in consumer
+        packages (e.g. `@fern-api/openapi-generator`) surfaced the phantom dep
+        as `ERR_MODULE_NOT_FOUND` on `logging-execa/src/createLoggingExecutable.js`.
+      type: fix
+  createdAt: "2026-04-23"
+  version: 0.9.16
+
+- changelogEntry:
+    - summary: |
         Fix autoversion placeholder leak on NO_CHANGE runs and auto-wire
         `GithubStep` PR body from the `AutoVersionStep` result (FER-10028,
         FER-10029).

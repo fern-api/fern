@@ -78,6 +78,10 @@ func TestNameFromStringSmartCasing(t *testing.T) {
 		{"myAPIKey", "myAPIKey", "myAPIKey", "MyAPIKey", "my_api_key", "MY_API_KEY"},
 		{"XMLParsing", "XMLParsing", "xmlParsing", "XMLParsing", "xml_parsing", "XML_PARSING"},
 		{"getHTTPSConnection", "getHTTPSConnection", "getHTTPSConnection", "GetHTTPSConnection", "get_https_connection", "GET_HTTPS_CONNECTION"},
+		// Single-letter word between a lowercase word and a capitalized word
+		// should be preserved as its own word (matches lodash words()).
+		{"WhoAmIResponseData", "WhoAmIResponseData", "whoAmIResponseData", "WhoAmIResponseData", "who_am_i_response_data", "WHO_AM_I_RESPONSE_DATA"},
+		{"GetWhoAmIResponse", "GetWhoAmIResponse", "getWhoAmIResponse", "GetWhoAmIResponse", "get_who_am_i_response", "GET_WHO_AM_I_RESPONSE"},
 		// Smart snake_case keeps digits attached: EC2 -> ec2
 		{"EC2", "EC2", "ec2", "Ec2", "ec2", "EC2"},
 		{"S3", "S3", "s3", "S3", "s3", "S3"},

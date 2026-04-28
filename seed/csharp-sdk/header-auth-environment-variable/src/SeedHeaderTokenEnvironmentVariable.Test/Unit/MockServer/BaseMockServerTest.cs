@@ -24,7 +24,7 @@ public class BaseMockServerTest
 
         // Initialize the Client
         Client = new SeedHeaderTokenEnvironmentVariableClient(
-            "HEADER_TOKEN_AUTH",
+            "YOUR_HEADER_VALUE",
             clientOptions: new ClientOptions { BaseUrl = Server.Urls[0], MaxRetries = 0 }
         );
     }

@@ -16,7 +16,7 @@
       }
     },
     "extra_dependencies": {
-      "boto3": "1.28.57"
+      "boto3": "1.35.76"
     }
   },
   "originGitCommit": "DUMMY",

@@ -47,7 +47,7 @@ use seed_bearer_token_environment_variable::prelude::*;
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
-        token: Some("<token>".to_string()),
+        token: Some("YOUR_API_KEY".to_string()),
         ..Default::default()
     };
     let client = BearerTokenEnvironmentVariableClient::new(config).expect("Failed to build client");

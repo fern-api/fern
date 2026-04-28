@@ -61,7 +61,7 @@ public class Example {
     public static void main(String[] args) {
         SeedHeaderTokenClient client = SeedHeaderTokenClient
             .builder()
-            .headerTokenAuth("<value>")
+            .headerTokenAuth("YOUR_API_KEY")
             .build();
 
         client.service().getWithBearerToken();

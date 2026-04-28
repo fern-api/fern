@@ -66,6 +66,18 @@ public partial interface IUnionClient
         CancellationToken cancellationToken = default
     );
 
+    WithRawResponseTask<string> NestedObjectUnionsAsync(
+        OneOf<string, WrapperObject> request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    WithRawResponseTask<string> AliasedObjectUnionAsync(
+        OneOf<LeafObjectA, LeafObjectB> request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
     WithRawResponseTask<
         OneOf<NamedMetadata, Dictionary<string, object?>?>
     > GetWithBasePropertiesAsync(

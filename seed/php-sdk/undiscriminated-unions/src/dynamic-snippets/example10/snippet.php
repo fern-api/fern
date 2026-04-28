@@ -3,19 +3,16 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Union\Requests\PaymentRequest;
-use Seed\Union\Types\TokenizeCard;
+use Seed\Union\Types\LeafObjectA;
 
 $client = new SeedClient(
     options: [
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->union->testCamelCaseProperties(
-    new PaymentRequest([
-        'paymentMethod' => new TokenizeCard([
-            'method' => 'card',
-            'cardNumber' => '1234567890123456',
-        ]),
+$client->union->aliasedObjectUnion(
+    new LeafObjectA([
+        'onlyInA' => 'onlyInA',
+        'sharedNumber' => 1,
     ]),
 );

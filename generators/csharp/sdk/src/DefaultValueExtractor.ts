@@ -1,3 +1,4 @@
+import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
 
@@ -105,6 +106,49 @@ export class DefaultValueExtractor {
             unknown: () => undefined,
             _other: () => undefined
         });
+    }
+
+    /**
+     * Extracts the default value from a clientDefault Literal, if present.
+     * clientDefault is always applied regardless of the useDefaultRequestParameterValues flag.
+     */
+    public extractClientDefault(clientDefault: FernIr.Literal | undefined): ExtractedDefault | undefined {
+        if (clientDefault == null) {
+            return undefined;
+        }
+        switch (clientDefault.type) {
+            case "string":
+                return { value: this.escapeString(clientDefault.string), csharpType: "string", isConst: true };
+            case "boolean":
+                return {
+                    value: clientDefault.boolean ? "true" : "false",
+                    csharpType: "bool",
+                    isConst: true
+                };
+            default:
+                assertNever(clientDefault);
+        }
+    }
+
+    /**
+     * Extracts the effective default, preferring clientDefault over type-level defaults.
+     */
+    public extractEffectiveDefault(
+        typeReference: FernIr.TypeReference,
+        clientDefault: FernIr.Literal | undefined
+    ): ExtractedDefault | undefined {
+        const clientDefaultValue = this.extractClientDefault(clientDefault);
+        if (clientDefaultValue != null) {
+            return clientDefaultValue;
+        }
+        return this.extractDefault(typeReference);
+    }
+
+    /**
+     * Checks whether a parameter has any default (clientDefault or type-level).
+     */
+    public hasAnyDefault(typeReference: FernIr.TypeReference, clientDefault: FernIr.Literal | undefined): boolean {
+        return clientDefault != null || this.extractDefault(typeReference) != null;
     }
 
     /**

@@ -22,7 +22,13 @@ import {
     FernNavigation,
     SDKSnippetHolder
 } from "@fern-api/fdr-sdk";
-import { AbsoluteFilePath, convertToFernHostAbsoluteFilePath, doesPathExist, relative } from "@fern-api/fs-utils";
+import {
+    AbsoluteFilePath,
+    convertToFernHostAbsoluteFilePath,
+    doesPathExist,
+    RelativeFilePath,
+    relative
+} from "@fern-api/fs-utils";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { getOriginalName } from "@fern-api/ir-utils";
 import { Project } from "@fern-api/project-loader";
@@ -114,19 +120,47 @@ function extractFrontmatterSlug(markdown: string): string | undefined {
     }
 }
 
+/**
+ * Result from getPreviewDocsDefinition that includes both the docs definition
+ * and data needed to compute translated definitions for each locale.
+ */
+export interface PreviewDocsResult {
+    docsDefinition: DocsV1Read.DocsDefinition;
+    /**
+     * Per-locale translated page content from translations/<lang>/ directories.
+     * Key is locale (e.g., "fr", "ja"), value is a map of page path to raw markdown.
+     */
+    translationPages: Record<string, Record<RelativeFilePath, string>> | undefined;
+    /**
+     * File IDs collected during docs resolution, needed for image path replacement
+     * in translated pages.
+     */
+    collectedFileIds: ReadonlyMap<AbsoluteFilePath, string>;
+    /**
+     * Absolute path to the fern docs workspace folder.
+     */
+    docsWorkspacePath: AbsoluteFilePath;
+}
+
 export async function getPreviewDocsDefinition({
     domain,
     project,
     context,
     previousDocsDefinition,
-    editedAbsoluteFilepaths
+    editedAbsoluteFilepaths,
+    previousPreviewResult
 }: {
     domain: string;
     project: Project;
     context: TaskContext;
     previousDocsDefinition?: DocsV1Read.DocsDefinition;
     editedAbsoluteFilepaths?: AbsoluteFilePath[];
-}): Promise<DocsV1Read.DocsDefinition> {
+    /**
+     * Previous preview result (for incremental updates).
+     * This is used to preserve translation data during incremental page updates.
+     */
+    previousPreviewResult?: PreviewDocsResult;
+}): Promise<PreviewDocsResult> {
     const docsWorkspace = project.docsWorkspaces;
     const apiWorkspaces = project.apiWorkspaces;
     if (docsWorkspace == null) {
@@ -249,8 +283,14 @@ export async function getPreviewDocsDefinition({
             };
         }
 
-        if (allMarkdownFiles && !navAffectingChange) {
-            return previousDocsDefinition;
+        if (allMarkdownFiles && !navAffectingChange && previousPreviewResult != null) {
+            // Return updated definition with preserved translation data
+            return {
+                docsDefinition: previousDocsDefinition,
+                translationPages: previousPreviewResult.translationPages,
+                collectedFileIds: previousPreviewResult.collectedFileIds,
+                docsWorkspacePath: previousPreviewResult.docsWorkspacePath
+            };
         }
     }
 
@@ -336,7 +376,16 @@ export async function getPreviewDocsDefinition({
         docsDefinition = { ...substitutedDocs, jsFiles };
     }
 
-    return docsDefinition;
+    // Get translation pages and collected file IDs for building translated definitions
+    const translationPages = resolver.getTranslationPages();
+    const collectedFileIds = resolver.getCollectedFileIds();
+
+    return {
+        docsDefinition,
+        translationPages,
+        collectedFileIds,
+        docsWorkspacePath: docsWorkspace.absoluteFilePath
+    };
 }
 
 async function applyGlobalThemeIfNeeded(

@@ -194,6 +194,17 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         throw GeneratorError.internalError(`No subpackage found for service ${serviceId}`);
     }
 
+    public getPackageForServiceId(serviceId: FernIr.ServiceId): FernIr.Package {
+        if (this.ir.rootPackage.service === serviceId) {
+            return this.ir.rootPackage;
+        }
+        return this.getSubpackageForServiceId(serviceId);
+    }
+
+    public isRootService(serviceId: FernIr.ServiceId): boolean {
+        return this.ir.rootPackage.service === serviceId;
+    }
+
     /**
      * Recursively checks if a subpackage has endpoints.
      * @param subpackage - The subpackage to check.
@@ -284,7 +295,7 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
     public getModuleNamesForServiceId(serviceId: FernIr.ServiceId): string[] {
         return [
             this.getRootModuleName(),
-            ...this.getSubpackageForServiceId(serviceId).fernFilepath.allParts.map((part) =>
+            ...this.getPackageForServiceId(serviceId).fernFilepath.allParts.map((part) =>
                 this.caseConverter.pascalSafe(part)
             ),
             this.getTypesModule().name

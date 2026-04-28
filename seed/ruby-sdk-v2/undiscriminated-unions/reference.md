@@ -280,6 +280,105 @@ client.union.nested_unions(request: "string")
 </dl>
 </details>
 
+<details><summary><code>client.union.<a href="/lib/seed/union/client.rb">nested_object_unions</a>(request) -> String</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.union.nested_object_unions(request: "string")
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Seed::Union::Types::OuterNestedUnion` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Union::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.union.<a href="/lib/seed/union/client.rb">aliased_object_union</a>(request) -> String</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.union.aliased_object_union(request: {
+  only_in_a: "onlyInA",
+  shared_number: 1
+})
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Seed::Union::Types::AliasedObjectUnion` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Union::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.union.<a href="/lib/seed/union/client.rb">get_with_base_properties</a>(request) -> Seed::Union::Types::UnionWithBaseProperties</code></summary>
 <dl>
 <dd>

@@ -84,9 +84,13 @@ public final class UnionWithBaseProperties {
         @java.lang.Override
         public UnionWithBaseProperties deserialize(JsonParser p, DeserializationContext context) throws IOException {
             Object value = p.readValueAs(Object.class);
-            try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, NamedMetadata.class));
-            } catch (RuntimeException e) {
+            if (value instanceof Map<?, ?>
+                    && ((Map<?, ?>) value).containsKey("name")
+                    && ((Map<?, ?>) value).containsKey("value")) {
+                try {
+                    return of(ObjectMappers.JSON_MAPPER.convertValue(value, NamedMetadata.class));
+                } catch (RuntimeException e) {
+                }
             }
             try {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(

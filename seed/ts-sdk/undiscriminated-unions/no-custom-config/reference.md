@@ -296,6 +296,107 @@ await client.union.nestedUnions("string");
 </dl>
 </details>
 
+<details><summary><code>client.union.<a href="/src/api/resources/union/client/Client.ts">nestedObjectUnions</a>({ ...params }) -> string</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.union.nestedObjectUnions("string");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedUndiscriminatedUnions.OuterNestedUnion` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UnionClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.union.<a href="/src/api/resources/union/client/Client.ts">aliasedObjectUnion</a>({ ...params }) -> string</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.union.aliasedObjectUnion({
+    onlyInA: "onlyInA",
+    sharedNumber: 1
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedUndiscriminatedUnions.AliasedObjectUnion` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UnionClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.union.<a href="/src/api/resources/union/client/Client.ts">getWithBaseProperties</a>({ ...params }) -> SeedUndiscriminatedUnions.UnionWithBaseProperties</code></summary>
 <dl>
 <dd>
