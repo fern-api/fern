@@ -100,7 +100,7 @@ export class MockEndpointGenerator extends WithGeneration {
                         // entries, so pass all values in a single WithParam call.
                         const paramValues = maybeParameterValue
                             .split(",")
-                            .map((v) => `"${v.trim().replace(/\\/g, "\\\\").replace(/"/g, '\\"')}"`);
+                            .map((v) => `"${v.replace(/\\/g, "\\\\").replace(/"/g, '\\"')}"`);
                         writer.write(`.WithParam("${getWireValue(parameter.name)}", ${paramValues.join(", ")})`);
                     }
                 }
