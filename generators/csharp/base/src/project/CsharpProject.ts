@@ -617,24 +617,28 @@ dotnet_diagnostic.IDE0005.severity = error
 
     private async createAsIsTestFile({ filename, namespace }: { filename: string; namespace: string }): Promise<File> {
         const contents = (await readFile(getAsIsFilepath(filename))).toString();
-        return new File(
-            filename.replace("test/", "").replace(".Template", ""),
-            RelativeFilePath.of(""),
-            replaceTemplate({
-                contents,
-                variables: {
-                    grpc: this.context.hasGrpcEndpoints(),
-                    idempotencyHeaders: this.context.hasIdempotencyHeaders(),
-                    hasBaseUrl: this.context.hasBaseUrl(),
-                    namespace,
-                    testNamespace: this.namespaces.test,
-                    additionalProperties: true,
-                    context: this.context,
-                    namespaces: this.namespaces,
-                    clientOptionsRequiredDefaults: this.getClientOptionsRequiredDefaults()
-                }
-            })
-        );
+        let rendered = replaceTemplate({
+            contents,
+            variables: {
+                grpc: this.context.hasGrpcEndpoints(),
+                idempotencyHeaders: this.context.hasIdempotencyHeaders(),
+                hasBaseUrl: this.context.hasBaseUrl(),
+                namespace,
+                testNamespace: this.namespaces.test,
+                additionalProperties: true,
+                context: this.context,
+                namespaces: this.namespaces,
+                clientOptionsRequiredDefaults: this.getClientOptionsRequiredDefaults()
+            }
+        });
+        if (
+            filename === AsIsFiles.Test.RawClientTests.RetriesTests &&
+            this.context.settings.retryStatusCodes === "recommended"
+        ) {
+            rendered = rendered.replaceAll("WithStatusCode(500)", "WithStatusCode(503)");
+            rendered = rendered.replace("[TestCase(500)]", "[TestCase(503)]");
+        }
+        return new File(filename.replace("test/", "").replace(".Template", ""), RelativeFilePath.of(""), rendered);
     }
 
     private cachedClientOptionsRequiredDefaults: string | undefined;
@@ -701,7 +705,7 @@ dotnet_diagnostic.IDE0005.severity = error
                 namespaces: this.namespaces
             }
         });
-        if (filename === AsIsFiles.RawClient && this.context.settings.retryStatusCodes() === "recommended") {
+        if (filename === AsIsFiles.RawClient && this.context.settings.retryStatusCodes === "recommended") {
             rendered = rendered.replace(
                 "return statusCode is 408 or 429 or (>= 500);",
                 "return statusCode is 408 or 429 or 502 or 503 or 504;"
