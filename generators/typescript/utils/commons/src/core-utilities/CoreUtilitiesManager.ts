@@ -247,11 +247,8 @@ export class CoreUtilitiesManager {
             })
         );
 
-        // Handle maxRetries and retryStatusCodes overrides in requestWithRetries.ts
-        if (
-            this.referencedCoreUtilities["fetcher"] != null &&
-            (this.maxRetries != null || this.retryStatusCodes === "recommended")
-        ) {
+        // Replace template variables in requestWithRetries.ts
+        if (this.referencedCoreUtilities["fetcher"] != null) {
             const requestWithRetriesPath = path.join(
                 pathToRoot,
                 this.relativePackagePath,
@@ -267,12 +264,11 @@ export class CoreUtilitiesManager {
                         `const DEFAULT_MAX_RETRIES = ${this.maxRetries};`
                     );
                 }
-                if (this.retryStatusCodes === "recommended") {
-                    contents = contents.replace(
-                        "return [408, 429].includes(statusCode) || statusCode >= 500;",
-                        "return [408, 429, 502, 503, 504].includes(statusCode);"
-                    );
-                }
+                const retryStatusCheck =
+                    this.retryStatusCodes === "recommended"
+                        ? "[408, 429, 502, 503, 504].includes(statusCode)"
+                        : "[408, 429].includes(statusCode) || statusCode >= 500";
+                contents = contents.replace(/\{\{RETRY_STATUS_CHECK\}\}/g, retryStatusCheck);
                 await writeFile(requestWithRetriesPath, contents, { encoding: "utf8" });
             } catch (_error) {
                 // File may not exist if fetcher utility doesn't include requestWithRetries
