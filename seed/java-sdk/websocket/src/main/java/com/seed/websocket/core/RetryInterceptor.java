@@ -8,7 +8,6 @@ import java.time.Duration;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import okhttp3.Interceptor;
@@ -156,7 +155,7 @@ public class RetryInterceptor implements Interceptor {
     }
 
     private static boolean shouldRetry(int statusCode) {
-        return List.of(408, 429).contains(statusCode) || statusCode >= 500;
+        return statusCode == 408 || statusCode == 429 || statusCode >= 500;
     }
 
     private final class ExponentialBackoff {
