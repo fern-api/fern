@@ -1,0 +1,9 @@
+- summary: |
+    Fix Java SDK generation crash when an OpenAPI property name is a Java keyword
+    or literal (e.g. `true`, `false`, `null`, `if`, `new`). `KeyWordUtils` only
+    sanitized 12 of Java's reserved words, so JavaPoet rejected the rest with
+    `IllegalArgumentException: not a valid name`. The reserved-word set now covers
+    the full Java keyword list plus `true`/`false`/`null` literals, so these
+    properties generate as `_<name>` fields with `@JsonProperty("<name>")`
+    preserving the wire format.
+  type: fix
