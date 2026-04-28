@@ -59,9 +59,7 @@ def build_flattened_union_parameters(
             same_properties_as_object=lambda type_name: _add_referenced_object_properties(
                 type_name, context, deconflict, accumulator
             ),
-            single_property=lambda single_prop: _add_single_property(
-                single_prop, context, deconflict, accumulator
-            ),
+            single_property=lambda single_prop: _add_single_property(single_prop, context, deconflict, accumulator),
             no_properties=lambda: None,
         )
 
@@ -116,8 +114,10 @@ def _accumulate(
         existing.inner_type_hints.append(inner_hint)
         existing.inner_type_hint_keys.append(inner_hint_key)
 
-    if existing.raw_type is not None and raw_type is not None and not _type_references_equal(
-        existing.raw_type, raw_type
+    if (
+        existing.raw_type is not None
+        and raw_type is not None
+        and not _type_references_equal(existing.raw_type, raw_type)
     ):
         # Conflicting source types — drop raw_type so the JSON-body emitter
         # falls back to plain interpolation rather than a per-type coercion.
