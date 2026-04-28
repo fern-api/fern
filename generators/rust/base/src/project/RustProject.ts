@@ -99,8 +99,8 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
 
         const retryStatusCheck =
             this.context.customConfig.retryStatusCodes === "recommended"
-                ? "status_code == 408 || status_code == 429 || (status_code >= 501 && status_code < 600)"
-                : "status_code == 408 || status_code == 429 || status_code >= 500";
+                ? "[408, 429, 502, 503, 504].contains(&status_code)"
+                : "[408, 429].contains(&status_code) || status_code >= 500";
         content = content.replace(/\{\{RETRY_STATUS_CHECK\}\}/g, retryStatusCheck);
 
         if (tomlSections.features) {

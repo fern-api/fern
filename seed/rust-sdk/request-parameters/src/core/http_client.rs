@@ -478,7 +478,7 @@ impl HttpClient {
     }
 
     fn is_retryable_status(status_code: u16) -> bool {
-        status_code == 408 || status_code == 429 || status_code >= 500
+        [408, 429].contains(&status_code) || status_code >= 500
     }
 
     async fn parse_response<T>(&self, response: Response) -> Result<T, ApiError>
