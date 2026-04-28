@@ -72,7 +72,8 @@ public final class KeyWordUtils {
             "while",
             "true",
             "false",
-            "null");
+            "null",
+            "_");
 
     private static final Set<String> RESERVED_METHOD_NAMES = Set.of("getClass", "notify", "notifyAll", "wait");
 

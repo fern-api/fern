@@ -16,7 +16,7 @@ class KeyWordUtilsTest {
                 "for", "goto", "if", "implements", "import", "instanceof", "int", "interface", "long", "native",
                 "new", "package", "private", "protected", "public", "return", "short", "static", "strictfp",
                 "super", "switch", "synchronized", "this", "throw", "throws", "transient", "try", "void",
-                "volatile", "while", "true", "false", "null"
+                "volatile", "while", "true", "false", "null", "_"
             })
     void getKeyWordCompatibleName_prefixesReservedWords(String keyword) {
         assertThat(KeyWordUtils.getKeyWordCompatibleName(keyword)).isEqualTo("_" + keyword);
