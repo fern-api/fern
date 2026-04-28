@@ -2054,7 +2054,6 @@ async function loadTranslationPages({
 
     return result;
 }
-<<<<<<< HEAD
 
 /**
  * Loads translated navigation overlay YAML files from `translations/<lang>/fern/` directories.
