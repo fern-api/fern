@@ -2261,6 +2261,16 @@
               "type": "null"
             }
           ]
+        },
+        "infer-discriminated-union-base-properties": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -2842,6 +2852,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/generators.DefaultIntegerFormat"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "infer-discriminated-union-base-properties": {
+          "oneOf": [
+            {
+              "type": "boolean"
             },
             {
               "type": "null"
