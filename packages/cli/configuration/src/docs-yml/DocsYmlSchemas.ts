@@ -34,23 +34,18 @@ export const ProgrammingLanguage = z.enum([
     "js"
 ]);
 
-export const Language = z.enum([
-    "en",
-    "es",
-    "fr",
-    "de",
-    "it",
-    "pt",
-    "ja",
-    "zh",
-    "ko",
-    "el",
-    "no",
-    "pl",
-    "ru",
-    "sv",
-    "tr"
-]);
+/**
+ * BCP 47 language tag validator for docs localization.
+ * Accepts simple codes like "en", "ja" as well as regional variants
+ * like "ja-JP", "pt-BR", "zh-Hans", "zh-Hans-CN".
+ * See: https://www.rfc-editor.org/rfc/rfc5646
+ */
+export const Language = z
+    .string()
+    .regex(
+        /^[a-zA-Z]{2,8}(-[a-zA-Z0-9]{1,8})*$/,
+        "Language must be a valid BCP 47 language tag (e.g. 'en', 'ja', 'ja-JP', 'pt-BR', 'zh-Hans-CN')"
+    );
 
 export const PageActionOption = z.enum([
     "copy-page",
