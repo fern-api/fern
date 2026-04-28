@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.103.1
+  changelogEntry:
+    - summary: |
+        Fix translation directory check to treat the first locale as the default when no explicit `default: true` is set, matching the behavior of the rest of the CLI.
+      type: fix
+  createdAt: "2026-04-28"
+  irVersion: 66
 - version: 4.103.0
   changelogEntry:
     - summary: |
