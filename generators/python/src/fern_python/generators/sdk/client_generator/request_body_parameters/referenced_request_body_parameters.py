@@ -4,6 +4,7 @@ from ...context.sdk_generator_context import SdkGeneratorContext
 from ..constants import DEFAULT_BODY_PARAMETER_VALUE
 from .abstract_request_body_parameters import AbstractRequestBodyParameters
 from .flattened_request_body_parameter_utils import get_json_body_for_inlined_request
+from .union_flattening_utils import build_flattened_union_parameters
 from fern_python.codegen import AST
 from fern_python.codegen.ast.nodes.declarations.function.named_function_parameter import (
     NamedFunctionParameter,
@@ -25,6 +26,7 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
         self._request_body = request_body
         self._context = context
         self._type_id = self._get_type_id_from_type_reference(self._request_body.request_body_type)
+        self._is_union_request_body = self._type_id is not None and self._is_union_type(self._type_id)
 
         self.should_inline_request_parameters = (
             context.custom_config.inline_request_params and self._type_id is not None
@@ -47,14 +49,55 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
             enum=lambda _: None,
             object=lambda o: type_id,
             undiscriminated_union=lambda _: None,
-            union=lambda _: None,
+            union=lambda _: type_id if self._context.custom_config.flatten_union_request_bodies else None,
+        )
+
+    def _is_union_type(self, type_id: ir_types.TypeId) -> bool:
+        declaration = self._context.pydantic_generator_context.get_declaration_for_type_id(type_id)
+        return declaration.shape.visit(
+            alias=lambda atd: self._is_union_type_via_type_reference(atd.alias_of),
+            enum=lambda _: False,
+            object=lambda _: False,
+            undiscriminated_union=lambda _: False,
+            union=lambda _: True,
+        )
+
+    def _is_union_type_via_type_reference(self, type_reference: ir_types.TypeReference) -> bool:
+        return type_reference.visit(
+            container=lambda _: False,
+            named=lambda t: self._is_union_type(t.type_id),
+            primitive=lambda _: False,
+            unknown=lambda: False,
         )
 
     def get_parameters(self, names_to_deconflict: Optional[List[str]] = None) -> List[AST.NamedFunctionParameter]:
         if self.should_inline_request_parameters:
+            if self._is_union_request_body:
+                return self._get_flattened_union_parameters(names_to_deconflict)
             return self._get_inlined_request_parameters(names_to_deconflict)
         else:
             return self._get_default_referenced_parameters()
+
+    def _get_flattened_union_parameters(
+        self, names_to_deconflict: Optional[List[str]]
+    ) -> List[AST.NamedFunctionParameter]:
+        if self._type_id is None:
+            raise RuntimeError("Request body type is not defined, this should never happen.")
+        declaration = self._context.pydantic_generator_context.get_declaration_for_type_id(self._type_id)
+        union_decl = declaration.shape.visit(
+            alias=lambda _: None,
+            enum=lambda _: None,
+            object=lambda _: None,
+            undiscriminated_union=lambda _: None,
+            union=lambda u: u,
+        )
+        if union_decl is None:
+            raise RuntimeError("Expected union shape for flattened union request body.")
+        return build_flattened_union_parameters(
+            union_decl=union_decl,
+            context=self._context,
+            names_to_deconflict=names_to_deconflict,
+        )
 
     def _is_type_literal(self, type_reference: ir_types.TypeReference) -> bool:
         return self._context.get_literal_value(reference=type_reference) is not None
@@ -97,6 +140,11 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
         return parameters
 
     def _get_non_parameter_properties(self) -> List[AST.NamedFunctionParameter]:
+        # Union request bodies emit every wire field via the flattening helper —
+        # nothing extra goes in the JSON body beyond what get_parameters returned.
+        if self._is_union_request_body:
+            return []
+
         non_param_properties = []
 
         parameters: List[AST.NamedFunctionParameter] = self.get_parameters()
