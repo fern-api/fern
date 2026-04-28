@@ -172,28 +172,34 @@ export async function runPreviewServer({
                 }
 
                 for (const [pagePath, rawMarkdown] of Object.entries(localePages)) {
-                    const basePage = translatedPages[pagePath];
-                    // Strip MDX comments first
-                    let processedMarkdown = stripMdxComments(rawMarkdown);
-                    // Replace image paths using collected file IDs
-                    const absolutePathToMarkdownFile = resolve(docsWorkspacePath, RelativeFilePath.of(pagePath));
-                    processedMarkdown = replaceImagePathsAndUrls(
-                        processedMarkdown,
-                        collectedFileIds,
-                        {}, // markdownFilesToPathName not needed for translations
-                        {
-                            absolutePathToMarkdownFile,
-                            absolutePathToFernFolder: docsWorkspacePath
-                        },
-                        context
-                    );
+                    try {
+                        const basePage = translatedPages[pagePath];
+                        // Strip MDX comments first
+                        let processedMarkdown = stripMdxComments(rawMarkdown);
+                        // Replace image paths using collected file IDs
+                        const absolutePathToMarkdownFile = resolve(docsWorkspacePath, RelativeFilePath.of(pagePath));
+                        processedMarkdown = replaceImagePathsAndUrls(
+                            processedMarkdown,
+                            collectedFileIds,
+                            {}, // markdownFilesToPathName not needed for translations
+                            {
+                                absolutePathToMarkdownFile,
+                                absolutePathToFernFolder: docsWorkspacePath
+                            },
+                            context
+                        );
 
-                    translatedPages[pagePath] = {
-                        markdown: processedMarkdown,
-                        rawMarkdown: processedMarkdown,
-                        editThisPageUrl: basePage?.editThisPageUrl,
-                        editThisPageLaunch: basePage?.editThisPageLaunch
-                    };
+                        translatedPages[pagePath] = {
+                            markdown: processedMarkdown,
+                            rawMarkdown: processedMarkdown,
+                            editThisPageUrl: basePage?.editThisPageUrl,
+                            editThisPageLaunch: basePage?.editThisPageLaunch
+                        };
+                    } catch (pageError) {
+                        context.logger.warn(
+                            `Failed to process translated page "${pagePath}" for locale "${locale}": ${String(pageError)}. Falling back to base page.`
+                        );
+                    }
                 }
 
                 // Apply translated frontmatter to nav tree
