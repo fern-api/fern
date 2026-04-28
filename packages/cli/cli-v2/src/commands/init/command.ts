@@ -27,7 +27,7 @@ export declare namespace InitCommand {
         api?: string;
         yes: boolean;
         /** Raw JSON payload conforming to fern-yml schema. Bypasses the wizard. */
-        input?: string;
+        params?: string;
     }
 }
 
@@ -38,8 +38,8 @@ export class InitCommand {
         const fernYmlPath = join(context.cwd, RelativeFilePath.of(FERN_YML_FILENAME));
         await this.validateArgs({ context, fernYmlPath, args });
 
-        if (args.input != null) {
-            await this.handleFromJsonInput({ context, fernYmlPath, inputValue: args.input });
+        if (args.params != null) {
+            await this.handleFromJsonInput({ context, fernYmlPath, inputValue: args.params });
             return;
         }
 
@@ -66,8 +66,7 @@ export class InitCommand {
     }): Promise<void> {
         const parsed = await readAndParseJsonInput({
             value: inputValue,
-            cwd: context.cwd,
-            stdin: process.stdin
+            cwd: context.cwd
         });
         const config = validateJsonInput({
             value: parsed,
@@ -85,7 +84,7 @@ export class InitCommand {
         });
         await writeFile(fernYmlPath, `${SCHEMA_COMMENT}\n${yamlContent}`, "utf-8");
 
-        context.stderr.info(`${Icons.success} Created ${FERN_YML_FILENAME} from --input`);
+        context.stderr.info(`${Icons.success} Created ${FERN_YML_FILENAME} from --params`);
     }
 
     private async writeFernYml({
@@ -194,9 +193,9 @@ export class InitCommand {
             });
         }
 
-        // --input is mutually exclusive with wizard-driven flags. When supplied
+        // --params is mutually exclusive with wizard-driven flags. When supplied
         // it fully describes fern.yml and we skip all interactive prompts.
-        if (args.input != null) {
+        if (args.params != null) {
             const conflicting: string[] = [];
             if (args.org != null) {
                 conflicting.push("--org");
@@ -206,7 +205,7 @@ export class InitCommand {
             }
             if (conflicting.length > 0) {
                 throw new CliError({
-                    message: `--input cannot be combined with ${conflicting.join(", ")}. The JSON payload must fully describe fern.yml.`,
+                    message: `--params cannot be combined with ${conflicting.join(", ")}. The JSON payload must fully describe fern.yml.`,
                     code: CliError.Code.ConfigError
                 });
             }
@@ -253,11 +252,11 @@ export function addInitCommand(cli: Argv<GlobalArgs>): void {
                     description: "Accept all defaults (non-interactive mode)",
                     default: false
                 })
-                .option("input", {
+                .option("params", {
                     type: "string",
                     description:
                         "Create fern.yml from a JSON payload (conforms to the `fern-yml` schema). " +
-                        "Accepts inline JSON, @path/to.json, or - to read from stdin. " +
+                        "Accepts inline JSON or @path/to.json (curl-style). " +
                         "Run 'fern schema fern-yml' to see the schema."
                 })
     );

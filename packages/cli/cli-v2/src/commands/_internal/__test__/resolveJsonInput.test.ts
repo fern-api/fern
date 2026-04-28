@@ -3,7 +3,6 @@ import { randomUUID } from "crypto";
 import { mkdir, rm, writeFile } from "fs/promises";
 import { tmpdir } from "os";
 import { join } from "path";
-import { Readable } from "stream";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { parseJsonInput, readAndParseJsonInput, readRawJsonInput } from "../resolveJsonInput.js";
 
@@ -24,7 +23,7 @@ describe("readRawJsonInput", () => {
         expect(result).toBe('{"foo":"bar"}');
     });
 
-    it("reads from a file when value starts with '@'", async () => {
+    it("reads from a file when value starts with '@' (curl-style)", async () => {
         const filePath = join(tmp, "payload.json");
         await writeFile(filePath, '{"from":"file"}', "utf-8");
 
@@ -42,15 +41,9 @@ describe("readRawJsonInput", () => {
 
     it("throws a helpful CliError when the file does not exist", async () => {
         await expect(readRawJsonInput({ value: "@does-not-exist.json", cwd: tmp })).rejects.toMatchObject({
-            message: expect.stringContaining("Failed to read --input file"),
+            message: expect.stringContaining("Failed to read --params file"),
             code: CliError.Code.ConfigError
         });
-    });
-
-    it("reads from stdin when value is '-'", async () => {
-        const stdin = Readable.from(['{"from":"stdin"}']);
-        const result = await readRawJsonInput({ value: "-", cwd: tmp, stdin });
-        expect(result).toBe('{"from":"stdin"}');
     });
 });
 
@@ -65,7 +58,7 @@ describe("parseJsonInput", () => {
             parseJsonInput("{not valid json");
         } catch (err) {
             expect(err).toMatchObject({
-                message: expect.stringContaining("--input is not valid JSON"),
+                message: expect.stringContaining("--params is not valid JSON"),
                 code: CliError.Code.ConfigError
             });
         }

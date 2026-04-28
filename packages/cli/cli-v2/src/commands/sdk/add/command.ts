@@ -39,7 +39,7 @@ export declare namespace AddCommand {
         yes: boolean;
 
         /** Raw JSON payload matching the sdk-add-input schema. Bypasses prompts and flag parsing. */
-        input?: string;
+        params?: string;
     }
 }
 
@@ -70,7 +70,7 @@ export class AddCommand {
 
         const existingTargets = workspace.sdks?.targets ?? [];
 
-        if (args.input != null) {
+        if (args.params != null) {
             return this.handleFromJsonInput({ context, args, fernYmlPath, existingTargets });
         }
 
@@ -95,21 +95,20 @@ export class AddCommand {
         if (args.target != null || args.output != null || args.group != null || args.stable) {
             throw new CliError({
                 message:
-                    "--input cannot be combined with --target, --output, --group, or --stable. " +
+                    "--params cannot be combined with --target, --output, --group, or --stable. " +
                     "The JSON payload must fully describe the target.",
                 code: CliError.Code.ConfigError
             });
         }
 
-        if (args.input == null) {
+        if (args.params == null) {
             // Defensive: caller already guarded this.
-            throw new CliError({ message: "--input is required", code: CliError.Code.ConfigError });
+            throw new CliError({ message: "--params is required", code: CliError.Code.ConfigError });
         }
 
         const parsed = await readAndParseJsonInput({
-            value: args.input,
-            cwd: context.cwd,
-            stdin: process.stdin
+            value: args.params,
+            cwd: context.cwd
         });
         const payload = validateJsonInput({
             value: parsed,
@@ -357,11 +356,11 @@ export function addAddCommand(cli: Argv<GlobalArgs>): void {
                     description: "Accept all defaults (non-interactive mode)",
                     default: false
                 })
-                .option("input", {
+                .option("params", {
                     type: "string",
                     description:
                         "Add a target from a JSON payload (conforms to the `sdk-add-input` schema). " +
-                        "Accepts inline JSON, @path/to.json, or - to read from stdin. " +
+                        "Accepts inline JSON or @path/to.json (curl-style). " +
                         "Run 'fern schema sdk-add-input' to see the schema."
                 })
     );

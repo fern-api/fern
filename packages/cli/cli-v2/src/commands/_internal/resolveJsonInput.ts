@@ -3,29 +3,18 @@ import { readFile } from "fs/promises";
 import { isAbsolute, resolve } from "path";
 
 /**
- * Read a raw `--input` value (or equivalent JSON-payload flag) and return the
- * raw JSON string. Supports three forms:
+ * Read a raw `--params` value and return the raw JSON string. Supports two
+ * forms:
  *
- *   - `-` — read JSON from stdin
- *   - `@path/to.json` — read JSON from a file (path is resolved relative to cwd)
+ *   - `@path/to.json` — read JSON from a file (curl-style; path is resolved
+ *     relative to cwd)
  *   - anything else — treated as an inline JSON string
  *
  * This helper does **not** parse or validate the JSON itself; it only resolves
  * where the payload text comes from. Callers should JSON-parse and validate
  * against their Zod schema afterwards.
  */
-export async function readRawJsonInput({
-    value,
-    cwd,
-    stdin = process.stdin
-}: {
-    value: string;
-    cwd: string;
-    stdin?: NodeJS.ReadableStream;
-}): Promise<string> {
-    if (value === "-") {
-        return readStream(stdin);
-    }
+export async function readRawJsonInput({ value, cwd }: { value: string; cwd: string }): Promise<string> {
     if (value.startsWith("@")) {
         const rawPath = value.slice(1);
         const filePath = isAbsolute(rawPath) ? rawPath : resolve(cwd, rawPath);
@@ -33,7 +22,7 @@ export async function readRawJsonInput({
             return await readFile(filePath, "utf-8");
         } catch (err) {
             throw new CliError({
-                message: `Failed to read --input file ${filePath}: ${(err as Error).message}`,
+                message: `Failed to read --params file ${filePath}: ${(err as Error).message}`,
                 code: CliError.Code.ConfigError
             });
         }
@@ -50,7 +39,7 @@ export function parseJsonInput(raw: string): unknown {
         return JSON.parse(raw);
     } catch (err) {
         throw new CliError({
-            message: `--input is not valid JSON: ${(err as Error).message}`,
+            message: `--params is not valid JSON: ${(err as Error).message}`,
             code: CliError.Code.ConfigError
         });
     }
@@ -59,23 +48,7 @@ export function parseJsonInput(raw: string): unknown {
 /**
  * Convenience: read + parse in one call.
  */
-export async function readAndParseJsonInput({
-    value,
-    cwd,
-    stdin
-}: {
-    value: string;
-    cwd: string;
-    stdin?: NodeJS.ReadableStream;
-}): Promise<unknown> {
-    const raw = await readRawJsonInput({ value, cwd, stdin });
+export async function readAndParseJsonInput({ value, cwd }: { value: string; cwd: string }): Promise<unknown> {
+    const raw = await readRawJsonInput({ value, cwd });
     return parseJsonInput(raw);
-}
-
-async function readStream(stream: NodeJS.ReadableStream): Promise<string> {
-    const chunks: Buffer[] = [];
-    for await (const chunk of stream) {
-        chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk));
-    }
-    return Buffer.concat(chunks as unknown as Uint8Array[]).toString("utf-8");
 }

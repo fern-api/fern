@@ -44,7 +44,7 @@ export function validateJsonInput<S extends SafeParseable>({
     const issueLines = issues.length > 0 ? issues.map((line) => `  - ${line}`).join("\n") : "  - (no details)";
 
     throw new CliError({
-        message: `--input did not match the ${schemaName} schema:\n${issueLines}\n\nRun 'fern schema ${schemaName}' to see the full schema.`,
+        message: `--params did not match the ${schemaName} schema:\n${issueLines}\n\nRun 'fern schema ${schemaName}' to see the full schema.`,
         code: CliError.Code.ValidationError
     });
 }

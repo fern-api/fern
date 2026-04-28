@@ -8,16 +8,16 @@ import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { createTestContext } from "../../../__test__/utils/createTestContext.js";
 import { InitCommand } from "../command.js";
 
-function buildArgs({ input, org }: { tmp: string; input?: string; org?: string }): InitCommand.Args {
+function buildArgs({ params, org }: { tmp: string; params?: string; org?: string }): InitCommand.Args {
     return {
         "log-level": "info",
         yes: false,
-        ...(input != null ? { input } : {}),
+        ...(params != null ? { params } : {}),
         ...(org != null ? { org } : {})
     } as InitCommand.Args;
 }
 
-describe("InitCommand --input", () => {
+describe("InitCommand --params", () => {
     let tmp: string;
 
     beforeEach(async () => {
@@ -43,7 +43,7 @@ describe("InitCommand --input", () => {
             }
         };
 
-        await cmd.handle(context, buildArgs({ tmp, input: JSON.stringify(payload) }));
+        await cmd.handle(context, buildArgs({ tmp, params: JSON.stringify(payload) }));
 
         const written = await readFile(join(tmp, "fern.yml"), "utf-8");
         expect(written).toContain("org: acme");
@@ -51,7 +51,7 @@ describe("InitCommand --input", () => {
         expect(written).toContain("yaml-language-server: $schema=");
     });
 
-    it("reads JSON input from a file when prefixed with '@'", async () => {
+    it("reads JSON input from a file when prefixed with '@' (curl-style)", async () => {
         const context = await createTestContext({ cwd: AbsoluteFilePath.of(tmp) });
         const cmd = new InitCommand();
 
@@ -62,13 +62,13 @@ describe("InitCommand --input", () => {
         const payloadPath = join(tmp, "payload.json");
         await writeFile(payloadPath, JSON.stringify(payload), "utf-8");
 
-        await cmd.handle(context, buildArgs({ tmp, input: "@payload.json" }));
+        await cmd.handle(context, buildArgs({ tmp, params: "@payload.json" }));
 
         const written = await readFile(join(tmp, "fern.yml"), "utf-8");
         expect(written).toContain("org: acme-file");
     });
 
-    it("rejects --input combined with --org", async () => {
+    it("rejects --params combined with --org", async () => {
         const context = await createTestContext({ cwd: AbsoluteFilePath.of(tmp) });
         const cmd = new InitCommand();
 
@@ -78,21 +78,21 @@ describe("InitCommand --input", () => {
                 buildArgs({
                     tmp,
                     org: "other",
-                    input: JSON.stringify({ org: "acme", api: { specs: [{ openapi: "./x" }] } })
+                    params: JSON.stringify({ org: "acme", api: { specs: [{ openapi: "./x" }] } })
                 })
             )
         ).rejects.toMatchObject({
-            message: expect.stringContaining("--input cannot be combined with --org"),
+            message: expect.stringContaining("--params cannot be combined with --org"),
             code: CliError.Code.ConfigError
         });
     });
 
-    it("rejects an --input payload that does not match the fern-yml schema", async () => {
+    it("rejects a --params payload that does not match the fern-yml schema", async () => {
         const context = await createTestContext({ cwd: AbsoluteFilePath.of(tmp) });
         const cmd = new InitCommand();
 
         await expect(
-            cmd.handle(context, buildArgs({ tmp, input: JSON.stringify({ org: 123 }) }))
+            cmd.handle(context, buildArgs({ tmp, params: JSON.stringify({ org: 123 }) }))
         ).rejects.toMatchObject({
             message: expect.stringContaining("did not match the fern-yml schema"),
             code: CliError.Code.ValidationError
@@ -110,7 +110,7 @@ describe("InitCommand --input", () => {
                 context,
                 buildArgs({
                     tmp,
-                    input: JSON.stringify({ org: "new", api: { specs: [{ openapi: "./x" }] } })
+                    params: JSON.stringify({ org: "new", api: { specs: [{ openapi: "./x" }] } })
                 })
             )
         ).rejects.toMatchObject({
