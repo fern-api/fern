@@ -2335,7 +2335,6 @@ function parseVariantOverlays(variants: unknown[]): docsYml.VariantOverlay[] {
     return result;
 }
 
-
 /**
  * Loads translated API definition JSON files from `translations/<lang>/apis/` directories.
  *
