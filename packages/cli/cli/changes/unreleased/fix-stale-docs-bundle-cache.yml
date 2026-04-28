@@ -1,0 +1,6 @@
+- summary: |
+    Invalidate cached docs preview bundle when the CLI version changes. Previously,
+    upgrading the CLI could leave a stale bundle in ~/.fern/app-preview that caused
+    "Cannot find module" errors on Windows. The cache now tracks the CLI version and
+    automatically re-downloads when it changes.
+  type: fix
