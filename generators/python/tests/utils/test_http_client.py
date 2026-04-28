@@ -672,27 +672,21 @@ def _make_response(status_code: int) -> httpx.Response:
 
 @pytest.mark.parametrize(
     "status_code",
-    [408, 409, 429, 501, 502, 503, 504, 599],
+    [408, 409, 429, 500, 501, 502, 503, 504, 599],
 )
 def test_should_retry_retryable_status_codes(status_code: int) -> None:
+    """Legacy mode: retries on 408, 409, 429, and all >= 500."""
     assert _should_retry(_make_response(status_code)) is True
 
 
 @pytest.mark.parametrize(
     "status_code",
-    [200, 201, 301, 400, 401, 403, 404, 500, 600],
+    [200, 201, 301, 400, 401, 403, 404],
 )
 def test_should_not_retry_non_retryable_status_codes(status_code: int) -> None:
     assert _should_retry(_make_response(status_code)) is False
 
 
-def test_should_not_retry_500_internal_server_error() -> None:
-    assert _should_retry(_make_response(500)) is False
-
-
 def test_should_retry_599_upper_boundary() -> None:
+    """Legacy mode retries on >= 500, which includes 599."""
     assert _should_retry(_make_response(599)) is True
-
-
-def test_should_not_retry_600_above_5xx_range() -> None:
-    assert _should_retry(_make_response(600)) is False
