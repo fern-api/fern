@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    New `flatten_union_request_bodies` config flag (default `false`). When
+    enabled, endpoints whose referenced request body is a discriminated
+    `oneOf`/union expose all variants' fields as flat kwargs (Stripe-style),
+    rather than a single `request: Union[...]` parameter. The discriminator
+    becomes a `Union[Literal[...], ...]` of every variant value; per-variant
+    fields with the same wire name are merged (with conflicting types
+    unioned). Existing customers see no change unless they opt in.
+  type: feat
