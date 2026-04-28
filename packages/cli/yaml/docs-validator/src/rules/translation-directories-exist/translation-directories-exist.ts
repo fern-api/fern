@@ -81,9 +81,10 @@ function buildExpectedDirectoryTree({
     for (let i = 0; i < missingDirs.length; i++) {
         const isLast = i === missingDirs.length - 1;
         const connector = isLast ? "└" : "├";
-        lines.push(`  │   ${connector}── ${missingDirs[i]}/`);
-        lines.push(`  │   ${isLast ? " " : "│"}   └── pages/`);
-        lines.push(`  │   ${isLast ? " " : "│"}       └── ... (translated .mdx files)`);
+        const prefix = translationsDirExists ? "│" : " ";
+        lines.push(`  ${prefix}   ${connector}── ${missingDirs[i]}/`);
+        lines.push(`  ${prefix}   ${isLast ? " " : "│"}   └── pages/`);
+        lines.push(`  ${prefix}   ${isLast ? " " : "│"}       └── ... (translated .mdx files)`);
     }
     return lines.join("\n");
 }
