@@ -4,6 +4,9 @@ const DEFAULT_MAX_RETRIES = 5;
 const JITTER_FACTOR = 0.2; // 20% random jitter
 
 function isRetryableStatusCode(statusCode: number): boolean {
+    if (RETRY_STATUS_CODES === "recommended") {
+        return [408, 429, 502, 503, 504].includes(statusCode);
+    }
     return [408, 429].includes(statusCode) || statusCode >= 500;
 }
 

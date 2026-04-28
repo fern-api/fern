@@ -269,8 +269,8 @@ export class CoreUtilitiesManager {
                 }
                 if (this.retryStatusCodes === "recommended") {
                     contents = contents.replace(
-                        /return \[408, 429\]\.includes\(statusCode\) \|\| statusCode >= 500;/,
-                        `return [408, 429, 502, 503, 504].includes(statusCode);`
+                        'const RETRY_STATUS_CODES: string = "legacy";',
+                        'const RETRY_STATUS_CODES: string = "recommended";'
                     );
                 }
                 await writeFile(requestWithRetriesPath, contents, { encoding: "utf8" });
