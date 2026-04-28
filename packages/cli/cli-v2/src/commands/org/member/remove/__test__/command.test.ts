@@ -181,7 +181,7 @@ describe("RemoveMemberCommand", () => {
         expect(context.stderr.error).toHaveBeenCalledWith(expect.stringContaining("Failed to remove member"));
     });
 
-    it("accepts --input with a valid JSON payload", async () => {
+    it("accepts --params with a valid JSON payload", async () => {
         const { createVenusService } = await import("@fern-api/core");
         const mockGet = mockOrgLookupSuccess();
         const mockRemoveUser = vi.fn().mockResolvedValue({ ok: true });
@@ -191,7 +191,7 @@ describe("RemoveMemberCommand", () => {
 
         const context = createMockContext();
         await cmd.handle(context, {
-            input: JSON.stringify({ userId: "user123", org: "acme" })
+            params: JSON.stringify({ userId: "user123", org: "acme" })
         } as RemoveMemberCommand.Args);
 
         expect(mockGet).toHaveBeenCalledWith("acme");
@@ -201,26 +201,26 @@ describe("RemoveMemberCommand", () => {
         });
     });
 
-    it("rejects --input combined with positional arguments", async () => {
+    it("rejects --params combined with positional arguments", async () => {
         const context = createMockContext();
 
         await expect(
             cmd.handle(context, {
                 userId: "user123",
-                input: JSON.stringify({ userId: "user123", org: "acme" })
+                params: JSON.stringify({ userId: "user123", org: "acme" })
             } as RemoveMemberCommand.Args)
         ).rejects.toMatchObject({
-            message: expect.stringContaining("--input cannot be combined"),
+            message: expect.stringContaining("--params cannot be combined"),
             code: CliError.Code.ConfigError
         });
     });
 
-    it("rejects an --input payload that does not match the schema", async () => {
+    it("rejects an --params payload that does not match the schema", async () => {
         const context = createMockContext();
 
         await expect(
             cmd.handle(context, {
-                input: JSON.stringify({ userId: "u1" })
+                params: JSON.stringify({ userId: "u1" })
             } as RemoveMemberCommand.Args)
         ).rejects.toMatchObject({
             message: expect.stringContaining("did not match the org-member-remove-input schema"),

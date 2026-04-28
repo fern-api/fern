@@ -14,7 +14,7 @@ export declare namespace RevokeTokenCommand {
     export interface Args extends GlobalArgs {
         tokenId?: string;
         json: boolean;
-        input?: string;
+        params?: string;
     }
 }
 
@@ -66,15 +66,15 @@ export class RevokeTokenCommand {
     }
 
     private async resolveTokenId(context: Context, args: RevokeTokenCommand.Args): Promise<string> {
-        if (args.input != null) {
+        if (args.params != null) {
             if (args.tokenId != null) {
                 throw new CliError({
                     message:
-                        "--input cannot be combined with the <token-id> positional argument. The JSON payload must fully describe the input.",
+                        "--params cannot be combined with the <token-id> positional argument. The JSON payload must fully describe the input.",
                     code: CliError.Code.ConfigError
                 });
             }
-            const raw = await readAndParseJsonInput({ value: args.input, cwd: context.cwd });
+            const raw = await readAndParseJsonInput({ value: args.params, cwd: context.cwd });
             const payload = validateJsonInput({
                 value: raw,
                 schema: OrgTokenRevokeInputSchema,
@@ -84,7 +84,7 @@ export class RevokeTokenCommand {
         }
         if (args.tokenId == null) {
             throw new CliError({
-                message: "Missing required argument <token-id>. Pass it positionally or via --input.",
+                message: "Missing required argument <token-id>. Pass it positionally or via --params.",
                 code: CliError.Code.ConfigError
             });
         }
@@ -111,14 +111,14 @@ export function addRevokeTokenCommand(cli: Argv<GlobalArgs>): void {
                     default: false,
                     description: "Output as JSON"
                 })
-                .option("input", {
+                .option("params", {
                     type: "string",
                     description:
-                        "JSON payload describing the revocation (inline JSON, @path/to.json, or - for stdin). Run 'fern schema org-token-revoke-input' to see the schema."
+                        "JSON payload describing the revocation (inline JSON or @path/to.json (curl-style)). Run 'fern schema org-token-revoke-input' to see the schema."
                 })
                 .example("$0 org token revoke abc123", "# Revoke the token with ID 'abc123'")
                 .example(
-                    '$0 org token revoke --input \'{"tokenId":"abc123"}\'',
+                    '$0 org token revoke --params \'{"tokenId":"abc123"}\'',
                     "# Non-interactive: pass the full payload as JSON"
                 )
     );

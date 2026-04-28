@@ -185,7 +185,7 @@ describe("InviteMemberCommand", () => {
         expect(context.stderr.error).toHaveBeenCalledWith(expect.stringContaining("Failed to invite member"));
     });
 
-    it("accepts --input with a valid JSON payload", async () => {
+    it("accepts --params with a valid JSON payload", async () => {
         const { createVenusService } = await import("@fern-api/core");
         const mockGet = mockOrgLookupSuccess();
         const mockInviteUser = vi.fn().mockResolvedValue({ ok: true });
@@ -195,7 +195,7 @@ describe("InviteMemberCommand", () => {
 
         const context = createMockContext();
         await cmd.handle(context, {
-            input: JSON.stringify({ email: "user@example.com", org: "acme" })
+            params: JSON.stringify({ email: "user@example.com", org: "acme" })
         } as InviteMemberCommand.Args);
 
         expect(mockGet).toHaveBeenCalledWith("acme");
@@ -205,26 +205,26 @@ describe("InviteMemberCommand", () => {
         });
     });
 
-    it("rejects --input combined with positional arguments", async () => {
+    it("rejects --params combined with positional arguments", async () => {
         const context = createMockContext();
 
         await expect(
             cmd.handle(context, {
                 email: "user@example.com",
-                input: JSON.stringify({ email: "other@example.com", org: "acme" })
+                params: JSON.stringify({ email: "other@example.com", org: "acme" })
             } as InviteMemberCommand.Args)
         ).rejects.toMatchObject({
-            message: expect.stringContaining("--input cannot be combined"),
+            message: expect.stringContaining("--params cannot be combined"),
             code: CliError.Code.ConfigError
         });
     });
 
-    it("rejects an --input payload that does not match the schema", async () => {
+    it("rejects an --params payload that does not match the schema", async () => {
         const context = createMockContext();
 
         await expect(
             cmd.handle(context, {
-                input: JSON.stringify({ email: "user@example.com" })
+                params: JSON.stringify({ email: "user@example.com" })
             } as InviteMemberCommand.Args)
         ).rejects.toMatchObject({
             message: expect.stringContaining("did not match the org-member-invite-input schema"),

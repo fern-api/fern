@@ -15,7 +15,7 @@ import { validateJsonInput } from "../../_internal/validateJsonInput.js";
 export declare namespace CreateCommand {
     export interface Args extends GlobalArgs {
         name?: string;
-        input?: string;
+        params?: string;
     }
 }
 
@@ -56,15 +56,15 @@ export class CreateCommand {
     }
 
     private async resolveName(context: Context, args: CreateCommand.Args): Promise<string> {
-        if (args.input != null) {
+        if (args.params != null) {
             if (args.name != null) {
                 throw new CliError({
                     message:
-                        "--input cannot be combined with the <name> positional argument. The JSON payload must fully describe the input.",
+                        "--params cannot be combined with the <name> positional argument. The JSON payload must fully describe the input.",
                     code: CliError.Code.ConfigError
                 });
             }
-            const raw = await readAndParseJsonInput({ value: args.input, cwd: context.cwd });
+            const raw = await readAndParseJsonInput({ value: args.params, cwd: context.cwd });
             const payload = validateJsonInput({
                 value: raw,
                 schema: OrgCreateInputSchema,
@@ -74,7 +74,7 @@ export class CreateCommand {
         }
         if (args.name == null) {
             throw new CliError({
-                message: "Missing required argument: name. Pass it positionally or via --input.",
+                message: "Missing required argument: name. Pass it positionally or via --params.",
                 code: CliError.Code.ConfigError
             });
         }
@@ -96,14 +96,14 @@ export function addCreateCommand(cli: Argv<GlobalArgs>): void {
                     type: "string",
                     description: "Organization name"
                 })
-                .option("input", {
+                .option("params", {
                     type: "string",
                     description:
-                        "JSON payload describing the org to create (inline JSON, @path/to.json, or - for stdin). Run 'fern schema org-create-input' to see the schema."
+                        "JSON payload describing the org to create (inline JSON or @path/to.json (curl-style)). Run 'fern schema org-create-input' to see the schema."
                 })
                 .example("$0 org create acme", "# Create the 'acme' organization")
                 .example(
-                    '$0 org create --input \'{"name":"acme"}\'',
+                    '$0 org create --params \'{"name":"acme"}\'',
                     "# Non-interactive: pass the full payload as JSON"
                 )
     );

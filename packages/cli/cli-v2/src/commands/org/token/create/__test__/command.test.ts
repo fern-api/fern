@@ -184,7 +184,7 @@ describe("CreateTokenCommand", () => {
         expect(context.stderr.error).toHaveBeenCalledWith(expect.stringContaining("Failed to create token"));
     });
 
-    it("accepts --input with a valid JSON payload", async () => {
+    it("accepts --params with a valid JSON payload", async () => {
         const { createVenusService } = await import("@fern-api/core");
         const mockGet = mockOrgLookupSuccess();
         const mockCreate = vi.fn().mockResolvedValue({
@@ -198,7 +198,7 @@ describe("CreateTokenCommand", () => {
 
         const context = createMockContext();
         await cmd.handle(context, {
-            input: JSON.stringify({ org: "acme", description: "CI token" })
+            params: JSON.stringify({ org: "acme", description: "CI token" })
         } as CreateTokenCommand.Args);
 
         expect(mockGet).toHaveBeenCalledWith("acme");
@@ -208,26 +208,26 @@ describe("CreateTokenCommand", () => {
         });
     });
 
-    it("rejects --input combined with --description", async () => {
+    it("rejects --params combined with --description", async () => {
         const context = createMockContext();
 
         await expect(
             cmd.handle(context, {
                 description: "CI",
-                input: JSON.stringify({ org: "acme" })
+                params: JSON.stringify({ org: "acme" })
             } as CreateTokenCommand.Args)
         ).rejects.toMatchObject({
-            message: expect.stringContaining("--input cannot be combined"),
+            message: expect.stringContaining("--params cannot be combined"),
             code: CliError.Code.ConfigError
         });
     });
 
-    it("rejects an --input payload that does not match the schema", async () => {
+    it("rejects an --params payload that does not match the schema", async () => {
         const context = createMockContext();
 
         await expect(
             cmd.handle(context, {
-                input: JSON.stringify({ description: "missing org" })
+                params: JSON.stringify({ description: "missing org" })
             } as CreateTokenCommand.Args)
         ).rejects.toMatchObject({
             message: expect.stringContaining("did not match the org-token-create-input schema"),

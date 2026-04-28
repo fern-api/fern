@@ -55,45 +55,45 @@ describe("CreateCommand (org)", () => {
         );
     });
 
-    it("accepts --input with a valid JSON payload", async () => {
+    it("accepts --params with a valid JSON payload", async () => {
         const { createOrganizationIfDoesNotExist, getOrganizationNameValidationError } = await import("@fern-api/auth");
         vi.mocked(getOrganizationNameValidationError).mockReturnValue(undefined);
         vi.mocked(createOrganizationIfDoesNotExist).mockResolvedValue(true);
 
         const context = createMockContext();
-        await cmd.handle(context, { input: JSON.stringify({ name: "acme" }) } as CreateCommand.Args);
+        await cmd.handle(context, { params: JSON.stringify({ name: "acme" }) } as CreateCommand.Args);
 
         expect(createOrganizationIfDoesNotExist).toHaveBeenCalledWith(
             expect.objectContaining({ organization: "acme" })
         );
     });
 
-    it("rejects --input combined with the positional name", async () => {
+    it("rejects --params combined with the positional name", async () => {
         const context = createMockContext();
 
         await expect(
             cmd.handle(context, {
                 name: "acme",
-                input: JSON.stringify({ name: "other" })
+                params: JSON.stringify({ name: "other" })
             } as CreateCommand.Args)
         ).rejects.toMatchObject({
-            message: expect.stringContaining("--input cannot be combined"),
+            message: expect.stringContaining("--params cannot be combined"),
             code: CliError.Code.ConfigError
         });
     });
 
-    it("rejects an --input payload that does not match the schema", async () => {
+    it("rejects an --params payload that does not match the schema", async () => {
         const context = createMockContext();
 
         await expect(
-            cmd.handle(context, { input: JSON.stringify({ name: 123 }) } as CreateCommand.Args)
+            cmd.handle(context, { params: JSON.stringify({ name: 123 }) } as CreateCommand.Args)
         ).rejects.toMatchObject({
             message: expect.stringContaining("did not match the org-create-input schema"),
             code: CliError.Code.ValidationError
         });
     });
 
-    it("rejects a missing name when neither positional nor --input is provided", async () => {
+    it("rejects a missing name when neither positional nor --params is provided", async () => {
         const context = createMockContext();
 
         await expect(cmd.handle(context, {} as CreateCommand.Args)).rejects.toMatchObject({

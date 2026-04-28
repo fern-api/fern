@@ -15,7 +15,7 @@ export declare namespace RemoveMemberCommand {
         userId?: string;
         org?: string;
         json: boolean;
-        input?: string;
+        params?: string;
     }
 }
 
@@ -92,15 +92,15 @@ export class RemoveMemberCommand {
         context: Context,
         args: RemoveMemberCommand.Args
     ): Promise<{ userId: string; org: string }> {
-        if (args.input != null) {
+        if (args.params != null) {
             if (args.userId != null || args.org != null) {
                 throw new CliError({
                     message:
-                        "--input cannot be combined with <user-id> or <org> positional arguments. The JSON payload must fully describe the input.",
+                        "--params cannot be combined with <user-id> or <org> positional arguments. The JSON payload must fully describe the input.",
                     code: CliError.Code.ConfigError
                 });
             }
-            const raw = await readAndParseJsonInput({ value: args.input, cwd: context.cwd });
+            const raw = await readAndParseJsonInput({ value: args.params, cwd: context.cwd });
             return validateJsonInput({
                 value: raw,
                 schema: OrgMemberRemoveInputSchema,
@@ -109,7 +109,7 @@ export class RemoveMemberCommand {
         }
         if (args.userId == null || args.org == null) {
             throw new CliError({
-                message: "Missing required arguments <user-id> and <org>. Pass them positionally or via --input.",
+                message: "Missing required arguments <user-id> and <org>. Pass them positionally or via --params.",
                 code: CliError.Code.ConfigError
             });
         }
@@ -140,14 +140,14 @@ export function addRemoveMemberCommand(cli: Argv<GlobalArgs>): void {
                     default: false,
                     description: "Output as JSON"
                 })
-                .option("input", {
+                .option("params", {
                     type: "string",
                     description:
-                        "JSON payload describing the removal (inline JSON, @path/to.json, or - for stdin). Run 'fern schema org-member-remove-input' to see the schema."
+                        "JSON payload describing the removal (inline JSON or @path/to.json (curl-style)). Run 'fern schema org-member-remove-input' to see the schema."
                 })
                 .example("$0 org member remove user123 acme", "# Remove user 'user123' from the 'acme' organization")
                 .example(
-                    '$0 org member remove --input \'{"userId":"user123","org":"acme"}\'',
+                    '$0 org member remove --params \'{"userId":"user123","org":"acme"}\'',
                     "# Non-interactive: pass the full payload as JSON"
                 )
     );

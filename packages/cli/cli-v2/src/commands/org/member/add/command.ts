@@ -15,7 +15,7 @@ export declare namespace InviteMemberCommand {
         email?: string;
         org?: string;
         json: boolean;
-        input?: string;
+        params?: string;
     }
 }
 
@@ -92,15 +92,15 @@ export class InviteMemberCommand {
         context: Context,
         args: InviteMemberCommand.Args
     ): Promise<{ email: string; org: string }> {
-        if (args.input != null) {
+        if (args.params != null) {
             if (args.email != null || args.org != null) {
                 throw new CliError({
                     message:
-                        "--input cannot be combined with <email> or <org> positional arguments. The JSON payload must fully describe the input.",
+                        "--params cannot be combined with <email> or <org> positional arguments. The JSON payload must fully describe the input.",
                     code: CliError.Code.ConfigError
                 });
             }
-            const raw = await readAndParseJsonInput({ value: args.input, cwd: context.cwd });
+            const raw = await readAndParseJsonInput({ value: args.params, cwd: context.cwd });
             return validateJsonInput({
                 value: raw,
                 schema: OrgMemberInviteInputSchema,
@@ -109,7 +109,7 @@ export class InviteMemberCommand {
         }
         if (args.email == null || args.org == null) {
             throw new CliError({
-                message: "Missing required arguments <email> and <org>. Pass them positionally or via --input.",
+                message: "Missing required arguments <email> and <org>. Pass them positionally or via --params.",
                 code: CliError.Code.ConfigError
             });
         }
@@ -140,17 +140,17 @@ export function addInviteMemberCommand(cli: Argv<GlobalArgs>): void {
                     default: false,
                     description: "Output as JSON"
                 })
-                .option("input", {
+                .option("params", {
                     type: "string",
                     description:
-                        "JSON payload describing the invite (inline JSON, @path/to.json, or - for stdin). Run 'fern schema org-member-invite-input' to see the schema."
+                        "JSON payload describing the invite (inline JSON or @path/to.json (curl-style)). Run 'fern schema org-member-invite-input' to see the schema."
                 })
                 .example(
                     "$0 org member invite user@example.com acme",
                     "# Invite user@example.com to the 'acme' organization"
                 )
                 .example(
-                    '$0 org member invite --input \'{"email":"user@example.com","org":"acme"}\'',
+                    '$0 org member invite --params \'{"email":"user@example.com","org":"acme"}\'',
                     "# Non-interactive: pass the full payload as JSON"
                 )
     );

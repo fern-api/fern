@@ -15,7 +15,7 @@ export declare namespace CreateTokenCommand {
         org?: string;
         description?: string;
         json: boolean;
-        input?: string;
+        params?: string;
     }
 }
 
@@ -97,15 +97,15 @@ export class CreateTokenCommand {
         context: Context,
         args: CreateTokenCommand.Args
     ): Promise<{ org: string; description: string | undefined }> {
-        if (args.input != null) {
+        if (args.params != null) {
             if (args.org != null || args.description != null) {
                 throw new CliError({
                     message:
-                        "--input cannot be combined with <org> or --description. The JSON payload must fully describe the input.",
+                        "--params cannot be combined with <org> or --description. The JSON payload must fully describe the input.",
                     code: CliError.Code.ConfigError
                 });
             }
-            const raw = await readAndParseJsonInput({ value: args.input, cwd: context.cwd });
+            const raw = await readAndParseJsonInput({ value: args.params, cwd: context.cwd });
             const payload = validateJsonInput({
                 value: raw,
                 schema: OrgTokenCreateInputSchema,
@@ -115,7 +115,7 @@ export class CreateTokenCommand {
         }
         if (args.org == null) {
             throw new CliError({
-                message: "Missing required argument <org>. Pass it positionally or via --input.",
+                message: "Missing required argument <org>. Pass it positionally or via --params.",
                 code: CliError.Code.ConfigError
             });
         }
@@ -146,15 +146,15 @@ export function addCreateTokenCommand(cli: Argv<GlobalArgs>): void {
                     default: false,
                     description: "Output as JSON"
                 })
-                .option("input", {
+                .option("params", {
                     type: "string",
                     description:
-                        "JSON payload describing the token to create (inline JSON, @path/to.json, or - for stdin). Run 'fern schema org-token-create-input' to see the schema."
+                        "JSON payload describing the token to create (inline JSON or @path/to.json (curl-style)). Run 'fern schema org-token-create-input' to see the schema."
                 })
                 .example("$0 org token create acme", "# Create a token for the 'acme' organization")
                 .example('$0 org token create acme --description "CI token"', "# Create a token with a description")
                 .example(
-                    '$0 org token create --input \'{"org":"acme","description":"CI token"}\'',
+                    '$0 org token create --params \'{"org":"acme","description":"CI token"}\'',
                     "# Non-interactive: pass the full payload as JSON"
                 )
     );
