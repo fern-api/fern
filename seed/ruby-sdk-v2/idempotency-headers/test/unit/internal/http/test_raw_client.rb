@@ -22,18 +22,16 @@ describe Seed::Internal::Http::RawClient do
       assert client.should_retry?(make_response(429), 0)
     end
 
-    it "retries on 501 through 599 (5xx except 500)" do
-      [501, 502, 503, 504, 521, 522, 524, 599].each do |status|
+    it "retries on retryable 5xx statuses" do
+      [500, 502, 503, 504, 521, 522, 524].each do |status|
         assert client.should_retry?(make_response(status), 0), "expected retry for status #{status}"
       end
     end
 
-    it "does not retry on 500 Internal Server Error" do
-      refute client.should_retry?(make_response(500), 0)
-    end
-
-    it "does not retry on 600 (above 5xx range)" do
-      refute client.should_retry?(make_response(600), 0)
+    it "does not retry on non-retryable 5xx statuses" do
+      [501, 505, 510, 599].each do |status|
+        refute client.should_retry?(make_response(status), 0), "expected no retry for status #{status}"
+      end
     end
 
     it "does not retry on 2xx success codes" do

@@ -64,7 +64,10 @@ export const AsIsFiles = {
     TestHashType: "test/unit/internal/types/test_hash.Template.rb",
     TestModelType: "test/unit/internal/types/test_model.Template.rb",
     TestUnionType: "test/unit/internal/types/test_union.Template.rb",
-    TestTypeUtils: "test/unit/internal/types/test_utils.Template.rb"
+    TestTypeUtils: "test/unit/internal/types/test_utils.Template.rb",
+
+    // HTTP tests
+    TestHttpRawClient: "test/unit/internal/http/test_raw_client.Template.rb"
 } as const;
 
 export function topologicalCompareAsIsFiles(fileA: string, fileB: string): number {

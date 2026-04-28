@@ -6,7 +6,7 @@ module Seed
       # @api private
       class RawClient
         # Default HTTP status codes that trigger a retry
-        RETRYABLE_4XX_STATUSES = [408, 429].freeze
+        RETRYABLE_STATUSES = [408, 429, 500, 502, 503, 504, 521, 522, 524].freeze
         # Initial delay between retries in seconds
         INITIAL_RETRY_DELAY = 0.5
         # Maximum delay between retries in seconds
@@ -69,7 +69,7 @@ module Seed
           return false if attempt >= @max_retries
 
           status = response.code.to_i
-          RETRYABLE_4XX_STATUSES.include?(status) || (status >= 501 && status < 600)
+          RETRYABLE_STATUSES.include?(status)
         end
 
         # Calculates the delay before the next retry attempt using exponential backoff with jitter.
