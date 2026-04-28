@@ -10,8 +10,8 @@ import type { MigrationModule } from "@fern-api/migrations-base";
 import csharpSdkMigrations from "./generators/csharp/migrations/index.js";
 import javaSdkMigrations from "./generators/java/migrations/index.js";
 import javaModelMigrations from "./generators/java-model/migrations/index.js";
-import pythonSdkMigrations from "./generators/python/migrations/index.js";
 import phpSdkMigrations from "./generators/php/migrations/index.js";
+import pythonSdkMigrations from "./generators/python/migrations/index.js";
 import typescriptSdkMigrations from "./generators/typescript/migrations/index.js";
 
 /**
