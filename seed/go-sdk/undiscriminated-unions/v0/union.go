@@ -7,6 +7,7 @@ import (
 	fmt "fmt"
 	internal "github.com/undiscriminated-unions/fern/internal"
 	big "math/big"
+	url "net/url"
 )
 
 var (
@@ -119,6 +120,21 @@ func (a AliasedObjectUnion) MarshalJSON() ([]byte, error) {
 		return json.Marshal(a.AliasedLeafB)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", a)
+}
+
+func (a *AliasedObjectUnion) EncodeQueryValues(key string, values *url.Values) error {
+	if a == nil {
+		return nil
+	}
+	if a.typ == "AliasedLeafA" || a.AliasedLeafA != nil {
+		values.Add(key, fmt.Sprintf("%v", a.AliasedLeafA))
+		return nil
+	}
+	if a.typ == "AliasedLeafB" || a.AliasedLeafB != nil {
+		values.Add(key, fmt.Sprintf("%v", a.AliasedLeafB))
+		return nil
+	}
+	return nil
 }
 
 type AliasedObjectUnionVisitor interface {
@@ -285,6 +301,17 @@ func (k Key) MarshalJSON() ([]byte, error) {
 		return json.Marshal("default")
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", k)
+}
+
+func (k *Key) EncodeQueryValues(key string, values *url.Values) error {
+	if k == nil {
+		return nil
+	}
+	if k.typ == "KeyType" || k.KeyType != "" {
+		values.Add(key, fmt.Sprintf("%v", k.KeyType))
+		return nil
+	}
+	return nil
 }
 
 type KeyVisitor interface {
@@ -752,6 +779,21 @@ func (m MetadataUnion) MarshalJSON() ([]byte, error) {
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", m)
 }
 
+func (m *MetadataUnion) EncodeQueryValues(key string, values *url.Values) error {
+	if m == nil {
+		return nil
+	}
+	if m.typ == "OptionalMetadata" || m.OptionalMetadata != nil {
+		values.Add(key, fmt.Sprintf("%v", m.OptionalMetadata))
+		return nil
+	}
+	if m.typ == "NamedMetadata" || m.NamedMetadata != nil {
+		values.Add(key, fmt.Sprintf("%v", m.NamedMetadata))
+		return nil
+	}
+	return nil
+}
+
 type MetadataUnionVisitor interface {
 	VisitOptionalMetadata(OptionalMetadata) error
 	VisitNamedMetadata(*NamedMetadata) error
@@ -905,6 +947,45 @@ func (m MyUnion) MarshalJSON() ([]byte, error) {
 		return json.Marshal(m.StringSet)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", m)
+}
+
+func (m *MyUnion) EncodeQueryValues(key string, values *url.Values) error {
+	if m == nil {
+		return nil
+	}
+	if m.typ == "String" || m.String != "" {
+		values.Add(key, fmt.Sprintf("%v", m.String))
+		return nil
+	}
+	if m.typ == "StringList" || m.StringList != nil {
+		for _, item := range m.StringList {
+			values.Add(key, fmt.Sprintf("%v", item))
+		}
+		return nil
+	}
+	if m.typ == "Integer" || m.Integer != 0 {
+		values.Add(key, fmt.Sprintf("%v", m.Integer))
+		return nil
+	}
+	if m.typ == "IntegerList" || m.IntegerList != nil {
+		for _, item := range m.IntegerList {
+			values.Add(key, fmt.Sprintf("%v", item))
+		}
+		return nil
+	}
+	if m.typ == "IntegerListList" || m.IntegerListList != nil {
+		for _, item := range m.IntegerListList {
+			values.Add(key, fmt.Sprintf("%v", item))
+		}
+		return nil
+	}
+	if m.typ == "StringSet" || m.StringSet != nil {
+		for _, item := range m.StringSet {
+			values.Add(key, fmt.Sprintf("%v", item))
+		}
+		return nil
+	}
+	return nil
 }
 
 type MyUnionVisitor interface {
@@ -1098,6 +1179,21 @@ func (n NestedObjectUnion) MarshalJSON() ([]byte, error) {
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", n)
 }
 
+func (n *NestedObjectUnion) EncodeQueryValues(key string, values *url.Values) error {
+	if n == nil {
+		return nil
+	}
+	if n.typ == "LeafTypeA" || n.LeafTypeA != nil {
+		values.Add(key, fmt.Sprintf("%v", n.LeafTypeA))
+		return nil
+	}
+	if n.typ == "LeafTypeB" || n.LeafTypeB != nil {
+		values.Add(key, fmt.Sprintf("%v", n.LeafTypeB))
+		return nil
+	}
+	return nil
+}
+
 type NestedObjectUnionVisitor interface {
 	VisitLeafTypeA(*LeafTypeA) error
 	VisitLeafTypeB(*LeafTypeB) error
@@ -1211,6 +1307,33 @@ func (n NestedUnionL1) MarshalJSON() ([]byte, error) {
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", n)
 }
 
+func (n *NestedUnionL1) EncodeQueryValues(key string, values *url.Values) error {
+	if n == nil {
+		return nil
+	}
+	if n.typ == "Integer" || n.Integer != 0 {
+		values.Add(key, fmt.Sprintf("%v", n.Integer))
+		return nil
+	}
+	if n.typ == "StringSet" || n.StringSet != nil {
+		for _, item := range n.StringSet {
+			values.Add(key, fmt.Sprintf("%v", item))
+		}
+		return nil
+	}
+	if n.typ == "StringList" || n.StringList != nil {
+		for _, item := range n.StringList {
+			values.Add(key, fmt.Sprintf("%v", item))
+		}
+		return nil
+	}
+	if n.typ == "NestedUnionL2" || n.NestedUnionL2 != nil {
+		values.Add(key, fmt.Sprintf("%v", n.NestedUnionL2))
+		return nil
+	}
+	return nil
+}
+
 type NestedUnionL1Visitor interface {
 	VisitInteger(int) error
 	VisitStringSet([]string) error
@@ -1311,6 +1434,29 @@ func (n NestedUnionL2) MarshalJSON() ([]byte, error) {
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", n)
 }
 
+func (n *NestedUnionL2) EncodeQueryValues(key string, values *url.Values) error {
+	if n == nil {
+		return nil
+	}
+	if n.typ == "Boolean" || n.Boolean != false {
+		values.Add(key, fmt.Sprintf("%v", n.Boolean))
+		return nil
+	}
+	if n.typ == "StringSet" || n.StringSet != nil {
+		for _, item := range n.StringSet {
+			values.Add(key, fmt.Sprintf("%v", item))
+		}
+		return nil
+	}
+	if n.typ == "StringList" || n.StringList != nil {
+		for _, item := range n.StringList {
+			values.Add(key, fmt.Sprintf("%v", item))
+		}
+		return nil
+	}
+	return nil
+}
+
 type NestedUnionL2Visitor interface {
 	VisitBoolean(bool) error
 	VisitStringSet([]string) error
@@ -1407,6 +1553,27 @@ func (n NestedUnionRoot) MarshalJSON() ([]byte, error) {
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", n)
 }
 
+func (n *NestedUnionRoot) EncodeQueryValues(key string, values *url.Values) error {
+	if n == nil {
+		return nil
+	}
+	if n.typ == "String" || n.String != "" {
+		values.Add(key, fmt.Sprintf("%v", n.String))
+		return nil
+	}
+	if n.typ == "StringList" || n.StringList != nil {
+		for _, item := range n.StringList {
+			values.Add(key, fmt.Sprintf("%v", item))
+		}
+		return nil
+	}
+	if n.typ == "NestedUnionL1" || n.NestedUnionL1 != nil {
+		values.Add(key, fmt.Sprintf("%v", n.NestedUnionL1))
+		return nil
+	}
+	return nil
+}
+
 type NestedUnionRootVisitor interface {
 	VisitString(string) error
 	VisitStringList([]string) error
@@ -1485,6 +1652,21 @@ func (o OuterNestedUnion) MarshalJSON() ([]byte, error) {
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", o)
 }
 
+func (o *OuterNestedUnion) EncodeQueryValues(key string, values *url.Values) error {
+	if o == nil {
+		return nil
+	}
+	if o.typ == "String" || o.String != "" {
+		values.Add(key, fmt.Sprintf("%v", o.String))
+		return nil
+	}
+	if o.typ == "WrapperObject" || o.WrapperObject != nil {
+		values.Add(key, fmt.Sprintf("%v", o.WrapperObject))
+		return nil
+	}
+	return nil
+}
+
 type OuterNestedUnionVisitor interface {
 	VisitString(string) error
 	VisitWrapperObject(*WrapperObject) error
@@ -1555,6 +1737,21 @@ func (p PaymentMethodUnion) MarshalJSON() ([]byte, error) {
 		return json.Marshal(p.ConvertToken)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", p)
+}
+
+func (p *PaymentMethodUnion) EncodeQueryValues(key string, values *url.Values) error {
+	if p == nil {
+		return nil
+	}
+	if p.typ == "TokenizeCard" || p.TokenizeCard != nil {
+		values.Add(key, fmt.Sprintf("%v", p.TokenizeCard))
+		return nil
+	}
+	if p.typ == "ConvertToken" || p.ConvertToken != nil {
+		values.Add(key, fmt.Sprintf("%v", p.ConvertToken))
+		return nil
+	}
+	return nil
 }
 
 type PaymentMethodUnionVisitor interface {
@@ -1897,6 +2094,21 @@ func (u UnionWithBaseProperties) MarshalJSON() ([]byte, error) {
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", u)
 }
 
+func (u *UnionWithBaseProperties) EncodeQueryValues(key string, values *url.Values) error {
+	if u == nil {
+		return nil
+	}
+	if u.typ == "NamedMetadata" || u.NamedMetadata != nil {
+		values.Add(key, fmt.Sprintf("%v", u.NamedMetadata))
+		return nil
+	}
+	if u.typ == "OptionalMetadata" || u.OptionalMetadata != nil {
+		values.Add(key, fmt.Sprintf("%v", u.OptionalMetadata))
+		return nil
+	}
+	return nil
+}
+
 type UnionWithBasePropertiesVisitor interface {
 	VisitNamedMetadata(*NamedMetadata) error
 	VisitOptionalMetadata(OptionalMetadata) error
@@ -2010,6 +2222,33 @@ func (u UnionWithDuplicateTypes) MarshalJSON() ([]byte, error) {
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", u)
 }
 
+func (u *UnionWithDuplicateTypes) EncodeQueryValues(key string, values *url.Values) error {
+	if u == nil {
+		return nil
+	}
+	if u.typ == "String" || u.String != "" {
+		values.Add(key, fmt.Sprintf("%v", u.String))
+		return nil
+	}
+	if u.typ == "StringList" || u.StringList != nil {
+		for _, item := range u.StringList {
+			values.Add(key, fmt.Sprintf("%v", item))
+		}
+		return nil
+	}
+	if u.typ == "Integer" || u.Integer != 0 {
+		values.Add(key, fmt.Sprintf("%v", u.Integer))
+		return nil
+	}
+	if u.typ == "StringSet" || u.StringSet != nil {
+		for _, item := range u.StringSet {
+			values.Add(key, fmt.Sprintf("%v", item))
+		}
+		return nil
+	}
+	return nil
+}
+
 type UnionWithDuplicateTypesVisitor interface {
 	VisitString(string) error
 	VisitStringList([]string) error
@@ -2110,6 +2349,25 @@ func (u UnionWithIdenticalPrimitives) MarshalJSON() ([]byte, error) {
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", u)
 }
 
+func (u *UnionWithIdenticalPrimitives) EncodeQueryValues(key string, values *url.Values) error {
+	if u == nil {
+		return nil
+	}
+	if u.typ == "Integer" || u.Integer != 0 {
+		values.Add(key, fmt.Sprintf("%v", u.Integer))
+		return nil
+	}
+	if u.typ == "Double" || u.Double != 0 {
+		values.Add(key, fmt.Sprintf("%v", u.Double))
+		return nil
+	}
+	if u.typ == "String" || u.String != "" {
+		values.Add(key, fmt.Sprintf("%v", u.String))
+		return nil
+	}
+	return nil
+}
+
 type UnionWithIdenticalPrimitivesVisitor interface {
 	VisitInteger(int) error
 	VisitDouble(float64) error
@@ -2163,6 +2421,17 @@ func (u UnionWithIdenticalStrings) MarshalJSON() ([]byte, error) {
 		return json.Marshal(u.String)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", u)
+}
+
+func (u *UnionWithIdenticalStrings) EncodeQueryValues(key string, values *url.Values) error {
+	if u == nil {
+		return nil
+	}
+	if u.typ == "String" || u.String != "" {
+		values.Add(key, fmt.Sprintf("%v", u.String))
+		return nil
+	}
+	return nil
 }
 
 type UnionWithIdenticalStringsVisitor interface {
@@ -2243,6 +2512,17 @@ func (u UnionWithReservedNames) MarshalJSON() ([]byte, error) {
 		return json.Marshal(u.String)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", u)
+}
+
+func (u *UnionWithReservedNames) EncodeQueryValues(key string, values *url.Values) error {
+	if u == nil {
+		return nil
+	}
+	if u.typ == "String" || u.String != "" {
+		values.Add(key, fmt.Sprintf("%v", u.String))
+		return nil
+	}
+	return nil
 }
 
 type UnionWithReservedNamesVisitor interface {
@@ -2346,6 +2626,25 @@ func (u UnionWithTypeAliases) MarshalJSON() ([]byte, error) {
 		return json.Marshal(u.Name)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", u)
+}
+
+func (u *UnionWithTypeAliases) EncodeQueryValues(key string, values *url.Values) error {
+	if u == nil {
+		return nil
+	}
+	if u.typ == "String" || u.String != "" {
+		values.Add(key, fmt.Sprintf("%v", u.String))
+		return nil
+	}
+	if u.typ == "UserID" || u.UserID != "" {
+		values.Add(key, fmt.Sprintf("%v", u.UserID))
+		return nil
+	}
+	if u.typ == "Name" || u.Name != "" {
+		values.Add(key, fmt.Sprintf("%v", u.Name))
+		return nil
+	}
+	return nil
 }
 
 type UnionWithTypeAliasesVisitor interface {

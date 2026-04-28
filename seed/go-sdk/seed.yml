@@ -317,6 +317,10 @@ fixtures:
   go-subpackage-collision:
     - outputFolder: .
       customConfig: null
+  union-query-parameters:
+    - outputFolder: .
+      customConfig:
+        enableWireTests: true
 scripts:
   - image: fernapi/go-seed:2.0.0
     commands:

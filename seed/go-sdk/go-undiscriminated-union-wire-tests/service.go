@@ -7,6 +7,7 @@ import (
 	fmt "fmt"
 	internal "github.com/go-undiscriminated-union-wire-tests/fern/internal"
 	big "math/big"
+	url "net/url"
 )
 
 type DocumentItem struct {
@@ -54,6 +55,21 @@ func (d DocumentItem) MarshalJSON() ([]byte, error) {
 		return json.Marshal(d.DocumentObject)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", d)
+}
+
+func (d *DocumentItem) EncodeQueryValues(key string, values *url.Values) error {
+	if d == nil {
+		return nil
+	}
+	if d.typ == "String" || d.String != "" {
+		values.Add(key, fmt.Sprintf("%v", d.String))
+		return nil
+	}
+	if d.typ == "DocumentObject" || d.DocumentObject != nil {
+		values.Add(key, fmt.Sprintf("%v", d.DocumentObject))
+		return nil
+	}
+	return nil
 }
 
 type DocumentItemVisitor interface {

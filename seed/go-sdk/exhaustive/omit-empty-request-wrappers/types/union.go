@@ -7,6 +7,7 @@ import (
 	fmt "fmt"
 	internal "github.com/exhaustive/fern/internal"
 	big "math/big"
+	url "net/url"
 )
 
 type Animal struct {
@@ -405,6 +406,31 @@ func (m MixedType) MarshalJSON() ([]byte, error) {
 		return json.Marshal(m.StringList)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", m)
+}
+
+func (m *MixedType) EncodeQueryValues(key string, values *url.Values) error {
+	if m == nil {
+		return nil
+	}
+	if m.typ == "Double" || m.Double != 0 {
+		values.Add(key, fmt.Sprintf("%v", m.Double))
+		return nil
+	}
+	if m.typ == "Boolean" || m.Boolean != false {
+		values.Add(key, fmt.Sprintf("%v", m.Boolean))
+		return nil
+	}
+	if m.typ == "String" || m.String != "" {
+		values.Add(key, fmt.Sprintf("%v", m.String))
+		return nil
+	}
+	if m.typ == "StringList" || m.StringList != nil {
+		for _, item := range m.StringList {
+			values.Add(key, fmt.Sprintf("%v", item))
+		}
+		return nil
+	}
+	return nil
 }
 
 type MixedTypeVisitor interface {
