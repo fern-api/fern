@@ -474,7 +474,7 @@ impl HttpClient {
     }
 
     fn is_retryable_status(status_code: u16) -> bool {
-        status_code == 408 || status_code == 429 || (status_code >= 501 && status_code < 600)
+        status_code == 408 || status_code == 429 || status_code >= 500
     }
 
     async fn parse_response<T>(&self, response: Response) -> Result<T, ApiError>
@@ -665,18 +665,13 @@ mod tests {
         assert!(HttpClient::is_retryable_status(408));
         assert!(HttpClient::is_retryable_status(429));
 
-        // Retryable 5xx (501–599)
+        // Retryable 5xx (>= 500)
+        assert!(HttpClient::is_retryable_status(500));
         assert!(HttpClient::is_retryable_status(501));
         assert!(HttpClient::is_retryable_status(502));
         assert!(HttpClient::is_retryable_status(503));
         assert!(HttpClient::is_retryable_status(504));
         assert!(HttpClient::is_retryable_status(599));
-
-        // 500 is NOT retryable
-        assert!(!HttpClient::is_retryable_status(500));
-
-        // Above 5xx range is NOT retryable
-        assert!(!HttpClient::is_retryable_status(600));
 
         // Success and other 4xx codes are NOT retryable
         assert!(!HttpClient::is_retryable_status(200));

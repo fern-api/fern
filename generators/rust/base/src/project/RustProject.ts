@@ -63,6 +63,13 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
                 // Replace template variables
                 fileContents = this.replaceTemplateVariables(fileContents);
 
+                if (def.filename === "http_client.rs" && context.customConfig.retryStatusCodes === "recommended") {
+                    fileContents = fileContents.replace(
+                        "status_code == 408 || status_code == 429 || status_code >= 500",
+                        "status_code == 408 || status_code == 429 || (status_code >= 501 && status_code < 600)"
+                    );
+                }
+
                 const rustFile = new RustFile({
                     filename: def.filename,
                     directory: def.directory,

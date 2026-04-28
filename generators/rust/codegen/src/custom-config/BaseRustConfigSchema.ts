@@ -49,6 +49,7 @@ export const BaseRustCustomConfigSchema = z.object({
     // Example: ["sse"] to only include SSE in default features
     defaultFeatures: z.array(z.string()).optional(),
     maxRetries: z.number().int().min(0).optional(),
+    retryStatusCodes: z.optional(z.enum(["legacy", "recommended"])),
 
     // =========================================================================
     // Casing Configuration
