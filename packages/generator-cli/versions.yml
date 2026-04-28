@@ -1,6 +1,17 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix `upsertBranchRef` failing on first-generation runs after replay
+        lockfile reset. GitHub's `updateRef` API returns HTTP 422 (not 404)
+        when the target branch does not exist, so the `createRef` fallback
+        was never reached. Now `isNotFoundError` also matches 422 responses
+        whose message contains "Reference does not exist".
+      type: fix
+  createdAt: "2026-04-28"
+  version: 0.9.17
+
+- changelogEntry:
+    - summary: |
         Bundle the private workspace deps used by the autoversion pipeline
         (`@fern-api/logging-execa`, `@fern-api/task-context`, `@fern-api/cli-ai`)
         into the published `dist/api.js`. They were added to generator-cli as
