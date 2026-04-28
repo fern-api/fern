@@ -157,10 +157,12 @@ class CoreUtilities:
             if not self._exclude_types_from_init_exports
             else set(),
         )
-        retry_status_check = (
-            "response.status_code in [408, 409, 429, 502, 503, 504]"
+        retry_replacements = (
+            {
+                "return response.status_code >= 500 or response.status_code in [429, 408, 409]": "return response.status_code in [408, 409, 429, 502, 503, 504]",
+            }
             if self._retry_status_codes == "recommended"
-            else "response.status_code >= 500 or response.status_code in [429, 408, 409]"
+            else None
         )
         self._copy_file_to_project(
             project=project,
@@ -170,7 +172,7 @@ class CoreUtilities:
                 file=Filepath.FilepathPart(module_name="http_client"),
             ),
             exports={"HttpClient", "AsyncHttpClient"} if not self._exclude_types_from_init_exports else set(),
-            string_replacements={"{{RETRY_STATUS_CHECK}}": retry_status_check},
+            string_replacements=retry_replacements,
         )
 
         self._copy_file_to_project(
