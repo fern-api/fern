@@ -676,6 +676,28 @@ describe("Python SDK Migrations", () => {
             });
         });
 
+        it("skips non-SDK generators (fastapi)", () => {
+            const config = createBaseConfig("fernapi/fern-fastapi-server");
+
+            const result = migration_6_0_0.migrateGeneratorConfig({
+                config,
+                context: { logger: mockLogger }
+            });
+
+            expect(result.config).toBeUndefined();
+        });
+
+        it("skips non-SDK generators (pydantic)", () => {
+            const config = createBaseConfig("fernapi/fern-pydantic-model");
+
+            const result = migration_6_0_0.migrateGeneratorConfig({
+                config,
+                context: { logger: mockLogger }
+            });
+
+            expect(result.config).toBeUndefined();
+        });
+
         it("does not modify generators.yml", () => {
             const document = { stringify: () => "original" };
 
