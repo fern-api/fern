@@ -6,7 +6,6 @@ import { loggingExeca } from "@fern-api/logging-execa";
 import { OutputMode } from "@fern-fern/generator-exec-sdk/api";
 import { copyFile, mkdir, readFile } from "fs/promises";
 import path from "path";
-import { AsIsFiles } from "../AsIs.js";
 import { AbstractGoGeneratorContext } from "../context/AbstractGoGeneratorContext.js";
 import { ModuleConfig } from "../module/ModuleConfig.js";
 import { ModuleConfigWriter } from "../module/ModuleConfigWriter.js";
