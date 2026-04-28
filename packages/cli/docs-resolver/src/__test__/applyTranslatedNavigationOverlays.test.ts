@@ -61,7 +61,9 @@ describe("applyTranslatedNavigationOverlays", () => {
                     slug: "home",
                     displayName: "ホーム",
                     subtitle: "ようこそ",
-                    announcement: undefined
+                    announcement: undefined,
+                    tabs: undefined,
+                    navigation: undefined
                 }
             ]
         };
@@ -327,7 +329,9 @@ describe("applyTranslatedNavigationOverlays", () => {
                     slug: "sdk",
                     displayName: undefined,
                     subtitle: undefined,
-                    announcement: { message: "v2がリリースされました！" }
+                    announcement: { message: "v2がリリースされました！" },
+                    tabs: undefined,
+                    navigation: undefined
                 }
             ]
         };

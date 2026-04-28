@@ -2173,7 +2173,9 @@ async function parseNavigationOverlayFromDocsYml({
                 slug: typeof productObj.slug === "string" ? productObj.slug : undefined,
                 displayName: typeof productObj["display-name"] === "string" ? productObj["display-name"] : undefined,
                 subtitle: typeof productObj.subtitle === "string" ? productObj.subtitle : undefined,
-                announcement: undefined
+                announcement: undefined,
+                tabs: undefined,
+                navigation: undefined
             };
 
             if (isPlainObject(productObj.announcement)) {
@@ -2184,6 +2186,7 @@ async function parseNavigationOverlayFromDocsYml({
             }
 
             // If this product references a nav file, load its tab/navigation overrides
+            // These are stored per-product to avoid collision when multiple products share tab IDs
             if (typeof productObj.path === "string") {
                 // Validate path to prevent path traversal attacks
                 const resolvedNavFilePath = path.resolve(langFernDir, productObj.path) as AbsoluteFilePath;
@@ -2200,19 +2203,13 @@ async function parseNavigationOverlayFromDocsYml({
                         const navContent = yaml.load(await readFile(navFilePath, "utf-8"));
                         if (isPlainObject(navContent)) {
                             const navObj = navContent as Record<string, unknown>;
-                            // Tabs defined in the nav file
+                            // Tabs defined in the nav file - stored per-product
                             if (isPlainObject(navObj.tabs)) {
-                                overlay.tabs = {
-                                    ...overlay.tabs,
-                                    ...parseTabOverlays(navObj.tabs as Record<string, unknown>)
-                                };
+                                productOverlay.tabs = parseTabOverlays(navObj.tabs as Record<string, unknown>);
                             }
-                            // Navigation items defined in the nav file
+                            // Navigation items defined in the nav file - stored per-product
                             if (Array.isArray(navObj.navigation)) {
-                                overlay.navigation = [
-                                    ...(overlay.navigation ?? []),
-                                    ...parseNavigationItemOverlays(navObj.navigation)
-                                ];
+                                productOverlay.navigation = parseNavigationItemOverlays(navObj.navigation);
                             }
                         }
                     } catch (error) {

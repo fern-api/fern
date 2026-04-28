@@ -569,6 +569,10 @@ export interface ProductOverlay {
     displayName: string | undefined;
     subtitle: string | undefined;
     announcement: AnnouncementOverlay | undefined;
+    /** Per-product tab overlays from the referenced nav file */
+    tabs: Record<string, TabOverlay> | undefined;
+    /** Per-product navigation overlays from the referenced nav file */
+    navigation: NavigationItemOverlay[] | undefined;
 }
 
 export interface VersionOverlay {

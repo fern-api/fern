@@ -73,11 +73,19 @@ function applyChildOverlays(
                 return walkAndApply(child, overlay);
             }
             const productOverlay = findProductOverlay(childObj, overlay.products ?? [], index);
-            const walked = walkAndApply(child, overlay) as Record<string, unknown>;
             if (productOverlay != null) {
+                // Create a scoped overlay with product-specific tabs/navigation
+                const scopedOverlay: docsYml.TranslationNavigationOverlay = {
+                    tabs: productOverlay.tabs ?? overlay.tabs,
+                    products: undefined,
+                    versions: overlay.versions,
+                    announcement: productOverlay.announcement ?? overlay.announcement,
+                    navigation: productOverlay.navigation ?? overlay.navigation
+                };
+                const walked = walkAndApply(child, scopedOverlay) as Record<string, unknown>;
                 return applyProductOverlayToNode(walked, productOverlay);
             }
-            return walked;
+            return walkAndApply(child, overlay);
         });
     }
 
@@ -114,6 +122,15 @@ function applyChildOverlays(
 
     // SidebarRoot children → match sections/pages with overlay.navigation
     if (parentType === "sidebarRoot") {
+        const navOverlays = collectFlatNavigationOverlays(overlay);
+        if (navOverlays.length > 0) {
+            return applySidebarChildOverlays(children, navOverlays, overlay);
+        }
+    }
+
+    // SidebarGroup children → match sections/pages with overlay.navigation
+    // This handles top-level pages that are wrapped in sidebarGroup nodes by DocsDefinitionResolver
+    if (parentType === "sidebarGroup") {
         const navOverlays = collectFlatNavigationOverlays(overlay);
         if (navOverlays.length > 0) {
             return applySidebarChildOverlays(children, navOverlays, overlay);
@@ -223,7 +240,6 @@ function applyVersionOverlayToNode(
 
 function applyTabOverlayToNode(node: Record<string, unknown>, overlay: docsYml.TranslationNavigationOverlay): unknown {
     const tabSlug = extractLastSlugSegment(node["slug"] as string | undefined);
-    const tabTitle = node["title"] as string | undefined;
 
     // Look up tab display-name override from overlay.tabs
     if (overlay.tabs != null && tabSlug != null) {
@@ -239,7 +255,7 @@ function applyTabOverlayToNode(node: Record<string, unknown>, overlay: docsYml.T
     }
 
     // Find matching tab navigation overlay for child overrides
-    const tabNavOverlay = findTabNavOverlay(tabSlug, tabTitle, overlay);
+    const tabNavOverlay = findTabNavOverlay(tabSlug, overlay);
 
     if (tabNavOverlay != null) {
         // Apply tab title override from the tabs map if not already applied
@@ -247,6 +263,17 @@ function applyTabOverlayToNode(node: Record<string, unknown>, overlay: docsYml.T
             const tabOverlayEntry = overlay.tabs[tabNavOverlay.tabId];
             if (tabOverlayEntry?.displayName != null) {
                 node["title"] = tabOverlayEntry.displayName;
+            }
+        }
+
+        // Handle tab variants if present
+        if (tabNavOverlay.variants != null && tabNavOverlay.variants.length > 0) {
+            const tabChild = node["child"] as Record<string, unknown> | undefined;
+            if (tabChild != null && tabChild["type"] === "variants") {
+                const variantsChildren = tabChild["children"] as unknown[] | undefined;
+                if (variantsChildren != null) {
+                    tabChild["children"] = applyVariantOverlays(variantsChildren, tabNavOverlay.variants);
+                }
             }
         }
 
@@ -268,7 +295,6 @@ function applyTabOverlayToNode(node: Record<string, unknown>, overlay: docsYml.T
 
 function findTabNavOverlay(
     tabSlug: string | undefined,
-    tabTitle: string | undefined,
     overlay: docsYml.TranslationNavigationOverlay
 ): docsYml.NavigationItemOverlay.Tab | undefined {
     if (overlay.navigation == null) {
@@ -287,13 +313,6 @@ function findTabNavOverlay(
         if (tabSlug != null && overlay.tabs != null) {
             const tabConfig = overlay.tabs[navItem.tabId];
             if (tabConfig?.slug != null && tabConfig.slug === tabSlug) {
-                return navItem;
-            }
-        }
-        // Fallback: match by overlay tab's display name against the nav tree title
-        if (overlay.tabs != null) {
-            const tabConfig = overlay.tabs[navItem.tabId];
-            if (tabConfig?.displayName != null && tabConfig.displayName === tabTitle) {
                 return navItem;
             }
         }
@@ -429,4 +448,46 @@ function extractLastSlugSegment(slug: string | undefined): string | undefined {
     }
     const parts = slug.split("/");
     return parts[parts.length - 1];
+}
+
+/**
+ * Applies variant overlays to tab variant children.
+ * Matches variants by slug first, then falls back to positional matching.
+ */
+function applyVariantOverlays(variants: unknown[], overlays: docsYml.VariantOverlay[]): unknown[] {
+    return variants.map((variant, index) => {
+        const variantObj = variant as Record<string, unknown> | null;
+        if (variantObj == null || typeof variantObj !== "object") {
+            return variant;
+        }
+
+        const variantSlug = extractLastSlugSegment(variantObj["slug"] as string | undefined);
+        let matchedOverlay: docsYml.VariantOverlay | undefined;
+
+        // First, try to match by slug
+        if (variantSlug != null) {
+            matchedOverlay = overlays.find((o) => o.slug != null && o.slug === variantSlug);
+        }
+
+        // Positional fallback: only use overlays that don't have a slug defined
+        if (matchedOverlay == null) {
+            const noSlugOverlays = overlays.filter((o) => o.slug == null);
+            if (index < noSlugOverlays.length) {
+                matchedOverlay = noSlugOverlays[index];
+            }
+        }
+
+        if (matchedOverlay != null) {
+            const result = { ...variantObj };
+            if (matchedOverlay.title != null) {
+                result["title"] = matchedOverlay.title;
+            }
+            if (matchedOverlay.subtitle != null) {
+                result["subtitle"] = matchedOverlay.subtitle;
+            }
+            return result;
+        }
+
+        return variant;
+    });
 }
