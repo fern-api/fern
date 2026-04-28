@@ -6,6 +6,7 @@ import { loggingExeca } from "@fern-api/logging-execa";
 import { OutputMode } from "@fern-fern/generator-exec-sdk/api";
 import { copyFile, mkdir, readFile } from "fs/promises";
 import path from "path";
+import { AsIsFiles } from "../AsIs.js";
 import { AbstractGoGeneratorContext } from "../context/AbstractGoGeneratorContext.js";
 import { ModuleConfig } from "../module/ModuleConfig.js";
 import { ModuleConfigWriter } from "../module/ModuleConfigWriter.js";
@@ -203,6 +204,13 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
         for (const [key, value] of Object.entries(templateVariables)) {
             const doubleRegex = new RegExp(`\\{\\{ *\\.${key} *\\}\\}`, "g");
             contents = contents.replace(doubleRegex, value);
+        }
+
+        if (filename === AsIsFiles.Retrier && this.context.customConfig.retryStatusCodes === "recommended") {
+            contents = contents.replace(
+                "response.StatusCode >= http.StatusInternalServerError",
+                "response.StatusCode == http.StatusBadGateway ||\n\t\tresponse.StatusCode == http.StatusServiceUnavailable ||\n\t\tresponse.StatusCode == http.StatusGatewayTimeout"
+            );
         }
 
         return new File(filename.replace(".go_", ".go"), RelativeFilePath.of(""), contents);

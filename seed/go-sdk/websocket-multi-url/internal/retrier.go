@@ -140,7 +140,7 @@ func (r *Retrier) run(
 func (r *Retrier) shouldRetry(response *http.Response) bool {
 	return response.StatusCode == http.StatusTooManyRequests ||
 		response.StatusCode == http.StatusRequestTimeout ||
-		(response.StatusCode > http.StatusInternalServerError && response.StatusCode < 600)
+		(response.StatusCode >= http.StatusInternalServerError)
 }
 
 // retryDelay calculates the delay time based on response headers,
