@@ -47,6 +47,10 @@ def build_flattened_union_parameters(
     deconflict = set(names_to_deconflict or [])
     accumulator: Dict[str, _AccumulatedField] = {}
 
+    for extended in union_decl.extends:
+        for prop in context.pydantic_generator_context.get_all_properties_including_extensions(extended.type_id):
+            _add_object_property(prop, context, deconflict, accumulator)
+
     for base_prop in union_decl.base_properties:
         _add_object_property(base_prop, context, deconflict, accumulator)
 
