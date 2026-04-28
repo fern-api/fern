@@ -148,8 +148,12 @@ export async function parseDocsConfiguration({
     });
 
     const defaultLocale =
-        rawDocsConfiguration.translations?.find((t) => t.default === true)?.lang ??
-        rawDocsConfiguration.translations?.[0]?.lang;
+        rawDocsConfiguration.translations
+            ?.map((t) => docsYml.DocsYmlSchemas.normalizeTranslationConfig(t))
+            .find((t) => t.default === true)?.lang ??
+        (rawDocsConfiguration.translations?.[0] != null
+            ? docsYml.DocsYmlSchemas.normalizeTranslationConfig(rawDocsConfiguration.translations[0]).lang
+            : undefined);
     const translationPagesPromise = pagesPromise.then((resolvedPages) =>
         loadTranslationPages({
             translations: rawDocsConfiguration.translations,

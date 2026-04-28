@@ -293,14 +293,16 @@ export class DocsDefinitionResolver {
             return undefined;
         }
 
-        const defaultTranslation = translations.find((translation) => translation.default === true) ?? translations[0];
+        const normalizedTranslations = translations.map((t) => docsYml.DocsYmlSchemas.normalizeTranslationConfig(t));
+        const defaultTranslation =
+            normalizedTranslations.find((translation) => translation.default === true) ?? normalizedTranslations[0];
         if (defaultTranslation == null) {
             return undefined;
         }
 
         return {
             defaultLocale: defaultTranslation.lang,
-            translations: translations.map((translation) => translation.lang)
+            translations: normalizedTranslations.map((translation) => translation.lang)
         };
     }
     private collectedFileIds = new Map<AbsoluteFilePath, string>();

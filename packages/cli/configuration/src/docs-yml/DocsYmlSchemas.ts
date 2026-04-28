@@ -942,10 +942,21 @@ export const ProductFileConfig = z.object({
 
 // ===== Translations =====
 
-export const TranslationConfig = z.object({
+export const TranslationConfigObject = z.object({
     lang: Language,
     default: z.boolean().optional()
 });
+
+export const TranslationConfig = z.union([Language, TranslationConfigObject]);
+
+export function normalizeTranslationConfig(
+    config: z.infer<typeof TranslationConfig>
+): { lang: string; default?: boolean } {
+    if (typeof config === "string") {
+        return { lang: config };
+    }
+    return config;
+}
 
 // ===== Main DocsConfiguration =====
 
@@ -974,7 +985,8 @@ export const DocsConfiguration = z.object({
             if (translations == null) {
                 return;
             }
-            const defaultCount = translations.filter((t) => t.default === true).length;
+            const normalizedTranslations = translations.map(normalizeTranslationConfig);
+            const defaultCount = normalizedTranslations.filter((t) => t.default === true).length;
             if (defaultCount > 1) {
                 ctx.addIssue({
                     code: z.ZodIssueCode.custom,

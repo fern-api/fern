@@ -1,3 +1,4 @@
+import { docsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { Rule, RuleViolation } from "../../Rule.js";
@@ -14,13 +15,16 @@ export const TranslationDirectoriesExistRule: Rule = {
                     return violations;
                 }
 
-                const defaultLocale = translations.find((t) => t.default === true)?.lang;
+                const normalizedTranslations = translations.map((t) =>
+                    docsYml.DocsYmlSchemas.normalizeTranslationConfig(t)
+                );
+                const defaultLocale = normalizedTranslations.find((t) => t.default === true)?.lang;
                 const translationsDir = join(workspace.absoluteFilePath, RelativeFilePath.of("translations"));
                 const translationsDirExists = await doesPathExist(translationsDir);
 
                 const missingDirs: string[] = [];
 
-                for (const translation of translations) {
+                for (const translation of normalizedTranslations) {
                     // The default locale's pages live in the top-level pages/ directory
                     if (translation.lang === defaultLocale) {
                         continue;

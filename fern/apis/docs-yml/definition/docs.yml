@@ -42,12 +42,21 @@ types:
       - sv
       - tr
 
-  TranslationConfig:
+  TranslationConfigObject:
     properties:
       lang: Language
       default:
         type: optional<boolean>
         docs: Whether this language is the default. At most one entry should be marked as default.
+
+  TranslationConfig:
+    discriminated: false
+    docs: |
+      Translation configuration can be either a language code string or an object with additional options.
+      When using a string, it's equivalent to `{ lang: <string> }`.
+    union:
+      - Language
+      - TranslationConfigObject
 
   AnalyticsConfig:
     properties:
@@ -287,13 +296,30 @@ types:
           that the documentation supports. Use the `translations/` directory alongside
           `docs.yml` to provide per-language content.
 
-          Example:
+          Example (object syntax):
           ```yaml
           translations:
             - lang: en
               default: true
             - lang: ja
             - lang: fr
+          ```
+
+          Example (simplified syntax):
+          ```yaml
+          translations:
+            - en
+            - ja
+            - fr
+          ```
+
+          You can mix both syntaxes:
+          ```yaml
+          translations:
+            - lang: en
+              default: true
+            - ja
+            - fr
           ```
 
       # Deprecated
