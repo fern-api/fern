@@ -35,7 +35,7 @@ features:
       the `Retry-After` header (as either in seconds or as an HTTP date), and then the `X-RateLimit-Reset` header
       (as a Unix timestamp in epoch seconds); failing both of those, it will fall back to exponential backoff.
 
-      Which status codes are retried depends on the `retryStatusCodes` generator configuration:
+      Which status codes are retried depends on the `retry-status-codes` generator configuration:
 
       **`legacy`** (current default): retries on
       - [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)

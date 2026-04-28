@@ -36,11 +36,11 @@ public final class RetryInterceptorGenerator extends AbstractFileGenerator {
     public GeneratedResourcesJavaFile generateFile() {
         try (InputStream is = RetryInterceptorGenerator.class.getResourceAsStream("/RetryInterceptor.java")) {
             String contents = new String(is.readAllBytes(), StandardCharsets.UTF_8);
-            if ("recommended".equals(clientGeneratorContext.getCustomConfig().retryStatusCodes())) {
-                contents = contents.replace(
-                        "return statusCode == 408 || statusCode == 429 || statusCode >= 500;",
-                        "return statusCode == 408 || statusCode == 429 || statusCode == 502 || statusCode == 503 || statusCode == 504;");
-            }
+            String retryStatusCheck = "recommended".equals(
+                            clientGeneratorContext.getCustomConfig().retryStatusCodes())
+                    ? "List.of(408, 429, 502, 503, 504).contains(statusCode)"
+                    : "List.of(408, 429).contains(statusCode) || statusCode >= 500";
+            contents = contents.replace("{{RETRY_STATUS_CHECK}}", retryStatusCheck);
             return GeneratedResourcesJavaFile.builder()
                     .className(className)
                     .contents(contents)

@@ -16,7 +16,7 @@ export const migration_4_0_0: Migration = {
 
     migrateGeneratorConfig: ({ config }) =>
         migrateConfig(config, (draft) => {
-            draft.retryStatusCodes ??= "legacy";
+            draft["retry-status-codes"] ??= "legacy";
         }),
 
     migrateGeneratorsYml: ({ document }) => document

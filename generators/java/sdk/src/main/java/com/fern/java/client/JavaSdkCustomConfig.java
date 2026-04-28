@@ -119,7 +119,7 @@ public interface JavaSdkCustomConfig extends ICustomConfig {
     }
 
     @Value.Default
-    @JsonProperty("retryStatusCodes")
+    @JsonProperty("retry-status-codes")
     default String retryStatusCodes() {
         return "legacy";
     }
