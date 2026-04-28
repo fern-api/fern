@@ -762,7 +762,7 @@
       "pathParameters": [],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "ChatRequest",
+      "generatedRequestName": "ChatBody",
       "request": {
         "schema": {
           "allOf": [],

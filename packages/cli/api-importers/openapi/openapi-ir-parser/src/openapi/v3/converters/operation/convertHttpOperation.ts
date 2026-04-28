@@ -336,12 +336,13 @@ export function convertHttpOperation({
         queryParameters: convertedParameters.queryParameters,
         headers: convertedParameters.headers,
         requestNameOverride: streamRequestNameOverride ?? requestNameOverride ?? undefined,
-        generatedRequestName: getGeneratedTypeName(
-            isMultipleRequests
-                ? getDifferentiatedBreadcrumbs({ breadcrumbs: requestBreadcrumbs, request })
-                : requestBreadcrumbs,
-            context.options.preserveSchemaIds
-        ),
+        generatedRequestName: getDisambiguatedRequestName({
+            baseBreadcrumbs,
+            requestBreadcrumbs,
+            isMultipleRequests,
+            request,
+            context
+        }),
         request,
         response: convertedResponse.value,
         errors: convertedResponse.errors,
@@ -435,4 +436,50 @@ function endpointHasNonRequestBodyParameters({
         convertedParameters.queryParameters.length > 0 ||
         convertedParameters.headers.length > 0
     );
+}
+
+/**
+ * Computes the generated request name, disambiguating when it would collide
+ * with a top-level component schema. Without this, specs that use the common
+ * pattern of `$ref`-ing `#/components/schemas/XRequest` from an operation
+ * whose operationId-derived breadcrumbs also produce `XRequest` will emit
+ * duplicate type declarations (TS2308, Java import collisions, Go redeclare).
+ */
+function getDisambiguatedRequestName({
+    baseBreadcrumbs,
+    requestBreadcrumbs,
+    isMultipleRequests,
+    request,
+    context
+}: {
+    baseBreadcrumbs: string[];
+    requestBreadcrumbs: string[];
+    isMultipleRequests: boolean;
+    request: RequestWithExample | undefined;
+    context: AbstractOpenAPIV3ParserContext;
+}): string {
+    const nameBreadcrumbs = isMultipleRequests
+        ? getDifferentiatedBreadcrumbs({ breadcrumbs: requestBreadcrumbs, request })
+        : requestBreadcrumbs;
+    const computedName = getGeneratedTypeName(nameBreadcrumbs, context.options.preserveSchemaIds);
+
+    const componentSchemas = context.document.components?.schemas;
+    if (componentSchemas == null) {
+        return computedName;
+    }
+
+    // Check if any component schema would produce the same generated type name.
+    const collidesWithSchema = Object.keys(componentSchemas).some(
+        (schemaKey) => getGeneratedTypeName([schemaKey], context.options.preserveSchemaIds) === computedName
+    );
+    if (!collidesWithSchema) {
+        return computedName;
+    }
+
+    // Replace "Request" breadcrumb with "Body" to produce a non-colliding name.
+    const bodyBreadcrumbs = [...baseBreadcrumbs, "Body"];
+    const bodyNameBreadcrumbs = isMultipleRequests
+        ? getDifferentiatedBreadcrumbs({ breadcrumbs: bodyBreadcrumbs, request })
+        : bodyBreadcrumbs;
+    return getGeneratedTypeName(bodyNameBreadcrumbs, context.options.preserveSchemaIds);
 }

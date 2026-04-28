@@ -332,6 +332,9 @@ fixtures:
     - customConfig:
         enable_wire_tests: true
       outputFolder: with-wire-tests
+  openapi-request-body-ref:
+    - customConfig: null
+      outputFolder: no-custom-config
   java-optional-nullable-query-params:
     - customConfig:
         use-default-request-parameter-values: true
@@ -430,3 +433,7 @@ allowedFailures:
   # Optional wire tests have snippet generation bug with optional(nullable(T))
   # Snippet generator doesn't wrap value in Optional.of() for optional request bodies
   - optional:wire-tests
+
+  # Multipart with $ref body — Java snippet generator drops the file argument;
+  # tracked under FER-10085 (will pass once that PR lands).
+  - openapi-request-body-ref:no-custom-config

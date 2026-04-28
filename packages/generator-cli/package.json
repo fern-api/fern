@@ -19,6 +19,12 @@
       "source": "./src/autoversion/index.ts",
       "types": "./lib/autoversion/index.d.ts",
       "default": "./lib/autoversion/index.js"
+    },
+    "./pipeline": {
+      "development": "./src/pipeline/index.ts",
+      "source": "./src/pipeline/index.ts",
+      "types": "./lib/pipeline/index.d.ts",
+      "default": "./lib/pipeline/index.js"
     }
   },
   "main": "lib/api.js",

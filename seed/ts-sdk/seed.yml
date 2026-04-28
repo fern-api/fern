@@ -230,6 +230,9 @@ fixtures:
     - outputFolder: flatten-request-parameters
       customConfig:
         flattenRequestParameters: true
+  openapi-request-body-ref:
+    - outputFolder: no-custom-config
+      customConfig: null
   trace:
     - outputFolder: no-custom-config
       customConfig: null

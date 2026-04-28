@@ -5,7 +5,9 @@ import { createFdrService } from "@fern-api/core";
 import { MediaType, replaceEnvVariables } from "@fern-api/core-utils";
 import {
     applyTranslatedFrontmatterToNavTree,
+    applyTranslatedNavigationOverlays,
     DocsDefinitionResolver,
+    getTranslatedAnnouncement,
     replaceImagePathsAndUrls,
     stripMdxComments,
     UploadedFile,
@@ -631,6 +633,7 @@ export async function publishDocs({
         // In preview mode, register translations against the preview URL (not the production domain)
         // so that translated docs are visible in preview without overwriting production translations.
         const translationPages = resolver.getTranslationPages();
+        const translationNavigationOverlays = resolver.getTranslationNavigationOverlays();
         const translationDomain = preview ? urlToOutput : domain;
         if (translationPages != null && Object.keys(translationPages).length > 0) {
             context.logger.info(`Registering translations for ${Object.keys(translationPages).length} locale(s)...`);
@@ -699,18 +702,29 @@ export async function publishDocs({
                                 })
                             )
                         };
-                        const updatedRoot = applyTranslatedFrontmatterToNavTree(
+                        let updatedRoot = applyTranslatedFrontmatterToNavTree(
                             docsDefinition.config.root,
                             // localePages is Record<RelativeFilePath, string> (path -> raw markdown)
                             localePages as Record<string, string>,
                             context
                         );
+
+                        // Apply navigation overlay (translated display-names, titles, etc.)
+                        const localeNavOverlay = translationNavigationOverlays?.[locale];
+                        let translatedAnnouncement = docsDefinition.config.announcement;
+                        if (localeNavOverlay != null) {
+                            updatedRoot = applyTranslatedNavigationOverlays(updatedRoot, localeNavOverlay);
+                            translatedAnnouncement =
+                                getTranslatedAnnouncement(localeNavOverlay) ?? translatedAnnouncement;
+                        }
+
                         const translatedDefinition: DocsDefinition = {
                             ...docsDefinition,
                             pages: translatedPages,
                             config: {
                                 ...docsDefinition.config,
-                                root: updatedRoot
+                                root: updatedRoot,
+                                announcement: translatedAnnouncement
                             }
                         };
                         const pageCount = Object.keys(localePages).length;

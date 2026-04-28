@@ -272,6 +272,17 @@ export class DocsDefinitionResolver {
     }
 
     /**
+     * Returns per-locale translated navigation overlays loaded from
+     * `translations/<lang>/fern/docs.yml` and referenced nav YAML files.
+     * Must be called after `resolve()`.
+     */
+    public getTranslationNavigationOverlays():
+        | Record<string, import("@fern-api/configuration").docsYml.TranslationNavigationOverlay>
+        | undefined {
+        return this._parsedDocsConfig?.translationNavigationOverlays;
+    }
+
+    /**
      * Returns the map of absolute file paths to uploaded file IDs.
      * Used by translation processing to rewrite image paths in translated pages.
      * Must be called after `resolve()`.

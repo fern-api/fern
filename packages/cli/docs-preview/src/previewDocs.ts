@@ -8,7 +8,12 @@ import {
     stripMdxComments,
     transformAtPrefixImports
 } from "@fern-api/docs-markdown-utils";
-import { DocsDefinitionResolver, filterOssWorkspaces, stitchGlobalTheme } from "@fern-api/docs-resolver";
+import {
+    DocsDefinitionResolver,
+    filterOssWorkspaces,
+    stitchGlobalTheme,
+    type TranslationNavigationOverlay
+} from "@fern-api/docs-resolver";
 import {
     APIV1Read,
     APIV1Write,
@@ -131,6 +136,11 @@ export interface PreviewDocsResult {
      * Key is locale (e.g., "fr", "ja"), value is a map of page path to raw markdown.
      */
     translationPages: Record<string, Record<RelativeFilePath, string>> | undefined;
+    /**
+     * Per-locale translated navigation overlays from translations/<lang>/fern/ YAML files.
+     * Key is locale, value is a parsed overlay with translated display-names, titles, etc.
+     */
+    translationNavigationOverlays: Record<string, TranslationNavigationOverlay> | undefined;
     /**
      * File IDs collected during docs resolution, needed for image path replacement
      * in translated pages.
@@ -288,6 +298,7 @@ export async function getPreviewDocsDefinition({
             return {
                 docsDefinition: previousDocsDefinition,
                 translationPages: previousPreviewResult.translationPages,
+                translationNavigationOverlays: previousPreviewResult.translationNavigationOverlays,
                 collectedFileIds: previousPreviewResult.collectedFileIds,
                 docsWorkspacePath: previousPreviewResult.docsWorkspacePath
             };
@@ -376,13 +387,15 @@ export async function getPreviewDocsDefinition({
         docsDefinition = { ...substitutedDocs, jsFiles };
     }
 
-    // Get translation pages and collected file IDs for building translated definitions
+    // Get translation pages, navigation overlays, and collected file IDs for building translated definitions
     const translationPages = resolver.getTranslationPages();
+    const translationNavigationOverlays = resolver.getTranslationNavigationOverlays();
     const collectedFileIds = resolver.getCollectedFileIds();
 
     return {
         docsDefinition,
         translationPages,
+        translationNavigationOverlays,
         collectedFileIds,
         docsWorkspacePath: docsWorkspace.absoluteFilePath
     };
