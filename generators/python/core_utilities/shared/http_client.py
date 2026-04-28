@@ -122,7 +122,12 @@ def _retry_timeout_from_retries(retries: int) -> float:
     return _add_symmetric_jitter(backoff)
 
 
+RETRY_STATUS_CODES = "legacy"
+
+
 def _should_retry(response: httpx.Response) -> bool:
+    if RETRY_STATUS_CODES == "recommended":
+        return response.status_code in [408, 409, 429, 502, 503, 504]
     retryable_400s = [429, 408, 409]
     return response.status_code >= 500 or response.status_code in retryable_400s
 
