@@ -96,12 +96,10 @@ export class MockEndpointGenerator extends WithGeneration {
                 for (const parameter of example.queryParameters) {
                     const maybeParameterValue = this.exampleToQueryOrHeaderValue(parameter);
                     if (maybeParameterValue != null) {
-                        // WireMock.Net splits comma-delimited query values into separate entries,
-                        // so each value must be matched individually.
-                        const paramValues = maybeParameterValue.split(",");
-                        for (const value of paramValues) {
-                            writer.write(`.WithParam("${getWireValue(parameter.name)}", "${value.trim()}")`);
-                        }
+                        // WireMock.Net splits comma-delimited query values into separate array
+                        // entries, so pass all values in a single WithParam call.
+                        const paramValues = maybeParameterValue.split(",").map((v) => `"${v.trim()}"`);
+                        writer.write(`.WithParam("${getWireValue(parameter.name)}", ${paramValues.join(", ")})`);
                     }
                 }
                 for (const header of [...example.serviceHeaders, ...example.endpointHeaders]) {
