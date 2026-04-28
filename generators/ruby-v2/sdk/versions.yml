@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.9.0
+  changelogEntry:
+    - summary: |
+        Support `x-fern-default` as fallback value for parameters in generated Ruby SDKs.
+        When a header, query parameter, or path parameter has a `clientDefault` value in the IR,
+        the generated Ruby SDK makes that parameter optional with the default value automatically applied.
+      type: feat
+  createdAt: "2026-04-27"
+  irVersion: 66
 - version: 1.8.0
   changelogEntry:
     - summary: |

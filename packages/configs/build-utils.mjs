@@ -64,12 +64,15 @@ export async function buildGenerator(dirname, options = {}) {
     const outDir = tsupOptions.outDir ?? "dist";
 
     // Build with tsup (merge default options with custom ones)
+    // Keep @boundaryml/baml external so esbuild does not try to bundle its
+    // platform-specific native .node files (transitive dep via generator-cli).
     const defaultTsupOptions = {
         entry: [entry],
         format: ["cjs"],
         sourcemap: true,
         clean: true,
-        outDir
+        outDir,
+        external: ["@boundaryml/baml"]
     };
 
     await tsup.build({

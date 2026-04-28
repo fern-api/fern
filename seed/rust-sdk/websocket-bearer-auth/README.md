@@ -39,7 +39,7 @@ The SDK supports WebSocket connections for real-time communication. Use the gene
 use seed_websocket_bearer_auth::prelude::*;
 
 let client = WebsocketBearerAuthClient::new(ClientConfig {
-    token: Some("your-api-key".to_string()),
+    token: Some("YOUR_API_KEY".to_string()),
     ..Default::default()
 })
 .expect("Failed to create client");

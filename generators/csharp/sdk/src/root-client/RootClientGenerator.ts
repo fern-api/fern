@@ -42,6 +42,11 @@ interface ConstructorParameter {
      * Falls back to parameter name if not provided
      */
     exampleValue?: string;
+    /**
+     * The client default value from x-fern-default.
+     * When present, the parameter is optional and uses this value as fallback.
+     */
+    clientDefault?: Literal;
 }
 
 interface LiteralParameter {
@@ -260,13 +265,14 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         for (const param of [...requiredParameters, ...optionalParameters]) {
             if (param.header != null) {
                 const access = paramAccess(param);
+                const fallback = this.getHeaderFallback(param);
                 authHeaderEntries.push({
                     key: this.csharp.codeblock(this.csharp.string_({ string: param.header.name })),
                     value: this.csharp.codeblock(
                         param.header.prefix != null
-                            ? `$"${param.header.prefix} {${param.isOptional ? `${access} ?? ""` : access}}"`
+                            ? `$"${param.header.prefix} {${param.isOptional ? `${access} ?? ${fallback}` : access}}"`
                             : param.isOptional || param.type.isOptional
-                              ? `${access} ?? ""`
+                              ? `${access} ?? ${fallback}`
                               : access
                     )
                 });
@@ -945,6 +951,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
     }
 
     private getParameterForHeader(header: HttpHeader): ConstructorParameter {
+        const hasClientDefault = header.clientDefault != null;
         return {
             name:
                 header.valueType.type === "container" && header.valueType.container.type === "literal"
@@ -954,13 +961,30 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                 name: getWireValue(header.name)
             },
             docs: header.docs,
-            isOptional: header.valueType.type === "container" && header.valueType.container.type === "optional",
+            isOptional:
+                hasClientDefault ||
+                (header.valueType.type === "container" && header.valueType.container.type === "optional"),
             typeReference: header.valueType,
             type: this.context.csharpTypeMapper.convert({
                 reference: header.valueType
             }),
-            exampleValue: this.case.screamingSnakeSafe(header.name)
+            exampleValue: this.case.screamingSnakeSafe(header.name),
+            clientDefault: header.clientDefault
         };
+    }
+
+    private getHeaderFallback(param: ConstructorParameter): string {
+        if (param.clientDefault != null) {
+            switch (param.clientDefault.type) {
+                case "string":
+                    return `"${escapeForCSharpString(param.clientDefault.string)}"`;
+                case "boolean":
+                    return param.clientDefault.boolean ? `"${true.toString()}"` : `"${false.toString()}"`;
+                default:
+                    assertNever(param.clientDefault);
+            }
+        }
+        return `""`;
     }
 
     private getFromEnvironmentOrThrowMethod(cls: ast.Class) {

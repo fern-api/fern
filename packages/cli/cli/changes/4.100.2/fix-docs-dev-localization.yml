@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix `fern docs dev` to serve translated page content when viewing localized pages.
+  type: fix

@@ -134,4 +134,21 @@ export class DefaultValueExtractor {
     private isSafeInteger(value: number): boolean {
         return Number.isSafeInteger(value);
     }
+
+    /**
+     * Extracts a Ruby code string from a clientDefault Literal value.
+     * Returns the escaped Ruby representation or undefined if no literal is provided.
+     */
+    public extractClientDefault(literal: FernIr.Literal | undefined): string | undefined {
+        if (literal == null) {
+            return undefined;
+        }
+        return literal._visit<string>({
+            string: (value) => this.escapeString(value),
+            boolean: (value) => (value ? "true" : "false"),
+            _other: () => {
+                throw new Error("Unknown Literal type");
+            }
+        });
+    }
 }

@@ -1,0 +1,6 @@
+- summary: |
+    Support simplified string syntax for `translations` field in docs.yml.
+    You can now use `translations: [en, ja, fr]` instead of requiring
+    `translations: [{lang: en}, {lang: ja}, {lang: fr}]`. The verbose
+    object syntax remains supported for specifying `default: true`.
+  type: feat

@@ -1,5 +1,5 @@
 import { createVenusService } from "@fern-api/core";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
 import { FernUserToken } from "../FernToken.js";
 import { getOrganizationNameValidationError } from "./getOrganizationNameValidationError.js";
 
@@ -22,13 +22,15 @@ export async function createOrganizationIfDoesNotExist({
 
     const validationError = getOrganizationNameValidationError(organization);
     if (validationError != null) {
-        context.failAndThrow(validationError);
+        context.failAndThrow(validationError, undefined, { code: CliError.Code.ValidationError });
     }
     const createOrganizationResponse = await venus.organization.create({
         organizationId: organization
     });
     if (!createOrganizationResponse.ok) {
-        context.failAndThrow(`Failed to create organization: ${organization}`, createOrganizationResponse.error);
+        context.failAndThrow(`Failed to create organization: ${organization}`, createOrganizationResponse.error, {
+            code: CliError.Code.NetworkError
+        });
     }
     return true;
 }

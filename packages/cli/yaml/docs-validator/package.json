@@ -35,6 +35,7 @@
     "@fern-api/api-workspace-commons": "workspace:*",
     "@fern-api/auth": "workspace:*",
     "@fern-api/cli-source-resolver": "workspace:*",
+    "@fern-api/configuration": "workspace:*",
     "@fern-api/configuration-loader": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/docs-markdown-utils": "workspace:*",

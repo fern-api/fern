@@ -234,6 +234,9 @@ fixtures:
     - outputFolder: with-wire-tests
       customConfig:
         enableWireTests: true
+  openapi-request-body-ref:
+    - outputFolder: no-custom-config
+      customConfig: null
   idempotency-headers:
     - outputFolder: .
       outputVersion: 0.0.1

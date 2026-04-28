@@ -59,13 +59,30 @@ export interface DocsConfiguration {
      * that the documentation supports. Use the `translations/` directory alongside
      * `docs.yml` to provide per-language content.
      *
-     * Example:
+     * Example (object syntax):
      * ```yaml
      * translations:
      *   - lang: en
      *     default: true
      *   - lang: ja
      *   - lang: fr
+     * ```
+     *
+     * Example (simplified syntax):
+     * ```yaml
+     * translations:
+     *   - en
+     *   - ja
+     *   - fr
+     * ```
+     *
+     * You can mix both syntaxes:
+     * ```yaml
+     * translations:
+     *   - lang: en
+     *     default: true
+     *   - ja
+     *   - fr
      * ```
      */
     translations?: FernDocsConfig.TranslationConfig[];

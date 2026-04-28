@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.38.1
+  changelogEntry:
+    - summary: |
+        Fix casing bug where a single-letter uppercase word between a lowercase word and a
+        PascalCase word (e.g. the `I` in `WhoAmIResponseData`) was merged into the following
+        word, producing `WhoAmIresponseData`. `splitWords` now matches lodash's `words()`
+        behaviour and tokenizes this as `Who|Am|I|Response|Data`.
+      type: fix
+  createdAt: "2026-04-27"
+  irVersion: 66
 - version: 1.38.0
   changelogEntry:
     - summary: |

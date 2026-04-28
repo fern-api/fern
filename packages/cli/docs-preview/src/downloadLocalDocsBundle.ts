@@ -37,11 +37,11 @@ interface SymlinkEntry {
 }
 
 /**
- * Checks the Windows registry for LongPathsEnabled and prints a prominent
- * warning if long paths are not enabled. Long paths are required because
+ * Checks the Windows registry for LongPathsEnabled and throws a hard
+ * error if long paths are not enabled. Long paths are required because
  * .pnpm directory names inside the bundle can exceed the 260-char MAX_PATH.
  */
-function warnIfLongPathsDisabled(logger: Logger): void {
+function assertLongPathsEnabled(logger: Logger): void {
     try {
         const output = execSync(
             'reg query "HKLM\\SYSTEM\\CurrentControlSet\\Control\\FileSystem" /v LongPathsEnabled',
@@ -57,30 +57,17 @@ function warnIfLongPathsDisabled(logger: Logger): void {
         logger.debug(`Registry query for LongPathsEnabled failed: ${error}`);
     }
 
-    logger.warn(
-        chalk.yellow.bold(
-            "\n" +
-                "╔══════════════════════════════════════════════════════════════════════════╗\n" +
-                "║  WARNING: Windows long path support is NOT enabled.                     ║\n" +
-                "║                                                                         ║\n" +
-                "║  The docs bundle contains deeply nested .pnpm paths that may exceed     ║\n" +
-                "║  the 260-character MAX_PATH limit. Extraction may silently truncate     ║\n" +
-                "║  paths and produce a broken bundle.                                     ║\n" +
-                "║                                                                         ║\n" +
-                "║  To fix, run this in an elevated PowerShell:                             ║\n" +
-                "║                                                                         ║\n" +
-                "║    New-ItemProperty -Path                                                ║\n" +
-                "║      'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\FileSystem'           ║\n" +
-                "║      -Name 'LongPathsEnabled' -Value 1 -PropertyType DWORD -Force       ║\n" +
-                "║                                                                         ║\n" +
-                "║  Then restart your terminal.                                             ║\n" +
-                "║                                                                         ║\n" +
-                "║  For more details, see:                                                  ║\n" +
-                "║  https://learn.microsoft.com/en-us/windows/win32/fileio/                 ║\n" +
-                "║  maximum-file-path-limitation                                            ║\n" +
-                "╚══════════════════════════════════════════════════════════════════════════╝\n"
-        )
-    );
+    throw new CliError({
+        message:
+            "Windows long path support is not enabled. " +
+            "The docs bundle contains deeply nested .pnpm paths that exceed the 260-character MAX_PATH limit.\n\n" +
+            "To fix, run this in an elevated PowerShell:\n\n" +
+            "  New-ItemProperty -Path 'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\FileSystem' " +
+            "-Name 'LongPathsEnabled' -Value 1 -PropertyType DWORD -Force\n\n" +
+            "Then restart your terminal.",
+        code: CliError.Code.EnvironmentError,
+        docsLink: "https://learn.microsoft.com/en-us/windows/win32/fileio/maximum-file-path-limitation"
+    });
 }
 
 function isWithinOutputDir(resolvedPath: string, outputDir: string): boolean {
@@ -406,7 +393,7 @@ export async function downloadBundle({
         }
 
         if (PLATFORM_IS_WINDOWS) {
-            warnIfLongPathsDisabled(logger);
+            assertLongPathsEnabled(logger);
         }
 
         const collectedSymlinks: SymlinkEntry[] = [];

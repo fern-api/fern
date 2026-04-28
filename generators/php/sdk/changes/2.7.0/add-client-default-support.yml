@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Support `x-fern-default` as fallback value for parameters in generated PHP SDKs.
+    When a header, query parameter, or path parameter has a `clientDefault` value in the IR,
+    the generated PHP SDK makes that parameter optional with the default value automatically applied.
+  type: feat

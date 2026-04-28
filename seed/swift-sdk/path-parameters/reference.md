@@ -381,13 +381,13 @@ private func main() async throws {
 
     _ = try await client.user.updateUser(
         userId: "user_id",
-        request: .init(body: User(
+        request: User(
             name: "name",
             tags: [
                 "tags",
                 "tags"
             ]
-        ))
+        )
     )
 }
 

@@ -24,7 +24,7 @@ public class BaseMockServerTest
 
         // Initialize the Client
         Client = new SeedHeaderTokenClient(
-            "HEADER_TOKEN_AUTH",
+            "YOUR_API_KEY",
             clientOptions: new ClientOptions { BaseUrl = Server.Urls[0], MaxRetries = 0 }
         );
     }

@@ -83,4 +83,12 @@ export interface DocsSettingsConfig {
      * @default: false
      */
     substituteEnvVars?: boolean;
+    /**
+     * Controls how WebSocket messages with oneOf bodies are displayed in the API Reference.
+     * - `flat` (default): Each variant in the oneOf is shown as a separate top-level entry.
+     * - `grouped`: Messages are shown as a single parent entry with nested variants.
+     *
+     * @default: flat
+     */
+    websocketOneofDisplay?: FernDocsConfig.WebSocketOneofDisplay;
 }

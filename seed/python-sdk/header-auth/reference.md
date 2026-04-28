@@ -30,7 +30,7 @@ GET request with custom api key
 from seed import SeedHeaderToken
 
 client = SeedHeaderToken(
-    header_token_auth="<value>",
+    header_token_auth="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
 

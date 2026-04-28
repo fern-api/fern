@@ -6,12 +6,12 @@ private func main() async throws {
 
     _ = try await client.updatePlant(
         plantId: "plantId",
-        request: .init(body: .object([
+        request: .object([
             "name": .string("Updated Venus Flytrap"), 
             "care": .object([
                 "light": .string("partial shade")
             ])
-        ]))
+        ])
     )
 }
 

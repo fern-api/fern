@@ -1,0 +1,5 @@
+- summary: |
+    Fix `fern generate --docs --preview` to register translations for preview URLs.
+    Previously, translation registration was skipped entirely in preview mode,
+    causing translated docs to not appear in preview deployments.
+  type: fix

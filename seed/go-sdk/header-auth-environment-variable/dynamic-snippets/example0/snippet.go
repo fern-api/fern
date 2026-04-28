@@ -13,7 +13,7 @@ func do() {
             "https://api.fern.com",
         ),
         option.WithHeaderTokenAuth(
-            "<value>",
+            "YOUR_HEADER_VALUE",
         ),
     )
     client.Service.GetWithBearerToken(

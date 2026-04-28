@@ -66,7 +66,7 @@ The SDK throws a single error enum for all failures. Client-side issues encoding
 ```swift
 import Accept
 
-let client = AcceptClient(...)
+let client = AcceptClient(token: "YOUR_API_KEY")
 
 do {
     let response = try await client.service.endpoint(...)
@@ -134,7 +134,7 @@ import Foundation
 import Accept
 
 let client = AcceptClient(
-    ...,
+    token: "YOUR_API_KEY",
     urlSession: // Provide your implementation here
 )
 ```

@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedHeaderToken;\n\nvar client = new SeedHeaderTokenClient(\"HEADER_TOKEN_AUTH\");\nawait client.Service.GetWithBearerTokenAsync();\n"
+                "client": "using SeedHeaderToken;\n\nvar client = new SeedHeaderTokenClient(\"YOUR_API_KEY\");\nawait client.Service.GetWithBearerTokenAsync();\n"
             }
         }
     ]
