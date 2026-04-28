@@ -1,8 +1,10 @@
 types:
   EventTypeEnum:
     enum:
-      - group.created
-      - user.updated
+      - name: GroupCreated
+        value: group.created
+      - name: UserUpdated
+        value: user.updated
 
   # Either a single enum value or a list of enum values.
   # Mirrors style: form, explode: true semantics from OpenAPI specs that
