@@ -36,8 +36,8 @@ public final class RetryInterceptorGenerator extends AbstractFileGenerator {
     public GeneratedResourcesJavaFile generateFile() {
         try (InputStream is = RetryInterceptorGenerator.class.getResourceAsStream("/RetryInterceptor.java")) {
             String contents = new String(is.readAllBytes(), StandardCharsets.UTF_8);
-            String retryStatusCheck = "recommended".equals(
-                            clientGeneratorContext.getCustomConfig().retryStatusCodes())
+            String retryStatusCheck = "recommended"
+                            .equals(clientGeneratorContext.getCustomConfig().retryStatusCodes())
                     ? "List.of(408, 429, 502, 503, 504).contains(statusCode)"
                     : "List.of(408, 429).contains(statusCode) || statusCode >= 500";
             contents = contents.replace("{{RETRY_STATUS_CHECK}}", retryStatusCheck);
