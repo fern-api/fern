@@ -677,4 +677,20 @@ public class QueryStringBuilderTests
         Assert.That(result, Does.Contain("$filter=status%20eq%20'active'"));
         Assert.That(result, Does.Contain("$top=10"));
     }
+
+    [Test]
+    public void Build_QueryKey_BracketsPreserved()
+    {
+        // "[" and "]" are safe in query keys for array-style parameters (e.g., page[size])
+        var parameters = new List<KeyValuePair<string, string>>
+        {
+            new("page[size]", "10"),
+            new("filter[status]", "active"),
+        };
+
+        var result = QueryStringBuilder.Build(parameters);
+
+        Assert.That(result, Does.Contain("page[size]=10"));
+        Assert.That(result, Does.Contain("filter[status]=active"));
+    }
 }

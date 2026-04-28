@@ -1,0 +1,5 @@
+- summary: |
+    Add `[` and `]` to safe query key characters so array-style parameter names
+    like `page[size]` are not percent-encoded. This fixes WireMock.Net mock server
+    test matching for query parameters that use bracket notation.
+  type: fix
