@@ -1,0 +1,5 @@
+- summary: |
+    Add `fern docs translate` command that interactively sets up internationalization
+    by letting users pick target languages, updating docs.yml with a translations config,
+    and creating the corresponding translation directories on disk.
+  type: feat

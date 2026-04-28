@@ -55,6 +55,7 @@ import { listDocsPreview } from "./commands/docs-preview/listDocsPreview.js";
 import { exportDocsTheme } from "./commands/docs-theme/exportDocsTheme.js";
 import { listDocsThemes } from "./commands/docs-theme/listDocsThemes.js";
 import { uploadDocsTheme } from "./commands/docs-theme/uploadDocsTheme.js";
+import { docsTranslate } from "./commands/docs-translate/docsTranslate.js";
 import { downgrade } from "./commands/downgrade/downgrade.js";
 import { generateOpenAPIForWorkspaces } from "./commands/export/generateOpenAPIForWorkspaces.js";
 import { formatWorkspaces } from "./commands/format/formatWorkspaces.js";
@@ -1744,8 +1745,30 @@ function addDocsCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
         addDocsDiffCommand(yargs, cliContext);
         addDocsMdCommand(yargs, cliContext);
         addDocsThemeCommand(yargs, cliContext);
+        addDocsTranslateCommand(yargs, cliContext);
         return yargs;
     });
+}
+
+function addDocsTranslateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "translate",
+        "Interactively set up internationalization for your documentation",
+        (yargs) => yargs,
+        async () => {
+            cliContext.instrumentPostHogEvent({
+                command: "fern docs translate"
+            });
+
+            await docsTranslate({
+                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                    defaultToAllApiWorkspaces: true,
+                    commandLineApiWorkspace: undefined
+                }),
+                cliContext
+            });
+        }
+    );
 }
 
 function addDocsThemeCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
