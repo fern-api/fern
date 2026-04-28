@@ -135,18 +135,17 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
             extraTemplateVars
         });
 
-        if (filename === AsIsFiles.RetryDecoratingClient && this.context.customConfig.retryStatusCodes === "recommended") {
+        if (
+            filename === AsIsFiles.RetryDecoratingClient &&
+            this.context.customConfig.retryStatusCodes === "recommended"
+        ) {
             rendered = rendered.replace(
                 "$response->getStatusCode() >= 500 ||\n                in_array($response->getStatusCode(), self::RETRY_STATUS_CODES)",
                 "in_array($response->getStatusCode(), [408, 429, 502, 503, 504])"
             );
         }
 
-        return new File(
-            filename.replace(".Template", ""),
-            RelativeFilePath.of(""),
-            rendered
-        );
+        return new File(filename.replace(".Template", ""), RelativeFilePath.of(""), rendered);
     }
 
     private async createGitHubWorkflowsDirectory(): Promise<void> {
