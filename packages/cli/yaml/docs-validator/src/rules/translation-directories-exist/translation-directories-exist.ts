@@ -14,7 +14,7 @@ export const TranslationDirectoriesExistRule: Rule = {
                     return violations;
                 }
 
-                const defaultLocale = translations.find((t) => t.default === true)?.lang;
+                const defaultLocale = (translations.find((t) => t.default === true) ?? translations[0])?.lang;
                 const translationsDir = join(workspace.absoluteFilePath, RelativeFilePath.of("translations"));
                 const translationsDirExists = await doesPathExist(translationsDir);
 

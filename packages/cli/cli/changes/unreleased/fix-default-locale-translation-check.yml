@@ -1,0 +1,3 @@
+- summary: |
+    Fix translation directory check to treat the first locale as the default when no explicit `default: true` is set, matching the behavior of the rest of the CLI.
+  type: fix
