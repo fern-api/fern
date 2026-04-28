@@ -136,9 +136,7 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
         });
 
         const retryStatusCodesArray =
-            this.context.customConfig.retryStatusCodes === "recommended"
-                ? "[408, 429, 502, 503, 504]"
-                : "[408, 429]";
+            this.context.customConfig.retryStatusCodes === "recommended" ? "[408, 429, 502, 503, 504]" : "[408, 429]";
         const retryStatusCheck =
             this.context.customConfig.retryStatusCodes === "recommended"
                 ? "in_array($response->getStatusCode(), self::RETRY_STATUS_CODES)"
