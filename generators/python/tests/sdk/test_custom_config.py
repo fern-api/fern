@@ -73,6 +73,18 @@ def test_parse_obj_override() -> None:
     )
 
 
+def test_flatten_union_request_bodies_default() -> None:
+    """Default value of flatten_union_request_bodies is False."""
+    config = SDKCustomConfig.parse_obj({})
+    assert config.flatten_union_request_bodies is False
+
+
+def test_flatten_union_request_bodies_explicit_true() -> None:
+    """flatten_union_request_bodies is parsed from the payload."""
+    config = SDKCustomConfig.parse_obj({"flatten_union_request_bodies": True})
+    assert config.flatten_union_request_bodies is True
+
+
 def test_parse_wrapped_aliases() -> None:
     v1 = {
         "pydantic_config": {
