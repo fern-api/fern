@@ -1,8 +1,5 @@
 import { buildGenerator, getDirname } from "@fern-api/configs/build-utils.mjs";
 
 await buildGenerator(getDirname(import.meta.url), {
-    copy: { from: "../base/src/asIs", to: "./dist/asIs" },
-    tsupOptions: {
-        external: ["@boundaryml/baml"]
-    }
+    copy: { from: "../base/src/asIs", to: "./dist/asIs" }
 });
