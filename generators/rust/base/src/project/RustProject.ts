@@ -63,13 +63,6 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
                 // Replace template variables
                 fileContents = this.replaceTemplateVariables(fileContents);
 
-                if (def.filename === "http_client.rs" && context.customConfig.retryStatusCodes === "recommended") {
-                    fileContents = fileContents.replace(
-                        "status_code == 408 || status_code == 429 || status_code >= 500",
-                        "status_code == 408 || status_code == 429 || (status_code >= 501 && status_code < 600)"
-                    );
-                }
-
                 const rustFile = new RustFile({
                     filename: def.filename,
                     directory: def.directory,
@@ -103,6 +96,12 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
         const tomlSections = this.context.dependencyManager.toTomlSections();
         content = content.replace(/\{\{EXTRA_DEPENDENCIES\}\}/g, tomlSections.dependencies);
         content = content.replace(/\{\{EXTRA_DEV_DEPENDENCIES\}\}/g, tomlSections.devDependencies);
+
+        const retryStatusCheck =
+            this.context.customConfig.retryStatusCodes === "recommended"
+                ? "status_code == 408 || status_code == 429 || (status_code >= 501 && status_code < 600)"
+                : "status_code == 408 || status_code == 429 || status_code >= 500";
+        content = content.replace(/\{\{RETRY_STATUS_CHECK\}\}/g, retryStatusCheck);
 
         if (tomlSections.features) {
             content = content.replace(/\{\{FEATURES\}\}/g, `\n[features]\n${tomlSections.features}`);
