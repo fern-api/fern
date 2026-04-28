@@ -245,6 +245,8 @@ export class Generation {
         explicitNamespaces: () => this.customConfig["explicit-namespaces"] === true,
         /** Override the default max retries for the SDK client. Default: 2. */
         maxRetries: () => this.customConfig.maxRetries,
+        /** Controls which HTTP status codes trigger automatic retries. Default: "legacy". */
+        retryStatusCodes: () => this.customConfig.retryStatusCodes ?? "legacy",
         /**
          * Output path configuration for generated files.
          * Returns normalized paths for library, test, solution, and other files.

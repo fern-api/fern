@@ -116,7 +116,8 @@ export const CsharpConfigSchema = z.object({
     // .NET tooling or CI systems that do not yet support .slnx.
     // "slnx" (default) generates only the modern .slnx format.
     "sln-format": z.enum(["sln", "slnx"]).optional(),
-    maxRetries: z.number().int().min(0).optional()
+    maxRetries: z.number().int().min(0).optional(),
+    retryStatusCodes: z.optional(z.enum(["legacy", "recommended"]))
 });
 
 export type CsharpConfigSchema = z.infer<typeof CsharpConfigSchema>;

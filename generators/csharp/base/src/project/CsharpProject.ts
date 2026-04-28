@@ -689,22 +689,25 @@ dotnet_diagnostic.IDE0005.severity = error
 
     private async createAsIsFile({ filename, namespace }: { filename: string; namespace: string }): Promise<File> {
         const contents = (await readFile(getAsIsFilepath(filename))).toString();
-        return new File(
-            filename.replace(".Template", ""),
-            RelativeFilePath.of(""),
-            replaceTemplate({
-                contents,
-                variables: {
-                    grpc: this.context.hasGrpcEndpoints(),
-                    idempotencyHeaders: this.context.hasIdempotencyHeaders(),
-                    hasBaseUrl: this.context.hasBaseUrl(),
-                    namespace,
-                    additionalProperties: true,
-                    context: this.context,
-                    namespaces: this.namespaces
-                }
-            })
-        );
+        let rendered = replaceTemplate({
+            contents,
+            variables: {
+                grpc: this.context.hasGrpcEndpoints(),
+                idempotencyHeaders: this.context.hasIdempotencyHeaders(),
+                hasBaseUrl: this.context.hasBaseUrl(),
+                namespace,
+                additionalProperties: true,
+                context: this.context,
+                namespaces: this.namespaces
+            }
+        });
+        if (filename === AsIsFiles.RawClient && this.context.settings.retryStatusCodes() === "recommended") {
+            rendered = rendered.replace(
+                "return statusCode is 408 or 429 or (>= 500);",
+                "return statusCode is 408 or 429 or 502 or 503 or 504;"
+            );
+        }
+        return new File(filename.replace(".Template", ""), RelativeFilePath.of(""), rendered);
     }
 
     private async createCustomPagerAsIsFiles(): Promise<File[]> {
