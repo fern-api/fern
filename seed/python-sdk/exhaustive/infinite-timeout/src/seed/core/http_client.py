@@ -125,8 +125,7 @@ def _retry_timeout_from_retries(retries: int) -> float:
 
 
 def _should_retry(response: httpx.Response) -> bool:
-    retryable_400s = [429, 408, 409]
-    return response.status_code >= 500 or response.status_code in retryable_400s
+    return response.status_code >= 500 or response.status_code in [429, 408, 409]
 
 
 _SENSITIVE_HEADERS = frozenset(
