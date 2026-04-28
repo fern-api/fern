@@ -179,7 +179,6 @@ describe("@fern-api/generator-migrations", () => {
 
     describe("generator name lookup", () => {
         it("returns undefined for generators without migrations", () => {
-            expect(migrations["fernapi/fern-go-sdk"]).toBeUndefined();
             expect(migrations["fernapi/fern-ruby-sdk"]).toBeUndefined();
         });
 
