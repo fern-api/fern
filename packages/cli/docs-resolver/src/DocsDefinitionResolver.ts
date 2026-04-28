@@ -860,6 +860,7 @@ export class DocsDefinitionResolver {
             }),
             typographyV2: this.convertDocsTypographyConfiguration(),
             layout: this.parsedDocsConfig.layout,
+            // @ts-expect-error -- BCP 47: Language type widened to string, @fern-api/fdr-sdk not yet updated
             settings: this.parsedDocsConfig.settings,
             css: this.parsedDocsConfig.css,
             js: this.convertJavascriptConfiguration(),
@@ -881,6 +882,7 @@ export class DocsDefinitionResolver {
                 value: DocsV1Write.Url(footerLink.value)
             })),
             defaultLanguage: this.parsedDocsConfig.defaultLanguage,
+            // @ts-expect-error -- BCP 47: Language[] widened to string[], @fern-api/fdr-sdk not yet updated
             languages: this.parsedDocsConfig.languages,
 
             translations: this.getDocsTranslationsConfig(),
