@@ -9,7 +9,6 @@ import {
     Availability,
     DocsInstance,
     ExperimentalConfig,
-    Language,
     LibraryLanguage,
     PlaygroundSettings,
     Target,
@@ -43,7 +42,7 @@ export interface ParsedPageActionsConfig {
 
 // TODO(kafkas): Remove this when we upgrade the fdr-sdk to latest
 interface ParsedDocsSettingsConfig extends Omit<CjsFdrSdk.docs.v1.commons.DocsSettingsConfig, "language"> {
-    language: Language | undefined;
+    language: string | undefined;
     disableEnvironmentEditing: boolean | undefined;
     websocketOneofDisplay: "flat" | "grouped" | undefined;
 }
@@ -85,7 +84,7 @@ export interface ParsedDocsConfiguration {
     context7File: AbsoluteFilePath | undefined;
     llmsTxtFile: AbsoluteFilePath | undefined;
     llmsFullTxtFile: AbsoluteFilePath | undefined;
-    languages: Language[] | undefined;
+    languages: string[] | undefined;
     translations: TranslationConfig[] | undefined;
     defaultLanguage: CjsFdrSdk.docs.v1.commons.ProgrammingLanguage | undefined;
     analyticsConfig: CjsFdrSdk.docs.v1.commons.AnalyticsConfig | undefined;

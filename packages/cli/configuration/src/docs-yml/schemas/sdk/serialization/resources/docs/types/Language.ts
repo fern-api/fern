@@ -5,8 +5,39 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
 export const Language: core.serialization.Schema<serializers.Language.Raw, FernDocsConfig.Language> =
-    core.serialization.string();
+    core.serialization.enum_([
+        "en",
+        "es",
+        "fr",
+        "de",
+        "it",
+        "pt",
+        "ja",
+        "zh",
+        "ko",
+        "el",
+        "no",
+        "pl",
+        "ru",
+        "sv",
+        "tr",
+    ]);
 
 export declare namespace Language {
-    export type Raw = string;
+    export type Raw =
+        | "en"
+        | "es"
+        | "fr"
+        | "de"
+        | "it"
+        | "pt"
+        | "ja"
+        | "zh"
+        | "ko"
+        | "el"
+        | "no"
+        | "pl"
+        | "ru"
+        | "sv"
+        | "tr";
 }
