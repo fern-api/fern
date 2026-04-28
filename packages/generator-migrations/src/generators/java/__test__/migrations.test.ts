@@ -4,6 +4,7 @@ import { describe, expect, it, vi } from "vitest";
 
 import { migration_2_0_0 } from "../migrations/2.0.0.js";
 import { migration_3_0_0 } from "../migrations/3.0.0.js";
+import { migration_4_0_0 } from "../migrations/4.0.0.js";
 import migrationModule from "../migrations/index.js";
 
 const mockLogger: Logger = {
@@ -218,10 +219,17 @@ describe("Java SDK Migrations", () => {
                 context: { logger: mockLogger }
             });
 
-            // Should have defaults from both migrations
+            // Apply 4.0.0
+            config = migration_4_0_0.migrateGeneratorConfig({
+                config,
+                context: { logger: mockLogger }
+            });
+
+            // Should have defaults from all migrations
             expect(config.config).toEqual({
                 "disable-required-property-builder-checks": true,
-                "enable-forward-compatible-enums": false
+                "enable-forward-compatible-enums": false,
+                retryStatusCodes: "legacy"
             });
         });
 
@@ -229,7 +237,8 @@ describe("Java SDK Migrations", () => {
             let config = createBaseConfig({
                 "disable-required-property-builder-checks": false,
                 "enable-forward-compatible-enums": true,
-                "client-class-name": "CustomClient"
+                "client-class-name": "CustomClient",
+                retryStatusCodes: "recommended"
             });
 
             // Apply all migrations
@@ -241,26 +250,93 @@ describe("Java SDK Migrations", () => {
                 config,
                 context: { logger: mockLogger }
             });
+            config = migration_4_0_0.migrateGeneratorConfig({
+                config,
+                context: { logger: mockLogger }
+            });
 
             // User config should be preserved
             expect(config.config).toMatchObject({
                 "disable-required-property-builder-checks": false,
                 "enable-forward-compatible-enums": true,
-                "client-class-name": "CustomClient"
+                "client-class-name": "CustomClient",
+                retryStatusCodes: "recommended"
             });
+        });
+    });
+
+    describe("migration_4_0_0", () => {
+        it("sets old default for retryStatusCodes", () => {
+            const config = createBaseConfig();
+
+            const result = migration_4_0_0.migrateGeneratorConfig({
+                config,
+                context: { logger: mockLogger }
+            });
+
+            expect(result.config).toEqual({
+                retryStatusCodes: "legacy"
+            });
+        });
+
+        it("preserves explicitly set retryStatusCodes to recommended", () => {
+            const config = createBaseConfig({
+                retryStatusCodes: "recommended"
+            });
+
+            const result = migration_4_0_0.migrateGeneratorConfig({
+                config,
+                context: { logger: mockLogger }
+            });
+
+            expect(result.config).toEqual({
+                retryStatusCodes: "recommended"
+            });
+        });
+
+        it("preserves explicitly set retryStatusCodes to legacy", () => {
+            const config = createBaseConfig({
+                retryStatusCodes: "legacy"
+            });
+
+            const result = migration_4_0_0.migrateGeneratorConfig({
+                config,
+                context: { logger: mockLogger }
+            });
+
+            expect(result.config).toEqual({
+                retryStatusCodes: "legacy"
+            });
+        });
+
+        it("returns unmodified document for migrateGeneratorsYml", () => {
+            const document = {
+                configuration: {
+                    groups: {}
+                }
+            };
+
+            const result = migration_4_0_0.migrateGeneratorsYml({
+                document,
+                context: { logger: mockLogger }
+            });
+
+            expect(result).toBe(document);
         });
     });
 
     describe("migration module", () => {
         it("exports all migrations in correct order", () => {
-            expect(migrationModule.migrations).toHaveLength(2);
+            expect(migrationModule.migrations).toHaveLength(3);
             expect(migrationModule.migrations[0]).toBe(migration_2_0_0);
             expect(migrationModule.migrations[1]).toBe(migration_3_0_0);
+            expect(migrationModule.migrations[2]).toBe(migration_4_0_0);
         });
 
         it("all migrations have correct versions", () => {
             expect(migration_2_0_0.version).toBe("2.0.0");
             expect(migration_3_0_0.version).toBe("3.0.0");
+            expect(migration_4_0_0.version).toBe("4.0.0");
         });
 
         it("all migrations are properly structured", () => {
