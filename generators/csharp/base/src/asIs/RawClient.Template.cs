@@ -12,7 +12,6 @@ internal partial class RawClient(ClientOptions clientOptions)
 {
     private const int MaxRetryDelayMs = 60000;
     private const double JitterFactor = 0.2;
-    private const string RetryStatusCodes = "<%= retryStatusCodes%>";
 #if NET6_0_OR_GREATER
     // Use Random.Shared for thread-safe random number generation on .NET 6+
 #else
@@ -166,11 +165,11 @@ internal partial class RawClient(ClientOptions clientOptions)
     private static bool ShouldRetry(HttpResponseMessage response)
     {
         var statusCode = (int)response.StatusCode;
-        if (RetryStatusCodes == "recommended")
-        {
-            return statusCode is 408 or 429 or 502 or 503 or 504;
-        }
+<% if (retryStatusCodes === "recommended") { %>
+        return statusCode is 408 or 429 or 502 or 503 or 504;
+<% } else { %>
         return statusCode is 408 or 429 or (>= 500);
+<% } %>
     }
 
     private static int AddPositiveJitter(int delayMs)
