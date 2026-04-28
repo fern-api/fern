@@ -63,6 +63,16 @@ export async function buildGenerator(dirname, options = {}) {
 
     const outDir = tsupOptions.outDir ?? "dist";
 
+    // @boundaryml/baml contains platform-specific native .node files that esbuild
+    // cannot bundle. It's a transitive dependency via generator-cli → cli-ai, but
+    // generators never trigger the code path that uses it (autoversioning), so
+    // marking it external is safe. Merge with any caller-supplied externals.
+    const callerExternal = tsupOptions.external ?? [];
+    const mergedExternal = [
+        "@boundaryml/baml",
+        ...(Array.isArray(callerExternal) ? callerExternal : [callerExternal])
+    ];
+
     // Build with tsup (merge default options with custom ones)
     const defaultTsupOptions = {
         entry: [entry],
@@ -74,7 +84,8 @@ export async function buildGenerator(dirname, options = {}) {
 
     await tsup.build({
         ...defaultTsupOptions,
-        ...tsupOptions
+        ...tsupOptions,
+        external: mergedExternal
     });
 
     // Rewrite source map paths to be repo-root-relative so Sentry displays
