@@ -1,6 +1,25 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Stop pulling `@boundaryml/baml` into the static dependency graph of the
+        main library entry. `PostGenerationPipeline` and the surrounding pipeline
+        types are no longer re-exported from `@fern-api/generator-cli`; consumers
+        that need them import from `@fern-api/generator-cli/pipeline` instead.
+        `AutoVersionStep` reaches `@fern-api/cli-ai` via a dynamic `import()`,
+        so when the pipeline surface was reachable through the main barrel every
+        bundler that walked the api entry (every SDK generator's tsup build, via
+        `@fern-api/base-generator`'s `GeneratorAgentClient`) followed the dynamic
+        import into baml's `native.js` and tried to resolve `.node` files for
+        every supported platform, failing with 23 errors per build. Moving the
+        pipeline surface to a subpath keeps autoversion working in the Fern CLI
+        and in the bundled `bin/cli` (which imports pipeline directly, not via
+        the public exports map) while letting generator bundles avoid baml.
+      type: fix
+  createdAt: "2026-04-28"
+  version: 0.9.18
+
+- changelogEntry:
+    - summary: |
         Fix `upsertBranchRef` failing on first-generation runs after replay
         lockfile reset. GitHub's `updateRef` API returns HTTP 422 (not 404)
         when the target branch does not exist, so the `createRef` fallback
