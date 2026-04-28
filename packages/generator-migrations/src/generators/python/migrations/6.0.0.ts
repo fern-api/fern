@@ -4,20 +4,27 @@ import { migrateConfig } from "@fern-api/migrations-base";
 // Migration for version 6.0.0
 //
 // Context:
-// Version 6.0.0 changes the default retry status codes from `legacy` to `recommended`.
-// Under `legacy`, all 5xx status codes (including 500) are retried along with 408, 409, and 429.
-// Under `recommended`, only 408, 409, 429, 502, 503, and 504 are retried, avoiding
-// idempotency issues when retrying non-transient errors like 500 Internal Server Error.
+// Version 6.0.0 changes the default retry behavior. Previously, all 5xx status codes
+// (>= 500) were retried. The new default only retries transient status codes:
+// 408, 409, 429, 502, 503, 504. This avoids retrying 500 Internal Server Error,
+// which is typically not transient and retrying can cause idempotency issues.
 //
-// This migration explicitly sets `retry_status_codes: "legacy"` for users upgrading from
-// pre-6.0.0 versions, preserving their current retry behavior. Users can opt into the
-// new defaults by removing the field or setting `retry_status_codes: "recommended"`.
+// Changed Default:
+// - retryStatusCodes: "recommended" → "legacy" (when migrating from pre-6.0.0)
+//   In v6, the recommended mode is the default. Setting this to "legacy" restores
+//   the pre-6.0.0 behavior of retrying all >= 500 status codes.
+//
+// Migration Strategy:
+// This migration uses the nullish coalescing assignment operator (??=) to only set
+// the value if it is explicitly undefined. This means:
+// - If a user has explicitly configured this field, that value is preserved
+// - If the field is undefined, it is set to "legacy" for backwards compatibility
 export const migration_6_0_0: Migration = {
     version: "6.0.0",
 
     migrateGeneratorConfig: ({ config }) =>
         migrateConfig(config, (draft) => {
-            draft.retry_status_codes ??= "legacy";
+            draft.retryStatusCodes ??= "legacy";
         }),
 
     migrateGeneratorsYml: ({ document }) => document

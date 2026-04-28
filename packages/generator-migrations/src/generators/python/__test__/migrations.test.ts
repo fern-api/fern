@@ -4,6 +4,7 @@ import { describe, expect, it, vi } from "vitest";
 
 import { migration_4_0_0 } from "../migrations/4.0.0.js";
 import { migration_4_54_4 } from "../migrations/4.54.4.js";
+import { migration_6_0_0 } from "../migrations/6.0.0.js";
 import migrationModule from "../migrations/index.js";
 
 const mockLogger: Logger = {
@@ -460,14 +461,16 @@ describe("Python SDK Migrations", () => {
 
     describe("migration module", () => {
         it("exports all migrations in correct order", () => {
-            expect(migrationModule.migrations).toHaveLength(2);
+            expect(migrationModule.migrations).toHaveLength(3);
             expect(migrationModule.migrations[0]).toBe(migration_4_0_0);
             expect(migrationModule.migrations[1]).toBe(migration_4_54_4);
+            expect(migrationModule.migrations[2]).toBe(migration_6_0_0);
         });
 
         it("all migrations have correct versions", () => {
             expect(migration_4_0_0.version).toBe("4.0.0");
             expect(migration_4_54_4.version).toBe("4.54.4");
+            expect(migration_6_0_0.version).toBe("6.0.0");
         });
 
         it("all migrations are properly structured", () => {
@@ -608,6 +611,80 @@ describe("Python SDK Migrations", () => {
                     docs: ["sphinx"]
                 }
             });
+        });
+    });
+
+    describe("migration_6_0_0", () => {
+        it("sets retryStatusCodes to legacy when not configured", () => {
+            const config = createBaseConfig("fernapi/fern-python-sdk");
+
+            const result = migration_6_0_0.migrateGeneratorConfig({
+                config,
+                context: { logger: mockLogger }
+            });
+
+            expect(result.config).toEqual({
+                retryStatusCodes: "legacy"
+            });
+        });
+
+        it("preserves explicitly set retryStatusCodes to recommended", () => {
+            const config = createBaseConfig("fernapi/fern-python-sdk", {
+                retryStatusCodes: "recommended"
+            });
+
+            const result = migration_6_0_0.migrateGeneratorConfig({
+                config,
+                context: { logger: mockLogger }
+            });
+
+            expect(result.config).toEqual({
+                retryStatusCodes: "recommended"
+            });
+        });
+
+        it("preserves explicitly set retryStatusCodes to legacy", () => {
+            const config = createBaseConfig("fernapi/fern-python-sdk", {
+                retryStatusCodes: "legacy"
+            });
+
+            const result = migration_6_0_0.migrateGeneratorConfig({
+                config,
+                context: { logger: mockLogger }
+            });
+
+            expect(result.config).toEqual({
+                retryStatusCodes: "legacy"
+            });
+        });
+
+        it("preserves other config fields", () => {
+            const config = createBaseConfig("fernapi/fern-python-sdk", {
+                client_class_name: "AcmeClient",
+                timeout_in_seconds: 60
+            });
+
+            const result = migration_6_0_0.migrateGeneratorConfig({
+                config,
+                context: { logger: mockLogger }
+            });
+
+            expect(result.config).toMatchObject({
+                client_class_name: "AcmeClient",
+                timeout_in_seconds: 60,
+                retryStatusCodes: "legacy"
+            });
+        });
+
+        it("does not modify generators.yml", () => {
+            const document = { stringify: () => "original" };
+
+            const result = migration_6_0_0.migrateGeneratorsYml({
+                document: document as never,
+                context: { logger: mockLogger }
+            });
+
+            expect(result).toBe(document);
         });
     });
 });
