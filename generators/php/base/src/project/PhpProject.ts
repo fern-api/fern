@@ -129,14 +129,22 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
     }): Promise<File> {
         const contents = (await readFile(getAsIsFilepath(filename))).toString();
 
-        const rendered = this.replaceTemplate({
+        let rendered = this.replaceTemplate({
             contents,
             namespace: this.getNestedNamespace({ namespace, filename }),
-            extraTemplateVars: {
-                ...extraTemplateVars,
-                retryStatusCodes: this.context.customConfig.retryStatusCodes ?? "legacy"
-            }
+            extraTemplateVars
         });
+
+        const retryStatusCodesArray =
+            this.context.customConfig.retryStatusCodes === "recommended"
+                ? "[408, 429, 502, 503, 504]"
+                : "[408, 429]";
+        const retryStatusCheck =
+            this.context.customConfig.retryStatusCodes === "recommended"
+                ? "in_array($response->getStatusCode(), self::RETRY_STATUS_CODES)"
+                : "$response->getStatusCode() >= 500 ||\n                in_array($response->getStatusCode(), self::RETRY_STATUS_CODES)";
+        rendered = rendered.replace(/\{\{RETRY_STATUS_CODES_ARRAY\}\}/g, retryStatusCodesArray);
+        rendered = rendered.replace(/\{\{RETRY_STATUS_CHECK\}\}/g, retryStatusCheck);
 
         return new File(filename.replace(".Template", ""), RelativeFilePath.of(""), rendered);
     }
