@@ -10,13 +10,27 @@ parameter has ``raw_type=None`` and falls back to plain dict interpolation in
 the generated JSON body).
 """
 
-from typing import Dict, List, Optional, Tuple
+from dataclasses import dataclass, field
+from typing import Callable, Dict, List, Optional
 
 from ...context.sdk_generator_context import SdkGeneratorContext
 from fern_python.codegen import AST
 from fern_python.utils.name_resolver import get_name_from_wire_value, get_wire_value, resolve_name
 
 import fern.ir.resources as ir_types
+
+
+@dataclass
+class _AccumulatedField:
+    """One synthesized field, tracked during the merge before being emitted."""
+
+    name: str
+    inner_type_hints: List[AST.TypeHint] = field(default_factory=list)
+    inner_type_hint_keys: List[str] = field(default_factory=list)
+    raw_type: Optional[ir_types.TypeReference] = None
+    raw_name: str = ""
+    docs: Optional[str] = None
+    raw_type_dropped: bool = False
 
 
 def build_flattened_union_parameters(
@@ -31,51 +45,15 @@ def build_flattened_union_parameters(
     last so it shows up consistently in IDE hover regardless of variant count.
     """
     deconflict = set(names_to_deconflict or [])
-
-    # Map of wire-name -> (NamedFunctionParameter, source_TypeReference). We
-    # keep the TypeReference around so we can detect collisions and either
-    # widen the type hint (different TypeReferences → Union) or skip the dup
-    # (same TypeReference → keep first).
-    accumulator: Dict[str, Tuple[AST.NamedFunctionParameter, Optional[ir_types.TypeReference]]] = {}
-
-    def add_property_from_object(prop: ir_types.ObjectProperty) -> None:
-        wire = get_wire_value(prop.name)
-        param_name = _python_name(prop.name, deconflict)
-        type_hint = context.pydantic_generator_context.get_type_hint_for_type_reference(
-            prop.value_type,
-            in_endpoint=True,
-        )
-        param = AST.NamedFunctionParameter(
-            name=param_name,
-            docs=prop.docs,
-            type_hint=type_hint if type_hint.is_optional else AST.TypeHint.optional(type_hint),
-            initializer=AST.Expression("None"),
-            raw_type=prop.value_type,
-            raw_name=wire,
-        )
-        _accumulate(accumulator, wire, param, prop.value_type, context)
-
-    def add_synthetic_property(
-        wire_name: str,
-        param_name: str,
-        type_hint: AST.TypeHint,
-    ) -> None:
-        param = AST.NamedFunctionParameter(
-            name=param_name,
-            type_hint=type_hint if type_hint.is_optional else AST.TypeHint.optional(type_hint),
-            initializer=AST.Expression("None"),
-            raw_type=None,
-            raw_name=wire_name,
-        )
-        _accumulate(accumulator, wire_name, param, None, context)
+    accumulator: Dict[str, _AccumulatedField] = {}
 
     for base_prop in union_decl.base_properties:
-        add_property_from_object(base_prop)
+        _add_object_property(base_prop, context, deconflict, accumulator)
 
     for single_union_type in union_decl.types:
         single_union_type.shape.visit(
-            same_properties_as_object=lambda type_name: _add_object_properties(
-                type_name, context, add_property_from_object
+            same_properties_as_object=lambda type_name: _add_referenced_object_properties(
+                type_name, context, deconflict, accumulator
             ),
             single_property=lambda single_prop: _add_single_property(
                 single_prop, context, deconflict, accumulator
@@ -85,93 +63,134 @@ def build_flattened_union_parameters(
 
     discriminator_wire = get_wire_value(union_decl.discriminant)
     discriminator_param_name = _python_name(union_decl.discriminant, deconflict)
-    discriminator_type_hint = _build_literal_union_type_hint(
-        [get_wire_value(t.discriminant_value) for t in union_decl.types]
+    discriminator_values = [get_wire_value(t.discriminant_value) for t in union_decl.types]
+    discriminator_inner_hint = _build_literal_union_type_hint(discriminator_values)
+    _accumulate(
+        accumulator,
+        discriminator_wire,
+        discriminator_param_name,
+        discriminator_inner_hint,
+        inner_hint_key=f"__discriminator__:{','.join(sorted(discriminator_values))}",
+        raw_type=None,
+        docs=None,
     )
-    add_synthetic_property(discriminator_wire, discriminator_param_name, discriminator_type_hint)
 
-    return [param for (param, _) in accumulator.values()]
+    return [_emit(field_) for field_ in accumulator.values()]
 
 
 def _accumulate(
-    accumulator: Dict[str, Tuple[AST.NamedFunctionParameter, Optional[ir_types.TypeReference]]],
+    accumulator: Dict[str, _AccumulatedField],
     wire: str,
-    param: AST.NamedFunctionParameter,
-    type_ref: Optional[ir_types.TypeReference],
-    context: SdkGeneratorContext,
+    param_name: str,
+    inner_hint: AST.TypeHint,
+    inner_hint_key: str,
+    raw_type: Optional[ir_types.TypeReference],
+    docs: Optional[str],
 ) -> None:
-    """Insert a parameter; on name collision, merge type hints."""
-    if wire not in accumulator:
-        accumulator[wire] = (param, type_ref)
+    existing = accumulator.get(wire)
+    if existing is None:
+        accumulator[wire] = _AccumulatedField(
+            name=param_name,
+            inner_type_hints=[inner_hint],
+            inner_type_hint_keys=[inner_hint_key],
+            raw_type=raw_type,
+            raw_name=wire,
+            docs=docs,
+        )
         return
 
-    existing_param, existing_ref = accumulator[wire]
-    if existing_ref is not None and type_ref is not None and _type_references_equal(existing_ref, type_ref):
-        # Same wire name + same source type → first one wins.
+    if (
+        existing.raw_type is not None
+        and raw_type is not None
+        and not existing.raw_type_dropped
+        and _type_references_equal(existing.raw_type, raw_type)
+    ):
+        # Same wire field, same source type — first-write wins, no merge needed.
         return
 
-    merged_hint = _union_optional_hints(existing_param.type_hint, param.type_hint)
-    merged = AST.NamedFunctionParameter(
-        name=existing_param.name,
-        docs=existing_param.docs,
-        type_hint=merged_hint,
+    if inner_hint_key not in existing.inner_type_hint_keys:
+        existing.inner_type_hints.append(inner_hint)
+        existing.inner_type_hint_keys.append(inner_hint_key)
+
+    if existing.raw_type is not None and raw_type is not None and not _type_references_equal(
+        existing.raw_type, raw_type
+    ):
+        # Conflicting source types — drop raw_type so the JSON-body emitter
+        # falls back to plain interpolation rather than a per-type coercion.
+        existing.raw_type = None
+        existing.raw_type_dropped = True
+
+
+def _emit(acc: _AccumulatedField) -> AST.NamedFunctionParameter:
+    if len(acc.inner_type_hints) == 1:
+        inner = acc.inner_type_hints[0]
+    else:
+        inner = AST.TypeHint.union(*acc.inner_type_hints)
+    type_hint = inner if inner.is_optional else AST.TypeHint.optional(inner)
+    return AST.NamedFunctionParameter(
+        name=acc.name,
+        docs=acc.docs,
+        type_hint=type_hint,
         initializer=AST.Expression("None"),
-        # Conflict means we can't reliably resolve a single TypeReference at
-        # serialization time → drop raw_type and let json-body emit the value
-        # via plain interpolation.
-        raw_type=None,
-        raw_name=existing_param.raw_name,
+        raw_type=acc.raw_type,
+        raw_name=acc.raw_name,
     )
-    accumulator[wire] = (merged, None)
 
 
-def _union_optional_hints(a: AST.TypeHint, b: AST.TypeHint) -> AST.TypeHint:
-    inner_a = _strip_optional(a)
-    inner_b = _strip_optional(b)
-    return AST.TypeHint.optional(AST.TypeHint.union(inner_a, inner_b))
+def _add_object_property(
+    prop: ir_types.ObjectProperty,
+    context: SdkGeneratorContext,
+    deconflict: set,
+    accumulator: Dict[str, _AccumulatedField],
+) -> None:
+    wire = get_wire_value(prop.name)
+    unwrapped_tr = context.unwrap_optional_type_reference(prop.value_type)
+    inner_hint = context.pydantic_generator_context.get_type_hint_for_type_reference(
+        unwrapped_tr,
+        in_endpoint=True,
+    )
+    _accumulate(
+        accumulator,
+        wire,
+        _python_name(prop.name, deconflict),
+        inner_hint,
+        inner_hint_key=unwrapped_tr.json(),
+        raw_type=unwrapped_tr,
+        docs=prop.docs,
+    )
 
 
-def _strip_optional(hint: AST.TypeHint) -> AST.TypeHint:
-    """Best-effort strip of an outer Optional[...] wrapping."""
-    if hint.is_optional and len(hint.type_parameters) == 1:
-        return hint.type_parameters[0].type_hint
-    return hint
-
-
-def _type_references_equal(a: ir_types.TypeReference, b: ir_types.TypeReference) -> bool:
-    """Cheap equality check to avoid spurious collisions on the same shared property."""
-    return a.json() == b.json()
-
-
-def _add_object_properties(
+def _add_referenced_object_properties(
     type_name: ir_types.DeclaredTypeName,
     context: SdkGeneratorContext,
-    add_property: "callable[[ir_types.ObjectProperty], None]",  # type: ignore[type-arg]
+    deconflict: set,
+    accumulator: Dict[str, _AccumulatedField],
 ) -> None:
     for prop in context.pydantic_generator_context.get_all_properties_including_extensions(type_name.type_id):
-        add_property(prop)
+        _add_object_property(prop, context, deconflict, accumulator)
 
 
 def _add_single_property(
     single_prop: ir_types.SingleUnionTypeProperty,
     context: SdkGeneratorContext,
     deconflict: set,
-    accumulator: Dict[str, Tuple[AST.NamedFunctionParameter, Optional[ir_types.TypeReference]]],
+    accumulator: Dict[str, _AccumulatedField],
 ) -> None:
     wire = get_wire_value(single_prop.name)
-    param_name = _python_name(single_prop.name, deconflict)
-    type_hint = context.pydantic_generator_context.get_type_hint_for_type_reference(
-        single_prop.type,
+    unwrapped_tr = context.unwrap_optional_type_reference(single_prop.type)
+    inner_hint = context.pydantic_generator_context.get_type_hint_for_type_reference(
+        unwrapped_tr,
         in_endpoint=True,
     )
-    param = AST.NamedFunctionParameter(
-        name=param_name,
-        type_hint=type_hint if type_hint.is_optional else AST.TypeHint.optional(type_hint),
-        initializer=AST.Expression("None"),
-        raw_type=single_prop.type,
-        raw_name=wire,
+    _accumulate(
+        accumulator,
+        wire,
+        _python_name(single_prop.name, deconflict),
+        inner_hint,
+        inner_hint_key=unwrapped_tr.json(),
+        raw_type=unwrapped_tr,
+        docs=None,
     )
-    _accumulate(accumulator, wire, param, single_prop.type, context)
 
 
 def _python_name(wire_or_name, deconflict: set) -> str:  # type: ignore[no-untyped-def]
@@ -188,3 +207,7 @@ def _build_literal_union_type_hint(values: List[str]) -> AST.TypeHint:
     if len(values) == 1:
         return AST.TypeHint.literal(AST.Expression(f'"{values[0]}"'))
     return AST.TypeHint.union(*[AST.TypeHint.literal(AST.Expression(f'"{v}"')) for v in values])
+
+
+def _type_references_equal(a: ir_types.TypeReference, b: ir_types.TypeReference) -> bool:
+    return a.json() == b.json()
