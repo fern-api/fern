@@ -71,7 +71,8 @@ describe("LegacyApiSpecAdapter", () => {
                     typeDatesAsStrings: true,
                     preserveSingleSchemaOneof: true,
                     inlineAllOfSchemas: true,
-                    groupMultiApiEnvironments: true
+                    groupMultiApiEnvironments: true,
+                    inferDiscriminatedUnionBaseProperties: true
                 }
             };
 
@@ -89,6 +90,7 @@ describe("LegacyApiSpecAdapter", () => {
             expect(result.settings?.preserveSingleSchemaOneOf).toBe(true);
             expect(result.settings?.inlineAllOfSchemas).toBe(true);
             expect(result.settings?.groupMultiApiEnvironments).toBe(true);
+            expect(result.settings?.shouldInferDiscriminatedUnionBaseProperties).toBe(true);
         });
 
         it("maps filter settings correctly", () => {

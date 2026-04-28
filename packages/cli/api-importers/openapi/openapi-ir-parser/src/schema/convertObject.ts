@@ -549,7 +549,7 @@ function filterNotProperties(schema: OpenAPIV3.SchemaObject): OpenAPIV3.SchemaOb
     return { ...schema, properties: filteredProperties };
 }
 
-function getAllProperties({
+export function getAllProperties({
     schema,
     context,
     breadcrumbs,

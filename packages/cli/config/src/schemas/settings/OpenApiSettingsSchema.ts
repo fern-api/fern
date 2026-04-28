@@ -81,7 +81,15 @@ export const OpenApiSettingsSchema = BaseApiSettingsSchema.extend({
      * The default format to use for integer types when no format is specified in the OpenAPI schema.
      * Defaults to int32.
      */
-    defaultIntegerFormat: DefaultIntegerFormatSchema.optional()
+    defaultIntegerFormat: DefaultIntegerFormatSchema.optional(),
+
+    /**
+     * If true, properties shared by every variant of a discriminated `oneOf`
+     * (including via `allOf`/`$ref`) are lifted into the union's base properties
+     * so SDKs can expose them directly on the union type without casting.
+     * Defaults to false.
+     */
+    inferDiscriminatedUnionBaseProperties: z.boolean().optional()
 });
 
 export type OpenApiSettingsSchema = z.infer<typeof OpenApiSettingsSchema>;

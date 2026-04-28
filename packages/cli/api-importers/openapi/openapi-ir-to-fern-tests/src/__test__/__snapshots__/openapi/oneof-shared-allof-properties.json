@@ -1,0 +1,308 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "getConnection": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "path-parameters": {
+                    "id": "id",
+                  },
+                  "response": {
+                    "body": {
+                      "display_name": "string",
+                      "id": "string",
+                      "name": "string",
+                      "options_auth0": {
+                        "tenant": "tenant",
+                      },
+                      "strategy": "auth0",
+                    },
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/connections/{id}",
+              "request": {
+                "name": "GetConnectionRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
+              },
+              "response": {
+                "docs": "Success",
+                "status-code": 200,
+                "type": "ConnectionResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+        "types": {
+          "ConnectionCommon": {
+            "docs": "Fields shared by every connection strategy.",
+            "inline": undefined,
+            "properties": {
+              "display_name": {
+                "docs": "Connection name shown in the login screen.",
+                "type": "optional<string>",
+              },
+              "id": {
+                "docs": "The connection's identifier.",
+                "type": "string",
+              },
+              "name": {
+                "docs": "The connection's display name.",
+                "type": "string",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ConnectionResponse": {
+            "availability": undefined,
+            "base-properties": {
+              "display_name": {
+                "docs": "Connection name shown in the login screen.",
+                "type": "string",
+              },
+              "id": {
+                "docs": "The connection's identifier.",
+                "type": "string",
+              },
+              "name": {
+                "docs": "The connection's display name.",
+                "type": "string",
+              },
+            },
+            "default-variant": undefined,
+            "discriminant": {
+              "context": "data",
+              "value": "strategy",
+            },
+            "docs": "Discriminated union of connection strategies.",
+            "encoding": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": {
+              "auth0": "ConnectionResponseAuth0",
+              "email": "ConnectionResponseEmail",
+              "samlp": "ConnectionResponseSamlp",
+            },
+          },
+          "ConnectionResponseAuth0": {
+            "docs": "Auth0 strategy connection.",
+            "extends": [
+              "ConnectionCommon",
+            ],
+            "inline": undefined,
+            "properties": {
+              "options_auth0": "optional<ConnectionResponseAuth0OptionsAuth0>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ConnectionResponseAuth0OptionsAuth0": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "tenant": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ConnectionResponseEmail": {
+            "docs": "Email strategy connection.",
+            "extends": [
+              "ConnectionCommon",
+            ],
+            "inline": undefined,
+            "properties": {
+              "options_email": "optional<ConnectionResponseEmailOptionsEmail>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ConnectionResponseEmailOptionsEmail": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "from": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ConnectionResponseSamlp": {
+            "docs": "SAML strategy connection.",
+            "extends": [
+              "ConnectionCommon",
+            ],
+            "inline": undefined,
+            "properties": {
+              "options_samlp": "optional<ConnectionResponseSamlpOptionsSamlp>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ConnectionResponseSamlpOptionsSamlp": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "metadata_url": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    getConnection:
+      path: /connections/{id}
+      method: GET
+      source:
+        openapi: ../openapi.yml
+      request:
+        name: GetConnectionRequest
+        path-parameters:
+          id: string
+      response:
+        docs: Success
+        type: ConnectionResponse
+        status-code: 200
+      examples:
+        - path-parameters:
+            id: id
+          response:
+            body:
+              id: string
+              name: string
+              display_name: string
+              options_auth0:
+                tenant: tenant
+              strategy: auth0
+  source:
+    openapi: ../openapi.yml
+types:
+  ConnectionCommon:
+    docs: Fields shared by every connection strategy.
+    properties:
+      id:
+        type: string
+        docs: The connection's identifier.
+      name:
+        type: string
+        docs: The connection's display name.
+      display_name:
+        type: optional<string>
+        docs: Connection name shown in the login screen.
+    source:
+      openapi: ../openapi.yml
+  ConnectionResponse:
+    discriminant:
+      value: strategy
+      context: data
+    base-properties:
+      id:
+        type: string
+        docs: The connection's identifier.
+      name:
+        type: string
+        docs: The connection's display name.
+      display_name:
+        type: string
+        docs: Connection name shown in the login screen.
+    docs: Discriminated union of connection strategies.
+    union:
+      auth0: ConnectionResponseAuth0
+      samlp: ConnectionResponseSamlp
+      email: ConnectionResponseEmail
+    source:
+      openapi: ../openapi.yml
+  ConnectionResponseAuth0OptionsAuth0:
+    properties:
+      tenant: optional<string>
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  ConnectionResponseAuth0:
+    docs: Auth0 strategy connection.
+    properties:
+      options_auth0: optional<ConnectionResponseAuth0OptionsAuth0>
+    extends:
+      - ConnectionCommon
+    source:
+      openapi: ../openapi.yml
+  ConnectionResponseSamlpOptionsSamlp:
+    properties:
+      metadata_url: optional<string>
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  ConnectionResponseSamlp:
+    docs: SAML strategy connection.
+    properties:
+      options_samlp: optional<ConnectionResponseSamlpOptionsSamlp>
+    extends:
+      - ConnectionCommon
+    source:
+      openapi: ../openapi.yml
+  ConnectionResponseEmailOptionsEmail:
+    properties:
+      from: optional<string>
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  ConnectionResponseEmail:
+    docs: Email strategy connection.
+    properties:
+      options_email: optional<ConnectionResponseEmailOptionsEmail>
+    extends:
+      - ConnectionCommon
+    source:
+      openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Lift shared allOf properties from oneOf variants",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Lift shared allOf properties from oneOf variants
+",
+  },
+}

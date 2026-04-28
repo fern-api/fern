@@ -58,4 +58,11 @@ export interface OpenApiSettingsSchema extends GeneratorsYml.BaseApiSettingsSche
      * Defaults to int32.
      */
     "default-integer-format"?: GeneratorsYml.DefaultIntegerFormat;
+    /**
+     * If true, properties shared by every variant of a discriminated `oneOf`
+     * (including via `allOf`/`$ref`) are lifted into the union's base properties
+     * so SDKs can expose them directly on the union type without casting.
+     * Defaults to false.
+     */
+    "infer-discriminated-union-base-properties"?: boolean;
 }

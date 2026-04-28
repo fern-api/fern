@@ -38,6 +38,7 @@ const SETTINGS_KEY_MAP: Record<string, string> = {
     "resolve-aliases": "resolveAliases",
     "group-multi-api-environments": "groupMultiApiEnvironments",
     "default-integer-format": "defaultIntegerFormat",
+    "infer-discriminated-union-base-properties": "inferDiscriminatedUnionBaseProperties",
 
     // AsyncAPI-specific settings
     "message-naming": "messageNaming"

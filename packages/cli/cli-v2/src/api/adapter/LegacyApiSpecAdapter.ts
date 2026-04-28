@@ -153,7 +153,8 @@ export class LegacyApiSpecAdapter {
             resolveAliases: settings.resolveAliases,
             groupMultiApiEnvironments: settings.groupMultiApiEnvironments,
             defaultIntegerFormat: this.adaptDefaultIntegerFormat(settings.defaultIntegerFormat),
-            coerceConstsTo: settings.coerceConstsTo
+            coerceConstsTo: settings.coerceConstsTo,
+            shouldInferDiscriminatedUnionBaseProperties: settings.inferDiscriminatedUnionBaseProperties
         };
 
         const hasSettings = Object.values(result).some((v) => v != null);

@@ -131,6 +131,16 @@ export interface ParseOpenAPIOptions {
      * instead of a plain string. Defaults to false.
      */
     respectByteFormat: boolean;
+
+    /**
+     * If true, when converting a discriminated `oneOf`, intersect the resolved
+     * (allOf-flattened) property maps of every variant and lift properties that
+     * are present in all variants with structurally-equal schemas into the
+     * union's commonProperties. The discriminant itself and any properties
+     * already declared at the union's top-level are excluded.
+     * Defaults to false.
+     */
+    shouldInferDiscriminatedUnionBaseProperties: boolean;
 }
 
 export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
@@ -169,7 +179,8 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     resolveSchemaCollisions: false,
     inferForwardCompatible: false,
     coerceConstsTo: "enums-coerceable-to-literals",
-    respectByteFormat: false
+    respectByteFormat: false,
+    shouldInferDiscriminatedUnionBaseProperties: false
 };
 
 function mergeOptions<T extends object>(params: {
