@@ -35,6 +35,7 @@ export const BaseJavaCustomConfigSchema = z.object({
     "output-directory": z.enum(["source-root", "project-root"]).optional(),
     "custom-interceptors": z.boolean().optional(),
     "omit-fern-headers": z.boolean().optional(),
+    retryStatusCodes: z.optional(z.enum(["legacy", "recommended"])),
 
     // Hidden options (for debugging).
     "enable-gradle-profiling": z.boolean().optional(),

@@ -25,14 +25,22 @@ import java.nio.charset.StandardCharsets;
 
 public final class RetryInterceptorGenerator extends AbstractFileGenerator {
 
+    private final ClientGeneratorContext clientGeneratorContext;
+
     public RetryInterceptorGenerator(ClientGeneratorContext clientGeneratorContext) {
         super(clientGeneratorContext.getPoetClassNameFactory().getRetryInterceptorClassName(), clientGeneratorContext);
+        this.clientGeneratorContext = clientGeneratorContext;
     }
 
     @Override
     public GeneratedResourcesJavaFile generateFile() {
         try (InputStream is = RetryInterceptorGenerator.class.getResourceAsStream("/RetryInterceptor.java")) {
             String contents = new String(is.readAllBytes(), StandardCharsets.UTF_8);
+            if ("recommended".equals(clientGeneratorContext.getCustomConfig().retryStatusCodes())) {
+                contents = contents.replace(
+                        "return statusCode == 408 || statusCode == 429 || statusCode >= 500;",
+                        "return statusCode == 408 || statusCode == 429 || statusCode == 502 || statusCode == 503 || statusCode == 504;");
+            }
             return GeneratedResourcesJavaFile.builder()
                     .className(className)
                     .contents(contents)

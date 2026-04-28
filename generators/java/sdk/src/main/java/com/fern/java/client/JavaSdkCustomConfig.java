@@ -118,6 +118,12 @@ public interface JavaSdkCustomConfig extends ICustomConfig {
         return false;
     }
 
+    @Value.Default
+    @JsonProperty("retryStatusCodes")
+    default String retryStatusCodes() {
+        return "legacy";
+    }
+
     static ImmutableJavaSdkCustomConfig.Builder builder() {
         return ImmutableJavaSdkCustomConfig.builder();
     }

@@ -2,6 +2,7 @@ import type { MigrationModule } from "@fern-api/migrations-base";
 
 import { migration_2_0_0 } from "./2.0.0.js";
 import { migration_3_0_0 } from "./3.0.0.js";
+import { migration_4_0_0 } from "./4.0.0.js";
 
 /**
  * Migration module for Java SDK generator.
@@ -15,7 +16,7 @@ import { migration_3_0_0 } from "./3.0.0.js";
  * `fern generator upgrade --generator java-sdk`
  */
 const migrationModule: MigrationModule = {
-    migrations: [migration_2_0_0, migration_3_0_0]
+    migrations: [migration_2_0_0, migration_3_0_0, migration_4_0_0]
 };
 
 export default migrationModule;
