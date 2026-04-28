@@ -537,6 +537,122 @@ class TestEventSource:
         parsed = events[0].json()
         assert parsed["text"] == "before\u2028after\u2029end"
 
+    @pytest.mark.asyncio
+    async def test_aiter_sse_preserves_all_splitlines_chars(self) -> None:
+        """Test that all characters Python's str.splitlines() treats as line breaks
+        (beyond \\n, \\r, \\r\\n) are preserved in SSE data fields.
+
+        str.splitlines() splits on: \\v(\\x0b), \\f(\\x0c), \\x1c, \\x1d, \\x1e,
+        \\x85, \\u2028, \\u2029. Only \\n, \\r, \\r\\n are valid SSE terminators.
+        """
+        problematic_chars = "\x0b\x0c\x1c\x1d\x1e\x85\u2028\u2029"
+        data_value = f"before{problematic_chars}after"
+        sse_payload = f"data: {data_value}\n\n".encode("utf-8")
+
+        response = Mock()
+        response.headers = {"content-type": "text/event-stream"}
+
+        async def mock_aiter_bytes() -> AsyncIterator[bytes]:
+            yield sse_payload
+
+        response.aiter_bytes = mock_aiter_bytes
+
+        event_source = EventSource(response)
+        events = []
+        async for event in event_source.aiter_sse():
+            events.append(event)
+
+        assert len(events) == 1
+        assert events[0].data == data_value
+
+    def test_iter_sse_preserves_all_splitlines_chars(self) -> None:
+        """Sync version: all str.splitlines() chars are preserved."""
+        problematic_chars = "\x0b\x0c\x1c\x1d\x1e\x85\u2028\u2029"
+        data_value = f"before{problematic_chars}after"
+        sse_payload = f"data: {data_value}\n\n".encode("utf-8")
+
+        response = Mock()
+        response.headers = {"content-type": "text/event-stream"}
+        response.iter_bytes.return_value = [sse_payload]
+
+        event_source = EventSource(response)
+        events = list(event_source.iter_sse())
+
+        assert len(events) == 1
+        assert events[0].data == data_value
+
+    @pytest.mark.asyncio
+    async def test_aiter_sse_handles_crlf_line_endings(self) -> None:
+        """Test that \\r\\n line endings (valid SSE terminators) are handled correctly."""
+        sse_payload = b"event: test\r\ndata: hello\r\ndata: world\r\n\r\n"
+
+        response = Mock()
+        response.headers = {"content-type": "text/event-stream"}
+
+        async def mock_aiter_bytes() -> AsyncIterator[bytes]:
+            yield sse_payload
+
+        response.aiter_bytes = mock_aiter_bytes
+
+        event_source = EventSource(response)
+        events = []
+        async for event in event_source.aiter_sse():
+            events.append(event)
+
+        assert len(events) == 1
+        assert events[0].event == "test"
+        assert events[0].data == "hello\nworld"
+
+    @pytest.mark.asyncio
+    async def test_aiter_sse_chunk_boundary_splitting(self) -> None:
+        """Test that SSE events split across chunk boundaries are correctly reassembled."""
+        response = Mock()
+        response.headers = {"content-type": "text/event-stream"}
+
+        async def mock_aiter_bytes() -> AsyncIterator[bytes]:
+            # Split the event across multiple chunks at arbitrary points
+            yield b"event: te"
+            yield b"st\nda"
+            yield b"ta: hel"
+            yield b"lo\n\n"
+
+        response.aiter_bytes = mock_aiter_bytes
+
+        event_source = EventSource(response)
+        events = []
+        async for event in event_source.aiter_sse():
+            events.append(event)
+
+        assert len(events) == 1
+        assert events[0].event == "test"
+        assert events[0].data == "hello"
+
+    @pytest.mark.asyncio
+    async def test_aiter_sse_unicode_in_chunked_data(self) -> None:
+        """Test that \\u2028/\\u2029 in data fields survive chunk boundary splitting."""
+        json_payload = '{"content": "line1\u2028line2\u2029line3"}'
+        full_sse = f"data: {json_payload}\n\n".encode("utf-8")
+        # Split in the middle of the UTF-8 encoded \\u2028 sequence
+        mid = len(full_sse) // 2
+
+        response = Mock()
+        response.headers = {"content-type": "text/event-stream"}
+
+        async def mock_aiter_bytes() -> AsyncIterator[bytes]:
+            yield full_sse[:mid]
+            yield full_sse[mid:]
+
+        response.aiter_bytes = mock_aiter_bytes
+
+        event_source = EventSource(response)
+        events = []
+        async for event in event_source.aiter_sse():
+            events.append(event)
+
+        assert len(events) == 1
+        parsed = events[0].json()
+        assert parsed["content"] == "line1\u2028line2\u2029line3"
+
 
 class TestConnectSSE:
     """Test cases for connect_sse and aconnect_sse functions."""
