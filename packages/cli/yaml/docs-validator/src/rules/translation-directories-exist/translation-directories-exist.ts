@@ -40,15 +40,22 @@ export const TranslationDirectoriesExistRule: Rule = {
                         fernFolderPath: workspace.absoluteFilePath
                     });
 
+                    const pad = "            ";
+                    const indentedTree = expectedTree
+                        .split("\n")
+                        .map((line) => `${pad}${line}`)
+                        .join("\n");
+
                     violations.push({
                         severity: "error",
                         message:
                             `Missing translation ${missingDirs.length === 1 ? "directory" : "directories"} for ` +
                             `${missingDirs.length === 1 ? "locale" : "locales"}: ${missingDirs.join(", ")}\n\n` +
-                            `Expected directory structure:\n\n${expectedTree}\n\n` +
-                            `Each translation directory should mirror the same page paths used in your docs.yml navigation.\n` +
-                            `For example, if your navigation references "pages/getting-started.mdx", create a\n` +
-                            `translated version at "translations/${missingDirs[0]}/pages/getting-started.mdx".`
+                            `${pad}Expected directory structure:\n\n${indentedTree}\n\n` +
+                            `${pad}Each translation directory should mirror the same page paths used in your\n` +
+                            `${pad}docs.yml navigation. For example, if your navigation references\n` +
+                            `${pad}"pages/getting-started.mdx", create a translated version at\n` +
+                            `${pad}"translations/${missingDirs[0]}/pages/getting-started.mdx".`
                     });
                 }
 
