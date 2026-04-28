@@ -7,7 +7,7 @@ import { execSync } from "child_process";
 import cliProgress from "cli-progress";
 import decompress from "decompress";
 import { cpSync, existsSync, lstatSync, mkdirSync, symlinkSync } from "fs";
-import { mkdir, readFile, rename, rm, writeFile } from "fs/promises";
+import { mkdir, readFile, rm, writeFile } from "fs/promises";
 import { homedir } from "os";
 import path from "path";
 import tmp from "tmp-promise";
@@ -16,7 +16,6 @@ import xml2js from "xml2js";
 const PLATFORM_IS_WINDOWS = process.platform === "win32";
 const DOCS_PREFIX = chalk.cyan("[docs]:");
 const ETAG_FILENAME = "etag";
-const CLI_VERSION_FILENAME = "cli-version";
 
 // Progress bar label alignment - pad labels to the longest one for consistent bar positioning
 const PROGRESS_LABEL_WIDTH = "Downloading docs bundle".length;
@@ -221,14 +220,6 @@ export function getPathToEtagFile({ app = false }: { app?: boolean }): AbsoluteF
     return join(getPathToPreviewFolder({ app }), RelativeFilePath.of(ETAG_FILENAME));
 }
 
-export function getPathToCliVersionFile({ app = false }: { app?: boolean }): AbsoluteFilePath {
-    return join(getPathToPreviewFolder({ app }), RelativeFilePath.of(CLI_VERSION_FILENAME));
-}
-
-function getCurrentCliVersion(): string {
-    return process.env.CLI_VERSION ?? "unknown";
-}
-
 export declare namespace DownloadLocalBundle {
     type Result = SuccessResult | FailureResult;
 
@@ -268,8 +259,6 @@ export async function downloadBundle({
     const key = parsedResponse?.ListBucketResult?.Contents?.[0]?.Key?.[0];
 
     const eTagFilepath = getPathToEtagFile({ app });
-    const cliVersionFilepath = getPathToCliVersionFile({ app });
-    const currentCliVersion = getCurrentCliVersion();
     if (preferCached) {
         const currentETagExists = await doesPathExist(eTagFilepath);
         let currentETag = undefined;
@@ -277,31 +266,14 @@ export async function downloadBundle({
             logger.debug("Reading existing ETag");
             currentETag = (await readFile(eTagFilepath)).toString();
         }
-
-        let cachedCliVersion: string | undefined;
-        if (await doesPathExist(cliVersionFilepath)) {
-            cachedCliVersion = (await readFile(cliVersionFilepath)).toString();
-        }
-
-        const cliVersionMismatch = cachedCliVersion == null || cachedCliVersion !== currentCliVersion;
-        if (cliVersionMismatch && cachedCliVersion != null) {
-            logger.debug(`CLI version changed from ${cachedCliVersion} to ${currentCliVersion}. Re-downloading bundle`);
-        } else if (cliVersionMismatch) {
-            logger.debug("No cached CLI version found. Re-downloading bundle to ensure compatibility");
-        }
-
-        if (currentETag != null && currentETag === eTag && !cliVersionMismatch) {
-            logger.debug("ETag matches and CLI version unchanged. Using already downloaded bundle");
+        if (currentETag != null && currentETag === eTag) {
+            logger.debug("ETag matches. Using already downloaded bundle");
             // The bundle is already downloaded
             return {
                 type: "success"
             };
         } else {
-            logger.debug(
-                cliVersionMismatch
-                    ? "CLI version changed. Downloading latest preview bundle"
-                    : "ETag is different. Downloading latest preview bundle"
-            );
+            logger.debug("ETag is different. Downloading latest preview bundle");
             if (app) {
                 logger.info(
                     "Setting up docs preview bundle...\nPlease wait while the installation completes. This may take a few minutes depending on your connection speed."
@@ -382,14 +354,8 @@ export async function downloadBundle({
 
         const absolutePathToPreviewFolder = getPathToPreviewFolder({ app });
         if (await doesPathExist(absolutePathToPreviewFolder)) {
-            const oldBundlePath = AbsoluteFilePath.of(`${absolutePathToPreviewFolder}-old-${Date.now()}`);
-            logger.debug(`Moving previously cached bundle to: ${oldBundlePath}`);
-            await rename(absolutePathToPreviewFolder, oldBundlePath);
-
-            // Delete the old bundle asynchronously so it doesn't block the rest of the setup
-            rm(oldBundlePath, { recursive: true }).catch((error) => {
-                logger.debug(`Failed to remove old bundle at ${oldBundlePath}: ${error}`);
-            });
+            logger.debug(`Removing previously cached bundle at: ${absolutePathToPreviewFolder}`);
+            await rm(absolutePathToPreviewFolder, { recursive: true, force: true });
         }
         await mkdir(absolutePathToPreviewFolder, { recursive: true });
 
@@ -475,9 +441,6 @@ export async function downloadBundle({
             }
         }
 
-        // write etag and cli version
-        await writeFile(eTagFilepath, eTag);
-        await writeFile(cliVersionFilepath, currentCliVersion);
         logger.debug(`Downloaded bundle to ${absolutePathToBundleFolder}`);
 
         if (app) {
@@ -570,6 +533,10 @@ export async function downloadBundle({
                 }
             }
         }
+
+        // Write etag only after all post-processing succeeds, so a failed
+        // extraction won't be treated as cached on the next run.
+        await writeFile(eTagFilepath, eTag);
 
         return {
             type: "success"
