@@ -713,8 +713,9 @@ export async function publishDocs({
                                 root: updatedRoot
                             }
                         };
-                        context.logger.info(
-                            `Sending translation for locale "${locale}": pages=${JSON.stringify(Object.keys(localePages))}`
+                        const pageCount = Object.keys(localePages).length;
+                        context.logger.debug(
+                            `Sending translation for locale "${locale}" (${pageCount} page${pageCount === 1 ? "" : "s"})`
                         );
                         // Use a raw fetch instead of the oRPC client to send `docsDefinition`
                         // (the live server expects that field; the published fdr-sdk still uses `content`).
