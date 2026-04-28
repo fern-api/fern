@@ -949,9 +949,10 @@ export const TranslationConfigObject = z.object({
 
 export const TranslationConfig = z.union([Language, TranslationConfigObject]);
 
-export function normalizeTranslationConfig(
-    config: z.infer<typeof TranslationConfig>
-): { lang: string; default?: boolean } {
+export function normalizeTranslationConfig(config: z.infer<typeof TranslationConfig>): {
+    lang: string;
+    default?: boolean;
+} {
     if (typeof config === "string") {
         return { lang: config };
     }

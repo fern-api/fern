@@ -7189,6 +7189,9 @@ importers:
       '@fern-api/cli-source-resolver':
         specifier: workspace:*
         version: link:../../cli-source-resolver
+      '@fern-api/configuration':
+        specifier: workspace:*
+        version: link:../../configuration
       '@fern-api/configuration-loader':
         specifier: workspace:*
         version: link:../../configuration-loader

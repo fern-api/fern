@@ -174,11 +174,7 @@ describe("DocsConfiguration translations field", () => {
     it("should parse translations mixing object and string syntax", () => {
         const result = DocsConfiguration.parse({
             instances: [],
-            translations: [
-                { lang: "en", default: true },
-                "ja",
-                "fr"
-            ]
+            translations: [{ lang: "en", default: true }, "ja", "fr"]
         });
         expect(result.translations).toHaveLength(3);
         const first = result.translations?.[0];

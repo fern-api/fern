@@ -18,8 +18,9 @@ export const TranslationDirectoriesExistRule: Rule = {
                 const normalizedTranslations = translations.map((t) =>
                     docsYml.DocsYmlSchemas.normalizeTranslationConfig(t)
                 );
-                const defaultLocale =
-                    (normalizedTranslations.find((t) => t.default === true) ?? normalizedTranslations[0])?.lang;
+                const defaultLocale = (
+                    normalizedTranslations.find((t) => t.default === true) ?? normalizedTranslations[0]
+                )?.lang;
                 const translationsDir = join(workspace.absoluteFilePath, RelativeFilePath.of("translations"));
                 const translationsDirExists = await doesPathExist(translationsDir);
 
