@@ -284,9 +284,7 @@ describe("applyTranslatedNavigationOverlays", () => {
                 {
                     type: "tab",
                     tabId: "docs",
-                    layout: [
-                        { type: "page", title: "はじめに", slug: "getting-started" }
-                    ],
+                    layout: [{ type: "page", title: "はじめに", slug: "getting-started" }],
                     variants: undefined
                 }
             ]
