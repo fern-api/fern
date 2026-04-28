@@ -440,14 +440,10 @@ class TestEventSource:
         response = Mock()
         response.headers = {"content-type": "text/event-stream"}
 
-        # Mock aiter_lines to return the SSE data as lines
-        async def mock_aiter_lines() -> AsyncIterator[str]:
-            yield "event: test"
-            yield "data: hello"
-            yield "data: world"
-            yield ""  # Empty line triggers event
+        async def mock_aiter_bytes() -> AsyncIterator[bytes]:
+            yield b"event: test\ndata: hello\ndata: world\n\n"
 
-        response.aiter_lines = mock_aiter_lines
+        response.aiter_bytes = mock_aiter_bytes
 
         event_source = EventSource(response)
         events = []
@@ -464,16 +460,11 @@ class TestEventSource:
         response = Mock()
         response.headers = {"content-type": "text/event-stream"}
 
-        # Mock aiter_lines to return the SSE data as lines
-        async def mock_aiter_lines() -> AsyncIterator[str]:
-            yield "event: first"
-            yield "data: first data"
-            yield ""
-            yield "event: second"
-            yield "data: second data"
-            yield ""
+        async def mock_aiter_bytes() -> AsyncIterator[bytes]:
+            yield b"event: first\ndata: first data\n\n"
+            yield b"event: second\ndata: second data\n\n"
 
-        response.aiter_lines = mock_aiter_lines
+        response.aiter_bytes = mock_aiter_bytes
 
         event_source = EventSource(response)
         events = []
@@ -492,12 +483,10 @@ class TestEventSource:
         response = Mock()
         response.headers = {"content-type": "text/event-stream"}
 
-        # Mock aiter_lines to return the SSE data as lines
-        async def mock_aiter_lines() -> AsyncIterator[str]:
-            yield "data: test"
-            yield ""
+        async def mock_aiter_bytes() -> AsyncIterator[bytes]:
+            yield b"data: test\n\n"
 
-        response.aiter_lines = mock_aiter_lines
+        response.aiter_bytes = mock_aiter_bytes
 
         event_source = EventSource(response)
 
@@ -508,6 +497,45 @@ class TestEventSource:
 
         assert len(events) == 1
         assert events[0].data == "test"
+
+    @pytest.mark.asyncio
+    async def test_aiter_sse_preserves_unicode_line_separators(self) -> None:
+        """Test that \u2028 and \u2029 in data fields are preserved, not treated as line breaks."""
+        json_with_separators = '{"text": "before\u2028after\u2029end"}'
+        sse_payload = f"data: {json_with_separators}\n\n".encode("utf-8")
+
+        response = Mock()
+        response.headers = {"content-type": "text/event-stream"}
+
+        async def mock_aiter_bytes() -> AsyncIterator[bytes]:
+            yield sse_payload
+
+        response.aiter_bytes = mock_aiter_bytes
+
+        event_source = EventSource(response)
+        events = []
+        async for event in event_source.aiter_sse():
+            events.append(event)
+
+        assert len(events) == 1
+        parsed = events[0].json()
+        assert parsed["text"] == "before\u2028after\u2029end"
+
+    def test_iter_sse_preserves_unicode_line_separators(self) -> None:
+        """Test that \u2028 and \u2029 in data fields are preserved in sync iteration."""
+        json_with_separators = '{"text": "before\u2028after\u2029end"}'
+        sse_payload = f"data: {json_with_separators}\n\n".encode("utf-8")
+
+        response = Mock()
+        response.headers = {"content-type": "text/event-stream"}
+        response.iter_bytes.return_value = [sse_payload]
+
+        event_source = EventSource(response)
+        events = list(event_source.iter_sse())
+
+        assert len(events) == 1
+        parsed = events[0].json()
+        assert parsed["text"] == "before\u2028after\u2029end"
 
 
 class TestConnectSSE:
@@ -567,11 +595,10 @@ class TestConnectSSE:
         response = Mock()
         response.headers = {"content-type": "text/event-stream"}
 
-        async def mock_aiter_lines() -> AsyncIterator[str]:
-            yield "data: test"
-            yield ""
+        async def mock_aiter_bytes() -> AsyncIterator[bytes]:
+            yield b"data: test\n\n"
 
-        response.aiter_lines = mock_aiter_lines
+        response.aiter_bytes = mock_aiter_bytes
 
         # Mock the async context manager
         async_context_manager = Mock()
@@ -595,11 +622,10 @@ class TestConnectSSE:
         response = Mock()
         response.headers = {"content-type": "text/event-stream"}
 
-        async def mock_aiter_lines() -> AsyncIterator[str]:
-            yield "data: test"
-            yield ""
+        async def mock_aiter_bytes() -> AsyncIterator[bytes]:
+            yield b"data: test\n\n"
 
-        response.aiter_lines = mock_aiter_lines
+        response.aiter_bytes = mock_aiter_bytes
 
         # Mock the async context manager
         async_context_manager = Mock()
