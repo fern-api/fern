@@ -77,9 +77,16 @@ export class ContainerTestRunner extends TestRunner {
             doNotPipeOutput: !this.shouldPipeOutput()
         });
         if (containerBuildReturn.exitCode !== 0) {
-            const stderr = containerBuildReturn.stderr?.trim();
-            const stdout = containerBuildReturn.stdout?.trim();
-            const output = stderr || stdout || "(no output captured)";
+            const stderr = containerBuildReturn.stderr?.trim() ?? "";
+            const stdout = containerBuildReturn.stdout?.trim() ?? "";
+            const parts: string[] = [];
+            if (stdout) {
+                parts.push(`STDOUT:\n${stdout}`);
+            }
+            if (stderr) {
+                parts.push(`STDERR:\n${stderr}`);
+            }
+            const output = parts.length > 0 ? parts.join("\n\n") : "(no output captured)";
             throw new Error(
                 `Failed to build the container for ${this.generator.workspaceName}. Exit code: ${containerBuildReturn.exitCode}\n${output}`
             );
