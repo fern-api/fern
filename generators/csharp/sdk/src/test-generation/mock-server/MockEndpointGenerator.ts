@@ -98,7 +98,9 @@ export class MockEndpointGenerator extends WithGeneration {
                     if (maybeParameterValue != null) {
                         // WireMock.Net splits comma-delimited query values into separate array
                         // entries, so pass all values in a single WithParam call.
-                        const paramValues = maybeParameterValue.split(",").map((v) => `"${v.trim()}"`);
+                        const paramValues = maybeParameterValue
+                            .split(",")
+                            .map((v) => `"${v.trim().replace(/\\/g, "\\\\").replace(/"/g, '\\"')}"`);
                         writer.write(`.WithParam("${getWireValue(parameter.name)}", ${paramValues.join(", ")})`);
                     }
                 }
