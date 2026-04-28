@@ -42,6 +42,7 @@ export async function submitReplayInit(params: SubmitReplayInitParams): Promise<
             repo,
             lockfileContents: initResult.lockfileContent,
             fernignoreEntries: initResult.fernignoreEntries,
+            gitattributesEntries: initResult.gitattributesEntries,
             prBody: initResult.prBody
         })
     });

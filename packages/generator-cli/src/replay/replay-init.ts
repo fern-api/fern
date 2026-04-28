@@ -3,11 +3,7 @@ import { type BootstrapResult, bootstrap } from "@fern-api/replay";
 import { existsSync, readFileSync } from "fs";
 import { join } from "path";
 import tmp from "tmp-promise";
-import {
-    ensureGitattributesEntriesSync,
-    ensureReplayFernignoreEntriesSync,
-    REPLAY_FERNIGNORE_ENTRIES
-} from "./fernignore";
+import { GITATTRIBUTES_ENTRIES, REPLAY_FERNIGNORE_ENTRIES } from "./fernignore";
 
 export interface ReplayInitParams {
     /** GitHub repo URI (e.g., "fern-demo/fern-replay-testbed-java-sdk") */
@@ -29,10 +25,10 @@ export interface ReplayInitResult {
     bootstrap: BootstrapResult;
     /** Raw lockfile YAML content, present when bootstrap succeeded and not dry-run */
     lockfileContent?: string;
-    /** Raw replay.yml content, present only when fernignore migration created it */
-    replayYmlContent?: string;
     /** Fernignore entries that the server should ensure exist */
     fernignoreEntries: string[];
+    /** Gitattributes entries the server should ensure exist (e.g. linguist-generated markers) */
+    gitattributesEntries: string[];
     /** Generated PR body markdown for the server to use */
     prBody?: string;
 }
@@ -46,8 +42,8 @@ export interface ReplayInitResult {
  * Flow:
  * 1. Clone the SDK repo (read-only)
  * 2. Run bootstrap() to scan history and create lockfile
- * 3. Ensure .fernignore has replay entries
- * 4. Read lockfile content from disk and return it
+ * 3. Read lockfile content from disk
+ * 4. Return lockfile + fernignore/gitattributes entries for Fiddle to apply server-side
  */
 export async function replayInit(params: ReplayInitParams): Promise<ReplayInitResult> {
     const { githubRepo, token, dryRun } = params;
@@ -71,29 +67,22 @@ export async function replayInit(params: ReplayInitParams): Promise<ReplayInitRe
     });
 
     if (!bootstrapResult.generationCommit) {
-        return { bootstrap: bootstrapResult, fernignoreEntries: [] };
+        return { bootstrap: bootstrapResult, fernignoreEntries: [], gitattributesEntries: [] };
     }
 
     if (dryRun) {
-        return { bootstrap: bootstrapResult, fernignoreEntries: [] };
+        return { bootstrap: bootstrapResult, fernignoreEntries: [], gitattributesEntries: [] };
     }
 
-    // 3. Ensure .fernignore has replay entries and .gitattributes marks lockfile as generated
-    ensureReplayFernignoreEntriesSync(repoPath);
-    ensureGitattributesEntriesSync(repoPath);
-
-    // 4. Read lockfile content from disk
+    // 3. Read lockfile content from disk
     const lockfilePath = join(repoPath, ".fern", "replay.lock");
     const lockfileContent = existsSync(lockfilePath) ? readFileSync(lockfilePath, "utf-8") : undefined;
-
-    const replayYmlPath = join(repoPath, ".fern", "replay.yml");
-    const replayYmlContent = existsSync(replayYmlPath) ? readFileSync(replayYmlPath, "utf-8") : undefined;
 
     return {
         bootstrap: bootstrapResult,
         lockfileContent,
-        replayYmlContent,
         fernignoreEntries: REPLAY_FERNIGNORE_ENTRIES,
+        gitattributesEntries: GITATTRIBUTES_ENTRIES,
         prBody: buildPrBody(bootstrapResult)
     };
 }

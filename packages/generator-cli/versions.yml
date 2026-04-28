@@ -1,6 +1,20 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Send `gitattributesEntries` from `replayInit()` so Fiddle can mark
+        `.fern/replay.lock` as `linguist-generated=true` in the PR it builds.
+        Previously the local CLI wrote `.gitattributes` into a temp clone that
+        was discarded; the wire body never carried the entries, so generated
+        `fern replay init` PRs were missing the `.gitattributes` change. The
+        Fiddle server must consume this new field for the fix to take effect.
+        Also drops the unused `replayYmlContent` field and the temp-clone
+        writes that went nowhere.
+      type: fix
+  createdAt: "2026-04-28"
+  version: 0.9.19
+
+- changelogEntry:
+    - summary: |
         Fix `upsertBranchRef` failing on first-generation runs after replay
         lockfile reset. GitHub's `updateRef` API returns HTTP 422 (not 404)
         when the target branch does not exist, so the `createRef` fallback

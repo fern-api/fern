@@ -4,7 +4,7 @@ import { join } from "path";
 
 export const REPLAY_FERNIGNORE_ENTRIES = [".fern/replay.lock", ".fern/replay.yml", ".gitattributes"];
 
-const GITATTRIBUTES_ENTRIES = [".fern/replay.lock linguist-generated=true"];
+export const GITATTRIBUTES_ENTRIES = [".fern/replay.lock linguist-generated=true"];
 
 export async function ensureReplayFernignoreEntries(outputDir: string): Promise<boolean> {
     const fernignorePath = join(outputDir, ".fernignore");

@@ -9,7 +9,7 @@ import {
     logReplaySummary,
     patchDescription
 } from "../pipeline/replay-summary";
-import { ensureReplayFernignoreEntries, REPLAY_FERNIGNORE_ENTRIES } from "../replay/fernignore";
+import { ensureReplayFernignoreEntries, GITATTRIBUTES_ENTRIES, REPLAY_FERNIGNORE_ENTRIES } from "../replay/fernignore";
 
 // ---------------------------------------------------------------------------
 // formatConflictReason
@@ -436,6 +436,10 @@ describe("fernignore", () => {
         expect(REPLAY_FERNIGNORE_ENTRIES).toContain(".fern/replay.yml");
         expect(REPLAY_FERNIGNORE_ENTRIES).toContain(".gitattributes");
         expect(REPLAY_FERNIGNORE_ENTRIES.length).toBeGreaterThanOrEqual(3);
+    });
+
+    it("GITATTRIBUTES_ENTRIES marks the replay lockfile as linguist-generated", () => {
+        expect(GITATTRIBUTES_ENTRIES).toContain(".fern/replay.lock linguist-generated=true");
     });
 
     it("creates .fernignore with entries when no file exists, returns true", async () => {
