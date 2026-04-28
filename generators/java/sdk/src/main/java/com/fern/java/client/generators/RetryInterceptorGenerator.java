@@ -38,8 +38,8 @@ public final class RetryInterceptorGenerator extends AbstractFileGenerator {
             String contents = new String(is.readAllBytes(), StandardCharsets.UTF_8);
             if ("recommended".equals(clientGeneratorContext.getCustomConfig().retryStatusCodes())) {
                 contents = contents.replace(
-                        "return statusCode == 408 || statusCode == 429 || statusCode >= 500;",
-                        "return statusCode == 408 || statusCode == 429 || statusCode == 502 || statusCode == 503 || statusCode == 504;");
+                        "RETRY_STATUS_CODES = \"legacy\"",
+                        "RETRY_STATUS_CODES = \"recommended\"");
             }
             return GeneratedResourcesJavaFile.builder()
                     .className(className)
