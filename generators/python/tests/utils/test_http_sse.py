@@ -677,6 +677,81 @@ class TestEventSource:
         assert len(events) == 1
         assert events[0].data == "hello\u2028world"
 
+    @pytest.mark.asyncio
+    async def test_aiter_sse_bare_cr_line_terminator(self) -> None:
+        """Test that bare \\r is handled as a line terminator per SSE spec."""
+        sse_payload = b"data: hello\rdata: world\r\r"
+
+        response = Mock()
+        response.headers = {"content-type": "text/event-stream"}
+
+        async def mock_aiter_bytes() -> AsyncIterator[bytes]:
+            yield sse_payload
+
+        response.aiter_bytes = mock_aiter_bytes
+
+        event_source = EventSource(response)
+        events = []
+        async for event in event_source.aiter_sse():
+            events.append(event)
+
+        assert len(events) == 1
+        assert events[0].data == "hello\nworld"
+
+    def test_iter_sse_bare_cr_line_terminator(self) -> None:
+        """Test that bare \\r is handled as a line terminator in sync iteration."""
+        sse_payload = b"data: hello\rdata: world\r\r"
+
+        response = Mock()
+        response.headers = {"content-type": "text/event-stream"}
+        response.iter_bytes.return_value = [sse_payload]
+
+        event_source = EventSource(response)
+        events = list(event_source.iter_sse())
+
+        assert len(events) == 1
+        assert events[0].data == "hello\nworld"
+
+    @pytest.mark.asyncio
+    async def test_aiter_sse_crlf_across_chunk_boundary(self) -> None:
+        """Test that \\r\\n split across chunks (\\r at end, \\n at start) is one terminator."""
+        response = Mock()
+        response.headers = {"content-type": "text/event-stream"}
+
+        async def mock_aiter_bytes() -> AsyncIterator[bytes]:
+            yield b"data: hello\r"
+            yield b"\ndata: world\n\n"
+
+        response.aiter_bytes = mock_aiter_bytes
+
+        event_source = EventSource(response)
+        events = []
+        async for event in event_source.aiter_sse():
+            events.append(event)
+
+        assert len(events) == 1
+        assert events[0].data == "hello\nworld"
+
+    @pytest.mark.asyncio
+    async def test_aiter_sse_bare_cr_across_chunk_boundary(self) -> None:
+        """Test that bare \\r at chunk end (not followed by \\n) acts as a terminator."""
+        response = Mock()
+        response.headers = {"content-type": "text/event-stream"}
+
+        async def mock_aiter_bytes() -> AsyncIterator[bytes]:
+            yield b"data: hello\r"
+            yield b"data: world\n\n"
+
+        response.aiter_bytes = mock_aiter_bytes
+
+        event_source = EventSource(response)
+        events = []
+        async for event in event_source.aiter_sse():
+            events.append(event)
+
+        assert len(events) == 1
+        assert events[0].data == "hello\nworld"
+
 
 class TestConnectSSE:
     """Test cases for connect_sse and aconnect_sse functions."""

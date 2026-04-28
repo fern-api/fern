@@ -44,6 +44,18 @@ class EventSource:
     def response(self) -> httpx.Response:
         return self._response
 
+    @staticmethod
+    def _normalize_sse_line_endings(buf: str) -> str:
+        """Normalize line endings per the SSE spec (\\r\\n → \\n, bare \\r → \\n).
+
+        A trailing \\r is preserved because it may pair with a leading \\n in
+        the next chunk to form a single \\r\\n terminator.
+        """
+        buf = buf.replace("\r\n", "\n")
+        if buf.endswith("\r"):
+            return buf[:-1].replace("\r", "\n") + "\r"
+        return buf.replace("\r", "\n")
+
     def iter_sse(self) -> Iterator[ServerSentEvent]:
         self._check_content_type()
         decoder = SSEDecoder()
@@ -53,20 +65,26 @@ class EventSource:
         buf = ""
         for chunk in self._response.iter_bytes():
             buf += text_decoder.decode(chunk)
+            buf = self._normalize_sse_line_endings(buf)
 
             while "\n" in buf:
                 line, buf = buf.split("\n", 1)
-                line = line.rstrip("\r")
                 sse = decoder.decode(line)
                 if sse is not None:
                     yield sse
 
         # Flush any remaining bytes from the incremental decoder
         buf += text_decoder.decode(b"", final=True)
+        buf = buf.replace("\r\n", "\n").replace("\r", "\n")
+
+        while "\n" in buf:
+            line, buf = buf.split("\n", 1)
+            sse = decoder.decode(line)
+            if sse is not None:
+                yield sse
 
         if buf.strip():
-            line = buf.rstrip("\r")
-            sse = decoder.decode(line)
+            sse = decoder.decode(buf)
             if sse is not None:
                 yield sse
 
@@ -79,20 +97,26 @@ class EventSource:
         buf = ""
         async for chunk in self._response.aiter_bytes():
             buf += text_decoder.decode(chunk)
+            buf = self._normalize_sse_line_endings(buf)
 
             while "\n" in buf:
                 line, buf = buf.split("\n", 1)
-                line = line.rstrip("\r")
                 sse = decoder.decode(line)
                 if sse is not None:
                     yield sse
 
         # Flush any remaining bytes from the incremental decoder
         buf += text_decoder.decode(b"", final=True)
+        buf = buf.replace("\r\n", "\n").replace("\r", "\n")
+
+        while "\n" in buf:
+            line, buf = buf.split("\n", 1)
+            sse = decoder.decode(line)
+            if sse is not None:
+                yield sse
 
         if buf.strip():
-            line = buf.rstrip("\r")
-            sse = decoder.decode(line)
+            sse = decoder.decode(buf)
             if sse is not None:
                 yield sse
 
