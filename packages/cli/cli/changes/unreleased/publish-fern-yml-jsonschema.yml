@@ -1,0 +1,4 @@
+- summary: |
+    Publish a JSON Schema for `fern.yml` so YAML language servers can provide
+    autocomplete and validation in IDEs.
+  type: chore
