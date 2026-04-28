@@ -229,7 +229,7 @@ describe("Java SDK Migrations", () => {
             expect(config.config).toEqual({
                 "disable-required-property-builder-checks": true,
                 "enable-forward-compatible-enums": false,
-                retryStatusCodes: "legacy"
+                "retry-status-codes": "legacy"
             });
         });
 
@@ -238,7 +238,7 @@ describe("Java SDK Migrations", () => {
                 "disable-required-property-builder-checks": false,
                 "enable-forward-compatible-enums": true,
                 "client-class-name": "CustomClient",
-                retryStatusCodes: "recommended"
+                "retry-status-codes": "recommended"
             });
 
             // Apply all migrations
@@ -260,13 +260,13 @@ describe("Java SDK Migrations", () => {
                 "disable-required-property-builder-checks": false,
                 "enable-forward-compatible-enums": true,
                 "client-class-name": "CustomClient",
-                retryStatusCodes: "recommended"
+                "retry-status-codes": "recommended"
             });
         });
     });
 
     describe("migration_4_0_0", () => {
-        it("sets old default for retryStatusCodes", () => {
+        it("sets old default for retry-status-codes", () => {
             const config = createBaseConfig();
 
             const result = migration_4_0_0.migrateGeneratorConfig({
@@ -275,13 +275,13 @@ describe("Java SDK Migrations", () => {
             });
 
             expect(result.config).toEqual({
-                retryStatusCodes: "legacy"
+                "retry-status-codes": "legacy"
             });
         });
 
-        it("preserves explicitly set retryStatusCodes to recommended", () => {
+        it("preserves explicitly set retry-status-codes to recommended", () => {
             const config = createBaseConfig({
-                retryStatusCodes: "recommended"
+                "retry-status-codes": "recommended"
             });
 
             const result = migration_4_0_0.migrateGeneratorConfig({
@@ -290,13 +290,13 @@ describe("Java SDK Migrations", () => {
             });
 
             expect(result.config).toEqual({
-                retryStatusCodes: "recommended"
+                "retry-status-codes": "recommended"
             });
         });
 
-        it("preserves explicitly set retryStatusCodes to legacy", () => {
+        it("preserves explicitly set retry-status-codes to legacy", () => {
             const config = createBaseConfig({
-                retryStatusCodes: "legacy"
+                "retry-status-codes": "legacy"
             });
 
             const result = migration_4_0_0.migrateGeneratorConfig({
@@ -305,7 +305,7 @@ describe("Java SDK Migrations", () => {
             });
 
             expect(result.config).toEqual({
-                retryStatusCodes: "legacy"
+                "retry-status-codes": "legacy"
             });
         });
 
