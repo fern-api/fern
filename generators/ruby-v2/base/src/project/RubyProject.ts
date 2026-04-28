@@ -250,11 +250,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
             );
         }
 
-        return new File(
-            this.getAsIsOutputFilename(filename),
-            this.getAsIsOutputDirectory(filename),
-            rendered
-        );
+        return new File(this.getAsIsOutputFilename(filename), this.getAsIsOutputDirectory(filename), rendered);
     }
 
     public getAsIsOutputDirectory(templateFileName: string): RelativeFilePath {
