@@ -162,6 +162,34 @@ describe("@fern-api/generator-migrations", () => {
         });
     });
 
+    describe("PHP SDK migrations", () => {
+        it("includes PHP SDK migration entries", () => {
+            expect(migrations["fernapi/fern-php-sdk"]).toBeDefined();
+            expect(migrations["fernapi/fern-php-sdk"]?.migrations).toBeDefined();
+            expect(Array.isArray(migrations["fernapi/fern-php-sdk"]?.migrations)).toBe(true);
+        });
+
+        it("PHP SDK migrations have correct structure", () => {
+            const module = migrations["fernapi/fern-php-sdk"];
+
+            expect(module).toBeDefined();
+            expect(module?.migrations.length).toBeGreaterThan(0);
+
+            for (const migration of module?.migrations ?? []) {
+                expect(migration).toHaveProperty("version");
+                expect(migration).toHaveProperty("migrateGeneratorConfig");
+                expect(migration).toHaveProperty("migrateGeneratorsYml");
+            }
+        });
+
+        it("PHP SDK migrations are in semver order", () => {
+            const module = migrations["fernapi/fern-php-sdk"];
+            const versions = module?.migrations.map((m) => m.version) ?? [];
+
+            expect(versions).toEqual(["3.0.0"]);
+        });
+    });
+
     describe("generator name lookup", () => {
         it("returns undefined for generators without migrations", () => {
             expect(migrations["fernapi/fern-go-sdk"]).toBeUndefined();

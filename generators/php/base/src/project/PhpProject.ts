@@ -129,14 +129,23 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
     }): Promise<File> {
         const contents = (await readFile(getAsIsFilepath(filename))).toString();
 
+        let rendered = this.replaceTemplate({
+            contents,
+            namespace: this.getNestedNamespace({ namespace, filename }),
+            extraTemplateVars
+        });
+
+        if (filename === AsIsFiles.RetryDecoratingClient && this.context.customConfig.retryStatusCodes === "recommended") {
+            rendered = rendered.replace(
+                "$response->getStatusCode() >= 500 ||\n                in_array($response->getStatusCode(), self::RETRY_STATUS_CODES)",
+                "in_array($response->getStatusCode(), [408, 429, 502, 503, 504])"
+            );
+        }
+
         return new File(
             filename.replace(".Template", ""),
             RelativeFilePath.of(""),
-            this.replaceTemplate({
-                contents,
-                namespace: this.getNestedNamespace({ namespace, filename }),
-                extraTemplateVars
-            })
+            rendered
         );
     }
 

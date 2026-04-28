@@ -150,7 +150,7 @@ class RetryDecoratingClient implements ClientInterface
         }
 
         if ($response !== null) {
-            return ($response->getStatusCode() >= 501 && $response->getStatusCode() < 600) ||
+            return $response->getStatusCode() >= 500 ||
                 in_array($response->getStatusCode(), self::RETRY_STATUS_CODES);
         }
 

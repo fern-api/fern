@@ -330,7 +330,7 @@ class RawClientTest extends TestCase
 
     public function testDefaultRetries(): void
     {
-        $this->mockClient->append(self::createResponse(502));
+        $this->mockClient->append(self::createResponse(500));
 
         $request = new JsonApiRequest(
             $this->baseUrl,
@@ -339,7 +339,7 @@ class RawClientTest extends TestCase
         );
 
         $response = $this->rawClient->sendRequest($request);
-        $this->assertEquals(502, $response->getStatusCode());
+        $this->assertEquals(500, $response->getStatusCode());
         $this->assertEquals(0, $this->mockClient->count());
     }
 
@@ -349,7 +349,7 @@ class RawClientTest extends TestCase
     public function testExplicitRetriesSuccess(): void
     {
         $mockClient = new MockHttpClient();
-        $mockClient->append(self::createResponse(502), self::createResponse(502), self::createResponse(200));
+        $mockClient->append(self::createResponse(500), self::createResponse(500), self::createResponse(200));
 
         $retryClient = new RetryDecoratingClient(
             $mockClient,
@@ -369,7 +369,7 @@ class RawClientTest extends TestCase
     public function testExplicitRetriesFailure(): void
     {
         $mockClient = new MockHttpClient();
-        $mockClient->append(self::createResponse(502), self::createResponse(502), self::createResponse(502));
+        $mockClient->append(self::createResponse(500), self::createResponse(500), self::createResponse(500));
 
         $retryClient = new RetryDecoratingClient(
             $mockClient,
@@ -382,7 +382,7 @@ class RawClientTest extends TestCase
 
         $response = $retryClient->sendRequest($request);
 
-        $this->assertEquals(502, $response->getStatusCode());
+        $this->assertEquals(500, $response->getStatusCode());
         $this->assertEquals(0, $mockClient->count());
     }
 
@@ -395,6 +395,7 @@ class RawClientTest extends TestCase
         $mockClient->append(
             self::createResponse(408),
             self::createResponse(429),
+            self::createResponse(500),
             self::createResponse(501),
             self::createResponse(502),
             self::createResponse(503),
@@ -418,26 +419,6 @@ class RawClientTest extends TestCase
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertEquals(0, $mockClient->count());
-    }
-
-    public function testShouldNotRetryOn500(): void
-    {
-        $mockClient = new MockHttpClient();
-        $mockClient->append(self::createResponse(500), self::createResponse(200));
-
-        $retryClient = new RetryDecoratingClient(
-            $mockClient,
-            maxRetries: 2,
-            sleepFunction: function (int $_microseconds): void {},
-        );
-
-        $requestFactory = \Http\Discovery\Psr17FactoryDiscovery::findRequestFactory();
-        $request = $requestFactory->createRequest('GET', $this->baseUrl . '/test');
-
-        $response = $retryClient->sendRequest($request);
-
-        $this->assertEquals(500, $response->getStatusCode());
-        $this->assertEquals(1, $mockClient->count()); // 200 was never consumed
     }
 
     public function testShouldFailOn400Response(): void
