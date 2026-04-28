@@ -174,7 +174,11 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
             getPackageName: () => this.context.getRootPackageName(),
             getImportPath: () => this.getRootImportPath(),
             templateVariables: {
-                DefaultRetryAttempts: String((this.context.customConfig.maxRetries ?? 1) + 1)
+                DefaultRetryAttempts: String((this.context.customConfig.maxRetries ?? 1) + 1),
+                RetryStatusCheck:
+                    this.context.customConfig.retryStatusCodes === "recommended"
+                        ? "response.StatusCode == http.StatusTooManyRequests ||\n\t\tresponse.StatusCode == http.StatusRequestTimeout ||\n\t\tresponse.StatusCode == http.StatusBadGateway ||\n\t\tresponse.StatusCode == http.StatusServiceUnavailable ||\n\t\tresponse.StatusCode == http.StatusGatewayTimeout"
+                        : "response.StatusCode == http.StatusTooManyRequests ||\n\t\tresponse.StatusCode == http.StatusRequestTimeout ||\n\t\tresponse.StatusCode >= http.StatusInternalServerError"
             }
         });
     }
@@ -204,13 +208,6 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
         for (const [key, value] of Object.entries(templateVariables)) {
             const doubleRegex = new RegExp(`\\{\\{ *\\.${key} *\\}\\}`, "g");
             contents = contents.replace(doubleRegex, value);
-        }
-
-        if (filename === AsIsFiles.Retrier && this.context.customConfig.retryStatusCodes === "recommended") {
-            contents = contents.replace(
-                "response.StatusCode >= http.StatusInternalServerError",
-                "response.StatusCode == http.StatusBadGateway ||\n\t\tresponse.StatusCode == http.StatusServiceUnavailable ||\n\t\tresponse.StatusCode == http.StatusGatewayTimeout"
-            );
         }
 
         return new File(filename.replace(".go_", ".go"), RelativeFilePath.of(""), contents);
