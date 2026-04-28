@@ -42,7 +42,8 @@ export interface ParsedPageActionsConfig {
 }
 
 // TODO(kafkas): Remove this when we upgrade the fdr-sdk to latest
-interface ParsedDocsSettingsConfig extends CjsFdrSdk.docs.v1.commons.DocsSettingsConfig {
+interface ParsedDocsSettingsConfig extends Omit<CjsFdrSdk.docs.v1.commons.DocsSettingsConfig, "language"> {
+    language: Language | undefined;
     disableEnvironmentEditing: boolean | undefined;
     websocketOneofDisplay: "flat" | "grouped" | undefined;
 }
