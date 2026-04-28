@@ -1,4 +1,22 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.33.1
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippet generation for endpoints whose body `$ref`s a top-level
+        schema. The snippet now passes the referenced type directly instead of
+        wrapping it in a non-existent `.init(body:)` on the request wrapper struct.
+      type: fix
+  createdAt: "2026-04-28"
+  irVersion: 66
+- version: 0.33.0
+  changelogEntry:
+    - summary: |
+        Show explicit auth parameters in README snippets (errors, custom networking,
+        environments sections) instead of eliding with `(...)`. Uses IR `placeholder`
+        fields when configured, with sensible defaults.
+      type: feat
+  createdAt: "2026-04-27"
+  irVersion: 66
 - version: 0.32.2
   changelogEntry:
     - summary: |

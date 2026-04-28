@@ -14,7 +14,7 @@ import HeaderToken
         )
         let client = HeaderTokenClient(
             baseURL: "https://api.fern.com",
-            headerTokenAuth: "<value>",
+            headerTokenAuth: "YOUR_API_KEY",
             urlSession: stub.urlSession
         )
         let expectedResponse = "string"

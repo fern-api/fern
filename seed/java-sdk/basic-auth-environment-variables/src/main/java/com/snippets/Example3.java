@@ -6,7 +6,7 @@ import java.util.HashMap;
 public class Example3 {
     public static void main(String[] args) {
         SeedBasicAuthEnvironmentVariablesClient client = SeedBasicAuthEnvironmentVariablesClient.builder()
-                .credentials("<username>", "<password>")
+                .credentials("YOUR_USERNAME", "YOUR_PASSWORD")
                 .url("https://api.fern.com")
                 .build();
 

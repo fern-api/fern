@@ -93,6 +93,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
                 if (bodyPropertyPascalNames.has(this.case.pascalSafe(pathParameter.name))) {
                     continue;
                 }
+                const pathDefaultValue = this.defaultValueExtractor.extractClientDefault(pathParameter.clientDefault);
                 class_.addField({
                     origin: pathParameter,
                     type: this.context.csharpTypeMapper.convert({
@@ -102,10 +103,13 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
                     get: true,
                     set: true,
                     summary: pathParameter.docs,
-                    useRequired: true,
-                    initializer: this.context.getLiteralInitializerFromTypeReference({
-                        typeReference: pathParameter.valueType
-                    }),
+                    useRequired: pathDefaultValue == null,
+                    initializer:
+                        pathDefaultValue != null
+                            ? this.csharp.codeblock(pathDefaultValue.value)
+                            : this.context.getLiteralInitializerFromTypeReference({
+                                  typeReference: pathParameter.valueType
+                              }),
                     annotations: [this.System.Text.Json.Serialization.JsonIgnore]
                 });
             }
@@ -114,7 +118,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
         const useDefaults = this.generation.settings.useDefaultRequestParameterValues;
         for (const query of this.endpoint.queryParameters) {
             const defaultValue = !query.allowMultiple
-                ? this.getDefaultIfEnabled(query.valueType, useDefaults)
+                ? this.getEffectiveDefault(query.valueType, query.clientDefault, useDefaults)
                 : undefined;
 
             const type = query.allowMultiple
@@ -155,7 +159,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
         }
 
         for (const header of [...(service?.headers ?? []), ...this.endpoint.headers]) {
-            const defaultValue = this.getDefaultIfEnabled(header.valueType, useDefaults);
+            const defaultValue = this.getEffectiveDefault(header.valueType, header.clientDefault, useDefaults);
 
             const type = this.context.csharpTypeMapper.convert({ reference: header.valueType });
 
@@ -441,9 +445,18 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
     }
 
     /**
-     * Returns the extracted default value if the feature is enabled, otherwise undefined.
+     * Returns the effective default value for a parameter, preferring clientDefault over type-level defaults.
+     * clientDefault is always applied regardless of the useDefaultRequestParameterValues flag.
      */
-    private getDefaultIfEnabled(typeReference: TypeReference, useDefaults: boolean): ExtractedDefault | undefined {
+    private getEffectiveDefault(
+        typeReference: TypeReference,
+        clientDefault: FernIr.Literal | undefined,
+        useDefaults: boolean
+    ): ExtractedDefault | undefined {
+        const clientDefaultValue = this.defaultValueExtractor.extractClientDefault(clientDefault);
+        if (clientDefaultValue != null) {
+            return clientDefaultValue;
+        }
         if (!useDefaults) {
             return undefined;
         }

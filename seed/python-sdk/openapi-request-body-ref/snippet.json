@@ -1,0 +1,70 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/vendors/{vendor_id}",
+                "method": "PUT",
+                "identifier_override": "endpoint_vendor.updateVendor"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.vendor.update_vendor(\n    vendor_id=\"vendor_id\",\n    name=\"name\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.vendor.update_vendor(\n        vendor_id=\"vendor_id\",\n        name=\"name\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/vendors",
+                "method": "POST",
+                "identifier_override": "endpoint_vendor.createVendor"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.vendor.create_vendor(\n    name=\"name\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.vendor.create_vendor(\n        name=\"name\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/catalog/images",
+                "method": "POST",
+                "identifier_override": "endpoint_catalog.createCatalogImage"
+            },
+            "snippet": {
+                "sync_client": "from seed import CreateCatalogImageRequest, SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.catalog.create_catalog_image(\n    request=CreateCatalogImageRequest(\n        catalog_object_id=\"catalog_object_id\",\n    ),\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi, CreateCatalogImageRequest\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.catalog.create_catalog_image(\n        request=CreateCatalogImageRequest(\n            catalog_object_id=\"catalog_object_id\",\n        ),\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/catalog/images/{image_id}",
+                "method": "GET",
+                "identifier_override": "endpoint_catalog.getCatalogImage"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.catalog.get_catalog_image(\n    image_id=\"image_id\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.catalog.get_catalog_image(\n        image_id=\"image_id\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/team-members/{team_member_id}",
+                "method": "PUT",
+                "identifier_override": "endpoint_teamMember.updateTeamMember"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.team_member.update_team_member(\n    team_member_id=\"team_member_id\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.team_member.update_team_member(\n        team_member_id=\"team_member_id\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        }
+    ]
+}

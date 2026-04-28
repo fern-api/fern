@@ -45,6 +45,7 @@ class SeedClient
         ?string $apiVersion = null,
         ?array $options = null,
     ) {
+        $apiVersion ??= '2024-02-08';
         $defaultHeaders = [
             'X-Fern-Language' => 'PHP',
             'X-Fern-SDK-Name' => 'Seed',
@@ -82,13 +83,11 @@ class SeedClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function testGet(string $region, TestGetRequest $request = new TestGetRequest(), ?array $options = null): ?TestGetResponse
+    public function testGet(string $region = 'us-east-1', TestGetRequest $request = new TestGetRequest(), ?array $options = null): ?TestGetResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->limit != null) {
-            $query['limit'] = $request->limit;
-        }
+        $query['limit'] = $request->limit ?? '100';
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(

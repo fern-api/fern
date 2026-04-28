@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Improved translation logging by moving verbose page array output to debug level and formatting as a concise count instead of raw JSON array.
+  type: chore

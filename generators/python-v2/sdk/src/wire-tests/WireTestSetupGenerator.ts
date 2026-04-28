@@ -32,8 +32,9 @@ export class WireTestSetupGenerator {
     }
 
     public static getWiremockConfigContent(ir: FernIr.IntermediateRepresentation) {
-        // @ts-expect-error ir-sdk 66.3.0 IR is structurally compatible with 66.0.0 expected by mock-utils
-        return new WireMock().convertToWireMock(ir);
+        // ir-sdk versions may differ between python-sdk and mock-utils;
+        // 66.3.0 is a strict superset (adds optional fields only), so this is safe.
+        return new WireMock().convertToWireMock(ir as Parameters<WireMock["convertToWireMock"]>[0]);
     }
 
     /**

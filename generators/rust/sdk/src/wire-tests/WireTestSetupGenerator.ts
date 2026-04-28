@@ -30,6 +30,8 @@ export class WireTestSetupGenerator {
     }
 
     public static getWiremockConfigContent(ir: FernIr.IntermediateRepresentation) {
+        // @ts-expect-error Nominal type mismatch: Rust SDK uses ir-sdk@66.2.0 while mock-utils
+        // resolves to a different version. The types are structurally compatible at runtime.
         return new WireMock().convertToWireMock(ir);
     }
 

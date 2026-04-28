@@ -16,8 +16,8 @@ import Testing
 
         let client = BasicAuthEnvironmentVariablesClient(
             baseURL: "https://api.fern.com",
-            username: "<username>",
-            accessToken: "<password>",
+            username: "YOUR_USERNAME",
+            accessToken: "YOUR_PASSWORD",
             urlSession: stub.urlSession
         )
 
@@ -42,8 +42,8 @@ import Testing
 
         let client = BasicAuthEnvironmentVariablesClient(
             baseURL: "https://api.fern.com",
-            username: "<username>",
-            accessToken: "<password>",
+            username: "YOUR_USERNAME",
+            accessToken: "YOUR_PASSWORD",
             urlSession: stub.urlSession
         )
 
@@ -68,8 +68,8 @@ import Testing
 
         let client = BasicAuthEnvironmentVariablesClient(
             baseURL: "https://api.fern.com",
-            username: "<username>",
-            accessToken: "<password>",
+            username: "YOUR_USERNAME",
+            accessToken: "YOUR_PASSWORD",
             urlSession: stub.urlSession
         )
 
@@ -93,8 +93,8 @@ import Testing
 
         let client = BasicAuthEnvironmentVariablesClient(
             baseURL: "https://api.fern.com",
-            username: "<username>",
-            accessToken: "<password>",
+            username: "YOUR_USERNAME",
+            accessToken: "YOUR_PASSWORD",
             urlSession: stub.urlSession
         )
 
@@ -117,8 +117,8 @@ import Testing
 
         let client = BasicAuthEnvironmentVariablesClient(
             baseURL: "https://api.fern.com",
-            username: "<username>",
-            accessToken: "<password>",
+            username: "YOUR_USERNAME",
+            accessToken: "YOUR_PASSWORD",
             urlSession: stub.urlSession
         )
 
@@ -142,8 +142,8 @@ import Testing
 
         let client = BasicAuthEnvironmentVariablesClient(
             baseURL: "https://api.fern.com",
-            username: "<username>",
-            accessToken: "<password>",
+            username: "YOUR_USERNAME",
+            accessToken: "YOUR_PASSWORD",
             urlSession: stub.urlSession
         )
 
@@ -167,8 +167,8 @@ import Testing
 
         let client = BasicAuthEnvironmentVariablesClient(
             baseURL: "https://api.fern.com",
-            username: "<username>",
-            accessToken: "<password>",
+            username: "YOUR_USERNAME",
+            accessToken: "YOUR_PASSWORD",
             urlSession: stub.urlSession
         )
 
@@ -196,8 +196,8 @@ import Testing
 
         let client = BasicAuthEnvironmentVariablesClient(
             baseURL: "https://api.fern.com",
-            username: "<username>",
-            accessToken: "<password>",
+            username: "YOUR_USERNAME",
+            accessToken: "YOUR_PASSWORD",
             urlSession: stub.urlSession
         )
 
@@ -236,8 +236,8 @@ import Testing
 
         let client = BasicAuthEnvironmentVariablesClient(
             baseURL: "https://api.fern.com",
-            username: "<username>",
-            accessToken: "<password>",
+            username: "YOUR_USERNAME",
+            accessToken: "YOUR_PASSWORD",
             urlSession: stub.urlSession
         )
 
@@ -272,8 +272,8 @@ import Testing
 
         let client = BasicAuthEnvironmentVariablesClient(
             baseURL: "https://api.fern.com",
-            username: "<username>",
-            accessToken: "<password>",
+            username: "YOUR_USERNAME",
+            accessToken: "YOUR_PASSWORD",
             urlSession: stub.urlSession
         )
 
@@ -320,8 +320,8 @@ import Testing
 
         let client = BasicAuthEnvironmentVariablesClient(
             baseURL: "https://api.fern.com",
-            username: "<username>",
-            accessToken: "<password>",
+            username: "YOUR_USERNAME",
+            accessToken: "YOUR_PASSWORD",
             urlSession: stub.urlSession
         )
 
@@ -341,8 +341,8 @@ import Testing
 
         let client = BasicAuthEnvironmentVariablesClient(
             baseURL: "https://api.fern.com",
-            username: "<username>",
-            accessToken: "<password>",
+            username: "YOUR_USERNAME",
+            accessToken: "YOUR_PASSWORD",
             urlSession: stub.urlSession
         )
 
@@ -366,8 +366,8 @@ import Testing
 
         let client = BasicAuthEnvironmentVariablesClient(
             baseURL: "https://api.fern.com",
-            username: "<username>",
-            accessToken: "<password>",
+            username: "YOUR_USERNAME",
+            accessToken: "YOUR_PASSWORD",
             urlSession: stub.urlSession
         )
 

@@ -39,8 +39,8 @@ import (
 func do() {
     client := client.NewClient(
         option.WithBasicAuth(
-            "<username>",
-            "<password>",
+            "YOUR_USERNAME",
+            "YOUR_PASSWORD",
         ),
     )
     request := map[string]any{

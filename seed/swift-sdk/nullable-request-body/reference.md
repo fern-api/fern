@@ -35,9 +35,9 @@ private func main() async throws {
 
     _ = try await client.testGroup.testMethodName(
         pathParam: "path_param",
-        request: .init(body: .value(PlainObject(
+        request: .value(PlainObject(
 
-        )))
+        ))
     )
 }
 

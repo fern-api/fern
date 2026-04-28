@@ -34,7 +34,12 @@ interface BunNamespace {
 export interface BunServerOptions {
     port: number;
     debugLogger: DebugLogger;
-    getDocsLoadResponse(): DocsV2Read.LoadDocsForUrlResponse;
+    getDocsLoadResponse(locale?: string): DocsV2Read.LoadDocsForUrlResponse;
+    /**
+     * Extracts the locale from a URL path.
+     * E.g., "/fr/getting-started" -> "fr", "/getting-started" -> undefined
+     */
+    extractLocaleFromPath?(urlPath: string | undefined): string | undefined;
 }
 
 export interface BunServer {
@@ -52,7 +57,7 @@ export function createBunServer(options: BunServerOptions): BunServer | undefine
         return undefined;
     }
 
-    const { port, debugLogger, getDocsLoadResponse } = options;
+    const { port, debugLogger, getDocsLoadResponse, extractLocaleFromPath } = options;
 
     type WsData = { connectionId: string };
     const connections = new Map<BunServerWebSocket<WsData>, { pingInterval: NodeJS.Timeout; lastPong: number }>();
@@ -78,7 +83,7 @@ export function createBunServer(options: BunServerOptions): BunServer | undefine
 
     const server = bun.serve<WsData>({
         port,
-        fetch(req, bunHttpServer) {
+        async fetch(req, bunHttpServer) {
             if (req.method === "OPTIONS") {
                 return new Response(null, { status: 204, headers: CORS_HEADERS });
             }
@@ -93,9 +98,18 @@ export function createBunServer(options: BunServerOptions): BunServer | undefine
 
             // POST /v2/registry/docs/load-with-url
             if (req.method === "POST" && url.pathname === "/v2/registry/docs/load-with-url") {
-                return new Response(JSON.stringify(getDocsLoadResponse()), {
-                    headers: { "Content-Type": "application/json", ...CORS_HEADERS }
-                });
+                try {
+                    const body = (await req.json()) as { url?: string } | undefined;
+                    const locale = extractLocaleFromPath?.(body?.url);
+                    return new Response(JSON.stringify(getDocsLoadResponse(locale)), {
+                        headers: { "Content-Type": "application/json", ...CORS_HEADERS }
+                    });
+                } catch {
+                    // If JSON parsing fails, just return the default response
+                    return new Response(JSON.stringify(getDocsLoadResponse()), {
+                        headers: { "Content-Type": "application/json", ...CORS_HEADERS }
+                    });
+                }
             }
 
             // GET /_local/...
