@@ -1,0 +1,8 @@
+{
+  "type": "string",
+  "enum": [
+    "group.created",
+    "user.updated"
+  ],
+  "definitions": {}
+}
