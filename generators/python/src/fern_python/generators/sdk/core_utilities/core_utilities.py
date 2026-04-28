@@ -159,7 +159,8 @@ class CoreUtilities:
         )
         retry_replacements = (
             {
-                'RETRY_STATUS_CODES = "legacy"': 'RETRY_STATUS_CODES = "recommended"',
+                "retryable_400s = [429, 408, 409]\n    return response.status_code >= 500 or response.status_code in retryable_400s":
+                "return response.status_code in [408, 409, 429, 502, 503, 504]",
             }
             if self._retry_status_codes == "recommended"
             else None
