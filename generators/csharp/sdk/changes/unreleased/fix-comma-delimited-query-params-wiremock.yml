@@ -1,0 +1,6 @@
+- summary: |
+    Split comma-delimited query parameter examples into multiple values in a single
+    `WithParam()` call for WireMock.Net mock server tests. WireMock.Net parses
+    comma-separated values into arrays, so the test matcher must list each value
+    individually.
+  type: fix
