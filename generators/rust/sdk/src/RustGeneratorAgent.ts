@@ -1,3 +1,4 @@
+// no-op comment to trigger affected detection for CI verification (PR #15497)
 import { AbstractGeneratorAgent, RawGithubConfig } from "@fern-api/base-generator";
 import { Logger } from "@fern-api/logger";
 

@@ -1,3 +1,4 @@
+// no-op comment to trigger affected detection for CI verification (PR #15497)
 import { ClassReference } from "./ClassReference.js";
 import { AstNode } from "./core/AstNode.js";
 import { Writer } from "./core/Writer.js";
