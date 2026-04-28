@@ -629,18 +629,24 @@ class TestEventSource:
 
     @pytest.mark.asyncio
     async def test_aiter_sse_unicode_in_chunked_data(self) -> None:
-        """Test that \\u2028/\\u2029 in data fields survive chunk boundary splitting."""
+        """Test that multi-byte UTF-8 sequences split across chunk boundaries
+        are decoded correctly (not replaced with \\ufffd).
+
+        \\u2028 encodes as \\xe2\\x80\\xa8 in UTF-8. We split inside this
+        3-byte sequence to verify the bytes buffer handles it.
+        """
         json_payload = '{"content": "line1\u2028line2\u2029line3"}'
         full_sse = f"data: {json_payload}\n\n".encode("utf-8")
-        # Split in the middle of the UTF-8 encoded \\u2028 sequence
-        mid = len(full_sse) // 2
+        # Find the UTF-8 byte sequence for \u2028 (b'\xe2\x80\xa8') and split inside it
+        u2028_bytes = "\u2028".encode("utf-8")  # b'\xe2\x80\xa8'
+        split_pos = full_sse.index(u2028_bytes) + 1  # split after first byte of the 3-byte sequence
 
         response = Mock()
         response.headers = {"content-type": "text/event-stream"}
 
         async def mock_aiter_bytes() -> AsyncIterator[bytes]:
-            yield full_sse[:mid]
-            yield full_sse[mid:]
+            yield full_sse[:split_pos]
+            yield full_sse[split_pos:]
 
         response.aiter_bytes = mock_aiter_bytes
 
@@ -652,6 +658,24 @@ class TestEventSource:
         assert len(events) == 1
         parsed = events[0].json()
         assert parsed["content"] == "line1\u2028line2\u2029line3"
+
+    def test_iter_sse_multibyte_split_across_chunks(self) -> None:
+        """Test that multi-byte UTF-8 sequences split across chunks work in sync iteration too."""
+        text = "data: hello\u2028world\n\n"
+        encoded = text.encode("utf-8")
+        # Split inside the \u2028 3-byte sequence
+        u2028_bytes = "\u2028".encode("utf-8")
+        split_pos = encoded.index(u2028_bytes) + 1
+
+        response = Mock()
+        response.headers = {"content-type": "text/event-stream"}
+        response.iter_bytes.return_value = [encoded[:split_pos], encoded[split_pos:]]
+
+        event_source = EventSource(response)
+        events = list(event_source.iter_sse())
+
+        assert len(events) == 1
+        assert events[0].data == "hello\u2028world"
 
 
 class TestConnectSSE:

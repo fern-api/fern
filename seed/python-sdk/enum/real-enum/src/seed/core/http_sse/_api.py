@@ -1,3 +1,4 @@
+import codecs
 import re
 from contextlib import asynccontextmanager, contextmanager
 from typing import Any, AsyncGenerator, AsyncIterator, Iterator
@@ -47,26 +48,24 @@ class EventSource:
         self._check_content_type()
         decoder = SSEDecoder()
         charset = self._get_charset()
+        text_decoder = codecs.getincrementaldecoder(charset)(errors="replace")
 
-        buffer = ""
+        buf = ""
         for chunk in self._response.iter_bytes():
-            # Decode chunk using detected charset
-            text_chunk = chunk.decode(charset, errors="replace")
-            buffer += text_chunk
+            buf += text_decoder.decode(chunk)
 
-            # Process complete lines
-            while "\n" in buffer:
-                line, buffer = buffer.split("\n", 1)
+            while "\n" in buf:
+                line, buf = buf.split("\n", 1)
                 line = line.rstrip("\r")
                 sse = decoder.decode(line)
-                # when we reach a "\n\n" => line = ''
-                # => decoder will attempt to return an SSE Event
                 if sse is not None:
                     yield sse
 
-        # Process any remaining data in buffer
-        if buffer.strip():
-            line = buffer.rstrip("\r")
+        # Flush any remaining bytes from the incremental decoder
+        buf += text_decoder.decode(b"", final=True)
+
+        if buf.strip():
+            line = buf.rstrip("\r")
             sse = decoder.decode(line)
             if sse is not None:
                 yield sse
@@ -75,22 +74,24 @@ class EventSource:
         self._check_content_type()
         decoder = SSEDecoder()
         charset = self._get_charset()
+        text_decoder = codecs.getincrementaldecoder(charset)(errors="replace")
 
-        buffer = ""
+        buf = ""
         async for chunk in self._response.aiter_bytes():
-            text_chunk = chunk.decode(charset, errors="replace")
-            buffer += text_chunk
+            buf += text_decoder.decode(chunk)
 
-            while "\n" in buffer:
-                line, buffer = buffer.split("\n", 1)
+            while "\n" in buf:
+                line, buf = buf.split("\n", 1)
                 line = line.rstrip("\r")
                 sse = decoder.decode(line)
                 if sse is not None:
                     yield sse
 
-        # Process any remaining data in buffer
-        if buffer.strip():
-            line = buffer.rstrip("\r")
+        # Flush any remaining bytes from the incremental decoder
+        buf += text_decoder.decode(b"", final=True)
+
+        if buf.strip():
+            line = buf.rstrip("\r")
             sse = decoder.decode(line)
             if sse is not None:
                 yield sse
