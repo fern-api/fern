@@ -1,9 +1,13 @@
-import { mkdir, mkdtemp, rm } from "fs/promises";
+import { mkdir, mkdtemp, rm, writeFile } from "fs/promises";
 import { tmpdir } from "os";
 import path from "path";
 import { describe, expect, it } from "vitest";
 
-import { validateTranslationsConfig, validateTranslationsSourceStorage } from "../valid-translations-config.js";
+import {
+    getTranslationsConfigLocations,
+    validateTranslationsConfig,
+    validateTranslationsSourceStorage
+} from "../valid-translations-config.js";
 
 describe("validateTranslationsConfig", () => {
     it("allows supported unique locales with matching source language", () => {
@@ -23,7 +27,8 @@ describe("validateTranslationsConfig", () => {
 
         expect(violations).toHaveLength(1);
         expect(violations[0]?.message).toContain('"pt_fake_test" is not a supported locale.');
-        expect(violations[0]?.message).toContain("Fix the languages entry in docs.yml at languages[1].");
+        expect(violations[0]?.message).toContain("Fix in fern/docs.yml.");
+        expect(violations[0]?.nodePath).toEqual([{ key: "languages", arrayIndex: 1 }]);
     });
 
     it("rejects unsupported locale tags", () => {
@@ -34,7 +39,27 @@ describe("validateTranslationsConfig", () => {
 
         expect(violations).toHaveLength(1);
         expect(violations[0]?.message).toContain('"pt-BR" is not a supported locale.');
-        expect(violations[0]?.message).toContain("Fix the languages entry in docs.yml at languages[1].");
+        expect(violations[0]?.message).toContain("Fix in fern/docs.yml.");
+        expect(violations[0]?.nodePath).toEqual([{ key: "languages", arrayIndex: 1 }]);
+    });
+
+    it("includes exact docs.yml line and column when available", async () => {
+        const fernDirectory = await mkdtemp(path.join(tmpdir(), "fern-translations-"));
+        try {
+            await writeFile(path.join(fernDirectory, "docs.yml"), "languages:\n  - en\n  - pt_fake_test\n");
+            const locations = await getTranslationsConfigLocations(fernDirectory);
+
+            const violations = validateTranslationsConfig({
+                languages: ["en", "pt_fake_test"],
+                settingsLanguage: undefined,
+                locations
+            });
+
+            expect(violations).toHaveLength(1);
+            expect(violations[0]?.message).toContain("Fix in fern/docs.yml:3:5.");
+        } finally {
+            await rm(fernDirectory, { recursive: true, force: true });
+        }
     });
 
     it("rejects duplicate locales after canonicalization", () => {
@@ -43,7 +68,7 @@ describe("validateTranslationsConfig", () => {
             settingsLanguage: "en"
         });
 
-        expect(violations.some((violation) => violation.message.includes("Duplicate translation locale"))).toBe(true);
+        expect(violations.some((violation) => violation.message.includes('Duplicate locale "zh-CN"'))).toBe(true);
     });
 
     it("rejects settings.language that does not match the source locale", () => {
@@ -55,7 +80,8 @@ describe("validateTranslationsConfig", () => {
         expect(violations).toHaveLength(1);
         expect(violations[0]?.message).toContain('settings.language is "zh"');
         expect(violations[0]?.message).toContain('languages[0] is "en"');
-        expect(violations[0]?.message).toContain('set settings.language to "en"');
+        expect(violations[0]?.message).toContain("Fix in fern/docs.yml");
+        expect(violations[0]?.nodePath).toEqual(["settings", "language"]);
     });
 
     it("rejects advertised translated locales without source storage", async () => {
