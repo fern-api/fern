@@ -2678,7 +2678,7 @@ function addAutomationsUpgradeCommand(cli: Argv<GlobalCliOptions>, cliContext: C
             });
 
             if (argv.json) {
-                process.stdout.write(JSON.stringify(result, null, 2) + "\n");
+                cliContext.writeJsonToStdout(result);
             } else {
                 // Human-readable summary
                 const { cli: cliResult, generators, skippedMajor, alreadyUpToDate } = result;
