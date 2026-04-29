@@ -1,0 +1,17 @@
+- summary: |
+    Detect Node.js undici timeout errors (UND_ERR_HEADERS_TIMEOUT, UND_ERR_BODY_TIMEOUT)
+    and classify them as `reason: "timeout"` instead of `reason: "unknown"`. This fixes
+    an issue where Node's built-in fetch has a hard 300s headersTimeout that fires before
+    the SDK's timeoutInSeconds, causing generic "fetch failed" errors.
+  type: fix
+
+- summary: |
+    Include the full error cause chain in unknown error messages so underlying error codes
+    (e.g., undici error codes, ECONNRESET) surface to users instead of just "fetch failed".
+  type: fix
+
+- summary: |
+    Retry on network-level failures (e.g., connection resets, socket errors) in addition
+    to retryable HTTP status codes (408, 429, 5xx). Previously, thrown errors from the
+    fetch call bypassed retry logic entirely.
+  type: feat

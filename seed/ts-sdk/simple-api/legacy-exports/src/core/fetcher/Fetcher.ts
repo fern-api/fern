@@ -254,6 +254,33 @@ async function getHeaders(args: Fetcher.Args): Promise<Headers> {
     return newHeaders;
 }
 
+const TIMEOUT_ERROR_CODES = new Set(["UND_ERR_HEADERS_TIMEOUT", "UND_ERR_BODY_TIMEOUT", "ETIMEDOUT"]);
+
+function isTimeoutError(error: Error): boolean {
+    if ("cause" in error && error.cause instanceof Error && "code" in error.cause) {
+        const { code } = error.cause as Error & { code: unknown };
+        if (typeof code === "string" && TIMEOUT_ERROR_CODES.has(code)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function getErrorMessageWithCause(error: Error): string {
+    let message = error.message;
+    let current: unknown = "cause" in error ? error.cause : undefined;
+    while (current instanceof Error) {
+        const suffix = "code" in current && typeof (current as Error & { code: unknown }).code === "string"
+            ? ` [${(current as Error & { code: string }).code}]`
+            : "";
+        if (current.message) {
+            message += ` -> ${current.message}${suffix}`;
+        }
+        current = "cause" in current ? current.cause : undefined;
+    }
+    return message;
+}
+
 export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse<R, Fetcher.Error>> {
     let url = args.url;
     if (args.queryString != null && args.queryString.length > 0) {
@@ -370,12 +397,30 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                 },
                 rawResponse: abortRawResponse,
             };
+        } else if (error instanceof Error && isTimeoutError(error)) {
+            if (logger.isError()) {
+                const metadata = {
+                    method: args.method,
+                    url: redactUrl(url),
+                    timeoutMs: args.timeoutMs,
+                    errorMessage: getErrorMessageWithCause(error),
+                };
+                logger.error("HTTP request timed out due to runtime timeout", metadata);
+            }
+            return {
+                ok: false,
+                error: {
+                    reason: "timeout",
+                    cause: error,
+                },
+                rawResponse: unknownRawResponse,
+            };
         } else if (error instanceof Error) {
             if (logger.isError()) {
                 const metadata = {
                     method: args.method,
                     url: redactUrl(url),
-                    errorMessage: error.message,
+                    errorMessage: getErrorMessageWithCause(error),
                 };
                 logger.error("HTTP request failed with error", metadata);
             }
@@ -383,7 +428,7 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                 ok: false,
                 error: {
                     reason: "unknown",
-                    errorMessage: error.message,
+                    errorMessage: getErrorMessageWithCause(error),
                     cause: error,
                 },
                 rawResponse: unknownRawResponse,

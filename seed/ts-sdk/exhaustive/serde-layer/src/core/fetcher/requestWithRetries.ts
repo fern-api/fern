@@ -48,17 +48,40 @@ export async function requestWithRetries(
     requestFn: () => Promise<Response>,
     maxRetries: number = DEFAULT_MAX_RETRIES,
 ): Promise<Response> {
-    let response: Response = await requestFn();
+    let lastError: unknown;
+    let lastResponse: Response | undefined;
 
-    for (let i = 0; i < maxRetries; ++i) {
-        if ([408, 429].includes(response.status) || response.status >= 500) {
+    for (let i = 0; i <= maxRetries; i++) {
+        try {
+            const response = await requestFn();
+            lastResponse = response;
+            lastError = undefined;
+
+            if (!([408, 429].includes(response.status) || response.status >= 500)) {
+                return response;
+            }
+
+            if (i === maxRetries) {
+                return response;
+            }
+
             const delay = getRetryDelayFromHeaders(response, i);
-
             await new Promise((resolve) => setTimeout(resolve, delay));
-            response = await requestFn();
-        } else {
-            break;
+        } catch (error) {
+            lastError = error;
+            lastResponse = undefined;
+
+            if (i === maxRetries) {
+                throw error;
+            }
+
+            const delay = addSymmetricJitter(Math.min(INITIAL_RETRY_DELAY * 2 ** i, MAX_RETRY_DELAY));
+            await new Promise((resolve) => setTimeout(resolve, delay));
         }
     }
-    return response!;
+
+    if (lastResponse != null) {
+        return lastResponse;
+    }
+    throw lastError;
 }
