@@ -182,8 +182,6 @@ export class Generation {
         enableExplicitNullableOptional: () => this.customConfig["experimental-explicit-nullable-optional"] ?? false,
         /** When true, generates Defaults nested class and WithDefaults() method for request records with default values. Default: false. */
         useDefaultRequestParameterValues: () => this.customConfig["use-default-request-parameter-values"] ?? false,
-        /** When true, union-typed query parameters serialize as `?key=a&key=b` (form/explode) instead of `?key[0]=a&key[1]=b` (deep-object indexing). Default: false. Will flip to `true` in the next major. */
-        useFormExplodeForUnionQueryParams: () => this.customConfig["use-form-explode-for-union-query-params"] ?? false,
         /** When true, redacts the response body in deserialization error exceptions and adds a custom ToString override to the base API exception. Default: false. */
         redactResponseBodyOnError: () => this.customConfig["redact-response-body-on-error"] ?? false,
         /** When true, generates inline types as nested classes inside a static Types class on the parent type, instead of as separate top-level files. Default: false. */

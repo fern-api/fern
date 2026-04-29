@@ -19,8 +19,8 @@ public partial class EventsClient : IEventsClient
     )
     {
         var _queryString = new SeedUnionQueryParameters.Core.QueryStringBuilder.Builder(capacity: 2)
-            .AddDeepObject("event_type", request.EventType)
-            .AddDeepObject("tags", request.Tags)
+            .AddExploded("event_type", request.EventType)
+            .AddExploded("tags", request.Tags)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();
         var _headers = await new SeedUnionQueryParameters.Core.HeadersBuilder.Builder()

@@ -98,13 +98,10 @@ export class WrappedEndpointRequest extends EndpointRequest {
 
         const namedShape = this.getNamedQueryShape(query.valueType);
         const wireName = getWireValue(query.name);
-        const isUnion = namedShape === "union" || namedShape === "undiscriminatedUnion";
-        const useFormExplodeForUnions = this.context.generation.settings.useFormExplodeForUnionQueryParams;
-
-        if (isUnion && useFormExplodeForUnions) {
+        if (namedShape === "union" || namedShape === "undiscriminatedUnion") {
             // Union variants can be primitive, list, or object — only form/explode handles all three.
             writer.write(`.AddExploded("${wireName}", ${queryParameterReference})`);
-        } else if (isUnion || namedShape === "object") {
+        } else if (namedShape === "object") {
             writer.write(`.AddDeepObject("${wireName}", ${queryParameterReference})`);
         } else {
             writer.write(`.Add("${wireName}", ${queryParameterReference})`);
