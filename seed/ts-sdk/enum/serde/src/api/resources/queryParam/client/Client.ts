@@ -54,23 +54,42 @@ export class QueryParamClient {
                           omitUndefined: true,
                       })
                     : undefined,
-            operandOrColor: (() => {
-                const mapped = serializers.ColorOrOperand.jsonOrThrow(operandOrColor, {
-                    unrecognizedObjectKeys: "strip",
-                    omitUndefined: true,
-                });
-                return typeof mapped === "string" ? mapped : toJson(mapped);
-            })(),
-            maybeOperandOrColor:
-                maybeOperandOrColor != null
-                    ? (() => {
-                          const mapped = serializers.ColorOrOperand.jsonOrThrow(maybeOperandOrColor, {
+            operandOrColor: Array.isArray(operandOrColor)
+                ? operandOrColor.map((item) =>
+                      (() => {
+                          const mapped = serializers.ColorOrOperand.jsonOrThrow(item, {
                               unrecognizedObjectKeys: "strip",
                               omitUndefined: true,
                           });
                           return typeof mapped === "string" ? mapped : toJson(mapped);
-                      })()
-                    : undefined,
+                      })(),
+                  )
+                : (() => {
+                      const mapped = serializers.ColorOrOperand.jsonOrThrow(operandOrColor, {
+                          unrecognizedObjectKeys: "strip",
+                          omitUndefined: true,
+                      });
+                      return typeof mapped === "string" ? mapped : toJson(mapped);
+                  })(),
+            maybeOperandOrColor: Array.isArray(maybeOperandOrColor)
+                ? maybeOperandOrColor.map((item) =>
+                      (() => {
+                          const mapped = serializers.ColorOrOperand.jsonOrThrow(item, {
+                              unrecognizedObjectKeys: "strip",
+                              omitUndefined: true,
+                          });
+                          return typeof mapped === "string" ? mapped : toJson(mapped);
+                      })(),
+                  )
+                : maybeOperandOrColor != null
+                  ? (() => {
+                        const mapped = serializers.ColorOrOperand.jsonOrThrow(maybeOperandOrColor, {
+                            unrecognizedObjectKeys: "strip",
+                            omitUndefined: true,
+                        });
+                        return typeof mapped === "string" ? mapped : toJson(mapped);
+                    })()
+                  : undefined,
         };
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({

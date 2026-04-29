@@ -6,6 +6,7 @@ module Seed
       module Types
         class GetDirectThreadRequest < Internal::Types::Model
           field :ids, -> { String }, optional: false, nullable: false
+
           field :tags, -> { String }, optional: false, nullable: false
         end
       end

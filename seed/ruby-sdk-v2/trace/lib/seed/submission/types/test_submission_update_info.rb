@@ -9,10 +9,15 @@ module Seed
         discriminant :type
 
         member -> { Seed::Submission::Types::RunningSubmissionState }, key: "RUNNING"
+
         member -> { Object }, key: "STOPPED"
+
         member -> { Seed::Submission::Types::ErrorInfo }, key: "ERRORED"
+
         member -> { Seed::Submission::Types::GradedTestCaseUpdate }, key: "GRADED_TEST_CASE"
+
         member -> { Seed::Submission::Types::RecordedTestCaseUpdate }, key: "RECORDED_TEST_CASE"
+
         member -> { Object }, key: "FINISHED"
       end
     end

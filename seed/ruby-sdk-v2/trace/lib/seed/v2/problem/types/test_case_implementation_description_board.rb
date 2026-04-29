@@ -10,6 +10,7 @@ module Seed
           discriminant :type
 
           member -> { String }, key: "HTML"
+
           member -> { String }, key: "PARAM_ID"
         end
       end

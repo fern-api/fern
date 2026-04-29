@@ -10,7 +10,9 @@ module Seed
           discriminant :type
 
           member -> { Seed::V2::Problem::Types::VoidFunctionSignature }, key: "VOID"
+
           member -> { Seed::V2::Problem::Types::NonVoidFunctionSignature }, key: "NON_VOID"
+
           member -> { Seed::V2::Problem::Types::VoidFunctionSignatureThatTakesActualResult }, key: "VOID_THAT_TAKES_ACTUAL_RESULT"
         end
       end

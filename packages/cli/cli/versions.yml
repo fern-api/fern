@@ -1,4 +1,28 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.107.0
+  changelogEntry:
+    - summary: |
+        Add `infer-discriminated-union-base-properties` OpenAPI parser setting.
+        When enabled, the parser intersects the resolved (allOf-flattened) property
+        maps of every variant of a discriminated `oneOf` and lifts properties that
+        appear in all variants with structurally-equal schemas into the union's
+        common properties. SDKs (e.g. C#, Java, Go) that already support union base
+        properties can then expose those shared fields directly on the union type
+        without forcing callers to cast to a concrete variant. Defaults to false.
+      type: feat
+  createdAt: "2026-04-28"
+  irVersion: 66
+- version: 4.106.3
+  changelogEntry:
+    - summary: |
+        Send `gitattributesEntries` to Fiddle on `fern replay init` so the
+        generated PR marks `.fern/replay.lock` as `linguist-generated=true`.
+        Previously the entries were written into a temp clone that was discarded
+        and never reached the server. Requires a matching Fiddle server change
+        to consume the new field.
+      type: fix
+  createdAt: "2026-04-28"
+  irVersion: 66
 - version: 4.106.2
   changelogEntry:
     - summary: |

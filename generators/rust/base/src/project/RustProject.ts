@@ -97,6 +97,12 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
         content = content.replace(/\{\{EXTRA_DEPENDENCIES\}\}/g, tomlSections.dependencies);
         content = content.replace(/\{\{EXTRA_DEV_DEPENDENCIES\}\}/g, tomlSections.devDependencies);
 
+        const retryStatusCheck =
+            this.context.customConfig.retryStatusCodes === "recommended"
+                ? "[408, 429, 502, 503, 504].contains(&status_code)"
+                : "[408, 429].contains(&status_code) || status_code >= 500";
+        content = content.replace(/\{\{RETRY_STATUS_CHECK\}\}/g, retryStatusCheck);
+
         if (tomlSections.features) {
             content = content.replace(/\{\{FEATURES\}\}/g, `\n[features]\n${tomlSections.features}`);
         } else {

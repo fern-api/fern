@@ -1,6 +1,16 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Bump `@fern-api/replay` from 0.12.0 to 0.13.0. Picks up per-commit
+        detection in non-linear-history fallback (FER-10201), which produces
+        per-commit patches with proper attribution for squash-merged divergent
+        PRs instead of one composite patch.
+      type: feat
+  createdAt: "2026-04-28"
+  version: 0.9.20
+
+- changelogEntry:
+    - summary: |
         Send `gitattributesEntries` from `replayInit()` so Fiddle can mark
         `.fern/replay.lock` as `linguist-generated=true` in the PR it builds.
         Previously the local CLI wrote `.gitattributes` into a temp clone that

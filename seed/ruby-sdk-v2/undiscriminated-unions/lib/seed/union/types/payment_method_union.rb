@@ -9,6 +9,7 @@ module Seed
         extend Seed::Internal::Types::Union
 
         member -> { Seed::Union::Types::TokenizeCard }
+
         member -> { Seed::Union::Types::ConvertToken }
       end
     end

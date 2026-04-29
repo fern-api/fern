@@ -10,6 +10,7 @@ module Seed
           discriminant :type
 
           member -> { Seed::V2::Problem::Types::TestCaseWithActualResultImplementation }, key: "WITH_ACTUAL_RESULT"
+
           member -> { Seed::V2::Problem::Types::VoidFunctionDefinition }, key: "CUSTOM"
         end
       end
