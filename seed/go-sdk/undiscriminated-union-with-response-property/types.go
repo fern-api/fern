@@ -7,6 +7,7 @@ import (
 	fmt "fmt"
 	internal "github.com/undiscriminated-union-with-response-property/fern/internal"
 	big "math/big"
+	url "net/url"
 )
 
 // Undiscriminated union with multiple object variants.
@@ -74,6 +75,25 @@ func (m MyUnion) MarshalJSON() ([]byte, error) {
 		return json.Marshal(m.VariantC)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", m)
+}
+
+func (m *MyUnion) EncodeQueryValues(key string, values *url.Values) error {
+	if m == nil {
+		return nil
+	}
+	if m.typ == "VariantA" || m.VariantA != nil {
+		values.Add(key, fmt.Sprintf("%v", m.VariantA))
+		return nil
+	}
+	if m.typ == "VariantB" || m.VariantB != nil {
+		values.Add(key, fmt.Sprintf("%v", m.VariantB))
+		return nil
+	}
+	if m.typ == "VariantC" || m.VariantC != nil {
+		values.Add(key, fmt.Sprintf("%v", m.VariantC))
+		return nil
+	}
+	return nil
 }
 
 type MyUnionVisitor interface {

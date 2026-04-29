@@ -7,6 +7,7 @@ import (
 	fmt "fmt"
 	internal "github.com/multiple-request-bodies/fern/internal"
 	big "math/big"
+	url "net/url"
 )
 
 var (
@@ -286,6 +287,21 @@ func (u UploadDocumentResponse) MarshalJSON() ([]byte, error) {
 		return json.Marshal(u.DocumentUploadResult)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", u)
+}
+
+func (u *UploadDocumentResponse) EncodeQueryValues(key string, values *url.Values) error {
+	if u == nil {
+		return nil
+	}
+	if u.typ == "DocumentMetadata" || u.DocumentMetadata != nil {
+		values.Add(key, fmt.Sprintf("%v", u.DocumentMetadata))
+		return nil
+	}
+	if u.typ == "DocumentUploadResult" || u.DocumentUploadResult != nil {
+		values.Add(key, fmt.Sprintf("%v", u.DocumentUploadResult))
+		return nil
+	}
+	return nil
 }
 
 type UploadDocumentResponseVisitor interface {
