@@ -37,7 +37,8 @@ export class TtyAwareLogger {
     private interval: ReturnType<typeof setInterval> | undefined;
 
     private suspended = false;
-    private suspendBuffer = "";
+    private suspendBuffer: Array<{ content: string; stderr: boolean }> = [];
+    private finished = false;
 
     constructor(stdout: NodeJS.WriteStream, stderr: NodeJS.WriteStream) {
         this.stdout = stdout;
@@ -71,7 +72,7 @@ export class TtyAwareLogger {
             return;
         }
         if (this.suspended) {
-            this.suspendBuffer += content;
+            this.suspendBuffer.push({ content, stderr });
             return;
         }
         // Stderr writes interleave with stdout's paint region; clearing on stdout
@@ -98,10 +99,11 @@ export class TtyAwareLogger {
             await run();
         } finally {
             this.suspended = false;
-            if (this.suspendBuffer.length > 0) {
-                this.stdout.write(this.suspendBuffer);
-                this.suspendBuffer = "";
+            for (const { content, stderr: isStderr } of this.suspendBuffer) {
+                const stream = isStderr ? this.stderr : this.stdout;
+                stream.write(content);
             }
+            this.suspendBuffer = [];
             if (this.paintables.length > 0) {
                 this.stdout.write(ansiEscapes.cursorHide);
                 this.repaint();
@@ -115,9 +117,10 @@ export class TtyAwareLogger {
      * Idempotent.
      */
     public finish(): void {
-        if (!this.isTTY) {
+        if (!this.isTTY || this.finished) {
             return;
         }
+        this.finished = true;
         this.stopLoop();
         this.stdout.write(this.clear() + this.paint());
         this.stdout.write(ansiEscapes.cursorShow);
@@ -147,7 +150,7 @@ export class TtyAwareLogger {
             this.lastPaint = "";
             return "";
         }
-        const spinnerFrame = SPINNER_FRAMES[this.frameIndex] ?? SPINNER_FRAMES[0] ?? "";
+        const spinnerFrame = SPINNER_FRAMES[this.frameIndex] ?? SPINNER_FRAMES[0];
         const bodies = this.paintables.map((p) => p.paint(spinnerFrame)).filter((body) => body.length > 0);
         if (bodies.length === 0) {
             this.lastPaint = "";

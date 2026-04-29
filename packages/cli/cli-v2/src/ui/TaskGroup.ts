@@ -321,7 +321,7 @@ export class TaskGroup implements Paintable {
 
         const lines: string[] = [];
         for (const stage of stages) {
-            const icon = this.getStageIcon(stage.status, spinnerFrame);
+            const icon = this.getStageIcon(stage.status);
             let line = `\n    ${icon} ${this.getStageLabel(stage)}`;
 
             if (stage.detail != null) {
@@ -356,7 +356,7 @@ export class TaskGroup implements Paintable {
      * Uses a static arrow (▸) for running stages to avoid visual noise
      * from having multiple spinners (the parent task already has a spinner).
      */
-    private getStageIcon(status: TaskStage["status"], _spinnerFrame: string): string {
+    private getStageIcon(status: TaskStage["status"]): string {
         switch (status) {
             case "pending":
                 return chalk.dim("○");

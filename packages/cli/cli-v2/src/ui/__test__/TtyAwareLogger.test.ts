@@ -151,6 +151,68 @@ describe("TtyAwareLogger", () => {
             await promise;
             expect(resolved).toBe(true);
         });
+
+        it("flushes stderr writes to stderr, not stdout", async () => {
+            const stdout = createStream({ isTTY: true });
+            const stderr = createStream({ isTTY: true });
+            const logger = new TtyAwareLogger(stdout.stream, stderr.stream);
+
+            logger.register(paintable("TASKS"));
+            stdout.drain();
+            stderr.drain();
+
+            await logger.takeOverTerminal(() => {
+                logger.write("err line\n", { stderr: true });
+            });
+
+            expect(stderr.drain()).toContain("err line\n");
+            expect(stdout.drain()).not.toContain("err line\n");
+        });
+    });
+
+    describe("multiple paintables", () => {
+        it("renders all registered paintables on the next repaint", () => {
+            const stdout = createStream({ isTTY: true });
+            const stderr = createStream({ isTTY: true });
+            const logger = new TtyAwareLogger(stdout.stream, stderr.stream);
+
+            logger.register(paintable("FIRST"));
+            logger.register(paintable("SECOND"));
+
+            // Advance one tick so the interval fires and repaints with both paintables.
+            vi.advanceTimersByTime(100);
+
+            const out = stdout.output();
+            expect(out).toContain("FIRST");
+            expect(out).toContain("SECOND");
+        });
+    });
+
+    describe("spinner frame", () => {
+        it("passes a different frame to paintables as time advances", () => {
+            const stdout = createStream({ isTTY: true });
+            const stderr = createStream({ isTTY: true });
+            const logger = new TtyAwareLogger(stdout.stream, stderr.stream);
+
+            const frames: string[] = [];
+            const trackingPaintable: Paintable = {
+                paint(frame) {
+                    frames.push(frame);
+                    return `frame:${frame}`;
+                }
+            };
+
+            logger.register(trackingPaintable);
+            stdout.drain();
+
+            vi.advanceTimersByTime(300);
+
+            // Three additional repaints should have fired (100ms each).
+            expect(frames.length).toBeGreaterThanOrEqual(3);
+            // Not all frames should be the same spinner character.
+            const unique = new Set(frames);
+            expect(unique.size).toBeGreaterThan(1);
+        });
     });
 
     describe("finish", () => {
@@ -180,16 +242,21 @@ describe("TtyAwareLogger", () => {
             expect(stdout.drain()).toBe("");
         });
 
-        it("is idempotent", () => {
+        it("is idempotent — cursorShow is written exactly once", () => {
             const stdout = createStream({ isTTY: true });
             const stderr = createStream({ isTTY: true });
             const logger = new TtyAwareLogger(stdout.stream, stderr.stream);
 
             logger.register(paintable("X"));
-            expect(() => {
-                logger.finish();
-                logger.finish();
-            }).not.toThrow();
+            logger.finish();
+            const afterFirst = stdout.drain();
+            logger.finish();
+            const afterSecond = stdout.drain();
+
+            // First finish writes the final paint + cursorShow.
+            expect(afterFirst).toBeTruthy();
+            // Second finish must be a no-op.
+            expect(afterSecond).toBe("");
         });
     });
 });
