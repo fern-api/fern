@@ -14,6 +14,7 @@ import { ValidInstanceUrlRule } from "./rules/valid-instance-url/index.js";
 import { ValidLocalReferencesRule } from "./rules/valid-local-references/index.js";
 import { ValidMarkdownLinks } from "./rules/valid-markdown-link/index.js";
 import { ValidOpenApiExamples } from "./rules/valid-openapi-examples/index.js";
+import { ValidTranslationsConfigRule } from "./rules/valid-translations-config/index.js";
 import { ValidateProductFileRule } from "./rules/validate-product-file/index.js";
 import { ValidateVersionFileRule } from "./rules/validate-version-file/index.js";
 
@@ -28,6 +29,7 @@ const allRules = [
     ValidateProductFileRule,
     ValidInstanceUrlRule, // Validate instance URLs have valid subdomains
     NoCircularRedirectsRule, // Detect circular redirect chains
+    ValidTranslationsConfigRule,
     MissingRedirectsRule, // Check if any previously published URLs disappear without a redirect
     AccentColorContrastRule,
     ValidMarkdownLinks,

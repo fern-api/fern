@@ -953,7 +953,7 @@ export const DocsConfiguration = z.object({
     "page-actions": PageActionsConfig.optional(),
     experimental: ExperimentalConfig.optional(),
     "default-language": ProgrammingLanguage.optional(),
-    languages: z.array(Language).optional(),
+    languages: z.array(z.string()).optional(),
     "ai-chat": AIChatConfig.optional(),
     "ai-search": AIChatConfig.optional(),
     "ai-examples": AiExamplesConfig.optional(),

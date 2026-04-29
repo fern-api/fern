@@ -47,7 +47,7 @@ export interface DocsConfiguration {
      * Options include: typescript, python, java, go, ruby, csharp, php, swift, curl
      */
     defaultLanguage?: FernDocsConfig.ProgrammingLanguage;
-    languages?: FernDocsConfig.Language[];
+    languages?: string[];
     aiChat?: FernDocsConfig.AiChatConfig;
     aiSearch?: FernDocsConfig.AiChatConfig;
     /** Configure AI-powered example enhancement for API documentation. When enabled, API examples will be enhanced with AI-generated content to provide more comprehensive and realistic examples. */

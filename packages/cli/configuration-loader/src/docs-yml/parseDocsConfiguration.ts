@@ -245,10 +245,12 @@ export async function parseDocsConfiguration({
         },
 
         /* integrations */
-        integrations: {
-            ...integrations,
-            intercom: integrations?.intercom ? integrations.intercom : undefined
-        },
+        integrations:
+            integrations != null
+                ? {
+                      intercom: integrations.intercom ? integrations.intercom : undefined
+                  }
+                : undefined,
 
         /* scripts */
         css,

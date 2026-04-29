@@ -180,7 +180,7 @@
         {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/docs.Language"
+            "type": "string"
           }
         },
         {

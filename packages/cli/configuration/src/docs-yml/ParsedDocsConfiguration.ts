@@ -9,7 +9,6 @@ import {
     Availability,
     DocsInstance,
     ExperimentalConfig,
-    Language,
     LibraryLanguage,
     PlaygroundSettings,
     Target,
@@ -78,7 +77,7 @@ export interface ParsedDocsConfiguration {
     context7File: AbsoluteFilePath | undefined;
     llmsTxtFile: AbsoluteFilePath | undefined;
     llmsFullTxtFile: AbsoluteFilePath | undefined;
-    languages: Language[] | undefined;
+    languages: string[] | undefined;
     defaultLanguage: CjsFdrSdk.docs.v1.commons.ProgrammingLanguage | undefined;
     analyticsConfig: CjsFdrSdk.docs.v1.commons.AnalyticsConfig | undefined;
     announcement: AnnouncementConfig | undefined;
