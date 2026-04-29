@@ -9,6 +9,7 @@ module Seed
         discriminant :type
 
         member -> { Seed::Submission::Types::TestSubmissionStatusV2 }, key: "TEST"
+
         member -> { Seed::Submission::Types::WorkspaceSubmissionStatusV2 }, key: "WORKSPACE"
       end
     end

@@ -10,7 +10,9 @@ module Seed
         discriminant :type
 
         member -> { Seed::NullableOptional::Types::EmailNotification }, key: "EMAIL"
+
         member -> { Seed::NullableOptional::Types::SmsNotification }, key: "SMS"
+
         member -> { Seed::NullableOptional::Types::PushNotification }, key: "PUSH"
       end
     end

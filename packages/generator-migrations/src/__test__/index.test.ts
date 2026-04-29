@@ -177,9 +177,65 @@ describe("@fern-api/generator-migrations", () => {
         });
     });
 
+    describe("Ruby SDK migrations", () => {
+        it("includes Ruby SDK migration entries", () => {
+            expect(migrations["fernapi/fern-ruby-sdk"]).toBeDefined();
+            expect(migrations["fernapi/fern-ruby-sdk"]?.migrations).toBeDefined();
+            expect(Array.isArray(migrations["fernapi/fern-ruby-sdk"]?.migrations)).toBe(true);
+        });
+
+        it("Ruby SDK migrations have correct structure", () => {
+            const module = migrations["fernapi/fern-ruby-sdk"];
+
+            expect(module).toBeDefined();
+            expect(module?.migrations.length).toBeGreaterThan(0);
+
+            for (const migration of module?.migrations ?? []) {
+                expect(migration).toHaveProperty("version");
+                expect(migration).toHaveProperty("migrateGeneratorConfig");
+                expect(migration).toHaveProperty("migrateGeneratorsYml");
+            }
+        });
+
+        it("Ruby SDK migrations are in semver order", () => {
+            const module = migrations["fernapi/fern-ruby-sdk"];
+            const versions = module?.migrations.map((m) => m.version) ?? [];
+
+            expect(versions).toEqual(["2.0.0"]);
+        });
+    });
+
+    describe("Rust SDK migrations", () => {
+        it("includes Rust SDK migration entries", () => {
+            expect(migrations["fernapi/fern-rust-sdk"]).toBeDefined();
+            expect(migrations["fernapi/fern-rust-sdk"]?.migrations).toBeDefined();
+            expect(Array.isArray(migrations["fernapi/fern-rust-sdk"]?.migrations)).toBe(true);
+        });
+
+        it("Rust SDK migrations have correct structure", () => {
+            const module = migrations["fernapi/fern-rust-sdk"];
+
+            expect(module).toBeDefined();
+            expect(module?.migrations.length).toBeGreaterThan(0);
+
+            for (const migration of module?.migrations ?? []) {
+                expect(migration).toHaveProperty("version");
+                expect(migration).toHaveProperty("migrateGeneratorConfig");
+                expect(migration).toHaveProperty("migrateGeneratorsYml");
+            }
+        });
+
+        it("Rust SDK migrations are in semver order", () => {
+            const module = migrations["fernapi/fern-rust-sdk"];
+            const versions = module?.migrations.map((m) => m.version) ?? [];
+
+            expect(versions).toEqual(["1.0.0"]);
+        });
+    });
+
     describe("generator name lookup", () => {
         it("returns undefined for generators without migrations", () => {
-            expect(migrations["fernapi/fern-ruby-sdk"]).toBeUndefined();
+            expect(migrations["fernapi/fern-swift-sdk"]).toBeUndefined();
         });
 
         it("requires full generator name with fernapi prefix", () => {

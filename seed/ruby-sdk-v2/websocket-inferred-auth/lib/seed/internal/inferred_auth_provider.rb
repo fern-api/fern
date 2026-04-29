@@ -31,9 +31,10 @@ module Seed
       def auth_headers
         access_token = token
         {
-          "Authorization" => "Bearer #{access_token}"
+          Authorization: "Bearer #{access_token}"
         }
       end
+
       # Refreshes the access token by calling the token endpoint.
       #
       # @return [String]

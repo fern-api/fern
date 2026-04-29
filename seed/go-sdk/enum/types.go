@@ -5,6 +5,7 @@ package enum
 import (
 	json "encoding/json"
 	fmt "fmt"
+	url "net/url"
 )
 
 type Color string
@@ -74,6 +75,21 @@ func (c ColorOrOperand) MarshalJSON() ([]byte, error) {
 		return json.Marshal(c.Operand)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", c)
+}
+
+func (c *ColorOrOperand) EncodeQueryValues(key string, values *url.Values) error {
+	if c == nil {
+		return nil
+	}
+	if c.typ == "Color" || c.Color != "" {
+		values.Add(key, fmt.Sprintf("%v", c.Color))
+		return nil
+	}
+	if c.typ == "Operand" || c.Operand != "" {
+		values.Add(key, fmt.Sprintf("%v", c.Operand))
+		return nil
+	}
+	return nil
 }
 
 type ColorOrOperandVisitor interface {

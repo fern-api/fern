@@ -262,14 +262,12 @@ require "${rootFolderName}"
 # This class provides helper methods for verifying requests made to WireMock
 # and manages the test lifecycle for integration tests.
 class WireMockTestCase < Minitest::Test
-  WIREMOCK_BASE_URL = ENV['WIREMOCK_URL'] || 'http://localhost:8080'
-  WIREMOCK_ADMIN_URL = "#{WIREMOCK_BASE_URL}/__admin"
+  WIREMOCK_BASE_URL = (ENV.fetch("WIREMOCK_URL", nil) || "http://localhost:8080").freeze
+  WIREMOCK_ADMIN_URL = "#{WIREMOCK_BASE_URL}/__admin".freeze
 
   def setup
     super
-    unless ENV["RUN_WIRE_TESTS"] == "true"
-      skip "Wire tests are disabled by default. Set RUN_WIRE_TESTS=true to enable them."
-    end
+    skip "Wire tests are disabled by default. Set RUN_WIRE_TESTS=true to enable them." unless ENV["RUN_WIRE_TESTS"] == "true"
   end
 
   # Verifies the number of requests made to WireMock filtered by test ID for concurrency safety.
@@ -279,8 +277,8 @@ class WireMockTestCase < Minitest::Test
   # @param url_path [String] The URL path to match
   # @param query_params [Hash, nil] Query parameters to match
   # @param expected [Integer] Expected number of requests
-  def verify_request_count(test_id:, method:, url_path:, query_params: nil, expected:)
-    admin_url = ENV['WIREMOCK_URL'] ? "#{ENV['WIREMOCK_URL']}/__admin" : WIREMOCK_ADMIN_URL
+  def verify_request_count(test_id:, method:, url_path:, expected:, query_params: nil)
+    admin_url = ENV["WIREMOCK_URL"] ? "#{ENV["WIREMOCK_URL"]}/__admin" : WIREMOCK_ADMIN_URL
     uri = URI("#{admin_url}/requests/find")
     http = Net::HTTP.new(uri.host, uri.port)
     post_request = Net::HTTP::Post.new(uri.path, { "Content-Type" => "application/json" })
@@ -312,7 +310,7 @@ class WireMockTestCase < Minitest::Test
   # @param url_path [String] The URL path to match
   # @param expected_value [String] The expected Authorization header value
   def verify_authorization_header(test_id:, method:, url_path:, expected_value:)
-    admin_url = ENV['WIREMOCK_URL'] ? "#{ENV['WIREMOCK_URL']}/__admin" : WIREMOCK_ADMIN_URL
+    admin_url = ENV["WIREMOCK_URL"] ? "#{ENV["WIREMOCK_URL"]}/__admin" : WIREMOCK_ADMIN_URL
     uri = URI("#{admin_url}/requests/find")
     http = Net::HTTP.new(uri.host, uri.port)
     post_request = Net::HTTP::Post.new(uri.path, { "Content-Type" => "application/json" })
@@ -327,6 +325,7 @@ class WireMockTestCase < Minitest::Test
 
     refute_empty requests, "No requests found for test_id #{test_id}"
     actual_header = requests.first.dig("request", "headers", "Authorization")
+
     assert_equal expected_value, actual_header, "Expected Authorization header '#{expected_value}', got '#{actual_header}'"
   end
 end
@@ -365,15 +364,13 @@ WIREMOCK_COMPOSE_FILE = File.expand_path("../../wiremock/docker-compose.test.yml
 # Start WireMock container when this file is required
 if ENV["RUN_WIRE_TESTS"] == "true" && File.exist?(WIREMOCK_COMPOSE_FILE) && !ENV["WIREMOCK_URL"]
   puts "Starting WireMock container..."
-  unless system("docker compose -f #{WIREMOCK_COMPOSE_FILE} up -d --wait")
-    warn "Failed to start WireMock container"
-  end
+  warn "Failed to start WireMock container" unless system("docker compose -f #{WIREMOCK_COMPOSE_FILE} up -d --wait")
 
   # Discover the dynamically assigned port and set WIREMOCK_URL
   port_output = \`docker compose -f #{WIREMOCK_COMPOSE_FILE} port wiremock 8080 2>&1\`.strip
   if port_output =~ /:(\\d+)$/
-    ENV["WIREMOCK_URL"] = "http://localhost:#{$1}"
-    puts "WireMock container is ready at #{ENV['WIREMOCK_URL']}"
+    ENV["WIREMOCK_URL"] = "http://localhost:#{Regexp.last_match(1)}"
+    puts "WireMock container is ready at #{ENV.fetch("WIREMOCK_URL", nil)}"
   else
     ENV["WIREMOCK_URL"] = "http://localhost:8080"
     puts "WireMock container is ready (default port 8080)"

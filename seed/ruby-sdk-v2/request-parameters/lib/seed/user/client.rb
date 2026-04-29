@@ -23,13 +23,11 @@ module Seed
       def create_username(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         request_data = Seed::User::Types::CreateUsernameRequest.new(params).to_h
-        non_body_param_names = ["tags"]
+        non_body_param_names = %w[tags]
         body = request_data.except(*non_body_param_names)
 
-        query_param_names = %i[tags]
         query_params = {}
         query_params["tags"] = params[:tags] if params.key?(:tags)
-        params.except(*query_param_names)
 
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
@@ -145,7 +143,6 @@ module Seed
       # @return [Seed::User::Types::User]
       def get_username(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        query_param_names = %i[limit id date deadline bytes user user_list optional_deadline key_value optional_string nested_user optional_user exclude_user filter long_param big_int_param]
         query_params = {}
         query_params["limit"] = params[:limit] if params.key?(:limit)
         query_params["id"] = params[:id] if params.key?(:id)
@@ -163,7 +160,6 @@ module Seed
         query_params["filter"] = params[:filter] if params.key?(:filter)
         query_params["longParam"] = params[:long_param] if params.key?(:long_param)
         query_params["bigIntParam"] = params[:big_int_param] if params.key?(:big_int_param)
-        params.except(*query_param_names)
 
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],

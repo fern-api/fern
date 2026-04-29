@@ -17,13 +17,11 @@ module Seed
     # @return [Seed::Types::Foo]
     def get_foo(request_options: {}, **params)
       params = Seed::Internal::Types::Utils.normalize_keys(params)
-      query_param_names = %i[optional_baz optional_nullable_baz required_baz required_nullable_baz]
       query_params = {}
       query_params["optional_baz"] = params[:optional_baz] if params.key?(:optional_baz)
       query_params["optional_nullable_baz"] = params[:optional_nullable_baz] if params.key?(:optional_nullable_baz)
       query_params["required_baz"] = params[:required_baz] if params.key?(:required_baz)
       query_params["required_nullable_baz"] = params[:required_nullable_baz] if params.key?(:required_nullable_baz)
-      params.except(*query_param_names)
 
       request = Seed::Internal::JSON::Request.new(
         base_url: request_options[:base_url],

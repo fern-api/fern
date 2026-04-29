@@ -70,30 +70,27 @@ class OffsetItemIteratorTest < Minitest::Test
     end
   end
 
-  def test_item_iterator_can_iterate_to_exhaustion
-    ALL_TEST_ITERATOR_CONFIGS.each do |config|
+  ALL_TEST_ITERATOR_CONFIGS.each do |config|
+    define_method("test_item_iterator_can_iterate_to_exhaustion_#{config.to_a.join("_")}") do
       iterator = make_iterator(config)
 
       assert_equal (config.first_item_returned..config.total_item_count).to_a, iterator.to_a
     end
-  end
 
-  def test_items_iterator_can_be_advanced_manually_and_has_accurate_has_next
-    ALL_TEST_ITERATOR_CONFIGS.each do |config|
+    define_method("test_items_iterator_can_be_advanced_manually_and_has_accurate_has_next_#{config.to_a.join("_")}") do
       iterator = make_iterator(config)
       items = []
 
       while (item = iterator.next_element)
         assert_equal(item != config.total_item_count, iterator.next?, "#{item} #{iterator}")
+
         items.push(item)
       end
 
       assert_equal (config.first_item_returned..config.total_item_count).to_a, items
     end
-  end
 
-  def test_pages_iterator_can_be_advanced_manually_and_has_accurate_has_next
-    ALL_TEST_ITERATOR_CONFIGS.each do |config|
+    define_method("test_pages_iterator_can_be_advanced_manually_and_has_accurate_has_next_#{config.to_a.join("_")}") do
       iterator = make_iterator(config).pages
       pages = []
 
@@ -102,6 +99,7 @@ class OffsetItemIteratorTest < Minitest::Test
         page = iterator.next_page
 
         assert_equal(has_next_output, !page.nil?, "next? was inaccurate: #{config} #{iterator.inspect}")
+
         break if page.nil?
 
         pages.push(page)
@@ -138,6 +136,7 @@ class OffsetItemIteratorTest < Minitest::Test
     iterator = make_iterator(LAZY_TEST_ITERATOR_CONFIG).pages
 
     assert_equal 0, @times_called
+
     iterator.first
 
     assert_equal 1, @times_called

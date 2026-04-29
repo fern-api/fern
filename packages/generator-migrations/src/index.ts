@@ -12,6 +12,8 @@ import goSdkMigrations from "./generators/go/migrations/index.js";
 import javaSdkMigrations from "./generators/java/migrations/index.js";
 import javaModelMigrations from "./generators/java-model/migrations/index.js";
 import pythonSdkMigrations from "./generators/python/migrations/index.js";
+import rubySdkMigrations from "./generators/ruby/migrations/index.js";
+import rustSdkMigrations from "./generators/rust/migrations/index.js";
 import typescriptSdkMigrations from "./generators/typescript/migrations/index.js";
 
 /**
@@ -41,6 +43,12 @@ export const migrations: Record<string, MigrationModule> = {
     "fernapi/fern-python-sdk": pythonSdkMigrations,
     "fernapi/fern-fastapi-server": pythonSdkMigrations,
     "fernapi/fern-pydantic-model": pythonSdkMigrations,
+
+    // Ruby SDK
+    "fernapi/fern-ruby-sdk": rubySdkMigrations,
+
+    // Rust SDK
+    "fernapi/fern-rust-sdk": rustSdkMigrations,
 
     // TypeScript SDK - all variants share the same migrations
     "fernapi/fern-typescript": typescriptSdkMigrations,
