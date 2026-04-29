@@ -5,7 +5,7 @@ import * as core from "../../core/index.js";
 import type * as serializers from "../index.js";
 
 export const EnumWithCustom: core.serialization.Schema<serializers.EnumWithCustom.Raw, SeedEnum.EnumWithCustom> =
-    core.serialization.enum_(["safe", "Custom"]);
+    core.serialization.forwardCompatibleEnum_(["safe", "Custom"]);
 
 export declare namespace EnumWithCustom {
     export type Raw = "safe" | "Custom";
