@@ -1,0 +1,17 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/events",
+                "method": "GET",
+                "identifier_override": "endpoint_events.subscribe"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedUnionQueryParameters;\n\nvar client = new SeedUnionQueryParametersClient();\nawait client.Events.SubscribeAsync(\n    new SubscribeEventsRequest { EventType = EventTypeEnum.GroupCreated, Tags = \"tags\" }\n);\n"
+            }
+        }
+    ]
+}

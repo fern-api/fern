@@ -10,7 +10,9 @@ module Seed
         discriminant :type
 
         member -> { Seed::NullableOptional::Types::UserResponse }, key: "USER"
+
         member -> { Seed::NullableOptional::Types::Organization }, key: "ORGANIZATION"
+
         member -> { Seed::NullableOptional::Types::Document }, key: "DOCUMENT"
       end
     end

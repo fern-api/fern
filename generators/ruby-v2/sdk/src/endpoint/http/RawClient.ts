@@ -136,6 +136,21 @@ export class RawClient {
             return;
         }
 
+        // If the full path consists of exactly one interpolation and nothing else
+        // (head is empty and there is a single part whose tail is empty), emit the
+        // bare Ruby expression instead of wrapping it in a redundant interpolated
+        // string. Matches rubocop's Style/RedundantInterpolation autocorrect.
+        if (endpoint.fullPath.head === "" && endpoint.fullPath.parts.length === 1) {
+            const [part] = endpoint.fullPath.parts;
+            if (part != null && part.tail === "" && part.pathParameter != null) {
+                const reference = pathParameterReferences[part.pathParameter];
+                if (reference != null) {
+                    writer.write(`URI.encode_uri_component(${reference}.to_s)`);
+                    return;
+                }
+            }
+        }
+
         // Build the Ruby string interpolation for the path
         let rubyPath = endpoint.fullPath.head;
         for (const part of endpoint.fullPath.parts) {

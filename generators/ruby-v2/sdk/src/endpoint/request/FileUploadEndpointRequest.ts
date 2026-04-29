@@ -38,7 +38,7 @@ export class FileUploadEndpointRequest extends EndpointRequest {
     public getRequestBodyCodeBlock(): RequestBodyCodeBlock | undefined {
         const codeBlock = ruby.codeblock((writer) => {
             writer.writeLine("body = Internal::Multipart::FormData.new");
-            writer.writeLine();
+            writer.newLine();
             for (const property of this.fileUploadRequest.properties) {
                 if (property.type === "file") {
                     const snakeCaseName = this.case.snakeSafe(property.value.key);
@@ -77,7 +77,7 @@ export class FileUploadEndpointRequest extends EndpointRequest {
                                                 name: "value",
                                                 value:
                                                     this.getFormDataPartForNonFileProperty(property) ??
-                                                    ruby.codeblock("")
+                                                    ruby.codeblock(`params[:${snakeCaseName}]`)
                                             })
                                         ];
                                         if (property.contentType) {

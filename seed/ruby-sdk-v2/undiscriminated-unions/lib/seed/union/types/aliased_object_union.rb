@@ -10,6 +10,7 @@ module Seed
         extend Seed::Internal::Types::Union
 
         member -> { Seed::Union::Types::LeafObjectA }
+
         member -> { Seed::Union::Types::LeafObjectB }
       end
     end

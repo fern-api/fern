@@ -109,14 +109,41 @@ export class GeneratedQueryParams {
         const clientDefaultVal = getClientDefaultValue(queryParameter.clientDefault);
 
         if (!queryParameter.allowMultiple) {
-            if (clientDefaultVal != null && !typeContainsNullable(queryParameter.valueType, context)) {
-                return ts.factory.createBinaryExpression(
-                    scalarExpression,
-                    ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                    ts.factory.createStringLiteral(clientDefaultVal.toString())
+            const scalarBranch =
+                clientDefaultVal != null && !typeContainsNullable(queryParameter.valueType, context)
+                    ? ts.factory.createBinaryExpression(
+                          scalarExpression,
+                          ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                          ts.factory.createStringLiteral(clientDefaultVal.toString())
+                      )
+                    : scalarExpression;
+
+            // Emit Array.isArray so list variants expand as ?key=a&key=b rather than a JSON blob.
+            const unionTypeRef = this.getUndiscriminatedUnionType(queryParameter.valueType, context);
+            if (unionTypeRef != null) {
+                const arrayExpression = this.getArrayValueExpression({
+                    queryParameter,
+                    referenceToQueryParameter,
+                    listItemType: unionTypeRef,
+                    context
+                });
+                return ts.factory.createConditionalExpression(
+                    ts.factory.createCallExpression(
+                        ts.factory.createPropertyAccessExpression(
+                            ts.factory.createIdentifier("Array"),
+                            ts.factory.createIdentifier("isArray")
+                        ),
+                        undefined,
+                        [referenceToQueryParameter]
+                    ),
+                    ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                    arrayExpression,
+                    ts.factory.createToken(ts.SyntaxKind.ColonToken),
+                    scalarBranch
                 );
             }
-            return scalarExpression;
+
+            return scalarBranch;
         }
 
         const arrayExpression = this.getArrayValueExpression({
@@ -421,6 +448,35 @@ export class GeneratedQueryParams {
                         return this.getObjectType(typeReference.container.optional, context);
                     case "nullable":
                         return this.getObjectType(typeReference.container.nullable, context);
+                }
+            }
+        }
+        return undefined;
+    }
+
+    private getUndiscriminatedUnionType(
+        typeReference: FernIr.TypeReference,
+        context: FileContext
+    ): FernIr.TypeReference | undefined {
+        switch (typeReference.type) {
+            case "named":
+                {
+                    const typeDeclaration = context.type.getTypeDeclaration(typeReference);
+                    switch (typeDeclaration.shape.type) {
+                        case "undiscriminatedUnion":
+                            return typeReference;
+                        case "alias": {
+                            return this.getUndiscriminatedUnionType(typeDeclaration.shape.aliasOf, context);
+                        }
+                    }
+                }
+                break;
+            case "container": {
+                switch (typeReference.container.type) {
+                    case "optional":
+                        return this.getUndiscriminatedUnionType(typeReference.container.optional, context);
+                    case "nullable":
+                        return this.getUndiscriminatedUnionType(typeReference.container.nullable, context);
                 }
             }
         }

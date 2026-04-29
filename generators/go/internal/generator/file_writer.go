@@ -90,6 +90,11 @@ type fileWriter struct {
 	coordinator                  *coordinator.Client
 	snippetWriter                *SnippetWriter
 
+	// queryReachableUnions is the set of undiscriminated union TypeIds that
+	// may be encoded as query parameters. Only unions in this set get an
+	// EncodeQueryValues method generated; populated by generateModelTypes.
+	queryReachableUnions map[common.TypeId]struct{}
+
 	buffer *bytes.Buffer
 
 	// testData collects information about types that need getter/setter tests

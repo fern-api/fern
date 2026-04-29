@@ -7,6 +7,7 @@ module Seed
     # the context.
     class UnionStreamRequestBase < Internal::Types::Model
       field :stream_response, -> { Internal::Types::Boolean }, optional: true, nullable: false
+
       field :prompt, -> { String }, optional: false, nullable: false
     end
   end

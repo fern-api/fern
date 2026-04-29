@@ -7,6 +7,7 @@ module Seed
       extend Seed::Internal::Types::Union
 
       member -> { Seed::Types::User }
+
       member -> { Seed::Types::Admin }
     end
   end

@@ -58,7 +58,7 @@ module Seed
       def patch_complex(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         request_data = Seed::Service::Types::PatchComplexRequest.new(params).to_h
-        non_body_param_names = ["id"]
+        non_body_param_names = %w[id]
         body = request_data.except(*non_body_param_names)
 
         request = Seed::Internal::JSON::Request.new(
@@ -96,7 +96,7 @@ module Seed
       def named_patch_with_mixed(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         request_data = Seed::Service::Types::NamedMixedPatchRequest.new(params).to_h
-        non_body_param_names = ["id"]
+        non_body_param_names = %w[id]
         body = request_data.except(*non_body_param_names)
 
         request = Seed::Internal::JSON::Request.new(
@@ -168,7 +168,7 @@ module Seed
       def regular_patch(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         request_data = Seed::Service::Types::RegularPatchRequest.new(params).to_h
-        non_body_param_names = ["id"]
+        non_body_param_names = %w[id]
         body = request_data.except(*non_body_param_names)
 
         request = Seed::Internal::JSON::Request.new(

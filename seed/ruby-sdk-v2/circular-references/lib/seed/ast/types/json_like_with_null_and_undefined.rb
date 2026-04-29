@@ -7,9 +7,13 @@ module Seed
         extend Seed::Internal::Types::Union
 
         member -> { Internal::Types::Array[Seed::Ast::Types::JSONLikeWithNullAndUndefined] }
+
         member -> { Internal::Types::Hash[String, Seed::Ast::Types::JSONLikeWithNullAndUndefined] }
+
         member -> { String }
+
         member -> { Integer }
+
         member -> { Internal::Types::Boolean }
       end
     end

@@ -371,7 +371,10 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
             AsIsFiles.TestHashType,
             AsIsFiles.TestModelType,
             AsIsFiles.TestUnionType,
-            AsIsFiles.TestTypeUtils
+            AsIsFiles.TestTypeUtils,
+
+            // HTTP tests
+            AsIsFiles.TestHttpRawClient
         ];
 
         return files;

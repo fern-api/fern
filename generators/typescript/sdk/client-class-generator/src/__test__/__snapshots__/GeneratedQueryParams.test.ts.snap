@@ -1,5 +1,23 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`GeneratedQueryParams > getBuildStatements > emits Array.isArray ternary for alias resolving to an undiscriminated union 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    eventType: Array.isArray(eventType) ? eventType.map(item => item.toString()) : eventType.toString()
+};"
+`;
+
+exports[`GeneratedQueryParams > getBuildStatements > emits Array.isArray ternary for optional<undiscriminated union> with allowMultiple: false (serde) 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    eventType: Array.isArray(eventType) ? eventType.map(item => item.toString()) : eventType.toString()
+};"
+`;
+
+exports[`GeneratedQueryParams > getBuildStatements > emits Array.isArray ternary for undiscriminated union with allowMultiple: false (no serde) 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    eventType: Array.isArray(eventType) ? eventType.map(item => item.toString()) : eventType.toString()
+};"
+`;
+
 exports[`GeneratedQueryParams > getBuildStatements > generates allowMultiple with date-time list items (stringify map) 1`] = `
 "const _queryParams: Record<string, unknown> = {
     dates: Array.isArray(dates) ? dates.map(item => item.toString()) : dates.toString()
