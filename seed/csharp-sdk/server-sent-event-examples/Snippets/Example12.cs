@@ -2,16 +2,16 @@ using SeedServerSentEvents;
 
 public partial class Examples
 {
-    public async Task Example10() {
+    public async Task Example12() {
         var client = new SeedServerSentEventsClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await foreach (var item in client.Completions.StreamEventsDiscriminantInDataAsync(
-            new StreamEventsDiscriminantInDataRequest {
-                Query = "query"
+        await foreach (var item in client.Completions.StreamEventsContextProtocolAsync(
+            new StreamEventsContextProtocolRequest {
+                Query = ""
             }
         ))
         {
