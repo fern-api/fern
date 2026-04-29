@@ -138,7 +138,13 @@ export async function validateTranslationsSourceStorage({
         if (!existsSync(localeDirectory)) {
             violations.push({
                 severity: "fatal",
-                message: `languages includes "${locale}" as a translated locale, but translations/${locale}/ does not exist. Add translated source files under fern/translations/${locale}/ or remove "${locale}" from languages.`
+                message:
+                    `${locale} is listed as a locale in docs.yml, but fern/translations/${locale}/ is missing.\n\n` +
+                    renderTranslationsDirectoryTree({
+                        locale,
+                        marker: "<-- missing"
+                    }) +
+                    `\n\nAdd fern/translations/${locale}/ or remove "${locale}" from languages.`
             });
             continue;
         }
@@ -158,7 +164,13 @@ export async function validateTranslationsSourceStorage({
         if (canonicalLocale == null) {
             violations.push({
                 severity: "fatal",
-                message: `translations/${entry.name}/ exists, but "${entry.name}" is not a supported docs translation locale. Supported locales are: ${SUPPORTED_TRANSLATION_LOCALES.join(", ")}.`
+                message:
+                    `${entry.name} is present in the translations directory, but it is not a supported docs translation locale.\n\n` +
+                    renderTranslationsDirectoryTree({
+                        locale: entry.name,
+                        marker: "<-- unsupported locale"
+                    }) +
+                    `\n\nSupported locales are: ${SUPPORTED_TRANSLATION_LOCALES.join(", ")}.`
             });
             continue;
         }
@@ -166,12 +178,25 @@ export async function validateTranslationsSourceStorage({
         if (!advertisedTranslationLocales.has(canonicalLocale)) {
             violations.push({
                 severity: "fatal",
-                message: `translations/${entry.name}/ exists, but "${canonicalLocale}" is not listed as a translated locale in languages. Add "${canonicalLocale}" after languages[0] or remove fern/translations/${entry.name}/.`
+                message:
+                    `${canonicalLocale} is not listed as a locale in docs.yml but is present in the translations directory.\n\n` +
+                    renderTranslationsDirectoryTree({
+                        locale: entry.name,
+                        marker: "<-- not listed in docs.yml"
+                    }) +
+                    `\n\nAdd "${canonicalLocale}" after languages[0] or remove fern/translations/${entry.name}/.`
             });
         }
     }
 
     return violations;
+}
+
+function renderTranslationsDirectoryTree({ locale, marker }: { locale: string; marker: string }): string {
+    return `fern/
+  docs.yml
+  translations/
+    ${locale}/ ${marker}`;
 }
 
 export const ValidTranslationsConfigRule: Rule = {

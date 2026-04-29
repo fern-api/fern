@@ -65,7 +65,10 @@ describe("validateTranslationsConfig", () => {
             });
 
             expect(violations).toHaveLength(1);
-            expect(violations[0]?.message).toContain("translations/zh/ does not exist");
+            expect(violations[0]?.message).toContain(
+                "zh is listed as a locale in docs.yml, but fern/translations/zh/ is missing."
+            );
+            expect(violations[0]?.message).toContain("fern/\n  docs.yml\n  translations/\n    zh/ <-- missing");
         } finally {
             await rm(fernDirectory, { recursive: true, force: true });
         }
@@ -98,8 +101,12 @@ describe("validateTranslationsConfig", () => {
             });
 
             expect(violations).toHaveLength(1);
-            expect(violations[0]?.message).toContain("translations/zh/ exists");
-            expect(violations[0]?.message).toContain("not listed as a translated locale");
+            expect(violations[0]?.message).toContain(
+                "zh is not listed as a locale in docs.yml but is present in the translations directory."
+            );
+            expect(violations[0]?.message).toContain(
+                "fern/\n  docs.yml\n  translations/\n    zh/ <-- not listed in docs.yml"
+            );
         } finally {
             await rm(fernDirectory, { recursive: true, force: true });
         }
@@ -116,8 +123,12 @@ describe("validateTranslationsConfig", () => {
             });
 
             expect(violations).toHaveLength(1);
-            expect(violations[0]?.message).toContain("translations/pt-BR/ exists");
-            expect(violations[0]?.message).toContain("not a supported docs translation locale");
+            expect(violations[0]?.message).toContain(
+                "pt-BR is present in the translations directory, but it is not a supported docs translation locale."
+            );
+            expect(violations[0]?.message).toContain(
+                "fern/\n  docs.yml\n  translations/\n    pt-BR/ <-- unsupported locale"
+            );
         } finally {
             await rm(fernDirectory, { recursive: true, force: true });
         }
