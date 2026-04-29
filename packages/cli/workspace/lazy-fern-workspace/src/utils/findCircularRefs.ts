@@ -1,4 +1,4 @@
-interface CircularRefInfo {
+export interface CircularRefInfo {
     /** JSON path where the circular $ref is located (e.g., "components.schemas.MySchema") */
     path: string;
     /** The $ref value that creates the cycle (e.g., "#/components/schemas/MySchema") */
