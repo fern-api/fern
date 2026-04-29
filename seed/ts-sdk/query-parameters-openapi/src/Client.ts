@@ -122,8 +122,18 @@ export class SeedApiClient {
             filter,
             tags,
             optionalTags,
-            neighbor: neighbor != null ? (typeof neighbor === "string" ? neighbor : toJson(neighbor)) : undefined,
-            neighborRequired: typeof neighborRequired === "string" ? neighborRequired : toJson(neighborRequired),
+            neighbor: Array.isArray(neighbor)
+                ? neighbor.map((item) => (typeof item === "string" ? item : toJson(item)))
+                : neighbor != null
+                  ? typeof neighbor === "string"
+                      ? neighbor
+                      : toJson(neighbor)
+                  : undefined,
+            neighborRequired: Array.isArray(neighborRequired)
+                ? neighborRequired.map((item) => (typeof item === "string" ? item : toJson(item)))
+                : typeof neighborRequired === "string"
+                  ? neighborRequired
+                  : toJson(neighborRequired),
         };
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
