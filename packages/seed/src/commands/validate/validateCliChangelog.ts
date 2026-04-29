@@ -8,6 +8,7 @@ import yaml from "js-yaml";
 import { loadCliWorkspace } from "../../loadGeneratorWorkspaces.js";
 import { validateAngleBracketEscaping } from "./angleBracketValidator.js";
 import { assertValidSemVerChangeOrThrow, assertValidSemVerOrThrow } from "./semVerUtils.js";
+import { validateStagedChanges } from "./validateStagedChanges.js";
 
 export async function validateCliRelease({ context }: { context: TaskContext }): Promise<void> {
     const cliWorkspace = await loadCliWorkspace();
@@ -84,6 +85,9 @@ async function validateCliChangelog({
             }
         }
     }
+
+    hasErrors = (await validateStagedChanges({ absolutePathToChangelog, context, label: "cli" })) || hasErrors;
+
     if (!hasErrors) {
         context.logger.info(chalk.green("All changelogs are valid"));
     } else {

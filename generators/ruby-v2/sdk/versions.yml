@@ -22,7 +22,7 @@
   changelogEntry:
     - summary: |
         Fix Ruby string interpolation injection vulnerability in TypeLiteral string emitter.
-        Untrusted API spec default values containing #{} are now properly escaped in generated
+        Untrusted API spec default values containing `#{}` are now properly escaped in generated
         double-quoted Ruby strings.
       type: fix
     - summary: |
