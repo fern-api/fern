@@ -89,6 +89,21 @@ describe("@fern-api/generator-migrations", () => {
         });
     });
 
+    describe("Go SDK migrations", () => {
+        it("includes Go SDK migration entries", () => {
+            expect(migrations["fernapi/fern-go-sdk"]).toBeDefined();
+            expect(migrations["fernapi/fern-go-sdk"]?.migrations).toBeDefined();
+            expect(Array.isArray(migrations["fernapi/fern-go-sdk"]?.migrations)).toBe(true);
+        });
+
+        it("Go SDK migrations are in semver order", () => {
+            const module = migrations["fernapi/fern-go-sdk"];
+            const versions = module?.migrations.map((m) => m.version) ?? [];
+
+            expect(versions).toEqual(["1.0.0"]);
+        });
+    });
+
     describe("Java SDK migrations", () => {
         it("includes Java SDK migration entries", () => {
             expect(migrations["fernapi/fern-java-sdk"]).toBeDefined();
@@ -248,7 +263,7 @@ describe("@fern-api/generator-migrations", () => {
 
     describe("generator name lookup", () => {
         it("returns undefined for generators without migrations", () => {
-            expect(migrations["fernapi/fern-go-sdk"]).toBeUndefined();
+            expect(migrations["fernapi/fern-swift-sdk"]).toBeUndefined();
         });
 
         it("requires full generator name with fernapi prefix", () => {
