@@ -7,6 +7,7 @@ import (
 	fmt "fmt"
 	internal "github.com/property-access/fern/internal"
 	big "math/big"
+	url "net/url"
 )
 
 // Admin user object
@@ -462,6 +463,21 @@ func (u UserOrAdmin) MarshalJSON() ([]byte, error) {
 		return json.Marshal(u.Admin)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", u)
+}
+
+func (u *UserOrAdmin) EncodeQueryValues(key string, values *url.Values) error {
+	if u == nil {
+		return nil
+	}
+	if u.typ == "User" || u.User != nil {
+		values.Add(key, fmt.Sprintf("%v", u.User))
+		return nil
+	}
+	if u.typ == "Admin" || u.Admin != nil {
+		values.Add(key, fmt.Sprintf("%v", u.Admin))
+		return nil
+	}
+	return nil
 }
 
 type UserOrAdminVisitor interface {

@@ -9,6 +9,7 @@ import (
 	internal "github.com/examples/fern/internal"
 	uuid "github.com/google/uuid"
 	big "math/big"
+	url "net/url"
 	time "time"
 )
 
@@ -228,6 +229,21 @@ func (t Type) MarshalJSON() ([]byte, error) {
 		return json.Marshal(t.ComplexType)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", t)
+}
+
+func (t *Type) EncodeQueryValues(key string, values *url.Values) error {
+	if t == nil {
+		return nil
+	}
+	if t.typ == "BasicType" || t.BasicType != "" {
+		values.Add(key, fmt.Sprintf("%v", t.BasicType))
+		return nil
+	}
+	if t.typ == "ComplexType" || t.ComplexType != "" {
+		values.Add(key, fmt.Sprintf("%v", t.ComplexType))
+		return nil
+	}
+	return nil
 }
 
 type TypeVisitor interface {
@@ -895,6 +911,25 @@ func (c CastMember) MarshalJSON() ([]byte, error) {
 		return json.Marshal(c.StuntDouble)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", c)
+}
+
+func (c *CastMember) EncodeQueryValues(key string, values *url.Values) error {
+	if c == nil {
+		return nil
+	}
+	if c.typ == "Actor" || c.Actor != nil {
+		values.Add(key, fmt.Sprintf("%v", c.Actor))
+		return nil
+	}
+	if c.typ == "Actress" || c.Actress != nil {
+		values.Add(key, fmt.Sprintf("%v", c.Actress))
+		return nil
+	}
+	if c.typ == "StuntDouble" || c.StuntDouble != nil {
+		values.Add(key, fmt.Sprintf("%v", c.StuntDouble))
+		return nil
+	}
+	return nil
 }
 
 type CastMemberVisitor interface {
