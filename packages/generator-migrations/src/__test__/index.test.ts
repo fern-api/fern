@@ -235,7 +235,7 @@ describe("@fern-api/generator-migrations", () => {
 
     describe("generator name lookup", () => {
         it("returns undefined for generators without migrations", () => {
-            expect(migrations["fernapi/fern-swift-sdk"]).toBeUndefined();
+            expect(migrations["fernapi/fern-openapi"]).toBeUndefined();
         });
 
         it("requires full generator name with fernapi prefix", () => {
