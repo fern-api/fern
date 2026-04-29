@@ -9,6 +9,7 @@ module Seed
         discriminant :type
 
         member -> { Integer }, key: "INTEGER"
+
         member -> { String }, key: "STRING"
       end
     end

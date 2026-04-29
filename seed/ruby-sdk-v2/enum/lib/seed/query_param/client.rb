@@ -25,13 +25,11 @@ module Seed
       # @return [untyped]
       def send_(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        query_param_names = %i[operand maybe_operand operand_or_color maybe_operand_or_color]
         query_params = {}
         query_params["operand"] = params[:operand] if params.key?(:operand)
         query_params["maybeOperand"] = params[:maybe_operand] if params.key?(:maybe_operand)
         query_params["operandOrColor"] = params[:operand_or_color] if params.key?(:operand_or_color)
         query_params["maybeOperandOrColor"] = params[:maybe_operand_or_color] if params.key?(:maybe_operand_or_color)
-        params.except(*query_param_names)
 
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
@@ -67,13 +65,11 @@ module Seed
       # @return [untyped]
       def send_list(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        query_param_names = %i[operand maybe_operand operand_or_color maybe_operand_or_color]
         query_params = {}
         query_params["operand"] = params[:operand] if params.key?(:operand)
         query_params["maybeOperand"] = params[:maybe_operand] if params.key?(:maybe_operand)
         query_params["operandOrColor"] = params[:operand_or_color] if params.key?(:operand_or_color)
         query_params["maybeOperandOrColor"] = params[:maybe_operand_or_color] if params.key?(:maybe_operand_or_color)
-        params.except(*query_param_names)
 
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],

@@ -21,13 +21,11 @@ module Seed
       non_body_param_names = %w[assigned_to is_complete date _fields]
       body = request_data.except(*non_body_param_names)
 
-      query_param_names = %i[filter_assigned_to filter_is_complete filter_date fields]
       query_params = {}
       query_params["assigned_to"] = params[:filter_assigned_to] if params.key?(:filter_assigned_to)
       query_params["is_complete"] = params[:filter_is_complete] if params.key?(:filter_is_complete)
       query_params["date"] = params[:filter_date] if params.key?(:filter_date)
       query_params["_fields"] = params[:fields] if params.key?(:fields)
-      params.except(*query_param_names)
 
       request = Seed::Internal::JSON::Request.new(
         base_url: request_options[:base_url],

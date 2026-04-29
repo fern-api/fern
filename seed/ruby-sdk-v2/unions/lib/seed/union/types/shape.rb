@@ -9,6 +9,7 @@ module Seed
         discriminant :type
 
         member -> { Seed::Union::Types::Circle }, key: "CIRCLE"
+
         member -> { Seed::Union::Types::Square }, key: "SQUARE"
       end
     end

@@ -7,7 +7,9 @@ module Seed
         extend Seed::Internal::Types::Union
 
         member -> { Seed::Types::Types::Actor }
+
         member -> { Seed::Types::Types::Actress }
+
         member -> { Seed::Types::Types::StuntDouble }
       end
     end

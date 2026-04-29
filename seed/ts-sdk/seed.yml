@@ -161,6 +161,9 @@ fixtures:
     - outputFolder: skip-response-validation
       customConfig:
         skipResponseValidation: true
+  union-query-parameters:
+    - outputFolder: no-custom-config
+      customConfig: null
   file-download:
     - outputFolder: no-custom-config
       customConfig: null

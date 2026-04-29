@@ -23,7 +23,7 @@ module Seed
       def update_team_member(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         request_data = Seed::TeamMember::Types::UpdateTeamMemberRequest.new(params).to_h
-        non_body_param_names = ["team_member_id"]
+        non_body_param_names = %w[team_member_id]
         body = request_data.except(*non_body_param_names)
 
         request = Seed::Internal::JSON::Request.new(
