@@ -14,10 +14,10 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &sse.StreamEventsDiscriminantInDataRequest{
-        Query: "query",
+    request := &sse.StreamEventsContextProtocolRequest{
+        Query: "",
     }
-    client.Completions.StreamEventsDiscriminantInData(
+    client.Completions.StreamEventsContextProtocol(
         context.TODO(),
         request,
     )
