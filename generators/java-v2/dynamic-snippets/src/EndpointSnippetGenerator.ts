@@ -17,37 +17,35 @@ const STRING_TYPE_REFERENCE: FernIr.dynamic.TypeReference = {
     value: "STRING"
 };
 
+function stripOptionalAndNullable(item: FernIr.dynamic.TypeReference): FernIr.dynamic.TypeReference {
+    let current = item;
+    while (current.type === "optional" || current.type === "nullable") {
+        current = current.value;
+    }
+    return current;
+}
+
 /**
- * For query parameters with allow-multiple and optional types, the Dynamic IR produces
- * optional<list<optional<T>>> or list<optional<T>>. However, Java SDK builders have
- * convenience overloads that accept List<T> directly. This function unwraps the optional
- * from list items so we generate List<T> instead of List<Optional<T>>.
- *
- * Note: We only unwrap "optional", not "nullable". Nullable list items (list<nullable<T>>)
- * are a distinct case where items genuinely can be null, and the SDK expects List<Optional<T>>.
+ * For query parameters with allow-multiple, the Dynamic IR may produce list items wrapped
+ * in optional<...>, nullable<...>, or both (e.g. list<optional<nullable<T>>>). The Java SDK
+ * builders only expose List<T> overloads — there is no List<Optional<T>> or List<Nullable<T>>.
+ * Strip those wrappers from list items so we generate List<T>.
  */
-function unwrapOptionalFromListItems(typeReference: FernIr.dynamic.TypeReference): FernIr.dynamic.TypeReference {
+function stripListItemWrappers(typeReference: FernIr.dynamic.TypeReference): FernIr.dynamic.TypeReference {
     if (typeReference.type === "optional" && typeReference.value.type === "list") {
-        const listType = typeReference.value;
-        const itemType = listType.value;
-        if (itemType.type === "optional") {
-            return {
-                type: "optional",
-                value: {
-                    type: "list",
-                    value: itemType.value
-                }
-            };
+        const itemType = typeReference.value.value;
+        const stripped = stripOptionalAndNullable(itemType);
+        if (stripped === itemType) {
+            return typeReference;
         }
+        return { type: "optional", value: { type: "list", value: stripped } };
     }
     if (typeReference.type === "list") {
-        const itemType = typeReference.value;
-        if (itemType.type === "optional") {
-            return {
-                type: "list",
-                value: itemType.value
-            };
+        const stripped = stripOptionalAndNullable(typeReference.value);
+        if (stripped === typeReference.value) {
+            return typeReference;
         }
+        return { type: "list", value: stripped };
     }
     return typeReference;
 }
@@ -825,9 +823,7 @@ export class EndpointSnippetGenerator {
         const queryParameterFields = sortedQueryParameters.map((queryParameter) => ({
             name: this.context.getMethodName(queryParameter.name.name),
             value: this.context.dynamicTypeLiteralMapper.convert({
-                // Unwrap optional from list items for allow-multiple query params.
-                // Java SDK builders have convenience overloads that accept List<T>.
-                typeReference: unwrapOptionalFromListItems(queryParameter.typeReference),
+                typeReference: stripListItemWrappers(queryParameter.typeReference),
                 value: queryParameter.value,
                 as: "request"
             })
