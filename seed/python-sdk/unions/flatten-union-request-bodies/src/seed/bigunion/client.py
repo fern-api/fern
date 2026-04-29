@@ -119,15 +119,13 @@ class BigunionClient:
         Examples
         --------
         from seed import SeedUnions
-        from seed.bigunion import BigUnion_NormalSweet
 
         client = SeedUnions(
             base_url="https://yourhost.com/path/to/api",
         )
         client.bigunion.update(
-            request=BigUnion_NormalSweet(
-                value="value",
-            ),
+            value="value",
+            type="normalSweet",
         )
         """
         _response = self._raw_client.update(
@@ -295,7 +293,6 @@ class AsyncBigunionClient:
         import asyncio
 
         from seed import AsyncSeedUnions
-        from seed.bigunion import BigUnion_NormalSweet
 
         client = AsyncSeedUnions(
             base_url="https://yourhost.com/path/to/api",
@@ -304,9 +301,8 @@ class AsyncBigunionClient:
 
         async def main() -> None:
             await client.bigunion.update(
-                request=BigUnion_NormalSweet(
-                    value="value",
-                ),
+                value="value",
+                type="normalSweet",
             )
 
 

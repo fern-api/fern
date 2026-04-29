@@ -86,15 +86,13 @@ class UnionClient:
         Examples
         --------
         from seed import SeedUnions
-        from seed.union import Shape_Circle
 
         client = SeedUnions(
             base_url="https://yourhost.com/path/to/api",
         )
         client.union.update(
-            request=Shape_Circle(
-                radius=1.1,
-            ),
+            radius=1.1,
+            type="circle",
         )
         """
         _response = self._raw_client.update(
@@ -188,7 +186,6 @@ class AsyncUnionClient:
         import asyncio
 
         from seed import AsyncSeedUnions
-        from seed.union import Shape_Circle
 
         client = AsyncSeedUnions(
             base_url="https://yourhost.com/path/to/api",
@@ -197,9 +194,8 @@ class AsyncUnionClient:
 
         async def main() -> None:
             await client.union.update(
-                request=Shape_Circle(
-                    radius=1.1,
-                ),
+                radius=1.1,
+                type="circle",
             )
 
 
