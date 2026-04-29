@@ -24,8 +24,7 @@ export function escapeSwiftStringLiteral(rawValue: string): string {
  */
 export function escapeSwiftStringLiteralContent(value: string): string {
     let result = "";
-    for (let i = 0; i < value.length; i++) {
-        const ch = value[i];
+    for (const ch of value) {
         switch (ch) {
             case "\\":
                 result += "\\\\";
@@ -46,9 +45,6 @@ export function escapeSwiftStringLiteralContent(value: string): string {
                 result += "\\0";
                 break;
             default: {
-                if (ch == null) {
-                    continue;
-                }
                 const code = ch.charCodeAt(0);
                 if (code < 0x20 || code === 0x7f) {
                     result += `\\u{${code.toString(16).toUpperCase()}}`;
