@@ -90,19 +90,19 @@ public class QueryStringBuilderTests
         var result = QueryStringBuilder.Build(queryParams);
 
         // Verify the result contains properly formatted deep object notation
-        // Note: Square brackets are kept as-is (not percent-encoded) for query key compatibility
+        // Note: Square brackets are URL-encoded as %5B and %5D
         Assert.That(result, Does.StartWith("?api_key=test_key_123"));
         Assert.That(
             result,
-            Does.Contain("session_settings[custom_session_id]=my-custom-session-id")
+            Does.Contain("session_settings%5Bcustom_session_id%5D=my-custom-session-id")
         );
         Assert.That(
             result,
-            Does.Contain("session_settings[system_prompt]=You%20are%20a%20helpful%20assistant")
+            Does.Contain("session_settings%5Bsystem_prompt%5D=You%20are%20a%20helpful%20assistant")
         );
-        Assert.That(result, Does.Contain("session_settings[variables][userName]=John"));
-        Assert.That(result, Does.Contain("session_settings[variables][userAge]=30"));
-        Assert.That(result, Does.Contain("session_settings[variables][isPremium]=true"));
+        Assert.That(result, Does.Contain("session_settings%5Bvariables%5D%5BuserName%5D=John"));
+        Assert.That(result, Does.Contain("session_settings%5Bvariables%5D%5BuserAge%5D=30"));
+        Assert.That(result, Does.Contain("session_settings%5Bvariables%5D%5BisPremium%5D=true"));
 
         // Verify it's NOT JSON encoded (no braces or quotes in the original format)
         Assert.That(result, Does.Not.Contain("%7B%22")); // Not {" sequence
@@ -136,16 +136,16 @@ public class QueryStringBuilderTests
 
         var result = QueryStringBuilder.Build(queryParams);
 
-        // Verify structure (square brackets are kept as-is)
+        // Verify structure (square brackets are URL-encoded)
         Assert.That(result, Does.StartWith("?"));
         Assert.That(result, Does.Contain("access_token=token123"));
         Assert.That(result, Does.Contain("config_id=config456"));
         Assert.That(result, Does.Contain("api_key=key789"));
         Assert.That(
             result,
-            Does.Contain("session_settings[system_prompt]=You%20are%20helpful")
+            Does.Contain("session_settings%5Bsystem_prompt%5D=You%20are%20helpful")
         );
-        Assert.That(result, Does.Contain("session_settings[variables][name]=Alice"));
+        Assert.That(result, Does.Contain("session_settings%5Bvariables%5D%5Bname%5D=Alice"));
     }
 
     [Test]
@@ -209,14 +209,14 @@ public class QueryStringBuilderTests
         Assert.That(result, Does.Contain("api_key=key123"));
         Assert.That(
             result,
-            Does.Contain("session_settings[custom_session_id]=id-123")
+            Does.Contain("session_settings%5Bcustom_session_id%5D=id-123")
         );
         Assert.That(
             result,
-            Does.Contain("session_settings[system_prompt]=You%20are%20helpful")
+            Does.Contain("session_settings%5Bsystem_prompt%5D=You%20are%20helpful")
         );
-        Assert.That(result, Does.Contain("session_settings[variables][name]=Alice"));
-        Assert.That(result, Does.Contain("session_settings[variables][age]=25"));
+        Assert.That(result, Does.Contain("session_settings%5Bvariables%5D%5Bname%5D=Alice"));
+        Assert.That(result, Does.Contain("session_settings%5Bvariables%5D%5Bage%5D=25"));
     }
 
     [Test]
@@ -242,8 +242,8 @@ public class QueryStringBuilderTests
             .Build();
 
         Assert.That(result, Does.Contain("api_key=key123"));
-        Assert.That(result, Does.Contain("filter[status]=active"));
-        Assert.That(result, Does.Contain("filter[type]=user"));
+        Assert.That(result, Does.Contain("filter%5Bstatus%5D=active"));
+        Assert.That(result, Does.Contain("filter%5Btype%5D=user"));
     }
 
     [Test]
@@ -300,10 +300,10 @@ public class QueryStringBuilderTests
         Assert.That(result, Does.Contain("api_key=key789"));
         Assert.That(
             result,
-            Does.Contain("session_settings[custom_session_id]=session-123")
+            Does.Contain("session_settings%5Bcustom_session_id%5D=session-123")
         );
-        Assert.That(result, Does.Contain("session_settings[variables][userName]=John"));
-        Assert.That(result, Does.Contain("session_settings[variables][userAge]=30"));
+        Assert.That(result, Does.Contain("session_settings%5Bvariables%5D%5BuserName%5D=John"));
+        Assert.That(result, Does.Contain("session_settings%5Bvariables%5D%5BuserAge%5D=30"));
     }
 
     [Test]
@@ -676,21 +676,5 @@ public class QueryStringBuilderTests
 
         Assert.That(result, Does.Contain("$filter=status%20eq%20'active'"));
         Assert.That(result, Does.Contain("$top=10"));
-    }
-
-    [Test]
-    public void Build_QueryKey_BracketsPreserved()
-    {
-        // "[" and "]" are safe in query keys for array-style parameters (e.g., page[size])
-        var parameters = new List<KeyValuePair<string, string>>
-        {
-            new("page[size]", "10"),
-            new("filter[status]", "active"),
-        };
-
-        var result = QueryStringBuilder.Build(parameters);
-
-        Assert.That(result, Does.Contain("page[size]=10"));
-        Assert.That(result, Does.Contain("filter[status]=active"));
     }
 }
