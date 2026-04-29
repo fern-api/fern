@@ -983,9 +983,7 @@ export class MockEndpointGenerator extends WithGeneration {
 // Characters the C# SDK's QueryStringBuilder treats as safe for query keys.
 // Mirrors: unreserved + (sub-delims \ {& = +}) + : @ / ?
 // See QueryStringBuilder.Template.cs SafeQueryKeyChars.
-const SAFE_QUERY_KEY_CHARS = new Set(
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.~!$'()*,;:@/?"
-);
+const SAFE_QUERY_KEY_CHARS = new Set("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.~!$'()*,;:@/?");
 
 /**
  * Percent-encodes a query parameter key to match the C# SDK's QueryStringBuilder.
