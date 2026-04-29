@@ -7,7 +7,6 @@ import (
 	fmt "fmt"
 	internal "github.com/circular-references-advanced/fern/internal"
 	big "math/big"
-	url "net/url"
 )
 
 var (
@@ -139,21 +138,6 @@ func (a Animal) MarshalJSON() ([]byte, error) {
 		return json.Marshal(a.Dog)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", a)
-}
-
-func (a *Animal) EncodeQueryValues(key string, values *url.Values) error {
-	if a == nil {
-		return nil
-	}
-	if a.typ == "Cat" || a.Cat != nil {
-		values.Add(key, fmt.Sprintf("%v", a.Cat))
-		return nil
-	}
-	if a.typ == "Dog" || a.Dog != nil {
-		values.Add(key, fmt.Sprintf("%v", a.Dog))
-		return nil
-	}
-	return nil
 }
 
 type AnimalVisitor interface {
@@ -934,21 +918,6 @@ func (f Fruit) MarshalJSON() ([]byte, error) {
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
 }
 
-func (f *Fruit) EncodeQueryValues(key string, values *url.Values) error {
-	if f == nil {
-		return nil
-	}
-	if f.typ == "Acai" || f.Acai != nil {
-		values.Add(key, fmt.Sprintf("%v", f.Acai))
-		return nil
-	}
-	if f.typ == "Fig" || f.Fig != nil {
-		values.Add(key, fmt.Sprintf("%v", f.Fig))
-		return nil
-	}
-	return nil
-}
-
 type FruitVisitor interface {
 	VisitAcai(*Acai) error
 	VisitFig(*Fig) error
@@ -1074,21 +1043,6 @@ func (n Node) MarshalJSON() ([]byte, error) {
 		return json.Marshal(n.LeafNode)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", n)
-}
-
-func (n *Node) EncodeQueryValues(key string, values *url.Values) error {
-	if n == nil {
-		return nil
-	}
-	if n.typ == "BranchNode" || n.BranchNode != nil {
-		values.Add(key, fmt.Sprintf("%v", n.BranchNode))
-		return nil
-	}
-	if n.typ == "LeafNode" || n.LeafNode != nil {
-		values.Add(key, fmt.Sprintf("%v", n.LeafNode))
-		return nil
-	}
-	return nil
 }
 
 type NodeVisitor interface {

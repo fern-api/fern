@@ -7,7 +7,6 @@ import (
 	fmt "fmt"
 	internal "github.com/nullable/fern/internal"
 	big "math/big"
-	url "net/url"
 	time "time"
 )
 
@@ -813,29 +812,6 @@ func (w WeirdNumber) MarshalJSON() ([]byte, error) {
 		return json.Marshal(w.Double)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", w)
-}
-
-func (w *WeirdNumber) EncodeQueryValues(key string, values *url.Values) error {
-	if w == nil {
-		return nil
-	}
-	if w.typ == "Integer" || w.Integer != 0 {
-		values.Add(key, fmt.Sprintf("%v", w.Integer))
-		return nil
-	}
-	if w.typ == "DoubleOptional" || w.DoubleOptional != nil {
-		values.Add(key, fmt.Sprintf("%v", w.DoubleOptional))
-		return nil
-	}
-	if w.typ == "StringOptional" || w.StringOptional != nil {
-		values.Add(key, fmt.Sprintf("%v", w.StringOptional))
-		return nil
-	}
-	if w.typ == "Double" || w.Double != 0 {
-		values.Add(key, fmt.Sprintf("%v", w.Double))
-		return nil
-	}
-	return nil
 }
 
 type WeirdNumberVisitor interface {

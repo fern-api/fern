@@ -7,7 +7,6 @@ import (
 	fmt "fmt"
 	internal "github.com/circular-references/fern/internal"
 	big "math/big"
-	url "net/url"
 )
 
 type ContainerValue struct {
@@ -402,35 +401,6 @@ func (j JSONLike) MarshalJSON() ([]byte, error) {
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", j)
 }
 
-func (j *JSONLike) EncodeQueryValues(key string, values *url.Values) error {
-	if j == nil {
-		return nil
-	}
-	if j.typ == "JSONLikeList" || j.JSONLikeList != nil {
-		for _, item := range j.JSONLikeList {
-			values.Add(key, fmt.Sprintf("%v", item))
-		}
-		return nil
-	}
-	if j.typ == "StringJSONLikeMap" || j.StringJSONLikeMap != nil {
-		values.Add(key, fmt.Sprintf("%v", j.StringJSONLikeMap))
-		return nil
-	}
-	if j.typ == "String" || j.String != "" {
-		values.Add(key, fmt.Sprintf("%v", j.String))
-		return nil
-	}
-	if j.typ == "Integer" || j.Integer != 0 {
-		values.Add(key, fmt.Sprintf("%v", j.Integer))
-		return nil
-	}
-	if j.typ == "Boolean" || j.Boolean != false {
-		values.Add(key, fmt.Sprintf("%v", j.Boolean))
-		return nil
-	}
-	return nil
-}
-
 type JSONLikeVisitor interface {
 	VisitJSONLikeList([]*JSONLike) error
 	VisitStringJSONLikeMap(map[string]*JSONLike) error
@@ -554,35 +524,6 @@ func (j JSONLikeWithNullAndUndefined) MarshalJSON() ([]byte, error) {
 		return json.Marshal(j.BooleanOptional)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", j)
-}
-
-func (j *JSONLikeWithNullAndUndefined) EncodeQueryValues(key string, values *url.Values) error {
-	if j == nil {
-		return nil
-	}
-	if j.typ == "JSONLikeWithNullAndUndefinedOptionalList" || j.JSONLikeWithNullAndUndefinedOptionalList != nil {
-		for _, item := range j.JSONLikeWithNullAndUndefinedOptionalList {
-			values.Add(key, fmt.Sprintf("%v", item))
-		}
-		return nil
-	}
-	if j.typ == "StringJSONLikeWithNullAndUndefinedOptionalMap" || j.StringJSONLikeWithNullAndUndefinedOptionalMap != nil {
-		values.Add(key, fmt.Sprintf("%v", j.StringJSONLikeWithNullAndUndefinedOptionalMap))
-		return nil
-	}
-	if j.typ == "StringOptional" || j.StringOptional != nil {
-		values.Add(key, fmt.Sprintf("%v", j.StringOptional))
-		return nil
-	}
-	if j.typ == "IntegerOptional" || j.IntegerOptional != nil {
-		values.Add(key, fmt.Sprintf("%v", j.IntegerOptional))
-		return nil
-	}
-	if j.typ == "BooleanOptional" || j.BooleanOptional != nil {
-		values.Add(key, fmt.Sprintf("%v", j.BooleanOptional))
-		return nil
-	}
-	return nil
 }
 
 type JSONLikeWithNullAndUndefinedVisitor interface {
@@ -828,21 +769,6 @@ func (t TorU) MarshalJSON() ([]byte, error) {
 		return json.Marshal(t.U)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", t)
-}
-
-func (t *TorU) EncodeQueryValues(key string, values *url.Values) error {
-	if t == nil {
-		return nil
-	}
-	if t.typ == "T" || t.T != nil {
-		values.Add(key, fmt.Sprintf("%v", t.T))
-		return nil
-	}
-	if t.typ == "U" || t.U != nil {
-		values.Add(key, fmt.Sprintf("%v", t.U))
-		return nil
-	}
-	return nil
 }
 
 type TorUVisitor interface {

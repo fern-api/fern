@@ -7,7 +7,6 @@ import (
 	fmt "fmt"
 	internal "github.com/simple-fhir/fern/internal"
 	big "math/big"
-	url "net/url"
 )
 
 var (
@@ -797,29 +796,6 @@ func (r ResourceList) MarshalJSON() ([]byte, error) {
 		return json.Marshal(r.Script)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", r)
-}
-
-func (r *ResourceList) EncodeQueryValues(key string, values *url.Values) error {
-	if r == nil {
-		return nil
-	}
-	if r.typ == "Account" || r.Account != nil {
-		values.Add(key, fmt.Sprintf("%v", r.Account))
-		return nil
-	}
-	if r.typ == "Patient" || r.Patient != nil {
-		values.Add(key, fmt.Sprintf("%v", r.Patient))
-		return nil
-	}
-	if r.typ == "Practitioner" || r.Practitioner != nil {
-		values.Add(key, fmt.Sprintf("%v", r.Practitioner))
-		return nil
-	}
-	if r.typ == "Script" || r.Script != nil {
-		values.Add(key, fmt.Sprintf("%v", r.Script))
-		return nil
-	}
-	return nil
 }
 
 type ResourceListVisitor interface {

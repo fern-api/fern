@@ -630,21 +630,6 @@ return json.Marshal(u.Boolean)
 return nil, fmt.Errorf("type %T does not include a non-empty union type", u)
 }
 
-func (u *UndiscriminatedLiteral) EncodeQueryValues(key string, values *url.Values) error {
-if u == nil {
-return nil
-}
-if u.typ == "String" || u.String != "" {
-values.Add(key, fmt.Sprintf("%v", u.String))
-return nil
-}
-if u.typ == "Boolean" || u.Boolean != false {
-values.Add(key, fmt.Sprintf("%v", u.Boolean))
-return nil
-}
-return nil
-}
-
 type UndiscriminatedLiteralVisitor interface {
 VisitString(string) error
 VisitEndingStringLiteral(string) error

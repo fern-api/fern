@@ -28,6 +28,7 @@ func (f *fileWriter) WriteType(
 ) error {
 	visitor := &typeVisitor{
 		typeName:                     typeDeclaration.Name.Name.PascalCase.UnsafeName,
+		typeId:                       typeDeclaration.Name.TypeId,
 		baseImportPath:               f.baseImportPath,
 		importPath:                   fernFilepathToImportPath(f.baseImportPath, typeDeclaration.Name.FernFilepath),
 		writer:                       f,
@@ -43,6 +44,7 @@ func (f *fileWriter) WriteType(
 // typeVisitor writes the internal properties of types (e.g. properties).
 type typeVisitor struct {
 	typeName       string
+	typeId         common.TypeId
 	baseImportPath string
 	importPath     string
 	writer         *fileWriter
@@ -1034,35 +1036,38 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 
 	// Implement the QueryEncoder interface so undiscriminated unions can be used as query
 	// parameters. Without this, internal/query.go recurses into the struct, finds no `url`
-	// tags on the inner fields, and silently drops the parameter.
-	t.writer.P("func (", receiver, " *", t.typeName, ") EncodeQueryValues(key string, values *url.Values) error {")
-	t.writer.P("if ", receiver, " == nil {")
-	t.writer.P("return nil")
-	t.writer.P("}")
-	for _, member := range members {
-		if member.isLiteral {
-			// Literals are constants; the server doesn't need them echoed back as query values.
-			continue
-		}
-		field := fmt.Sprintf("%s.%s", receiver, member.field)
-		if member.date != nil && !member.isOptional {
-			t.writer.P(fmt.Sprintf("if %s.typ == %q || !%s.IsZero() {", receiver, member.field, field))
-		} else {
-			t.writer.P(fmt.Sprintf("if %s.typ == %q || %s != %s {", receiver, member.field, field, member.zeroValue))
-		}
-		if member.isList {
-			t.writer.P("for _, item := range ", field, " {")
-			t.writer.P(`values.Add(key, fmt.Sprintf("%v", item))`)
+	// tags on the inner fields, and silently drops the parameter. Only emit on unions
+	// reachable from a query parameter position to avoid bloating unrelated types.
+	if _, queryReachable := t.writer.queryReachableUnions[t.typeId]; queryReachable {
+		t.writer.P("func (", receiver, " *", t.typeName, ") EncodeQueryValues(key string, values *url.Values) error {")
+		t.writer.P("if ", receiver, " == nil {")
+		t.writer.P("return nil")
+		t.writer.P("}")
+		for _, member := range members {
+			if member.isLiteral {
+				// Literals are constants; the server doesn't need them echoed back as query values.
+				continue
+			}
+			field := fmt.Sprintf("%s.%s", receiver, member.field)
+			if member.date != nil && !member.isOptional {
+				t.writer.P(fmt.Sprintf("if %s.typ == %q || !%s.IsZero() {", receiver, member.field, field))
+			} else {
+				t.writer.P(fmt.Sprintf("if %s.typ == %q || %s != %s {", receiver, member.field, field, member.zeroValue))
+			}
+			if member.isList {
+				t.writer.P("for _, item := range ", field, " {")
+				t.writer.P(`values.Add(key, fmt.Sprintf("%v", item))`)
+				t.writer.P("}")
+			} else {
+				t.writer.P(`values.Add(key, fmt.Sprintf("%v", `, field, "))")
+			}
+			t.writer.P("return nil")
 			t.writer.P("}")
-		} else {
-			t.writer.P(`values.Add(key, fmt.Sprintf("%v", `, field, "))")
 		}
 		t.writer.P("return nil")
 		t.writer.P("}")
+		t.writer.P()
 	}
-	t.writer.P("return nil")
-	t.writer.P("}")
-	t.writer.P()
 
 	// Generate the Visitor interface.
 	t.writer.P("type ", t.typeName, "Visitor interface {")

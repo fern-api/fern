@@ -5,7 +5,6 @@ package literalsunions
 import (
 	json "encoding/json"
 	fmt "fmt"
-	url "net/url"
 )
 
 // A string literal.
@@ -57,17 +56,6 @@ func (u UnionOverLiteral) MarshalJSON() ([]byte, error) {
 		return json.Marshal("literally")
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", u)
-}
-
-func (u *UnionOverLiteral) EncodeQueryValues(key string, values *url.Values) error {
-	if u == nil {
-		return nil
-	}
-	if u.typ == "String" || u.String != "" {
-		values.Add(key, fmt.Sprintf("%v", u.String))
-		return nil
-	}
-	return nil
 }
 
 type UnionOverLiteralVisitor interface {
