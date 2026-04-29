@@ -58,7 +58,9 @@ export function validateTranslationsConfig({
         if (locale == null || locale.trim().length === 0) {
             violations.push({
                 severity: "fatal",
-                message: `languages[${index}] must be a non-empty BCP 47 locale tag.`
+                message:
+                    `languages[${index}] is empty. Fix the languages entry in docs.yml at languages[${index}]. ` +
+                    `Supported locales are: ${SUPPORTED_TRANSLATION_LOCALES.join(", ")}.`
             });
             continue;
         }
@@ -67,7 +69,9 @@ export function validateTranslationsConfig({
         if (canonicalLocale == null) {
             violations.push({
                 severity: "fatal",
-                message: `languages[${index}] is "${locale}", which is not a valid BCP 47 locale tag.`
+                message:
+                    `"${locale}" is not a supported locale. Fix the languages entry in docs.yml at languages[${index}]. ` +
+                    `Supported locales are: ${SUPPORTED_TRANSLATION_LOCALES.join(", ")}.`
             });
             continue;
         }
@@ -79,7 +83,9 @@ export function validateTranslationsConfig({
         if (!supportedTranslationLocales.has(canonicalLocale)) {
             violations.push({
                 severity: "fatal",
-                message: `languages[${index}] is "${locale}", which is not currently supported for docs translations. Supported locales are: ${SUPPORTED_TRANSLATION_LOCALES.join(", ")}.`
+                message:
+                    `"${locale}" is not a supported locale. Fix the languages entry in docs.yml at languages[${index}]. ` +
+                    `Supported locales are: ${SUPPORTED_TRANSLATION_LOCALES.join(", ")}.`
             });
         }
     }

@@ -15,14 +15,15 @@ describe("validateTranslationsConfig", () => {
         expect(violations).toEqual([]);
     });
 
-    it("rejects invalid BCP 47 locale tags", () => {
+    it("rejects invalid locale tags with a direct supported-locale message", () => {
         const violations = validateTranslationsConfig({
-            languages: ["en", "not_a_locale"],
+            languages: ["en", "pt_fake_test"],
             settingsLanguage: "en"
         });
 
         expect(violations).toHaveLength(1);
-        expect(violations[0]?.message).toContain("not a valid BCP 47 locale tag");
+        expect(violations[0]?.message).toContain('"pt_fake_test" is not a supported locale.');
+        expect(violations[0]?.message).toContain("Fix the languages entry in docs.yml at languages[1].");
     });
 
     it("rejects unsupported locale tags", () => {
@@ -32,7 +33,8 @@ describe("validateTranslationsConfig", () => {
         });
 
         expect(violations).toHaveLength(1);
-        expect(violations[0]?.message).toContain("not currently supported");
+        expect(violations[0]?.message).toContain('"pt-BR" is not a supported locale.');
+        expect(violations[0]?.message).toContain("Fix the languages entry in docs.yml at languages[1].");
     });
 
     it("rejects duplicate locales after canonicalization", () => {
