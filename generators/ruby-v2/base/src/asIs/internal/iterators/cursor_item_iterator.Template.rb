@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module <%= gem_namespace %>
   module Internal
     class CursorItemIterator < ItemIterator
@@ -8,10 +10,10 @@ module <%= gem_namespace %>
       # @param item_field [Symbol] The field in API responses to extract the items to iterate over.
       # @param block [Proc] A block which is responsible for receiving a cursor to use and returning the given page from the API.
       # @return [<%= gem_namespace %>::Internal::CursorItemIterator]
-      def initialize(initial_cursor:, cursor_field:, item_field:, &block)
+      def initialize(initial_cursor:, cursor_field:, item_field:, &)
         super()
         @item_field = item_field
-        @page_iterator = CursorPageIterator.new(initial_cursor:, cursor_field:, &block)
+        @page_iterator = CursorPageIterator.new(initial_cursor:, cursor_field:, &)
         @page = nil
       end
 

@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.66.4
+  changelogEntry:
+    - summary: |
+        Fix undiscriminated-union query parameters so the list variant is sent as
+        repeated keys (`?key=a&key=b`) instead of a URL-encoded JSON blob. Mirrors
+        the Go fix in #15526.
+      type: fix
+  createdAt: "2026-04-29"
+  irVersion: 66
 - version: 3.66.3
   changelogEntry:
     - summary: |

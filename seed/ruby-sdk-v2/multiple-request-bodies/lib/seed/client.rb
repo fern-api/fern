@@ -35,7 +35,7 @@ module Seed
     end
 
     # @param request_options [Hash]
-    # @param params [Hash]
+    # @param _params [Hash]
     # @option request_options [String] :base_url
     # @option request_options [Hash{String => Object}] :additional_headers
     # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -43,8 +43,7 @@ module Seed
     # @option request_options [Integer] :timeout_in_seconds
     #
     # @return [Seed::Types::UploadDocumentResponse]
-    def upload_pdf_document(request_options: {}, **params)
-      Seed::Internal::Types::Utils.normalize_keys(params)
+    def upload_pdf_document(request_options: {}, **_params)
       request = Seed::Internal::JSON::Request.new(
         base_url: request_options[:base_url],
         method: "POST",
@@ -65,8 +64,8 @@ module Seed
       end
     end
 
-    # @param base_url [String, nil]
     # @param token [String]
+    # @param base_url [String, nil]
     #
     # @return [void]
     def initialize(token:, base_url: nil)

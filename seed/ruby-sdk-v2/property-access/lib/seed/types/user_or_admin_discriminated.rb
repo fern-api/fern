@@ -9,7 +9,9 @@ module Seed
       discriminant :type
 
       member -> { Seed::Types::User }, key: "USER"
+
       member -> { Seed::Types::Admin }, key: "ADMIN"
+
       member -> { Object }, key: "EMPTY"
     end
   end

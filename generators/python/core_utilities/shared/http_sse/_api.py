@@ -1,6 +1,7 @@
+import codecs
 import re
 from contextlib import asynccontextmanager, contextmanager
-from typing import Any, AsyncGenerator, AsyncIterator, Iterator, cast
+from typing import Any, AsyncGenerator, AsyncIterator, Iterator
 
 import httpx
 from ._decoders import SSEDecoder
@@ -43,46 +44,81 @@ class EventSource:
     def response(self) -> httpx.Response:
         return self._response
 
+    @staticmethod
+    def _normalize_sse_line_endings(buf: str) -> str:
+        """Normalize line endings per the SSE spec (\\r\\n → \\n, bare \\r → \\n).
+
+        A trailing \\r is preserved because it may pair with a leading \\n in
+        the next chunk to form a single \\r\\n terminator.
+        """
+        buf = buf.replace("\r\n", "\n")
+        if buf.endswith("\r"):
+            return buf[:-1].replace("\r", "\n") + "\r"
+        return buf.replace("\r", "\n")
+
     def iter_sse(self) -> Iterator[ServerSentEvent]:
         self._check_content_type()
         decoder = SSEDecoder()
         charset = self._get_charset()
+        text_decoder = codecs.getincrementaldecoder(charset)(errors="replace")
 
-        buffer = ""
+        buf = ""
         for chunk in self._response.iter_bytes():
-            # Decode chunk using detected charset
-            text_chunk = chunk.decode(charset, errors="replace")
-            buffer += text_chunk
+            buf += text_decoder.decode(chunk)
+            buf = self._normalize_sse_line_endings(buf)
 
-            # Process complete lines
-            while "\n" in buffer:
-                line, buffer = buffer.split("\n", 1)
-                line = line.rstrip("\r")
+            while "\n" in buf:
+                line, buf = buf.split("\n", 1)
                 sse = decoder.decode(line)
-                # when we reach a "\n\n" => line = ''
-                # => decoder will attempt to return an SSE Event
                 if sse is not None:
                     yield sse
 
-        # Process any remaining data in buffer
-        if buffer.strip():
-            line = buffer.rstrip("\r")
+        # Flush any remaining bytes from the incremental decoder
+        buf += text_decoder.decode(b"", final=True)
+        buf = buf.replace("\r\n", "\n").replace("\r", "\n")
+
+        while "\n" in buf:
+            line, buf = buf.split("\n", 1)
             sse = decoder.decode(line)
+            if sse is not None:
+                yield sse
+
+        if buf.strip():
+            sse = decoder.decode(buf)
             if sse is not None:
                 yield sse
 
     async def aiter_sse(self) -> AsyncGenerator[ServerSentEvent, None]:
         self._check_content_type()
         decoder = SSEDecoder()
-        lines = cast(AsyncGenerator[str, None], self._response.aiter_lines())
-        try:
-            async for line in lines:
-                line = line.rstrip("\n")
+        charset = self._get_charset()
+        text_decoder = codecs.getincrementaldecoder(charset)(errors="replace")
+
+        buf = ""
+        async for chunk in self._response.aiter_bytes():
+            buf += text_decoder.decode(chunk)
+            buf = self._normalize_sse_line_endings(buf)
+
+            while "\n" in buf:
+                line, buf = buf.split("\n", 1)
                 sse = decoder.decode(line)
                 if sse is not None:
                     yield sse
-        finally:
-            await lines.aclose()
+
+        # Flush any remaining bytes from the incremental decoder
+        buf += text_decoder.decode(b"", final=True)
+        buf = buf.replace("\r\n", "\n").replace("\r", "\n")
+
+        while "\n" in buf:
+            line, buf = buf.split("\n", 1)
+            sse = decoder.decode(line)
+            if sse is not None:
+                yield sse
+
+        if buf.strip():
+            sse = decoder.decode(buf)
+            if sse is not None:
+                yield sse
 
 
 @contextmanager

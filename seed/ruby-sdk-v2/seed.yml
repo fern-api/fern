@@ -51,6 +51,7 @@ scripts:
       build:
         - bundle install
       test:
+        - bundle exec rubocop
         - bundle exec rake test
 
 fixtures:
