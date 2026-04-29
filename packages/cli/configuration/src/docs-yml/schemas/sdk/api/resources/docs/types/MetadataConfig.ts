@@ -40,8 +40,10 @@ export interface MetadataConfig {
     twitterCard?: FernDocsConfig.TwitterCardSetting;
     /** When true, enables dynamic OG image generation for pages that don't have a custom og:image set. */
     ogDynamic?: boolean;
-    /** A custom background image for dynamically generated OG images. Can be a URL or a file path. */
+    /** @deprecated Use ogDynamicBackgroundImage instead. */
     ogBackgroundImage?: string;
+    /** A custom background image for dynamically generated OG images. Can be a URL or a file path. */
+    ogDynamicBackgroundImage?: string;
     /** Override the text color for dynamically generated OG images. Accepts any valid CSS color value (e.g., "#1a1a1a"). */
     ogDynamicTextColor?: string;
     /** Override the background color for dynamically generated OG images. Accepts any valid CSS color value (e.g., "#ffffff"). */
