@@ -3,7 +3,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { go } from "@fern-api/go-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
 
-import { isPlainStringType } from "../../authUtils.js";
+import { getOAuthClientCredentialsScheme, isPlainStringType } from "../../authUtils.js";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator.js";
 import { EndpointSignatureInfo } from "../EndpointSignatureInfo.js";
@@ -1191,6 +1191,14 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     }
 
     private getContentTypeHeaderValue({ endpoint }: { endpoint: FernIr.HttpEndpoint }): string | undefined {
+        // OAuth 2.0 token endpoints must use form-urlencoded encoding (RFC 6749 §4.4.2).
+        const oauthScheme = getOAuthClientCredentialsScheme(this.context.ir);
+        if (oauthScheme?.configuration?.type === "clientCredentials") {
+            const tokenEndpointId = oauthScheme.configuration.tokenEndpoint.endpointReference.endpointId;
+            if (endpoint.id === tokenEndpointId) {
+                return "application/x-www-form-urlencoded";
+            }
+        }
         const sdkRequest = endpoint.sdkRequest;
         if (sdkRequest == null) {
             return undefined;
