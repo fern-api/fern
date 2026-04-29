@@ -6,7 +6,7 @@ module <%= gem_namespace %>
       # @api private
       class RawClient
         # Default HTTP status codes that trigger a retry
-        RETRYABLE_STATUSES = [408, 429, 500, 502, 503, 504, 521, 522, 524].freeze
+        RETRYABLE_STATUSES = {{RETRY_STATUS_CODES_ARRAY}}
         # Initial delay between retries in seconds
         INITIAL_RETRY_DELAY = 0.5
         # Maximum delay between retries in seconds
