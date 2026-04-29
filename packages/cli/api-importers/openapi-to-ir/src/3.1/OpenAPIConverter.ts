@@ -111,37 +111,12 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
 
     private convertSecuritySchemes(): void {
         const openApiSchemes = this.convertOpenApiSecuritySchemes();
-
+        const descriptions = new Map(openApiSchemes.map((scheme) => [scheme.key, scheme.docs]));
         if (this.context.authOverrides) {
-            const descriptions = new Map(openApiSchemes.map((scheme) => [scheme.key, scheme.docs]));
-            const enriched = {
-                ...this.context.authOverrides,
-                "auth-schemes": Object.fromEntries(
-                    Object.entries(this.context.authOverrides["auth-schemes"] ?? {}).map(([id, scheme]) => [
-                        id,
-                        { ...scheme }
-                    ])
-                )
-            };
-
-            for (const [schemeId, scheme] of Object.entries(enriched["auth-schemes"])) {
-                if (!scheme.docs && descriptions.has(schemeId)) {
-                    scheme.docs = descriptions.get(schemeId);
-                }
-            }
-
-            const auth = convertApiAuth({
-                rawApiFileSchema: enriched,
-                casingsGenerator: this.context.casingsGenerator
-            });
-
-            this.addAuthToIR({
-                requirement: auth.requirement,
-                schemes: auth.schemes,
-                docs: auth.docs
-            });
+            this.convertAuthOverrides(descriptions, this.context.authOverrides);
             return;
         }
+
 
         if (openApiSchemes.length > 0) {
             this.addAuthToIR({
@@ -150,6 +125,28 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                 docs: undefined
             });
         }
+    }
+    private convertAuthOverrides(descriptions: Map<FernIr.AuthSchemeKey, string | undefined>,  authOverrides: NonNullable<typeof this.context.authOverrides>): void {
+        const enriched = {
+            ...authOverrides,
+            "auth-schemes": Object.fromEntries(
+                Object.entries(authOverrides["auth-schemes"] ?? {}).map(([id, scheme]) => [id, { ...scheme }])
+            )
+        };
+        for (const [schemeId, scheme] of Object.entries(enriched["auth-schemes"])) {
+            if (!scheme.docs && descriptions.has(schemeId)) {
+                scheme.docs = descriptions.get(schemeId);
+            }
+        }
+        const auth = convertApiAuth({
+            rawApiFileSchema: enriched,
+            casingsGenerator: this.context.casingsGenerator
+        });
+        this.addAuthToIR({
+            requirement: auth.requirement,
+            schemes: auth.schemes,
+            docs: auth.docs
+        });
     }
 
     private convertOpenApiSecuritySchemes(): AuthScheme[] {
