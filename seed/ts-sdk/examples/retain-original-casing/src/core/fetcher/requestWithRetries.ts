@@ -13,6 +13,24 @@ function addSymmetricJitter(delay: number): number {
     return delay * jitterMultiplier;
 }
 
+const TIMEOUT_ERROR_CODES = new Set(["UND_ERR_HEADERS_TIMEOUT", "UND_ERR_BODY_TIMEOUT", "ETIMEDOUT"]);
+
+function isRetryableError(error: unknown): boolean {
+    if (!(error instanceof Error)) {
+        return true;
+    }
+    if (error.name === "AbortError") {
+        return false;
+    }
+    if ("cause" in error && error.cause instanceof Error && "code" in error.cause) {
+        const { code } = error.cause as Error & { code: unknown };
+        if (typeof code === "string" && TIMEOUT_ERROR_CODES.has(code)) {
+            return false;
+        }
+    }
+    return true;
+}
+
 function getRetryDelayFromHeaders(response: Response, retryAttempt: number): number {
     const retryAfter = response.headers.get("Retry-After");
     if (retryAfter) {
@@ -71,7 +89,7 @@ export async function requestWithRetries(
             lastError = error;
             lastResponse = undefined;
 
-            if (i === maxRetries) {
+            if (i === maxRetries || !isRetryableError(error)) {
                 throw error;
             }
 
