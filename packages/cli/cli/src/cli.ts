@@ -2655,10 +2655,10 @@ function addAutomationsUpgradeCommand(cli: Argv<GlobalCliOptions>, cliContext: C
             yargs
                 .option("include-major", {
                     boolean: true,
-                    default: false,
+                    default: true,
                     description:
                         "Whether to include major version upgrades for generators. " +
-                        "When false (default), only minor/patch upgrades are applied."
+                        "When true (default), all upgrades including major versions are applied."
                 })
                 .option("json", {
                     boolean: true,
