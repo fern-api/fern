@@ -287,7 +287,7 @@ types:
           Sets the default language displayed by code snippets in the API Reference.
           Options include: typescript, python, java, go, ruby, csharp, php, swift, curl
 
-      languages: optional<list<Language>>
+      languages: optional<list<string>>
 
       translations:
         type: optional<list<TranslationConfig>>
