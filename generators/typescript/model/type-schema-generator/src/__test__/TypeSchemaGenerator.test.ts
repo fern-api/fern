@@ -523,10 +523,7 @@ describe("GeneratedEnumTypeSchemaImpl", () => {
         it("generates forwardCompatibleEnum_ schema when forward-compatible enums enabled", () => {
             const schema = createEnumSchema({
                 typeName: "Status",
-                values: [
-                    createEnumValue("Active", "active"),
-                    createEnumValue("Inactive", "inactive")
-                ],
+                values: [createEnumValue("Active", "active"), createEnumValue("Inactive", "inactive")],
                 enableForwardCompatibleEnums: true
             });
 
