@@ -59,7 +59,7 @@ module Seed
       def create_vendor(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         request_data = Seed::Vendor::Types::CreateVendorRequest.new(params).to_h
-        non_body_param_names = ["idempotency_key"]
+        non_body_param_names = %w[idempotency_key]
         body = request_data.except(*non_body_param_names)
 
         headers = {}
