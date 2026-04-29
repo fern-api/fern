@@ -211,6 +211,8 @@ export class DynamicTypeLiteralMapper {
         discriminatedUnion: FernIr.dynamic.DiscriminatedUnionType;
         value: unknown;
     }): python.TypeInstantiation {
+        // biome-ignore lint/correctness/useHookAtTopLevel: not a React hook
+        const typedDictRequests = this.context.useTypedDictRequests();
         const discriminatedUnionTypeInstance = this.context.resolveDiscriminatedUnionTypeInstance({
             discriminatedUnion,
             value
@@ -225,6 +227,13 @@ export class DynamicTypeLiteralMapper {
         });
         if (unionProperties == null) {
             return python.TypeInstantiation.nop();
+        }
+        if (typedDictRequests) {
+            const discriminantEntry: python.NamedValue = {
+                name: this.context.getPropertyName(discriminatedUnion.discriminant.name),
+                value: python.TypeInstantiation.str(discriminatedUnionTypeInstance.discriminantValue.wireValue)
+            };
+            return python.TypeInstantiation.typedDict([discriminantEntry, ...unionProperties], { multiline: true });
         }
         const variantClassReference = this.context.getDiscriminatedUnionVariantClassReference({
             unionDeclaration: discriminatedUnion.declaration,
@@ -401,7 +410,12 @@ export class DynamicTypeLiteralMapper {
         object_: FernIr.dynamic.ObjectType;
         value: unknown;
     }): python.TypeInstantiation {
+        // biome-ignore lint/correctness/useHookAtTopLevel: not a React hook
+        const typedDictRequests = this.context.useTypedDictRequests();
         const entries = this.convertObjectEntries({ object_, value });
+        if (typedDictRequests) {
+            return python.TypeInstantiation.typedDict(entries, { multiline: true });
+        }
         const classReference = this.context.getTypeClassReference(object_.declaration);
         return python.TypeInstantiation.reference(
             python.instantiateClass({
@@ -600,6 +614,8 @@ export class DynamicTypeLiteralMapper {
         typeId: string;
         seen: Set<string>;
     }): python.TypeInstantiation {
+        // biome-ignore lint/correctness/useHookAtTopLevel: not a React hook
+        const typedDictRequests = this.context.useTypedDictRequests();
         const newSeen = new Set(seen);
         newSeen.add(typeId);
 
@@ -640,6 +656,9 @@ export class DynamicTypeLiteralMapper {
                             value: defaultValue
                         });
                     }
+                }
+                if (typedDictRequests) {
+                    return python.TypeInstantiation.typedDict(entries, { multiline: true });
                 }
                 const classReference = this.context.getTypeClassReference(named.declaration);
                 return python.TypeInstantiation.reference(

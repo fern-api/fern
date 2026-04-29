@@ -68,3 +68,24 @@ Style/FrozenStringLiteralComment:
 Layout/FirstHashElementIndentation:
   Exclude:
     - "dynamic-snippets/**/*"
+    - "test/wire/**/*"
+
+Layout/FirstArgumentIndentation:
+  Exclude:
+    - "test/wire/**/*"
+
+# IR-derived type names (e.g. Get_With_Query) follow API spec conventions, not Ruby naming.
+Naming/ClassAndModuleCamelCase:
+  Enabled: false
+
+# Generated code may have duplicate hash keys when the API spec defines overlapping field names.
+Lint/DuplicateHashKey:
+  Enabled: false
+
+# Single path-parameter URLs produce "#{expr}" which is equivalent to expr.to_s.
+Style/RedundantInterpolation:
+  Enabled: false
+
+# Generated code uses multi-line if blocks for clarity; modifier form is a style preference.
+Style/IfUnlessModifier:
+  Enabled: false

@@ -39,7 +39,7 @@ namespace Example;
 use Seed\SeedClient;
 
 $client = new SeedClient(
-    headerTokenAuth: '<value>',
+    headerTokenAuth: 'YOUR_HEADER_VALUE',
 );
 $client->service->getWithBearerToken();
 

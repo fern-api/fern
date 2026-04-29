@@ -16,6 +16,7 @@ const SETTINGS_KEY_MAP: Record<string, string> = {
     "optional-additional-properties": "optionalAdditionalProperties",
     "idiomatic-request-names": "idiomaticRequestNames",
     "group-environments-by-host": "groupEnvironmentsByHost",
+    "multi-server-strategy": "multiServerStrategy",
     "remove-discriminants-from-schemas": "removeDiscriminantsFromSchemas",
     "path-parameter-order": "pathParameterOrder",
     "coerce-consts-to": "coerceConstsTo",
@@ -37,6 +38,7 @@ const SETTINGS_KEY_MAP: Record<string, string> = {
     "resolve-aliases": "resolveAliases",
     "group-multi-api-environments": "groupMultiApiEnvironments",
     "default-integer-format": "defaultIntegerFormat",
+    "infer-discriminated-union-base-properties": "inferDiscriminatedUnionBaseProperties",
 
     // AsyncAPI-specific settings
     "message-naming": "messageNaming"
@@ -48,6 +50,11 @@ const SETTINGS_KEY_MAP: Record<string, string> = {
 const PATH_PARAMETER_ORDER_MAP: Record<string, string> = {
     "url-order": "urlOrder",
     "spec-order": "specOrder"
+};
+
+const MULTI_SERVER_STRATEGY_MAP: Record<string, string> = {
+    "environment-per-server": "environmentPerServer",
+    "urls-per-environment": "urlsPerEnvironment"
 };
 
 const FORM_ENCODING_MAP: Record<string, string> = {
@@ -82,6 +89,10 @@ export function convertSettings(
         }
         if (key === "path-parameter-order" && typeof value === "string") {
             settings[newKey] = PATH_PARAMETER_ORDER_MAP[value] ?? value;
+            continue;
+        }
+        if (key === "multi-server-strategy" && typeof value === "string") {
+            settings[newKey] = MULTI_SERVER_STRATEGY_MAP[value] ?? value;
             continue;
         }
         if (key === "default-form-parameter-encoding" && typeof value === "string") {
@@ -124,6 +135,10 @@ export function convertOpenApiSpecSettings(legacySettings: Record<string, unknow
         }
         if (key === "path-parameter-order" && typeof value === "string") {
             settings[newKey] = PATH_PARAMETER_ORDER_MAP[value] ?? value;
+            continue;
+        }
+        if (key === "multi-server-strategy" && typeof value === "string") {
+            settings[newKey] = MULTI_SERVER_STRATEGY_MAP[value] ?? value;
             continue;
         }
         if (key === "default-form-parameter-encoding" && typeof value === "string") {

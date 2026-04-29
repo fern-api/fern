@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.seed.examples.core.ObjectMappers;
 import java.io.IOException;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonDeserialize(using = CastMember.Deserializer.class)
@@ -89,17 +90,29 @@ public final class CastMember {
         @java.lang.Override
         public CastMember deserialize(JsonParser p, DeserializationContext context) throws IOException {
             Object value = p.readValueAs(Object.class);
-            try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, Actor.class));
-            } catch (RuntimeException e) {
+            if (value instanceof Map<?, ?>
+                    && ((Map<?, ?>) value).containsKey("name")
+                    && ((Map<?, ?>) value).containsKey("id")) {
+                try {
+                    return of(ObjectMappers.JSON_MAPPER.convertValue(value, Actor.class));
+                } catch (RuntimeException e) {
+                }
             }
-            try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, Actress.class));
-            } catch (RuntimeException e) {
+            if (value instanceof Map<?, ?>
+                    && ((Map<?, ?>) value).containsKey("name")
+                    && ((Map<?, ?>) value).containsKey("id")) {
+                try {
+                    return of(ObjectMappers.JSON_MAPPER.convertValue(value, Actress.class));
+                } catch (RuntimeException e) {
+                }
             }
-            try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, StuntDouble.class));
-            } catch (RuntimeException e) {
+            if (value instanceof Map<?, ?>
+                    && ((Map<?, ?>) value).containsKey("name")
+                    && ((Map<?, ?>) value).containsKey("actorOrActressId")) {
+                try {
+                    return of(ObjectMappers.JSON_MAPPER.convertValue(value, StuntDouble.class));
+                } catch (RuntimeException e) {
+                }
             }
             throw new JsonParseException(p, "Failed to deserialize");
         }

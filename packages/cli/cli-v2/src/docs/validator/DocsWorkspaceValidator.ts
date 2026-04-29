@@ -2,6 +2,7 @@ import { replaceEnvVariables } from "@fern-api/core-utils";
 import type { ValidationViolation } from "@fern-api/docs-validator";
 import { validateDocsWorkspace } from "@fern-api/docs-validator";
 import type { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
+import { CliError } from "@fern-api/task-context";
 import type { AbstractAPIWorkspace, DocsWorkspace } from "@fern-api/workspace-loader";
 import { TaskContextAdapter } from "../../context/adapter/TaskContextAdapter.js";
 import type { Context } from "../../context/Context.js";
@@ -67,7 +68,7 @@ export class DocsWorkspaceValidator {
 
         if (workspace.config.settings?.substituteEnvVars) {
             workspace.config = replaceEnvVariables(workspace.config, {
-                onError: (error) => this.taskContext.failAndThrow(error)
+                onError: (error) => this.taskContext.failAndThrow(error, undefined, { code: CliError.Code.ConfigError })
             });
         }
 

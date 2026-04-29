@@ -8,7 +8,6 @@
     "base-exception-class-name": "CustomException"
   },
   "originGitCommit": "DUMMY",
-  "originGitCommitIsDirty": null,
   "invokedBy": "ci",
   "requestedVersion": "0.0.1",
   "ciProvider": "github",

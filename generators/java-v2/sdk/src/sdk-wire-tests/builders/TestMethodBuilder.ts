@@ -1,3 +1,4 @@
+import { GeneratorError } from "@fern-api/base-generator";
 import { java, Writer } from "@fern-api/java-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
@@ -57,7 +58,7 @@ export class TestMethodBuilder {
 
             // If we can't extract a method call, this endpoint should have been filtered out upstream
             if (methodCall === null) {
-                throw new Error(
+                throw GeneratorError.internalError(
                     `INTERNAL ERROR: Null method call reached TestMethodBuilder for endpoint ${endpoint.id}. ` +
                         `This should have been caught upstream in SdkWireTestGenerator.`
                 );
@@ -153,6 +154,17 @@ export class TestMethodBuilder {
                 writer.writeLine(
                     'Assertions.assertEquals("Bearer test-token", request.getHeader("Authorization"), ' +
                         '"OAuth Authorization header should contain Bearer token from OAuth flow");'
+                );
+            }
+
+            // For Basic Auth APIs, validate the Authorization header contains the correct encoded credentials
+            const basicAuthHeader = this.getExpectedBasicAuthHeader();
+            if (basicAuthHeader) {
+                writer.writeLine("");
+                writer.writeLine("// Validate Basic Auth Authorization header");
+                writer.writeLine(
+                    `Assertions.assertEquals("Basic ${basicAuthHeader}", request.getHeader("Authorization"), ` +
+                        `"Basic Auth Authorization header should contain correct encoded credentials");`
                 );
             }
 
@@ -351,6 +363,34 @@ export class TestMethodBuilder {
         } catch {
             return value;
         }
+    }
+
+    /**
+     * Computes the expected base64-encoded Basic Auth header value based on the auth scheme.
+     * Returns undefined if the API doesn't use basic auth or both fields are omitted.
+     */
+    private getExpectedBasicAuthHeader(): string | undefined {
+        const auth = this.context.ir.auth;
+        if (!auth?.schemes || auth.schemes.length === 0) {
+            return undefined;
+        }
+
+        const basicScheme = auth.schemes.find((scheme) => scheme.type === "basic");
+        if (!basicScheme || basicScheme.type !== "basic") {
+            return undefined;
+        }
+
+        const usernameOmitted = !!basicScheme.usernameOmit;
+        const passwordOmitted = !!basicScheme.passwordOmit;
+
+        if (usernameOmitted && passwordOmitted) {
+            return undefined;
+        }
+
+        const username = usernameOmitted ? "" : "test-username";
+        const password = passwordOmitted ? "" : "test-password";
+        const encoded = Buffer.from(`${username}:${password}`).toString("base64");
+        return encoded;
     }
 
     private isFormUrlEncodedEndpoint(endpoint: FernIr.HttpEndpoint): boolean {

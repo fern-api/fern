@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Publish the Ruby SDK generator to `fernapi/fern-ruby-sdk` on Docker Hub.
+    The `fernapi/fern-ruby-sdk-v2` image is still pushed as an alias for backward compatibility.
+  type: chore

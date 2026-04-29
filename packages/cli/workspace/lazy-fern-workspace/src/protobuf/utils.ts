@@ -2,6 +2,7 @@ import { extractErrorMessage } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { createLoggingExecutable, runExeca } from "@fern-api/logging-execa";
+import { CliError } from "@fern-api/task-context";
 import { access, cp, rm } from "fs/promises";
 import tmp from "tmp-promise";
 import { resolveBuf } from "./BufDownloader.js";
@@ -51,10 +52,14 @@ async function performAirGapDetection(url: string, logger: Logger, timeoutMs: nu
     logger.debug(`Detecting air-gapped mode by checking connectivity to ${url}`);
 
     try {
-        await fetch(url, {
+        const res = await fetch(url, {
             method: "GET",
             signal: AbortSignal.timeout(timeoutMs)
         });
+        // Cancel the body to release the socket back to the pool cleanly.
+        // Without this, the unconsumed "OK" bytes stay on the keep-alive socket
+        // and corrupt the next request's HTTP framing in Node.js / undici.
+        await res.body?.cancel().catch(() => undefined);
 
         airGapDetectionResult = false;
         logger.debug("Network check succeeded - not in air-gapped mode");
@@ -168,7 +173,10 @@ export async function ensureBufCommand(logger: Logger): Promise<string> {
             logger.debug(`Using auto-downloaded buf: ${downloadedBufPath}`);
             return downloadedBufPath;
         }
-        throw new Error("Missing required dependency; please install 'buf' to continue (e.g. 'brew install buf').");
+        throw new CliError({
+            message: "Missing required dependency; please install 'buf' to continue (e.g. 'brew install buf').",
+            code: CliError.Code.EnvironmentError
+        });
     }
 }
 

@@ -1,4 +1,4 @@
-import { getWireValue } from "@fern-api/base-generator";
+import { getWireValue, GeneratorError } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { convertToSnakeCase, RustFile } from "@fern-api/rust-base";
@@ -215,7 +215,7 @@ export class WebSocketChannelGenerator {
     private generateChannelFile(channelId: string, channel: FernIr.WebSocketChannel): RustFile {
         const names = this.channelNameMap.get(channelId);
         if (names == null) {
-            throw new Error(`No name mapping found for channel ${channelId}`);
+            throw GeneratorError.internalError(`No name mapping found for channel ${channelId}`);
         }
         const { clientName, moduleName, enumPrefix } = names;
 

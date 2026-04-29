@@ -59,7 +59,7 @@ export class SyspropClient {
             ),
             method: "PUT",
             headers: _headers,
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             timeoutMs:
                 requestOptions?.timeoutInSeconds != null
                     ? requestOptions.timeoutInSeconds * 1000
@@ -131,7 +131,7 @@ export class SyspropClient {
             ),
             method: "GET",
             headers: _headers,
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             timeoutMs:
                 requestOptions?.timeoutInSeconds != null
                     ? requestOptions.timeoutInSeconds * 1000

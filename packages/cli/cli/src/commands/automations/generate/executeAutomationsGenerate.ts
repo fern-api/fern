@@ -62,7 +62,7 @@ export async function executeAutomationsGenerate({
                 }),
                 cliContext,
                 version: options.version,
-                groupName: options.group,
+                groupNames: options.group != null ? [options.group] : undefined,
                 generatorName,
                 generatorIndex,
                 shouldLogS3Url: false,
@@ -83,6 +83,7 @@ export async function executeAutomationsGenerate({
                 requireEnvVars: false,
                 automationMode: true,
                 autoMerge: options.autoMerge,
+                skipIfNoDiff: true,
                 automation: { recorder: collector }
             });
         });

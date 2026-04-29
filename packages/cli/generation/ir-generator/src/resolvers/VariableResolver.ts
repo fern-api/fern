@@ -1,6 +1,6 @@
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { VariableId } from "@fern-api/ir-sdk";
-
+import { CliError } from "@fern-api/task-context";
 import { constructRootApiFileContext, FernFileContext } from "../FernFileContext.js";
 
 export interface VariableResolver {
@@ -25,7 +25,10 @@ export class VariableResolverImpl implements VariableResolver {
     ): { declaration: RawSchemas.VariableDeclarationSchema; file: FernFileContext } {
         const declaration = this.getDeclaration(referenceToVariable, file);
         if (declaration == null) {
-            throw new Error("Variable does not exist: " + referenceToVariable);
+            throw new CliError({
+                message: "Variable does not exist: " + referenceToVariable,
+                code: CliError.Code.ResolutionError
+            });
         }
         return declaration;
     }
@@ -55,7 +58,10 @@ export class VariableResolverImpl implements VariableResolver {
     public getVariableIdOrThrow(referenceToVariable: string): VariableId {
         const variableId = this.getVariableId(referenceToVariable);
         if (variableId == null) {
-            throw new Error("Variable reference does not start with " + VariableResolverImpl.VARIABLE_PREFIX);
+            throw new CliError({
+                message: "Variable reference does not start with " + VariableResolverImpl.VARIABLE_PREFIX,
+                code: CliError.Code.ResolutionError
+            });
         }
         return variableId;
     }

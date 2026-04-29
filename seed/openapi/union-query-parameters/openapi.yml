@@ -1,0 +1,60 @@
+openapi: 3.1.0
+info:
+  title: union-query-parameters
+  version: 0.0.0
+paths:
+  /events:
+    get:
+      description: |-
+        Subscribe to events with a oneOf-style query parameter that may be a
+        scalar enum value or a list of enum values.
+      operationId: events_subscribe
+      tags:
+        - Events
+      parameters:
+        - name: event_type
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - $ref: '#/components/schemas/EventTypeParam'
+              - type: 'null'
+        - name: tags
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - $ref: '#/components/schemas/StringOrListParam'
+              - type: 'null'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: string
+components:
+  schemas:
+    EventTypeEnum:
+      title: EventTypeEnum
+      type: string
+      enum:
+        - group.created
+        - user.updated
+    EventTypeParam:
+      title: EventTypeParam
+      oneOf:
+        - $ref: '#/components/schemas/EventTypeEnum'
+        - type: array
+          items:
+            $ref: '#/components/schemas/EventTypeEnum'
+      description: Either a single event type or a list of event types.
+    StringOrListParam:
+      title: StringOrListParam
+      oneOf:
+        - type: string
+        - type: array
+          items:
+            type: string
+      description: Either a single string or a list of strings.
+  securitySchemes: {}

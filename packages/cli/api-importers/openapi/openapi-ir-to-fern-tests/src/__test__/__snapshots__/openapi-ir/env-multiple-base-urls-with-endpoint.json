@@ -18,7 +18,16 @@
       "name": "Download"
     }
   ],
-  "websocketServers": [],
+  "websocketServers": [
+    {
+      "name": "Events",
+      "url": "wss://events.example.com"
+    },
+    {
+      "name": "Upload",
+      "url": "wss://upload.example.com"
+    }
+  ],
   "tags": {
     "tagsById": {}
   },
@@ -309,7 +318,116 @@
     }
   ],
   "webhooks": [],
-  "channels": {},
+  "channels": {
+    "eventsChannel": {
+      "audiences": [],
+      "handshake": {
+        "headers": [],
+        "queryParameters": [],
+        "pathParameters": []
+      },
+      "groupName": [
+        "eventsChannel"
+      ],
+      "messages": [
+        {
+          "origin": "server",
+          "name": "event",
+          "body": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "Event",
+            "groupName": [],
+            "type": "primitive"
+          }
+        }
+      ],
+      "servers": [
+        {
+          "name": "Events",
+          "url": "wss://events.example.com"
+        }
+      ],
+      "path": "/v1/events",
+      "examples": [
+        {
+          "queryParameters": [],
+          "headers": [],
+          "messages": [
+            {
+              "messageType": "event",
+              "payload": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
+        }
+      ],
+      "source": {
+        "file": "../asyncapi.yml",
+        "type": "openapi"
+      }
+    },
+    "uploadChannel": {
+      "audiences": [],
+      "handshake": {
+        "headers": [],
+        "queryParameters": [],
+        "pathParameters": []
+      },
+      "groupName": [
+        "uploadChannel"
+      ],
+      "messages": [
+        {
+          "origin": "server",
+          "name": "uploadProgress",
+          "body": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "UploadProgress",
+            "groupName": [],
+            "type": "primitive"
+          }
+        }
+      ],
+      "servers": [
+        {
+          "name": "Upload",
+          "url": "wss://upload.example.com"
+        }
+      ],
+      "path": "/v1/uploads",
+      "examples": [
+        {
+          "queryParameters": [],
+          "headers": [],
+          "messages": [
+            {
+              "messageType": "uploadProgress",
+              "payload": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
+        }
+      ],
+      "source": {
+        "file": "../asyncapi.yml",
+        "type": "openapi"
+      }
+    }
+  },
   "groupedSchemas": {
     "rootSchemas": {},
     "namespacedSchemas": {}

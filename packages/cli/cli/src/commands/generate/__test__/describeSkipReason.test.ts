@@ -1,6 +1,6 @@
 import type { generatorsYml } from "@fern-api/configuration-loader";
 import { describe, expect, it } from "vitest";
-import { describeSkipReason } from "../describeSkipReason.js";
+import { classifySkipReason, describeSkipReason } from "../describeSkipReason.js";
 
 function makeGenerator(
     overrides: Partial<Pick<generatorsYml.GeneratorInvocation, "automation" | "absolutePathToLocalOutput" | "raw">> = {}
@@ -66,5 +66,35 @@ describe("describeSkipReason", () => {
             automation: { generate: true, upgrade: true, preview: true, verify: true }
         });
         expect(describeSkipReason(effectivelyEnabled, undefined)).toBeNull();
+    });
+});
+
+describe("classifySkipReason", () => {
+    it("returns null when the generator is eligible", () => {
+        expect(classifySkipReason(makeGenerator(), undefined)).toBeNull();
+    });
+
+    it("reports opted_out for automations.generate: false", () => {
+        const g = makeGenerator({
+            automation: { generate: false, upgrade: true, preview: true, verify: true }
+        });
+        expect(classifySkipReason(g, undefined)).toBe("opted_out");
+    });
+
+    it("reports local_output for generators with a local-file-system target", () => {
+        const g = makeGenerator({
+            absolutePathToLocalOutput:
+                "/tmp/out" as unknown as generatorsYml.GeneratorInvocation["absolutePathToLocalOutput"]
+        });
+        expect(classifySkipReason(g, undefined)).toBe("local_output");
+    });
+
+    it("reports opted_out for generator-level autorelease: false", () => {
+        const g = makeGenerator({ raw: { autorelease: false } as generatorsYml.GeneratorInvocation["raw"] });
+        expect(classifySkipReason(g, undefined)).toBe("opted_out");
+    });
+
+    it("reports opted_out when root autorelease is false and the generator has no override", () => {
+        expect(classifySkipReason(makeGenerator(), false)).toBe("opted_out");
     });
 });

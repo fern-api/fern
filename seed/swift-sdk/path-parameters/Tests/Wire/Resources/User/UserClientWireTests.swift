@@ -104,13 +104,13 @@ import PathParameters
         )
         let response = try await client.user.updateUser(
             userId: "user_id",
-            request: .init(body: User(
+            request: User(
                 name: "name",
                 tags: [
                     "tags",
                     "tags"
                 ]
-            )),
+            ),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)

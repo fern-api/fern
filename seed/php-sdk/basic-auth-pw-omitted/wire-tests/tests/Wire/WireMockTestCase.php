@@ -21,7 +21,7 @@ abstract class WireMockTestCase extends TestCase
      * @param string $testId The test ID used to filter requests
      * @param string $method The HTTP method (GET, POST, etc.)
      * @param string $urlPath The URL path to match
-     * @param array<string, string>|null $queryParams Query parameters to match
+     * @param array<string, string|array<string>>|null $queryParams Query parameters to match
      * @param int $expected Expected number of requests
      */
     protected function verifyRequestCount(
@@ -45,7 +45,15 @@ abstract class WireMockTestCase extends TestCase
         if ($queryParams !== null && $queryParams !== []) {
             $body['queryParameters'] = [];
             foreach ($queryParams as $k => $v) {
-                $body['queryParameters'][$k] = ['equalTo' => (string) $v];
+                if (is_array($v)) {
+                    $matchers = [];
+                    foreach ($v as $item) {
+                        $matchers[] = ['equalTo' => (string) $item];
+                    }
+                    $body['queryParameters'][$k] = ['hasExactly' => $matchers];
+                } else {
+                    $body['queryParameters'][$k] = ['equalTo' => (string) $v];
+                }
             }
         }
 

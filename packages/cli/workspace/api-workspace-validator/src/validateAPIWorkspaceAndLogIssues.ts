@@ -3,7 +3,7 @@ import { ValidationViolation, validateFernWorkspace } from "@fern-api/fern-defin
 import { validateGeneratorsWorkspace } from "@fern-api/generators-validator";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { validateOSSWorkspace } from "@fern-api/oss-validator";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
 import validatePackageName from "validate-npm-package-name";
 
 import { logViolations } from "./logViolations.js";
@@ -25,7 +25,7 @@ export async function collectAPIWorkspaceViolations({
     ossWorkspace?: OSSWorkspace;
 }): Promise<CollectedApiViolations> {
     if (!validatePackageName(workspace.definition.rootApiFile.contents.name).validForNewPackages) {
-        context.failAndThrow("API name is not valid.");
+        context.failAndThrow("API name is not valid.", undefined, { code: CliError.Code.ValidationError });
     }
 
     const startTime = performance.now();
@@ -91,7 +91,7 @@ export async function validateAPIWorkspaceAndLogIssues({
     ossWorkspace?: OSSWorkspace;
 }): Promise<void> {
     if (!validatePackageName(workspace.definition.rootApiFile.contents.name).validForNewPackages) {
-        context.failAndThrow("API name is not valid.");
+        context.failAndThrow("API name is not valid.", undefined, { code: CliError.Code.ValidationError });
     }
 
     const { hasErrors } = await validateAPIWorkspaceWithoutExiting({
@@ -102,6 +102,6 @@ export async function validateAPIWorkspaceAndLogIssues({
     });
 
     if (hasErrors) {
-        context.failAndThrow();
+        context.failAndThrow(undefined, undefined, { code: CliError.Code.ValidationError });
     }
 }

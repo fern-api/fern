@@ -78,7 +78,7 @@ List endpoints return a `Pager<T>` which lets you loop over all items and the SD
 use Seed\SeedClient;
 
 $client = new SeedClient(
-    '<token>',
+    '<YOUR_TOKEN>',
     ['baseUrl' => 'https://api.example.com'],
 );
 

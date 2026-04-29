@@ -25,6 +25,11 @@ publish:
     file: ./generators/csharp/model/Dockerfile
     image: fernapi/fern-csharp-model
     context: .
+  sentry:
+    name: fern-csharp-model
+    project: csharp-sdk
+    sourceMaps:
+      - dir: generators/csharp/model/dist
 test:
   docker:
     image: fernapi/fern-csharp-model:latest

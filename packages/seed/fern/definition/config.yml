@@ -58,6 +58,38 @@ types:
       aliases: optional<list<string>>
       file: string
 
+  PublishSentryConfiguration:
+    docs: |
+      Per-generator Sentry upload configuration. Only fields that are set
+      are processed, so each generator can opt in incrementally.
+    properties:
+      project:
+        type: string
+        docs: |
+          Sentry project slug for this generator (e.g. `csharp-sdk`,
+          `go-model`). Each generator has its own project so that issues,
+          releases, and alerts are scoped per SDK.
+      sourceMaps:
+        type: optional<list<SentrySourceMapArtifact>>
+        docs: |
+          JS/TS source map directories. Supports multiple entries so hybrid
+          generators can upload maps for both their v1 and v2 CLIs.
+
+  SentrySourceMapArtifact:
+    properties:
+      dir:
+        type: string
+        docs: |
+          Path to the built TypeScript dist directory, relative to the repo
+          root (e.g. `generators/csharp/model/dist`).
+      urlPrefix:
+        type: optional<string>
+        docs: |
+          URL prefix used to match runtime stack frame paths to uploaded
+          source files. Defaults to `app:///`, which matches Node's
+          `--enable-source-maps` output when the CLI is copied into the
+          image at `/dist/cli.cjs` or `/bin/<lang>-v2`.
+
   PublishDocker:
     docs: |
       Configuration for publishing from a docker image, assuming a vanilla docker deployment.
@@ -65,6 +97,13 @@ types:
       workingDirectory: optional<string>
       preBuildCommands: optional<DockerCommand>
       docker: PublishDockerConfiguration
+      sentry:
+        type: optional<PublishSentryConfiguration>
+        docs: |
+          Artifacts to upload to Sentry as a step of the publish pipeline.
+          All uploads share the release name `${docker.image}:${version}`,
+          which matches the release tag produced by the generator runtimes'
+          SentryClient (see generators/base/src/telemetry/SentryClient.ts).
 
   PublishCommand:
     docs: |

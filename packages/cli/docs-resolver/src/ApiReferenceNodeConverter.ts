@@ -2,7 +2,7 @@ import { docsYml } from "@fern-api/configuration-loader";
 import { isNonNullish, titleCase } from "@fern-api/core-utils";
 import { APIV1Read, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import { camelCase, kebabCase } from "lodash-es";
@@ -1356,7 +1356,9 @@ export class ApiReferenceNodeConverter {
     private getFileId(filepath: AbsoluteFilePath): string {
         const fileId = this.collectedFileIds.get(filepath);
         if (fileId == null) {
-            return this.taskContext.failAndThrow("Failed to locate file after uploading: " + filepath);
+            return this.taskContext.failAndThrow("Failed to locate file after uploading: " + filepath, undefined, {
+                code: CliError.Code.InternalError
+            });
         }
         return fileId;
     }

@@ -7,6 +7,7 @@ export const BaseRubyCustomConfigSchema = z.object({
     clientModuleName: z.optional(z.string()),
     customReadmeSections: z.optional(z.array(CustomReadmeSectionSchema)),
     customPagerName: z.optional(z.string()),
+    offsetSemantics: z.enum(["item-index", "page-index"]).optional(),
     // Generate wire tests for serialization/deserialization
     enableWireTests: z.boolean().optional(),
     // Extra dependencies to add to the gemspec (e.g., { "my-gem": "~> 6.0" })
@@ -42,7 +43,8 @@ export const BaseRubyCustomConfigSchema = z.object({
     // - "warning": reports violations as warnings (default for customer SDKs)
     // - "error": reports violations as errors (used in seed to enforce rubocop)
     rubocopSeverity: z.enum(["info", "warning", "error"]).optional(),
-    maxRetries: z.number().int().min(0).optional()
+    maxRetries: z.number().int().min(0).optional(),
+    retryStatusCodes: z.optional(z.enum(["legacy", "recommended"]))
 });
 
 export type BaseRubyCustomConfigSchema = z.infer<typeof BaseRubyCustomConfigSchema>;

@@ -4,6 +4,7 @@ import { removeDefaultDockerOrgIfPresent } from "@fern-api/configuration-loader"
 import { assertNever } from "@fern-api/core-utils";
 import { doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { parseRepository } from "@fern-api/github";
+import { CliError } from "@fern-api/task-context";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { readFile } from "fs/promises";
 import type { Context } from "../../context/Context.js";
@@ -313,9 +314,10 @@ export class LegacyGeneratorInvocationAdapter {
         }
         const absolutePath = join(this.context.cwd, RelativeFilePath.of(license));
         if (!(await doesPathExist(absolutePath, "file"))) {
-            throw new Error(
-                `Custom license file "${absolutePath}" does not exist; did you mean to use either MIT or Apache-2.0?`
-            );
+            throw new CliError({
+                message: `Custom license file "${absolutePath}" does not exist; did you mean to use either MIT or Apache-2.0?`,
+                code: CliError.Code.InternalError
+            });
         }
         const contents = await readFile(absolutePath, "utf-8");
         return FernFiddle.GithubLicense.custom({ contents });

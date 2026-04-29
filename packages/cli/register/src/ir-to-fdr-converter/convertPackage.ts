@@ -9,8 +9,8 @@ import {
     V2HttpEndpointExample
 } from "@fern-api/ir-sdk";
 import { generateEndpointV1Example as generateEndpointExample } from "@fern-api/ir-utils";
+import { CliError } from "@fern-api/task-context";
 import { noop, startCase } from "lodash-es";
-
 import { convertTypeReference } from "./convertTypeShape.js";
 import { getInnerName, getOriginalName, getOriginalNameOptional, getWireValue } from "./nameUtils.js";
 
@@ -501,9 +501,10 @@ function convertIrEnvironments({
                     return environmentsConfigValue.environments.map((singleBaseUrlEnvironment) => {
                         const endpointBaseUrl = singleBaseUrlEnvironment.urls[baseUrlId];
                         if (endpointBaseUrl == null) {
-                            throw new Error(
-                                `Encountered undefined server name "${baseUrlId}" at endpoint ${endpoint.method.toUpperCase()} ${endpoint.path}. Expected environment ${singleBaseUrlEnvironment.id} to contain url for ${baseUrlId}`
-                            );
+                            throw new CliError({
+                                message: `Encountered undefined server name "${baseUrlId}" at endpoint ${endpoint.method.toUpperCase()} ${endpoint.path}. Expected environment ${singleBaseUrlEnvironment.id} to contain url for ${baseUrlId}`,
+                                code: CliError.Code.IrConversionError
+                            });
                         }
                         return {
                             id: FdrCjsSdk.EnvironmentId(baseUrlId),
@@ -518,14 +519,18 @@ function convertIrEnvironments({
                 );
             }
             if (endpointBaseUrlId == null) {
-                throw new Error(`Expected endpoint ${getOriginalName(endpoint.name)} to have base url.`);
+                throw new CliError({
+                    message: `Expected endpoint ${getOriginalName(endpoint.name)} to have base url.`,
+                    code: CliError.Code.IrConversionError
+                });
             }
             return environmentsConfigValue.environments.map((singleBaseUrlEnvironment) => {
                 const endpointBaseUrl = singleBaseUrlEnvironment.urls[endpointBaseUrlId];
                 if (endpointBaseUrl == null) {
-                    throw new Error(
-                        `Encountered undefined server name "${endpointBaseUrlId}" at endpoint ${endpoint.method.toUpperCase()} ${endpoint.path.head}. Expected environment ${singleBaseUrlEnvironment.id} to contain url for ${endpointBaseUrlId}`
-                    );
+                    throw new CliError({
+                        message: `Encountered undefined server name "${endpointBaseUrlId}" at endpoint ${endpoint.method.toUpperCase()} ${endpoint.path.head}. Expected environment ${singleBaseUrlEnvironment.id} to contain url for ${endpointBaseUrlId}`,
+                        code: CliError.Code.IrConversionError
+                    });
                 }
                 return {
                     id: FdrCjsSdk.EnvironmentId(singleBaseUrlEnvironment.id),
@@ -558,14 +563,18 @@ function convertIrWebSocketEnvironments({
             });
         case "multipleBaseUrls":
             if (channelBaseUrlId == null) {
-                throw new Error(`Expected channel ${getOriginalName(channel.name)} to have base url.`);
+                throw new CliError({
+                    message: `Expected channel ${getOriginalName(channel.name)} to have base url.`,
+                    code: CliError.Code.IrConversionError
+                });
             }
             return environmentsConfigValue.environments.map((singleBaseUrlEnvironment) => {
                 const channelBaseUrl = singleBaseUrlEnvironment.urls[channelBaseUrlId];
                 if (channelBaseUrl == null) {
-                    throw new Error(
-                        `Encountered undefined server name ${channelBaseUrl} at channel ${getOriginalName(channel.name)} ${channel.path.head}. Expected environment ${singleBaseUrlEnvironment.id} to contain url for ${channelBaseUrlId}`
-                    );
+                    throw new CliError({
+                        message: `Encountered undefined server name ${channelBaseUrl} at channel ${getOriginalName(channel.name)} ${channel.path.head}. Expected environment ${singleBaseUrlEnvironment.id} to contain url for ${channelBaseUrlId}`,
+                        code: CliError.Code.IrConversionError
+                    });
                 }
                 return {
                     id: FdrCjsSdk.EnvironmentId(singleBaseUrlEnvironment.id),
@@ -591,7 +600,7 @@ function convertHttpMethod(method: Ir.http.HttpMethod): FdrCjsSdk.HttpMethod {
         delete: () => FdrCjsSdk.HttpMethod.Delete,
         head: () => FdrCjsSdk.HttpMethod.Head,
         _other: () => {
-            throw new Error("Unknown http method: " + method);
+            throw new CliError({ message: "Unknown http method: " + method, code: CliError.Code.InternalError });
         }
     });
 }
@@ -718,7 +727,10 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): FdrCjsSdk.api.v
                 contentType: bytes.contentType
             }),
             _other: () => {
-                throw new Error("Unknown HttpRequestBody: " + irRequest.type);
+                throw new CliError({
+                    message: "Unknown HttpRequestBody: " + irRequest.type,
+                    code: CliError.Code.InternalError
+                });
             }
         }
     );
@@ -777,7 +789,10 @@ function convertResponse(irResponse: Ir.http.HttpResponse): FdrCjsSdk.api.v1.reg
                     return undefined;
                 },
                 _other: () => {
-                    throw new Error("Unknown HttpResponse: " + irResponse.body);
+                    throw new CliError({
+                        message: "Unknown HttpResponse: " + irResponse.body,
+                        code: CliError.Code.InternalError
+                    });
                 }
             }
         );
@@ -1090,7 +1105,10 @@ function convertV2HttpEndpointExample({
                           return undefined;
                       },
                       _other: () => {
-                          throw new Error("Unknown ExampleResponseBody: " + example.response?.body?.type);
+                          throw new CliError({
+                              message: "Unknown ExampleResponseBody: " + example.response?.body?.type,
+                              code: CliError.Code.InternalError
+                          });
                       }
                   })
                 : undefined,
@@ -1267,18 +1285,27 @@ function convertHttpEndpointExample({
                         stream: (stream) => (stream.length > 0 ? 200 : 204),
                         sse: (stream) => (stream.length > 0 ? 200 : 204),
                         _other: () => {
-                            throw new Error("Unknown ExampleResponseBody: " + ok.type);
+                            throw new CliError({
+                                message: "Unknown ExampleResponseBody: " + ok.type,
+                                code: CliError.Code.InternalError
+                            });
                         }
                     }),
                 error: ({ error: errorName }) => {
                     const error = ir.errors[errorName.errorId];
                     if (error == null) {
-                        throw new Error("Cannot find error " + errorName.errorId);
+                        throw new CliError({
+                            message: "Cannot find error " + errorName.errorId,
+                            code: CliError.Code.ResolutionError
+                        });
                     }
                     return error.statusCode;
                 },
                 _other: () => {
-                    throw new Error("Unknown ExampleResponse: " + example.response.type);
+                    throw new CliError({
+                        message: "Unknown ExampleResponse: " + example.response.type,
+                        code: CliError.Code.InternalError
+                    });
                 }
             }),
         responseBody: example.response._visit({
@@ -1302,12 +1329,18 @@ function convertHttpEndpointExample({
                         value: sse.map(({ event, data }) => ({ event, data: data.jsonExample }))
                     }),
                     _other: () => {
-                        throw new Error("Unknown ExampleResponseBody: " + ok.type);
+                        throw new CliError({
+                            message: "Unknown ExampleResponseBody: " + ok.type,
+                            code: CliError.Code.InternalError
+                        });
                     }
                 }),
             error: (error) => (error.body != null ? { type: "json", value: error.body.jsonExample } : undefined),
             _other: () => {
-                throw new Error("Unknown ExampleResponse: " + example.response.type);
+                throw new CliError({
+                    message: "Unknown ExampleResponse: " + example.response.type,
+                    code: CliError.Code.InternalError
+                });
             }
         }),
         // irExample.response.body != null ? { type: "json", value: irExample.response.body.jsonExample } : undefined,

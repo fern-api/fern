@@ -1,1 +1,3 @@
-require_relative '../lib/<%= rootFolderName %>'
+# frozen_string_literal: true
+
+require_relative "../lib/<%= rootFolderName %>"

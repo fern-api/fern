@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "properties": {
+    "caption": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "catalog_object_id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "catalog_object_id"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

@@ -1,5 +1,6 @@
 import { isNonNullish } from "@fern-api/core-utils";
 import { Logger } from "@fern-api/logger";
+import { GeneratorError } from "../GeneratorError.js";
 
 /**
  * The configuration used to interact with a GitHub repository.
@@ -30,17 +31,17 @@ export function resolveGitHubConfig({
 }): ResolvedGithubConfig {
     if (rawGithubConfig.type == null) {
         logger.error("Publishing config is missing");
-        throw new Error("Publishing config is required for GitHub actions");
+        throw GeneratorError.configError("Publishing config is required for GitHub actions");
     }
 
     if (rawGithubConfig.type !== "github") {
         logger.error(`Publishing type ${rawGithubConfig.type} is not supported`);
-        throw new Error("Only GitHub publishing is supported");
+        throw GeneratorError.configError("Only GitHub publishing is supported");
     }
 
     if (!(isNonNullish(rawGithubConfig.uri) && isNonNullish(rawGithubConfig.token))) {
         logger.error("GitHub URI or token is missing in publishing config");
-        throw new Error("GitHub URI and token are required in publishing config");
+        throw GeneratorError.configError("GitHub URI and token are required in publishing config");
     }
 
     return {

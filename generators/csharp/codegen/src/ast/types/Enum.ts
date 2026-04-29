@@ -1,4 +1,4 @@
-import { getWireValue } from "@fern-api/base-generator";
+import { getWireValue } from "@fern-api/browser-compatible-base-generator";
 import { type Generation } from "../../context/generation-info.js";
 import { Node } from "../core/AstNode.js";
 import { Writer } from "../core/Writer.js";

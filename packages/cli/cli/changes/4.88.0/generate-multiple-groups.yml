@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern generate` now accepts multiple `--group` flags. Passing e.g.
+    `fern generate --group typescript --group java --group python` generates
+    for all of the listed groups instead of failing with
+    `'typescript,java,python' is not a valid group or alias`. Each value is
+    resolved independently (including aliases) and the union is generated.
+  type: feat

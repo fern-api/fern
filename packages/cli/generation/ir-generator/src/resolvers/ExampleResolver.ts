@@ -1,6 +1,6 @@
 import { isPlainObject } from "@fern-api/core-utils";
 import { EXAMPLE_REFERENCE_PREFIX } from "@fern-api/fern-definition-schema";
-
+import { CliError } from "@fern-api/task-context";
 import { FernFileContext } from "../FernFileContext.js";
 import { TypeResolver } from "./TypeResolver.js";
 
@@ -86,7 +86,7 @@ export class ExampleResolverImpl implements ExampleResolver {
     } {
         const resolvedExample = this.resolveAllReferencesInExample({ example, file });
         if (resolvedExample == null) {
-            throw new Error("Failed to resolve examples");
+            throw new CliError({ message: "Failed to resolve examples", code: CliError.Code.ResolutionError });
         }
         return resolvedExample;
     }
@@ -162,7 +162,7 @@ export class ExampleResolverImpl implements ExampleResolver {
     } {
         const resolvedExample = this.resolveExample({ example, file });
         if (resolvedExample == null) {
-            throw new Error("Cannot resolve example: " + example);
+            throw new CliError({ message: "Cannot resolve example: " + example, code: CliError.Code.ResolutionError });
         }
         return resolvedExample;
     }

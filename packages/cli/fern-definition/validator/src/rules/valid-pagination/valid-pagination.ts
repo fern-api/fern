@@ -5,6 +5,7 @@ import {
     isRawUriPaginationSchema,
     TypeResolverImpl
 } from "@fern-api/ir-generator";
+import { CliError } from "@fern-api/task-context";
 
 import { Rule } from "../../Rule.js";
 import { CASINGS_GENERATOR } from "../../utils/casingsGenerator.js";
@@ -77,7 +78,10 @@ export const ValidPaginationRule: Rule = {
                             pathPagination: endpointPagination
                         });
                     }
-                    throw new Error("Invalid pagination schema");
+                    throw new CliError({
+                        message: "Invalid pagination schema",
+                        code: CliError.Code.ValidationError
+                    });
                 }
             }
         };

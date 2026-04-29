@@ -9,8 +9,8 @@
                 "identifier_override": "endpoint_.test_get"
             },
             "snippet": {
-                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    api_version=\"YOUR_API_VERSION\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.test_get(\n    region=\"region\",\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    api_version=\"YOUR_API_VERSION\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.test_get(\n        region=\"region\",\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    \"2024-02-08\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.test_get(\n    region=\"region\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    \"2024-02-08\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.test_get(\n        region=\"region\",\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         }

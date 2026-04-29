@@ -61,7 +61,7 @@ public class Example {
     public static void main(String[] args) {
         SeedBearerTokenEnvironmentVariableClient client = SeedBearerTokenEnvironmentVariableClient
             .builder()
-            .apiKey("<token>")
+            .apiKey("YOUR_API_KEY")
             .build();
 
         client.service().getWithBearerToken();

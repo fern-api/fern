@@ -88,6 +88,7 @@ export const CsharpConfigSchema = z.object({
     // General options.
     "root-client-class-access": z.enum(["public", "internal"]).optional(),
     "custom-pager-name": z.string().optional(),
+    "offset-semantics": z.enum(["item-index", "page-index"]).optional(),
     "enable-forward-compatible-enums": z.boolean().optional(),
     "generate-error-types": z.boolean().optional(),
     "package-id": z.string().optional(),

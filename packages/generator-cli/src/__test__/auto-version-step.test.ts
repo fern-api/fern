@@ -17,7 +17,7 @@ const emptyContext: PipelineContext = {
 const baseConfig: AutoVersionStepConfig = {
     enabled: true,
     language: "typescript",
-    fernToken: "test-token"
+    ai: { provider: "anthropic", model: "claude-sonnet-4-6" }
 };
 
 describe("AutoVersionStep", () => {
@@ -54,16 +54,43 @@ describe("PostGenerationPipeline autoVersion wiring", () => {
         expect(result.success).toBe(true);
     });
 
-    it("runs the no-op step and records its result when autoVersion.enabled is true", async () => {
+    it("auto-disables autoVersion with a warning when replay is not enabled", async () => {
+        let warnings: string[] = [];
+        const capturingLogger: PipelineLogger = {
+            debug: () => undefined,
+            info: () => undefined,
+            warn: (msg: string) => {
+                warnings.push(msg);
+            },
+            error: () => undefined
+        };
         const pipeline = new PostGenerationPipeline(
             {
                 outputDir: "/tmp/fake",
                 autoVersion: baseConfig
             },
+            capturingLogger
+        );
+        const result = await pipeline.run();
+        expect(result.steps.autoVersion).toBeUndefined();
+        expect(warnings.some((w) => w.includes("AutoVersion requires Replay"))).toBe(true);
+        expect(result.success).toBe(true);
+    });
+
+    it("runs autoVersion alongside replay when both are enabled", async () => {
+        const pipeline = new PostGenerationPipeline(
+            {
+                outputDir: "/tmp/fake",
+                autoVersion: baseConfig,
+                replay: { enabled: true }
+            },
             silentLogger
         );
         const result = await pipeline.run();
-        expect(result.steps.autoVersion).toEqual({ executed: true, success: true });
+        // No lockfile at /tmp/fake, so GenerationCommitStep yields preparedReplay: null.
+        // AutoVersionStep still runs; current scaffold returns {executed, success}.
+        expect(result.steps.autoVersion?.executed).toBe(true);
+        expect(result.steps.autoVersion?.success).toBe(true);
         expect(result.success).toBe(true);
     });
 });

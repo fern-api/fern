@@ -1,0 +1,8 @@
+- summary: |
+    Support omitting username or password from basic auth when configured via
+    `usernameOmit`/`passwordOmit` in the IR. When a field is omitted, it is
+    removed from the SDK's public API (`credentials()` takes fewer arguments)
+    and an empty string is used internally for the auth header encoding. When
+    both fields are omitted, the `credentials()` call and Authorization header
+    are skipped entirely.
+  type: feat

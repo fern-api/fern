@@ -7,6 +7,7 @@ import {
     SourcedNumber,
     SourcedString
 } from "@fern-api/source";
+import { CliError } from "@fern-api/task-context";
 import type { YamlDocument, YamlPath } from "./YamlDocument.js";
 
 export class YamlSourceResolver {
@@ -46,7 +47,10 @@ export class YamlSourceResolver {
             case "boolean":
                 return new SourcedBoolean(value, location) as Sourced<T>;
             default:
-                throw new Error(`Unexpected value type: ${typeof value}`);
+                throw new CliError({
+                    message: `Unexpected value type: ${typeof value}`,
+                    code: CliError.Code.InternalError
+                });
         }
     }
 }

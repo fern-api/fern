@@ -9,6 +9,7 @@ module Seed
         # own required properties should also be filled with defaults.
         class ObjectWithRequiredNestedObject < Internal::Types::Model
           field :required_string, -> { String }, optional: false, nullable: false, api_name: "requiredString"
+
           field :required_object, -> { Seed::Types::Object_::Types::NestedObjectWithRequiredField }, optional: false, nullable: false, api_name: "requiredObject"
         end
       end

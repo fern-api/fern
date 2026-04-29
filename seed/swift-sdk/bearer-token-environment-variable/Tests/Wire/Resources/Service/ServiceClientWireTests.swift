@@ -14,7 +14,7 @@ import BearerTokenEnvironmentVariable
         )
         let client = BearerTokenEnvironmentVariableClient(
             baseURL: "https://api.fern.com",
-            apiKey: "<token>",
+            apiKey: "YOUR_API_KEY",
             urlSession: stub.urlSession
         )
         let expectedResponse = "string"

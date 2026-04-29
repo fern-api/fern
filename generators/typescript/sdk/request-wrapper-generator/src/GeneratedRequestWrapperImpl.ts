@@ -196,12 +196,13 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         for (const pathParameter of this.getPathParamsForRequestWrapper(context)) {
             const type = context.type.getReferenceToType(pathParameter.valueType);
             const hasDefaultValue = this.hasDefaultValue(pathParameter.valueType, context);
+            const hasClientDefault = pathParameter.clientDefault != null;
             const propertyName = this.getPropertyNameOfPathParameter(pathParameter);
             properties.push({
                 name: getPropertyKey(propertyName.propertyName),
                 safeName: getPropertyKey(propertyName.safeName),
                 type: type.typeNodeWithoutUndefined,
-                isOptional: type.isOptional || hasDefaultValue,
+                isOptional: type.isOptional || hasDefaultValue || hasClientDefault,
                 docs: pathParameter.docs ? [pathParameter.docs] : undefined
             });
         }
@@ -209,6 +210,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         for (const queryParameter of this.getAllQueryParameters()) {
             const type = context.type.getReferenceToType(queryParameter.valueType);
             const hasDefaultValue = this.hasDefaultValue(queryParameter.valueType, context);
+            const hasClientDefault = queryParameter.clientDefault != null;
             const propertyName = collidingQueryParamWireValues.has(getWireValue(queryParameter.name))
                 ? this.getOverriddenPropertyNameOfQueryParameter(queryParameter)
                 : this.getPropertyNameOfQueryParameter(queryParameter);
@@ -221,7 +223,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                           ts.factory.createArrayTypeNode(type.typeNodeWithoutUndefined)
                       ])
                     : type.typeNodeWithoutUndefined,
-                isOptional: type.isOptional || hasDefaultValue,
+                isOptional: type.isOptional || hasDefaultValue || hasClientDefault,
                 docs: queryParameter.docs ? [queryParameter.docs] : undefined
             });
         }
@@ -229,12 +231,13 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         for (const header of this.getAllNonLiteralHeaders(context)) {
             const type = context.type.getReferenceToType(header.valueType);
             const hasDefaultValue = this.hasDefaultValue(header.valueType, context);
+            const hasClientDefault = header.clientDefault != null;
             const headerName = this.getPropertyNameOfNonLiteralHeader(header);
             properties.push({
                 name: getPropertyKey(headerName.propertyName),
                 safeName: getPropertyKey(headerName.safeName),
                 type: type.typeNodeWithoutUndefined,
-                isOptional: type.isOptional || hasDefaultValue,
+                isOptional: type.isOptional || hasDefaultValue || hasClientDefault,
                 docs: header.docs ? [header.docs] : undefined
             });
         }
@@ -608,18 +611,18 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
 
     private expensivelyComputeIfAllPropertiesAreOptional(context: FileContext): boolean {
         for (const pathParameter of this.getPathParamsForRequestWrapper(context)) {
-            if (!this.isTypeOptional(pathParameter.valueType, context)) {
+            if (!this.isTypeOptional(pathParameter.valueType, context) && pathParameter.clientDefault == null) {
                 return false;
             }
         }
 
         for (const queryParameter of this.getAllQueryParameters()) {
-            if (!this.isTypeOptional(queryParameter.valueType, context)) {
+            if (!this.isTypeOptional(queryParameter.valueType, context) && queryParameter.clientDefault == null) {
                 return false;
             }
         }
         for (const header of this.getAllNonLiteralHeaders(context)) {
-            if (!this.isTypeOptional(header.valueType, context)) {
+            if (!this.isTypeOptional(header.valueType, context) && header.clientDefault == null) {
                 return false;
             }
         }

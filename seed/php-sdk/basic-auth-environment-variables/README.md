@@ -39,8 +39,8 @@ namespace Example;
 use Seed\SeedClient;
 
 $client = new SeedClient(
-    username: '<username>',
-    accessToken: '<password>',
+    username: 'YOUR_USERNAME',
+    accessToken: 'YOUR_PASSWORD',
 );
 $client->basicAuth->postWithBasicAuth(
     [

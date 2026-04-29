@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Suppress Sentry false positives caused by user- and environment-provoked errors being misclassified as `InternalError`:
+      - Add a generic `ErrnoException` classifier in `resolveErrorCode` that maps filesystem errors (`ENOENT`, `EACCES`, `ENOSPC`, `EPIPE`, …) to `EnvironmentError` and network errors (`ENOTFOUND`, `ECONNREFUSED`, `ETIMEDOUT`, …) to `NetworkError`, both of which are non-reportable.
+      - Register an `error` listener on `process.stdout`/`process.stderr` in `TtyAwareLogger` to swallow `EPIPE` at the source before it reaches Sentry's uncaught-exception integration (triggered when piping CLI output into `head`, `jq`, etc.).
+      - Make `ContainerError` non-reportable and replace the aggregate `CliError({ ContainerError })` throw in the `sdk generate` and `docs publish` commands with `TaskAbortSignal` to prevent double-reporting individual task failures.
+      - Fix `JsonError`, `ParseError`, and `GeneratorError` class names surviving esbuild minification by explicitly setting `this.name` in their constructors, so `isSchemaValidationError` can reliably classify them as `ParseError`.
+      - Wrap `yaml.load` in `loadOpenAPI` to translate `YAMLException` into a user-readable `CliError({ ParseError })` with file, line, and column context.
+      - Wrap `swagger2openapi` conversion failures in `convertOpenAPIV2ToV3` as `CliError({ ParseError })`.
+      - Pass explicit `ValidationError` / `NetworkError` codes in `createOrganizationIfDoesNotExist` instead of letting them fall through to `InternalError`.
+      - Reclassify "Generator not found" in the upgrade message helper from `InternalError` to `ConfigError` (user's `generators.yml` references an image not in FDR).
+      - Use `TaskAbortSignal` in `rerunFernCliAtVersion` failure path instead of reporting a spurious `InternalError`.
+  type: internal

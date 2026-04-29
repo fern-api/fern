@@ -1,3 +1,4 @@
+import { GeneratorError } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import {
     Attribute,
@@ -213,7 +214,7 @@ export class ErrorGenerator {
             if (errors.length === 1) {
                 const [singleError] = errors;
                 if (!singleError) {
-                    throw new Error("Unexpected: errors array should not be empty");
+                    throw GeneratorError.internalError("Unexpected: errors array should not be empty");
                 }
                 return this.buildSingleErrorMatchArm(singleError);
             } else {
@@ -380,7 +381,7 @@ export class ErrorGenerator {
         // Add fallback for when parsing fails
         const [firstError] = errors;
         if (!firstError) {
-            throw new Error("Unexpected: errors array should not be empty");
+            throw GeneratorError.internalError("Unexpected: errors array should not be empty");
         }
         const fallbackConstruction = this.buildFallbackConstruction(this.getErrorVariantName(firstError), firstError);
         innerStatements.push(Statement.return(fallbackConstruction));
@@ -421,7 +422,7 @@ export class ErrorGenerator {
         // Add default fallback to first error type
         const [firstError] = errors;
         if (!firstError) {
-            throw new Error("Unexpected: errors array should not be empty");
+            throw GeneratorError.internalError("Unexpected: errors array should not be empty");
         }
         const fallbackName = this.getErrorVariantName(firstError);
         matchArms.push(
@@ -512,7 +513,7 @@ export class ErrorGenerator {
     private getErrorVariantName(errorDeclaration: FernIr.ErrorDeclaration): string {
         const safeName = this.context.case.pascalSafe(errorDeclaration.name.name);
         if (!safeName) {
-            throw new Error(`Error declaration missing safe name: ${JSON.stringify(errorDeclaration.name)}`);
+            throw GeneratorError.internalError(`Error declaration missing safe name: ${JSON.stringify(errorDeclaration.name)}`);
         }
         return safeName;
     }

@@ -1,4 +1,4 @@
-import { File, GeneratorNotificationService } from "@fern-api/base-generator";
+import { File, GeneratorError, GeneratorNotificationService } from "@fern-api/base-generator";
 import { FernGeneratorExec } from "@fern-api/browser-compatible-base-generator";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
@@ -63,7 +63,7 @@ export class SdkGeneratorCli extends AbstractPythonGeneratorCli<SdkCustomConfigS
             try {
                 await this.generateReadme({ context, endpointSnippets });
             } catch (error) {
-                throw new Error(`Failed to generate README.md: ${extractErrorMessage(error)}`);
+                throw GeneratorError.internalError(`Failed to generate README.md: ${extractErrorMessage(error)}`);
             }
         }
 
@@ -71,7 +71,7 @@ export class SdkGeneratorCli extends AbstractPythonGeneratorCli<SdkCustomConfigS
         try {
             await this.generateReference({ context, endpointSnippets });
         } catch (error) {
-            throw new Error(`Failed to generate reference.md: ${extractErrorMessage(error)}`);
+            throw GeneratorError.internalError(`Failed to generate reference.md: ${extractErrorMessage(error)}`);
         }
 
         await context.project.persist();
@@ -102,7 +102,7 @@ export class SdkGeneratorCli extends AbstractPythonGeneratorCli<SdkCustomConfigS
 
         const dynamicIr = context.ir.dynamic;
         if (dynamicIr == null) {
-            throw new Error("Cannot generate dynamic snippets without dynamic IR");
+            throw GeneratorError.internalError("Cannot generate dynamic snippets without dynamic IR");
         }
 
         const dynamicSnippetsGenerator = new DynamicSnippetsGenerator({

@@ -52,6 +52,9 @@ import { docsDiff } from "./commands/docs-diff/docsDiff.js";
 import { generateLibraryDocs } from "./commands/docs-md-generate/generateLibraryDocs.js";
 import { deleteDocsPreview } from "./commands/docs-preview/deleteDocsPreview.js";
 import { listDocsPreview } from "./commands/docs-preview/listDocsPreview.js";
+import { exportDocsTheme } from "./commands/docs-theme/exportDocsTheme.js";
+import { listDocsThemes } from "./commands/docs-theme/listDocsThemes.js";
+import { uploadDocsTheme } from "./commands/docs-theme/uploadDocsTheme.js";
 import { downgrade } from "./commands/downgrade/downgrade.js";
 import { generateOpenAPIForWorkspaces } from "./commands/export/generateOpenAPIForWorkspaces.js";
 import { formatWorkspaces } from "./commands/format/formatWorkspaces.js";
@@ -93,10 +96,22 @@ import { RUNTIME } from "./runtime.js";
 void runCli();
 
 async function runCli() {
-    getOrCreateFernRunId();
+    // Shell completion must be fast and side-effect-free. When the shell
+    // invokes `fern --get-yargs-completions …` we skip version redirection
+    // (network call) and suppress upgrade notices so TAB never produces
+    // extraneous output.
+    const isCompletion = process.argv.includes("--get-yargs-completions");
+
+    if (!isCompletion) {
+        getOrCreateFernRunId();
+    }
 
     const isLocal = process.argv.includes("--local");
     const cliContext = await CliContext.create(process.stdout, process.stderr, { isLocal });
+
+    if (isCompletion) {
+        cliContext.suppressUpgradeMessage();
+    }
 
     const exit = async () => {
         await cliContext.exit();
@@ -126,14 +141,21 @@ async function runCli() {
         if (cwd != null) {
             process.chdir(cwd);
         }
-        const versionOfCliToRun = await getIntendedVersionOfCli(cliContext);
-        if (cliContext.environment.packageVersion === versionOfCliToRun) {
+
+        // During completion, skip version redirection to avoid a slow network
+        // round-trip that blocks every TAB press.
+        if (isCompletion) {
             await tryRunCli(cliContext);
         } else {
-            await rerunFernCliAtVersion({
-                version: versionOfCliToRun,
-                cliContext
-            });
+            const versionOfCliToRun = await getIntendedVersionOfCli(cliContext);
+            if (cliContext.environment.packageVersion === versionOfCliToRun) {
+                await tryRunCli(cliContext);
+            } else {
+                await rerunFernCliAtVersion({
+                    version: versionOfCliToRun,
+                    cliContext
+                });
+            }
         }
     } catch (error) {
         cliContext.failWithoutThrowing(undefined, error);
@@ -627,8 +649,10 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
         (yargs) =>
             yargs
                 .option("api", {
-                    string: true,
-                    description: "If multiple APIs, specify the name with --api <name>. Otherwise, just --api."
+                    type: "string",
+                    array: true,
+                    description:
+                        "If multiple APIs, specify the name with --api <name>. Pass --api multiple times to generate for several APIs at once."
                 })
                 .option("docs", {
                     string: true,
@@ -650,7 +674,9 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 })
                 .option("group", {
                     type: "string",
-                    description: "The group to generate"
+                    array: true,
+                    description:
+                        "The group to generate. Pass --group multiple times to generate for several groups at once."
                 })
                 .option("generator", {
                     type: "string",
@@ -763,9 +789,15 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     default: false,
                     description:
                         "Skip the .fernignore file and generate all files. For remote generation, uploads an empty .fernignore. For local generation, skips reading .fernignore from the output directory."
+                })
+                .option("skip-if-no-diff", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Skip opening a PR / pushing when the generated output has no diff from the base branch."
                 }),
         async (argv) => {
-            if (argv.api != null && argv.docs != null) {
+            if (argv.api != null && argv.api.length > 0 && argv.docs != null) {
                 return cliContext.failWithoutThrowing(
                     "Cannot specify both --api and --docs. Please choose one.",
                     undefined,
@@ -848,7 +880,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
             const correctedGeneratorFilter =
                 argv.generator != null ? warnAndCorrectIncorrectDockerOrg(argv.generator, cliContext) : undefined;
             const { generatorName, generatorIndex } = parseGeneratorArg(correctedGeneratorFilter);
-            if (argv.api != null) {
+            if (argv.api != null && argv.api.length > 0) {
                 return await generateAPIWorkspaces({
                     project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                         commandLineApiWorkspace: argv.api,
@@ -856,7 +888,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     }),
                     cliContext,
                     version: argv.version,
-                    groupName: argv.group,
+                    groupNames: argv.group,
                     generatorName,
                     generatorIndex,
                     shouldLogS3Url: argv.printZipUrl,
@@ -874,11 +906,12 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     outputDir: argv.output,
                     noReplay: !argv.replay,
                     retryRateLimited: argv["retry-rate-limited"],
-                    requireEnvVars: argv["require-env-vars"]
+                    requireEnvVars: argv["require-env-vars"],
+                    skipIfNoDiff: argv["skip-if-no-diff"]
                 });
             }
             if (argv.docs != null) {
-                if (argv.group != null) {
+                if (argv.group != null && argv.group.length > 0) {
                     cliContext.logger.warn("--group is ignored when generating docs");
                 }
                 if (argv.generator != null) {
@@ -916,7 +949,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 }),
                 cliContext,
                 version: argv.version,
-                groupName: argv.group,
+                groupNames: argv.group,
                 generatorName,
                 generatorIndex,
                 shouldLogS3Url: argv.printZipUrl,
@@ -934,7 +967,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 outputDir: argv.output,
                 noReplay: !argv.replay,
                 retryRateLimited: argv["retry-rate-limited"],
-                requireEnvVars: argv["require-env-vars"]
+                requireEnvVars: argv["require-env-vars"],
+                skipIfNoDiff: argv["skip-if-no-diff"]
             });
         }
     );
@@ -1117,35 +1151,19 @@ function addFdrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     default: [] as string[],
                     description: "Filter the FDR API definition for certain audiences"
                 })
-                .option("v2", {
-                    boolean: true,
-                    description: "Use v2 format"
-                })
                 .option("from-openapi", {
                     boolean: true,
                     description: "Whether to use the new parser and go directly from OpenAPI to IR",
                     default: false
                 }),
         async (argv) => {
-            if (argv.v2) {
+            if (argv.fromOpenapi) {
                 await generateOpenApiToFdrApiDefinitionForWorkspaces({
                     project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                         commandLineApiWorkspace: argv.api,
                         defaultToAllApiWorkspaces: false
                     }),
                     outputFilepath: resolve(cwd(), argv.pathToOutput),
-                    directFromOpenapi: false,
-                    cliContext,
-                    audiences: argv.audience.length > 0 ? { type: "select", audiences: argv.audience } : { type: "all" }
-                });
-            } else if (argv.fromOpenapi) {
-                await generateOpenApiToFdrApiDefinitionForWorkspaces({
-                    project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                        commandLineApiWorkspace: argv.api,
-                        defaultToAllApiWorkspaces: false
-                    }),
-                    outputFilepath: resolve(cwd(), argv.pathToOutput),
-                    directFromOpenapi: true,
                     cliContext,
                     audiences: argv.audience.length > 0 ? { type: "select", audiences: argv.audience } : { type: "all" }
                 });
@@ -1725,8 +1743,86 @@ function addDocsCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
         addDocsPreviewCommand(yargs, cliContext);
         addDocsDiffCommand(yargs, cliContext);
         addDocsMdCommand(yargs, cliContext);
+        addDocsThemeCommand(yargs, cliContext);
         return yargs;
     });
+}
+
+function addDocsThemeCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command("theme", "Manage org-level themes for your documentation", (yargs) => {
+        addDocsThemeExportCommand(yargs, cliContext);
+        addDocsThemeListCommand(yargs, cliContext);
+        addDocsThemeUploadCommand(yargs, cliContext);
+        return yargs;
+    });
+}
+
+function addDocsThemeExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "export",
+        "Export theme-eligible fields from docs.yml into a standalone theme directory",
+        (yargs) =>
+            yargs
+                .option("output", {
+                    alias: "o",
+                    type: "string",
+                    description: "Directory to export the theme into (default: ./fern/theme)"
+                })
+                .example("$0 docs theme export", "Export theme from docs.yml to ./fern/theme")
+                .example("$0 docs theme export --output ./my-theme", "Export to a custom directory"),
+        async (argv) => {
+            cliContext.instrumentPostHogEvent({ command: "fern docs theme export" });
+            await exportDocsTheme({ cliContext, output: argv.output });
+        }
+    );
+}
+
+function addDocsThemeListCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "list",
+        "List all themes for an org",
+        (yargs) =>
+            yargs
+                .option("org", {
+                    type: "string",
+                    description: "Override the org ID from fern.config.json"
+                })
+                .option("json", {
+                    type: "boolean",
+                    description: "Output themes as a JSON array (includes updatedAt)"
+                })
+                .example("$0 docs theme list", "List all themes for the current org")
+                .example("$0 docs theme list --json", "Output themes as JSON"),
+        async (argv) => {
+            cliContext.instrumentPostHogEvent({ command: "fern docs theme list" });
+            await listDocsThemes({ cliContext, org: argv.org, json: argv.json });
+        }
+    );
+}
+
+function addDocsThemeUploadCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "upload",
+        "Upload a theme to Fern's cloud (creates or updates)",
+        (yargs) =>
+            yargs
+                .option("name", {
+                    alias: "n",
+                    type: "string",
+                    description: 'Theme name (default: "default")',
+                    default: "default"
+                })
+                .option("org", {
+                    type: "string",
+                    description: "Override the org ID from fern.config.json"
+                })
+                .example("$0 docs theme upload", 'Upload theme from ./fern/theme as "default"')
+                .example("$0 docs theme upload --name dark", "Upload a named theme variant"),
+        async (argv) => {
+            cliContext.instrumentPostHogEvent({ command: "fern docs theme upload" });
+            await uploadDocsTheme({ cliContext, name: argv.name, org: argv.org });
+        }
+    );
 }
 
 function addDocsMdCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
@@ -1869,10 +1965,16 @@ function addDocsPreviewDeleteCommand(cli: Argv<GlobalCliOptions>, cliContext: Cl
                 .check((argv) => {
                     const sources = [argv.target, argv.url, argv.id].filter(Boolean);
                     if (sources.length === 0) {
-                        throw new Error("Must provide a preview URL or --id.");
+                        throw new CliError({
+                            message: "Must provide a preview URL or --id.",
+                            code: CliError.Code.ConfigError
+                        });
                     }
                     if (sources.length > 1) {
-                        throw new Error("Provide only one of: [target], --url, or --id.");
+                        throw new CliError({
+                            message: "Provide only one of: [target], --url, or --id.",
+                            code: CliError.Code.ConfigError
+                        });
                     }
                     return true;
                 }),
@@ -2863,6 +2965,7 @@ function addReplayInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                         repo,
                         lockfileContents: result.lockfileContent,
                         fernignoreEntries: result.fernignoreEntries,
+                        gitattributesEntries: result.gitattributesEntries,
                         prBody: result.prBody
                     })
                 });

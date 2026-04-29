@@ -1,3 +1,4 @@
+import { GeneratorError } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
@@ -71,7 +72,7 @@ export class EnvironmentGenerator {
             singleBaseUrl: (config) => this.generateSingleUrlEnvironment(config),
             multipleBaseUrls: (config) => this.generateMultiUrlEnvironment(config),
             _other: () => {
-                throw new Error("Unknown environments type: " + environmentsConfig.environments.type);
+                throw GeneratorError.validationError("Unknown environments type: " + environmentsConfig.environments.type);
             }
         });
     }
@@ -198,7 +199,7 @@ export class EnvironmentGenerator {
         const environmentEnumName = this.getEnvironmentEnumName();
 
         if (!defaultEnv) {
-            throw new Error("No environments found for Default implementation");
+            throw GeneratorError.validationError("No environments found for Default implementation");
         }
 
         const defaultMethod = rust.method({
@@ -324,7 +325,7 @@ export class EnvironmentGenerator {
         const environmentEnumName = this.getEnvironmentEnumName();
 
         if (!defaultEnv) {
-            throw new Error("No environments found for Default implementation");
+            throw GeneratorError.validationError("No environments found for Default implementation");
         }
 
         // Create the URL struct instance with all base URLs

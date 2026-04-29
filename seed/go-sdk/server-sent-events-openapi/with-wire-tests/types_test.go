@@ -10,9 +10,9 @@ import (
 	time "time"
 )
 
-func TestSettersStreamXfernStreamingConditionRequest(t *testing.T) {
+func TestSettersStreamXFernStreamingConditionRequest(t *testing.T) {
 	t.Run("SetQuery", func(t *testing.T) {
-		obj := &StreamXfernStreamingConditionRequest{}
+		obj := &StreamXFernStreamingConditionRequest{}
 		var fernTestValueQuery string
 		obj.SetQuery(fernTestValueQuery)
 		assert.Equal(t, fernTestValueQuery, obj.Query)
@@ -21,11 +21,11 @@ func TestSettersStreamXfernStreamingConditionRequest(t *testing.T) {
 
 }
 
-func TestSettersMarkExplicitStreamXfernStreamingConditionRequest(t *testing.T) {
+func TestSettersMarkExplicitStreamXFernStreamingConditionRequest(t *testing.T) {
 	t.Run("SetQuery_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &StreamXfernStreamingConditionRequest{}
+		obj := &StreamXFernStreamingConditionRequest{}
 		var fernTestValueQuery string
 
 		// Act
@@ -55,9 +55,9 @@ func TestSettersMarkExplicitStreamXfernStreamingConditionRequest(t *testing.T) {
 
 }
 
-func TestSettersStreamXfernStreamingConditionStreamRequest(t *testing.T) {
+func TestSettersStreamXFernStreamingConditionStreamRequest(t *testing.T) {
 	t.Run("SetQuery", func(t *testing.T) {
-		obj := &StreamXfernStreamingConditionStreamRequest{}
+		obj := &StreamXFernStreamingConditionStreamRequest{}
 		var fernTestValueQuery string
 		obj.SetQuery(fernTestValueQuery)
 		assert.Equal(t, fernTestValueQuery, obj.Query)
@@ -66,11 +66,11 @@ func TestSettersStreamXfernStreamingConditionStreamRequest(t *testing.T) {
 
 }
 
-func TestSettersMarkExplicitStreamXfernStreamingConditionStreamRequest(t *testing.T) {
+func TestSettersMarkExplicitStreamXFernStreamingConditionStreamRequest(t *testing.T) {
 	t.Run("SetQuery_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &StreamXfernStreamingConditionStreamRequest{}
+		obj := &StreamXFernStreamingConditionStreamRequest{}
 		var fernTestValueQuery string
 
 		// Act
@@ -100,9 +100,9 @@ func TestSettersMarkExplicitStreamXfernStreamingConditionStreamRequest(t *testin
 
 }
 
-func TestSettersStreamXfernStreamingNullableConditionRequest(t *testing.T) {
+func TestSettersStreamXFernStreamingNullableConditionRequest(t *testing.T) {
 	t.Run("SetQuery", func(t *testing.T) {
-		obj := &StreamXfernStreamingNullableConditionRequest{}
+		obj := &StreamXFernStreamingNullableConditionRequest{}
 		var fernTestValueQuery string
 		obj.SetQuery(fernTestValueQuery)
 		assert.Equal(t, fernTestValueQuery, obj.Query)
@@ -111,11 +111,11 @@ func TestSettersStreamXfernStreamingNullableConditionRequest(t *testing.T) {
 
 }
 
-func TestSettersMarkExplicitStreamXfernStreamingNullableConditionRequest(t *testing.T) {
+func TestSettersMarkExplicitStreamXFernStreamingNullableConditionRequest(t *testing.T) {
 	t.Run("SetQuery_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &StreamXfernStreamingNullableConditionRequest{}
+		obj := &StreamXFernStreamingNullableConditionRequest{}
 		var fernTestValueQuery string
 
 		// Act
@@ -145,9 +145,9 @@ func TestSettersMarkExplicitStreamXfernStreamingNullableConditionRequest(t *test
 
 }
 
-func TestSettersStreamXfernStreamingNullableConditionStreamRequest(t *testing.T) {
+func TestSettersStreamXFernStreamingNullableConditionStreamRequest(t *testing.T) {
 	t.Run("SetQuery", func(t *testing.T) {
-		obj := &StreamXfernStreamingNullableConditionStreamRequest{}
+		obj := &StreamXFernStreamingNullableConditionStreamRequest{}
 		var fernTestValueQuery string
 		obj.SetQuery(fernTestValueQuery)
 		assert.Equal(t, fernTestValueQuery, obj.Query)
@@ -156,11 +156,11 @@ func TestSettersStreamXfernStreamingNullableConditionStreamRequest(t *testing.T)
 
 }
 
-func TestSettersMarkExplicitStreamXfernStreamingNullableConditionStreamRequest(t *testing.T) {
+func TestSettersMarkExplicitStreamXFernStreamingNullableConditionStreamRequest(t *testing.T) {
 	t.Run("SetQuery_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &StreamXfernStreamingNullableConditionStreamRequest{}
+		obj := &StreamXFernStreamingNullableConditionStreamRequest{}
 		var fernTestValueQuery string
 
 		// Act
@@ -190,9 +190,9 @@ func TestSettersMarkExplicitStreamXfernStreamingNullableConditionStreamRequest(t
 
 }
 
-func TestSettersStreamXfernStreamingSharedSchemaRequest(t *testing.T) {
+func TestSettersStreamXFernStreamingSharedSchemaRequest(t *testing.T) {
 	t.Run("SetPrompt", func(t *testing.T) {
-		obj := &StreamXfernStreamingSharedSchemaRequest{}
+		obj := &StreamXFernStreamingSharedSchemaRequest{}
 		var fernTestValuePrompt string
 		obj.SetPrompt(fernTestValuePrompt)
 		assert.Equal(t, fernTestValuePrompt, obj.Prompt)
@@ -200,7 +200,7 @@ func TestSettersStreamXfernStreamingSharedSchemaRequest(t *testing.T) {
 	})
 
 	t.Run("SetModel", func(t *testing.T) {
-		obj := &StreamXfernStreamingSharedSchemaRequest{}
+		obj := &StreamXFernStreamingSharedSchemaRequest{}
 		var fernTestValueModel string
 		obj.SetModel(fernTestValueModel)
 		assert.Equal(t, fernTestValueModel, obj.Model)
@@ -209,11 +209,11 @@ func TestSettersStreamXfernStreamingSharedSchemaRequest(t *testing.T) {
 
 }
 
-func TestSettersMarkExplicitStreamXfernStreamingSharedSchemaRequest(t *testing.T) {
+func TestSettersMarkExplicitStreamXFernStreamingSharedSchemaRequest(t *testing.T) {
 	t.Run("SetPrompt_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &StreamXfernStreamingSharedSchemaRequest{}
+		obj := &StreamXFernStreamingSharedSchemaRequest{}
 		var fernTestValuePrompt string
 
 		// Act
@@ -244,7 +244,7 @@ func TestSettersMarkExplicitStreamXfernStreamingSharedSchemaRequest(t *testing.T
 	t.Run("SetModel_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &StreamXfernStreamingSharedSchemaRequest{}
+		obj := &StreamXFernStreamingSharedSchemaRequest{}
 		var fernTestValueModel string
 
 		// Act
@@ -274,9 +274,9 @@ func TestSettersMarkExplicitStreamXfernStreamingSharedSchemaRequest(t *testing.T
 
 }
 
-func TestSettersStreamXfernStreamingSharedSchemaStreamRequest(t *testing.T) {
+func TestSettersStreamXFernStreamingSharedSchemaStreamRequest(t *testing.T) {
 	t.Run("SetPrompt", func(t *testing.T) {
-		obj := &StreamXfernStreamingSharedSchemaStreamRequest{}
+		obj := &StreamXFernStreamingSharedSchemaStreamRequest{}
 		var fernTestValuePrompt string
 		obj.SetPrompt(fernTestValuePrompt)
 		assert.Equal(t, fernTestValuePrompt, obj.Prompt)
@@ -284,7 +284,7 @@ func TestSettersStreamXfernStreamingSharedSchemaStreamRequest(t *testing.T) {
 	})
 
 	t.Run("SetModel", func(t *testing.T) {
-		obj := &StreamXfernStreamingSharedSchemaStreamRequest{}
+		obj := &StreamXFernStreamingSharedSchemaStreamRequest{}
 		var fernTestValueModel string
 		obj.SetModel(fernTestValueModel)
 		assert.Equal(t, fernTestValueModel, obj.Model)
@@ -293,11 +293,11 @@ func TestSettersStreamXfernStreamingSharedSchemaStreamRequest(t *testing.T) {
 
 }
 
-func TestSettersMarkExplicitStreamXfernStreamingSharedSchemaStreamRequest(t *testing.T) {
+func TestSettersMarkExplicitStreamXFernStreamingSharedSchemaStreamRequest(t *testing.T) {
 	t.Run("SetPrompt_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &StreamXfernStreamingSharedSchemaStreamRequest{}
+		obj := &StreamXFernStreamingSharedSchemaStreamRequest{}
 		var fernTestValuePrompt string
 
 		// Act
@@ -328,7 +328,7 @@ func TestSettersMarkExplicitStreamXfernStreamingSharedSchemaStreamRequest(t *tes
 	t.Run("SetModel_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &StreamXfernStreamingSharedSchemaStreamRequest{}
+		obj := &StreamXFernStreamingSharedSchemaStreamRequest{}
 		var fernTestValueModel string
 
 		// Act
@@ -3312,11 +3312,11 @@ func TestSettersMarkExplicitStreamRequest(t *testing.T) {
 
 }
 
-func TestGettersStreamXfernStreamingUnionRequest(t *testing.T) {
+func TestGettersStreamXFernStreamingUnionRequest(t *testing.T) {
 	t.Run("GetType", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &StreamXfernStreamingUnionRequest{}
+		obj := &StreamXFernStreamingUnionRequest{}
 		var expected string
 		obj.Type = expected
 
@@ -3326,7 +3326,7 @@ func TestGettersStreamXfernStreamingUnionRequest(t *testing.T) {
 
 	t.Run("GetType_NilReceiver", func(t *testing.T) {
 		t.Parallel()
-		var obj *StreamXfernStreamingUnionRequest
+		var obj *StreamXFernStreamingUnionRequest
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
@@ -3339,7 +3339,7 @@ func TestGettersStreamXfernStreamingUnionRequest(t *testing.T) {
 	t.Run("GetMessage", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &StreamXfernStreamingUnionRequest{}
+		obj := &StreamXFernStreamingUnionRequest{}
 		var expected *UnionStreamMessageVariant
 		obj.Message = expected
 
@@ -3350,7 +3350,7 @@ func TestGettersStreamXfernStreamingUnionRequest(t *testing.T) {
 	t.Run("GetMessage_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &StreamXfernStreamingUnionRequest{}
+		obj := &StreamXFernStreamingUnionRequest{}
 		obj.Message = nil
 
 		// Act & Assert
@@ -3359,7 +3359,7 @@ func TestGettersStreamXfernStreamingUnionRequest(t *testing.T) {
 
 	t.Run("GetMessage_NilReceiver", func(t *testing.T) {
 		t.Parallel()
-		var obj *StreamXfernStreamingUnionRequest
+		var obj *StreamXFernStreamingUnionRequest
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
@@ -3372,7 +3372,7 @@ func TestGettersStreamXfernStreamingUnionRequest(t *testing.T) {
 	t.Run("GetInterrupt", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &StreamXfernStreamingUnionRequest{}
+		obj := &StreamXFernStreamingUnionRequest{}
 		var expected *UnionStreamInterruptVariant
 		obj.Interrupt = expected
 
@@ -3383,7 +3383,7 @@ func TestGettersStreamXfernStreamingUnionRequest(t *testing.T) {
 	t.Run("GetInterrupt_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &StreamXfernStreamingUnionRequest{}
+		obj := &StreamXFernStreamingUnionRequest{}
 		obj.Interrupt = nil
 
 		// Act & Assert
@@ -3392,7 +3392,7 @@ func TestGettersStreamXfernStreamingUnionRequest(t *testing.T) {
 
 	t.Run("GetInterrupt_NilReceiver", func(t *testing.T) {
 		t.Parallel()
-		var obj *StreamXfernStreamingUnionRequest
+		var obj *StreamXFernStreamingUnionRequest
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
@@ -3405,7 +3405,7 @@ func TestGettersStreamXfernStreamingUnionRequest(t *testing.T) {
 	t.Run("GetCompact", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &StreamXfernStreamingUnionRequest{}
+		obj := &StreamXFernStreamingUnionRequest{}
 		var expected *UnionStreamCompactVariant
 		obj.Compact = expected
 
@@ -3416,7 +3416,7 @@ func TestGettersStreamXfernStreamingUnionRequest(t *testing.T) {
 	t.Run("GetCompact_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &StreamXfernStreamingUnionRequest{}
+		obj := &StreamXFernStreamingUnionRequest{}
 		obj.Compact = nil
 
 		// Act & Assert
@@ -3425,7 +3425,7 @@ func TestGettersStreamXfernStreamingUnionRequest(t *testing.T) {
 
 	t.Run("GetCompact_NilReceiver", func(t *testing.T) {
 		t.Parallel()
-		var obj *StreamXfernStreamingUnionRequest
+		var obj *StreamXFernStreamingUnionRequest
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
@@ -3437,11 +3437,11 @@ func TestGettersStreamXfernStreamingUnionRequest(t *testing.T) {
 
 }
 
-func TestGettersStreamXfernStreamingUnionStreamRequest(t *testing.T) {
+func TestGettersStreamXFernStreamingUnionStreamRequest(t *testing.T) {
 	t.Run("GetType", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &StreamXfernStreamingUnionStreamRequest{}
+		obj := &StreamXFernStreamingUnionStreamRequest{}
 		var expected string
 		obj.Type = expected
 
@@ -3451,7 +3451,7 @@ func TestGettersStreamXfernStreamingUnionStreamRequest(t *testing.T) {
 
 	t.Run("GetType_NilReceiver", func(t *testing.T) {
 		t.Parallel()
-		var obj *StreamXfernStreamingUnionStreamRequest
+		var obj *StreamXFernStreamingUnionStreamRequest
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
@@ -3464,7 +3464,7 @@ func TestGettersStreamXfernStreamingUnionStreamRequest(t *testing.T) {
 	t.Run("GetMessage", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &StreamXfernStreamingUnionStreamRequest{}
+		obj := &StreamXFernStreamingUnionStreamRequest{}
 		var expected *UnionStreamMessageVariant
 		obj.Message = expected
 
@@ -3475,7 +3475,7 @@ func TestGettersStreamXfernStreamingUnionStreamRequest(t *testing.T) {
 	t.Run("GetMessage_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &StreamXfernStreamingUnionStreamRequest{}
+		obj := &StreamXFernStreamingUnionStreamRequest{}
 		obj.Message = nil
 
 		// Act & Assert
@@ -3484,7 +3484,7 @@ func TestGettersStreamXfernStreamingUnionStreamRequest(t *testing.T) {
 
 	t.Run("GetMessage_NilReceiver", func(t *testing.T) {
 		t.Parallel()
-		var obj *StreamXfernStreamingUnionStreamRequest
+		var obj *StreamXFernStreamingUnionStreamRequest
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
@@ -3497,7 +3497,7 @@ func TestGettersStreamXfernStreamingUnionStreamRequest(t *testing.T) {
 	t.Run("GetInterrupt", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &StreamXfernStreamingUnionStreamRequest{}
+		obj := &StreamXFernStreamingUnionStreamRequest{}
 		var expected *UnionStreamInterruptVariant
 		obj.Interrupt = expected
 
@@ -3508,7 +3508,7 @@ func TestGettersStreamXfernStreamingUnionStreamRequest(t *testing.T) {
 	t.Run("GetInterrupt_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &StreamXfernStreamingUnionStreamRequest{}
+		obj := &StreamXFernStreamingUnionStreamRequest{}
 		obj.Interrupt = nil
 
 		// Act & Assert
@@ -3517,7 +3517,7 @@ func TestGettersStreamXfernStreamingUnionStreamRequest(t *testing.T) {
 
 	t.Run("GetInterrupt_NilReceiver", func(t *testing.T) {
 		t.Parallel()
-		var obj *StreamXfernStreamingUnionStreamRequest
+		var obj *StreamXFernStreamingUnionStreamRequest
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
@@ -3530,7 +3530,7 @@ func TestGettersStreamXfernStreamingUnionStreamRequest(t *testing.T) {
 	t.Run("GetCompact", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &StreamXfernStreamingUnionStreamRequest{}
+		obj := &StreamXFernStreamingUnionStreamRequest{}
 		var expected *UnionStreamCompactVariant
 		obj.Compact = expected
 
@@ -3541,7 +3541,7 @@ func TestGettersStreamXfernStreamingUnionStreamRequest(t *testing.T) {
 	t.Run("GetCompact_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &StreamXfernStreamingUnionStreamRequest{}
+		obj := &StreamXFernStreamingUnionStreamRequest{}
 		obj.Compact = nil
 
 		// Act & Assert
@@ -3550,7 +3550,7 @@ func TestGettersStreamXfernStreamingUnionStreamRequest(t *testing.T) {
 
 	t.Run("GetCompact_NilReceiver", func(t *testing.T) {
 		t.Parallel()
-		var obj *StreamXfernStreamingUnionStreamRequest
+		var obj *StreamXFernStreamingUnionStreamRequest
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {

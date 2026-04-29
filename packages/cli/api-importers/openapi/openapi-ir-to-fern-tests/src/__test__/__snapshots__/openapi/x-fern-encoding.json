@@ -34,6 +34,7 @@
             "type": "map<string, nullable<MetadataValue>>",
           },
           "MetadataValue": {
+            "base-properties": undefined,
             "discriminated": false,
             "docs": undefined,
             "encoding": {

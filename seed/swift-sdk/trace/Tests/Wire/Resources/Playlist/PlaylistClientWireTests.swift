@@ -38,13 +38,13 @@ import Trace
             serviceParam: 1,
             datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
             optionalDatetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            request: .init(body: PlaylistCreateRequest(
+            request: PlaylistCreateRequest(
                 name: "name",
                 problems: [
                     "problems",
                     "problems"
                 ]
-            )),
+            ),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)

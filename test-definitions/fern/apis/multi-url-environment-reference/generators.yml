@@ -2,3 +2,5 @@
 api:
   specs:
     - openapi: ./openapi.yml
+      settings:
+        multi-server-strategy: urls-per-environment

@@ -3255,4 +3255,33 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
 
         await expect(workspaceSnapshot).toMatchFileSnapshot("__snapshots__/graphql-workspace.snap");
     });
+
+    it("should gracefully handle circular $ref pointers during workspace loading", async () => {
+        // This spec has PlantCategory -> PlantCategoryAlias -> PlantCategory (a $ref cycle)
+        // which triggers @redocly/openapi-core's "Self-referencing circular pointer" error.
+        // The fix catches this error, logs a warning, and continues with the unbundled document
+        // so that workspace loading does not throw.
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures/circular-ref")),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "circular-ref"
+        });
+
+        // Workspace loading should succeed (not throw) despite circular refs
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        // Fetching the raw definition should succeed — this is the path that previously
+        // threw "Self-referencing circular pointer" from @redocly/openapi-core.
+        const definition = await workspace.workspace.getDefinition({ context });
+        expect(definition).toBeDefined();
+    });
 });

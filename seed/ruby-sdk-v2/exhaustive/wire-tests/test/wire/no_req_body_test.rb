@@ -16,10 +16,10 @@ class NoReqBodyWireTest < WireMockTestCase
     test_id = "no_req_body.get_with_no_request_body.0"
 
     @client.no_req_body.get_with_no_request_body(request_options: {
-                                                   additional_headers: {
-                                                     "X-Test-Id" => "no_req_body.get_with_no_request_body.0"
-                                                   }
-                                                 })
+      additional_headers: {
+        "X-Test-Id" => "no_req_body.get_with_no_request_body.0"
+      }
+    })
 
     verify_request_count(
       test_id: test_id,
@@ -34,10 +34,10 @@ class NoReqBodyWireTest < WireMockTestCase
     test_id = "no_req_body.post_with_no_request_body.0"
 
     @client.no_req_body.post_with_no_request_body(request_options: {
-                                                    additional_headers: {
-                                                      "X-Test-Id" => "no_req_body.post_with_no_request_body.0"
-                                                    }
-                                                  })
+      additional_headers: {
+        "X-Test-Id" => "no_req_body.post_with_no_request_body.0"
+      }
+    })
 
     verify_request_count(
       test_id: test_id,

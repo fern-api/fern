@@ -482,8 +482,8 @@ export class EndpointSnippetGenerator {
         const args: ts.TypeLiteral[] = [];
 
         const { inlinePathParameters, inlineFileProperties } = {
-            inlinePathParameters: this.context.customConfig?.inlinePathParameters ?? false,
-            inlineFileProperties: this.context.customConfig?.inlineFileProperties ?? false
+            inlinePathParameters: this.context.customConfig?.inlinePathParameters ?? true,
+            inlineFileProperties: this.context.customConfig?.inlineFileProperties ?? true
         };
 
         this.context.errors.scope(Scope.PathParameters);
@@ -631,7 +631,7 @@ export class EndpointSnippetGenerator {
     }: {
         filePropertyInfo: FilePropertyInfo;
     }): ts.ObjectField[] {
-        if (this.context.customConfig?.inlineFileProperties) {
+        if (this.context.customConfig?.inlineFileProperties ?? true) {
             return [...filePropertyInfo.fileFields, ...filePropertyInfo.bodyPropertyFields];
         }
         return filePropertyInfo.bodyPropertyFields;

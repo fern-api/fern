@@ -22,7 +22,7 @@ public class TestGetTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/test/region/resource")
-                    .WithParam("limit", "100")
+                    .WithParam("limit", "limit")
                     .UsingGet()
             )
             .RespondWith(
@@ -33,7 +33,7 @@ public class TestGetTest : BaseMockServerTest
             );
 
         var response = await Client.TestGetAsync(
-            new TestGetRequest { Region = "region", Limit = "100" }
+            new TestGetRequest { Region = "region", Limit = "limit" }
         );
         JsonAssert.AreEqual(response, mockResponse);
     }

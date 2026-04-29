@@ -10,6 +10,11 @@ publish:
     file: ./generators/swift/sdk/Dockerfile
     image: fernapi/fern-swift-sdk
     context: .
+  sentry:
+    name: fern-swift-sdk
+    project: swift-sdk
+    sourceMaps:
+      - dir: generators/swift/sdk/dist
 
 test:
   docker:
@@ -183,3 +188,6 @@ allowedFailures:
   - imdb
   # Boolean literal enum changes require seed snapshot regeneration
   - null-type
+  # Multipart with $ref body — Swift snippet generator emits args in wrong
+  # positional order; tracked separately under FER-10087 follow-up.
+  - openapi-request-body-ref

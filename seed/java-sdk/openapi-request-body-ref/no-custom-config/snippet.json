@@ -1,0 +1,122 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "653877d2",
+            "id": {
+                "method": "PUT",
+                "path": "/vendors/{vendor_id}",
+                "identifier_override": "endpoint_vendor.updateVendor"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.vendor.requests.UpdateVendorBody;\nimport com.seed.api.types.UpdateVendorRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.vendor().updateVendor(\n            \"vendor_id\",\n            UpdateVendorBody\n                .builder()\n                .body(\n                    UpdateVendorRequest\n                        .builder()\n                        .name(\"name\")\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.vendor.requests.UpdateVendorBody;\nimport com.seed.api.types.UpdateVendorRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.vendor().updateVendor(\n            \"vendor_id\",\n            UpdateVendorBody\n                .builder()\n                .body(\n                    UpdateVendorRequest\n                        .builder()\n                        .name(\"name\")\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "4f163c8f",
+            "id": {
+                "method": "PUT",
+                "path": "/vendors/{vendor_id}",
+                "identifier_override": "endpoint_vendor.updateVendor"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.vendor.requests.UpdateVendorBody;\nimport com.seed.api.types.UpdateVendorRequest;\nimport com.seed.api.types.UpdateVendorRequestStatus;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.vendor().updateVendor(\n            \"vendor_id\",\n            UpdateVendorBody\n                .builder()\n                .body(\n                    UpdateVendorRequest\n                        .builder()\n                        .name(\"name\")\n                        .status(UpdateVendorRequestStatus.ACTIVE)\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.vendor.requests.UpdateVendorBody;\nimport com.seed.api.types.UpdateVendorRequest;\nimport com.seed.api.types.UpdateVendorRequestStatus;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.vendor().updateVendor(\n            \"vendor_id\",\n            UpdateVendorBody\n                .builder()\n                .body(\n                    UpdateVendorRequest\n                        .builder()\n                        .name(\"name\")\n                        .status(UpdateVendorRequestStatus.ACTIVE)\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "387b9a0e",
+            "id": {
+                "method": "POST",
+                "path": "/vendors",
+                "identifier_override": "endpoint_vendor.createVendor"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.vendor.requests.CreateVendorRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.vendor().createVendor(\n            CreateVendorRequest\n                .builder()\n                .name(\"name\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.vendor.requests.CreateVendorRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.vendor().createVendor(\n            CreateVendorRequest\n                .builder()\n                .name(\"name\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "5445b694",
+            "id": {
+                "method": "POST",
+                "path": "/vendors",
+                "identifier_override": "endpoint_vendor.createVendor"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.vendor.requests.CreateVendorRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.vendor().createVendor(\n            CreateVendorRequest\n                .builder()\n                .name(\"name\")\n                .idempotencyKey(\"idempotencyKey\")\n                .address(\"address\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.vendor.requests.CreateVendorRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.vendor().createVendor(\n            CreateVendorRequest\n                .builder()\n                .name(\"name\")\n                .idempotencyKey(\"idempotencyKey\")\n                .address(\"address\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "6f1b004",
+            "id": {
+                "method": "POST",
+                "path": "/catalog/images",
+                "identifier_override": "endpoint_catalog.createCatalogImage"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.catalog.requests.CreateCatalogImageBody;\nimport com.seed.api.types.CreateCatalogImageRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.catalog().createCatalogImage(\n            CreateCatalogImageBody\n                .builder()\n                .request(\n                    CreateCatalogImageRequest\n                        .builder()\n                        .catalogObjectId(\"catalog_object_id\")\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.catalog.requests.CreateCatalogImageBody;\nimport com.seed.api.types.CreateCatalogImageRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.catalog().createCatalogImage(\n            CreateCatalogImageBody\n                .builder()\n                .request(\n                    CreateCatalogImageRequest\n                        .builder()\n                        .catalogObjectId(\"catalog_object_id\")\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "be044416",
+            "id": {
+                "method": "GET",
+                "path": "/catalog/images/{image_id}",
+                "identifier_override": "endpoint_catalog.getCatalogImage"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.catalog.requests.GetCatalogImageRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.catalog().getCatalogImage(\n            \"image_id\",\n            GetCatalogImageRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.catalog.requests.GetCatalogImageRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.catalog().getCatalogImage(\n            \"image_id\",\n            GetCatalogImageRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "a94f9d3d",
+            "id": {
+                "method": "GET",
+                "path": "/catalog/images/{image_id}",
+                "identifier_override": "endpoint_catalog.getCatalogImage"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.catalog.requests.GetCatalogImageRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.catalog().getCatalogImage(\n            \"image_id\",\n            GetCatalogImageRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.catalog.requests.GetCatalogImageRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.catalog().getCatalogImage(\n            \"image_id\",\n            GetCatalogImageRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "25ab9299",
+            "id": {
+                "method": "PUT",
+                "path": "/team-members/{team_member_id}",
+                "identifier_override": "endpoint_teamMember.updateTeamMember"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.teammember.requests.UpdateTeamMemberRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.teamMember().updateTeamMember(\n            \"team_member_id\",\n            UpdateTeamMemberRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.teammember.requests.UpdateTeamMemberRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.teamMember().updateTeamMember(\n            \"team_member_id\",\n            UpdateTeamMemberRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "d2098c6f",
+            "id": {
+                "method": "PUT",
+                "path": "/team-members/{team_member_id}",
+                "identifier_override": "endpoint_teamMember.updateTeamMember"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.teammember.requests.UpdateTeamMemberRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.teamMember().updateTeamMember(\n            \"team_member_id\",\n            UpdateTeamMemberRequest\n                .builder()\n                .givenName(\"given_name\")\n                .familyName(\"family_name\")\n                .emailAddress(\"email_address\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.teammember.requests.UpdateTeamMemberRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.teamMember().updateTeamMember(\n            \"team_member_id\",\n            UpdateTeamMemberRequest\n                .builder()\n                .givenName(\"given_name\")\n                .familyName(\"family_name\")\n                .emailAddress(\"email_address\")\n                .build()\n        );\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

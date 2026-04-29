@@ -2,17 +2,33 @@ import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
 import { GeneratorReleaseRequest } from "@fern-fern/generators-sdk/api/resources/generators";
+import SentryCli from "@sentry/cli";
+import { existsSync } from "fs";
 import path from "path";
 import semver from "semver";
 
-import { PublishDockerConfiguration } from "../../config/api/index.js";
+import {
+    PublishDocker,
+    PublishDockerConfiguration,
+    PublishSentryConfiguration,
+    SentrySourceMapArtifact
+} from "../../config/api/index.js";
 import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces.js";
 import { parseGeneratorReleasesFile } from "../../utils/convertVersionsFileToReleases.js";
 import { runCommands, subVersion } from "../../utils/publishUtilities.js";
 
+const SENTRY_ORG = "buildwithfern";
+const DEFAULT_SOURCE_MAP_URL_PREFIX = "app:///";
+
 interface VersionFilePair {
     latestChangelogPath: string;
     previousChangelogPath: string;
+}
+
+interface SentryEnvVariables {
+    dsn: string;
+    environment: string;
+    release: string;
 }
 
 export async function publishGenerator({
@@ -64,8 +80,13 @@ export async function publishGenerator({
               ? [unparsedCommands]
               : [];
 
+        const sentryEnvVariables = getSentryEnvVariables(publishConfig.sentry, publishVersion, context);
+
         await runCommands(preBuildCommands, context, workingDirectory);
-        await buildAndPushContainerImage(publishConfig.docker, publishVersion, context);
+        await buildAndPushContainerImage(publishConfig.docker, publishVersion, sentryEnvVariables, context);
+        if (sentryEnvVariables != null) {
+            await uploadToSentry(publishConfig.sentry!, sentryEnvVariables, context);
+        }
     } else {
         // Instance of PublishCommand configuration, leverage these commands outright
         const unparsedCommands = publishConfig.command;
@@ -76,9 +97,28 @@ export async function publishGenerator({
     }
 }
 
+function getSentryEnvVariables(
+    sentryConfig: PublishSentryConfiguration | undefined,
+    publishVersion: string,
+    context: TaskContext
+): SentryEnvVariables | null {
+    if (sentryConfig == null) return null;
+
+    const sentryDsn = process.env.SENTRY_DSN;
+    if (sentryDsn == null || sentryDsn.length == 0) {
+        context.logger.warn("SENTRY_DSN not set; skipping Sentry uploads.");
+        return null;
+    }
+
+    const sentryRelease = `${sentryConfig.name}@${publishVersion}`;
+    const sentryEnvironment = process.env.SENTRY_ENVIRONMENT ?? "production";
+    return { dsn: sentryDsn, release: sentryRelease, environment: sentryEnvironment };
+}
+
 async function buildAndPushContainerImage(
     containerConfig: PublishDockerConfiguration,
     version: string,
+    sentryEnvVariables: SentryEnvVariables | null,
     context: TaskContext
 ) {
     const dockerHubUsername = process?.env?.DOCKER_USERNAME;
@@ -105,6 +145,16 @@ async function buildAndPushContainerImage(
     context.logger.debug(`Also tagging as latest: ${latestTags.join(", ")}`);
     const standardBuildOptions = [
         "build",
+        ...(sentryEnvVariables != null
+            ? [
+                  "--build-arg",
+                  `SENTRY_DSN=${sentryEnvVariables.dsn}`,
+                  "--build-arg",
+                  `SENTRY_ENVIRONMENT=${sentryEnvVariables.environment}`,
+                  "--build-arg",
+                  `SENTRY_RELEASE=${sentryEnvVariables.release}`
+              ]
+            : []),
         "--push",
         "--platform",
         "linux/amd64,linux/arm64",
@@ -130,6 +180,63 @@ async function buildAndPushContainerImage(
             return;
         }
         throw e;
+    }
+}
+
+async function uploadToSentry(
+    sentryConfig: PublishSentryConfiguration,
+    sentryEnvVariables: SentryEnvVariables,
+    context: TaskContext
+): Promise<void> {
+    const sourceMaps = sentryConfig.sourceMaps ?? [];
+    if (sourceMaps.length === 0) {
+        return;
+    }
+
+    const authToken = process.env.SENTRY_AUTH_TOKEN;
+    if (authToken == null || authToken.length === 0) {
+        context.logger.debug("SENTRY_AUTH_TOKEN not set; skipping Sentry uploads.");
+        return;
+    }
+
+    const cli = new SentryCli(null, {
+        authToken,
+        org: SENTRY_ORG,
+        project: sentryConfig.project
+    });
+
+    for (const artifact of sourceMaps) {
+        await uploadSourceMapArtifact({ cli, release: sentryEnvVariables.release, artifact, context });
+    }
+}
+
+async function uploadSourceMapArtifact({
+    cli,
+    release,
+    artifact,
+    context
+}: {
+    cli: SentryCli;
+    release: string;
+    artifact: SentrySourceMapArtifact;
+    context: TaskContext;
+}): Promise<void> {
+    if (!existsSync(artifact.dir)) {
+        context.logger.warn(`Source map directory ${artifact.dir} does not exist; skipping.`);
+        return;
+    }
+
+    const urlPrefix = artifact.urlPrefix ?? DEFAULT_SOURCE_MAP_URL_PREFIX;
+    context.logger.info(`Uploading source maps from ${artifact.dir} for Sentry release ${release}...`);
+
+    try {
+        await cli.execute(
+            ["sourcemaps", "upload", "--release", release, "--url-prefix", urlPrefix, artifact.dir],
+            /* live */ true
+        );
+    } catch (e) {
+        // Don't fail the publish because Sentry is down or mis-configured.
+        context.logger.warn(`Failed to upload source maps to Sentry: ${e instanceof Error ? e.message : String(e)}`);
     }
 }
 

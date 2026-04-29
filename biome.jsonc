@@ -309,6 +309,43 @@
             }
         },
         {
+            // Packages reachable from any dynamic-snippets bundle must be
+            // browser-compatible. Importing @fern-api/base-generator pulls in
+            // Node-only dependencies (e.g. @sentry/node -> import-in-the-middle
+            // -> worker_threads) that break the esbuild browser bundle. Use
+            // @fern-api/browser-compatible-base-generator instead.
+            //
+            // Scope: every path that can end up in a per-language dynamic-snippets
+            // bundle (the snippet package itself + shared language packages it
+            // depends on), plus browser-compatible-base-generator itself.
+            "includes": [
+                "generators/browser-compatible-base/src/**/*.ts",
+                "generators/browser-compatible-base/src/**/*.tsx",
+                "generators/*/dynamic-snippets/src/**/*.ts",
+                "generators/*/dynamic-snippets/src/**/*.tsx",
+                "generators/*/codegen/**/*.ts",
+                "generators/*/codegen/**/*.tsx",
+                "generators/*/ast/src/**/*.ts",
+                "generators/*/ast/src/**/*.tsx",
+                "generators/*/formatter/src/**/*.ts",
+                "generators/*/formatter/src/**/*.tsx"
+            ],
+            "linter": {
+                "rules": {
+                    "style": {
+                        "noRestrictedImports": {
+                            "level": "error",
+                            "options": {
+                                "paths": {
+                                    "@fern-api/base-generator": "This package is bundled into a browser-compatible dynamic-snippets build. Import from @fern-api/browser-compatible-base-generator instead of @fern-api/base-generator."
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        {
             "includes": ["*.ts", "*.tsx", "*.mts", "*.cts"],
             "linter": {
                 "rules": {

@@ -1,4 +1,4 @@
-import { getOriginalName, getWireValue } from "@fern-api/base-generator";
+import { getOriginalName, getWireValue, GeneratorError } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
@@ -1873,7 +1873,7 @@ export class SubClientGenerator {
 
     private generatePaginatedMethod(endpoint: FernIr.HttpEndpoint): rust.Client.SimpleMethod {
         if (!endpoint.pagination) {
-            throw new Error("Cannot generate paginated method for endpoint without pagination");
+            throw GeneratorError.internalError("Cannot generate paginated method for endpoint without pagination");
         }
 
         const params = this.extractParametersFromEndpoint(endpoint);
@@ -1916,7 +1916,7 @@ export class SubClientGenerator {
         requestBody: string
     ): string {
         if (!endpoint.pagination) {
-            throw new Error("Cannot generate pagination logic without pagination configuration");
+            throw GeneratorError.internalError("Cannot generate pagination logic without pagination configuration");
         }
 
         return FernIr.Pagination._visit(endpoint.pagination, {
@@ -1928,7 +1928,7 @@ export class SubClientGenerator {
             uri: () => this.generateCustomPaginationLogic(endpoint, httpMethod, pathExpression, requestBody),
             path: () => this.generateCustomPaginationLogic(endpoint, httpMethod, pathExpression, requestBody),
             _other: () => {
-                throw new Error("Unknown pagination type");
+                throw GeneratorError.internalError("Unknown pagination type");
             }
         });
     }

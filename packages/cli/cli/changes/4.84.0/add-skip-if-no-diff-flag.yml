@@ -1,0 +1,6 @@
+- summary: |
+    Add `--skip-if-no-diff` flag to `fern generate` that skips opening a PR / pushing when the
+    generated output has no diff from the base branch. The existing no-diff skip behavior is
+    decoupled from `automationMode` and now gated behind its own `skipIfNoDiff` config.
+    `fern automations generate` continues to skip no-diff PRs by default.
+  type: feat

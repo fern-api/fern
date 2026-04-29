@@ -1,4 +1,4 @@
-import { getOriginalName } from "@fern-api/base-generator";
+import { GeneratorError, getOriginalName } from "@fern-api/base-generator";
 import { go } from "@fern-api/go-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
 
@@ -74,7 +74,7 @@ function getCustomPagerReturnType({
 }): go.Type {
     const response = endpoint.response;
     if (response?.body == null) {
-        throw new Error("Custom pagination endpoint must have a response body");
+        throw GeneratorError.validationError("Custom pagination endpoint must have a response body");
     }
 
     // Get the response body type (T) - this is the full response type
@@ -120,7 +120,7 @@ function getLinkTypeFromResponse({
     }
 
     if (responseTypeReference == null) {
-        throw new Error("Could not extract response type reference for custom pagination");
+        throw GeneratorError.validationError("Could not extract response type reference for custom pagination");
     }
 
     // Unwrap optional/nullable to get to the base type
@@ -128,12 +128,12 @@ function getLinkTypeFromResponse({
 
     // Get the type declaration
     if (baseTypeReference.type !== "named") {
-        throw new Error("Custom pagination response type must be a named type");
+        throw GeneratorError.validationError("Custom pagination response type must be a named type");
     }
 
     const typeDeclaration = context.getTypeDeclarationOrThrow(baseTypeReference.typeId);
     if (typeDeclaration.shape.type !== "object") {
-        throw new Error("Custom pagination response type must be an object type");
+        throw GeneratorError.validationError("Custom pagination response type must be an object type");
     }
 
     // Get all properties including extended properties
@@ -148,7 +148,7 @@ function getLinkTypeFromResponse({
 
     if (linksProperty == null) {
         const availableProperties = propertyNames.join(", ");
-        throw new Error(
+        throw GeneratorError.internalError(
             `Custom pagination response type must have a 'links' property. Available properties: ${availableProperties}`
         );
     }
@@ -158,7 +158,7 @@ function getLinkTypeFromResponse({
     const linkElementType = context.maybeUnwrapIterable(linksValueType);
 
     if (linkElementType == null) {
-        throw new Error("Custom pagination 'links' property must be a list/array type");
+        throw GeneratorError.validationError("Custom pagination 'links' property must be a list/array type");
     }
 
     // Convert to Go type

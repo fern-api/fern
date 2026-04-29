@@ -1,6 +1,6 @@
 import { Pagination } from "@fern-api/openapi-ir";
+import { CliError } from "@fern-api/task-context";
 import { OpenAPIV3 } from "openapi-types";
-
 import { getExtension } from "../../../getExtension.js";
 import { FernOpenAPIExtension } from "./fernExtensions.js";
 
@@ -88,7 +88,7 @@ export function convertPaginationExtension(
             results: customPagination.results
         });
     }
-    throw new Error("Invalid pagination extension");
+    throw new CliError({ message: "Invalid pagination extension", code: CliError.Code.ValidationError });
 }
 
 export function getFernPaginationExtension(
@@ -106,9 +106,11 @@ export function getFernPaginationExtension(
             FernOpenAPIExtension.PAGINATION
         );
         if (typeof topLevelPagination === "boolean") {
-            throw new Error(
-                "Global pagination extension is a boolean, expected an object. Only endpoints may declare a boolean for x-fern-pagination."
-            );
+            throw new CliError({
+                message:
+                    "Global pagination extension is a boolean, expected an object. Only endpoints may declare a boolean for x-fern-pagination.",
+                code: CliError.Code.ValidationError
+            });
         }
         return topLevelPagination == null ? undefined : convertPaginationExtension(topLevelPagination);
     }

@@ -25,7 +25,7 @@ export default mergeConfig(
                     // (e.g. "./addPrefixToString" instead of "./addPrefixToString.js"), which
                     // breaks under Node's strict ESM resolution. Inlining the package lets
                     // Vite's bundler resolve those imports correctly.
-                    inline: ["@fern-api/ui-core-utils", "@fern-api/docs-parsers"]
+                    inline: ["@fern-api/ui-core-utils"]
                 }
             }
         }

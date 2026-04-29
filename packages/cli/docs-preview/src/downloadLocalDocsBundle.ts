@@ -1,6 +1,7 @@
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
+import { CliError } from "@fern-api/task-context";
 import chalk from "chalk";
 import { execSync } from "child_process";
 import cliProgress from "cli-progress";
@@ -36,11 +37,11 @@ interface SymlinkEntry {
 }
 
 /**
- * Checks the Windows registry for LongPathsEnabled and prints a prominent
- * warning if long paths are not enabled. Long paths are required because
+ * Checks the Windows registry for LongPathsEnabled and throws a hard
+ * error if long paths are not enabled. Long paths are required because
  * .pnpm directory names inside the bundle can exceed the 260-char MAX_PATH.
  */
-function warnIfLongPathsDisabled(logger: Logger): void {
+function assertLongPathsEnabled(logger: Logger): void {
     try {
         const output = execSync(
             'reg query "HKLM\\SYSTEM\\CurrentControlSet\\Control\\FileSystem" /v LongPathsEnabled',
@@ -56,30 +57,17 @@ function warnIfLongPathsDisabled(logger: Logger): void {
         logger.debug(`Registry query for LongPathsEnabled failed: ${error}`);
     }
 
-    logger.warn(
-        chalk.yellow.bold(
-            "\n" +
-                "╔══════════════════════════════════════════════════════════════════════════╗\n" +
-                "║  WARNING: Windows long path support is NOT enabled.                     ║\n" +
-                "║                                                                         ║\n" +
-                "║  The docs bundle contains deeply nested .pnpm paths that may exceed     ║\n" +
-                "║  the 260-character MAX_PATH limit. Extraction may silently truncate     ║\n" +
-                "║  paths and produce a broken bundle.                                     ║\n" +
-                "║                                                                         ║\n" +
-                "║  To fix, run this in an elevated PowerShell:                             ║\n" +
-                "║                                                                         ║\n" +
-                "║    New-ItemProperty -Path                                                ║\n" +
-                "║      'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\FileSystem'           ║\n" +
-                "║      -Name 'LongPathsEnabled' -Value 1 -PropertyType DWORD -Force       ║\n" +
-                "║                                                                         ║\n" +
-                "║  Then restart your terminal.                                             ║\n" +
-                "║                                                                         ║\n" +
-                "║  For more details, see:                                                  ║\n" +
-                "║  https://learn.microsoft.com/en-us/windows/win32/fileio/                 ║\n" +
-                "║  maximum-file-path-limitation                                            ║\n" +
-                "╚══════════════════════════════════════════════════════════════════════════╝\n"
-        )
-    );
+    throw new CliError({
+        message:
+            "Windows long path support is not enabled. " +
+            "The docs bundle contains deeply nested .pnpm paths that exceed the 260-character MAX_PATH limit.\n\n" +
+            "To fix, run this in an elevated PowerShell:\n\n" +
+            "  New-ItemProperty -Path 'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\FileSystem' " +
+            "-Name 'LongPathsEnabled' -Value 1 -PropertyType DWORD -Force\n\n" +
+            "Then restart your terminal.",
+        code: CliError.Code.EnvironmentError,
+        docsLink: "https://learn.microsoft.com/en-us/windows/win32/fileio/maximum-file-path-limitation"
+    });
 }
 
 function isWithinOutputDir(resolvedPath: string, outputDir: string): boolean {
@@ -305,7 +293,10 @@ export async function downloadBundle({
     try {
         const docsBundleZipResponse = await fetch(docsBundleUrl);
         if (!docsBundleZipResponse.ok) {
-            throw new Error(`Failed to download docs preview bundle. Status code: ${docsBundleZipResponse.status}`);
+            throw new CliError({
+                message: `Failed to download docs preview bundle. Status code: ${docsBundleZipResponse.status}`,
+                code: CliError.Code.NetworkError
+            });
         }
         const outputZipPath = join(
             absoluteDirectoryToTmpDir,
@@ -402,7 +393,7 @@ export async function downloadBundle({
         }
 
         if (PLATFORM_IS_WINDOWS) {
-            warnIfLongPathsDisabled(logger);
+            assertLongPathsEnabled(logger);
         }
 
         const collectedSymlinks: SymlinkEntry[] = [];
@@ -482,9 +473,11 @@ export async function downloadBundle({
                     doNotPipeOutput: true
                 });
             } catch (error) {
-                throw new Error(
-                    "Requires [pnpm] to run local development. Please run: npm install -g pnpm, and then: fern docs dev"
-                );
+                throw new CliError({
+                    message:
+                        "Requires [pnpm] to run local development. Please run: npm install -g pnpm, and then: fern docs dev",
+                    code: CliError.Code.EnvironmentError
+                });
             }
 
             try {

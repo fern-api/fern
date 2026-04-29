@@ -7,6 +7,7 @@ import (
 	fmt "fmt"
 	internal "github.com/query-parameters-openapi/fern/internal"
 	big "math/big"
+	url "net/url"
 	time "time"
 )
 
@@ -371,6 +372,29 @@ func (s SearchRequestNeighbor) MarshalJSON() ([]byte, error) {
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", s)
 }
 
+func (s *SearchRequestNeighbor) EncodeQueryValues(key string, values *url.Values) error {
+	if s == nil {
+		return nil
+	}
+	if s.typ == "User" || s.User != nil {
+		values.Add(key, fmt.Sprintf("%v", s.User))
+		return nil
+	}
+	if s.typ == "NestedUser" || s.NestedUser != nil {
+		values.Add(key, fmt.Sprintf("%v", s.NestedUser))
+		return nil
+	}
+	if s.typ == "String" || s.String != "" {
+		values.Add(key, fmt.Sprintf("%v", s.String))
+		return nil
+	}
+	if s.typ == "Integer" || s.Integer != 0 {
+		values.Add(key, fmt.Sprintf("%v", s.Integer))
+		return nil
+	}
+	return nil
+}
+
 type SearchRequestNeighborVisitor interface {
 	VisitUser(*User) error
 	VisitNestedUser(*NestedUser) error
@@ -473,6 +497,29 @@ func (s SearchRequestNeighborRequired) MarshalJSON() ([]byte, error) {
 		return json.Marshal(s.Integer)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", s)
+}
+
+func (s *SearchRequestNeighborRequired) EncodeQueryValues(key string, values *url.Values) error {
+	if s == nil {
+		return nil
+	}
+	if s.typ == "User" || s.User != nil {
+		values.Add(key, fmt.Sprintf("%v", s.User))
+		return nil
+	}
+	if s.typ == "NestedUser" || s.NestedUser != nil {
+		values.Add(key, fmt.Sprintf("%v", s.NestedUser))
+		return nil
+	}
+	if s.typ == "String" || s.String != "" {
+		values.Add(key, fmt.Sprintf("%v", s.String))
+		return nil
+	}
+	if s.typ == "Integer" || s.Integer != 0 {
+		values.Add(key, fmt.Sprintf("%v", s.Integer))
+		return nil
+	}
+	return nil
 }
 
 type SearchRequestNeighborRequiredVisitor interface {

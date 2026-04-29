@@ -415,16 +415,31 @@ export class EndpointSnippetGenerator {
         this.context.errors.unscope();
 
         if (request.body != null) {
-            args.push(
-                swift.functionArgument({
-                    label: "request",
-                    value: this.getInlinedRequestArg({
-                        request,
-                        snippet,
-                        filePropertyInfo
+            if (request.body.type === "referenced") {
+                // The Swift SDK accepts the referenced type directly as the method
+                // parameter (no wrapper struct is generated), so pass the type literal
+                // without wrapping it in .init(body:).
+                args.push(
+                    swift.functionArgument({
+                        label: "request",
+                        value: this.getReferencedRequestBodyPropertyTypeLiteral({
+                            body: request.body.bodyType,
+                            value: snippet.requestBody
+                        })
                     })
-                })
-            );
+                );
+            } else {
+                args.push(
+                    swift.functionArgument({
+                        label: "request",
+                        value: this.getInlinedRequestArg({
+                            request,
+                            snippet,
+                            filePropertyInfo
+                        })
+                    })
+                );
+            }
         }
 
         return args;

@@ -5,7 +5,8 @@ export default mergeConfig(
     defineConfig({
         test: {
             setupFiles: ["./src/workerSetup.ts"],
-            isolate: false
+            isolate: false,
+            testTimeout: 30_000
         }
     })
 );

@@ -27,6 +27,7 @@ function createContextWithWarn(): { context: TaskContext; warn: ReturnType<typeo
         failWithoutThrowing: noop,
         captureException: noop,
         getResult: () => TaskResult.Success,
+        getLastFailureMessage: () => undefined,
         addInteractiveTask: () => {
             throw new Error("not implemented");
         },

@@ -109,8 +109,8 @@ async fn test_service_get_metadata_with_wiremock() {
         "GET",
         "/metadata",
         Some(HashMap::from([
-            ("shallow".to_string(), "false".to_string()),
-            ("tag".to_string(), "development".to_string()),
+            ("shallow".to_string(), json!("false")),
+            ("tag".to_string(), json!("development")),
         ])),
         1,
     )

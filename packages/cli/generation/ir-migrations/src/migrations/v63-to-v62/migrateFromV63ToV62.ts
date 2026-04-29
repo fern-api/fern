@@ -1,4 +1,5 @@
 import { GeneratorName } from "@fern-api/configuration-loader";
+import { CliError } from "@fern-api/task-context";
 import { mapValues } from "lodash-es";
 import { IrSerialization } from "../../ir-serialization/index.js";
 import { IrVersions } from "../../ir-versions/index.js";
@@ -161,7 +162,7 @@ function convertAuthScheme(scheme: IrVersions.V63.AuthScheme): IrVersions.V62.Au
             // in the serializer, we can pass it through with a type assertion
             return IrVersions.V62.AuthScheme.inferred(scheme as unknown as IrVersions.V62.auth.InferredAuthScheme);
         default:
-            throw new Error("Unknown AuthScheme type");
+            throw new CliError({ message: "Unknown AuthScheme type", code: CliError.Code.InternalError });
     }
 }
 

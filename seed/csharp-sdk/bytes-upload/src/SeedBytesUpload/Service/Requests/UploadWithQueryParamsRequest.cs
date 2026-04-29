@@ -18,6 +18,9 @@ public record UploadWithQueryParamsRequest
     [JsonIgnore]
     public string? Language { get; set; }
 
+    [JsonIgnore]
+    public required Stream Body { get; set; }
+
     /// <inheritdoc />
     public override string ToString()
     {

@@ -1,4 +1,94 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.6.2
+  changelogEntry:
+    - summary: |
+        Fix Java SDK generation crash when an OpenAPI property name is a Java keyword
+        or literal (e.g. `true`, `false`, `null`, `if`, `new`). `KeyWordUtils` only
+        sanitized 12 of Java's reserved words, so JavaPoet rejected the rest with
+        `IllegalArgumentException: not a valid name`. The reserved-word set now covers
+        the full Java keyword list plus `true`/`false`/`null` literals, so these
+        properties generate as `_<name>` fields with `@JsonProperty("<name>")`
+        preserving the wire format.
+      type: fix
+  createdAt: "2026-04-28"
+  irVersion: 66
+- version: 4.6.1
+  changelogEntry:
+    - summary: |
+        Fix undiscriminated union deserializer misclassifying payloads. The generated
+        deserializer now checks that all required wire keys are present in the JSON
+        object before attempting to convert to each variant, preventing the first
+        variant from always winning when Jackson's builder silently accepts missing
+        required fields.
+      type: fix
+    - summary: |
+        Replace switch-on-type WebSocket message dispatch with shape-based trial
+        deserialization. Messages are now matched by checking required-field presence
+        and literal values before attempting Jackson conversion. This correctly handles
+        AsyncAPI channels where multiple message schemas share the same discriminator
+        value (e.g., two "History" variants with disjoint required fields).
+      type: fix
+  createdAt: "2026-04-27"
+  irVersion: 66
+- version: 4.6.0
+  changelogEntry:
+    - summary: |
+        Use auth scheme placeholder values in README snippets when configured via
+        `placeholder` field on auth schemes.
+      type: feat
+  createdAt: "2026-04-25"
+  irVersion: 66
+- version: 4.5.0
+  changelogEntry:
+    - summary: |
+        Support omitting username or password from basic auth when configured via
+        `usernameOmit`/`passwordOmit` in the IR. When a field is omitted, it is
+        removed from the SDK's public API (`credentials()` takes fewer arguments)
+        and an empty string is used internally for the auth header encoding. When
+        both fields are omitted, the `credentials()` call and Authorization header
+        are skipped entirely.
+      type: feat
+  createdAt: "2026-04-24"
+  irVersion: 66
+- version: 4.4.1
+  changelogEntry:
+    - summary: |
+        Bump @fern-api/generator-cli to 0.9.11. The GitHub pipeline step now creates
+        signed commits via the GitHub REST API (matching fiddle's legacy InMemoryGitRepo
+        push path), restoring verified fern-api[bot] commits on replay-enabled orgs.
+      type: chore
+  createdAt: "2026-04-22"
+  irVersion: 66
+- version: 4.4.0
+  changelogEntry:
+    - summary: |
+        Add `offset-semantics` config option. When set to `"item-index"`, offset pagination increments by the number of items returned each page instead of by 1 (`"page-index"`, the default).
+      type: feat
+  createdAt: "2026-04-22"
+  irVersion: 66
+- version: 4.3.1
+  changelogEntry:
+    - summary: |
+        Add crash reporting via Sentry to the generator runtime, and classify
+        thrown errors using the new shared `GeneratorError` taxonomy so user-facing
+        failures (config, validation, auth, network, environment) are kept distinct
+        from internal Fern bugs — only the latter are forwarded to Sentry. No
+        change to generated output.
+      type: chore
+  createdAt: "2026-04-22"
+  irVersion: 66
+- version: 4.3.0
+  changelogEntry:
+    - summary: |
+        Add `clientDefault` support for headers, query parameters, and path
+        parameters. When a parameter has a `clientDefault` value (set via the
+        `x-fern-default` OpenAPI extension), the generated SDK uses that value
+        as a fallback when the caller does not provide one. Parameters with
+        `clientDefault` become optional in the wrapped request and use
+        `.orElse(defaultValue)` to apply the fallback.
+      type: feat
+  createdAt: "2026-04-21"
+  irVersion: 66
 - version: 4.2.3
   changelogEntry:
     - summary: |
@@ -44,7 +134,6 @@
       type: fix
   createdAt: "2026-04-14"
   irVersion: 66
-
 - version: 4.2.0
   changelogEntry:
     - summary: |
@@ -68,7 +157,6 @@
       type: feat
   createdAt: "2026-04-10"
   irVersion: 66
-
 - version: 4.2.0-rc.0
   changelogEntry:
     - summary: |
@@ -98,7 +186,6 @@
       type: fix
   createdAt: "2026-04-09"
   irVersion: 65
-
 - version: 4.1.2
   changelogEntry:
     - summary: |
@@ -109,7 +196,6 @@
       type: fix
   createdAt: "2026-04-08"
   irVersion: 65
-
 - version: 4.1.1
   changelogEntry:
     - summary: |

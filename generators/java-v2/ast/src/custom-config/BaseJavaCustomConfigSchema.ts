@@ -27,6 +27,7 @@ export const BaseJavaCustomConfigSchema = z.object({
     "collapse-optional-nullable": z.boolean().optional(),
     "custom-readme-sections": z.array(CustomReadmeSectionSchema).optional(),
     "custom-pager-name": z.string().optional(),
+    "offset-semantics": z.enum(["item-index", "page-index"]).optional(),
     "default-timeout-in-seconds": z.number().optional(),
     "gradle-distribution-url": z.string().optional(),
     "gradle-plugin-management": z.string().optional(),

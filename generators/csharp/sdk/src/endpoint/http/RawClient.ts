@@ -1,5 +1,5 @@
 import { fail } from "node:assert";
-import { Arguments, getWireValue } from "@fern-api/base-generator";
+import { Arguments, GeneratorError, getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { ast, WithGeneration, Writer } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -157,7 +157,9 @@ export class RawClient extends WithGeneration {
                 };
             case "multipartform": {
                 if (endpoint.requestBody?.type !== "fileUpload") {
-                    throw new Error("Internal error; Multipart form requests are only supported for file uploads");
+                    throw GeneratorError.internalError(
+                        "Internal error; Multipart form requests are only supported for file uploads"
+                    );
                 }
                 const requestBody = endpoint.requestBody;
                 const varName = "multipartFormRequest_";
@@ -379,7 +381,7 @@ export class RawClient extends WithGeneration {
             writer.write(`{${counter++}}`);
             const reference = pathParameterReferences[part.pathParameter];
             if (reference == null) {
-                throw new Error(
+                throw GeneratorError.internalError(
                     `Failed to find request parameter for the endpoint ${endpoint.id} with path parameter ${part.pathParameter}`
                 );
             }
