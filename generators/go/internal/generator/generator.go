@@ -154,6 +154,7 @@ func (g *Generator) Generate(mode Mode) ([]*File, error) {
 }
 
 func (g *Generator) generateModelTypes(ir *fernir.IntermediateRepresentation, mode Mode, rootClientInstantiation *ast.AssignStmt, rootPackageName string) ([]*File, []*GeneratedClient, error) {
+	queryReachableUnions := collectQueryReachableUnions(ir)
 	fileInfoToTypes, err := fileInfoToTypes(
 		rootPackageName,
 		ir.Types,
@@ -190,6 +191,7 @@ func (g *Generator) generateModelTypes(ir *fernir.IntermediateRepresentation, mo
 			ir.Errors,
 			g.coordinator,
 		)
+		writer.queryReachableUnions = queryReachableUnions
 		for _, typeToGenerate := range typesToGenerate {
 			switch {
 			case typeToGenerate.TypeDeclaration != nil:
@@ -423,7 +425,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.UseReaderForBytesRequest,
 				g.config.GettersPassByValue,
 				g.config.ExportAllRequestsAtRoot,
-					g.config.OmitEmptyRequestWrappers,
+				g.config.OmitEmptyRequestWrappers,
 				g.config.OmitFernHeaders,
 				g.config.UnionVersion,
 				g.config.CustomPagerName,
@@ -491,7 +493,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.UseReaderForBytesRequest,
 				g.config.GettersPassByValue,
 				g.config.ExportAllRequestsAtRoot,
-					g.config.OmitEmptyRequestWrappers,
+				g.config.OmitEmptyRequestWrappers,
 				g.config.OmitFernHeaders,
 				g.config.UnionVersion,
 				g.config.CustomPagerName,
@@ -519,7 +521,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.UseReaderForBytesRequest,
 				g.config.GettersPassByValue,
 				g.config.ExportAllRequestsAtRoot,
-					g.config.OmitEmptyRequestWrappers,
+				g.config.OmitEmptyRequestWrappers,
 				g.config.OmitFernHeaders,
 				g.config.UnionVersion,
 				g.config.CustomPagerName,
@@ -550,7 +552,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.UseReaderForBytesRequest,
 				g.config.GettersPassByValue,
 				g.config.ExportAllRequestsAtRoot,
-					g.config.OmitEmptyRequestWrappers,
+				g.config.OmitEmptyRequestWrappers,
 				g.config.OmitFernHeaders,
 				g.config.UnionVersion,
 				g.config.CustomPagerName,
@@ -635,7 +637,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.UseReaderForBytesRequest,
 				g.config.GettersPassByValue,
 				g.config.ExportAllRequestsAtRoot,
-					g.config.OmitEmptyRequestWrappers,
+				g.config.OmitEmptyRequestWrappers,
 				g.config.OmitFernHeaders,
 				g.config.UnionVersion,
 				g.config.CustomPagerName,
@@ -1148,7 +1150,6 @@ func hasOAuthScheme(auth *ir.ApiAuth) bool {
 	return false
 }
 
-
 // newPointerFile returns a *File containing the pointer helper functions
 // used to more easily instantiate pointers to primitive values (e.g. *string).
 //
@@ -1318,7 +1319,6 @@ func newApiErrorFile(coordinator *coordinator.Client) *File {
 		[]byte(apiErrorFile),
 	)
 }
-
 
 // func newErrorDecoderFile(coordinator *coordinator.Client, baseImportPath string) *File {
 // 	content := replaceCoreImportPath(errorDecoderFile, baseImportPath)
@@ -2103,4 +2103,69 @@ func valueOf[T any](value *T) T {
 		return result
 	}
 	return *value
+}
+
+// collectQueryReachableUnions returns the set of undiscriminated union TypeIds
+// that are reachable from a query parameter position. The Go runtime query
+// encoder dispatches via the QueryEncoder interface, so we only need to
+// generate EncodeQueryValues on unions that may actually be encoded as query
+// parameters.
+//
+// Reachability follows container wrappers (optional/list/set/nullable) and
+// alias chains, but does not recurse into union variants — generated union
+// EncodeQueryValues stringifies variants directly and does not call back into
+// QueryEncoder.
+func collectQueryReachableUnions(ir *fernir.IntermediateRepresentation) map[common.TypeId]struct{} {
+	reachable := make(map[common.TypeId]struct{})
+	visited := make(map[common.TypeId]struct{})
+	for _, service := range ir.Services {
+		for _, endpoint := range service.Endpoints {
+			for _, queryParameter := range endpoint.QueryParameters {
+				walkQueryReachableType(queryParameter.ValueType, ir.Types, reachable, visited)
+			}
+		}
+	}
+	return reachable
+}
+
+func walkQueryReachableType(
+	typeReference *fernir.TypeReference,
+	types map[common.TypeId]*fernir.TypeDeclaration,
+	reachable map[common.TypeId]struct{},
+	visited map[common.TypeId]struct{},
+) {
+	if typeReference == nil {
+		return
+	}
+	if container := typeReference.Container; container != nil {
+		switch {
+		case container.List != nil:
+			walkQueryReachableType(container.List, types, reachable, visited)
+		case container.Set != nil:
+			walkQueryReachableType(container.Set, types, reachable, visited)
+		case container.Optional != nil:
+			walkQueryReachableType(container.Optional, types, reachable, visited)
+		case container.Nullable != nil:
+			walkQueryReachableType(container.Nullable, types, reachable, visited)
+		}
+		return
+	}
+	named := typeReference.Named
+	if named == nil {
+		return
+	}
+	if _, seen := visited[named.TypeId]; seen {
+		return
+	}
+	visited[named.TypeId] = struct{}{}
+	declaration, ok := types[named.TypeId]
+	if !ok || declaration.Shape == nil {
+		return
+	}
+	switch {
+	case declaration.Shape.UndiscriminatedUnion != nil:
+		reachable[named.TypeId] = struct{}{}
+	case declaration.Shape.Alias != nil:
+		walkQueryReachableType(declaration.Shape.Alias.AliasOf, types, reachable, visited)
+	}
 }

@@ -23,13 +23,11 @@ module Seed
       def find(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         request_data = Seed::Foo::Types::FindRequest.new(params).to_h
-        non_body_param_names = ["optionalString"]
+        non_body_param_names = %w[optionalString]
         body = request_data.except(*non_body_param_names)
 
-        query_param_names = %i[optional_string]
         query_params = {}
         query_params["optionalString"] = params[:optional_string] if params.key?(:optional_string)
-        params.except(*query_param_names)
 
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],

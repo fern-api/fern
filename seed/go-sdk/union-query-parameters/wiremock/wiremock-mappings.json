@@ -1,0 +1,42 @@
+{
+  "mappings": [
+    {
+      "id": "97e94e12-cd4f-45a9-825f-6976a296ad0b",
+      "name": "subscribe - default",
+      "request": {
+        "urlPathTemplate": "/events",
+        "method": "GET",
+        "queryParameters": {
+          "event_type": {
+            "equalTo": "group.created"
+          },
+          "tags": {
+            "equalTo": "tags"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"string\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "97e94e12-cd4f-45a9-825f-6976a296ad0b",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
+    }
+  ],
+  "meta": {
+    "total": 1
+  }
+}

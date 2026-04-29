@@ -1,4 +1,5 @@
 import { getWireValue } from "@fern-api/base-generator";
+import { assertNever } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { FileGenerator, RubyFile } from "@fern-api/ruby-base";
@@ -98,11 +99,18 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         const globalHeaderParameters = this.getGlobalHeaderParameters();
         parameters.push(...globalHeaderParameters);
 
+        // Sort parameters: required (no initializer) before optional (with initializer)
+        const sortedParameters = [...parameters].sort((a, b) => {
+            const aOptional = a.initializer != null ? 1 : 0;
+            const bOptional = b.initializer != null ? 1 : 0;
+            return aOptional - bOptional;
+        });
+
         const method = ruby.method({
             name: "initialize",
             kind: ruby.MethodKind.Instance,
             parameters: {
-                keyword: parameters
+                keyword: sortedParameters
             },
             returnType: ruby.Type.void()
         });
@@ -170,7 +178,11 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                             // Both fields omitted — skip auth header entirely when auth is non-mandatory
                             continue;
                         }
-                        if (isAuthOptional || basicAuthSchemes.length > 1) {
+                        const authHeaderStmt = `headers["Authorization"] = "Basic #{Base64.strict_encode64(${credentialStr})}"`;
+                        if (basicAuthSchemes.length > 1) {
+                            // Multiple basic-auth schemes: emit as an if/elsif chain so
+                            // only one scheme is applied at runtime. Modifier form isn't
+                            // applicable when there are alternative branches.
                             if (isFirstBlock) {
                                 writer.writeLine(`if ${condition}`);
                             } else {
@@ -178,16 +190,19 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                             }
                             isFirstBlock = false;
                             emittedAnyBlock = true;
-                            writer.writeLine(
-                                `  headers["Authorization"] = "Basic #{Base64.strict_encode64(${credentialStr})}"`
-                            );
+                            writer.writeLine(`  ${authHeaderStmt}`);
+                        } else if (isAuthOptional) {
+                            // Single optional basic-auth scheme: emit in modifier form so
+                            // rubocop's Style/IfUnlessModifier is satisfied without needing
+                            // a post-emit autocorrect pass.
+                            writer.writeLine(`${authHeaderStmt} if ${condition}`);
                         } else {
-                            writer.writeLine(
-                                `headers["Authorization"] = "Basic #{Base64.strict_encode64(${credentialStr})}"`
-                            );
+                            // Mandatory auth: credentials are always present, so emit the
+                            // header unconditionally.
+                            writer.writeLine(authHeaderStmt);
                         }
                     }
-                    if (emittedAnyBlock && (isAuthOptional || basicAuthSchemes.length > 1)) {
+                    if (emittedAnyBlock && basicAuthSchemes.length > 1) {
                         writer.writeLine(`end`);
                     }
                 }
@@ -579,17 +594,27 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                 case "bearer":
                     headers.push({
                         key: ruby.TypeLiteral.string("Authorization"),
-                        value: ruby.TypeLiteral.string(`Bearer #{${TOKEN_PARAMETER_NAME}}`)
+                        value: ruby.TypeLiteral.interpolatedString(`Bearer #{${TOKEN_PARAMETER_NAME}}`)
                     });
                     break;
                 case "header": {
                     const headerParamName = this.case.snakeSafe(header.name);
                     const headerName = getWireValue(header.name);
-                    const headerValue =
-                        header.prefix != null ? `${header.prefix} #{${headerParamName}}` : `#{${headerParamName}}`;
+                    let headerValueNode: ruby.AstNode;
+                    if (header.prefix != null) {
+                        // Escape any interpolation markers in the spec-supplied prefix so it
+                        // cannot inject arbitrary Ruby code at SDK init time.
+                        const safePrefix = header.prefix.replace(/#(?=[{$@])/g, "\\#");
+                        headerValueNode = ruby.TypeLiteral.interpolatedString(`${safePrefix} #{${headerParamName}}`);
+                    } else {
+                        // No prefix means the value is a single interpolation. Emit the
+                        // parameter with `.to_s` directly instead of wrapping it in a
+                        // redundant interpolated string.
+                        headerValueNode = ruby.codeblock(`${headerParamName}.to_s`);
+                    }
                     headers.push({
                         key: ruby.TypeLiteral.string(headerName),
-                        value: ruby.TypeLiteral.string(headerValue)
+                        value: headerValueNode
                     });
                     break;
                 }
@@ -597,8 +622,15 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     // Basic auth header is added conditionally in the constructor body
                     // to guard against nil credentials when auth is optional.
                     break;
-                default:
+                case "oauth":
+                case "inferred":
+                    // OAuth and inferred auth schemes attach their Authorization
+                    // headers via their own providers (OAuthProviderGenerator,
+                    // InferredAuthProviderGenerator) rather than the raw client's
+                    // default header hash, so there's nothing to add here.
                     break;
+                default:
+                    assertNever(header);
             }
         }
 
@@ -616,7 +648,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             const wireValue = getWireValue(header.name);
             headers.push({
                 key: ruby.TypeLiteral.string(wireValue),
-                value: ruby.TypeLiteral.string(`#{${paramName}}`)
+                value: ruby.codeblock(`${paramName}.to_s`)
             });
         }
 

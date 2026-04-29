@@ -450,6 +450,12 @@ impl HttpClient {
 
             match self.client.execute(cloned_request).await {
                 Ok(response) if response.status().is_success() => return Ok(response),
+                Ok(response) if attempt < max_retries && Self::is_retryable_status(response.status().as_u16()) => {
+                    drop(response);
+                    // Exponential backoff for retryable HTTP status codes
+                    let delay = std::time::Duration::from_millis(100 * 2_u64.pow(attempt));
+                    tokio::time::sleep(delay).await;
+                }
                 Ok(response) => {
                     let status_code = response.status().as_u16();
                     let body = response.text().await.ok();
@@ -466,6 +472,10 @@ impl HttpClient {
         }
 
         Err(ApiError::Network(last_error.unwrap()))
+    }
+
+    fn is_retryable_status(status_code: u16) -> bool {
+        [408, 429].contains(&status_code) || status_code >= 500
     }
 
     async fn parse_response<T>(&self, response: Response) -> Result<T, ApiError>
@@ -644,4 +654,30 @@ impl HttpClient {
         Ok(ByteStream::new(response))
     }
 
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_is_retryable_status() {
+        // Retryable 4xx
+        assert!(HttpClient::is_retryable_status(408));
+        assert!(HttpClient::is_retryable_status(429));
+
+        // Retryable 5xx (>= 500)
+        assert!(HttpClient::is_retryable_status(500));
+        assert!(HttpClient::is_retryable_status(501));
+        assert!(HttpClient::is_retryable_status(502));
+        assert!(HttpClient::is_retryable_status(503));
+        assert!(HttpClient::is_retryable_status(504));
+        assert!(HttpClient::is_retryable_status(599));
+
+        // Success and other 4xx codes are NOT retryable
+        assert!(!HttpClient::is_retryable_status(200));
+        assert!(!HttpClient::is_retryable_status(400));
+        assert!(!HttpClient::is_retryable_status(401));
+        assert!(!HttpClient::is_retryable_status(404));
+    }
 }

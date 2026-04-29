@@ -130,13 +130,11 @@ module Seed
       # @return [Array[Seed::NullableOptional::Types::UserResponse]]
       def list_users(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        query_param_names = %i[limit offset include_deleted sort_by]
         query_params = {}
         query_params["limit"] = params[:limit] if params.key?(:limit)
         query_params["offset"] = params[:offset] if params.key?(:offset)
         query_params["includeDeleted"] = params[:include_deleted] if params.key?(:include_deleted)
         query_params["sortBy"] = params[:sort_by] if params.key?(:sort_by)
-        params.except(*query_param_names)
 
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
@@ -174,13 +172,11 @@ module Seed
       # @return [Array[Seed::NullableOptional::Types::UserResponse]]
       def search_users(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        query_param_names = %i[query department role is_active]
         query_params = {}
         query_params["query"] = params[:query] if params.key?(:query)
         query_params["department"] = params[:department] if params.key?(:department)
         query_params["role"] = params[:role] if params.key?(:role)
         query_params["isActive"] = params[:is_active] if params.key?(:is_active)
-        params.except(*query_param_names)
 
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
@@ -284,7 +280,7 @@ module Seed
       def update_complex_profile(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         request_data = Seed::NullableOptional::Types::UpdateComplexProfileRequest.new(params).to_h
-        non_body_param_names = ["profileId"]
+        non_body_param_names = %w[profileId]
         body = request_data.except(*non_body_param_names)
 
         request = Seed::Internal::JSON::Request.new(
@@ -358,12 +354,10 @@ module Seed
       # @return [Array[Seed::NullableOptional::Types::UserResponse]]
       def filter_by_role(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        query_param_names = %i[role status secondary_role]
         query_params = {}
         query_params["role"] = params[:role] if params.key?(:role)
         query_params["status"] = params[:status] if params.key?(:status)
         query_params["secondaryRole"] = params[:secondary_role] if params.key?(:secondary_role)
-        params.except(*query_param_names)
 
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
@@ -431,7 +425,7 @@ module Seed
       def update_tags(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         request_data = Seed::NullableOptional::Types::UpdateTagsRequest.new(params).to_h
-        non_body_param_names = ["userId"]
+        non_body_param_names = %w[userId]
         body = request_data.except(*non_body_param_names)
 
         request = Seed::Internal::JSON::Request.new(
