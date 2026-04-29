@@ -208,7 +208,8 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
                     rootFolderName: this.rubyContext.getRootFolderName(),
                     customPagerClassName: this.rubyContext.customConfig.customPagerName,
                     omitFernHeaders: this.rubyContext.customConfig.omitFernHeaders,
-                    maxRetries: this.rubyContext.customConfig.maxRetries
+                    maxRetries: this.rubyContext.customConfig.maxRetries,
+                    retryStatusCodes: this.rubyContext.customConfig.retryStatusCodes
                 })
             );
         }
@@ -220,7 +221,8 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         rootFolderName,
         customPagerClassName,
         omitFernHeaders,
-        maxRetries
+        maxRetries,
+        retryStatusCodes
     }: {
         filename: string;
         gemNamespace: string;
@@ -228,22 +230,26 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         customPagerClassName?: string;
         omitFernHeaders?: boolean;
         maxRetries?: number;
+        retryStatusCodes?: string;
     }): Promise<File> {
-        const contents = (await readFile(getAsIsFilepath(filename))).toString();
-        return new File(
-            this.getAsIsOutputFilename(filename),
-            this.getAsIsOutputDirectory(filename),
-            replaceTemplate({
-                contents,
-                variables: getTemplateVariables({
-                    gemNamespace,
-                    rootFolderName,
-                    customPagerClassName,
-                    omitFernHeaders,
-                    maxRetries
-                })
+        let rendered = replaceTemplate({
+            contents: (await readFile(getAsIsFilepath(filename))).toString(),
+            variables: getTemplateVariables({
+                gemNamespace,
+                rootFolderName,
+                customPagerClassName,
+                omitFernHeaders,
+                maxRetries
             })
-        );
+        });
+
+        const retryStatusCodesArray =
+            retryStatusCodes === "recommended"
+                ? "[408, 429, 502, 503, 504].freeze"
+                : "[408, 429, 500, 502, 503, 504, 521, 522, 524].freeze";
+        rendered = rendered.replace(/\{\{RETRY_STATUS_CODES_ARRAY\}\}/g, retryStatusCodesArray);
+
+        return new File(this.getAsIsOutputFilename(filename), this.getAsIsOutputDirectory(filename), rendered);
     }
 
     public getAsIsOutputDirectory(templateFileName: string): RelativeFilePath {
