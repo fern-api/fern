@@ -553,6 +553,16 @@
               "type": "null"
             }
           ]
+        },
+        "multi-source": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
