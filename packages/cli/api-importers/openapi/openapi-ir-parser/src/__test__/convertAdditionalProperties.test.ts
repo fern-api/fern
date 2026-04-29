@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { isAdditionalPropertiesAny } from "../schema/convertAdditionalProperties.js";
 import { DEFAULT_PARSE_OPENAPI_SETTINGS } from "../options.js";
+import { isAdditionalPropertiesAny } from "../schema/convertAdditionalProperties.js";
 
 describe("isAdditionalPropertiesAny", () => {
     const options = DEFAULT_PARSE_OPENAPI_SETTINGS;

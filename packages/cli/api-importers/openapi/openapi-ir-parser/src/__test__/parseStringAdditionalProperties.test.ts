@@ -1,9 +1,9 @@
+import { Source } from "@fern-api/openapi-ir";
 import { TaskContext } from "@fern-api/task-context";
 import { OpenAPIV3 } from "openapi-types";
 import { describe, expect, it, vi } from "vitest";
-import { parse } from "../parse.js";
 import { DEFAULT_PARSE_OPENAPI_SETTINGS } from "../options.js";
-import { Source } from "@fern-api/openapi-ir";
+import { parse } from "../parse.js";
 
 describe("parse with string additionalProperties", () => {
     const mockTaskContext = {
