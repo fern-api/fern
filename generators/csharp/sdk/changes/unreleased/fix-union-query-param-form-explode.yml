@@ -1,9 +1,11 @@
 # yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
 
 - summary: |
-    Fix union-typed query parameters to use OpenAPI `style: form, explode: true` semantics.
-    Previously, an undiscriminated union with a list variant (e.g. `EventType | list<EventType>`)
-    was emitted as `?event_type[0]=a&event_type[1]=b` (deep-object indexed). It now emits the
-    expected `?event_type=a&event_type=b` (repeated keys) for the list variant and
-    `?event_type=group.created` for the scalar variant.
-  type: fix
+    Add the `use-form-explode-for-union-query-params` config option (default: false).
+    When set to true, union-typed query parameters are serialized using OpenAPI
+    `style: form, explode: true` (`?event_type=a&event_type=b` for the list variant)
+    instead of deep-object indexing (`?event_type[0]=a&event_type[1]=b`).
+    The new behavior matches the OpenAPI default and resolves wire-format mismatches
+    against servers (e.g. Auth0's `/events` SSE endpoint) that expect repeated keys.
+    The flag will default to true in the next major version.
+  type: feat

@@ -42,6 +42,17 @@ export const CsharpConfigSchema = z.object({
     "root-namespace-for-core-classes": z.boolean().optional(),
     "use-discriminated-unions": z.boolean().optional(),
     "use-undiscriminated-unions": z.boolean().optional(),
+    // When true, union-typed query parameters (discriminated and undiscriminated) are
+    // serialized using OpenAPI `style: form, explode: true` (e.g. `?key=a&key=b` for a
+    // list variant). When false (current default), they route through deep-object
+    // indexing (`?key[0]=a&key[1]=b`), which is the legacy C# behavior and does not
+    // match the OpenAPI default for query parameters.
+    //
+    // NOTE: This flag will flip to default `true` in the next major version of the C#
+    // generator. A migration under `packages/generator-migrations/src/generators/csharp/`
+    // will set this to `false` for customers who had not explicitly configured it, so
+    // their existing wire shape is preserved across the major bump.
+    "use-form-explode-for-union-query-params": z.boolean().optional(),
     "experimental-fully-qualified-namespaces": z.boolean().optional(),
     "experimental-dotnet-format": z.boolean().optional(),
 

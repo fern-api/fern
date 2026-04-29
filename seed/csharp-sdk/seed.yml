@@ -329,6 +329,9 @@ fixtures:
   union-query-parameters:
     - customConfig: null
       outputFolder: no-custom-config
+    - customConfig:
+        use-form-explode-for-union-query-params: true
+      outputFolder: form-explode
   csharp-namespace-collision:
     - customConfig:
         experimental-fully-qualified-namespaces: true
