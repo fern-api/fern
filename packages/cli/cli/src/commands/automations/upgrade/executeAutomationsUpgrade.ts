@@ -245,5 +245,14 @@ async function upgradeGeneratorsForAllWorkspaces({
         })
     );
 
+    // Sort arrays deterministically so output is stable across runs
+    // (Promise.all over workspaces may resolve in any order)
+    generators.sort((a, b) => {
+        const key = (e: GeneratorUpgradeEntry): string => `${e.api ?? ""}::${e.group}::${e.name}`;
+        return key(a).localeCompare(key(b));
+    });
+    skippedMajor.sort((a, b) => a.name.localeCompare(b.name));
+    alreadyUpToDate.sort((a, b) => a.name.localeCompare(b.name));
+
     return { generators, skippedMajor, alreadyUpToDate };
 }
