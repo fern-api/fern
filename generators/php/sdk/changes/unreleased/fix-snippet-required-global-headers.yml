@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix dynamic snippet generator to emit required global headers as named
+    constructor arguments instead of inside the options array. Previously, when
+    an OpenAPI spec declared an apiKey-in-header security scheme that the
+    importer turned into a required global header, the snippet generator would
+    place the header in the options array, producing a constructor call that
+    omitted the required parameter and caused phpstan to fail with "Missing
+    parameter $<header> (string) in call to <Client> constructor".
+  type: fix
