@@ -31,7 +31,10 @@ export interface DocsSettingsConfig {
      * @default: false
      */
     defaultSearchFilters?: boolean;
-    /** Controls product-aware search behavior. See `SearchSettingsConfig` for individual options. */
+    /**
+     * Controls product-aware search behavior. See `SearchSettingsConfig` for
+     * individual options.
+     */
     search?: FernDocsConfig.SearchSettingsConfig;
     /**
      * Controls the display of HTTP snippets in the API Reference. HTTP snippets are enabled by default for all languages.
