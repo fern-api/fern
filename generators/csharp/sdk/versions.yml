@@ -1,4 +1,24 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.63.2
+  changelogEntry:
+    - summary: |
+        Fix multi-value query parameter snippets when the example value is already
+        a list, which previously produced uncompilable list-of-list initializers
+        like `[new List<T>() { value }]` in mock server tests, reference docs, and
+        snippets.
+      type: fix
+  createdAt: "2026-04-29"
+  irVersion: 66
+- version: 2.63.1
+  changelogEntry:
+    - summary: |
+        Fix WireMock test generation to use percent-encoded query parameter keys,
+        matching what spec-compliant HTTP clients send. Also split comma-delimited
+        query parameter examples into multiple values in a single `WithParam()` call,
+        since WireMock.Net parses comma-separated values into arrays.
+      type: fix
+  createdAt: "2026-04-29"
+  irVersion: 66
 - version: 2.63.0
   changelogEntry:
     - summary: |

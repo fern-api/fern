@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.66.6
+  changelogEntry:
+    - summary: |
+        Fix TS2322 type error in generated serialization files when `enableForwardCompatibleEnums` is enabled.
+        The enum schema builder now uses `forwardCompatibleEnum_` which correctly widens the parsed type to `string`,
+        matching the widened API type.
+      type: fix
+  createdAt: "2026-04-29"
+  irVersion: 66
 - version: 3.66.5
   changelogEntry:
     - summary: |

@@ -7,7 +7,7 @@ import type * as serializers from "../index.js";
 export const EnumWithSpecialCharacters: core.serialization.Schema<
     serializers.EnumWithSpecialCharacters.Raw,
     SeedEnum.EnumWithSpecialCharacters
-> = core.serialization.enum_(["\\$bla", "\\$yo"]);
+> = core.serialization.forwardCompatibleEnum_(["\\$bla", "\\$yo"]);
 
 export declare namespace EnumWithSpecialCharacters {
     export type Raw = "\\$bla" | "\\$yo";

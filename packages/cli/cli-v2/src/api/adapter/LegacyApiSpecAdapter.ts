@@ -2,9 +2,42 @@ import type {
     OpenAPISettings,
     OpenAPISpec,
     Spec,
+    GraphQLSpec as V1GraphQLSpec,
     OpenRPCSpec as V1OpenRPCSpec,
     ProtobufSpec as V1ProtobufSpec
 } from "@fern-api/api-workspace-commons";
+
+/**
+ * Partitions v1 specs into two groups:
+ *
+ * - `filteredSpecs`: IR-generating specs (OpenAPI, AsyncAPI, protobuf-from-openapi).
+ *   Docs-only types (graphql, openrpc) and raw protobuf are excluded.
+ * - `allSpecs`: All specs except protobuf-from-openapi (used by OSSWorkspace for doc rendering).
+ */
+export function partitionV1Specs(v1Specs: Spec[]): {
+    filteredSpecs: (OpenAPISpec | V1ProtobufSpec)[];
+    allSpecs: Spec[];
+} {
+    const filteredSpecs = v1Specs.filter((spec): spec is OpenAPISpec | V1ProtobufSpec => {
+        if (spec.type === "openrpc" || spec.type === "graphql") {
+            return false;
+        }
+        if (spec.type === "protobuf" && !spec.fromOpenAPI) {
+            return false;
+        }
+        return true;
+    });
+
+    const allSpecs = v1Specs.filter((spec) => {
+        if (spec.type === "protobuf" && spec.fromOpenAPI) {
+            return false;
+        }
+        return true;
+    });
+
+    return { filteredSpecs, allSpecs };
+}
+
 import type { schemas } from "@fern-api/config";
 import { generatorsYml } from "@fern-api/configuration";
 import { relativize } from "@fern-api/fs-utils";
@@ -13,6 +46,8 @@ import type { Context } from "../../context/Context.js";
 import type { ApiSpec } from "../config/ApiSpec.js";
 import type { AsyncApiSpec } from "../config/AsyncApiSpec.js";
 import { isAsyncApiSpec } from "../config/AsyncApiSpec.js";
+import type { GraphQlSpec } from "../config/GraphQlSpec.js";
+import { isGraphQlSpec } from "../config/GraphQlSpec.js";
 import type { OpenApiSpec } from "../config/OpenApiSpec.js";
 import { isOpenApiSpec } from "../config/OpenApiSpec.js";
 import type { OpenRpcSpec } from "../config/OpenRpcSpec.js";
@@ -49,6 +84,9 @@ export class LegacyApiSpecAdapter {
         }
         if (isOpenRpcSpec(spec)) {
             return this.adaptOpenRpcSpec(spec);
+        }
+        if (isGraphQlSpec(spec)) {
+            return this.adaptGraphQlSpec(spec);
         }
         throw new CliError({
             message: `Unsupported spec type: ${JSON.stringify(spec)}`,
@@ -111,6 +149,15 @@ export class LegacyApiSpecAdapter {
             absoluteFilepath: spec.openrpc,
             absoluteFilepathToOverrides: spec.overrides,
             namespace: undefined
+        };
+    }
+
+    private adaptGraphQlSpec(spec: GraphQlSpec): V1GraphQLSpec {
+        return {
+            type: "graphql" as const,
+            absoluteFilepath: spec.graphql,
+            absoluteFilepathToOverrides: spec.overrides,
+            namespace: spec.name
         };
     }
 

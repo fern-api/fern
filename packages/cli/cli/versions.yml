@@ -1,4 +1,45 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.109.0
+  changelogEntry:
+    - summary: |
+        cli-v2: Add support for GraphQL specs in `fern.yml`. Specs can now be declared
+        with a `graphql` key (plus optional `name`, `origin`, and `overrides`) and are
+        rendered in the docs pipeline. SDK generation targets that reference an API
+        containing a GraphQL spec emit a non-fatal warning and skip the GraphQL spec,
+        since GraphQL SDK generation is not supported.
+      type: feat
+  createdAt: "2026-04-29"
+  irVersion: 66
+- version: 4.108.0
+  changelogEntry:
+    - summary: |
+        Validate staged changelog entries in `changes/<version>/*.yml` (not just `versions.yml`)
+        and trigger the workflow on PRs that touch those staged files. Catches unescaped
+        `{}` / `<>` / `#{}` patterns at PR time instead of after autorelease promotes the
+        entry to `versions.yml` on `main`.
+      type: internal
+  createdAt: "2026-04-29"
+  irVersion: 66
+- version: 4.107.3
+  changelogEntry:
+    - summary: |
+        Fix `fern generate --docs --preview` hang when OpenAPI specs contain circular
+        `$ref` chains. The unbundled fallback document now has its circular references
+        replaced with opaque object schemas so downstream converters no longer
+        infinite-loop.
+      type: fix
+  createdAt: "2026-04-29"
+  irVersion: 66
+- version: 4.107.2
+  changelogEntry:
+    - summary: |
+        Suppress additional Sentry false positives: EADDRINUSE port conflicts,
+        MDX/acorn parse errors from docs preview and publishing, version range
+        strings in generators.yml, missing fern project when using --id flag,
+        non-JSON fern.config.json, and absolute filepath in OpenAPI spec config.
+      type: fix
+  createdAt: "2026-04-29"
+  irVersion: 66
 - version: 4.107.1
   changelogEntry:
     - summary: |

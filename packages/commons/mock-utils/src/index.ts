@@ -171,9 +171,14 @@ export class WireMock {
         // Build URL path template
         const urlPathTemplate = this.buildUrlPathTemplate(endpoint);
 
-        // Extract path parameters from example
+        // Extract path parameters from example (root, service, and endpoint levels)
         const pathParameters: Record<string, { equalTo: string }> = {};
-        for (const param of example?.endpointPathParameters || []) {
+        const allPathParams = [
+            ...(example?.rootPathParameters || []),
+            ...(example?.servicePathParameters || []),
+            ...(example?.endpointPathParameters || [])
+        ];
+        for (const param of allPathParams) {
             const paramValue = this.extractExampleValue(param.value);
             if (paramValue !== null) {
                 const paramName = getOriginalName(param.name);

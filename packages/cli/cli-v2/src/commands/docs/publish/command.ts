@@ -82,7 +82,7 @@ export class PublishCommand {
         }
 
         const adapter = new LegacyProjectAdapter({ context });
-        const project = adapter.adapt(workspace);
+        const project = await adapter.adapt(workspace);
 
         const docsWorkspace = project.docsWorkspaces;
         if (docsWorkspace == null) {

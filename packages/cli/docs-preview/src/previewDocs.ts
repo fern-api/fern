@@ -1,4 +1,4 @@
-import { replaceEnvVariables } from "@fern-api/core-utils";
+import { extractErrorMessage, replaceEnvVariables } from "@fern-api/core-utils";
 import {
     isValidRelativeSlug,
     parseImagePaths,
@@ -246,10 +246,19 @@ export async function getPreviewDocsDefinition({
                 absolutePathToMarkdownFile: absoluteFilePath
             });
 
-            const { markdown: markdownWithAbsPaths, filepaths } = parseImagePaths(markdownReplacedMdAndCode, {
-                absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
-                absolutePathToMarkdownFile: absoluteFilePath
-            });
+            let markdownWithAbsPaths: string;
+            let filepaths: AbsoluteFilePath[];
+            try {
+                ({ markdown: markdownWithAbsPaths, filepaths } = parseImagePaths(markdownReplacedMdAndCode, {
+                    absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
+                    absolutePathToMarkdownFile: absoluteFilePath
+                }));
+            } catch (error) {
+                throw new CliError({
+                    message: `Failed to parse markdown in ${absoluteFilePath}: ${extractErrorMessage(error)}`,
+                    code: CliError.Code.ParseError
+                });
+            }
 
             if (previousDocsDefinition.filesV2 == null) {
                 previousDocsDefinition.filesV2 = {};

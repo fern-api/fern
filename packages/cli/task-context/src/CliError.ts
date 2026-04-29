@@ -112,7 +112,8 @@ const USER_ENVIRONMENT_ERRNOS: ReadonlySet<string> = new Set([
     "EROFS",
     "EMFILE",
     "ENFILE",
-    "EBUSY"
+    "EBUSY",
+    "EADDRINUSE"
 ]);
 
 // `ErrnoException` codes from `node:net` / `node:dns` / `undici` that mean

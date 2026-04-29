@@ -482,7 +482,10 @@ export class DocsDefinitionResolver {
                 }
             } catch (error) {
                 this.taskContext.logger.error(`Failed to parse ${relativePath}: ${extractErrorMessage(error)}`);
-                throw error;
+                throw new CliError({
+                    message: `Failed to parse markdown file ${relativePath}: ${extractErrorMessage(error)}`,
+                    code: CliError.Code.ParseError
+                });
             }
         }
         const imageParseTime = performance.now() - imageParseStart;

@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.11.1
+  changelogEntry:
+    - summary: |
+        Strip trailing whitespace from generated comment lines so spec-controlled docstrings
+        no longer trip `Layout/TrailingWhitespace` after the `rubocop -A` autocorrect pass
+        was removed in #15202. Caught on the Square nightly baseline benchmark.
+      type: fix
+  createdAt: "2026-04-29"
+  irVersion: 66
 - version: 1.11.0
   changelogEntry:
     - summary: |
@@ -13,7 +22,7 @@
   changelogEntry:
     - summary: |
         Fix Ruby string interpolation injection vulnerability in TypeLiteral string emitter.
-        Untrusted API spec default values containing #{} are now properly escaped in generated
+        Untrusted API spec default values containing `#{}` are now properly escaped in generated
         double-quoted Ruby strings.
       type: fix
     - summary: |

@@ -1000,9 +1000,9 @@ jobs:
           fetch: false
           message: "Automated update of seed files"
 
-  # Verify that the branch is the default branch (running for PR to main)
-  # Always run this job to create PRs for generators that succeeded, even if some seed runs fail.
-  # Each matrix job will only create a PR if its corresponding seed-update job produced patches.
+  # Combine ALL generator seed patches into a single PR instead of one per generator.
+  # This reduces the number of main-branch pushes (and the resulting CI cascade) from
+  # up to 16 down to 1, dramatically cutting runner consumption and release latency.
   commit-seed-changes-by-pr:
     if: >-
       ${{
@@ -1033,60 +1033,6 @@ jobs:
       ]
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    strategy:
-      matrix:
-        sdk-name:
-          [
-            ruby-sdk-v2,
-            pydantic,
-            python-sdk,
-            openapi,
-            java-sdk,
-            java-model,
-            ts-sdk,
-            go-model,
-            go-sdk,
-            csharp-model,
-            csharp-sdk,
-            php-model,
-            php-sdk,
-            swift-sdk,
-            rust-model,
-            rust-sdk
-          ]
-        include:
-          - language-name: ruby
-            sdk-name: ruby-sdk-v2
-          - language-name: python
-            sdk-name: pydantic
-          - language-name: python
-            sdk-name: python-sdk
-          - language-name: openapi
-            sdk-name: openapi
-          - language-name: java
-            sdk-name: java-sdk
-          - language-name: java
-            sdk-name: java-model
-          - language-name: typescript
-            sdk-name: ts-sdk
-          - language-name: go
-            sdk-name: go-model
-          - language-name: go
-            sdk-name: go-sdk
-          - language-name: csharp
-            sdk-name: csharp-model
-          - language-name: csharp
-            sdk-name: csharp-sdk
-          - language-name: php
-            sdk-name: php-model
-          - language-name: php
-            sdk-name: php-sdk
-          - language-name: swift
-            sdk-name: swift-sdk
-          - language-name: rust
-            sdk-name: rust-model
-          - language-name: rust
-            sdk-name: rust-sdk
     steps:
       - name: Checkout Action File
         uses: actions/checkout@v6
@@ -1094,43 +1040,40 @@ jobs:
           sparse-checkout: |
             .github/
 
-      # Don't set checkout-ref, applying by PR so we can checkout detached
-      # Only match to patches with this matrix name, since we are PR'ing per generator
+      # Apply ALL seed patches at once (seed-*.patch matches every generator)
       - name: Apply Patches
         id: apply-patches
         uses: ./.github/actions/apply-update-seed-patches
         with:
-          patch-pattern: seed-${{ matrix.sdk-name }}-*.patch
+          patch-pattern: seed-*.patch
 
       - name: Install
         if: steps.apply-patches.outputs.has-patches == 'true'
         uses: ./.github/actions/install
 
-      - name: Clean orphaned seed folders for ${{ matrix.sdk-name }}
+      - name: Clean orphaned seed folders
         if: steps.apply-patches.outputs.has-patches == 'true'
         shell: bash
         env:
           FORCE_COLOR: "2"
         run: |
-          pnpm seed:local clean --generator ${{ matrix.sdk-name }}
+          pnpm seed:local clean
 
-      # Create PR, approve and set to merge per generator
       - name: Create Pull Request
         if: steps.apply-patches.outputs.has-patches == 'true'
         id: cpr
         uses: peter-evans/create-pull-request@v8
         with:
           token: ${{ secrets.FERN_SUPPORT_GH_ACTIONS_PAT }}
-          commit-message: "chore(${{ matrix.language-name }}): update ${{ matrix.sdk-name }} seed"
-          title: "chore(${{ matrix.language-name }}): update ${{ matrix.sdk-name }} seed"
-          branch: update-${{ matrix.sdk-name }}-seed
-          body: "Auto-generated PR, triggered by GitHub event: ${{ github.event_name }} from branch: ${{ github.ref_name }}.\nGitHub workflow run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          commit-message: "chore(seed): update all seed snapshots"
+          title: "chore(seed): update all seed snapshots"
+          branch: update-all-seed
+          body: "Auto-generated combined seed update PR.\nTrigger: ${{ github.event_name }} from branch: ${{ github.ref_name }}.\nWorkflow run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           delete-branch: true
           add-paths: |
             seed/**
           labels: |
             seed
-            language/${{ matrix.language-name }}
 
       - name: Log PR Creation Failure
         if: steps.cpr.outputs.pull-request-operation != 'created'
