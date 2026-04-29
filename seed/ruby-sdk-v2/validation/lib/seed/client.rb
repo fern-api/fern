@@ -48,12 +48,10 @@ module Seed
     # @return [Seed::Types::Type]
     def get(request_options: {}, **params)
       params = Seed::Internal::Types::Utils.normalize_keys(params)
-      query_param_names = %i[decimal even name]
       query_params = {}
       query_params["decimal"] = params[:decimal] if params.key?(:decimal)
       query_params["even"] = params[:even] if params.key?(:even)
       query_params["name"] = params[:name] if params.key?(:name)
-      params.except(*query_param_names)
 
       request = Seed::Internal::JSON::Request.new(
         base_url: request_options[:base_url],

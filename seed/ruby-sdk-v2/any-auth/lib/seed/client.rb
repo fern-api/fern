@@ -2,13 +2,13 @@
 
 module Seed
   class Client
+    # @param client_id [String]
+    # @param client_secret [String]
     # @param base_url [String, nil]
     # @param token [String]
     # @param api_key [String]
     # @param username [String]
     # @param password [String]
-    # @param client_id [String]
-    # @param client_secret [String]
     #
     # @return [void]
     def initialize(client_id:, client_secret:, base_url: nil, token: ENV.fetch("MY_TOKEN", nil), api_key: ENV.fetch("MY_API_KEY", nil), username: ENV.fetch("MY_USERNAME", nil), password: ENV.fetch("MY_PASSWORD", nil))

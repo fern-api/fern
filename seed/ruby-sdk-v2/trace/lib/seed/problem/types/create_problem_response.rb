@@ -9,6 +9,7 @@ module Seed
         discriminant :type
 
         member -> { String }, key: "SUCCESS"
+
         member -> { Seed::Problem::Types::CreateProblemError }, key: "ERROR"
       end
     end

@@ -9,7 +9,9 @@ module Seed
       extend Seed::Internal::Types::Union
 
       member -> { Seed::Types::VariantA }
+
       member -> { Seed::Types::VariantB }
+
       member -> { Seed::Types::VariantC }
     end
   end

@@ -26,14 +26,12 @@ module Seed
       # @return [Array[Seed::Nullable::Types::User]]
       def get_users(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        query_param_names = %i[usernames avatar activated tags extra]
         query_params = {}
         query_params["usernames"] = params[:usernames] if params.key?(:usernames)
         query_params["avatar"] = params[:avatar] if params.key?(:avatar)
         query_params["activated"] = params[:activated] if params.key?(:activated)
         query_params["tags"] = params[:tags] if params.key?(:tags)
         query_params["extra"] = params[:extra] if params.key?(:extra)
-        params.except(*query_param_names)
 
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],

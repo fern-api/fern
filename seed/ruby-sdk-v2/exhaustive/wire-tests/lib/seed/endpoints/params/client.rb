@@ -90,11 +90,9 @@ module Seed
         # @return [untyped]
         def get_with_query(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
-          query_param_names = %i[query number]
           query_params = {}
           query_params["query"] = params[:query] if params.key?(:query)
           query_params["number"] = params[:number] if params.key?(:number)
-          params.except(*query_param_names)
 
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
@@ -130,11 +128,9 @@ module Seed
         # @return [untyped]
         def get_with_allow_multiple_query(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
-          query_param_names = %i[query number]
           query_params = {}
           query_params["query"] = params[:query] if params.key?(:query)
           query_params["number"] = params[:number] if params.key?(:number)
-          params.except(*query_param_names)
 
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
@@ -170,10 +166,8 @@ module Seed
         # @return [untyped]
         def get_with_path_and_query(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
-          query_param_names = %i[query]
           query_params = {}
           query_params["query"] = params[:query] if params.key?(:query)
-          params = params.except(*query_param_names)
 
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
@@ -209,10 +203,8 @@ module Seed
         # @return [untyped]
         def get_with_inline_path_and_query(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
-          query_param_names = %i[query]
           query_params = {}
           query_params["query"] = params[:query] if params.key?(:query)
-          params = params.except(*query_param_names)
 
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],

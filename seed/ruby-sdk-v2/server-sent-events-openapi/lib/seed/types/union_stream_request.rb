@@ -11,7 +11,9 @@ module Seed
       discriminant :type
 
       member -> { Seed::Types::UnionStreamMessageVariant }, key: "MESSAGE"
+
       member -> { Seed::Types::UnionStreamInterruptVariant }, key: "INTERRUPT"
+
       member -> { Seed::Types::UnionStreamCompactVariant }, key: "COMPACT"
     end
   end
