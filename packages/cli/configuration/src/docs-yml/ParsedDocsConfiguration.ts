@@ -133,13 +133,13 @@ export interface DocsColorsConfiguration {
 export interface ParsedMetadataConfig
     extends Omit<
         CjsFdrSdk.docs.v1.commons.MetadataConfig,
-        "og:image" | "og:logo" | "twitter:image" | "og:background-image"
+        "og:image" | "og:logo" | "twitter:image" | "og:background-image" | "og:dynamic:background-image"
     > {
     "og:image": FilepathOrUrl | undefined;
     "og:logo": FilepathOrUrl | undefined;
     "twitter:image": FilepathOrUrl | undefined;
     "og:dynamic": boolean | undefined;
-    "og:background-image": FilepathOrUrl | undefined;
+    "og:dynamic:background-image": FilepathOrUrl | undefined;
     "og:dynamic:text-color": string | undefined;
     "og:dynamic:background-color": string | undefined;
     "og:dynamic:logo-color": "dark" | "light" | undefined;

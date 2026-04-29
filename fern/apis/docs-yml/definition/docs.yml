@@ -2038,6 +2038,9 @@ types:
         docs: When true, enables dynamic OG image generation for pages that don't have a custom og:image set.
       "og:background-image":
         type: optional<string>
+        docs: Deprecated. Use og:dynamic:background-image instead.
+      "og:dynamic:background-image":
+        type: optional<string>
         docs: A custom background image for dynamically generated OG images. Can be a URL or a file path.
       "og:dynamic:text-color":
         type: optional<string>

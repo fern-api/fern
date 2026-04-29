@@ -32,7 +32,7 @@ const FULL_CONFIG: Record<string, unknown> = {
     metadata: {
         "og:image": "og.jpg",
         "twitter:image": "twitter.jpg",
-        "og:background-image": "og-bg.jpg",
+        "og:dynamic:background-image": "og-bg.jpg",
         "og:logo": "og-logo.jpg"
     }
 };
