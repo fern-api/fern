@@ -1786,7 +1786,7 @@ async function convertMetadata(
         "twitter:card": metadata.twitterCard,
         "og:dynamic": metadata.ogDynamic,
         "og:dynamic:background-image": await convertFilepathOrUrl(
-            metadata.ogDynamicBackgroundImage ?? metadata.ogBackgroundImage,
+            metadata.ogDynamicBackgroundImage,
             absoluteFilepathToDocsConfig
         ),
         "og:dynamic:text-color": metadata.ogDynamicTextColor,
@@ -1815,7 +1815,7 @@ function warnOnMetadataConflicts(metadata: docsYml.RawSchemas.MetadataConfig, co
     const dynamicEnabled = metadata.ogDynamic === true;
 
     const dynamicSettings: Array<[string, unknown]> = [
-        ["og:dynamic:background-image", metadata.ogDynamicBackgroundImage ?? metadata.ogBackgroundImage],
+        ["og:dynamic:background-image", metadata.ogDynamicBackgroundImage],
         ["og:dynamic:text-color", metadata.ogDynamicTextColor],
         ["og:dynamic:background-color", metadata.ogDynamicBackgroundColor],
         ["og:dynamic:logo-color", metadata.ogDynamicLogoColor],

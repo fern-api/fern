@@ -27,7 +27,6 @@ export const MetadataConfig: core.serialization.ObjectSchema<
     twitterUrl: core.serialization.property("twitter:url", core.serialization.string().optional()),
     twitterCard: core.serialization.property("twitter:card", TwitterCardSetting.optional()),
     ogDynamic: core.serialization.property("og:dynamic", core.serialization.boolean().optional()),
-    ogBackgroundImage: core.serialization.property("og:background-image", core.serialization.string().optional()),
     ogDynamicBackgroundImage: core.serialization.property(
         "og:dynamic:background-image",
         core.serialization.string().optional(),
@@ -74,7 +73,6 @@ export declare namespace MetadataConfig {
         "twitter:url"?: string | null;
         "twitter:card"?: TwitterCardSetting.Raw | null;
         "og:dynamic"?: boolean | null;
-        "og:background-image"?: string | null;
         "og:dynamic:background-image"?: string | null;
         "og:dynamic:text-color"?: string | null;
         "og:dynamic:background-color"?: string | null;

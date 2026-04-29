@@ -1,5 +1,4 @@
 - summary: |
-    Rename `og:background-image` metadata key to `og:dynamic:background-image` for
-    consistency with other `og:dynamic:*` settings. The old key is still accepted for
-    backward compatibility but the new key takes precedence.
-  type: chore
+    Remove `og:background-image` metadata key. Use `og:dynamic:background-image` instead,
+    which is consistent with other `og:dynamic:*` settings.
+  type: break

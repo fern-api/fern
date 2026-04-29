@@ -4675,16 +4675,6 @@
             }
           ]
         },
-        "og:background-image": {
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "og:dynamic:background-image": {
           "oneOf": [
             {
