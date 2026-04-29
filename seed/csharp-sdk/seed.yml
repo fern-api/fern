@@ -326,6 +326,9 @@ fixtures:
     - customConfig:
         use-discriminated-unions: false
       outputFolder: no-discriminated-unions
+  union-query-parameters:
+    - customConfig: null
+      outputFolder: no-custom-config
   csharp-namespace-collision:
     - customConfig:
         experimental-fully-qualified-namespaces: true

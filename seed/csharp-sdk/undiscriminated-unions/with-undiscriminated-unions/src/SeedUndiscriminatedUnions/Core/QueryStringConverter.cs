@@ -37,11 +37,12 @@ internal static class QueryStringConverter
     }
 
     /// <summary>
-    /// Converts an object into a query string collection using Exploded Form notation with a prefix.
+    /// Converts a value into a query string collection using Exploded Form notation with a prefix.
+    /// Objects produce <c>prefix[key]=value</c>, arrays produce repeated <c>prefix=value</c> entries,
+    /// and primitives produce a single <c>prefix=value</c> entry.
     /// </summary>
     /// <param name="prefix">The prefix to prepend to all keys. Pass empty string for no prefix.</param>
-    /// <param name="value">Object to form URL-encode. You can pass in an object or dictionary, but not lists, strings, or primitives.</param>
-    /// <exception cref="Exception">Throws when passing in a list, a string, or a primitive value.</exception>
+    /// <param name="value">Value to form URL-encode. Can be an object, dictionary, array, or primitive.</param>
     /// <returns>A collection of key value pairs. The keys and values are not URL encoded.</returns>
     internal static IEnumerable<KeyValuePair<string, string>> ToExplodedForm(
         string prefix,
@@ -50,16 +51,16 @@ internal static class QueryStringConverter
     {
         var queryCollection = new List<KeyValuePair<string, string>>();
         var json = JsonUtils.SerializeToElement(value);
-        AssertRootJson(json);
         JsonToFormExploded(json, prefix, queryCollection);
         return queryCollection;
     }
 
     /// <summary>
-    /// Converts an object into a query string collection using Exploded Form notation.
+    /// Converts a value into a query string collection using Exploded Form notation.
+    /// Objects produce <c>key=value</c> pairs (nested as <c>key[sub]=value</c>), arrays produce repeated
+    /// keys, and primitives produce a single empty-prefix entry.
     /// </summary>
-    /// <param name="value">Object to form URL-encode. You can pass in an object or dictionary, but not lists, strings, or primitives.</param>
-    /// <exception cref="Exception">Throws when passing in a list, a string, or a primitive value.</exception>
+    /// <param name="value">Value to form URL-encode. Can be an object, dictionary, array, or primitive.</param>
     /// <returns>A collection of key value pairs. The keys and values are not URL encoded.</returns>
     internal static IEnumerable<KeyValuePair<string, string>> ToExplodedForm(object value)
     {

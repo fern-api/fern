@@ -155,4 +155,43 @@ public class QueryStringConverterTests
         };
         Assert.That(result, Is.EqualTo(expected));
     }
+
+    [Test]
+    public void ToQueryStringCollection_ExplodedForm_StringRoot()
+    {
+        var result = QueryStringConverter.ToExplodedForm("event_type", "group.created");
+        var expected = new List<KeyValuePair<string, string>>
+        {
+            new("event_type", "group.created"),
+        };
+        Assert.That(result, Is.EqualTo(expected));
+    }
+
+    [Test]
+    public void ToQueryStringCollection_ExplodedForm_PrimitiveArrayRoot()
+    {
+        var result = QueryStringConverter.ToExplodedForm("event_type", new[] { "a", "b" });
+        var expected = new List<KeyValuePair<string, string>>
+        {
+            new("event_type", "a"),
+            new("event_type", "b"),
+        };
+        Assert.That(result, Is.EqualTo(expected));
+    }
+
+    [Test]
+    public void ToQueryStringCollection_ExplodedForm_NumberRoot()
+    {
+        var result = QueryStringConverter.ToExplodedForm("count", 42);
+        var expected = new List<KeyValuePair<string, string>> { new("count", "42") };
+        Assert.That(result, Is.EqualTo(expected));
+    }
+
+    [Test]
+    public void ToQueryStringCollection_ExplodedForm_BoolRoot()
+    {
+        var result = QueryStringConverter.ToExplodedForm("active", true);
+        var expected = new List<KeyValuePair<string, string>> { new("active", "true") };
+        Assert.That(result, Is.EqualTo(expected));
+    }
 }

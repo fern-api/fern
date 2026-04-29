@@ -96,12 +96,15 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 ? `${baseReference}.IsDefined ? ${baseReference}.Value : null`
                 : baseReference;
 
-        const isComplexType = this.isComplexType(query.valueType);
-
-        if (isComplexType) {
-            writer.write(`.AddDeepObject("${getWireValue(query.name)}", ${queryParameterReference})`);
+        const namedShape = this.getNamedQueryShape(query.valueType);
+        const wireName = getWireValue(query.name);
+        if (namedShape === "union" || namedShape === "undiscriminatedUnion") {
+            // Union variants can be primitive, list, or object — only form/explode handles all three.
+            writer.write(`.AddExploded("${wireName}", ${queryParameterReference})`);
+        } else if (namedShape === "object") {
+            writer.write(`.AddDeepObject("${wireName}", ${queryParameterReference})`);
         } else {
-            writer.write(`.Add("${getWireValue(query.name)}", ${queryParameterReference})`);
+            writer.write(`.Add("${wireName}", ${queryParameterReference})`);
         }
     }
 
@@ -132,44 +135,34 @@ export class WrappedEndpointRequest extends EndpointRequest {
     }
 
     /**
-     * Determines if a type reference represents a complex type (object/named type)
-     * that should use AddDeepObject for query string serialization.
-     * Returns false for primitives, collections, and aliases to non-object types.
+     * Resolves the underlying named-type shape for query-string routing, unwrapping
+     * optional/nullable containers and following aliases. Returns undefined for
+     * primitives, collections, and unresolved aliases.
      */
-    private isComplexType(typeReference: TypeReference): boolean {
+    private getNamedQueryShape(typeReference: TypeReference): "object" | "union" | "undiscriminatedUnion" | undefined {
         return typeReference._visit({
             container: (container) => {
-                // For optional types, check the inner type
                 if (container.type === "optional") {
-                    return this.isComplexType(container.optional);
+                    return this.getNamedQueryShape(container.optional);
                 }
                 if (container.type === "nullable") {
-                    return this.isComplexType(container.nullable);
+                    return this.getNamedQueryShape(container.nullable);
                 }
-                // Lists, maps, sets are not deep objects
-                return false;
+                return undefined;
             },
             named: (namedType) => {
-                // Check if this named type is actually an object type (not an alias to primitive/collection)
-                const typeDeclaration = this.context.model.dereferenceType(namedType.typeId).typeDeclaration;
-                const shapeType = typeDeclaration.shape.type;
-
-                // Only true objects and unions should use AddDeepObject
-                if (shapeType === "object" || shapeType === "union" || shapeType === "undiscriminatedUnion") {
-                    return true;
+                const { shape } = this.context.model.dereferenceType(namedType.typeId).typeDeclaration;
+                if (shape.type === "alias") {
+                    return this.getNamedQueryShape(shape.aliasOf);
                 }
-
-                // For aliases, check the aliased type recursively
-                if (shapeType === "alias") {
-                    return this.isComplexType(typeDeclaration.shape.aliasOf);
+                if (shape.type === "object" || shape.type === "union" || shape.type === "undiscriminatedUnion") {
+                    return shape.type;
                 }
-
-                // Enums and other types are not complex
-                return false;
+                return undefined;
             },
-            primitive: () => false,
-            unknown: () => false,
-            _other: () => false
+            primitive: () => undefined,
+            unknown: () => undefined,
+            _other: () => undefined
         });
     }
 

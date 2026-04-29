@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix union-typed query parameters to use OpenAPI `style: form, explode: true` semantics.
+    Previously, an undiscriminated union with a list variant (e.g. `EventType | list<EventType>`)
+    was emitted as `?event_type[0]=a&event_type[1]=b` (deep-object indexed). It now emits the
+    expected `?event_type=a&event_type=b` (repeated keys) for the list variant and
+    `?event_type=group.created` for the scalar variant.
+  type: fix
