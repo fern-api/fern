@@ -9,6 +9,8 @@ if typing.TYPE_CHECKING:
     from .completion_event import CompletionEvent
     from .error_event import ErrorEvent
     from .event_event import EventEvent
+    from .group_created_event import GroupCreatedEvent
+    from .group_deleted_event import GroupDeletedEvent
     from .stream_event import StreamEvent, StreamEvent_Completion, StreamEvent_Error
     from .stream_event_context_protocol import (
         StreamEventContextProtocol,
@@ -16,16 +18,26 @@ if typing.TYPE_CHECKING:
         StreamEventContextProtocol_Error,
         StreamEventContextProtocol_Event,
     )
+    from .stream_event_discriminant_in_data import (
+        StreamEventDiscriminantInData,
+        StreamEventDiscriminantInData_GroupCreated,
+        StreamEventDiscriminantInData_GroupDeleted,
+    )
     from .streamed_completion import StreamedCompletion
 _dynamic_imports: typing.Dict[str, str] = {
     "CompletionEvent": ".completion_event",
     "ErrorEvent": ".error_event",
     "EventEvent": ".event_event",
+    "GroupCreatedEvent": ".group_created_event",
+    "GroupDeletedEvent": ".group_deleted_event",
     "StreamEvent": ".stream_event",
     "StreamEventContextProtocol": ".stream_event_context_protocol",
     "StreamEventContextProtocol_Completion": ".stream_event_context_protocol",
     "StreamEventContextProtocol_Error": ".stream_event_context_protocol",
     "StreamEventContextProtocol_Event": ".stream_event_context_protocol",
+    "StreamEventDiscriminantInData": ".stream_event_discriminant_in_data",
+    "StreamEventDiscriminantInData_GroupCreated": ".stream_event_discriminant_in_data",
+    "StreamEventDiscriminantInData_GroupDeleted": ".stream_event_discriminant_in_data",
     "StreamEvent_Completion": ".stream_event",
     "StreamEvent_Error": ".stream_event",
     "StreamedCompletion": ".streamed_completion",
@@ -57,11 +69,16 @@ __all__ = [
     "CompletionEvent",
     "ErrorEvent",
     "EventEvent",
+    "GroupCreatedEvent",
+    "GroupDeletedEvent",
     "StreamEvent",
     "StreamEventContextProtocol",
     "StreamEventContextProtocol_Completion",
     "StreamEventContextProtocol_Error",
     "StreamEventContextProtocol_Event",
+    "StreamEventDiscriminantInData",
+    "StreamEventDiscriminantInData_GroupCreated",
+    "StreamEventDiscriminantInData_GroupDeleted",
     "StreamEvent_Completion",
     "StreamEvent_Error",
     "StreamedCompletion",
