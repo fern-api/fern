@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.5.1
+  changelogEntry:
+    - summary: |
+        Bump `@fern-api/fdr-sdk` to `1.2.0-1d73d2e141` to pick up the first-class
+        `Alpha`, `Preview`, and `Legacy` availability values published from the
+        `fdr@1.2.0` tag.
+      type: chore
+  createdAt: "2026-04-30"
+  irVersion: 66
 - version: 5.5.0
   changelogEntry:
     - summary: |
