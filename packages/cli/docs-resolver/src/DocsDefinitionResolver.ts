@@ -824,7 +824,7 @@ export class DocsDefinitionResolver {
         const config: DocsConfigWithTranslations = {
             aiChatConfig:
                 this.parsedDocsConfig.aiChatConfig != null
-                    ? {
+                    ? ({
                           model: this.parsedDocsConfig.aiChatConfig.model,
                           systemPrompt: this.parsedDocsConfig.aiChatConfig.systemPrompt,
                           // Filter out 'discord' which is no longer supported by fdr-sdk
@@ -835,7 +835,7 @@ export class DocsDefinitionResolver {
                               url: ds.url,
                               title: ds.title
                           }))
-                      }
+                      } as DocsV1Write.DocsConfig["aiChatConfig"])
                     : undefined,
             hideNavLinks: undefined,
             title: this.parsedDocsConfig.title,
@@ -899,9 +899,7 @@ export class DocsDefinitionResolver {
                 value: DocsV1Write.Url(footerLink.value)
             })),
             defaultLanguage: this.parsedDocsConfig.defaultLanguage,
-            // @ts-expect-error -- BCP 47: Language[] widened to string[], @fern-api/fdr-sdk not yet updated
-            languages: this.parsedDocsConfig.languages,
-
+            languages: this.parsedDocsConfig.languages as DocsV1Write.DocsConfig["languages"],
             translations: this.getDocsTranslationsConfig(),
             analyticsConfig: {
                 ...this.parsedDocsConfig.analyticsConfig,

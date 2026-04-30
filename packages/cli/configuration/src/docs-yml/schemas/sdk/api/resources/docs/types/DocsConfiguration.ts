@@ -53,7 +53,7 @@ export interface DocsConfiguration {
      * Options include: typescript, python, java, go, ruby, csharp, php, swift, curl
      */
     defaultLanguage?: FernDocsConfig.ProgrammingLanguage;
-    languages?: FernDocsConfig.Language[];
+    languages?: string[];
     /**
      * Configuration for multi-language documentation. Each entry defines a locale
      * that the documentation supports. Use the `translations/` directory alongside
