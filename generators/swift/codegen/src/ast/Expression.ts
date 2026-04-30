@@ -103,6 +103,11 @@ type StringLiteral = {
     escape?: boolean;
 };
 
+type RawMultiLineStringLiteral = {
+    type: "raw-multi-line-string-literal";
+    value: string;
+};
+
 type NumberLiteral = {
     type: "number-literal";
     value: number;
@@ -179,6 +184,7 @@ type InternalExpression =
     | ArrayLiteral
     | DataLiteral
     | RawValue
+    | RawMultiLineStringLiteral
     | Nop;
 
 type WriteCallableExpressionParams = {
@@ -319,6 +325,9 @@ export class Expression extends AstNode {
                         ? `"${escapeSwiftStringLiteralContent(this.internalExpression.value)}"`
                         : `"${this.internalExpression.value}"`
                 );
+                break;
+            case "raw-multi-line-string-literal":
+                writer.write(`#"""\n${this.internalExpression.value}\n"""#`);
                 break;
             case "number-literal":
                 writer.write(this.internalExpression.value.toString());
@@ -479,6 +488,19 @@ export class Expression extends AstNode {
      */
     public static escapedStringLiteral(value: string): Expression {
         return new this({ type: "string-literal", value, escape: true });
+    }
+
+    /**
+     * Emits `value` as a Swift raw multi-line string literal (`#"""..."""#`).
+     * Inside a raw string literal, escape sequences such as `\n` are NOT
+     * interpreted by the Swift compiler -- they remain as literal
+     * backslash-n characters at runtime. Use this when `value` already
+     * contains escape sequences that must survive verbatim into the
+     * runtime `String` (e.g. JSON payloads where `\n` must reach the
+     * JSON parser as `\n`, not as a real newline).
+     */
+    public static rawMultiLineStringLiteral(value: string): Expression {
+        return new this({ type: "raw-multi-line-string-literal", value });
     }
 
     public static numberLiteral(value: number): Expression {
