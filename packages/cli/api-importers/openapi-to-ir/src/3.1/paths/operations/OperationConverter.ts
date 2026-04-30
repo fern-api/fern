@@ -373,6 +373,21 @@ export class OperationConverter extends AbstractOperationConverter {
                 if (converted == null) {
                     // A 2xx response with no body (e.g., 204 No Content with content: {})
                     hasNoContentResponse = true;
+                    // Preserve the user-defined status code on the response so downstream
+                    // consumers (docs, FDR, generators) display e.g. 204 instead of falling
+                    // back to a default 200. We only write this if no response has been
+                    // recorded yet, and we intentionally do NOT set hasSuccessfulResponse —
+                    // that way a later 2xx iteration that does have a body still takes over
+                    // via the (!hasSuccessfulResponse) branch below and becomes the primary
+                    // response for this endpoint.
+                    if (convertedResponseBody.response == null) {
+                        convertedResponseBody.response = {
+                            statusCode: statusCodeNum,
+                            isWildcardStatusCode: isWildcardStatusCode ? true : undefined,
+                            body: undefined,
+                            docs: resolvedResponse.description
+                        };
+                    }
                     continue;
                 }
                 if (converted != null) {
