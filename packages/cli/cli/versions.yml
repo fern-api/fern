@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.4.0
+  changelogEntry:
+    - summary: |
+        Make `auth` optional at the service level in Fern Definition files.
+        When omitted, auth is inherited from the root API-level auth scheme.
+        This allows users to only specify `auth: false` when they explicitly want to disable auth.
+      type: feat
+  createdAt: "2026-04-30"
+  irVersion: 66
 - version: 5.3.0
   changelogEntry:
     - summary: |
