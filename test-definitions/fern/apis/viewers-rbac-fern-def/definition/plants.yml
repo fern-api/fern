@@ -1,0 +1,32 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
+  Plant:
+    properties:
+      id: string
+      name: string
+
+service:
+  auth: false
+  base-path: /plants
+  viewers:
+    - admin
+    - gardener
+  endpoints:
+    list:
+      path: ""
+      method: GET
+      response:
+        type: list<Plant>
+    create:
+      path: ""
+      method: POST
+      viewers:
+        - admin
+      request: Plant
+      response: Plant
+    delete:
+      path: "/{plantId}"
+      method: DELETE
+      path-parameters:
+        plantId: string
