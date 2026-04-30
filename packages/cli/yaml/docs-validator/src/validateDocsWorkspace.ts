@@ -107,16 +107,47 @@ export async function runRulesOnDocsWorkspace({
     const violations: ValidationViolation[] = [];
 
     const ruleCreationStart = performance.now();
-    const allRulesWithVisitors = await Promise.all(
-        rules.map(
-            async (rule): Promise<RuleWithVisitor> => ({
-                ruleName: rule.name,
-                visitor: await rule.create({ workspace, apiWorkspaces, ossWorkspaces, logger: context.logger })
-            })
-        )
+    const ruleCreationResults = await Promise.all(
+        rules.map(async (rule): Promise<RuleWithVisitor | { ruleName: string; error: unknown }> => {
+            try {
+                const visitor = await rule.create({
+                    workspace,
+                    apiWorkspaces,
+                    ossWorkspaces,
+                    logger: context.logger
+                });
+                return { ruleName: rule.name, visitor };
+            } catch (error) {
+                return { ruleName: rule.name, error };
+            }
+        })
     );
+    const allRulesWithVisitors: RuleWithVisitor[] = [];
+    for (const result of ruleCreationResults) {
+        if ("error" in result) {
+            const message = result.error instanceof Error ? result.error.message : String(result.error);
+            violations.push({
+                name: result.ruleName,
+                severity: "fatal",
+                relativeFilepath: RelativeFilePath.of(DOCS_CONFIGURATION_FILENAME),
+                nodePath: [],
+                message: `Rule "${result.ruleName}" failed to initialize: ${message}`
+            });
+            context.logger.debug(
+                `Rule "${result.ruleName}" failed to initialize: ${
+                    result.error instanceof Error ? (result.error.stack ?? result.error.message) : String(result.error)
+                }`
+            );
+        } else {
+            allRulesWithVisitors.push(result);
+        }
+    }
     const ruleCreationTime = performance.now() - ruleCreationStart;
-    context.logger.debug(`Created ${rules.length} rule visitors in ${ruleCreationTime.toFixed(0)}ms`);
+    context.logger.debug(
+        `Created ${allRulesWithVisitors.length} rule visitors in ${ruleCreationTime.toFixed(0)}ms (${
+            rules.length - allRulesWithVisitors.length
+        } failed to initialize)`
+    );
 
     const astVisitor = createDocsConfigFileAstVisitorForRules({
         relativeFilepath: RelativeFilePath.of(DOCS_CONFIGURATION_FILENAME),
