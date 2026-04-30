@@ -632,11 +632,7 @@ dotnet_diagnostic.IDE0005.severity = error
                 retryStatusCodes: this.context.settings.retryStatusCodes ?? "legacy"
             }
         });
-        return new File(
-            filename.replace("test/", "").replace(".Template", ""),
-            RelativeFilePath.of(""),
-            rendered
-        );
+        return new File(filename.replace("test/", "").replace(".Template", ""), RelativeFilePath.of(""), rendered);
     }
 
     private cachedClientOptionsRequiredDefaults: string | undefined;
