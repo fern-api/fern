@@ -15,8 +15,28 @@ describe("parseRepository", () => {
             expect(reference.repo).toBe("fern");
             expect(reference.repoUrl).toBe("https://github.com/fern-api/fern");
             expect(reference.cloneUrl).toBe("https://github.com/fern-api/fern.git");
-            expect(reference.getAuthedCloneUrl("xyz")).toBe("https://x-access-token:xyz@github.com/fern-api/fern.git");
+            expect(reference.getAuthedCloneUrl("ghs_xyz")).toBe(
+                "https://x-access-token:ghs_xyz@github.com/fern-api/fern.git"
+            );
         }
+    });
+
+    it("getAuthedCloneUrl format depends on token type", () => {
+        const ref = parseRepository("fern-api/fern");
+        // GitHub App installation tokens authenticate as the special `x-access-token` user.
+        expect(ref.getAuthedCloneUrl("ghs_install_token_value")).toBe(
+            "https://x-access-token:ghs_install_token_value@github.com/fern-api/fern.git"
+        );
+        // OAuth user tokens (gho_*) authenticate as the token itself — using
+        // `x-access-token:` as the username returns "Invalid username or token".
+        expect(ref.getAuthedCloneUrl("gho_oauth_token_value")).toBe(
+            "https://gho_oauth_token_value@github.com/fern-api/fern.git"
+        );
+        // Personal access tokens (ghp_*, github_pat_*) follow the same OAuth-style format.
+        expect(ref.getAuthedCloneUrl("ghp_pat_value")).toBe("https://ghp_pat_value@github.com/fern-api/fern.git");
+        expect(ref.getAuthedCloneUrl("github_pat_finegrained_value")).toBe(
+            "https://github_pat_finegrained_value@github.com/fern-api/fern.git"
+        );
     });
     it("invalid structure", async () => {
         expect(() => {
@@ -46,8 +66,8 @@ describe("parseRepository", () => {
         expect(reference.repo).toBe("api-client-sdk");
         expect(reference.repoUrl).toBe("https://github.acme.com/engineering/api-client-sdk");
         expect(reference.cloneUrl).toBe("https://github.acme.com/engineering/api-client-sdk.git");
-        expect(reference.getAuthedCloneUrl("xyz")).toBe(
-            "https://x-access-token:xyz@github.acme.com/engineering/api-client-sdk.git"
+        expect(reference.getAuthedCloneUrl("ghs_xyz")).toBe(
+            "https://x-access-token:ghs_xyz@github.acme.com/engineering/api-client-sdk.git"
         );
     });
 });

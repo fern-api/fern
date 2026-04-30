@@ -51,7 +51,13 @@ function newRepositoryReference({
         repoUrl,
         cloneUrl,
         getAuthedCloneUrl: (installationToken: string) => {
-            return cloneUrl.replace("https://", `https://x-access-token:${installationToken}@`);
+            // GitHub App installation tokens (ghs_*) authenticate as the special
+            // `x-access-token` user. OAuth user tokens (gho_*) and personal access
+            // tokens (ghp_*, github_pat_*) authenticate as the token itself —
+            // using `x-access-token` for those returns "Invalid username or token".
+            const isInstallationToken = installationToken.startsWith("ghs_");
+            const userPrefix = isInstallationToken ? "x-access-token:" : "";
+            return cloneUrl.replace("https://", `https://${userPrefix}${installationToken}@`);
         }
     };
 }
