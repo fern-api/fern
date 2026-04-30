@@ -2,6 +2,7 @@ import { docsYml } from "@fern-api/configuration";
 import { DOCS_CONFIGURATION_FILENAME } from "@fern-api/configuration-loader";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
+import { DocsWorkspace } from "@fern-api/workspace-loader";
 import { checkbox, confirm } from "@inquirer/prompts";
 import chalk from "chalk";
 import { existsSync } from "fs";
@@ -52,16 +53,28 @@ interface ExistingTranslationState {
     configuredLangs: Language[];
 }
 
-function getExistingTranslationState(config: docsYml.RawSchemas.DocsConfiguration): ExistingTranslationState {
-    if (config.translations != null && config.translations.length > 0) {
-        const defaultLang = config.translations.find((t) => t.default === true)?.lang ?? config.translations[0]?.lang;
-        const configuredLangs = config.translations.map((t) => t.lang);
+function getExistingTranslationState(config: DocsWorkspace["config"]): ExistingTranslationState {
+    const translations = config.translations;
+    if (translations != null && translations.length > 0) {
+        let defaultLang: Language | undefined;
+        const configuredLangs: Language[] = [];
+        for (const entry of translations) {
+            const lang = entry.lang;
+            configuredLangs.push(lang);
+            if (entry.default === true) {
+                defaultLang = lang;
+            }
+        }
+        if (defaultLang == null) {
+            defaultLang = configuredLangs[0];
+        }
         return { defaultLang, configuredLangs };
     }
 
-    if (config.languages != null && config.languages.length > 0) {
-        const defaultLang = config.languages[0];
-        return { defaultLang, configuredLangs: config.languages };
+    const languages = config.languages;
+    if (languages != null && languages.length > 0) {
+        const defaultLang = languages[0];
+        return { defaultLang, configuredLangs: languages };
     }
 
     return { defaultLang: undefined, configuredLangs: [] };
