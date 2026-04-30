@@ -1745,19 +1745,26 @@ function addDocsCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
         addDocsDiffCommand(yargs, cliContext);
         addDocsMdCommand(yargs, cliContext);
         addDocsThemeCommand(yargs, cliContext);
-        addDocsTranslateCommand(yargs, cliContext);
+        addDocsTranslationCommand(yargs, cliContext);
         return yargs;
     });
 }
 
-function addDocsTranslateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+function addDocsTranslationCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command("translation", "Commands for managing documentation translations", (yargs) => {
+        addDocsTranslationGenerateCommand(yargs, cliContext);
+        return yargs;
+    });
+}
+
+function addDocsTranslationGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
-        "translate",
+        "generate",
         "Interactively set up internationalization for your documentation",
         (yargs) => yargs,
         async () => {
             cliContext.instrumentPostHogEvent({
-                command: "fern docs translate"
+                command: "fern docs translation generate"
             });
 
             await docsTranslate({
