@@ -1,6 +1,17 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Bump `@fern-api/replay` from 0.13.0 to 0.14.0. Picks up fixes for
+        silent customization loss across apply and resolve paths (FER-9983),
+        per-patch-region diff to prevent silent customization loss, and
+        preservation of clean follow-up patches when same-file predecessors
+        conflict.
+      type: fix
+  createdAt: "2026-04-30"
+  version: 0.9.21
+
+- changelogEntry:
+    - summary: |
         Bump `@fern-api/replay` from 0.12.0 to 0.13.0. Picks up per-commit
         detection in non-linear-history fallback (FER-10201), which produces
         per-commit patches with proper attribution for squash-merged divergent
