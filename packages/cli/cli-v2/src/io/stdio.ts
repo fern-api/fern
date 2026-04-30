@@ -3,6 +3,7 @@ import { CliError } from "@fern-api/task-context";
 
 import { readFile, writeFile } from "fs/promises";
 import { JsonStreamStringify } from "json-stream-stringify";
+import { pipeline } from "stream/promises";
 
 /**
  * Conventional Unix marker used on I/O flags: `-` means stdin for inputs and
@@ -85,22 +86,23 @@ export async function readJsonOrPath(
 /**
  * Write a JSON-serializable object to a file path, or stream it to stdout when
  * the value is `-`.
+ *
+ * When writing to a file, `pathOrDash` must be an absolute path.
  */
 export async function writeOutputJson(
-    pathOrDash: string,
+    pathOrDash: AbsoluteFilePath | "-",
     object: unknown,
     { pretty = true, stdout = process.stdout }: { pretty?: boolean; stdout?: NodeJS.WritableStream } = {}
 ): Promise<void> {
     if (isStdioMarker(pathOrDash)) {
-        const stream = new JsonStreamStringify(object, undefined, pretty ? 2 : undefined);
-        return new Promise<void>((resolve, reject) => {
-            stream.on("error", reject);
-            stream.on("end", resolve);
-            stream.pipe(stdout, { end: false });
-        });
+        // JsonStreamStringify implements the Readable interface but the library
+        // does not export typings that satisfy NodeJS.ReadableStream directly.
+        const stream = new JsonStreamStringify(object, undefined, pretty ? 4 : undefined) as NodeJS.ReadableStream;
+        await pipeline(stream, stdout, { end: false });
+        return;
     }
 
-    await streamObjectToFile(AbsoluteFilePath.of(pathOrDash), object, { pretty });
+    await streamObjectToFile(pathOrDash, object, { pretty });
 }
 
 /**
@@ -160,7 +162,8 @@ async function readStreamToString(stream: NodeJS.ReadableStream): Promise<string
     stream.setEncoding("utf-8");
     let result = "";
     for await (const chunk of stream) {
-        result += typeof chunk === "string" ? chunk : chunk.toString("utf-8");
+        // setEncoding("utf-8") ensures chunks are always strings.
+        result += chunk as string;
     }
     return result;
 }

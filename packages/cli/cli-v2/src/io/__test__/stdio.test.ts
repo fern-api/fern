@@ -1,3 +1,4 @@
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { CliError } from "@fern-api/task-context";
 
 import { mkdtemp, readFile, rm, writeFile } from "fs/promises";
@@ -28,7 +29,7 @@ function capturingWritable(): { stream: NodeJS.WritableStream; getOutput: () => 
     }) as unknown as NodeJS.WritableStream;
     return {
         stream,
-        getOutput: () => Buffer.concat(chunks as unknown as Uint8Array[]).toString("utf-8")
+        getOutput: () => Buffer.concat(chunks as Uint8Array[]).toString("utf-8")
     };
 }
 
@@ -69,6 +70,11 @@ describe("readInput", () => {
     it("reads from a file path otherwise", async () => {
         const result = await readInput(filePath);
         expect(result).toBe("hello from file");
+    });
+
+    it("throws when the file does not exist", async () => {
+        const badPath = join(tmpDir, "does-not-exist.txt");
+        await expect(readInput(badPath)).rejects.toThrow();
     });
 });
 
@@ -142,7 +148,7 @@ describe("writeOutputJson", () => {
     });
 
     it("writes to a file when path is an absolute path", async () => {
-        const filePath = join(tmpDir, "output.json");
+        const filePath = AbsoluteFilePath.of(join(tmpDir, "output.json"));
         await writeOutputJson(filePath, { hello: "file" }, { pretty: false });
         const content = await readFile(filePath, "utf-8");
         expect(JSON.parse(content)).toEqual({ hello: "file" });
