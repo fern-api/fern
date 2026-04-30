@@ -118,12 +118,12 @@ function updateDocsYamlContent({
 }): string {
     const translationsBlock = buildTranslationsYamlBlock(defaultLang, allTargetLangs);
 
-    const translationsRegex = /^translations:\s*\n(?:\s+-[^\n]*\n?)*/m;
+    const translationsRegex = /^translations:\s*\n(?:[ \t]+[^\n]*(?:\n|$))*/m;
     if (translationsRegex.test(rawContent)) {
         return rawContent.replace(translationsRegex, translationsBlock + "\n");
     }
 
-    const languagesRegex = /^languages:\s*\n(?:\s+-[^\n]*\n?)*/m;
+    const languagesRegex = /^languages:\s*\n(?:[ \t]+[^\n]*(?:\n|$))*/m;
     if (languagesRegex.test(rawContent)) {
         return rawContent.replace(languagesRegex, translationsBlock + "\n");
     }
