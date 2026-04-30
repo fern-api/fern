@@ -29,9 +29,10 @@ internal class OneOfSerializer : JsonConverter<IOneOf>
                 var oneOf = (IOneOf)cast.Invoke(null, [result])!;
                 firstMatch ??= oneOf;
 
-                if (bestMatch == null && !ContainsJsonElement(result))
+                if (!ContainsJsonElement(result))
                 {
                     bestMatch = oneOf;
+                    break;
                 }
             }
             catch (JsonException) { }
