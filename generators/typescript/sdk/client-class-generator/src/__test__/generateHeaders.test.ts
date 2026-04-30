@@ -918,4 +918,45 @@ describe("generateHeaders", () => {
         expect(text).toContain("_authRequest");
         expect(text).toMatchSnapshot();
     });
+
+    it("skips auth headers on auth endpoints even when alwaysSendAuth is true (prevents auth loop)", () => {
+        const coreUtilities = createMockCoreUtilities();
+        const authEndpointContext = {
+            type: createMockTypeContext(),
+            importsManager: {
+                addImportFromRoot: () => {
+                    // no-op for test
+                }
+            },
+            coreUtilities,
+            authProvider: {
+                isAuthEndpoint: () => true
+            },
+            versionContext: {
+                getGeneratedVersion: () => undefined
+            },
+            case: caseConverter
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
+        } as any;
+
+        const result = generateHeaders({
+            context: authEndpointContext,
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
+            intermediateRepresentation: { headers: [] } as any,
+            generatedSdkClientClass: createMockGeneratedSdkClientClass({
+                hasAuthProvider: true,
+                alwaysSendAuth: true
+            }),
+            requestParameter: createMockRequestParameter(),
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
+            service: { headers: [] } as any,
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
+            endpoint: { headers: [], auth: false, idempotent: false } as any,
+            idempotencyHeaders: []
+        });
+
+        const text = statementsToString(result);
+        expect(text).not.toContain("_authRequest");
+        expect(text).toMatchSnapshot();
+    });
 });

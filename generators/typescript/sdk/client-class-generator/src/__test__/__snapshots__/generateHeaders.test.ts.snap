@@ -67,4 +67,6 @@ exports[`generateHeaders > includes auth headers when alwaysSendAuth is true eve
 let _headers: Fetcher.Args["headers"] = mergeHeaders(_authRequest.headers, this._options?.headers, requestOptions?.headers);"
 `;
 
+exports[`generateHeaders > skips auth headers on auth endpoints even when alwaysSendAuth is true (prevents auth loop) 1`] = `"let _headers: Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);"`;
+
 exports[`generateHeaders > skips auth headers when alwaysSendAuth is false and endpoint.auth is false 1`] = `"let _headers: Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);"`;

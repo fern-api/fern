@@ -1,0 +1,35 @@
+# yaml-language-server: $schema=../../../../../fern.schema.json
+
+types:
+  Plant:
+    properties:
+      id: string
+      name: string
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    getPlant:
+      docs: Endpoint with auth explicitly disabled
+      auth: false
+      path: /plants/{plantId}
+      method: GET
+      path-parameters:
+        plantId: string
+      response: Plant
+
+    createPlant:
+      docs: Endpoint with auth enabled
+      auth: true
+      path: /plants
+      method: POST
+      request: Plant
+      response: Plant
+
+    listPlants:
+      docs: Endpoint with auth explicitly disabled
+      auth: false
+      path: /plants
+      method: GET
+      response: list<Plant>

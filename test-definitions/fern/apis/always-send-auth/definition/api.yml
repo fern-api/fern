@@ -1,0 +1,8 @@
+name: always-send-auth
+auth: Bearer
+auth-schemes:
+  Bearer:
+    scheme: bearer
+    token:
+      name: apiKey
+      env: MY_API_KEY

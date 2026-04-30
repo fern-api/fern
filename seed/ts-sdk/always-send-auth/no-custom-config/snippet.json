@@ -1,0 +1,38 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/plants/{plantId}",
+                "method": "GET",
+                "identifier_override": "endpoint_service.getPlant"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedAlwaysSendAuthClient } from \"@fern/always-send-auth\";\n\nconst client = new SeedAlwaysSendAuthClient({ environment: \"YOUR_BASE_URL\", apiKey: \"YOUR_API_KEY\" });\nawait client.service.getPlant(\"plantId\");\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/plants",
+                "method": "POST",
+                "identifier_override": "endpoint_service.createPlant"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedAlwaysSendAuthClient } from \"@fern/always-send-auth\";\n\nconst client = new SeedAlwaysSendAuthClient({ environment: \"YOUR_BASE_URL\", apiKey: \"YOUR_API_KEY\" });\nawait client.service.createPlant({\n    id: \"id\",\n    name: \"name\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/plants",
+                "method": "GET",
+                "identifier_override": "endpoint_service.listPlants"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedAlwaysSendAuthClient } from \"@fern/always-send-auth\";\n\nconst client = new SeedAlwaysSendAuthClient({ environment: \"YOUR_BASE_URL\", apiKey: \"YOUR_API_KEY\" });\nawait client.service.listPlants();\n"
+            }
+        }
+    ],
+    "types": {}
+}
