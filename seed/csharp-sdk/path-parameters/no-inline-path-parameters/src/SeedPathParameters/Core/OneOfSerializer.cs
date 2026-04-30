@@ -16,21 +16,66 @@ internal class OneOfSerializer : JsonConverter<IOneOf>
         if (reader.TokenType is JsonTokenType.Null)
             return default;
 
+        var json = JsonElement.ParseValue(ref reader);
+
+        IOneOf? firstMatch = null;
+        IOneOf? bestMatch = null;
+
         foreach (var (type, cast) in GetOneOfTypes(typeToConvert))
         {
             try
             {
-                var readerCopy = reader;
-                var result = JsonSerializer.Deserialize(ref readerCopy, type, options);
-                reader.Skip();
-                return (IOneOf)cast.Invoke(null, [result])!;
+                var result = JsonSerializer.Deserialize(json, type, options);
+                var oneOf = (IOneOf)cast.Invoke(null, [result])!;
+                firstMatch ??= oneOf;
+
+                if (!ContainsJsonElement(result))
+                {
+                    bestMatch = oneOf;
+                    break;
+                }
             }
             catch (JsonException) { }
         }
 
-        throw new JsonException(
-            $"Cannot deserialize into one of the supported types for {typeToConvert}"
-        );
+        return bestMatch
+            ?? firstMatch
+            ?? throw new JsonException(
+                $"Cannot deserialize into one of the supported types for {typeToConvert}"
+            );
+    }
+
+    /// <summary>
+    /// Checks if the deserialized object is or contains a raw JsonElement value,
+    /// indicating the deserializer used a catch-all strategy rather than
+    /// strongly-typed deserialization.
+    /// </summary>
+    private static bool ContainsJsonElement(object? result)
+    {
+        if (result == null || result is JsonElement)
+            return true;
+
+        foreach (
+            var prop in result.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance)
+        )
+        {
+            if (prop.GetCustomAttribute<JsonIgnoreAttribute>() != null)
+                continue;
+            if (prop.GetCustomAttribute<JsonExtensionDataAttribute>() != null)
+                continue;
+
+            try
+            {
+                if (prop.GetValue(result) is JsonElement)
+                    return true;
+            }
+            catch
+            {
+                // Ignore inaccessible properties
+            }
+        }
+
+        return false;
     }
 
     public override void Write(Utf8JsonWriter writer, IOneOf value, JsonSerializerOptions options)
