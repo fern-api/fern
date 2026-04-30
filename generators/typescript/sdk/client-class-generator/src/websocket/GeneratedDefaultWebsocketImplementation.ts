@@ -34,6 +34,7 @@ export declare namespace GeneratedDefaultWebsocketImplementation {
         omitUndefined: boolean;
         parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
         caseConverter: CaseConverter;
+        alwaysSendAuth: boolean;
     }
 }
 
@@ -63,6 +64,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
     private readonly omitUndefined: boolean;
     private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     private readonly case: CaseConverter;
+    private readonly alwaysSendAuth: boolean;
     public readonly channel: FernIr.WebSocketChannel;
 
     constructor({
@@ -77,7 +79,8 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
         retainOriginalCasing,
         omitUndefined,
         parameterNaming,
-        caseConverter
+        caseConverter,
+        alwaysSendAuth
     }: GeneratedDefaultWebsocketImplementation.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.generatedSdkClientClass = generatedSdkClientClass;
@@ -91,6 +94,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
         this.omitUndefined = omitUndefined;
         this.parameterNaming = parameterNaming;
         this.case = caseConverter;
+        this.alwaysSendAuth = alwaysSendAuth;
     }
 
     public getSignature(context: FileContext): ChannelSignature {
@@ -416,7 +420,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
         const mergeHeaders: ts.Expression[] = [];
         const authProviderStatements = [];
         const mergeOnlyDefinedHeaders: (ts.PropertyAssignment | ts.SpreadAssignment)[] = [];
-        if (this.generatedSdkClientClass.hasAuthProvider() && this.channel.auth) {
+        if (this.generatedSdkClientClass.hasAuthProvider() && (this.channel.auth || this.alwaysSendAuth)) {
             const metadataArg = this.generatedSdkClientClass.getGenerateEndpointMetadata()
                 ? ts.factory.createObjectLiteralExpression([
                       ts.factory.createPropertyAssignment(

@@ -3171,7 +3171,14 @@
           ]
         },
         "auth": {
-          "type": "boolean"
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "url": {
           "oneOf": [
@@ -3250,7 +3257,6 @@
         }
       },
       "required": [
-        "auth",
         "base-path",
         "endpoints"
       ],

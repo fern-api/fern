@@ -87,6 +87,7 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     customPagerName: z.optional(z.string()),
 
     resolveQueryParameterNameConflicts: z.optional(z.boolean()),
+    alwaysSendAuth: z.optional(z.boolean()),
 
     // beta (not in docs)
     includeContentHeadersOnFileDownloadResponse: z.optional(z.boolean()),

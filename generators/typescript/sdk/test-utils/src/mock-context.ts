@@ -110,10 +110,12 @@ export function createMockGeneratedClientClass() {
 export function createMockGeneratedSdkClientClass(opts?: {
     hasAuthProvider?: boolean;
     generateEndpointMetadata?: boolean;
+    alwaysSendAuth?: boolean;
 }) {
     return {
         hasAuthProvider: () => opts?.hasAuthProvider ?? false,
         getGenerateEndpointMetadata: () => opts?.generateEndpointMetadata ?? false,
+        getAlwaysSendAuth: () => opts?.alwaysSendAuth ?? false,
         getReferenceToAuthProviderOrThrow: () => ts.factory.createIdentifier("this._authProvider"),
         getReferenceToMetadataForEndpointSupplier: () => ts.factory.createIdentifier("_metadata")
         // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
