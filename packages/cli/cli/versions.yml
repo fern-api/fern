@@ -1,4 +1,21 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.4.1
+  changelogEntry:
+    - summary: |
+        Fix OpenAPI parsing crash when specs contain non-standard `additionalProperties: "true"` (string instead of boolean).
+        The parser was attempting to use the `in` operator on a string value, causing a `Cannot use 'in' operator to search for 'type' in true` error.
+      type: fix
+    - summary: |
+        Surface rule initialization errors in `fern check` instead of exiting silently.
+        Previously, when a validation rule (e.g. `valid-markdown-links`) failed to
+        initialize because its docs configuration could not be resolved — for
+        example, a navigation `folder:` entry pointing at a path that does not
+        exist — `fern check` would exit with code 1 and no visible error message.
+        Now the underlying failure (e.g. `Folder not found: …`) is reported as a
+        fatal violation on `docs.yml`.
+      type: fix
+  createdAt: "2026-04-30"
+  irVersion: 66
 - version: 5.4.0
   changelogEntry:
     - summary: |
