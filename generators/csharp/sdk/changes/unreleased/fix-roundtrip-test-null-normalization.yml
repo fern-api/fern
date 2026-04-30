@@ -1,0 +1,6 @@
+- summary: |
+    Fix serialization round-trip tests to account for WhenWritingNull normalization.
+    The Roundtrips test now verifies idempotency of the serialized form rather than
+    comparing against the raw input JSON, which may include null optional properties
+    that are intentionally omitted by the serializer.
+  type: fix
