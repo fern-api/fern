@@ -874,4 +874,48 @@ describe("generateHeaders", () => {
         expect(text).toContain("_options");
         expect(text).toMatchSnapshot();
     });
+
+    it("skips auth headers when alwaysSendAuth is false and endpoint.auth is false", () => {
+        const result = generateHeaders({
+            context: createMockContext(),
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
+            intermediateRepresentation: { headers: [] } as any,
+            generatedSdkClientClass: createMockGeneratedSdkClientClass({
+                hasAuthProvider: true,
+                alwaysSendAuth: false
+            }),
+            requestParameter: createMockRequestParameter(),
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
+            service: { headers: [] } as any,
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
+            endpoint: { headers: [], auth: false, idempotent: false } as any,
+            idempotencyHeaders: []
+        });
+
+        const text = statementsToString(result);
+        expect(text).not.toContain("_authRequest");
+        expect(text).toMatchSnapshot();
+    });
+
+    it("includes auth headers when alwaysSendAuth is true even if endpoint.auth is false", () => {
+        const result = generateHeaders({
+            context: createMockContext(),
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
+            intermediateRepresentation: { headers: [] } as any,
+            generatedSdkClientClass: createMockGeneratedSdkClientClass({
+                hasAuthProvider: true,
+                alwaysSendAuth: true
+            }),
+            requestParameter: createMockRequestParameter(),
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
+            service: { headers: [] } as any,
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
+            endpoint: { headers: [], auth: false, idempotent: false } as any,
+            idempotencyHeaders: []
+        });
+
+        const text = statementsToString(result);
+        expect(text).toContain("_authRequest");
+        expect(text).toMatchSnapshot();
+    });
 });

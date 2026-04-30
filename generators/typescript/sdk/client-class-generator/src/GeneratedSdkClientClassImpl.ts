@@ -82,6 +82,7 @@ export declare namespace GeneratedSdkClientClassImpl {
         generateEndpointMetadata: boolean;
         parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
         offsetSemantics: "item-index" | "page-index";
+        alwaysSendAuth: boolean;
     }
 }
 
@@ -126,6 +127,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private readonly anyEndpointWithAuth: boolean;
     private readonly generateEndpointMetadata: boolean;
     private readonly offsetSemantics: "item-index" | "page-index";
+    private readonly alwaysSendAuth: boolean;
 
     constructor({
         caseConverter,
@@ -153,7 +155,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         formDataSupport,
         generateEndpointMetadata,
         parameterNaming,
-        offsetSemantics
+        offsetSemantics,
+        alwaysSendAuth
     }: GeneratedSdkClientClassImpl.Init) {
         this.case = caseConverter;
         this.isRoot = isRoot;
@@ -174,6 +177,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.generateEndpointMetadata = generateEndpointMetadata;
         this.parameterNaming = parameterNaming;
         this.offsetSemantics = offsetSemantics;
+        this.alwaysSendAuth = alwaysSendAuth;
 
         const package_ = packageResolver.resolvePackage(packageId);
         this.package_ = package_;
@@ -371,7 +375,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 retainOriginalCasing: this.retainOriginalCasing,
                 omitUndefined: this.omitUndefined,
                 parameterNaming,
-                caseConverter: this.case
+                caseConverter: this.case,
+                alwaysSendAuth: this.alwaysSendAuth
             });
         } else {
             this.generatedWebsocketImplementation = undefined;
@@ -570,6 +575,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
     public getGenerateEndpointMetadata(): boolean {
         return this.generateEndpointMetadata;
+    }
+
+    public getAlwaysSendAuth(): boolean {
+        return this.alwaysSendAuth;
     }
 
     public accessFromRootClient(args: { referenceToRootClient: ts.Expression }): ts.Expression {
