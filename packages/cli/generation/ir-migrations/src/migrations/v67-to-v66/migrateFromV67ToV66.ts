@@ -50,7 +50,20 @@ export const V67_TO_V66_MIGRATION: IrMigration<
         v67: IrVersions.V67.ir.IntermediateRepresentation,
         _context: IrMigrationContext
     ): IrVersions.V66.ir.IntermediateRepresentation => {
-        return migrateIntermediateRepresentation(v67) as unknown as IrVersions.V66.ir.IntermediateRepresentation;
+        // The workspace V67 SDK and the published V66 SDK are nominally distinct generated
+        // TypeScript packages (newer `_Utils` style vs. older flat declarations), so a V67 IR
+        // value with V66-compatible runtime shape is not structurally assignable to V66's IR
+        // type. We migrate availability values in V67 space, then round-trip through V67's
+        // serializer + V66's parser to obtain a true V66-typed object.
+        const migrated = migrateIntermediateRepresentation(v67);
+        const json = IrSerialization.V67.IntermediateRepresentation.jsonOrThrow(migrated, {
+            unrecognizedObjectKeys: "passthrough",
+            skipValidation: true
+        });
+        return IrSerialization.V66.IntermediateRepresentation.parseOrThrow(json, {
+            unrecognizedObjectKeys: "passthrough",
+            skipValidation: true
+        });
     }
 };
 
@@ -83,7 +96,10 @@ function migrateAvailability(
     }
     return {
         ...availability,
-        status: downcastAvailabilityStatus(availability.status) as IrVersions.V67.AvailabilityStatus
+        // The downcast result is a V66 status string. It is also a valid V67 status string
+        // (since V67 is a strict superset of V66), so we keep V67 typing throughout the
+        // V67-shaped traversal. The final V66 conversion happens in `migrateBackwards`.
+        status: downcastAvailabilityStatus(availability.status)
     };
 }
 
