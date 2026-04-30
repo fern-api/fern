@@ -645,7 +645,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
         // Determine the type for _options based on whether auth is required
         const optionsType =
-            this.authProvider && this.anyEndpointWithAuth
+            this.authProvider && (this.anyEndpointWithAuth || this.alwaysSendAuth)
                 ? (() => {
                       // Import NormalizedClientOptionsWithAuth and normalizeClientOptionsWithAuth from BaseClient
                       context.importsManager.addImportFromRoot("BaseClient", {
@@ -692,7 +692,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             isReadonly: true
         });
 
-        if (this.authProvider && this.anyEndpointWithAuth) {
+        if (this.authProvider && (this.anyEndpointWithAuth || this.alwaysSendAuth)) {
             const parameters = [
                 {
                     name: GeneratedSdkClientClassImpl.OPTIONS_PARAMETER_NAME,
@@ -887,7 +887,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         context: FileContext;
     }): void {
         // Build the auth headers getter expression
-        const hasAuth = this.authProvider && this.anyEndpointWithAuth;
+        const hasAuth = this.authProvider && (this.anyEndpointWithAuth || this.alwaysSendAuth);
         let getAuthHeadersCode: string;
         if (hasAuth) {
             getAuthHeadersCode =
