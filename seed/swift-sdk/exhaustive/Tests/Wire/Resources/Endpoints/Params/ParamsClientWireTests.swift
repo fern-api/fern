@@ -7,9 +7,9 @@ import Exhaustive
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 string
-                """.utf8
+                """#.utf8
             )
         )
         let client = ExhaustiveClient(
@@ -29,9 +29,9 @@ import Exhaustive
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 string
-                """.utf8
+                """#.utf8
             )
         )
         let client = ExhaustiveClient(
@@ -51,9 +51,9 @@ import Exhaustive
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 string
-                """.utf8
+                """#.utf8
             )
         )
         let client = ExhaustiveClient(
@@ -74,9 +74,9 @@ import Exhaustive
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 string
-                """.utf8
+                """#.utf8
             )
         )
         let client = ExhaustiveClient(
@@ -97,11 +97,11 @@ import Exhaustive
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "string": "uploaded"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ExhaustiveClient(
@@ -124,9 +124,9 @@ import Exhaustive
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 string
-                """.utf8
+                """#.utf8
             )
         )
         let client = ExhaustiveClient(
@@ -146,9 +146,9 @@ import Exhaustive
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 string
-                """.utf8
+                """#.utf8
             )
         )
         let client = ExhaustiveClient(

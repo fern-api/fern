@@ -7,7 +7,7 @@ import Trace
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 [
                   {
                     "problemId": "problemId",
@@ -30,7 +30,7 @@ import Trace
                     ]
                   }
                 ]
-                """.utf8
+                """#.utf8
             )
         )
         let client = TraceClient(
@@ -60,7 +60,7 @@ import Trace
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 [
                   {
                     "problemId": "problemId",
@@ -645,7 +645,7 @@ import Trace
                     "isPublic": true
                   }
                 ]
-                """.utf8
+                """#.utf8
             )
         )
         let client = TraceClient(
@@ -1173,7 +1173,7 @@ import Trace
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "problemId": "problemId",
                   "problemDescription": {
@@ -1467,7 +1467,7 @@ import Trace
                   ],
                   "isPublic": true
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = TraceClient(
@@ -1743,7 +1743,7 @@ import Trace
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "problemId": "problemId",
                   "problemDescription": {
@@ -2037,7 +2037,7 @@ import Trace
                   ],
                   "isPublic": true
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = TraceClient(

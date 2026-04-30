@@ -7,9 +7,9 @@ import FileUpload
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 Foo
-                """.utf8
+                """#.utf8
             )
         )
         let client = FileUploadClient(
@@ -28,9 +28,9 @@ import FileUpload
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 Success
-                """.utf8
+                """#.utf8
             )
         )
         let client = FileUploadClient(

@@ -96,7 +96,9 @@ export class WireTestFunctionGenerator {
                                             swift.functionArgument({
                                                 value: swift.Expression.memberAccess({
                                                     target: swift.Expression.rawMultiLineStringLiteral(
-                                                        serializeJsonExampleForWireTest(exampleTypeRef.jsonExample)
+                                                        typeof exampleTypeRef.jsonExample === "string"
+                                                            ? exampleTypeRef.jsonExample
+                                                            : JSON.stringify(exampleTypeRef.jsonExample, null, 2)
                                                     ),
                                                     memberName: "utf8"
                                                 })
@@ -627,26 +629,4 @@ export class WireTestFunctionGenerator {
     }
 }
 
-/**
- * Serializes a wire-test example body (`exampleTypeRef.jsonExample`, which has
- * type `unknown` in the IR) into a JSON string suitable for embedding in a
- * Swift raw multi-line string literal.
- *
- * The IR commonly stores examples in one of three shapes:
- *   1. A parsed JS value (object/array/primitive). We `JSON.stringify` it.
- *   2. A pre-serialized JSON blob (a string). We try to parse-then-restringify
- *      to normalize formatting and escape any control characters that may
- *      appear unescaped inside string values.
- *   3. A primitive string value that happens to be invalid JSON. We fall back
- *      to `JSON.stringify` so the resulting blob is itself valid JSON.
- */
-export function serializeJsonExampleForWireTest(jsonExample: unknown): string {
-    if (typeof jsonExample !== "string") {
-        return JSON.stringify(jsonExample, null, 2);
-    }
-    try {
-        return JSON.stringify(JSON.parse(jsonExample), null, 2);
-    } catch {
-        return JSON.stringify(jsonExample, null, 2);
-    }
-}
+

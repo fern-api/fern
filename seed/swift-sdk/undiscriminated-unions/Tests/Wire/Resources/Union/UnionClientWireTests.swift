@@ -7,9 +7,9 @@ import UndiscriminatedUnions
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 string
-                """.utf8
+                """#.utf8
             )
         )
         let client = UndiscriminatedUnionsClient(
@@ -32,13 +32,13 @@ import UndiscriminatedUnions
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "name": "exampleName",
                   "value": "exampleValue",
                   "default": "exampleDefault"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = UndiscriminatedUnionsClient(
@@ -64,11 +64,11 @@ import UndiscriminatedUnions
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "name": "string"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = UndiscriminatedUnionsClient(
@@ -88,9 +88,9 @@ import UndiscriminatedUnions
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 true
-                """.utf8
+                """#.utf8
             )
         )
         let client = UndiscriminatedUnionsClient(
@@ -115,9 +115,9 @@ import UndiscriminatedUnions
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 true
-                """.utf8
+                """#.utf8
             )
         )
         let client = UndiscriminatedUnionsClient(
@@ -142,9 +142,9 @@ import UndiscriminatedUnions
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 true
-                """.utf8
+                """#.utf8
             )
         )
         let client = UndiscriminatedUnionsClient(
@@ -171,9 +171,9 @@ import UndiscriminatedUnions
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 true
-                """.utf8
+                """#.utf8
             )
         )
         let client = UndiscriminatedUnionsClient(
@@ -200,9 +200,9 @@ import UndiscriminatedUnions
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 string
-                """.utf8
+                """#.utf8
             )
         )
         let client = UndiscriminatedUnionsClient(
@@ -225,9 +225,9 @@ import UndiscriminatedUnions
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 string
-                """.utf8
+                """#.utf8
             )
         )
         let client = UndiscriminatedUnionsClient(
@@ -248,9 +248,9 @@ import UndiscriminatedUnions
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 string
-                """.utf8
+                """#.utf8
             )
         )
         let client = UndiscriminatedUnionsClient(
@@ -271,9 +271,9 @@ import UndiscriminatedUnions
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 string
-                """.utf8
+                """#.utf8
             )
         )
         let client = UndiscriminatedUnionsClient(
@@ -297,7 +297,7 @@ import UndiscriminatedUnions
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "name": "name",
                   "value": {
@@ -306,7 +306,7 @@ import UndiscriminatedUnions
                     }
                   }
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = UndiscriminatedUnionsClient(
@@ -345,9 +345,9 @@ import UndiscriminatedUnions
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 success
-                """.utf8
+                """#.utf8
             )
         )
         let client = UndiscriminatedUnionsClient(
@@ -371,9 +371,9 @@ import UndiscriminatedUnions
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 string
-                """.utf8
+                """#.utf8
             )
         )
         let client = UndiscriminatedUnionsClient(

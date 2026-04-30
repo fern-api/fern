@@ -7,7 +7,7 @@ import NullableOptional
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "id": "id",
                   "username": "username",
@@ -25,7 +25,7 @@ import NullableOptional
                     "tenantId": "tenantId"
                   }
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = NullableOptionalClient(
@@ -60,7 +60,7 @@ import NullableOptional
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "id": "id",
                   "username": "username",
@@ -78,7 +78,7 @@ import NullableOptional
                     "tenantId": "tenantId"
                   }
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = NullableOptionalClient(
@@ -126,7 +126,7 @@ import NullableOptional
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "id": "id",
                   "username": "username",
@@ -144,7 +144,7 @@ import NullableOptional
                     "tenantId": "tenantId"
                   }
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = NullableOptionalClient(
@@ -193,7 +193,7 @@ import NullableOptional
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 [
                   {
                     "id": "id",
@@ -230,7 +230,7 @@ import NullableOptional
                     }
                   }
                 ]
-                """.utf8
+                """#.utf8
             )
         )
         let client = NullableOptionalClient(
@@ -287,7 +287,7 @@ import NullableOptional
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 [
                   {
                     "id": "id",
@@ -324,7 +324,7 @@ import NullableOptional
                     }
                   }
                 ]
-                """.utf8
+                """#.utf8
             )
         )
         let client = NullableOptionalClient(
@@ -381,7 +381,7 @@ import NullableOptional
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "id": "id",
                   "nullableRole": "ADMIN",
@@ -489,7 +489,7 @@ import NullableOptional
                     "optionalMapOfEnums": "ADMIN"
                   }
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = NullableOptionalClient(
@@ -755,7 +755,7 @@ import NullableOptional
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "id": "id",
                   "nullableRole": "ADMIN",
@@ -863,7 +863,7 @@ import NullableOptional
                     "optionalMapOfEnums": "ADMIN"
                   }
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = NullableOptionalClient(
@@ -1016,7 +1016,7 @@ import NullableOptional
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "id": "id",
                   "nullableRole": "ADMIN",
@@ -1124,7 +1124,7 @@ import NullableOptional
                     "optionalMapOfEnums": "ADMIN"
                   }
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = NullableOptionalClient(
@@ -1311,7 +1311,7 @@ import NullableOptional
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "echo": {
                     "requiredString": "requiredString",
@@ -1371,7 +1371,7 @@ import NullableOptional
                   "nullCount": 1,
                   "presentFieldsCount": 1
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = NullableOptionalClient(
@@ -1511,7 +1511,7 @@ import NullableOptional
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 [
                   {
                     "id": "id",
@@ -1548,7 +1548,7 @@ import NullableOptional
                     }
                   }
                 ]
-                """.utf8
+                """#.utf8
             )
         )
         let client = NullableOptionalClient(
@@ -1604,14 +1604,14 @@ import NullableOptional
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "type": "email",
                   "emailAddress": "emailAddress",
                   "subject": "subject",
                   "htmlContent": "htmlContent"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = NullableOptionalClient(
@@ -1639,12 +1639,12 @@ import NullableOptional
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 [
                   "string",
                   "string"
                 ]
-                """.utf8
+                """#.utf8
             )
         )
         let client = NullableOptionalClient(
@@ -1680,7 +1680,7 @@ import NullableOptional
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 [
                   {
                     "type": "user",
@@ -1719,7 +1719,7 @@ import NullableOptional
                     }
                   }
                 ]
-                """.utf8
+                """#.utf8
             )
         )
         let client = NullableOptionalClient(

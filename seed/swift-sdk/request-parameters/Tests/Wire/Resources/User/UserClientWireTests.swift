@@ -7,7 +7,7 @@ import RequestParameters
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "name": "name",
                   "tags": [
@@ -15,7 +15,7 @@ import RequestParameters
                     "tags"
                   ]
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = RequestParametersClient(

@@ -7,7 +7,7 @@ import Api
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "id": "id",
                   "name": "name",
@@ -15,7 +15,7 @@ import Api
                     "key": "value"
                   }
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ApiClient(
@@ -42,7 +42,7 @@ import Api
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "id": "id",
                   "name": "name",
@@ -50,7 +50,7 @@ import Api
                     "key": "value"
                   }
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ApiClient(

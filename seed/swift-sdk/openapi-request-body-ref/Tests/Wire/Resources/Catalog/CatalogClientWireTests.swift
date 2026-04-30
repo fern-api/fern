@@ -7,7 +7,7 @@ import Api
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "id": "id",
                   "caption": "caption",
@@ -17,7 +17,7 @@ import Api
                     "catalog_object_id": "catalog_object_id"
                   }
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ApiClient(
@@ -49,7 +49,7 @@ import Api
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "id": "id",
                   "caption": "caption",
@@ -59,7 +59,7 @@ import Api
                     "catalog_object_id": "catalog_object_id"
                   }
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ApiClient(
@@ -86,7 +86,7 @@ import Api
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "id": "id",
                   "caption": "caption",
@@ -96,7 +96,7 @@ import Api
                     "catalog_object_id": "catalog_object_id"
                   }
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ApiClient(
