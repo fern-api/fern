@@ -300,5 +300,50 @@ describe("migrateFromV67ToV66", () => {
             expect(v66IR.types.type_Enum?.availability?.status).toBe("PRE_RELEASE");
             expect(enm.values[0]?.availability?.status).toBe("DEPRECATED");
         });
+
+        it("downcasts availability on apiVersion header and enum values", () => {
+            const buildName = (n: string): IrVersions.V67.NameAndWireValueOrString => ({
+                wireValue: n,
+                name: {
+                    originalName: n,
+                    camelCase: { safeName: n, unsafeName: n },
+                    pascalCase: { safeName: n, unsafeName: n },
+                    snakeCase: { safeName: n, unsafeName: n },
+                    screamingSnakeCase: { safeName: n, unsafeName: n }
+                }
+            });
+            const v67IR = createMinimalV67IR({
+                apiVersion: IrVersions.V67.ApiVersionScheme.header({
+                    header: {
+                        docs: undefined,
+                        availability: { status: "ALPHA", message: undefined },
+                        name: buildName("X-API-Version"),
+                        valueType: IrVersions.V67.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+                        env: undefined,
+                        v2Examples: undefined
+                    } as IrVersions.V67.HttpHeader,
+                    value: {
+                        default: undefined,
+                        values: [
+                            {
+                                docs: undefined,
+                                availability: { status: "LEGACY", message: undefined },
+                                name: buildName("v1")
+                            }
+                        ],
+                        forwardCompatible: undefined
+                    }
+                })
+            });
+
+            const v66IR = V67_TO_V66_MIGRATION.migrateBackwards(v67IR, mockContext);
+
+            const scheme = v66IR.apiVersion;
+            if (scheme?.type !== "header") {
+                throw new Error("expected header scheme");
+            }
+            expect(scheme.header.availability?.status).toBe("IN_DEVELOPMENT");
+            expect(scheme.value.values[0]?.availability?.status).toBe("DEPRECATED");
+        });
     });
 });

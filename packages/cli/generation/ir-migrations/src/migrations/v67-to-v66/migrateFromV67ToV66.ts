@@ -100,6 +100,7 @@ function migrateIntermediateRepresentation(
 ): IrVersions.V67.ir.IntermediateRepresentation {
     return {
         ...v67,
+        apiVersion: v67.apiVersion != null ? migrateApiVersionScheme(v67.apiVersion) : undefined,
         headers: v67.headers.map(migrateHttpHeader),
         idempotencyHeaders: v67.idempotencyHeaders.map(migrateHttpHeader),
         types: mapRecord(v67.types, migrateTypeDeclaration),
@@ -109,6 +110,23 @@ function migrateIntermediateRepresentation(
         websocketChannels:
             v67.websocketChannels != null ? mapRecord(v67.websocketChannels, migrateWebSocketChannel) : undefined
     };
+}
+
+function migrateApiVersionScheme(scheme: IrVersions.V67.ApiVersionScheme): IrVersions.V67.ApiVersionScheme {
+    switch (scheme.type) {
+        case "header":
+            return {
+                ...scheme,
+                header: migrateHttpHeader(scheme.header),
+                value: {
+                    ...scheme.value,
+                    default: scheme.value.default != null ? migrateEnumValue(scheme.value.default) : undefined,
+                    values: scheme.value.values.map(migrateEnumValue)
+                }
+            };
+        default:
+            return assertNever(scheme.type);
+    }
 }
 
 function migrateErrorDeclaration(error: IrVersions.V67.ErrorDeclaration): IrVersions.V67.ErrorDeclaration {
