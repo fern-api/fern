@@ -838,811 +838,811 @@ index 925b5375d52..5679469f51a 100644
 diff --git a/src/BaseClient.ts b/src/test-packagePath/BaseClient.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/BaseClient.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/BaseClient.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/BaseClient.ts
 diff --git a/src/Client.ts b/src/test-packagePath/Client.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/Client.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/Client.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/Client.ts
 diff --git a/src/api/index.ts b/src/test-packagePath/api/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/index.ts
 diff --git a/src/api/resources/endpoints/client/Client.ts b/src/test-packagePath/api/resources/endpoints/client/Client.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/client/Client.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/client/Client.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/client/Client.ts
 diff --git a/src/api/resources/endpoints/client/index.ts b/src/test-packagePath/api/resources/endpoints/client/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/client/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/client/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/client/index.ts
 diff --git a/src/api/resources/endpoints/exports.ts b/src/test-packagePath/api/resources/endpoints/exports.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/exports.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/exports.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/exports.ts
 diff --git a/src/api/resources/endpoints/index.ts b/src/test-packagePath/api/resources/endpoints/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/index.ts
 diff --git a/src/api/resources/endpoints/resources/container/client/Client.ts b/src/test-packagePath/api/resources/endpoints/resources/container/client/Client.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/container/client/Client.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/container/client/Client.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/container/client/Client.ts
 diff --git a/src/api/resources/endpoints/resources/container/client/index.ts b/src/test-packagePath/api/resources/endpoints/resources/container/client/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/container/client/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/container/client/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/container/client/index.ts
 diff --git a/src/api/resources/endpoints/resources/container/exports.ts b/src/test-packagePath/api/resources/endpoints/resources/container/exports.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/container/exports.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/container/exports.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/container/exports.ts
 diff --git a/src/api/resources/endpoints/resources/container/index.ts b/src/test-packagePath/api/resources/endpoints/resources/container/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/container/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/container/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/container/index.ts
 diff --git a/src/api/resources/endpoints/resources/contentType/client/Client.ts b/src/test-packagePath/api/resources/endpoints/resources/contentType/client/Client.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/contentType/client/Client.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/contentType/client/Client.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/contentType/client/Client.ts
 diff --git a/src/api/resources/endpoints/resources/contentType/client/index.ts b/src/test-packagePath/api/resources/endpoints/resources/contentType/client/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/contentType/client/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/contentType/client/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/contentType/client/index.ts
 diff --git a/src/api/resources/endpoints/resources/contentType/exports.ts b/src/test-packagePath/api/resources/endpoints/resources/contentType/exports.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/contentType/exports.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/contentType/exports.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/contentType/exports.ts
 diff --git a/src/api/resources/endpoints/resources/contentType/index.ts b/src/test-packagePath/api/resources/endpoints/resources/contentType/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/contentType/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/contentType/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/contentType/index.ts
 diff --git a/src/api/resources/endpoints/resources/enum/client/Client.ts b/src/test-packagePath/api/resources/endpoints/resources/enum/client/Client.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/enum/client/Client.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/enum/client/Client.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/enum/client/Client.ts
 diff --git a/src/api/resources/endpoints/resources/enum/client/index.ts b/src/test-packagePath/api/resources/endpoints/resources/enum/client/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/enum/client/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/enum/client/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/enum/client/index.ts
 diff --git a/src/api/resources/endpoints/resources/enum/exports.ts b/src/test-packagePath/api/resources/endpoints/resources/enum/exports.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/enum/exports.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/enum/exports.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/enum/exports.ts
 diff --git a/src/api/resources/endpoints/resources/enum/index.ts b/src/test-packagePath/api/resources/endpoints/resources/enum/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/enum/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/enum/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/enum/index.ts
 diff --git a/src/api/resources/endpoints/resources/httpMethods/client/Client.ts b/src/test-packagePath/api/resources/endpoints/resources/httpMethods/client/Client.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/httpMethods/client/Client.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/httpMethods/client/Client.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/httpMethods/client/Client.ts
 diff --git a/src/api/resources/endpoints/resources/httpMethods/client/index.ts b/src/test-packagePath/api/resources/endpoints/resources/httpMethods/client/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/httpMethods/client/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/httpMethods/client/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/httpMethods/client/index.ts
 diff --git a/src/api/resources/endpoints/resources/httpMethods/exports.ts b/src/test-packagePath/api/resources/endpoints/resources/httpMethods/exports.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/httpMethods/exports.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/httpMethods/exports.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/httpMethods/exports.ts
 diff --git a/src/api/resources/endpoints/resources/httpMethods/index.ts b/src/test-packagePath/api/resources/endpoints/resources/httpMethods/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/httpMethods/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/httpMethods/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/httpMethods/index.ts
 diff --git a/src/api/resources/endpoints/resources/index.ts b/src/test-packagePath/api/resources/endpoints/resources/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/index.ts
 diff --git a/src/api/resources/endpoints/resources/object/client/Client.ts b/src/test-packagePath/api/resources/endpoints/resources/object/client/Client.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/object/client/Client.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/object/client/Client.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/object/client/Client.ts
 diff --git a/src/api/resources/endpoints/resources/object/client/index.ts b/src/test-packagePath/api/resources/endpoints/resources/object/client/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/object/client/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/object/client/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/object/client/index.ts
 diff --git a/src/api/resources/endpoints/resources/object/exports.ts b/src/test-packagePath/api/resources/endpoints/resources/object/exports.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/object/exports.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/object/exports.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/object/exports.ts
 diff --git a/src/api/resources/endpoints/resources/object/index.ts b/src/test-packagePath/api/resources/endpoints/resources/object/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/object/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/object/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/object/index.ts
 diff --git a/src/api/resources/endpoints/resources/pagination/client/Client.ts b/src/test-packagePath/api/resources/endpoints/resources/pagination/client/Client.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/pagination/client/Client.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/pagination/client/Client.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/pagination/client/Client.ts
 diff --git a/src/api/resources/endpoints/resources/pagination/client/index.ts b/src/test-packagePath/api/resources/endpoints/resources/pagination/client/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/pagination/client/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/pagination/client/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/pagination/client/index.ts
 diff --git a/src/api/resources/endpoints/resources/pagination/client/requests/ListItemsRequest.ts b/src/test-packagePath/api/resources/endpoints/resources/pagination/client/requests/ListItemsRequest.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/pagination/client/requests/ListItemsRequest.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/pagination/client/requests/ListItemsRequest.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/pagination/client/requests/ListItemsRequest.ts
 diff --git a/src/api/resources/endpoints/resources/pagination/client/requests/index.ts b/src/test-packagePath/api/resources/endpoints/resources/pagination/client/requests/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/pagination/client/requests/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/pagination/client/requests/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/pagination/client/requests/index.ts
 diff --git a/src/api/resources/endpoints/resources/pagination/exports.ts b/src/test-packagePath/api/resources/endpoints/resources/pagination/exports.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/pagination/exports.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/pagination/exports.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/pagination/exports.ts
 diff --git a/src/api/resources/endpoints/resources/pagination/index.ts b/src/test-packagePath/api/resources/endpoints/resources/pagination/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/pagination/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/pagination/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/pagination/index.ts
 diff --git a/src/api/resources/endpoints/resources/pagination/types/PaginatedResponse.ts b/src/test-packagePath/api/resources/endpoints/resources/pagination/types/PaginatedResponse.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/pagination/types/PaginatedResponse.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/pagination/types/PaginatedResponse.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/pagination/types/PaginatedResponse.ts
 diff --git a/src/api/resources/endpoints/resources/pagination/types/index.ts b/src/test-packagePath/api/resources/endpoints/resources/pagination/types/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/pagination/types/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/pagination/types/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/pagination/types/index.ts
 diff --git a/src/api/resources/endpoints/resources/params/client/Client.ts b/src/test-packagePath/api/resources/endpoints/resources/params/client/Client.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/params/client/Client.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/params/client/Client.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/params/client/Client.ts
 diff --git a/src/api/resources/endpoints/resources/params/client/index.ts b/src/test-packagePath/api/resources/endpoints/resources/params/client/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/params/client/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/params/client/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/params/client/index.ts
 diff --git a/src/api/resources/endpoints/resources/params/client/requests/GetWithInlinePath.ts b/src/test-packagePath/api/resources/endpoints/resources/params/client/requests/GetWithInlinePath.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/params/client/requests/GetWithInlinePath.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/params/client/requests/GetWithInlinePath.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/params/client/requests/GetWithInlinePath.ts
 diff --git a/src/api/resources/endpoints/resources/params/client/requests/GetWithInlinePathAndQuery.ts b/src/test-packagePath/api/resources/endpoints/resources/params/client/requests/GetWithInlinePathAndQuery.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/params/client/requests/GetWithInlinePathAndQuery.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/params/client/requests/GetWithInlinePathAndQuery.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/params/client/requests/GetWithInlinePathAndQuery.ts
 diff --git a/src/api/resources/endpoints/resources/params/client/requests/GetWithMultipleQuery.ts b/src/test-packagePath/api/resources/endpoints/resources/params/client/requests/GetWithMultipleQuery.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/params/client/requests/GetWithMultipleQuery.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/params/client/requests/GetWithMultipleQuery.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/params/client/requests/GetWithMultipleQuery.ts
 diff --git a/src/api/resources/endpoints/resources/params/client/requests/GetWithPathAndQuery.ts b/src/test-packagePath/api/resources/endpoints/resources/params/client/requests/GetWithPathAndQuery.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/params/client/requests/GetWithPathAndQuery.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/params/client/requests/GetWithPathAndQuery.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/params/client/requests/GetWithPathAndQuery.ts
 diff --git a/src/api/resources/endpoints/resources/params/client/requests/GetWithQuery.ts b/src/test-packagePath/api/resources/endpoints/resources/params/client/requests/GetWithQuery.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/params/client/requests/GetWithQuery.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/params/client/requests/GetWithQuery.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/params/client/requests/GetWithQuery.ts
 diff --git a/src/api/resources/endpoints/resources/params/client/requests/ModifyResourceAtInlinedPath.ts b/src/test-packagePath/api/resources/endpoints/resources/params/client/requests/ModifyResourceAtInlinedPath.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/params/client/requests/ModifyResourceAtInlinedPath.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/params/client/requests/ModifyResourceAtInlinedPath.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/params/client/requests/ModifyResourceAtInlinedPath.ts
 diff --git a/src/api/resources/endpoints/resources/params/client/requests/index.ts b/src/test-packagePath/api/resources/endpoints/resources/params/client/requests/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/params/client/requests/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/params/client/requests/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/params/client/requests/index.ts
 diff --git a/src/api/resources/endpoints/resources/params/exports.ts b/src/test-packagePath/api/resources/endpoints/resources/params/exports.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/params/exports.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/params/exports.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/params/exports.ts
 diff --git a/src/api/resources/endpoints/resources/params/index.ts b/src/test-packagePath/api/resources/endpoints/resources/params/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/params/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/params/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/params/index.ts
 diff --git a/src/api/resources/endpoints/resources/primitive/client/Client.ts b/src/test-packagePath/api/resources/endpoints/resources/primitive/client/Client.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/primitive/client/Client.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/primitive/client/Client.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/primitive/client/Client.ts
 diff --git a/src/api/resources/endpoints/resources/primitive/client/index.ts b/src/test-packagePath/api/resources/endpoints/resources/primitive/client/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/primitive/client/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/primitive/client/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/primitive/client/index.ts
 diff --git a/src/api/resources/endpoints/resources/primitive/exports.ts b/src/test-packagePath/api/resources/endpoints/resources/primitive/exports.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/primitive/exports.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/primitive/exports.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/primitive/exports.ts
 diff --git a/src/api/resources/endpoints/resources/primitive/index.ts b/src/test-packagePath/api/resources/endpoints/resources/primitive/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/primitive/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/primitive/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/primitive/index.ts
 diff --git a/src/api/resources/endpoints/resources/put/client/Client.ts b/src/test-packagePath/api/resources/endpoints/resources/put/client/Client.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/put/client/Client.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/put/client/Client.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/put/client/Client.ts
 diff --git a/src/api/resources/endpoints/resources/put/client/index.ts b/src/test-packagePath/api/resources/endpoints/resources/put/client/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/put/client/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/put/client/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/put/client/index.ts
 diff --git a/src/api/resources/endpoints/resources/put/client/requests/PutRequest.ts b/src/test-packagePath/api/resources/endpoints/resources/put/client/requests/PutRequest.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/put/client/requests/PutRequest.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/put/client/requests/PutRequest.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/put/client/requests/PutRequest.ts
 diff --git a/src/api/resources/endpoints/resources/put/client/requests/index.ts b/src/test-packagePath/api/resources/endpoints/resources/put/client/requests/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/put/client/requests/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/put/client/requests/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/put/client/requests/index.ts
 diff --git a/src/api/resources/endpoints/resources/put/exports.ts b/src/test-packagePath/api/resources/endpoints/resources/put/exports.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/put/exports.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/put/exports.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/put/exports.ts
 diff --git a/src/api/resources/endpoints/resources/put/index.ts b/src/test-packagePath/api/resources/endpoints/resources/put/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/put/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/put/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/put/index.ts
 diff --git a/src/api/resources/endpoints/resources/put/types/ErrorCategory.ts b/src/test-packagePath/api/resources/endpoints/resources/put/types/ErrorCategory.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/put/types/ErrorCategory.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/put/types/ErrorCategory.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/put/types/ErrorCategory.ts
 diff --git a/src/api/resources/endpoints/resources/put/types/ErrorCode.ts b/src/test-packagePath/api/resources/endpoints/resources/put/types/ErrorCode.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/put/types/ErrorCode.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/put/types/ErrorCode.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/put/types/ErrorCode.ts
 diff --git a/src/api/resources/endpoints/resources/put/types/Error_.ts b/src/test-packagePath/api/resources/endpoints/resources/put/types/Error_.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/put/types/Error_.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/put/types/Error_.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/put/types/Error_.ts
 diff --git a/src/api/resources/endpoints/resources/put/types/PutResponse.ts b/src/test-packagePath/api/resources/endpoints/resources/put/types/PutResponse.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/put/types/PutResponse.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/put/types/PutResponse.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/put/types/PutResponse.ts
 diff --git a/src/api/resources/endpoints/resources/put/types/index.ts b/src/test-packagePath/api/resources/endpoints/resources/put/types/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/put/types/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/put/types/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/put/types/index.ts
 diff --git a/src/api/resources/endpoints/resources/union/client/Client.ts b/src/test-packagePath/api/resources/endpoints/resources/union/client/Client.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/union/client/Client.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/union/client/Client.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/union/client/Client.ts
 diff --git a/src/api/resources/endpoints/resources/union/client/index.ts b/src/test-packagePath/api/resources/endpoints/resources/union/client/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/union/client/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/union/client/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/union/client/index.ts
 diff --git a/src/api/resources/endpoints/resources/union/exports.ts b/src/test-packagePath/api/resources/endpoints/resources/union/exports.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/union/exports.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/union/exports.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/union/exports.ts
 diff --git a/src/api/resources/endpoints/resources/union/index.ts b/src/test-packagePath/api/resources/endpoints/resources/union/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/union/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/union/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/union/index.ts
 diff --git a/src/api/resources/endpoints/resources/urls/client/Client.ts b/src/test-packagePath/api/resources/endpoints/resources/urls/client/Client.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/urls/client/Client.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/urls/client/Client.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/urls/client/Client.ts
 diff --git a/src/api/resources/endpoints/resources/urls/client/index.ts b/src/test-packagePath/api/resources/endpoints/resources/urls/client/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/urls/client/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/urls/client/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/urls/client/index.ts
 diff --git a/src/api/resources/endpoints/resources/urls/exports.ts b/src/test-packagePath/api/resources/endpoints/resources/urls/exports.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/urls/exports.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/urls/exports.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/urls/exports.ts
 diff --git a/src/api/resources/endpoints/resources/urls/index.ts b/src/test-packagePath/api/resources/endpoints/resources/urls/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/urls/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/endpoints/resources/urls/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/endpoints/resources/urls/index.ts
 diff --git a/src/api/resources/generalErrors/errors/BadRequestBody.ts b/src/test-packagePath/api/resources/generalErrors/errors/BadRequestBody.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/generalErrors/errors/BadRequestBody.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/generalErrors/errors/BadRequestBody.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/generalErrors/errors/BadRequestBody.ts
 diff --git a/src/api/resources/generalErrors/errors/index.ts b/src/test-packagePath/api/resources/generalErrors/errors/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/generalErrors/errors/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/generalErrors/errors/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/generalErrors/errors/index.ts
 diff --git a/src/api/resources/generalErrors/exports.ts b/src/test-packagePath/api/resources/generalErrors/exports.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/generalErrors/exports.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/generalErrors/exports.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/generalErrors/exports.ts
 diff --git a/src/api/resources/generalErrors/index.ts b/src/test-packagePath/api/resources/generalErrors/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/generalErrors/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/generalErrors/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/generalErrors/index.ts
 diff --git a/src/api/resources/generalErrors/types/BadObjectRequestInfo.ts b/src/test-packagePath/api/resources/generalErrors/types/BadObjectRequestInfo.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/generalErrors/types/BadObjectRequestInfo.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/generalErrors/types/BadObjectRequestInfo.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/generalErrors/types/BadObjectRequestInfo.ts
 diff --git a/src/api/resources/generalErrors/types/index.ts b/src/test-packagePath/api/resources/generalErrors/types/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/generalErrors/types/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/generalErrors/types/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/generalErrors/types/index.ts
 diff --git a/src/api/resources/index.ts b/src/test-packagePath/api/resources/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/index.ts
 diff --git a/src/api/resources/inlinedRequests/client/Client.ts b/src/test-packagePath/api/resources/inlinedRequests/client/Client.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/inlinedRequests/client/Client.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/inlinedRequests/client/Client.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/inlinedRequests/client/Client.ts
 diff --git a/src/api/resources/inlinedRequests/client/index.ts b/src/test-packagePath/api/resources/inlinedRequests/client/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/inlinedRequests/client/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/inlinedRequests/client/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/inlinedRequests/client/index.ts
 diff --git a/src/api/resources/inlinedRequests/client/requests/PostWithObjectBody.ts b/src/test-packagePath/api/resources/inlinedRequests/client/requests/PostWithObjectBody.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/inlinedRequests/client/requests/PostWithObjectBody.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/inlinedRequests/client/requests/PostWithObjectBody.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/inlinedRequests/client/requests/PostWithObjectBody.ts
 diff --git a/src/api/resources/inlinedRequests/client/requests/index.ts b/src/test-packagePath/api/resources/inlinedRequests/client/requests/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/inlinedRequests/client/requests/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/inlinedRequests/client/requests/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/inlinedRequests/client/requests/index.ts
 diff --git a/src/api/resources/inlinedRequests/exports.ts b/src/test-packagePath/api/resources/inlinedRequests/exports.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/inlinedRequests/exports.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/inlinedRequests/exports.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/inlinedRequests/exports.ts
 diff --git a/src/api/resources/inlinedRequests/index.ts b/src/test-packagePath/api/resources/inlinedRequests/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/inlinedRequests/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/inlinedRequests/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/inlinedRequests/index.ts
 diff --git a/src/api/resources/noAuth/client/Client.ts b/src/test-packagePath/api/resources/noAuth/client/Client.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/noAuth/client/Client.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/noAuth/client/Client.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/noAuth/client/Client.ts
 diff --git a/src/api/resources/noAuth/client/index.ts b/src/test-packagePath/api/resources/noAuth/client/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/noAuth/client/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/noAuth/client/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/noAuth/client/index.ts
 diff --git a/src/api/resources/noAuth/exports.ts b/src/test-packagePath/api/resources/noAuth/exports.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/noAuth/exports.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/noAuth/exports.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/noAuth/exports.ts
 diff --git a/src/api/resources/noAuth/index.ts b/src/test-packagePath/api/resources/noAuth/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/noAuth/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/noAuth/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/noAuth/index.ts
 diff --git a/src/api/resources/noReqBody/client/Client.ts b/src/test-packagePath/api/resources/noReqBody/client/Client.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/noReqBody/client/Client.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/noReqBody/client/Client.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/noReqBody/client/Client.ts
 diff --git a/src/api/resources/noReqBody/client/index.ts b/src/test-packagePath/api/resources/noReqBody/client/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/noReqBody/client/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/noReqBody/client/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/noReqBody/client/index.ts
 diff --git a/src/api/resources/noReqBody/exports.ts b/src/test-packagePath/api/resources/noReqBody/exports.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/noReqBody/exports.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/noReqBody/exports.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/noReqBody/exports.ts
 diff --git a/src/api/resources/noReqBody/index.ts b/src/test-packagePath/api/resources/noReqBody/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/noReqBody/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/noReqBody/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/noReqBody/index.ts
 diff --git a/src/api/resources/reqWithHeaders/client/Client.ts b/src/test-packagePath/api/resources/reqWithHeaders/client/Client.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/reqWithHeaders/client/Client.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/reqWithHeaders/client/Client.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/reqWithHeaders/client/Client.ts
 diff --git a/src/api/resources/reqWithHeaders/client/index.ts b/src/test-packagePath/api/resources/reqWithHeaders/client/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/reqWithHeaders/client/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/reqWithHeaders/client/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/reqWithHeaders/client/index.ts
 diff --git a/src/api/resources/reqWithHeaders/client/requests/ReqWithHeaders.ts b/src/test-packagePath/api/resources/reqWithHeaders/client/requests/ReqWithHeaders.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/reqWithHeaders/client/requests/ReqWithHeaders.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/reqWithHeaders/client/requests/ReqWithHeaders.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/reqWithHeaders/client/requests/ReqWithHeaders.ts
 diff --git a/src/api/resources/reqWithHeaders/client/requests/index.ts b/src/test-packagePath/api/resources/reqWithHeaders/client/requests/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/reqWithHeaders/client/requests/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/reqWithHeaders/client/requests/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/reqWithHeaders/client/requests/index.ts
 diff --git a/src/api/resources/reqWithHeaders/exports.ts b/src/test-packagePath/api/resources/reqWithHeaders/exports.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/reqWithHeaders/exports.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/reqWithHeaders/exports.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/reqWithHeaders/exports.ts
 diff --git a/src/api/resources/reqWithHeaders/index.ts b/src/test-packagePath/api/resources/reqWithHeaders/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/reqWithHeaders/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/reqWithHeaders/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/reqWithHeaders/index.ts
 diff --git a/src/api/resources/types/exports.ts b/src/test-packagePath/api/resources/types/exports.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/types/exports.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/types/exports.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/types/exports.ts
 diff --git a/src/api/resources/types/index.ts b/src/test-packagePath/api/resources/types/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/types/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/types/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/types/index.ts
 diff --git a/src/api/resources/types/resources/docs/exports.ts b/src/test-packagePath/api/resources/types/resources/docs/exports.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/types/resources/docs/exports.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/types/resources/docs/exports.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/types/resources/docs/exports.ts
 diff --git a/src/api/resources/types/resources/docs/index.ts b/src/test-packagePath/api/resources/types/resources/docs/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/types/resources/docs/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/types/resources/docs/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/types/resources/docs/index.ts
 diff --git a/src/api/resources/types/resources/docs/types/ObjectWithDocs.ts b/src/test-packagePath/api/resources/types/resources/docs/types/ObjectWithDocs.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/types/resources/docs/types/ObjectWithDocs.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/types/resources/docs/types/ObjectWithDocs.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/types/resources/docs/types/ObjectWithDocs.ts
 diff --git a/src/api/resources/types/resources/docs/types/index.ts b/src/test-packagePath/api/resources/types/resources/docs/types/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/types/resources/docs/types/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/types/resources/docs/types/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/types/resources/docs/types/index.ts
 diff --git a/src/api/resources/types/resources/enum/errors/ErrorWithEnumBody.ts b/src/test-packagePath/api/resources/types/resources/enum/errors/ErrorWithEnumBody.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/types/resources/enum/errors/ErrorWithEnumBody.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/types/resources/enum/errors/ErrorWithEnumBody.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/types/resources/enum/errors/ErrorWithEnumBody.ts
 diff --git a/src/api/resources/types/resources/enum/errors/index.ts b/src/test-packagePath/api/resources/types/resources/enum/errors/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/types/resources/enum/errors/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/types/resources/enum/errors/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/types/resources/enum/errors/index.ts
 diff --git a/src/api/resources/types/resources/enum/exports.ts b/src/test-packagePath/api/resources/types/resources/enum/exports.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/types/resources/enum/exports.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/types/resources/enum/exports.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/types/resources/enum/exports.ts
 diff --git a/src/api/resources/types/resources/enum/index.ts b/src/test-packagePath/api/resources/types/resources/enum/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/types/resources/enum/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/types/resources/enum/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/types/resources/enum/index.ts
 diff --git a/src/api/resources/types/resources/enum/types/WeatherReport.ts b/src/test-packagePath/api/resources/types/resources/enum/types/WeatherReport.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/types/resources/enum/types/WeatherReport.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/types/resources/enum/types/WeatherReport.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/types/resources/enum/types/WeatherReport.ts
 diff --git a/src/api/resources/types/resources/enum/types/index.ts b/src/test-packagePath/api/resources/types/resources/enum/types/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/types/resources/enum/types/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/types/resources/enum/types/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/types/resources/enum/types/index.ts
 diff --git a/src/api/resources/types/resources/index.ts b/src/test-packagePath/api/resources/types/resources/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/types/resources/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/types/resources/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/types/resources/index.ts
 diff --git a/src/api/resources/types/resources/object/errors/NestedObjectWithOptionalFieldError.ts b/src/test-packagePath/api/resources/types/resources/object/errors/NestedObjectWithOptionalFieldError.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/types/resources/object/errors/NestedObjectWithOptionalFieldError.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/types/resources/object/errors/NestedObjectWithOptionalFieldError.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/types/resources/object/errors/NestedObjectWithOptionalFieldError.ts
 diff --git a/src/api/resources/types/resources/object/errors/NestedObjectWithRequiredFieldError.ts b/src/test-packagePath/api/resources/types/resources/object/errors/NestedObjectWithRequiredFieldError.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/types/resources/object/errors/NestedObjectWithRequiredFieldError.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/types/resources/object/errors/NestedObjectWithRequiredFieldError.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/types/resources/object/errors/NestedObjectWithRequiredFieldError.ts
 diff --git a/src/api/resources/types/resources/object/errors/ObjectWithOptionalFieldError.ts b/src/test-packagePath/api/resources/types/resources/object/errors/ObjectWithOptionalFieldError.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/types/resources/object/errors/ObjectWithOptionalFieldError.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/types/resources/object/errors/ObjectWithOptionalFieldError.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/types/resources/object/errors/ObjectWithOptionalFieldError.ts
 diff --git a/src/api/resources/types/resources/object/errors/ObjectWithRequiredFieldError.ts b/src/test-packagePath/api/resources/types/resources/object/errors/ObjectWithRequiredFieldError.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/types/resources/object/errors/ObjectWithRequiredFieldError.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/types/resources/object/errors/ObjectWithRequiredFieldError.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/types/resources/object/errors/ObjectWithRequiredFieldError.ts
 diff --git a/src/api/resources/types/resources/object/errors/index.ts b/src/test-packagePath/api/resources/types/resources/object/errors/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/types/resources/object/errors/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/types/resources/object/errors/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/types/resources/object/errors/index.ts
 diff --git a/src/api/resources/types/resources/object/exports.ts b/src/test-packagePath/api/resources/types/resources/object/exports.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/types/resources/object/exports.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/types/resources/object/exports.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/types/resources/object/exports.ts
 diff --git a/src/api/resources/types/resources/object/index.ts b/src/test-packagePath/api/resources/types/resources/object/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/types/resources/object/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/types/resources/object/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/types/resources/object/index.ts
 diff --git a/src/api/resources/types/resources/object/types/DocumentedUnknownType.ts b/src/test-packagePath/api/resources/types/resources/object/types/DocumentedUnknownType.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/types/resources/object/types/DocumentedUnknownType.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/types/resources/object/types/DocumentedUnknownType.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/types/resources/object/types/DocumentedUnknownType.ts
 diff --git a/src/api/resources/types/resources/object/types/DoubleOptional.ts b/src/test-packagePath/api/resources/types/resources/object/types/DoubleOptional.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/types/resources/object/types/DoubleOptional.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/types/resources/object/types/DoubleOptional.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/types/resources/object/types/DoubleOptional.ts
 diff --git a/src/api/resources/types/resources/object/types/MapOfDocumentedUnknownType.ts b/src/test-packagePath/api/resources/types/resources/object/types/MapOfDocumentedUnknownType.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/types/resources/object/types/MapOfDocumentedUnknownType.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/types/resources/object/types/MapOfDocumentedUnknownType.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/types/resources/object/types/MapOfDocumentedUnknownType.ts
 diff --git a/src/api/resources/types/resources/object/types/NestedObjectWithOptionalField.ts b/src/test-packagePath/api/resources/types/resources/object/types/NestedObjectWithOptionalField.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/types/resources/object/types/NestedObjectWithOptionalField.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/types/resources/object/types/NestedObjectWithOptionalField.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/types/resources/object/types/NestedObjectWithOptionalField.ts
 diff --git a/src/api/resources/types/resources/object/types/NestedObjectWithRequiredField.ts b/src/test-packagePath/api/resources/types/resources/object/types/NestedObjectWithRequiredField.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/types/resources/object/types/NestedObjectWithRequiredField.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/types/resources/object/types/NestedObjectWithRequiredField.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/types/resources/object/types/NestedObjectWithRequiredField.ts
 diff --git a/src/api/resources/types/resources/object/types/ObjectWithDatetimeLikeString.ts b/src/test-packagePath/api/resources/types/resources/object/types/ObjectWithDatetimeLikeString.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/types/resources/object/types/ObjectWithDatetimeLikeString.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/types/resources/object/types/ObjectWithDatetimeLikeString.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/types/resources/object/types/ObjectWithDatetimeLikeString.ts
 diff --git a/src/api/resources/types/resources/object/types/ObjectWithDocumentedUnknownType.ts b/src/test-packagePath/api/resources/types/resources/object/types/ObjectWithDocumentedUnknownType.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/types/resources/object/types/ObjectWithDocumentedUnknownType.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/types/resources/object/types/ObjectWithDocumentedUnknownType.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/types/resources/object/types/ObjectWithDocumentedUnknownType.ts
 diff --git a/src/api/resources/types/resources/object/types/ObjectWithMapOfMap.ts b/src/test-packagePath/api/resources/types/resources/object/types/ObjectWithMapOfMap.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/types/resources/object/types/ObjectWithMapOfMap.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/types/resources/object/types/ObjectWithMapOfMap.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/types/resources/object/types/ObjectWithMapOfMap.ts
 diff --git a/src/api/resources/types/resources/object/types/ObjectWithMixedRequiredAndOptionalFields.ts b/src/test-packagePath/api/resources/types/resources/object/types/ObjectWithMixedRequiredAndOptionalFields.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/types/resources/object/types/ObjectWithMixedRequiredAndOptionalFields.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/types/resources/object/types/ObjectWithMixedRequiredAndOptionalFields.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/types/resources/object/types/ObjectWithMixedRequiredAndOptionalFields.ts
 diff --git a/src/api/resources/types/resources/object/types/ObjectWithOptionalField.ts b/src/test-packagePath/api/resources/types/resources/object/types/ObjectWithOptionalField.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/types/resources/object/types/ObjectWithOptionalField.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/types/resources/object/types/ObjectWithOptionalField.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/types/resources/object/types/ObjectWithOptionalField.ts
 diff --git a/src/api/resources/types/resources/object/types/ObjectWithRequiredField.ts b/src/test-packagePath/api/resources/types/resources/object/types/ObjectWithRequiredField.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/types/resources/object/types/ObjectWithRequiredField.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/types/resources/object/types/ObjectWithRequiredField.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/types/resources/object/types/ObjectWithRequiredField.ts
 diff --git a/src/api/resources/types/resources/object/types/ObjectWithRequiredNestedObject.ts b/src/test-packagePath/api/resources/types/resources/object/types/ObjectWithRequiredNestedObject.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/types/resources/object/types/ObjectWithRequiredNestedObject.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/types/resources/object/types/ObjectWithRequiredNestedObject.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/types/resources/object/types/ObjectWithRequiredNestedObject.ts
 diff --git a/src/api/resources/types/resources/object/types/ObjectWithUnknownField.ts b/src/test-packagePath/api/resources/types/resources/object/types/ObjectWithUnknownField.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/types/resources/object/types/ObjectWithUnknownField.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/types/resources/object/types/ObjectWithUnknownField.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/types/resources/object/types/ObjectWithUnknownField.ts
 diff --git a/src/api/resources/types/resources/object/types/OptionalAlias.ts b/src/test-packagePath/api/resources/types/resources/object/types/OptionalAlias.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/types/resources/object/types/OptionalAlias.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/types/resources/object/types/OptionalAlias.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/types/resources/object/types/OptionalAlias.ts
 diff --git a/src/api/resources/types/resources/object/types/index.ts b/src/test-packagePath/api/resources/types/resources/object/types/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/types/resources/object/types/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/types/resources/object/types/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/types/resources/object/types/index.ts
 diff --git a/src/api/resources/types/resources/union/errors/ErrorWithUnionBody.ts b/src/test-packagePath/api/resources/types/resources/union/errors/ErrorWithUnionBody.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/types/resources/union/errors/ErrorWithUnionBody.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/types/resources/union/errors/ErrorWithUnionBody.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/types/resources/union/errors/ErrorWithUnionBody.ts
 diff --git a/src/api/resources/types/resources/union/errors/index.ts b/src/test-packagePath/api/resources/types/resources/union/errors/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/types/resources/union/errors/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/types/resources/union/errors/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/types/resources/union/errors/index.ts
 diff --git a/src/api/resources/types/resources/union/exports.ts b/src/test-packagePath/api/resources/types/resources/union/exports.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/types/resources/union/exports.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/types/resources/union/exports.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/types/resources/union/exports.ts
 diff --git a/src/api/resources/types/resources/union/index.ts b/src/test-packagePath/api/resources/types/resources/union/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/types/resources/union/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/types/resources/union/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/types/resources/union/index.ts
 diff --git a/src/api/resources/types/resources/union/types/Animal.ts b/src/test-packagePath/api/resources/types/resources/union/types/Animal.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/types/resources/union/types/Animal.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/types/resources/union/types/Animal.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/types/resources/union/types/Animal.ts
 diff --git a/src/api/resources/types/resources/union/types/Cat.ts b/src/test-packagePath/api/resources/types/resources/union/types/Cat.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/types/resources/union/types/Cat.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/types/resources/union/types/Cat.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/types/resources/union/types/Cat.ts
 diff --git a/src/api/resources/types/resources/union/types/Dog.ts b/src/test-packagePath/api/resources/types/resources/union/types/Dog.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/types/resources/union/types/Dog.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/types/resources/union/types/Dog.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/types/resources/union/types/Dog.ts
 diff --git a/src/api/resources/types/resources/union/types/MixedType.ts b/src/test-packagePath/api/resources/types/resources/union/types/MixedType.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/types/resources/union/types/MixedType.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/types/resources/union/types/MixedType.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/types/resources/union/types/MixedType.ts
 diff --git a/src/api/resources/types/resources/union/types/index.ts b/src/test-packagePath/api/resources/types/resources/union/types/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/types/resources/union/types/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/api/resources/types/resources/union/types/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/api/resources/types/resources/union/types/index.ts
 diff --git a/src/auth/BearerAuthProvider.ts b/src/test-packagePath/auth/BearerAuthProvider.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/auth/BearerAuthProvider.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/auth/BearerAuthProvider.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/auth/BearerAuthProvider.ts
 diff --git a/src/auth/index.ts b/src/test-packagePath/auth/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/auth/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/auth/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/auth/index.ts
 diff --git a/src/core/auth/AuthProvider.ts b/src/test-packagePath/core/auth/AuthProvider.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/core/auth/AuthProvider.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/core/auth/AuthProvider.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/core/auth/AuthProvider.ts
 diff --git a/src/core/auth/AuthRequest.ts b/src/test-packagePath/core/auth/AuthRequest.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/core/auth/AuthRequest.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/core/auth/AuthRequest.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/core/auth/AuthRequest.ts
 diff --git a/src/core/auth/BasicAuth.ts b/src/test-packagePath/core/auth/BasicAuth.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/core/auth/BasicAuth.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/core/auth/BasicAuth.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/core/auth/BasicAuth.ts
 diff --git a/src/core/auth/BearerToken.ts b/src/test-packagePath/core/auth/BearerToken.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/core/auth/BearerToken.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/core/auth/BearerToken.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/core/auth/BearerToken.ts
 diff --git a/src/core/auth/NoOpAuthProvider.ts b/src/test-packagePath/core/auth/NoOpAuthProvider.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/core/auth/NoOpAuthProvider.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/core/auth/NoOpAuthProvider.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/core/auth/NoOpAuthProvider.ts
 diff --git a/src/core/auth/index.ts b/src/test-packagePath/core/auth/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/core/auth/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/core/auth/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/core/auth/index.ts
 diff --git a/src/core/base64.ts b/src/test-packagePath/core/base64.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/core/base64.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/core/base64.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/core/base64.ts
 diff --git a/src/core/exports.ts b/src/test-packagePath/core/exports.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/core/exports.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/core/exports.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/core/exports.ts
 diff --git a/src/core/fetcher/APIResponse.ts b/src/test-packagePath/core/fetcher/APIResponse.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/core/fetcher/APIResponse.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/core/fetcher/APIResponse.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/core/fetcher/APIResponse.ts
 diff --git a/src/core/fetcher/BinaryResponse.ts b/src/test-packagePath/core/fetcher/BinaryResponse.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/core/fetcher/BinaryResponse.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/core/fetcher/BinaryResponse.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/core/fetcher/BinaryResponse.ts
 diff --git a/src/core/fetcher/EndpointMetadata.ts b/src/test-packagePath/core/fetcher/EndpointMetadata.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/core/fetcher/EndpointMetadata.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/core/fetcher/EndpointMetadata.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/core/fetcher/EndpointMetadata.ts
 diff --git a/src/core/fetcher/EndpointSupplier.ts b/src/test-packagePath/core/fetcher/EndpointSupplier.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/core/fetcher/EndpointSupplier.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/core/fetcher/EndpointSupplier.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/core/fetcher/EndpointSupplier.ts
 diff --git a/src/core/fetcher/Fetcher.ts b/src/test-packagePath/core/fetcher/Fetcher.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/core/fetcher/Fetcher.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/core/fetcher/Fetcher.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/core/fetcher/Fetcher.ts
 diff --git a/src/core/fetcher/Headers.ts b/src/test-packagePath/core/fetcher/Headers.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/core/fetcher/Headers.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/core/fetcher/Headers.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/core/fetcher/Headers.ts
 diff --git a/src/core/fetcher/HttpResponsePromise.ts b/src/test-packagePath/core/fetcher/HttpResponsePromise.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/core/fetcher/HttpResponsePromise.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/core/fetcher/HttpResponsePromise.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/core/fetcher/HttpResponsePromise.ts
 diff --git a/src/core/fetcher/RawResponse.ts b/src/test-packagePath/core/fetcher/RawResponse.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/core/fetcher/RawResponse.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/core/fetcher/RawResponse.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/core/fetcher/RawResponse.ts
 diff --git a/src/core/fetcher/Supplier.ts b/src/test-packagePath/core/fetcher/Supplier.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/core/fetcher/Supplier.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/core/fetcher/Supplier.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/core/fetcher/Supplier.ts
 diff --git a/src/core/fetcher/createRequestUrl.ts b/src/test-packagePath/core/fetcher/createRequestUrl.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/core/fetcher/createRequestUrl.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/core/fetcher/createRequestUrl.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/core/fetcher/createRequestUrl.ts
 diff --git a/src/core/fetcher/getErrorResponseBody.ts b/src/test-packagePath/core/fetcher/getErrorResponseBody.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/core/fetcher/getErrorResponseBody.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/core/fetcher/getErrorResponseBody.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/core/fetcher/getErrorResponseBody.ts
 diff --git a/src/core/fetcher/getFetchFn.ts b/src/test-packagePath/core/fetcher/getFetchFn.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/core/fetcher/getFetchFn.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/core/fetcher/getFetchFn.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/core/fetcher/getFetchFn.ts
 diff --git a/src/core/fetcher/getHeader.ts b/src/test-packagePath/core/fetcher/getHeader.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/core/fetcher/getHeader.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/core/fetcher/getHeader.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/core/fetcher/getHeader.ts
 diff --git a/src/core/fetcher/getRequestBody.ts b/src/test-packagePath/core/fetcher/getRequestBody.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/core/fetcher/getRequestBody.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/core/fetcher/getRequestBody.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/core/fetcher/getRequestBody.ts
 diff --git a/src/core/fetcher/getResponseBody.ts b/src/test-packagePath/core/fetcher/getResponseBody.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/core/fetcher/getResponseBody.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/core/fetcher/getResponseBody.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/core/fetcher/getResponseBody.ts
 diff --git a/src/core/fetcher/index.ts b/src/test-packagePath/core/fetcher/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/core/fetcher/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/core/fetcher/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/core/fetcher/index.ts
 diff --git a/src/core/fetcher/makePassthroughRequest.ts b/src/test-packagePath/core/fetcher/makePassthroughRequest.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/core/fetcher/makePassthroughRequest.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/core/fetcher/makePassthroughRequest.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/core/fetcher/makePassthroughRequest.ts
 diff --git a/src/core/fetcher/makeRequest.ts b/src/test-packagePath/core/fetcher/makeRequest.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/core/fetcher/makeRequest.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/core/fetcher/makeRequest.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/core/fetcher/makeRequest.ts
 diff --git a/src/core/fetcher/requestWithRetries.ts b/src/test-packagePath/core/fetcher/requestWithRetries.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/core/fetcher/requestWithRetries.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/core/fetcher/requestWithRetries.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/core/fetcher/requestWithRetries.ts
 diff --git a/src/core/fetcher/signals.ts b/src/test-packagePath/core/fetcher/signals.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/core/fetcher/signals.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/core/fetcher/signals.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/core/fetcher/signals.ts
 diff --git a/src/core/file/exports.ts b/src/test-packagePath/core/file/exports.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/core/file/exports.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/core/file/exports.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/core/file/exports.ts
 diff --git a/src/core/file/file.ts b/src/test-packagePath/core/file/file.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/core/file/file.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/core/file/file.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/core/file/file.ts
 diff --git a/src/core/file/index.ts b/src/test-packagePath/core/file/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/core/file/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/core/file/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/core/file/index.ts
 diff --git a/src/core/file/types.ts b/src/test-packagePath/core/file/types.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/core/file/types.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/core/file/types.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/core/file/types.ts
 diff --git a/src/core/headers.ts b/src/test-packagePath/core/headers.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/core/headers.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/core/headers.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/core/headers.ts
 diff --git a/src/core/index.ts b/src/test-packagePath/core/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/core/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/core/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/core/index.ts
 diff --git a/src/core/json.ts b/src/test-packagePath/core/json.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/core/json.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/core/json.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/core/json.ts
 diff --git a/src/core/logging/exports.ts b/src/test-packagePath/core/logging/exports.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/core/logging/exports.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/core/logging/exports.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/core/logging/exports.ts
 diff --git a/src/core/logging/index.ts b/src/test-packagePath/core/logging/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/core/logging/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/core/logging/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/core/logging/index.ts
 diff --git a/src/core/logging/logger.ts b/src/test-packagePath/core/logging/logger.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/core/logging/logger.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/core/logging/logger.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/core/logging/logger.ts
 diff --git a/src/core/pagination/Page.ts b/src/test-packagePath/core/pagination/Page.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/core/pagination/Page.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/core/pagination/Page.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/core/pagination/Page.ts
 diff --git a/src/core/pagination/exports.ts b/src/test-packagePath/core/pagination/exports.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/core/pagination/exports.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/core/pagination/exports.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/core/pagination/exports.ts
 diff --git a/src/core/pagination/index.ts b/src/test-packagePath/core/pagination/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/core/pagination/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/core/pagination/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/core/pagination/index.ts
 diff --git a/src/core/runtime/index.ts b/src/test-packagePath/core/runtime/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/core/runtime/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/core/runtime/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/core/runtime/index.ts
 diff --git a/src/core/runtime/runtime.ts b/src/test-packagePath/core/runtime/runtime.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/core/runtime/runtime.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/core/runtime/runtime.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/core/runtime/runtime.ts
 diff --git a/src/core/url/QueryStringBuilder.ts b/src/test-packagePath/core/url/QueryStringBuilder.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/core/url/QueryStringBuilder.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/core/url/QueryStringBuilder.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/core/url/QueryStringBuilder.ts
 diff --git a/src/core/url/encodePathParam.ts b/src/test-packagePath/core/url/encodePathParam.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/core/url/encodePathParam.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/core/url/encodePathParam.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/core/url/encodePathParam.ts
 diff --git a/src/core/url/index.ts b/src/test-packagePath/core/url/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/core/url/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/core/url/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/core/url/index.ts
 diff --git a/src/core/url/join.ts b/src/test-packagePath/core/url/join.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/core/url/join.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/core/url/join.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/core/url/join.ts
 diff --git a/src/core/url/qs.ts b/src/test-packagePath/core/url/qs.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/core/url/qs.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/core/url/qs.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/core/url/qs.ts
 diff --git a/src/core/utils/index.ts b/src/test-packagePath/core/utils/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/core/utils/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/core/utils/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/core/utils/index.ts
 diff --git a/src/core/utils/setObjectProperty.ts b/src/test-packagePath/core/utils/setObjectProperty.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/core/utils/setObjectProperty.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/core/utils/setObjectProperty.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/core/utils/setObjectProperty.ts
 diff --git a/src/errors/SeedExhaustiveError.ts b/src/test-packagePath/errors/SeedExhaustiveError.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/errors/SeedExhaustiveError.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/errors/SeedExhaustiveError.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/errors/SeedExhaustiveError.ts
 diff --git a/src/errors/SeedExhaustiveTimeoutError.ts b/src/test-packagePath/errors/SeedExhaustiveTimeoutError.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/errors/SeedExhaustiveTimeoutError.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/errors/SeedExhaustiveTimeoutError.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/errors/SeedExhaustiveTimeoutError.ts
 diff --git a/src/errors/handleNonStatusCodeError.ts b/src/test-packagePath/errors/handleNonStatusCodeError.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/errors/handleNonStatusCodeError.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/errors/handleNonStatusCodeError.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/errors/handleNonStatusCodeError.ts
 diff --git a/src/errors/index.ts b/src/test-packagePath/errors/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/errors/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/errors/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/errors/index.ts
 diff --git a/src/exports.ts b/src/test-packagePath/exports.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/exports.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/exports.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/exports.ts
 diff --git a/src/index.ts b/src/test-packagePath/index.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/index.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/index.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/index.ts
 diff --git a/tests/custom.test.ts b/src/test-packagePath/tests/custom.test.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/tests/custom.test.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/tests/custom.test.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/tests/custom.test.ts
 diff --git a/tests/mock-server/MockServer.ts b/src/test-packagePath/tests/mock-server/MockServer.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/tests/mock-server/MockServer.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/tests/mock-server/MockServer.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/tests/mock-server/MockServer.ts
 diff --git a/tests/mock-server/MockServerPool.ts b/src/test-packagePath/tests/mock-server/MockServerPool.ts
 similarity index 98%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/tests/mock-server/MockServerPool.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/tests/mock-server/MockServerPool.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/tests/mock-server/MockServerPool.ts
 index d7d891a2d80..d48323281df 100644
 --- a/tests/mock-server/MockServerPool.ts
 +++ b/src/test-packagePath/tests/mock-server/MockServerPool.ts
@@ -1657,7 +1657,7 @@ index d7d891a2d80..d48323281df 100644
 diff --git a/tests/mock-server/mockEndpointBuilder.ts b/src/test-packagePath/tests/mock-server/mockEndpointBuilder.ts
 similarity index 98%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/tests/mock-server/mockEndpointBuilder.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/tests/mock-server/mockEndpointBuilder.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/tests/mock-server/mockEndpointBuilder.ts
 index 3e8540a3ba5..d374a140406 100644
 --- a/tests/mock-server/mockEndpointBuilder.ts
 +++ b/src/test-packagePath/tests/mock-server/mockEndpointBuilder.ts
@@ -1674,15 +1674,15 @@ index 3e8540a3ba5..d374a140406 100644
 diff --git a/tests/mock-server/randomBaseUrl.ts b/src/test-packagePath/tests/mock-server/randomBaseUrl.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/tests/mock-server/randomBaseUrl.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/tests/mock-server/randomBaseUrl.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/tests/mock-server/randomBaseUrl.ts
 diff --git a/tests/mock-server/setup.ts b/src/test-packagePath/tests/mock-server/setup.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/tests/mock-server/setup.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/tests/mock-server/setup.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/tests/mock-server/setup.ts
 diff --git a/tests/mock-server/withFormUrlEncoded.ts b/src/test-packagePath/tests/mock-server/withFormUrlEncoded.ts
 similarity index 98%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/tests/mock-server/withFormUrlEncoded.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/tests/mock-server/withFormUrlEncoded.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/tests/mock-server/withFormUrlEncoded.ts
 index 2b23448e310..a57a1df0a44 100644
 --- a/tests/mock-server/withFormUrlEncoded.ts
 +++ b/src/test-packagePath/tests/mock-server/withFormUrlEncoded.ts
@@ -1697,11 +1697,11 @@ index 2b23448e310..a57a1df0a44 100644
 diff --git a/tests/mock-server/withHeaders.ts b/src/test-packagePath/tests/mock-server/withHeaders.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/tests/mock-server/withHeaders.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/tests/mock-server/withHeaders.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/tests/mock-server/withHeaders.ts
 diff --git a/tests/mock-server/withJson.ts b/src/test-packagePath/tests/mock-server/withJson.ts
 similarity index 99%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/tests/mock-server/withJson.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/tests/mock-server/withJson.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/tests/mock-server/withJson.ts
 index 3e8800a0c37..9047b87e94a 100644
 --- a/tests/mock-server/withJson.ts
 +++ b/src/test-packagePath/tests/mock-server/withJson.ts
@@ -1716,11 +1716,11 @@ index 3e8800a0c37..9047b87e94a 100644
 diff --git a/tests/setup.ts b/src/test-packagePath/tests/setup.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/tests/setup.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/tests/setup.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/tests/setup.ts
 diff --git a/tests/tsconfig.json b/src/test-packagePath/tests/tsconfig.json
 similarity index 50%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/tests/tsconfig.json
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/tests/tsconfig.json
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/tests/tsconfig.json
 index ac39744de7b..aa20b5b1969 100644
 --- a/tests/tsconfig.json
 +++ b/src/test-packagePath/tests/tsconfig.json
@@ -1740,7 +1740,7 @@ index ac39744de7b..aa20b5b1969 100644
 diff --git a/tests/unit/auth/BasicAuth.test.ts b/src/test-packagePath/tests/unit/auth/BasicAuth.test.ts
 similarity index 98%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/tests/unit/auth/BasicAuth.test.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/tests/unit/auth/BasicAuth.test.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/tests/unit/auth/BasicAuth.test.ts
 index 8c82c1b723d..de92500a458 100644
 --- a/tests/unit/auth/BasicAuth.test.ts
 +++ b/src/test-packagePath/tests/unit/auth/BasicAuth.test.ts
@@ -1753,7 +1753,7 @@ index 8c82c1b723d..de92500a458 100644
 diff --git a/tests/unit/auth/BearerToken.test.ts b/src/test-packagePath/tests/unit/auth/BearerToken.test.ts
 similarity index 87%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/tests/unit/auth/BearerToken.test.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/tests/unit/auth/BearerToken.test.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/tests/unit/auth/BearerToken.test.ts
 index 7757b87cb97..1b988a76a9a 100644
 --- a/tests/unit/auth/BearerToken.test.ts
 +++ b/src/test-packagePath/tests/unit/auth/BearerToken.test.ts
@@ -1766,7 +1766,7 @@ index 7757b87cb97..1b988a76a9a 100644
 diff --git a/tests/unit/base64.test.ts b/src/test-packagePath/tests/unit/base64.test.ts
 similarity index 96%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/tests/unit/base64.test.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/tests/unit/base64.test.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/tests/unit/base64.test.ts
 index 939594ca277..1758cd37565 100644
 --- a/tests/unit/base64.test.ts
 +++ b/src/test-packagePath/tests/unit/base64.test.ts
@@ -1779,7 +1779,7 @@ index 939594ca277..1758cd37565 100644
 diff --git a/tests/unit/fetcher/Fetcher.test.ts b/src/test-packagePath/tests/unit/fetcher/Fetcher.test.ts
 similarity index 98%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/tests/unit/fetcher/Fetcher.test.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/tests/unit/fetcher/Fetcher.test.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/tests/unit/fetcher/Fetcher.test.ts
 index 6c17624228b..cd295b4f2ab 100644
 --- a/tests/unit/fetcher/Fetcher.test.ts
 +++ b/src/test-packagePath/tests/unit/fetcher/Fetcher.test.ts
@@ -1797,7 +1797,7 @@ index 6c17624228b..cd295b4f2ab 100644
 diff --git a/tests/unit/fetcher/HttpResponsePromise.test.ts b/src/test-packagePath/tests/unit/fetcher/HttpResponsePromise.test.ts
 similarity index 96%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/tests/unit/fetcher/HttpResponsePromise.test.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/tests/unit/fetcher/HttpResponsePromise.test.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/tests/unit/fetcher/HttpResponsePromise.test.ts
 index 2ec008e581d..0c78dceaa9c 100644
 --- a/tests/unit/fetcher/HttpResponsePromise.test.ts
 +++ b/src/test-packagePath/tests/unit/fetcher/HttpResponsePromise.test.ts
@@ -1814,7 +1814,7 @@ index 2ec008e581d..0c78dceaa9c 100644
 diff --git a/tests/unit/fetcher/RawResponse.test.ts b/src/test-packagePath/tests/unit/fetcher/RawResponse.test.ts
 similarity index 94%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/tests/unit/fetcher/RawResponse.test.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/tests/unit/fetcher/RawResponse.test.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/tests/unit/fetcher/RawResponse.test.ts
 index 375ee3f3806..ca531eaa562 100644
 --- a/tests/unit/fetcher/RawResponse.test.ts
 +++ b/src/test-packagePath/tests/unit/fetcher/RawResponse.test.ts
@@ -1829,7 +1829,7 @@ index 375ee3f3806..ca531eaa562 100644
 diff --git a/tests/unit/fetcher/createRequestUrl.test.ts b/src/test-packagePath/tests/unit/fetcher/createRequestUrl.test.ts
 similarity index 98%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/tests/unit/fetcher/createRequestUrl.test.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/tests/unit/fetcher/createRequestUrl.test.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/tests/unit/fetcher/createRequestUrl.test.ts
 index f8afeaf0f0c..f6c2b25367e 100644
 --- a/tests/unit/fetcher/createRequestUrl.test.ts
 +++ b/src/test-packagePath/tests/unit/fetcher/createRequestUrl.test.ts
@@ -1842,7 +1842,7 @@ index f8afeaf0f0c..f6c2b25367e 100644
 diff --git a/tests/unit/fetcher/getRequestBody.test.ts b/src/test-packagePath/tests/unit/fetcher/getRequestBody.test.ts
 similarity index 97%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/tests/unit/fetcher/getRequestBody.test.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/tests/unit/fetcher/getRequestBody.test.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/tests/unit/fetcher/getRequestBody.test.ts
 index 8a6c3a57e21..f54b924ec72 100644
 --- a/tests/unit/fetcher/getRequestBody.test.ts
 +++ b/src/test-packagePath/tests/unit/fetcher/getRequestBody.test.ts
@@ -1857,7 +1857,7 @@ index 8a6c3a57e21..f54b924ec72 100644
 diff --git a/tests/unit/fetcher/getResponseBody.test.ts b/src/test-packagePath/tests/unit/fetcher/getResponseBody.test.ts
 similarity index 96%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/tests/unit/fetcher/getResponseBody.test.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/tests/unit/fetcher/getResponseBody.test.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/tests/unit/fetcher/getResponseBody.test.ts
 index ad6be7fc2c9..0e09a52c24a 100644
 --- a/tests/unit/fetcher/getResponseBody.test.ts
 +++ b/src/test-packagePath/tests/unit/fetcher/getResponseBody.test.ts
@@ -1873,7 +1873,7 @@ index ad6be7fc2c9..0e09a52c24a 100644
 diff --git a/tests/unit/fetcher/logging.test.ts b/src/test-packagePath/tests/unit/fetcher/logging.test.ts
 similarity index 99%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/tests/unit/fetcher/logging.test.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/tests/unit/fetcher/logging.test.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/tests/unit/fetcher/logging.test.ts
 index 366c9b6ced6..281a4927855 100644
 --- a/tests/unit/fetcher/logging.test.ts
 +++ b/src/test-packagePath/tests/unit/fetcher/logging.test.ts
@@ -1886,7 +1886,7 @@ index 366c9b6ced6..281a4927855 100644
 diff --git a/tests/unit/fetcher/makePassthroughRequest.test.ts b/src/test-packagePath/tests/unit/fetcher/makePassthroughRequest.test.ts
 similarity index 99%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/tests/unit/fetcher/makePassthroughRequest.test.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/tests/unit/fetcher/makePassthroughRequest.test.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/tests/unit/fetcher/makePassthroughRequest.test.ts
 index cb8f2260e0e..afa9ad22bc1 100644
 --- a/tests/unit/fetcher/makePassthroughRequest.test.ts
 +++ b/src/test-packagePath/tests/unit/fetcher/makePassthroughRequest.test.ts
@@ -1900,7 +1900,7 @@ index cb8f2260e0e..afa9ad22bc1 100644
 diff --git a/tests/unit/fetcher/makeRequest.test.ts b/src/test-packagePath/tests/unit/fetcher/makeRequest.test.ts
 similarity index 97%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/tests/unit/fetcher/makeRequest.test.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/tests/unit/fetcher/makeRequest.test.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/tests/unit/fetcher/makeRequest.test.ts
 index bde194554dd..1661d78fcc6 100644
 --- a/tests/unit/fetcher/makeRequest.test.ts
 +++ b/src/test-packagePath/tests/unit/fetcher/makeRequest.test.ts
@@ -1918,7 +1918,7 @@ index bde194554dd..1661d78fcc6 100644
 diff --git a/tests/unit/fetcher/redacting.test.ts b/src/test-packagePath/tests/unit/fetcher/redacting.test.ts
 similarity index 99%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/tests/unit/fetcher/redacting.test.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/tests/unit/fetcher/redacting.test.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/tests/unit/fetcher/redacting.test.ts
 index 685f1ddafd4..11b10e7dbfa 100644
 --- a/tests/unit/fetcher/redacting.test.ts
 +++ b/src/test-packagePath/tests/unit/fetcher/redacting.test.ts
@@ -1931,7 +1931,7 @@ index 685f1ddafd4..11b10e7dbfa 100644
 diff --git a/tests/unit/fetcher/requestWithRetries.test.ts b/src/test-packagePath/tests/unit/fetcher/requestWithRetries.test.ts
 similarity index 99%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/tests/unit/fetcher/requestWithRetries.test.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/tests/unit/fetcher/requestWithRetries.test.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/tests/unit/fetcher/requestWithRetries.test.ts
 index 7c98c0abfad..724be0681f8 100644
 --- a/tests/unit/fetcher/requestWithRetries.test.ts
 +++ b/src/test-packagePath/tests/unit/fetcher/requestWithRetries.test.ts
@@ -1945,7 +1945,7 @@ index 7c98c0abfad..724be0681f8 100644
 diff --git a/tests/unit/fetcher/signals.test.ts b/src/test-packagePath/tests/unit/fetcher/signals.test.ts
 similarity index 96%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/tests/unit/fetcher/signals.test.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/tests/unit/fetcher/signals.test.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/tests/unit/fetcher/signals.test.ts
 index d7b6d1e63ca..39e991d6775 100644
 --- a/tests/unit/fetcher/signals.test.ts
 +++ b/src/test-packagePath/tests/unit/fetcher/signals.test.ts
@@ -1958,11 +1958,11 @@ index d7b6d1e63ca..39e991d6775 100644
 diff --git a/tests/unit/fetcher/test-file.txt b/src/test-packagePath/tests/unit/fetcher/test-file.txt
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/tests/unit/fetcher/test-file.txt
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/tests/unit/fetcher/test-file.txt
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/tests/unit/fetcher/test-file.txt
 diff --git a/tests/unit/file/file.test.ts b/src/test-packagePath/tests/unit/file/file.test.ts
 similarity index 99%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/tests/unit/file/file.test.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/tests/unit/file/file.test.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/tests/unit/file/file.test.ts
 index 6cd6509059b..a12f6cd1f5c 100644
 --- a/tests/unit/file/file.test.ts
 +++ b/src/test-packagePath/tests/unit/file/file.test.ts
@@ -1978,7 +1978,7 @@ index 6cd6509059b..a12f6cd1f5c 100644
 diff --git a/tests/unit/logging/logger.test.ts b/src/test-packagePath/tests/unit/logging/logger.test.ts
 similarity index 99%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/tests/unit/logging/logger.test.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/tests/unit/logging/logger.test.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/tests/unit/logging/logger.test.ts
 index 2e0b5fe5040..332bdda67d2 100644
 --- a/tests/unit/logging/logger.test.ts
 +++ b/src/test-packagePath/tests/unit/logging/logger.test.ts
@@ -1991,11 +1991,11 @@ index 2e0b5fe5040..332bdda67d2 100644
 diff --git a/tests/unit/test-file.txt b/src/test-packagePath/tests/unit/test-file.txt
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/tests/unit/test-file.txt
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/tests/unit/test-file.txt
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/tests/unit/test-file.txt
 diff --git a/tests/unit/url/QueryStringBuilder.test.ts b/src/test-packagePath/tests/unit/url/QueryStringBuilder.test.ts
 similarity index 99%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/tests/unit/url/QueryStringBuilder.test.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/tests/unit/url/QueryStringBuilder.test.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/tests/unit/url/QueryStringBuilder.test.ts
 index 1afa2d22248..98ef6a0a375 100644
 --- a/tests/unit/url/QueryStringBuilder.test.ts
 +++ b/src/test-packagePath/tests/unit/url/QueryStringBuilder.test.ts
@@ -2008,7 +2008,7 @@ index 1afa2d22248..98ef6a0a375 100644
 diff --git a/tests/unit/url/join.test.ts b/src/test-packagePath/tests/unit/url/join.test.ts
 similarity index 99%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/tests/unit/url/join.test.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/tests/unit/url/join.test.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/tests/unit/url/join.test.ts
 index 123488f084e..9f502713379 100644
 --- a/tests/unit/url/join.test.ts
 +++ b/src/test-packagePath/tests/unit/url/join.test.ts
@@ -2021,7 +2021,7 @@ index 123488f084e..9f502713379 100644
 diff --git a/tests/unit/url/qs.test.ts b/src/test-packagePath/tests/unit/url/qs.test.ts
 similarity index 99%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/tests/unit/url/qs.test.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/tests/unit/url/qs.test.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/tests/unit/url/qs.test.ts
 index 1099b954282..3af9e83b4ca 100644
 --- a/tests/unit/url/qs.test.ts
 +++ b/src/test-packagePath/tests/unit/url/qs.test.ts
@@ -2034,7 +2034,7 @@ index 1099b954282..3af9e83b4ca 100644
 diff --git a/tests/unit/utils/setObjectProperty.test.ts b/src/test-packagePath/tests/unit/utils/setObjectProperty.test.ts
 similarity index 96%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/tests/unit/utils/setObjectProperty.test.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/tests/unit/utils/setObjectProperty.test.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/tests/unit/utils/setObjectProperty.test.ts
 index 29f8e638d44..c3b86d86863 100644
 --- a/tests/unit/utils/setObjectProperty.test.ts
 +++ b/src/test-packagePath/tests/unit/utils/setObjectProperty.test.ts
@@ -2047,11 +2047,11 @@ index 29f8e638d44..c3b86d86863 100644
 diff --git a/tests/wire/.gitkeep b/src/test-packagePath/tests/wire/.gitkeep
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/tests/wire/.gitkeep
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/tests/wire/.gitkeep
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/tests/wire/.gitkeep
 diff --git a/tests/wire/endpoints/container.test.ts b/src/test-packagePath/tests/wire/endpoints/container.test.ts
 similarity index 99%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/tests/wire/endpoints/container.test.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/tests/wire/endpoints/container.test.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/tests/wire/endpoints/container.test.ts
 index c9e5828af21..744e3d885a0 100644
 --- a/tests/wire/endpoints/container.test.ts
 +++ b/src/test-packagePath/tests/wire/endpoints/container.test.ts
@@ -2066,7 +2066,7 @@ index c9e5828af21..744e3d885a0 100644
 diff --git a/tests/wire/endpoints/contentType.test.ts b/src/test-packagePath/tests/wire/endpoints/contentType.test.ts
 similarity index 98%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/tests/wire/endpoints/contentType.test.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/tests/wire/endpoints/contentType.test.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/tests/wire/endpoints/contentType.test.ts
 index f6336d860bd..9ce9b7ed902 100644
 --- a/tests/wire/endpoints/contentType.test.ts
 +++ b/src/test-packagePath/tests/wire/endpoints/contentType.test.ts
@@ -2081,7 +2081,7 @@ index f6336d860bd..9ce9b7ed902 100644
 diff --git a/tests/wire/endpoints/enum.test.ts b/src/test-packagePath/tests/wire/endpoints/enum.test.ts
 similarity index 93%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/tests/wire/endpoints/enum.test.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/tests/wire/endpoints/enum.test.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/tests/wire/endpoints/enum.test.ts
 index dd8d82689ba..ab6a055e3f7 100644
 --- a/tests/wire/endpoints/enum.test.ts
 +++ b/src/test-packagePath/tests/wire/endpoints/enum.test.ts
@@ -2096,7 +2096,7 @@ index dd8d82689ba..ab6a055e3f7 100644
 diff --git a/tests/wire/endpoints/httpMethods.test.ts b/src/test-packagePath/tests/wire/endpoints/httpMethods.test.ts
 similarity index 98%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/tests/wire/endpoints/httpMethods.test.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/tests/wire/endpoints/httpMethods.test.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/tests/wire/endpoints/httpMethods.test.ts
 index 8432f5649d3..271f31722a0 100644
 --- a/tests/wire/endpoints/httpMethods.test.ts
 +++ b/src/test-packagePath/tests/wire/endpoints/httpMethods.test.ts
@@ -2111,7 +2111,7 @@ index 8432f5649d3..271f31722a0 100644
 diff --git a/tests/wire/endpoints/object.test.ts b/src/test-packagePath/tests/wire/endpoints/object.test.ts
 similarity index 99%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/tests/wire/endpoints/object.test.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/tests/wire/endpoints/object.test.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/tests/wire/endpoints/object.test.ts
 index 6df1bb23f80..76fc636ab35 100644
 --- a/tests/wire/endpoints/object.test.ts
 +++ b/src/test-packagePath/tests/wire/endpoints/object.test.ts
@@ -2126,7 +2126,7 @@ index 6df1bb23f80..76fc636ab35 100644
 diff --git a/tests/wire/endpoints/pagination.test.ts b/src/test-packagePath/tests/wire/endpoints/pagination.test.ts
 similarity index 94%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/tests/wire/endpoints/pagination.test.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/tests/wire/endpoints/pagination.test.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/tests/wire/endpoints/pagination.test.ts
 index d556b1d447c..56395ff491d 100644
 --- a/tests/wire/endpoints/pagination.test.ts
 +++ b/src/test-packagePath/tests/wire/endpoints/pagination.test.ts
@@ -2141,7 +2141,7 @@ index d556b1d447c..56395ff491d 100644
 diff --git a/tests/wire/endpoints/params.test.ts b/src/test-packagePath/tests/wire/endpoints/params.test.ts
 similarity index 98%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/tests/wire/endpoints/params.test.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/tests/wire/endpoints/params.test.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/tests/wire/endpoints/params.test.ts
 index 4bd811699b7..a1cf4a4cc79 100644
 --- a/tests/wire/endpoints/params.test.ts
 +++ b/src/test-packagePath/tests/wire/endpoints/params.test.ts
@@ -2158,7 +2158,7 @@ index 4bd811699b7..a1cf4a4cc79 100644
 diff --git a/tests/wire/endpoints/primitive.test.ts b/src/test-packagePath/tests/wire/endpoints/primitive.test.ts
 similarity index 99%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/tests/wire/endpoints/primitive.test.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/tests/wire/endpoints/primitive.test.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/tests/wire/endpoints/primitive.test.ts
 index 4fe9897bfe1..67bebdfdb2b 100644
 --- a/tests/wire/endpoints/primitive.test.ts
 +++ b/src/test-packagePath/tests/wire/endpoints/primitive.test.ts
@@ -2173,7 +2173,7 @@ index 4fe9897bfe1..67bebdfdb2b 100644
 diff --git a/tests/wire/endpoints/put.test.ts b/src/test-packagePath/tests/wire/endpoints/put.test.ts
 similarity index 93%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/tests/wire/endpoints/put.test.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/tests/wire/endpoints/put.test.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/tests/wire/endpoints/put.test.ts
 index a7e6dfd8f90..88ccf75347e 100644
 --- a/tests/wire/endpoints/put.test.ts
 +++ b/src/test-packagePath/tests/wire/endpoints/put.test.ts
@@ -2188,7 +2188,7 @@ index a7e6dfd8f90..88ccf75347e 100644
 diff --git a/tests/wire/endpoints/union.test.ts b/src/test-packagePath/tests/wire/endpoints/union.test.ts
 similarity index 94%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/tests/wire/endpoints/union.test.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/tests/wire/endpoints/union.test.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/tests/wire/endpoints/union.test.ts
 index 8558fd288df..86a125510d1 100644
 --- a/tests/wire/endpoints/union.test.ts
 +++ b/src/test-packagePath/tests/wire/endpoints/union.test.ts
@@ -2203,7 +2203,7 @@ index 8558fd288df..86a125510d1 100644
 diff --git a/tests/wire/endpoints/urls.test.ts b/src/test-packagePath/tests/wire/endpoints/urls.test.ts
 similarity index 97%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/tests/wire/endpoints/urls.test.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/tests/wire/endpoints/urls.test.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/tests/wire/endpoints/urls.test.ts
 index b5bafd142a2..7bafdc69915 100644
 --- a/tests/wire/endpoints/urls.test.ts
 +++ b/src/test-packagePath/tests/wire/endpoints/urls.test.ts
@@ -2218,7 +2218,7 @@ index b5bafd142a2..7bafdc69915 100644
 diff --git a/tests/wire/inlinedRequests.test.ts b/src/test-packagePath/tests/wire/inlinedRequests.test.ts
 similarity index 97%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/tests/wire/inlinedRequests.test.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/tests/wire/inlinedRequests.test.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/tests/wire/inlinedRequests.test.ts
 index de7adfb4410..43cc5c63953 100644
 --- a/tests/wire/inlinedRequests.test.ts
 +++ b/src/test-packagePath/tests/wire/inlinedRequests.test.ts
@@ -2235,7 +2235,7 @@ index de7adfb4410..43cc5c63953 100644
 diff --git a/tests/wire/noAuth.test.ts b/src/test-packagePath/tests/wire/noAuth.test.ts
 similarity index 93%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/tests/wire/noAuth.test.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/tests/wire/noAuth.test.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/tests/wire/noAuth.test.ts
 index 6ada23e76bc..e5826e6a948 100644
 --- a/tests/wire/noAuth.test.ts
 +++ b/src/test-packagePath/tests/wire/noAuth.test.ts
@@ -2252,7 +2252,7 @@ index 6ada23e76bc..e5826e6a948 100644
 diff --git a/tests/wire/noReqBody.test.ts b/src/test-packagePath/tests/wire/noReqBody.test.ts
 similarity index 96%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/tests/wire/noReqBody.test.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/tests/wire/noReqBody.test.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/tests/wire/noReqBody.test.ts
 index b6a6ab1102a..14299b508bd 100644
 --- a/tests/wire/noReqBody.test.ts
 +++ b/src/test-packagePath/tests/wire/noReqBody.test.ts
@@ -2267,7 +2267,7 @@ index b6a6ab1102a..14299b508bd 100644
 diff --git a/tests/wire/reqWithHeaders.test.ts b/src/test-packagePath/tests/wire/reqWithHeaders.test.ts
 similarity index 94%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/tests/wire/reqWithHeaders.test.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/tests/wire/reqWithHeaders.test.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/tests/wire/reqWithHeaders.test.ts
 index a2295047e42..45a3299c2fc 100644
 --- a/tests/wire/reqWithHeaders.test.ts
 +++ b/src/test-packagePath/tests/wire/reqWithHeaders.test.ts
@@ -2282,7 +2282,7 @@ index a2295047e42..45a3299c2fc 100644
 diff --git a/src/version.ts b/src/test-packagePath/version.ts
 similarity index 100%
 rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/version.ts
-rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-BAphu5pBNckG/src/test-packagePath/version.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-83968-WKNFo6wUjiQo/src/test-packagePath/version.ts
 diff --git a/tsconfig.base.json b/tsconfig.base.json
 index 93a92c0630b..10d655202f4 100644
 --- a/tsconfig.base.json

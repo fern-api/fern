@@ -109,6 +109,7 @@ fixtures:
       outputMode: local_files
       customConfig:
         outputSrcOnly: true
+      storeFullSnapshot: true
     - outputFolder: never-throw-errors
       customConfig:
         neverThrowErrors: true

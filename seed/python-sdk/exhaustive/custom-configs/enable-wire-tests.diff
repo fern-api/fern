@@ -1,5 +1,5 @@
 diff --git a/.fern/metadata.json b/.fern/metadata.json
-index 884da712b73..7c288fdabe1 100644
+index d018d66316a..46cf3f37ec3 100644
 --- a/.fern/metadata.json
 +++ b/.fern/metadata.json
 @@ -2,6 +2,9 @@
@@ -10,8 +10,8 @@ index 884da712b73..7c288fdabe1 100644
 +    "enable_wire_tests": true
 +  },
    "originGitCommit": "DUMMY",
-   "originGitCommitIsDirty": null,
    "invokedBy": "manual",
+   "requestedVersion": "0.0.1",
 diff --git a/.fernignore b/.fernignore
 deleted file mode 100644
 index fe580e7c5de..00000000000
@@ -21,7 +21,7 @@ index fe580e7c5de..00000000000
 -tests/test_lazy_loading.py
 -tests/custom/test_discriminated_unions.py
 diff --git a/poetry.lock b/poetry.lock
-index 2a97347e644..1597c9ee2cd 100644
+index 75a1b22ff1e..ae0e45a6f7c 100644
 --- a/poetry.lock
 +++ b/poetry.lock
 @@ -242,6 +242,144 @@ files = [
@@ -222,16 +222,16 @@ index 2a97347e644..1597c9ee2cd 100644
  [metadata]
  lock-version = "2.0"
  python-versions = "^3.10"
--content-hash = "02ee31852ff3143d28cf513ee3fa1b514fe2ba936dcffc8ab6cc98f7c9570c01"
-+content-hash = "e2541afd91bc09d4197eeb20ce689552c2fba7835992ac58b76873446bec8411"
+-content-hash = "d007b2e8258e3a9475b9bc4e94cb13783c81486e624f0529b033cf734e528227"
++content-hash = "677be9fe653c8e79ed1843582a11e1360f447e5c47d969af176ace015a4729ed"
 diff --git a/pyproject.toml b/pyproject.toml
-index 5c5322a57b0..65b8032ac22 100644
+index e230ac522c8..dea8ead5d90 100644
 --- a/pyproject.toml
 +++ b/pyproject.toml
 @@ -57,6 +57,8 @@ pytest-xdist = "^3.6.1"
  python-dateutil = "^2.9.0"
  types-python-dateutil = "^2.9.0.20240316"
- urllib3 = ">=1.26.19,<2.0.0 || >=2.2.2,<3.0.0"
+ urllib3 = ">=2.6.3,<3.0.0"
 +requests = "^2.33.0"
 +types-requests = "^2.33.0"
  ruff = "==0.11.5"

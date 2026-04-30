@@ -62,6 +62,7 @@ fixtures:
         package-layout: flat
         use-default-request-parameter-values: true
       outputFolder: flat-package-layout
+      storeFullSnapshot: true
     - customConfig:
         inline-path-parameters: true
         custom-dependencies:
@@ -345,6 +346,7 @@ fixtures:
       outputMode: local_files
       outputFolder: no-config
       skipScripts: true
+      storeFullSnapshot: true
       # Test with explicit project-root (should behave same as default)
     - customConfig:
         package-prefix: com.test.sdk
@@ -352,6 +354,7 @@ fixtures:
       outputMode: local_files
       outputFolder: project-root
       skipScripts: true
+      storeFullSnapshot: true
       # Test with source-root (should NOT add src/main/java)
     - customConfig:
         package-prefix: com.test.sdk
@@ -359,6 +362,7 @@ fixtures:
       outputMode: local_files
       outputFolder: source-root
       skipScripts: true
+      storeFullSnapshot: true
 scripts:
   docker:
     - image: fernapi/java-seed

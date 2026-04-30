@@ -1,0 +1,13 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-java-sdk",
+  "generatorVersion": "local",
+  "generatorConfig": {
+    "package-layout": "flat",
+    "use-default-request-parameter-values": true
+  },
+  "originGitCommit": "DUMMY",
+  "invokedBy": "manual",
+  "requestedVersion": "0.0.1",
+  "sdkVersion": "0.0.1"
+}
