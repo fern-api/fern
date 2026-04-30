@@ -172,6 +172,7 @@ export declare namespace SdkGenerator {
         customPagerName: string;
         resolveQueryParameterNameConflicts: boolean;
         maxRetries: number | undefined;
+        alwaysSendAuth: boolean;
     }
 }
 
@@ -542,7 +543,8 @@ export class SdkGenerator {
             useDefaultRequestParameterValues: config.useDefaultRequestParameterValues,
             generateEndpointMetadata: config.generateEndpointMetadata,
             parameterNaming: config.parameterNaming,
-            offsetSemantics: config.offsetSemantics
+            offsetSemantics: config.offsetSemantics,
+            alwaysSendAuth: config.alwaysSendAuth
         });
         this.baseClientTypeGenerator = new BaseClientTypeGenerator({
             ir: intermediateRepresentation,
