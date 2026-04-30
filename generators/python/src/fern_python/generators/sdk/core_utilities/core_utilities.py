@@ -170,7 +170,9 @@ class CoreUtilities:
                 file=Filepath.FilepathPart(module_name="http_client"),
             ),
             exports={"HttpClient", "AsyncHttpClient"} if not self._exclude_types_from_init_exports else set(),
-            string_replacements={"{{RETRY_STATUS_CHECK}}": retry_status_check},
+            string_replacements={
+                "return response.status_code >= 500 or response.status_code in [429, 408, 409]  # {{RETRY_STATUS_CHECK}}": f"return {retry_status_check}",
+            },
         )
 
         self._copy_file_to_project(
