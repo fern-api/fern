@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module <%= gem_namespace %>
   module Internal
     class OffsetPageIterator
@@ -36,7 +38,7 @@ module <%= gem_namespace %>
       # @param block [Proc] The block which each retrieved page is yielded to.
       # @return [NilClass]
       def each(&block)
-        while page = next_page do
+        while (page = next_page)
           block.call(page)
         end
       end
@@ -69,9 +71,7 @@ module <%= gem_namespace %>
           this_page = fetch_page(@page_number)
         end
 
-        if @has_next_field
-          @has_next_page = this_page&.send(@has_next_field)
-        end
+        @has_next_page = this_page&.send(@has_next_field) if @has_next_field
 
         items = this_page.send(@item_field)
         if items.nil? || items.empty?

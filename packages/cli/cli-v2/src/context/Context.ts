@@ -5,7 +5,6 @@ import {
     getAccessToken,
     verifyAndDecodeJwt
 } from "@fern-api/auth";
-import { Log, TtyAwareLogger } from "@fern-api/cli-logger";
 import { schemas } from "@fern-api/config";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { createLogger, LOG_LEVELS, Logger, LogLevel } from "@fern-api/logger";
@@ -13,6 +12,7 @@ import { getTokenFromAuth0 } from "@fern-api/login";
 import { CliError } from "@fern-api/task-context";
 
 import chalk from "chalk";
+import { readFile } from "fs/promises";
 import inquirer from "inquirer";
 import { CredentialStore, TokenService } from "../auth/index.js";
 import { Cache } from "../cache/index.js";
@@ -20,6 +20,7 @@ import { FernYmlSchemaLoader } from "../config/fern-yml/FernYmlSchemaLoader.js";
 import { Target } from "../sdk/config/Target.js";
 import { TelemetryClient } from "../telemetry/index.js";
 import { Icons } from "../ui/format.js";
+import { TtyAwareLogger } from "../ui/TtyAwareLogger.js";
 import type { Workspace } from "../workspace/Workspace.js";
 import { WorkspaceLoader } from "../workspace/WorkspaceLoader.js";
 import { TaskContextAdapter } from "./adapter/TaskContextAdapter.js";
@@ -89,6 +90,30 @@ export class Context {
      */
     public get isTTY(): boolean {
         return this.ttyAwareLogger.isTTY;
+    }
+
+    /**
+     * Resolves the org from the local Fern config. Tries `fern.yml` first
+     * (`org` field), then falls back to `fern/fern.config.json` (`organization`
+     * field) for repos that haven't migrated yet.
+     * Returns `undefined` if neither file exists or neither contains an org.
+     *
+     * @deprecated Remove the fern.config.json fallback once all repos have migrated to fern.yml.
+     */
+    public async loadOrg(): Promise<string | undefined> {
+        const fernYmlResult = await new FernYmlSchemaLoader({ cwd: this.cwd }).load();
+        if (fernYmlResult.type === "success") {
+            return fernYmlResult.data.org;
+        }
+
+        try {
+            const configPath = join(this.cwd, RelativeFilePath.of("fern/fern.config.json"));
+            const raw = await readFile(configPath, "utf-8");
+            const config = JSON.parse(raw) as Record<string, unknown>;
+            return typeof config.organization === "string" ? config.organization : undefined;
+        } catch {
+            return undefined;
+        }
     }
 
     public async loadWorkspaceOrThrow(): Promise<Workspace> {
@@ -322,33 +347,53 @@ export class Context {
     }
 
     private log(level: LogLevel, ...parts: string[]) {
-        this.logImmediately([
-            {
-                parts,
-                level,
-                time: new Date()
-            }
-        ]);
+        this.writeLog(level, parts, { stderr: false });
     }
 
     private logStderr(level: LogLevel, ...parts: string[]) {
-        this.logImmediately(
-            [
-                {
-                    parts,
-                    level,
-                    time: new Date()
-                }
-            ],
-            { stderr: true }
-        );
+        this.writeLog(level, parts, { stderr: true });
     }
 
-    private logImmediately(logs: Log[], { stderr = false }: { stderr?: boolean } = {}): void {
-        const filtered = logs.filter((log) => LOG_LEVELS.indexOf(log.level) >= LOG_LEVELS.indexOf(this.logLevel));
-        this.ttyAwareLogger.log(filtered, {
-            includeDebugInfo: this.logLevel === LogLevel.Debug,
-            stderr
+    private writeLog(level: LogLevel, parts: string[], { stderr }: { stderr: boolean }): void {
+        if (LOG_LEVELS.indexOf(level) < LOG_LEVELS.indexOf(this.logLevel)) {
+            return;
+        }
+        const content = formatLogContent({
+            level,
+            parts,
+            includeDebugInfo: this.logLevel === LogLevel.Debug
         });
+        this.ttyAwareLogger.write(content, { stderr });
     }
+}
+
+function formatLogContent({
+    level,
+    parts,
+    includeDebugInfo
+}: {
+    level: LogLevel;
+    parts: string[];
+    includeDebugInfo: boolean;
+}): string {
+    let content = parts.join(" ");
+    if (includeDebugInfo) {
+        content = `${chalk.dim(`${getLogLevelPrefix(level)} ${new Date().toISOString()} `)}${content}`;
+    }
+    content += "\n";
+    switch (level) {
+        case LogLevel.Error:
+            return chalk.red(content);
+        case LogLevel.Warn:
+            return chalk.hex("FFA500")(content);
+        case LogLevel.Trace:
+        case LogLevel.Debug:
+        case LogLevel.Info:
+            return content;
+    }
+}
+
+const LOG_LEVEL_PREFIX_WIDTH = Math.max(...LOG_LEVELS.map((l) => l.length));
+function getLogLevelPrefix(level: LogLevel): string {
+    return level.toUpperCase().padEnd(LOG_LEVEL_PREFIX_WIDTH);
 }

@@ -66,6 +66,7 @@ export {
     ConjureSpecSchema,
     FernSettingsSchema,
     FernSpecSchema,
+    GraphQlSpecSchema,
     OpenApiSpecSchema,
     OpenRpcSettingsSchema,
     OpenRpcSpecSchema,

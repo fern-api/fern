@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.seed.object.core.ObjectMappers;
 import java.io.IOException;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonDeserialize(using = UndiscriminatedUnionTypeWithAliasVariant.Deserializer.class)
@@ -32,7 +33,7 @@ public final class UndiscriminatedUnionTypeWithAliasVariant {
     @SuppressWarnings("unchecked")
     public <T> T visit(Visitor<T> visitor) {
         if (this.type == 0) {
-            return visitor.visit((AliasVariantType) this.value);
+            return visitor.visit((AliasVariant) this.value);
         } else if (this.type == 1) {
             return visitor.visit((NonAliasVariant) this.value);
         }
@@ -60,7 +61,7 @@ public final class UndiscriminatedUnionTypeWithAliasVariant {
         return this.value.toString();
     }
 
-    public static UndiscriminatedUnionTypeWithAliasVariant of(AliasVariantType value) {
+    public static UndiscriminatedUnionTypeWithAliasVariant of(AliasVariant value) {
         return new UndiscriminatedUnionTypeWithAliasVariant(value, 0);
     }
 
@@ -69,7 +70,7 @@ public final class UndiscriminatedUnionTypeWithAliasVariant {
     }
 
     public interface Visitor<T> {
-        T visit(AliasVariantType value);
+        T visit(AliasVariant value);
 
         T visit(NonAliasVariant value);
     }
@@ -83,13 +84,17 @@ public final class UndiscriminatedUnionTypeWithAliasVariant {
         public UndiscriminatedUnionTypeWithAliasVariant deserialize(JsonParser p, DeserializationContext context)
                 throws IOException {
             Object value = p.readValueAs(Object.class);
-            try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, AliasVariantType.class));
-            } catch (RuntimeException e) {
+            if (value instanceof Map<?, ?> && ((Map<?, ?>) value).containsKey("prop")) {
+                try {
+                    return of(ObjectMappers.JSON_MAPPER.convertValue(value, AliasVariant.class));
+                } catch (RuntimeException e) {
+                }
             }
-            try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, NonAliasVariant.class));
-            } catch (RuntimeException e) {
+            if (value instanceof Map<?, ?> && ((Map<?, ?>) value).containsKey("prop")) {
+                try {
+                    return of(ObjectMappers.JSON_MAPPER.convertValue(value, NonAliasVariant.class));
+                } catch (RuntimeException e) {
+                }
             }
             throw new JsonParseException(p, "Failed to deserialize");
         }

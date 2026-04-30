@@ -12,7 +12,7 @@ public partial class Examples
         await client.TestGetAsync(
             new TestGetRequest {
                 Region = "region",
-                Limit = "100"
+                Limit = "limit"
             }
         );
     }

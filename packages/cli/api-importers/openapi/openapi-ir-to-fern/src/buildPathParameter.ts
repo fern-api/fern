@@ -48,7 +48,7 @@ export function buildPathParameter({
         pathParameterSchema.availability = convertAvailability(pathParameter.availability);
     }
     if (pathParameter.clientDefault != null && "type" in pathParameterSchema) {
-        pathParameterSchema.default = pathParameter.clientDefault;
+        pathParameterSchema["client-default"] = pathParameter.clientDefault;
     }
 
     return pathParameterSchema;

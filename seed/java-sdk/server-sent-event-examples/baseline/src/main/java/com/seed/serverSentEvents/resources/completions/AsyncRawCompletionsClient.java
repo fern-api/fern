@@ -16,9 +16,11 @@ import com.seed.serverSentEvents.core.Stream;
 import com.seed.serverSentEvents.resources.completions.errors.BadRequestError;
 import com.seed.serverSentEvents.resources.completions.requests.StreamCompletionRequest;
 import com.seed.serverSentEvents.resources.completions.requests.StreamEventsContextProtocolRequest;
+import com.seed.serverSentEvents.resources.completions.requests.StreamEventsDiscriminantInDataRequest;
 import com.seed.serverSentEvents.resources.completions.requests.StreamEventsRequest;
 import com.seed.serverSentEvents.resources.completions.types.StreamEvent;
 import com.seed.serverSentEvents.resources.completions.types.StreamEventContextProtocol;
+import com.seed.serverSentEvents.resources.completions.types.StreamEventDiscriminantInData;
 import com.seed.serverSentEvents.resources.completions.types.StreamedCompletion;
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
@@ -159,6 +161,82 @@ public class AsyncRawCompletionsClient {
                         future.complete(new SeedServerSentEventsHttpResponse<>(
                                 Stream.fromSseWithEventDiscrimination(
                                         StreamEvent.class, new ResponseBodyReader(response), "event", "[DONE]"),
+                                response));
+                        return;
+                    }
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    try {
+                        if (response.code() == 400) {
+                            future.completeExceptionally(new BadRequestError(
+                                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response));
+                            return;
+                        }
+                    } catch (JsonProcessingException ignored) {
+                        // unable to map error response, throwing generic error
+                    }
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+                    future.completeExceptionally(new SeedServerSentEventsApiException(
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
+                    return;
+                } catch (IOException e) {
+                    future.completeExceptionally(
+                            new SeedServerSentEventsException("Network error executing HTTP request", e));
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                future.completeExceptionally(
+                        new SeedServerSentEventsException("Network error executing HTTP request", e));
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<SeedServerSentEventsHttpResponse<Iterable<StreamEventDiscriminantInData>>>
+            streamEventsDiscriminantInData(StreamEventsDiscriminantInDataRequest request) {
+        return streamEventsDiscriminantInData(request, null);
+    }
+
+    public CompletableFuture<SeedServerSentEventsHttpResponse<Iterable<StreamEventDiscriminantInData>>>
+            streamEventsDiscriminantInData(
+                    StreamEventsDiscriminantInDataRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("stream-events-discriminant-in-data");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (JsonProcessingException e) {
+            throw new SeedServerSentEventsException("Failed to serialize request", e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl.build())
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        client = client.newBuilder().callTimeout(0, TimeUnit.SECONDS).build();
+        CompletableFuture<SeedServerSentEventsHttpResponse<Iterable<StreamEventDiscriminantInData>>> future =
+                new CompletableFuture<>();
+        client.newCall(okhttpRequest).enqueue(new Callback() {
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                try {
+                    ResponseBody responseBody = response.body();
+                    if (response.isSuccessful()) {
+                        future.complete(new SeedServerSentEventsHttpResponse<>(
+                                Stream.fromSse(StreamEventDiscriminantInData.class, new ResponseBodyReader(response)),
                                 response));
                         return;
                     }

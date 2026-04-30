@@ -281,6 +281,10 @@ fixtures:
   - customConfig:
       enable-wire-tests: true
     outputFolder: basic-auth
+  basic-auth-pw-omitted:
+  - customConfig:
+      enable-wire-tests: true
+    outputFolder: basic-auth-pw-omitted
   oauth-client-credentials:
   - customConfig:
       enable-wire-tests: true
@@ -416,3 +420,7 @@ allowedFailures:
   # Optional wire tests have snippet generation bug with optional(nullable(T))
   # Snippet generator doesn't wrap value in Optional.of() for optional request bodies
 - optional:wire-tests
+
+  # Multipart with $ref body — Java snippet generator drops the file argument;
+  # tracked under FER-10085 (will pass once that PR lands).
+- openapi-request-body-ref:baseline

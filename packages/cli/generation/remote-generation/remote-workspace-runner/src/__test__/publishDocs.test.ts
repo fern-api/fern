@@ -1,6 +1,86 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { beforeEach, describe, expect, it, type Mock, vi } from "vitest";
 
+// Auth message helpers are defined locally to avoid transitive import issues
+// (publishDocs.ts has heavy dependencies). The logic here must stay in sync with publishDocs.ts.
+const FORBIDDEN_ORG_MEMBERSHIP_PATTERNS = ["does not belong to organization", "User does not belong"];
+
+function extractServerError(content: Record<string, unknown> | undefined): {
+    code: string | undefined;
+    message: string | undefined;
+} {
+    if (content == null) {
+        return { code: undefined, message: undefined };
+    }
+    const body = content.body as Record<string, unknown> | string | undefined;
+    if (body != null && typeof body === "object") {
+        const code = typeof body.code === "string" ? body.code : undefined;
+        const message = typeof body.message === "string" ? body.message : undefined;
+        return { code, message };
+    }
+    const message =
+        typeof body === "string" && body.length > 0
+            ? body
+            : typeof content.errorMessage === "string"
+              ? content.errorMessage
+              : typeof content.message === "string"
+                ? content.message
+                : undefined;
+    return { code: undefined, message };
+}
+
+function buildForbiddenMessage(
+    domain: string,
+    organization: string,
+    message: string | undefined,
+    loginCommand: string
+): string {
+    if (message == null) {
+        return `You do not have permission to publish docs to '${domain}' under organization '${organization}'.`;
+    }
+    if (FORBIDDEN_ORG_MEMBERSHIP_PATTERNS.some((pattern) => message.includes(pattern))) {
+        return (
+            `You are not a member of organization '${organization}'. ` +
+            `Please run '${loginCommand}' to ensure you are logged in with the correct account.\n\n` +
+            "Please ensure you have membership at https://dashboard.buildwithfern.com, and ask a team member for an invite if not."
+        );
+    }
+    return message;
+}
+
+function buildUnauthorizedMessage(organization: string, message: string | undefined, loginCommand: string): string {
+    if (message != null && message.includes("Invalid authorization token")) {
+        return "Your authentication token is invalid or expired. " + `Please run '${loginCommand}' to re-authenticate.`;
+    }
+    return (
+        `You are not authorized to publish docs under organization '${organization}'. ` +
+        `Please run '${loginCommand}' to ensure you are logged in with the correct account.\n\n` +
+        "Please ensure you have membership at https://dashboard.buildwithfern.com, and ask a team member for an invite if not."
+    );
+}
+
+function buildAuthFailureMessage(
+    domain: string,
+    organization: string,
+    errorContent: Record<string, unknown> | undefined,
+    loginCommand: string
+): string {
+    const { code, message } = extractServerError(errorContent);
+    switch (code) {
+        case "FORBIDDEN":
+            return buildForbiddenMessage(domain, organization, message, loginCommand);
+        case "UNAUTHORIZED":
+            return buildUnauthorizedMessage(organization, message, loginCommand);
+        case "INTERNAL_SERVER_ERROR":
+            return `An internal server error occurred while publishing docs to '${domain}'. Please try again or reach out to support@buildwithfern.com for assistance.`;
+        default:
+            if (message != null) {
+                return message;
+            }
+            return `Failed to publish docs to '${domain}'. Please reach out to support@buildwithfern.com for assistance.`;
+    }
+}
+
 // Define the function locally to avoid import issues - tests the same logic
 function sanitizeRelativePathForS3(relativeFilePath: RelativeFilePath): RelativeFilePath {
     // Replace ../ segments with _dot_dot_/ to prevent HTTP client normalization issues
@@ -198,6 +278,112 @@ describe("publishDocs S3 path sanitization", () => {
             // "../assets/logo.svg" would become "assets/logo.svg"
             // But our sanitized path "_dot_dot_/assets/logo.svg" stays unchanged
             expect(result).not.toBe("assets/logo.svg");
+        });
+    });
+});
+
+describe("auth error message builders", () => {
+    const ORG = "my-org";
+    const DOMAIN = "docs.example.com";
+    const V1_CMD = "fern login";
+    const V2_CMD = "fern auth login";
+
+    describe("buildForbiddenMessage", () => {
+        it("returns generic permission message when message is undefined", () => {
+            const result = buildForbiddenMessage(DOMAIN, ORG, undefined, V1_CMD);
+            expect(result).toBe(
+                `You do not have permission to publish docs to '${DOMAIN}' under organization '${ORG}'.`
+            );
+        });
+
+        it("returns org membership hint with v1 login command when message matches membership pattern", () => {
+            const result = buildForbiddenMessage(DOMAIN, ORG, "User does not belong to org", V1_CMD);
+            expect(result).toContain(`run '${V1_CMD}'`);
+            expect(result).toContain(`not a member of organization '${ORG}'`);
+        });
+
+        it("returns org membership hint with v2 login command when message matches membership pattern", () => {
+            const result = buildForbiddenMessage(DOMAIN, ORG, "does not belong to organization acme", V2_CMD);
+            expect(result).toContain(`run '${V2_CMD}'`);
+            expect(result).not.toContain(V1_CMD);
+        });
+
+        it("passes through unrecognized server messages unchanged", () => {
+            const serverMessage = "Your plan does not include this feature.";
+            const result = buildForbiddenMessage(DOMAIN, ORG, serverMessage, V1_CMD);
+            expect(result).toBe(serverMessage);
+        });
+    });
+
+    describe("buildUnauthorizedMessage", () => {
+        it("returns token-expired hint with v1 login command for invalid token message", () => {
+            const result = buildUnauthorizedMessage(ORG, "Invalid authorization token", V1_CMD);
+            expect(result).toContain(`run '${V1_CMD}'`);
+            expect(result).toContain("invalid or expired");
+        });
+
+        it("returns token-expired hint with v2 login command for invalid token message", () => {
+            const result = buildUnauthorizedMessage(ORG, "Invalid authorization token", V2_CMD);
+            expect(result).toContain(`run '${V2_CMD}'`);
+            expect(result).not.toContain(V1_CMD);
+        });
+
+        it("returns generic unauthorized message when message is undefined", () => {
+            const result = buildUnauthorizedMessage(ORG, undefined, V1_CMD);
+            expect(result).toContain(`run '${V1_CMD}'`);
+            expect(result).toContain(`not authorized to publish docs under organization '${ORG}'`);
+        });
+
+        it("returns generic unauthorized message for unrecognized message", () => {
+            const result = buildUnauthorizedMessage(ORG, "Some other auth error", V2_CMD);
+            expect(result).toContain(`run '${V2_CMD}'`);
+            expect(result).toContain(`not authorized to publish docs under organization '${ORG}'`);
+        });
+    });
+
+    describe("buildAuthFailureMessage", () => {
+        it("routes FORBIDDEN to buildForbiddenMessage with correct loginCommand", () => {
+            const content: Record<string, unknown> = {
+                reason: "status-code",
+                statusCode: 403,
+                body: { code: "FORBIDDEN", message: "does not belong to organization" }
+            };
+            const result = buildAuthFailureMessage(DOMAIN, ORG, content, V2_CMD);
+            expect(result).toContain(`run '${V2_CMD}'`);
+        });
+
+        it("routes UNAUTHORIZED to buildUnauthorizedMessage with correct loginCommand", () => {
+            const content: Record<string, unknown> = {
+                reason: "status-code",
+                statusCode: 401,
+                body: { code: "UNAUTHORIZED", message: "Invalid authorization token" }
+            };
+            const result = buildAuthFailureMessage(DOMAIN, ORG, content, V2_CMD);
+            expect(result).toContain(`run '${V2_CMD}'`);
+            expect(result).toContain("invalid or expired");
+        });
+
+        it("returns internal server error message for INTERNAL_SERVER_ERROR code", () => {
+            const content: Record<string, unknown> = {
+                body: { code: "INTERNAL_SERVER_ERROR" }
+            };
+            const result = buildAuthFailureMessage(DOMAIN, ORG, content, V1_CMD);
+            expect(result).toContain("internal server error");
+            expect(result).toContain(DOMAIN);
+        });
+
+        it("returns server message directly when code is unrecognized but message is present", () => {
+            const content: Record<string, unknown> = {
+                body: { code: "SOME_OTHER_CODE", message: "Custom server error" }
+            };
+            const result = buildAuthFailureMessage(DOMAIN, ORG, content, V1_CMD);
+            expect(result).toBe("Custom server error");
+        });
+
+        it("returns fallback message when content is undefined", () => {
+            const result = buildAuthFailureMessage(DOMAIN, ORG, undefined, V1_CMD);
+            expect(result).toContain("Failed to publish docs");
+            expect(result).toContain(DOMAIN);
         });
     });
 });

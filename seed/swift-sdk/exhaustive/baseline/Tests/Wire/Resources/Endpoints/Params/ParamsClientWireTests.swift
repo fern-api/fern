@@ -87,7 +87,7 @@ import Exhaustive
         let expectedResponse = "string"
         let response = try await client.endpoints.params.modifyWithInlinePath(
             param: "param",
-            request: .init(body: "string"),
+            request: "string",
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)

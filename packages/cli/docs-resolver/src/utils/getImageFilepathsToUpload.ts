@@ -63,10 +63,10 @@ export async function collectFilesFromDocsConfig({
     }
 
     if (
-        parsedDocsConfig.metadata?.["og:background-image"] != null &&
-        parsedDocsConfig.metadata["og:background-image"].type === "filepath"
+        parsedDocsConfig.metadata?.["og:dynamic:background-image"] != null &&
+        parsedDocsConfig.metadata["og:dynamic:background-image"].type === "filepath"
     ) {
-        filepaths.add(parsedDocsConfig.metadata["og:background-image"].value);
+        filepaths.add(parsedDocsConfig.metadata["og:dynamic:background-image"].value);
     }
 
     /* typography */

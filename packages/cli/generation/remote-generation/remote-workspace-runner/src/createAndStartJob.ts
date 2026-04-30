@@ -41,7 +41,8 @@ export async function createAndStartJob({
     retryRateLimited,
     automationMode,
     autoMerge,
-    skipIfNoDiff
+    skipIfNoDiff,
+    loginCommand = "fern login"
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     workspace: FernWorkspace;
@@ -65,6 +66,11 @@ export async function createAndStartJob({
     automationMode?: boolean;
     autoMerge?: boolean;
     skipIfNoDiff?: boolean;
+    /**
+     * CLI command to reference in auth-failure hints (e.g. 'fern login' for v1,
+     * 'fern auth login' for CLI v2). Defaults to 'fern login'.
+     */
+    loginCommand?: string;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
     // Determine fernignore contents:
     // - If --skip-fernignore is set, upload an empty .fernignore so nothing is ignored
@@ -101,7 +107,8 @@ export async function createAndStartJob({
                 fernignoreContents,
                 automationMode,
                 autoMerge,
-                skipIfNoDiff
+                skipIfNoDiff,
+                loginCommand
             }),
         retryRateLimited,
         logger: context.logger,
@@ -130,7 +137,8 @@ async function createJob({
     fiddlePreview,
     pushPreviewBranch,
     fernignoreContents,
-    skipIfNoDiff
+    skipIfNoDiff,
+    loginCommand
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     workspace: FernWorkspace;
@@ -150,6 +158,7 @@ async function createJob({
     automationMode?: boolean;
     autoMerge?: boolean;
     skipIfNoDiff?: boolean;
+    loginCommand: string;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
     const remoteGenerationService = createFiddleService({ token: token.value });
 
@@ -247,7 +256,7 @@ async function createJob({
             },
             insufficientPermissions: () => {
                 return context.failAndThrow(
-                    `You do not have permission to run this generator for organization '${organization}'. Please run 'fern login' to ensure you are logged in with the correct account.\n\n` +
+                    `You do not have permission to run this generator for organization '${organization}'. Please run '${loginCommand}' to ensure you are logged in with the correct account.\n\n` +
                         "Please ensure you have membership at https://dashboard.buildwithfern.com, and ask a team member for an invite if not.",
                     undefined,
                     { code: CliError.Code.AuthError }

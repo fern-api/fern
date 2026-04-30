@@ -1,0 +1,16 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/events",
+                "method": "GET",
+                "identifier_override": "endpoint_events.subscribe"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedUnionQueryParametersClient } from \"@fern/union-query-parameters\";\n\nconst client = new SeedUnionQueryParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.events.subscribe({\n    event_type: \"group.created\",\n    tags: \"tags\"\n});\n"
+            }
+        }
+    ],
+    "types": {}
+}

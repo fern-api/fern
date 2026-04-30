@@ -9,6 +9,7 @@ type HttpEndpoint = FernIr.HttpEndpoint;
 type PathParameter = FernIr.PathParameter;
 type ServiceId = FernIr.ServiceId;
 
+import { DefaultValueExtractor } from "../DefaultValueExtractor.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { WrappedRequestGenerator } from "../wrapped-request/WrappedRequestGenerator.js";
 import { EndpointSignatureInfo } from "./EndpointSignatureInfo.js";
@@ -22,11 +23,13 @@ type PagingEndpoint = HttpEndpoint & {
 export abstract class AbstractEndpointGenerator extends WithGeneration {
     private exampleGenerator: ExampleGenerator;
     protected readonly context: SdkGeneratorContext;
+    protected readonly defaultValueExtractor: DefaultValueExtractor;
 
     public constructor({ context }: { context: SdkGeneratorContext }) {
         super(context.generation);
         this.context = context;
         this.exampleGenerator = new ExampleGenerator(context);
+        this.defaultValueExtractor = new DefaultValueExtractor(context);
     }
 
     public getEndpointSignatureInfo({
@@ -110,8 +113,12 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
             default:
                 assertNever(endpointType);
         }
+        const requiredPathParameters = pathParameters.filter((p) => p.initializer == null);
+        const optionalPathParameters = pathParameters.filter((p) => p.initializer != null);
         return {
-            baseParameters: [...pathParameters, requestParameter].filter((p): p is ast.Parameter => p != null),
+            baseParameters: [...requiredPathParameters, requestParameter, ...optionalPathParameters].filter(
+                (p): p is ast.Parameter => p != null
+            ),
             pathParameters,
             pathParameterReferences,
             request,
@@ -212,18 +219,37 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
                 includePathParametersInEndpointSignature,
                 requestParameter
             });
+            const clientDefault = this.defaultValueExtractor.extractClientDefault(pathParam.clientDefault);
             if (includePathParametersInEndpointSignature) {
-                pathParameters.push(
-                    this.csharp.parameter({
-                        docs: pathParam.docs,
-                        name: parameterName,
-                        type: this.context.csharpTypeMapper.convert({
-                            reference: pathParam.valueType
+                if (clientDefault != null) {
+                    pathParameters.push(
+                        this.csharp.parameter({
+                            docs: pathParam.docs,
+                            name: parameterName,
+                            type: this.context.csharpTypeMapper
+                                .convert({
+                                    reference: pathParam.valueType
+                                })
+                                .asOptional(),
+                            initializer: "null"
                         })
-                    })
-                );
+                    );
+                } else {
+                    pathParameters.push(
+                        this.csharp.parameter({
+                            docs: pathParam.docs,
+                            name: parameterName,
+                            type: this.context.csharpTypeMapper.convert({
+                                reference: pathParam.valueType
+                            })
+                        })
+                    );
+                }
             }
-            pathParameterReferences[getOriginalName(pathParam.name)] = parameterName;
+            pathParameterReferences[getOriginalName(pathParam.name)] =
+                clientDefault != null && includePathParametersInEndpointSignature
+                    ? `${parameterName} ?? ${clientDefault.value}`
+                    : parameterName;
         }
         return {
             pathParameters,

@@ -1040,4 +1040,5 @@ types:
       - commons.WithTitle
       - commons.WithInline
     properties:
+      commonProperties: optional<list<CommonProperty>>
       schemas: list<Schema>

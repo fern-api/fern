@@ -68,7 +68,7 @@ public class Example {
             "region",
             TestGetRequest
                 .builder()
-                .limit("100")
+                .limit("limit")
                 .build()
         );
     }

@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 module Seed
-  class Client
-    # @param base_url [String, nil]
+  class MyClient
     # @param token [String]
+    # @param base_url [String, nil]
     #
     # @return [void]
     def initialize(token:, base_url: nil)

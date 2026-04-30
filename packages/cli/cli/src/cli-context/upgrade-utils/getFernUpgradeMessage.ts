@@ -127,7 +127,7 @@ async function normalizeGeneratorName(generatorImage: string): Promise<string> {
     });
     const generatorResponse = await client.generators.getGeneratorByImage({ dockerImage: generatorImage });
     if (!generatorResponse.ok || generatorResponse.body == null) {
-        throw new CliError({ message: `Generator ${generatorImage} not found`, code: CliError.Code.InternalError });
+        throw new CliError({ message: `Generator ${generatorImage} not found`, code: CliError.Code.ConfigError });
     }
     return generatorResponse.body.displayName;
 }

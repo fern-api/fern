@@ -9,9 +9,9 @@ public partial class Examples
             }
         );
 
-        await foreach (var item in client.Completions.StreamEventsContextProtocolAsync(
-            new StreamEventsContextProtocolRequest {
-                Query = ""
+        await foreach (var item in client.Completions.StreamEventsDiscriminantInDataAsync(
+            new StreamEventsDiscriminantInDataRequest {
+                Query = "query"
             }
         ))
         {

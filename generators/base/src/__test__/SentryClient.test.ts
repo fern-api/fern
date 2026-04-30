@@ -1,24 +1,27 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-const { mockSentryCaptureException, mockSentryFlush, mockSentryInit, mockSentrySetTag } = vi.hoisted(() => ({
-    mockSentryCaptureException: vi.fn(),
-    mockSentryFlush: vi.fn().mockResolvedValue(true),
-    mockSentryInit: vi.fn(function () {
-        return {
-            captureException: mockSentryCaptureException,
-            flush: mockSentryFlush
-        };
-    }),
-    mockSentrySetTag: vi.fn()
-}));
+const { mockSentryCaptureException, mockSentryFlush, mockSentryInit, mockSentrySetTag, mockLocalVariablesIntegration } =
+    vi.hoisted(() => ({
+        mockSentryCaptureException: vi.fn(),
+        mockSentryFlush: vi.fn().mockResolvedValue(true),
+        mockSentryInit: vi.fn(function () {
+            return {
+                captureException: mockSentryCaptureException,
+                flush: mockSentryFlush
+            };
+        }),
+        mockSentrySetTag: vi.fn(),
+        mockLocalVariablesIntegration: vi.fn().mockReturnValue({ name: "LocalVariables" })
+    }));
 
 vi.mock("@sentry/node", () => ({
     init: mockSentryInit,
-    rewriteFramesIntegration: vi.fn().mockReturnValue({}),
-    onUncaughtExceptionIntegration: vi.fn().mockReturnValue({}),
-    onUnhandledRejectionIntegration: vi.fn().mockReturnValue({}),
-    linkedErrorsIntegration: vi.fn().mockReturnValue({}),
-    nodeContextIntegration: vi.fn().mockReturnValue({}),
+    rewriteFramesIntegration: vi.fn().mockReturnValue({ name: "RewriteFrames" }),
+    onUncaughtExceptionIntegration: vi.fn().mockReturnValue({ name: "OnUncaughtException" }),
+    onUnhandledRejectionIntegration: vi.fn().mockReturnValue({ name: "OnUnhandledRejection" }),
+    linkedErrorsIntegration: vi.fn().mockReturnValue({ name: "LinkedErrors" }),
+    nodeContextIntegration: vi.fn().mockReturnValue({ name: "NodeContext" }),
+    localVariablesIntegration: mockLocalVariablesIntegration,
     setTag: mockSentrySetTag
 }));
 
@@ -42,6 +45,7 @@ describe("SentryClient (base-generator)", () => {
         mockSentryFlush.mockClear();
         mockSentryInit.mockClear();
         mockSentrySetTag.mockClear();
+        mockLocalVariablesIntegration.mockClear();
     });
 
     afterEach(() => {

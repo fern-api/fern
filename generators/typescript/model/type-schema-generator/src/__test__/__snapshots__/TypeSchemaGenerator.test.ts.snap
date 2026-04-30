@@ -45,6 +45,15 @@ export declare namespace UserId {
 "
 `;
 
+exports[`GeneratedEnumTypeSchemaImpl > writeToFile > generates forwardCompatibleEnum_ schema when forward-compatible enums enabled 1`] = `
+"export const Status: Schema<serializers.Raw, Status> = forwardCompatibleEnum_(["active", "inactive"]);
+
+export declare namespace Status {
+    export type Raw = "active" | "inactive";
+}
+"
+`;
+
 exports[`GeneratedEnumTypeSchemaImpl > writeToFile > generates raw type declaration with wire values as string literals 1`] = `
 "export const Color: Schema<serializers.Raw, Color> = enum_(["RED", "BLUE", "GREEN"]);
 

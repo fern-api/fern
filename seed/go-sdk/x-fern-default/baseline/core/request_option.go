@@ -48,9 +48,11 @@ func NewRequestOptions(opts ...RequestOption) *RequestOptions {
 // for the request(s).
 func (r *RequestOptions) ToHeader() http.Header {
 	header := r.cloneHeader()
+	apiVersion := fmt.Sprintf("%v", "2024-02-08")
 	if r.APIVersion != nil {
-		header.Set("X-API-Version", fmt.Sprintf("%v", *r.APIVersion))
+		apiVersion = fmt.Sprintf("%v", *r.APIVersion)
 	}
+	header.Set("X-API-Version", apiVersion)
 	return header
 }
 

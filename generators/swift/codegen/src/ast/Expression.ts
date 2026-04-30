@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { escapeReservedKeyword } from "../syntax/index.js";
+import { escapeReservedKeyword, escapeSwiftStringLiteralContent } from "../syntax/index.js";
 import { AstNode, Writer } from "./core/index.js";
 import { FunctionArgument } from "./FunctionArgument.js";
 import { TypeReference } from "./TypeReference.js";
@@ -100,6 +100,7 @@ type Await = {
 type StringLiteral = {
     type: "string-literal";
     value: string;
+    escape?: boolean;
 };
 
 type NumberLiteral = {
@@ -313,7 +314,11 @@ export class Expression extends AstNode {
                 this.internalExpression.expression.write(writer);
                 break;
             case "string-literal":
-                writer.write(`"${this.internalExpression.value}"`);
+                writer.write(
+                    this.internalExpression.escape
+                        ? `"${escapeSwiftStringLiteralContent(this.internalExpression.value)}"`
+                        : `"${this.internalExpression.value}"`
+                );
                 break;
             case "number-literal":
                 writer.write(this.internalExpression.value.toString());
@@ -462,6 +467,18 @@ export class Expression extends AstNode {
 
     public static stringLiteral(value: string): Expression {
         return new this({ type: "string-literal", value });
+    }
+
+    /**
+     * Like {@link Expression.stringLiteral}, but escapes characters in `value`
+     * that cannot appear unescaped inside a Swift `"..."` string literal
+     * (control characters, real newlines, real backslashes, real double quotes).
+     * Use this when `value` is raw user data (e.g. from JSON.parse), not a
+     * pre-formed Swift string literal containing intentional backslash
+     * sequences such as `\(...)` interpolation.
+     */
+    public static escapedStringLiteral(value: string): Expression {
+        return new this({ type: "string-literal", value, escape: true });
     }
 
     public static numberLiteral(value: number): Expression {

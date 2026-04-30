@@ -3,4 +3,5 @@
 export interface BearerSecurityScheme {
     tokenVariableName: string | undefined;
     tokenEnvVar: string | undefined;
+    tokenPlaceholder: string | undefined;
 }

@@ -9,8 +9,8 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.bearerTokenEnvironmentVariable.SeedBearerTokenEnvironmentVariableClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedBearerTokenEnvironmentVariableClient client = SeedBearerTokenEnvironmentVariableClient\n            .builder()\n            .apiKey(\"<token>\")\n            .build();\n\n        client.service().getWithBearerToken();\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.bearerTokenEnvironmentVariable.SeedBearerTokenEnvironmentVariableClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedBearerTokenEnvironmentVariableClient client = SeedBearerTokenEnvironmentVariableClient\n            .builder()\n            .apiKey(\"<token>\")\n            .build();\n\n        client.service().getWithBearerToken();\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.bearerTokenEnvironmentVariable.SeedBearerTokenEnvironmentVariableClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedBearerTokenEnvironmentVariableClient client = SeedBearerTokenEnvironmentVariableClient\n            .builder()\n            .apiKey(\"YOUR_API_KEY\")\n            .build();\n\n        client.service().getWithBearerToken();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.bearerTokenEnvironmentVariable.SeedBearerTokenEnvironmentVariableClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedBearerTokenEnvironmentVariableClient client = SeedBearerTokenEnvironmentVariableClient\n            .builder()\n            .apiKey(\"YOUR_API_KEY\")\n            .build();\n\n        client.service().getWithBearerToken();\n    }\n}\n"
             }
         }
     ],

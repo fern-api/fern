@@ -11,6 +11,7 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
 import { GeneratorError, resolveErrorCode, shouldReportToSentry } from "./GeneratorError.js";
 import { SentryClient } from "./telemetry/SentryClient.js";
+import { shouldTrackLocalVariablesInSentry } from "./telemetry/shouldTrackLocalVariablesInSentry.js";
 
 export declare namespace AbstractGeneratorCli {
     interface Options {
@@ -36,7 +37,8 @@ export abstract class AbstractGeneratorCli<
         try {
             sentryClient = new SentryClient({
                 workspaceName: config.workspaceName,
-                organization: config.organization
+                organization: config.organization,
+                shouldTrackLocalVariables: shouldTrackLocalVariablesInSentry(config)
             });
             await generatorNotificationService.sendUpdate(
                 FernGeneratorExec.GeneratorUpdate.initV2({

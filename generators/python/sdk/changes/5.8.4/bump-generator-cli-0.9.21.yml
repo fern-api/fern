@@ -1,0 +1,5 @@
+- summary: |
+    Bump @fern-api/generator-cli to 0.9.21, which includes @fern-api/replay
+    0.14.0 with fixes for silent customization loss across apply and resolve
+    paths, per-patch-region diff, and clean follow-up patch preservation.
+  type: chore

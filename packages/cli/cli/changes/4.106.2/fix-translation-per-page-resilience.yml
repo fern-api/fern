@@ -1,0 +1,4 @@
+- summary: |
+    Translation no longer fails for an entire locale when a single MDX file has a parse error. 
+    Invalid pages are skipped with a warning that includes the file path, and the base page is used as a fallback.
+  type: fix

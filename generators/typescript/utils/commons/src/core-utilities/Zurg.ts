@@ -22,6 +22,7 @@ export interface Zurg {
     record: (args: { keySchema: Zurg.Schema; valueSchema: Zurg.Schema }) => Zurg.Schema;
     partialRecord: (args: { keySchema: Zurg.Schema; valueSchema: Zurg.Schema }) => Zurg.Schema;
     enum: (values: string[]) => Zurg.Schema;
+    forwardCompatibleEnum: (values: string[]) => Zurg.Schema;
     string: () => Zurg.Schema;
     stringLiteral: (literal: string) => Zurg.Schema;
     booleanLiteral: (literal: boolean) => Zurg.Schema;
@@ -491,6 +492,27 @@ export class ZurgImpl extends CoreUtility implements Zurg {
             ...this.getSchemaUtils(baseSchema)
         };
     });
+
+    public forwardCompatibleEnum = this.withExportedName(
+        "forwardCompatibleEnum_",
+        (forwardCompatibleEnum_: Reference) => (values: string[]) => {
+            const baseSchema: Zurg.BaseSchema = {
+                isOptional: false,
+                isNullable: false,
+                toExpression: () =>
+                    ts.factory.createCallExpression(forwardCompatibleEnum_.getExpression(), undefined, [
+                        ts.factory.createArrayLiteralExpression(
+                            values.map((value) => ts.factory.createStringLiteral(value))
+                        )
+                    ])
+            };
+
+            return {
+                ...baseSchema,
+                ...this.getSchemaUtils(baseSchema)
+            };
+        }
+    );
 
     public string = this.withExportedName("string", (string: Reference) => () => {
         const baseSchema: Zurg.BaseSchema = {

@@ -14,6 +14,7 @@ export const BearerAuthScheme: core.serialization.ObjectSchema<
     .objectWithoutOptionalProperties({
         token: NameOrString,
         tokenEnvVar: EnvironmentVariable.optional(),
+        tokenPlaceholder: core.serialization.string().optional(),
     })
     .extend(BaseAuthScheme);
 
@@ -21,5 +22,6 @@ export declare namespace BearerAuthScheme {
     export interface Raw extends BaseAuthScheme.Raw {
         token: NameOrString.Raw;
         tokenEnvVar?: EnvironmentVariable.Raw | null;
+        tokenPlaceholder?: string | null;
     }
 }

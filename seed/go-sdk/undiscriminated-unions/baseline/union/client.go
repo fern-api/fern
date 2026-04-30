@@ -127,6 +127,54 @@ func (c *Client) NestedUnions(
 	return response.Body, nil
 }
 
+func (c *Client) NestedObjectUnions(
+	ctx context.Context,
+	request *undiscriminated.OuterNestedUnion,
+	opts ...option.RequestOption,
+) (string, error) {
+	response, err := c.WithRawResponse.NestedObjectUnions(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return "", err
+	}
+	return response.Body, nil
+}
+
+func (c *Client) AliasedObjectUnion(
+	ctx context.Context,
+	request *undiscriminated.AliasedObjectUnion,
+	opts ...option.RequestOption,
+) (string, error) {
+	response, err := c.WithRawResponse.AliasedObjectUnion(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return "", err
+	}
+	return response.Body, nil
+}
+
+func (c *Client) GetWithBaseProperties(
+	ctx context.Context,
+	request *undiscriminated.UnionWithBaseProperties,
+	opts ...option.RequestOption,
+) (*undiscriminated.UnionWithBaseProperties, error) {
+	response, err := c.WithRawResponse.GetWithBaseProperties(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
 func (c *Client) TestCamelCaseProperties(
 	ctx context.Context,
 	request *undiscriminated.PaymentRequest,

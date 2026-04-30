@@ -65,6 +65,7 @@ public class Example {
             .build();
 
         client.fileUploadExample().uploadFile(
+            null,
             UploadFileRequest
                 .builder()
                 .name("name")

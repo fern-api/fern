@@ -635,6 +635,7 @@
       },
       "shape": {
         "_visit": [Function],
+        "baseProperties": undefined,
         "members": [
           {
             "docs": "Error variant A without discriminator",
@@ -841,6 +842,7 @@
       },
       "shape": {
         "_visit": [Function],
+        "baseProperties": undefined,
         "members": [
           {
             "docs": "First variant for oneOf without discriminator",

@@ -1,0 +1,56 @@
+openapi: 3.0.0
+info:
+  title: API with x-fern-default
+  version: 1.0.0
+paths:
+  /test/{region}:
+    get:
+      operationId: getTest
+      parameters:
+        - name: region
+          in: path
+          required: true
+          schema:
+            type: string
+          x-fern-default: "us-east-1"
+        - name: version
+          in: header
+          required: false
+          schema:
+            type: string
+          x-fern-default: "2024-02-08"
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 100
+          x-fern-default: "50"
+        - name: status
+          in: query
+          required: false
+          schema:
+            type: string
+          x-fern-default: "active"
+        - name: verbose
+          in: query
+          required: false
+          schema:
+            type: boolean
+          x-fern-default: true
+        - name: onlyOasDefault
+          in: query
+          required: false
+          schema:
+            type: string
+            default: "oas-only"
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string

@@ -27,15 +27,30 @@ export const MetadataConfig: core.serialization.ObjectSchema<
     twitterUrl: core.serialization.property("twitter:url", core.serialization.string().optional()),
     twitterCard: core.serialization.property("twitter:card", TwitterCardSetting.optional()),
     ogDynamic: core.serialization.property("og:dynamic", core.serialization.boolean().optional()),
-    ogBackgroundImage: core.serialization.property("og:background-image", core.serialization.string().optional()),
+    ogDynamicBackgroundImage: core.serialization.property(
+        "og:dynamic:background-image",
+        core.serialization.string().optional(),
+    ),
     ogDynamicTextColor: core.serialization.property("og:dynamic:text-color", core.serialization.string().optional()),
-    ogDynamicBackgroundColor: core.serialization.property("og:dynamic:background-color", core.serialization.string().optional()),
+    ogDynamicBackgroundColor: core.serialization.property(
+        "og:dynamic:background-color",
+        core.serialization.string().optional(),
+    ),
     ogDynamicLogoColor: core.serialization.property("og:dynamic:logo-color", OgDynamicLogoColor.optional()),
     ogDynamicShowLogo: core.serialization.property("og:dynamic:show-logo", core.serialization.boolean().optional()),
-    ogDynamicShowSection: core.serialization.property("og:dynamic:show-section", core.serialization.boolean().optional()),
-    ogDynamicShowDescription: core.serialization.property("og:dynamic:show-description", core.serialization.boolean().optional()),
+    ogDynamicShowSection: core.serialization.property(
+        "og:dynamic:show-section",
+        core.serialization.boolean().optional(),
+    ),
+    ogDynamicShowDescription: core.serialization.property(
+        "og:dynamic:show-description",
+        core.serialization.boolean().optional(),
+    ),
     ogDynamicShowUrl: core.serialization.property("og:dynamic:show-url", core.serialization.boolean().optional()),
-    ogDynamicShowGradient: core.serialization.property("og:dynamic:show-gradient", core.serialization.boolean().optional()),
+    ogDynamicShowGradient: core.serialization.property(
+        "og:dynamic:show-gradient",
+        core.serialization.boolean().optional(),
+    ),
     canonicalHost: core.serialization.property("canonical-host", core.serialization.string().optional()),
 });
 
@@ -58,7 +73,7 @@ export declare namespace MetadataConfig {
         "twitter:url"?: string | null;
         "twitter:card"?: TwitterCardSetting.Raw | null;
         "og:dynamic"?: boolean | null;
-        "og:background-image"?: string | null;
+        "og:dynamic:background-image"?: string | null;
         "og:dynamic:text-color"?: string | null;
         "og:dynamic:background-color"?: string | null;
         "og:dynamic:logo-color"?: OgDynamicLogoColor.Raw | null;

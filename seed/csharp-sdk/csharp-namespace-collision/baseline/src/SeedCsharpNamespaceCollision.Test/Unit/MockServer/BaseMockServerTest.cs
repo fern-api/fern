@@ -1,16 +1,16 @@
 using NUnit.Framework;
-using SeedCsharpNamespaceCollision;
+using SeedBearerTokenEnvironmentVariable;
 using WireMock.Logging;
 using WireMock.Server;
 using WireMock.Settings;
 
-namespace SeedCsharpNamespaceCollision.Test.Unit.MockServer;
+namespace SeedBearerTokenEnvironmentVariable.Test.Unit.MockServer;
 
 public class BaseMockServerTest
 {
     protected WireMockServer Server { get; set; } = null!;
 
-    protected SeedCsharpNamespaceCollisionClient Client { get; set; } = null!;
+    protected SeedBearerTokenEnvironmentVariableClient Client { get; set; } = null!;
 
     protected RequestOptions RequestOptions { get; set; } = new();
 
@@ -23,8 +23,13 @@ public class BaseMockServerTest
         );
 
         // Initialize the Client
-        Client = new SeedCsharpNamespaceCollisionClient(
-            clientOptions: new ClientOptions { BaseUrl = Server.Urls[0], MaxRetries = 0 }
+        Client = new SeedBearerTokenEnvironmentVariableClient(
+            clientOptions: new ClientOptions
+            {
+                ApiKey = "YOUR_API_KEY",
+                BaseUrl = Server.Urls[0],
+                MaxRetries = 0,
+            }
         );
     }
 

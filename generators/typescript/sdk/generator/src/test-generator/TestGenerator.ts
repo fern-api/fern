@@ -2,22 +2,22 @@ import { CaseConverter, getOriginalName, getWireValue } from "@fern-api/base-gen
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 import {
-    DependencyManager,
+    type DependencyManager,
     DependencyType,
-    ExportedFilePath,
+    type ExportedFilePath,
     getExampleEndpointCalls,
     getExampleEndpointCallsForTests,
     getParameterNameForRootExamplePathParameter,
     getParameterNameForRootPathParameter,
     getTextOfTsNode,
-    PackageId,
-    Reference
+    type PackageId,
+    type Reference
 } from "@fern-typescript/commons";
-import { FileContext, GeneratedSdkClientClass } from "@fern-typescript/contexts";
+import type { FileContext, GeneratedSdkClientClass } from "@fern-typescript/contexts";
 import { camelCase, upperFirst } from "lodash-es";
 import path from "path";
-import { Directory, ts } from "ts-morph";
-import { arrayOf, Code, code, literalOf } from "ts-poet";
+import { type Directory, ts } from "ts-morph";
+import { arrayOf, type Code, code, literalOf } from "ts-poet";
 
 const DEFAULT_PACKAGE_PATH = "src";
 
@@ -1204,7 +1204,7 @@ describe("${serviceName}", () => {
         });
 
         const sseExpectedEvents: Code | undefined = isSSEStreaming
-            ? this.getSseExpectedEvents({ endpoint, example, context })
+            ? this.getSseExpectedEvents({ example, context })
             : undefined;
 
         const generateEnvironment = () => {
@@ -1538,11 +1538,9 @@ describe("${serviceName}", () => {
     }
 
     private getSseExpectedEvents({
-        endpoint,
         example,
         context
     }: {
-        endpoint: FernIr.HttpEndpoint;
         example: FernIr.ExampleEndpointCall;
         context: FileContext;
     }): Code | undefined {
@@ -1561,35 +1559,11 @@ describe("${serviceName}", () => {
             return undefined;
         }
 
-        // Determine the SSE protocol discriminant field, if any
-        let discriminantField: string | undefined;
-        const ssePayload =
-            endpoint.response?.body?.type === "streaming" && endpoint.response.body.value.type === "sse"
-                ? endpoint.response.body.value.payload
-                : undefined;
-        if (ssePayload != null && ssePayload.type === "named") {
-            const typeDeclaration = context.type.getTypeDeclaration(ssePayload);
-            if (
-                typeDeclaration.shape.type === "union" &&
-                typeDeclaration.shape.discriminatorContext === FernIr.UnionDiscriminatorContext.Protocol
-            ) {
-                // Use the deserialized discriminant name (camelCase when serde layer is enabled)
-                discriminantField = context.includeSerdeLayer
-                    ? context.case.camelUnsafe(typeDeclaration.shape.discriminant)
-                    : getWireValue(typeDeclaration.shape.discriminant);
-            }
-        }
-
         const eventCodes = sseEvents.map((event) => {
-            // Build the deserialized (camelCase) representation of the event data
             const deserializedData = context.type.getGeneratedExample(event.data).build(context, {
                 isForSnippet: true,
                 isForResponse: true
             });
-            if (discriminantField != null) {
-                // For protocol-discriminated unions, merge the discriminant field into the deserialized data
-                return code`{ ${literalOf(discriminantField)}: ${literalOf(event.event)}, ...${getTextOfTsNode(deserializedData)} }`;
-            }
             return code`${getTextOfTsNode(deserializedData)}`;
         });
         return code`${arrayOf(...eventCodes)}`;
@@ -1756,6 +1730,7 @@ describe("${serviceName}", () => {
                         }
                         const sseLines = events.map((event) => {
                             let dataJson: unknown = event.data.jsonExample;
+                            let eventType = event.event;
                             if (
                                 discriminantField != null &&
                                 dataJson != null &&
@@ -1763,10 +1738,15 @@ describe("${serviceName}", () => {
                                 !Array.isArray(dataJson)
                             ) {
                                 const copy = { ...(dataJson as Record<string, unknown>) };
+                                // If the example puts the discriminant inside the data payload,
+                                // promote it onto the SSE event line before stripping.
+                                if (discriminantField in copy && typeof copy[discriminantField] === "string") {
+                                    eventType = copy[discriminantField] as string;
+                                }
                                 delete copy[discriminantField];
                                 dataJson = copy;
                             }
-                            return `event: ${event.event}\ndata: ${JSON.stringify(dataJson)}\n`;
+                            return `event: ${eventType}\ndata: ${JSON.stringify(dataJson)}\n`;
                         });
                         return code`${literalOf(sseLines.join("\n") + "\n")}`;
                     },

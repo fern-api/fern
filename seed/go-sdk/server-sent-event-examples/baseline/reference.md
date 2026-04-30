@@ -1,6 +1,6 @@
 # Reference
 ## Completions
-<details><summary><code>client.Completions.Stream(request) -> fern.StreamedCompletion</code></summary>
+<details><summary><code>client.Completions.Stream(request) -> sse.StreamedCompletion</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```go
-request := &fern.StreamCompletionRequest{
+request := &sse.StreamCompletionRequest{
         Query: "foo",
     }
 client.Completions.Stream(
@@ -47,7 +47,7 @@ client.Completions.Stream(
 </dl>
 </details>
 
-<details><summary><code>client.Completions.StreamEvents(request) -> fern.StreamEvent</code></summary>
+<details><summary><code>client.Completions.StreamEvents(request) -> sse.StreamEvent</code></summary>
 <dl>
 <dd>
 
@@ -60,7 +60,7 @@ client.Completions.Stream(
 <dd>
 
 ```go
-request := &fern.StreamEventsRequest{
+request := &sse.StreamEventsRequest{
         Query: "query",
     }
 client.Completions.StreamEvents(
@@ -94,7 +94,7 @@ client.Completions.StreamEvents(
 </dl>
 </details>
 
-<details><summary><code>client.Completions.StreamEventsContextProtocol(request) -> fern.StreamEventContextProtocol</code></summary>
+<details><summary><code>client.Completions.StreamEventsDiscriminantInData(request) -> sse.StreamEventDiscriminantInData</code></summary>
 <dl>
 <dd>
 
@@ -107,7 +107,54 @@ client.Completions.StreamEvents(
 <dd>
 
 ```go
-request := &fern.StreamEventsContextProtocolRequest{
+request := &sse.StreamEventsDiscriminantInDataRequest{
+        Query: "query",
+    }
+client.Completions.StreamEventsDiscriminantInData(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**query:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Completions.StreamEventsContextProtocol(request) -> sse.StreamEventContextProtocol</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &sse.StreamEventsContextProtocolRequest{
         Query: "query",
     }
 client.Completions.StreamEventsContextProtocol(

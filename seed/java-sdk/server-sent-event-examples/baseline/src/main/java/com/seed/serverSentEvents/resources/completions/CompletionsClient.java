@@ -7,9 +7,11 @@ import com.seed.serverSentEvents.core.ClientOptions;
 import com.seed.serverSentEvents.core.RequestOptions;
 import com.seed.serverSentEvents.resources.completions.requests.StreamCompletionRequest;
 import com.seed.serverSentEvents.resources.completions.requests.StreamEventsContextProtocolRequest;
+import com.seed.serverSentEvents.resources.completions.requests.StreamEventsDiscriminantInDataRequest;
 import com.seed.serverSentEvents.resources.completions.requests.StreamEventsRequest;
 import com.seed.serverSentEvents.resources.completions.types.StreamEvent;
 import com.seed.serverSentEvents.resources.completions.types.StreamEventContextProtocol;
+import com.seed.serverSentEvents.resources.completions.types.StreamEventDiscriminantInData;
 import com.seed.serverSentEvents.resources.completions.types.StreamedCompletion;
 
 public class CompletionsClient {
@@ -43,6 +45,18 @@ public class CompletionsClient {
 
     public Iterable<StreamEvent> streamEvents(StreamEventsRequest request, RequestOptions requestOptions) {
         return this.rawClient.streamEvents(request, requestOptions).body();
+    }
+
+    public Iterable<StreamEventDiscriminantInData> streamEventsDiscriminantInData(
+            StreamEventsDiscriminantInDataRequest request) {
+        return this.rawClient.streamEventsDiscriminantInData(request).body();
+    }
+
+    public Iterable<StreamEventDiscriminantInData> streamEventsDiscriminantInData(
+            StreamEventsDiscriminantInDataRequest request, RequestOptions requestOptions) {
+        return this.rawClient
+                .streamEventsDiscriminantInData(request, requestOptions)
+                .body();
     }
 
     public Iterable<StreamEventContextProtocol> streamEventsContextProtocol(

@@ -16,6 +16,7 @@ export const HeaderAuthScheme: core.serialization.ObjectSchema<
         valueType: core.serialization.lazy(() => serializers.TypeReference),
         prefix: core.serialization.string().optional(),
         headerEnvVar: EnvironmentVariable.optional(),
+        headerPlaceholder: core.serialization.string().optional(),
     })
     .extend(BaseAuthScheme);
 
@@ -25,5 +26,6 @@ export declare namespace HeaderAuthScheme {
         valueType: serializers.TypeReference.Raw;
         prefix?: string | null;
         headerEnvVar?: EnvironmentVariable.Raw | null;
+        headerPlaceholder?: string | null;
     }
 }

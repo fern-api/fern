@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/SeedUnionQueryParameters.Test/SeedUnionQueryParameters.Test.csproj" />
+  <Project Path="src/SeedUnionQueryParameters/SeedUnionQueryParameters.csproj" />
+</Solution>

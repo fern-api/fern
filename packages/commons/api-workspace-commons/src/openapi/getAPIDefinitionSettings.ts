@@ -64,7 +64,8 @@ const FIELD_MAPPINGS: Partial<MappableFields> = {
     pathParameterOrder: "pathParameterOrder",
     resolveSchemaCollisions: "resolveSchemaCollisions",
     inferForwardCompatible: "inferForwardCompatible",
-    coerceConstsTo: "coerceConstsTo"
+    coerceConstsTo: "coerceConstsTo",
+    shouldInferDiscriminatedUnionBaseProperties: "shouldInferDiscriminatedUnionBaseProperties"
 };
 
 function setIfDefined<K extends keyof OpenAPISettings>(

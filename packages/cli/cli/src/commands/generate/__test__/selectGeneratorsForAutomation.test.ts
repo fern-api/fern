@@ -28,19 +28,22 @@ describe("selectGeneratorsForAutomation", () => {
                     rootAutorelease: undefined,
                     targeting: { type: "none" }
                 })
-            ).toEqual({ type: "run", generators: gens });
+            ).toEqual({ type: "run", generators: gens, skipped: [] });
         });
 
         it("silently filters out generators with automations.generate: false", () => {
             const ok = makeGenerator("ok");
             const optedOut = makeGenerator("opted-out", { automation: optedOutAutomation });
-            expect(
-                selectGeneratorsForAutomation({
-                    generators: [ok, optedOut],
-                    rootAutorelease: undefined,
-                    targeting: { type: "none" }
-                })
-            ).toEqual({ type: "run", generators: [ok] });
+            const result = selectGeneratorsForAutomation({
+                generators: [ok, optedOut],
+                rootAutorelease: undefined,
+                targeting: { type: "none" }
+            });
+            if (result.type !== "run") {
+                throw new Error("Expected 'run'");
+            }
+            expect(result.generators).toEqual([ok]);
+            expect(result.skipped).toEqual([{ generator: optedOut, reason: "opted_out" }]);
         });
 
         it("silently filters out generators with local-file-system output", () => {
@@ -58,16 +61,24 @@ describe("selectGeneratorsForAutomation", () => {
                 throw new Error("Expected 'run'");
             }
             expect(result.generators.map((g) => g.name)).toEqual(["ok"]);
+            expect(result.skipped).toEqual([{ generator: local, reason: "local_output" }]);
         });
 
-        it("returns empty-after-skip when root autorelease is false and none override", () => {
-            expect(
-                selectGeneratorsForAutomation({
-                    generators: [makeGenerator("a"), makeGenerator("b")],
-                    rootAutorelease: false,
-                    targeting: { type: "none" }
-                })
-            ).toEqual({ type: "empty-after-skip" });
+        it("returns empty-after-skip with the dropped generators when root autorelease is false", () => {
+            const a = makeGenerator("a");
+            const b = makeGenerator("b");
+            const result = selectGeneratorsForAutomation({
+                generators: [a, b],
+                rootAutorelease: false,
+                targeting: { type: "none" }
+            });
+            expect(result).toEqual({
+                type: "empty-after-skip",
+                skipped: [
+                    { generator: a, reason: "opted_out" },
+                    { generator: b, reason: "opted_out" }
+                ]
+            });
         });
 
         it("keeps a generator that overrides root autorelease: false with its own true", () => {
@@ -80,17 +91,21 @@ describe("selectGeneratorsForAutomation", () => {
                     rootAutorelease: false,
                     targeting: { type: "none" }
                 })
-            ).toEqual({ type: "run", generators: [overridden] });
+            ).toEqual({ type: "run", generators: [overridden], skipped: [] });
         });
 
-        it("returns empty-after-skip when every generator is opted out", () => {
+        it("returns empty-after-skip with the dropped generators when every generator is opted out", () => {
+            const a = makeGenerator("a", { automation: optedOutAutomation });
             expect(
                 selectGeneratorsForAutomation({
-                    generators: [makeGenerator("a", { automation: optedOutAutomation })],
+                    generators: [a],
                     rootAutorelease: undefined,
                     targeting: { type: "none" }
                 })
-            ).toEqual({ type: "empty-after-skip" });
+            ).toEqual({
+                type: "empty-after-skip",
+                skipped: [{ generator: a, reason: "opted_out" }]
+            });
         });
 
         it("returns empty-after-skip when given no generators", () => {
@@ -100,7 +115,7 @@ describe("selectGeneratorsForAutomation", () => {
                     rootAutorelease: undefined,
                     targeting: { type: "none" }
                 })
-            ).toEqual({ type: "empty-after-skip" });
+            ).toEqual({ type: "empty-after-skip", skipped: [] });
         });
     });
 
@@ -113,7 +128,7 @@ describe("selectGeneratorsForAutomation", () => {
                     rootAutorelease: undefined,
                     targeting: { type: "name", name: "dupe" }
                 })
-            ).toEqual({ type: "run", generators: [gen] });
+            ).toEqual({ type: "run", generators: [gen], skipped: [] });
         });
 
         it("silently filters out an opted-out match, returning empty-after-skip when only opt-outs remain", () => {
@@ -124,7 +139,10 @@ describe("selectGeneratorsForAutomation", () => {
                     rootAutorelease: undefined,
                     targeting: { type: "name", name: "dupe" }
                 })
-            ).toEqual({ type: "empty-after-skip" });
+            ).toEqual({
+                type: "empty-after-skip",
+                skipped: [{ generator: optedOut, reason: "opted_out" }]
+            });
         });
 
         it("narrows from 2 matching generators to 1 when one is opted out", () => {
@@ -135,7 +153,11 @@ describe("selectGeneratorsForAutomation", () => {
                 rootAutorelease: undefined,
                 targeting: { type: "name", name: "dupe" }
             });
-            expect(result).toEqual({ type: "run", generators: [eligible] });
+            expect(result).toEqual({
+                type: "run",
+                generators: [eligible],
+                skipped: [{ generator: optedOut, reason: "opted_out" }]
+            });
         });
 
         it("narrows from 2 matching generators to 0 when both are opted out", () => {
@@ -149,7 +171,13 @@ describe("selectGeneratorsForAutomation", () => {
                     rootAutorelease: undefined,
                     targeting: { type: "name", name: "dupe" }
                 })
-            ).toEqual({ type: "empty-after-skip" });
+            ).toEqual({
+                type: "empty-after-skip",
+                skipped: [
+                    { generator: a, reason: "opted_out" },
+                    { generator: b, reason: "opted_out" }
+                ]
+            });
         });
     });
 
@@ -162,7 +190,7 @@ describe("selectGeneratorsForAutomation", () => {
                     rootAutorelease: undefined,
                     targeting: { type: "index", index: 0 }
                 })
-            ).toEqual({ type: "run", generators: [gen] });
+            ).toEqual({ type: "run", generators: [gen], skipped: [] });
         });
 
         it("rejects when the indexed generator has automations.generate: false", () => {

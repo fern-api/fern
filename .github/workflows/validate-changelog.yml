@@ -7,8 +7,10 @@ on:
     paths:
       - "packages/seed/src/commands/validate/**/*"
       - "packages/cli/cli/versions.yml"
+      - "packages/cli/cli/changes/**"
       - "packages/generator-cli/versions.yml"
       - "generators/**/versions.yml"
+      - "generators/**/changes/**"
       - "scripts/validate-all-changelogs.sh"
       - ".github/workflows/validate-changelog.yml"
   pull_request:
@@ -17,8 +19,10 @@ on:
     paths:
       - "packages/seed/src/commands/validate/**/*"
       - "packages/cli/cli/versions.yml"
+      - "packages/cli/cli/changes/**"
       - "packages/generator-cli/versions.yml"
       - "generators/**/versions.yml"
+      - "generators/**/changes/**"
       - "scripts/validate-all-changelogs.sh"
       - ".github/workflows/validate-changelog.yml"
 

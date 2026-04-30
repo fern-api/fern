@@ -48,6 +48,7 @@ class CoreUtilities:
         self._import_paths = custom_config.import_paths
         self._datetime_milliseconds = custom_config.datetime_milliseconds
         self._default_max_retries = custom_config.default_max_retries
+        self._retry_status_codes = custom_config.retry_status_codes
 
     def copy_to_project(self, *, project: Project) -> None:
         datetime_replacements = (
@@ -156,6 +157,11 @@ class CoreUtilities:
             if not self._exclude_types_from_init_exports
             else set(),
         )
+        retry_status_check = (
+            "response.status_code in [408, 409, 429, 502, 503, 504]"
+            if self._retry_status_codes == "recommended"
+            else "response.status_code >= 500 or response.status_code in [429, 408, 409]"
+        )
         self._copy_file_to_project(
             project=project,
             relative_filepath_on_disk="http_client.py",
@@ -164,6 +170,9 @@ class CoreUtilities:
                 file=Filepath.FilepathPart(module_name="http_client"),
             ),
             exports={"HttpClient", "AsyncHttpClient"} if not self._exclude_types_from_init_exports else set(),
+            string_replacements={
+                "return response.status_code >= 500 or response.status_code in [429, 408, 409]  # {{RETRY_STATUS_CHECK}}": f"return {retry_status_check}",
+            },
         )
 
         self._copy_file_to_project(

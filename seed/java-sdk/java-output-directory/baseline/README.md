@@ -1,7 +1,7 @@
 # Seed Java Library
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FJava)
-[![Maven Central](https://img.shields.io/maven-central/v/com.fern/java-output-directory)](https://central.sonatype.com/artifact/com.fern/java-output-directory)
+[![Maven Central](https://img.shields.io/maven-central/v/com.fern/file-upload)](https://central.sonatype.com/artifact/com.fern/file-upload)
 
 The Seed Java library provides convenient access to the Seed APIs from Java.
 
@@ -28,7 +28,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:java-output-directory:0.0.1'
+  implementation 'com.fern:file-upload:0.0.1'
 }
 ```
 
@@ -39,7 +39,7 @@ Add the dependency in your `pom.xml` file:
 ```xml
 <dependency>
   <groupId>com.fern</groupId>
-  <artifactId>java-output-directory</artifactId>
+  <artifactId>file-upload</artifactId>
   <version>0.0.1</version>
 </dependency>
 ```
@@ -55,15 +55,21 @@ Instantiate and use the client with the following:
 ```java
 package com.example.usage;
 
-import com.seed.api.SeedApiClient;
+import com.seed.fileUpload.SeedFileUploadClient;
+import com.seed.fileUpload.resources.service.requests.JustFileRequest;
 
 public class Example {
     public static void main(String[] args) {
-        SeedApiClient client = SeedApiClient
+        SeedFileUploadClient client = SeedFileUploadClient
             .builder()
             .build();
 
-        client.service().getUser("userId");
+        client.service().justFile(
+            null,
+            JustFileRequest
+                .builder()
+                .build()
+        );
     }
 }
 ```
@@ -73,9 +79,9 @@ public class Example {
 You can set a custom base URL when constructing the client.
 
 ```java
-import com.seed.api.SeedApiClient;
+import com.seed.fileUpload.SeedFileUploadClient;
 
-SeedApiClient client = SeedApiClient
+SeedFileUploadClient client = SeedFileUploadClient
     .builder()
     .url("https://example.com")
     .build();
@@ -86,11 +92,11 @@ SeedApiClient client = SeedApiClient
 When the API returns a non-success status code (4xx or 5xx response), an API exception will be thrown.
 
 ```java
-import com.seed.api.core.SeedApiApiException;
+import com.seed.fileUpload.core.SeedFileUploadApiException;
 
 try{
-    client.service().getUser(...);
-} catch (SeedApiApiException e){
+    client.service().justFile(...);
+} catch (SeedFileUploadApiException e){
     // Do something with the API exception...
 }
 ```
@@ -103,12 +109,12 @@ This SDK is built to work with any instance of `OkHttpClient`. By default, if no
 However, you can pass your own client like so:
 
 ```java
-import com.seed.api.SeedApiClient;
+import com.seed.fileUpload.SeedFileUploadClient;
 import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedApiClient client = SeedApiClient
+SeedFileUploadClient client = SeedFileUploadClient
     .builder()
     .httpClient(customClient)
     .build();
@@ -131,9 +137,9 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` client option to configure this behavior.
 
 ```java
-import com.seed.api.SeedApiClient;
+import com.seed.fileUpload.SeedFileUploadClient;
 
-SeedApiClient client = SeedApiClient
+SeedFileUploadClient client = SeedFileUploadClient
     .builder()
     .maxRetries(1)
     .build();
@@ -143,17 +149,17 @@ SeedApiClient client = SeedApiClient
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 ```java
-import com.seed.api.SeedApiClient;
-import com.seed.api.core.RequestOptions;
+import com.seed.fileUpload.SeedFileUploadClient;
+import com.seed.fileUpload.core.RequestOptions;
 
 // Client level
-SeedApiClient client = SeedApiClient
+SeedFileUploadClient client = SeedFileUploadClient
     .builder()
     .timeout(60)
     .build();
 
 // Request level
-client.service().getUser(
+client.service().justFile(
     ...,
     RequestOptions
         .builder()
@@ -167,11 +173,11 @@ client.service().getUser(
 The SDK allows you to add custom headers to requests. You can configure headers at the client level or at the request level.
 
 ```java
-import com.seed.api.SeedApiClient;
-import com.seed.api.core.RequestOptions;
+import com.seed.fileUpload.SeedFileUploadClient;
+import com.seed.fileUpload.core.RequestOptions;
 
 // Client level
-SeedApiClient client = SeedApiClient
+SeedFileUploadClient client = SeedFileUploadClient
     .builder()
     .addHeader("X-Custom-Header", "custom-value")
     .addHeader("X-Request-Id", "abc-123")
@@ -179,7 +185,7 @@ SeedApiClient client = SeedApiClient
 ;
 
 // Request level
-client.service().getUser(
+client.service().justFile(
     ...,
     RequestOptions
         .builder()
@@ -195,7 +201,7 @@ The `withRawResponse()` method returns a raw client that wraps all responses wit
 (A normal client's `response` is identical to a raw client's `response.body()`.)
 
 ```java
-SeedApiHttpResponse response = client.service().withRawResponse().getUser(...);
+SeedFileUploadHttpResponse response = client.service().withRawResponse().justFile(...);
 
 System.out.println(response.body());
 System.out.println(response.headers().get("X-My-Header"));

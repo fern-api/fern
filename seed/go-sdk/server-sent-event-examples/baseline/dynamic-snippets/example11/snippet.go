@@ -3,9 +3,9 @@ package example
 import (
     context "context"
 
-    fern "github.com/server-sent-event-examples/fern"
-    client "github.com/server-sent-event-examples/fern/client"
-    option "github.com/server-sent-event-examples/fern/option"
+    sse "github.com/fern-api/sse-examples-go"
+    client "github.com/fern-api/sse-examples-go/client"
+    option "github.com/fern-api/sse-examples-go/option"
 )
 
 func do() {
@@ -14,10 +14,10 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.StreamEventsContextProtocolRequest{
+    request := &sse.StreamEventsDiscriminantInDataRequest{
         Query: "query",
     }
-    client.Completions.StreamEventsContextProtocol(
+    client.Completions.StreamEventsDiscriminantInData(
         context.TODO(),
         request,
     )

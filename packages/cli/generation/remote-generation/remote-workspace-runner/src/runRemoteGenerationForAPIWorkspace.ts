@@ -12,6 +12,7 @@ import {
 
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 
+import { findGeneratorLineNumber, GeneratorOccurrenceTracker, getOutputRepoUrl } from "./automationMetadata.js";
 import { downloadSnippetsForTask } from "./downloadSnippetsForTask.js";
 import type { AutomationRunOptions } from "./RemoteGeneratorRunRecorder.js";
 import { resolveAutoDiscoveredFernignorePath } from "./resolveAutoDiscoveredFernignorePath.js";
@@ -45,7 +46,9 @@ export async function runRemoteGenerationForAPIWorkspace({
     automationMode,
     autoMerge,
     skipIfNoDiff,
-    automation
+    automation,
+    occurrenceTracker,
+    loginCommand
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     organization: string;
@@ -84,6 +87,18 @@ export async function runRemoteGenerationForAPIWorkspace({
      * throws.
      */
     automation?: AutomationRunOptions;
+    /**
+     * Shared tracker used to assign a unique occurrence index to each generator name, so the
+     * recorder's `generators.yml` line-number lookup resolves duplicates correctly. Callers
+     * that drive multiple invocations of this function against the same workspace pass one
+     * tracker so skipped and run generators don't collide on indices.
+     */
+    occurrenceTracker?: GeneratorOccurrenceTracker;
+    /**
+     * CLI command to reference in auth-failure hints (e.g. 'fern login' for v1,
+     * 'fern auth login' for CLI v2). Defaults to 'fern login'.
+     */
+    loginCommand?: string;
 }): Promise<RemoteGenerationForAPIWorkspaceResponse | null> {
     if (generatorGroup.generators.length === 0) {
         context.logger.warn("No generators specified.");
@@ -91,6 +106,16 @@ export async function runRemoteGenerationForAPIWorkspace({
     }
 
     const snippetsProducedBy: generatorsYml.GeneratorInvocation[] = [];
+
+    // Use the caller-supplied tracker when present so it already knows about skipped siblings
+    // recorded upstream. When absent, seed a fresh one with this group's generators so `lookup`
+    // still returns correct declaration-order indices — harmless for non-automation paths where
+    // we never record anything, but correct for automation callers that don't bother pre-priming.
+    const effectiveOccurrenceTracker = occurrenceTracker ?? new GeneratorOccurrenceTracker();
+    if (occurrenceTracker == null) {
+        effectiveOccurrenceTracker.recordOccurrences(generatorGroup.generators);
+    }
+    const generatorsYmlAbsolutePath = workspace.generatorsConfiguration?.absolutePathToConfiguration;
 
     const results = await Promise.all(
         generatorGroup.generators.map((generatorInvocation) =>
@@ -123,6 +148,9 @@ export async function runRemoteGenerationForAPIWorkspace({
                     autoMerge,
                     skipIfNoDiff,
                     automation,
+                    generatorsYmlAbsolutePath,
+                    occurrenceTracker: effectiveOccurrenceTracker,
+                    loginCommand,
                     onSnippetsProduced: (invocation) => snippetsProducedBy.push(invocation)
                 })
             )
@@ -173,6 +201,9 @@ async function generateOne({
     autoMerge,
     skipIfNoDiff,
     automation,
+    generatorsYmlAbsolutePath,
+    occurrenceTracker,
+    loginCommand,
     onSnippetsProduced
 }: {
     generatorInvocation: generatorsYml.GeneratorInvocation;
@@ -201,6 +232,9 @@ async function generateOne({
     autoMerge: boolean | undefined;
     skipIfNoDiff: boolean | undefined;
     automation: AutomationRunOptions | undefined;
+    generatorsYmlAbsolutePath: AbsoluteFilePath | undefined;
+    occurrenceTracker: GeneratorOccurrenceTracker;
+    loginCommand: string | undefined;
     /** Invoked post-success when the generator produced snippets. */
     onSnippetsProduced: (invocation: generatorsYml.GeneratorInvocation) => void;
 }): Promise<void> {
@@ -279,7 +313,8 @@ async function generateOne({
             requireEnvVars,
             automationMode,
             autoMerge,
-            skipIfNoDiff
+            skipIfNoDiff,
+            loginCommand
         });
 
         if (remoteTaskHandlerResponse?.createdSnippets) {
@@ -297,13 +332,29 @@ async function generateOne({
             }
         }
 
-        automation?.recorder.recordSuccess({
-            apiName: workspace.workspaceName,
-            groupName: generatorGroup.groupName,
-            generatorName: generatorInvocation.name,
-            version: remoteTaskHandlerResponse?.actualVersion ?? null,
-            durationMs: Date.now() - startedAt
-        });
+        if (automation != null) {
+            const lineNumber =
+                generatorsYmlAbsolutePath != null
+                    ? await findGeneratorLineNumber(
+                          generatorsYmlAbsolutePath,
+                          generatorInvocation.name,
+                          occurrenceTracker.lookup(generatorInvocation)
+                      )
+                    : undefined;
+            automation.recorder.recordSuccess({
+                apiName: workspace.workspaceName,
+                groupName: generatorGroup.groupName,
+                generatorName: generatorInvocation.name,
+                version: remoteTaskHandlerResponse?.actualVersion ?? null,
+                durationMs: Date.now() - startedAt,
+                pullRequestUrl: remoteTaskHandlerResponse?.pullRequestUrl,
+                noChangesDetected: remoteTaskHandlerResponse?.noChangesDetected,
+                publishTarget: remoteTaskHandlerResponse?.publishTarget,
+                outputRepoUrl: getOutputRepoUrl(generatorInvocation),
+                generatorsYmlAbsolutePath,
+                generatorsYmlLineNumber: lineNumber
+            });
+        }
     } catch (error) {
         if (automation == null) {
             throw error;
@@ -315,22 +366,44 @@ async function generateOne({
         // Re-logging here would produce `[object Object]` since `TaskAbortSignal`
         // isn't an `Error` and has no serializable message.
         if (error instanceof TaskAbortSignal) {
+            const lineNumber =
+                generatorsYmlAbsolutePath != null
+                    ? await findGeneratorLineNumber(
+                          generatorsYmlAbsolutePath,
+                          generatorInvocation.name,
+                          occurrenceTracker.lookup(generatorInvocation)
+                      )
+                    : undefined;
             automation.recorder.recordFailure({
                 apiName: workspace.workspaceName,
                 groupName: generatorGroup.groupName,
                 generatorName: generatorInvocation.name,
                 errorMessage: interactiveTaskContext.getLastFailureMessage() ?? "Generator failed",
-                durationMs: Date.now() - startedAt
+                durationMs: Date.now() - startedAt,
+                outputRepoUrl: getOutputRepoUrl(generatorInvocation),
+                generatorsYmlAbsolutePath,
+                generatorsYmlLineNumber: lineNumber
             });
             throw error;
         }
         const message = extractErrorMessage(error);
+        const lineNumber =
+            generatorsYmlAbsolutePath != null
+                ? await findGeneratorLineNumber(
+                      generatorsYmlAbsolutePath,
+                      generatorInvocation.name,
+                      occurrenceTracker.lookup(generatorInvocation)
+                  )
+                : undefined;
         automation.recorder.recordFailure({
             apiName: workspace.workspaceName,
             groupName: generatorGroup.groupName,
             generatorName: generatorInvocation.name,
             errorMessage: message,
-            durationMs: Date.now() - startedAt
+            durationMs: Date.now() - startedAt,
+            outputRepoUrl: getOutputRepoUrl(generatorInvocation),
+            generatorsYmlAbsolutePath,
+            generatorsYmlLineNumber: lineNumber
         });
         // Mark the task as failed but don't propagate — siblings continue running.
         interactiveTaskContext.failWithoutThrowing(message);

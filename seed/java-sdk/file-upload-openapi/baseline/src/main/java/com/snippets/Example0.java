@@ -9,6 +9,6 @@ public class Example0 {
                 SeedApiClient.builder().url("https://api.fern.com").build();
 
         client.fileUploadExample()
-                .uploadFile(UploadFileRequest.builder().name("name").build());
+                .uploadFile(null, UploadFileRequest.builder().name("name").build());
     }
 }

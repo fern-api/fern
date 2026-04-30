@@ -54,7 +54,6 @@ export class ServiceClient {
                 (await core.Supplier.get(this._options.environment)),
             method: "GET",
             headers: _headers,
-            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
             queryString: core.url
                 .queryBuilder()
                 .addMany(_queryParams)

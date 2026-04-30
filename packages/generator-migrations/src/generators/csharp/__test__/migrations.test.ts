@@ -4,6 +4,7 @@ import { describe, expect, it, vi } from "vitest";
 
 import { migration_1_0_0 } from "../migrations/1.0.0.js";
 import { migration_2_0_0 } from "../migrations/2.0.0.js";
+import { migration_3_0_0 } from "../migrations/3.0.0.js";
 import migrationModule from "../migrations/index.js";
 
 const mockLogger: Logger = {
@@ -291,16 +292,63 @@ describe("C# SDK Migrations", () => {
         });
     });
 
+    describe("migration_3_0_0", () => {
+        it("sets old default for retryStatusCodes", () => {
+            const config = createBaseConfig();
+
+            const result = migration_3_0_0.migrateGeneratorConfig({
+                config,
+                context: { logger: mockLogger }
+            });
+
+            expect(result.config).toEqual({
+                retryStatusCodes: "legacy"
+            });
+        });
+
+        it("preserves explicitly set retryStatusCodes to recommended", () => {
+            const config = createBaseConfig({
+                retryStatusCodes: "recommended"
+            });
+
+            const result = migration_3_0_0.migrateGeneratorConfig({
+                config,
+                context: { logger: mockLogger }
+            });
+
+            expect(result.config).toEqual({
+                retryStatusCodes: "recommended"
+            });
+        });
+
+        it("returns unmodified document for migrateGeneratorsYml", () => {
+            const document = {
+                configuration: {
+                    groups: {}
+                }
+            };
+
+            const result = migration_3_0_0.migrateGeneratorsYml({
+                document,
+                context: { logger: mockLogger }
+            });
+
+            expect(result).toBe(document);
+        });
+    });
+
     describe("migration module", () => {
         it("exports all migrations in correct order", () => {
-            expect(migrationModule.migrations).toHaveLength(2);
+            expect(migrationModule.migrations).toHaveLength(3);
             expect(migrationModule.migrations[0]).toBe(migration_1_0_0);
             expect(migrationModule.migrations[1]).toBe(migration_2_0_0);
+            expect(migrationModule.migrations[2]).toBe(migration_3_0_0);
         });
 
         it("all migrations have correct versions", () => {
             expect(migration_1_0_0.version).toBe("1.0.0");
             expect(migration_2_0_0.version).toBe("2.0.0");
+            expect(migration_3_0_0.version).toBe("3.0.0");
         });
 
         it("all migrations are properly structured", () => {

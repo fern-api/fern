@@ -1,0 +1,6 @@
+- summary: |
+    Fix dynamic snippets emitting wrong property name when PascalCase(property)
+    collides with class name (e.g. CatalogV1Id.catalog_v1_id). The snippet
+    generator now uses the same rename logic as the SDK (appending "_") so that
+    generated examples compile without CS0542 / CS0117 errors.
+  type: fix

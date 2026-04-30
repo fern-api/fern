@@ -15,7 +15,7 @@ function join(...segments: string[]): string {
     return segments.filter(Boolean).join("/");
 }
 
-import { CaseConverter } from "@fern-api/base-generator";
+import { CaseConverter } from "@fern-api/browser-compatible-base-generator";
 import * as ast from "../ast/index.js";
 import { ClassReference } from "../ast/types/ClassReference.js";
 import { Type } from "../ast/types/IType.js";
@@ -245,6 +245,8 @@ export class Generation {
         explicitNamespaces: () => this.customConfig["explicit-namespaces"] === true,
         /** Override the default max retries for the SDK client. Default: 2. */
         maxRetries: () => this.customConfig.maxRetries,
+        /** Controls which HTTP status codes trigger automatic retries. Default: "legacy". */
+        retryStatusCodes: () => this.customConfig.retryStatusCodes ?? "legacy",
         /**
          * Output path configuration for generated files.
          * Returns normalized paths for library, test, solution, and other files.

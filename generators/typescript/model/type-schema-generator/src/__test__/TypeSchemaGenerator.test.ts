@@ -92,6 +92,8 @@ function createMockContext() {
                 objectWithoutOptionalProperties: (props: Zurg.Property[]) =>
                     createMockZurgObjectSchema("objectWithoutOptionalProperties({})"),
                 enum: (values: string[]) => createMockZurgSchema(`enum_([${values.map((v) => `"${v}"`).join(", ")}])`),
+                forwardCompatibleEnum: (values: string[]) =>
+                    createMockZurgSchema(`forwardCompatibleEnum_([${values.map((v) => `"${v}"`).join(", ")}])`),
                 undiscriminatedUnion: (schemas: Zurg.Schema[]) => createMockZurgSchema("undiscriminatedUnion([...])"),
                 union: (args: Zurg.union.Args) => createMockZurgObjectSchema("union({})"),
                 Schema: {
@@ -273,6 +275,7 @@ describe("TypeSchemaGenerator", () => {
         const generator = new TypeSchemaGenerator({
             includeUtilsOnUnionMembers: false,
             noOptionalProperties: false,
+            enableForwardCompatibleEnums: false,
             caseConverter
         });
 
@@ -296,6 +299,7 @@ describe("TypeSchemaGenerator", () => {
         const generator = new TypeSchemaGenerator({
             includeUtilsOnUnionMembers: false,
             noOptionalProperties: false,
+            enableForwardCompatibleEnums: false,
             caseConverter
         });
 
@@ -320,6 +324,7 @@ describe("TypeSchemaGenerator", () => {
         const generator = new TypeSchemaGenerator({
             includeUtilsOnUnionMembers: false,
             noOptionalProperties: false,
+            enableForwardCompatibleEnums: false,
             caseConverter
         });
 
@@ -345,6 +350,7 @@ describe("TypeSchemaGenerator", () => {
         const generator = new TypeSchemaGenerator({
             includeUtilsOnUnionMembers: false,
             noOptionalProperties: false,
+            enableForwardCompatibleEnums: false,
             caseConverter
         });
 
@@ -353,6 +359,7 @@ describe("TypeSchemaGenerator", () => {
             extends: [],
             types: [],
             baseProperties: [],
+            default: undefined,
             discriminatorContext: undefined
         });
         const schema = generator.generateTypeSchema({
@@ -370,11 +377,13 @@ describe("TypeSchemaGenerator", () => {
         const generator = new TypeSchemaGenerator({
             includeUtilsOnUnionMembers: false,
             noOptionalProperties: false,
+            enableForwardCompatibleEnums: false,
             caseConverter
         });
 
         const shape = FernIr.Type.undiscriminatedUnion({
-            members: []
+            members: [],
+            baseProperties: undefined
         });
         const schema = generator.generateTypeSchema({
             typeName: "Value",
@@ -391,6 +400,7 @@ describe("TypeSchemaGenerator", () => {
         const generator = new TypeSchemaGenerator({
             includeUtilsOnUnionMembers: false,
             noOptionalProperties: true,
+            enableForwardCompatibleEnums: false,
             caseConverter
         });
 
@@ -419,6 +429,7 @@ describe("TypeSchemaGenerator", () => {
         const generator = new TypeSchemaGenerator({
             includeUtilsOnUnionMembers: true,
             noOptionalProperties: false,
+            enableForwardCompatibleEnums: false,
             caseConverter
         });
 
@@ -427,6 +438,7 @@ describe("TypeSchemaGenerator", () => {
             extends: [],
             types: [],
             baseProperties: [],
+            default: undefined,
             discriminatorContext: undefined
         });
         const schema = generator.generateTypeSchema({
@@ -447,7 +459,12 @@ describe("TypeSchemaGenerator", () => {
 // ────────────────────────────────────────────────────────────────────────────
 
 describe("GeneratedEnumTypeSchemaImpl", () => {
-    function createEnumSchema(opts: { typeName: string; values: FernIr.EnumValue[]; noOptionalProperties?: boolean }) {
+    function createEnumSchema(opts: {
+        typeName: string;
+        values: FernIr.EnumValue[];
+        noOptionalProperties?: boolean;
+        enableForwardCompatibleEnums?: boolean;
+    }) {
         return new GeneratedEnumTypeSchemaImpl({
             typeName: opts.typeName,
             shape: { values: opts.values, default: undefined, forwardCompatible: undefined },
@@ -455,6 +472,7 @@ describe("GeneratedEnumTypeSchemaImpl", () => {
             getReferenceToGeneratedType: () => ts.factory.createTypeReferenceNode(opts.typeName),
             getReferenceToGeneratedTypeSchema: () => createMockReference(`${opts.typeName}Schema`),
             noOptionalProperties: opts.noOptionalProperties ?? false,
+            enableForwardCompatibleEnums: opts.enableForwardCompatibleEnums ?? false,
             caseConverter
         });
     }
@@ -499,6 +517,18 @@ describe("GeneratedEnumTypeSchemaImpl", () => {
             expect(output).toContain("RED");
             expect(output).toContain("BLUE");
             expect(output).toContain("GREEN");
+            expect(output).toMatchSnapshot();
+        });
+
+        it("generates forwardCompatibleEnum_ schema when forward-compatible enums enabled", () => {
+            const schema = createEnumSchema({
+                typeName: "Status",
+                values: [createEnumValue("Active", "active"), createEnumValue("Inactive", "inactive")],
+                enableForwardCompatibleEnums: true
+            });
+
+            const output = writeSchemaAndGetText(schema);
+            expect(output).toContain("forwardCompatibleEnum_");
             expect(output).toMatchSnapshot();
         });
     });
@@ -786,7 +816,7 @@ describe("GeneratedUndiscriminatedUnionTypeSchemaImpl", () => {
     }) {
         return new GeneratedUndiscriminatedUnionTypeSchemaImpl({
             typeName: opts.typeName,
-            shape: { members: opts.members },
+            shape: { members: opts.members, baseProperties: undefined },
             getGeneratedType: createMockGeneratedUndiscriminatedUnionType,
             getReferenceToGeneratedType: () => ts.factory.createTypeReferenceNode(opts.typeName),
             getReferenceToGeneratedTypeSchema: () => createMockReference(`${opts.typeName}Schema`),
@@ -892,6 +922,7 @@ describe("GeneratedUnionTypeSchemaImpl", () => {
                 extends: [],
                 types: opts.types ?? [],
                 baseProperties: opts.baseProperties ?? [],
+                default: undefined,
                 discriminatorContext: undefined
             },
             getGeneratedType: createMockGeneratedUnionType,

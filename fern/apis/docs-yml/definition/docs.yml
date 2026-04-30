@@ -42,6 +42,22 @@ types:
       - sv
       - tr
 
+  TranslationConfigObject:
+    properties:
+      lang: Language
+      default:
+        type: optional<boolean>
+        docs: Whether this language is the default. At most one entry should be marked as default.
+
+  TranslationConfig:
+    discriminated: false
+    docs: |
+      Translation configuration can be either a language code string or an object with additional options.
+      When using a string, it's equivalent to `{ lang: <string> }`.
+    union:
+      - Language
+      - TranslationConfigObject
+
   AnalyticsConfig:
     properties:
       segment: optional<SegmentConfig>
@@ -258,6 +274,12 @@ types:
       "navbar-links": optional<list<NavbarLink>>
       "footer-links": optional<FooterLinksConfig>
       "page-actions": optional<PageActionsConfig>
+      "global-theme":
+        type: optional<string>
+        docs: |
+          Name of a global theme stored in Fern's cloud to apply to this documentation site.
+          Theme values override local branding configuration (colors, typography, logo, fonts, JS, CSS, etc.).
+          Upload a theme first with: fern beta docs theme upload --name <theme-name>
       experimental: optional<ExperimentalConfig>
       "default-language":
         type: optional<ProgrammingLanguage>
@@ -266,6 +288,39 @@ types:
           Options include: typescript, python, java, go, ruby, csharp, php, swift, curl
 
       languages: optional<list<Language>>
+
+      translations:
+        type: optional<list<TranslationConfig>>
+        docs: |
+          Configuration for multi-language documentation. Each entry defines a locale
+          that the documentation supports. Use the `translations/` directory alongside
+          `docs.yml` to provide per-language content.
+
+          Example (object syntax):
+          ```yaml
+          translations:
+            - lang: en
+              default: true
+            - lang: ja
+            - lang: fr
+          ```
+
+          Example (simplified syntax):
+          ```yaml
+          translations:
+            - en
+            - ja
+            - fr
+          ```
+
+          You can mix both syntaxes:
+          ```yaml
+          translations:
+            - lang: en
+              default: true
+            - ja
+            - fr
+          ```
 
       # Deprecated
       "ai-chat": optional<AIChatConfig>
@@ -344,6 +399,8 @@ types:
       - chatgpt
       - claude
       - cursor
+      - value: claude-code
+        name: claude_code
       - vscode
 
   PageActionOptions:
@@ -369,21 +426,33 @@ types:
       chatgpt:
         type: optional<boolean>
         docs: |
-          When enabled, displays an "Open in ChatGPT" button that allows users to send the page content to ChatGPT for further exploration and Q&A.
+          Controls the "Open in ChatGPT" button, which sends the page content to ChatGPT for further
+          exploration and Q&A. Set to `false` to hide it.
 
-          @default: false
+          @default: true
       claude:
         type: optional<boolean>
         docs: |
-          When enabled, displays an "Open in Claude" button that allows users to send the page content to Claude for further exploration and Q&A.
+          Controls the "Open in Claude" button, which sends the page content to Claude for further
+          exploration and Q&A. Set to `false` to hide it.
 
-          @default: false
+          @default: true
+      claude-code:
+        type: optional<boolean>
+        docs: |
+          Controls the "Connect to Claude Code" button, which copies a `claude mcp add` command to the
+          clipboard so users can register this docs site's MCP server with Claude Code. The button only
+          renders on docs sites that have Ask AI enabled; set to `false` to hide it on those sites.
+
+          @default: true
       cursor:
         type: optional<boolean>
         docs: |
-          When enabled, displays an "Open in Cursor" button that allows users to open the page content in Cursor IDE with AI-powered code assistance.
+          Controls the "Connect to Cursor" button, which installs this docs site's MCP server in
+          Cursor via a deeplink. The button only renders on docs sites that have Ask AI enabled; set
+          to `false` to hide it on those sites.
 
-          @default: false
+          @default: true
       vscode:
         type: optional<boolean>
         docs: |
@@ -515,6 +584,10 @@ types:
         docs: |
           Specify which audiences this instance serves (e.g., internal developers, beta testers, public customers).
           You can use audiences to control which versions and products appear in each documentation instance, enabling you to create separate sites for different user groups. Content is included when its audience tag matches the instance audience. Content without an audience tag is included by default.
+      "multi-source":
+        type: optional<boolean>
+        docs: |
+          When enabled, docs registration uses a basepath-aware S3 key format, allowing multiple independent doc sites to be hosted under the same custom domain with different basepaths. If true, the url and custom-domain must share the same basepath.
 
   CustomDomain:
     discriminated: false
@@ -911,6 +984,14 @@ types:
           Use \$\{VAR\} to escape and output literal ${VAR} without substitution.
 
           @default: false
+      websocket-oneof-display:
+        type: optional<WebSocketOneofDisplay>
+        docs: |
+          Controls how WebSocket messages with oneOf bodies are displayed in the API Reference.
+          - `flat` (default): Each variant in the oneOf is shown as a separate top-level entry.
+          - `grouped`: Messages are shown as a single parent entry with nested variants.
+
+          @default: flat
 
   ThemeConfig:
     properties:
@@ -1252,6 +1333,11 @@ types:
     enum:
       - frontmatter
       - filename
+
+  WebSocketOneofDisplay:
+    enum:
+      - flat
+      - grouped
 
   CollapsedValue:
     discriminated: false
@@ -1954,7 +2040,7 @@ types:
       "og:dynamic":
         type: optional<boolean>
         docs: When true, enables dynamic OG image generation for pages that don't have a custom og:image set.
-      "og:background-image":
+      "og:dynamic:background-image":
         type: optional<string>
         docs: A custom background image for dynamically generated OG images. Can be a URL or a file path.
       "og:dynamic:text-color":
@@ -2088,7 +2174,7 @@ types:
       basepath-aware:
         type: optional<boolean>
         docs: |
-          When enabled, docs registration uses a basepath-aware S3 key format, allowing multiple independent doc sites to be hosted under the same custom domain with different basepaths.
+          Deprecated: Use `multi-source: true` on the instance instead. When enabled, docs registration uses a basepath-aware S3 key format, allowing multiple independent doc sites to be hosted under the same custom domain with different basepaths.
 
   PlaygroundSettings:
     properties:

@@ -54,6 +54,17 @@ interface LibraryNavNode {
     children?: LibraryNavNode[];
 }
 
+interface DocsTranslationsConfig {
+    defaultLocale: string;
+    translations: string[] | undefined;
+}
+
+// TODO: Remove this shim once the published @fern-api/fdr-sdk type for
+// DocsV1Write.DocsConfig includes the translations field.
+interface DocsConfigWithTranslations extends DocsV1Write.DocsConfig {
+    translations: DocsTranslationsConfig | undefined;
+}
+
 import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter.js";
 import { ChangelogNodeConverter } from "./ChangelogNodeConverter.js";
 import { NodeIdGenerator } from "./NodeIdGenerator.js";
@@ -251,6 +262,60 @@ export class DocsDefinitionResolver {
         }
         return this._parsedDocsConfig;
     }
+
+    /**
+     * Returns per-locale translated page content loaded from `translations/<lang>/` directories.
+     * Must be called after `resolve()`.
+     */
+    public getTranslationPages(): Record<string, Record<RelativeFilePath, string>> | undefined {
+        return this._parsedDocsConfig?.translationPages;
+    }
+
+    /**
+     * Returns per-locale translated navigation overlays loaded from
+     * `translations/<lang>/fern/docs.yml` and referenced nav YAML files.
+     * Must be called after `resolve()`.
+     */
+    public getTranslationNavigationOverlays():
+        | Record<string, import("@fern-api/configuration").docsYml.TranslationNavigationOverlay>
+        | undefined {
+        return this._parsedDocsConfig?.translationNavigationOverlays;
+    }
+
+    /**
+     * Returns the map of absolute file paths to uploaded file IDs.
+     * Used by translation processing to rewrite image paths in translated pages.
+     * Must be called after `resolve()`.
+     */
+    public getCollectedFileIds(): ReadonlyMap<AbsoluteFilePath, string> {
+        return this.collectedFileIds;
+    }
+
+    /**
+     * Returns the absolute path to the docs workspace (fern folder).
+     */
+    public getDocsWorkspacePath(): AbsoluteFilePath {
+        return this.docsWorkspace.absoluteFilePath;
+    }
+
+    private getDocsTranslationsConfig(): DocsConfigWithTranslations["translations"] {
+        const translations = this.parsedDocsConfig.translations;
+        if (translations == null || translations.length === 0) {
+            return undefined;
+        }
+
+        const normalizedTranslations = translations.map((t) => docsYml.DocsYmlSchemas.normalizeTranslationConfig(t));
+        const defaultTranslation =
+            normalizedTranslations.find((translation) => translation.default === true) ?? normalizedTranslations[0];
+        if (defaultTranslation == null) {
+            return undefined;
+        }
+
+        return {
+            defaultLocale: defaultTranslation.lang,
+            translations: normalizedTranslations.map((translation) => translation.lang)
+        };
+    }
     private collectedFileIds = new Map<AbsoluteFilePath, string>();
     private markdownFilesToFullSlugs: Map<AbsoluteFilePath, string> = new Map();
     private markdownFilesToSidebarTitle: Map<AbsoluteFilePath, string> = new Map();
@@ -417,7 +482,10 @@ export class DocsDefinitionResolver {
                 }
             } catch (error) {
                 this.taskContext.logger.error(`Failed to parse ${relativePath}: ${extractErrorMessage(error)}`);
-                throw error;
+                throw new CliError({
+                    message: `Failed to parse markdown file ${relativePath}: ${extractErrorMessage(error)}`,
+                    code: CliError.Code.ParseError
+                });
             }
         }
         const imageParseTime = performance.now() - imageParseStart;
@@ -752,13 +820,16 @@ export class DocsDefinitionResolver {
                       context7: this.getFileId(this.parsedDocsConfig.context7File)
                   } as DocsV1Write.DocsConfig["integrations"])
                 : undefined;
-        const config: DocsV1Write.DocsConfig = {
+        const config: DocsConfigWithTranslations = {
             aiChatConfig:
                 this.parsedDocsConfig.aiChatConfig != null
                     ? {
                           model: this.parsedDocsConfig.aiChatConfig.model,
                           systemPrompt: this.parsedDocsConfig.aiChatConfig.systemPrompt,
-                          location: this.parsedDocsConfig.aiChatConfig.location,
+                          // Filter out 'discord' which is no longer supported by fdr-sdk
+                          location: this.parsedDocsConfig.aiChatConfig.location?.filter(
+                              (loc): loc is "slack" | "docs" => loc === "slack" || loc === "docs"
+                          ),
                           datasources: this.parsedDocsConfig.aiChatConfig.datasources?.map((ds) => ({
                               url: ds.url,
                               title: ds.title
@@ -805,10 +876,10 @@ export class DocsDefinitionResolver {
             }),
             typographyV2: this.convertDocsTypographyConfiguration(),
             layout: this.parsedDocsConfig.layout,
+            // @ts-expect-error -- BCP 47: Language type widened to string, @fern-api/fdr-sdk not yet updated
             settings: this.parsedDocsConfig.settings,
             css: this.parsedDocsConfig.css,
             js: this.convertJavascriptConfiguration(),
-            // @ts-expect-error - Remove this when the fdr-sdk upgraded to the latest version
             agents:
                 this.parsedDocsConfig.agents != null ||
                 this.parsedDocsConfig.llmsTxtFile != null ||
@@ -827,7 +898,10 @@ export class DocsDefinitionResolver {
                 value: DocsV1Write.Url(footerLink.value)
             })),
             defaultLanguage: this.parsedDocsConfig.defaultLanguage,
+            // @ts-expect-error -- BCP 47: Language[] widened to string[], @fern-api/fdr-sdk not yet updated
             languages: this.parsedDocsConfig.languages,
+
+            translations: this.getDocsTranslationsConfig(),
             analyticsConfig: {
                 ...this.parsedDocsConfig.analyticsConfig,
                 segment: this.parsedDocsConfig.analyticsConfig?.segment,
@@ -2138,6 +2212,7 @@ export class DocsDefinitionResolver {
                 openAi: this.parsedDocsConfig.pageActions.options.openAi,
                 claude: this.parsedDocsConfig.pageActions.options.claude,
                 cursor: this.parsedDocsConfig.pageActions.options.cursor,
+                claudeCode: this.parsedDocsConfig.pageActions.options.claudeCode,
                 vscode: this.parsedDocsConfig.pageActions.options.vscode,
                 custom: this.parsedDocsConfig.pageActions.options.custom.map((customAction) => ({
                     title: customAction.title,
@@ -2266,17 +2341,17 @@ export class DocsDefinitionResolver {
             "og:image": ogImage,
             "og:logo": ogLogo,
             "twitter:image": twitterImage,
-            "og:background-image": ogBackgroundImage,
+            "og:dynamic:background-image": ogDynamicBackgroundImage,
             ...rest
         } = this.parsedDocsConfig.metadata;
-        // Type assertion needed: og:dynamic and og:background-image are not yet in the
-        // published FDR SDK MetadataConfig type, but FDR accepts them at runtime.
+        // Type assertion needed: og:dynamic and og:dynamic:background-image are not yet
+        // in the published FDR SDK MetadataConfig type, but FDR accepts them at runtime.
         return {
             ...rest,
             "og:image": this.convertFileIdOrUrl(ogImage),
             "og:logo": this.convertFileIdOrUrl(ogLogo),
             "twitter:image": this.convertFileIdOrUrl(twitterImage),
-            "og:background-image": this.convertFileIdOrUrl(ogBackgroundImage)
+            "og:dynamic:background-image": this.convertFileIdOrUrl(ogDynamicBackgroundImage)
         } as DocsV1Write.MetadataConfig;
     }
 

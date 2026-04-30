@@ -14,7 +14,6 @@ func do() {
         ),
         option.WithBasicAuth(
             "<username>",
-            "<password>",
         ),
     )
     request := map[string]any{

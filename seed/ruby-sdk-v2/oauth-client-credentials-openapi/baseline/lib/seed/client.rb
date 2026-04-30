@@ -9,20 +9,10 @@ module Seed
       @raw_client = Seed::Internal::Http::RawClient.new(
         base_url: base_url,
         headers: {
-          "User-Agent" => "fern_oauth-client-credentials-openapi/0.0.1",
+          "User-Agent" => "fern_objects-with-imports/0.0.1",
           "X-Fern-Language" => "Ruby"
         }
       )
-    end
-
-    # @return [Seed::Identity::Client]
-    def identity
-      @identity ||= Seed::Identity::Client.new(client: @raw_client)
-    end
-
-    # @return [Seed::Plants::Client]
-    def plants
-      @plants ||= Seed::Plants::Client.new(client: @raw_client)
     end
   end
 end

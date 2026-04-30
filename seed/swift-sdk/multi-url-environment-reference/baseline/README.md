@@ -72,7 +72,7 @@ This SDK allows you to configure different environments for API requests.
 import Api
 
 let client = ApiClient(
-    ...,
+    token: "YOUR_API_KEY",
     environment: .production
 )
 ```
@@ -84,7 +84,7 @@ The SDK throws a single error enum for all failures. Client-side issues encoding
 ```swift
 import Api
 
-let client = ApiClient(...)
+let client = ApiClient(token: "YOUR_API_KEY")
 
 do {
     let response = try await client.auth.gettoken(...)
@@ -164,7 +164,7 @@ import Foundation
 import Api
 
 let client = ApiClient(
-    ...,
+    token: "YOUR_API_KEY",
     urlSession: // Provide your implementation here
 )
 ```

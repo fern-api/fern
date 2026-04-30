@@ -62,7 +62,7 @@ export async function executeAutomationsGenerate({
                 }),
                 cliContext,
                 version: options.version,
-                groupName: options.group,
+                groupNames: options.group != null ? [options.group] : undefined,
                 generatorName,
                 generatorIndex,
                 shouldLogS3Url: false,

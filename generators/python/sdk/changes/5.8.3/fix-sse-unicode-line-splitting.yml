@@ -1,0 +1,6 @@
+- summary: |
+    Fix async SSE parsing to only split on SSE-spec line terminators (\n, \r, \r\n).
+    Previously, aiter_sse() used httpx's aiter_lines() which splits on \u2028 and
+    \u2029 via Python's str.splitlines(), corrupting data fields containing those
+    characters (common in LLM JSON output).
+  type: fix
