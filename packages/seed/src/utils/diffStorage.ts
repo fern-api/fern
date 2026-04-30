@@ -1,6 +1,6 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { execFileSync } from "child_process";
-import { cp, mkdir, readFile, writeFile } from "fs/promises";
+import { cp, mkdir, readFile, rm, writeFile } from "fs/promises";
 
 const BASELINE_DIR = "baseline";
 const CUSTOM_CONFIGS_DIR = "custom-configs";
@@ -37,6 +37,19 @@ export function getDiffFilePath(
  */
 export function getCustomConfigsDir(workspaceDir: AbsoluteFilePath, fixture: string): AbsoluteFilePath {
     return join(workspaceDir, RelativeFilePath.of(fixture), RelativeFilePath.of(CUSTOM_CONFIGS_DIR));
+}
+
+/**
+ * Get the path to a variant's full-snapshot directory (sibling of `baseline/`).
+ * Used when a variant opts out of diff-based storage via `storeFullSnapshot: true`.
+ * e.g. seed/java-sdk/exhaustive/local-files/
+ */
+export function getSnapshotDir(
+    workspaceDir: AbsoluteFilePath,
+    fixture: string,
+    outputFolder: string
+): AbsoluteFilePath {
+    return join(workspaceDir, RelativeFilePath.of(fixture), RelativeFilePath.of(outputFolder));
 }
 
 function isExecError(error: unknown): error is { status: number; stdout: string; stderr: string } {
@@ -140,6 +153,24 @@ export async function computeAndStoreDiff(
     const contentToWrite = diffContent.length === 0 ? EMPTY_DIFF_MARKER : diffContent;
     await writeFile(diffPath, contentToWrite, "utf-8");
     return diffPath;
+}
+
+/**
+ * Store a variant's output as a full directory snapshot at `<fixture>/<outputFolder>/`.
+ * Used for variants that opt out of diff-based storage via `storeFullSnapshot: true`.
+ * Returns the path to the written snapshot directory.
+ */
+export async function storeFullSnapshot(
+    variantDir: AbsoluteFilePath,
+    workspaceDir: AbsoluteFilePath,
+    fixture: string,
+    outputFolder: string
+): Promise<AbsoluteFilePath> {
+    const snapshotDir = getSnapshotDir(workspaceDir, fixture, outputFolder);
+    await rm(snapshotDir, { recursive: true, force: true });
+    await mkdir(snapshotDir, { recursive: true });
+    await cp(variantDir, snapshotDir, { recursive: true });
+    return snapshotDir;
 }
 
 /**

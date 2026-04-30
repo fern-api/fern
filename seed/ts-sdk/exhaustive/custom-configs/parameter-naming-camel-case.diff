@@ -1,5 +1,5 @@
 diff --git a/.fern/metadata.json b/.fern/metadata.json
-index d8b7bf00e12..c9d465daa73 100644
+index 9ea68298004..3c157bba174 100644
 --- a/.fern/metadata.json
 +++ b/.fern/metadata.json
 @@ -2,6 +2,9 @@
@@ -10,8 +10,8 @@ index d8b7bf00e12..c9d465daa73 100644
 +        "parameterNaming": "camelCase"
 +    },
      "originGitCommit": "DUMMY",
-     "originGitCommitIsDirty": null,
-     "invokedBy": "ci",
+     "invokedBy": "manual",
+     "requestedVersion": "0.0.1",
 diff --git a/reference.md b/reference.md
 index 925b5375d52..725c58260db 100644
 --- a/reference.md
@@ -41,7 +41,7 @@ index a0d13554153..4b2479d9785 100644
          }
      ],
 diff --git a/src/api/resources/reqWithHeaders/client/Client.ts b/src/api/resources/reqWithHeaders/client/Client.ts
-index 89eaf1d6814..1b2ace15e13 100644
+index fc7b2c3a9b0..e7a0a28ee71 100644
 --- a/src/api/resources/reqWithHeaders/client/Client.ts
 +++ b/src/api/resources/reqWithHeaders/client/Client.ts
 @@ -27,8 +27,8 @@ export class ReqWithHeadersClient {

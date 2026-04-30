@@ -12,7 +12,13 @@ import { GeneratorWorkspace } from "../../../loadGeneratorWorkspaces.js";
 import { Semaphore } from "../../../Semaphore.js";
 import { Stopwatch } from "../../../Stopwatch.js";
 import { convertGeneratorWorkspaceToFernWorkspace } from "../../../utils/convertSeedWorkspaceToFernWorkspace.js";
-import { computeAndStoreDiff, getBaselineDir } from "../../../utils/diffStorage.js";
+import {
+    computeAndStoreDiff,
+    getBaselineDir,
+    getDiffFilePath,
+    getSnapshotDir,
+    storeFullSnapshot
+} from "../../../utils/diffStorage.js";
 import { ParsedDockerName, parseDockerOrThrow } from "../../../utils/parseDockerOrThrow.js";
 import { workspaceShouldGenerateDynamicSnippetTests } from "../../../workspaceShouldGenerateDynamicSnippetTests.js";
 import { ScriptRunner } from "../index.js";
@@ -360,18 +366,38 @@ export abstract class TestRunner {
             this.lock.release();
             lockAcquired = false;
 
-            // For non-baseline variants, compute and store the diff against the baseline.
+            // For non-baseline variants, persist the variant output. By default we store
+            // a diff against baseline; variants with `storeFullSnapshot: true` get a full
+            // directory snapshot instead. We also clean up any stale artifact from the
+            // opposite mode in case the flag flipped since the previous run.
             // outputDir still points at the temp dir with full content for script execution.
             if (tempOutputDir != null && baselineDir != null && configuration != null) {
-                taskContext.logger.info("Computing diff against baseline...");
-                const diffPath = await computeAndStoreDiff(
-                    baselineDir,
-                    tempOutputDir,
-                    this.generator.absolutePathToWorkspace,
-                    fixture,
-                    configuration.outputFolder
-                );
-                taskContext.logger.info(`Stored diff at ${diffPath}`);
+                const workspace = this.generator.absolutePathToWorkspace;
+                if (configuration.storeFullSnapshot === true) {
+                    taskContext.logger.info("Storing full variant snapshot...");
+                    const snapshotPath = await storeFullSnapshot(
+                        tempOutputDir,
+                        workspace,
+                        fixture,
+                        configuration.outputFolder
+                    );
+                    await rm(getDiffFilePath(workspace, fixture, configuration.outputFolder), { force: true });
+                    taskContext.logger.info(`Stored full snapshot at ${snapshotPath}`);
+                } else {
+                    taskContext.logger.info("Computing diff against baseline...");
+                    const diffPath = await computeAndStoreDiff(
+                        baselineDir,
+                        tempOutputDir,
+                        workspace,
+                        fixture,
+                        configuration.outputFolder
+                    );
+                    await rm(getSnapshotDir(workspace, fixture, configuration.outputFolder), {
+                        recursive: true,
+                        force: true
+                    });
+                    taskContext.logger.info(`Stored diff at ${diffPath}`);
+                }
             }
 
             if (this.skipScripts) {

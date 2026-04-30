@@ -1,5 +1,5 @@
 diff --git a/.fern/metadata.json b/.fern/metadata.json
-index d8b7bf00e12..9ed2670248b 100644
+index 9ea68298004..b0927623af6 100644
 --- a/.fern/metadata.json
 +++ b/.fern/metadata.json
 @@ -2,6 +2,9 @@
@@ -10,8 +10,8 @@ index d8b7bf00e12..9ed2670248b 100644
 +        "consolidateTypeFiles": true
 +    },
      "originGitCommit": "DUMMY",
-     "originGitCommitIsDirty": null,
-     "invokedBy": "ci",
+     "invokedBy": "manual",
+     "requestedVersion": "0.0.1",
 diff --git a/src/api/resources/endpoints/resources/pagination/types/index.ts b/src/api/resources/endpoints/resources/pagination/types/index.ts
 index af5abb94be0..a0c4ebf250f 100644
 --- a/src/api/resources/endpoints/resources/pagination/types/index.ts
@@ -21,8 +21,8 @@ index af5abb94be0..a0c4ebf250f 100644
 +export * from "./types.js";
 diff --git a/src/api/resources/endpoints/resources/pagination/types/PaginatedResponse.ts b/src/api/resources/endpoints/resources/pagination/types/types.ts
 similarity index 100%
-rename from src/api/resources/endpoints/resources/pagination/types/PaginatedResponse.ts
-rename to src/api/resources/endpoints/resources/pagination/types/types.ts
+rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/endpoints/resources/pagination/types/PaginatedResponse.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-8t1g1x5Q4HDV/src/api/resources/endpoints/resources/pagination/types/types.ts
 diff --git a/src/api/resources/endpoints/resources/put/types/ErrorCategory.ts b/src/api/resources/endpoints/resources/put/types/ErrorCategory.ts
 deleted file mode 100644
 index a197fec8788..00000000000
@@ -149,8 +149,8 @@ index b10afa3b774..a0c4ebf250f 100644
 +export * from "./types.js";
 diff --git a/src/api/resources/generalErrors/types/BadObjectRequestInfo.ts b/src/api/resources/generalErrors/types/types.ts
 similarity index 100%
-rename from src/api/resources/generalErrors/types/BadObjectRequestInfo.ts
-rename to src/api/resources/generalErrors/types/types.ts
+rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/generalErrors/types/BadObjectRequestInfo.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-8t1g1x5Q4HDV/src/api/resources/generalErrors/types/types.ts
 diff --git a/src/api/resources/types/resources/docs/types/index.ts b/src/api/resources/types/resources/docs/types/index.ts
 index 3eedfcba912..a0c4ebf250f 100644
 --- a/src/api/resources/types/resources/docs/types/index.ts
@@ -160,8 +160,8 @@ index 3eedfcba912..a0c4ebf250f 100644
 +export * from "./types.js";
 diff --git a/src/api/resources/types/resources/docs/types/ObjectWithDocs.ts b/src/api/resources/types/resources/docs/types/types.ts
 similarity index 100%
-rename from src/api/resources/types/resources/docs/types/ObjectWithDocs.ts
-rename to src/api/resources/types/resources/docs/types/types.ts
+rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/types/resources/docs/types/ObjectWithDocs.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-8t1g1x5Q4HDV/src/api/resources/types/resources/docs/types/types.ts
 diff --git a/src/api/resources/types/resources/enum/types/index.ts b/src/api/resources/types/resources/enum/types/index.ts
 index 3b2d63911a1..a0c4ebf250f 100644
 --- a/src/api/resources/types/resources/enum/types/index.ts
@@ -171,8 +171,8 @@ index 3b2d63911a1..a0c4ebf250f 100644
 +export * from "./types.js";
 diff --git a/src/api/resources/types/resources/enum/types/WeatherReport.ts b/src/api/resources/types/resources/enum/types/types.ts
 similarity index 100%
-rename from src/api/resources/types/resources/enum/types/WeatherReport.ts
-rename to src/api/resources/types/resources/enum/types/types.ts
+rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/types/resources/enum/types/WeatherReport.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-8t1g1x5Q4HDV/src/api/resources/types/resources/enum/types/types.ts
 diff --git a/src/api/resources/types/resources/object/types/DocumentedUnknownType.ts b/src/api/resources/types/resources/object/types/DocumentedUnknownType.ts
 deleted file mode 100644
 index cf964239ad3..00000000000
@@ -557,8 +557,8 @@ index b7eb914bb35..a0c4ebf250f 100644
 +export * from "./types.js";
 diff --git a/src/api/resources/types/resources/union/types/Animal.ts b/src/api/resources/types/resources/union/types/types.ts
 similarity index 67%
-rename from src/api/resources/types/resources/union/types/Animal.ts
-rename to src/api/resources/types/resources/union/types/types.ts
+rename from /Users/Patrick/fern/fern2/seed/ts-sdk/exhaustive/baseline/src/api/resources/types/resources/union/types/Animal.ts
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-77155-8t1g1x5Q4HDV/src/api/resources/types/resources/union/types/types.ts
 index f5336c6b33b..80737e1eeb2 100644
 --- a/src/api/resources/types/resources/union/types/Animal.ts
 +++ b/src/api/resources/types/resources/union/types/types.ts

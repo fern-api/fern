@@ -1,5 +1,5 @@
 diff --git a/.fern/metadata.json b/.fern/metadata.json
-index d8b7bf00e12..a51d466cdb4 100644
+index 9ea68298004..85d1f19701f 100644
 --- a/.fern/metadata.json
 +++ b/.fern/metadata.json
 @@ -2,6 +2,9 @@
@@ -10,8 +10,8 @@ index d8b7bf00e12..a51d466cdb4 100644
 +        "noSerdeLayer": false
 +    },
      "originGitCommit": "DUMMY",
-     "originGitCommitIsDirty": null,
-     "invokedBy": "ci",
+     "invokedBy": "manual",
+     "requestedVersion": "0.0.1",
 diff --git a/package.json b/package.json
 index 36918bca44f..fcc82b40527 100644
 --- a/package.json
@@ -413,7 +413,7 @@ index a0d13554153..dad84e64978 100644
          }
      ],
 diff --git a/src/api/resources/endpoints/resources/container/client/Client.ts b/src/api/resources/endpoints/resources/container/client/Client.ts
-index 44dd1c3093b..5ba808c8f3d 100644
+index c7f3504eaf9..8731f5a7aa6 100644
 --- a/src/api/resources/endpoints/resources/container/client/Client.ts
 +++ b/src/api/resources/endpoints/resources/container/client/Client.ts
 @@ -6,6 +6,7 @@ import { mergeHeaders } from "../../../../../../core/headers.js";
@@ -426,7 +426,7 @@ index 44dd1c3093b..5ba808c8f3d 100644
  export declare namespace ContainerClient {
 @@ -56,7 +57,10 @@ export class ContainerClient {
              contentType: "application/json",
-             queryParameters: requestOptions?.queryParams,
+             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
              requestType: "json",
 -            body: request,
 +            body: serializers.endpoints.container.getAndReturnListOfPrimitives.Request.jsonOrThrow(request, {
@@ -459,7 +459,7 @@ index 44dd1c3093b..5ba808c8f3d 100644
          if (_response.error.reason === "status-code") {
 @@ -122,7 +138,10 @@ export class ContainerClient {
              contentType: "application/json",
-             queryParameters: requestOptions?.queryParams,
+             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
              requestType: "json",
 -            body: request,
 +            body: serializers.endpoints.container.getAndReturnListOfObjects.Request.jsonOrThrow(request, {
@@ -516,7 +516,7 @@ index 44dd1c3093b..5ba808c8f3d 100644
              _authRequest.headers,
 @@ -182,7 +207,10 @@ export class ContainerClient {
              contentType: "application/json",
-             queryParameters: requestOptions?.queryParams,
+             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
              requestType: "json",
 -            body: request,
 +            body: serializers.endpoints.container.getAndReturnSetOfPrimitives.Request.jsonOrThrow(request, {
@@ -549,7 +549,7 @@ index 44dd1c3093b..5ba808c8f3d 100644
          if (_response.error.reason === "status-code") {
 @@ -241,7 +281,10 @@ export class ContainerClient {
              contentType: "application/json",
-             queryParameters: requestOptions?.queryParams,
+             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
              requestType: "json",
 -            body: request,
 +            body: serializers.endpoints.container.getAndReturnSetOfObjects.Request.jsonOrThrow(request, {
@@ -576,7 +576,7 @@ index 44dd1c3093b..5ba808c8f3d 100644
          }
 @@ -303,7 +352,10 @@ export class ContainerClient {
              contentType: "application/json",
-             queryParameters: requestOptions?.queryParams,
+             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
              requestType: "json",
 -            body: request,
 +            body: serializers.endpoints.container.getAndReturnMapPrimToPrim.Request.jsonOrThrow(request, {
@@ -606,7 +606,7 @@ index 44dd1c3093b..5ba808c8f3d 100644
          if (_response.error.reason === "status-code") {
 @@ -364,7 +425,10 @@ export class ContainerClient {
              contentType: "application/json",
-             queryParameters: requestOptions?.queryParams,
+             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
              requestType: "json",
 -            body: request,
 +            body: serializers.endpoints.container.getAndReturnMapOfPrimToObject.Request.jsonOrThrow(request, {
@@ -636,7 +636,7 @@ index 44dd1c3093b..5ba808c8f3d 100644
          }
 @@ -433,7 +506,10 @@ export class ContainerClient {
              contentType: "application/json",
-             queryParameters: requestOptions?.queryParams,
+             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
              requestType: "json",
 -            body: request,
 +            body: serializers.endpoints.container.getAndReturnMapOfPrimToUndiscriminatedUnion.Request.jsonOrThrow(
@@ -666,7 +666,7 @@ index 44dd1c3093b..5ba808c8f3d 100644
          }
 @@ -495,7 +580,10 @@ export class ContainerClient {
              contentType: "application/json",
-             queryParameters: requestOptions?.queryParams,
+             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
              requestType: "json",
 -            body: request,
 +            body: serializers.endpoints.container.getAndReturnOptional.Request.jsonOrThrow(request, {
@@ -692,7 +692,7 @@ index 44dd1c3093b..5ba808c8f3d 100644
              };
          }
 diff --git a/src/api/resources/endpoints/resources/contentType/client/Client.ts b/src/api/resources/endpoints/resources/contentType/client/Client.ts
-index ae19b03e6c8..0596a90d800 100644
+index eafac7deff5..4308aab014c 100644
 --- a/src/api/resources/endpoints/resources/contentType/client/Client.ts
 +++ b/src/api/resources/endpoints/resources/contentType/client/Client.ts
 @@ -6,6 +6,7 @@ import { mergeHeaders } from "../../../../../../core/headers.js";
@@ -720,7 +720,7 @@ index ae19b03e6c8..0596a90d800 100644
       *         },
 @@ -72,7 +73,10 @@ export class ContentTypeClient {
              contentType: "application/json-patch+json",
-             queryParameters: requestOptions?.queryParams,
+             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
              requestType: "json",
 -            body: request,
 +            body: serializers.types.ObjectWithOptionalField.jsonOrThrow(request, {
@@ -747,7 +747,7 @@ index ae19b03e6c8..0596a90d800 100644
       *         },
 @@ -147,7 +151,10 @@ export class ContentTypeClient {
              contentType: "application/json-patch+json; charset=utf-8",
-             queryParameters: requestOptions?.queryParams,
+             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
              requestType: "json",
 -            body: request,
 +            body: serializers.types.ObjectWithOptionalField.jsonOrThrow(request, {
@@ -758,7 +758,7 @@ index ae19b03e6c8..0596a90d800 100644
              maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
              abortSignal: requestOptions?.abortSignal,
 diff --git a/src/api/resources/endpoints/resources/enum/client/Client.ts b/src/api/resources/endpoints/resources/enum/client/Client.ts
-index 9dc0d0ef769..6e2af2b2dae 100644
+index ad469715e31..a4090a2dca6 100644
 --- a/src/api/resources/endpoints/resources/enum/client/Client.ts
 +++ b/src/api/resources/endpoints/resources/enum/client/Client.ts
 @@ -6,6 +6,7 @@ import { mergeHeaders } from "../../../../../../core/headers.js";
@@ -771,7 +771,7 @@ index 9dc0d0ef769..6e2af2b2dae 100644
  export declare namespace EnumClient {
 @@ -56,7 +57,10 @@ export class EnumClient {
              contentType: "application/json",
-             queryParameters: requestOptions?.queryParams,
+             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
              requestType: "json",
 -            body: request,
 +            body: serializers.types.WeatherReport.jsonOrThrow(request, {
@@ -800,7 +800,7 @@ index 9dc0d0ef769..6e2af2b2dae 100644
  
          if (_response.error.reason === "status-code") {
 diff --git a/src/api/resources/endpoints/resources/httpMethods/client/Client.ts b/src/api/resources/endpoints/resources/httpMethods/client/Client.ts
-index 363c4a7f1dd..8ffd074d859 100644
+index 58174119092..da7f244ddb4 100644
 --- a/src/api/resources/endpoints/resources/httpMethods/client/Client.ts
 +++ b/src/api/resources/endpoints/resources/httpMethods/client/Client.ts
 @@ -6,6 +6,7 @@ import { mergeHeaders } from "../../../../../../core/headers.js";
@@ -831,7 +831,7 @@ index 363c4a7f1dd..8ffd074d859 100644
          if (_response.error.reason === "status-code") {
 @@ -111,7 +121,10 @@ export class HttpMethodsClient {
              contentType: "application/json",
-             queryParameters: requestOptions?.queryParams,
+             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
              requestType: "json",
 -            body: request,
 +            body: serializers.types.ObjectWithRequiredField.jsonOrThrow(request, {
@@ -858,7 +858,7 @@ index 363c4a7f1dd..8ffd074d859 100644
          }
 @@ -178,7 +197,10 @@ export class HttpMethodsClient {
              contentType: "application/json",
-             queryParameters: requestOptions?.queryParams,
+             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
              requestType: "json",
 -            body: request,
 +            body: serializers.types.ObjectWithRequiredField.jsonOrThrow(request, {
@@ -900,7 +900,7 @@ index 363c4a7f1dd..8ffd074d859 100644
       *         },
 @@ -259,7 +287,10 @@ export class HttpMethodsClient {
              contentType: "application/json",
-             queryParameters: requestOptions?.queryParams,
+             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
              requestType: "json",
 -            body: request,
 +            body: serializers.types.ObjectWithOptionalField.jsonOrThrow(request, {
@@ -944,7 +944,7 @@ index 363c4a7f1dd..8ffd074d859 100644
  
          if (_response.error.reason === "status-code") {
 diff --git a/src/api/resources/endpoints/resources/object/client/Client.ts b/src/api/resources/endpoints/resources/object/client/Client.ts
-index c8848cb572b..d9444a599f3 100644
+index bab67ea17ee..a6aa2b1cfa6 100644
 --- a/src/api/resources/endpoints/resources/object/client/Client.ts
 +++ b/src/api/resources/endpoints/resources/object/client/Client.ts
 @@ -6,6 +6,7 @@ import { mergeHeaders } from "../../../../../../core/headers.js";
@@ -972,7 +972,7 @@ index c8848cb572b..d9444a599f3 100644
       *         },
 @@ -72,7 +73,10 @@ export class ObjectClient {
              contentType: "application/json",
-             queryParameters: requestOptions?.queryParams,
+             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
              requestType: "json",
 -            body: request,
 +            body: serializers.types.ObjectWithOptionalField.jsonOrThrow(request, {
@@ -999,7 +999,7 @@ index c8848cb572b..d9444a599f3 100644
          }
 @@ -139,7 +149,10 @@ export class ObjectClient {
              contentType: "application/json",
-             queryParameters: requestOptions?.queryParams,
+             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
              requestType: "json",
 -            body: request,
 +            body: serializers.types.ObjectWithRequiredField.jsonOrThrow(request, {
@@ -1026,7 +1026,7 @@ index c8848cb572b..d9444a599f3 100644
          }
 @@ -210,7 +229,10 @@ export class ObjectClient {
              contentType: "application/json",
-             queryParameters: requestOptions?.queryParams,
+             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
              requestType: "json",
 -            body: request,
 +            body: serializers.types.ObjectWithMapOfMap.jsonOrThrow(request, {
@@ -1075,7 +1075,7 @@ index c8848cb572b..d9444a599f3 100644
       *             },
 @@ -296,7 +324,10 @@ export class ObjectClient {
              contentType: "application/json",
-             queryParameters: requestOptions?.queryParams,
+             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
              requestType: "json",
 -            body: request,
 +            body: serializers.types.NestedObjectWithOptionalField.jsonOrThrow(request, {
@@ -1124,7 +1124,7 @@ index c8848cb572b..d9444a599f3 100644
       *             },
 @@ -385,7 +422,10 @@ export class ObjectClient {
              contentType: "application/json",
-             queryParameters: requestOptions?.queryParams,
+             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
              requestType: "json",
 -            body: request,
 +            body: serializers.types.NestedObjectWithRequiredField.jsonOrThrow(request, {
@@ -1195,7 +1195,7 @@ index c8848cb572b..d9444a599f3 100644
       *                 },
 @@ -490,7 +536,10 @@ export class ObjectClient {
              contentType: "application/json",
-             queryParameters: requestOptions?.queryParams,
+             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
              requestType: "json",
 -            body: request,
 +            body: serializers.endpoints.object.getAndReturnNestedWithRequiredFieldAsList.Request.jsonOrThrow(request, {
@@ -1222,7 +1222,7 @@ index c8848cb572b..d9444a599f3 100644
          }
 @@ -559,7 +614,10 @@ export class ObjectClient {
              contentType: "application/json",
-             queryParameters: requestOptions?.queryParams,
+             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
              requestType: "json",
 -            body: request,
 +            body: serializers.types.ObjectWithUnknownField.jsonOrThrow(request, {
@@ -1249,7 +1249,7 @@ index c8848cb572b..d9444a599f3 100644
          }
 @@ -630,7 +694,10 @@ export class ObjectClient {
              contentType: "application/json",
-             queryParameters: requestOptions?.queryParams,
+             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
              requestType: "json",
 -            body: request,
 +            body: serializers.types.ObjectWithDocumentedUnknownType.jsonOrThrow(request, {
@@ -1276,7 +1276,7 @@ index c8848cb572b..d9444a599f3 100644
          }
 @@ -701,7 +774,10 @@ export class ObjectClient {
              contentType: "application/json",
-             queryParameters: requestOptions?.queryParams,
+             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
              requestType: "json",
 -            body: request,
 +            body: serializers.types.MapOfDocumentedUnknownType.jsonOrThrow(request, {
@@ -1303,7 +1303,7 @@ index c8848cb572b..d9444a599f3 100644
          }
 @@ -776,7 +858,10 @@ export class ObjectClient {
              contentType: "application/json",
-             queryParameters: requestOptions?.queryParams,
+             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
              requestType: "json",
 -            body: request,
 +            body: serializers.types.ObjectWithMixedRequiredAndOptionalFields.jsonOrThrow(request, {
@@ -1339,7 +1339,7 @@ index c8848cb572b..d9444a599f3 100644
       */
 @@ -854,7 +945,10 @@ export class ObjectClient {
              contentType: "application/json",
-             queryParameters: requestOptions?.queryParams,
+             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
              requestType: "json",
 -            body: request,
 +            body: serializers.types.ObjectWithRequiredNestedObject.jsonOrThrow(request, {
@@ -1375,7 +1375,7 @@ index c8848cb572b..d9444a599f3 100644
      public getAndReturnWithDatetimeLikeString(
 @@ -926,7 +1026,10 @@ export class ObjectClient {
              contentType: "application/json",
-             queryParameters: requestOptions?.queryParams,
+             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
              requestType: "json",
 -            body: request,
 +            body: serializers.types.ObjectWithDatetimeLikeString.jsonOrThrow(request, {
@@ -1401,7 +1401,7 @@ index c8848cb572b..d9444a599f3 100644
              };
          }
 diff --git a/src/api/resources/endpoints/resources/pagination/client/Client.ts b/src/api/resources/endpoints/resources/pagination/client/Client.ts
-index 2b3985ea5fa..7490dab8002 100644
+index bf2ee375a8b..7e29e4efbd3 100644
 --- a/src/api/resources/endpoints/resources/pagination/client/Client.ts
 +++ b/src/api/resources/endpoints/resources/pagination/client/Client.ts
 @@ -6,6 +6,7 @@ import { mergeHeaders } from "../../../../../../core/headers.js";
@@ -1412,7 +1412,7 @@ index 2b3985ea5fa..7490dab8002 100644
  import type * as SeedExhaustive from "../../../../../index.js";
  
  export declare namespace PaginationClient {
-@@ -74,7 +75,13 @@ export class PaginationClient {
+@@ -73,7 +74,13 @@ export class PaginationClient {
                  });
                  if (_response.ok) {
                      return {
@@ -1439,7 +1439,7 @@ index 6f3a602d10a..1d709fdf22d 100644
 +    next?: string;
  }
 diff --git a/src/api/resources/endpoints/resources/params/client/Client.ts b/src/api/resources/endpoints/resources/params/client/Client.ts
-index ba780ddbe88..f1182b5a16e 100644
+index e0b9c748aae..e30c025e447 100644
 --- a/src/api/resources/endpoints/resources/params/client/Client.ts
 +++ b/src/api/resources/endpoints/resources/params/client/Client.ts
 @@ -6,6 +6,7 @@ import { mergeHeaders } from "../../../../../../core/headers.js";
@@ -1486,9 +1486,9 @@ index ba780ddbe88..f1182b5a16e 100644
          }
  
          if (_response.error.reason === "status-code") {
-@@ -449,7 +468,10 @@ export class ParamsClient {
+@@ -445,7 +464,10 @@ export class ParamsClient {
              contentType: "application/json",
-             queryParameters: requestOptions?.queryParams,
+             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
              requestType: "json",
 -            body: request,
 +            body: serializers.endpoints.params.modifyWithPath.Request.jsonOrThrow(request, {
@@ -1498,7 +1498,7 @@ index ba780ddbe88..f1182b5a16e 100644
              timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
              maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
              abortSignal: requestOptions?.abortSignal,
-@@ -457,7 +479,16 @@ export class ParamsClient {
+@@ -453,7 +475,16 @@ export class ParamsClient {
              logging: this._options.logging,
          });
          if (_response.ok) {
@@ -1516,9 +1516,9 @@ index ba780ddbe88..f1182b5a16e 100644
          }
  
          if (_response.error.reason === "status-code") {
-@@ -512,7 +543,10 @@ export class ParamsClient {
+@@ -508,7 +539,10 @@ export class ParamsClient {
              contentType: "application/json",
-             queryParameters: requestOptions?.queryParams,
+             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
              requestType: "json",
 -            body: _body,
 +            body: serializers.endpoints.params.modifyWithInlinePath.Request.jsonOrThrow(_body, {
@@ -1528,7 +1528,7 @@ index ba780ddbe88..f1182b5a16e 100644
              timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
              maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
              abortSignal: requestOptions?.abortSignal,
-@@ -520,7 +554,16 @@ export class ParamsClient {
+@@ -516,7 +550,16 @@ export class ParamsClient {
              logging: this._options.logging,
          });
          if (_response.ok) {
@@ -1546,7 +1546,7 @@ index ba780ddbe88..f1182b5a16e 100644
          }
  
          if (_response.error.reason === "status-code") {
-@@ -586,7 +629,13 @@ export class ParamsClient {
+@@ -582,7 +625,13 @@ export class ParamsClient {
          });
          if (_response.ok) {
              return {
@@ -1561,7 +1561,7 @@ index ba780ddbe88..f1182b5a16e 100644
                  rawResponse: _response.rawResponse,
              };
          }
-@@ -644,7 +693,16 @@ export class ParamsClient {
+@@ -640,7 +689,16 @@ export class ParamsClient {
              logging: this._options.logging,
          });
          if (_response.ok) {
@@ -1579,7 +1579,7 @@ index ba780ddbe88..f1182b5a16e 100644
          }
  
          if (_response.error.reason === "status-code") {
-@@ -702,14 +760,29 @@ export class ParamsClient {
+@@ -698,14 +756,29 @@ export class ParamsClient {
              logging: this._options.logging,
          });
          if (_response.ok) {
@@ -1612,7 +1612,7 @@ index ba780ddbe88..f1182b5a16e 100644
                      );
                  default:
 diff --git a/src/api/resources/endpoints/resources/primitive/client/Client.ts b/src/api/resources/endpoints/resources/primitive/client/Client.ts
-index 7833b8adebe..87b4fe331e4 100644
+index b86e5d3cf4f..8e8a054361e 100644
 --- a/src/api/resources/endpoints/resources/primitive/client/Client.ts
 +++ b/src/api/resources/endpoints/resources/primitive/client/Client.ts
 @@ -6,6 +6,7 @@ import { mergeHeaders } from "../../../../../../core/headers.js";
@@ -1625,7 +1625,7 @@ index 7833b8adebe..87b4fe331e4 100644
      export type Options = BaseClientOptions;
 @@ -55,7 +56,10 @@ export class PrimitiveClient {
              contentType: "application/json",
-             queryParameters: requestOptions?.queryParams,
+             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
              requestType: "json",
 -            body: request,
 +            body: serializers.endpoints.primitive.getAndReturnString.Request.jsonOrThrow(request, {
@@ -1655,7 +1655,7 @@ index 7833b8adebe..87b4fe331e4 100644
          if (_response.error.reason === "status-code") {
 @@ -112,7 +125,10 @@ export class PrimitiveClient {
              contentType: "application/json",
-             queryParameters: requestOptions?.queryParams,
+             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
              requestType: "json",
 -            body: request,
 +            body: serializers.endpoints.primitive.getAndReturnInt.Request.jsonOrThrow(request, {
@@ -1685,7 +1685,7 @@ index 7833b8adebe..87b4fe331e4 100644
          if (_response.error.reason === "status-code") {
 @@ -169,7 +194,10 @@ export class PrimitiveClient {
              contentType: "application/json",
-             queryParameters: requestOptions?.queryParams,
+             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
              requestType: "json",
 -            body: request,
 +            body: serializers.endpoints.primitive.getAndReturnLong.Request.jsonOrThrow(request, {
@@ -1715,7 +1715,7 @@ index 7833b8adebe..87b4fe331e4 100644
          if (_response.error.reason === "status-code") {
 @@ -226,7 +263,10 @@ export class PrimitiveClient {
              contentType: "application/json",
-             queryParameters: requestOptions?.queryParams,
+             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
              requestType: "json",
 -            body: request,
 +            body: serializers.endpoints.primitive.getAndReturnDouble.Request.jsonOrThrow(request, {
@@ -1745,7 +1745,7 @@ index 7833b8adebe..87b4fe331e4 100644
          if (_response.error.reason === "status-code") {
 @@ -283,7 +332,10 @@ export class PrimitiveClient {
              contentType: "application/json",
-             queryParameters: requestOptions?.queryParams,
+             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
              requestType: "json",
 -            body: request,
 +            body: serializers.endpoints.primitive.getAndReturnBool.Request.jsonOrThrow(request, {
@@ -1805,7 +1805,7 @@ index 7833b8adebe..87b4fe331e4 100644
              _authRequest.headers,
 @@ -340,7 +401,10 @@ export class PrimitiveClient {
              contentType: "application/json",
-             queryParameters: requestOptions?.queryParams,
+             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
              requestType: "json",
 -            body: request,
 +            body: serializers.endpoints.primitive.getAndReturnDatetime.Request.jsonOrThrow(request, {
@@ -1835,7 +1835,7 @@ index 7833b8adebe..87b4fe331e4 100644
          if (_response.error.reason === "status-code") {
 @@ -397,7 +470,10 @@ export class PrimitiveClient {
              contentType: "application/json",
-             queryParameters: requestOptions?.queryParams,
+             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
              requestType: "json",
 -            body: request,
 +            body: serializers.endpoints.primitive.getAndReturnDate.Request.jsonOrThrow(request, {
@@ -1865,7 +1865,7 @@ index 7833b8adebe..87b4fe331e4 100644
          if (_response.error.reason === "status-code") {
 @@ -454,7 +539,10 @@ export class PrimitiveClient {
              contentType: "application/json",
-             queryParameters: requestOptions?.queryParams,
+             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
              requestType: "json",
 -            body: request,
 +            body: serializers.endpoints.primitive.getAndReturnUuid.Request.jsonOrThrow(request, {
@@ -1895,7 +1895,7 @@ index 7833b8adebe..87b4fe331e4 100644
          if (_response.error.reason === "status-code") {
 @@ -511,7 +608,10 @@ export class PrimitiveClient {
              contentType: "application/json",
-             queryParameters: requestOptions?.queryParams,
+             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
              requestType: "json",
 -            body: request,
 +            body: serializers.endpoints.primitive.getAndReturnBase64.Request.jsonOrThrow(request, {
@@ -1924,7 +1924,7 @@ index 7833b8adebe..87b4fe331e4 100644
  
          if (_response.error.reason === "status-code") {
 diff --git a/src/api/resources/endpoints/resources/put/client/Client.ts b/src/api/resources/endpoints/resources/put/client/Client.ts
-index d9e95e8a785..c9ffdb8a8cc 100644
+index d42b55d093d..b36a983e856 100644
 --- a/src/api/resources/endpoints/resources/put/client/Client.ts
 +++ b/src/api/resources/endpoints/resources/put/client/Client.ts
 @@ -6,6 +6,7 @@ import { mergeHeaders } from "../../../../../../core/headers.js";
@@ -1978,7 +1978,7 @@ index 3de822129fd..628b46ba729 100644
 +    errors?: SeedExhaustive.endpoints.Error_[];
  }
 diff --git a/src/api/resources/endpoints/resources/union/client/Client.ts b/src/api/resources/endpoints/resources/union/client/Client.ts
-index 69805a6c156..886ba2a0978 100644
+index 1ca8918e562..62b0de18cd9 100644
 --- a/src/api/resources/endpoints/resources/union/client/Client.ts
 +++ b/src/api/resources/endpoints/resources/union/client/Client.ts
 @@ -6,6 +6,7 @@ import { mergeHeaders } from "../../../../../../core/headers.js";
@@ -1991,7 +1991,7 @@ index 69805a6c156..886ba2a0978 100644
  export declare namespace UnionClient {
 @@ -60,7 +61,10 @@ export class UnionClient {
              contentType: "application/json",
-             queryParameters: requestOptions?.queryParams,
+             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
              requestType: "json",
 -            body: request,
 +            body: serializers.types.Animal.jsonOrThrow(request, {
@@ -2020,7 +2020,7 @@ index 69805a6c156..886ba2a0978 100644
  
          if (_response.error.reason === "status-code") {
 diff --git a/src/api/resources/endpoints/resources/urls/client/Client.ts b/src/api/resources/endpoints/resources/urls/client/Client.ts
-index 5adb0e2f00f..eee779a5df1 100644
+index 33d3abb684d..70ba884a999 100644
 --- a/src/api/resources/endpoints/resources/urls/client/Client.ts
 +++ b/src/api/resources/endpoints/resources/urls/client/Client.ts
 @@ -6,6 +6,7 @@ import { mergeHeaders } from "../../../../../../core/headers.js";
@@ -2104,7 +2104,7 @@ index 5adb0e2f00f..eee779a5df1 100644
  
          if (_response.error.reason === "status-code") {
 diff --git a/src/api/resources/inlinedRequests/client/Client.ts b/src/api/resources/inlinedRequests/client/Client.ts
-index 0e942711569..17040d94650 100644
+index 43d40c0c9df..9725fe47a0e 100644
 --- a/src/api/resources/inlinedRequests/client/Client.ts
 +++ b/src/api/resources/inlinedRequests/client/Client.ts
 @@ -6,6 +6,7 @@ import { mergeHeaders } from "../../../../core/headers.js";
@@ -2139,7 +2139,7 @@ index 0e942711569..17040d94650 100644
       *             },
 @@ -75,7 +76,10 @@ export class InlinedRequestsClient {
              contentType: "application/json",
-             queryParameters: requestOptions?.queryParams,
+             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
              requestType: "json",
 -            body: request,
 +            body: serializers.PostWithObjectBody.jsonOrThrow(request, {
@@ -2213,7 +2213,7 @@ index b20679ee1c9..15d3f75bc67 100644
 +    nestedObject: SeedExhaustive.types.ObjectWithOptionalField;
  }
 diff --git a/src/api/resources/noAuth/client/Client.ts b/src/api/resources/noAuth/client/Client.ts
-index 58ab9e04adc..e2da6ff5294 100644
+index 41d83a28710..08ef861cfef 100644
 --- a/src/api/resources/noAuth/client/Client.ts
 +++ b/src/api/resources/noAuth/client/Client.ts
 @@ -6,6 +6,7 @@ import { mergeHeaders } from "../../../../core/headers.js";
@@ -2257,7 +2257,7 @@ index 58ab9e04adc..e2da6ff5294 100644
                      );
                  default:
 diff --git a/src/api/resources/noReqBody/client/Client.ts b/src/api/resources/noReqBody/client/Client.ts
-index 2dfdc11cc11..0e5a1d42f2a 100644
+index b3b30a8bd07..272f5b22755 100644
 --- a/src/api/resources/noReqBody/client/Client.ts
 +++ b/src/api/resources/noReqBody/client/Client.ts
 @@ -6,6 +6,7 @@ import { mergeHeaders } from "../../../../core/headers.js";
@@ -2302,7 +2302,7 @@ index 2dfdc11cc11..0e5a1d42f2a 100644
  
          if (_response.error.reason === "status-code") {
 diff --git a/src/api/resources/reqWithHeaders/client/Client.ts b/src/api/resources/reqWithHeaders/client/Client.ts
-index 89eaf1d6814..081ea65568c 100644
+index fc7b2c3a9b0..9ab4e8327e4 100644
 --- a/src/api/resources/reqWithHeaders/client/Client.ts
 +++ b/src/api/resources/reqWithHeaders/client/Client.ts
 @@ -6,6 +6,7 @@ import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.
@@ -2339,7 +2339,7 @@ index 89eaf1d6814..081ea65568c 100644
              _authRequest.headers,
 @@ -69,7 +66,10 @@ export class ReqWithHeadersClient {
              contentType: "application/json",
-             queryParameters: requestOptions?.queryParams,
+             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
              requestType: "json",
 -            body: _body,
 +            body: serializers.reqWithHeaders.getWithCustomHeader.Request.jsonOrThrow(_body, {
@@ -2754,10 +2754,10 @@ index 00000000000..e22a2f16bfc
 +export { date } from "./date.js";
 diff --git a/src/core/schemas/builders/enum/enum.ts b/src/core/schemas/builders/enum/enum.ts
 new file mode 100644
-index 00000000000..ccae24bcf20
+index 00000000000..2f2777cf104
 --- /dev/null
 +++ b/src/core/schemas/builders/enum/enum.ts
-@@ -0,0 +1,43 @@
+@@ -0,0 +1,50 @@
 +import { type Schema, SchemaType } from "../../Schema.js";
 +import { createIdentitySchemaCreator } from "../../utils/createIdentitySchemaCreator.js";
 +import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType.js";
@@ -2801,13 +2801,20 @@ index 00000000000..ccae24bcf20
 +
 +    return schemaCreator();
 +}
++
++export function forwardCompatibleEnum_<U extends string, E extends U[]>(values: E): Schema<E[number], string> {
++    return enum_(values).transform<string>({
++        transform: (val) => val,
++        untransform: (val) => val,
++    });
++}
 diff --git a/src/core/schemas/builders/enum/index.ts b/src/core/schemas/builders/enum/index.ts
 new file mode 100644
-index 00000000000..ff3bee3bf65
+index 00000000000..2ff90af36e9
 --- /dev/null
 +++ b/src/core/schemas/builders/enum/index.ts
 @@ -0,0 +1 @@
-+export { enum_ } from "./enum.js";
++export { enum_, forwardCompatibleEnum_ } from "./enum.js";
 diff --git a/src/core/schemas/builders/index.ts b/src/core/schemas/builders/index.ts
 new file mode 100644
 index 00000000000..ddb9b3c9455
@@ -4169,32 +4176,34 @@ index 00000000000..fa7623853d2
 +> = BaseSchema<Record<RawKey, RawValue>, Partial<Record<ParsedKey, ParsedValue>>>;
 diff --git a/src/core/schemas/builders/schema-utils/JsonError.ts b/src/core/schemas/builders/schema-utils/JsonError.ts
 new file mode 100644
-index 00000000000..daee3dc7918
+index 00000000000..da472f27e71
 --- /dev/null
 +++ b/src/core/schemas/builders/schema-utils/JsonError.ts
-@@ -0,0 +1,9 @@
+@@ -0,0 +1,10 @@
 +import type { ValidationError } from "../../Schema.js";
 +import { stringifyValidationError } from "./stringifyValidationErrors.js";
 +
 +export class JsonError extends Error {
 +    constructor(public readonly errors: ValidationError[]) {
 +        super(errors.map(stringifyValidationError).join("; "));
-+        Object.setPrototypeOf(this, JsonError.prototype);
++        Object.setPrototypeOf(this, new.target.prototype);
++        this.name = this.constructor.name;
 +    }
 +}
 diff --git a/src/core/schemas/builders/schema-utils/ParseError.ts b/src/core/schemas/builders/schema-utils/ParseError.ts
 new file mode 100644
-index 00000000000..9facf06159b
+index 00000000000..c2645b5b7d4
 --- /dev/null
 +++ b/src/core/schemas/builders/schema-utils/ParseError.ts
-@@ -0,0 +1,9 @@
+@@ -0,0 +1,10 @@
 +import type { ValidationError } from "../../Schema.js";
 +import { stringifyValidationError } from "./stringifyValidationErrors.js";
 +
 +export class ParseError extends Error {
 +    constructor(public readonly errors: ValidationError[]) {
 +        super(errors.map(stringifyValidationError).join("; "));
-+        Object.setPrototypeOf(this, ParseError.prototype);
++        Object.setPrototypeOf(this, new.target.prototype);
++        this.name = this.constructor.name;
 +    }
 +}
 diff --git a/src/core/schemas/builders/schema-utils/getSchemaUtils.ts b/src/core/schemas/builders/schema-utils/getSchemaUtils.ts

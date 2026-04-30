@@ -24,4 +24,12 @@ export interface FixtureConfigurations {
      * When true, all build and test scripts will be skipped for this fixture.
      */
     skipScripts?: FernSeedConfig.SkipScripts | undefined;
+    /**
+     * If true, the variant's full SDK output is stored as a sibling directory
+     * of `baseline/` (at `<fixture>/<outputFolder>/`) instead of as a `.diff` file
+     * under `custom-configs/`. Use this for variants whose diff against baseline
+     * is impractically large because the variant changes file layout (e.g.
+     * `outputMode: local_files`).
+     */
+    storeFullSnapshot?: boolean | undefined;
 }

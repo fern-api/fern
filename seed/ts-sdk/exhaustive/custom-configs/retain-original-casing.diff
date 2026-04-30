@@ -1,5 +1,5 @@
 diff --git a/.fern/metadata.json b/.fern/metadata.json
-index d8b7bf00e12..d1e24431ff8 100644
+index 9ea68298004..0269bdaf77e 100644
 --- a/.fern/metadata.json
 +++ b/.fern/metadata.json
 @@ -2,6 +2,9 @@
@@ -10,5 +10,5 @@ index d8b7bf00e12..d1e24431ff8 100644
 +        "retainOriginalCasing": true
 +    },
      "originGitCommit": "DUMMY",
-     "originGitCommitIsDirty": null,
-     "invokedBy": "ci",
+     "invokedBy": "manual",
+     "requestedVersion": "0.0.1",

@@ -3,7 +3,7 @@ import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
 import { askToLogin } from "@fern-api/login";
 import { FernRegistryClient as FdrClient } from "@fern-fern/generators-sdk";
 import fs from "fs";
-import { writeFile } from "fs/promises";
+import { cp, writeFile } from "fs/promises";
 import { minimatch } from "minimatch";
 import os from "os";
 import yargs, { Argv } from "yargs";
@@ -41,7 +41,7 @@ import { validateGenerator } from "./commands/validate/validateGeneratorChangelo
 import { validateVersionsYml } from "./commands/validate/validateVersionsYml.js";
 import { GeneratorWorkspace, loadGeneratorWorkspaces } from "./loadGeneratorWorkspaces.js";
 import { Semaphore } from "./Semaphore.js";
-import { getBaselineDir, getDiffFilePath, reconstructVariant } from "./utils/diffStorage.js";
+import { getBaselineDir, getDiffFilePath, getSnapshotDir, reconstructVariant } from "./utils/diffStorage.js";
 
 tryRunCli()
     .then(() => {
@@ -1693,6 +1693,22 @@ function addReconstructCommand(cli: Argv) {
                 process.exit(1);
             }
 
+            const outputDir = argv.output.startsWith("/")
+                ? AbsoluteFilePath.of(argv.output)
+                : join(AbsoluteFilePath.of(process.cwd()), RelativeFilePath.of(argv.output));
+
+            // Variants with `storeFullSnapshot: true` live as a sibling directory of
+            // baseline/, so reconstruction is just a recursive copy from there.
+            const snapshotDir = getSnapshotDir(generator.absolutePathToWorkspace, argv.fixture, argv.variant);
+            if (fs.existsSync(snapshotDir) && fs.statSync(snapshotDir).isDirectory()) {
+                console.log(
+                    `Variant '${argv.variant}' is stored as a full snapshot — copying from ${snapshotDir} to ${outputDir}`
+                );
+                await cp(snapshotDir, outputDir, { recursive: true });
+                console.log("Done.");
+                return;
+            }
+
             const diffPath = getDiffFilePath(generator.absolutePathToWorkspace, argv.fixture, argv.variant);
             if (!fs.existsSync(diffPath)) {
                 console.error(`Diff file not found at ${diffPath}`);
@@ -1710,10 +1726,6 @@ function addReconstructCommand(cli: Argv) {
                 }
                 process.exit(1);
             }
-
-            const outputDir = argv.output.startsWith("/")
-                ? AbsoluteFilePath.of(argv.output)
-                : join(AbsoluteFilePath.of(process.cwd()), RelativeFilePath.of(argv.output));
 
             console.log(`Reconstructing ${argv.generator}/${argv.fixture}/${argv.variant}...`);
             console.log(`  Baseline: ${baselineDir}`);

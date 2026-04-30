@@ -1,9 +1,9 @@
 diff --git a/README.md b/README.md
 deleted file mode 100644
-index c5bd7f8f668..00000000000
+index c5a466b6162..00000000000
 --- a/README.md
 +++ /dev/null
-@@ -1,363 +0,0 @@
+@@ -1,371 +0,0 @@
 -# Seed TypeScript Library
 -
 -[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FTypeScript)
@@ -212,11 +212,19 @@ index c5bd7f8f668..00000000000
 -as the request is deemed retryable and the number of retry attempts has not grown larger than the configured
 -retry limit (default: 2).
 -
--A request is deemed retryable when any of the following HTTP status codes is returned:
+-Which status codes are retried depends on the `retryStatusCodes` generator configuration:
 -
+-**`legacy`** (current default): retries on
 -- [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
 -- [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
--- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
+-- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#server_error_responses) (All server errors, including 500)
+-
+-**`recommended`**: retries on
+-- [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+-- [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
+-- [502](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/502) (Bad Gateway)
+-- [503](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/503) (Service Unavailable)
+-- [504](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504) (Gateway Timeout)
 -
 -Use the `maxRetries` request option to configure this behavior.
 -
@@ -4916,7 +4924,7 @@ index 9eb1192dcc3..00000000000
 -export * from "./resources/index.js";
 diff --git a/src/api/resources/endpoints/resources/container/client/Client.ts b/src/api/resources/endpoints/resources/container/client/Client.ts
 deleted file mode 100644
-index 44dd1c3093b..00000000000
+index c7f3504eaf9..00000000000
 --- a/src/api/resources/endpoints/resources/container/client/Client.ts
 +++ /dev/null
 @@ -1,522 +0,0 @@
@@ -4976,7 +4984,7 @@ index 44dd1c3093b..00000000000
 -            method: "POST",
 -            headers: _headers,
 -            contentType: "application/json",
--            queryParameters: requestOptions?.queryParams,
+-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
 -            requestType: "json",
 -            body: request,
 -            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -5042,7 +5050,7 @@ index 44dd1c3093b..00000000000
 -            method: "POST",
 -            headers: _headers,
 -            contentType: "application/json",
--            queryParameters: requestOptions?.queryParams,
+-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
 -            requestType: "json",
 -            body: request,
 -            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -5102,7 +5110,7 @@ index 44dd1c3093b..00000000000
 -            method: "POST",
 -            headers: _headers,
 -            contentType: "application/json",
--            queryParameters: requestOptions?.queryParams,
+-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
 -            requestType: "json",
 -            body: request,
 -            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -5161,7 +5169,7 @@ index 44dd1c3093b..00000000000
 -            method: "POST",
 -            headers: _headers,
 -            contentType: "application/json",
--            queryParameters: requestOptions?.queryParams,
+-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
 -            requestType: "json",
 -            body: request,
 -            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -5223,7 +5231,7 @@ index 44dd1c3093b..00000000000
 -            method: "POST",
 -            headers: _headers,
 -            contentType: "application/json",
--            queryParameters: requestOptions?.queryParams,
+-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
 -            requestType: "json",
 -            body: request,
 -            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -5284,7 +5292,7 @@ index 44dd1c3093b..00000000000
 -            method: "POST",
 -            headers: _headers,
 -            contentType: "application/json",
--            queryParameters: requestOptions?.queryParams,
+-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
 -            requestType: "json",
 -            body: request,
 -            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -5353,7 +5361,7 @@ index 44dd1c3093b..00000000000
 -            method: "POST",
 -            headers: _headers,
 -            contentType: "application/json",
--            queryParameters: requestOptions?.queryParams,
+-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
 -            requestType: "json",
 -            body: request,
 -            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -5415,7 +5423,7 @@ index 44dd1c3093b..00000000000
 -            method: "POST",
 -            headers: _headers,
 -            contentType: "application/json",
--            queryParameters: requestOptions?.queryParams,
+-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
 -            requestType: "json",
 -            body: request,
 -            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -5468,7 +5476,7 @@ index 914b8c3c721..00000000000
 -export * from "./client/index.js";
 diff --git a/src/api/resources/endpoints/resources/contentType/client/Client.ts b/src/api/resources/endpoints/resources/contentType/client/Client.ts
 deleted file mode 100644
-index ae19b03e6c8..00000000000
+index eafac7deff5..00000000000
 --- a/src/api/resources/endpoints/resources/contentType/client/Client.ts
 +++ /dev/null
 @@ -1,171 +0,0 @@
@@ -5544,7 +5552,7 @@ index ae19b03e6c8..00000000000
 -            method: "POST",
 -            headers: _headers,
 -            contentType: "application/json-patch+json",
--            queryParameters: requestOptions?.queryParams,
+-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
 -            requestType: "json",
 -            body: request,
 -            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -5619,7 +5627,7 @@ index ae19b03e6c8..00000000000
 -            method: "POST",
 -            headers: _headers,
 -            contentType: "application/json-patch+json; charset=utf-8",
--            queryParameters: requestOptions?.queryParams,
+-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
 -            requestType: "json",
 -            body: request,
 -            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -5669,7 +5677,7 @@ index 914b8c3c721..00000000000
 -export * from "./client/index.js";
 diff --git a/src/api/resources/endpoints/resources/enum/client/Client.ts b/src/api/resources/endpoints/resources/enum/client/Client.ts
 deleted file mode 100644
-index 9dc0d0ef769..00000000000
+index ad469715e31..00000000000
 --- a/src/api/resources/endpoints/resources/enum/client/Client.ts
 +++ /dev/null
 @@ -1,80 +0,0 @@
@@ -5729,7 +5737,7 @@ index 9dc0d0ef769..00000000000
 -            method: "POST",
 -            headers: _headers,
 -            contentType: "application/json",
--            queryParameters: requestOptions?.queryParams,
+-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
 -            requestType: "json",
 -            body: request,
 -            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -5779,7 +5787,7 @@ index 914b8c3c721..00000000000
 -export * from "./client/index.js";
 diff --git a/src/api/resources/endpoints/resources/httpMethods/client/Client.ts b/src/api/resources/endpoints/resources/httpMethods/client/Client.ts
 deleted file mode 100644
-index 363c4a7f1dd..00000000000
+index 58174119092..00000000000
 --- a/src/api/resources/endpoints/resources/httpMethods/client/Client.ts
 +++ /dev/null
 @@ -1,342 +0,0 @@
@@ -5835,7 +5843,7 @@ index 363c4a7f1dd..00000000000
 -            ),
 -            method: "GET",
 -            headers: _headers,
--            queryParameters: requestOptions?.queryParams,
+-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
 -            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
 -            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
 -            abortSignal: requestOptions?.abortSignal,
@@ -5894,7 +5902,7 @@ index 363c4a7f1dd..00000000000
 -            method: "POST",
 -            headers: _headers,
 -            contentType: "application/json",
--            queryParameters: requestOptions?.queryParams,
+-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
 -            requestType: "json",
 -            body: request,
 -            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -5961,7 +5969,7 @@ index 363c4a7f1dd..00000000000
 -            method: "PUT",
 -            headers: _headers,
 -            contentType: "application/json",
--            queryParameters: requestOptions?.queryParams,
+-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
 -            requestType: "json",
 -            body: request,
 -            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -6042,7 +6050,7 @@ index 363c4a7f1dd..00000000000
 -            method: "PATCH",
 -            headers: _headers,
 -            contentType: "application/json",
--            queryParameters: requestOptions?.queryParams,
+-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
 -            requestType: "json",
 -            body: request,
 -            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -6103,7 +6111,7 @@ index 363c4a7f1dd..00000000000
 -            ),
 -            method: "DELETE",
 -            headers: _headers,
--            queryParameters: requestOptions?.queryParams,
+-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
 -            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
 -            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
 -            abortSignal: requestOptions?.abortSignal,
@@ -6173,7 +6181,7 @@ index 362e2057075..00000000000
 -export * as urls from "./urls/index.js";
 diff --git a/src/api/resources/endpoints/resources/object/client/Client.ts b/src/api/resources/endpoints/resources/object/client/Client.ts
 deleted file mode 100644
-index c8848cb572b..00000000000
+index bab67ea17ee..00000000000
 --- a/src/api/resources/endpoints/resources/object/client/Client.ts
 +++ /dev/null
 @@ -1,958 +0,0 @@
@@ -6249,7 +6257,7 @@ index c8848cb572b..00000000000
 -            method: "POST",
 -            headers: _headers,
 -            contentType: "application/json",
--            queryParameters: requestOptions?.queryParams,
+-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
 -            requestType: "json",
 -            body: request,
 -            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -6316,7 +6324,7 @@ index c8848cb572b..00000000000
 -            method: "POST",
 -            headers: _headers,
 -            contentType: "application/json",
--            queryParameters: requestOptions?.queryParams,
+-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
 -            requestType: "json",
 -            body: request,
 -            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -6387,7 +6395,7 @@ index c8848cb572b..00000000000
 -            method: "POST",
 -            headers: _headers,
 -            contentType: "application/json",
--            queryParameters: requestOptions?.queryParams,
+-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
 -            requestType: "json",
 -            body: request,
 -            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -6473,7 +6481,7 @@ index c8848cb572b..00000000000
 -            method: "POST",
 -            headers: _headers,
 -            contentType: "application/json",
--            queryParameters: requestOptions?.queryParams,
+-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
 -            requestType: "json",
 -            body: request,
 -            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -6562,7 +6570,7 @@ index c8848cb572b..00000000000
 -            method: "POST",
 -            headers: _headers,
 -            contentType: "application/json",
--            queryParameters: requestOptions?.queryParams,
+-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
 -            requestType: "json",
 -            body: request,
 -            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -6667,7 +6675,7 @@ index c8848cb572b..00000000000
 -            method: "POST",
 -            headers: _headers,
 -            contentType: "application/json",
--            queryParameters: requestOptions?.queryParams,
+-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
 -            requestType: "json",
 -            body: request,
 -            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -6736,7 +6744,7 @@ index c8848cb572b..00000000000
 -            method: "POST",
 -            headers: _headers,
 -            contentType: "application/json",
--            queryParameters: requestOptions?.queryParams,
+-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
 -            requestType: "json",
 -            body: request,
 -            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -6807,7 +6815,7 @@ index c8848cb572b..00000000000
 -            method: "POST",
 -            headers: _headers,
 -            contentType: "application/json",
--            queryParameters: requestOptions?.queryParams,
+-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
 -            requestType: "json",
 -            body: request,
 -            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -6878,7 +6886,7 @@ index c8848cb572b..00000000000
 -            method: "POST",
 -            headers: _headers,
 -            contentType: "application/json",
--            queryParameters: requestOptions?.queryParams,
+-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
 -            requestType: "json",
 -            body: request,
 -            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -6953,7 +6961,7 @@ index c8848cb572b..00000000000
 -            method: "POST",
 -            headers: _headers,
 -            contentType: "application/json",
--            queryParameters: requestOptions?.queryParams,
+-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
 -            requestType: "json",
 -            body: request,
 -            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -7031,7 +7039,7 @@ index c8848cb572b..00000000000
 -            method: "POST",
 -            headers: _headers,
 -            contentType: "application/json",
--            queryParameters: requestOptions?.queryParams,
+-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
 -            requestType: "json",
 -            body: request,
 -            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -7103,7 +7111,7 @@ index c8848cb572b..00000000000
 -            method: "POST",
 -            headers: _headers,
 -            contentType: "application/json",
--            queryParameters: requestOptions?.queryParams,
+-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
 -            requestType: "json",
 -            body: request,
 -            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -7161,10 +7169,10 @@ index 914b8c3c721..00000000000
 -export * from "./client/index.js";
 diff --git a/src/api/resources/endpoints/resources/pagination/client/Client.ts b/src/api/resources/endpoints/resources/pagination/client/Client.ts
 deleted file mode 100644
-index 2b3985ea5fa..00000000000
+index bf2ee375a8b..00000000000
 --- a/src/api/resources/endpoints/resources/pagination/client/Client.ts
 +++ /dev/null
-@@ -1,103 +0,0 @@
+@@ -1,102 +0,0 @@
 -// This file was auto-generated by Fern from our API Definition.
 -
 -import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.js";
@@ -7227,7 +7235,6 @@ index 2b3985ea5fa..00000000000
 -                    ),
 -                    method: "GET",
 -                    headers: _headers,
--                    queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
 -                    queryString: core.url
 -                        .queryBuilder()
 -                        .addMany(_queryParams)
@@ -7344,10 +7351,10 @@ index af5abb94be0..00000000000
 -export * from "./PaginatedResponse.js";
 diff --git a/src/api/resources/endpoints/resources/params/client/Client.ts b/src/api/resources/endpoints/resources/params/client/Client.ts
 deleted file mode 100644
-index ba780ddbe88..00000000000
+index e0b9c748aae..00000000000
 --- a/src/api/resources/endpoints/resources/params/client/Client.ts
 +++ /dev/null
-@@ -1,726 +0,0 @@
+@@ -1,722 +0,0 @@
 -// This file was auto-generated by Fern from our API Definition.
 -
 -import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.js";
@@ -7402,7 +7409,7 @@ index ba780ddbe88..00000000000
 -            ),
 -            method: "GET",
 -            headers: _headers,
--            queryParameters: requestOptions?.queryParams,
+-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
 -            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
 -            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
 -            abortSignal: requestOptions?.abortSignal,
@@ -7461,7 +7468,7 @@ index ba780ddbe88..00000000000
 -            ),
 -            method: "GET",
 -            headers: _headers,
--            queryParameters: requestOptions?.queryParams,
+-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
 -            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
 -            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
 -            abortSignal: requestOptions?.abortSignal,
@@ -7525,7 +7532,6 @@ index ba780ddbe88..00000000000
 -            ),
 -            method: "GET",
 -            headers: _headers,
--            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
 -            queryString: core.url
 -                .queryBuilder()
 -                .addMany(_queryParams)
@@ -7594,7 +7600,6 @@ index ba780ddbe88..00000000000
 -            ),
 -            method: "GET",
 -            headers: _headers,
--            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
 -            queryString: core.url
 -                .queryBuilder()
 -                .addMany(_queryParams)
@@ -7664,7 +7669,6 @@ index ba780ddbe88..00000000000
 -            ),
 -            method: "GET",
 -            headers: _headers,
--            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
 -            queryString: core.url
 -                .queryBuilder()
 -                .addMany(_queryParams)
@@ -7732,7 +7736,6 @@ index ba780ddbe88..00000000000
 -            ),
 -            method: "GET",
 -            headers: _headers,
--            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
 -            queryString: core.url
 -                .queryBuilder()
 -                .addMany(_queryParams)
@@ -7797,7 +7800,7 @@ index ba780ddbe88..00000000000
 -            method: "PUT",
 -            headers: _headers,
 -            contentType: "application/json",
--            queryParameters: requestOptions?.queryParams,
+-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
 -            requestType: "json",
 -            body: request,
 -            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -7860,7 +7863,7 @@ index ba780ddbe88..00000000000
 -            method: "PUT",
 -            headers: _headers,
 -            contentType: "application/json",
--            queryParameters: requestOptions?.queryParams,
+-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
 -            requestType: "json",
 -            body: _body,
 -            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -7924,7 +7927,7 @@ index ba780ddbe88..00000000000
 -            ),
 -            method: "POST",
 -            headers: _headers,
--            queryParameters: requestOptions?.queryParams,
+-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
 -            requestType: "bytes",
 -            duplex: "half",
 -            body: _binaryUploadRequest.body,
@@ -7986,7 +7989,7 @@ index ba780ddbe88..00000000000
 -            ),
 -            method: "GET",
 -            headers: _headers,
--            queryParameters: requestOptions?.queryParams,
+-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
 -            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
 -            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
 -            abortSignal: requestOptions?.abortSignal,
@@ -8044,7 +8047,7 @@ index ba780ddbe88..00000000000
 -            ),
 -            method: "GET",
 -            headers: _headers,
--            queryParameters: requestOptions?.queryParams,
+-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
 -            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
 -            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
 -            abortSignal: requestOptions?.abortSignal,
@@ -8222,7 +8225,7 @@ index 914b8c3c721..00000000000
 -export * from "./client/index.js";
 diff --git a/src/api/resources/endpoints/resources/primitive/client/Client.ts b/src/api/resources/endpoints/resources/primitive/client/Client.ts
 deleted file mode 100644
-index 7833b8adebe..00000000000
+index b86e5d3cf4f..00000000000
 --- a/src/api/resources/endpoints/resources/primitive/client/Client.ts
 +++ /dev/null
 @@ -1,535 +0,0 @@
@@ -8281,7 +8284,7 @@ index 7833b8adebe..00000000000
 -            method: "POST",
 -            headers: _headers,
 -            contentType: "application/json",
--            queryParameters: requestOptions?.queryParams,
+-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
 -            requestType: "json",
 -            body: request,
 -            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -8338,7 +8341,7 @@ index 7833b8adebe..00000000000
 -            method: "POST",
 -            headers: _headers,
 -            contentType: "application/json",
--            queryParameters: requestOptions?.queryParams,
+-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
 -            requestType: "json",
 -            body: request,
 -            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -8395,7 +8398,7 @@ index 7833b8adebe..00000000000
 -            method: "POST",
 -            headers: _headers,
 -            contentType: "application/json",
--            queryParameters: requestOptions?.queryParams,
+-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
 -            requestType: "json",
 -            body: request,
 -            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -8452,7 +8455,7 @@ index 7833b8adebe..00000000000
 -            method: "POST",
 -            headers: _headers,
 -            contentType: "application/json",
--            queryParameters: requestOptions?.queryParams,
+-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
 -            requestType: "json",
 -            body: request,
 -            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -8509,7 +8512,7 @@ index 7833b8adebe..00000000000
 -            method: "POST",
 -            headers: _headers,
 -            contentType: "application/json",
--            queryParameters: requestOptions?.queryParams,
+-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
 -            requestType: "json",
 -            body: request,
 -            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -8566,7 +8569,7 @@ index 7833b8adebe..00000000000
 -            method: "POST",
 -            headers: _headers,
 -            contentType: "application/json",
--            queryParameters: requestOptions?.queryParams,
+-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
 -            requestType: "json",
 -            body: request,
 -            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -8623,7 +8626,7 @@ index 7833b8adebe..00000000000
 -            method: "POST",
 -            headers: _headers,
 -            contentType: "application/json",
--            queryParameters: requestOptions?.queryParams,
+-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
 -            requestType: "json",
 -            body: request,
 -            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -8680,7 +8683,7 @@ index 7833b8adebe..00000000000
 -            method: "POST",
 -            headers: _headers,
 -            contentType: "application/json",
--            queryParameters: requestOptions?.queryParams,
+-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
 -            requestType: "json",
 -            body: request,
 -            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -8737,7 +8740,7 @@ index 7833b8adebe..00000000000
 -            method: "POST",
 -            headers: _headers,
 -            contentType: "application/json",
--            queryParameters: requestOptions?.queryParams,
+-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
 -            requestType: "json",
 -            body: request,
 -            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -8787,7 +8790,7 @@ index 914b8c3c721..00000000000
 -export * from "./client/index.js";
 diff --git a/src/api/resources/endpoints/resources/put/client/Client.ts b/src/api/resources/endpoints/resources/put/client/Client.ts
 deleted file mode 100644
-index d9e95e8a785..00000000000
+index d42b55d093d..00000000000
 --- a/src/api/resources/endpoints/resources/put/client/Client.ts
 +++ /dev/null
 @@ -1,80 +0,0 @@
@@ -8849,7 +8852,7 @@ index d9e95e8a785..00000000000
 -            ),
 -            method: "PUT",
 -            headers: _headers,
--            queryParameters: requestOptions?.queryParams,
+-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
 -            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
 -            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
 -            abortSignal: requestOptions?.abortSignal,
@@ -8997,7 +9000,7 @@ index 3293f66bb34..00000000000
 -export * from "./PutResponse.js";
 diff --git a/src/api/resources/endpoints/resources/union/client/Client.ts b/src/api/resources/endpoints/resources/union/client/Client.ts
 deleted file mode 100644
-index 69805a6c156..00000000000
+index 1ca8918e562..00000000000
 --- a/src/api/resources/endpoints/resources/union/client/Client.ts
 +++ /dev/null
 @@ -1,84 +0,0 @@
@@ -9061,7 +9064,7 @@ index 69805a6c156..00000000000
 -            method: "POST",
 -            headers: _headers,
 -            contentType: "application/json",
--            queryParameters: requestOptions?.queryParams,
+-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
 -            requestType: "json",
 -            body: request,
 -            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -9111,7 +9114,7 @@ index 914b8c3c721..00000000000
 -export * from "./client/index.js";
 diff --git a/src/api/resources/endpoints/resources/urls/client/Client.ts b/src/api/resources/endpoints/resources/urls/client/Client.ts
 deleted file mode 100644
-index 5adb0e2f00f..00000000000
+index 33d3abb684d..00000000000
 --- a/src/api/resources/endpoints/resources/urls/client/Client.ts
 +++ /dev/null
 @@ -1,210 +0,0 @@
@@ -9162,7 +9165,7 @@ index 5adb0e2f00f..00000000000
 -            ),
 -            method: "GET",
 -            headers: _headers,
--            queryParameters: requestOptions?.queryParams,
+-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
 -            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
 -            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
 -            abortSignal: requestOptions?.abortSignal,
@@ -9209,7 +9212,7 @@ index 5adb0e2f00f..00000000000
 -            ),
 -            method: "GET",
 -            headers: _headers,
--            queryParameters: requestOptions?.queryParams,
+-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
 -            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
 -            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
 -            abortSignal: requestOptions?.abortSignal,
@@ -9256,7 +9259,7 @@ index 5adb0e2f00f..00000000000
 -            ),
 -            method: "GET",
 -            headers: _headers,
--            queryParameters: requestOptions?.queryParams,
+-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
 -            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
 -            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
 -            abortSignal: requestOptions?.abortSignal,
@@ -9303,7 +9306,7 @@ index 5adb0e2f00f..00000000000
 -            ),
 -            method: "GET",
 -            headers: _headers,
--            queryParameters: requestOptions?.queryParams,
+-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
 -            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
 -            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
 -            abortSignal: requestOptions?.abortSignal,
@@ -9438,7 +9441,7 @@ index 3ca611c9fb5..00000000000
 -export * as types from "./types/index.js";
 diff --git a/src/api/resources/inlinedRequests/client/Client.ts b/src/api/resources/inlinedRequests/client/Client.ts
 deleted file mode 100644
-index 0e942711569..00000000000
+index 43d40c0c9df..00000000000
 --- a/src/api/resources/inlinedRequests/client/Client.ts
 +++ /dev/null
 @@ -1,110 +0,0 @@
@@ -9517,7 +9520,7 @@ index 0e942711569..00000000000
 -            method: "POST",
 -            headers: _headers,
 -            contentType: "application/json",
--            queryParameters: requestOptions?.queryParams,
+-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
 -            requestType: "json",
 -            body: request,
 -            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -9624,7 +9627,7 @@ index 914b8c3c721..00000000000
 -export * from "./client/index.js";
 diff --git a/src/api/resources/noAuth/client/Client.ts b/src/api/resources/noAuth/client/Client.ts
 deleted file mode 100644
-index 58ab9e04adc..00000000000
+index 41d83a28710..00000000000
 --- a/src/api/resources/noAuth/client/Client.ts
 +++ /dev/null
 @@ -1,89 +0,0 @@
@@ -9685,7 +9688,7 @@ index 58ab9e04adc..00000000000
 -            method: "POST",
 -            headers: _headers,
 -            contentType: "application/json",
--            queryParameters: requestOptions?.queryParams,
+-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
 -            requestType: "json",
 -            body: request,
 -            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -9743,7 +9746,7 @@ index 914b8c3c721..00000000000
 -export * from "./client/index.js";
 diff --git a/src/api/resources/noReqBody/client/Client.ts b/src/api/resources/noReqBody/client/Client.ts
 deleted file mode 100644
-index 2dfdc11cc11..00000000000
+index b3b30a8bd07..00000000000
 --- a/src/api/resources/noReqBody/client/Client.ts
 +++ /dev/null
 @@ -1,126 +0,0 @@
@@ -9799,7 +9802,7 @@ index 2dfdc11cc11..00000000000
 -            ),
 -            method: "GET",
 -            headers: _headers,
--            queryParameters: requestOptions?.queryParams,
+-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
 -            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
 -            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
 -            abortSignal: requestOptions?.abortSignal,
@@ -9851,7 +9854,7 @@ index 2dfdc11cc11..00000000000
 -            ),
 -            method: "POST",
 -            headers: _headers,
--            queryParameters: requestOptions?.queryParams,
+-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
 -            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
 -            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
 -            abortSignal: requestOptions?.abortSignal,
@@ -9899,7 +9902,7 @@ index 914b8c3c721..00000000000
 -export * from "./client/index.js";
 diff --git a/src/api/resources/reqWithHeaders/client/Client.ts b/src/api/resources/reqWithHeaders/client/Client.ts
 deleted file mode 100644
-index 89eaf1d6814..00000000000
+index fc7b2c3a9b0..00000000000
 --- a/src/api/resources/reqWithHeaders/client/Client.ts
 +++ /dev/null
 @@ -1,93 +0,0 @@
@@ -9972,7 +9975,7 @@ index 89eaf1d6814..00000000000
 -            method: "POST",
 -            headers: _headers,
 -            contentType: "application/json",
--            queryParameters: requestOptions?.queryParams,
+-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
 -            requestType: "json",
 -            body: _body,
 -            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,

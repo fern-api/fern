@@ -1,5 +1,5 @@
 diff --git a/.fern/metadata.json b/.fern/metadata.json
-index d8b7bf00e12..fa5fa9e6e18 100644
+index 9ea68298004..413b01aa7ca 100644
 --- a/.fern/metadata.json
 +++ b/.fern/metadata.json
 @@ -2,6 +2,9 @@
@@ -10,8 +10,8 @@ index d8b7bf00e12..fa5fa9e6e18 100644
 +        "neverThrowErrors": true
 +    },
      "originGitCommit": "DUMMY",
-     "originGitCommitIsDirty": null,
-     "invokedBy": "ci",
+     "invokedBy": "manual",
+     "requestedVersion": "0.0.1",
 diff --git a/reference.md b/reference.md
 index 925b5375d52..05b21aa7207 100644
 --- a/reference.md
@@ -556,7 +556,7 @@ index 925b5375d52..05b21aa7207 100644
  <dd>
  
 diff --git a/src/api/resources/endpoints/resources/container/client/Client.ts b/src/api/resources/endpoints/resources/container/client/Client.ts
-index 44dd1c3093b..e283e82b322 100644
+index c7f3504eaf9..0884fb71172 100644
 --- a/src/api/resources/endpoints/resources/container/client/Client.ts
 +++ b/src/api/resources/endpoints/resources/container/client/Client.ts
 @@ -4,9 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../Ba
@@ -1438,7 +1438,7 @@ index cb0ff5c3b54..a67a4635689 100644
 +export * as getAndReturnSetOfObjects from "./getAndReturnSetOfObjects.js";
 +export * as getAndReturnSetOfPrimitives from "./getAndReturnSetOfPrimitives.js";
 diff --git a/src/api/resources/endpoints/resources/contentType/client/Client.ts b/src/api/resources/endpoints/resources/contentType/client/Client.ts
-index ae19b03e6c8..f38be237e21 100644
+index eafac7deff5..c3ea5b17933 100644
 --- a/src/api/resources/endpoints/resources/contentType/client/Client.ts
 +++ b/src/api/resources/endpoints/resources/contentType/client/Client.ts
 @@ -4,9 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../Ba
@@ -1667,7 +1667,7 @@ index 00000000000..1359c460f14
 +    },
 +} as const;
 diff --git a/src/api/resources/endpoints/resources/enum/client/Client.ts b/src/api/resources/endpoints/resources/enum/client/Client.ts
-index 9dc0d0ef769..cabf85a55d4 100644
+index ad469715e31..1aef6a6652b 100644
 --- a/src/api/resources/endpoints/resources/enum/client/Client.ts
 +++ b/src/api/resources/endpoints/resources/enum/client/Client.ts
 @@ -4,9 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../Ba
@@ -1788,7 +1788,7 @@ index cb0ff5c3b54..b588fd095cb 100644
 -export {};
 +export * as getAndReturnEnum from "./getAndReturnEnum.js";
 diff --git a/src/api/resources/endpoints/resources/httpMethods/client/Client.ts b/src/api/resources/endpoints/resources/httpMethods/client/Client.ts
-index 363c4a7f1dd..8383ef69520 100644
+index 58174119092..19d7e810984 100644
 --- a/src/api/resources/endpoints/resources/httpMethods/client/Client.ts
 +++ b/src/api/resources/endpoints/resources/httpMethods/client/Client.ts
 @@ -4,9 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../Ba
@@ -2321,7 +2321,7 @@ index 00000000000..01acf454125
 +    },
 +} as const;
 diff --git a/src/api/resources/endpoints/resources/object/client/Client.ts b/src/api/resources/endpoints/resources/object/client/Client.ts
-index c8848cb572b..19d2212f835 100644
+index bab67ea17ee..a8e129d7738 100644
 --- a/src/api/resources/endpoints/resources/object/client/Client.ts
 +++ b/src/api/resources/endpoints/resources/object/client/Client.ts
 @@ -4,9 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../Ba
@@ -3720,7 +3720,7 @@ index cb0ff5c3b54..978778e9e07 100644
 +export * as getAndReturnWithRequiredNestedObject from "./getAndReturnWithRequiredNestedObject.js";
 +export * as getAndReturnWithUnknownField from "./getAndReturnWithUnknownField.js";
 diff --git a/src/api/resources/endpoints/resources/pagination/client/Client.ts b/src/api/resources/endpoints/resources/pagination/client/Client.ts
-index 2b3985ea5fa..0bab2e956ec 100644
+index bf2ee375a8b..5efcd4f1ff8 100644
 --- a/src/api/resources/endpoints/resources/pagination/client/Client.ts
 +++ b/src/api/resources/endpoints/resources/pagination/client/Client.ts
 @@ -4,9 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../Ba
@@ -3734,7 +3734,7 @@ index 2b3985ea5fa..0bab2e956ec 100644
  
  export declare namespace PaginationClient {
      export type Options = BaseClientOptions;
-@@ -33,71 +31,79 @@ export class PaginationClient {
+@@ -33,70 +31,78 @@ export class PaginationClient {
       *         limit: 1
       *     })
       */
@@ -3766,7 +3766,6 @@ index 2b3985ea5fa..0bab2e956ec 100644
 -                    ),
 -                    method: "GET",
 -                    headers: _headers,
--                    queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
 -                    queryString: core.url
 -                        .queryBuilder()
 -                        .addMany(_queryParams)
@@ -3842,7 +3841,6 @@ index 2b3985ea5fa..0bab2e956ec 100644
 +            ),
 +            method: "GET",
 +            headers: _headers,
-+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
 +            queryString: core.url
 +                .queryBuilder()
 +                .addMany(_queryParams)
@@ -3926,7 +3924,7 @@ index 00000000000..4c7bf83d75d
 +    },
 +} as const;
 diff --git a/src/api/resources/endpoints/resources/params/client/Client.ts b/src/api/resources/endpoints/resources/params/client/Client.ts
-index ba780ddbe88..00108417fda 100644
+index e0b9c748aae..ac0fe5d61ad 100644
 --- a/src/api/resources/endpoints/resources/params/client/Client.ts
 +++ b/src/api/resources/endpoints/resources/params/client/Client.ts
 @@ -4,8 +4,6 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../Ba
@@ -4064,7 +4062,7 @@ index ba780ddbe88..00108417fda 100644
          const { query, number: number_ } = request;
          const _queryParams: Record<string, unknown> = {
              query,
-@@ -188,18 +205,25 @@ export class ParamsClient {
+@@ -187,18 +204,25 @@ export class ParamsClient {
              logging: this._options.logging,
          });
          if (_response.ok) {
@@ -4099,7 +4097,7 @@ index ba780ddbe88..00108417fda 100644
      }
  
      /**
-@@ -217,14 +241,18 @@ export class ParamsClient {
+@@ -216,14 +240,18 @@ export class ParamsClient {
      public getWithAllowMultipleQuery(
          request: SeedExhaustive.endpoints.GetWithMultipleQuery,
          requestOptions?: ParamsClient.RequestOptions,
@@ -4120,7 +4118,7 @@ index ba780ddbe88..00108417fda 100644
          const { query, number: number_ } = request;
          const _queryParams: Record<string, unknown> = {
              query,
-@@ -257,18 +285,25 @@ export class ParamsClient {
+@@ -255,18 +283,25 @@ export class ParamsClient {
              logging: this._options.logging,
          });
          if (_response.ok) {
@@ -4155,7 +4153,7 @@ index ba780ddbe88..00108417fda 100644
      }
  
      /**
-@@ -287,7 +322,7 @@ export class ParamsClient {
+@@ -285,7 +320,7 @@ export class ParamsClient {
          param: string,
          request: SeedExhaustive.endpoints.GetWithPathAndQuery,
          requestOptions?: ParamsClient.RequestOptions,
@@ -4164,7 +4162,7 @@ index ba780ddbe88..00108417fda 100644
          return core.HttpResponsePromise.fromPromise(this.__getWithPathAndQuery(param, request, requestOptions));
      }
  
-@@ -295,7 +330,9 @@ export class ParamsClient {
+@@ -293,7 +328,9 @@ export class ParamsClient {
          param: string,
          request: SeedExhaustive.endpoints.GetWithPathAndQuery,
          requestOptions?: ParamsClient.RequestOptions,
@@ -4175,7 +4173,7 @@ index ba780ddbe88..00108417fda 100644
          const { query } = request;
          const _queryParams: Record<string, unknown> = {
              query,
-@@ -327,18 +364,25 @@ export class ParamsClient {
+@@ -324,18 +361,25 @@ export class ParamsClient {
              logging: this._options.logging,
          });
          if (_response.ok) {
@@ -4210,7 +4208,7 @@ index ba780ddbe88..00108417fda 100644
      }
  
      /**
-@@ -356,14 +400,18 @@ export class ParamsClient {
+@@ -353,14 +397,18 @@ export class ParamsClient {
      public getWithInlinePathAndQuery(
          request: SeedExhaustive.endpoints.GetWithInlinePathAndQuery,
          requestOptions?: ParamsClient.RequestOptions,
@@ -4231,7 +4229,7 @@ index ba780ddbe88..00108417fda 100644
          const { param, query } = request;
          const _queryParams: Record<string, unknown> = {
              query,
-@@ -395,18 +443,25 @@ export class ParamsClient {
+@@ -391,18 +439,25 @@ export class ParamsClient {
              logging: this._options.logging,
          });
          if (_response.ok) {
@@ -4266,7 +4264,7 @@ index ba780ddbe88..00108417fda 100644
      }
  
      /**
-@@ -423,7 +478,7 @@ export class ParamsClient {
+@@ -419,7 +474,7 @@ export class ParamsClient {
          param: string,
          request: string,
          requestOptions?: ParamsClient.RequestOptions,
@@ -4275,7 +4273,7 @@ index ba780ddbe88..00108417fda 100644
          return core.HttpResponsePromise.fromPromise(this.__modifyWithPath(param, request, requestOptions));
      }
  
-@@ -431,7 +486,7 @@ export class ParamsClient {
+@@ -427,7 +482,7 @@ export class ParamsClient {
          param: string,
          request: string,
          requestOptions?: ParamsClient.RequestOptions,
@@ -4284,7 +4282,7 @@ index ba780ddbe88..00108417fda 100644
          const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
          const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
              _authRequest.headers,
-@@ -457,18 +512,25 @@ export class ParamsClient {
+@@ -453,18 +508,25 @@ export class ParamsClient {
              logging: this._options.logging,
          });
          if (_response.ok) {
@@ -4319,7 +4317,7 @@ index ba780ddbe88..00108417fda 100644
      }
  
      /**
-@@ -486,14 +548,16 @@ export class ParamsClient {
+@@ -482,14 +544,16 @@ export class ParamsClient {
      public modifyWithInlinePath(
          request: SeedExhaustive.endpoints.ModifyResourceAtInlinedPath,
          requestOptions?: ParamsClient.RequestOptions,
@@ -4338,7 +4336,7 @@ index ba780ddbe88..00108417fda 100644
          const { param, body: _body } = request;
          const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
          const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-@@ -520,18 +584,25 @@ export class ParamsClient {
+@@ -516,18 +580,25 @@ export class ParamsClient {
              logging: this._options.logging,
          });
          if (_response.ok) {
@@ -4373,7 +4371,7 @@ index ba780ddbe88..00108417fda 100644
      }
  
      /**
-@@ -549,7 +620,12 @@ export class ParamsClient {
+@@ -545,7 +616,12 @@ export class ParamsClient {
          uploadable: core.file.Uploadable,
          param: string,
          requestOptions?: ParamsClient.RequestOptions,
@@ -4387,7 +4385,7 @@ index ba780ddbe88..00108417fda 100644
          return core.HttpResponsePromise.fromPromise(this.__uploadWithPath(uploadable, param, requestOptions));
      }
  
-@@ -557,7 +633,14 @@ export class ParamsClient {
+@@ -553,7 +629,14 @@ export class ParamsClient {
          uploadable: core.file.Uploadable,
          param: string,
          requestOptions?: ParamsClient.RequestOptions,
@@ -4403,7 +4401,7 @@ index ba780ddbe88..00108417fda 100644
          const _binaryUploadRequest = await core.file.toBinaryUploadRequest(uploadable);
          const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
          const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-@@ -586,20 +669,24 @@ export class ParamsClient {
+@@ -582,20 +665,24 @@ export class ParamsClient {
          });
          if (_response.ok) {
              return {
@@ -4437,7 +4435,7 @@ index ba780ddbe88..00108417fda 100644
      }
  
      /**
-@@ -614,14 +701,16 @@ export class ParamsClient {
+@@ -610,14 +697,16 @@ export class ParamsClient {
      public getWithBooleanPath(
          param: boolean,
          requestOptions?: ParamsClient.RequestOptions,
@@ -4456,7 +4454,7 @@ index ba780ddbe88..00108417fda 100644
          const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
          const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
              _authRequest.headers,
-@@ -644,18 +733,25 @@ export class ParamsClient {
+@@ -640,18 +729,25 @@ export class ParamsClient {
              logging: this._options.logging,
          });
          if (_response.ok) {
@@ -4491,7 +4489,7 @@ index ba780ddbe88..00108417fda 100644
      }
  
      /**
-@@ -664,22 +760,22 @@ export class ParamsClient {
+@@ -660,22 +756,22 @@ export class ParamsClient {
       * @param {string} param
       * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
       *
@@ -4518,7 +4516,7 @@ index ba780ddbe88..00108417fda 100644
          const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
          const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
              _authRequest.headers,
-@@ -702,25 +798,40 @@ export class ParamsClient {
+@@ -698,25 +794,40 @@ export class ParamsClient {
              logging: this._options.logging,
          });
          if (_response.ok) {
@@ -5079,7 +5077,7 @@ index 00000000000..b3f0085c789
 +    },
 +} as const;
 diff --git a/src/api/resources/endpoints/resources/primitive/client/Client.ts b/src/api/resources/endpoints/resources/primitive/client/Client.ts
-index 7833b8adebe..ce6bcdd780a 100644
+index b86e5d3cf4f..67f2ad92ac9 100644
 --- a/src/api/resources/endpoints/resources/primitive/client/Client.ts
 +++ b/src/api/resources/endpoints/resources/primitive/client/Client.ts
 @@ -4,8 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../Ba
@@ -5989,7 +5987,7 @@ index cb0ff5c3b54..9805ab86b12 100644
 +export * as getAndReturnString from "./getAndReturnString.js";
 +export * as getAndReturnUuid from "./getAndReturnUuid.js";
 diff --git a/src/api/resources/endpoints/resources/put/client/Client.ts b/src/api/resources/endpoints/resources/put/client/Client.ts
-index d9e95e8a785..86e67058bfd 100644
+index d42b55d093d..7cdc7e01062 100644
 --- a/src/api/resources/endpoints/resources/put/client/Client.ts
 +++ b/src/api/resources/endpoints/resources/put/client/Client.ts
 @@ -4,9 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../Ba
@@ -6110,7 +6108,7 @@ index 195f9aa8a84..ada5046c6c9 100644
 +export * as add from "./add.js";
  export * from "./requests/index.js";
 diff --git a/src/api/resources/endpoints/resources/union/client/Client.ts b/src/api/resources/endpoints/resources/union/client/Client.ts
-index 69805a6c156..6413e857b18 100644
+index 1ca8918e562..e99455ab830 100644
 --- a/src/api/resources/endpoints/resources/union/client/Client.ts
 +++ b/src/api/resources/endpoints/resources/union/client/Client.ts
 @@ -4,9 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../Ba
@@ -6231,7 +6229,7 @@ index cb0ff5c3b54..7b8205b5874 100644
 -export {};
 +export * as getAndReturnUnion from "./getAndReturnUnion.js";
 diff --git a/src/api/resources/endpoints/resources/urls/client/Client.ts b/src/api/resources/endpoints/resources/urls/client/Client.ts
-index 5adb0e2f00f..9faaa270350 100644
+index 33d3abb684d..d49542b8a56 100644
 --- a/src/api/resources/endpoints/resources/urls/client/Client.ts
 +++ b/src/api/resources/endpoints/resources/urls/client/Client.ts
 @@ -4,8 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../Ba
@@ -6686,7 +6684,7 @@ index 3ca611c9fb5..c0c1cef2a71 100644
  export * from "./generalErrors/types/index.js";
  export * from "./inlinedRequests/client/requests/index.js";
 diff --git a/src/api/resources/inlinedRequests/client/Client.ts b/src/api/resources/inlinedRequests/client/Client.ts
-index 0e942711569..81ef1cffe6d 100644
+index 43d40c0c9df..e31db8ae098 100644
 --- a/src/api/resources/inlinedRequests/client/Client.ts
 +++ b/src/api/resources/inlinedRequests/client/Client.ts
 @@ -4,8 +4,6 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
@@ -6858,7 +6856,7 @@ index 00000000000..74403ea216b
 +    },
 +} as const;
 diff --git a/src/api/resources/noAuth/client/Client.ts b/src/api/resources/noAuth/client/Client.ts
-index 58ab9e04adc..8cf5a6a53a0 100644
+index 41d83a28710..489ff03be2f 100644
 --- a/src/api/resources/noAuth/client/Client.ts
 +++ b/src/api/resources/noAuth/client/Client.ts
 @@ -4,8 +4,6 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
@@ -7017,7 +7015,7 @@ index 00000000000..26aad8d8621
 +    },
 +} as const;
 diff --git a/src/api/resources/noReqBody/client/Client.ts b/src/api/resources/noReqBody/client/Client.ts
-index 2dfdc11cc11..2ecb9759430 100644
+index b3b30a8bd07..e4fd0cfc232 100644
 --- a/src/api/resources/noReqBody/client/Client.ts
 +++ b/src/api/resources/noReqBody/client/Client.ts
 @@ -4,9 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
@@ -7238,7 +7236,7 @@ index 00000000000..b83e6e242f2
 +    },
 +} as const;
 diff --git a/src/api/resources/reqWithHeaders/client/Client.ts b/src/api/resources/reqWithHeaders/client/Client.ts
-index 89eaf1d6814..b4ce31a6c5d 100644
+index fc7b2c3a9b0..58e9cce97b7 100644
 --- a/src/api/resources/reqWithHeaders/client/Client.ts
 +++ b/src/api/resources/reqWithHeaders/client/Client.ts
 @@ -4,9 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
