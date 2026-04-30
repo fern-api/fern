@@ -148,6 +148,7 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         if (fernFile.service == null) {
             // Set to default values if service is null
             fernFile.service = {
+                auth: false,
                 "base-path": "",
                 endpoints: {}
             };
@@ -411,6 +412,7 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         const fernFile = this.getOrCreateFile(file);
         if (fernFile.service == null) {
             fernFile.service = {
+                auth: false,
                 "base-path": "",
                 endpoints: {}
             };
@@ -495,7 +497,7 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
             const allEndpointsHaveAuthTrue = endpoints.every((endpoint) => endpoint.auth === true);
 
             if (allEndpointsHaveAuthTrue) {
-                delete file.service.auth;
+                file.service.auth = true;
                 for (const endpoint of Object.values(file.service.endpoints)) {
                     delete endpoint.auth;
                 }
