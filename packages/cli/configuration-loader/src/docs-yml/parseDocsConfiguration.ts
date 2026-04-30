@@ -2106,6 +2106,7 @@ async function loadTranslationNavigationOverlays({
                 const overlay = await parseNavigationOverlayFromDocsYml({
                     docsYmlContent: overlayContent as Record<string, unknown>,
                     langFernDir: overlayDir,
+                    overlayDocsYmlPath,
                     context
                 });
 
@@ -2167,16 +2168,46 @@ function extractString(obj: unknown, key: string): string | undefined {
 }
 
 /**
+ * Validates each entry of a translation overlay's `navbar-links` array against the
+ * docs.yml NavbarLink schema. Invalid entries are dropped with a warning so a single
+ * malformed link does not discard the whole list.
+ */
+async function validateOverlayNavbarLinks({
+    rawNavbarLinks,
+    overlayDocsYmlPath,
+    context
+}: {
+    rawNavbarLinks: unknown[];
+    overlayDocsYmlPath: AbsoluteFilePath;
+    context: TaskContext;
+}): Promise<docsYml.RawSchemas.NavbarLink[] | undefined> {
+    const result: docsYml.RawSchemas.NavbarLink[] = [];
+    for (const [index, raw] of rawNavbarLinks.entries()) {
+        try {
+            const parsed = await docsYml.RawSchemas.Serializer.NavbarLink.parseOrThrow(raw);
+            result.push(parsed);
+        } catch (error) {
+            context.logger.warn(
+                `Invalid navbar-link at index ${index} in "${overlayDocsYmlPath}": ${String(error)}. Skipping this entry.`
+            );
+        }
+    }
+    return result.length > 0 ? result : undefined;
+}
+
+/**
  * Parses a translated `docs.yml` overlay and any referenced nav YAML files
  * to produce a `TranslationNavigationOverlay`.
  */
 async function parseNavigationOverlayFromDocsYml({
     docsYmlContent,
     langFernDir: overlayDir,
+    overlayDocsYmlPath,
     context
 }: {
     docsYmlContent: Record<string, unknown>;
     langFernDir: AbsoluteFilePath;
+    overlayDocsYmlPath: AbsoluteFilePath;
     context: TaskContext;
 }): Promise<docsYml.TranslationNavigationOverlay> {
     const overlay: docsYml.TranslationNavigationOverlay = {
@@ -2184,7 +2215,8 @@ async function parseNavigationOverlayFromDocsYml({
         products: undefined,
         versions: undefined,
         announcement: undefined,
-        navigation: undefined
+        navigation: undefined,
+        navbarLinks: undefined
     };
 
     // Parse announcement
@@ -2192,6 +2224,20 @@ async function parseNavigationOverlayFromDocsYml({
         const message = extractString(docsYmlContent.announcement, "message");
         if (message != null) {
             overlay.announcement = { message };
+        }
+    }
+
+    // Parse navbar-links (CTAs). When present, these replace the docs-level
+    // navbar-links in the FDR upload for this locale.
+    const rawNavbarLinks = docsYmlContent["navbar-links"];
+    if (Array.isArray(rawNavbarLinks)) {
+        const validatedNavbarLinks = await validateOverlayNavbarLinks({
+            rawNavbarLinks,
+            overlayDocsYmlPath,
+            context
+        });
+        if (validatedNavbarLinks != null) {
+            overlay.navbarLinks = convertNavbarLinks(validatedNavbarLinks, overlayDocsYmlPath);
         }
     }
 
