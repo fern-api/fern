@@ -19,6 +19,12 @@
       "source": "./src/autoversion/index.ts",
       "types": "./lib/autoversion/index.d.ts",
       "default": "./lib/autoversion/index.js"
+    },
+    "./pipeline": {
+      "development": "./src/pipeline/index.ts",
+      "source": "./src/pipeline/index.ts",
+      "types": "./lib/pipeline/index.d.ts",
+      "default": "./lib/pipeline/index.js"
     }
   },
   "main": "lib/api.js",
@@ -33,7 +39,7 @@
     "@fern-api/cli-ai": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/logging-execa": "workspace:*",
-    "@fern-api/replay": "0.12.0",
+    "@fern-api/replay": "0.14.0",
     "@fern-api/task-context": "workspace:*",
     "@octokit/rest": "catalog:",
     "es-toolkit": "catalog:",

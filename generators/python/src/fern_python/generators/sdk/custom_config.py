@@ -177,6 +177,11 @@ class SDKCustomConfig(pydantic.BaseModel):
     # SDK users can still override this per-request via request_options.
     default_max_retries: int = pydantic.Field(2, ge=0)
 
+    # Controls which HTTP status codes trigger automatic retries.
+    # "legacy" (default): Retries on 408, 409, 429, and all >= 500.
+    # "recommended": Retries only on transient codes: 408, 409, 429, 502, 503, 504.
+    retry_status_codes: Literal["legacy", "recommended"] = "legacy"
+
     # Controls where OpenAPI/IR default values are applied in generated code.
     # Takes precedence over pydantic_config.use_provided_defaults when set.
     #   "none": no defaults applied anywhere
@@ -199,6 +204,8 @@ class SDKCustomConfig(pydantic.BaseModel):
                 obj["omit_fern_headers"] = obj.pop("omitFernHeaders")
             if "maxRetries" in obj and "default_max_retries" not in obj:
                 obj["default_max_retries"] = obj.pop("maxRetries")
+            if "retryStatusCodes" in obj and "retry_status_codes" not in obj:
+                obj["retry_status_codes"] = obj.pop("retryStatusCodes")
 
         obj = super().parse_obj(obj)
 

@@ -85,6 +85,52 @@ async fn main() {
 </dl>
 </details>
 
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">with_ref_body</a>() -> Result&lt;String, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_file_upload::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        ..Default::default()
+    };
+    let client = FileUploadClient::new(config).expect("Failed to build client");
+    client
+        .service
+        .with_ref_body(
+            &WithRefBodyRequest {
+                image_file: b"test file content".to_vec(),
+                request: MyObject {
+                    foo: "bar".to_string(),
+                    ..Default::default()
+                },
+            },
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">simple</a>() -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>

@@ -62,6 +62,11 @@
           "Authorization": {
             "matches": "Bearer .+"
           }
+        },
+        "pathParameters": {
+          "notificationId": {
+            "equalTo": "notification-hsy129x"
+          }
         }
       },
       "response": {
@@ -81,8 +86,7 @@
             "via": "SYSTEM"
           }
         }
-      },
-      "postServeActions": []
+      }
     },
     {
       "id": "a430abe8-03a0-48c9-97d3-345f8f18e526",

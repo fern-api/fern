@@ -7,8 +7,11 @@ module Seed
         extend Seed::Internal::Types::Union
 
         member -> { Integer }
+
         member -> { Integer }
+
         member -> { String }
+
         member -> { Integer }
       end
     end

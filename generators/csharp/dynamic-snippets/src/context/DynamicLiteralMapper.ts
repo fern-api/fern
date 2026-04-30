@@ -469,6 +469,21 @@ export class DynamicLiteralMapper extends WithGeneration {
         value: unknown;
         fallbackToDefault?: string;
     }): ast.Literal {
+        // Create class reference first so we can detect property-vs-class name collisions
+        // (e.g., CatalogV1Id.catalog_v1_id → PascalCase "CatalogV1Id" collides with class name).
+        const classReference = this.csharp.classReference({
+            origin: object_.declaration,
+            namespace: this.context.getNamespace(object_.declaration.fernFilepath)
+        });
+
+        // Pre-register all property names through the TypeScope's collision detection.
+        // registerField renames properties that collide with the enclosing type name (CS0542).
+        const propertyNameByWireValue = new Map<string, string>();
+        for (const property of object_.properties) {
+            const actualName = this.context.resolvePropertyName(classReference, property.name.name);
+            propertyNameByWireValue.set(property.name.wireValue, actualName);
+        }
+
         const record = this.context.getRecord(value) ?? {};
         const properties = this.context.associateByWireValue({
             parameters: object_.properties,
@@ -479,7 +494,9 @@ export class DynamicLiteralMapper extends WithGeneration {
             this.context.errors.scope(property.name.wireValue);
             try {
                 return {
-                    name: this.context.getClassName(property.name.name),
+                    name:
+                        propertyNameByWireValue.get(property.name.wireValue) ??
+                        this.context.getClassName(property.name.name),
                     value: this.convert(property)
                 };
             } finally {
@@ -491,7 +508,8 @@ export class DynamicLiteralMapper extends WithGeneration {
         // the example or whose provided value failed to convert (produced nop).
         const providedWireValues = new Set(Object.keys(record));
         for (const property of object_.properties) {
-            const fieldName = this.context.getClassName(property.name.name);
+            const fieldName =
+                propertyNameByWireValue.get(property.name.wireValue) ?? this.context.getClassName(property.name.name);
             if (providedWireValues.has(property.name.wireValue)) {
                 // Value was provided but may have converted to nop().
                 if (this.isRequiredProperty(property.typeReference)) {
@@ -517,10 +535,7 @@ export class DynamicLiteralMapper extends WithGeneration {
         }
 
         return this.csharp.Literal.class_({
-            reference: this.csharp.classReference({
-                origin: object_.declaration,
-                namespace: this.context.getNamespace(object_.declaration.fernFilepath)
-            }),
+            reference: classReference,
             fields
         });
     }
@@ -582,13 +597,18 @@ export class DynamicLiteralMapper extends WithGeneration {
         }
         visited.add(typeId);
 
+        const classReference = this.csharp.classReference({
+            origin: object_.declaration,
+            namespace: this.context.getNamespace(object_.declaration.fernFilepath)
+        });
+
         const fields: { name: string; value: ast.Literal }[] = [];
         for (const property of object_.properties) {
             if (this.isRequiredProperty(property.typeReference)) {
                 const defaultValue = this.getDefaultLiteralForType(property.typeReference, visited);
                 if (defaultValue != null) {
                     fields.push({
-                        name: this.context.getClassName(property.name.name),
+                        name: this.context.resolvePropertyName(classReference, property.name.name),
                         value: defaultValue
                     });
                 }
@@ -598,10 +618,7 @@ export class DynamicLiteralMapper extends WithGeneration {
         visited.delete(typeId);
 
         return this.csharp.Literal.class_({
-            reference: this.csharp.classReference({
-                origin: object_.declaration,
-                namespace: this.context.getNamespace(object_.declaration.fernFilepath)
-            }),
+            reference: classReference,
             fields
         });
     }

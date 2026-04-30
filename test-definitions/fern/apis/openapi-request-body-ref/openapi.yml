@@ -1,0 +1,223 @@
+openapi: 3.0.3
+info:
+  title: openapi-request-body-ref
+  version: 1.0.0
+  description: |
+    Tests that when an operation's request body $refs a top-level
+    components.schemas.X schema, the importer does NOT synthesize a
+    duplicate auto-named request wrapper with the same name.
+paths:
+  /vendors/{vendor_id}:
+    put:
+      operationId: updateVendor
+      tags:
+        - Vendor
+      summary: Update a vendor
+      parameters:
+        - name: vendor_id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateVendorRequest"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Vendor"
+
+  /vendors:
+    post:
+      operationId: createVendor
+      tags:
+        - Vendor
+      summary: Create a vendor
+      parameters:
+        - name: idempotency_key
+          in: header
+          required: false
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateVendorRequest"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Vendor"
+
+  /catalog/images:
+    post:
+      operationId: createCatalogImage
+      tags:
+        - Catalog
+      summary: Upload a catalog image (multipart)
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                request:
+                  $ref: "#/components/schemas/CreateCatalogImageRequest"
+                image_file:
+                  type: string
+                  format: binary
+              required:
+                - request
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CatalogImage"
+
+  /catalog/images/{image_id}:
+    get:
+      operationId: getCatalogImage
+      tags:
+        - Catalog
+      summary: Retrieve a catalog image
+      parameters:
+        - name: image_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CatalogImage"
+
+  /team-members/{team_member_id}:
+    put:
+      operationId: updateTeamMember
+      tags:
+        - TeamMember
+      summary: Update a team member (body ref, no extra params)
+      parameters:
+        - name: team_member_id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateTeamMemberRequest"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TeamMember"
+
+components:
+  schemas:
+    UpdateVendorRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        status:
+          type: string
+          enum:
+            - ACTIVE
+            - INACTIVE
+      required:
+        - name
+
+    CreateVendorRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        address:
+          type: string
+      required:
+        - name
+
+    Vendor:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        status:
+          type: string
+          enum:
+            - ACTIVE
+            - INACTIVE
+        update_request:
+          $ref: "#/components/schemas/UpdateVendorRequest"
+      required:
+        - id
+        - name
+
+    CreateCatalogImageRequest:
+      type: object
+      properties:
+        caption:
+          type: string
+        catalog_object_id:
+          type: string
+      required:
+        - catalog_object_id
+
+    CatalogImage:
+      type: object
+      properties:
+        id:
+          type: string
+        caption:
+          type: string
+        url:
+          type: string
+        create_request:
+          $ref: "#/components/schemas/CreateCatalogImageRequest"
+      required:
+        - id
+
+    UpdateTeamMemberRequest:
+      type: object
+      properties:
+        given_name:
+          type: string
+        family_name:
+          type: string
+        email_address:
+          type: string
+
+    TeamMember:
+      type: object
+      properties:
+        id:
+          type: string
+        given_name:
+          type: string
+        family_name:
+          type: string
+      required:
+        - id

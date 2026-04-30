@@ -79,6 +79,38 @@ paths:
               Bad request:
                 value:
                   query: ''
+  /stream-events-discriminant-in-data:
+    post:
+      operationId: completions_streamEventsDiscriminantInData
+      tags:
+        - Completions
+      parameters: []
+      responses:
+        '204':
+          description: No content
+        '400':
+          description: BadRequestError
+          content:
+            application/json:
+              schema:
+                type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+                  examples:
+                    - query
+              required:
+                - query
+            examples:
+              Stream events where discriminant is embedded in data and SSE event line is empty:
+                value:
+                  query: query
   /stream-events-context-protocol:
     post:
       operationId: completions_streamEventsContextProtocol
@@ -195,6 +227,51 @@ components:
             - $ref: '#/components/schemas/EventEvent'
           required:
             - event
+    GroupCreatedEvent:
+      title: GroupCreatedEvent
+      type: object
+      properties:
+        offset:
+          type: string
+        group_id:
+          type: string
+      required:
+        - offset
+        - group_id
+    GroupDeletedEvent:
+      title: GroupDeletedEvent
+      type: object
+      properties:
+        offset:
+          type: string
+        group_id:
+          type: string
+      required:
+        - offset
+        - group_id
+    StreamEventDiscriminantInData:
+      title: StreamEventDiscriminantInData
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: group.created
+            - $ref: '#/components/schemas/GroupCreatedEvent'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: group.deleted
+            - $ref: '#/components/schemas/GroupDeletedEvent'
+          required:
+            - type
     StreamEvent:
       title: StreamEvent
       oneOf:

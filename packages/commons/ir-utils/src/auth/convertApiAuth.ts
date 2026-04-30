@@ -71,11 +71,12 @@ function convertSchemeReference({
         if (declaration == null) {
             throw new Error("Unknown auth scheme: " + reference);
         }
+        const effectiveDocs = docs ?? (typeof declaration === "object" ? declaration.docs : undefined);
         return visitRawAuthSchemeDeclaration<AuthScheme>(declaration, {
             header: (rawHeader) =>
                 AuthScheme.header({
                     key: reference,
-                    docs,
+                    docs: effectiveDocs,
                     name: casingsGenerator.generateNameAndWireValue({
                         name: rawHeader.name ?? reference,
                         wireValue: rawHeader.header
@@ -92,14 +93,14 @@ function convertSchemeReference({
                 generateBasicAuth({
                     key: reference,
                     casingsGenerator,
-                    docs,
+                    docs: effectiveDocs,
                     rawScheme
                 }),
             tokenBearer: (rawScheme) =>
                 generateBearerAuth({
                     key: reference,
                     casingsGenerator,
-                    docs,
+                    docs: effectiveDocs,
                     rawScheme
                 }),
             inferredBearer(authScheme) {
@@ -107,7 +108,7 @@ function convertSchemeReference({
                 return generateBearerAuth({
                     key: reference,
                     casingsGenerator,
-                    docs,
+                    docs: effectiveDocs,
                     rawScheme: undefined
                 });
             },
@@ -117,7 +118,7 @@ function convertSchemeReference({
                 generateBearerAuth({
                     key: reference,
                     casingsGenerator,
-                    docs,
+                    docs: effectiveDocs,
                     rawScheme: undefined
                 })
         });

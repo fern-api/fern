@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module <%= gem_namespace %>
   module Internal
     class ItemIterator
@@ -14,7 +16,7 @@ module <%= gem_namespace %>
       # @param block [Proc] The block which each retrieved item is yielded to.
       # @return [NilClass]
       def each(&block)
-        while item = next_element do
+        while (item = next_element)
           block.call(item)
         end
       end
@@ -27,6 +29,7 @@ module <%= gem_namespace %>
         return false if @page.nil?
 
         return true if any_items_in_cached_page?
+
         load_next_page
         any_items_in_cached_page?
       end
@@ -35,6 +38,7 @@ module <%= gem_namespace %>
       def next_element
         item = next_item_from_cached_page
         return item if item
+
         load_next_page
         next_item_from_cached_page
       end
@@ -42,12 +46,14 @@ module <%= gem_namespace %>
       private
 
       def next_item_from_cached_page
-        return if !@page
+        return unless @page
+
         @page.send(@item_field).shift
       end
 
       def any_items_in_cached_page?
-        return false if !@page
+        return false unless @page
+
         !@page.send(@item_field).empty?
       end
 

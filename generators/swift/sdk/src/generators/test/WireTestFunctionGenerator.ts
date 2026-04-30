@@ -307,7 +307,7 @@ export class WireTestFunctionGenerator {
                 }),
             primitive: (examplePrimitive) =>
                 examplePrimitive._visit({
-                    string: (escapedString) => swift.Expression.stringLiteral(escapedString.original),
+                    string: (escapedString) => swift.Expression.escapedStringLiteral(escapedString.original),
                     boolean: (bool) => swift.Expression.boolLiteral(bool),
                     integer: (value) => swift.Expression.numberLiteral(value),
                     uint: (value) => swift.Expression.numberLiteral(value),
@@ -315,11 +315,11 @@ export class WireTestFunctionGenerator {
                     long: (value) => swift.Expression.numberLiteral(value),
                     float: (value) => swift.Expression.numberLiteral(value),
                     double: (value) => swift.Expression.numberLiteral(value),
-                    bigInteger: (value) => swift.Expression.stringLiteral(value),
+                    bigInteger: (value) => swift.Expression.escapedStringLiteral(value),
                     date: (value) => swift.Expression.calendarDateLiteral(value),
                     datetime: (value) => this.generateDateTimeLiteral(value.raw),
                     datetimeRfc2822: (value) => this.generateDateTimeLiteral(value.raw),
-                    base64: (value) => swift.Expression.stringLiteral(value),
+                    base64: (value) => swift.Expression.escapedStringLiteral(value),
                     uuid: (value) => swift.Expression.uuidLiteral(value),
                     _other: () => swift.Expression.nop()
                 }),
@@ -402,7 +402,7 @@ export class WireTestFunctionGenerator {
                                             label: "additionalProperties",
                                             value: swift.Expression.dictionaryLiteral({
                                                 entries: extraEntries.map(([key, value]) => [
-                                                    swift.Expression.stringLiteral(key),
+                                                    swift.Expression.escapedStringLiteral(key),
                                                     this.generateUnknownExampleResponse(value)
                                                 ]),
                                                 multiline: true
@@ -574,7 +574,7 @@ export class WireTestFunctionGenerator {
             return swift.Expression.methodCall({
                 target: swift.Expression.reference("JSONValue"),
                 methodName: "string",
-                arguments_: [swift.functionArgument({ value: swift.Expression.stringLiteral(val) })]
+                arguments_: [swift.functionArgument({ value: swift.Expression.escapedStringLiteral(val) })]
             });
         }
         if (typeof val === "number") {
@@ -613,7 +613,7 @@ export class WireTestFunctionGenerator {
                     swift.functionArgument({
                         value: swift.Expression.dictionaryLiteral({
                             entries: Object.entries(val).map(([key, value]) => [
-                                swift.Expression.stringLiteral(key),
+                                swift.Expression.escapedStringLiteral(key),
                                 this.generateUnknownExampleResponse(value)
                             ]),
                             multiline: true

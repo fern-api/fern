@@ -13,7 +13,7 @@ module Seed
       # GET request with custom api key
       #
       # @param request_options [Hash]
-      # @param params [Hash]
+      # @param _params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -21,8 +21,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [String]
-      def get_with_bearer_token(request_options: {}, **params)
-        Seed::Internal::Types::Utils.normalize_keys(params)
+      def get_with_bearer_token(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",

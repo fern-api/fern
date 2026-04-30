@@ -606,3 +606,17 @@ func (l *LiteralEnumRequest) require(field *big.Int) {
 	}
 	l.explicitFields.Or(l.explicitFields, field)
 }
+
+type WithRefBodyRequest struct {
+	Request *MyObject `json:"request,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (w *WithRefBodyRequest) require(field *big.Int) {
+	if w.explicitFields == nil {
+		w.explicitFields = big.NewInt(0)
+	}
+	w.explicitFields.Or(w.explicitFields, field)
+}

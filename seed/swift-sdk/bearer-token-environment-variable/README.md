@@ -66,7 +66,7 @@ The SDK throws a single error enum for all failures. Client-side issues encoding
 ```swift
 import BearerTokenEnvironmentVariable
 
-let client = BearerTokenEnvironmentVariableClient(...)
+let client = BearerTokenEnvironmentVariableClient(apiKey: "YOUR_API_KEY")
 
 do {
     let response = try await client.service.getWithBearerToken(...)
@@ -134,7 +134,7 @@ import Foundation
 import BearerTokenEnvironmentVariable
 
 let client = BearerTokenEnvironmentVariableClient(
-    ...,
+    apiKey: "YOUR_API_KEY",
     urlSession: // Provide your implementation here
 )
 ```

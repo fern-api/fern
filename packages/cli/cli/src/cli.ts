@@ -2965,6 +2965,7 @@ function addReplayInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                         repo,
                         lockfileContents: result.lockfileContent,
                         fernignoreEntries: result.fernignoreEntries,
+                        gitattributesEntries: result.gitattributesEntries,
                         prBody: result.prBody
                     })
                 });

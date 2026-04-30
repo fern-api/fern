@@ -58,6 +58,41 @@ client.service().optionalArgs(
 </dl>
 </details>
 
+<details><summary><code>client.service.withRefBody(request) -> String</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.service().withRefBody(
+    WithRefBodyRequest
+        .builder()
+        .request(
+            MyObject
+                .builder()
+                .foo("bar")
+                .build()
+        )
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.service.simple()</code></summary>
 <dl>
 <dd>

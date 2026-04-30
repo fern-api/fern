@@ -1,0 +1,503 @@
+{
+  "title": "Lift shared allOf properties from oneOf variants",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "getConnection",
+      "tags": [],
+      "pathParameters": [
+        {
+          "name": "id",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "GetConnectionRequestId",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GetConnectionRequest",
+      "response": {
+        "description": "Success",
+        "schema": {
+          "generatedName": "GetConnectionResponse",
+          "schema": "ConnectionResponse",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "GET",
+      "path": "/connections/{id}",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "value": {
+                  "value": "id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": {
+                "value": {
+                  "id": {
+                    "value": {
+                      "value": "string",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "name": {
+                    "value": {
+                      "value": "string",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "display_name": {
+                    "value": {
+                      "value": "string",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "options_auth0": {
+                    "properties": {
+                      "tenant": {
+                        "value": {
+                          "value": "tenant",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "strategy": {
+                    "value": {
+                      "value": "auth0",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "discriminated"
+              },
+              "type": "oneOf"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "ConnectionCommon": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "connectionCommonId",
+            "key": "id",
+            "schema": {
+              "description": "The connection's identifier.",
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "ConnectionCommonId",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "connectionCommonName",
+            "key": "name",
+            "schema": {
+              "description": "The connection's display name.",
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "ConnectionCommonName",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "connectionCommonDisplayName",
+            "key": "display_name",
+            "schema": {
+              "generatedName": "ConnectionCommonDisplayName",
+              "description": "Connection name shown in the login screen.",
+              "value": {
+                "description": "Connection name shown in the login screen.",
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "ConnectionCommonDisplayName",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "description": "Fields shared by every connection strategy.",
+        "generatedName": "ConnectionCommon",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "ConnectionResponse": {
+        "value": {
+          "commonProperties": [
+            {
+              "key": "id",
+              "schema": {
+                "description": "The connection's identifier.",
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "ConnectionCommonId",
+                "groupName": [],
+                "type": "primitive"
+              }
+            },
+            {
+              "key": "name",
+              "schema": {
+                "description": "The connection's display name.",
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "ConnectionCommonName",
+                "groupName": [],
+                "type": "primitive"
+              }
+            },
+            {
+              "key": "display_name",
+              "schema": {
+                "description": "Connection name shown in the login screen.",
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "ConnectionCommonDisplayName",
+                "groupName": [],
+                "type": "primitive"
+              }
+            }
+          ],
+          "description": "Discriminated union of connection strategies.",
+          "discriminantProperty": "strategy",
+          "discriminatorContext": "data",
+          "generatedName": "ConnectionResponse",
+          "schemas": {
+            "auth0": {
+              "generatedName": "ComponentsSchemasConnectionResponseAuth0",
+              "schema": "ConnectionResponseAuth0",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            "samlp": {
+              "generatedName": "ComponentsSchemasConnectionResponseSamlp",
+              "schema": "ConnectionResponseSamlp",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            "email": {
+              "generatedName": "ComponentsSchemasConnectionResponseEmail",
+              "schema": "ConnectionResponseEmail",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            }
+          },
+          "groupName": [],
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "discriminated"
+        },
+        "type": "oneOf"
+      },
+      "ConnectionResponseAuth0": {
+        "allOf": [
+          {
+            "generatedName": "ConnectionCommon",
+            "schema": "ConnectionCommon",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          }
+        ],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "connectionResponseAuth0OptionsAuth0",
+            "key": "options_auth0",
+            "schema": {
+              "generatedName": "ConnectionResponseAuth0OptionsAuth0",
+              "value": {
+                "allOf": [],
+                "properties": [
+                  {
+                    "conflict": {},
+                    "generatedName": "connectionResponseAuth0OptionsAuth0Tenant",
+                    "key": "tenant",
+                    "schema": {
+                      "generatedName": "ConnectionResponseAuth0OptionsAuth0Tenant",
+                      "value": {
+                        "schema": {
+                          "type": "string"
+                        },
+                        "generatedName": "ConnectionResponseAuth0OptionsAuth0Tenant",
+                        "groupName": [],
+                        "type": "primitive"
+                      },
+                      "groupName": [],
+                      "type": "optional"
+                    },
+                    "audiences": []
+                  }
+                ],
+                "allOfPropertyConflicts": [],
+                "generatedName": "ConnectionResponseAuth0OptionsAuth0",
+                "groupName": [],
+                "additionalProperties": false,
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "object"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "description": "Auth0 strategy connection.",
+        "generatedName": "ConnectionResponseAuth0",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "ConnectionResponseSamlp": {
+        "allOf": [
+          {
+            "generatedName": "ConnectionCommon",
+            "schema": "ConnectionCommon",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          }
+        ],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "connectionResponseSamlpOptionsSamlp",
+            "key": "options_samlp",
+            "schema": {
+              "generatedName": "ConnectionResponseSamlpOptionsSamlp",
+              "value": {
+                "allOf": [],
+                "properties": [
+                  {
+                    "conflict": {},
+                    "generatedName": "connectionResponseSamlpOptionsSamlpMetadataUrl",
+                    "key": "metadata_url",
+                    "schema": {
+                      "generatedName": "ConnectionResponseSamlpOptionsSamlpMetadataUrl",
+                      "value": {
+                        "schema": {
+                          "type": "string"
+                        },
+                        "generatedName": "ConnectionResponseSamlpOptionsSamlpMetadataUrl",
+                        "groupName": [],
+                        "type": "primitive"
+                      },
+                      "groupName": [],
+                      "type": "optional"
+                    },
+                    "audiences": []
+                  }
+                ],
+                "allOfPropertyConflicts": [],
+                "generatedName": "ConnectionResponseSamlpOptionsSamlp",
+                "groupName": [],
+                "additionalProperties": false,
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "object"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "description": "SAML strategy connection.",
+        "generatedName": "ConnectionResponseSamlp",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "ConnectionResponseEmail": {
+        "allOf": [
+          {
+            "generatedName": "ConnectionCommon",
+            "schema": "ConnectionCommon",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          }
+        ],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "connectionResponseEmailOptionsEmail",
+            "key": "options_email",
+            "schema": {
+              "generatedName": "ConnectionResponseEmailOptionsEmail",
+              "value": {
+                "allOf": [],
+                "properties": [
+                  {
+                    "conflict": {},
+                    "generatedName": "connectionResponseEmailOptionsEmailFrom",
+                    "key": "from",
+                    "schema": {
+                      "generatedName": "ConnectionResponseEmailOptionsEmailFrom",
+                      "value": {
+                        "schema": {
+                          "type": "string"
+                        },
+                        "generatedName": "ConnectionResponseEmailOptionsEmailFrom",
+                        "groupName": [],
+                        "type": "primitive"
+                      },
+                      "groupName": [],
+                      "type": "optional"
+                    },
+                    "audiences": []
+                  }
+                ],
+                "allOfPropertyConflicts": [],
+                "generatedName": "ConnectionResponseEmailOptionsEmail",
+                "groupName": [],
+                "additionalProperties": false,
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "object"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "description": "Email strategy connection.",
+        "generatedName": "ConnectionResponseEmail",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

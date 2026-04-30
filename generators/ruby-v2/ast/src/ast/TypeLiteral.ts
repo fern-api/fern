@@ -8,10 +8,15 @@ export interface NamedValue {
     value: AstNode;
 }
 
-type InternalTypeLiteral = Str | Int | Float | Bool | Hash | Set_ | List_ | Nop | Nil;
+type InternalTypeLiteral = Str | InterpolatedStr | Int | Float | Bool | Hash | Set_ | List_ | Nop | Nil;
 
 interface Str {
     type: "str";
+    value: string;
+}
+
+interface InterpolatedStr {
+    type: "interpolatedStr";
     value: string;
 }
 
@@ -63,8 +68,37 @@ export class TypeLiteral extends AstNode {
         super();
     }
 
+    /**
+     * Returns a stable string representation of this literal suitable for
+     * deduplicating hash keys (see Lint/DuplicateHashKey). Returns undefined
+     * for compound/dynamic shapes where value equality isn't decidable at
+     * emit time.
+     */
+    public getDedupKey(): string | undefined {
+        switch (this.internalType.type) {
+            case "str":
+                return `str:${this.internalType.value}`;
+            case "interpolatedStr":
+                return `istr:${this.internalType.value}`;
+            case "int":
+                return `int:${this.internalType.value}`;
+            case "float":
+                return `float:${this.internalType.value}`;
+            case "bool":
+                return `bool:${this.internalType.value}`;
+            case "nil":
+                return "nil";
+            default:
+                return undefined;
+        }
+    }
+
     public static string(value: string): TypeLiteral {
         return new this({ type: "str", value });
+    }
+
+    public static interpolatedString(value: string): TypeLiteral {
+        return new this({ type: "interpolatedStr", value });
     }
 
     public static integer(value: number): TypeLiteral {
@@ -114,6 +148,16 @@ export class TypeLiteral extends AstNode {
         switch (this.internalType.type) {
             case "str": {
                 const value = this.internalType.value.replaceAll("\r\n", "\n");
+                writer.write(
+                    `"${value
+                        .replaceAll("\\", "\\\\")
+                        .replaceAll('"', '\\"')
+                        .replace(/#(?=[{$@])/g, "\\#")}"`
+                );
+                break;
+            }
+            case "interpolatedStr": {
+                const value = this.internalType.value.replaceAll("\r\n", "\n");
                 writer.write(`"${value.replaceAll("\\", "\\\\").replaceAll('"', '\\"')}"`);
                 break;
             }
@@ -130,9 +174,26 @@ export class TypeLiteral extends AstNode {
                 break;
             }
             case "hash": {
-                const entries = this.internalType.entries.filter(
+                const filteredEntries = this.internalType.entries.filter(
                     (entry) => !TypeLiteral.isNop(entry.key) && !TypeLiteral.isNop(entry.value)
                 );
+                // Dedupe by rendered key so generated hashes never contain duplicate keys.
+                // Matches rubocop's Lint/DuplicateHashKey autocorrect, which drops earlier
+                // occurrences and keeps the last one.
+                const seenKeys = new Map<string, number>();
+                filteredEntries.forEach((entry, index) => {
+                    const rendered = renderKeyForDedup(entry.key);
+                    if (rendered != null) {
+                        seenKeys.set(rendered, index);
+                    }
+                });
+                const entries = filteredEntries.filter((entry, index) => {
+                    const rendered = renderKeyForDedup(entry.key);
+                    if (rendered == null) {
+                        return true;
+                    }
+                    return seenKeys.get(rendered) === index;
+                });
                 if (entries.length === 0) {
                     writer.write("{}");
                     break;
@@ -224,6 +285,20 @@ export class TypeLiteral extends AstNode {
                 assertNever(this.internalType);
         }
     }
+}
+
+/**
+ * Returns a stable string representation of a hash key for deduplication, or
+ * undefined if the key is too dynamic to compare safely (i.e. an arbitrary
+ * AstNode rather than a literal). Dynamic keys are never considered duplicates
+ * of each other since we can't know at emit time whether they resolve to the
+ * same Ruby value.
+ */
+function renderKeyForDedup(key: AstNode): string | undefined {
+    if (!(key instanceof TypeLiteral)) {
+        return undefined;
+    }
+    return key.getDedupKey();
 }
 
 export { Type };

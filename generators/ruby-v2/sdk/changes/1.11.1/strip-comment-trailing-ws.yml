@@ -1,0 +1,5 @@
+- summary: |
+    Strip trailing whitespace from generated comment lines so spec-controlled docstrings
+    no longer trip `Layout/TrailingWhitespace` after the `rubocop -A` autocorrect pass
+    was removed in #15202. Caught on the Square nightly baseline benchmark.
+  type: fix

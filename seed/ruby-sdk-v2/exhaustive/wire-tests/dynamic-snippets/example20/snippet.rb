@@ -7,7 +7,6 @@ client = Seed::MyClient.new(
 
 client.endpoints.object.get_and_return_nested_with_required_field(
   string: "string",
-  string: "string",
   nested_object: {
     string: "string",
     integer: 1,

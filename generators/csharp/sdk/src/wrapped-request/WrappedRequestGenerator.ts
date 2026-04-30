@@ -331,19 +331,22 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
         for (const exampleQueryParameter of example.queryParameters) {
             const isSingleQueryParameter =
                 exampleQueryParameter.shape == null || exampleQueryParameter.shape.type === "single";
+            const exampleShape = exampleQueryParameter.value.shape;
+            const isExampleAlreadyList = exampleShape.type === "container" && exampleShape.container.type === "list";
             const singleValueSnippet = this.exampleGenerator.getSnippetForTypeReference({
                 exampleTypeReference: exampleQueryParameter.value,
                 parseDatetimes
             });
-            const value = isSingleQueryParameter
-                ? singleValueSnippet
-                : this.csharp.codeblock((writer: Writer) =>
-                      writer.writeNode(
-                          this.csharp.list({
-                              entries: [singleValueSnippet]
-                          })
-                      )
-                  );
+            const value =
+                isSingleQueryParameter || isExampleAlreadyList
+                    ? singleValueSnippet
+                    : this.csharp.codeblock((writer: Writer) =>
+                          writer.writeNode(
+                              this.csharp.list({
+                                  entries: [singleValueSnippet]
+                              })
+                          )
+                      );
             orderedFields.push({
                 name: exampleQueryParameter.name,
                 value

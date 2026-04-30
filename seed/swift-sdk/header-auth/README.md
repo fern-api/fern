@@ -66,7 +66,7 @@ The SDK throws a single error enum for all failures. Client-side issues encoding
 ```swift
 import HeaderToken
 
-let client = HeaderTokenClient(...)
+let client = HeaderTokenClient(headerTokenAuth: "YOUR_API_KEY")
 
 do {
     let response = try await client.service.getWithBearerToken(...)
@@ -134,7 +134,7 @@ import Foundation
 import HeaderToken
 
 let client = HeaderTokenClient(
-    ...,
+    headerTokenAuth: "YOUR_API_KEY",
     urlSession: // Provide your implementation here
 )
 ```

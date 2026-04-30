@@ -9,9 +9,9 @@ async fn main() {
     let client = ServerSentEventsClient::new(config).expect("Failed to build client");
     client
         .completions
-        .stream_events_context_protocol(
-            &StreamEventsContextProtocolRequest {
-                query: "".to_string(),
+        .stream_events_discriminant_in_data(
+            &StreamEventsDiscriminantInDataRequest {
+                query: "query".to_string(),
             },
             None,
         )

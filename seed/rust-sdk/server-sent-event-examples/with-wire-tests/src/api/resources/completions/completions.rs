@@ -47,6 +47,23 @@ impl CompletionsClient {
             .await
     }
 
+    pub async fn stream_events_discriminant_in_data(
+        &self,
+        request: &StreamEventsDiscriminantInDataRequest,
+        options: Option<RequestOptions>,
+    ) -> Result<SseStream<StreamEventDiscriminantInData>, ApiError> {
+        self.http_client
+            .execute_sse_request(
+                Method::POST,
+                "stream-events-discriminant-in-data",
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+                None,
+            )
+            .await
+    }
+
     pub async fn stream_events_context_protocol(
         &self,
         request: &StreamEventsContextProtocolRequest,

@@ -5,7 +5,9 @@ import { createFdrService } from "@fern-api/core";
 import { MediaType, replaceEnvVariables } from "@fern-api/core-utils";
 import {
     applyTranslatedFrontmatterToNavTree,
+    applyTranslatedNavigationOverlays,
     DocsDefinitionResolver,
+    getTranslatedAnnouncement,
     replaceImagePathsAndUrls,
     stripMdxComments,
     UploadedFile,
@@ -139,7 +141,8 @@ export async function publishDocs({
     cliVersion,
     ciSource,
     deployerAuthor,
-    loginCommand = "fern login"
+    loginCommand = "fern login",
+    multiSource = false
 }: {
     token: FernToken;
     organization: string;
@@ -166,6 +169,7 @@ export async function publishDocs({
      * 'fern auth login' for CLI v2). Defaults to 'fern login'.
      */
     loginCommand?: string;
+    multiSource?: boolean;
 }): Promise<string> {
     const fdrOrigin = process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com";
     const isAirGapped = await detectAirGappedMode(`${fdrOrigin}/health`, context.logger);
@@ -204,10 +208,15 @@ export async function publishDocs({
     const basePath = parseBasePath(domain);
     const disableDynamicSnippets =
         docsWorkspace.config.experimental && docsWorkspace.config.experimental.dynamicSnippets === false;
-    const isBasepathAware = docsWorkspace.config.experimental?.basepathAware === true;
+    if (docsWorkspace.config.experimental?.basepathAware === true) {
+        context.logger.warn(
+            "experimental.basepath-aware is deprecated. Use 'multi-source: true' on the instance instead."
+        );
+    }
+    const isBasepathAware = multiSource || docsWorkspace.config.experimental?.basepathAware === true;
 
     if (isBasepathAware) {
-        context.logger.debug("Experimental flag 'basepath-aware' is enabled - using basepath-aware S3 key format");
+        context.logger.debug("Basepath-aware mode is enabled - using basepath-aware S3 key format");
     }
 
     let deployLocked = false;
@@ -628,9 +637,12 @@ export async function publishDocs({
         context.logger.debug(`Docs published to FDR in ${publishTime.toFixed(0)}ms`);
 
         // Register translated page content for each configured locale.
-        // Skip translation registration in preview mode to avoid overwriting production translations.
+        // In preview mode, register translations against the preview URL (not the production domain)
+        // so that translated docs are visible in preview without overwriting production translations.
         const translationPages = resolver.getTranslationPages();
-        if (!preview && translationPages != null && Object.keys(translationPages).length > 0) {
+        const translationNavigationOverlays = resolver.getTranslationNavigationOverlays();
+        const translationDomain = preview ? urlToOutput : domain;
+        if (translationPages != null && Object.keys(translationPages).length > 0) {
             context.logger.info(`Registering translations for ${Object.keys(translationPages).length} locale(s)...`);
             await Promise.all(
                 Object.entries(translationPages).map(async ([locale, localePages]) => {
@@ -653,66 +665,92 @@ export async function publishDocs({
                         const translatedPages = {
                             ...docsDefinition.pages,
                             ...Object.fromEntries(
-                                Object.entries(localePages).map(([path, rawMarkdown]) => {
-                                    const basePage = docsDefinition.pages[path as DocsV1Write.PageId];
-                                    // Strip MDX comments first
-                                    let processedMarkdown = stripMdxComments(rawMarkdown);
-                                    // Replace image paths using the base page's location for resolution
-                                    // (translated pages reference the same images as the default locale)
-                                    const absolutePathToMarkdownFile = resolve(
-                                        docsWorkspacePath,
-                                        RelativeFilePath.of(path)
-                                    );
-                                    processedMarkdown = replaceImagePathsAndUrls(
-                                        processedMarkdown,
-                                        collectedFileIds,
-                                        {}, // markdownFilesToPathName not needed for translations
-                                        {
-                                            absolutePathToMarkdownFile,
-                                            absolutePathToFernFolder: docsWorkspacePath
-                                        },
-                                        context
-                                    );
-                                    // Rewrite editThisPageUrl to point to the translated file
-                                    // URL format: .../fern/${path}?plain=1 -> .../fern/translations/${locale}/${path}?plain=1
-                                    let editThisPageUrl = basePage?.editThisPageUrl;
-                                    if (editThisPageUrl != null) {
-                                        // Replace /fern/${path} with /fern/translations/${locale}/${path}
-                                        const fernPathPattern = `/fern/${path}`;
-                                        const translatedPath = `/fern/translations/${locale}/${path}`;
-                                        editThisPageUrl = editThisPageUrl.replace(
-                                            fernPathPattern,
-                                            translatedPath
-                                        ) as typeof editThisPageUrl;
-                                    }
-                                    return [
-                                        path,
-                                        {
-                                            markdown: processedMarkdown,
-                                            rawMarkdown: processedMarkdown,
-                                            editThisPageUrl,
-                                            editThisPageLaunch: basePage?.editThisPageLaunch
+                                Object.entries(localePages)
+                                    .map(([path, rawMarkdown]) => {
+                                        try {
+                                            const basePage = docsDefinition.pages[path as DocsV1Write.PageId];
+                                            // Strip MDX comments first
+                                            let processedMarkdown = stripMdxComments(rawMarkdown);
+                                            // Replace image paths using the base page's location for resolution
+                                            // (translated pages reference the same images as the default locale)
+                                            const absolutePathToMarkdownFile = resolve(
+                                                docsWorkspacePath,
+                                                RelativeFilePath.of(path)
+                                            );
+                                            processedMarkdown = replaceImagePathsAndUrls(
+                                                processedMarkdown,
+                                                collectedFileIds,
+                                                {}, // markdownFilesToPathName not needed for translations
+                                                {
+                                                    absolutePathToMarkdownFile,
+                                                    absolutePathToFernFolder: docsWorkspacePath
+                                                },
+                                                context
+                                            );
+                                            // Rewrite editThisPageUrl to point to the translated file
+                                            // URL format: .../fern/${path}?plain=1 -> .../fern/translations/${locale}/${path}?plain=1
+                                            let editThisPageUrl = basePage?.editThisPageUrl;
+                                            if (editThisPageUrl != null) {
+                                                // Replace /fern/${path} with /fern/translations/${locale}/${path}
+                                                const fernPathPattern = `/fern/${path}`;
+                                                const translatedPath = `/fern/translations/${locale}/${path}`;
+                                                editThisPageUrl = editThisPageUrl.replace(
+                                                    fernPathPattern,
+                                                    translatedPath
+                                                ) as typeof editThisPageUrl;
+                                            }
+                                            return [
+                                                path,
+                                                {
+                                                    markdown: processedMarkdown,
+                                                    rawMarkdown: processedMarkdown,
+                                                    editThisPageUrl,
+                                                    editThisPageLaunch: basePage?.editThisPageLaunch
+                                                }
+                                            ];
+                                        } catch (pageError) {
+                                            context.logger.warn(
+                                                `Failed to process translated page "${path}" for locale "${locale}": ${String(pageError)}. Falling back to base page.`
+                                            );
+                                            return undefined;
                                         }
-                                    ];
-                                })
+                                    })
+                                    .filter((entry): entry is NonNullable<typeof entry> => entry != null)
                             )
                         };
-                        const updatedRoot = applyTranslatedFrontmatterToNavTree(
+                        let updatedRoot = applyTranslatedFrontmatterToNavTree(
                             docsDefinition.config.root,
                             // localePages is Record<RelativeFilePath, string> (path -> raw markdown)
                             localePages as Record<string, string>,
                             context
                         );
+
+                        // Apply navigation overlay (translated display-names, titles, etc.)
+                        const localeNavOverlay = translationNavigationOverlays?.[locale];
+                        let translatedAnnouncement = docsDefinition.config.announcement;
+                        let translatedNavbarLinks = docsDefinition.config.navbarLinks;
+                        if (localeNavOverlay != null) {
+                            updatedRoot = applyTranslatedNavigationOverlays(updatedRoot, localeNavOverlay);
+                            translatedAnnouncement =
+                                getTranslatedAnnouncement(localeNavOverlay) ?? translatedAnnouncement;
+                            if (localeNavOverlay.navbarLinks != null) {
+                                translatedNavbarLinks = localeNavOverlay.navbarLinks;
+                            }
+                        }
+
                         const translatedDefinition: DocsDefinition = {
                             ...docsDefinition,
                             pages: translatedPages,
                             config: {
                                 ...docsDefinition.config,
-                                root: updatedRoot
+                                root: updatedRoot,
+                                announcement: translatedAnnouncement,
+                                navbarLinks: translatedNavbarLinks
                             }
                         };
-                        context.logger.info(
-                            `Sending translation for locale "${locale}": pages=${JSON.stringify(Object.keys(localePages))}`
+                        const pageCount = Object.keys(localePages).length;
+                        context.logger.debug(
+                            `Sending translation for locale "${locale}" (${pageCount} page${pageCount === 1 ? "" : "s"})`
                         );
                         // Use a raw fetch instead of the oRPC client to send `docsDefinition`
                         // (the live server expects that field; the published fdr-sdk still uses `content`).
@@ -724,7 +762,7 @@ export async function publishDocs({
                                 ...headers // Include telemetry headers (X-CLI-Version, X-CI-Source, etc.)
                             },
                             body: JSON.stringify({
-                                domain,
+                                domain: translationDomain,
                                 orgId: organization,
                                 locale,
                                 docsDefinition: translatedDefinition

@@ -19,7 +19,6 @@ import { ExperimentalConfig } from "./ExperimentalConfig.js";
 import { FooterLinksConfig } from "./FooterLinksConfig.js";
 import { IntegrationsConfig } from "./IntegrationsConfig.js";
 import { JsConfig } from "./JsConfig.js";
-import { Language } from "./Language.js";
 import { LayoutConfig } from "./LayoutConfig.js";
 import { LibraryConfiguration } from "./LibraryConfiguration.js";
 import { LibraryName } from "./LibraryName.js";
@@ -60,7 +59,7 @@ export const DocsConfiguration: core.serialization.ObjectSchema<
     globalTheme: core.serialization.property("global-theme", core.serialization.string().optional()),
     experimental: ExperimentalConfig.optional(),
     defaultLanguage: core.serialization.property("default-language", ProgrammingLanguage.optional()),
-    languages: core.serialization.list(Language).optional(),
+    languages: core.serialization.list(core.serialization.string()).optional(),
     translations: core.serialization.list(TranslationConfig).optional(),
     aiChat: core.serialization.property("ai-chat", AiChatConfig.optional()),
     aiSearch: core.serialization.property("ai-search", AiChatConfig.optional()),
@@ -103,7 +102,7 @@ export declare namespace DocsConfiguration {
         "global-theme"?: string | null;
         experimental?: ExperimentalConfig.Raw | null;
         "default-language"?: ProgrammingLanguage.Raw | null;
-        languages?: Language.Raw[] | null;
+        languages?: string[] | null;
         translations?: TranslationConfig.Raw[] | null;
         "ai-chat"?: AiChatConfig.Raw | null;
         "ai-search"?: AiChatConfig.Raw | null;

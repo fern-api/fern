@@ -1,0 +1,6 @@
+- summary: |
+    Fix `fern generate --docs --preview` hang when OpenAPI specs contain circular
+    `$ref` chains. The unbundled fallback document now has its circular references
+    replaced with opaque object schemas so downstream converters no longer
+    infinite-loop.
+  type: fix

@@ -273,6 +273,18 @@ export class DocsDefinitionResolver {
     }
 
     /**
+     * Returns per-locale translated navigation overlays loaded from
+     * `translations/<lang>/docs.yml` (or `translations/<lang>/fern/docs.yml` for
+     * backwards compatibility) and referenced nav YAML files.
+     * Must be called after `resolve()`.
+     */
+    public getTranslationNavigationOverlays():
+        | Record<string, import("@fern-api/configuration").docsYml.TranslationNavigationOverlay>
+        | undefined {
+        return this._parsedDocsConfig?.translationNavigationOverlays;
+    }
+
+    /**
      * Returns the map of absolute file paths to uploaded file IDs.
      * Used by translation processing to rewrite image paths in translated pages.
      * Must be called after `resolve()`.
@@ -294,14 +306,16 @@ export class DocsDefinitionResolver {
             return undefined;
         }
 
-        const defaultTranslation = translations.find((translation) => translation.default === true) ?? translations[0];
+        const normalizedTranslations = translations.map((t) => docsYml.DocsYmlSchemas.normalizeTranslationConfig(t));
+        const defaultTranslation =
+            normalizedTranslations.find((translation) => translation.default === true) ?? normalizedTranslations[0];
         if (defaultTranslation == null) {
             return undefined;
         }
 
         return {
             defaultLocale: defaultTranslation.lang,
-            translations: translations.map((translation) => translation.lang)
+            translations: normalizedTranslations.map((translation) => translation.lang)
         };
     }
     private collectedFileIds = new Map<AbsoluteFilePath, string>();
@@ -470,7 +484,10 @@ export class DocsDefinitionResolver {
                 }
             } catch (error) {
                 this.taskContext.logger.error(`Failed to parse ${relativePath}: ${extractErrorMessage(error)}`);
-                throw error;
+                throw new CliError({
+                    message: `Failed to parse markdown file ${relativePath}: ${extractErrorMessage(error)}`,
+                    code: CliError.Code.ParseError
+                });
             }
         }
         const imageParseTime = performance.now() - imageParseStart;
@@ -492,6 +509,10 @@ export class DocsDefinitionResolver {
         uploadedFiles.forEach((uploadedFile) => {
             this.collectedFileIds.set(uploadedFile.absoluteFilePath, uploadedFile.fileId);
         });
+
+        // Resolve any AbsoluteFilePath icons on translation overlay navbar-links to their
+        // uploaded file IDs so the per-locale navbarLinks land in FDR with valid icon refs.
+        this.resolveTranslationOverlayNavbarLinkIcons();
 
         // store root here so we only process once
         this.taskContext.logger.debug("Building navigation tree...");
@@ -808,7 +829,7 @@ export class DocsDefinitionResolver {
         const config: DocsConfigWithTranslations = {
             aiChatConfig:
                 this.parsedDocsConfig.aiChatConfig != null
-                    ? {
+                    ? ({
                           model: this.parsedDocsConfig.aiChatConfig.model,
                           systemPrompt: this.parsedDocsConfig.aiChatConfig.systemPrompt,
                           // Filter out 'discord' which is no longer supported by fdr-sdk
@@ -819,7 +840,7 @@ export class DocsDefinitionResolver {
                               url: ds.url,
                               title: ds.title
                           }))
-                      }
+                      } as DocsV1Write.DocsConfig["aiChatConfig"])
                     : undefined,
             hideNavLinks: undefined,
             title: this.parsedDocsConfig.title,
@@ -861,6 +882,7 @@ export class DocsDefinitionResolver {
             }),
             typographyV2: this.convertDocsTypographyConfiguration(),
             layout: this.parsedDocsConfig.layout,
+            // @ts-expect-error -- BCP 47: Language type widened to string, @fern-api/fdr-sdk not yet updated
             settings: this.parsedDocsConfig.settings,
             css: this.parsedDocsConfig.css,
             js: this.convertJavascriptConfiguration(),
@@ -882,8 +904,7 @@ export class DocsDefinitionResolver {
                 value: DocsV1Write.Url(footerLink.value)
             })),
             defaultLanguage: this.parsedDocsConfig.defaultLanguage,
-            languages: this.parsedDocsConfig.languages,
-
+            languages: this.parsedDocsConfig.languages as DocsV1Write.DocsConfig["languages"],
             translations: this.getDocsTranslationsConfig(),
             analyticsConfig: {
                 ...this.parsedDocsConfig.analyticsConfig,
@@ -2181,6 +2202,46 @@ export class DocsDefinitionResolver {
         return iconPath as string;
     }
 
+    /**
+     * Walks each translation overlay's navbar-links and rewrites any
+     * AbsoluteFilePath icons to `file:<fileId>` references using the icons
+     * we just uploaded. Mirrors the per-link transform applied to the
+     * docs-level navbar-links in `toDocsConfig`.
+     */
+    private resolveTranslationOverlayNavbarLinkIcons(): void {
+        const overlays = this.parsedDocsConfig.translationNavigationOverlays;
+        if (overlays == null) {
+            return;
+        }
+        for (const overlay of Object.values(overlays)) {
+            if (overlay.navbarLinks == null) {
+                continue;
+            }
+            overlay.navbarLinks = overlay.navbarLinks.map((navbarLink) => {
+                if (navbarLink.type === "github") {
+                    return navbarLink;
+                }
+                if (navbarLink.type === "dropdown") {
+                    return {
+                        ...navbarLink,
+                        icon: this.resolveIconFileId(navbarLink.icon),
+                        rightIcon: this.resolveIconFileId(navbarLink.rightIcon),
+                        links: navbarLink.links.map((link) => ({
+                            ...link,
+                            icon: this.resolveIconFileId(link.icon),
+                            rightIcon: this.resolveIconFileId(link.rightIcon)
+                        }))
+                    };
+                }
+                return {
+                    ...navbarLink,
+                    icon: this.resolveIconFileId(navbarLink.icon),
+                    rightIcon: this.resolveIconFileId(navbarLink.rightIcon)
+                };
+            });
+        }
+    }
+
     private convertPageActions(): DocsV1Write.PageActionsConfig | undefined {
         if (this.parsedDocsConfig.pageActions == null) {
             return undefined;
@@ -2324,17 +2385,17 @@ export class DocsDefinitionResolver {
             "og:image": ogImage,
             "og:logo": ogLogo,
             "twitter:image": twitterImage,
-            "og:background-image": ogBackgroundImage,
+            "og:dynamic:background-image": ogDynamicBackgroundImage,
             ...rest
         } = this.parsedDocsConfig.metadata;
-        // Type assertion needed: og:dynamic and og:background-image are not yet in the
-        // published FDR SDK MetadataConfig type, but FDR accepts them at runtime.
+        // Type assertion needed: og:dynamic and og:dynamic:background-image are not yet
+        // in the published FDR SDK MetadataConfig type, but FDR accepts them at runtime.
         return {
             ...rest,
             "og:image": this.convertFileIdOrUrl(ogImage),
             "og:logo": this.convertFileIdOrUrl(ogLogo),
             "twitter:image": this.convertFileIdOrUrl(twitterImage),
-            "og:background-image": this.convertFileIdOrUrl(ogBackgroundImage)
+            "og:dynamic:background-image": this.convertFileIdOrUrl(ogDynamicBackgroundImage)
         } as DocsV1Write.MetadataConfig;
     }
 

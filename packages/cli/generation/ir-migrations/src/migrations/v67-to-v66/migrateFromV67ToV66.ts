@@ -237,7 +237,18 @@ function migrateHttpEndpoint(endpoint: IrVersions.V67.HttpEndpoint): IrVersions.
         headers: endpoint.headers.map(migrateHttpHeader),
         responseHeaders: endpoint.responseHeaders?.map(migrateHttpHeader),
         queryParameters: endpoint.queryParameters.map(migrateQueryParameter),
-        requestBody: endpoint.requestBody != null ? migrateHttpRequestBody(endpoint.requestBody) : undefined
+        requestBody: endpoint.requestBody != null ? migrateHttpRequestBody(endpoint.requestBody) : undefined,
+        v2RequestBodies:
+            endpoint.v2RequestBodies != null ? migrateV2HttpRequestBodies(endpoint.v2RequestBodies) : undefined
+    };
+}
+
+function migrateV2HttpRequestBodies(
+    v2RequestBodies: IrVersions.V67.V2HttpRequestBodies
+): IrVersions.V67.V2HttpRequestBodies {
+    return {
+        ...v2RequestBodies,
+        requestBodies: v2RequestBodies.requestBodies?.map(migrateHttpRequestBody)
     };
 }
 
@@ -283,7 +294,18 @@ function migrateWebhook(webhook: IrVersions.V67.Webhook): IrVersions.V67.Webhook
         ...webhook,
         availability: migrateAvailability(webhook.availability),
         headers: webhook.headers.map(migrateHttpHeader),
-        payload: migrateWebhookPayload(webhook.payload)
+        payload: migrateWebhookPayload(webhook.payload),
+        fileUploadPayload:
+            webhook.fileUploadPayload != null ? migrateFileUploadRequest(webhook.fileUploadPayload) : undefined
+    };
+}
+
+function migrateFileUploadRequest(
+    fileUploadRequest: IrVersions.V67.FileUploadRequest
+): IrVersions.V67.FileUploadRequest {
+    return {
+        ...fileUploadRequest,
+        properties: fileUploadRequest.properties.map(migrateFileUploadRequestProperty)
     };
 }
 

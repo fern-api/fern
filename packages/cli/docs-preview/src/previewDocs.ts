@@ -1,4 +1,4 @@
-import { replaceEnvVariables } from "@fern-api/core-utils";
+import { extractErrorMessage, replaceEnvVariables } from "@fern-api/core-utils";
 import {
     isValidRelativeSlug,
     parseImagePaths,
@@ -8,7 +8,12 @@ import {
     stripMdxComments,
     transformAtPrefixImports
 } from "@fern-api/docs-markdown-utils";
-import { DocsDefinitionResolver, filterOssWorkspaces, stitchGlobalTheme } from "@fern-api/docs-resolver";
+import {
+    DocsDefinitionResolver,
+    filterOssWorkspaces,
+    stitchGlobalTheme,
+    type TranslationNavigationOverlay
+} from "@fern-api/docs-resolver";
 import {
     APIV1Read,
     APIV1Write,
@@ -132,6 +137,11 @@ export interface PreviewDocsResult {
      */
     translationPages: Record<string, Record<RelativeFilePath, string>> | undefined;
     /**
+     * Per-locale translated navigation overlays from translations/<lang>/ YAML files.
+     * Key is locale, value is a parsed overlay with translated display-names, titles, etc.
+     */
+    translationNavigationOverlays: Record<string, TranslationNavigationOverlay> | undefined;
+    /**
      * File IDs collected during docs resolution, needed for image path replacement
      * in translated pages.
      */
@@ -236,10 +246,19 @@ export async function getPreviewDocsDefinition({
                 absolutePathToMarkdownFile: absoluteFilePath
             });
 
-            const { markdown: markdownWithAbsPaths, filepaths } = parseImagePaths(markdownReplacedMdAndCode, {
-                absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
-                absolutePathToMarkdownFile: absoluteFilePath
-            });
+            let markdownWithAbsPaths: string;
+            let filepaths: AbsoluteFilePath[];
+            try {
+                ({ markdown: markdownWithAbsPaths, filepaths } = parseImagePaths(markdownReplacedMdAndCode, {
+                    absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
+                    absolutePathToMarkdownFile: absoluteFilePath
+                }));
+            } catch (error) {
+                throw new CliError({
+                    message: `Failed to parse markdown in ${absoluteFilePath}: ${extractErrorMessage(error)}`,
+                    code: CliError.Code.ParseError
+                });
+            }
 
             if (previousDocsDefinition.filesV2 == null) {
                 previousDocsDefinition.filesV2 = {};
@@ -288,6 +307,7 @@ export async function getPreviewDocsDefinition({
             return {
                 docsDefinition: previousDocsDefinition,
                 translationPages: previousPreviewResult.translationPages,
+                translationNavigationOverlays: previousPreviewResult.translationNavigationOverlays,
                 collectedFileIds: previousPreviewResult.collectedFileIds,
                 docsWorkspacePath: previousPreviewResult.docsWorkspacePath
             };
@@ -376,13 +396,15 @@ export async function getPreviewDocsDefinition({
         docsDefinition = { ...substitutedDocs, jsFiles };
     }
 
-    // Get translation pages and collected file IDs for building translated definitions
+    // Get translation pages, navigation overlays, and collected file IDs for building translated definitions
     const translationPages = resolver.getTranslationPages();
+    const translationNavigationOverlays = resolver.getTranslationNavigationOverlays();
     const collectedFileIds = resolver.getCollectedFileIds();
 
     return {
         docsDefinition,
         translationPages,
+        translationNavigationOverlays,
         collectedFileIds,
         docsWorkspacePath: docsWorkspace.absoluteFilePath
     };

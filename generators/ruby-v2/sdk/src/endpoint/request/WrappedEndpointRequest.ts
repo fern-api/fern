@@ -59,10 +59,24 @@ export class WrappedEndpointRequest extends EndpointRequest {
 
         const defaultExtractor = new DefaultValueExtractor(this.context);
 
+        const hasRequestBody = this.endpoint.requestBody != null;
+
+        // When the body is built via request_data.except(*non_body_param_names), the body
+        // code block already handles excluding non-body params, so stripping query params
+        // from `params` would be a useless assignment (Lint/UselessAssignment).
+        const bodyHandlesParamExclusion =
+            hasRequestBody &&
+            this.endpoint.requestBody?.type === "inlinedRequestBody" &&
+            this.getNonBodyParameterWireNames().length > 0;
+
+        const needsParamsExcept = hasRequestBody && !bodyHandlesParamExclusion;
+
         return {
             code: ruby.codeblock((writer) => {
-                writer.write(`${QUERY_PARAM_NAMES_VN} = `);
-                writer.writeLine(`${toRubySymbolArray(this.getQueryParameterNames())}`);
+                if (needsParamsExcept) {
+                    writer.write(`${QUERY_PARAM_NAMES_VN} = `);
+                    writer.writeLine(`${toRubySymbolArray(this.getQueryParameterNames())}`);
+                }
                 writer.writeLine(`${queryParameterBagName} = {}`);
                 for (const queryParam of this.endpoint.queryParameters) {
                     const snakeCaseName = this.case.snakeSafe(queryParam.name);
@@ -86,7 +100,9 @@ export class WrappedEndpointRequest extends EndpointRequest {
                         );
                     }
                 }
-                writer.writeLine(`params = params.except(*${QUERY_PARAM_NAMES_VN})`);
+                if (needsParamsExcept) {
+                    writer.writeLine(`params = params.except(*${QUERY_PARAM_NAMES_VN})`);
+                }
             }),
             queryParameterBagReference: queryParameterBagName
         };
@@ -275,6 +291,9 @@ export class WrappedEndpointRequest extends EndpointRequest {
 }
 
 function toExplicitArray(s: string[]): string {
+    if (s.every((item) => /^[^\s\]\\]+$/.test(item))) {
+        return `%w[${s.join(" ")}]`;
+    }
     return `["${s.join('", "')}"]`;
 }
 

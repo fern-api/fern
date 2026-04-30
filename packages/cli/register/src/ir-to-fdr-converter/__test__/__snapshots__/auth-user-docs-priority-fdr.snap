@@ -1,0 +1,159 @@
+{
+  "apiName": "Auth User Docs Priority Test API",
+  "auth": {
+    "description": "User's custom documentation that should take priority over OpenAPI description",
+    "headerWireValue": "X-API-Key",
+    "nameOverride": "api_key",
+    "prefix": undefined,
+    "type": "header",
+  },
+  "authSchemes": {
+    "apiKeyAuth": {
+      "description": "User's custom documentation that should take priority over OpenAPI description",
+      "headerWireValue": "X-API-Key",
+      "nameOverride": "api_key",
+      "prefix": undefined,
+      "type": "header",
+    },
+  },
+  "globalHeaders": [],
+  "navigation": undefined,
+  "rootPackage": {
+    "endpoints": [
+      {
+        "auth": true,
+        "authV2": [
+          "apiKeyAuth",
+        ],
+        "availability": undefined,
+        "defaultEnvironment": "https://api.example.com",
+        "description": undefined,
+        "environments": [
+          {
+            "audiences": undefined,
+            "baseUrl": "https://api.example.com",
+            "id": "https://api.example.com",
+          },
+        ],
+        "errors": undefined,
+        "errorsV2": [],
+        "examples": [
+          {
+            "codeSamples": undefined,
+            "description": "",
+            "headers": {},
+            "name": undefined,
+            "path": "/resource",
+            "pathParameters": {},
+            "queryParameters": {},
+            "requestBody": undefined,
+            "requestBodyV3": undefined,
+            "responseBody": "resource data",
+            "responseBodyV3": {
+              "type": "json",
+              "value": "resource data",
+            },
+            "responseStatusCode": 200,
+          },
+        ],
+        "headers": [],
+        "id": "getResource",
+        "includeInApiExplorer": undefined,
+        "method": "GET",
+        "multiAuth": [
+          {
+            "schemes": [
+              "apiKeyAuth",
+            ],
+          },
+        ],
+        "name": "Get protected resource",
+        "originalEndpointId": "endpoint_.getResource",
+        "path": {
+          "parts": [
+            {
+              "type": "literal",
+              "value": "",
+            },
+            {
+              "type": "literal",
+              "value": "/resource",
+            },
+          ],
+          "pathParameters": [],
+        },
+        "protocol": {
+          "type": "rest",
+        },
+        "queryParameters": [],
+        "request": undefined,
+        "requestsV2": {
+          "requests": undefined,
+        },
+        "response": {
+          "description": "Success",
+          "isWildcard": undefined,
+          "statusCode": 200,
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+        },
+        "responseHeaders": [],
+        "responsesV2": {
+          "responses": [
+            {
+              "description": "Success",
+              "isWildcard": undefined,
+              "statusCode": 200,
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "default": undefined,
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "regex": undefined,
+                    "type": "string",
+                  },
+                },
+              },
+            },
+          ],
+        },
+        "slug": undefined,
+      },
+    ],
+    "graphqlOperations": [],
+    "pointsTo": undefined,
+    "subpackages": [],
+    "types": [],
+    "webhooks": [],
+    "websockets": [],
+  },
+  "snippetsConfiguration": {
+    "csharpSdk": undefined,
+    "goSdk": undefined,
+    "javaSdk": undefined,
+    "phpSdk": undefined,
+    "pythonSdk": undefined,
+    "rubySdk": undefined,
+    "rustSdk": undefined,
+    "swiftSdk": undefined,
+    "typescriptSdk": undefined,
+  },
+  "subpackages": {},
+  "types": {},
+}

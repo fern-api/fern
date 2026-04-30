@@ -1,0 +1,10 @@
+- summary: |
+    Fix Java SDK snippet and wire test generation for `allow-multiple` query
+    parameters when `coerce-optional-schemas-to-nullable: true` is set.
+    Previously, list items wrapped in `optional<...>` and/or `nullable<...>`
+    produced calls like `.strategy(Arrays.asList(Optional.of(...)))`, which
+    failed to compile because the generated builders only expose `List<T>`
+    overloads (no `List<Optional<T>>` or `List<Nullable<T>>`). The snippet
+    generator now strips both `optional` and `nullable` wrappers from list
+    items, so the emitted code matches an existing builder signature.
+  type: fix

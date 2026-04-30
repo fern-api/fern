@@ -68,6 +68,43 @@ client.Service.OptionalArgs(
 </dl>
 </details>
 
+<details><summary><code>client.Service.WithRefBody(request) -> string</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &fern.WithRefBodyRequest{
+        ImageFile: strings.NewReader(
+            "",
+        ),
+        Request: &fern.MyObject{
+            Foo: "bar",
+        },
+    }
+client.Service.WithRefBody(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.Service.Simple() -> error</code></summary>
 <dl>
 <dd>

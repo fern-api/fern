@@ -481,6 +481,7 @@ export class SdkGenerator {
         this.typeSchemaGenerator = new TypeSchemaGenerator({
             includeUtilsOnUnionMembers: config.includeUtilsOnUnionMembers,
             noOptionalProperties: config.noOptionalProperties,
+            enableForwardCompatibleEnums: config.enableForwardCompatibleEnums,
             caseConverter
         });
         this.typeReferenceExampleGenerator = new TypeReferenceExampleGenerator({

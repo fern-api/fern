@@ -116,6 +116,10 @@ export async function runRemoteGenerationForDocsWorkspace({
         }
     }
 
+    if (maybeInstance.multiSource === true) {
+        validateMultiSourceBasepaths(maybeInstance.url, customDomains, context);
+    }
+
     context.logger.info(`Starting docs publishing for ${preview ? "preview" : "production"}: ${maybeInstance.url}`);
     context.logger.debug(
         `Organization: ${organization}, Preview: ${preview}, APIs: ${apiWorkspaces.length}, OSS: ${ossWorkspaces.length}`
@@ -151,7 +155,8 @@ export async function runRemoteGenerationForDocsWorkspace({
                 cliVersion,
                 ciSource,
                 deployerAuthor,
-                loginCommand
+                loginCommand,
+                multiSource: maybeInstance.multiSource ?? false
             });
 
         for (let attempt = 0; ; attempt++) {
@@ -188,4 +193,28 @@ export async function runRemoteGenerationForDocsWorkspace({
         context.logger.debug(`Docs publishing completed in ${publishTime.toFixed(0)}ms`);
     });
     return publishedUrl;
+}
+
+function getBasepath(domain: string): string {
+    try {
+        const url = domain.startsWith("https://") || domain.startsWith("http://") ? domain : `https://${domain}`;
+        return new URL(url).pathname;
+    } catch {
+        return "/";
+    }
+}
+
+function validateMultiSourceBasepaths(instanceUrl: string, customDomains: string[], context: TaskContext): void {
+    const urlBasepath = getBasepath(instanceUrl);
+    for (const customDomain of customDomains) {
+        const customDomainBasepath = getBasepath(customDomain);
+        if (customDomainBasepath !== "/" && urlBasepath !== customDomainBasepath) {
+            context.failAndThrow(
+                `When multi-source is enabled, the url and custom-domain must share the same basepath. ` +
+                    `Instance url '${instanceUrl}' has basepath '${urlBasepath}' but custom-domain '${customDomain}' has basepath '${customDomainBasepath}'.`,
+                undefined,
+                { code: CliError.Code.ConfigError }
+            );
+        }
+    }
 }

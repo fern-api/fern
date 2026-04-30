@@ -1,3 +1,4 @@
+import { NodePath } from "@fern-api/fern-definition-schema";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { Logger } from "@fern-api/logger";
@@ -26,6 +27,7 @@ export interface RuleViolation {
     severity: "fatal" | "error" | "warning";
     message: string;
     relativeFilepath?: RelativeFilePath;
+    nodePath?: NodePath;
 }
 
 export type MaybePromise<T> = T | Promise<T>;

@@ -1,0 +1,6 @@
+- summary: |
+    Validate staged changelog entries in `changes/<version>/*.yml` (not just `versions.yml`)
+    and trigger the workflow on PRs that touch those staged files. Catches unescaped
+    `{}` / `<>` / `#{}` patterns at PR time instead of after autorelease promotes the
+    entry to `versions.yml` on `main`.
+  type: internal

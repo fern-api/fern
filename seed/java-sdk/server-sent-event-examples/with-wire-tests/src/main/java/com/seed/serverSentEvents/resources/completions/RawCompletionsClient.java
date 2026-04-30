@@ -16,9 +16,11 @@ import com.seed.serverSentEvents.core.Stream;
 import com.seed.serverSentEvents.resources.completions.errors.BadRequestError;
 import com.seed.serverSentEvents.resources.completions.requests.StreamCompletionRequest;
 import com.seed.serverSentEvents.resources.completions.requests.StreamEventsContextProtocolRequest;
+import com.seed.serverSentEvents.resources.completions.requests.StreamEventsDiscriminantInDataRequest;
 import com.seed.serverSentEvents.resources.completions.requests.StreamEventsRequest;
 import com.seed.serverSentEvents.resources.completions.types.StreamEvent;
 import com.seed.serverSentEvents.resources.completions.types.StreamEventContextProtocol;
+import com.seed.serverSentEvents.resources.completions.types.StreamEventDiscriminantInData;
 import com.seed.serverSentEvents.resources.completions.types.StreamedCompletion;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -133,6 +135,64 @@ public class RawCompletionsClient {
                 return new SeedServerSentEventsHttpResponse<>(
                         Stream.fromSseWithEventDiscrimination(
                                 StreamEvent.class, new ResponseBodyReader(response), "event", "[DONE]"),
+                        response);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                if (response.code() == 400) {
+                    throw new BadRequestError(
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response);
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
+            }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new SeedServerSentEventsApiException(
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (IOException e) {
+            throw new SeedServerSentEventsException("Network error executing HTTP request", e);
+        }
+    }
+
+    public SeedServerSentEventsHttpResponse<Iterable<StreamEventDiscriminantInData>> streamEventsDiscriminantInData(
+            StreamEventsDiscriminantInDataRequest request) {
+        return streamEventsDiscriminantInData(request, null);
+    }
+
+    public SeedServerSentEventsHttpResponse<Iterable<StreamEventDiscriminantInData>> streamEventsDiscriminantInData(
+            StreamEventsDiscriminantInDataRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("stream-events-discriminant-in-data");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (JsonProcessingException e) {
+            throw new SeedServerSentEventsException("Failed to serialize request", e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl.build())
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        client = client.newBuilder().callTimeout(0, TimeUnit.SECONDS).build();
+        try {
+            Response response = client.newCall(okhttpRequest).execute();
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return new SeedServerSentEventsHttpResponse<>(
+                        Stream.fromSse(StreamEventDiscriminantInData.class, new ResponseBodyReader(response)),
                         response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";

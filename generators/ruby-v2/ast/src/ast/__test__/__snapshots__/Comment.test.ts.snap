@@ -2,6 +2,13 @@
 
 exports[`Comment > does not write a comment with no content 1`] = `""`;
 
+exports[`Comment > emits bare \`#\` for blank lines in multi-line docs 1`] = `
+"# First paragraph.
+#
+# Second paragraph.
+"
+`;
+
 exports[`Comment > handles lines that are exactly at the limit 1`] = `
 "# AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 "
@@ -18,6 +25,12 @@ exports[`Comment > preserves existing line breaks while wrapping long lines 1`] 
 "# First paragraph that is short.
 # Second paragraph that is very long and exceeds the RuboCop default line length limit of 120 characters and should be
 # wrapped to multiple lines automatically.
+"
+`;
+
+exports[`Comment > strips trailing whitespace from short lines 1`] = `
+"# If the request resulted in errors,
+# additional context here.
 "
 `;
 

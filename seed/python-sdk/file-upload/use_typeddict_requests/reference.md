@@ -850,6 +850,74 @@ client.service.with_json_property(...)
 </dl>
 </details>
 
+<details><summary><code>client.service.<a href="src/seed/service/client.py">with_ref_body</a>(...) -> str</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import SeedFileUpload
+
+client = SeedFileUpload(
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.service.with_ref_body(
+    image_file="example_image_file",
+    request={
+        "foo": "bar"
+    },
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `MyObject` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**image_file:** `typing.Optional[core.File]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.service.<a href="src/seed/service/client.py">simple</a>()</code></summary>
 <dl>
 <dd>

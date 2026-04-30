@@ -69,7 +69,7 @@ This SDK allows you to configure different environments for API requests.
 import MultiUrlEnvironmentNoDefault
 
 let client = MultiUrlEnvironmentNoDefaultClient(
-    ...,
+    token: "YOUR_API_KEY",
     environment: .production
 )
 ```
@@ -81,7 +81,7 @@ The SDK throws a single error enum for all failures. Client-side issues encoding
 ```swift
 import MultiUrlEnvironmentNoDefault
 
-let client = MultiUrlEnvironmentNoDefaultClient(...)
+let client = MultiUrlEnvironmentNoDefaultClient(token: "YOUR_API_KEY")
 
 do {
     let response = try await client.ec2.bootInstance(...)
@@ -161,7 +161,7 @@ import Foundation
 import MultiUrlEnvironmentNoDefault
 
 let client = MultiUrlEnvironmentNoDefaultClient(
-    ...,
+    token: "YOUR_API_KEY",
     urlSession: // Provide your implementation here
 )
 ```
