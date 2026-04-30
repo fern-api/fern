@@ -5,12 +5,15 @@ import { tmpdir } from "os";
 import path from "path";
 import { FETCH_API_SPEC_REQUEST_TIMEOUT_MS } from "../../constants.js";
 import type { Context } from "../../context/Context.js";
+import { isStdioMarker, readInput, STDIO_MARKER } from "../../io/stdio.js";
 import type { ApiSpec, ApiSpecType } from "../config/ApiSpec.js";
 import { ApiSpecDetector } from "./ApiSpecDetector.js";
 
 export namespace ApiSpecResolver {
     export interface Args {
         reference: string;
+        /** Optional stdin stream (defaults to process.stdin). Used for testing. */
+        stdin?: NodeJS.ReadableStream;
     }
 
     export interface Result {
@@ -33,13 +36,50 @@ export class ApiSpecResolver {
     }
 
     /**
-     * Resolves a string reference (local path or URL) to a fully-constructed ApiSpec.
+     * Resolves a string reference (local path, URL, or `-` for stdin) to a
+     * fully-constructed ApiSpec.
      */
     public async resolve(args: ApiSpecResolver.Args): Promise<ApiSpecResolver.Result> {
+        if (isStdioMarker(args.reference)) {
+            return this.resolveStdin(args);
+        }
         if (this.isUrl(args.reference)) {
             return this.resolveUrl(args);
         }
         return this.resolveLocal(args);
+    }
+
+    private async resolveStdin({
+        reference,
+        stdin
+    }: {
+        reference: string;
+        stdin?: NodeJS.ReadableStream;
+    }): Promise<ApiSpecResolver.Result> {
+        const content = await readInput(STDIO_MARKER, { stdin });
+        if (content.trim().length === 0) {
+            throw new CliError({
+                message: 'No input received on stdin (--api "-").',
+                code: CliError.Code.ConfigError
+            });
+        }
+        const extension = this.inferExtensionFromContent(content);
+        const tempDir = await mkdtemp(path.join(tmpdir(), "fern-"));
+        const absoluteFilePath = AbsoluteFilePath.of(path.join(tempDir, `spec${extension}`));
+        await writeFile(absoluteFilePath, content, "utf-8");
+
+        const specType = await this.detector.detect({ absoluteFilePath, content, reference: "stdin" });
+        return {
+            absoluteFilePath,
+            reference,
+            spec: this.buildApiSpec({ absoluteFilePath, specType, origin: "stdin" })
+        };
+    }
+
+    private inferExtensionFromContent(content: string): string {
+        const trimmed = content.trimStart();
+        const first = trimmed[0];
+        return first === "{" || first === "[" ? ".json" : ".yaml";
     }
 
     private async resolveUrl({ reference }: { reference: string }): Promise<ApiSpecResolver.Result> {

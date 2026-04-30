@@ -47,7 +47,7 @@ export function addPreviewCommand(cli: Argv<GlobalArgs>): void {
             yargs
                 .option("api", {
                     type: "string",
-                    description: "Path or URL to an API spec file (enables no-config mode)"
+                    description: 'Path or URL to an API spec file, or "-" to read from stdin (enables no-config mode)'
                 })
                 .option("audience", {
                     type: "array",
