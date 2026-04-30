@@ -117,7 +117,6 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
             return;
         }
 
-
         if (openApiSchemes.length > 0) {
             this.addAuthToIR({
                 requirement: openApiSchemes.length === 1 ? "ALL" : "ANY",
@@ -126,7 +125,11 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
             });
         }
     }
-    private convertAuthOverrides(descriptions: Map<FernIr.AuthSchemeKey, string | undefined>,  authOverrides: NonNullable<typeof this.context.authOverrides>): void {
+
+    private convertAuthOverrides(
+        descriptions: Map<FernIr.AuthSchemeKey, string | undefined>,
+        authOverrides: NonNullable<typeof this.context.authOverrides>
+    ): void {
         const enriched = {
             ...authOverrides,
             "auth-schemes": Object.fromEntries(
