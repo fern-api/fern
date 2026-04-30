@@ -2,11 +2,11 @@ import { docsYml } from "@fern-api/configuration";
 import { DOCS_CONFIGURATION_FILENAME } from "@fern-api/configuration-loader";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
-import { DocsWorkspace } from "@fern-api/workspace-loader";
 import { checkbox, confirm } from "@inquirer/prompts";
 import chalk from "chalk";
 import { existsSync } from "fs";
 import { mkdir, readFile, writeFile } from "fs/promises";
+import yaml from "js-yaml";
 
 import { CliContext } from "../../cli-context/CliContext.js";
 
@@ -53,16 +53,31 @@ interface ExistingTranslationState {
     configuredLangs: Language[];
 }
 
-function getExistingTranslationState(config: DocsWorkspace["config"]): ExistingTranslationState {
-    const translations = config.translations;
-    if (translations != null && translations.length > 0) {
+interface RawTranslationEntry {
+    lang: string;
+    default?: boolean;
+}
+
+function isLanguage(value: string): value is Language {
+    return Object.values(docsYml.RawSchemas.Language).includes(value as Language);
+}
+
+function getExistingTranslationState(rawContent: string): ExistingTranslationState {
+    const parsed = yaml.load(rawContent) as Record<string, unknown> | undefined;
+    if (parsed == null) {
+        return { defaultLang: undefined, configuredLangs: [] };
+    }
+
+    const translations = parsed.translations;
+    if (Array.isArray(translations) && translations.length > 0) {
         let defaultLang: Language | undefined;
         const configuredLangs: Language[] = [];
-        for (const entry of translations) {
-            const lang = entry.lang;
-            configuredLangs.push(lang);
-            if (entry.default === true) {
-                defaultLang = lang;
+        for (const entry of translations as RawTranslationEntry[]) {
+            if (isLanguage(entry.lang)) {
+                configuredLangs.push(entry.lang);
+                if (entry.default === true) {
+                    defaultLang = entry.lang;
+                }
             }
         }
         if (defaultLang == null) {
@@ -71,10 +86,11 @@ function getExistingTranslationState(config: DocsWorkspace["config"]): ExistingT
         return { defaultLang, configuredLangs };
     }
 
-    const languages = config.languages;
-    if (languages != null && languages.length > 0) {
-        const defaultLang = languages[0];
-        return { defaultLang, configuredLangs: languages };
+    const languages = parsed.languages;
+    if (Array.isArray(languages) && languages.length > 0) {
+        const validLangs = languages.filter((l): l is Language => typeof l === "string" && isLanguage(l));
+        const defaultLang = validLangs[0];
+        return { defaultLang, configuredLangs: validLangs };
     }
 
     return { defaultLang: undefined, configuredLangs: [] };
@@ -131,12 +147,14 @@ export async function docsTranslate({
     const fernDirectory = docsWorkspace.absoluteFilePath;
     const docsConfigPath = join(fernDirectory, RelativeFilePath.of(DOCS_CONFIGURATION_FILENAME));
 
+    const rawDocsContent = await readFile(docsConfigPath, "utf-8");
+
     cliContext.logger.info("");
     cliContext.logger.info(chalk.bold("🌐 Fern Docs — Internationalization Setup"));
     cliContext.logger.info(chalk.dim("─".repeat(45)));
     cliContext.logger.info("");
 
-    const existingState = getExistingTranslationState(docsWorkspace.config);
+    const existingState = getExistingTranslationState(rawDocsContent);
 
     if (existingState.configuredLangs.length > 0) {
         cliContext.logger.info(
@@ -256,7 +274,6 @@ export async function docsTranslate({
     cliContext.logger.info(chalk.bold("  Updating configuration..."));
     cliContext.logger.info("");
 
-    const rawDocsContent = await readFile(docsConfigPath, "utf-8");
     const updatedContent = updateDocsYamlContent({
         rawContent: rawDocsContent,
         defaultLang,
