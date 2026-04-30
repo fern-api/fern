@@ -104,9 +104,17 @@ function migrateIntermediateRepresentation(
         idempotencyHeaders: v67.idempotencyHeaders.map(migrateHttpHeader),
         types: mapRecord(v67.types, migrateTypeDeclaration),
         services: mapRecord(v67.services, migrateHttpService),
+        errors: mapRecord(v67.errors, migrateErrorDeclaration),
         webhookGroups: mapRecord(v67.webhookGroups, (group) => group.map(migrateWebhook)),
         websocketChannels:
             v67.websocketChannels != null ? mapRecord(v67.websocketChannels, migrateWebSocketChannel) : undefined
+    };
+}
+
+function migrateErrorDeclaration(error: IrVersions.V67.ErrorDeclaration): IrVersions.V67.ErrorDeclaration {
+    return {
+        ...error,
+        headers: error.headers?.map(migrateHttpHeader)
     };
 }
 
@@ -183,8 +191,12 @@ function migrateTypeDeclaration(typeDeclaration: IrVersions.V67.TypeDeclaration)
 function migrateType(type: IrVersions.V67.Type): IrVersions.V67.Type {
     switch (type.type) {
         case "alias":
-        case "undiscriminatedUnion":
             return type;
+        case "undiscriminatedUnion":
+            return {
+                ...type,
+                baseProperties: type.baseProperties?.map(migrateObjectProperty)
+            };
         case "object":
             return {
                 ...type,
@@ -237,12 +249,32 @@ function migrateHttpRequestBody(requestBody: IrVersions.V67.HttpRequestBody): Ir
                 properties: requestBody.properties.map(migrateInlinedRequestBodyProperty),
                 extendedProperties: requestBody.extendedProperties?.map(migrateObjectProperty)
             };
-        case "reference":
         case "fileUpload":
+            return {
+                ...requestBody,
+                properties: requestBody.properties.map(migrateFileUploadRequestProperty)
+            };
+        case "reference":
         case "bytes":
             return requestBody;
         default:
             return assertNever(requestBody);
+    }
+}
+
+function migrateFileUploadRequestProperty(
+    property: IrVersions.V67.FileUploadRequestProperty
+): IrVersions.V67.FileUploadRequestProperty {
+    switch (property.type) {
+        case "file":
+            return property;
+        case "bodyProperty":
+            return {
+                ...property,
+                availability: migrateAvailability(property.availability)
+            };
+        default:
+            return assertNever(property);
     }
 }
 
