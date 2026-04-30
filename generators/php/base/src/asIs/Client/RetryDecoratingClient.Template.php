@@ -9,7 +9,11 @@ use Psr\Http\Message\ResponseInterface;
 
 class RetryDecoratingClient implements ClientInterface
 {
-    private const RETRY_STATUS_CODES = {{RETRY_STATUS_CODES_ARRAY}};
+<% if (retryStatusCodes === "recommended") { %>
+    private const RETRY_STATUS_CODES = [408, 429, 502, 503, 504];
+<% } else { %>
+    private const RETRY_STATUS_CODES = [408, 429];
+<% } %>
     private const MAX_RETRY_DELAY = 60000; // 60 seconds in milliseconds
     private const JITTER_FACTOR = 0.2; // 20% random jitter
 
@@ -150,7 +154,12 @@ class RetryDecoratingClient implements ClientInterface
         }
 
         if ($response !== null) {
-            return {{RETRY_STATUS_CHECK}};
+<% if (retryStatusCodes === "recommended") { %>
+            return in_array($response->getStatusCode(), self::RETRY_STATUS_CODES);
+<% } else { %>
+            return $response->getStatusCode() >= 500 ||
+                in_array($response->getStatusCode(), self::RETRY_STATUS_CODES);
+<% } %>
         }
 
         return false;
