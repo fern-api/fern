@@ -2170,7 +2170,10 @@ function extractString(obj: unknown, key: string): string | undefined {
 /**
  * Validates each entry of a translation overlay's `navbar-links` array against the
  * docs.yml NavbarLink schema. Invalid entries are dropped with a warning so a single
- * malformed link does not discard the whole list.
+ * malformed link does not discard the whole list. The presence of the field — even
+ * when it parses to an empty list — is preserved so the caller can distinguish an
+ * intentional override (including the empty `navbar-links: []` opt-out) from an
+ * absent field.
  */
 async function validateOverlayNavbarLinks({
     rawNavbarLinks,
@@ -2180,7 +2183,7 @@ async function validateOverlayNavbarLinks({
     rawNavbarLinks: unknown[];
     overlayDocsYmlPath: AbsoluteFilePath;
     context: TaskContext;
-}): Promise<docsYml.RawSchemas.NavbarLink[] | undefined> {
+}): Promise<docsYml.RawSchemas.NavbarLink[]> {
     const result: docsYml.RawSchemas.NavbarLink[] = [];
     for (const [index, raw] of rawNavbarLinks.entries()) {
         try {
@@ -2192,7 +2195,7 @@ async function validateOverlayNavbarLinks({
             );
         }
     }
-    return result.length > 0 ? result : undefined;
+    return result;
 }
 
 /**
@@ -2228,7 +2231,8 @@ async function parseNavigationOverlayFromDocsYml({
     }
 
     // Parse navbar-links (CTAs). When present, these replace the docs-level
-    // navbar-links in the FDR upload for this locale.
+    // navbar-links in the FDR upload for this locale — including the empty
+    // case (`navbar-links: []`), which is a per-locale opt-out of CTAs.
     const rawNavbarLinks = docsYmlContent["navbar-links"];
     if (Array.isArray(rawNavbarLinks)) {
         const validatedNavbarLinks = await validateOverlayNavbarLinks({
@@ -2236,10 +2240,10 @@ async function parseNavigationOverlayFromDocsYml({
             overlayDocsYmlPath,
             context
         });
-        if (validatedNavbarLinks != null) {
-            overlay.navbarLinks = convertNavbarLinks(validatedNavbarLinks, overlayDocsYmlPath);
-        }
+        overlay.navbarLinks = convertNavbarLinks(validatedNavbarLinks, overlayDocsYmlPath) ?? [];
     }
+    // If `navbar-links` is absent, leave `overlay.navbarLinks` undefined so the
+    // docs-level CTAs are inherited.
 
     // Parse top-level tabs
     if (isPlainObject(docsYmlContent.tabs)) {
