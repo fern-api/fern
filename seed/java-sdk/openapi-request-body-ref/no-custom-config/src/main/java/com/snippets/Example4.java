@@ -10,10 +10,12 @@ public class Example4 {
                 SeedApiClient.builder().url("https://api.fern.com").build();
 
         client.catalog()
-                .createCatalogImage(CreateCatalogImageBody.builder()
-                        .request(CreateCatalogImageRequest.builder()
-                                .catalogObjectId("catalog_object_id")
-                                .build())
-                        .build());
+                .createCatalogImage(
+                        null,
+                        CreateCatalogImageBody.builder()
+                                .request(CreateCatalogImageRequest.builder()
+                                        .catalogObjectId("catalog_object_id")
+                                        .build())
+                                .build());
     }
 }
