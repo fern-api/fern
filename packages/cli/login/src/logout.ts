@@ -27,6 +27,8 @@ const LOGOUT_SUCCESS_PAGE = `
 </html>
 `;
 
+const LOGOUT_TIMEOUT_MS = 15_000;
+
 export async function logout(context: TaskContext): Promise<void> {
     context.instrumentPostHogEvent({
         command: "Logout initiated"
@@ -45,9 +47,18 @@ export async function logout(context: TaskContext): Promise<void> {
     // Start a local server to handle the Auth0 logout redirect
     const { server, origin } = await createServer();
 
-    server.addListener("request", (_request, response) => {
-        response.end(LOGOUT_SUCCESS_PAGE);
-        server.close();
+    const redirectReceived = new Promise<void>((resolve) => {
+        const timeout = setTimeout(() => {
+            server.close();
+            resolve();
+        }, LOGOUT_TIMEOUT_MS);
+
+        server.addListener("request", (_request, response) => {
+            clearTimeout(timeout);
+            response.end(LOGOUT_SUCCESS_PAGE);
+            server.close();
+            resolve();
+        });
     });
 
     const logoutUrl = constructAuth0LogoutUrl(origin);
@@ -56,7 +67,6 @@ export async function logout(context: TaskContext): Promise<void> {
 
     try {
         await open(logoutUrl);
-        context.logger.info(chalk.green("Successfully logged out! You can close the browser window."));
     } catch (error) {
         server.close();
         context.logger.warn(
@@ -65,6 +75,10 @@ export async function logout(context: TaskContext): Promise<void> {
             )
         );
     }
+
+    await redirectReceived;
+
+    context.logger.info(chalk.green("Successfully logged out!"));
 
     context.instrumentPostHogEvent({
         command: "Logout successful"
