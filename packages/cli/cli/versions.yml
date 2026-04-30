@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.2.1
+  changelogEntry:
+    - summary: |
+        Fix auth scheme descriptions being lost when using generators.yml auth-schemes.
+        When security schemes are overridden in generators.yml, Fern now preserves the
+        descriptions from the OpenAPI spec's components.securitySchemes instead of using
+        generic placeholder text.
+      type: fix
+  createdAt: "2026-04-30"
+  irVersion: 66
 - version: 5.2.0
   changelogEntry:
     - summary: |
