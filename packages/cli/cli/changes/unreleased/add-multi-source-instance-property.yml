@@ -1,0 +1,7 @@
+- summary: |
+    Add `multi-source` property to docs.yml `instances` configuration. When enabled, docs registration
+    uses a basepath-aware S3 key format, allowing multiple independent doc sites to be hosted under the
+    same custom domain with different basepaths. This replaces `experimental.basepath-aware`, which is now
+    deprecated but still supported. When `multi-source: true`, the CLI validates that the `url` and
+    `custom-domain` share the same basepath.
+  type: feat

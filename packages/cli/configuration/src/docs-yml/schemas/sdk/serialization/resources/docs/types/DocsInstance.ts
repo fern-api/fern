@@ -13,6 +13,7 @@ export const DocsInstance: core.serialization.ObjectSchema<serializers.DocsInsta
         customDomain: core.serialization.property("custom-domain", CustomDomain.optional()),
         editThisPage: core.serialization.property("edit-this-page", EditThisPageConfig.optional()),
         audiences: Audience.optional(),
+        multiSource: core.serialization.property("multi-source", core.serialization.boolean().optional()),
     });
 
 export declare namespace DocsInstance {
@@ -21,5 +22,6 @@ export declare namespace DocsInstance {
         "custom-domain"?: CustomDomain.Raw | null;
         "edit-this-page"?: EditThisPageConfig.Raw | null;
         audiences?: Audience.Raw | null;
+        "multi-source"?: boolean | null;
     }
 }
