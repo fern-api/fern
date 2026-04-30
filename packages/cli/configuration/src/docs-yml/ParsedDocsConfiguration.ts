@@ -539,7 +539,8 @@ export interface ParsedLibraryConfiguration {
 
 /**
  * Represents a navigation overlay for a single locale, extracted from
- * `translations/<lang>/fern/docs.yml` and any referenced product/version YAML files.
+ * `translations/<lang>/docs.yml` (or, for backwards compatibility,
+ * `translations/<lang>/fern/docs.yml`) and any referenced product/version YAML files.
  *
  * These overlays contain only the translatable fields (display-name, title, subtitle,
  * announcement message) keyed by the identifiers used in the source YAML (tab IDs,

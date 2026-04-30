@@ -6,7 +6,8 @@ import { FernNavigation } from "@fern-api/fdr-sdk";
  *
  * This walks the navigation tree (as a plain object) and overrides `title`,
  * `subtitle`, and `announcement` fields based on the overlay data parsed from
- * `translations/<lang>/fern/docs.yml` and nav YAML files.
+ * `translations/<lang>/docs.yml` (or `translations/<lang>/fern/docs.yml` for
+ * backwards compatibility) and nav YAML files.
  *
  * Matching strategy:
  * - Products: matched positionally against the overlay's products array

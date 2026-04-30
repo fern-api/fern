@@ -137,7 +137,7 @@ export interface PreviewDocsResult {
      */
     translationPages: Record<string, Record<RelativeFilePath, string>> | undefined;
     /**
-     * Per-locale translated navigation overlays from translations/<lang>/fern/ YAML files.
+     * Per-locale translated navigation overlays from translations/<lang>/ YAML files.
      * Key is locale, value is a parsed overlay with translated display-names, titles, etc.
      */
     translationNavigationOverlays: Record<string, TranslationNavigationOverlay> | undefined;
