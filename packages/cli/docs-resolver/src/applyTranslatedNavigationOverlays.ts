@@ -81,7 +81,8 @@ function applyChildOverlays(
                     products: undefined,
                     versions: overlay.versions,
                     announcement: productOverlay.announcement ?? overlay.announcement,
-                    navigation: productOverlay.navigation ?? overlay.navigation
+                    navigation: productOverlay.navigation ?? overlay.navigation,
+                    navbarLinks: overlay.navbarLinks
                 };
                 const walked = walkAndApply(child, scopedOverlay) as Record<string, unknown>;
                 return applyProductOverlayToNode(walked, productOverlay);
@@ -285,7 +286,8 @@ function applyTabOverlayToNode(node: Record<string, unknown>, overlay: docsYml.T
                 products: undefined,
                 versions: undefined,
                 announcement: undefined,
-                navigation: tabNavOverlay.layout
+                navigation: tabNavOverlay.layout,
+                navbarLinks: undefined
             };
             return walkAndApply(node, scopedOverlay);
         }

@@ -14,7 +14,8 @@ function emptyOverlay(): docsYml.TranslationNavigationOverlay {
         products: undefined,
         versions: undefined,
         announcement: undefined,
-        navigation: undefined
+        navigation: undefined,
+        navbarLinks: undefined
     };
 }
 
