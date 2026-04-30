@@ -273,7 +273,8 @@ export class DocsDefinitionResolver {
 
     /**
      * Returns per-locale translated navigation overlays loaded from
-     * `translations/<lang>/fern/docs.yml` and referenced nav YAML files.
+     * `translations/<lang>/docs.yml` (or `translations/<lang>/fern/docs.yml` for
+     * backwards compatibility) and referenced nav YAML files.
      * Must be called after `resolve()`.
      */
     public getTranslationNavigationOverlays():
