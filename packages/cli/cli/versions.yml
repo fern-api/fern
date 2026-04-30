@@ -1,4 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.5.0
+  changelogEntry:
+    - summary: |
+        Add `alpha`, `beta`, `preview`, and `legacy` as supported values for the
+        `x-fern-availability` OpenAPI extension and the `availability` field
+        in Fern Definitions. These flow through the IR to generators and docs.
+      type: feat
+    - summary: |
+        Use first-class FDR Availability values (Alpha, Preview, Legacy) when
+        converting IR to FDR, replacing the previous fallback mappings to Beta /
+        Deprecated. Bumps @fern-api/fdr-sdk to a release that includes the new
+        enum values.
+      type: feat
+  createdAt: "2026-04-30"
+  irVersion: 66
 - version: 5.4.3
   changelogEntry:
     - summary: |
