@@ -103,7 +103,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             offsetSemantics: parsed?.offsetSemantics ?? "item-index",
             customPagerName: parsed?.customPagerName ?? "CustomPager",
             resolveQueryParameterNameConflicts: parsed?.resolveQueryParameterNameConflicts ?? false,
-            maxRetries: parsed?.maxRetries
+            maxRetries: parsed?.maxRetries,
+            retryStatusCodes: parsed?.retryStatusCodes ?? "legacy"
         };
 
         if (parsed?.noSerdeLayer === false && typeof parsed?.enableInlineTypes === "undefined") {
@@ -284,7 +285,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             fileResponseType: customConfig.fileResponseType,
             formDataSupport: customConfig.formDataSupport,
             fetchSupport: customConfig.fetchSupport,
-            testFramework: customConfig.testFramework
+            testFramework: customConfig.testFramework,
+            retryStatusCodes: customConfig.retryStatusCodes ?? "legacy"
         };
     }
 

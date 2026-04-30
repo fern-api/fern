@@ -5,7 +5,9 @@ module Seed
     module Types
       class CreateUsernameBody < Internal::Types::Model
         field :username, -> { String }, optional: false, nullable: false
+
         field :password, -> { String }, optional: false, nullable: false
+
         field :name, -> { String }, optional: false, nullable: false
       end
     end

@@ -197,6 +197,19 @@ function createEndpointRequestMockContext(opts?: { shouldInlinePathParams?: bool
                     }
                 }
             },
+            urlUtils: {
+                queryBuilder: {
+                    _invoke: () =>
+                        ts.factory.createCallExpression(
+                            ts.factory.createPropertyAccessExpression(
+                                ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier("core"), "url"),
+                                "queryBuilder"
+                            ),
+                            undefined,
+                            []
+                        )
+                }
+            },
             auth: {
                 AuthRequest: {
                     _getReferenceToType: () => ts.factory.createTypeReferenceNode("core.AuthRequest")

@@ -633,13 +633,19 @@ export class EndpointSnippetGenerator extends WithGeneration {
         pathParameterFields: ast.ConstructorField[];
         filePropertyInfo: FilePropertyInfo;
     }): ast.Literal {
+        // Create class reference first to enable property-vs-class name collision detection.
+        const classReference = this.csharp.classReference({
+            origin: request.declaration,
+            namespace: this.context.getNamespace(request.declaration.fernFilepath)
+        });
+
         this.context.errors.scope(Scope.QueryParameters);
         const queryParameters = this.context.associateQueryParametersByWireValue({
             parameters: request.queryParameters ?? [],
             values: snippet.queryParameters ?? {}
         });
         const queryParameterFields = queryParameters.map((queryParameter) => ({
-            name: this.context.getPropertyName(queryParameter.name.name),
+            name: this.context.resolvePropertyName(classReference, queryParameter.name.name),
             value: this.context.dynamicLiteralMapper.convert(queryParameter)
         }));
         this.context.errors.unscope();
@@ -650,7 +656,7 @@ export class EndpointSnippetGenerator extends WithGeneration {
             values: snippet.headers ?? {}
         });
         const headerFields = headers.map((header) => ({
-            name: this.context.getPropertyName(header.name.name),
+            name: this.context.resolvePropertyName(classReference, header.name.name),
             value: this.context.dynamicLiteralMapper.convert({
                 ...header,
                 fallbackToDefault: header.name.wireValue
@@ -664,16 +670,14 @@ export class EndpointSnippetGenerator extends WithGeneration {
                 ? this.getInlinedRequestBodyConstructorFields({
                       body: request.body,
                       value: snippet.requestBody,
-                      filePropertyInfo
+                      filePropertyInfo,
+                      classReference
                   })
                 : [];
         this.context.errors.unscope();
 
         return this.csharp.Literal.class_({
-            reference: this.csharp.classReference({
-                origin: request.declaration,
-                namespace: this.context.getNamespace(request.declaration.fernFilepath)
-            }),
+            reference: classReference,
             fields: [...pathParameterFields, ...queryParameterFields, ...headerFields, ...requestBodyFields]
         });
     }
@@ -681,17 +685,23 @@ export class EndpointSnippetGenerator extends WithGeneration {
     private getInlinedRequestBodyConstructorFields({
         body,
         value,
-        filePropertyInfo
+        filePropertyInfo,
+        classReference
     }: {
         body: FernIr.dynamic.InlinedRequestBody;
         value: unknown;
         filePropertyInfo: FilePropertyInfo;
+        classReference: ast.ClassReference;
     }): ast.ConstructorField[] {
         switch (body.type) {
             case "properties":
-                return this.getInlinedRequestBodyPropertyConstructorFields({ parameters: body.value, value });
+                return this.getInlinedRequestBodyPropertyConstructorFields({
+                    parameters: body.value,
+                    value,
+                    classReference
+                });
             case "referenced":
-                return [this.getReferencedRequestBodyPropertyConstructorField({ body, value })];
+                return [this.getReferencedRequestBodyPropertyConstructorField({ body, value, classReference })];
             case "fileUpload":
                 return this.getFileUploadRequestBodyConstructorFields({ filePropertyInfo });
             default:
@@ -701,10 +711,12 @@ export class EndpointSnippetGenerator extends WithGeneration {
 
     private getInlinedRequestBodyPropertyConstructorFields({
         parameters,
-        value
+        value,
+        classReference
     }: {
         parameters: FernIr.dynamic.NamedParameter[];
         value: unknown;
+        classReference: ast.ClassReference;
     }): ast.ConstructorField[] {
         const fields: ast.ConstructorField[] = [];
 
@@ -714,7 +726,7 @@ export class EndpointSnippetGenerator extends WithGeneration {
         });
         for (const parameter of bodyProperties) {
             fields.push({
-                name: this.context.getPropertyName(parameter.name.name),
+                name: this.context.resolvePropertyName(classReference, parameter.name.name),
                 value: this.context.dynamicLiteralMapper.convert({
                     ...parameter,
                     fallbackToDefault: parameter.name.wireValue
@@ -735,13 +747,15 @@ export class EndpointSnippetGenerator extends WithGeneration {
 
     private getReferencedRequestBodyPropertyConstructorField({
         body,
-        value
+        value,
+        classReference
     }: {
         body: FernIr.dynamic.ReferencedRequestBody;
         value: unknown;
+        classReference: ast.ClassReference;
     }): ast.ConstructorField {
         return {
-            name: this.context.getPropertyName(body.bodyKey),
+            name: this.context.resolvePropertyName(classReference, body.bodyKey),
             value: this.getReferencedRequestBodyPropertyLiteral({ body: body.bodyType, value })
         };
     }

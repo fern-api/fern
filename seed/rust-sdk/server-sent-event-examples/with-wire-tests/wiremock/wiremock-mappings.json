@@ -53,6 +53,32 @@
       }
     },
     {
+      "id": "b9c132a6-4cb0-462f-a27c-c8c4c9a457d4",
+      "name": "streamEventsDiscriminantInData - Stream events where discriminant is embedded in data and SSE event line is empty",
+      "request": {
+        "urlPathTemplate": "/stream-events-discriminant-in-data",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "body": "event: message\ndata: {\"type\":\"group.created\",\"offset\":\"offset-1\",\"group_id\":\"g1\"}\n\nevent: message\ndata: {\"type\":\"group.deleted\",\"offset\":\"offset-2\",\"group_id\":\"g2\"}\n",
+        "headers": {
+          "Content-Type": "text/event-stream"
+        }
+      },
+      "uuid": "b9c132a6-4cb0-462f-a27c-c8c4c9a457d4",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "0913bb86-4b39-4c8a-9875-111a5210a147",
       "name": "streamEventsContextProtocol - Stream events context protocol",
       "request": {
@@ -80,6 +106,6 @@
     }
   ],
   "meta": {
-    "total": 3
+    "total": 4
   }
 }

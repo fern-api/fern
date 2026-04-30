@@ -43,7 +43,7 @@ Repository = 'https://github.com/exhaustive/fern'
 [tool.poetry.dependencies]
 python = "^3.10"
 aiohttp = { version = ">=3.13.4,<4", optional = true, python = ">=3.9"}
-boto3 = "1.28.57"
+boto3 = "1.35.76"
 httpx = ">=0.21.2"
 httpx-aiohttp = { version = "0.1.8", optional = true, python = ">=3.9"}
 numpy = { version = "^2.0", optional = true, python = ">=3.10"}
@@ -58,7 +58,7 @@ pytest-asyncio = "^1.0.0"
 pytest-xdist = "^3.6.1"
 python-dateutil = "^2.9.0"
 types-python-dateutil = "^2.9.0.20240316"
-urllib3 = ">=1.26.19,<2.0.0 || >=2.2.2,<3.0.0"
+urllib3 = ">=2.6.3,<3.0.0"
 ruff = "==0.11.5"
 
 [tool.pytest.ini_options]

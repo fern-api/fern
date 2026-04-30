@@ -9,6 +9,9 @@ import {
 import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
+import { GeneratorError, resolveErrorCode, shouldReportToSentry } from "./GeneratorError.js";
+import { SentryClient } from "./telemetry/SentryClient.js";
+import { shouldTrackLocalVariablesInSentry } from "./telemetry/shouldTrackLocalVariablesInSentry.js";
 
 export declare namespace AbstractGeneratorCli {
     interface Options {
@@ -27,10 +30,16 @@ export abstract class AbstractGeneratorCli<
 
     public async run(options: AbstractGeneratorCli.Options = {}): Promise<void> {
         const config = await getGeneratorConfig();
-        const generatorNotificationService = options.disableNotifications
+        let sentryClient: SentryClient | undefined;
+        let generatorNotificationService: AbstractGeneratorNotificationService = options.disableNotifications
             ? new NopGeneratorNotificationService()
             : new GeneratorNotificationService(config.environment);
         try {
+            sentryClient = new SentryClient({
+                workspaceName: config.workspaceName,
+                organization: config.organization,
+                shouldTrackLocalVariables: shouldTrackLocalVariablesInSentry(config)
+            });
             await generatorNotificationService.sendUpdate(
                 FernGeneratorExec.GeneratorUpdate.initV2({
                     publishingToRegistry: "MAVEN"
@@ -71,14 +80,23 @@ export abstract class AbstractGeneratorCli<
                 FernGeneratorExec.GeneratorUpdate.exitStatusUpdate(FernGeneratorExec.ExitStatusUpdate.successful({}))
             );
         } catch (e) {
-            await generatorNotificationService.sendUpdate(
-                FernGeneratorExec.GeneratorUpdate.exitStatusUpdate(
-                    FernGeneratorExec.ExitStatusUpdate.error({
-                        message: e instanceof Error ? e.message : "Encountered error"
-                    })
-                )
-            );
+            const errorCode = resolveErrorCode(e);
+            if (shouldReportToSentry(e)) {
+                await sentryClient?.captureException(e);
+            }
+            if (generatorNotificationService != null) {
+                const exitMessage = e instanceof Error ? e.message : "Encountered error";
+                await generatorNotificationService.sendUpdate(
+                    FernGeneratorExec.GeneratorUpdate.exitStatusUpdate(
+                        FernGeneratorExec.ExitStatusUpdate.error({
+                            message: exitMessage
+                        })
+                    )
+                );
+            }
             throw e;
+        } finally {
+            await sentryClient?.flush();
         }
     }
 
@@ -140,7 +158,7 @@ export abstract class AbstractGeneratorCli<
 async function getGeneratorConfig(): Promise<FernGeneratorExec.GeneratorConfig> {
     const pathToConfig = process.argv[process.argv.length - 1];
     if (pathToConfig == null) {
-        throw new Error("No argument for config filepath was provided.");
+        throw GeneratorError.environmentError("No argument for config filepath was provided.");
     }
     const rawConfig = await readFile(pathToConfig);
     console.log(`Reading ${pathToConfig}`);
@@ -150,7 +168,7 @@ async function getGeneratorConfig(): Promise<FernGeneratorExec.GeneratorConfig> 
         unrecognizedObjectKeys: "passthrough"
     });
     if (!validatedConfig.ok) {
-        throw new Error(
+        throw GeneratorError.validationError(
             `The generator config failed to pass validation. ${validatedConfig.errors.map((e) => (typeof e === "object" ? JSON.stringify(e) : String(e))).join(", ")}`
         );
     }

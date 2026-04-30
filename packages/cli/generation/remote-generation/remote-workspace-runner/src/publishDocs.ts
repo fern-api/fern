@@ -3,7 +3,16 @@ import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { docsYml, generatorsYml } from "@fern-api/configuration";
 import { createFdrService } from "@fern-api/core";
 import { MediaType, replaceEnvVariables } from "@fern-api/core-utils";
-import { DocsDefinitionResolver, UploadedFile, wrapWithHttps } from "@fern-api/docs-resolver";
+import {
+    applyTranslatedFrontmatterToNavTree,
+    applyTranslatedNavigationOverlays,
+    DocsDefinitionResolver,
+    getTranslatedAnnouncement,
+    replaceImagePathsAndUrls,
+    stripMdxComments,
+    UploadedFile,
+    wrapWithHttps
+} from "@fern-api/docs-resolver";
 import { APIV1Write, FdrAPI as CjsFdrSdk, DocsV1Write, DocsV2Write, FdrClient } from "@fern-api/fdr-sdk";
 
 type DynamicIr = APIV1Write.DynamicIr;
@@ -11,6 +20,7 @@ type DynamicIRUpload = APIV1Write.DynamicIRUpload;
 type SnippetsConfig = APIV1Write.SnippetsConfig;
 type DocsDefinition = DocsV1Write.DocsDefinition;
 
+import { stitchGlobalTheme } from "@fern-api/docs-resolver";
 import { AbsoluteFilePath, convertToFernHostRelativeFilePath, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { convertIrToDynamicSnippetsIr, generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { getOriginalName } from "@fern-api/ir-utils";
@@ -130,7 +140,9 @@ export async function publishDocs({
     docsUrl,
     cliVersion,
     ciSource,
-    deployerAuthor
+    deployerAuthor,
+    loginCommand = "fern login",
+    multiSource = false
 }: {
     token: FernToken;
     organization: string;
@@ -152,6 +164,12 @@ export async function publishDocs({
     cliVersion?: string;
     ciSource?: CISource;
     deployerAuthor?: { username?: string; email?: string };
+    /**
+     * CLI command to reference in auth-failure hints (e.g. 'fern login' for v1,
+     * 'fern auth login' for CLI v2). Defaults to 'fern login'.
+     */
+    loginCommand?: string;
+    multiSource?: boolean;
 }): Promise<string> {
     const fdrOrigin = process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com";
     const isAirGapped = await detectAirGappedMode(`${fdrOrigin}/health`, context.logger);
@@ -190,10 +208,15 @@ export async function publishDocs({
     const basePath = parseBasePath(domain);
     const disableDynamicSnippets =
         docsWorkspace.config.experimental && docsWorkspace.config.experimental.dynamicSnippets === false;
-    const isBasepathAware = docsWorkspace.config.experimental?.basepathAware === true;
+    if (docsWorkspace.config.experimental?.basepathAware === true) {
+        context.logger.warn(
+            "experimental.basepath-aware is deprecated. Use 'multi-source: true' on the instance instead."
+        );
+    }
+    const isBasepathAware = multiSource || docsWorkspace.config.experimental?.basepathAware === true;
 
     if (isBasepathAware) {
-        context.logger.debug("Experimental flag 'basepath-aware' is enabled - using basepath-aware S3 key format");
+        context.logger.debug("Basepath-aware mode is enabled - using basepath-aware S3 key format");
     }
 
     let deployLocked = false;
@@ -216,9 +239,17 @@ export async function publishDocs({
     process.on("SIGTERM", onSignal);
 
     try {
+        const effectiveWorkspace = await stitchGlobalTheme({
+            docsWorkspace,
+            organization,
+            fdrOrigin,
+            token: token.value,
+            taskContext: context
+        });
+
         const resolver = new DocsDefinitionResolver({
             domain,
-            docsWorkspace,
+            docsWorkspace: effectiveWorkspace,
             ossWorkspaces,
             apiWorkspaces,
             taskContext: context,
@@ -321,7 +352,7 @@ export async function publishDocs({
                             previewId: previewId != null ? sanitizePreviewId(previewId) : undefined
                         });
                     } catch (error) {
-                        return await startDocsRegisterFailed(error, context, organization, domain);
+                        return await startDocsRegisterFailed(error, context, organization, domain, loginCommand);
                     }
                     urlToOutput = startDocsRegisterResponse.previewUrl;
                     docsRegistrationId = startDocsRegisterResponse.docsRegistrationId;
@@ -371,7 +402,7 @@ export async function publishDocs({
                             ...(isBasepathAware && { basepathAware: true })
                         });
                     } catch (error) {
-                        return startDocsRegisterFailed(error, context, organization, domain);
+                        return startDocsRegisterFailed(error, context, organization, domain, loginCommand);
                     }
                     docsRegistrationId = startDocsRegisterResponse.docsRegistrationId;
                     deployLocked = true;
@@ -605,6 +636,150 @@ export async function publishDocs({
         const publishTime = performance.now() - publishStart;
         context.logger.debug(`Docs published to FDR in ${publishTime.toFixed(0)}ms`);
 
+        // Register translated page content for each configured locale.
+        // In preview mode, register translations against the preview URL (not the production domain)
+        // so that translated docs are visible in preview without overwriting production translations.
+        const translationPages = resolver.getTranslationPages();
+        const translationNavigationOverlays = resolver.getTranslationNavigationOverlays();
+        const translationDomain = preview ? urlToOutput : domain;
+        if (translationPages != null && Object.keys(translationPages).length > 0) {
+            context.logger.info(`Registering translations for ${Object.keys(translationPages).length} locale(s)...`);
+            await Promise.all(
+                Object.entries(translationPages).map(async ([locale, localePages]) => {
+                    try {
+                        // Build a translated DocsDefinition by taking the base definition,
+                        // overriding translated pages, and updating the nav tree to reflect
+                        // any sidebar-title / slug frontmatter in the translated pages.
+                        //
+                        // For each translated page, we apply the same transformations as default locale pages:
+                        // 1. Strip MDX comments to prevent leakage
+                        // 2. Replace relative image paths with file IDs (using base page path for resolution)
+                        // 3. Preserve editThisPageUrl/editThisPageLaunch from the base page
+                        //
+                        // TODO(translations-alpha): Translated pages still need:
+                        // - replaceReferencedMarkdown/Code for <Markdown src="..."/> and <CodeBlock src="..."/>
+                        // - transformAtPrefixImports for @/... and @components/... imports
+                        const collectedFileIds = resolver.getCollectedFileIds();
+                        const docsWorkspacePath = resolver.getDocsWorkspacePath();
+
+                        const translatedPages = {
+                            ...docsDefinition.pages,
+                            ...Object.fromEntries(
+                                Object.entries(localePages)
+                                    .map(([path, rawMarkdown]) => {
+                                        try {
+                                            const basePage = docsDefinition.pages[path as DocsV1Write.PageId];
+                                            // Strip MDX comments first
+                                            let processedMarkdown = stripMdxComments(rawMarkdown);
+                                            // Replace image paths using the base page's location for resolution
+                                            // (translated pages reference the same images as the default locale)
+                                            const absolutePathToMarkdownFile = resolve(
+                                                docsWorkspacePath,
+                                                RelativeFilePath.of(path)
+                                            );
+                                            processedMarkdown = replaceImagePathsAndUrls(
+                                                processedMarkdown,
+                                                collectedFileIds,
+                                                {}, // markdownFilesToPathName not needed for translations
+                                                {
+                                                    absolutePathToMarkdownFile,
+                                                    absolutePathToFernFolder: docsWorkspacePath
+                                                },
+                                                context
+                                            );
+                                            // Rewrite editThisPageUrl to point to the translated file
+                                            // URL format: .../fern/${path}?plain=1 -> .../fern/translations/${locale}/${path}?plain=1
+                                            let editThisPageUrl = basePage?.editThisPageUrl;
+                                            if (editThisPageUrl != null) {
+                                                // Replace /fern/${path} with /fern/translations/${locale}/${path}
+                                                const fernPathPattern = `/fern/${path}`;
+                                                const translatedPath = `/fern/translations/${locale}/${path}`;
+                                                editThisPageUrl = editThisPageUrl.replace(
+                                                    fernPathPattern,
+                                                    translatedPath
+                                                ) as typeof editThisPageUrl;
+                                            }
+                                            return [
+                                                path,
+                                                {
+                                                    markdown: processedMarkdown,
+                                                    rawMarkdown: processedMarkdown,
+                                                    editThisPageUrl,
+                                                    editThisPageLaunch: basePage?.editThisPageLaunch
+                                                }
+                                            ];
+                                        } catch (pageError) {
+                                            context.logger.warn(
+                                                `Failed to process translated page "${path}" for locale "${locale}": ${String(pageError)}. Falling back to base page.`
+                                            );
+                                            return undefined;
+                                        }
+                                    })
+                                    .filter((entry): entry is NonNullable<typeof entry> => entry != null)
+                            )
+                        };
+                        let updatedRoot = applyTranslatedFrontmatterToNavTree(
+                            docsDefinition.config.root,
+                            // localePages is Record<RelativeFilePath, string> (path -> raw markdown)
+                            localePages as Record<string, string>,
+                            context
+                        );
+
+                        // Apply navigation overlay (translated display-names, titles, etc.)
+                        const localeNavOverlay = translationNavigationOverlays?.[locale];
+                        let translatedAnnouncement = docsDefinition.config.announcement;
+                        let translatedNavbarLinks = docsDefinition.config.navbarLinks;
+                        if (localeNavOverlay != null) {
+                            updatedRoot = applyTranslatedNavigationOverlays(updatedRoot, localeNavOverlay);
+                            translatedAnnouncement =
+                                getTranslatedAnnouncement(localeNavOverlay) ?? translatedAnnouncement;
+                            if (localeNavOverlay.navbarLinks != null) {
+                                translatedNavbarLinks = localeNavOverlay.navbarLinks;
+                            }
+                        }
+
+                        const translatedDefinition: DocsDefinition = {
+                            ...docsDefinition,
+                            pages: translatedPages,
+                            config: {
+                                ...docsDefinition.config,
+                                root: updatedRoot,
+                                announcement: translatedAnnouncement,
+                                navbarLinks: translatedNavbarLinks
+                            }
+                        };
+                        const pageCount = Object.keys(localePages).length;
+                        context.logger.debug(
+                            `Sending translation for locale "${locale}" (${pageCount} page${pageCount === 1 ? "" : "s"})`
+                        );
+                        // Use a raw fetch instead of the oRPC client to send `docsDefinition`
+                        // (the live server expects that field; the published fdr-sdk still uses `content`).
+                        const translationResponse = await fetch(`${fdrOrigin}/v2/registry/docs/translations/register`, {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                Authorization: `Bearer ${token.value}`,
+                                ...headers // Include telemetry headers (X-CLI-Version, X-CI-Source, etc.)
+                            },
+                            body: JSON.stringify({
+                                domain: translationDomain,
+                                orgId: organization,
+                                locale,
+                                docsDefinition: translatedDefinition
+                            })
+                        });
+                        if (!translationResponse.ok) {
+                            const body = await translationResponse.text();
+                            throw new Error(`HTTP ${translationResponse.status}: ${body}`);
+                        }
+                        context.logger.debug(`Registered translations for locale "${locale}"`);
+                    } catch (error) {
+                        context.logger.warn(`Failed to register translations for locale "${locale}": ${String(error)}`);
+                    }
+                })
+            );
+        }
+
         const url = wrapWithHttps(urlToOutput);
         await updateAiChatFromDocsDefinition({
             docsDefinition,
@@ -723,7 +898,8 @@ async function startDocsRegisterFailed(
     error: unknown,
     context: TaskContext,
     organization: string,
-    domain: string
+    domain: string,
+    loginCommand: string
 ): Promise<never> {
     context.instrumentPostHogEvent({
         command: "docs-generation",
@@ -743,7 +919,7 @@ async function startDocsRegisterFailed(
         throw new DocsPublishConflictError();
     }
 
-    const authErrorMessage = getAuthenticationErrorMessage(error, organization, domain);
+    const authErrorMessage = getAuthenticationErrorMessage(error, organization, domain, loginCommand);
     if (authErrorMessage != null) {
         return context.failAndThrow(authErrorMessage, undefined, { code: CliError.Code.AuthError });
     }
@@ -763,12 +939,16 @@ async function startDocsRegisterFailed(
                 { code: CliError.Code.ConfigError }
             );
         case "UnauthorizedError":
-            return context.failAndThrow(buildAuthFailureMessage(domain, organization, errorContent), undefined, {
-                code: CliError.Code.AuthError
-            });
+            return context.failAndThrow(
+                buildAuthFailureMessage(domain, organization, errorContent, loginCommand),
+                undefined,
+                {
+                    code: CliError.Code.AuthError
+                }
+            );
         case "UserNotInOrgError":
             return context.failAndThrow(
-                `You do not belong to organization '${organization}'. Please run 'fern login' to ensure you are logged in with the correct account.\n\n` +
+                `You do not belong to organization '${organization}'. Please run '${loginCommand}' to ensure you are logged in with the correct account.\n\n` +
                     "Please ensure you have membership at https://dashboard.buildwithfern.com, and ask a team member for an invite if not.",
                 undefined,
                 { code: CliError.Code.AuthError }
@@ -784,15 +964,24 @@ async function startDocsRegisterFailed(
     }
 }
 
-function getAuthenticationErrorMessage(error: unknown, organization: string, domain: string): string | undefined {
-    const errorObj = error as Record<string, unknown>;
-    const content = errorObj?.content as Record<string, unknown> | undefined;
+function getAuthenticationErrorMessage(
+    error: unknown,
+    organization: string,
+    domain: string,
+    loginCommand: string
+): string | undefined {
+    if (typeof error !== "object" || error == null) {
+        return undefined;
+    }
+    const rawContent = (error as Record<string, unknown>).content;
+    const content: Record<string, unknown> | undefined =
+        typeof rawContent === "object" && rawContent != null ? (rawContent as Record<string, unknown>) : undefined;
 
     if (content?.reason === "status-code") {
-        const statusCode = content.statusCode as number | undefined;
+        const statusCode = typeof content.statusCode === "number" ? content.statusCode : undefined;
 
         if (statusCode === 401 || statusCode === 403) {
-            return buildAuthFailureMessage(domain, organization, content);
+            return buildAuthFailureMessage(domain, organization, content, loginCommand);
         }
     }
 
@@ -802,15 +991,16 @@ function getAuthenticationErrorMessage(error: unknown, organization: string, dom
 function buildAuthFailureMessage(
     domain: string,
     organization: string,
-    errorContent: Record<string, unknown> | undefined
+    errorContent: Record<string, unknown> | undefined,
+    loginCommand: string
 ): string {
     const { code, message } = extractServerError(errorContent);
 
     switch (code) {
         case "FORBIDDEN":
-            return buildForbiddenMessage(domain, organization, message);
+            return buildForbiddenMessage(domain, organization, message, loginCommand);
         case "UNAUTHORIZED":
-            return buildUnauthorizedMessage(organization, message);
+            return buildUnauthorizedMessage(organization, message, loginCommand);
         case "INTERNAL_SERVER_ERROR":
             return `An internal server error occurred while publishing docs to '${domain}'. Please try again or reach out to support@buildwithfern.com for assistance.`;
         default:
@@ -827,7 +1017,12 @@ function buildAuthFailureMessage(
 // admin contact guidance, so we pass them through directly.
 const FORBIDDEN_ORG_MEMBERSHIP_PATTERNS = ["does not belong to organization", "User does not belong"];
 
-function buildForbiddenMessage(domain: string, organization: string, message: string | undefined): string {
+function buildForbiddenMessage(
+    domain: string,
+    organization: string,
+    message: string | undefined,
+    loginCommand: string
+): string {
     if (message == null) {
         return `You do not have permission to publish docs to '${domain}' under organization '${organization}'.`;
     }
@@ -835,7 +1030,7 @@ function buildForbiddenMessage(domain: string, organization: string, message: st
     if (FORBIDDEN_ORG_MEMBERSHIP_PATTERNS.some((pattern) => message.includes(pattern))) {
         return (
             `You are not a member of organization '${organization}'. ` +
-            "Please run 'fern login' to ensure you are logged in with the correct account.\n\n" +
+            `Please run '${loginCommand}' to ensure you are logged in with the correct account.\n\n` +
             "Please ensure you have membership at https://dashboard.buildwithfern.com, and ask a team member for an invite if not."
         );
     }
@@ -843,14 +1038,14 @@ function buildForbiddenMessage(domain: string, organization: string, message: st
     return message;
 }
 
-function buildUnauthorizedMessage(organization: string, message: string | undefined): string {
+function buildUnauthorizedMessage(organization: string, message: string | undefined, loginCommand: string): string {
     if (message != null && message.includes("Invalid authorization token")) {
-        return "Your authentication token is invalid or expired. " + "Please run 'fern login' to re-authenticate.";
+        return "Your authentication token is invalid or expired. " + `Please run '${loginCommand}' to re-authenticate.`;
     }
 
     return (
         `You are not authorized to publish docs under organization '${organization}'. ` +
-        "Please run 'fern login' to ensure you are logged in with the correct account.\n\n" +
+        `Please run '${loginCommand}' to ensure you are logged in with the correct account.\n\n` +
         "Please ensure you have membership at https://dashboard.buildwithfern.com, and ask a team member for an invite if not."
     );
 }

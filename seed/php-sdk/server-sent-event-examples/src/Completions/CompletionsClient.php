@@ -11,6 +11,7 @@ use Seed\Core\Json\JsonApiRequest;
 use Seed\Core\Client\HttpMethod;
 use Psr\Http\Client\ClientExceptionInterface;
 use Seed\Completions\Requests\StreamEventsRequest;
+use Seed\Completions\Requests\StreamEventsDiscriminantInDataRequest;
 use Seed\Completions\Requests\StreamEventsContextProtocolRequest;
 
 class CompletionsClient
@@ -107,6 +108,43 @@ class CompletionsClient
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "stream-events",
+                    method: HttpMethod::POST,
+                    body: $request,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+        } catch (ClientExceptionInterface $e) {
+            throw new SeedException(message: $e->getMessage(), previous: $e);
+        }
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * @param StreamEventsDiscriminantInDataRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @throws SeedException
+     * @throws SeedApiException
+     */
+    public function streamEventsDiscriminantInData(StreamEventsDiscriminantInDataRequest $request, ?array $options = null): void
+    {
+        $options = array_merge($this->options, $options ?? []);
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "stream-events-discriminant-in-data",
                     method: HttpMethod::POST,
                     body: $request,
                 ),

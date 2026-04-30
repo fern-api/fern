@@ -3954,7 +3954,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.reqWithHeaders.getWithCustomHeader(request: .init(body: "string"))
+    _ = try await client.reqWithHeaders.getWithCustomHeader(request: "string")
 }
 
 try await main()

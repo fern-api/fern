@@ -4,11 +4,8 @@ import type * as SeedEnum from "../../api/index.js";
 import * as core from "../../core/index.js";
 import type * as serializers from "../index.js";
 
-export const Operand: core.serialization.Schema<serializers.Operand.Raw, SeedEnum.Operand> = core.serialization.enum_([
-    ">",
-    "=",
-    "less_than",
-]);
+export const Operand: core.serialization.Schema<serializers.Operand.Raw, SeedEnum.Operand> =
+    core.serialization.forwardCompatibleEnum_([">", "=", "less_than"]);
 
 export declare namespace Operand {
     export type Raw = ">" | "=" | "less_than";

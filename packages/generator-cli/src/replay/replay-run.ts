@@ -1,4 +1,4 @@
-import { LockfileManager, type ReplayReport, ReplayService } from "@fern-api/replay";
+import { LockfileManager, type ReplayPreparation, type ReplayReport, ReplayService } from "@fern-api/replay";
 import { execFileSync } from "child_process";
 import { existsSync } from "fs";
 import { join } from "path";
@@ -32,7 +32,52 @@ export interface ReplayRunResult {
     baseBranchHead: string | null;
 }
 
-export async function replayRun(params: ReplayRunParams): Promise<ReplayRunResult> {
+/**
+ * Opaque handle returned by `replayPrepare()` and consumed by `replayApply()`.
+ *
+ * Between prepare and apply, HEAD is at the new `[fern-generated]` commit (or unchanged
+ * for dry-run / skip-application terminals). Consumers MAY land additional commits on
+ * HEAD (e.g. `[fern-autoversion]`) — apply will run patches on top of current HEAD at
+ * call time while rebasing stored patches against the pure `[fern-generated]` tree.
+ *
+ * If apply is never reached, the working tree has the new `[fern-generated]` commit
+ * but the lockfile is stale. Callers MUST either call apply (which advances the
+ * lockfile) or reset HEAD to `previousGenerationSha`.
+ */
+export interface PreparedReplay {
+    /** @internal Service instance carrying in-memory state across phases. */
+    _service: ReplayService;
+    /** @internal Preparation state handed to the service's apply phase. */
+    _preparation: ReplayPreparation;
+    /** Working tree / git repo the replay operates on. */
+    outputDir: string;
+    /** Flow selected by the service during prepare. */
+    flow: ReplayPreparation["flow"];
+    /** SHA of the `[fern-generated]` commit before this run; null if no prior generation. */
+    previousGenerationSha: string | null;
+    /** SHA of the new `[fern-generated]` commit created by prepare (or prior HEAD for dry-run terminals). */
+    currentGenerationSha: string;
+    /** SHA of main's HEAD captured before prepare mutated anything. */
+    baseBranchHead: string | null;
+}
+
+export interface ReplayApplyParams {
+    /** Don't commit, just stage changes. Default: false */
+    stageOnly?: boolean;
+    /** Optional logger for diagnostic output */
+    logger?: PipelineLogger;
+}
+
+/**
+ * Phase 1 of the split replay flow. Reads the lockfile, syncs divergent merges if a
+ * `fern-generation-base` tag indicates a squash-merged PR, and invokes the replay
+ * service's `prepareReplay`. Leaves HEAD at the new `[fern-generated]` commit.
+ *
+ * Returns `null` when replay isn't initialized (no lockfile). Callers that also need
+ * to skip the entire flow in that case should check for `null` before wiring into
+ * `replayApply`.
+ */
+export async function replayPrepare(params: ReplayRunParams): Promise<PreparedReplay | null> {
     const {
         outputDir,
         cliVersion,
@@ -45,18 +90,9 @@ export async function replayRun(params: ReplayRunParams): Promise<ReplayRunResul
     const lockfilePath = join(outputDir, ".fern", "replay.lock");
 
     if (!existsSync(lockfilePath)) {
-        return {
-            report: null,
-            fernignoreUpdated: false,
-            previousGenerationSha: null,
-            currentGenerationSha: null,
-            baseBranchHead: null
-        };
+        return null;
     }
 
-    // Capture main's HEAD before replay modifies anything.
-    // This is always on main's lineage, unlike generation SHAs which
-    // may end up on dead branches after squash merges.
     const baseBranchHead = gitRevParse(outputDir, "HEAD");
 
     let previousGenerationSha: string | null = null;
@@ -73,7 +109,6 @@ export async function replayRun(params: ReplayRunParams): Promise<ReplayRunResul
         // If lockfile can't be read, proceed without SHA
     }
 
-    // Always check tag — old generation IS reachable, so !isReachable is not a valid gate
     if (previousGenerationSha != null) {
         const sanitizedName = generatorName?.replace(/\//g, "--");
         const namespacedTag = sanitizedName != null ? `fern-generation-base--${sanitizedName}` : null;
@@ -122,13 +157,10 @@ export async function replayRun(params: ReplayRunParams): Promise<ReplayRunResul
         }
     }
 
-    const service = new ReplayService(outputDir, {
-        enabled: true
-    });
-
-    let report: ReplayReport;
+    const service = new ReplayService(outputDir, { enabled: true });
+    let preparation: ReplayPreparation;
     try {
-        report = await service.runReplay({
+        preparation = await service.prepareReplay({
             cliVersion,
             generatorVersions,
             stageOnly,
@@ -136,43 +168,95 @@ export async function replayRun(params: ReplayRunParams): Promise<ReplayRunResul
             baseBranchHead: baseBranchHead ?? undefined
         });
     } catch (error) {
-        // Don't fail generation because of replay errors
+        // Mirror the pre-split contract: replay failures never fail generation.
+        // Corrupted lockfiles, unreachable base generations, etc. are logged and
+        // the caller proceeds as if replay were disabled for this run.
+        logger?.warn("Replay failed, continuing without replay: " + String(error));
+        return null;
+    }
+
+    return {
+        _service: service,
+        _preparation: preparation,
+        outputDir,
+        flow: preparation.flow,
+        previousGenerationSha,
+        currentGenerationSha: preparation.currentGenerationSha,
+        baseBranchHead
+    };
+}
+
+/**
+ * Phase 2 of the split replay flow. Applies patches, rebases them, writes the
+ * lockfile, and commits `[fern-replay]` (or stages under `stageOnly`). Refreshes
+ * `baseBranchHead` from the lockfile afterward in case the service recorded a
+ * newer value during apply. Also ensures `.fernignore` / `.gitattributes` entries
+ * exist.
+ *
+ * Errors from `applyPreparedReplay` are caught and logged; a null report is
+ * returned rather than aborting generation, mirroring the pre-split behavior.
+ */
+export async function replayApply(prepared: PreparedReplay, params: ReplayApplyParams = {}): Promise<ReplayRunResult> {
+    const { stageOnly = false, logger } = params;
+
+    let report: ReplayReport;
+    try {
+        report = await prepared._service.applyPreparedReplay(prepared._preparation, { stageOnly });
+    } catch (error) {
         logger?.warn("Replay failed, continuing without replay: " + String(error));
         return {
             report: null,
             fernignoreUpdated: false,
-            previousGenerationSha,
-            currentGenerationSha: null,
-            baseBranchHead
+            previousGenerationSha: prepared.previousGenerationSha,
+            currentGenerationSha: prepared.currentGenerationSha,
+            baseBranchHead: prepared.baseBranchHead
         };
     }
 
-    let currentGenerationSha: string | null = null;
-    let resolvedBaseBranchHead: string | null = baseBranchHead;
+    // The service may have recorded a more recent baseBranchHead in the lockfile
+    // during apply (e.g., a bootstrap write). Prefer the persisted value if present.
+    let resolvedBaseBranchHead = prepared.baseBranchHead;
     try {
-        const freshLockManager = new LockfileManager(outputDir);
+        const freshLockManager = new LockfileManager(prepared.outputDir);
         if (freshLockManager.exists()) {
             const freshLock = freshLockManager.read();
-            currentGenerationSha = freshLock.current_generation;
             const latestGen = freshLock.generations.find((g) => g.commit_sha === freshLock.current_generation);
             if (latestGen?.base_branch_head) {
                 resolvedBaseBranchHead = latestGen.base_branch_head;
             }
         }
     } catch {
-        // If lockfile can't be read, proceed with captured values
+        // proceed with prepared.baseBranchHead
     }
 
-    const fernignoreUpdated = await ensureReplayFernignoreEntries(outputDir);
-    await ensureGitattributesEntries(outputDir);
+    const fernignoreUpdated = await ensureReplayFernignoreEntries(prepared.outputDir);
+    await ensureGitattributesEntries(prepared.outputDir);
 
     return {
         report,
         fernignoreUpdated,
-        previousGenerationSha,
-        currentGenerationSha,
+        previousGenerationSha: prepared.previousGenerationSha,
+        currentGenerationSha: prepared.currentGenerationSha,
         baseBranchHead: resolvedBaseBranchHead
     };
+}
+
+/**
+ * Backwards-compatible atomic entry point. Composes `replayPrepare` +
+ * `replayApply` with byte-identical behavior for existing callers.
+ */
+export async function replayRun(params: ReplayRunParams): Promise<ReplayRunResult> {
+    const prepared = await replayPrepare(params);
+    if (prepared == null) {
+        return {
+            report: null,
+            fernignoreUpdated: false,
+            previousGenerationSha: null,
+            currentGenerationSha: null,
+            baseBranchHead: null
+        };
+    }
+    return replayApply(prepared, { stageOnly: params.stageOnly, logger: params.logger });
 }
 
 /**

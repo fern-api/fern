@@ -59,7 +59,6 @@ export class UserClient {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
             queryString: core.url
                 .queryBuilder()
                 .addMany(_queryParams)
@@ -125,7 +124,6 @@ export class UserClient {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
             queryString: core.url
                 .queryBuilder()
                 .addMany(_queryParams)
@@ -182,7 +180,7 @@ export class UserClient {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
             body: request,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -298,7 +296,7 @@ export class UserClient {
             excludeUser,
             filter,
             longParam,
-            bigIntParam: bigIntParam ?? "18446744073709551615",
+            bigIntParam,
         };
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
@@ -309,7 +307,6 @@ export class UserClient {
             ),
             method: "GET",
             headers: _headers,
-            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
             queryString: core.url
                 .queryBuilder()
                 .addMany(_queryParams)

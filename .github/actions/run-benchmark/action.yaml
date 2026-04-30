@@ -44,13 +44,25 @@ runs:
           if [ "${{ inputs.skip-scripts }}" = "true" ]; then
             SKIP_FLAG="--skip-scripts"
           fi
+          LOG_FILE=$(mktemp)
           pnpm seed:local run \
             --generator "${GENERATOR}" \
             --path "benchmarks/fern/apis/${SPEC}" \
-            ${SKIP_FLAG} 2>&1 || EXIT_CODE=$?
+            ${SKIP_FLAG} 2>&1 | tee "$LOG_FILE" || EXIT_CODE=$?
 
           END_TIME=$EPOCHSECONDS
           DURATION=$(( END_TIME - START_TIME ))
+
+          # Detect generation failures in the output even if seed exits 0.
+          # The seed CLI does not propagate generator failures to exit code,
+          # so we scan the output for the failure marker in the results table.
+          GEN_FAILED=false
+          if grep -qE '\│.*failure.*\│' "$LOG_FILE" || grep -q "Generation failed" "$LOG_FILE"; then
+            GEN_FAILED=true
+            EXIT_CODE=1
+            echo "::error::Generator ${GENERATOR} failed during benchmark against ${SPEC} (generation failure detected in output)"
+          fi
+          rm -f "$LOG_FILE"
 
           if [ "$EXIT_CODE" -ne 0 ]; then
             echo "::warning::Benchmark ${GENERATOR} x ${SPEC} exited with code ${EXIT_CODE} after ${DURATION}s"
@@ -58,9 +70,30 @@ runs:
 
           echo "Benchmark: ${GENERATOR} x ${SPEC} = ${DURATION}s (exit ${EXIT_CODE})"
 
-          # Write result as JSON (includes exit code so failures are distinguishable)
-          echo "{\"generator\":\"${GENERATOR}\",\"spec\":\"${SPEC}\",\"duration_seconds\":${DURATION},\"exit_code\":${EXIT_CODE}}" \
+          # Write result as JSON (includes exit code and generation status)
+          echo "{\"generator\":\"${GENERATOR}\",\"spec\":\"${SPEC}\",\"duration_seconds\":${DURATION},\"exit_code\":${EXIT_CODE},\"generation_failed\":${GEN_FAILED}}" \
             >> "${RESULTS_DIR}/${GENERATOR}.jsonl"
 
           echo "::endgroup::"
         done
+
+    - name: Fail if any generation crashed
+      shell: bash
+      run: |
+        RESULTS_DIR="benchmark-results"
+        FAILURES=0
+        for f in "${RESULTS_DIR}"/*.jsonl; do
+          [ -f "$f" ] || continue
+          while IFS= read -r line; do
+            if echo "$line" | jq -e '.generation_failed == true' > /dev/null 2>&1; then
+              GEN=$(echo "$line" | jq -r '.generator')
+              SPEC=$(echo "$line" | jq -r '.spec')
+              echo "::error::${GEN} x ${SPEC}: generation failed"
+              FAILURES=$((FAILURES + 1))
+            fi
+          done < "$f"
+        done
+        if [ "$FAILURES" -gt 0 ]; then
+          echo "::error::${FAILURES} benchmark(s) had generation failures — baseline results are invalid"
+          exit 1
+        fi

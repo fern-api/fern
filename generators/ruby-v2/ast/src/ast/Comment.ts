@@ -25,7 +25,8 @@ export class Comment extends AstNode {
             this.docs.split("\n").forEach((line) => {
                 const wrappedLines = this.wrapLine(line, writer);
                 wrappedLines.forEach((wrappedLine) => {
-                    writer.writeLine(`# ${wrappedLine}`);
+                    const trimmed = wrappedLine.trimEnd();
+                    writer.writeLine(trimmed === "" ? "#" : `# ${trimmed}`);
                 });
             });
         }

@@ -38,7 +38,6 @@ from seed import SeedBasicAuthPwOmitted
 
 client = SeedBasicAuthPwOmitted(
     username="<username>",
-    password="<password>",
     base_url="https://yourhost.com/path/to/api",
 )
 
@@ -58,7 +57,6 @@ from seed import AsyncSeedBasicAuthPwOmitted
 
 client = AsyncSeedBasicAuthPwOmitted(
     username="<username>",
-    password="<password>",
     base_url="https://yourhost.com/path/to/api",
 )
 

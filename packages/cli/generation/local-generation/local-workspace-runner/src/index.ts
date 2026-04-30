@@ -1,6 +1,3 @@
-export { AutoVersioningCache, type CachedAnalysis } from "./AutoVersioningCache.js";
-export * from "./AutoVersioningService.js";
-export { AutoVersioningException, AutoVersioningService } from "./AutoVersioningService.js";
 export * from "./ContainerExecutionEnvironment.js";
 export { ContainerExecutionEnvironment } from "./ContainerExecutionEnvironment.js";
 export * from "./DockerExecutionEnvironment.js";
@@ -20,14 +17,3 @@ export {
     runNativeGenerationWithCommand
 } from "./runLocalGenerationForSeed.js";
 export * from "./runLocalGenerationForWorkspace.js";
-export * from "./VersionUtils.js";
-export {
-    AUTO_VERSION,
-    extractPreviousVersionFromDiffLine,
-    incrementVersion,
-    isAutoVersion,
-    MAGIC_VERSION,
-    MAGIC_VERSION_PYTHON,
-    mapMagicVersionForLanguage,
-    VersionBump
-} from "./VersionUtils.js";

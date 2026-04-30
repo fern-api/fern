@@ -1,0 +1,5 @@
+- summary: |
+    Move docs theme commands (export, list, upload) from CLI v2 to CLI v1.
+    Commands are now available as `fern docs theme export`, `fern docs theme list`, and `fern docs theme upload`.
+    Uses DocsWorkspace for path resolution, v1 auth, and validates all file references before uploading.
+  type: feat

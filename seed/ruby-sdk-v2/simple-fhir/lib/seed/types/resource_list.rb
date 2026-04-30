@@ -6,8 +6,11 @@ module Seed
       extend Seed::Internal::Types::Union
 
       member -> { Seed::Types::Account }
+
       member -> { Seed::Types::Patient }
+
       member -> { Seed::Types::Practitioner }
+
       member -> { Seed::Types::Script }
     end
   end

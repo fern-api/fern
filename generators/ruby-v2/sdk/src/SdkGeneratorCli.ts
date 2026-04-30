@@ -1,7 +1,6 @@
-import { File, GeneratorNotificationService } from "@fern-api/base-generator";
+import { File, GeneratorError, GeneratorNotificationService } from "@fern-api/base-generator";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { loggingExeca } from "@fern-api/logging-execa";
 import { AbstractRubyGeneratorCli } from "@fern-api/ruby-base";
 import { DynamicSnippetsGenerator } from "@fern-api/ruby-dynamic-snippets";
 import { generateModels } from "@fern-api/ruby-model";
@@ -45,7 +44,7 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
     }
 
     protected async publishPackage(context: SdkGeneratorContext): Promise<void> {
-        throw new Error("Method not implemented.");
+        throw GeneratorError.internalError("Method not implemented.");
     }
 
     protected async writeForGithub(context: SdkGeneratorContext): Promise<void> {
@@ -69,9 +68,6 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
                 return;
             }
 
-            const rootClient = new RootClientGenerator(context);
-            context.project.addRawFiles(rootClient.generate());
-
             const subClient = new SubPackageClientGenerator({
                 subpackageId,
                 context,
@@ -83,6 +79,16 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
                 this.generateRequests(context, service, subpackage.service);
             }
         });
+
+        // Generate root client (always, regardless of subpackages)
+        const rootClient = new RootClientGenerator(context);
+        context.project.addRawFiles(rootClient.generate());
+
+        // Generate requests for root service
+        if (context.ir.rootPackage.service != null) {
+            const rootService = context.getHttpServiceOrThrow(context.ir.rootPackage.service);
+            this.generateRequests(context, rootService, context.ir.rootPackage.service);
+        }
 
         context.ir.environments?.environments._visit({
             singleBaseUrl: (value) => {
@@ -118,45 +124,19 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
                 });
                 context.logger.debug("Generated readme!");
             } catch (e) {
-                throw new Error(`Failed to generate README.md: ${extractErrorMessage(e)}`);
+                throw GeneratorError.internalError(`Failed to generate README.md: ${extractErrorMessage(e)}`);
             }
         }
 
         try {
             await this.generateReference({ context });
         } catch (error) {
-            throw new Error(`Failed to generate reference.md: ${extractErrorMessage(error)}`);
+            throw GeneratorError.internalError(`Failed to generate reference.md: ${extractErrorMessage(error)}`);
         }
 
         await this.generateWireTestFiles(context);
 
         await context.project.persist();
-
-        // Clear nix/devbox Ruby environment variables that may conflict with the
-        // project's bundled gems (e.g. RUBYLIB and GEM_PATH pointing to Ruby 3.4
-        // paths while running Ruby 3.3).
-        const rubyEnv = {
-            ...process.env,
-            RUBYLIB: undefined,
-            GEM_PATH: undefined,
-            GEM_HOME: undefined
-        };
-
-        await loggingExeca(context.logger, "bundle", ["install"], {
-            cwd: context.project.absolutePathToOutputDirectory,
-            doNotPipeOutput: true,
-            env: rubyEnv
-        });
-
-        try {
-            await loggingExeca(context.logger, "bundle", ["exec", "rubocop", "-A"], {
-                cwd: context.project.absolutePathToOutputDirectory,
-                doNotPipeOutput: true,
-                env: rubyEnv
-            });
-        } catch (_) {
-            // It's okay if rubocop fails to run.
-        }
     }
 
     private generateRequests(context: SdkGeneratorContext, service: FernIr.HttpService, serviceId: string) {
@@ -219,7 +199,7 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
 
         const dynamicIr = context.ir.dynamic;
         if (dynamicIr == null) {
-            throw new Error("Cannot generate dynamic snippets without dynamic IR");
+            throw GeneratorError.internalError("Cannot generate dynamic snippets without dynamic IR");
         }
 
         const dynamicSnippetsGenerator = new DynamicSnippetsGenerator({

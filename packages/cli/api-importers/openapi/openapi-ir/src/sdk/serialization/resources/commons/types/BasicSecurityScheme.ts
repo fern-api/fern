@@ -10,15 +10,19 @@ export const BasicSecurityScheme: core.serialization.ObjectSchema<
 > = core.serialization.objectWithoutOptionalProperties({
     usernameVariableName: core.serialization.string().optional(),
     usernameEnvVar: core.serialization.string().optional(),
+    usernamePlaceholder: core.serialization.string().optional(),
     passwordVariableName: core.serialization.string().optional(),
     passwordEnvVar: core.serialization.string().optional(),
+    passwordPlaceholder: core.serialization.string().optional(),
 });
 
 export declare namespace BasicSecurityScheme {
     export interface Raw {
         usernameVariableName?: string | null;
         usernameEnvVar?: string | null;
+        usernamePlaceholder?: string | null;
         passwordVariableName?: string | null;
         passwordEnvVar?: string | null;
+        passwordPlaceholder?: string | null;
     }
 }

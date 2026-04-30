@@ -247,6 +247,7 @@
             },
           },
           "Shape": {
+            "base-properties": undefined,
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,

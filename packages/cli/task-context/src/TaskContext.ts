@@ -9,6 +9,12 @@ export interface TaskContext {
     failWithoutThrowing: (message?: string, error?: unknown, options?: { code?: CliError.Code }) => void;
     captureException: (error: unknown, code?: CliError.Code) => void;
     getResult: () => TaskResult;
+    /**
+     * Returns the most recent message passed to `failAndThrow` / `failWithoutThrowing`,
+     * if any. Useful for callers that swallow a `TaskAbortSignal` and still need to
+     * surface the original failure reason (e.g. automation summaries).
+     */
+    getLastFailureMessage: () => string | undefined;
     addInteractiveTask: (params: CreateInteractiveTaskParams) => Startable<InteractiveTaskContext>;
     runInteractiveTask: (
         params: CreateInteractiveTaskParams,

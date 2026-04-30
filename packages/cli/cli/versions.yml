@@ -1,4 +1,623 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.4.0
+  changelogEntry:
+    - summary: |
+        Make `auth` optional at the service level in Fern Definition files.
+        When omitted, auth is inherited from the root API-level auth scheme.
+        This allows users to only specify `auth: false` when they explicitly want to disable auth.
+      type: feat
+  createdAt: "2026-04-30"
+  irVersion: 66
+- version: 5.3.0
+  changelogEntry:
+    - summary: |
+        Translation overlays can now override navbar links (CTAs) per locale. Set `navbar-links:`
+        inside `translations/<locale>/docs.yml` and the per-locale FDR upload will use those
+        instead of the docs-level navbar-links. Local icon files referenced from the overlay
+        are uploaded and resolved alongside the rest of the docs assets.
+      type: feat
+  createdAt: "2026-04-30"
+  irVersion: 66
+- version: 5.2.2
+  changelogEntry:
+    - summary: |
+        Translated `docs.yml` overlays are now read directly from `translations/<locale>/docs.yml`,
+        so an extra nested `fern/` folder is no longer required. The legacy
+        `translations/<locale>/fern/docs.yml` location continues to work as a fallback.
+      type: fix
+  createdAt: "2026-04-30"
+  irVersion: 66
+- version: 5.2.1
+  changelogEntry:
+    - summary: |
+        Fix auth scheme descriptions being lost when using generators.yml auth-schemes.
+        When security schemes are overridden in generators.yml, Fern now preserves the
+        descriptions from the OpenAPI spec's components.securitySchemes instead of using
+        generic placeholder text.
+      type: fix
+  createdAt: "2026-04-30"
+  irVersion: 66
+- version: 5.2.0
+  changelogEntry:
+    - summary: |
+        Add `multi-source` property to docs.yml `instances` configuration. When enabled, docs registration
+        uses a basepath-aware S3 key format, allowing multiple independent doc sites to be hosted under the
+        same custom domain with different basepaths. This replaces `experimental.basepath-aware`, which is now
+        deprecated but still supported. When `multi-source: true`, the CLI validates that the `url` and
+        `custom-domain` share the same basepath.
+      type: feat
+  createdAt: "2026-04-30"
+  irVersion: 66
+- version: 5.1.0
+  changelogEntry:
+    - summary: |
+        Introduce a simpler TtyAwareLogger local to `cli-v2`. The new logger drops
+        legacy behaviours that cli-v2 did not use (`omitOnTTY`, `FERN_SPINNER_STATUS`,
+        dynamic `finish` reassignment, `ora` dependency) and exposes a minimal
+        `register` / `write` / `takeOverTerminal` / `finish` surface against a
+        generic `Paintable` interface. Box-frame rendering moves into `TaskGroup`.
+        The legacy `TtyAwareLogger` in `@fern-api/cli-logger` is untouched.
+      type: internal
+  createdAt: "2026-04-30"
+  irVersion: 66
+- version: 5.0.0
+  changelogEntry:
+    - summary: |
+        Remove `og:background-image` metadata key. Use `og:dynamic:background-image` instead,
+        which is consistent with other `og:dynamic:*` settings.
+      type: break
+  createdAt: "2026-04-29"
+  irVersion: 66
+- version: 4.109.0
+  changelogEntry:
+    - summary: |
+        cli-v2: Add support for GraphQL specs in `fern.yml`. Specs can now be declared
+        with a `graphql` key (plus optional `name`, `origin`, and `overrides`) and are
+        rendered in the docs pipeline. SDK generation targets that reference an API
+        containing a GraphQL spec emit a non-fatal warning and skip the GraphQL spec,
+        since GraphQL SDK generation is not supported.
+      type: feat
+  createdAt: "2026-04-29"
+  irVersion: 66
+- version: 4.108.0
+  changelogEntry:
+    - summary: |
+        Validate staged changelog entries in `changes/<version>/*.yml` (not just `versions.yml`)
+        and trigger the workflow on PRs that touch those staged files. Catches unescaped
+        `{}` / `<>` / `#{}` patterns at PR time instead of after autorelease promotes the
+        entry to `versions.yml` on `main`.
+      type: internal
+  createdAt: "2026-04-29"
+  irVersion: 66
+- version: 4.107.3
+  changelogEntry:
+    - summary: |
+        Fix `fern generate --docs --preview` hang when OpenAPI specs contain circular
+        `$ref` chains. The unbundled fallback document now has its circular references
+        replaced with opaque object schemas so downstream converters no longer
+        infinite-loop.
+      type: fix
+  createdAt: "2026-04-29"
+  irVersion: 66
+- version: 4.107.2
+  changelogEntry:
+    - summary: |
+        Suppress additional Sentry false positives: EADDRINUSE port conflicts,
+        MDX/acorn parse errors from docs preview and publishing, version range
+        strings in generators.yml, missing fern project when using --id flag,
+        non-JSON fern.config.json, and absolute filepath in OpenAPI spec config.
+      type: fix
+  createdAt: "2026-04-29"
+  irVersion: 66
+- version: 4.107.1
+  changelogEntry:
+    - summary: |
+        Make OpenAPI validation errors non-fatal during docs generation. Previously,
+        validation issues like "Self-referencing circular pointer" or parameter name
+        collisions would abort `fern generate --docs` entirely. The CLI now logs
+        warnings and skips the offending API workspace so the rest of the docs can
+        still be published. These validations remain errors in `fern check`.
+      type: fix
+  createdAt: "2026-04-29"
+  irVersion: 66
+- version: 4.107.0
+  changelogEntry:
+    - summary: |
+        Add `infer-discriminated-union-base-properties` OpenAPI parser setting.
+        When enabled, the parser intersects the resolved (allOf-flattened) property
+        maps of every variant of a discriminated `oneOf` and lifts properties that
+        appear in all variants with structurally-equal schemas into the union's
+        common properties. SDKs (e.g. C#, Java, Go) that already support union base
+        properties can then expose those shared fields directly on the union type
+        without forcing callers to cast to a concrete variant. Defaults to false.
+      type: feat
+  createdAt: "2026-04-28"
+  irVersion: 66
+- version: 4.106.3
+  changelogEntry:
+    - summary: |
+        Send `gitattributesEntries` to Fiddle on `fern replay init` so the
+        generated PR marks `.fern/replay.lock` as `linguist-generated=true`.
+        Previously the entries were written into a temp clone that was discarded
+        and never reached the server. Requires a matching Fiddle server change
+        to consume the new field.
+      type: fix
+  createdAt: "2026-04-28"
+  irVersion: 66
+- version: 4.106.2
+  changelogEntry:
+    - summary: |
+        Translation no longer fails for an entire locale when a single MDX file has a parse error. 
+        Invalid pages are skipped with a warning that includes the file path, and the base page is used as a fallback.
+      type: fix
+  createdAt: "2026-04-28"
+  irVersion: 66
+- version: 4.106.1
+  changelogEntry:
+    - summary: |
+        Fix OpenAPI importer generating duplicate type names when an operation's
+        request body $refs a top-level components.schemas.X schema whose name
+        collides with the auto-generated request wrapper name. The wrapper is now
+        disambiguated by using "Body" instead of "Request" in the generated name.
+      type: fix
+  createdAt: "2026-04-28"
+  irVersion: 66
+- version: 4.106.0
+  changelogEntry:
+    - summary: |
+        Add support for translating navigation labels (tabs, products, versions, sections, pages, announcements)
+        via YAML overlay files in `translations/<lang>/fern/`. The overlay files use the same format as
+        `write-translation` output and are deep-merged over the source navigation configuration.
+      type: feat
+  createdAt: "2026-04-28"
+  irVersion: 66
+- version: 4.105.0
+  changelogEntry:
+    - summary: |
+        Fix branch creation during signed commit push in generator-cli. GitHub's
+        updateRef API returns 422 (not 404) when the target branch does not exist,
+        so the createRef fallback was unreachable.
+      type: fix
+    - summary: |
+        `fern docs dev` now exits with a hard error on Windows when long path support
+        is not enabled, instead of printing a warning.
+      type: feat
+  createdAt: "2026-04-28"
+  irVersion: 66
+- version: 4.104.0
+  changelogEntry:
+    - summary: |
+        Improved translation logging by moving verbose page array output to debug level and formatting as a concise count instead of raw JSON array.
+      type: chore
+    - summary: |
+        Support simplified string syntax for `translations` field in docs.yml.
+        You can now use `translations: [en, ja, fr]` instead of requiring
+        `translations: [{lang: en}, {lang: ja}, {lang: fr}]`. The verbose
+        object syntax remains supported for specifying `default: true`.
+      type: feat
+  createdAt: "2026-04-28"
+  irVersion: 66
+- version: 4.103.1
+  changelogEntry:
+    - summary: |
+        Fix translation directory check to treat the first locale as the default when no explicit `default: true` is set, matching the behavior of the rest of the CLI.
+      type: fix
+  createdAt: "2026-04-28"
+  irVersion: 66
+- version: 4.103.0
+  changelogEntry:
+    - summary: |
+        Support BCP 47 locale tags (e.g. `ja-JP`, `pt-BR`, `zh-Hans-CN`) in the
+        `translations` and `languages` fields of `docs.yml`. Previously only
+        two-letter language codes were accepted.
+      type: feat
+  createdAt: "2026-04-28"
+  irVersion: 66
+- version: 4.102.0
+  changelogEntry:
+    - summary: |
+        Add validation to `fern check` / `fern docs check` that verifies all configured
+        translation locales have a corresponding directory under `fern/translations/`.
+        If a directory is missing, a clear error message is printed showing the expected
+        directory structure.
+      type: feat
+  createdAt: "2026-04-28"
+  irVersion: 66
+- version: 4.101.0
+  changelogEntry:
+    - summary: |
+        Add `websocket-oneof-display` setting to `docs.yml`. When set to `grouped`,
+        WebSocket messages with oneOf bodies are rendered as a single parent entry
+        with nested variants instead of flattened separate entries (default: `flat`).
+      type: feat
+  createdAt: "2026-04-28"
+  irVersion: 66
+- version: 4.100.3
+  changelogEntry:
+    - summary: |
+        Fix `fern generate --docs --preview` to register translations for preview URLs.
+        Previously, translation registration was skipped entirely in preview mode,
+        causing translated docs to not appear in preview deployments.
+      type: fix
+  createdAt: "2026-04-28"
+  irVersion: 66
+- version: 4.100.2
+  changelogEntry:
+    - summary: |
+        Fix `fern docs dev` to serve translated page content when viewing localized pages.
+      type: fix
+  createdAt: "2026-04-27"
+  irVersion: 66
+- version: 4.100.1
+  changelogEntry:
+    - summary: |
+        Fix `fern automations generate` step summary not displaying SDK versions.
+        Upgrade Fiddle SDK to consume the new `actualVersion` field from
+        `FinishedTaskStatus`, which Fiddle now returns for both AUTO and explicit
+        versioning modes. Falls back to log-regex parsing and locally-resolved
+        version for backward compatibility.
+      type: fix
+    - summary: |
+        Fix `fern docs dev` to serve translated page content when viewing localized pages.
+      type: fix
+  createdAt: "2026-04-27"
+  irVersion: 66
+- version: 4.100.0
+  changelogEntry:
+    - summary: |
+        Suppress Sentry false positives caused by user- and environment-provoked errors being misclassified as `InternalError`:
+          - Add a generic `ErrnoException` classifier in `resolveErrorCode` that maps filesystem errors (`ENOENT`, `EACCES`, `ENOSPC`, `EPIPE`, …) to `EnvironmentError` and network errors (`ENOTFOUND`, `ECONNREFUSED`, `ETIMEDOUT`, …) to `NetworkError`, both of which are non-reportable.
+          - Register an `error` listener on `process.stdout`/`process.stderr` in `TtyAwareLogger` to swallow `EPIPE` at the source before it reaches Sentry's uncaught-exception integration (triggered when piping CLI output into `head`, `jq`, etc.).
+          - Make `ContainerError` non-reportable and replace the aggregate `CliError({ ContainerError })` throw in the `sdk generate` and `docs publish` commands with `TaskAbortSignal` to prevent double-reporting individual task failures.
+          - Fix `JsonError`, `ParseError`, and `GeneratorError` class names surviving esbuild minification by explicitly setting `this.name` in their constructors, so `isSchemaValidationError` can reliably classify them as `ParseError`.
+          - Wrap `yaml.load` in `loadOpenAPI` to translate `YAMLException` into a user-readable `CliError({ ParseError })` with file, line, and column context.
+          - Wrap `swagger2openapi` conversion failures in `convertOpenAPIV2ToV3` as `CliError({ ParseError })`.
+          - Pass explicit `ValidationError` / `NetworkError` codes in `createOrganizationIfDoesNotExist` instead of letting them fall through to `InternalError`.
+          - Reclassify "Generator not found" in the upgrade message helper from `InternalError` to `ConfigError` (user's `generators.yml` references an image not in FDR).
+          - Use `TaskAbortSignal` in `rerunFernCliAtVersion` failure path instead of reporting a spurious `InternalError`.
+      type: internal
+  createdAt: "2026-04-27"
+  irVersion: 66
+- version: 4.99.0
+  changelogEntry:
+    - summary: |
+        [Alpha] Add support for a `translations` block in `docs.yml` to configure multi-language documentation.
+        Each entry specifies a locale (`lang`) and optionally marks it as the default language.
+      type: feat
+    - summary: |
+        Include docs translation metadata in the docs definition published to FDR so generated `fdr.json`
+        advertises configured locales alongside uploaded translation files.
+      type: fix
+  createdAt: "2026-04-27"
+  irVersion: 66
+- version: 4.98.0
+  changelogEntry:
+    - summary: |
+        Move docs theme commands (export, list, upload) from CLI v2 to CLI v1.
+        Commands are now available as `fern docs theme export`, `fern docs theme list`, and `fern docs theme upload`.
+        Uses DocsWorkspace for path resolution, v1 auth, and validates all file references before uploading.
+      type: feat
+  createdAt: "2026-04-27"
+  irVersion: 66
+- version: 4.97.0
+  changelogEntry:
+    - summary: |
+        [Alpha] Add support for a `translations` block in `docs.yml` to configure multi-language documentation.
+        Each entry specifies a locale (`lang`) and optionally marks it as the default language.
+      type: feat
+    - summary: |
+        Include docs translation metadata in the docs definition published to FDR so generated `fdr.json`
+        advertises configured locales alongside uploaded translation files.
+      type: fix
+  createdAt: "2026-04-27"
+  irVersion: 66
+- version: 4.96.0
+  changelogEntry:
+    - summary: |
+        Add optional `baseProperties` field to `UndiscriminatedUnionTypeDeclaration` in the IR schema.
+        Both the V3 importer and the legacy OpenAPI importer now extract sibling properties from
+        `oneOf`/`anyOf` schemas and populate `baseProperties` on undiscriminated unions.
+      type: feat
+  createdAt: "2026-04-25"
+  irVersion: 66
+- version: 4.95.0
+  changelogEntry:
+    - summary: |
+        Add `placeholder` field to auth scheme configuration (basic, bearer, header) for controlling
+        example values in dynamic code snippets. The fallback chain is: explicit placeholder > generic placeholder.
+        Configurable via Fern definition YAML and OpenAPI extensions (x-fern-basic, x-fern-bearer, x-fern-header).
+      type: feat
+  createdAt: "2026-04-25"
+  irVersion: 66
+- version: 4.94.3
+  changelogEntry:
+    - summary: |
+        Polish the `fern automations generate` step-summary heading and the
+        `generators.yml` deep-link lookup.
+
+        - The failure heading now excludes skipped generators from the
+          denominator. A run of 4 succeeded, 2 failed, 4 skipped previously read
+          `❌ SDK generation failed (4/10 succeeded)` — implying 6 failures. It
+          now reads `❌ SDK generation failed (4/6 succeeded, 4 skipped)`.
+        - Added a distinct `⏭️ SDK generation skipped` heading for runs where
+          every generator was skipped. Previously these printed the cheerful
+          `✅ SDK generation succeeded` heading despite nothing having run.
+        - Tightened the `generators.yml` line-number regex to only match
+          `- name: <slug>` list-item entries. Nested `name:` keys (e.g. inside
+          `publishInfo`) and free-form values (e.g. a reviewer's full name) no
+          longer collide with generator lookups. Trailing YAML comments on the
+          `name:` line are tolerated.
+        - Added an `assertNever` exhaustiveness check on the generator-status
+          switch so a future status variant fails at compile time instead of
+          silently miscounting.
+      type: chore
+    - summary: |
+        Re-publish CLI after the 4.94.2 production publish failed in CI. The dev
+        version had already been published in an earlier job, so the prod job's
+        dev re-publish step errored out and prevented the prod publish from
+        running.
+      type: chore
+  createdAt: "2026-04-24"
+  irVersion: 66
+- version: 4.94.2
+  changelogEntry:
+    - summary: |
+        Fix Python dynamic snippet generation to respect the `use_typeddict_requests`
+        configuration option. When enabled, dynamic snippets now generate dict literals
+        instead of Pydantic model constructors for object and discriminated union types.
+      type: fix
+  createdAt: "2026-04-24"
+  irVersion: 66
+- version: 4.94.1
+  changelogEntry:
+    - summary: |
+        Fix global theme asset downloads preserving original filenames and extensions.
+        Previously, assets downloaded from S3 CAS URLs (whose pathname is a raw content
+        hash) were saved without a file extension, breaking downstream MIME type detection.
+        The CLI now reads the filename from the presigned URL's response-content-disposition
+        query parameter, falling back to the Content-Disposition response header, then
+        Content-Type, so files land on disk with their correct names (e.g. logo.svg).
+      type: fix
+  createdAt: "2026-04-24"
+  irVersion: 66
+- version: 4.94.0
+  changelogEntry:
+    - summary: |
+        Add consumer-side support for the `global-theme` key in docs.yml. When a docs site
+        declares `global-theme: <name>`, the CLI fetches the named theme from Fern's cloud
+        registry and merges it into the docs configuration before building (theme values win
+        for branding fields). Works with `fern generate --docs`, `fern generate --docs --preview`,
+        and `fern docs dev` (dev mode requires FERN_TOKEN to be set).
+      type: feat
+  createdAt: "2026-04-24"
+  irVersion: 66
+- version: 4.93.0
+  changelogEntry:
+    - summary: |
+        Expose `claude-code` under `page-actions` in `docs.yml` so docs sites can toggle the
+        "Connect to Claude Code" button (e.g. `page-actions.options.claude-code: false` or
+        `page-actions.default: claude-code`).
+      type: feat
+  createdAt: "2026-04-24"
+  irVersion: 66
+- version: 4.92.0
+  changelogEntry:
+    - summary: |
+        `fern automations generate` now writes a richer GitHub Actions step
+        summary. The summary is an HTML table grouped by API and generator group
+        (with rowspan cells), a heading that shows the succeeded/total count on
+        failure, a duration column, and a links column with the PR, SDK repo, and
+        generators.yml entry (the latter deep-linked to the exact line when running
+        under GitHub Actions). Generators excluded from automation now surface as
+        explicit skipped rows with reasons (`Skipped - local output`, `Skipped -
+        opted out`), replacing the silent drop.
+      type: feat
+  createdAt: "2026-04-24"
+  irVersion: 66
+- version: 4.91.1
+  changelogEntry:
+    - summary: |
+        Update CLI v2 authentication error messages to reference `fern auth login` instead of `fern login`.
+        This covers SDK generation permission errors, docs publish auth failures, and missing-token hints
+        produced by CLI v2 code paths. The legacy `fern login` wording is preserved for the v1 CLI.
+      type: fix
+  createdAt: "2026-04-23"
+  irVersion: 66
+- version: 4.91.0
+  changelogEntry:
+    - summary: |
+        Remove the abandoned `@fern-api/docs-parsers` dependency from `@fern-api/docs-resolver` and drop
+        the hidden `fern fdr <path> --v2` code path that was the only remaining consumer. The upstream
+        package was deleted from fern-platform in https://github.com/fern-api/fern-platform/pull/2420
+        and hasn't been published since; removing it clears the transitive `uuid@9.0.1` from the lockfile.
+      type: internal
+  createdAt: "2026-04-23"
+  irVersion: 66
+- version: 4.90.0
+  changelogEntry:
+    - summary: |
+        Implement the FER-9980 autoversion pipeline. A new `GenerationCommitStep` +
+        `AutoVersionStep` run between the `[fern-generated]` commit and replay
+        detect/apply, diffing prev vs new `[fern-generated]` SHAs (both pure
+        generator output), calling Fern AI for a semver bump + changelog entry,
+        rewriting the placeholder version, prepending `changelog.md`, and committing
+        `[fern-autoversion]`. Consumes the two-phase `@fern-api/replay@0.12.0` API.
+        Prep refactors (moved `AutoVersioningService` / `AutoVersioningCache` /
+        `VersionUtils` from `@fern-api/local-workspace-runner` into
+        `@fern-api/generator-cli/autoversion` to resolve a circular-dep blocker) are
+        folded into this entry. Opt-in via `config.autoVersion.enabled`; no
+        behavior change for non-replay flows.
+      type: internal
+  createdAt: "2026-04-23"
+  irVersion: 66
+- version: 4.89.0
+  changelogEntry:
+    - summary: |
+        `fern generate` now accepts multiple `--api` flags. Previously, running
+        `fern generate --api api1 --api api2` failed because yargs collapsed the values into a single
+        comma-joined string that was then looked up as a workspace name. `--api` is now declared as an
+        array option, so each `--api <name>` value is parsed individually and the command generates for
+        the union of the specified API workspaces (de-duplicated).
+      type: feat
+  createdAt: "2026-04-22"
+  irVersion: 66
+- version: 4.88.0
+  changelogEntry:
+    - summary: |
+        `fern generate` now accepts multiple `--group` flags. Passing e.g.
+        `fern generate --group typescript --group java --group python` generates
+        for all of the listed groups instead of failing with
+        `'typescript,java,python' is not a valid group or alias`. Each value is
+        resolved independently (including aliases) and the union is generated.
+      type: feat
+  createdAt: "2026-04-22"
+  irVersion: 66
+- version: 4.87.1
+  changelogEntry:
+    - summary: |
+        Gracefully handle "Self-referencing circular pointer" errors from OpenAPI specs.
+        Instead of failing the entire publish, the CLI now logs a warning with the
+        offending file path and circular $ref breadcrumbs, then continues processing
+        without full reference resolution.
+      type: fix
+  createdAt: "2026-04-22"
+  irVersion: 66
+- version: 4.87.0
+  changelogEntry:
+    - summary: |
+        Add new `docs.yml` metadata fields for controlling dynamically generated OG images:
+        `og:dynamic:text-color`, `og:dynamic:background-color`, `og:dynamic:logo-color`
+        (`dark` | `light`), and five visibility toggle flags (`og:dynamic:show-logo`,
+        `og:dynamic:show-section`, `og:dynamic:show-description`, `og:dynamic:show-url`,
+        `og:dynamic:show-gradient`).
+        Also fixes a pre-existing gap where `og:dynamic` and `og:background-image` were
+        missing from the Zod `MetadataConfig` schema, causing `fern check` to reject them.
+      type: feat
+    - summary: |
+        Populate `apiNameToId` in `fern docs dev` so MDX widgets that resolve APIs by
+        user-facing name (e.g. `<MergeSupportedFieldsByIntegrationWidget apiName="hris_v2" ... />`)
+        work in local preview. Previously the preview server hardcoded this mapping to
+        `{}`, causing such widgets to throw `MergeWidgetResolutionError` and render the
+        affected pages as 500 Internal Server Error.
+      type: fix
+    - summary: |
+        Emit non-fatal warnings during `fern check` / `fern docs dev` when `docs.yml`
+        metadata settings silently conflict. Covered cases:
+        - `og:dynamic: true` combined with `og:image` or `twitter:image` (the static
+          images only apply to the homepage once dynamic generation is enabled).
+        - `og:dynamic:*` sub-settings or `og:background-image` set without
+          `og:dynamic: true` (they are ignored).
+        - `og:dynamic:logo-color` set with `og:dynamic:show-logo: false` (no effect).
+        - `og:image:width` / `og:image:height` set without `og:image`.
+        - `og:dynamic:text-color` equal to `og:dynamic:background-color`
+          (text is invisible).
+      type: chore
+  createdAt: "2026-04-22"
+  irVersion: 66
+- version: 4.86.2
+  changelogEntry:
+    - summary: |
+        Gate the consolidation of top-level OpenAPI servers into a single multi-URL
+        environment behind a new setting, `multi-server-strategy`, with values
+        `environment-per-server` (default) and `urls-per-environment`. Previously
+        (since 4.71.4) any spec where endpoint-level `servers:` overrides referenced
+        top-level `x-fern-server-name` values would collapse all top-level servers
+        into one environment, silently removing named environment constants
+        (e.g. `Environment.AGENT`) from generated SDKs. The old pre-4.71.4 behavior
+        of emitting one environment per top-level server is now restored by default;
+        customers who want the Box-style "one logical environment with multiple
+        named base URLs" behavior can opt in by setting
+        `multi-server-strategy: urls-per-environment` under
+        `api.specs[].settings`.
+      type: fix
+    - summary: |
+        Fix WebSocket base URLs silently overwriting HTTP base URLs when both share
+        the same `x-fern-server-name` (OpenAPI + AsyncAPI) inside a consolidated
+        environment. Colliding WebSocket URLs are now suffixed with their protocol
+        (e.g. `Agent_wss`) so both the HTTP and WSS URLs remain addressable. Only
+        applies when `multi-server-strategy: urls-per-environment` is set.
+      type: fix
+  createdAt: "2026-04-22"
+  irVersion: 66
+- version: 4.86.1
+  changelogEntry:
+    - summary: |
+        When an OpenAPI endpoint has multiple request and response examples that cannot be paired by matching `summary` fields, the CLI now emits a warning explaining which response example had no match and how to fix it, rather than silently producing an extra example with an empty request body.
+      type: chore
+  createdAt: "2026-04-22"
+  irVersion: 66
+- version: 4.86.0
+  changelogEntry:
+    - summary: |
+        Allow `theme.product-switcher: tabs` in `docs.yml`. When set, the product
+        switcher renders as a row of tabs in the docs header on desktop, with a
+        dropdown fallback on mobile.
+      type: feat
+  createdAt: "2026-04-22"
+  irVersion: 66
+- version: 4.85.2
+  changelogEntry:
+    - summary: |
+        Surface descriptive Fiddle error messages (e.g. `GithubAppNotInstalled`) in
+        the CLI instead of the generic "Failed to create job. Please try again or
+        contact support@buildwithfern.com" fallback. The `_other` visitor callback
+        receives `core.Fetcher.Error` directly (`{ reason, statusCode, body }`), but
+        `extractErrorMessage` was looking one level too deep under `.content`, so
+        the descriptive message was never extracted.
+      type: chore
+  createdAt: "2026-04-22"
+  irVersion: 66
+- version: 4.85.1
+  changelogEntry:
+    - summary: |
+        Fix `x-fern-discriminated: true` to correctly keep specific schemas as discriminated unions when `prefer-undiscriminated-unions-with-literals` is enabled.
+      type: fix
+  createdAt: "2026-04-22"
+  irVersion: 66
+- version: 4.85.0
+  changelogEntry:
+    - summary: |
+        Fix shell completion triggering upgrade notices and slow network calls.
+        Suppress upgrade messages and skip version redirection when the shell
+        invokes `--get-yargs-completions` so that TAB completions are fast and
+        side-effect-free.
+      type: fix
+    - summary: |
+        Add shell completion support to CLI v2 with content-aware completions
+        for `--group`, `--api`, and `--instance` flags. The completion reads
+        `fern.yml` to suggest valid values when the user presses TAB.
+      type: feat
+  createdAt: "2026-04-22"
+  irVersion: 66
+- version: 4.84.2
+  changelogEntry:
+    - summary: |
+        Fix wire test infrastructure to correctly handle array query parameters in WireMock stubs and test verification across all generators with wire test support.
+      type: fix
+  createdAt: "2026-04-22"
+  irVersion: 66
+- version: 4.84.1
+  changelogEntry:
+    - summary: |
+        Fix `[object Object]` being logged (and recorded in the automation summary) when a
+        generator fails during `fern automations generate`. The automation-mode catch in the
+        remote workspace runner now propagates `TaskAbortSignal` instead of stringifying it,
+        and pulls the real failure message off the task context for the run summary. Also
+        makes `InteractiveTaskContextImpl.finish()` idempotent so the duplicate `Failed.`
+        line is gone.
+      type: fix
+  createdAt: "2026-04-22"
+  irVersion: 66
+- version: 4.84.0
+  changelogEntry:
+    - summary: |
+        Add `--skip-if-no-diff` flag to `fern generate` that skips opening a PR / pushing when the
+        generated output has no diff from the base branch. The existing no-diff skip behavior is
+        decoupled from `automationMode` and now gated behind its own `skipIfNoDiff` config.
+        `fern automations generate` continues to skip no-diff PRs by default.
+      type: feat
+  createdAt: "2026-04-22"
+  irVersion: 66
 - version: 4.83.0
   changelogEntry:
     - summary: |

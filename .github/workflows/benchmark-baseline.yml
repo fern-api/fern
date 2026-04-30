@@ -75,6 +75,7 @@ jobs:
           skip-scripts: "true"
 
       - name: Upload baseline results
+        if: always()
         uses: actions/upload-artifact@v6
         with:
           name: benchmark-baseline-${{ matrix.generator }}
@@ -113,6 +114,7 @@ jobs:
           generator: ${{ matrix.generator }}
 
       - name: Upload E2E results
+        if: always()
         uses: actions/upload-artifact@v6
         with:
           name: benchmark-e2e-${{ matrix.generator }}

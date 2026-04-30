@@ -3,7 +3,7 @@ import type { Audiences } from "@fern-api/configuration";
 import type { ContainerRunner } from "@fern-api/core-utils";
 import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist, resolve } from "@fern-api/fs-utils";
-import { CliError } from "@fern-api/task-context";
+import { CliError, TaskAbortSignal } from "@fern-api/task-context";
 import { ValidationIssue } from "@fern-api/yaml-loader";
 import chalk from "chalk";
 import { readdir } from "fs/promises";
@@ -362,7 +362,11 @@ export class GenerateCommand {
         });
 
         if (summary.failedCount > 0) {
-            throw new CliError({ code: CliError.Code.ContainerError });
+            // Individual task failures have already been reported with their
+            // correct error codes via TaskContextAdapter.failWithoutThrowing.
+            // Throw TaskAbortSignal so withContext exits non-zero without
+            // emitting a duplicate (and mis-classified) error event.
+            throw new TaskAbortSignal();
         }
     }
 

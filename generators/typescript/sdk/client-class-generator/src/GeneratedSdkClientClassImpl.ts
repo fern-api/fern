@@ -404,6 +404,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                         name: header.name,
                         prefix: undefined,
                         headerEnvVar: header.env,
+                        headerPlaceholder: undefined,
                         valueType: header.valueType,
                         docs: header.docs
                     })

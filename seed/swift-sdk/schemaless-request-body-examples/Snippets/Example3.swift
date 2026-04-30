@@ -6,9 +6,9 @@ private func main() async throws {
 
     _ = try await client.updatePlant(
         plantId: "plantId",
-        request: .init(body: .object([
+        request: .object([
             "key": .string("value")
-        ]))
+        ])
     )
 }
 

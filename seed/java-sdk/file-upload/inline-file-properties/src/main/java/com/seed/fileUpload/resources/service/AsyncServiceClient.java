@@ -16,6 +16,7 @@ import com.seed.fileUpload.resources.service.requests.OptionalArgsRequest;
 import com.seed.fileUpload.resources.service.requests.WithContentTypeRequest;
 import com.seed.fileUpload.resources.service.requests.WithFormEncodingRequest;
 import com.seed.fileUpload.resources.service.requests.WithJsonPropertyRequest;
+import com.seed.fileUpload.resources.service.requests.WithRefBodyRequest;
 import java.io.InputStream;
 import java.util.concurrent.CompletableFuture;
 import okhttp3.MediaType;
@@ -243,6 +244,33 @@ public class AsyncServiceClient {
             InputStream stream, String filename, MediaType mediaType, RequestOptions requestOptions) {
         return this.rawClient
                 .withJsonProperty(stream, filename, mediaType, requestOptions)
+                .thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> withRefBody(WithRefBodyRequest request) {
+        return this.rawClient.withRefBody(request).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> withRefBody(WithRefBodyRequest request, RequestOptions requestOptions) {
+        return this.rawClient.withRefBody(request, requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> withRefBody(InputStream stream, String filename) {
+        return this.rawClient.withRefBody(stream, filename).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> withRefBody(InputStream stream, String filename, MediaType mediaType) {
+        return this.rawClient.withRefBody(stream, filename, mediaType).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> withRefBody(InputStream stream, String filename, RequestOptions requestOptions) {
+        return this.rawClient.withRefBody(stream, filename, requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> withRefBody(
+            InputStream stream, String filename, MediaType mediaType, RequestOptions requestOptions) {
+        return this.rawClient
+                .withRefBody(stream, filename, mediaType, requestOptions)
                 .thenApply(response -> response.body());
     }
 

@@ -139,6 +139,12 @@ for PR_FILE in "${PR_DIR}"/*.jsonl; do
 
   while IFS= read -r LINE; do
     GENERATOR=$(echo "$LINE" | jq -r '.generator')
+    # Defensive: skip entries that don't belong in the SDK benchmark table
+    # (e.g. docs benchmark rows that lack a .generator field). Without this,
+    # a stray file in PR_DIR would render as "null | <spec> | ..." rows.
+    if [ -z "$GENERATOR" ] || [ "$GENERATOR" = "null" ]; then
+      continue
+    fi
     SPEC=$(echo "$LINE" | jq -r '.spec')
     PR_DURATION=$(echo "$LINE" | jq -r '.duration_seconds')
     PR_EXIT=$(echo "$LINE" | jq -r '.exit_code // 0')

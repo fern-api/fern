@@ -43,7 +43,7 @@ export function createDocsConfigFileAstVisitorForRules({
                             name: violation.name,
                             severity: severityOverride ?? violation.severity,
                             relativeFilepath: violation.relativeFilepath ?? RelativeFilePath.of(""),
-                            nodePath,
+                            nodePath: violation.nodePath ?? nodePath,
                             message: violation.message
                         }))
                     );

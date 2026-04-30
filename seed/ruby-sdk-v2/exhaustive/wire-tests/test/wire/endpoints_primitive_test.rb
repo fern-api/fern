@@ -58,7 +58,7 @@ class EndpointsPrimitiveWireTest < WireMockTestCase
     test_id = "endpoints.primitive.get_and_return_long.0"
 
     @client.endpoints.primitive.get_and_return_long(
-      request: 1_000_000,
+      request: 1000000,
       request_options: {
         additional_headers: {
           "X-Test-Id" => "endpoints.primitive.get_and_return_long.0"

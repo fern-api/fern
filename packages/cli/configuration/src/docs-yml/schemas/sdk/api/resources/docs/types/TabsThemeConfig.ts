@@ -2,16 +2,4 @@
 
 import type * as FernDocsConfig from "../../../index.js";
 
-export const TabsThemeStyle = {
-    Default: "default",
-    Bubble: "bubble",
-} as const;
-export type TabsThemeStyle = (typeof TabsThemeStyle)[keyof typeof TabsThemeStyle];
-
-export interface TabsThemeObjectConfig {
-    style?: FernDocsConfig.TabsThemeStyle;
-    alignment?: FernDocsConfig.TabsAlignment;
-    placement?: FernDocsConfig.TabsPlacement;
-}
-
 export type TabsThemeConfig = FernDocsConfig.TabsThemeStyle | FernDocsConfig.TabsThemeObjectConfig;

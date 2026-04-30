@@ -499,6 +499,7 @@ This value is not specified for other SQL statements.",
             },
           },
           "ResultSetLastInsertRowid": {
+            "base-properties": undefined,
             "discriminated": false,
             "docs": "ROWID of the last inserted row.
 
@@ -1862,6 +1863,7 @@ docs: Blobs
             },
           },
           "EmailsSendRequestBcc": {
+            "base-properties": undefined,
             "discriminated": false,
             "docs": "A single email or list of emails for one of the address fields",
             "encoding": undefined,
@@ -1880,6 +1882,7 @@ docs: Blobs
             ],
           },
           "EmailsSendRequestBccOneItem": {
+            "base-properties": undefined,
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
@@ -1907,6 +1910,7 @@ docs: Blobs
             },
           },
           "EmailsSendRequestBccZero": {
+            "base-properties": undefined,
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
@@ -1934,6 +1938,7 @@ docs: Blobs
             },
           },
           "EmailsSendRequestCc": {
+            "base-properties": undefined,
             "discriminated": false,
             "docs": "A single email or list of emails for one of the address fields",
             "encoding": undefined,
@@ -1952,6 +1957,7 @@ docs: Blobs
             ],
           },
           "EmailsSendRequestCcOneItem": {
+            "base-properties": undefined,
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
@@ -1979,6 +1985,7 @@ docs: Blobs
             },
           },
           "EmailsSendRequestCcZero": {
+            "base-properties": undefined,
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
@@ -2006,6 +2013,7 @@ docs: Blobs
             },
           },
           "EmailsSendRequestFrom": {
+            "base-properties": undefined,
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
@@ -2033,6 +2041,7 @@ docs: Blobs
             },
           },
           "EmailsSendRequestReplyToList": {
+            "base-properties": undefined,
             "discriminated": false,
             "docs": "A reply-to list of email addresses",
             "encoding": undefined,
@@ -2073,6 +2082,7 @@ docs: Blobs
             },
           },
           "EmailsSendRequestTo": {
+            "base-properties": undefined,
             "discriminated": false,
             "docs": "A single email or list of emails for one of the address fields",
             "encoding": undefined,
@@ -2091,6 +2101,7 @@ docs: Blobs
             ],
           },
           "EmailsSendRequestToOneItem": {
+            "base-properties": undefined,
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
@@ -2118,6 +2129,7 @@ docs: Blobs
             },
           },
           "EmailsSendRequestToZero": {
+            "base-properties": undefined,
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
@@ -3870,6 +3882,7 @@ docs: Search
             },
           },
           "SqliteBatchRequestStatementsItem": {
+            "base-properties": undefined,
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
@@ -3907,6 +3920,7 @@ docs: Search
             },
           },
           "SqliteBatchRequestStatementsItemArgsArgs": {
+            "base-properties": undefined,
             "discriminated": false,
             "docs": "List of arguments to be used in the given statement",
             "encoding": undefined,
@@ -3920,6 +3934,7 @@ docs: Search
             ],
           },
           "SqliteBatchRequestStatementsItemArgsArgsOneValue": {
+            "base-properties": undefined,
             "discriminated": false,
             "docs": "A value to be used as a parameter",
             "encoding": undefined,
@@ -3934,6 +3949,7 @@ docs: Search
             ],
           },
           "SqliteBatchRequestStatementsItemArgsArgsZeroItem": {
+            "base-properties": undefined,
             "discriminated": false,
             "docs": "A value to be used as a parameter",
             "encoding": undefined,
@@ -3948,6 +3964,7 @@ docs: Search
             ],
           },
           "SqliteExecuteRequestStatement": {
+            "base-properties": undefined,
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
@@ -3985,6 +4002,7 @@ docs: Search
             },
           },
           "SqliteExecuteRequestStatementArgsArgs": {
+            "base-properties": undefined,
             "discriminated": false,
             "docs": "List of arguments to be used in the given statement",
             "encoding": undefined,
@@ -3998,6 +4016,7 @@ docs: Search
             ],
           },
           "SqliteExecuteRequestStatementArgsArgsOneValue": {
+            "base-properties": undefined,
             "discriminated": false,
             "docs": "A value to be used as a parameter",
             "encoding": undefined,
@@ -4012,6 +4031,7 @@ docs: Search
             ],
           },
           "SqliteExecuteRequestStatementArgsArgsZeroItem": {
+            "base-properties": undefined,
             "discriminated": false,
             "docs": "A value to be used as a parameter",
             "encoding": undefined,
@@ -5408,6 +5428,7 @@ let you get, create, and run vals.",
         },
         "types": {
           "EvalGetResponse": {
+            "base-properties": undefined,
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
@@ -5424,6 +5445,7 @@ let you get, create, and run vals.",
             ],
           },
           "EvalPostResponse": {
+            "base-properties": undefined,
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,

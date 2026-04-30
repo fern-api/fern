@@ -3,6 +3,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { php } from "@fern-api/php-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
 
+import { DefaultValueExtractor } from "../../DefaultValueExtractor.js";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import {
     EndpointRequest,
@@ -66,9 +67,17 @@ export class WrappedEndpointRequest extends EndpointRequest {
                         requestParameterName: this.requestParameterName,
                         propertyName: query.name
                     });
-                    writer.controlFlow("if", php.codeblock(`${queryParameterReference} != null`));
-                    this.writeQueryParameter(writer, query);
-                    writer.endControlFlow();
+                    const clientDefaultWire = DefaultValueExtractor.getClientDefaultStringValue(query.clientDefault);
+                    if (clientDefaultWire != null) {
+                        const escaped = clientDefaultWire.replace(/\\/g, "\\\\").replace(/'/g, "\\'");
+                        writer.writeTextStatement(
+                            `${QUERY_PARAMETER_BAG_NAME}['${getWireValue(query.name)}'] = ${queryParameterReference} ?? '${escaped}'`
+                        );
+                    } else {
+                        writer.controlFlow("if", php.codeblock(`${queryParameterReference} != null`));
+                        this.writeQueryParameter(writer, query);
+                        writer.endControlFlow();
+                    }
                 }
             }),
             queryParameterBagReference: QUERY_PARAMETER_BAG_NAME
@@ -101,9 +110,17 @@ export class WrappedEndpointRequest extends EndpointRequest {
                         requestParameterName: this.requestParameterName,
                         propertyName: header.name
                     });
-                    writer.controlFlow("if", php.codeblock(`${headerParameterReference} != null`));
-                    this.writeHeader(writer, header);
-                    writer.endControlFlow();
+                    const clientDefaultWire = DefaultValueExtractor.getClientDefaultStringValue(header.clientDefault);
+                    if (clientDefaultWire != null) {
+                        const escaped = clientDefaultWire.replace(/\\/g, "\\\\").replace(/'/g, "\\'");
+                        writer.writeTextStatement(
+                            `${HEADER_BAG_NAME}['${getWireValue(header.name)}'] = ${headerParameterReference} ?? '${escaped}'`
+                        );
+                    } else {
+                        writer.controlFlow("if", php.codeblock(`${headerParameterReference} != null`));
+                        this.writeHeader(writer, header);
+                        writer.endControlFlow();
+                    }
                 }
             }),
             headerParameterBagReference: HEADER_BAG_NAME

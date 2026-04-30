@@ -43,6 +43,7 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     resolveAliases: undefined,
     groupMultiApiEnvironments: undefined,
     groupEnvironmentsByHost: undefined,
+    multiServerStrategy: undefined,
     inferDefaultEnvironment: undefined,
     wrapReferencesToNullableInOptional: undefined,
     coerceOptionalSchemasToNullable: undefined,
@@ -51,7 +52,8 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     defaultIntegerFormat: undefined,
     resolveSchemaCollisions: undefined,
     inferForwardCompatible: undefined,
-    coerceConstsTo: undefined
+    coerceConstsTo: undefined,
+    shouldInferDiscriminatedUnionBaseProperties: undefined
 };
 
 export async function convertGeneratorsConfiguration({
@@ -146,8 +148,10 @@ function parseOpenApiDefinitionSettingsSchema(
         resolveAliases: settings?.["resolve-aliases"],
         groupMultiApiEnvironments: settings?.["group-multi-api-environments"],
         groupEnvironmentsByHost: settings?.["group-environments-by-host"],
+        multiServerStrategy: settings?.["multi-server-strategy"],
         defaultIntegerFormat: settings?.["default-integer-format"],
-        pathParameterOrder: settings?.["path-parameter-order"]
+        pathParameterOrder: settings?.["path-parameter-order"],
+        shouldInferDiscriminatedUnionBaseProperties: settings?.["infer-discriminated-union-base-properties"]
     };
 }
 
@@ -173,6 +177,7 @@ export function parseBaseApiDefinitionSettingsSchema(
         wrapReferencesToNullableInOptional: settings?.["wrap-references-to-nullable-in-optional"],
         coerceOptionalSchemasToNullable: settings?.["coerce-optional-schemas-to-nullable"],
         groupEnvironmentsByHost: settings?.["group-environments-by-host"],
+        multiServerStrategy: settings?.["multi-server-strategy"],
         inferDefaultEnvironment: settings?.["infer-default-environment"],
         groupMultiApiEnvironments:
             settings != null && "group-multi-api-environments" in settings

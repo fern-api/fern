@@ -37,10 +37,10 @@ class HealthServiceWireTest < WireMockTestCase
     test_id = "health.service.ping.0"
 
     @client.health.service.ping(request_options: {
-                                  additional_headers: {
-                                    "X-Test-Id" => "health.service.ping.0"
-                                  }
-                                })
+      additional_headers: {
+        "X-Test-Id" => "health.service.ping.0"
+      }
+    })
 
     verify_request_count(
       test_id: test_id,

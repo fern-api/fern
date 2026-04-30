@@ -938,6 +938,75 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/auth-name-collision-ir.snap");
     });
 
+    it("should preserve user's explicit docs over OpenAPI description", async () => {
+        // Test that when generators.yml has explicit docs for an auth scheme,
+        // it takes priority over the OpenAPI securityScheme description
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/auth-user-docs-priority")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "auth-user-docs-priority"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false,
+            logWarnings: false
+        });
+
+        const fdrApiDefinition = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        // Validate auth schemes exist
+        expect(intermediateRepresentation.auth).toBeDefined();
+        expect(intermediateRepresentation.auth.schemes).toBeDefined();
+        const authSchemes = intermediateRepresentation.auth.schemes;
+
+        // Find the apiKeyAuth scheme
+        const apiKeyScheme = authSchemes.find((scheme) => scheme.key === "apiKeyAuth");
+        expect(apiKeyScheme).toBeDefined();
+
+        // Verify the docs field is the user's custom docs, NOT the OpenAPI description
+        expect(apiKeyScheme?.docs).toBe(
+            "User's custom documentation that should take priority over OpenAPI description"
+        );
+
+        // Snapshot for regression testing
+        await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/auth-user-docs-priority-fdr.snap");
+        await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/auth-user-docs-priority-ir.snap");
+    });
+
     it("should handle OpenAPI auth overrides combined with OpenAPI overrides file", async () => {
         const context = createMockTaskContext();
         const workspace = await loadAPIWorkspace({
@@ -3254,5 +3323,47 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         };
 
         await expect(workspaceSnapshot).toMatchFileSnapshot("__snapshots__/graphql-workspace.snap");
+    });
+
+    it("should gracefully handle circular $ref pointers during workspace loading and IR generation", async () => {
+        // This spec has PlantCategory -> PlantCategoryAlias -> PlantCategory (a $ref cycle)
+        // which triggers @redocly/openapi-core's "Self-referencing circular pointer" error.
+        // The fix catches this error, breaks the circular $ref cycles in the unbundled
+        // document, and continues so that both workspace loading and IR generation succeed.
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures/circular-ref")),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "circular-ref"
+        });
+
+        // Workspace loading should succeed (not throw) despite circular refs
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        // Fetching the raw definition should succeed — this is the path that previously
+        // threw "Self-referencing circular pointer" from @redocly/openapi-core.
+        const definition = await workspace.workspace.getDefinition({ context });
+        expect(definition).toBeDefined();
+
+        // IR generation must also complete without hanging. Before the fix,
+        // the unbundled document retained circular $ref chains that caused the
+        // OpenAPI3_1Converter to infinite-loop.
+        const ir = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false,
+            logWarnings: false
+        });
+        expect(ir).toBeDefined();
+        expect(ir.services).toBeDefined();
     });
 });

@@ -58,6 +58,22 @@ describe("Comment", () => {
         expect(comment.toString(writerConfig)).toMatchSnapshot();
     });
 
+    test("strips trailing whitespace from short lines", () => {
+        // Spec-controlled docstrings sometimes include trailing whitespace that
+        // would trip Layout/TrailingWhitespace once `rubocop -A` is gone.
+        const docs = "If the request resulted in errors,   \nadditional context here.";
+        const comment = ruby.comment({ docs });
+
+        expect(comment.toString(writerConfig)).toMatchSnapshot();
+    });
+
+    test("emits bare `#` for blank lines in multi-line docs", () => {
+        const docs = "First paragraph.\n   \nSecond paragraph.";
+        const comment = ruby.comment({ docs });
+
+        expect(comment.toString(writerConfig)).toMatchSnapshot();
+    });
+
     test("handles very long words like URLs without breaking them", () => {
         const textWithUrl =
             "See the documentation at https://example.com/very/long/path/to/documentation/that/exceeds/the/line/length/limit/significantly for more information.";

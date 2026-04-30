@@ -18,7 +18,7 @@ class EndpointsContentTypeWireTest < WireMockTestCase
     @client.endpoints.content_type.post_json_patch_content_type(
       string: "string",
       integer: 1,
-      long: 1_000_000,
+      long: 1000000,
       double: 1.1,
       bool: true,
       datetime: "2024-01-15T09:30:00Z",
@@ -53,7 +53,7 @@ class EndpointsContentTypeWireTest < WireMockTestCase
     @client.endpoints.content_type.post_json_patch_content_with_charset_type(
       string: "string",
       integer: 1,
-      long: 1_000_000,
+      long: 1000000,
       double: 1.1,
       bool: true,
       datetime: "2024-01-15T09:30:00Z",

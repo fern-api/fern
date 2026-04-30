@@ -1,4 +1,4 @@
-import { File, getOriginalName } from "@fern-api/base-generator";
+import { File, GeneratorError, getOriginalName } from "@fern-api/base-generator";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { java } from "@fern-api/java-ast";
@@ -143,7 +143,7 @@ export class SdkWireTestGenerator {
         );
 
         if (totalEndpointsProcessed > 0 && totalEndpointsGenerated === 0) {
-            throw new Error(
+            throw GeneratorError.internalError(
                 `Wire test generation failed: 0/${totalEndpointsProcessed} endpoints succeeded. ` +
                     `This indicates a systemic issue with snippet generation or service mapping. ` +
                     `Check logs above for specific endpoint failures.`
@@ -350,7 +350,7 @@ export class SdkWireTestGenerator {
         // have endpoints with the same HTTP method and path pattern
         const response = await dynamicSnippetsGenerator.generate(snippetRequest, { endpointId });
         if (!response.snippet) {
-            throw new Error("No snippet generated for example");
+            throw GeneratorError.internalError("No snippet generated for example");
         }
         return response.snippet;
     }
@@ -416,7 +416,7 @@ export class SdkWireTestGenerator {
 
             const dynamicEndpoint = dynamicIr.endpoints[endpoint.id];
             if (!dynamicEndpoint) {
-                throw new Error(
+                throw GeneratorError.internalError(
                     `Dynamic endpoint not found for ${endpoint.id}. This is likely due to a service mapping issue in the FernIr.dynamic IR.`
                 );
             }
@@ -470,7 +470,7 @@ export class SdkWireTestGenerator {
                 return snippet;
             } catch (error) {
                 const errorMessage = extractErrorMessage(error);
-                throw new Error(
+                throw GeneratorError.internalError(
                     `Service mismatch (expected: '${expectedServiceName}', got: '${dynamicServiceName}'). ` +
                         `Correction attempt failed: ${errorMessage}. ` +
                         `This typically occurs with V1 ungrouped endpoints or incorrect FernIr.dynamic IR service mapping.`

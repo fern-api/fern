@@ -2,9 +2,42 @@ import type {
     OpenAPISettings,
     OpenAPISpec,
     Spec,
+    GraphQLSpec as V1GraphQLSpec,
     OpenRPCSpec as V1OpenRPCSpec,
     ProtobufSpec as V1ProtobufSpec
 } from "@fern-api/api-workspace-commons";
+
+/**
+ * Partitions v1 specs into two groups:
+ *
+ * - `filteredSpecs`: IR-generating specs (OpenAPI, AsyncAPI, protobuf-from-openapi).
+ *   Docs-only types (graphql, openrpc) and raw protobuf are excluded.
+ * - `allSpecs`: All specs except protobuf-from-openapi (used by OSSWorkspace for doc rendering).
+ */
+export function partitionV1Specs(v1Specs: Spec[]): {
+    filteredSpecs: (OpenAPISpec | V1ProtobufSpec)[];
+    allSpecs: Spec[];
+} {
+    const filteredSpecs = v1Specs.filter((spec): spec is OpenAPISpec | V1ProtobufSpec => {
+        if (spec.type === "openrpc" || spec.type === "graphql") {
+            return false;
+        }
+        if (spec.type === "protobuf" && !spec.fromOpenAPI) {
+            return false;
+        }
+        return true;
+    });
+
+    const allSpecs = v1Specs.filter((spec) => {
+        if (spec.type === "protobuf" && spec.fromOpenAPI) {
+            return false;
+        }
+        return true;
+    });
+
+    return { filteredSpecs, allSpecs };
+}
+
 import type { schemas } from "@fern-api/config";
 import { generatorsYml } from "@fern-api/configuration";
 import { relativize } from "@fern-api/fs-utils";
@@ -13,6 +46,8 @@ import type { Context } from "../../context/Context.js";
 import type { ApiSpec } from "../config/ApiSpec.js";
 import type { AsyncApiSpec } from "../config/AsyncApiSpec.js";
 import { isAsyncApiSpec } from "../config/AsyncApiSpec.js";
+import type { GraphQlSpec } from "../config/GraphQlSpec.js";
+import { isGraphQlSpec } from "../config/GraphQlSpec.js";
 import type { OpenApiSpec } from "../config/OpenApiSpec.js";
 import { isOpenApiSpec } from "../config/OpenApiSpec.js";
 import type { OpenRpcSpec } from "../config/OpenRpcSpec.js";
@@ -49,6 +84,9 @@ export class LegacyApiSpecAdapter {
         }
         if (isOpenRpcSpec(spec)) {
             return this.adaptOpenRpcSpec(spec);
+        }
+        if (isGraphQlSpec(spec)) {
+            return this.adaptGraphQlSpec(spec);
         }
         throw new CliError({
             message: `Unsupported spec type: ${JSON.stringify(spec)}`,
@@ -114,6 +152,15 @@ export class LegacyApiSpecAdapter {
         };
     }
 
+    private adaptGraphQlSpec(spec: GraphQlSpec): V1GraphQLSpec {
+        return {
+            type: "graphql" as const,
+            absoluteFilepath: spec.graphql,
+            absoluteFilepathToOverrides: spec.overrides,
+            namespace: spec.name
+        };
+    }
+
     private adaptOpenApiSettings(settings: OpenApiSpec["settings"]): OpenAPISettings | undefined {
         if (settings == null) {
             return undefined;
@@ -129,6 +176,7 @@ export class LegacyApiSpecAdapter {
             optionalAdditionalProperties: settings.optionalAdditionalProperties,
             shouldUseIdiomaticRequestNames: settings.idiomaticRequestNames,
             groupEnvironmentsByHost: settings.groupEnvironmentsByHost,
+            multiServerStrategy: this.adaptMultiServerStrategy(settings.multiServerStrategy),
             removeDiscriminantsFromSchemas: this.adaptRemoveDiscriminantsFromSchemas(
                 settings.removeDiscriminantsFromSchemas
             ),
@@ -152,7 +200,8 @@ export class LegacyApiSpecAdapter {
             resolveAliases: settings.resolveAliases,
             groupMultiApiEnvironments: settings.groupMultiApiEnvironments,
             defaultIntegerFormat: this.adaptDefaultIntegerFormat(settings.defaultIntegerFormat),
-            coerceConstsTo: settings.coerceConstsTo
+            coerceConstsTo: settings.coerceConstsTo,
+            shouldInferDiscriminatedUnionBaseProperties: settings.inferDiscriminatedUnionBaseProperties
         };
 
         const hasSettings = Object.values(result).some((v) => v != null);
@@ -174,6 +223,7 @@ export class LegacyApiSpecAdapter {
             optionalAdditionalProperties: settings.optionalAdditionalProperties,
             shouldUseIdiomaticRequestNames: settings.idiomaticRequestNames,
             groupEnvironmentsByHost: settings.groupEnvironmentsByHost,
+            multiServerStrategy: this.adaptMultiServerStrategy(settings.multiServerStrategy),
             removeDiscriminantsFromSchemas: this.adaptRemoveDiscriminantsFromSchemas(
                 settings.removeDiscriminantsFromSchemas
             ),
@@ -199,6 +249,22 @@ export class LegacyApiSpecAdapter {
                 return generatorsYml.RemoveDiscriminantsFromSchemas.Always;
             case "never":
                 return generatorsYml.RemoveDiscriminantsFromSchemas.Never;
+            default:
+                return undefined;
+        }
+    }
+
+    private adaptMultiServerStrategy(
+        value: schemas.MultiServerStrategySchema | undefined
+    ): generatorsYml.MultiServerStrategy | undefined {
+        if (value == null) {
+            return undefined;
+        }
+        switch (value) {
+            case "environmentPerServer":
+                return generatorsYml.MultiServerStrategy.EnvironmentPerServer;
+            case "urlsPerEnvironment":
+                return generatorsYml.MultiServerStrategy.UrlsPerEnvironment;
             default:
                 return undefined;
         }

@@ -234,6 +234,9 @@ fixtures:
     - outputFolder: with-wire-tests
       customConfig:
         enableWireTests: true
+  openapi-request-body-ref:
+    - outputFolder: no-custom-config
+      customConfig: null
   idempotency-headers:
     - outputFolder: .
       outputVersion: 0.0.1
@@ -304,12 +307,20 @@ fixtures:
   inferred-auth-implicit-reference:
     - outputFolder: .
       customConfig: null
+  basic-auth-pw-omitted:
+    - outputFolder: wire-tests
+      customConfig:
+        enableWireTests: true
   go-nested-cross-package:
     - outputFolder: .
       customConfig: null
   go-subpackage-collision:
     - outputFolder: .
       customConfig: null
+  union-query-parameters:
+    - outputFolder: .
+      customConfig:
+        enableWireTests: true
 scripts:
   - image: fernapi/go-seed:2.0.0
     commands:

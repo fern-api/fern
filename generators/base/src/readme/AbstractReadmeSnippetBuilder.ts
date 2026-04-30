@@ -1,5 +1,6 @@
 import { FernGeneratorExec } from "@fern-api/browser-compatible-base-generator";
 import { camelCase } from "lodash-es";
+import { GeneratorError } from "../GeneratorError.js";
 
 export abstract class AbstractReadmeSnippetBuilder {
     private endpointSnippets: FernGeneratorExec.Endpoint[];
@@ -18,12 +19,14 @@ export abstract class AbstractReadmeSnippetBuilder {
         if (defaultEndpoint == null) {
             const firstEndpoint = this.endpointSnippets[0];
             if (firstEndpoint == null) {
-                throw new Error("Internal error; no endpoint snippets were provided");
+                throw GeneratorError.internalError("Internal error; no endpoint snippets were provided");
             }
             defaultEndpoint = firstEndpoint;
         }
         if (defaultEndpoint.id.identifierOverride == null) {
-            throw new Error("Internal error; all endpoints must define an endpoint id to generate README.md");
+            throw GeneratorError.internalError(
+                "Internal error; all endpoints must define an endpoint id to generate README.md"
+            );
         }
         return defaultEndpoint.id.identifierOverride;
     }

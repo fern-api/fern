@@ -1,4 +1,4 @@
-import { Arguments, NamedArgument } from "@fern-api/base-generator";
+import { Arguments, GeneratorError, NamedArgument } from "@fern-api/base-generator";
 import { php } from "@fern-api/php-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
 
@@ -136,7 +136,7 @@ export class RawClient {
         for (const part of endpoint.fullPath.parts) {
             const reference = pathParameterReferences[part.pathParameter];
             if (reference == null) {
-                throw new Error(
+                throw GeneratorError.internalError(
                     `Failed to find request parameter for the endpoint ${endpoint.id} with path parameter ${part.pathParameter}`
                 );
             }

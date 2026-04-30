@@ -10,6 +10,7 @@ module Seed
           discriminant :type
 
           member -> { String }, key: "TEMPLATE_ID"
+
           member -> { Seed::V2::Problem::Types::TestCaseImplementation }, key: "IMPLEMENTATION"
         end
       end

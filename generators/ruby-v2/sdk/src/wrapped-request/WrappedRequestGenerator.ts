@@ -100,7 +100,7 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
 
         return new RubyFile({
             node: ruby.codeblock((writer) => {
-                ruby.comment({ docs: "frozen_string_literal: true" });
+                ruby.comment({ docs: "frozen_string_literal: true" }).write(writer);
                 writer.newLine();
                 ruby.wrapInModules(class_, this.context.getModulesForServiceId(this.serviceId)).write(writer);
             }),
@@ -111,12 +111,12 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
     }
 
     protected getFilepath(): RelativeFilePath {
-        const subpackage = this.context.getSubpackageForServiceId(this.serviceId);
+        const pkg = this.context.getPackageForServiceId(this.serviceId);
         const serviceDir = RelativeFilePath.of(
             [
                 "lib",
                 this.context.getRootFolderName(),
-                ...subpackage.fernFilepath.allParts.map((path) => this.case.snakeSafe(path)),
+                ...pkg.fernFilepath.allParts.map((path) => this.case.snakeSafe(path)),
                 "types"
             ].join("/")
         );

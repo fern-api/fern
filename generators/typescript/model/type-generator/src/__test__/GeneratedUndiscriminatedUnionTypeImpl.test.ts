@@ -124,7 +124,7 @@ function createGenerator(opts: {
 }): GeneratedUndiscriminatedUnionTypeImpl<any> {
     return new GeneratedUndiscriminatedUnionTypeImpl({
         typeName: opts.typeName,
-        shape: { members: opts.members },
+        shape: { members: opts.members, baseProperties: undefined },
         examples: opts.examples ?? [],
         docs: opts.docs,
         fernFilepath: createFernFilepath(),

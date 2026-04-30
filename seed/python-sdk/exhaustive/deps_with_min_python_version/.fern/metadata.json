@@ -16,11 +16,10 @@
       }
     },
     "extra_dependencies": {
-      "boto3": "1.28.57"
+      "boto3": "1.35.76"
     }
   },
   "originGitCommit": "DUMMY",
-  "originGitCommitIsDirty": null,
   "invokedBy": "ci",
   "requestedVersion": "0.0.1",
   "ciProvider": "github",

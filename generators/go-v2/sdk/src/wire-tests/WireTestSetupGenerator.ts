@@ -26,7 +26,9 @@ export class WireTestSetupGenerator {
     }
 
     public static getWiremockConfigContent(ir: FernIr.IntermediateRepresentation) {
-        return new WireMock().convertToWireMock(ir);
+        // ir-sdk versions may differ between go-sdk (66.3.0) and mock-utils (66.0.0);
+        // 66.3.0 is a strict superset (adds optional fields only), so this is safe.
+        return new WireMock().convertToWireMock(ir as Parameters<WireMock["convertToWireMock"]>[0]);
     }
 
     private generateWireMockConfigFile(): void {

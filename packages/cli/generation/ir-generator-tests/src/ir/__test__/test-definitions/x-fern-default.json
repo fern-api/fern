@@ -26,7 +26,7 @@
                             "v1": "STRING",
                             "v2": {
                                 "type": "string",
-                                "default": "2024-02-08",
+                                "default": null,
                                 "validation": null
                             }
                         }
@@ -232,7 +232,7 @@
                                             "v1": "STRING",
                                             "v2": {
                                                 "type": "string",
-                                                "default": "100",
+                                                "default": null,
                                                 "validation": null
                                             }
                                         }

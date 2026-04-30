@@ -4,7 +4,9 @@ module Seed
   module Types
     class RuleType < Internal::Types::Model
       field :id, -> { String }, optional: false, nullable: false
+
       field :name, -> { String }, optional: false, nullable: false
+
       field :description, -> { String }, optional: true, nullable: false
     end
   end

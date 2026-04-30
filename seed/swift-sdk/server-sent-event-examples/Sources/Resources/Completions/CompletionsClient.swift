@@ -27,6 +27,16 @@ public final class CompletionsClient: Sendable {
         )
     }
 
+    public func streamEventsDiscriminantInData(request: Requests.StreamEventsDiscriminantInDataRequest, requestOptions: RequestOptions? = nil) async throws -> JSONValue {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/stream-events-discriminant-in-data",
+            body: request,
+            requestOptions: requestOptions,
+            responseType: JSONValue.self
+        )
+    }
+
     public func streamEventsContextProtocol(request: Requests.StreamEventsContextProtocolRequest, requestOptions: RequestOptions? = nil) async throws -> JSONValue {
         return try await httpClient.performRequest(
             method: .post,

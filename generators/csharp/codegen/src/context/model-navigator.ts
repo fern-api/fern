@@ -1,4 +1,4 @@
-import { NameInput } from "@fern-api/base-generator";
+import { NameInput } from "@fern-api/browser-compatible-base-generator";
 import { FernIr as DynamicFernIr } from "@fern-api/dynamic-ir-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { fail } from "../utils/fail.js";

@@ -1,7 +1,7 @@
 require "seed"
 
 client = Seed::Client.new(
-  header_token_auth: "<value>",
+  header_token_auth: "YOUR_HEADER_VALUE",
   base_url: "https://api.fern.com"
 )
 

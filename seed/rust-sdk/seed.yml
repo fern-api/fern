@@ -20,6 +20,11 @@ publish:
     file: ./generators/rust/sdk/Dockerfile
     image: fernapi/fern-rust-sdk
     context: .
+  sentry:
+    name: fern-rust-sdk
+    project: rust-sdk
+    sourceMaps:
+      - dir: generators/rust/sdk/dist
 
 test:
   docker:

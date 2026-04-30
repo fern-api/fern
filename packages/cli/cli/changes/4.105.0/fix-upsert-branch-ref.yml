@@ -1,0 +1,5 @@
+- summary: |
+    Fix branch creation during signed commit push in generator-cli. GitHub's
+    updateRef API returns 422 (not 404) when the target branch does not exist,
+    so the createRef fallback was unreachable.
+  type: fix

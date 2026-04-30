@@ -1,4 +1,140 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.9.0
+  changelogEntry:
+    - summary: |
+        Add `retryStatusCodes` config with `"legacy"` and `"recommended"` modes. Legacy (default)
+        preserves current behavior (408, 409, 429, >= 500). Recommended retries only transient
+        codes (408, 409, 429, 502, 503, 504), avoiding idempotency issues with 500. A 6.0.0
+        migration auto-pins legacy for upgrading users.
+      type: feat
+  createdAt: "2026-04-30"
+  irVersion: 66
+- version: 5.8.4
+  changelogEntry:
+    - summary: |
+        Bump @fern-api/generator-cli to 0.9.21, which includes @fern-api/replay
+        0.14.0 with fixes for silent customization loss across apply and resolve
+        paths, per-patch-region diff, and clean follow-up patch preservation.
+      type: chore
+  createdAt: "2026-04-30"
+  irVersion: 66
+- version: 5.8.3
+  changelogEntry:
+    - summary: |
+        Fix async SSE parsing to only split on SSE-spec line terminators (\n, \r, \r\n).
+        Previously, aiter_sse() used httpx's aiter_lines() which splits on \u2028 and
+        \u2029 via Python's str.splitlines(), corrupting data fields containing those
+        characters (common in LLM JSON output).
+      type: fix
+  createdAt: "2026-04-28"
+  irVersion: 66
+- version: 5.8.2
+  changelogEntry:
+    - summary: |
+        Bump @fern-api/generator-cli to 0.9.16, which bundles the autoversion
+        pipeline's private workspace deps (@fern-api/logging-execa,
+        @fern-api/task-context, @fern-api/cli-ai) into the published dist/api.js
+        so consumers no longer hit ERR_MODULE_NOT_FOUND on
+        logging-execa/src/createLoggingExecutable.js under Vite/Vitest.
+      type: chore
+  createdAt: "2026-04-28"
+  irVersion: 66
+- version: 5.8.1
+  changelogEntry:
+    - summary: |
+        Tighten the generated `urllib3` dev-dependency pin to `>=2.6.3,<3.0.0`
+        (Python >= 3.9) to address CVE-2026-21441 and several additional
+        HIGH-severity urllib3 advisories. Projects still supporting Python 3.8
+        fall back to the tightest safe constraint available for the 1.x line.
+      type: chore
+  createdAt: "2026-04-27"
+  irVersion: 66
+- version: 5.8.0
+  changelogEntry:
+    - summary: |
+        Support omitting username or password from basic auth when configured via
+        `usernameOmit` or `passwordOmit` in the IR. Omitted fields are removed from
+        the SDK's public API and treated as empty strings internally (e.g., omitting
+        password encodes `username:`, omitting username encodes `:password`). When
+        both are omitted, the Authorization header is skipped entirely.
+      type: feat
+  createdAt: "2026-04-27"
+  irVersion: 66
+- version: 5.7.0
+  changelogEntry:
+    - summary: |
+        Use auth scheme placeholder values in README snippets when configured via
+        `placeholder` field on auth schemes.
+      type: feat
+  createdAt: "2026-04-25"
+  irVersion: 66
+- version: 5.6.1
+  changelogEntry:
+    - summary: |
+        Fix `@fern-api/python-dynamic-snippets` to respect the `use_typeddict_requests`
+        configuration option. When enabled, dynamic snippets now generate dict literals
+        instead of Pydantic model constructors for object and discriminated union types.
+      type: fix
+  createdAt: "2026-04-24"
+  irVersion: 66
+- version: 5.6.0
+  changelogEntry:
+    - summary: |
+        Support `x-fern-default` as fallback value for parameters in generated Python SDKs.
+        When a header, query parameter, or path parameter has a `clientDefault` value in the IR,
+        the generated Python function signature makes that parameter optional with the default
+        value automatically applied. This enables patterns like optional API version headers
+        that fall back to a pinned version.
+      type: feat
+  createdAt: "2026-04-24"
+  irVersion: 66
+- version: 5.5.11
+  changelogEntry:
+    - summary: |
+        Bump @fern-api/generator-cli to 0.9.13, which fixes the publish of 0.9.12
+        (autoversion pipeline + @fern-api/replay 0.12.0) by marking @boundaryml/baml
+        as external in the generator-cli CLI bundle so esbuild no longer tries to
+        statically resolve baml's platform-specific native bindings.
+      type: chore
+  createdAt: "2026-04-23"
+  irVersion: 66
+- version: 5.5.10
+  changelogEntry:
+    - summary: |
+        Bump @fern-api/generator-cli to 0.9.12, which ships the FER-9980 autoversion
+        pipeline (AutoVersionStep runs between the [fern-generated] commit and replay
+        apply, diffing pure generator output across runs to drive a semver bump and
+        changelog entry via FAI) and pins @fern-api/replay to 0.12.0.
+      type: chore
+  createdAt: "2026-04-23"
+  irVersion: 66
+- version: 5.5.9
+  changelogEntry:
+    - summary: |
+        Bump @fern-api/generator-cli to 0.9.11. The GitHub pipeline step now creates
+        signed commits via the GitHub REST API (matching fiddle's legacy InMemoryGitRepo
+        push path), restoring verified fern-api[bot] commits on replay-enabled orgs.
+      type: chore
+  createdAt: "2026-04-22"
+  irVersion: 66
+- version: 5.5.8
+  changelogEntry:
+    - summary: |
+        Fix wire test verification for endpoints with multi-value array query parameters.
+      type: fix
+  createdAt: "2026-04-22"
+  irVersion: 66
+- version: 5.5.7
+  changelogEntry:
+    - summary: |
+        Add crash reporting via Sentry to the generator runtime, and classify
+        thrown errors using the new shared `GeneratorError` taxonomy so user-facing
+        failures (config, validation, auth, network, environment) are kept distinct
+        from internal Fern bugs — only the latter are forwarded to Sentry. No
+        change to generated output.
+      type: chore
+  createdAt: "2026-04-22"
+  irVersion: 66
 - version: 5.5.6
   changelogEntry:
     - summary: |

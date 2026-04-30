@@ -56,6 +56,13 @@ Pipeline core:
 Replay integration:
 - `src/replay/replay-run.ts` — Replay invocation + divergent merge detection
 
+Autoversioning (`src/autoversion/`, exported under the `@fern-api/generator-cli/autoversion` subpath):
+- `AutoVersioningService.ts` — Diff cleaning + chunking, magic-version placeholder rewrite, Go v2+ module-path suffix, git-tag fallback.
+- `VersionUtils.ts` — Language detection, magic-version constants, semver bump, `VersionBump` enum, chunk-size constants.
+- `AutoVersioningCache.ts` — Per-invocation deduplication cache for FAI analysis calls across parallel generators.
+
+Consumed by `@fern-api/local-workspace-runner`'s `LocalTaskHandler` and `packages/cli/cli`'s `sdk-diff` command. Will also be consumed by `AutoVersionStep` in the post-generation pipeline (FER-9980).
+
 GitHub helpers (`src/pipeline/github/`):
 - `createReplayBranch.ts` — Synthetic divergent commit creation
 - `findExistingUpdatablePR.ts` — Find reusable fern-bot PRs
@@ -110,7 +117,11 @@ Generators pick up new generator-cli versions **lazily** — the next time a gen
 - `@fern-api/replay` — Core replay engine
 - `@fern-api/github` — `ClonedRepository` for git operations
 - `@fern-api/fs-utils` — Path utilities
+- `@fern-api/cli-ai` — BAML FAI client + `VersionBump` enum (used by autoversion)
+- `@fern-api/logging-execa` — Shell execution with structured logging (used by autoversion)
+- `@fern-api/task-context` — Logger interface (used by autoversion)
 - `@octokit/rest` — GitHub API client
+- `semver` — Semantic version parsing (used by autoversion)
 - `yargs` — CLI argument parsing
 
 ## Common Gotchas

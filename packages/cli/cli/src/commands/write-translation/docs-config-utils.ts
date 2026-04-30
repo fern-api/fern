@@ -10,7 +10,7 @@ import { ContentTransformation } from "./types.js";
 import { addLanguageSuffixToUrl } from "./url-utils.js";
 
 type DocsConfiguration = docsYml.RawSchemas.Serializer.DocsConfiguration.Raw;
-type Language = docsYml.RawSchemas.Language;
+type Language = string;
 type DocsInstance = docsYml.RawSchemas.Serializer.DocsInstance.Raw;
 
 /**
@@ -40,18 +40,18 @@ function modifySettingsConfigForLanguage({
     const modifiedConfig = structuredClone(docsConfig);
 
     if (modifiedConfig.settings) {
-        modifiedConfig.settings.language = language;
-        modifiedConfig.settings["search-text"] = searchTexts[language];
+        modifiedConfig.settings.language = language as docsYml.RawSchemas.Language;
+        modifiedConfig.settings["search-text"] = searchTexts[language] ?? "Search";
     } else {
         modifiedConfig.settings = {
-            language,
-            "search-text": searchTexts[language]
+            language: language as docsYml.RawSchemas.Language,
+            "search-text": searchTexts[language] ?? "Search"
         };
     }
     return modifiedConfig;
 }
 
-const searchTexts: Record<Language, string> = {
+const searchTexts: Record<string, string> = {
     en: "Search",
     es: "Buscar",
     fr: "Rechercher",

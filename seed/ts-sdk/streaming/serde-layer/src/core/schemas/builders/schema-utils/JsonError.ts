@@ -4,6 +4,7 @@ import { stringifyValidationError } from "./stringifyValidationErrors.js";
 export class JsonError extends Error {
     constructor(public readonly errors: ValidationError[]) {
         super(errors.map(stringifyValidationError).join("; "));
-        Object.setPrototypeOf(this, JsonError.prototype);
+        Object.setPrototypeOf(this, new.target.prototype);
+        this.name = this.constructor.name;
     }
 }

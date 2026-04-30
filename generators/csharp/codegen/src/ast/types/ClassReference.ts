@@ -239,6 +239,13 @@ export class ClassReference extends Node implements Type {
                         // the C# compiler resolves it as the namespace instead of the type (CS0118).
                         // Use the fully qualified name to disambiguate.
                         writer.write(fqName);
+                    } else if (
+                        this.enclosingType != null &&
+                        this.hasNamespaceConflict(this.enclosingType.name, writer.namespace)
+                    ) {
+                        // When the enclosing type name matches a segment in the writer's namespace,
+                        // C# resolves the enclosing type as the namespace instead of the SDK type (CS0234).
+                        writer.write(fqName);
                     } else {
                         // If the class is not ambiguous and is in this specific namespace,
                         // we can use the short name

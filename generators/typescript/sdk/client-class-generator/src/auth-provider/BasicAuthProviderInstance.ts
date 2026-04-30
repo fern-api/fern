@@ -33,7 +33,8 @@ export class BasicAuthProviderInstance implements AuthProviderInstance {
                 ts.factory.createPropertyAssignment(
                     getPropertyKey(context.case.camelSafe(this.authScheme.username)),
                     ts.factory.createStringLiteral(
-                        `YOUR_${context.case.screamingSnakeUnsafe(this.authScheme.username)}`
+                        this.authScheme.usernamePlaceholder ??
+                            `YOUR_${context.case.screamingSnakeUnsafe(this.authScheme.username)}`
                     )
                 )
             );
@@ -43,7 +44,8 @@ export class BasicAuthProviderInstance implements AuthProviderInstance {
                 ts.factory.createPropertyAssignment(
                     getPropertyKey(context.case.camelSafe(this.authScheme.password)),
                     ts.factory.createStringLiteral(
-                        `YOUR_${context.case.screamingSnakeUnsafe(this.authScheme.password)}`
+                        this.authScheme.passwordPlaceholder ??
+                            `YOUR_${context.case.screamingSnakeUnsafe(this.authScheme.password)}`
                     )
                 )
             );

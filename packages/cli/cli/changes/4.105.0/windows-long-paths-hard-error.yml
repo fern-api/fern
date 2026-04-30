@@ -1,0 +1,4 @@
+- summary: |
+    `fern docs dev` now exits with a hard error on Windows when long path support
+    is not enabled, instead of printing a warning.
+  type: feat

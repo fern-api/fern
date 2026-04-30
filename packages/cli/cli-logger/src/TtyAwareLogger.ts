@@ -26,6 +26,19 @@ export class TtyAwareLogger {
         private readonly stdout: NodeJS.WriteStream,
         private readonly stderr: NodeJS.WriteStream
     ) {
+        // If the downstream reader of our pipe (`fern ... | head`, `| jq`,
+        // etc.) closes early, Node emits EPIPE on the stream. Without a
+        // listener it becomes an uncaught exception and lands in Sentry as
+        // InternalError. Swallow EPIPE here so the CLI just exits cleanly;
+        // anything else is rethrown so real I/O failures still surface.
+        for (const stream of [this.stdout, this.stderr]) {
+            stream.on("error", (err) => {
+                if (err instanceof Error && (err as NodeJS.ErrnoException).code === "EPIPE") {
+                    return;
+                }
+                throw err;
+            });
+        }
         this.start();
     }
 

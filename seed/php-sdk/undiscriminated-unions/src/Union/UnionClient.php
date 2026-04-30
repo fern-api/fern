@@ -16,6 +16,9 @@ use Psr\Http\Client\ClientExceptionInterface;
 use Seed\Union\Types\KeyType;
 use Seed\Union\Types\NamedMetadata;
 use Seed\Union\Types\Request;
+use Seed\Union\Types\WrapperObject;
+use Seed\Union\Types\LeafObjectA;
+use Seed\Union\Types\LeafObjectB;
 use Seed\Union\Requests\PaymentRequest;
 
 class UnionClient
@@ -353,6 +356,161 @@ class UnionClient
                     return null;
                 }
                 return JsonDecoder::decodeString($json);
+            }
+        } catch (JsonException $e) {
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (ClientExceptionInterface $e) {
+            throw new SeedException(message: $e->getMessage(), previous: $e);
+        }
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * @param (
+     *    string
+     *   |WrapperObject
+     * ) $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return ?string
+     * @throws SeedException
+     * @throws SeedApiException
+     */
+    public function nestedObjectUnions(string|WrapperObject $request, ?array $options = null): ?string
+    {
+        $options = array_merge($this->options, $options ?? []);
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "/nested-objects",
+                    method: HttpMethod::POST,
+                    body: JsonSerializer::serializeUnion($request, new Union('string', WrapperObject::class)),
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
+                return JsonDecoder::decodeString($json);
+            }
+        } catch (JsonException $e) {
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (ClientExceptionInterface $e) {
+            throw new SeedException(message: $e->getMessage(), previous: $e);
+        }
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * @param (
+     *    LeafObjectA
+     *   |LeafObjectB
+     * ) $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return ?string
+     * @throws SeedException
+     * @throws SeedApiException
+     */
+    public function aliasedObjectUnion(LeafObjectA|LeafObjectB $request, ?array $options = null): ?string
+    {
+        $options = array_merge($this->options, $options ?? []);
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "/aliased-object",
+                    method: HttpMethod::POST,
+                    body: JsonSerializer::serializeUnion($request, new Union(LeafObjectA::class, LeafObjectB::class)),
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
+                return JsonDecoder::decodeString($json);
+            }
+        } catch (JsonException $e) {
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (ClientExceptionInterface $e) {
+            throw new SeedException(message: $e->getMessage(), previous: $e);
+        }
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * @param (
+     *    NamedMetadata
+     *   |array<string, mixed>
+     *   |null
+     * ) $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return (
+     *    NamedMetadata
+     *   |array<string, mixed>
+     *   |null
+     * )
+     * @throws SeedException
+     * @throws SeedApiException
+     */
+    public function getWithBaseProperties(NamedMetadata|array|null $request, ?array $options = null): NamedMetadata|array|null
+    {
+        $options = array_merge($this->options, $options ?? []);
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "/with-base-properties",
+                    method: HttpMethod::POST,
+                    body: JsonSerializer::serializeUnion($request, new Union(NamedMetadata::class, new Union(['string' => 'mixed'], 'null'))),
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
+                return JsonDecoder::decodeUnion($json, new Union(NamedMetadata::class, new Union(['string' => 'mixed'], 'null'))); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);

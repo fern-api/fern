@@ -92,7 +92,7 @@
       "pathParameters": [],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "UpdateOrgDetailsRequest",
+      "generatedRequestName": "UpdateOrgDetailsBody",
       "request": {
         "schema": {
           "generatedName": "UpdateOrgDetailsRequest",

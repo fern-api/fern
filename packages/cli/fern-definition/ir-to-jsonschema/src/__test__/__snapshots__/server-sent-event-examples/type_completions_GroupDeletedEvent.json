@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "offset": {
+      "type": "string"
+    },
+    "group_id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "offset",
+    "group_id"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}
