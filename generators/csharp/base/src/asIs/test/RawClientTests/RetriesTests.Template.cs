@@ -36,7 +36,11 @@ public class RetriesTests
     [Test]
     [TestCase(408)]
     [TestCase(429)]
-    [TestCase({{RETRY_TEST_STATUS_CODE}})]
+<% if (retryStatusCodes === "recommended") { %>
+    [TestCase(503)]
+<% } else { %>
+    [TestCase(500)]
+<% } %>
     [TestCase(504)]
     public async SystemTask SendRequestAsync_ShouldRetry_OnRetryableStatusCodes(int statusCode)
     {
@@ -326,7 +330,7 @@ public class RetriesTests
             .Given(WireMockRequest.Create().WithPath("/test").UsingPost())
             .InScenario("RetryWithBody")
             .WillSetStateTo("Success")
-            .RespondWith(WireMockResponse.Create().WithStatusCode({{RETRY_TEST_STATUS_CODE}}));
+            .RespondWith(WireMockResponse.Create().WithStatusCode(<%= retryStatusCodes === "recommended" ? 503 : 500 %>));
 
         _server
             .Given(WireMockRequest.Create().WithPath("/test").UsingPost())
@@ -365,7 +369,7 @@ public class RetriesTests
             .Given(WireMockRequest.Create().WithPath("/test").UsingPost())
             .InScenario("RetryMultipart")
             .WillSetStateTo("Success")
-            .RespondWith(WireMockResponse.Create().WithStatusCode({{RETRY_TEST_STATUS_CODE}}));
+            .RespondWith(WireMockResponse.Create().WithStatusCode(<%= retryStatusCodes === "recommended" ? 503 : 500 %>));
 
         _server
             .Given(WireMockRequest.Create().WithPath("/test").UsingPost())
