@@ -260,13 +260,30 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
             return param.name;
         };
 
-        // Separate auth headers from platform headers
+        // Separate auth headers from platform headers.
+        //
+        // Multiple auth schemes can resolve to the same HTTP header name (e.g.
+        // an oauth2 bearer scheme + an apiKey-in-header scheme both named
+        // `Authorization`). The generated `Dictionary<string, string>`
+        // collection initializer throws `System.ArgumentException` at runtime
+        // when the same key is added twice, so we dedup here. Earlier entries
+        // win; we preserve the IR-established ordering of required > optional
+        // > literal so the most specific / required scheme takes precedence.
         const authHeaderEntries: ast.Dictionary.MapEntry[] = [];
+        const seenAuthHeaderNames = new Set<string>();
+        const pushAuthHeaderEntry = (headerName: string, entry: ast.Dictionary.MapEntry): void => {
+            if (seenAuthHeaderNames.has(headerName)) {
+                return;
+            }
+            seenAuthHeaderNames.add(headerName);
+            authHeaderEntries.push(entry);
+        };
+
         for (const param of [...requiredParameters, ...optionalParameters]) {
             if (param.header != null) {
                 const access = paramAccess(param);
                 const fallback = this.getHeaderFallback(param);
-                authHeaderEntries.push({
+                pushAuthHeaderEntry(param.header.name, {
                     key: this.csharp.codeblock(this.csharp.string_({ string: param.header.name })),
                     value: this.csharp.codeblock(
                         param.header.prefix != null
@@ -281,7 +298,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
 
         for (const param of literalParameters) {
             if (param.header != null) {
-                authHeaderEntries.push({
+                pushAuthHeaderEntry(param.header.name, {
                     key: this.csharp.codeblock(this.csharp.string_({ string: param.header.name })),
                     value: this.csharp.codeblock(
                         param.value.type === "string"
