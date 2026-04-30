@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.64.0
+  changelogEntry:
+    - summary: |
+        Add `retryStatusCodes` config with `"legacy"` and `"recommended"` modes. Legacy (default)
+        preserves current behavior (408, 429, >= 500). Recommended retries only transient
+        codes (408, 429, 502, 503, 504), avoiding idempotency issues with 500. A 3.0.0
+        migration auto-pins legacy for upgrading users.
+      type: feat
+  createdAt: "2026-04-30"
+  irVersion: 66
 - version: 2.63.3
   changelogEntry:
     - summary: |
