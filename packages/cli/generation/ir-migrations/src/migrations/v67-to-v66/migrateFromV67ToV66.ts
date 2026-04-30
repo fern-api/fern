@@ -50,7 +50,7 @@ export const V67_TO_V66_MIGRATION: IrMigration<
         v67: IrVersions.V67.ir.IntermediateRepresentation,
         _context: IrMigrationContext
     ): IrVersions.V66.ir.IntermediateRepresentation => {
-        return downcastAvailabilityRecursive(v67) as unknown as IrVersions.V66.ir.IntermediateRepresentation;
+        return migrateIntermediateRepresentation(v67) as unknown as IrVersions.V66.ir.IntermediateRepresentation;
     }
 };
 
@@ -75,60 +75,236 @@ function downcastAvailabilityStatus(status: IrVersions.V67.AvailabilityStatus): 
     }
 }
 
-const V67_AVAILABILITY_STATUSES = new Set<string>([
-    "IN_DEVELOPMENT",
-    "PRE_RELEASE",
-    "GENERAL_AVAILABILITY",
-    "DEPRECATED",
-    "ALPHA",
-    "BETA",
-    "PREVIEW",
-    "LEGACY"
-]);
-
-// Restricted to the known V67 enum values so we do not match user JSON payloads
-// (e.g. raw `jsonExample` fields) that happen to contain an `availability` key
-// with an unrelated `status` string.
-function isAvailabilityShape(value: unknown): value is { status: IrVersions.V67.AvailabilityStatus; message?: string } {
-    if (value == null || typeof value !== "object") {
-        return false;
+function migrateAvailability(
+    availability: IrVersions.V67.Availability | undefined
+): IrVersions.V67.Availability | undefined {
+    if (availability == null) {
+        return availability;
     }
-    const status = (value as { status?: unknown }).status;
-    return typeof status === "string" && V67_AVAILABILITY_STATUSES.has(status);
+    return {
+        ...availability,
+        status: downcastAvailabilityStatus(availability.status) as IrVersions.V67.AvailabilityStatus
+    };
 }
 
-// The only structural difference between V67 and V66 is the AvailabilityStatus enum
-// (V67 added ALPHA, BETA, PREVIEW, LEGACY). Walk the IR tree and downcast every
-// availability value so the resulting object is a structurally valid V66 IR.
-function downcastAvailabilityRecursive<T>(value: T): T {
-    if (value == null || typeof value !== "object") {
-        return value;
-    }
-    if (Array.isArray(value)) {
-        return value.map((item) => downcastAvailabilityRecursive(item)) as unknown as T;
-    }
-    if (value instanceof Set) {
-        return new Set(Array.from(value, (item) => downcastAvailabilityRecursive(item))) as unknown as T;
-    }
-    if (value instanceof Map) {
-        return new Map(Array.from(value, ([k, v]) => [k, downcastAvailabilityRecursive(v)] as const)) as unknown as T;
-    }
-    // Preserve non-plain objects (Date, Buffer, URL, etc.) as-is so that downstream
-    // serialization keeps their runtime type rather than turning them into `{}`.
-    const proto = Object.getPrototypeOf(value);
-    if (proto !== null && proto !== Object.prototype) {
-        return value;
-    }
-    const result: Record<string, unknown> = {};
-    for (const [key, child] of Object.entries(value as Record<string, unknown>)) {
-        if (key === "availability" && isAvailabilityShape(child)) {
-            result[key] = {
-                ...child,
-                status: downcastAvailabilityStatus(child.status)
+// ===== Explicit traversal of every IR site that carries an `availability` field =====
+// The only structural difference between V67 and V66 is the AvailabilityStatus enum, so
+// we keep the rest of the IR in place and only rewrite the `availability` field at each
+// known site. Walking the IR explicitly (instead of via a generic recursive object walker)
+// avoids matching unrelated user data (e.g. raw `jsonExample` payloads that happen to
+// contain an `availability` field) and keeps non-plain objects (Date, Buffer, Set, Map)
+// intact without special-casing.
+
+function migrateIntermediateRepresentation(
+    v67: IrVersions.V67.ir.IntermediateRepresentation
+): IrVersions.V67.ir.IntermediateRepresentation {
+    return {
+        ...v67,
+        headers: v67.headers.map(migrateHttpHeader),
+        idempotencyHeaders: v67.idempotencyHeaders.map(migrateHttpHeader),
+        types: mapRecord(v67.types, migrateTypeDeclaration),
+        services: mapRecord(v67.services, migrateHttpService),
+        webhookGroups: mapRecord(v67.webhookGroups, (group) => group.map(migrateWebhook)),
+        websocketChannels:
+            v67.websocketChannels != null ? mapRecord(v67.websocketChannels, migrateWebSocketChannel) : undefined
+    };
+}
+
+function migrateHttpHeader(header: IrVersions.V67.HttpHeader): IrVersions.V67.HttpHeader {
+    return {
+        ...header,
+        availability: migrateAvailability(header.availability)
+    };
+}
+
+function migrateQueryParameter(queryParameter: IrVersions.V67.QueryParameter): IrVersions.V67.QueryParameter {
+    return {
+        ...queryParameter,
+        availability: migrateAvailability(queryParameter.availability)
+    };
+}
+
+function migrateObjectProperty(property: IrVersions.V67.ObjectProperty): IrVersions.V67.ObjectProperty {
+    return {
+        ...property,
+        availability: migrateAvailability(property.availability)
+    };
+}
+
+function migrateInlinedRequestBodyProperty(
+    property: IrVersions.V67.InlinedRequestBodyProperty
+): IrVersions.V67.InlinedRequestBodyProperty {
+    return {
+        ...property,
+        availability: migrateAvailability(property.availability)
+    };
+}
+
+function migrateInlinedWebhookPayloadProperty(
+    property: IrVersions.V67.InlinedWebhookPayloadProperty
+): IrVersions.V67.InlinedWebhookPayloadProperty {
+    return {
+        ...property,
+        availability: migrateAvailability(property.availability)
+    };
+}
+
+function migrateInlinedWebSocketMessageBodyProperty(
+    property: IrVersions.V67.InlinedWebSocketMessageBodyProperty
+): IrVersions.V67.InlinedWebSocketMessageBodyProperty {
+    return {
+        ...property,
+        availability: migrateAvailability(property.availability)
+    };
+}
+
+function migrateEnumValue(enumValue: IrVersions.V67.EnumValue): IrVersions.V67.EnumValue {
+    return {
+        ...enumValue,
+        availability: migrateAvailability(enumValue.availability)
+    };
+}
+
+function migrateSingleUnionType(singleUnionType: IrVersions.V67.SingleUnionType): IrVersions.V67.SingleUnionType {
+    return {
+        ...singleUnionType,
+        availability: migrateAvailability(singleUnionType.availability)
+    };
+}
+
+function migrateTypeDeclaration(typeDeclaration: IrVersions.V67.TypeDeclaration): IrVersions.V67.TypeDeclaration {
+    return {
+        ...typeDeclaration,
+        availability: migrateAvailability(typeDeclaration.availability),
+        shape: migrateType(typeDeclaration.shape)
+    };
+}
+
+function migrateType(type: IrVersions.V67.Type): IrVersions.V67.Type {
+    switch (type.type) {
+        case "alias":
+        case "undiscriminatedUnion":
+            return type;
+        case "object":
+            return {
+                ...type,
+                properties: type.properties.map(migrateObjectProperty),
+                extendedProperties: type.extendedProperties?.map(migrateObjectProperty)
             };
-        } else {
-            result[key] = downcastAvailabilityRecursive(child);
-        }
+        case "union":
+            return {
+                ...type,
+                types: type.types.map(migrateSingleUnionType),
+                baseProperties: type.baseProperties.map(migrateObjectProperty),
+                default: type.default != null ? migrateSingleUnionType(type.default) : undefined
+            };
+        case "enum":
+            return {
+                ...type,
+                default: type.default != null ? migrateEnumValue(type.default) : undefined,
+                values: type.values.map(migrateEnumValue)
+            };
+        default:
+            return assertNever(type);
     }
-    return result as T;
+}
+
+function migrateHttpService(service: IrVersions.V67.HttpService): IrVersions.V67.HttpService {
+    return {
+        ...service,
+        availability: migrateAvailability(service.availability),
+        headers: service.headers.map(migrateHttpHeader),
+        endpoints: service.endpoints.map(migrateHttpEndpoint)
+    };
+}
+
+function migrateHttpEndpoint(endpoint: IrVersions.V67.HttpEndpoint): IrVersions.V67.HttpEndpoint {
+    return {
+        ...endpoint,
+        availability: migrateAvailability(endpoint.availability),
+        headers: endpoint.headers.map(migrateHttpHeader),
+        responseHeaders: endpoint.responseHeaders?.map(migrateHttpHeader),
+        queryParameters: endpoint.queryParameters.map(migrateQueryParameter),
+        requestBody: endpoint.requestBody != null ? migrateHttpRequestBody(endpoint.requestBody) : undefined
+    };
+}
+
+function migrateHttpRequestBody(requestBody: IrVersions.V67.HttpRequestBody): IrVersions.V67.HttpRequestBody {
+    switch (requestBody.type) {
+        case "inlinedRequestBody":
+            return {
+                ...requestBody,
+                properties: requestBody.properties.map(migrateInlinedRequestBodyProperty),
+                extendedProperties: requestBody.extendedProperties?.map(migrateObjectProperty)
+            };
+        case "reference":
+        case "fileUpload":
+        case "bytes":
+            return requestBody;
+        default:
+            return assertNever(requestBody);
+    }
+}
+
+function migrateWebhook(webhook: IrVersions.V67.Webhook): IrVersions.V67.Webhook {
+    return {
+        ...webhook,
+        availability: migrateAvailability(webhook.availability),
+        headers: webhook.headers.map(migrateHttpHeader),
+        payload: migrateWebhookPayload(webhook.payload)
+    };
+}
+
+function migrateWebhookPayload(payload: IrVersions.V67.WebhookPayload): IrVersions.V67.WebhookPayload {
+    switch (payload.type) {
+        case "inlinedPayload":
+            return {
+                ...payload,
+                properties: payload.properties.map(migrateInlinedWebhookPayloadProperty)
+            };
+        case "reference":
+            return payload;
+        default:
+            return assertNever(payload);
+    }
+}
+
+function migrateWebSocketChannel(channel: IrVersions.V67.WebSocketChannel): IrVersions.V67.WebSocketChannel {
+    return {
+        ...channel,
+        availability: migrateAvailability(channel.availability),
+        headers: channel.headers.map(migrateHttpHeader),
+        queryParameters: channel.queryParameters.map(migrateQueryParameter),
+        messages: channel.messages.map(migrateWebSocketMessage)
+    };
+}
+
+function migrateWebSocketMessage(message: IrVersions.V67.WebSocketMessage): IrVersions.V67.WebSocketMessage {
+    return {
+        ...message,
+        availability: migrateAvailability(message.availability),
+        body: migrateWebSocketMessageBody(message.body)
+    };
+}
+
+function migrateWebSocketMessageBody(body: IrVersions.V67.WebSocketMessageBody): IrVersions.V67.WebSocketMessageBody {
+    switch (body.type) {
+        case "inlinedBody":
+            return {
+                ...body,
+                properties: body.properties.map(migrateInlinedWebSocketMessageBodyProperty)
+            };
+        case "reference":
+            return body;
+        default:
+            return assertNever(body);
+    }
+}
+
+function mapRecord<K extends string, V, R>(record: Record<K, V>, fn: (value: V) => R): Record<K, R> {
+    const result = {} as Record<K, R>;
+    for (const key of Object.keys(record) as K[]) {
+        result[key] = fn(record[key]);
+    }
+    return result;
 }

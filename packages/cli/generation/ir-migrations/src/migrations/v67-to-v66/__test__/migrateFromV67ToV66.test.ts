@@ -162,7 +162,7 @@ describe("migrateFromV67ToV66", () => {
             expect(v66IR.types.type_Foo?.availability?.status).toBe(expected);
         });
 
-        it("preserves Set instances during the recursive walk", () => {
+        it("preserves Set instances on TypeDeclaration.referencedTypes", () => {
             const referencedTypes = new Set<string>(["type_Bar"]);
             const v67IR = createMinimalV67IR({
                 types: {
@@ -179,7 +179,7 @@ describe("migrateFromV67ToV66", () => {
             expect(v66IR.types.type_Foo?.referencedTypes.has("type_Bar")).toBe(true);
         });
 
-        it("preserves Date instances during the recursive walk", () => {
+        it("preserves Date instances embedded in user examples", () => {
             const date = new Date("2024-01-01T00:00:00Z");
             const v67IR = createMinimalV67IR({
                 types: {
@@ -203,7 +203,7 @@ describe("migrateFromV67ToV66", () => {
             expect(example.createdAt.toISOString()).toBe("2024-01-01T00:00:00.000Z");
         });
 
-        it("does not match availability-shaped objects with unknown status strings (e.g. user jsonExample data)", () => {
+        it("does not touch availability-shaped objects nested in user jsonExample payloads", () => {
             const v67IR = createMinimalV67IR({
                 types: {
                     type_Foo: {
@@ -219,7 +219,10 @@ describe("migrateFromV67ToV66", () => {
                 }
             });
 
-            // Should not throw via assertNever on the user-provided "active" status.
+            // The explicit traversal does not descend into user `jsonExample` payloads,
+            // so a user-provided `availability.status` field there is left untouched.
+            // (Previously a generic recursive walker would have hit this and tripped
+            // assertNever on "active".)
             const v66IR = V67_TO_V66_MIGRATION.migrateBackwards(v67IR, mockContext);
 
             expect(v66IR.types.type_Foo?.availability?.status).toBe("PRE_RELEASE");
@@ -235,6 +238,67 @@ describe("migrateFromV67ToV66", () => {
             const apiName = v66IR.apiName;
             const originalName = typeof apiName === "string" ? apiName : apiName.originalName;
             expect(originalName).toBe("TestApi");
+        });
+
+        it("downcasts availability on object properties, enum values, and union variants", () => {
+            const buildName = (n: string): IrVersions.V67.NameAndWireValueOrString => ({
+                wireValue: n,
+                name: {
+                    originalName: n,
+                    camelCase: { safeName: n, unsafeName: n },
+                    pascalCase: { safeName: n, unsafeName: n },
+                    snakeCase: { safeName: n, unsafeName: n },
+                    screamingSnakeCase: { safeName: n, unsafeName: n }
+                }
+            });
+            const objectType: IrVersions.V67.TypeDeclaration = {
+                ...buildTypeWithAvailability("type_Obj", "ALPHA"),
+                shape: IrVersions.V67.Type.object({
+                    extends: [],
+                    extendedProperties: undefined,
+                    extraProperties: false,
+                    properties: [
+                        {
+                            docs: undefined,
+                            availability: { status: "BETA", message: undefined },
+                            name: buildName("foo"),
+                            valueType: IrVersions.V67.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+                            propertyAccess: undefined,
+                            v2Examples: undefined
+                        }
+                    ]
+                })
+            };
+            const enumType: IrVersions.V67.TypeDeclaration = {
+                ...buildTypeWithAvailability("type_Enum", "PREVIEW"),
+                shape: IrVersions.V67.Type.enum({
+                    default: undefined,
+                    forwardCompatible: undefined,
+                    values: [
+                        {
+                            docs: undefined,
+                            availability: { status: "LEGACY", message: undefined },
+                            name: buildName("LEGACY_VALUE")
+                        }
+                    ]
+                })
+            };
+
+            const v67IR = createMinimalV67IR({
+                types: { type_Obj: objectType, type_Enum: enumType }
+            });
+
+            const v66IR = V67_TO_V66_MIGRATION.migrateBackwards(v67IR, mockContext);
+
+            const obj = v66IR.types.type_Obj?.shape;
+            const enm = v66IR.types.type_Enum?.shape;
+            if (obj?.type !== "object" || enm?.type !== "enum") {
+                throw new Error("unexpected shape");
+            }
+            expect(v66IR.types.type_Obj?.availability?.status).toBe("IN_DEVELOPMENT");
+            expect(obj.properties[0]?.availability?.status).toBe("PRE_RELEASE");
+            expect(v66IR.types.type_Enum?.availability?.status).toBe("PRE_RELEASE");
+            expect(enm.values[0]?.availability?.status).toBe("DEPRECATED");
         });
     });
 });
