@@ -140,8 +140,33 @@ export class TaskContextAdapter implements TaskContext {
         }
     }
 
-    public instrumentPostHogEvent(_event: PosthogEvent): void {
-        // no-op — v2 uses TelemetryClient.sendEvent directly
+    public instrumentPostHogEvent(event: PosthogEvent): void {
+        // Translate the legacy PosthogEvent shape ({command, orgId, properties})
+        // into v2's TelemetryClient.sendEvent. Filters properties to primitives
+        // since Tags requires string|number|boolean|null. Defensive try/catch —
+        // telemetry must never fail the calling operation.
+        try {
+            const eventName = event.command ?? "cli";
+            const tags: Record<string, string | number | boolean | null> = {};
+            if (event.orgId != null) {
+                tags.org = event.orgId;
+            }
+            for (const [key, value] of Object.entries(event.properties ?? {})) {
+                if (
+                    typeof value === "string" ||
+                    typeof value === "number" ||
+                    typeof value === "boolean" ||
+                    value === null
+                ) {
+                    tags[String(key)] = value;
+                }
+                // Non-primitives (objects, arrays) are silently dropped — Tags
+                // schema rejects nested values to control PostHog cardinality.
+            }
+            this.context.telemetry.sendEvent(eventName, tags);
+        } catch {
+            // no-op — telemetry must never fail the caller
+        }
     }
 
     private formatError(error: unknown): string | undefined {
