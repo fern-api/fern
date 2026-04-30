@@ -157,10 +157,10 @@ export async function reconstructVariant(
     await mkdir(targetDir, { recursive: true });
     await cp(baselineDir, targetDir, { recursive: true });
 
-    // Read the diff content to check if it's empty or a placeholder marker
+    // A real unified diff always contains a `diff --git` header. Anything else
+    // (empty file, marker text, whitespace) means the variant is identical to baseline.
     const diffContent = await readFile(diffFilePath, "utf-8");
-    if (diffContent.trim().length === 0 || !diffContent.includes("diff --git")) {
-        // Empty diff or placeholder marker — variant is identical to baseline, nothing to apply
+    if (!diffContent.includes("diff --git")) {
         return;
     }
 
