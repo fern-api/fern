@@ -16,7 +16,7 @@ from .snake_case import snake_case as to_snake
 
 import fern.ir.resources as ir_types
 
-_DIGIT_SPLIT = re.compile(r"(\d+)")
+_LEADING_DIGIT_LOWERCASE = re.compile(r"^(\d+)_([a-z]+)")
 
 
 def _to_camel(s: str) -> str:
@@ -28,14 +28,17 @@ def _to_camel(s: str) -> str:
 
 
 def _smart_snake(s: str) -> str:
-    """Smart-casing snake_case matching @fern-api/casings-generator.
+    """Snake_case for v66-compressed strings, matching IR pre-computed values.
 
-    Treats digits adjacent to letters as part of the same word so
-    ``3d`` stays ``3d`` instead of becoming ``3_d``. Mirrors:
-
-        n.split(" ").map(part => part.split(/(\\d+)/).map(snakeCase).join("")).join("_")
+    Mirrors plain lodash ``snakeCase`` (which is what the IR server uses to pre-compute
+    Name.snake_case), with one exception: digit-prefixed identifiers like ``3d`` keep
+    the digit attached to the following lowercase run (``3d`` not ``3_d``) so
+    _make_safe can sanitize them to ``_3d`` and match the canonical IR safe_name.
     """
-    return "_".join("".join(to_snake(sub) for sub in _DIGIT_SPLIT.split(part)) for part in s.split(" "))
+    snake = "_".join(to_snake(part) for part in s.split(" "))
+    if s and s[0].isdigit():
+        return _LEADING_DIGIT_LOWERCASE.sub(r"\1\2", snake)
+    return snake
 
 
 def _to_screaming_snake(s: str) -> str:

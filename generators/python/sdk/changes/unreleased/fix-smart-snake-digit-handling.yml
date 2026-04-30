@@ -1,0 +1,17 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix `_smart_snake` to only collapse digit-letter sequences for digit-prefixed
+    identifiers (the case it was originally designed for, e.g. `3d` -> `f_3d`).
+    For digits between camelCase words or inside already-snake-cased names, fall
+    back to plain `snake_case` so the v1 Python generator's recomputed names
+    match the IR's pre-computed values:
+
+    - `setFcmv1Provider` -> `set_fcmv_1_provider` (was: `set_fcmv1provider`)
+    - `auth0_mapping` -> `auth_0_mapping` (was: `auth0mapping`)
+    - `3d` -> `3d` (preserved, sanitized to `f_3d`)
+
+    Previously, the v1 generator's recomputed snake_case for compressed v66 IR
+    strings diverged from the IR-pre-computed values used by the v2 wire test
+    generator, causing wire tests to call methods/fields that did not exist.
+  type: fix
