@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.68.0
+  changelogEntry:
+    - summary: |
+        Add `alwaysSendAuth` config option that forces the generated SDK to include
+        auth headers on all endpoints, even those marked with `auth: false` in the
+        API definition. This is useful when using the same API definition for both
+        server (where auth is handled by a gateway) and client SDK generation.
+      type: feat
+  createdAt: "2026-04-30"
+  irVersion: 66
 - version: 3.67.0
   changelogEntry:
     - summary: |
