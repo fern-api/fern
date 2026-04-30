@@ -4,6 +4,7 @@ import { cp, mkdir, readFile, writeFile } from "fs/promises";
 
 const BASELINE_DIR = "baseline";
 const CUSTOM_CONFIGS_DIR = "custom-configs";
+const EMPTY_DIFF_MARKER = "No diff. Variant SDK was identical to baseline.\n";
 
 /**
  * Get the path to a fixture's baseline directory.
@@ -136,7 +137,8 @@ export async function computeAndStoreDiff(
     await mkdir(customConfigsDir, { recursive: true });
 
     const diffPath = getDiffFilePath(workspaceDir, fixture, outputFolder);
-    await writeFile(diffPath, diffContent, "utf-8");
+    const contentToWrite = diffContent.length === 0 ? EMPTY_DIFF_MARKER : diffContent;
+    await writeFile(diffPath, contentToWrite, "utf-8");
     return diffPath;
 }
 
@@ -155,10 +157,10 @@ export async function reconstructVariant(
     await mkdir(targetDir, { recursive: true });
     await cp(baselineDir, targetDir, { recursive: true });
 
-    // Read the diff content to check if it's empty
+    // Read the diff content to check if it's empty or a placeholder marker
     const diffContent = await readFile(diffFilePath, "utf-8");
-    if (diffContent.trim().length === 0) {
-        // Empty diff — variant is identical to baseline, nothing to apply
+    if (diffContent.trim().length === 0 || !diffContent.includes("diff --git")) {
+        // Empty diff or placeholder marker — variant is identical to baseline, nothing to apply
         return;
     }
 
