@@ -1,5 +1,5 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { execSync } from "child_process";
+import { execFileSync } from "child_process";
 import { cp, mkdir, readFile, writeFile } from "fs/promises";
 
 const BASELINE_DIR = "baseline";
@@ -97,7 +97,7 @@ export function computeDiff(baselineDir: AbsoluteFilePath, variantDir: AbsoluteF
     try {
         // git diff --no-index exits with code 1 when there are differences,
         // code 0 when identical, and >1 on error
-        rawDiff = execSync(`git diff --no-index --binary --no-color -- "${baselineDir}" "${variantDir}"`, {
+        rawDiff = execFileSync("git", ["diff", "--no-index", "--binary", "--no-color", "--", baselineDir, variantDir], {
             encoding: "utf-8",
             maxBuffer: 100 * 1024 * 1024, // 100MB
             stdio: ["pipe", "pipe", "pipe"]
@@ -166,7 +166,7 @@ export async function reconstructVariant(
 
     // Apply the diff directly from the file. The diff uses relative paths (a/file, b/file)
     // so we use -p1 to strip the a/ and b/ prefixes, applied within the target directory.
-    execSync(`git apply -p1 "${diffFilePath}"`, {
+    execFileSync("git", ["apply", "-p1", diffFilePath], {
         encoding: "utf-8",
         cwd: targetDir,
         stdio: ["pipe", "pipe", "pipe"]
