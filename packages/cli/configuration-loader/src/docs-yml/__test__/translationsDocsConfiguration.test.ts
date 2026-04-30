@@ -187,3 +187,117 @@ describe("parseDocsConfiguration — translation pages loading", () => {
         expect(parsed.translationPages?.["ja"]?.[RelativeFilePath.of("pages/index.mdx")]).toBe("# ホーム");
     });
 });
+
+describe("parseDocsConfiguration — translation navigation overlay docs.yml location", () => {
+    let tmpDir: string;
+
+    beforeEach(async () => {
+        tmpDir = await mkdtemp(path.join(os.tmpdir(), "fern-translations-overlay-test-"));
+    });
+
+    afterEach(async () => {
+        await rm(tmpDir, { recursive: true, force: true });
+    });
+
+    it("should read overlay docs.yml directly from translations/<lang>/ without a nested fern folder", async () => {
+        const fernDir = tmpDir as AbsoluteFilePath;
+        const configPath = path.join(tmpDir, "docs.yml") as AbsoluteFilePath;
+        await writeFile(configPath, "");
+
+        // Place the overlay directly under translations/fr — no nested fern/ folder
+        const frDir = path.join(tmpDir, "translations", "fr");
+        await mkdir(frDir, { recursive: true });
+        await writeFile(path.join(frDir, "docs.yml"), "title: Documentation\nannouncement:\n  message: Bienvenue\n");
+
+        const config = makeMinimalRawConfig({
+            translations: [{ lang: "en", default: true }, { lang: "fr" }]
+        });
+
+        const parsed = await parseDocsConfiguration({
+            rawDocsConfiguration: config,
+            absolutePathToFernFolder: fernDir,
+            absoluteFilepathToDocsConfig: configPath,
+            context: createMockTaskContext()
+        });
+
+        expect(parsed.translationNavigationOverlays?.["fr"]?.announcement?.message).toBe("Bienvenue");
+    });
+
+    it("should fall back to translations/<lang>/fern/docs.yml when the canonical location is missing", async () => {
+        const fernDir = tmpDir as AbsoluteFilePath;
+        const configPath = path.join(tmpDir, "docs.yml") as AbsoluteFilePath;
+        await writeFile(configPath, "");
+
+        // Place the overlay only under the legacy nested fern/ location
+        const frFernDir = path.join(tmpDir, "translations", "fr", "fern");
+        await mkdir(frFernDir, { recursive: true });
+        await writeFile(path.join(frFernDir, "docs.yml"), "title: Documentation\nannouncement:\n  message: Bonjour\n");
+
+        const config = makeMinimalRawConfig({
+            translations: [{ lang: "en", default: true }, { lang: "fr" }]
+        });
+
+        const parsed = await parseDocsConfiguration({
+            rawDocsConfiguration: config,
+            absolutePathToFernFolder: fernDir,
+            absoluteFilepathToDocsConfig: configPath,
+            context: createMockTaskContext()
+        });
+
+        expect(parsed.translationNavigationOverlays?.["fr"]?.announcement?.message).toBe("Bonjour");
+    });
+
+    it("should prefer translations/<lang>/docs.yml when both locations exist", async () => {
+        const fernDir = tmpDir as AbsoluteFilePath;
+        const configPath = path.join(tmpDir, "docs.yml") as AbsoluteFilePath;
+        await writeFile(configPath, "");
+
+        const frDir = path.join(tmpDir, "translations", "fr");
+        const frFernDir = path.join(frDir, "fern");
+        await mkdir(frFernDir, { recursive: true });
+        await writeFile(path.join(frDir, "docs.yml"), "announcement:\n  message: from-canonical\n");
+        await writeFile(path.join(frFernDir, "docs.yml"), "announcement:\n  message: from-legacy\n");
+
+        const config = makeMinimalRawConfig({
+            translations: [{ lang: "en", default: true }, { lang: "fr" }]
+        });
+
+        const parsed = await parseDocsConfiguration({
+            rawDocsConfiguration: config,
+            absolutePathToFernFolder: fernDir,
+            absoluteFilepathToDocsConfig: configPath,
+            context: createMockTaskContext()
+        });
+
+        expect(parsed.translationNavigationOverlays?.["fr"]?.announcement?.message).toBe("from-canonical");
+    });
+
+    it("should resolve product nav file paths relative to translations/<lang>/", async () => {
+        const fernDir = tmpDir as AbsoluteFilePath;
+        const configPath = path.join(tmpDir, "docs.yml") as AbsoluteFilePath;
+        await writeFile(configPath, "");
+
+        const frDir = path.join(tmpDir, "translations", "fr");
+        await mkdir(frDir, { recursive: true });
+        await writeFile(
+            path.join(frDir, "docs.yml"),
+            "products:\n  - display-name: Produit\n    path: ./product.yml\n"
+        );
+        await writeFile(path.join(frDir, "product.yml"), "tabs:\n  guides:\n    display-name: Guides\n");
+
+        const config = makeMinimalRawConfig({
+            translations: [{ lang: "en", default: true }, { lang: "fr" }]
+        });
+
+        const parsed = await parseDocsConfiguration({
+            rawDocsConfiguration: config,
+            absolutePathToFernFolder: fernDir,
+            absoluteFilepathToDocsConfig: configPath,
+            context: createMockTaskContext()
+        });
+
+        const productOverlay = parsed.translationNavigationOverlays?.["fr"]?.products?.[0];
+        expect(productOverlay?.displayName).toBe("Produit");
+        expect(productOverlay?.tabs?.["guides"]?.displayName).toBe("Guides");
+    });
+});

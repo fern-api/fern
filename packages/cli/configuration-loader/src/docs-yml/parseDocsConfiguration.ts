@@ -2046,14 +2046,16 @@ async function loadTranslationPages({
 }
 
 /**
- * Loads translated navigation overlay YAML files from `translations/<lang>/fern/` directories.
+ * Loads translated navigation overlay YAML files from `translations/<lang>/` directories.
  *
  * For each locale declared in `translations`, this function:
- * 1. Checks for `translations/<lang>/fern/docs.yml` (the top-level overlay).
+ * 1. Checks for `translations/<lang>/docs.yml` (the top-level overlay). For backwards
+ *    compatibility, falls back to `translations/<lang>/fern/docs.yml` if not present.
  * 2. If found, parses it and extracts translatable fields (title, products, versions,
  *    announcement, tabs).
  * 3. For products with a `path:` field, also loads the referenced nav YAML file
- *    from `translations/<lang>/fern/` to extract tab and navigation overrides.
+ *    from the same directory as the overlay `docs.yml` to extract tab and navigation
+ *    overrides.
  * 4. Returns a map of locale → TranslationNavigationOverlay.
  */
 async function loadTranslationNavigationOverlays({
@@ -2082,12 +2084,15 @@ async function loadTranslationNavigationOverlays({
                 return;
             }
 
-            const langFernDir = path.join(translationsRootDir, lang, "fern") as AbsoluteFilePath;
-            const overlayDocsYmlPath = path.join(langFernDir, "docs.yml") as AbsoluteFilePath;
-
-            if (!(await doesPathExist(overlayDocsYmlPath))) {
+            const overlayLookup = await resolveTranslationOverlayDocsYml({
+                translationsRootDir,
+                lang
+            });
+            if (overlayLookup == null) {
                 return;
             }
+
+            const { overlayDocsYmlPath, overlayDir } = overlayLookup;
 
             try {
                 const overlayContent = yaml.load(await readFile(overlayDocsYmlPath, "utf-8"));
@@ -2100,7 +2105,7 @@ async function loadTranslationNavigationOverlays({
 
                 const overlay = await parseNavigationOverlayFromDocsYml({
                     docsYmlContent: overlayContent as Record<string, unknown>,
-                    langFernDir,
+                    langFernDir: overlayDir,
                     context
                 });
 
@@ -2120,6 +2125,37 @@ async function loadTranslationNavigationOverlays({
     return result;
 }
 
+/**
+ * Resolves the translation overlay `docs.yml` for a locale.
+ *
+ * Prefers `translations/<lang>/docs.yml` (the canonical location) and falls
+ * back to `translations/<lang>/fern/docs.yml` for backwards compatibility with
+ * translation directories produced by older versions of `fern write-translation`.
+ *
+ * Returns `undefined` if neither path exists.
+ */
+async function resolveTranslationOverlayDocsYml({
+    translationsRootDir,
+    lang
+}: {
+    translationsRootDir: AbsoluteFilePath;
+    lang: string;
+}): Promise<{ overlayDocsYmlPath: AbsoluteFilePath; overlayDir: AbsoluteFilePath } | undefined> {
+    const langDir = path.join(translationsRootDir, lang) as AbsoluteFilePath;
+    const directDocsYmlPath = path.join(langDir, "docs.yml") as AbsoluteFilePath;
+    if (await doesPathExist(directDocsYmlPath)) {
+        return { overlayDocsYmlPath: directDocsYmlPath, overlayDir: langDir };
+    }
+
+    const legacyFernDir = path.join(langDir, "fern") as AbsoluteFilePath;
+    const legacyDocsYmlPath = path.join(legacyFernDir, "docs.yml") as AbsoluteFilePath;
+    if (await doesPathExist(legacyDocsYmlPath)) {
+        return { overlayDocsYmlPath: legacyDocsYmlPath, overlayDir: legacyFernDir };
+    }
+
+    return undefined;
+}
+
 function extractString(obj: unknown, key: string): string | undefined {
     if (isPlainObject(obj)) {
         const value = (obj as Record<string, unknown>)[key];
@@ -2136,7 +2172,7 @@ function extractString(obj: unknown, key: string): string | undefined {
  */
 async function parseNavigationOverlayFromDocsYml({
     docsYmlContent,
-    langFernDir,
+    langFernDir: overlayDir,
     context
 }: {
     docsYmlContent: Record<string, unknown>;
@@ -2192,8 +2228,8 @@ async function parseNavigationOverlayFromDocsYml({
             // These are stored per-product to avoid collision when multiple products share tab IDs
             if (typeof productObj.path === "string") {
                 // Validate path to prevent path traversal attacks
-                const resolvedNavFilePath = path.resolve(langFernDir, productObj.path) as AbsoluteFilePath;
-                if (!resolvedNavFilePath.startsWith(langFernDir)) {
+                const resolvedNavFilePath = path.resolve(overlayDir, productObj.path) as AbsoluteFilePath;
+                if (!resolvedNavFilePath.startsWith(overlayDir)) {
                     context.logger.warn(
                         `Invalid path in product overlay: "${productObj.path}" escapes the translations directory. Skipping.`
                     );
