@@ -4,7 +4,7 @@ import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { LogLevel } from "@fern-api/logger";
 import { TaskContext, TaskResult } from "@fern-api/task-context";
 import { getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation } from "@fern-api/workspace-loader";
-import { rm } from "fs/promises";
+import { mkdir, rm } from "fs/promises";
 import path from "path";
 import tmp from "tmp-promise";
 import { FixtureConfigurations, OutputMode } from "../../../config/api/index.js";
@@ -224,8 +224,15 @@ export abstract class TestRunner {
             const outputFolder = isBaseline ? "baseline" : (configuration?.outputFolder ?? "");
             if (!outputDir) {
                 if (isBaseline) {
-                    // Baseline always outputs to <fixture>/baseline/
+                    // Baseline always outputs to <fixture>/baseline/. Reset the directory
+                    // to a clean empty state before generation: leaving stale content in
+                    // place causes the generator's local-workspace-runner to hit ENOTEMPTY
+                    // (rmdir on dirs the new run does not regenerate), ENOENT (lstat on a
+                    // path the cleanup pass already removed), or ENOENT (copyfile into a
+                    // parent dir that no longer exists).
                     outputDir = getBaselineDir(this.generator.absolutePathToWorkspace, fixture);
+                    await rm(outputDir, { recursive: true, force: true });
+                    await mkdir(outputDir, { recursive: true });
                 } else if (baselineDir != null) {
                     // Non-baseline variant: generate to a temp dir, we'll compute diff after
                     const tmpDir = await tmp.dir({ unsafeCleanup: true });
