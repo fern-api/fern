@@ -111,8 +111,8 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
 
     private convertSecuritySchemes(): void {
         const openApiSchemes = this.convertOpenApiSecuritySchemes();
-        const descriptions = new Map(openApiSchemes.map((scheme) => [scheme.key, scheme.docs]));
         if (this.context.authOverrides) {
+            const descriptions = new Map(openApiSchemes.map((scheme) => [scheme.key, scheme.docs]));
             this.convertAuthOverrides(descriptions, this.context.authOverrides);
             return;
         }
