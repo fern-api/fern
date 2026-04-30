@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.3.0
+  changelogEntry:
+    - summary: |
+        Translation overlays can now override navbar links (CTAs) per locale. Set `navbar-links:`
+        inside `translations/<locale>/docs.yml` and the per-locale FDR upload will use those
+        instead of the docs-level navbar-links. Local icon files referenced from the overlay
+        are uploaded and resolved alongside the rest of the docs assets.
+      type: feat
+  createdAt: "2026-04-30"
+  irVersion: 66
 - version: 5.2.2
   changelogEntry:
     - summary: |
