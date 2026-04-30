@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.2.2
+  changelogEntry:
+    - summary: |
+        Translated `docs.yml` overlays are now read directly from `translations/<locale>/docs.yml`,
+        so an extra nested `fern/` folder is no longer required. The legacy
+        `translations/<locale>/fern/docs.yml` location continues to work as a fallback.
+      type: fix
+  createdAt: "2026-04-30"
+  irVersion: 66
 - version: 5.2.1
   changelogEntry:
     - summary: |
