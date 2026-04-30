@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.2.0
+  changelogEntry:
+    - summary: |
+        Add `multi-source` property to docs.yml `instances` configuration. When enabled, docs registration
+        uses a basepath-aware S3 key format, allowing multiple independent doc sites to be hosted under the
+        same custom domain with different basepaths. This replaces `experimental.basepath-aware`, which is now
+        deprecated but still supported. When `multi-source: true`, the CLI validates that the `url` and
+        `custom-domain` share the same basepath.
+      type: feat
+  createdAt: "2026-04-30"
+  irVersion: 66
 - version: 5.1.0
   changelogEntry:
     - summary: |
