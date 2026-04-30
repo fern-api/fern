@@ -1,0 +1,4 @@
+- summary: |
+    Improve error message when `fern login` fails with a permission error writing
+    to `~/.fern/token`. The CLI now suggests the fix command (`sudo chown -R $(whoami) ~/.fern`).
+  type: fix
