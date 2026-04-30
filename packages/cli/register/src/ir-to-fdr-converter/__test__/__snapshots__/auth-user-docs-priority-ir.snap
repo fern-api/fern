@@ -13,6 +13,7 @@
         "_visit": [Function],
         "docs": "User's custom documentation that should take priority over OpenAPI description",
         "headerEnvVar": "API_KEY_ENV",
+        "headerPlaceholder": undefined,
         "key": "apiKeyAuth",
         "name": {
           "name": "api_key",
