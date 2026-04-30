@@ -1,4 +1,4 @@
-import { replayPrepare } from "../../replay/replay-run";
+import { ReplayPrepareError, replayPrepare } from "../../replay/replay-run";
 import type { PipelineLogger } from "../PipelineLogger";
 import type { GenerationCommitStepConfig, GenerationCommitStepResult, PipelineContext } from "../types";
 import { BaseStep } from "./BaseStep";
@@ -32,14 +32,25 @@ export class GenerationCommitStep extends BaseStep {
     }
 
     async execute(_context: PipelineContext): Promise<GenerationCommitStepResult> {
-        const prepared = await replayPrepare({
-            outputDir: this.outputDir,
-            cliVersion: this.cliVersion,
-            generatorVersions: this.generatorVersions,
-            generatorName: this.generatorName,
-            skipApplication: this.config.skipApplication,
-            logger: this.logger
-        });
+        let prepared: Awaited<ReturnType<typeof replayPrepare>>;
+        try {
+            prepared = await replayPrepare({
+                outputDir: this.outputDir,
+                cliVersion: this.cliVersion,
+                generatorVersions: this.generatorVersions,
+                generatorName: this.generatorName,
+                skipApplication: this.config.skipApplication,
+                logger: this.logger
+            });
+        } catch (error) {
+            const reason = error instanceof ReplayPrepareError ? error.reason : String(error);
+            return {
+                executed: true,
+                success: false,
+                errorMessage: reason,
+                preparedReplay: null
+            };
+        }
 
         if (prepared == null) {
             return {
