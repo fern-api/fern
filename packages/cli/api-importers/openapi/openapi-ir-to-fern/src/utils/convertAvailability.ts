@@ -8,9 +8,15 @@ export function convertAvailability(
         case Availability.Deprecated:
             return "deprecated";
         case Availability.Beta:
-            return "pre-release";
+            return "beta";
         case Availability.GenerallyAvailable:
             return "generally-available";
+        case Availability.Alpha:
+            return "alpha";
+        case Availability.Preview:
+            return "preview";
+        case Availability.Legacy:
+            return "legacy";
         default:
             return undefined;
     }

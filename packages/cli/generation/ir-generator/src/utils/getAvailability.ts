@@ -2,7 +2,15 @@ import { Availability } from "@fern-api/ir-sdk";
 
 import { convertAvailability } from "../converters/convertDeclaration.js";
 
-type RawAvailabilityStatus = "in-development" | "pre-release" | "generally-available" | "deprecated";
+type RawAvailabilityStatus =
+    | "in-development"
+    | "pre-release"
+    | "generally-available"
+    | "deprecated"
+    | "alpha"
+    | "beta"
+    | "preview"
+    | "legacy";
 interface RawAvailability {
     status: RawAvailabilityStatus;
     message?: string;

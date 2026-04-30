@@ -1058,9 +1058,12 @@
       "type": "string",
       "enum": [
         "deprecated",
+        "legacy",
         "ga",
         "stable",
-        "beta"
+        "beta",
+        "alpha",
+        "preview"
       ]
     },
     "docs.VersionConfig": {
@@ -1405,7 +1408,10 @@
         "in-development",
         "pre-release",
         "deprecated",
-        "beta"
+        "beta",
+        "alpha",
+        "preview",
+        "legacy"
       ]
     },
     "docs.PageConfiguration": {

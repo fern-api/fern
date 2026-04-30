@@ -465,12 +465,19 @@ export function convertIrAvailability(availability: Ir.Availability | undefined)
     switch (availability.status) {
         case "DEPRECATED":
             return FdrCjsSdk.Availability.Deprecated;
+        case "LEGACY":
+            return FdrCjsSdk.Availability.Legacy;
         case "PRE_RELEASE":
+        case "BETA":
             return FdrCjsSdk.Availability.Beta;
         case "GENERAL_AVAILABILITY":
             return FdrCjsSdk.Availability.GenerallyAvailable;
         case "IN_DEVELOPMENT":
             return FdrCjsSdk.Availability.Beta;
+        case "ALPHA":
+            return FdrCjsSdk.Availability.Alpha;
+        case "PREVIEW":
+            return FdrCjsSdk.Availability.Preview;
         default:
             assertNever(availability.status);
     }

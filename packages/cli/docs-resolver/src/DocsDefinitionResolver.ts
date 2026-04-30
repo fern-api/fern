@@ -68,6 +68,7 @@ interface DocsConfigWithTranslations extends DocsV1Write.DocsConfig {
 import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter.js";
 import { ChangelogNodeConverter } from "./ChangelogNodeConverter.js";
 import { NodeIdGenerator } from "./NodeIdGenerator.js";
+import { convertDocsAvailability } from "./utils/convertDocsAvailability.js";
 import { convertDocsSnippetsConfigToFdr } from "./utils/convertDocsSnippetsConfigToFdr.js";
 import { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition.js";
 import { collectFilesFromDocsConfig } from "./utils/getImageFilepathsToUpload.js";
@@ -881,7 +882,6 @@ export class DocsDefinitionResolver {
             }),
             typographyV2: this.convertDocsTypographyConfiguration(),
             layout: this.parsedDocsConfig.layout,
-            // @ts-expect-error -- BCP 47: Language type widened to string, @fern-api/fdr-sdk not yet updated
             settings: this.parsedDocsConfig.settings,
             css: this.parsedDocsConfig.css,
             js: this.convertJavascriptConfiguration(),
@@ -1962,7 +1962,7 @@ export class DocsDefinitionResolver {
             authed: undefined,
             noindex: item.noindex || this.markdownFilesToNoIndex.get(item.absolutePath),
             featureFlags: item.featureFlags,
-            availability: frontmatterAvailability ?? item.availability ?? parentAvailability
+            availability: convertDocsAvailability(frontmatterAvailability ?? item.availability ?? parentAvailability)
         };
     }
 
@@ -2046,7 +2046,7 @@ export class DocsDefinitionResolver {
             pointsTo: undefined,
             noindex,
             featureFlags: item.featureFlags,
-            availability: frontmatterAvailability ?? item.availability ?? parentAvailability
+            availability: convertDocsAvailability(frontmatterAvailability ?? item.availability ?? parentAvailability)
         };
     }
 
@@ -2461,6 +2461,12 @@ function convertAvailability(
             return FernNavigation.V1.NavigationV1Availability.GenerallyAvailable;
         case "stable":
             return FernNavigation.V1.NavigationV1Availability.Stable;
+        case "alpha":
+            return FernNavigation.V1.NavigationV1Availability.Alpha;
+        case "preview":
+            return FernNavigation.V1.NavigationV1Availability.Preview;
+        case "legacy":
+            return FernNavigation.V1.NavigationV1Availability.Legacy;
         default:
             assertNever(availability);
     }
