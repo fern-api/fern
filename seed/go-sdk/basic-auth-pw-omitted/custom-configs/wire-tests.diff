@@ -1,8 +1,8 @@
 diff --git a/.fern/metadata.json b/.fern/metadata.json
-index cef89e12341..0162fff7b46 100644
+index 5b82336b763..fd555f119a5 100644
 --- a/.fern/metadata.json
 +++ b/.fern/metadata.json
-@@ -3,12 +3,11 @@
+@@ -3,7 +3,7 @@
    "generatorName": "fernapi/fern-go-sdk",
    "generatorVersion": "local",
    "generatorConfig": {
@@ -10,15 +10,7 @@ index cef89e12341..0162fff7b46 100644
 +    "enableWireTests": true
    },
    "originGitCommit": "DUMMY",
--  "originGitCommitIsDirty": null,
--  "invokedBy": "manual",
-+  "invokedBy": "ci",
-   "requestedVersion": "0.0.1",
--  "ciProvider": null,
-+  "ciProvider": "github",
-   "sdkVersion": "v0.0.1"
- }
-\ No newline at end of file
+   "invokedBy": "manual",
 diff --git a/basicauth/basic_auth_test/basic_auth_test.go b/basicauth/basic_auth_test/basic_auth_test.go
 new file mode 100644
 index 00000000000..61e50ff369e
@@ -149,63 +141,6 @@ index 00000000000..61e50ff369e
 +
 +	require.NoError(t, invocationErr, "Client method call should succeed")
 +	VerifyRequestCount(t, "TestBasicAuthPostWithBasicAuthWithWireMock", "POST", "/basic-auth", nil, 1)
-+}
-diff --git a/core/request_option.go b/core/request_option.go
-index 3ee6fb32b2d..30390af1e82 100644
---- a/core/request_option.go
-+++ b/core/request_option.go
-@@ -3,6 +3,7 @@
- package core
- 
- import (
-+	base64 "encoding/base64"
- 	http "net/http"
- 	url "net/url"
- )
-@@ -24,6 +25,7 @@ type RequestOptions struct {
- 	QueryParameters url.Values
- 	MaxAttempts     uint
- 	MaxBufSize      int
-+	Username        string
- }
- 
- // NewRequestOptions returns a new *RequestOptions value.
-@@ -44,14 +46,20 @@ func NewRequestOptions(opts ...RequestOption) *RequestOptions {
- 
- // ToHeader maps the configured request options into a http.Header used
- // for the request(s).
--func (r *RequestOptions) ToHeader() http.Header { return r.cloneHeader() }
-+func (r *RequestOptions) ToHeader() http.Header {
-+	header := r.cloneHeader()
-+	if r.Username != "" {
-+		header.Set("Authorization", "Basic "+base64.StdEncoding.EncodeToString([]byte(r.Username+":")))
-+	}
-+	return header
-+}
- 
- func (r *RequestOptions) cloneHeader() http.Header {
- 	headers := r.HTTPHeader.Clone()
- 	headers.Set("X-Fern-Language", "Go")
--	headers.Set("X-Fern-SDK-Name", "github.com/union-query-parameters/fern")
-+	headers.Set("X-Fern-SDK-Name", "github.com/basic-auth-pw-omitted/fern")
- 	headers.Set("X-Fern-SDK-Version", "v0.0.1")
--	headers.Set("User-Agent", "github.com/union-query-parameters/fern/0.0.1")
-+	headers.Set("User-Agent", "github.com/basic-auth-pw-omitted/fern/0.0.1")
- 	return headers
- }
- 
-@@ -117,3 +125,12 @@ type MaxBufSizeOption struct {
- func (m *MaxBufSizeOption) applyRequestOptions(opts *RequestOptions) {
- 	opts.MaxBufSize = m.MaxBufSize
- }
-+
-+// BasicAuthOption implements the RequestOption interface.
-+type BasicAuthOption struct {
-+	Username string
-+}
-+
-+func (b *BasicAuthOption) applyRequestOptions(opts *RequestOptions) {
-+	opts.Username = b.Username
 +}
 diff --git a/wiremock/docker-compose.test.yml b/wiremock/docker-compose.test.yml
 new file mode 100644

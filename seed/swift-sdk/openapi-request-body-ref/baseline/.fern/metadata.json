@@ -1,12 +1,10 @@
 {
   "cliVersion": "DUMMY",
-  "generatorName": "fernapi/fern-go-sdk",
+  "generatorName": "fernapi/fern-swift-sdk",
   "generatorVersion": "local",
-  "generatorConfig": {
-    "enableWireTests": false
-  },
+  "generatorConfig": {},
   "originGitCommit": "DUMMY",
   "invokedBy": "manual",
   "requestedVersion": "0.0.1",
-  "sdkVersion": "v0.0.1"
+  "sdkVersion": "0.0.1"
 }

@@ -1,5 +1,5 @@
 diff --git a/.fern/metadata.json b/.fern/metadata.json
-index 6533addd8b4..bb747c8f3d2 100644
+index 7bcb89e7c5c..dc5ec3994ec 100644
 --- a/.fern/metadata.json
 +++ b/.fern/metadata.json
 @@ -3,7 +3,8 @@
@@ -11,7 +11,7 @@ index 6533addd8b4..bb747c8f3d2 100644
 +    "enableWireTests": true
    },
    "originGitCommit": "DUMMY",
-   "originGitCommitIsDirty": null,
+   "invokedBy": "manual",
 diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
 index 72178ea4c8f..9a224d6dfd0 100644
 --- a/.github/workflows/ci.yml
@@ -110,7 +110,7 @@ index 00000000000..f8e5a086985
 +end
 diff --git a/test/wire/health_service_test.rb b/test/wire/health_service_test.rb
 new file mode 100644
-index 00000000000..a416b0e7074
+index 00000000000..c04b8c004da
 --- /dev/null
 +++ b/test/wire/health_service_test.rb
 @@ -0,0 +1,53 @@
@@ -153,10 +153,10 @@ index 00000000000..a416b0e7074
 +    test_id = "health.service.ping.0"
 +
 +    @client.health.service.ping(request_options: {
-+                                  additional_headers: {
-+                                    "X-Test-Id" => "health.service.ping.0"
-+                                  }
-+                                })
++      additional_headers: {
++        "X-Test-Id" => "health.service.ping.0"
++      }
++    })
 +
 +    verify_request_count(
 +      test_id: test_id,
@@ -169,7 +169,7 @@ index 00000000000..a416b0e7074
 +end
 diff --git a/test/wire/service_test.rb b/test/wire/service_test.rb
 new file mode 100644
-index 00000000000..d61a235891b
+index 00000000000..c9a01b5428e
 --- /dev/null
 +++ b/test/wire/service_test.rb
 @@ -0,0 +1,252 @@
@@ -220,7 +220,7 @@ index 00000000000..d61a235891b
 +      type: "movie",
 +      tag: "tag-wf9as23d",
 +      metadata: {},
-+      revenue: 1_000_000,
++      revenue: 1000000,
 +      request_options: {
 +        additional_headers: {
 +          "X-Test-Id" => "service.create_movie.0"
@@ -278,7 +278,7 @@ index 00000000000..d61a235891b
 +        tag: "tag",
 +        book: "book",
 +        metadata: {},
-+        revenue: 1_000_000
++        revenue: 1000000
 +      },
 +      entity: {
 +        type: "primitive",
@@ -411,10 +411,10 @@ index 00000000000..d61a235891b
 +    test_id = "service.refresh_token.0"
 +
 +    @client.service.refresh_token(request_options: {
-+                                    additional_headers: {
-+                                      "X-Test-Id" => "service.refresh_token.0"
-+                                    }
-+                                  })
++      additional_headers: {
++        "X-Test-Id" => "service.refresh_token.0"
++      }
++    })
 +
 +    verify_request_count(
 +      test_id: test_id,
@@ -464,10 +464,10 @@ index 00000000000..ce0ea46b040
 +end
 diff --git a/test/wire/wiremock_test_case.rb b/test/wire/wiremock_test_case.rb
 new file mode 100644
-index 00000000000..10986b9b122
+index 00000000000..afe768ead76
 --- /dev/null
 +++ b/test/wire/wiremock_test_case.rb
-@@ -0,0 +1,83 @@
+@@ -0,0 +1,81 @@
 +# frozen_string_literal: true
 +
 +require "test_helper"
@@ -482,14 +482,12 @@ index 00000000000..10986b9b122
 +# This class provides helper methods for verifying requests made to WireMock
 +# and manages the test lifecycle for integration tests.
 +class WireMockTestCase < Minitest::Test
-+  WIREMOCK_BASE_URL = ENV["WIREMOCK_URL"] || "http://localhost:8080"
++  WIREMOCK_BASE_URL = (ENV.fetch("WIREMOCK_URL", nil) || "http://localhost:8080").freeze
 +  WIREMOCK_ADMIN_URL = "#{WIREMOCK_BASE_URL}/__admin".freeze
 +
 +  def setup
 +    super
-+    return if ENV["RUN_WIRE_TESTS"] == "true"
-+
-+    skip "Wire tests are disabled by default. Set RUN_WIRE_TESTS=true to enable them."
++    skip "Wire tests are disabled by default. Set RUN_WIRE_TESTS=true to enable them." unless ENV["RUN_WIRE_TESTS"] == "true"
 +  end
 +
 +  # Verifies the number of requests made to WireMock filtered by test ID for concurrency safety.
@@ -573,10 +571,10 @@ index 00000000000..58747d54a46
 +      start_period: 5s
 diff --git a/wiremock/wiremock-mappings.json b/wiremock/wiremock-mappings.json
 new file mode 100644
-index 00000000000..f2f801a2feb
+index 00000000000..de6f0d18b1a
 --- /dev/null
 +++ b/wiremock/wiremock-mappings.json
-@@ -0,0 +1,339 @@
+@@ -0,0 +1,343 @@
 +{
 +  "mappings": [
 +    {
@@ -641,6 +639,11 @@ index 00000000000..f2f801a2feb
 +          "Authorization": {
 +            "matches": "Bearer .+"
 +          }
++        },
++        "pathParameters": {
++          "notificationId": {
++            "equalTo": "notification-hsy129x"
++          }
 +        }
 +      },
 +      "response": {
@@ -660,8 +663,7 @@ index 00000000000..f2f801a2feb
 +            "via": "SYSTEM"
 +          }
 +        }
-+      },
-+      "postServeActions": []
++      }
 +    },
 +    {
 +      "id": "a430abe8-03a0-48c9-97d3-345f8f18e526",

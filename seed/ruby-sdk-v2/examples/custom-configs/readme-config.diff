@@ -1,5 +1,5 @@
 diff --git a/.fern/metadata.json b/.fern/metadata.json
-index 6533addd8b4..be08219f31f 100644
+index 7bcb89e7c5c..3764d90e2fe 100644
 --- a/.fern/metadata.json
 +++ b/.fern/metadata.json
 @@ -3,7 +3,17 @@
@@ -20,9 +20,9 @@ index 6533addd8b4..be08219f31f 100644
 +    ]
    },
    "originGitCommit": "DUMMY",
-   "originGitCommitIsDirty": null,
+   "invokedBy": "manual",
 diff --git a/README.md b/README.md
-index 97c02cef0af..5194d04e417 100644
+index 0f64c52de8b..dbb97453aee 100644
 --- a/README.md
 +++ b/README.md
 @@ -1,12 +1,18 @@
@@ -218,7 +218,7 @@ index 97c02cef0af..5194d04e417 100644
  rescue Seed::Errors::TimeoutError
      puts "API didn't respond before our timeout elapsed"
  rescue Seed::Errors::ServiceUnavailableError
-@@ -111,7 +262,16 @@ The SDK defaults to a 60 second timeout. Use the `timeout` option to configure t
+@@ -116,7 +267,16 @@ The SDK defaults to a 60 second timeout. Use the `timeout` option to configure t
  ```ruby
  require "seed"
  
@@ -236,7 +236,7 @@ index 97c02cef0af..5194d04e417 100644
      ...,
      timeout: 30  # 30 second timeout
  )
-@@ -124,7 +284,7 @@ If you would like to send additional headers as part of the request, use the `ad
+@@ -129,7 +289,7 @@ If you would like to send additional headers as part of the request, use the `ad
  ```ruby
  require "seed"
  
@@ -245,7 +245,7 @@ index 97c02cef0af..5194d04e417 100644
      ...,
      request_options: {
          additional_headers: {
-@@ -141,7 +301,7 @@ If you would like to send additional query parameters as part of the request, us
+@@ -146,7 +306,7 @@ If you would like to send additional query parameters as part of the request, us
  ```ruby
  require "seed"
  

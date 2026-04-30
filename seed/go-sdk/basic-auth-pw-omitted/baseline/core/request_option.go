@@ -3,6 +3,7 @@
 package core
 
 import (
+	base64 "encoding/base64"
 	http "net/http"
 	url "net/url"
 )
@@ -24,6 +25,7 @@ type RequestOptions struct {
 	QueryParameters url.Values
 	MaxAttempts     uint
 	MaxBufSize      int
+	Username        string
 }
 
 // NewRequestOptions returns a new *RequestOptions value.
@@ -44,14 +46,20 @@ func NewRequestOptions(opts ...RequestOption) *RequestOptions {
 
 // ToHeader maps the configured request options into a http.Header used
 // for the request(s).
-func (r *RequestOptions) ToHeader() http.Header { return r.cloneHeader() }
+func (r *RequestOptions) ToHeader() http.Header {
+	header := r.cloneHeader()
+	if r.Username != "" {
+		header.Set("Authorization", "Basic "+base64.StdEncoding.EncodeToString([]byte(r.Username+":")))
+	}
+	return header
+}
 
 func (r *RequestOptions) cloneHeader() http.Header {
 	headers := r.HTTPHeader.Clone()
 	headers.Set("X-Fern-Language", "Go")
-	headers.Set("X-Fern-SDK-Name", "github.com/union-query-parameters/fern")
+	headers.Set("X-Fern-SDK-Name", "github.com/basic-auth-pw-omitted/fern")
 	headers.Set("X-Fern-SDK-Version", "v0.0.1")
-	headers.Set("User-Agent", "github.com/union-query-parameters/fern/0.0.1")
+	headers.Set("User-Agent", "github.com/basic-auth-pw-omitted/fern/0.0.1")
 	return headers
 }
 
@@ -116,4 +124,13 @@ type MaxBufSizeOption struct {
 
 func (m *MaxBufSizeOption) applyRequestOptions(opts *RequestOptions) {
 	opts.MaxBufSize = m.MaxBufSize
+}
+
+// BasicAuthOption implements the RequestOption interface.
+type BasicAuthOption struct {
+	Username string
+}
+
+func (b *BasicAuthOption) applyRequestOptions(opts *RequestOptions) {
+	opts.Username = b.Username
 }

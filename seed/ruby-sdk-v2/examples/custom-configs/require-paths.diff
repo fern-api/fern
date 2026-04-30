@@ -1,5 +1,5 @@
 diff --git a/.fern/metadata.json b/.fern/metadata.json
-index 6533addd8b4..4789a0a1d19 100644
+index 7bcb89e7c5c..674eb3e748b 100644
 --- a/.fern/metadata.json
 +++ b/.fern/metadata.json
 @@ -3,7 +3,11 @@
@@ -14,14 +14,14 @@ index 6533addd8b4..4789a0a1d19 100644
 +    ]
    },
    "originGitCommit": "DUMMY",
-   "originGitCommitIsDirty": null,
+   "invokedBy": "manual",
 diff --git a/lib/seed.rb b/lib/seed.rb
-index 5abb083de4c..de79fbb338e 100644
+index c6842091ee7..47de0bb5d5e 100644
 --- a/lib/seed.rb
 +++ b/lib/seed.rb
-@@ -81,3 +81,10 @@ require_relative "seed/health/service/client"
- require_relative "seed/service/client"
+@@ -81,3 +81,10 @@ require_relative "seed/service/client"
  require_relative "seed/service/types/get_metadata_request"
+ require_relative "seed/client"
  require_relative "seed/environment"
 +
 +# Load user-defined files if present (e.g., for Sentry integration)

@@ -1,5 +1,5 @@
 diff --git a/.fern/metadata.json b/.fern/metadata.json
-index 6533addd8b4..d00e475e560 100644
+index 7bcb89e7c5c..1b02f5f60a3 100644
 --- a/.fern/metadata.json
 +++ b/.fern/metadata.json
 @@ -3,7 +3,8 @@
@@ -11,12 +11,12 @@ index 6533addd8b4..d00e475e560 100644
 +    "omitFernHeaders": true
    },
    "originGitCommit": "DUMMY",
-   "originGitCommitIsDirty": null,
+   "invokedBy": "manual",
 diff --git a/lib/seed/client.rb b/lib/seed/client.rb
-index bb5569799aa..55f2d06b620 100644
+index e9059bafddd..bb1d0c97d6e 100644
 --- a/lib/seed/client.rb
 +++ b/lib/seed/client.rb
-@@ -10,8 +10,6 @@ module Seed
+@@ -72,8 +72,6 @@ module Seed
        @raw_client = Seed::Internal::Http::RawClient.new(
          base_url: base_url,
          headers: {
@@ -26,7 +26,7 @@ index bb5569799aa..55f2d06b620 100644
          }
        )
 diff --git a/lib/seed/internal/http/raw_client.rb b/lib/seed/internal/http/raw_client.rb
-index 482ab951771..184a4f66154 100644
+index f4f53404497..324db115136 100644
 --- a/lib/seed/internal/http/raw_client.rb
 +++ b/lib/seed/internal/http/raw_client.rb
 @@ -25,11 +25,7 @@ module Seed
