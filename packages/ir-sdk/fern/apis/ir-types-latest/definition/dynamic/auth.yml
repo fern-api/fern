@@ -22,7 +22,13 @@ types:
   BasicAuth:
     properties:
       username: commons.Name
+      usernameOmit:
+        type: optional<boolean>
+        docs: If true, the username will be omitted from the SDK.
       password: commons.Name
+      passwordOmit:
+        type: optional<boolean>
+        docs: If true, the password will be omitted from the SDK.
 
   BasicAuthValues:
     properties:

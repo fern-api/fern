@@ -61,7 +61,7 @@ public class Example {
     public static void main(String[] args) {
         SeedHeaderTokenEnvironmentVariableClient client = SeedHeaderTokenEnvironmentVariableClient
             .builder()
-            .headerTokenAuth("<value>")
+            .headerTokenAuth("YOUR_HEADER_VALUE")
             .build();
 
         client.service().getWithBearerToken();

@@ -11,6 +11,7 @@ import {
     WebsocketMessageSchema,
     WebsocketSessionExample
 } from "@fern-api/openapi-ir";
+import { CliError } from "@fern-api/task-context";
 import { camelCase, upperFirst } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../../getExtension.js";
@@ -227,9 +228,10 @@ export function parseAsyncAPIV3({
 
         const channelEvent = channelEvents[channelPath];
         if (channelEvent == null) {
-            throw new Error(
-                `Internal error: channelEvents["${channelPath}"] is unexpectedly undefined for operation ${operationId}`
-            );
+            throw new CliError({
+                message: `Internal error: channelEvents["${channelPath}"] is unexpectedly undefined for operation ${operationId}`,
+                code: CliError.Code.InternalError
+            });
         }
 
         if (operation.action === "receive") {
@@ -237,7 +239,10 @@ export function parseAsyncAPIV3({
         } else if (operation.action === "send") {
             channelEvent.publish.push(...messagesWithMethodName);
         } else {
-            throw new Error(`Operation ${operationId} has an invalid action: ${operation.action}`);
+            throw new CliError({
+                message: `Operation ${operationId} has an invalid action: ${operation.action}`,
+                code: CliError.Code.ValidationError
+            });
         }
     }
 
@@ -639,13 +644,22 @@ function decodeJsonPointerSegment(segment: string): string {
 
 function getChannelPathFromOperation(operation: AsyncAPIV3.Operation): string {
     if (!operation.channel) {
-        throw new Error("Operation is missing required 'channel' field");
+        throw new CliError({
+            message: "Operation is missing required 'channel' field",
+            code: CliError.Code.ValidationError
+        });
     }
     if (!operation.channel.$ref) {
-        throw new Error("Operation channel is missing required '$ref' field");
+        throw new CliError({
+            message: "Operation channel is missing required '$ref' field",
+            code: CliError.Code.ValidationError
+        });
     }
     if (!operation.channel.$ref.startsWith(CHANNEL_REFERENCE_PREFIX)) {
-        throw new Error(`Failed to resolve channel path from operation ${operation.channel.$ref}`);
+        throw new CliError({
+            message: `Failed to resolve channel path from operation ${operation.channel.$ref}`,
+            code: CliError.Code.ReferenceError
+        });
     }
     return decodeJsonPointerSegment(operation.channel.$ref.substring(CHANNEL_REFERENCE_PREFIX.length));
 }
@@ -654,25 +668,31 @@ function convertChannelParameterLocation(location: string): {
     type: "header" | "path" | "payload";
     parameterKey: string;
 } {
-    try {
-        const [messageType, parameterKey] = location.split("#/");
-        if (messageType == null || parameterKey == null) {
-            throw new Error(`Invalid location format: ${location}; unable to parse message type and parameter key`);
-        }
-        if (!messageType.startsWith(LOCATION_PREFIX)) {
-            throw new Error(`Invalid location format: ${location}; expected ${LOCATION_PREFIX} prefix`);
-        }
-        const type = messageType.substring(LOCATION_PREFIX.length);
-        if (type !== "header" && type !== "path" && type !== "payload") {
-            throw new Error(`Invalid message type: ${type}. Must be one of: header, path, payload`);
-        }
-        return { type, parameterKey };
-    } catch (error) {
-        throw new Error(
-            `Invalid location format: ${location}; see here for more details: ` +
-                "https://www.asyncapi.com/docs/reference/specification/v3.0.0#runtimeExpression"
-        );
+    const ASYNCAPI_RUNTIME_EXPRESSION_DOCS =
+        "https://www.asyncapi.com/docs/reference/specification/v3.0.0#runtimeExpression";
+    const [messageType, parameterKey] = location.split("#/");
+    if (messageType == null || parameterKey == null) {
+        throw new CliError({
+            message:
+                `Invalid location format: ${location}; unable to parse message type and parameter key. ` +
+                `See ${ASYNCAPI_RUNTIME_EXPRESSION_DOCS} for the expected format.`,
+            code: CliError.Code.ValidationError
+        });
     }
+    if (!messageType.startsWith(LOCATION_PREFIX)) {
+        throw new CliError({
+            message: `Invalid location format: ${location}; expected ${LOCATION_PREFIX} prefix`,
+            code: CliError.Code.ValidationError
+        });
+    }
+    const type = messageType.substring(LOCATION_PREFIX.length);
+    if (type !== "header" && type !== "path" && type !== "payload") {
+        throw new CliError({
+            message: `Invalid message type: ${type}. Must be one of: header, path, payload`,
+            code: CliError.Code.ValidationError
+        });
+    }
+    return { type, parameterKey };
 }
 
 function getServerNameFromServerRef(
@@ -680,12 +700,18 @@ function getServerNameFromServerRef(
     serverRef: OpenAPIV3.ReferenceObject
 ): ServerContext {
     if (!serverRef.$ref.startsWith(SERVER_REFERENCE_PREFIX)) {
-        throw new Error(`Failed to resolve server name from server ref ${serverRef.$ref}`);
+        throw new CliError({
+            message: `Failed to resolve server name from server ref ${serverRef.$ref}`,
+            code: CliError.Code.ReferenceError
+        });
     }
     const serverName = serverRef.$ref.substring(SERVER_REFERENCE_PREFIX.length);
     const server = servers[serverName];
     if (server == null) {
-        throw new Error(`Failed to find server with name ${serverName}`);
+        throw new CliError({
+            message: `Failed to find server with name ${serverName}`,
+            code: CliError.Code.ReferenceError
+        });
     }
     return server;
 }

@@ -1,4 +1,5 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
+import { CliError } from "@fern-api/task-context";
 
 export function mergeEndpointPairs<EndpointType extends { method: string }>({
     children,
@@ -28,7 +29,10 @@ export function mergeEndpointPairs<EndpointType extends { method: string }>({
 
         const endpoint = findEndpointById(child.endpointId);
         if (endpoint == null) {
-            throw new Error(`Endpoint ${child.endpointId} not found`);
+            throw new CliError({
+                message: `Endpoint ${child.endpointId} not found`,
+                code: CliError.Code.InternalError
+            });
         }
 
         const methodAndPath = `${endpoint.method} ${stringifyEndpointPathParts(endpoint)}`;

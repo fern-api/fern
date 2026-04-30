@@ -22,6 +22,7 @@ export declare namespace TypeSchemaGenerator {
     export interface Init {
         includeUtilsOnUnionMembers: boolean;
         noOptionalProperties: boolean;
+        enableForwardCompatibleEnums: boolean;
         caseConverter: CaseConverter;
     }
 
@@ -39,11 +40,18 @@ export declare namespace TypeSchemaGenerator {
 export class TypeSchemaGenerator<Context extends ModelContext = ModelContext> {
     private includeUtilsOnUnionMembers: boolean;
     private noOptionalProperties: boolean;
+    private enableForwardCompatibleEnums: boolean;
     private case: CaseConverter;
 
-    constructor({ includeUtilsOnUnionMembers, noOptionalProperties, caseConverter }: TypeSchemaGenerator.Init) {
+    constructor({
+        includeUtilsOnUnionMembers,
+        noOptionalProperties,
+        enableForwardCompatibleEnums,
+        caseConverter
+    }: TypeSchemaGenerator.Init) {
         this.includeUtilsOnUnionMembers = includeUtilsOnUnionMembers;
         this.noOptionalProperties = noOptionalProperties;
+        this.enableForwardCompatibleEnums = enableForwardCompatibleEnums;
         this.case = caseConverter;
     }
 
@@ -170,6 +178,7 @@ export class TypeSchemaGenerator<Context extends ModelContext = ModelContext> {
             getReferenceToGeneratedType,
             getReferenceToGeneratedTypeSchema,
             noOptionalProperties: this.noOptionalProperties,
+            enableForwardCompatibleEnums: this.enableForwardCompatibleEnums,
             caseConverter: this.case
         });
     }

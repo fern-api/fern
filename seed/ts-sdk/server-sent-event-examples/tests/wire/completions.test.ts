@@ -119,6 +119,65 @@ describe("CompletionsClient", () => {
         }).rejects.toThrow(SeedServerSentEvents.BadRequestError);
     });
 
+    test("streamEventsDiscriminantInData (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedServerSentEventsClient({ maxRetries: 0, environment: server.baseUrl });
+        const rawRequestBody = { query: "query" };
+        const rawResponseBody =
+            'event: group.created\ndata: {"offset":"offset-1","group_id":"g1"}\n\nevent: group.deleted\ndata: {"offset":"offset-2","group_id":"g2"}\n\n';
+
+        server
+            .mockEndpoint()
+            .post("/stream-events-discriminant-in-data")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .sseBody(rawResponseBody)
+            .build();
+
+        const response = await client.completions.streamEventsDiscriminantInData({
+            query: "query",
+        });
+        const events: unknown[] = [];
+        for await (const event of response) {
+            events.push(event);
+        }
+        expect(events).toEqual([
+            {
+                type: "group.created",
+                offset: "offset-1",
+                group_id: "g1",
+            },
+            {
+                type: "group.deleted",
+                offset: "offset-2",
+                group_id: "g2",
+            },
+        ]);
+    });
+
+    test("streamEventsDiscriminantInData (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedServerSentEventsClient({ maxRetries: 0, environment: server.baseUrl });
+        const rawRequestBody = { query: "query" };
+        const rawResponseBody = "string";
+
+        server
+            .mockEndpoint()
+            .post("/stream-events-discriminant-in-data")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.completions.streamEventsDiscriminantInData({
+                query: "query",
+            });
+        }).rejects.toThrow(SeedServerSentEvents.BadRequestError);
+    });
+
     test("streamEventsContextProtocol (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedServerSentEventsClient({ maxRetries: 0, environment: server.baseUrl });
@@ -145,17 +204,11 @@ describe("CompletionsClient", () => {
         expect(events).toEqual([
             {
                 event: "completion",
-                ...{
-                    event: "completion",
-                    content: "hello",
-                },
+                content: "hello",
             },
             {
                 event: "error",
-                ...{
-                    event: "error",
-                    error: "something went wrong",
-                },
+                error: "something went wrong",
             },
         ]);
     });

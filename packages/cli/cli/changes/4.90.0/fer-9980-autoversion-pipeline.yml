@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Implement the FER-9980 autoversion pipeline. A new `GenerationCommitStep` +
+    `AutoVersionStep` run between the `[fern-generated]` commit and replay
+    detect/apply, diffing prev vs new `[fern-generated]` SHAs (both pure
+    generator output), calling Fern AI for a semver bump + changelog entry,
+    rewriting the placeholder version, prepending `changelog.md`, and committing
+    `[fern-autoversion]`. Consumes the two-phase `@fern-api/replay@0.12.0` API.
+    Prep refactors (moved `AutoVersioningService` / `AutoVersioningCache` /
+    `VersionUtils` from `@fern-api/local-workspace-runner` into
+    `@fern-api/generator-cli/autoversion` to resolve a circular-dep blocker) are
+    folded into this entry. Opt-in via `config.autoVersion.enabled`; no
+    behavior change for non-replay flows.
+  type: internal

@@ -2,6 +2,7 @@ export * from "./CratesPublishTarget.js";
 export * from "./DirectPublish.js";
 export * from "./Filesystem.js";
 export * from "./GithubPublish.js";
+export * from "./GoPublishTarget.js";
 export * from "./MavenPublishTarget.js";
 export * from "./NpmPublishTarget.js";
 export * from "./PostmanPublishTarget.js";

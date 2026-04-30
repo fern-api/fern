@@ -45,7 +45,7 @@ class ServiceWireTest < WireMockTestCase
       type: "movie",
       tag: "tag-wf9as23d",
       metadata: {},
-      revenue: 1_000_000,
+      revenue: 1000000,
       request_options: {
         additional_headers: {
           "X-Test-Id" => "service.create_movie.0"
@@ -103,7 +103,7 @@ class ServiceWireTest < WireMockTestCase
         tag: "tag",
         book: "book",
         metadata: {},
-        revenue: 1_000_000
+        revenue: 1000000
       },
       entity: {
         type: "primitive",
@@ -236,10 +236,10 @@ class ServiceWireTest < WireMockTestCase
     test_id = "service.refresh_token.0"
 
     @client.service.refresh_token(request_options: {
-                                    additional_headers: {
-                                      "X-Test-Id" => "service.refresh_token.0"
-                                    }
-                                  })
+      additional_headers: {
+        "X-Test-Id" => "service.refresh_token.0"
+      }
+    })
 
     verify_request_count(
       test_id: test_id,

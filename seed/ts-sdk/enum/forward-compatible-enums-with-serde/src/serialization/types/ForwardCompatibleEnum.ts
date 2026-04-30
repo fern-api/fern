@@ -7,7 +7,7 @@ import type * as serializers from "../index.js";
 export const ForwardCompatibleEnum: core.serialization.Schema<
     serializers.ForwardCompatibleEnum.Raw,
     SeedEnum.ForwardCompatibleEnum
-> = core.serialization.enum_(["active", "inactive"]);
+> = core.serialization.forwardCompatibleEnum_(["active", "inactive"]);
 
 export declare namespace ForwardCompatibleEnum {
     export type Raw = "active" | "inactive";

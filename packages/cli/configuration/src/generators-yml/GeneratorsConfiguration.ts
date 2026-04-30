@@ -87,6 +87,7 @@ export interface APIDefinitionSettings {
     resolveAliases: generatorsYml.ResolveAliases | undefined;
     groupMultiApiEnvironments: boolean | undefined;
     groupEnvironmentsByHost: boolean | undefined;
+    multiServerStrategy: generatorsYml.MultiServerStrategy | undefined;
     inferDefaultEnvironment: boolean | undefined;
     wrapReferencesToNullableInOptional: boolean | undefined;
     coerceOptionalSchemasToNullable: boolean | undefined;
@@ -96,6 +97,7 @@ export interface APIDefinitionSettings {
     resolveSchemaCollisions: boolean | undefined;
     inferForwardCompatible: boolean | undefined;
     coerceConstsTo: "literals" | "enums" | "enums-coerceable-to-literals" | undefined;
+    shouldInferDiscriminatedUnionBaseProperties: boolean | undefined;
 }
 
 export interface APIDefinitionLocation {

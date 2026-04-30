@@ -7,8 +7,8 @@ import {
     SchemaWithExample,
     Source
 } from "@fern-api/openapi-ir";
+import { CliError } from "@fern-api/task-context";
 import { OpenAPIV3 } from "openapi-types";
-
 import { getExtension } from "../../../getExtension.js";
 import { FernOpenAPIExtension } from "./fernExtensions.js";
 
@@ -356,7 +356,10 @@ export function getSchemaFromFernType({
                         string: (value) => LiteralSchemaValue.string(value),
                         boolean: (value) => LiteralSchemaValue.boolean(value),
                         _other: () => {
-                            throw new Error("Unexpected literal type");
+                            throw new CliError({
+                                message: "Unexpected literal type",
+                                code: CliError.Code.InternalError
+                            });
                         }
                     }),
                     description,

@@ -27,7 +27,8 @@ import {
     resolveOAuthEndpointReferences
 } from "@fern-api/openapi-to-ir";
 import { OpenRPCConverter, OpenRPCConverterContext3_1 } from "@fern-api/openrpc-to-ir";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
+
 import { ErrorCollector } from "@fern-api/v3-importer-commons";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
@@ -69,6 +70,17 @@ function collapseSpecBooleanSetting(
     // If at least one spec explicitly defines the setting, treat undefined as neutral.
     // Only return false if a spec explicitly sets it to false.
     return values.every((v) => v == null || v === true);
+}
+
+function toRelativePath(raw: string, field: string): RelativeFilePath {
+    try {
+        return RelativeFilePath.of(raw);
+    } catch {
+        throw new CliError({
+            message: `"${field}: ${raw}" must be a relative path, not an absolute one.`,
+            code: CliError.Code.ConfigError
+        });
+    }
 }
 
 function convertRemoveDiscriminantsFromSchemas(
@@ -150,6 +162,8 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             })(),
             exampleGeneration: specs[0]?.settings?.exampleGeneration,
             groupEnvironmentsByHost: specs.some((spec) => spec.settings?.groupEnvironmentsByHost),
+            multiServerStrategy: specs.find((spec) => spec.settings?.multiServerStrategy != null)?.settings
+                ?.multiServerStrategy,
             inferDefaultEnvironment: collapseSpecBooleanSetting(specs, (s) => s?.inferDefaultEnvironment),
             defaultIntegerFormat: specs[0]?.settings?.defaultIntegerFormat,
             pathParameterOrder: specs[0]?.settings?.pathParameterOrder,
@@ -484,7 +498,10 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         }
 
         if (mergedIr === undefined) {
-            throw new Error("Failed to generate intermediate representation");
+            throw new CliError({
+                message: "Failed to generate intermediate representation",
+                code: CliError.Code.IrConversionError
+            });
         }
 
         // Resolve OAuth endpoint references after all specs have been merged,
@@ -620,14 +637,17 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
     ): Promise<Spec[]> {
         // Handle conjure schema case
         if (!Array.isArray(specsOverride)) {
-            throw new Error("Conjure specs override is not yet supported");
+            throw new CliError({
+                message: "Conjure specs override is not yet supported",
+                code: CliError.Code.InternalError
+            });
         }
 
         const specs: Spec[] = [];
 
         for (const spec of specsOverride) {
             if (generatorsYml.isOpenApiSpecSchema(spec)) {
-                const absoluteFilepath = join(this.absoluteFilePath, RelativeFilePath.of(spec.openapi));
+                const absoluteFilepath = join(this.absoluteFilePath, toRelativePath(spec.openapi, "openapi"));
                 // Handle both single override path and array of override paths
                 let absoluteFilepathToOverrides: AbsoluteFilePath | AbsoluteFilePath[] | undefined;
                 const specOverridePaths: AbsoluteFilePath[] = [];
@@ -637,11 +657,13 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                     if (Array.isArray(spec.overrides)) {
                         specOverridePaths.push(
                             ...spec.overrides.map((override) =>
-                                join(this.absoluteFilePath, RelativeFilePath.of(override))
+                                join(this.absoluteFilePath, toRelativePath(override, "overrides"))
                             )
                         );
                     } else {
-                        specOverridePaths.push(join(this.absoluteFilePath, RelativeFilePath.of(spec.overrides)));
+                        specOverridePaths.push(
+                            join(this.absoluteFilePath, toRelativePath(spec.overrides, "overrides"))
+                        );
                     }
                 }
 
@@ -651,7 +673,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                         specOverridePaths.length === 1 ? specOverridePaths[0] : specOverridePaths;
                 }
                 const absoluteFilepathToOverlays = spec.overlays
-                    ? join(this.absoluteFilePath, RelativeFilePath.of(spec.overlays))
+                    ? join(this.absoluteFilePath, toRelativePath(spec.overlays, "overlays"))
                     : undefined;
 
                 // Create a minimal OpenAPI spec with default settings
@@ -672,9 +694,10 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                 specs.push(openApiSpec);
             } else {
                 // For now, only support OpenAPI specs override to keep it simple
-                throw new Error(
-                    `Spec type override not yet supported. Only OpenAPI specs are currently supported in specs override.`
-                );
+                throw new CliError({
+                    message: `Spec type override not yet supported. Only OpenAPI specs are currently supported in specs override.`,
+                    code: CliError.Code.InternalError
+                });
             }
         }
 

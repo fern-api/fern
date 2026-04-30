@@ -1,6 +1,7 @@
 import type { Logger } from "@fern-api/logger";
 import type { Namespace, SchemaId, SdkGroup, SdkGroupName } from "@fern-api/openapi-ir";
-import type { TaskContext } from "@fern-api/task-context";
+import { CliError, type TaskContext } from "@fern-api/task-context";
+
 import type { OpenAPIV3 } from "openapi-types";
 
 import type { ParseOpenAPIOptions } from "../options.js";
@@ -76,7 +77,10 @@ export abstract class AbstractAsyncAPIParserContext<TDocument extends object> im
      */
     public resolveSchemaReference(schema: OpenAPIV3.ReferenceObject): OpenAPIV3.SchemaObject {
         if (!schema.$ref.startsWith(SCHEMA_REFERENCE_PREFIX)) {
-            throw new Error(`Failed to resolve schema reference: ${schema.$ref}`);
+            throw new CliError({
+                message: `Failed to resolve schema reference: ${schema.$ref}`,
+                code: CliError.Code.ReferenceError
+            });
         }
 
         const schemaKey = schema.$ref.substring(SCHEMA_REFERENCE_PREFIX.length);
@@ -84,18 +88,27 @@ export abstract class AbstractAsyncAPIParserContext<TDocument extends object> im
 
         const components = (this.document as AsyncAPIV2.DocumentV2 | AsyncAPIV3.DocumentV3).components;
         if (components == null || components.schemas == null) {
-            throw new Error("Document does not have components.schemas.");
+            throw new CliError({
+                message: "Document does not have components.schemas.",
+                code: CliError.Code.ReferenceError
+            });
         }
 
         const [topKey, maybeProps, maybePropKey] = splitSchemaKey;
 
         if (topKey == null || topKey === "") {
-            throw new Error(`${schema.$ref} cannot be resolved. No schema key provided.`);
+            throw new CliError({
+                message: `${schema.$ref} cannot be resolved. No schema key provided.`,
+                code: CliError.Code.ReferenceError
+            });
         }
 
         let resolvedSchema = components.schemas[topKey];
         if (resolvedSchema == null) {
-            throw new Error(`Schema "${topKey}" is undefined in document.components.schemas.`);
+            throw new CliError({
+                message: `Schema "${topKey}" is undefined in document.components.schemas.`,
+                code: CliError.Code.ReferenceError
+            });
         }
 
         if (isReferenceObject(resolvedSchema)) {
@@ -105,7 +118,10 @@ export abstract class AbstractAsyncAPIParserContext<TDocument extends object> im
         if (maybeProps === "properties" && maybePropKey != null) {
             const resolvedProperty = resolvedSchema.properties?.[maybePropKey];
             if (resolvedProperty == null) {
-                throw new Error(`Property "${maybePropKey}" not found on "${topKey}". Full ref: ${schema.$ref}`);
+                throw new CliError({
+                    message: `Property "${maybePropKey}" not found on "${topKey}". Full ref: ${schema.$ref}`,
+                    code: CliError.Code.ReferenceError
+                });
             } else if (isReferenceObject(resolvedProperty)) {
                 resolvedSchema = this.resolveSchemaReference(resolvedProperty);
             } else {

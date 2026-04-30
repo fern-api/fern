@@ -1,6 +1,7 @@
 import { extractErrorMessage, mergeWithOverrides } from "@fern-api/core-utils";
 import type { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { CliError } from "@fern-api/task-context";
+
 import chalk from "chalk";
 import { execFile } from "child_process";
 import { readFile, writeFile } from "fs/promises";
@@ -291,9 +292,10 @@ export function addSplitCommand(cli: Argv<GlobalArgs>): void {
                 })
                 .coerce("format", (value: string): SplitFormatInput => {
                     if (!(ALL_FORMAT_NAMES as readonly string[]).includes(value)) {
-                        throw new Error(
-                            `Invalid format '${value}'. Expected one of: ${OVERLAY_NAME}, ${OVERRIDES_NAME}`
-                        );
+                        throw new CliError({
+                            message: `Invalid format '${value}'. Expected one of: ${OVERLAY_NAME}, ${OVERRIDES_NAME}`,
+                            code: CliError.Code.ValidationError
+                        });
                     }
                     return value as SplitFormatInput;
                 })

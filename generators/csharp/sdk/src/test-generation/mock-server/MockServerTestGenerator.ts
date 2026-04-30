@@ -1,3 +1,4 @@
+import { GeneratorError } from "@fern-api/base-generator";
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast, Writer } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
@@ -93,7 +94,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkGenera
             let jsonExampleResponse: unknown | undefined = undefined;
             if (example.response != null) {
                 if (example.response.type !== "ok" || example.response.value.type !== "body") {
-                    throw new Error("Unexpected error response type");
+                    throw GeneratorError.internalError("Unexpected error response type");
                 }
                 jsonExampleResponse = example.response.value.value?.jsonExample;
             }
@@ -128,7 +129,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkGenera
                     parseDatetimes: true
                 });
                 if (endpointSnippet == null) {
-                    throw new Error("Endpoint snippet is null");
+                    throw GeneratorError.internalError("Endpoint snippet is null");
                 }
                 if (this.hasPaginationEnabled()) {
                     writer.write("var items = ");

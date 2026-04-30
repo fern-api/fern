@@ -59,14 +59,22 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
         });
         if (includePathParameters) {
             for (const pathParameter of this.endpoint.allPathParameters) {
+                const clientDefaultInit = DefaultValueExtractor.extractClientDefaultCodeBlock(
+                    pathParameter.clientDefault
+                );
+                let type = this.context.phpTypeMapper.convert({ reference: pathParameter.valueType });
+                if (clientDefaultInit != null && !this.context.isOptional(pathParameter.valueType)) {
+                    type = php.Type.optional(type);
+                }
                 this.addFieldWithMethods({
                     clazz,
                     name: pathParameter.name,
                     field: php.field({
                         name: this.context.getPropertyName(pathParameter.name),
-                        type: this.context.phpTypeMapper.convert({ reference: pathParameter.valueType }),
+                        type,
                         access: this.context.getPropertyAccess(),
-                        docs: pathParameter.docs
+                        docs: pathParameter.docs,
+                        initializer: clientDefaultInit
                     }),
                     includeGetters,
                     includeSetters
@@ -75,10 +83,14 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
         }
 
         for (const query of this.endpoint.queryParameters) {
-            const initializer =
+            let initializer =
                 defaultExtractor != null && !query.allowMultiple
                     ? defaultExtractor.extractDefaultCodeBlock(query.valueType)
                     : undefined;
+            const clientDefaultInit = DefaultValueExtractor.extractClientDefaultCodeBlock(query.clientDefault);
+            if (clientDefaultInit != null) {
+                initializer = clientDefaultInit;
+            }
             this.addFieldWithMethods({
                 clazz,
                 name: query.name,
@@ -95,7 +107,11 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
         }
 
         for (const header of [...service.headers, ...this.endpoint.headers]) {
-            const initializer = defaultExtractor?.extractDefaultCodeBlock(header.valueType);
+            let initializer = defaultExtractor?.extractDefaultCodeBlock(header.valueType);
+            const clientDefaultInit = DefaultValueExtractor.extractClientDefaultCodeBlock(header.clientDefault);
+            if (clientDefaultInit != null) {
+                initializer = clientDefaultInit;
+            }
             this.addFieldWithMethods({
                 clazz,
                 name: header.name,

@@ -1,7 +1,8 @@
 import { filterOssWorkspaces } from "@fern-api/docs-resolver";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { loadProjectFromDirectory } from "@fern-api/project-loader";
-import { createMockTaskContext } from "@fern-api/task-context";
+import { CliError, createMockTaskContext } from "@fern-api/task-context";
+
 import stripAnsi from "strip-ansi";
 
 import { Rule } from "../Rule.js";
@@ -30,7 +31,10 @@ export async function getViolationsForRule({
     });
 
     if (project.docsWorkspaces == null) {
-        throw new Error("Expected docs workspace to be present, but found none");
+        throw new CliError({
+            message: "Expected docs workspace to be present, but found none",
+            code: CliError.Code.InternalError
+        });
     }
 
     const violations = await runRulesOnDocsWorkspace({

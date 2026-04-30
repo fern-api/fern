@@ -4,6 +4,7 @@ import type * as FernDefinition from "../../../index.js";
 
 export interface BaseTypeReferenceSchema extends FernDefinition.WithDocsSchema, FernDefinition.WithAvailability {
     default?: unknown;
+    "client-default"?: unknown;
     encoding?: FernDefinition.EncodingSchema;
     validation?: FernDefinition.ValidationSchema;
 }

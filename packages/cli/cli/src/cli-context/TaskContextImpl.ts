@@ -23,6 +23,11 @@ export declare namespace TaskContextImpl {
         takeOverTerminal: (run: () => void | Promise<void>) => Promise<void>;
         logPrefix?: string;
         /**
+         * Optional title shown by `TtyAwareLogger` as the heading of this task's frame
+         * (e.g. the API workspace name). Falls back to no title when omitted.
+         */
+        title?: string;
+        /**
          * called when this task or any subtask finishes
          */
         onResult?: (result: TaskResult) => void;
@@ -34,8 +39,10 @@ export declare namespace TaskContextImpl {
 
 export class TaskContextImpl implements Startable<TaskContext>, Finishable, TaskContext {
     protected result = TaskResult.Success;
+    protected lastFailureMessage: string | undefined = undefined;
     protected logImmediately: (logs: Log[]) => void;
     protected logPrefix: string;
+    public readonly title: string | undefined;
     protected subtasks: InteractiveTaskContextImpl[] = [];
     private shouldBufferLogs: boolean;
     private bufferedLogs: Log[] = [];
@@ -46,6 +53,7 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
     public constructor({
         logImmediately,
         logPrefix,
+        title,
         takeOverTerminal,
         onResult,
         shouldBufferLogs,
@@ -54,6 +62,7 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
     }: TaskContextImpl.Init) {
         this.logImmediately = logImmediately;
         this.logPrefix = logPrefix ?? "";
+        this.title = title;
         this.takeOverTerminal = takeOverTerminal;
         this.onResult = onResult;
         this.shouldBufferLogs = shouldBufferLogs;
@@ -71,6 +80,9 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
     }
 
     public finish(): void {
+        if (this.status === "finished") {
+            return;
+        }
         this.status = "finished";
         this.flushLogs();
         this.onResult?.(this.getResult());
@@ -93,8 +105,15 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
         if (error instanceof TaskAbortSignal) {
             return;
         }
+        if (message != null) {
+            this.lastFailureMessage = message;
+        }
         logErrorMessage({ message, error, logger: this.logger });
         reportError(this, error, { ...options, message });
+    }
+
+    public getLastFailureMessage(): string | undefined {
+        return this.lastFailureMessage;
     }
 
     public captureException(error: unknown, code?: CliError.Code): void {
@@ -214,6 +233,9 @@ export class InteractiveTaskContextImpl
     }
 
     public finish(): void {
+        if (this.status === "finished") {
+            return;
+        }
         if (this.result === TaskResult.Success) {
             this.logAtLevelWithOverrides(LogLevel.Info, ["Finished."], {
                 omitOnTTY: true
@@ -237,8 +259,10 @@ export class InteractiveTaskContextImpl
         }
         lines.push(...this.subtasks.map((subtask) => subtask.print({ spinner })));
 
+        // The icon already carries its own trailing separator (spinner frames come out of ora
+        // with a trailing space; static icons add one explicitly). Don't append extra padding.
         return addPrefixToString({
-            prefix: `${this.getIcon({ spinner }).padEnd(spinner.length)} `,
+            prefix: this.getIcon({ spinner }),
             content: lines.join("\n")
         });
     }
@@ -247,18 +271,27 @@ export class InteractiveTaskContextImpl
         return this.print({ spinner });
     }
 
+    /**
+     * Tasks with subtasks (e.g. a generator group whose children are individual generators)
+     * render with a disclosure-triangle glyph instead of the leaf check/x/spinner, so the
+     * tree shape is legible at a glance. Leaves keep the existing per-status glyphs.
+     *
+     * Every branch returns a string ending in a trailing space so the caller doesn't need
+     * to pad — `spinner` from ora already includes one, and static glyphs add one explicitly.
+     */
     private getIcon({ spinner }: { spinner: string }): string {
+        const hasChildren = this.subtasks.length > 0;
         switch (this.status) {
             case "notStarted":
-                return chalk.dim("◦");
+                return hasChildren ? chalk.dim("▸ ") : chalk.dim("◦ ");
             case "running":
-                return spinner;
+                return hasChildren ? chalk.cyan("▾ ") : spinner;
             case "finished":
                 switch (this.getResult()) {
                     case TaskResult.Success:
-                        return chalk.green("✓");
+                        return hasChildren ? chalk.green("▾ ") : chalk.green("✓ ");
                     case TaskResult.Failure:
-                        return chalk.red("x");
+                        return hasChildren ? chalk.red("▾ ") : chalk.red("x ");
                 }
         }
     }

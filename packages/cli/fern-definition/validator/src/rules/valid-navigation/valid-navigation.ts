@@ -2,6 +2,7 @@ import { getAllDefinitionFiles, getAllNamedDefinitionFiles } from "@fern-api/api
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration-loader";
 import { keys } from "@fern-api/core-utils";
 import { dirname, join, RelativeFilePath, relative } from "@fern-api/fs-utils";
+import { CliError } from "@fern-api/task-context";
 import path from "path";
 
 import { Rule, RuleViolation } from "../../Rule.js";
@@ -51,7 +52,10 @@ export const ValidNavigationRule: Rule = {
 
                     const expectedItems = directoryToChildren[dirname(relativeFilepath)];
                     if (expectedItems == null) {
-                        throw new Error(`Could not find expected contents of ${relativeFilepath}`);
+                        throw new CliError({
+                            message: `Could not find expected contents of ${relativeFilepath}`,
+                            code: CliError.Code.InternalError
+                        });
                     }
 
                     const violations: RuleViolation[] = [];

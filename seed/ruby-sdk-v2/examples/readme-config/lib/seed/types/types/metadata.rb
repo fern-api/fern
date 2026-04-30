@@ -9,6 +9,7 @@ module Seed
         discriminant :type
 
         member -> { String }, key: "HTML"
+
         member -> { String }, key: "MARKDOWN"
       end
     end

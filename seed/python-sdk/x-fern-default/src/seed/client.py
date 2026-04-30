@@ -40,7 +40,7 @@ class SeedApi:
     from seed import SeedApi
 
     client = SeedApi(
-        api_version="YOUR_API_VERSION",
+        "2024-02-08",
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -49,7 +49,7 @@ class SeedApi:
         self,
         *,
         base_url: str,
-        api_version: typing.Optional[str] = None,
+        api_version: typing.Optional[str] = "2024-02-08",
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
@@ -86,9 +86,9 @@ class SeedApi:
 
     def test_get(
         self,
-        region: str,
         *,
-        limit: typing.Optional[str] = None,
+        region: str = "us-east-1",
+        limit: typing.Optional[str] = "100",
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TestGetResponse:
         """
@@ -111,14 +111,14 @@ class SeedApi:
         from seed import SeedApi
 
         client = SeedApi(
-            api_version="YOUR_API_VERSION",
+            "2024-02-08",
             base_url="https://yourhost.com/path/to/api",
         )
         client.test_get(
             region="region",
         )
         """
-        _response = self._raw_client.test_get(region, limit=limit, request_options=request_options)
+        _response = self._raw_client.test_get(region=region, limit=limit, request_options=request_options)
         return _response.data
 
 
@@ -170,7 +170,7 @@ class AsyncSeedApi:
     from seed import AsyncSeedApi
 
     client = AsyncSeedApi(
-        api_version="YOUR_API_VERSION",
+        "2024-02-08",
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -179,7 +179,7 @@ class AsyncSeedApi:
         self,
         *,
         base_url: str,
-        api_version: typing.Optional[str] = None,
+        api_version: typing.Optional[str] = "2024-02-08",
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
@@ -214,9 +214,9 @@ class AsyncSeedApi:
 
     async def test_get(
         self,
-        region: str,
         *,
-        limit: typing.Optional[str] = None,
+        region: str = "us-east-1",
+        limit: typing.Optional[str] = "100",
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TestGetResponse:
         """
@@ -241,7 +241,7 @@ class AsyncSeedApi:
         from seed import AsyncSeedApi
 
         client = AsyncSeedApi(
-            api_version="YOUR_API_VERSION",
+            "2024-02-08",
             base_url="https://yourhost.com/path/to/api",
         )
 
@@ -254,5 +254,5 @@ class AsyncSeedApi:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.test_get(region, limit=limit, request_options=request_options)
+        _response = await self._raw_client.test_get(region=region, limit=limit, request_options=request_options)
         return _response.data

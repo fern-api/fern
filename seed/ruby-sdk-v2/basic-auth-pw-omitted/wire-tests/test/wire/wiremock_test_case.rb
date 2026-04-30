@@ -12,14 +12,12 @@ require "seed"
 # This class provides helper methods for verifying requests made to WireMock
 # and manages the test lifecycle for integration tests.
 class WireMockTestCase < Minitest::Test
-  WIREMOCK_BASE_URL = ENV["WIREMOCK_URL"] || "http://localhost:8080"
+  WIREMOCK_BASE_URL = (ENV.fetch("WIREMOCK_URL", nil) || "http://localhost:8080").freeze
   WIREMOCK_ADMIN_URL = "#{WIREMOCK_BASE_URL}/__admin".freeze
 
   def setup
     super
-    return if ENV["RUN_WIRE_TESTS"] == "true"
-
-    skip "Wire tests are disabled by default. Set RUN_WIRE_TESTS=true to enable them."
+    skip "Wire tests are disabled by default. Set RUN_WIRE_TESTS=true to enable them." unless ENV["RUN_WIRE_TESTS"] == "true"
   end
 
   # Verifies the number of requests made to WireMock filtered by test ID for concurrency safety.
@@ -37,7 +35,15 @@ class WireMockTestCase < Minitest::Test
 
     request_body = { "method" => method, "urlPath" => url_path }
     request_body["headers"] = { "X-Test-Id" => { "equalTo" => test_id } }
-    request_body["queryParameters"] = query_params.transform_values { |v| { "equalTo" => v } } if query_params
+    if query_params
+      request_body["queryParameters"] = query_params.transform_values do |v|
+        if v.is_a?(Array)
+          { "hasExactly" => v.map { |item| { "equalTo" => item } } }
+        else
+          { "equalTo" => v }
+        end
+      end
+    end
 
     post_request.body = request_body.to_json
     response = http.request(post_request)

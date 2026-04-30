@@ -7,6 +7,7 @@ import {
     InferredAuthSchemeTokenEndpoint,
     OAuthConfiguration
 } from "@fern-api/ir-sdk";
+import { CliError } from "@fern-api/task-context";
 
 import { FernFileContext } from "../FernFileContext.js";
 import { EndpointResolver } from "../resolvers/EndpointResolver.js";
@@ -105,7 +106,7 @@ function convertSchemeReference({
     const convertNamedAuthSchemeReference = (reference: string, docs: string | undefined) => {
         const declaration = authSchemeDeclarations?.[reference];
         if (declaration == null) {
-            throw new Error("Unknown auth scheme: " + reference);
+            throw new CliError({ message: "Unknown auth scheme: " + reference, code: CliError.Code.ReferenceError });
         }
         return visitRawAuthSchemeDeclaration<AuthScheme>(declaration, {
             header: (rawHeader) =>
@@ -118,7 +119,8 @@ function convertSchemeReference({
                     }),
                     valueType: file.parseTypeReference(rawHeader.type ?? "string"),
                     prefix: rawHeader.prefix,
-                    headerEnvVar: rawHeader.env
+                    headerEnvVar: rawHeader.env,
+                    headerPlaceholder: rawHeader.placeholder
                 }),
             basic: (rawScheme) =>
                 generateBasicAuth({
@@ -203,7 +205,8 @@ function generateBearerAuth({
         key,
         docs,
         token: file.casingsGenerator.generateName(rawScheme?.token?.name ?? "token"),
-        tokenEnvVar: rawScheme?.token?.env
+        tokenEnvVar: rawScheme?.token?.env,
+        tokenPlaceholder: rawScheme?.token?.placeholder
     });
 }
 
@@ -224,9 +227,11 @@ function generateBasicAuth({
         username: file.casingsGenerator.generateName(rawScheme?.username?.name ?? "username"),
         usernameEnvVar: rawScheme?.username?.env,
         usernameOmit: rawScheme?.username?.omit,
+        usernamePlaceholder: rawScheme?.username?.placeholder,
         password: file.casingsGenerator.generateName(rawScheme?.password?.name ?? "password"),
         passwordEnvVar: rawScheme?.password?.env,
-        passwordOmit: rawScheme?.password?.omit
+        passwordOmit: rawScheme?.password?.omit,
+        passwordPlaceholder: rawScheme?.password?.placeholder
     });
 }
 
@@ -265,7 +270,10 @@ function generateOAuth({
                 )
             });
         default:
-            throw new Error(`Unknown OAuth type: '${rawScheme?.type}'`);
+            throw new CliError({
+                message: `Unknown OAuth type: '${rawScheme?.type}'`,
+                code: CliError.Code.ValidationError
+            });
     }
 }
 

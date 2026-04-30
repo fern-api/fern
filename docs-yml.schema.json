@@ -155,6 +155,16 @@
         }
       ]
     },
+    "global-theme": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "experimental": {
       "oneOf": [
         {
@@ -181,6 +191,19 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/docs.Language"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "translations": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/docs.TranslationConfig"
           }
         },
         {
@@ -3939,6 +3962,7 @@
         "chatgpt",
         "claude",
         "cursor",
+        "claude-code",
         "vscode"
       ]
     },
@@ -4032,6 +4056,16 @@
           ]
         },
         "claude": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "claude-code": {
           "oneOf": [
             {
               "type": "boolean"
@@ -4244,6 +4278,38 @@
         "tr"
       ]
     },
+    "docs.TranslationConfigObject": {
+      "type": "object",
+      "properties": {
+        "lang": {
+          "$ref": "#/definitions/docs.Language"
+        },
+        "default": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "lang"
+      ],
+      "additionalProperties": false
+    },
+    "docs.TranslationConfig": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/docs.Language"
+        },
+        {
+          "$ref": "#/definitions/docs.TranslationConfigObject"
+        }
+      ]
+    },
     "docs.AIChatModel": {
       "type": "string",
       "enum": [
@@ -4429,6 +4495,13 @@
         "player"
       ]
     },
+    "docs.OgDynamicLogoColor": {
+      "type": "string",
+      "enum": [
+        "dark",
+        "light"
+      ]
+    },
     "docs.MetadataConfig": {
       "type": "object",
       "properties": {
@@ -4602,10 +4675,90 @@
             }
           ]
         },
-        "og:background-image": {
+        "og:dynamic:background-image": {
           "oneOf": [
             {
               "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "og:dynamic:text-color": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "og:dynamic:background-color": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "og:dynamic:logo-color": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.OgDynamicLogoColor"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "og:dynamic:show-logo": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "og:dynamic:show-section": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "og:dynamic:show-description": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "og:dynamic:show-url": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "og:dynamic:show-gradient": {
+          "oneOf": [
+            {
+              "type": "boolean"
             },
             {
               "type": "null"
@@ -5471,6 +5624,13 @@
         }
       ]
     },
+    "docs.WebSocketOneofDisplay": {
+      "type": "string",
+      "enum": [
+        "flat",
+        "grouped"
+      ]
+    },
     "docs.DocsSettingsConfig": {
       "type": "object",
       "properties": {
@@ -5603,6 +5763,16 @@
               "type": "null"
             }
           ]
+        },
+        "websocket-oneof-display": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.WebSocketOneofDisplay"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -5706,7 +5876,8 @@
       "type": "string",
       "enum": [
         "default",
-        "toggle"
+        "toggle",
+        "tabs"
       ]
     },
     "docs.ThemeConfig": {

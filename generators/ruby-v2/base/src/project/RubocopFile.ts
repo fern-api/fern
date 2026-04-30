@@ -96,9 +96,42 @@ Style/FrozenStringLiteralComment:
   Exclude:
     - "dynamic-snippets/**/*"
 
+# Indent hash elements 2 spaces from the start of the enclosing line rather than
+# aligning with the preceding paren or bracket. Generated code nests hashes inside
+# arrays and method calls; the "consistent" style is more readable there.
 Layout/FirstHashElementIndentation:
+  EnforcedStyle: consistent
   Exclude:
     - "dynamic-snippets/**/*"
+
+# Match Layout/FirstHashElementIndentation: indent the first argument 2 spaces
+# from the start of the method call's line, regardless of parenthesis position.
+# Dynamic snippets are code samples, not standalone Ruby files; exclude them to
+# keep this config symmetric with Layout/FirstHashElementIndentation above.
+Layout/FirstArgumentIndentation:
+  EnforcedStyle: consistent
+  Exclude:
+    - "dynamic-snippets/**/*"
+
+# The generator emits non-idiomatic class names (e.g. Get_With_Query, JSON_)
+# derived from IR type names whose wire form contains underscores or digits.
+# Rubocop never auto-corrected these (naming cops have no autocorrecter), so
+# disabling the cop keeps CI green without changing customer output. Fixing at
+# source would rename public types across every existing SDK and therefore
+# requires a ruby-v2 major-version bump with a generator migration.
+Naming/ClassAndModuleCamelCase:
+  Enabled: false
+
+# Integer literals are emitted unformatted (e.g. 1000000, not 1_000_000).
+# Rubocop has an autocorrecter for this cop, but the only caller of integer
+# emission is the dynamic-snippets path, which feeds customer-facing surfaces:
+# (1) snippet markdown in reference docs, (2) dynamic-snippets/*.rb sample
+# files. Neither is rubocop-gated (markdown isn't Ruby, dynamic-snippets/**/*
+# is excluded above), so formatting integers there would change docs/dashboard
+# output without any rubocop benefit. Disabling the cop keeps integers raw
+# everywhere and avoids customer-visible diffs.
+Style/NumericLiterals:
+  Enabled: false
 `;
     }
 }

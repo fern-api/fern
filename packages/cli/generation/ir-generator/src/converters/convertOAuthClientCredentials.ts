@@ -1,6 +1,6 @@
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { OAuthClientCredentials } from "@fern-api/ir-sdk";
-
+import { CliError } from "@fern-api/task-context";
 import { FernFileContext } from "../FernFileContext.js";
 import { EndpointResolver } from "../resolvers/EndpointResolver.js";
 import { PropertyResolver } from "../resolvers/PropertyResolver.js";
@@ -34,7 +34,10 @@ export function convertOAuthClientCredentials({
         tokenEndpoint
     });
     if (oauthTokenEndpoint == null) {
-        throw new Error("Failed to convert OAuth token endpoint.");
+        throw new CliError({
+            message: "Failed to convert OAuth token endpoint.",
+            code: CliError.Code.IrConversionError
+        });
     }
     const refreshEndpoint =
         refreshTokenEndpoint != null

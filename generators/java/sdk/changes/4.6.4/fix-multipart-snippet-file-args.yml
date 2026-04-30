@@ -1,0 +1,7 @@
+- summary: |
+    Fix dynamic snippet generation for multipart/form-data endpoints with file parameters.
+    Previously, when a file value was not provided in the example, the file argument was
+    omitted from the snippet, causing subsequent arguments to shift and produce compile errors
+    (e.g. `incompatible types: <Op>Request cannot be converted to Optional<java.io.File>`).
+    Now emits `null` for missing file arguments to keep positional args aligned.
+  type: fix

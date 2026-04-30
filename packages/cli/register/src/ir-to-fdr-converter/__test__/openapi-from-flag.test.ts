@@ -3324,4 +3324,46 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
 
         await expect(workspaceSnapshot).toMatchFileSnapshot("__snapshots__/graphql-workspace.snap");
     });
+
+    it("should gracefully handle circular $ref pointers during workspace loading and IR generation", async () => {
+        // This spec has PlantCategory -> PlantCategoryAlias -> PlantCategory (a $ref cycle)
+        // which triggers @redocly/openapi-core's "Self-referencing circular pointer" error.
+        // The fix catches this error, breaks the circular $ref cycles in the unbundled
+        // document, and continues so that both workspace loading and IR generation succeed.
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures/circular-ref")),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "circular-ref"
+        });
+
+        // Workspace loading should succeed (not throw) despite circular refs
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        // Fetching the raw definition should succeed — this is the path that previously
+        // threw "Self-referencing circular pointer" from @redocly/openapi-core.
+        const definition = await workspace.workspace.getDefinition({ context });
+        expect(definition).toBeDefined();
+
+        // IR generation must also complete without hanging. Before the fix,
+        // the unbundled document retained circular $ref chains that caused the
+        // OpenAPI3_1Converter to infinite-loop.
+        const ir = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false,
+            logWarnings: false
+        });
+        expect(ir).toBeDefined();
+        expect(ir.services).toBeDefined();
+    });
 });

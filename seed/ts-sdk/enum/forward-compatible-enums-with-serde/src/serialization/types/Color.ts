@@ -4,10 +4,8 @@ import type * as SeedEnum from "../../api/index.js";
 import * as core from "../../core/index.js";
 import type * as serializers from "../index.js";
 
-export const Color: core.serialization.Schema<serializers.Color.Raw, SeedEnum.Color> = core.serialization.enum_([
-    "red",
-    "blue",
-]);
+export const Color: core.serialization.Schema<serializers.Color.Raw, SeedEnum.Color> =
+    core.serialization.forwardCompatibleEnum_(["red", "blue"]);
 
 export declare namespace Color {
     export type Raw = "red" | "blue";

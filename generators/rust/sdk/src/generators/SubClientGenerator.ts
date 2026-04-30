@@ -1,4 +1,4 @@
-import { getOriginalName, getWireValue } from "@fern-api/base-generator";
+import { getOriginalName, getWireValue, GeneratorError } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
@@ -1873,7 +1873,7 @@ export class SubClientGenerator {
 
     private generatePaginatedMethod(endpoint: FernIr.HttpEndpoint): rust.Client.SimpleMethod {
         if (!endpoint.pagination) {
-            throw new Error("Cannot generate paginated method for endpoint without pagination");
+            throw GeneratorError.internalError("Cannot generate paginated method for endpoint without pagination");
         }
 
         const params = this.extractParametersFromEndpoint(endpoint);
@@ -1916,7 +1916,7 @@ export class SubClientGenerator {
         requestBody: string
     ): string {
         if (!endpoint.pagination) {
-            throw new Error("Cannot generate pagination logic without pagination configuration");
+            throw GeneratorError.internalError("Cannot generate pagination logic without pagination configuration");
         }
 
         return FernIr.Pagination._visit(endpoint.pagination, {
@@ -1928,7 +1928,7 @@ export class SubClientGenerator {
             uri: () => this.generateCustomPaginationLogic(endpoint, httpMethod, pathExpression, requestBody),
             path: () => this.generateCustomPaginationLogic(endpoint, httpMethod, pathExpression, requestBody),
             _other: () => {
-                throw new Error("Unknown pagination type");
+                throw GeneratorError.internalError("Unknown pagination type");
             }
         });
     }
@@ -1971,13 +1971,14 @@ export class SubClientGenerator {
                     ${this.generateCapturedVariableCloningForAsyncMove(params)}
                     
                     Box::pin(async move {
-                        let response: serde_json::Value = client.execute_request(
+                        let raw_response = client.execute_request_raw::<serde_json::Value>(
                             Method::${httpMethod},
                             ${this.buildPathExpressionForAsyncMove(pathExpression, params)},
                             ${this.buildRequestBodyForAsyncMove(requestBody, params)},
                             Some(query_params),
                             options_for_request,
                         ).await?;
+                        let response = raw_response.body;
                         
                         // Extract pagination info from response
                         ${this.generatePaginationExtraction(endpoint, false)}
@@ -1986,6 +1987,9 @@ export class SubClientGenerator {
                             items,
                             next_cursor,
                             has_next_page,
+                            response: Some(response),
+                            status_code: raw_response.status_code,
+                            headers: raw_response.headers,
                         })
                     })
                 },
@@ -2032,13 +2036,14 @@ export class SubClientGenerator {
                     ${this.generateCapturedVariableCloningForAsyncMove(params)}
                     
                     Box::pin(async move {
-                        let response: serde_json::Value = client.execute_request(
+                        let raw_response = client.execute_request_raw::<serde_json::Value>(
                             Method::${httpMethod},
                             ${this.buildPathExpressionForAsyncMove(pathExpression, params)},
                             ${this.buildRequestBodyForAsyncMove(requestBody, params)},
                             Some(query_params),
                             options_for_request,
                         ).await?;
+                        let response = raw_response.body;
                         
                         // Extract pagination info from response
                         ${this.generatePaginationExtraction(endpoint, true)}
@@ -2047,6 +2052,9 @@ export class SubClientGenerator {
                             items,
                             next_cursor,
                             has_next_page,
+                            response: Some(response),
+                            status_code: raw_response.status_code,
+                            headers: raw_response.headers,
                         })
                     })
                 },
@@ -2086,13 +2094,14 @@ export class SubClientGenerator {
                     ${this.generateCapturedVariableCloningForAsyncMove(params)}
                     
                     Box::pin(async move {
-                        let response: serde_json::Value = client.execute_request(
+                        let raw_response = client.execute_request_raw::<serde_json::Value>(
                             Method::${httpMethod},
                             ${this.buildPathExpressionForAsyncMove(pathExpression, params)},
                             ${this.buildRequestBodyForAsyncMove(requestBody, params)},
                             query_params,
                             options_for_request,
                         ).await?;
+                        let response = raw_response.body;
                         
                         // Custom extraction logic would go here
                         ${this.generatePaginationExtraction(endpoint)}
@@ -2101,6 +2110,9 @@ export class SubClientGenerator {
                             items,
                             next_cursor,
                             has_next_page,
+                            response: Some(response),
+                            status_code: raw_response.status_code,
+                            headers: raw_response.headers,
                         })
                     })
                 },

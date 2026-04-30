@@ -1,6 +1,7 @@
 import type { Logger } from "@fern-api/logger";
 import type { Namespace, SchemaId, SdkGroup, SdkGroupName, Source } from "@fern-api/openapi-ir";
-import type { TaskContext } from "@fern-api/task-context";
+import { CliError, type TaskContext } from "@fern-api/task-context";
+
 import type { OpenAPIV3 } from "openapi-types";
 
 import { getExtension } from "../../getExtension.js";
@@ -156,12 +157,12 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
             this.document.components.parameters == null ||
             !parameter.$ref.startsWith(PARAMETER_REFERENCE_PREFIX)
         ) {
-            throw new Error(`Failed to resolve ${parameter.$ref}`);
+            throw new CliError({ message: `Failed to resolve ${parameter.$ref}`, code: CliError.Code.ReferenceError });
         }
         const parameterKey = parameter.$ref.substring(PARAMETER_REFERENCE_PREFIX.length);
         const resolvedParameter = this.document.components.parameters[parameterKey];
         if (resolvedParameter == null) {
-            throw new Error(`${parameter.$ref} is undefined`);
+            throw new CliError({ message: `${parameter.$ref} is undefined`, code: CliError.Code.ReferenceError });
         }
         if (isReferenceObject(resolvedParameter)) {
             return this.resolveParameterReference(resolvedParameter);
@@ -175,12 +176,15 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
             this.document.components.requestBodies == null ||
             !requestBody.$ref.startsWith(REQUEST_BODY_REFERENCE_PREFIX)
         ) {
-            throw new Error(`Failed to resolve ${requestBody.$ref}`);
+            throw new CliError({
+                message: `Failed to resolve ${requestBody.$ref}`,
+                code: CliError.Code.ReferenceError
+            });
         }
         const requestBodyKey = requestBody.$ref.substring(REQUEST_BODY_REFERENCE_PREFIX.length);
         const resolvedRequestBody = this.document.components.requestBodies[requestBodyKey];
         if (resolvedRequestBody == null) {
-            throw new Error(`${requestBody.$ref} is undefined`);
+            throw new CliError({ message: `${requestBody.$ref} is undefined`, code: CliError.Code.ReferenceError });
         }
         if (isReferenceObject(resolvedRequestBody)) {
             return this.resolveRequestBodyReference(resolvedRequestBody);
@@ -194,12 +198,12 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
             this.document.components.responses == null ||
             !response.$ref.startsWith(RESPONSE_REFERENCE_PREFIX)
         ) {
-            throw new Error(`Failed to resolve ${response.$ref}`);
+            throw new CliError({ message: `Failed to resolve ${response.$ref}`, code: CliError.Code.ReferenceError });
         }
         const parameterKey = response.$ref.substring(RESPONSE_REFERENCE_PREFIX.length);
         const resolvedResponse = this.document.components.responses[parameterKey];
         if (resolvedResponse == null) {
-            throw new Error(`${response.$ref} is undefined`);
+            throw new CliError({ message: `${response.$ref} is undefined`, code: CliError.Code.ReferenceError });
         }
         if (isReferenceObject(resolvedResponse)) {
             return this.resolveResponseReference(resolvedResponse);
@@ -213,12 +217,12 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
             this.document.components.examples == null ||
             !example.$ref.startsWith(EXAMPLES_REFERENCE_PREFIX)
         ) {
-            throw new Error(`Failed to resolve ${example.$ref}`);
+            throw new CliError({ message: `Failed to resolve ${example.$ref}`, code: CliError.Code.ReferenceError });
         }
         const parameterKey = example.$ref.substring(EXAMPLES_REFERENCE_PREFIX.length);
         const resolvedExample = this.document.components.examples[parameterKey];
         if (resolvedExample == null) {
-            throw new Error(`${example.$ref} is undefined`);
+            throw new CliError({ message: `${example.$ref} is undefined`, code: CliError.Code.ReferenceError });
         }
         if (isReferenceObject(resolvedExample)) {
             return this.resolveExampleReference(resolvedExample);
@@ -232,12 +236,15 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
             this.document.components.securitySchemes == null ||
             !securityScheme.$ref.startsWith(SECURITY_SCHEME_REFERENCE_PREFIX)
         ) {
-            throw new Error(`Failed to resolve ${securityScheme.$ref}`);
+            throw new CliError({
+                message: `Failed to resolve ${securityScheme.$ref}`,
+                code: CliError.Code.ReferenceError
+            });
         }
         const securitySchemeKey = securityScheme.$ref.substring(SECURITY_SCHEME_REFERENCE_PREFIX.length);
         const resolvedSecurityScheme = this.document.components.securitySchemes[securitySchemeKey];
         if (resolvedSecurityScheme == null) {
-            throw new Error(`${securityScheme.$ref} is undefined`);
+            throw new CliError({ message: `${securityScheme.$ref} is undefined`, code: CliError.Code.ReferenceError });
         }
         if (isReferenceObject(resolvedSecurityScheme)) {
             return this.resolveSecuritySchemeReference(resolvedSecurityScheme);

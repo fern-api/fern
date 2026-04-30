@@ -86,7 +86,8 @@ function convertSchemeReference({
                         v2: PrimitiveTypeV2.string({ default: undefined, validation: undefined })
                     }),
                     prefix: rawHeader.prefix,
-                    headerEnvVar: rawHeader.env
+                    headerEnvVar: rawHeader.env,
+                    headerPlaceholder: rawHeader.placeholder
                 }),
             basic: (rawScheme) =>
                 generateBasicAuth({
@@ -161,7 +162,8 @@ function generateBearerAuth({
         key,
         docs,
         token: casingsGenerator.generateName(rawScheme?.token?.name ?? "token"),
-        tokenEnvVar: rawScheme?.token?.env
+        tokenEnvVar: rawScheme?.token?.env,
+        tokenPlaceholder: rawScheme?.token?.placeholder
     });
 }
 
@@ -182,8 +184,10 @@ function generateBasicAuth({
         username: casingsGenerator.generateName(rawScheme?.username?.name ?? "username"),
         usernameEnvVar: rawScheme?.username?.env,
         usernameOmit: rawScheme?.username?.omit,
+        usernamePlaceholder: rawScheme?.username?.placeholder,
         password: casingsGenerator.generateName(rawScheme?.password?.name ?? "password"),
         passwordEnvVar: rawScheme?.password?.env,
-        passwordOmit: rawScheme?.password?.omit
+        passwordOmit: rawScheme?.password?.omit,
+        passwordPlaceholder: rawScheme?.password?.placeholder
     });
 }

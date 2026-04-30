@@ -2,8 +2,8 @@
   "extends": "@fern-api/configs/tsconfig/main.json",
   "compilerOptions": {
     "outDir": "lib",
-    "rootDir": "."
+    "rootDir": "src"
   },
-  "include": ["./**/*"],
+  "include": ["src/**/*"],
   "exclude": ["node_modules", "lib", "dist", "test"]
 }

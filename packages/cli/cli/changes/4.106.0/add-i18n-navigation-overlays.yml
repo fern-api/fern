@@ -1,0 +1,5 @@
+- summary: |
+    Add support for translating navigation labels (tabs, products, versions, sections, pages, announcements)
+    via YAML overlay files in `translations/<lang>/fern/`. The overlay files use the same format as
+    `write-translation` output and are deep-merged over the source navigation configuration.
+  type: feat

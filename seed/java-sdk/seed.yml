@@ -185,6 +185,10 @@ fixtures:
     - customConfig:
         enable-wire-tests: true
       outputFolder: default
+    - customConfig:
+        enable-wire-tests: true
+        offset-semantics: "item-index"
+      outputFolder: item-index-semantics
   pagination-custom:
     - customConfig:
         custom-pager-name: "FernCustomPaginator"
@@ -282,6 +286,10 @@ fixtures:
     - customConfig:
         enable-wire-tests: true
       outputFolder: basic-auth
+  basic-auth-pw-omitted:
+    - customConfig:
+        enable-wire-tests: true
+      outputFolder: basic-auth-pw-omitted
   oauth-client-credentials:
     - customConfig:
         enable-wire-tests: true
@@ -324,6 +332,9 @@ fixtures:
     - customConfig:
         enable_wire_tests: true
       outputFolder: with-wire-tests
+  openapi-request-body-ref:
+    - customConfig: null
+      outputFolder: no-custom-config
   java-optional-nullable-query-params:
     - customConfig:
         use-default-request-parameter-values: true
@@ -412,13 +423,14 @@ allowedFailures:
   # Bug with how java-sdk creates nightly balanced files
   - java-pagination-deep-cursor-path
 
-  # File upload dynamic snippets have compilation errors due to missing file parameters
-  # These failures are from pre-existing broken dynamic snippet generation
-  - file-upload:no-custom-config
-  - file-upload:wrapped-aliases
+  # Staged builder snippets don't provide required file arguments (separate from positional shift fix)
   - file-upload:inline-file-properties
-  - file-upload-openapi
+
 
   # Optional wire tests have snippet generation bug with optional(nullable(T))
   # Snippet generator doesn't wrap value in Optional.of() for optional request bodies
   - optional:wire-tests
+
+  # Multipart with $ref body — Java snippet generator drops the file argument;
+  # tracked under FER-10085 (will pass once that PR lands).
+  - openapi-request-body-ref:no-custom-config

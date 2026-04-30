@@ -5,7 +5,9 @@ module Seed
     module Types
       class GetOrganizationUserRequest < Internal::Types::Model
         field :tenant_id, -> { String }, optional: false, nullable: false
+
         field :organization_id, -> { String }, optional: false, nullable: false
+
         field :user_id, -> { String }, optional: false, nullable: false
       end
     end

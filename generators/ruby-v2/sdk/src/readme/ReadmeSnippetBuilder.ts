@@ -1,4 +1,5 @@
-import { AbstractReadmeSnippetBuilder, CaseConverter } from "@fern-api/base-generator";
+import { AbstractReadmeSnippetBuilder, CaseConverter, GeneratorError } from "@fern-api/base-generator";
+import { assertNever } from "@fern-api/core-utils";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -15,6 +16,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static CLIENT_VARIABLE_NAME = "client";
 
     private static ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENVIRONMENTS";
+    private static DEFAULT_AUTH_PLACEHOLDER = "<YOUR_API_KEY>";
 
     private readonly context: SdkGeneratorContext;
     private readonly case: CaseConverter;
@@ -122,7 +124,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                 const endpointId = endpoint.endpoint.id;
                 const snippet = this.prerenderedSnippetsByEndpointId[endpoint.endpoint.id];
                 if (snippet == null) {
-                    throw new Error(`Internal error; missing snippet for endpoint ${endpointId}`);
+                    throw GeneratorError.internalError(`Internal error; missing snippet for endpoint ${endpointId}`);
                 }
                 return snippet;
             });
@@ -202,11 +204,12 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
 
     private renderRequestOptionsSnippet(endpoint: EndpointWithFilepath): string {
+        const placeholder = this.getAuthPlaceholder();
         return this.writeCode(dedent`require "${this.rootPackageName}"
 
             # Specify default options applied on every request.
             ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} = ${this.rootPackageClientName}.new(
-                token: "<YOUR_API_KEY>",
+                token: "${placeholder}",
                 http_client: HTTP::Client.new(
                     timeout: 5
                 )
@@ -215,7 +218,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             # Specify options for an individual request.
             response = ${this.getMethodCall(endpoint)}(
                 ...,
-                token: "<YOUR_API_KEY>"
+                token: "${placeholder}"
             )
         `);
     }
@@ -350,10 +353,14 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         const snippets: Record<FernIr.EndpointId, string> = {};
         for (const endpointSnippet of Object.values(endpointSnippets)) {
             if (endpointSnippet.id.identifierOverride == null) {
-                throw new Error("Internal error; snippets must define the endpoint id to generate README.md");
+                throw GeneratorError.internalError(
+                    "Internal error; snippets must define the endpoint id to generate README.md"
+                );
             }
             if (endpointSnippet.snippet.type !== "ruby") {
-                throw new Error(`Internal error; expected ruby snippet but got: ${endpointSnippet.snippet.type}`);
+                throw GeneratorError.internalError(
+                    `Internal error; expected ruby snippet but got: ${endpointSnippet.snippet.type}`
+                );
             }
             if (snippets[endpointSnippet.id.identifierOverride] != null) {
                 continue;
@@ -366,7 +373,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private getSnippetForEndpointId(endpointId: FernIr.EndpointId): string {
         const snippet = this.prerenderedSnippetsByEndpointId[endpointId];
         if (snippet == null) {
-            throw new Error(`Internal error; missing snippet for endpoint ${endpointId}`);
+            throw GeneratorError.internalError(`Internal error; missing snippet for endpoint ${endpointId}`);
         }
         return snippet;
     }
@@ -383,7 +390,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private lookupEndpointById(endpointId: FernIr.EndpointId): EndpointWithFilepath {
         const endpoint = this.endpointsById[endpointId];
         if (endpoint == null) {
-            throw new Error(`Internal error; missing endpoint ${endpointId}`);
+            throw GeneratorError.internalError(`Internal error; missing endpoint ${endpointId}`);
         }
         return endpoint;
     }
@@ -443,6 +450,34 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
     private getRootPackageClientName(): string {
         return this.context.getRootFolderName();
+    }
+
+    private getAuthPlaceholder(): string {
+        for (const scheme of this.context.ir.auth.schemes) {
+            switch (scheme.type) {
+                case "bearer":
+                    if (scheme.tokenPlaceholder != null) {
+                        return scheme.tokenPlaceholder;
+                    }
+                    break;
+                case "basic":
+                    if (scheme.usernamePlaceholder != null) {
+                        return scheme.usernamePlaceholder;
+                    }
+                    break;
+                case "header":
+                    if (scheme.headerPlaceholder != null) {
+                        return scheme.headerPlaceholder;
+                    }
+                    break;
+                case "oauth":
+                case "inferred":
+                    break;
+                default:
+                    assertNever(scheme);
+            }
+        }
+        return ReadmeSnippetBuilder.DEFAULT_AUTH_PLACEHOLDER;
     }
 
     private writeCode(s: string): string {

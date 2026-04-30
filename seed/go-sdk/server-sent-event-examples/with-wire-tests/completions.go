@@ -148,6 +148,52 @@ func (s *StreamEventsContextProtocolRequest) MarshalJSON() ([]byte, error) {
 }
 
 var (
+	streamEventsDiscriminantInDataRequestFieldQuery = big.NewInt(1 << 0)
+)
+
+type StreamEventsDiscriminantInDataRequest struct {
+	Query string `json:"query" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (s *StreamEventsDiscriminantInDataRequest) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+// SetQuery sets the Query field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *StreamEventsDiscriminantInDataRequest) SetQuery(query string) {
+	s.Query = query
+	s.require(streamEventsDiscriminantInDataRequestFieldQuery)
+}
+
+func (s *StreamEventsDiscriminantInDataRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler StreamEventsDiscriminantInDataRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*s = StreamEventsDiscriminantInDataRequest(body)
+	return nil
+}
+
+func (s *StreamEventsDiscriminantInDataRequest) MarshalJSON() ([]byte, error) {
+	type embed StreamEventsDiscriminantInDataRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
 	completionEventFieldContent = big.NewInt(1 << 0)
 )
 
@@ -431,6 +477,206 @@ func (e *EventEvent) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
+var (
+	groupCreatedEventFieldOffset  = big.NewInt(1 << 0)
+	groupCreatedEventFieldGroupID = big.NewInt(1 << 1)
+)
+
+type GroupCreatedEvent struct {
+	Offset  string `json:"offset" url:"offset"`
+	GroupID string `json:"group_id" url:"group_id"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (g *GroupCreatedEvent) GetOffset() string {
+	if g == nil {
+		return ""
+	}
+	return g.Offset
+}
+
+func (g *GroupCreatedEvent) GetGroupID() string {
+	if g == nil {
+		return ""
+	}
+	return g.GroupID
+}
+
+func (g *GroupCreatedEvent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
+	return g.extraProperties
+}
+
+func (g *GroupCreatedEvent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetOffset sets the Offset field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GroupCreatedEvent) SetOffset(offset string) {
+	g.Offset = offset
+	g.require(groupCreatedEventFieldOffset)
+}
+
+// SetGroupID sets the GroupID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GroupCreatedEvent) SetGroupID(groupID string) {
+	g.GroupID = groupID
+	g.require(groupCreatedEventFieldGroupID)
+}
+
+func (g *GroupCreatedEvent) UnmarshalJSON(data []byte) error {
+	type unmarshaler GroupCreatedEvent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*g = GroupCreatedEvent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GroupCreatedEvent) MarshalJSON() ([]byte, error) {
+	type embed GroupCreatedEvent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (g *GroupCreatedEvent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
+
+var (
+	groupDeletedEventFieldOffset  = big.NewInt(1 << 0)
+	groupDeletedEventFieldGroupID = big.NewInt(1 << 1)
+)
+
+type GroupDeletedEvent struct {
+	Offset  string `json:"offset" url:"offset"`
+	GroupID string `json:"group_id" url:"group_id"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (g *GroupDeletedEvent) GetOffset() string {
+	if g == nil {
+		return ""
+	}
+	return g.Offset
+}
+
+func (g *GroupDeletedEvent) GetGroupID() string {
+	if g == nil {
+		return ""
+	}
+	return g.GroupID
+}
+
+func (g *GroupDeletedEvent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
+	return g.extraProperties
+}
+
+func (g *GroupDeletedEvent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetOffset sets the Offset field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GroupDeletedEvent) SetOffset(offset string) {
+	g.Offset = offset
+	g.require(groupDeletedEventFieldOffset)
+}
+
+// SetGroupID sets the GroupID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GroupDeletedEvent) SetGroupID(groupID string) {
+	g.GroupID = groupID
+	g.require(groupDeletedEventFieldGroupID)
+}
+
+func (g *GroupDeletedEvent) UnmarshalJSON(data []byte) error {
+	type unmarshaler GroupDeletedEvent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*g = GroupDeletedEvent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GroupDeletedEvent) MarshalJSON() ([]byte, error) {
+	type embed GroupDeletedEvent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (g *GroupDeletedEvent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
+
 type StreamEvent struct {
 	Event      string
 	Completion *CompletionEvent
@@ -682,6 +928,123 @@ func (s *StreamEventContextProtocol) validate() error {
 				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
 				s,
 				s.Event,
+				s,
+			)
+		}
+	}
+	return nil
+}
+
+type StreamEventDiscriminantInData struct {
+	Type         string
+	GroupCreated *GroupCreatedEvent
+	GroupDeleted *GroupDeletedEvent
+}
+
+func (s *StreamEventDiscriminantInData) GetType() string {
+	if s == nil {
+		return ""
+	}
+	return s.Type
+}
+
+func (s *StreamEventDiscriminantInData) GetGroupCreated() *GroupCreatedEvent {
+	if s == nil {
+		return nil
+	}
+	return s.GroupCreated
+}
+
+func (s *StreamEventDiscriminantInData) GetGroupDeleted() *GroupDeletedEvent {
+	if s == nil {
+		return nil
+	}
+	return s.GroupDeleted
+}
+
+func (s *StreamEventDiscriminantInData) UnmarshalJSON(data []byte) error {
+	var unmarshaler struct {
+		Type string `json:"type"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	s.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", s)
+	}
+	switch unmarshaler.Type {
+	case "group.created":
+		value := new(GroupCreatedEvent)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		s.GroupCreated = value
+	case "group.deleted":
+		value := new(GroupDeletedEvent)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		s.GroupDeleted = value
+	}
+	return nil
+}
+
+func (s StreamEventDiscriminantInData) MarshalJSON() ([]byte, error) {
+	if err := s.validate(); err != nil {
+		return nil, err
+	}
+	if s.GroupCreated != nil {
+		return internal.MarshalJSONWithExtraProperty(s.GroupCreated, "type", "group.created")
+	}
+	if s.GroupDeleted != nil {
+		return internal.MarshalJSONWithExtraProperty(s.GroupDeleted, "type", "group.deleted")
+	}
+	return nil, fmt.Errorf("type %T does not define a non-empty union type", s)
+}
+
+type StreamEventDiscriminantInDataVisitor interface {
+	VisitGroupCreated(*GroupCreatedEvent) error
+	VisitGroupDeleted(*GroupDeletedEvent) error
+}
+
+func (s *StreamEventDiscriminantInData) Accept(visitor StreamEventDiscriminantInDataVisitor) error {
+	if s.GroupCreated != nil {
+		return visitor.VisitGroupCreated(s.GroupCreated)
+	}
+	if s.GroupDeleted != nil {
+		return visitor.VisitGroupDeleted(s.GroupDeleted)
+	}
+	return fmt.Errorf("type %T does not define a non-empty union type", s)
+}
+
+func (s *StreamEventDiscriminantInData) validate() error {
+	if s == nil {
+		return fmt.Errorf("type %T is nil", s)
+	}
+	var fields []string
+	if s.GroupCreated != nil {
+		fields = append(fields, "group.created")
+	}
+	if s.GroupDeleted != nil {
+		fields = append(fields, "group.deleted")
+	}
+	if len(fields) == 0 {
+		if s.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", s, s.Type)
+		}
+		return fmt.Errorf("type %T is empty", s)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", s, fields)
+	}
+	if s.Type != "" {
+		field := fields[0]
+		if s.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				s,
+				s.Type,
 				s,
 			)
 		}

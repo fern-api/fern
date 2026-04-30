@@ -1336,6 +1336,74 @@ export abstract class AbstractRustGeneratorContext<
         return this.getFirstHeaderAuthValue((header) => header.prefix);
     }
 
+    /**
+     * Get the placeholder value for the header auth scheme.
+     * Falls back to bearer token placeholder, then undefined.
+     */
+    public getHeaderAuthPlaceholder(): string | undefined {
+        return this.getFirstHeaderAuthValue((header) => header.headerPlaceholder) ?? this.getBearerTokenPlaceholder();
+    }
+
+    /**
+     * Get the placeholder value for the bearer token auth scheme.
+     */
+    public getBearerTokenPlaceholder(): string | undefined {
+        return this.getFirstAuthSchemeValue((scheme) =>
+            FernIr.AuthScheme._visit(scheme, {
+                bearer: (bearer) => bearer.tokenPlaceholder,
+                header: () => undefined,
+                basic: () => undefined,
+                oauth: () => undefined,
+                inferred: () => undefined,
+                _other: () => undefined
+            })
+        );
+    }
+
+    /**
+     * Get the placeholder value for the basic auth username.
+     */
+    public getBasicAuthUsernamePlaceholder(): string | undefined {
+        return this.getFirstAuthSchemeValue((scheme) =>
+            FernIr.AuthScheme._visit(scheme, {
+                basic: (basic) => basic.usernamePlaceholder,
+                bearer: () => undefined,
+                header: () => undefined,
+                oauth: () => undefined,
+                inferred: () => undefined,
+                _other: () => undefined
+            })
+        );
+    }
+
+    /**
+     * Get the placeholder value for the basic auth password.
+     */
+    public getBasicAuthPasswordPlaceholder(): string | undefined {
+        return this.getFirstAuthSchemeValue((scheme) =>
+            FernIr.AuthScheme._visit(scheme, {
+                basic: (basic) => basic.passwordPlaceholder,
+                bearer: () => undefined,
+                header: () => undefined,
+                oauth: () => undefined,
+                inferred: () => undefined,
+                _other: () => undefined
+            })
+        );
+    }
+
+    /**
+     * Get the most appropriate auth placeholder from configured auth schemes.
+     * Checks header, bearer, and basic auth schemes in order.
+     */
+    public getAuthPlaceholder(): string | undefined {
+        return (
+            this.getFirstHeaderAuthValue((header) => header.headerPlaceholder) ??
+            this.getBearerTokenPlaceholder() ??
+            this.getBasicAuthUsernamePlaceholder()
+        );
+    }
+
     private getFirstHeaderAuthValue<T>(selector: (header: FernIr.HeaderAuthScheme) => T | undefined): T | undefined {
         if (this.ir.auth?.schemes) {
             for (const scheme of this.ir.auth.schemes) {
@@ -1347,6 +1415,18 @@ export abstract class AbstractRustGeneratorContext<
                     inferred: () => undefined,
                     _other: () => undefined
                 });
+                if (result !== undefined) {
+                    return result;
+                }
+            }
+        }
+        return undefined;
+    }
+
+    private getFirstAuthSchemeValue<T>(selector: (scheme: FernIr.AuthScheme) => T | undefined): T | undefined {
+        if (this.ir.auth?.schemes) {
+            for (const scheme of this.ir.auth.schemes) {
+                const result = selector(scheme);
                 if (result !== undefined) {
                     return result;
                 }

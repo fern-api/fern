@@ -5,4 +5,5 @@ export interface HeaderSecurityScheme {
     prefix: string | undefined;
     headerVariableName: string | undefined;
     headerEnvVar: string | undefined;
+    headerPlaceholder: string | undefined;
 }

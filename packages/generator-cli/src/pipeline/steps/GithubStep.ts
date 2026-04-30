@@ -6,9 +6,16 @@ import { join } from "path";
 import { createReplayBranch } from "../github/createReplayBranch";
 import { findExistingUpdatablePR } from "../github/findExistingUpdatablePR";
 import { parseCommitMessageForPR } from "../github/parseCommitMessage";
+import { pushSignedCommit } from "../github/pushSignedCommit";
 import type { PipelineLogger } from "../PipelineLogger";
 import { formatReplayPrBody } from "../replay-summary";
-import type { GithubStepConfig, GithubStepResult, PipelineContext, ReplayStepResult } from "../types";
+import type {
+    AutoVersionStepResult,
+    GithubStepConfig,
+    GithubStepResult,
+    PipelineContext,
+    ReplayStepResult
+} from "../types";
 import { BaseStep } from "./BaseStep";
 
 export class GithubStep extends BaseStep {
@@ -24,8 +31,10 @@ export class GithubStep extends BaseStep {
 
     async execute(context: PipelineContext): Promise<GithubStepResult> {
         const replayResult = context.previousStepResults.replay;
+        const autoVersionResult = context.previousStepResults.autoVersion;
         const skipCommit = this.config.skipCommit ?? this.deriveSkipCommit(replayResult);
         const replayConflictInfo = this.config.replayConflictInfo ?? this.deriveReplayConflictInfo(replayResult);
+        const resolvedPrFields = this.resolvePrFields(autoVersionResult);
 
         try {
             this.logger.debug("Starting GitHub self-hosted flow in directory: " + this.outputDir);
@@ -58,10 +67,11 @@ export class GithubStep extends BaseStep {
                         newPrBranch,
                         skipCommit,
                         replayConflictInfo,
-                        replayResult
+                        replayResult,
+                        resolvedPrFields
                     );
                 case "push":
-                    return await this.executePushMode(repository);
+                    return await this.executePushMode(repository, resolvedPrFields);
                 default: {
                     const exhaustive: never = mode;
                     throw new Error(`Unexpected GitHub mode: ${String(exhaustive)}`);
@@ -88,7 +98,8 @@ export class GithubStep extends BaseStep {
                   currentGenerationSha: string;
               }
             | undefined,
-        replayResult: ReplayStepResult | undefined
+        replayResult: ReplayStepResult | undefined,
+        resolved: ResolvedPrFields
     ): Promise<GithubStepResult> {
         const baseBranch = this.config.branch ?? (await repository.getDefaultBranch());
         const octokit = new Octokit({ auth: this.config.token });
@@ -129,7 +140,7 @@ export class GithubStep extends BaseStep {
                     generationBaseSha = await createReplayBranch(
                         repository,
                         prBranch,
-                        this.config.commitMessage,
+                        resolved.commitMessage,
                         replayConflictInfo,
                         this.logger
                     );
@@ -153,16 +164,15 @@ export class GithubStep extends BaseStep {
             await this.ensureFernignore();
 
             this.logger.debug("Committing changes...");
-            const finalCommitMessage = this.config.commitMessage ?? "SDK Generation";
-            await repository.commitAllChanges(finalCommitMessage);
+            await repository.commitAllChanges(resolved.commitMessage);
             this.logger.debug(`Committed changes to local copy of GitHub repository at ${this.outputDir}`);
         }
 
-        // In automation mode, detect no-diff before pushing.
+        // When skipIfNoDiff is enabled, detect no-diff before pushing.
         // --version AUTO already returns shouldCommit=false for NO_CHANGE, which prevents the
         // pipeline from running at all. This tree-hash check is a safety net for edge cases
         // where the version changes but the generated output doesn't.
-        if (this.config.automationMode) {
+        if (shouldCheckNoDiff(this.config)) {
             const noDiff = await repository.treeHashEquals(`origin/${baseBranch}`);
             if (noDiff) {
                 this.logger.info("No changes detected after generation — skipping PR creation");
@@ -177,13 +187,18 @@ export class GithubStep extends BaseStep {
         };
 
         if (!this.config.previewMode) {
-            if (isUpdatingExistingPR) {
-                // Force push is safe: fern-bot/* branches are exclusively owned by this pipeline,
-                // and required when the clone lacks remote tracking refs (e.g., shallow clone from fiddle).
-                await repository.forcePush();
-            } else {
-                await repository.push();
-            }
+            // Create a signed commit via the GitHub API. Using the App installation token causes
+            // GitHub to sign the commit with the App's key. `force=true` when updating an existing
+            // fern-bot/* PR branch (bot-owned, pipeline-owned) — same safety posture as forcePush().
+            await pushSignedCommit({
+                repository,
+                octokit,
+                owner,
+                repo,
+                branch: prBranch,
+                force: isUpdatingExistingPR,
+                logger: this.logger
+            });
             const pushedBranch = await repository.getCurrentBranch();
             result.branchUrl = `https://github.com/${this.config.uri}/tree/${pushedBranch}`;
             this.logger.info(`Pushed branch: ${result.branchUrl}`);
@@ -202,24 +217,23 @@ export class GithubStep extends BaseStep {
             }
         }
 
-        const finalCommitMessage = this.config.commitMessage ?? "SDK Generation";
         const headSha = await repository.getHeadSha();
-        const changelogUrl = this.config.changelogEntry
+        const changelogUrl = resolved.changelogEntry
             ? `https://github.com/${this.config.uri}/blob/${headSha}/changelog.md`
             : undefined;
         const { prTitle, prBody } = parseCommitMessageForPR(
-            finalCommitMessage,
-            this.config.changelogEntry,
-            this.config.prDescription,
-            this.config.versionBumpReason,
-            this.config.previousVersion,
-            this.config.newVersion,
-            this.config.versionBump,
+            resolved.commitMessage,
+            resolved.changelogEntry,
+            resolved.prDescription,
+            resolved.versionBumpReason,
+            resolved.previousVersion,
+            resolved.newVersion,
+            resolved.versionBump,
             changelogUrl
         );
         const replaySection = formatReplayPrBody(replayResult, { branchName: prBranch, repoUri: this.config.uri });
         let enrichedBody = replaySection != null ? prBody + "\n\n---\n\n" + replaySection : prBody;
-        enrichedBody = enrichPrBodyForAutomation(enrichedBody, this.config);
+        enrichedBody = enrichPrBodyForAutomation(enrichedBody, this.config, resolved);
 
         if (isUpdatingExistingPR && existingPR != null) {
             this.logger.info(`Updated existing pull request: ${existingPR.htmlUrl}`);
@@ -258,7 +272,7 @@ export class GithubStep extends BaseStep {
                 // In automation mode, enable GitHub automerge on non-breaking PRs.
                 // Uses the built-in octokit.graphql() from @octokit/core (no extra dependency).
                 // The SDK repo's own branch protection rules govern whether the PR actually merges.
-                if (shouldEnableAutomerge(this.config) && pullRequest.node_id) {
+                if (shouldEnableAutomerge(this.config, resolved) && pullRequest.node_id) {
                     try {
                         await octokit.graphql(
                             `mutation($pullRequestId: ID!) {
@@ -289,7 +303,7 @@ export class GithubStep extends BaseStep {
         return result;
     }
 
-    private async executePushMode(repository: ClonedRepository): Promise<GithubStepResult> {
+    private async executePushMode(repository: ClonedRepository, resolved: ResolvedPrFields): Promise<GithubStepResult> {
         const baseBranch = this.config.branch ?? (await repository.getDefaultBranch());
 
         if (this.config.branch != null) {
@@ -300,12 +314,11 @@ export class GithubStep extends BaseStep {
         await this.ensureFernignore();
 
         this.logger.debug("Committing changes...");
-        const finalCommitMessage = this.config.commitMessage ?? "SDK Generation";
-        await repository.commitAllChanges(finalCommitMessage);
+        await repository.commitAllChanges(resolved.commitMessage);
         this.logger.debug(`Committed changes to local copy of GitHub repository at ${this.outputDir}`);
 
-        // In automation mode, detect no-diff before pushing
-        if (this.config.automationMode) {
+        // When skipIfNoDiff is enabled, detect no-diff before pushing
+        if (shouldCheckNoDiff(this.config)) {
             const noDiff = await repository.treeHashEquals(`origin/${baseBranch}`);
             if (noDiff) {
                 this.logger.info("No changes detected after generation — skipping push");
@@ -319,7 +332,18 @@ export class GithubStep extends BaseStep {
         };
 
         if (!this.config.previewMode) {
-            await repository.pushWithRebasingRemote();
+            const octokit = new Octokit({ auth: this.config.token });
+            const { owner, repo } = parseRepository(this.config.uri);
+            await pushSignedCommit({
+                repository,
+                octokit,
+                owner,
+                repo,
+                branch: baseBranch,
+                force: false,
+                rebaseOnConflict: true,
+                logger: this.logger
+            });
 
             const pushedBranch = await repository.getCurrentBranch();
             result.branchUrl = `https://github.com/${this.config.uri}/tree/${pushedBranch}`;
@@ -367,25 +391,85 @@ export class GithubStep extends BaseStep {
         }
         return undefined;
     }
+
+    private resolvePrFields(autoVersion: AutoVersionStepResult | undefined): ResolvedPrFields {
+        return resolvePrFields(this.config, autoVersion);
+    }
+}
+
+export interface ResolvedPrFields {
+    /** Always populated — falls back to "SDK Generation" when neither config nor autoVersion provides one. */
+    commitMessage: string;
+    changelogEntry: string | undefined;
+    prDescription: string | undefined;
+    versionBumpReason: string | undefined;
+    previousVersion: string | undefined;
+    newVersion: string | undefined;
+    versionBump: string | undefined;
+    hasBreakingChanges: boolean;
+    breakingChangesSummary: string | undefined;
+}
+
+/**
+ * Merges PR-body fields from explicit `GithubStepConfig` with `AutoVersionStep`
+ * results in `previousStepResults.autoVersion`. Explicit config values always
+ * win — same policy as `skipCommit` / `replayConflictInfo`.
+ *
+ * Consumers that delegate autoversion to the pipeline (e.g. fiddle post-FER-9982)
+ * cannot populate these fields at config-emission time because they're pipeline
+ * outputs, not inputs. Without this fallback the PR body would ship without a
+ * version header, changelog entry, or breaking-change warning even when
+ * `AutoVersionStep` computed real values.
+ *
+ * `hasBreakingChanges` / `breakingChangesSummary` are derived from the autoVersion
+ * result as well so automerge (which disables on breaking changes) and the
+ * automation-mode Breaking Changes section stay consistent with the version
+ * header rendered by `parseCommitMessageForPR`.
+ *
+ * Exported for testing.
+ */
+export function resolvePrFields(
+    config: GithubStepConfig,
+    autoVersion: AutoVersionStepResult | undefined
+): ResolvedPrFields {
+    const autoVersionBreaking = autoVersion?.versionBump === "MAJOR";
+    return {
+        commitMessage: config.commitMessage ?? autoVersion?.commitMessage ?? "SDK Generation",
+        changelogEntry: config.changelogEntry ?? autoVersion?.changelogEntry,
+        prDescription: config.prDescription ?? autoVersion?.prDescription,
+        versionBumpReason: config.versionBumpReason ?? autoVersion?.versionBumpReason,
+        previousVersion: config.previousVersion ?? autoVersion?.previousVersion,
+        newVersion: config.newVersion ?? autoVersion?.version,
+        versionBump: config.versionBump ?? autoVersion?.versionBump,
+        hasBreakingChanges: config.hasBreakingChanges ?? autoVersionBreaking,
+        breakingChangesSummary: config.breakingChangesSummary ?? autoVersion?.prDescription
+    };
 }
 
 /**
  * Appends automation-specific sections to the PR body.
  * Exported for testing.
+ *
+ * `breaking` carries the derived hasBreakingChanges + breakingChangesSummary that
+ * may come from either explicit config or `AutoVersionStep`'s result. Callers
+ * outside the step pass an empty object to preserve the config-only behavior.
  */
 export function enrichPrBodyForAutomation(
     body: string,
-    config: { automationMode?: boolean; hasBreakingChanges?: boolean; breakingChangesSummary?: string; runId?: string }
+    config: { automationMode?: boolean; hasBreakingChanges?: boolean; breakingChangesSummary?: string; runId?: string },
+    breaking: { hasBreakingChanges?: boolean; breakingChangesSummary?: string } = {}
 ): string {
     if (!config.automationMode) {
         return body;
     }
+    const hasBreakingChanges = breaking.hasBreakingChanges ?? config.hasBreakingChanges;
+    const breakingChangesSummary = breaking.breakingChangesSummary ?? config.breakingChangesSummary;
     let result = body;
-    if (config.hasBreakingChanges && config.breakingChangesSummary) {
+    if (hasBreakingChanges && breakingChangesSummary) {
         result +=
             "\n\n---\n\n## ⚠️ Breaking Changes\n\n" +
             "This release contains breaking changes that require manual review:\n\n" +
-            config.breakingChangesSummary;
+            breakingChangesSummary;
     }
     if (config.runId) {
         result += `\n\n---\n\n_Fern Run ID: \`${config.runId}\`_`;
@@ -396,13 +480,26 @@ export function enrichPrBodyForAutomation(
 /**
  * Determines whether automerge should be enabled on a PR.
  * Exported for testing.
+ *
+ * `breaking` carries the derived hasBreakingChanges that may come from either
+ * explicit config or `AutoVersionStep`'s result. Callers outside the step pass
+ * an empty object to preserve the config-only behavior.
  */
-export function shouldEnableAutomerge(config: {
-    automationMode?: boolean;
-    autoMerge?: boolean;
-    hasBreakingChanges?: boolean;
-}): boolean {
-    return config.automationMode === true && config.autoMerge === true && config.hasBreakingChanges !== true;
+export function shouldEnableAutomerge(
+    config: { automationMode?: boolean; autoMerge?: boolean; hasBreakingChanges?: boolean },
+    breaking: { hasBreakingChanges?: boolean } = {}
+): boolean {
+    const hasBreakingChanges = breaking.hasBreakingChanges ?? config.hasBreakingChanges;
+    return config.automationMode === true && config.autoMerge === true && hasBreakingChanges !== true;
+}
+
+/**
+ * Determines whether the no-diff tree-hash check should run before push/PR creation.
+ * Independent of automationMode: callers opt into this behavior explicitly via skipIfNoDiff.
+ * Exported for testing.
+ */
+export function shouldCheckNoDiff(config: { skipIfNoDiff?: boolean }): boolean {
+    return config.skipIfNoDiff === true;
 }
 
 /**

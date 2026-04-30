@@ -54,6 +54,19 @@
             }
         },
         {
+            "example_identifier": "Stream events where discriminant is embedded in data and SSE event line is empty",
+            "id": {
+                "path": "/stream-events-discriminant-in-data",
+                "method": "POST",
+                "identifier_override": "endpoint_completions.streamEventsDiscriminantInData"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedServerSentEvents\n\nclient = SeedServerSentEvents(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nresponse = client.completions.stream_events_discriminant_in_data(\n    query=\"query\",\n)\nfor chunk in response.data:\n    yield chunk\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedServerSentEvents\n\nclient = AsyncSeedServerSentEvents(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    response = await client.completions.stream_events_discriminant_in_data(\n        query=\"query\",\n    )\n    async for chunk in response.data:\n        yield chunk\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
             "example_identifier": "Stream events context protocol",
             "id": {
                 "path": "/stream-events-context-protocol",

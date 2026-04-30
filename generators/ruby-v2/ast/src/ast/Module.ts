@@ -59,6 +59,7 @@ export class Module_ extends AstNode {
                     writer.newLine();
                 }
             });
+            writer.writeNewLineIfLastLineNot();
 
             writer.dedent();
             writer.write("end");

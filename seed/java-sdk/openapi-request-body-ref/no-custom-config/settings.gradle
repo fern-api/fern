@@ -1,0 +1,3 @@
+rootProject.name = 'openapi-request-body-ref'
+
+include 'sample-app'

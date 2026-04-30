@@ -1,4 +1,4 @@
-import { GeneratorNotificationService } from "@fern-api/base-generator";
+import { GeneratorNotificationService, GeneratorError } from "@fern-api/base-generator";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import {
@@ -135,7 +135,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         } catch (error) {
             const errorMessage = extractErrorMessage(error);
             context.logger.debug(`Cargo publish failed with error: ${errorMessage}`);
-            throw new Error(`Failed to publish crate: ${errorMessage}`);
+            throw GeneratorError.internalError(`Failed to publish crate: ${errorMessage}`);
         }
     }
 
@@ -341,6 +341,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             lines.push("mod websocket;");
         }
         lines.push("mod utils;");
+        lines.push("pub mod pagination;");
         if (hasDateTime) {
             lines.push("pub mod flexible_datetime;");
         }
@@ -354,7 +355,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             lines.push("pub mod number_serializers;");
         }
         lines.push("");
-        lines.push("pub use http_client::{ByteStream, HttpClient, OAuthConfig};");
+        lines.push("pub use http_client::{ByteStream, HttpClient, OAuthConfig, RawResponse};");
         lines.push("pub use oauth_token_provider::OAuthTokenProvider;");
         lines.push("pub use request_options::RequestOptions;");
         lines.push("pub use query_parameter_builder::{QueryBuilder, QueryBuilderError, parse_structured_query};");
@@ -367,6 +368,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             lines.push("pub use websocket::{DisconnectInfo, WebSocketClient, WebSocketMessage, WebSocketOptions, WebSocketState};");
         }
         lines.push("pub use utils::join_url;");
+        lines.push("pub use pagination::{AsyncPaginator, SyncPaginator, PaginationResult};");
         lines.push("");
 
         return new RustFile({
@@ -831,7 +833,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
             context.logger.debug("Successfully added README.md to project");
         } catch (error) {
-            throw new Error(`Failed to generate README.md: ${extractErrorMessage(error)}`);
+            throw GeneratorError.internalError(`Failed to generate README.md: ${extractErrorMessage(error)}`);
         }
     }
 
@@ -839,7 +841,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         const endpointSnippets: FernGeneratorExec.Endpoint[] = [];
         const dynamicIr = context.ir.dynamic;
         if (!dynamicIr) {
-            throw new Error("Cannot generate FernIr.dynamic snippets without FernIr.dynamic IR");
+            throw GeneratorError.internalError("Cannot generate FernIr.dynamic snippets without FernIr.dynamic IR");
         }
         const dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
             ir: convertIr(dynamicIr),
@@ -896,7 +898,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             context.project.addSourceFiles(referenceFile);
             context.logger.debug("Successfully added reference.md to project");
         } catch (error) {
-            throw new Error(`Failed to generate reference.md: ${extractErrorMessage(error)}`);
+            throw GeneratorError.internalError(`Failed to generate reference.md: ${extractErrorMessage(error)}`);
         }
     }
 

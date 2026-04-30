@@ -11,6 +11,11 @@ publish:
     image: fernapi/fern-typescript-sdk
     aliases: [fernapi/fern-typescript-node-sdk]
     context: .
+  sentry:
+    name: fern-typescript-sdk
+    project: typescript-sdk
+    sourceMaps:
+      - dir: generators/typescript/sdk/cli/dist
 test:
   docker:
     image: fernapi/fern-typescript-sdk:latest
@@ -156,6 +161,9 @@ fixtures:
     - outputFolder: skip-response-validation
       customConfig:
         skipResponseValidation: true
+  union-query-parameters:
+    - outputFolder: no-custom-config
+      customConfig: null
   file-download:
     - outputFolder: no-custom-config
       customConfig: null
@@ -225,6 +233,9 @@ fixtures:
     - outputFolder: flatten-request-parameters
       customConfig:
         flattenRequestParameters: true
+  openapi-request-body-ref:
+    - outputFolder: no-custom-config
+      customConfig: null
   trace:
     - outputFolder: no-custom-config
       customConfig: null
@@ -552,7 +563,6 @@ scripts:
           fi
 allowedFailures:
   - cross-package-type-names:serde-layer
-  - enum:forward-compatible-enums-with-serde
   - exhaustive:never-throw-errors
   - exhaustive:multiple-exports
   - oauth-client-credentials-custom

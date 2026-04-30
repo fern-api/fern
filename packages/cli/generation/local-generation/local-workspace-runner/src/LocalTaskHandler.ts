@@ -3,24 +3,30 @@ import { b as BamlClient, configureBamlClient, VersionBump } from "@fern-api/cli
 import { FERNIGNORE_FILENAME, generatorsYml, getFernIgnorePaths } from "@fern-api/configuration";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+import {
+    AutoVersioningCache,
+    AutoVersioningException,
+    AutoVersioningService,
+    AutoVersionResult,
+    CachedAnalysis,
+    countFilesInDiff,
+    formatSizeKB,
+    isAutoVersion,
+    MAX_AI_DIFF_BYTES,
+    MAX_CHUNKS,
+    MAX_RAW_DIFF_BYTES,
+    maxVersionBump
+} from "@fern-api/generator-cli/autoversion";
 import { loggingExeca } from "@fern-api/logging-execa";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
+
 import decompress from "decompress";
 import { cp, readdir, readFile, rm } from "fs/promises";
 import { tmpdir } from "os";
 import { join as pathJoin } from "path";
 import semver from "semver";
 import tmp from "tmp-promise";
-import { AutoVersioningCache, CachedAnalysis } from "./AutoVersioningCache.js";
-import {
-    AutoVersioningException,
-    AutoVersioningService,
-    AutoVersionResult,
-    countFilesInDiff,
-    formatSizeKB
-} from "./AutoVersioningService.js";
 import { sanitizeChangelogEntry } from "./sanitizeChangelogEntry.js";
-import { isAutoVersion, MAX_AI_DIFF_BYTES, MAX_CHUNKS, MAX_RAW_DIFF_BYTES, maxVersionBump } from "./VersionUtils.js";
 export declare namespace LocalTaskHandler {
     export interface Init {
         context: TaskContext;
@@ -206,7 +212,10 @@ export class LocalTaskHandler {
             // Extract previous version and clean diff
             // Note: this.version is the mapped magic version (e.g., "v0.0.0-fern-placeholder" for Go)
             if (!this.version) {
-                throw new Error("Version is required for auto versioning");
+                throw new CliError({
+                    message: "Version is required for auto versioning",
+                    code: CliError.Code.InternalError
+                });
             }
 
             let previousVersion: string | undefined;
@@ -522,7 +531,11 @@ export class LocalTaskHandler {
             }
 
             this.context.logger.error(`Failed to perform automatic versioning: ${error}`);
-            throw new Error(`Automatic versioning failed: ${error}`);
+
+            throw new CliError({
+                message: `Automatic versioning failed: ${error}`,
+                code: error instanceof CliError ? error.code : CliError.Code.InternalError
+            });
         } finally {
             // Clean up temp diff file
             if (diffFile) {
@@ -605,7 +618,7 @@ export class LocalTaskHandler {
         // Handle 'v' prefix - semver handles this automatically
         const cleanVersion = semver.clean(version);
         if (!cleanVersion) {
-            throw new Error(`Invalid version format: ${version}`);
+            throw new CliError({ message: `Invalid version format: ${version}`, code: CliError.Code.VersionError });
         }
 
         let releaseType: semver.ReleaseType;
@@ -620,12 +633,18 @@ export class LocalTaskHandler {
                 releaseType = "patch";
                 break;
             default:
-                throw new Error(`Unsupported version bump: ${versionBump}`);
+                throw new CliError({
+                    message: `Unsupported version bump: ${versionBump}`,
+                    code: CliError.Code.VersionError
+                });
         }
 
         const newVersion = semver.inc(cleanVersion, releaseType);
         if (!newVersion) {
-            throw new Error(`Failed to increment version: ${version}`);
+            throw new CliError({
+                message: `Failed to increment version: ${version}`,
+                code: CliError.Code.VersionError
+            });
         }
 
         // Preserve 'v' prefix if original version had it
@@ -690,10 +709,12 @@ export class LocalTaskHandler {
      */
     private async getClientRegistry(): Promise<ClientRegistry> {
         if (this.ai == null) {
-            throw new Error(
-                "No AI service configuration found in generators.yml. " +
-                    "Please add an 'ai' section with provider and model."
-            );
+            throw new CliError({
+                message:
+                    "No AI service configuration found in generators.yml. " +
+                    "Please add an 'ai' section with provider and model.",
+                code: CliError.Code.ConfigError
+            });
         }
 
         this.context.logger.debug(`Using AI service: ${this.ai.provider} with model ${this.ai.model}`);

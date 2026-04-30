@@ -24,8 +24,8 @@ import {
     NameOrString
 } from "@fern-api/ir-sdk";
 import { getOriginalName, hashJSON } from "@fern-api/ir-utils";
+import { CliError } from "@fern-api/task-context";
 import urlJoin from "url-join";
-
 import { FernFileContext } from "../../FernFileContext.js";
 import { ErrorResolver } from "../../resolvers/ErrorResolver.js";
 import { ExampleResolver } from "../../resolvers/ExampleResolver.js";
@@ -89,7 +89,10 @@ export function convertExampleEndpointCall({
                               ? endpoint.request?.["query-parameters"]?.[wireKey]
                               : undefined;
                       if (queryParameterDeclaration == null) {
-                          throw new Error(`Query parameter ${wireKey} does not exist`);
+                          throw new CliError({
+                              message: `Query parameter ${wireKey} does not exist`,
+                              code: CliError.Code.ReferenceError
+                          });
                       }
                       const isAllowMultiple =
                           typeof queryParameterDeclaration !== "string" &&
@@ -252,7 +255,10 @@ function convertPathParameters({
                     })
                 );
             } else {
-                throw new Error(`Path parameter ${key} does not exist`);
+                throw new CliError({
+                    message: `Path parameter ${key} does not exist`,
+                    code: CliError.Code.ReferenceError
+                });
             }
         }
     }
@@ -405,7 +411,10 @@ function convertExampleRequestBody({
     }
 
     if (!isPlainObject(example.request)) {
-        throw new Error(`Example is not an object. Got: ${JSON.stringify(example.request)}`);
+        throw new CliError({
+            message: `Example is not an object. Got: ${JSON.stringify(example.request)}`,
+            code: CliError.Code.ValidationError
+        });
     }
 
     const exampleProperties: ExampleInlinedRequestBodyProperty[] = [];
@@ -463,7 +472,10 @@ function convertExampleRequestBody({
                     });
                     continue;
                 }
-                throw new Error("Could not find original type declaration for property: " + wireKey);
+                throw new CliError({
+                    message: "Could not find original type declaration for property: " + wireKey,
+                    code: CliError.Code.ResolutionError
+                });
             }
             exampleProperties.push({
                 name: file.casingsGenerator.generateNameAndWireValue({

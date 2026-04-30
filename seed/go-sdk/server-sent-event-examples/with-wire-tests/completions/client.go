@@ -110,6 +110,45 @@ func (c *Client) StreamEvents(
 	)
 }
 
+func (c *Client) StreamEventsDiscriminantInData(
+	ctx context.Context,
+	request *sse.StreamEventsDiscriminantInDataRequest,
+	opts ...option.RequestOption,
+) (*core.Stream[sse.StreamEventDiscriminantInData], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
+	endpointURL := baseURL + "/stream-events-discriminant-in-data"
+	headers := internal.MergeHeaders(
+		c.options.ToHeader(),
+		options.ToHeader(),
+	)
+	headers.Add("Accept", "text/event-stream")
+	streamer := internal.NewStreamer[sse.StreamEventDiscriminantInData](c.caller)
+	return streamer.Stream(
+		ctx,
+		&internal.StreamParams{
+			URL:                endpointURL,
+			Method:             http.MethodPost,
+			Headers:            headers,
+			MaxAttempts:        options.MaxAttempts,
+			BodyProperties:     options.BodyProperties,
+			QueryParameters:    options.QueryParameters,
+			Client:             options.HTTPClient,
+			MaxBufSize:         options.MaxBufSize,
+			Prefix:             internal.DefaultSSEDataPrefix,
+			Terminator:         internal.DefaultSSETerminator,
+			Format:             core.StreamFormatSSE,
+			EventDiscriminator: "type",
+			Request:            request,
+			ErrorDecoder:       internal.NewErrorDecoder(sse.ErrorCodes),
+		},
+	)
+}
+
 func (c *Client) StreamEventsContextProtocol(
 	ctx context.Context,
 	request *sse.StreamEventsContextProtocolRequest,

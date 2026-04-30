@@ -7,9 +7,9 @@ import {
 } from "@fern-api/configuration";
 import { FdrAPI as CjsFdrSdk } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { CliError } from "@fern-api/task-context";
 import { cp, mkdir, writeFile } from "fs/promises";
 import yaml from "js-yaml";
-
 import { FernDocsBuilder, FernDocsNavigationBuilder } from "./FernDocsBuilder.js";
 
 interface MarkdownPage {
@@ -88,7 +88,7 @@ export class FernDocsBuilderImpl extends FernDocsBuilder {
         versionConfig: docsYml.RawSchemas.VersionConfig;
         navigation: docsYml.RawSchemas.VersionFileConfig;
     }): void {
-        throw new Error("Method not implemented.");
+        throw new CliError({ message: "Method not implemented.", code: CliError.Code.InternalError });
     }
 
     public addNavbarLink({ link }: { link: docsYml.RawSchemas.NavbarLink }): void {

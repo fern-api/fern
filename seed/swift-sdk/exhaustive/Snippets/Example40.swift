@@ -9,7 +9,7 @@ private func main() async throws {
 
     _ = try await client.endpoints.params.modifyWithInlinePath(
         param: "param",
-        request: .init(body: "string")
+        request: "string"
     )
 }
 

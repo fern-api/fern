@@ -4,8 +4,8 @@ import BasicAuthEnvironmentVariables
 private func main() async throws {
     let client = BasicAuthEnvironmentVariablesClient(
         baseURL: "https://api.fern.com",
-        username: "<username>",
-        accessToken: "<password>"
+        username: "YOUR_USERNAME",
+        accessToken: "YOUR_PASSWORD"
     )
 
     _ = try await client.basicAuth.postWithBasicAuth(request: .object([

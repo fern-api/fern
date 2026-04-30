@@ -25,20 +25,38 @@ async function main() {
         clean: true
     };
 
-    // CLI: bundle everything so it works as a standalone binary
+    // CLI: bundle everything so it works as a standalone binary.
+    // Keep @boundaryml/baml external so esbuild does not try to bundle its
+    // platform-specific native .node files; at runtime it's resolved from
+    // node_modules via the baml dep listed in the published package.json below.
     await tsup.build({
         ...commonConfig,
         entry: ["src/cli.ts"],
-        noExternal: [/.*/]
+        // Match everything EXCEPT @boundaryml/baml so esbuild does not try to
+        // statically bundle baml's platform-specific native .node files; baml
+        // is resolved from node_modules at runtime via the dep in package.json.
+        noExternal: [/^(?!@boundaryml\/baml(\/|$)).*/],
+        external: ["@boundaryml/baml"]
     });
 
-    // API: bundle private workspace deps (@fern-api/github, @fern-api/fs-utils),
-    // keep published deps external so npm manages them for consumers
+    // API: bundle private workspace deps so consumers of the published
+    // package don't need them on disk (they aren't listed as npm deps), keep
+    // published deps external so npm manages them for consumers. Keep
+    // @boundaryml/baml external so esbuild does not bundle its platform-
+    // specific native .node files; baml is a direct dep of generator-cli
+    // below and resolved from node_modules at runtime.
     await tsup.build({
         ...commonConfig,
         entry: ["src/api.ts"],
-        noExternal: ["@fern-api/github", "@fern-api/fs-utils", "@fern-api/core-utils"],
-        external: ["@fern-api/replay", "@octokit/rest", "es-toolkit", "tmp-promise"],
+        noExternal: [
+            "@fern-api/github",
+            "@fern-api/fs-utils",
+            "@fern-api/core-utils",
+            "@fern-api/logging-execa",
+            "@fern-api/task-context",
+            "@fern-api/cli-ai"
+        ],
+        external: ["@fern-api/replay", "@octokit/rest", "es-toolkit", "tmp-promise", "@boundaryml/baml"],
         clean: false
     });
 

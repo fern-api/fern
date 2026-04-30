@@ -150,14 +150,28 @@ func (f *fileWriter) WriteLegacyClientOptions(
 			f.P("}")
 		}
 		if authScheme.Basic != nil {
-			f.P("// WithBasicAuth sets the 'Authorization: Basic <base64>' request header.")
-			if includeCustomAuthDocs {
-				f.P("//")
-				f.WriteDocs(auth.Docs)
+			usernameOmitted := isBasicAuthUsernameOmitted(authScheme.Basic)
+			passwordOmitted := isBasicAuthPasswordOmitted(authScheme.Basic)
+			if !(usernameOmitted && passwordOmitted) {
+				f.P("// WithBasicAuth sets the 'Authorization: Basic <base64>' request header.")
+				if includeCustomAuthDocs {
+					f.P("//")
+					f.WriteDocs(auth.Docs)
+				}
+				var params []string
+				var args []string
+				if !usernameOmitted {
+					params = append(params, "username string")
+					args = append(args, "username")
+				}
+				if !passwordOmitted {
+					params = append(params, "password string")
+					args = append(args, "password")
+				}
+				f.P("func WithBasicAuth(", strings.Join(params, ", "), ") *core.BasicAuthOption {")
+				f.P("return option.WithBasicAuth(", strings.Join(args, ", "), ")")
+				f.P("}")
 			}
-			f.P("func WithBasicAuth(username string, password string) *core.BasicAuthOption {")
-			f.P("return option.WithBasicAuth(username, password)")
-			f.P("}")
 		}
 		if authScheme.Header != nil {
 			if !shouldGenerateHeaderAuthScheme(authScheme.Header, f.types) {
@@ -350,12 +364,18 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 			declaredFields[name] = true
 		}
 		if authScheme.Basic != nil {
+			usernameOmitted := isBasicAuthUsernameOmitted(authScheme.Basic)
+			passwordOmitted := isBasicAuthPasswordOmitted(authScheme.Basic)
 			uname := authScheme.Basic.Username.PascalCase.UnsafeName
 			pname := authScheme.Basic.Password.PascalCase.UnsafeName
-			f.P(uname, " string")
-			f.P(pname, " string")
-			declaredFields[uname] = true
-			declaredFields[pname] = true
+			if !usernameOmitted {
+				f.P(uname, " string")
+				declaredFields[uname] = true
+			}
+			if !passwordOmitted {
+				f.P(pname, " string")
+				declaredFields[pname] = true
+			}
 		}
 		if authScheme.Header != nil {
 			if !shouldGenerateHeaderAuthScheme(authScheme.Header, f.types) {
@@ -445,13 +465,29 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 			f.P("}")
 		}
 		if authScheme.Basic != nil {
-			var (
-				username = authScheme.Basic.Username.PascalCase.UnsafeName
-				password = authScheme.Basic.Password.PascalCase.UnsafeName
-			)
-			f.P(`if r.`, username, ` != "" || r.`, password, ` != "" {`)
-			f.P(`header.Set("Authorization", `, `"Basic " + base64.StdEncoding.EncodeToString([]byte(r.`, username, ` + ":" + r.`, password, `)))`)
-			f.P("}")
+			usernameOmitted := isBasicAuthUsernameOmitted(authScheme.Basic)
+			passwordOmitted := isBasicAuthPasswordOmitted(authScheme.Basic)
+			if usernameOmitted && passwordOmitted {
+				// Both omitted — skip the Authorization header entirely.
+			} else if usernameOmitted {
+				password := authScheme.Basic.Password.PascalCase.UnsafeName
+				f.P(`if r.`, password, ` != "" {`)
+				f.P(`header.Set("Authorization", `, `"Basic " + base64.StdEncoding.EncodeToString([]byte(":" + r.`, password, `)))`)
+				f.P("}")
+			} else if passwordOmitted {
+				username := authScheme.Basic.Username.PascalCase.UnsafeName
+				f.P(`if r.`, username, ` != "" {`)
+				f.P(`header.Set("Authorization", `, `"Basic " + base64.StdEncoding.EncodeToString([]byte(r.`, username, ` + ":")))`)
+				f.P("}")
+			} else {
+				var (
+					username = authScheme.Basic.Username.PascalCase.UnsafeName
+					password = authScheme.Basic.Password.PascalCase.UnsafeName
+				)
+				f.P(`if r.`, username, ` != "" || r.`, password, ` != "" {`)
+				f.P(`header.Set("Authorization", `, `"Basic " + base64.StdEncoding.EncodeToString([]byte(r.`, username, ` + ":" + r.`, password, `)))`)
+				f.P("}")
+			}
 		}
 		if header := authScheme.Header; header != nil {
 			var prefix string
@@ -524,6 +560,25 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 			} else {
 				f.P(`header.Set("`, header.Name.WireValue, `", `, formatValue, ")")
 			}
+			continue
+		}
+		if header.ClientDefault != nil {
+			formatValue := `fmt.Sprintf("%v",` + literalToValue(header.ClientDefault) + ")"
+			f.P(header.Name.Name.CamelCase.SafeName, " := ", formatValue)
+			if header.Env != nil {
+				f.P(`if envValue := os.Getenv("`, *header.Env, `"); envValue != "" {`)
+				f.P(header.Name.Name.CamelCase.SafeName, " = envValue")
+				f.P("}")
+			}
+			value := valueTypeFormat.Prefix + "r." + header.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
+			if valueTypeFormat.IsOptional {
+				f.P("if r.", header.Name.Name.PascalCase.UnsafeName, " != nil {")
+			} else {
+				f.P("if r.", header.Name.Name.PascalCase.UnsafeName, " != ", valueTypeFormat.ZeroValue, " {")
+			}
+			f.P(header.Name.Name.CamelCase.SafeName, ` = fmt.Sprintf("%v", `, value, ")")
+			f.P("}")
+			f.P(`header.Set("`, header.Name.WireValue, `", `, header.Name.Name.CamelCase.SafeName, ")")
 			continue
 		}
 		value := valueTypeFormat.Prefix + "r." + header.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
@@ -627,27 +682,37 @@ func (f *fileWriter) writeRequestOptionStructs(
 				if err := f.writeOptionStruct(pascalCase, goType, true, asIdempotentRequestOption); err != nil {
 					return err
 				}
-				declaredOptionStructs[pascalCase] = true
+					declaredOptionStructs[pascalCase] = true
 			}
 			if authScheme.Basic != nil {
-				var (
-					username = authScheme.Basic.Username.PascalCase.UnsafeName
-					password = authScheme.Basic.Password.PascalCase.UnsafeName
-				)
-				// The basic auth option requires special care because it requires
-				// two parameters.
-				f.P("// BasicAuthOption implements the RequestOption interface.")
-				f.P("type BasicAuthOption struct {")
-				f.P(username, " string")
-				f.P(password, " string")
-				f.P("}")
-				f.P()
+				usernameOmitted := isBasicAuthUsernameOmitted(authScheme.Basic)
+				passwordOmitted := isBasicAuthPasswordOmitted(authScheme.Basic)
+				if usernameOmitted && passwordOmitted {
+					// Both omitted — no BasicAuthOption needed.
+				} else {
+					username := authScheme.Basic.Username.PascalCase.UnsafeName
+					password := authScheme.Basic.Password.PascalCase.UnsafeName
+					f.P("// BasicAuthOption implements the RequestOption interface.")
+					f.P("type BasicAuthOption struct {")
+					if !usernameOmitted {
+						f.P(username, " string")
+					}
+					if !passwordOmitted {
+						f.P(password, " string")
+					}
+					f.P("}")
+					f.P()
 
-				f.P("func (b *BasicAuthOption) applyRequestOptions(opts *RequestOptions) {")
-				f.P("opts.", username, " = b.", username)
-				f.P("opts.", password, " = b.", password)
-				f.P("}")
-				f.P()
+					f.P("func (b *BasicAuthOption) applyRequestOptions(opts *RequestOptions) {")
+					if !usernameOmitted {
+						f.P("opts.", username, " = b.", username)
+					}
+					if !passwordOmitted {
+						f.P("opts.", password, " = b.", password)
+					}
+					f.P("}")
+					f.P()
+				}
 			}
 			if authScheme.Header != nil {
 				if authScheme.Header.ValueType.Container != nil && authScheme.Header.ValueType.Container.Literal != nil {
@@ -960,36 +1025,59 @@ func (f *fileWriter) WriteRequestOptions(
 			declaredPublicOptions[optionName] = true
 		}
 		if authScheme.Basic != nil {
-			if i == 0 {
-				option = ast.NewCallExpr(
-					ast.NewImportedReference(
-						"WithBasicAuth",
-						importPath,
-					),
-					[]ast.Expr{
-						ast.NewBasicLit(fmt.Sprintf(`"<YOUR_%s>"`, authScheme.Basic.Username.ScreamingSnakeCase.UnsafeName)),
-						ast.NewBasicLit(fmt.Sprintf(`"<YOUR_%s>"`, authScheme.Basic.Password.ScreamingSnakeCase.UnsafeName)),
-					},
-				)
-				if authScheme.Basic.UsernameEnvVar != nil && authScheme.Basic.PasswordEnvVar != nil {
-					environmentVars = append(environmentVars, *authScheme.Basic.UsernameEnvVar)
-					environmentVars = append(environmentVars, *authScheme.Basic.PasswordEnvVar)
+			usernameOmitted := isBasicAuthUsernameOmitted(authScheme.Basic)
+			passwordOmitted := isBasicAuthPasswordOmitted(authScheme.Basic)
+			if usernameOmitted && passwordOmitted {
+				// Both omitted — no WithBasicAuth option needed.
+			} else {
+				if i == 0 {
+					var snippetArgs []ast.Expr
+					if !usernameOmitted {
+						snippetArgs = append(snippetArgs, ast.NewBasicLit(fmt.Sprintf(`"<YOUR_%s>"`, authScheme.Basic.Username.ScreamingSnakeCase.UnsafeName)))
+					}
+					if !passwordOmitted {
+						snippetArgs = append(snippetArgs, ast.NewBasicLit(fmt.Sprintf(`"<YOUR_%s>"`, authScheme.Basic.Password.ScreamingSnakeCase.UnsafeName)))
+					}
+					option = ast.NewCallExpr(
+						ast.NewImportedReference(
+							"WithBasicAuth",
+							importPath,
+						),
+						snippetArgs,
+					)
+					if !usernameOmitted && authScheme.Basic.UsernameEnvVar != nil {
+						environmentVars = append(environmentVars, *authScheme.Basic.UsernameEnvVar)
+					}
+					if !passwordOmitted && authScheme.Basic.PasswordEnvVar != nil {
+						environmentVars = append(environmentVars, *authScheme.Basic.PasswordEnvVar)
+					}
 				}
+				f.P("// WithBasicAuth sets the 'Authorization: Basic <base64>' request header.")
+				if includeCustomAuthDocs {
+					f.P("//")
+					f.WriteDocs(auth.Docs)
+				}
+				typeName := "core.BasicAuthOption"
+				var funcParams []string
+				var structFields []string
+				if !usernameOmitted {
+					funcParams = append(funcParams, authScheme.Basic.Username.CamelCase.SafeName)
+					structFields = append(structFields, fmt.Sprintf("%s: %s,", authScheme.Basic.Username.PascalCase.UnsafeName, authScheme.Basic.Username.CamelCase.SafeName))
+				}
+				if !passwordOmitted {
+					funcParams = append(funcParams, authScheme.Basic.Password.CamelCase.SafeName)
+					structFields = append(structFields, fmt.Sprintf("%s: %s,", authScheme.Basic.Password.PascalCase.UnsafeName, authScheme.Basic.Password.CamelCase.SafeName))
+				}
+				f.P("func WithBasicAuth(", strings.Join(funcParams, ", "), " string) *", typeName, " {")
+				f.P("return &", typeName, "{")
+				for _, field := range structFields {
+					f.P(field)
+				}
+				f.P("}")
+				f.P("}")
+				f.P()
+				declaredPublicOptions["WithBasicAuth"] = true
 			}
-			f.P("// WithBasicAuth sets the 'Authorization: Basic <base64>' request header.")
-			if includeCustomAuthDocs {
-				f.P("//")
-				f.WriteDocs(auth.Docs)
-			}
-			typeName := "core.BasicAuthOption"
-			f.P("func WithBasicAuth(", authScheme.Basic.Username.CamelCase.SafeName, ", ", authScheme.Basic.Password.CamelCase.SafeName, " string) *", typeName, " {")
-			f.P("return &", typeName, "{")
-			f.P(fmt.Sprintf("%s: %s,", authScheme.Basic.Username.PascalCase.UnsafeName, authScheme.Basic.Username.CamelCase.SafeName))
-			f.P(fmt.Sprintf("%s: %s,", authScheme.Basic.Password.PascalCase.UnsafeName, authScheme.Basic.Password.CamelCase.SafeName))
-			f.P("}")
-			f.P("}")
-			f.P()
-			declaredPublicOptions["WithBasicAuth"] = true
 		}
 		if authScheme.Header != nil {
 			if authScheme.Header.ValueType.Container != nil && authScheme.Header.ValueType.Container.Literal != nil {
@@ -1311,7 +1399,11 @@ func (f *fileWriter) WriteClient(
 			f.P("if options.", header.Name.Name.PascalCase.UnsafeName, ` == "" {`)
 			f.P("options. ", header.Name.Name.PascalCase.UnsafeName, ` = os.Getenv("`, *header.Env, `")`)
 			f.P("}")
-			continue
+		}
+		if header.ClientDefault != nil && isStringType(header.ValueType) {
+			f.P("if options.", header.Name.Name.PascalCase.UnsafeName, ` == "" {`)
+			f.P("options. ", header.Name.Name.PascalCase.UnsafeName, ` = fmt.Sprintf("%v", `, literalToValue(header.ClientDefault), `)`)
+			f.P("}")
 		}
 	}
 	if oauthClientCredentials != nil {
@@ -1405,6 +1497,14 @@ func (f *fileWriter) WriteClient(
 		if len(endpoint.PathSuffix) > 0 {
 			baseURLVariable = `baseURL + ` + fmt.Sprintf(`"/%s"`, endpoint.PathSuffix)
 		}
+		for _, ppd := range endpoint.PathParameterDefaults {
+			if ppd.InitExpr != "" {
+				f.P(ppd.VarExpr, " := ", ppd.InitExpr)
+			}
+			f.P("if ", ppd.VarExpr, ` == "" {`)
+			f.P(ppd.VarExpr, " = fmt.Sprintf(\"%v\", ", ppd.DefaultVal, ")")
+			f.P("}")
+		}
 		if len(endpoint.PathParameterNames) > 0 {
 			f.P("endpointURL := internal.EncodeURL(")
 			f.P(baseURLVariable, ", ")
@@ -1423,6 +1523,12 @@ func (f *fileWriter) WriteClient(
 			for _, queryParameter := range endpoint.QueryParameters {
 				if isLiteral := (queryParameter.ValueType.Container != nil && queryParameter.ValueType.Container.Literal != nil); isLiteral {
 					f.P(`queryParams.Add("`, queryParameter.Name.WireValue, `", fmt.Sprintf("%v", `, literalToValue(queryParameter.ValueType.Container.Literal), "))")
+				} else if queryParameter.ClientDefault != nil {
+					// Add clientDefault for query params not already set by user.
+					// Use map indexing instead of Has() for Go <1.17 compatibility.
+					f.P(`if _, ok := queryParams["`, queryParameter.Name.WireValue, `"]; !ok {`)
+					f.P(`queryParams.Add("`, queryParameter.Name.WireValue, `", fmt.Sprintf("%v", `, literalToValue(queryParameter.ClientDefault), "))")
+					f.P("}")
 				}
 			}
 			if endpoint.PaginationInfo == nil {
@@ -1442,7 +1548,19 @@ func (f *fileWriter) WriteClient(
 			for _, header := range endpoint.Headers {
 				valueTypeFormat := formatForValueType(header.ValueType, f.types)
 				requestField := valueTypeFormat.Prefix + endpoint.RequestParameterName + "." + header.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
-				if valueTypeFormat.IsOptional {
+				if header.ClientDefault != nil && !isLiteralType(header.ValueType, f.types) {
+					// Use clientDefault as fallback for endpoint headers.
+					formatValue := `fmt.Sprintf("%v",` + literalToValue(header.ClientDefault) + ")"
+					f.P(header.Name.Name.CamelCase.SafeName, " := ", formatValue)
+					if valueTypeFormat.IsOptional {
+						f.P("if ", endpoint.RequestParameterName, ".", header.Name.Name.PascalCase.UnsafeName, " != nil {")
+					} else {
+						f.P("if ", endpoint.RequestParameterName, ".", header.Name.Name.PascalCase.UnsafeName, " != ", valueTypeFormat.ZeroValue, " {")
+					}
+					f.P(header.Name.Name.CamelCase.SafeName, ` = fmt.Sprintf("%v", `, requestField, ")")
+					f.P("}")
+					f.P(`headers.Add("`, header.Name.WireValue, `", `, header.Name.Name.CamelCase.SafeName, ")")
+				} else if valueTypeFormat.IsOptional {
 					f.P("if ", endpoint.RequestParameterName, ".", header.Name.Name.PascalCase.UnsafeName, "!= nil {")
 					f.P(`headers.Add("`, header.Name.WireValue, `", fmt.Sprintf("%v", `, requestField, "))")
 					f.P("}")
@@ -2617,6 +2735,12 @@ func filePropertyToInfo(fileProperty *ir.FileProperty) (*filePropertyInfo, error
 //
 // All of the fields are pre-formatted so that they can all be simple
 // strings.
+type pathParameterDefault struct {
+	VarExpr    string // Go local variable to check and assign (e.g., "_region")
+	InitExpr   string // Go expression to initialize VarExpr from (e.g., "request.Region"), empty if VarExpr is already the source
+	DefaultVal string // Go expression for the default value
+}
+
 type endpoint struct {
 	Name                        *common.Name
 	Docs                        *string
@@ -2632,6 +2756,7 @@ type endpoint struct {
 	ResponseInitializerFormat   string
 	ResponseIsOptionalParameter bool
 	PathParameterNames          []string
+	PathParameterDefaults       []pathParameterDefault
 	SignatureParameters         []*signatureParameter
 	ReturnValues                string
 	SuccessfulReturnValues      string
@@ -2690,10 +2815,23 @@ func (f *fileWriter) endpointFromIR(
 		pathParameterNames  []string
 		signatureParameters = []*signatureParameter{{parameter: "ctx context.Context"}}
 	)
+	var pathParameterDefaults []pathParameterDefault
 	if includePathParametersInWrappedRequest(irEndpoint, inlinePathParameters) {
 		requestParameterName := irEndpoint.SdkRequest.RequestParameterName.CamelCase.SafeName
 		for _, pathParameter := range irEndpoint.AllPathParameters {
-			pathParameterNames = append(pathParameterNames, fmt.Sprintf("%s.%s", requestParameterName, pathParameter.Name.PascalCase.UnsafeName))
+			requestFieldExpr := fmt.Sprintf("%s.%s", requestParameterName, pathParameter.Name.PascalCase.UnsafeName)
+			if pathParameter.ClientDefault != nil && isStringType(pathParameter.ValueType) {
+				// Use a local variable to avoid mutating the caller's request struct.
+				localVar := "_" + pathParameter.Name.CamelCase.SafeName
+				pathParameterNames = append(pathParameterNames, localVar)
+				pathParameterDefaults = append(pathParameterDefaults, pathParameterDefault{
+					VarExpr:    localVar,
+					InitExpr:   requestFieldExpr,
+					DefaultVal: literalToValue(pathParameter.ClientDefault),
+				})
+			} else {
+				pathParameterNames = append(pathParameterNames, requestFieldExpr)
+			}
 		}
 	} else {
 		for _, part := range irEndpoint.FullPath.Parts {
@@ -2713,6 +2851,12 @@ func (f *fileWriter) endpointFromIR(
 			pathParameterName := scope.Add(pathParameter.Name.CamelCase.SafeName)
 			pathParameterNames = append(pathParameterNames, pathParameterName)
 			pathParameterToScopedName[part.PathParameter] = pathParameterName
+			if pathParameter.ClientDefault != nil && isStringType(pathParameter.ValueType) {
+				pathParameterDefaults = append(pathParameterDefaults, pathParameterDefault{
+					VarExpr:    pathParameterName,
+					DefaultVal: literalToValue(pathParameter.ClientDefault),
+				})
+			}
 		}
 
 		// Preserve the order of path parameters specified in the API in the function signature.
@@ -3044,6 +3188,7 @@ func (f *fileWriter) endpointFromIR(
 		ResponseInitializerFormat:   responseInitializerFormat,
 		ResponseIsOptionalParameter: responseIsOptionalParameter,
 		PathParameterNames:          pathParameterNames,
+		PathParameterDefaults:       pathParameterDefaults,
 		SignatureParameters:         signatureParameters,
 		ReturnValues:                signatureReturnValues,
 		SuccessfulReturnValues:      successfulReturnValues,
@@ -4088,6 +4233,17 @@ func maybePrimitive(typeReference *ir.TypeReference) *ir.PrimitiveType {
 	return nil
 }
 
+// isStringType returns true if the given type reference is a non-optional string primitive.
+// This is used to guard clientDefault generation, since the `== ""` zero-value check
+// and `fmt.Sprintf` assignment only compile for Go `string` types (not `*string`).
+func isStringType(valueType *ir.TypeReference) bool {
+	if getOptionalOrNullableContainer(valueType) != nil {
+		return false
+	}
+	primitive := maybePrimitive(valueType)
+	return primitive != nil && primitive.V1 == common.PrimitiveTypeV1String
+}
+
 // isPrimitiveInteger returns true if the given primitive type is an integer.
 func isPrimitiveInteger(primitive *ir.PrimitiveType) bool {
 	return primitive.V1 == common.PrimitiveTypeV1Integer || primitive.V1 == common.PrimitiveTypeV1Uint || primitive.V1 == common.PrimitiveTypeV1Uint64 || primitive.V1 == common.PrimitiveTypeV1Long
@@ -4223,6 +4379,34 @@ func hasBearerAuth(auth *ir.ApiAuth) bool {
 		}
 	}
 	return false
+}
+
+// isBasicAuthUsernameOmitted checks the BasicAuthScheme's extra properties for
+// usernameOmit == true, indicating the username should be removed from the public API.
+func isBasicAuthUsernameOmitted(basic *ir.BasicAuthScheme) bool {
+	if basic == nil {
+		return false
+	}
+	extras := basic.GetExtraProperties()
+	if extras == nil {
+		return false
+	}
+	val, ok := extras["usernameOmit"]
+	return ok && val == true
+}
+
+// isBasicAuthPasswordOmitted checks the BasicAuthScheme's extra properties for
+// passwordOmit == true, indicating the password should be removed from the public API.
+func isBasicAuthPasswordOmitted(basic *ir.BasicAuthScheme) bool {
+	if basic == nil {
+		return false
+	}
+	extras := basic.GetExtraProperties()
+	if extras == nil {
+		return false
+	}
+	val, ok := extras["passwordOmit"]
+	return ok && val == true
 }
 
 // getOAuthClientCredentials returns the OAuth client credentials configuration, or nil if not present.

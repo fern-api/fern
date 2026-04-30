@@ -9,4 +9,11 @@ export interface PublishDocker {
     workingDirectory?: string | undefined;
     preBuildCommands?: FernSeedConfig.DockerCommand | undefined;
     docker: FernSeedConfig.PublishDockerConfiguration;
+    /**
+     * Artifacts to upload to Sentry as a step of the publish pipeline.
+     * The release name is `${sentry.name}:${version}`, which matches the
+     * SENTRY_RELEASE env var baked into the Docker image at build time
+     * and read by the generator runtimes' SentryClient.
+     */
+    sentry?: FernSeedConfig.PublishSentryConfiguration | undefined;
 }

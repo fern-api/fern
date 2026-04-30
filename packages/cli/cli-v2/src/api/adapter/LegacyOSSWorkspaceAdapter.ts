@@ -1,4 +1,3 @@
-import type { OpenAPISpec, ProtobufSpec, Spec } from "@fern-api/api-workspace-commons";
 import type { generatorsYml } from "@fern-api/configuration";
 import type { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
@@ -6,7 +5,7 @@ import type { Context } from "../../context/Context.js";
 import type { ApiDefinition } from "../config/ApiDefinition.js";
 import { isConjureSpec } from "../config/ConjureSpec.js";
 import { isFernSpec } from "../config/FernSpec.js";
-import { LegacyApiSpecAdapter } from "./LegacyApiSpecAdapter.js";
+import { LegacyApiSpecAdapter, partitionV1Specs } from "./LegacyApiSpecAdapter.js";
 
 /**
  * Shared adapter for constructing OSSWorkspace instances from an ApiDefinition.
@@ -43,25 +42,14 @@ export class LegacyOSSWorkspaceAdapter {
         }
 
         const v1Specs = this.specAdapter.convertAll(ossSpecs);
+        const { filteredSpecs, allSpecs } = partitionV1Specs(v1Specs);
 
-        const filteredSpecs = v1Specs.filter((spec): spec is OpenAPISpec | ProtobufSpec => {
-            if (spec.type === "openrpc") {
-                return false;
-            }
-            if (spec.type === "protobuf" && !spec.fromOpenAPI) {
-                return false;
-            }
-            return true;
-        });
+        const hasGraphQlSpec = allSpecs.some((spec) => spec.type === "graphql");
 
-        const allSpecs = v1Specs.filter((spec: Spec) => {
-            if (spec.type === "protobuf" && spec.fromOpenAPI) {
-                return false;
-            }
-            return true;
-        });
-
-        if (filteredSpecs.length === 0) {
+        // If there are no IR-generating specs, skip the workspace — unless there
+        // is at least one GraphQL spec, which is docs-only and must still be
+        // surfaced so `fern docs` can render it.
+        if (filteredSpecs.length === 0 && !hasGraphQlSpec) {
             return undefined;
         }
 

@@ -1,4 +1,4 @@
-import { getOriginalName, getWireValue, NamedArgument, NameInput } from "@fern-api/base-generator";
+import { GeneratorError, getOriginalName, getWireValue, NamedArgument, NameInput } from "@fern-api/base-generator";
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast, Writer } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
@@ -120,7 +120,9 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
                                         };
                                     },
                                     _other: () => {
-                                        throw new Error("Internal error; Unexpected environment type");
+                                        throw GeneratorError.internalError(
+                                            "Internal error; Unexpected environment type"
+                                        );
                                     }
                                 }) ?? {
                                     name: "BaseUrl",

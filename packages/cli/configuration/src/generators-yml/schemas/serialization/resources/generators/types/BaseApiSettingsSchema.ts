@@ -4,6 +4,7 @@ import type * as GeneratorsYml from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { CoerceConstsTo } from "./CoerceConstsTo.js";
+import { MultiServerStrategy } from "./MultiServerStrategy.js";
 import { PathParameterOrder } from "./PathParameterOrder.js";
 import { RemoveDiscriminantsFromSchemas } from "./RemoveDiscriminantsFromSchemas.js";
 
@@ -19,6 +20,7 @@ export const BaseApiSettingsSchema: core.serialization.ObjectSchema<
     "wrap-references-to-nullable-in-optional": core.serialization.boolean().optional(),
     "coerce-optional-schemas-to-nullable": core.serialization.boolean().optional(),
     "group-environments-by-host": core.serialization.boolean().optional(),
+    "multi-server-strategy": MultiServerStrategy.optional(),
     "remove-discriminants-from-schemas": RemoveDiscriminantsFromSchemas.optional(),
     "path-parameter-order": PathParameterOrder.optional(),
     "resolve-schema-collisions": core.serialization.boolean().optional(),
@@ -37,6 +39,7 @@ export declare namespace BaseApiSettingsSchema {
         "wrap-references-to-nullable-in-optional"?: boolean | null;
         "coerce-optional-schemas-to-nullable"?: boolean | null;
         "group-environments-by-host"?: boolean | null;
+        "multi-server-strategy"?: MultiServerStrategy.Raw | null;
         "remove-discriminants-from-schemas"?: RemoveDiscriminantsFromSchemas.Raw | null;
         "path-parameter-order"?: PathParameterOrder.Raw | null;
         "resolve-schema-collisions"?: boolean | null;

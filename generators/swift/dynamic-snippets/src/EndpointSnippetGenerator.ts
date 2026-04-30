@@ -198,7 +198,7 @@ export class EndpointSnippetGenerator {
             } else {
                 return swift.functionArgument({
                     label: "baseURL",
-                    value: swift.Expression.stringLiteral(snippet.baseURL)
+                    value: swift.Expression.escapedStringLiteral(snippet.baseURL)
                 });
             }
         }
@@ -234,11 +234,11 @@ export class EndpointSnippetGenerator {
                 args.push(
                     swift.functionArgument({
                         label: auth.username.camelCase.unsafeName,
-                        value: swift.Expression.stringLiteral(values.username)
+                        value: swift.Expression.escapedStringLiteral(values.username)
                     }),
                     swift.functionArgument({
                         label: auth.password.camelCase.unsafeName,
-                        value: swift.Expression.stringLiteral(values.password)
+                        value: swift.Expression.escapedStringLiteral(values.password)
                     })
                 );
                 break;
@@ -253,7 +253,7 @@ export class EndpointSnippetGenerator {
                 args.push(
                     swift.functionArgument({
                         label: auth.token.camelCase.unsafeName,
-                        value: swift.Expression.stringLiteral(values.token)
+                        value: swift.Expression.escapedStringLiteral(values.token)
                     })
                 );
                 break;
@@ -415,16 +415,31 @@ export class EndpointSnippetGenerator {
         this.context.errors.unscope();
 
         if (request.body != null) {
-            args.push(
-                swift.functionArgument({
-                    label: "request",
-                    value: this.getInlinedRequestArg({
-                        request,
-                        snippet,
-                        filePropertyInfo
+            if (request.body.type === "referenced") {
+                // The Swift SDK accepts the referenced type directly as the method
+                // parameter (no wrapper struct is generated), so pass the type literal
+                // without wrapping it in .init(body:).
+                args.push(
+                    swift.functionArgument({
+                        label: "request",
+                        value: this.getReferencedRequestBodyPropertyTypeLiteral({
+                            body: request.body.bodyType,
+                            value: snippet.requestBody
+                        })
                     })
-                })
-            );
+                );
+            } else {
+                args.push(
+                    swift.functionArgument({
+                        label: "request",
+                        value: this.getInlinedRequestArg({
+                            request,
+                            snippet,
+                            filePropertyInfo
+                        })
+                    })
+                );
+            }
         }
 
         return args;

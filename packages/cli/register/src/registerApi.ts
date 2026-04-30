@@ -6,7 +6,7 @@ import { createFdrService } from "@fern-api/core";
 import { FdrAPI as FdrCjsSdk } from "@fern-api/fdr-sdk";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
 
 import { AIExampleEnhancerConfig, enhanceExamplesWithAI } from "./ai-example-enhancer/index.js";
 import { PlaygroundConfig } from "./ir-to-fdr-converter/convertAuth.js";
@@ -93,6 +93,8 @@ export async function registerApi({
         context.logger.debug(`Registered API Definition ${response.apiDefinitionId}`);
         return { id: response.apiDefinitionId, ir };
     } catch (error) {
-        return context.failAndThrow("Failed to register API", error);
+        return context.failAndThrow("Failed to register API", error, {
+            code: CliError.Code.NetworkError
+        });
     }
 }

@@ -1,0 +1,6 @@
+- summary: |
+    Bump @fern-api/generator-cli to 0.9.13, which fixes the publish of 0.9.12
+    (autoversion pipeline + @fern-api/replay 0.12.0) by marking @boundaryml/baml
+    as external in the generator-cli CLI bundle so esbuild no longer tries to
+    statically resolve baml's platform-specific native bindings.
+  type: chore

@@ -1,7 +1,7 @@
 import { FernToken } from "@fern-api/auth";
 import { replaceEnvVariables } from "@fern-api/core-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace } from "@fern-api/workspace-loader";
 import { DocsPublishConflictError, publishDocs } from "./publishDocs.js";
 
@@ -35,7 +35,8 @@ export async function runRemoteGenerationForDocsWorkspace({
     skipUpload,
     cliVersion,
     ciSource,
-    deployerAuthor
+    deployerAuthor,
+    loginCommand
 }: {
     organization: string;
     apiWorkspaces: AbstractAPIWorkspace<unknown>[];
@@ -51,6 +52,11 @@ export async function runRemoteGenerationForDocsWorkspace({
     cliVersion?: string;
     ciSource?: CISource;
     deployerAuthor?: { username?: string; email?: string };
+    /**
+     * CLI command to reference in auth-failure hints (e.g. 'fern login' for v1,
+     * 'fern auth login' for CLI v2). Defaults to 'fern login'.
+     */
+    loginCommand?: string;
 }): Promise<string | undefined> {
     // Substitute templated environment variables:
     // If substitute-env-vars is enabled, we'll attempt to read and replace the templated
@@ -66,7 +72,7 @@ export async function runRemoteGenerationForDocsWorkspace({
     docsWorkspace.config = replaceEnvVariables(
         docsWorkspace.config,
         // Wrap in a closure for correct binding of `this` downstream
-        { onError: (e) => context.failAndThrow(e) },
+        { onError: (e) => context.failAndThrow(undefined, e, { code: CliError.Code.EnvironmentError }) },
         { substituteAsEmpty: shouldSubstituteAsEmpty }
     );
 
@@ -75,19 +81,27 @@ export async function runRemoteGenerationForDocsWorkspace({
     const instances = docsWorkspace.config.instances;
 
     if (instances.length === 0) {
-        context.failAndThrow("No instances specified in docs.yml! Cannot register docs.");
+        context.failAndThrow("No instances specified in docs.yml! Cannot register docs.", undefined, {
+            code: CliError.Code.ConfigError
+        });
         return;
     }
 
     if (instances.length > 1 && instanceUrl == null) {
-        context.failAndThrow(`More than one docs instances. Please specify one (e.g. --instance ${instances[0]?.url})`);
+        context.failAndThrow(
+            `More than one docs instances. Please specify one (e.g. --instance ${instances[0]?.url})`,
+            undefined,
+            { code: CliError.Code.ConfigError }
+        );
         return;
     }
 
     const maybeInstance = instances.find((instance) => instance.url === instanceUrl) ?? instances[0];
 
     if (maybeInstance == null) {
-        context.failAndThrow(`No docs instance with url ${instanceUrl}. Failed to register.`);
+        context.failAndThrow(`No docs instance with url ${instanceUrl}. Failed to register.`, undefined, {
+            code: CliError.Code.ConfigError
+        });
         return;
     }
 
@@ -136,7 +150,8 @@ export async function runRemoteGenerationForDocsWorkspace({
                 docsUrl: maybeInstance.url,
                 cliVersion,
                 ciSource,
-                deployerAuthor
+                deployerAuthor,
+                loginCommand
             });
 
         for (let attempt = 0; ; attempt++) {
@@ -150,7 +165,9 @@ export async function runRemoteGenerationForDocsWorkspace({
                 ) {
                     if (error instanceof DocsPublishConflictError) {
                         return context.failAndThrow(
-                            "Another docs publish is currently in progress. Please try again once the other publish is complete."
+                            "Another docs publish is currently in progress. Please try again once the other publish is complete.",
+                            undefined,
+                            { code: CliError.Code.NetworkError }
                         );
                     }
                     throw error;

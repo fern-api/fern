@@ -25,7 +25,8 @@ import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { getSnakeCaseUnsafe } from "@fern-api/ir-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
+
 import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
@@ -51,6 +52,17 @@ interface LibraryNavNode {
     slug: string;
     pageId?: string;
     children?: LibraryNavNode[];
+}
+
+interface DocsTranslationsConfig {
+    defaultLocale: string;
+    translations: string[] | undefined;
+}
+
+// TODO: Remove this shim once the published @fern-api/fdr-sdk type for
+// DocsV1Write.DocsConfig includes the translations field.
+interface DocsConfigWithTranslations extends DocsV1Write.DocsConfig {
+    translations: DocsTranslationsConfig | undefined;
 }
 
 import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter.js";
@@ -246,9 +258,63 @@ export class DocsDefinitionResolver {
     private _parsedDocsConfig: WithoutQuestionMarks<docsYml.ParsedDocsConfiguration> | undefined;
     private get parsedDocsConfig(): WithoutQuestionMarks<docsYml.ParsedDocsConfiguration> {
         if (this._parsedDocsConfig == null) {
-            throw new Error("parsedDocsConfig is not set");
+            throw new CliError({ message: "parsedDocsConfig is not set", code: CliError.Code.InternalError });
         }
         return this._parsedDocsConfig;
+    }
+
+    /**
+     * Returns per-locale translated page content loaded from `translations/<lang>/` directories.
+     * Must be called after `resolve()`.
+     */
+    public getTranslationPages(): Record<string, Record<RelativeFilePath, string>> | undefined {
+        return this._parsedDocsConfig?.translationPages;
+    }
+
+    /**
+     * Returns per-locale translated navigation overlays loaded from
+     * `translations/<lang>/fern/docs.yml` and referenced nav YAML files.
+     * Must be called after `resolve()`.
+     */
+    public getTranslationNavigationOverlays():
+        | Record<string, import("@fern-api/configuration").docsYml.TranslationNavigationOverlay>
+        | undefined {
+        return this._parsedDocsConfig?.translationNavigationOverlays;
+    }
+
+    /**
+     * Returns the map of absolute file paths to uploaded file IDs.
+     * Used by translation processing to rewrite image paths in translated pages.
+     * Must be called after `resolve()`.
+     */
+    public getCollectedFileIds(): ReadonlyMap<AbsoluteFilePath, string> {
+        return this.collectedFileIds;
+    }
+
+    /**
+     * Returns the absolute path to the docs workspace (fern folder).
+     */
+    public getDocsWorkspacePath(): AbsoluteFilePath {
+        return this.docsWorkspace.absoluteFilePath;
+    }
+
+    private getDocsTranslationsConfig(): DocsConfigWithTranslations["translations"] {
+        const translations = this.parsedDocsConfig.translations;
+        if (translations == null || translations.length === 0) {
+            return undefined;
+        }
+
+        const normalizedTranslations = translations.map((t) => docsYml.DocsYmlSchemas.normalizeTranslationConfig(t));
+        const defaultTranslation =
+            normalizedTranslations.find((translation) => translation.default === true) ?? normalizedTranslations[0];
+        if (defaultTranslation == null) {
+            return undefined;
+        }
+
+        return {
+            defaultLocale: defaultTranslation.lang,
+            translations: normalizedTranslations.map((translation) => translation.lang)
+        };
     }
     private collectedFileIds = new Map<AbsoluteFilePath, string>();
     private markdownFilesToFullSlugs: Map<AbsoluteFilePath, string> = new Map();
@@ -416,7 +482,10 @@ export class DocsDefinitionResolver {
                 }
             } catch (error) {
                 this.taskContext.logger.error(`Failed to parse ${relativePath}: ${extractErrorMessage(error)}`);
-                throw error;
+                throw new CliError({
+                    message: `Failed to parse markdown file ${relativePath}: ${extractErrorMessage(error)}`,
+                    code: CliError.Code.ParseError
+                });
             }
         }
         const imageParseTime = performance.now() - imageParseStart;
@@ -751,13 +820,16 @@ export class DocsDefinitionResolver {
                       context7: this.getFileId(this.parsedDocsConfig.context7File)
                   } as DocsV1Write.DocsConfig["integrations"])
                 : undefined;
-        const config: DocsV1Write.DocsConfig = {
+        const config: DocsConfigWithTranslations = {
             aiChatConfig:
                 this.parsedDocsConfig.aiChatConfig != null
                     ? {
                           model: this.parsedDocsConfig.aiChatConfig.model,
                           systemPrompt: this.parsedDocsConfig.aiChatConfig.systemPrompt,
-                          location: this.parsedDocsConfig.aiChatConfig.location,
+                          // Filter out 'discord' which is no longer supported by fdr-sdk
+                          location: this.parsedDocsConfig.aiChatConfig.location?.filter(
+                              (loc): loc is "slack" | "docs" => loc === "slack" || loc === "docs"
+                          ),
                           datasources: this.parsedDocsConfig.aiChatConfig.datasources?.map((ds) => ({
                               url: ds.url,
                               title: ds.title
@@ -804,10 +876,10 @@ export class DocsDefinitionResolver {
             }),
             typographyV2: this.convertDocsTypographyConfiguration(),
             layout: this.parsedDocsConfig.layout,
+            // @ts-expect-error -- BCP 47: Language type widened to string, @fern-api/fdr-sdk not yet updated
             settings: this.parsedDocsConfig.settings,
             css: this.parsedDocsConfig.css,
             js: this.convertJavascriptConfiguration(),
-            // @ts-expect-error - Remove this when the fdr-sdk upgraded to the latest version
             agents:
                 this.parsedDocsConfig.agents != null ||
                 this.parsedDocsConfig.llmsTxtFile != null ||
@@ -826,7 +898,10 @@ export class DocsDefinitionResolver {
                 value: DocsV1Write.Url(footerLink.value)
             })),
             defaultLanguage: this.parsedDocsConfig.defaultLanguage,
+            // @ts-expect-error -- BCP 47: Language[] widened to string[], @fern-api/fdr-sdk not yet updated
             languages: this.parsedDocsConfig.languages,
+
+            translations: this.getDocsTranslationsConfig(),
             analyticsConfig: {
                 ...this.parsedDocsConfig.analyticsConfig,
                 segment: this.parsedDocsConfig.analyticsConfig?.segment,
@@ -879,7 +954,8 @@ export class DocsDefinitionResolver {
                           "page-actions": this.parsedDocsConfig.theme.pageActions,
                           footerNav: this.parsedDocsConfig.theme.footerNav,
                           "language-switcher": this.parsedDocsConfig.theme.languageSwitcher,
-                          "product-switcher": this.parsedDocsConfig.theme.productSwitcher
+                          "product-switcher": this.parsedDocsConfig.theme
+                              .productSwitcher as DocsV1Write.DocsThemeConfig["product-switcher"]
                       }
                     : undefined,
             // deprecated
@@ -912,7 +988,7 @@ export class DocsDefinitionResolver {
         const errorMessage = apiSection.apiName
             ? `Failed to load API Definition '${apiSection.apiName}' referenced in docs.\nA valid API configuration was not found at the path: fern/apis/${apiSection.apiName}.\nLearn more about project structure:\nhttps://buildwithfern.com/learn/docs/getting-started/project-structure#api-definitions`
             : "Failed to load API Definition referenced in docs.\nLearn more about project structure:\nhttps://buildwithfern.com/learn/docs/getting-started/project-structure#api-definitions";
-        throw new Error(errorMessage);
+        throw new CliError({ message: errorMessage, code: CliError.Code.ConfigError });
     }
 
     private getOpenApiWorkspaceForApiSection(apiSection: docsYml.DocsNavigationItem.ApiSection): OSSWorkspace {
@@ -927,7 +1003,7 @@ export class DocsDefinitionResolver {
         const errorMessage = apiSection.apiName
             ? `Failed to load API Definition '${apiSection.apiName}' referenced in docs.\nA valid API configuration was not found at the path: fern/apis/${apiSection.apiName}.\nLearn more about project structure:\nhttps://buildwithfern.com/learn/docs/getting-started/project-structure#api-definitions`
             : "Failed to load API Definition referenced in docs.\nLearn more about project structure:\nhttps://buildwithfern.com/learn/docs/getting-started/project-structure#api-definitions";
-        throw new Error(errorMessage);
+        throw new CliError({ message: errorMessage, code: CliError.Code.ConfigError });
     }
 
     private async toRootNode(): Promise<FernNavigation.V1.RootNode> {
@@ -1035,9 +1111,10 @@ export class DocsDefinitionResolver {
 
         const defaultVersion = versioned.versions[0];
         if (defaultVersion?.hidden === true) {
-            throw new Error(
-                `The default version "${defaultVersion.version}" cannot be hidden. Please set a non-hidden version as the first version in your versions list, or remove the hidden flag from the default version.`
-            );
+            throw new CliError({
+                message: `The default version "${defaultVersion.version}" cannot be hidden. Please set a non-hidden version as the first version in your versions list, or remove the hidden flag from the default version.`,
+                code: CliError.Code.ConfigError
+            });
         }
 
         // Process versions in batches to reduce memory usage for customers with many API versions.
@@ -1469,7 +1546,11 @@ export class DocsDefinitionResolver {
                 ir,
                 {
                     onError: (e) =>
-                        this.taskContext.failAndThrow(`Error substituting environment variables in API spec: ${e}`)
+                        this.taskContext.failAndThrow(
+                            `Error substituting environment variables in API spec: ${e}`,
+                            undefined,
+                            { code: CliError.Code.EnvironmentError }
+                        )
                 },
                 { substituteAsEmpty: false }
             );
@@ -2096,7 +2177,9 @@ export class DocsDefinitionResolver {
         }
         const fileId = this.collectedFileIds.get(filepath);
         if (fileId == null) {
-            return this.taskContext.failAndThrow("Failed to locate file after uploading: " + filepath);
+            return this.taskContext.failAndThrow("Failed to locate file after uploading: " + filepath, undefined, {
+                code: CliError.Code.InternalError
+            });
         }
         return DocsV1Write.FileId(fileId);
     }
@@ -2129,6 +2212,7 @@ export class DocsDefinitionResolver {
                 openAi: this.parsedDocsConfig.pageActions.options.openAi,
                 claude: this.parsedDocsConfig.pageActions.options.claude,
                 cursor: this.parsedDocsConfig.pageActions.options.cursor,
+                claudeCode: this.parsedDocsConfig.pageActions.options.claudeCode,
                 vscode: this.parsedDocsConfig.pageActions.options.vscode,
                 custom: this.parsedDocsConfig.pageActions.options.custom.map((customAction) => ({
                     title: customAction.title,
@@ -2257,17 +2341,17 @@ export class DocsDefinitionResolver {
             "og:image": ogImage,
             "og:logo": ogLogo,
             "twitter:image": twitterImage,
-            "og:background-image": ogBackgroundImage,
+            "og:dynamic:background-image": ogDynamicBackgroundImage,
             ...rest
         } = this.parsedDocsConfig.metadata;
-        // Type assertion needed: og:dynamic and og:background-image are not yet in the
-        // published FDR SDK MetadataConfig type, but FDR accepts them at runtime.
+        // Type assertion needed: og:dynamic and og:dynamic:background-image are not yet
+        // in the published FDR SDK MetadataConfig type, but FDR accepts them at runtime.
         return {
             ...rest,
             "og:image": this.convertFileIdOrUrl(ogImage),
             "og:logo": this.convertFileIdOrUrl(ogLogo),
             "twitter:image": this.convertFileIdOrUrl(twitterImage),
-            "og:background-image": this.convertFileIdOrUrl(ogBackgroundImage)
+            "og:dynamic:background-image": this.convertFileIdOrUrl(ogDynamicBackgroundImage)
         } as DocsV1Write.MetadataConfig;
     }
 
@@ -2282,7 +2366,10 @@ export class DocsDefinitionResolver {
                 value: this.getFileId(value)
             }),
             url: ({ value }) => ({ type: "url", value: DocsV1Write.Url(value) }),
-            _other: () => this.taskContext.failAndThrow("Invalid metadata configuration")
+            _other: () =>
+                this.taskContext.failAndThrow("Invalid metadata configuration", undefined, {
+                    code: CliError.Code.ConfigError
+                })
         });
     }
 

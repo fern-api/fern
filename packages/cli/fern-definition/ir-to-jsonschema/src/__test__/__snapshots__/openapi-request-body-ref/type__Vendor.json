@@ -1,0 +1,74 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "status": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/VendorStatus"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "update_request": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/UpdateVendorRequest"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "id",
+    "name"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "VendorStatus": {
+      "type": "string",
+      "enum": [
+        "ACTIVE",
+        "INACTIVE"
+      ]
+    },
+    "UpdateVendorRequestStatus": {
+      "type": "string",
+      "enum": [
+        "ACTIVE",
+        "INACTIVE"
+      ]
+    },
+    "UpdateVendorRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "status": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/UpdateVendorRequestStatus"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

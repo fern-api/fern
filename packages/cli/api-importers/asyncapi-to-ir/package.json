@@ -33,6 +33,7 @@
   "dependencies": {
     "@fern-api/ir-sdk": "workspace:*",
     "@fern-api/ir-utils": "workspace:*",
+    "@fern-api/task-context": "workspace:*",
     "@fern-api/v3-importer-commons": "workspace:*",
     "lodash-es": "catalog:",
     "openapi-types": "^12.1.3",

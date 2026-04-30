@@ -44,9 +44,9 @@ import {
     UnionTypeDeclaration
 } from "@fern-api/ir-sdk";
 import { getOriginalName, getWireValue } from "@fern-api/ir-utils";
+import { CliError } from "@fern-api/task-context";
 import urlJoin from "url-join";
 import { v4 as uuidv4 } from "uuid";
-
 import { Version } from "./version.js";
 
 interface EndpointWithFilepath extends HttpEndpoint {
@@ -225,7 +225,10 @@ export class DynamicSnippetsConverter {
             return DynamicSnippets.Request.body({ pathParameters, body: undefined });
         }
         if (endpoint.sdkRequest == null) {
-            throw new Error(`Internal error; endpoint "${endpoint.id}" has a request body but no SDK request`);
+            throw new CliError({
+                message: `Internal error; endpoint "${endpoint.id}" has a request body but no SDK request`,
+                code: CliError.Code.InternalError
+            });
         }
         switch (endpoint.sdkRequest.shape.type) {
             case "justRequestBody":
@@ -733,20 +736,12 @@ export class DynamicSnippetsConverter {
         const scheme = auth.schemes[0];
         switch (scheme.type) {
             case "basic": {
-                const basicAuth: DynamicSnippets.BasicAuth & {
-                    usernameOmit?: boolean;
-                    passwordOmit?: boolean;
-                } = {
+                return DynamicSnippets.Auth.basic({
                     username: this.inflateName(scheme.username),
-                    password: this.inflateName(scheme.password)
-                };
-                if (scheme.usernameOmit) {
-                    basicAuth.usernameOmit = scheme.usernameOmit;
-                }
-                if (scheme.passwordOmit) {
-                    basicAuth.passwordOmit = scheme.passwordOmit;
-                }
-                return DynamicSnippets.Auth.basic(basicAuth);
+                    usernameOmit: scheme.usernameOmit,
+                    password: this.inflateName(scheme.password),
+                    passwordOmit: scheme.passwordOmit
+                });
             }
             case "bearer":
                 return DynamicSnippets.Auth.bearer({
@@ -783,16 +778,16 @@ export class DynamicSnippetsConverter {
         switch (scheme.type) {
             case "bearer":
                 return DynamicSnippets.AuthValues.bearer({
-                    token: "<token>"
+                    token: scheme.tokenPlaceholder ?? "<token>"
                 });
             case "basic":
                 return DynamicSnippets.AuthValues.basic({
-                    username: "<username>",
-                    password: "<password>"
+                    username: scheme.usernameOmit ? "" : (scheme.usernamePlaceholder ?? "<username>"),
+                    password: scheme.passwordOmit ? "" : (scheme.passwordPlaceholder ?? "<password>")
                 });
             case "header":
                 return DynamicSnippets.AuthValues.header({
-                    value: "<value>"
+                    value: scheme.headerPlaceholder ?? "<value>"
                 });
             case "oauth":
                 return DynamicSnippets.AuthValues.oauth({
@@ -933,7 +928,7 @@ export class DynamicSnippetsConverter {
                         }))
                     }),
                 _other: () => {
-                    throw new Error("Unknown environments type");
+                    throw new CliError({ message: "Unknown environments type", code: CliError.Code.InternalError });
                 }
             })
         };
@@ -983,10 +978,16 @@ export class DynamicSnippetsConverter {
     private resolveObjectTypeOrThrow(typeId: TypeId): ObjectTypeDeclaration {
         const typeDeclaration = this.ir.types[typeId];
         if (typeDeclaration == null) {
-            throw new Error(`Internal error; type "${typeId}" not found`);
+            throw new CliError({
+                message: `Internal error; type "${typeId}" not found`,
+                code: CliError.Code.InternalError
+            });
         }
         if (typeDeclaration.shape.type !== "object") {
-            throw new Error(`Internal error; type "${typeId}" is not an object`);
+            throw new CliError({
+                message: `Internal error; type "${typeId}" is not an object`,
+                code: CliError.Code.InternalError
+            });
         }
         return typeDeclaration.shape;
     }

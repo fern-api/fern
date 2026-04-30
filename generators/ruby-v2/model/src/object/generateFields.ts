@@ -35,10 +35,6 @@ export function generateFields({
             if (wireValue !== fieldName) {
                 writer.write(`, api_name: "${wireValue}"`);
             }
-            // Only add newline for the last statement to ensure 'end' appears on its own line
-            if (index === properties.length - 1) {
-                writer.newLine();
-            }
         });
     });
 }

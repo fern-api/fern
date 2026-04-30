@@ -1,7 +1,7 @@
 package com.snippets;
 
 import com.seed.serverSentEvents.SeedServerSentEventsClient;
-import com.seed.serverSentEvents.resources.completions.requests.StreamEventsContextProtocolRequest;
+import com.seed.serverSentEvents.resources.completions.requests.StreamEventsDiscriminantInDataRequest;
 
 public class Example9 {
     public static void main(String[] args) {
@@ -9,7 +9,8 @@ public class Example9 {
                 SeedServerSentEventsClient.builder().url("https://api.fern.com").build();
 
         client.completions()
-                .streamEventsContextProtocol(
-                        StreamEventsContextProtocolRequest.builder().query("").build());
+                .streamEventsDiscriminantInData(StreamEventsDiscriminantInDataRequest.builder()
+                        .query("query")
+                        .build());
     }
 }

@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern generate` and `fern automations generate` now render generation progress as a nested
+    hierarchy of API → group → generator tasks in the terminal, so fan-out runs are easier to
+    follow when multiple APIs, groups, and generators are running at once. Behavior is unchanged;
+    only the live task display is different.
+  type: chore

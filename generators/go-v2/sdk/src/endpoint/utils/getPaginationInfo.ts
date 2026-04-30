@@ -304,6 +304,7 @@ function getReadPageResponseBody({
             return getReadPageResponseBodyForOffset({
                 context,
                 pagination,
+                offset: pagination,
                 pageType,
                 responseType
             });
@@ -367,16 +368,23 @@ function getReadPageResponseBodyForCursor({
 function getReadPageResponseBodyForOffset({
     context,
     pagination,
+    offset,
     pageType,
     responseType
 }: {
     context: SdkGeneratorContext;
     pagination: FernIr.Pagination;
+    offset: FernIr.OffsetPagination;
     pageType: go.Type;
     responseType: go.Type;
 }): go.AstNode {
     return go.codeblock((writer) => {
-        writer.writeLine("next += 1");
+        const useItemIndex = offset.step != null && context.customConfig.offsetSemantics === "item-index";
+        if (useItemIndex) {
+            writer.writeLine("next += int(len(results))");
+        } else {
+            writer.writeLine("next += 1");
+        }
         writer.writeNode(getNextResultsSetter({ context, results: pagination.results }));
         writer.write("return ");
         writer.writeNode(

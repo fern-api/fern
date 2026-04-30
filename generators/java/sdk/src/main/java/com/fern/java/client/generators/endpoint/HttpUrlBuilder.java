@@ -22,6 +22,8 @@ import com.fern.ir.model.http.HttpPathPart;
 import com.fern.ir.model.http.HttpService;
 import com.fern.ir.model.http.PathParameter;
 import com.fern.ir.model.http.PathParameterLocation;
+import com.fern.ir.model.http.QueryParameter;
+import com.fern.ir.model.types.Literal;
 import com.fern.ir.model.variables.VariableId;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
@@ -161,9 +163,11 @@ public final class HttpUrlBuilder {
             boolean isOptionalNullable = isTypeNameOptionalNullable(queryParamProperty.poetTypeName());
             boolean isOptional = isJavaOptional || isOptionalNullable;
 
-            // Check if this parameter has a default value
-            Optional<CodeBlock> defaultValue = defaultValueExtractor.extractDefaultValue(
-                    queryParamProperty.objectProperty().getValueType());
+            // Check if this parameter has a default value (clientDefault takes precedence over type-level)
+            Optional<Literal> clientDefault =
+                    findQueryParamClientDefault(queryParamProperty.wireKey().get());
+            Optional<CodeBlock> defaultValue = defaultValueExtractor.extractEffectiveDefault(
+                    queryParamProperty.objectProperty().getValueType(), clientDefault);
 
             if (isOptional) {
                 if (defaultValue.isPresent()) {
@@ -294,22 +298,41 @@ public final class HttpUrlBuilder {
                             + "()";
                 }
                 if (typeNameIsOptional(poetPathParameter.poetParam().type)) {
-                    codeBlock.add(";\n");
-                    CodeBlock paramValue =
-                            PoetTypeNameStringifier.stringify(paramName + ".get()", poetPathParameter.poetParam().type);
+                    // Use extractEffectiveDefault to check type compatibility before using clientDefault
+                    Optional<CodeBlock> pathClientDefault = defaultValueExtractor.extractEffectiveDefault(
+                            poetPathParameter.irParam().getValueType(),
+                            poetPathParameter.irParam().getClientDefault());
 
-                    if (!prefixForNextParam.isEmpty()) {
-                        codeBlock
-                                .beginControlFlow("if ($L.isPresent())", poetPathParameter.poetParam().name)
-                                .addStatement("$L.addPathSegment($S + $L)", httpUrlname, prefixForNextParam, paramValue)
-                                .endControlFlow();
+                    if (pathClientDefault.isPresent()) {
+                        // Use clientDefault as fallback via .orElse()
+                        CodeBlock paramValue = PoetTypeNameStringifier.stringify(
+                                paramName + ".orElse(" + pathClientDefault.get().toString() + ")",
+                                poetPathParameter.poetParam().type);
+
+                        if (!prefixForNextParam.isEmpty()) {
+                            codeBlock.add("\n.addPathSegment($S + $L)", prefixForNextParam, paramValue);
+                        } else {
+                            codeBlock.add("\n.addPathSegment($L)", paramValue);
+                        }
                     } else {
-                        codeBlock
-                                .beginControlFlow("if ($L.isPresent())", poetPathParameter.poetParam().name)
-                                .addStatement("$L.addPathSegment($L)", httpUrlname, paramValue)
-                                .endControlFlow();
+                        codeBlock.add(";\n");
+                        CodeBlock paramValue = PoetTypeNameStringifier.stringify(
+                                paramName + ".get()", poetPathParameter.poetParam().type);
+
+                        if (!prefixForNextParam.isEmpty()) {
+                            codeBlock
+                                    .beginControlFlow("if ($L.isPresent())", poetPathParameter.poetParam().name)
+                                    .addStatement(
+                                            "$L.addPathSegment($S + $L)", httpUrlname, prefixForNextParam, paramValue)
+                                    .endControlFlow();
+                        } else {
+                            codeBlock
+                                    .beginControlFlow("if ($L.isPresent())", poetPathParameter.poetParam().name)
+                                    .addStatement("$L.addPathSegment($L)", httpUrlname, paramValue)
+                                    .endControlFlow();
+                        }
+                        endedWithStatement = true;
                     }
-                    endedWithStatement = true;
                 } else {
                     CodeBlock paramValue =
                             PoetTypeNameStringifier.stringify(paramName, poetPathParameter.poetParam().type);
@@ -375,6 +398,14 @@ public final class HttpUrlBuilder {
             codeBlock.add("\n");
         }
         return endedWithStatement;
+    }
+
+    /** Finds the clientDefault for a query parameter by matching on wire key. */
+    private Optional<Literal> findQueryParamClientDefault(String wireKey) {
+        return httpEndpoint.getQueryParameters().stream()
+                .filter(qp -> NameUtils.getWireValue(qp.getName()).equals(wireKey))
+                .findFirst()
+                .flatMap(QueryParameter::getClientDefault);
     }
 
     private static boolean typeNameIsOptional(TypeName typeName) {

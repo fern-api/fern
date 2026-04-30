@@ -65,6 +65,7 @@ public class Example {
             .build();
 
         client.service().justFile(
+            null,
             JustFileRequest
                 .builder()
                 .build()

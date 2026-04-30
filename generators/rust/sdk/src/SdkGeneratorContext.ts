@@ -1,4 +1,4 @@
-import { GeneratorNotificationService } from "@fern-api/base-generator";
+import { GeneratorNotificationService, GeneratorError } from "@fern-api/base-generator";
 import { AbstractRustGeneratorContext, AsIsFileDefinition, AsIsFiles } from "@fern-api/rust-base";
 import { ModelCustomConfigSchema, ModelGeneratorContext } from "@fern-api/rust-model";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -89,7 +89,7 @@ export class SdkGeneratorContext extends AbstractRustGeneratorContext<SdkCustomC
     public getSubpackageOrThrow(subpackageId: FernIr.SubpackageId): FernIr.Subpackage {
         const subpackage = this.ir.subpackages[subpackageId];
         if (subpackage == null) {
-            throw new Error(`FernIr.Subpackage with id ${subpackageId} not found`);
+            throw GeneratorError.internalError(`FernIr.Subpackage with id ${subpackageId} not found`);
         }
         return subpackage;
     }
@@ -97,7 +97,7 @@ export class SdkGeneratorContext extends AbstractRustGeneratorContext<SdkCustomC
     public getHttpServiceOrThrow(serviceId: FernIr.ServiceId): FernIr.HttpService {
         const service = this.ir.services[serviceId];
         if (service == null) {
-            throw new Error(`Service with id ${serviceId} not found`);
+            throw GeneratorError.internalError(`Service with id ${serviceId} not found`);
         }
         return service;
     }

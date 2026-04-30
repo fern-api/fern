@@ -1,0 +1,6 @@
+- summary: |
+    Fix multi-value query parameter snippets when the example value is already
+    a list, which previously produced uncompilable list-of-list initializers
+    like `[new List<T>() { value }]` in mock server tests, reference docs, and
+    snippets.
+  type: fix

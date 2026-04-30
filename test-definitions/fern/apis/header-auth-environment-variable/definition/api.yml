@@ -7,3 +7,4 @@ auth-schemes:
     type: string
     prefix: test_prefix
     env: HEADER_TOKEN_ENV_VAR
+    placeholder: YOUR_HEADER_VALUE

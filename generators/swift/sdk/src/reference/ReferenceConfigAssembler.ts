@@ -1,4 +1,4 @@
-import { ReferenceConfigBuilder } from "@fern-api/base-generator";
+import { GeneratorError, ReferenceConfigBuilder } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { swift } from "@fern-api/swift-codegen";
 import { DynamicSnippetsGenerator } from "@fern-api/swift-dynamic-snippets";
@@ -46,7 +46,9 @@ export class ReferenceConfigAssembler {
             .map((endpoint) => {
                 const endpointContainer = this.context.getEndpointContainer(endpoint);
                 if (endpointContainer.type === "none") {
-                    throw new Error(`Internal error; missing package or subpackage for endpoint ${endpoint.id}`);
+                    throw GeneratorError.internalError(
+                        `Internal error; missing package or subpackage for endpoint ${endpoint.id}`
+                    );
                 }
                 const rootClientSymbol = this.context.project.nameRegistry.getRootClientSymbolOrThrow();
                 const clientGeneratorContext = new ClientGeneratorContext({
@@ -126,7 +128,9 @@ export class ReferenceConfigAssembler {
     private getEndpointFilepath(endpoint: FernIr.HttpEndpoint): string {
         const endpointContainer = this.context.getEndpointContainer(endpoint);
         if (endpointContainer.type === "none") {
-            throw new Error(`Internal error; missing package or subpackage for endpoint ${endpoint.id}`);
+            throw GeneratorError.internalError(
+                `Internal error; missing package or subpackage for endpoint ${endpoint.id}`
+            );
         } else if (endpointContainer.type === "root-package") {
             const rootClientSymbol = this.context.project.nameRegistry.getRootClientSymbolOrThrow();
             return `/${this.context.project.sourcesDirectory}/${rootClientSymbol.name}.swift`;

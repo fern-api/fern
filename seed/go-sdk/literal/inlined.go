@@ -41,7 +41,7 @@ Query string`json:"query" url:"-"`
 Temperature *float64`json:"temperature,omitempty" url:"-"`
 AliasedContext SomeAliasedLiteral`json:"aliasedContext" url:"-"`
 MaybeContext *SomeAliasedLiteral`json:"maybeContext,omitempty" url:"-"`
-ObjectWithLiteral *AtopLevelLiteral`json:"objectWithLiteral" url:"-"`
+ObjectWithLiteral *ATopLevelLiteral`json:"objectWithLiteral" url:"-"`
 prompt string
 stream bool
 
@@ -101,7 +101,7 @@ func (s *SendLiteralsInlinedRequest) SetMaybeContext(maybeContext *SomeAliasedLi
 
 // SetObjectWithLiteral sets the ObjectWithLiteral field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SendLiteralsInlinedRequest) SetObjectWithLiteral(objectWithLiteral *AtopLevelLiteral) {
+func (s *SendLiteralsInlinedRequest) SetObjectWithLiteral(objectWithLiteral *ATopLevelLiteral) {
 	s.ObjectWithLiteral = objectWithLiteral
 	s.require(sendLiteralsInlinedRequestFieldObjectWithLiteral)
 }
@@ -133,7 +133,7 @@ explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
 return json.Marshal(explicitMarshaler)
 }
 
-type AnestedLiteral struct {
+type ANestedLiteral struct {
 
 // Private bitmask of fields set to an explicit value and therefore not to be omitted
 explicitFields *big.Int `json:"-" url:"-"`
@@ -143,26 +143,26 @@ extraProperties map[string]interface{}
 rawJSON json.RawMessage
 }
 
-func (a *AnestedLiteral) MyLiteral()string{
+func (a *ANestedLiteral) MyLiteral()string{
 return a.myLiteral
 }
 
-func (a *AnestedLiteral) GetExtraProperties() map[string]interface{} {
+func (a *ANestedLiteral) GetExtraProperties() map[string]interface{} {
 if a == nil {
 return nil
 }
 return a.extraProperties
 }
 
-func (a *AnestedLiteral) require(field *big.Int) {
+func (a *ANestedLiteral) require(field *big.Int) {
 	if a.explicitFields == nil {
 		a.explicitFields = big.NewInt(0)
 	}
 	a.explicitFields.Or(a.explicitFields, field)
 }
 
-func (a *AnestedLiteral) UnmarshalJSON(data []byte) error {
-type embed AnestedLiteral
+func (a *ANestedLiteral) UnmarshalJSON(data []byte) error {
+type embed ANestedLiteral
 var unmarshaler = struct{
 embed
 MyLiteral string `json:"myLiteral"`
@@ -172,7 +172,7 @@ embed: embed(*a),
 if err := json.Unmarshal(data, &unmarshaler); err != nil {
 return err
 }
-*a = AnestedLiteral(unmarshaler.embed)
+*a = ANestedLiteral(unmarshaler.embed)
 if unmarshaler.MyLiteral!= "How super cool" {
 return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", a, "How super cool", unmarshaler.MyLiteral)
 }
@@ -186,8 +186,8 @@ a.rawJSON = json.RawMessage(data)
 return nil
 }
 
-func (a *AnestedLiteral) MarshalJSON() ([]byte, error) {
-type embed AnestedLiteral
+func (a *ANestedLiteral) MarshalJSON() ([]byte, error) {
+type embed ANestedLiteral
 var marshaler = struct{
 embed
 MyLiteral string `json:"myLiteral"`
@@ -199,7 +199,7 @@ explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
 return json.Marshal(explicitMarshaler)
 }
 
-func (a *AnestedLiteral) String() string {
+func (a *ANestedLiteral) String() string {
 if a == nil {
 return "<nil>"
 }
@@ -215,11 +215,11 @@ return fmt.Sprintf("%#v", a)
 }
 
 var (
-	atopLevelLiteralFieldNestedLiteral = big.NewInt(1 << 0)
+	aTopLevelLiteralFieldNestedLiteral = big.NewInt(1 << 0)
 )
 
-type AtopLevelLiteral struct {
-NestedLiteral *AnestedLiteral`json:"nestedLiteral" url:"nestedLiteral"`
+type ATopLevelLiteral struct {
+NestedLiteral *ANestedLiteral`json:"nestedLiteral" url:"nestedLiteral"`
 
 // Private bitmask of fields set to an explicit value and therefore not to be omitted
 explicitFields *big.Int `json:"-" url:"-"`
@@ -228,21 +228,21 @@ extraProperties map[string]interface{}
 rawJSON json.RawMessage
 }
 
-func (a *AtopLevelLiteral) GetNestedLiteral()*AnestedLiteral {
+func (a *ATopLevelLiteral) GetNestedLiteral()*ANestedLiteral {
 if a == nil {
 return nil
 }
 return a.NestedLiteral
 }
 
-func (a *AtopLevelLiteral) GetExtraProperties() map[string]interface{} {
+func (a *ATopLevelLiteral) GetExtraProperties() map[string]interface{} {
 if a == nil {
 return nil
 }
 return a.extraProperties
 }
 
-func (a *AtopLevelLiteral) require(field *big.Int) {
+func (a *ATopLevelLiteral) require(field *big.Int) {
 	if a.explicitFields == nil {
 		a.explicitFields = big.NewInt(0)
 	}
@@ -251,18 +251,18 @@ func (a *AtopLevelLiteral) require(field *big.Int) {
 
 // SetNestedLiteral sets the NestedLiteral field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (a *AtopLevelLiteral) SetNestedLiteral(nestedLiteral *AnestedLiteral) {
+func (a *ATopLevelLiteral) SetNestedLiteral(nestedLiteral *ANestedLiteral) {
 	a.NestedLiteral = nestedLiteral
-	a.require(atopLevelLiteralFieldNestedLiteral)
+	a.require(aTopLevelLiteralFieldNestedLiteral)
 }
 
-func (a *AtopLevelLiteral) UnmarshalJSON(data []byte) error {
-type unmarshaler AtopLevelLiteral
+func (a *ATopLevelLiteral) UnmarshalJSON(data []byte) error {
+type unmarshaler ATopLevelLiteral
 var value unmarshaler
 if err := json.Unmarshal(data, &value); err != nil {
 return err
 }
-*a = AtopLevelLiteral(value)
+*a = ATopLevelLiteral(value)
 extraProperties, err := internal.ExtractExtraProperties(data, *a)
 if err != nil {
 return err
@@ -272,8 +272,8 @@ a.rawJSON = json.RawMessage(data)
 return nil
 }
 
-func (a *AtopLevelLiteral) MarshalJSON() ([]byte, error) {
-type embed AtopLevelLiteral
+func (a *ATopLevelLiteral) MarshalJSON() ([]byte, error) {
+type embed ATopLevelLiteral
 var marshaler = struct{
 embed
 }{
@@ -283,7 +283,7 @@ explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
 return json.Marshal(explicitMarshaler)
 }
 
-func (a *AtopLevelLiteral) String() string {
+func (a *ATopLevelLiteral) String() string {
 if a == nil {
 return "<nil>"
 }

@@ -2,6 +2,7 @@ import { getOriginalName, getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { FileContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
+import { getClientDefaultValue } from "./isLiteralHeader.js";
 import {
     REQUEST_OPTIONS_ADDITIONAL_QUERY_PARAMETERS_PROPERTY_NAME,
     REQUEST_OPTIONS_PARAMETER_NAME
@@ -102,8 +103,47 @@ export class GeneratedQueryParams {
             context
         });
 
+        // If clientDefault is set, add a fallback: value ?? "clientDefault"
+        // Skip when the type is nullable — explicit null means "don't send the parameter",
+        // and ?? would replace null with the clientDefault, preventing intentional omission.
+        const clientDefaultVal = getClientDefaultValue(queryParameter.clientDefault);
+
         if (!queryParameter.allowMultiple) {
-            return scalarExpression;
+            const scalarBranch =
+                clientDefaultVal != null && !typeContainsNullable(queryParameter.valueType, context)
+                    ? ts.factory.createBinaryExpression(
+                          scalarExpression,
+                          ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                          ts.factory.createStringLiteral(clientDefaultVal.toString())
+                      )
+                    : scalarExpression;
+
+            // Emit Array.isArray so list variants expand as ?key=a&key=b rather than a JSON blob.
+            const unionTypeRef = this.getUndiscriminatedUnionType(queryParameter.valueType, context);
+            if (unionTypeRef != null) {
+                const arrayExpression = this.getArrayValueExpression({
+                    queryParameter,
+                    referenceToQueryParameter,
+                    listItemType: unionTypeRef,
+                    context
+                });
+                return ts.factory.createConditionalExpression(
+                    ts.factory.createCallExpression(
+                        ts.factory.createPropertyAccessExpression(
+                            ts.factory.createIdentifier("Array"),
+                            ts.factory.createIdentifier("isArray")
+                        ),
+                        undefined,
+                        [referenceToQueryParameter]
+                    ),
+                    ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                    arrayExpression,
+                    ts.factory.createToken(ts.SyntaxKind.ColonToken),
+                    scalarBranch
+                );
+            }
+
+            return scalarBranch;
         }
 
         const arrayExpression = this.getArrayValueExpression({
@@ -113,8 +153,18 @@ export class GeneratedQueryParams {
             context
         });
 
+        // For allowMultiple params, apply clientDefault fallback to the scalar branch
+        const scalarWithDefault =
+            clientDefaultVal != null && !typeContainsNullable(queryParameter.valueType, context)
+                ? ts.factory.createBinaryExpression(
+                      scalarExpression,
+                      ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                      ts.factory.createStringLiteral(clientDefaultVal.toString())
+                  )
+                : scalarExpression;
+
         if (!needsArrayCheck) {
-            return scalarExpression;
+            return scalarWithDefault;
         }
 
         return ts.factory.createConditionalExpression(
@@ -129,7 +179,7 @@ export class GeneratedQueryParams {
             ts.factory.createToken(ts.SyntaxKind.QuestionToken),
             arrayExpression,
             ts.factory.createToken(ts.SyntaxKind.ColonToken),
-            scalarExpression
+            scalarWithDefault
         );
     }
 
@@ -160,7 +210,7 @@ export class GeneratedQueryParams {
                         breadcrumbsPrefix: ["request", paramName],
                         omitUndefined: context.omitUndefined
                     });
-                if (this.isOptional(queryParameter.valueType)) {
+                if (this.isOptional(queryParameter.valueType) || queryParameter.clientDefault != null) {
                     return ts.factory.createConditionalExpression(
                         ts.factory.createBinaryExpression(
                             referenceToQueryParameter,
@@ -282,52 +332,51 @@ export class GeneratedQueryParams {
      * Non-comma params are added in bulk via `.addMany()`, then comma-style params
      * override their keys individually via `.add(..., { style: "comma" })`.
      */
-    public getQueryStringExpression(context: FileContext): ts.Expression | undefined {
-        if (this.queryParameters == null || this.queryParameters.length === 0) {
-            return undefined;
-        }
-
+    public getQueryStringExpression(context: FileContext): ts.Expression {
         const additionalQueryParams = ts.factory.createPropertyAccessChain(
             ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
             ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
             ts.factory.createIdentifier(REQUEST_OPTIONS_ADDITIONAL_QUERY_PARAMETERS_PROPERTY_NAME)
         );
 
-        const commaParams = this.queryParameters.filter((qp) => qp.explode === false);
+        const hasDefinedParams = this.queryParameters != null && this.queryParameters.length > 0;
+        const commaParams = hasDefinedParams ? (this.queryParameters ?? []).filter((qp) => qp.explode === false) : [];
 
         // core.url.queryBuilder()
         let chain: ts.Expression = context.coreUtilities.urlUtils.queryBuilder._invoke();
 
-        // .addMany(_queryParams) — adds all params with default "repeat" format
-        chain = ts.factory.createCallExpression(
-            ts.factory.createPropertyAccessExpression(chain, ts.factory.createIdentifier("addMany")),
-            undefined,
-            [ts.factory.createIdentifier(GeneratedQueryParams.QUERY_PARAMS_VARIABLE_NAME)]
-        );
-
-        // Override comma-style params individually
-        for (const queryParameter of commaParams) {
-            const wireValue = getWireValue(queryParameter.name);
-
-            const valueRef = ts.factory.createElementAccessExpression(
-                ts.factory.createIdentifier(GeneratedQueryParams.QUERY_PARAMS_VARIABLE_NAME),
-                ts.factory.createStringLiteral(wireValue)
-            );
-
+        if (hasDefinedParams) {
+            // .addMany(_queryParams) — adds all params with default "repeat" format
             chain = ts.factory.createCallExpression(
-                ts.factory.createPropertyAccessExpression(chain, ts.factory.createIdentifier("add")),
+                ts.factory.createPropertyAccessExpression(chain, ts.factory.createIdentifier("addMany")),
                 undefined,
-                [
-                    ts.factory.createStringLiteral(wireValue),
-                    valueRef,
-                    ts.factory.createObjectLiteralExpression([
-                        ts.factory.createPropertyAssignment(
-                            ts.factory.createIdentifier("style"),
-                            ts.factory.createStringLiteral("comma")
-                        )
-                    ])
-                ]
+                [ts.factory.createIdentifier(GeneratedQueryParams.QUERY_PARAMS_VARIABLE_NAME)]
             );
+
+            // Override comma-style params individually
+            for (const queryParameter of commaParams) {
+                const wireValue = getWireValue(queryParameter.name);
+
+                const valueRef = ts.factory.createElementAccessExpression(
+                    ts.factory.createIdentifier(GeneratedQueryParams.QUERY_PARAMS_VARIABLE_NAME),
+                    ts.factory.createStringLiteral(wireValue)
+                );
+
+                chain = ts.factory.createCallExpression(
+                    ts.factory.createPropertyAccessExpression(chain, ts.factory.createIdentifier("add")),
+                    undefined,
+                    [
+                        ts.factory.createStringLiteral(wireValue),
+                        valueRef,
+                        ts.factory.createObjectLiteralExpression([
+                            ts.factory.createPropertyAssignment(
+                                ts.factory.createIdentifier("style"),
+                                ts.factory.createStringLiteral("comma")
+                            )
+                        ])
+                    ]
+                );
+            }
         }
 
         // .mergeAdditional(requestOptions?.queryParams)
@@ -345,27 +394,6 @@ export class GeneratedQueryParams {
         );
 
         return chain;
-    }
-
-    public getReferenceTo(): ts.Expression | undefined {
-        const getRequestOptionsAdditionalQueryParameters = ts.factory.createPropertyAccessChain(
-            ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
-            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-            ts.factory.createIdentifier(REQUEST_OPTIONS_ADDITIONAL_QUERY_PARAMETERS_PROPERTY_NAME)
-        );
-        if (this.queryParameters != null && this.queryParameters.length > 0) {
-            return ts.factory.createObjectLiteralExpression(
-                [
-                    ts.factory.createSpreadAssignment(
-                        ts.factory.createIdentifier(GeneratedQueryParams.QUERY_PARAMS_VARIABLE_NAME)
-                    ),
-                    ts.factory.createSpreadAssignment(getRequestOptionsAdditionalQueryParameters)
-                ],
-                false
-            );
-        } else {
-            return getRequestOptionsAdditionalQueryParameters;
-        }
     }
 
     private getPrimitiveType(
@@ -426,6 +454,35 @@ export class GeneratedQueryParams {
         return undefined;
     }
 
+    private getUndiscriminatedUnionType(
+        typeReference: FernIr.TypeReference,
+        context: FileContext
+    ): FernIr.TypeReference | undefined {
+        switch (typeReference.type) {
+            case "named":
+                {
+                    const typeDeclaration = context.type.getTypeDeclaration(typeReference);
+                    switch (typeDeclaration.shape.type) {
+                        case "undiscriminatedUnion":
+                            return typeReference;
+                        case "alias": {
+                            return this.getUndiscriminatedUnionType(typeDeclaration.shape.aliasOf, context);
+                        }
+                    }
+                }
+                break;
+            case "container": {
+                switch (typeReference.container.type) {
+                    case "optional":
+                        return this.getUndiscriminatedUnionType(typeReference.container.optional, context);
+                    case "nullable":
+                        return this.getUndiscriminatedUnionType(typeReference.container.nullable, context);
+                }
+            }
+        }
+        return undefined;
+    }
+
     private isOptional(typeReference: FernIr.TypeReference): boolean {
         if (typeReference.type === "container" && typeReference.container.type === "optional") {
             return true;
@@ -476,6 +533,29 @@ function primitiveTypeNeedsStringify(primitiveType: FernIr.PrimitiveType): boole
         case "DATE_TIME":
         case "DATE_TIME_RFC_2822":
             return true;
+        default:
+            return false;
+    }
+}
+
+function typeContainsNullable(type: FernIr.TypeReference, context: FileContext): boolean {
+    switch (type.type) {
+        case "container":
+            switch (type.container.type) {
+                case "nullable":
+                    return true;
+                case "optional":
+                    return typeContainsNullable(type.container.optional, context);
+                default:
+                    return false;
+            }
+        case "named": {
+            const declaration = context.type.getTypeDeclaration(type);
+            if (declaration.shape.type === "alias") {
+                return typeContainsNullable(declaration.shape.aliasOf, context);
+            }
+            return false;
+        }
         default:
             return false;
     }

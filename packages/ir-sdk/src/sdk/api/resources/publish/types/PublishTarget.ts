@@ -7,7 +7,8 @@ export type PublishTarget =
     | FernIr.PublishTarget.Npm
     | FernIr.PublishTarget.Maven
     | FernIr.PublishTarget.Pypi
-    | FernIr.PublishTarget.Crates;
+    | FernIr.PublishTarget.Crates
+    | FernIr.PublishTarget.Go;
 
 export namespace PublishTarget {
     export interface Postman extends FernIr.PostmanPublishTarget, _Utils {
@@ -30,6 +31,10 @@ export namespace PublishTarget {
         type: "crates";
     }
 
+    export interface Go extends FernIr.GoPublishTarget, _Utils {
+        type: "go";
+    }
+
     export interface _Utils {
         _visit: <_Result>(visitor: FernIr.PublishTarget._Visitor<_Result>) => _Result;
     }
@@ -40,6 +45,7 @@ export namespace PublishTarget {
         maven: (value: FernIr.MavenPublishTarget) => _Result;
         pypi: (value: FernIr.PypiPublishTarget) => _Result;
         crates: (value: FernIr.CratesPublishTarget) => _Result;
+        go: (value: FernIr.GoPublishTarget) => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
@@ -110,6 +116,16 @@ export const PublishTarget = {
         };
     },
 
+    go: (value: FernIr.GoPublishTarget): FernIr.PublishTarget.Go => {
+        return {
+            ...value,
+            type: "go",
+            _visit: function <_Result>(this: FernIr.PublishTarget.Go, visitor: FernIr.PublishTarget._Visitor<_Result>) {
+                return FernIr.PublishTarget._visit(this, visitor);
+            },
+        };
+    },
+
     _visit: <_Result>(value: FernIr.PublishTarget, visitor: FernIr.PublishTarget._Visitor<_Result>): _Result => {
         switch (value.type) {
             case "postman":
@@ -122,6 +138,8 @@ export const PublishTarget = {
                 return visitor.pypi(value);
             case "crates":
                 return visitor.crates(value);
+            case "go":
+                return visitor.go(value);
             default:
                 return visitor._other(value);
         }

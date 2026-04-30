@@ -32,7 +32,7 @@ import {
     WebhookTimestampFormat
 } from "@fern-api/ir-sdk";
 import { IdGenerator, isReferencedWebhookPayloadSchema } from "@fern-api/ir-utils";
-
+import { CliError } from "@fern-api/task-context";
 import { FernFileContext } from "../FernFileContext.js";
 import { ExampleResolver } from "../resolvers/ExampleResolver.js";
 import { TypeResolver } from "../resolvers/TypeResolver.js";
@@ -200,7 +200,10 @@ function convertWebhookExamples({
         }));
     }
     if (!isPlainObject(webhook.payload)) {
-        throw new Error(`Example webhook payload is not an object. Got: ${JSON.stringify(webhook.payload)}`);
+        throw new CliError({
+            message: `Example webhook payload is not an object. Got: ${JSON.stringify(webhook.payload)}`,
+            code: CliError.Code.ValidationError
+        });
     }
     // The payload example is a simple object of key, value pairs, so we format the example as
     // a map<string, unknown> for simplicity. If we ever add support for webhooks in the generated

@@ -6,8 +6,10 @@ auth-schemes:
     username:
       name: username
       env: USERNAME
+      placeholder: YOUR_USERNAME
     password:
       name: accessToken
       env: PASSWORD
+      placeholder: YOUR_PASSWORD
 error-discrimination:
   strategy: status-code

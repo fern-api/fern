@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix dynamic snippet generator to emit placeholder auth values when snippet
+    requests omit auth for endpoints that require bearer, OAuth, basic, or header
+    authentication. Previously the generated constructor call was missing the
+    required auth parameter, causing phpstan failures.
+  type: fix

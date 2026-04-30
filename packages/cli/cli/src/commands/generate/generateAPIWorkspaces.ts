@@ -1,15 +1,20 @@
 import { createOrganizationIfDoesNotExist, FernToken } from "@fern-api/auth";
-import { generatorsYml } from "@fern-api/configuration-loader";
 import { ContainerRunner, Values } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
 import { Project } from "@fern-api/project-loader";
+import type { AutomationRunOptions } from "@fern-api/remote-workspace-runner";
 import { CliError } from "@fern-api/task-context";
+import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { CliContext } from "../../cli-context/CliContext.js";
 import { PREVIEW_DIRECTORY } from "../../constants.js";
 import { checkOutputDirectory } from "./checkOutputDirectory.js";
+import { expandGroupFilter } from "./expandGroupFilter.js";
 import { filterGenerators } from "./filterGenerators.js";
 import { generateWorkspace } from "./generateAPIWorkspace.js";
+import { resolveGroupsForWorkspace } from "./resolveGroupsForWorkspace.js";
+import { resolvePosthogCommandLabel } from "./resolvePosthogCommandLabel.js";
+import { shouldPreflightGenerator } from "./shouldPreflightGenerator.js";
 
 export const GenerationMode = {
     PullRequest: "pull-request"
@@ -21,7 +26,7 @@ export async function generateAPIWorkspaces({
     project,
     cliContext,
     version,
-    groupName,
+    groupNames,
     generatorName,
     generatorIndex,
     shouldLogS3Url,
@@ -41,12 +46,15 @@ export async function generateAPIWorkspaces({
     retryRateLimited,
     requireEnvVars,
     automationMode,
-    autoMerge
+    autoMerge,
+    skipIfNoDiff,
+    automation
 }: {
     project: Project;
     cliContext: CliContext;
     version: string | undefined;
-    groupName: string | undefined;
+    /** One or more `--group` values. `undefined` means no `--group` was passed. */
+    groupNames: string[] | undefined;
     generatorName: string | undefined;
     /** Index-based generator targeting (0-based). Used by `fern automations generate --generator 0`. */
     generatorIndex: number | undefined;
@@ -68,6 +76,11 @@ export async function generateAPIWorkspaces({
     requireEnvVars: boolean;
     automationMode?: boolean;
     autoMerge?: boolean;
+    skipIfNoDiff?: boolean;
+    /**
+     * When provided, this call runs in fan-out automation mode (see {@link AutomationRunOptions}).
+     */
+    automation?: AutomationRunOptions;
 }): Promise<void> {
     let token: FernToken | undefined = undefined;
 
@@ -87,63 +100,43 @@ export async function generateAPIWorkspaces({
         token = currentToken;
     }
 
-    for (const workspace of project.apiWorkspaces) {
-        const resolvedGroupNames = resolveGroupNamesForWorkspace(groupName, workspace.generatorsConfiguration);
-        for (const group of workspace.generatorsConfiguration?.groups.filter(
-            (group) => resolvedGroupNames == null || resolvedGroupNames.includes(group.groupName)
-        ) ?? []) {
-            const filterResult = filterGenerators({
-                generators: group.generators,
-                generatorIndex,
-                generatorName,
-                groupName: group.groupName
-            });
-            if (!filterResult.ok) {
-                continue;
-            }
-            for (const generator of filterResult.generators) {
-                const { shouldProceed } = await checkOutputDirectory(
-                    generator.absolutePathToLocalOutput,
-                    cliContext,
-                    force
-                );
-                if (!shouldProceed) {
-                    cliContext.failAndThrow("Generation cancelled", undefined, { code: CliError.Code.ConfigError });
-                }
-            }
-        }
-    }
+    await confirmOutputDirectoriesForEligibleGenerators({
+        project,
+        groupNames,
+        generatorName,
+        generatorIndex,
+        automation,
+        cliContext,
+        force
+    });
 
     cliContext.instrumentPostHogEvent({
         orgId: project.config.organization,
-        command: "fern generate",
+        command: resolvePosthogCommandLabel(automation),
         properties: {
-            workspaces: project.apiWorkspaces.map((workspace) => {
-                const resolvedGroupNames = resolveGroupNamesForWorkspace(groupName, workspace.generatorsConfiguration);
-                return {
-                    name: workspace.workspaceName,
-                    group: groupName,
-                    generators: workspace.generatorsConfiguration?.groups
-                        .filter((group) => resolvedGroupNames == null || resolvedGroupNames.includes(group.groupName))
-                        .map((group) => {
-                            return group.generators
-                                .filter((generator) => generatorName == null || generator.name === generatorName)
-                                .map((generator) => {
-                                    return {
-                                        name: generator.name,
-                                        version: generator.version,
-                                        outputMode: generator.outputMode.type,
-                                        config: generator.config
-                                    };
-                                });
-                        })
-                };
-            })
+            workspaces: buildPosthogWorkspaces({ project, groupNames, generatorName })
         }
+    });
+
+    // Pre-flight: resolve groups for every selected workspace up front. If any workspace is
+    // misconfigured for this invocation (e.g. `--group foo` targets a group that doesn't exist
+    // in one of the `--api`-selected workspaces, or no `--group` was passed and one workspace
+    // lacks a `default-group`), `resolveGroupsOrFail` throws before we start any generation.
+    // We keep the resolved names so `generateWorkspace` doesn't need to re-run the resolver
+    // (and re-log "Using default group '…' from generators.yml").
+    const resolvedGroupNamesByWorkspace = await resolveGroupsForAllWorkspaces({
+        project,
+        groupNames,
+        automation,
+        cliContext
     });
 
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
+            const resolvedGroupNames = resolvedGroupNamesByWorkspace.get(workspace);
+            // Workspaces skipped by the pre-flight (no generators.yml or no configured groups)
+            // still need to run through `generateWorkspace` so the existing warning paths fire.
+            // An undefined entry means "skipped"; an empty array would mean "resolved to nothing".
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 const absolutePathToPreview = preview
                     ? outputDir != null
@@ -161,7 +154,7 @@ export async function generateAPIWorkspaces({
                     projectConfig: project.config,
                     context,
                     version,
-                    groupName,
+                    resolvedGroupNames: resolvedGroupNames ?? [],
                     generatorName,
                     generatorIndex,
                     shouldLogS3Url,
@@ -180,7 +173,9 @@ export async function generateAPIWorkspaces({
                     retryRateLimited,
                     requireEnvVars,
                     automationMode,
-                    autoMerge
+                    autoMerge,
+                    skipIfNoDiff,
+                    automation
                 });
             });
         })
@@ -188,28 +183,129 @@ export async function generateAPIWorkspaces({
 }
 
 /**
- * Resolves a group name to a list of group names, handling aliases.
- * Returns null if no group name is specified (meaning all groups should be included).
- * Returns the resolved list of group names if a group name or alias is specified.
+ * Pre-flight pass that resolves (and validates) the group list for every workspace the user
+ * selected via `--api`. Any misconfiguration surfaces here — before generation starts — via
+ * {@link resolveGroupsOrFail}'s `failAndThrow`, matching today's error rendering (workspace-
+ * prefixed, same message text).
+ *
+ * Skips workspaces that have no `generators.yml` or no configured groups; those hit the
+ * corresponding warn-and-return paths inside {@link generateWorkspace}.
  */
-function resolveGroupNamesForWorkspace(
-    groupName: string | undefined,
-    generatorsConfiguration: generatorsYml.GeneratorsConfiguration | undefined
-): string[] | null {
-    if (groupName == null) {
-        return null; // No filter - include all groups
-    }
+async function resolveGroupsForAllWorkspaces({
+    project,
+    groupNames,
+    automation,
+    cliContext
+}: {
+    project: Project;
+    groupNames: string[] | undefined;
+    automation: AutomationRunOptions | undefined;
+    cliContext: CliContext;
+}): Promise<Map<AbstractAPIWorkspace<unknown>, string[]>> {
+    const resolvedGroupNamesByWorkspace = new Map<AbstractAPIWorkspace<unknown>, string[]>();
+    await Promise.all(
+        project.apiWorkspaces.map(async (workspace) => {
+            await cliContext.runTaskForWorkspace(workspace, async (context) => {
+                const resolved = resolveGroupsForWorkspace({
+                    workspace,
+                    groupNames,
+                    isAutomation: automation != null,
+                    context
+                });
+                if (resolved != null) {
+                    resolvedGroupNamesByWorkspace.set(workspace, resolved);
+                }
+            });
+        })
+    );
+    return resolvedGroupNamesByWorkspace;
+}
 
-    if (generatorsConfiguration == null) {
-        return [groupName]; // No configuration - just use the group name as-is
+/**
+ * Walks the project's generators and prompts the user to confirm overwriting any local-file-system
+ * output directories that already exist. Skips generators that wouldn't run anyway (per
+ * {@link shouldPreflightGenerator}) to avoid noise when fanning out in automation mode.
+ *
+ * Throws via `cliContext.failAndThrow` if the user declines a prompt.
+ */
+async function confirmOutputDirectoriesForEligibleGenerators({
+    project,
+    groupNames,
+    generatorName,
+    generatorIndex,
+    automation,
+    cliContext,
+    force
+}: {
+    project: Project;
+    groupNames: string[] | undefined;
+    generatorName: string | undefined;
+    generatorIndex: number | undefined;
+    automation: AutomationRunOptions | undefined;
+    cliContext: CliContext;
+    force: boolean;
+}): Promise<void> {
+    for (const workspace of project.apiWorkspaces) {
+        const resolvedGroupNames = expandGroupFilter(groupNames, workspace.generatorsConfiguration);
+        const rootAutorelease = workspace.generatorsConfiguration?.rawConfiguration.autorelease;
+        const groupsInScope =
+            workspace.generatorsConfiguration?.groups.filter(
+                (group) => resolvedGroupNames == null || resolvedGroupNames.includes(group.groupName)
+            ) ?? [];
+        for (const group of groupsInScope) {
+            const filterResult = filterGenerators({
+                generators: group.generators,
+                generatorIndex,
+                generatorName,
+                groupName: group.groupName
+            });
+            if (!filterResult.ok) {
+                continue;
+            }
+            for (const generator of filterResult.generators) {
+                if (!shouldPreflightGenerator({ generator, rootAutorelease, automation })) {
+                    continue;
+                }
+                const { shouldProceed } = await checkOutputDirectory(
+                    generator.absolutePathToLocalOutput,
+                    cliContext,
+                    force
+                );
+                if (!shouldProceed) {
+                    cliContext.failAndThrow("Generation cancelled", undefined, { code: CliError.Code.ConfigError });
+                }
+            }
+        }
     }
+}
 
-    // Check if it's an alias
-    const aliasGroups = generatorsConfiguration.groupAliases[groupName];
-    if (aliasGroups != null) {
-        return aliasGroups;
-    }
-
-    // Not an alias - return as single group
-    return [groupName];
+/** Builds the `workspaces` array for the posthog event, honoring `--group` / `--generator` filters. */
+function buildPosthogWorkspaces({
+    project,
+    groupNames,
+    generatorName
+}: {
+    project: Project;
+    groupNames: string[] | undefined;
+    generatorName: string | undefined;
+}) {
+    return project.apiWorkspaces.map((workspace) => {
+        const resolvedGroupNames = expandGroupFilter(groupNames, workspace.generatorsConfiguration);
+        return {
+            name: workspace.workspaceName,
+            group: groupNames != null && groupNames.length === 1 ? groupNames[0] : groupNames,
+            generators: workspace.generatorsConfiguration?.groups
+                .filter((group) => resolvedGroupNames == null || resolvedGroupNames.includes(group.groupName))
+                .map((group) =>
+                    group.generators
+                        .filter((generator) => generatorName == null || generator.name === generatorName)
+                        .map((generator) => ({
+                            name: generator.name,
+                            version: generator.version,
+                            outputMode: generator.outputMode.type,
+                            config: generator.config
+                        }))
+                )
+        };
+    });
 }

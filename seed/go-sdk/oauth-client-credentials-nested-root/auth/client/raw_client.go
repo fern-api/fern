@@ -47,6 +47,7 @@ func (r *RawClient) GetToken(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
+	headers.Add("Content-Type", "application/x-www-form-urlencoded")
 	var response *auth.TokenResponse
 	raw, err := r.caller.Call(
 		ctx,

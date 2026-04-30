@@ -23,7 +23,10 @@ export class HeaderAuthProviderInstance implements AuthProviderInstance {
         return [
             ts.factory.createPropertyAssignment(
                 getPropertyKey(context.case.camelSafe(this.authScheme.name)),
-                ts.factory.createStringLiteral(`YOUR_${context.case.screamingSnakeUnsafe(this.authScheme.name)}`)
+                ts.factory.createStringLiteral(
+                    this.authScheme.headerPlaceholder ??
+                        `YOUR_${context.case.screamingSnakeUnsafe(this.authScheme.name)}`
+                )
             )
         ];
     }

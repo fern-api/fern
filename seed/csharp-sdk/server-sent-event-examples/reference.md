@@ -80,6 +80,48 @@ client.Completions.StreamEventsAsync(new StreamEventsRequest { Query = "query" }
 </dl>
 </details>
 
+<details><summary><code>client.Completions.<a href="/src/SeedServerSentEvents/Completions/CompletionsClient.cs">StreamEventsDiscriminantInDataAsync</a>(StreamEventsDiscriminantInDataRequest { ... }) -> IAsyncEnumerable&lt;StreamEventDiscriminantInData&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+client.Completions.StreamEventsDiscriminantInDataAsync(
+    new StreamEventsDiscriminantInDataRequest { Query = "query" }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `StreamEventsDiscriminantInDataRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.Completions.<a href="/src/SeedServerSentEvents/Completions/CompletionsClient.cs">StreamEventsContextProtocolAsync</a>(StreamEventsContextProtocolRequest { ... }) -> IAsyncEnumerable&lt;StreamEventContextProtocol&gt;</code></summary>
 <dl>
 <dd>
