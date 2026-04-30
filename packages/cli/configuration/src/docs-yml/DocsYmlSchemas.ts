@@ -394,7 +394,8 @@ export const DocsInstance = z.object({
     url: z.string(),
     "custom-domain": CustomDomain.optional(),
     "edit-this-page": EditThisPageConfig.optional(),
-    audiences: Audience.optional()
+    audiences: Audience.optional(),
+    "multi-source": z.boolean().optional()
 });
 
 // ===== Logo =====

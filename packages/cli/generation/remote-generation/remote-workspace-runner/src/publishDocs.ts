@@ -141,7 +141,8 @@ export async function publishDocs({
     cliVersion,
     ciSource,
     deployerAuthor,
-    loginCommand = "fern login"
+    loginCommand = "fern login",
+    multiSource = false
 }: {
     token: FernToken;
     organization: string;
@@ -168,6 +169,7 @@ export async function publishDocs({
      * 'fern auth login' for CLI v2). Defaults to 'fern login'.
      */
     loginCommand?: string;
+    multiSource?: boolean;
 }): Promise<string> {
     const fdrOrigin = process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com";
     const isAirGapped = await detectAirGappedMode(`${fdrOrigin}/health`, context.logger);
@@ -206,10 +208,15 @@ export async function publishDocs({
     const basePath = parseBasePath(domain);
     const disableDynamicSnippets =
         docsWorkspace.config.experimental && docsWorkspace.config.experimental.dynamicSnippets === false;
-    const isBasepathAware = docsWorkspace.config.experimental?.basepathAware === true;
+    if (docsWorkspace.config.experimental?.basepathAware === true) {
+        context.logger.warn(
+            "experimental.basepath-aware is deprecated. Use 'multi-source: true' on the instance instead."
+        );
+    }
+    const isBasepathAware = multiSource || docsWorkspace.config.experimental?.basepathAware === true;
 
     if (isBasepathAware) {
-        context.logger.debug("Experimental flag 'basepath-aware' is enabled - using basepath-aware S3 key format");
+        context.logger.debug("Basepath-aware mode is enabled - using basepath-aware S3 key format");
     }
 
     let deployLocked = false;
