@@ -259,8 +259,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 offsetSemantics: customConfig.offsetSemantics,
                 customPagerName: customConfig.customPagerName ?? "CustomPager",
                 resolveQueryParameterNameConflicts: customConfig.resolveQueryParameterNameConflicts,
-                maxRetries: customConfig.maxRetries,
-                retryStatusCodes: customConfig.retryStatusCodes
+                maxRetries: customConfig.maxRetries
             }
         });
         const typescriptProject = await sdkGenerator.generate();
@@ -286,7 +285,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             fileResponseType: customConfig.fileResponseType,
             formDataSupport: customConfig.formDataSupport,
             fetchSupport: customConfig.fetchSupport,
-            testFramework: customConfig.testFramework
+            testFramework: customConfig.testFramework,
+            retryStatusCodes: customConfig.retryStatusCodes ?? "legacy"
         };
     }
 

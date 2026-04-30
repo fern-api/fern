@@ -172,7 +172,6 @@ export declare namespace SdkGenerator {
         customPagerName: string;
         resolveQueryParameterNameConflicts: boolean;
         maxRetries: number | undefined;
-        retryStatusCodes: "legacy" | "recommended";
     }
 }
 
@@ -327,8 +326,7 @@ export class SdkGenerator {
             relativeTestPath: this.relativeTestPath,
             generateEndpointMetadata: config.generateEndpointMetadata,
             customPagerName: config.customPagerName,
-            maxRetries: config.maxRetries ?? undefined,
-            retryStatusCodes: config.retryStatusCodes
+            maxRetries: config.maxRetries ?? undefined
         });
 
         const apiDirectory: ExportedDirectory[] = [
