@@ -7,7 +7,7 @@ export const NoMissingAuthRule: Rule = {
         return {
             definitionFile: {
                 httpService: (service) => {
-                    if ((service.auth ?? true) && !authIsDefined) {
+                    if ((service.auth ?? authIsDefined) && !authIsDefined) {
                         return [
                             {
                                 severity: "fatal",
