@@ -1343,6 +1343,9 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
      * These schemas are used in allOf compositions to add constraints to the merged schema.
      */
     private isConstraintOnlySchema(schema: OpenAPIV3_1.SchemaObject): boolean {
+        if (typeof schema !== "object" || schema === null) {
+            return false;
+        }
         // If the schema has any structural elements, it's not constraint-only
         if (
             schema.type !== undefined ||
