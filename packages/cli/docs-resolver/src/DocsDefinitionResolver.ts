@@ -2462,14 +2462,11 @@ function convertAvailability(
         case "stable":
             return FernNavigation.V1.NavigationV1Availability.Stable;
         case "alpha":
-            // TODO: switch to NavigationV1Availability.Alpha once the next fdr-sdk release includes it
-            return FernNavigation.V1.NavigationV1Availability.Beta;
+            return FernNavigation.V1.NavigationV1Availability.Alpha;
         case "preview":
-            // TODO: switch to NavigationV1Availability.Preview once the next fdr-sdk release includes it
-            return FernNavigation.V1.NavigationV1Availability.Beta;
+            return FernNavigation.V1.NavigationV1Availability.Preview;
         case "legacy":
-            // TODO: switch to NavigationV1Availability.Legacy once the next fdr-sdk release includes it
-            return FernNavigation.V1.NavigationV1Availability.Deprecated;
+            return FernNavigation.V1.NavigationV1Availability.Legacy;
         default:
             assertNever(availability);
     }
