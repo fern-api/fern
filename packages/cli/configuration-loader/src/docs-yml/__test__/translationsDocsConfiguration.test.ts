@@ -301,3 +301,183 @@ describe("parseDocsConfiguration — translation navigation overlay docs.yml loc
         expect(productOverlay?.tabs?.["guides"]?.displayName).toBe("Guides");
     });
 });
+
+describe("parseDocsConfiguration — translation navbar-links overrides", () => {
+    let tmpDir: string;
+
+    beforeEach(async () => {
+        tmpDir = await mkdtemp(path.join(os.tmpdir(), "fern-translations-navbar-test-"));
+    });
+
+    afterEach(async () => {
+        await rm(tmpDir, { recursive: true, force: true });
+    });
+
+    it("should parse navbar-links from a translation overlay docs.yml", async () => {
+        const fernDir = tmpDir as AbsoluteFilePath;
+        const configPath = path.join(tmpDir, "docs.yml") as AbsoluteFilePath;
+        await writeFile(configPath, "");
+
+        const frDir = path.join(tmpDir, "translations", "fr");
+        await mkdir(frDir, { recursive: true });
+        await writeFile(
+            path.join(frDir, "docs.yml"),
+            [
+                "navbar-links:",
+                "  - type: filled",
+                "    text: Commencer",
+                "    href: https://example.com/fr/start",
+                "  - type: github",
+                "    value: https://github.com/example/repo"
+            ].join("\n") + "\n"
+        );
+
+        const config = makeMinimalRawConfig({
+            translations: [{ lang: "en", default: true }, { lang: "fr" }]
+        });
+
+        const parsed = await parseDocsConfiguration({
+            rawDocsConfiguration: config,
+            absolutePathToFernFolder: fernDir,
+            absoluteFilepathToDocsConfig: configPath,
+            context: createMockTaskContext()
+        });
+
+        const navbarLinks = parsed.translationNavigationOverlays?.["fr"]?.navbarLinks;
+        expect(navbarLinks).toBeDefined();
+        expect(navbarLinks).toHaveLength(2);
+        expect(navbarLinks?.[0]).toMatchObject({ type: "filled", text: "Commencer" });
+        expect(navbarLinks?.[1]).toMatchObject({ type: "github" });
+    });
+
+    it("should leave navbarLinks undefined when overlay does not specify navbar-links", async () => {
+        const fernDir = tmpDir as AbsoluteFilePath;
+        const configPath = path.join(tmpDir, "docs.yml") as AbsoluteFilePath;
+        await writeFile(configPath, "");
+
+        const frDir = path.join(tmpDir, "translations", "fr");
+        await mkdir(frDir, { recursive: true });
+        await writeFile(path.join(frDir, "docs.yml"), "announcement:\n  message: Bienvenue\n");
+
+        const config = makeMinimalRawConfig({
+            translations: [{ lang: "en", default: true }, { lang: "fr" }]
+        });
+
+        const parsed = await parseDocsConfiguration({
+            rawDocsConfiguration: config,
+            absolutePathToFernFolder: fernDir,
+            absoluteFilepathToDocsConfig: configPath,
+            context: createMockTaskContext()
+        });
+
+        expect(parsed.translationNavigationOverlays?.["fr"]?.navbarLinks).toBeUndefined();
+    });
+
+    it("should drop invalid navbar-link entries with a warning but keep valid ones", async () => {
+        const fernDir = tmpDir as AbsoluteFilePath;
+        const configPath = path.join(tmpDir, "docs.yml") as AbsoluteFilePath;
+        await writeFile(configPath, "");
+
+        const frDir = path.join(tmpDir, "translations", "fr");
+        await mkdir(frDir, { recursive: true });
+        await writeFile(
+            path.join(frDir, "docs.yml"),
+            [
+                "navbar-links:",
+                "  - type: filled",
+                "    text: Valide",
+                "    href: https://example.com/fr",
+                "  - type: not-a-real-type",
+                "    text: Invalide"
+            ].join("\n") + "\n"
+        );
+
+        const config = makeMinimalRawConfig({
+            translations: [{ lang: "en", default: true }, { lang: "fr" }]
+        });
+
+        const warnings: string[] = [];
+        const mockContext = createMockTaskContext({
+            logger: {
+                warn: (msg: string) => warnings.push(msg),
+                info: () => undefined,
+                debug: () => undefined,
+                error: () => undefined
+            } as never
+        });
+
+        const parsed = await parseDocsConfiguration({
+            rawDocsConfiguration: config,
+            absolutePathToFernFolder: fernDir,
+            absoluteFilepathToDocsConfig: configPath,
+            context: mockContext
+        });
+
+        const navbarLinks = parsed.translationNavigationOverlays?.["fr"]?.navbarLinks;
+        expect(navbarLinks).toHaveLength(1);
+        expect(navbarLinks?.[0]).toMatchObject({ type: "filled", text: "Valide" });
+        expect(warnings.some((w) => w.includes("Invalid navbar-link"))).toBe(true);
+    });
+
+    it("should treat an empty navbar-links list as a per-locale opt-out (not inherit)", async () => {
+        const fernDir = tmpDir as AbsoluteFilePath;
+        const configPath = path.join(tmpDir, "docs.yml") as AbsoluteFilePath;
+        await writeFile(configPath, "");
+
+        const frDir = path.join(tmpDir, "translations", "fr");
+        await mkdir(frDir, { recursive: true });
+        await writeFile(path.join(frDir, "docs.yml"), "navbar-links: []\n");
+
+        const config = makeMinimalRawConfig({
+            translations: [{ lang: "en", default: true }, { lang: "fr" }]
+        });
+
+        const parsed = await parseDocsConfiguration({
+            rawDocsConfiguration: config,
+            absolutePathToFernFolder: fernDir,
+            absoluteFilepathToDocsConfig: configPath,
+            context: createMockTaskContext()
+        });
+
+        const navbarLinks = parsed.translationNavigationOverlays?.["fr"]?.navbarLinks;
+        expect(navbarLinks).toEqual([]);
+    });
+
+    it("should still produce an override (empty list) when every navbar-link entry is invalid", async () => {
+        const fernDir = tmpDir as AbsoluteFilePath;
+        const configPath = path.join(tmpDir, "docs.yml") as AbsoluteFilePath;
+        await writeFile(configPath, "");
+
+        const frDir = path.join(tmpDir, "translations", "fr");
+        await mkdir(frDir, { recursive: true });
+        await writeFile(
+            path.join(frDir, "docs.yml"),
+            ["navbar-links:", "  - type: not-a-real-type", "    text: Invalide"].join("\n") + "\n"
+        );
+
+        const config = makeMinimalRawConfig({
+            translations: [{ lang: "en", default: true }, { lang: "fr" }]
+        });
+
+        const warnings: string[] = [];
+        const mockContext = createMockTaskContext({
+            logger: {
+                warn: (msg: string) => warnings.push(msg),
+                info: () => undefined,
+                debug: () => undefined,
+                error: () => undefined
+            } as never
+        });
+
+        const parsed = await parseDocsConfiguration({
+            rawDocsConfiguration: config,
+            absolutePathToFernFolder: fernDir,
+            absoluteFilepathToDocsConfig: configPath,
+            context: mockContext
+        });
+
+        const navbarLinks = parsed.translationNavigationOverlays?.["fr"]?.navbarLinks;
+        expect(navbarLinks).toEqual([]);
+        expect(warnings.some((w) => w.includes("Invalid navbar-link"))).toBe(true);
+    });
+});

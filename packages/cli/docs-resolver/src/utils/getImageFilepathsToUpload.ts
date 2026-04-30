@@ -179,7 +179,61 @@ export async function collectFilesFromDocsConfig({
         );
     }
 
+    /* per-locale translation overlay navbar links */
+    if (parsedDocsConfig.translationNavigationOverlays != null) {
+        for (const overlay of Object.values(parsedDocsConfig.translationNavigationOverlays)) {
+            await collectIconsFromNavbarLinks({
+                navbarLinks: overlay.navbarLinks,
+                filepaths
+            });
+        }
+    }
+
     return filepaths;
+}
+
+async function collectIconsFromNavbarLinks({
+    navbarLinks,
+    filepaths
+}: {
+    navbarLinks: docsYml.TranslationNavigationOverlay["navbarLinks"];
+    filepaths: Set<AbsoluteFilePath>;
+}): Promise<void> {
+    if (navbarLinks == null) {
+        return;
+    }
+    await Promise.all(
+        navbarLinks.map(async (link) => {
+            if (link.type === "github") {
+                return;
+            }
+            if (link.type === "dropdown") {
+                await Promise.all(
+                    link.links.map(async (nestedLink) => {
+                        if (nestedLink.icon != null) {
+                            await addIconToFilepaths({ iconPath: nestedLink.icon, filepaths });
+                        }
+                        if (nestedLink.rightIcon != null) {
+                            await addIconToFilepaths({ iconPath: nestedLink.rightIcon, filepaths });
+                        }
+                    })
+                );
+                if (link.icon != null) {
+                    await addIconToFilepaths({ iconPath: link.icon, filepaths });
+                }
+                if (link.rightIcon != null) {
+                    await addIconToFilepaths({ iconPath: link.rightIcon, filepaths });
+                }
+                return;
+            }
+            if (link.icon != null) {
+                await addIconToFilepaths({ iconPath: link.icon, filepaths });
+            }
+            if (link.rightIcon != null) {
+                await addIconToFilepaths({ iconPath: link.rightIcon, filepaths });
+            }
+        })
+    );
 }
 
 async function collectIconsFromNavigation({

@@ -509,6 +509,10 @@ export class DocsDefinitionResolver {
             this.collectedFileIds.set(uploadedFile.absoluteFilePath, uploadedFile.fileId);
         });
 
+        // Resolve any AbsoluteFilePath icons on translation overlay navbar-links to their
+        // uploaded file IDs so the per-locale navbarLinks land in FDR with valid icon refs.
+        this.resolveTranslationOverlayNavbarLinkIcons();
+
         // store root here so we only process once
         this.taskContext.logger.debug("Building navigation tree...");
         const rootStart = performance.now();
@@ -2195,6 +2199,46 @@ export class DocsDefinitionResolver {
         }
 
         return iconPath as string;
+    }
+
+    /**
+     * Walks each translation overlay's navbar-links and rewrites any
+     * AbsoluteFilePath icons to `file:<fileId>` references using the icons
+     * we just uploaded. Mirrors the per-link transform applied to the
+     * docs-level navbar-links in `toDocsConfig`.
+     */
+    private resolveTranslationOverlayNavbarLinkIcons(): void {
+        const overlays = this.parsedDocsConfig.translationNavigationOverlays;
+        if (overlays == null) {
+            return;
+        }
+        for (const overlay of Object.values(overlays)) {
+            if (overlay.navbarLinks == null) {
+                continue;
+            }
+            overlay.navbarLinks = overlay.navbarLinks.map((navbarLink) => {
+                if (navbarLink.type === "github") {
+                    return navbarLink;
+                }
+                if (navbarLink.type === "dropdown") {
+                    return {
+                        ...navbarLink,
+                        icon: this.resolveIconFileId(navbarLink.icon),
+                        rightIcon: this.resolveIconFileId(navbarLink.rightIcon),
+                        links: navbarLink.links.map((link) => ({
+                            ...link,
+                            icon: this.resolveIconFileId(link.icon),
+                            rightIcon: this.resolveIconFileId(link.rightIcon)
+                        }))
+                    };
+                }
+                return {
+                    ...navbarLink,
+                    icon: this.resolveIconFileId(navbarLink.icon),
+                    rightIcon: this.resolveIconFileId(navbarLink.rightIcon)
+                };
+            });
+        }
     }
 
     private convertPageActions(): DocsV1Write.PageActionsConfig | undefined {

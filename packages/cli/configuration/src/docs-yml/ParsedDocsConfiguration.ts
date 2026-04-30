@@ -558,6 +558,11 @@ export interface TranslationNavigationOverlay {
     announcement: AnnouncementOverlay | undefined;
     /** Translated navigation items (sections, pages), from the navigation YAML */
     navigation: NavigationItemOverlay[] | undefined;
+    /**
+     * Translated navbar links (CTAs). When present, these replace the docs-level
+     * navbar links in the FDR upload for this locale.
+     */
+    navbarLinks: CjsFdrSdk.docs.v1.commons.NavbarLink[] | undefined;
 }
 
 export interface TabOverlay {

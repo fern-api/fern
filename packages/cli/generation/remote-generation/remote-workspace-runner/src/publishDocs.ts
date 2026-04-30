@@ -728,10 +728,14 @@ export async function publishDocs({
                         // Apply navigation overlay (translated display-names, titles, etc.)
                         const localeNavOverlay = translationNavigationOverlays?.[locale];
                         let translatedAnnouncement = docsDefinition.config.announcement;
+                        let translatedNavbarLinks = docsDefinition.config.navbarLinks;
                         if (localeNavOverlay != null) {
                             updatedRoot = applyTranslatedNavigationOverlays(updatedRoot, localeNavOverlay);
                             translatedAnnouncement =
                                 getTranslatedAnnouncement(localeNavOverlay) ?? translatedAnnouncement;
+                            if (localeNavOverlay.navbarLinks != null) {
+                                translatedNavbarLinks = localeNavOverlay.navbarLinks;
+                            }
                         }
 
                         const translatedDefinition: DocsDefinition = {
@@ -740,7 +744,8 @@ export async function publishDocs({
                             config: {
                                 ...docsDefinition.config,
                                 root: updatedRoot,
-                                announcement: translatedAnnouncement
+                                announcement: translatedAnnouncement,
+                                navbarLinks: translatedNavbarLinks
                             }
                         };
                         const pageCount = Object.keys(localePages).length;
