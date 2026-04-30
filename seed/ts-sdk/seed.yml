@@ -372,18 +372,15 @@ fixtures:
     - outputFolder: websockets
       customConfig:
         generateWebSocketClients: true
-  always-send-auth:
-    - outputFolder: no-custom-config
-      customConfig: null
-    - outputFolder: always-send-auth
-      customConfig:
-        alwaysSendAuth: true
   any-auth:
     - outputFolder: no-custom-config
       customConfig: null
     - outputFolder: generate-endpoint-metadata
       customConfig:
         generateEndpointMetadata: true
+    - outputFolder: always-send-auth
+      customConfig:
+        alwaysSendAuth: true
   simple-api:
     - outputFolder: use-yarn
       customConfig:
