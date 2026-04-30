@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.4.3
+  changelogEntry:
+    - summary: |
+        Fix OpenAPI endpoints that declare only a `204 No Content` success response
+        being dropped during OpenAPI -> IR conversion. The user-defined `204` status
+        code is now preserved on the endpoint response so docs display it correctly
+        instead of falling back to a default `200`.
+      type: fix
+  createdAt: "2026-04-30"
+  irVersion: 66
 - version: 5.4.2
   changelogEntry:
     - summary: |
