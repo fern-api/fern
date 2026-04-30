@@ -378,6 +378,9 @@ fixtures:
     - outputFolder: generate-endpoint-metadata
       customConfig:
         generateEndpointMetadata: true
+    - outputFolder: always-send-auth
+      customConfig:
+        alwaysSendAuth: true
   simple-api:
     - outputFolder: use-yarn
       customConfig:

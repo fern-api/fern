@@ -13,7 +13,7 @@ types:
       - commons.DeclarationWithoutDocsSchema
       - commons.WithDisplayName
     properties:
-      auth: boolean
+      auth: optional<boolean>
       url: optional<string>
       base-path: string
       path-parameters: optional<map<string, types.TypeReferenceSchema>>

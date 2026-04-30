@@ -1,0 +1,5 @@
+- summary: |
+    Make `auth` optional at the service level in Fern Definition files.
+    When omitted, auth is inherited from the root API-level auth scheme.
+    This allows users to only specify `auth: false` when they explicitly want to disable auth.
+  type: feat

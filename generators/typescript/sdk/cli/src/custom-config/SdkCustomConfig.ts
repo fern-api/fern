@@ -80,5 +80,6 @@ export interface SdkCustomConfig {
     customPagerName: string | undefined;
     resolveQueryParameterNameConflicts: boolean;
     maxRetries: number | undefined;
+    alwaysSendAuth: boolean;
     retryStatusCodes: "legacy" | "recommended";
 }

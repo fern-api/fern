@@ -110,8 +110,9 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
         // creating a synthetic merged copy.
         const refElements = this.schemaOrReference.allOf.filter((s) => this.context.isReferenceObject(s));
         const inlineElements = this.schemaOrReference.allOf.filter(
-            (s) => !this.context.isReferenceObject(s)
-        ) as OpenAPIV3_1.SchemaObject[];
+            (s): s is OpenAPIV3_1.SchemaObject =>
+                typeof s === "object" && s !== null && !this.context.isReferenceObject(s)
+        );
         const singleRef = refElements.length === 1 ? refElements[0] : undefined;
 
         if (

@@ -6,7 +6,7 @@ import { APIV1Read, ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, join, RelativeFilePath, relative } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { createLogger } from "@fern-api/logger";
-import { CliError, createMockTaskContext } from "@fern-api/task-context";
+import { CliError, createMockTaskContext, TaskContext } from "@fern-api/task-context";
 
 import chalk from "chalk";
 import { randomUUID } from "crypto";
@@ -16,7 +16,52 @@ import { checkIfPathnameExists } from "./check-if-pathname-exists.js";
 import { collectPathnamesToCheck, PathnameToCheck } from "./collect-pathnames.js";
 import { getInstanceUrls, removeLeadingSlash, toBaseUrl } from "./url-utils.js";
 
+/**
+ * Build a task context for `DocsDefinitionResolver` during validation.
+ *
+ * We can't use the real CLI context because the resolver is chatty (progress
+ * logs, warnings, etc.) and we don't want that noise in `fern check` output.
+ * The previous implementation used a fully-noop context, which also swallowed
+ * the message passed to `failAndThrow` — leaving callers with a bare
+ * `TaskAbortSignal` and a silent exit code. This context keeps logs quiet but
+ * surfaces `failAndThrow` messages as real `Error`s so that callers can report
+ * them as validation violations.
+ */
 const NOOP_CONTEXT = createMockTaskContext({ logger: createLogger(noop) });
+
+function createDocsResolverValidationContext(): TaskContext {
+    const base = createMockTaskContext({ logger: createLogger(noop) });
+    return {
+        ...base,
+        failAndThrow: (message?: string, error?: unknown, _options?: { code?: CliError.Code }) => {
+            const messageParts: string[] = [];
+            if (message != null) {
+                messageParts.push(message);
+            }
+            if (error instanceof Error) {
+                messageParts.push(error.message);
+            } else if (error != null) {
+                messageParts.push(JSON.stringify(error));
+            }
+            const combined = messageParts.length > 0 ? messageParts.join(": ") : "Docs validation failed";
+            throw new Error(combined);
+        },
+        failWithoutThrowing: (message?: string, error?: unknown, _options?: { code?: CliError.Code }) => {
+            const messageParts: string[] = [];
+            if (message != null) {
+                messageParts.push(message);
+            }
+            if (error instanceof Error) {
+                messageParts.push(error.message);
+            } else if (error != null) {
+                messageParts.push(JSON.stringify(error));
+            }
+            if (messageParts.length > 0) {
+                base.logger.error(messageParts.join(": "));
+            }
+        }
+    };
+}
 
 // The FDR SDK types config.root as {} via zod inference, but at runtime it is FernNavigation.V1.RootNode.
 // This type guard checks the "type" discriminant to safely narrow the type without a blind cast.
@@ -37,7 +82,7 @@ export const ValidMarkdownLinks: Rule = {
             docsWorkspace: workspace,
             ossWorkspaces,
             apiWorkspaces,
-            taskContext: NOOP_CONTEXT,
+            taskContext: createDocsResolverValidationContext(),
             editThisPage: undefined,
             uploadFiles: undefined,
             registerApi: undefined,

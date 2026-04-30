@@ -168,10 +168,10 @@ export function convertHttpService({
                         ? endpoint.auth
                         : endpoint.auth != null
                           ? endpoint.auth.length > 0
-                          : serviceDefinition.auth,
+                          : (serviceDefinition.auth ?? auth.schemes.length > 0),
                 security:
                     typeof endpoint.auth === "undefined" || typeof endpoint.auth === "boolean"
-                        ? (endpoint.auth ?? serviceDefinition.auth === true)
+                        ? (endpoint.auth ?? (serviceDefinition.auth ?? auth.schemes.length > 0) === true)
                             ? AuthSchemesRequirement._visit<Record<string, string[]>[] | undefined>(auth.requirement, {
                                   any: () => auth.schemes.map((scheme) => ({ [scheme.key]: [] })),
                                   all: () => [auth.schemes.reduce((acc, scheme) => ({ ...acc, [scheme.key]: [] }), {})],
