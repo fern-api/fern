@@ -628,5 +628,3 @@ export class WireTestFunctionGenerator {
         throw GeneratorError.internalError(`Unknown value: ${JSON.stringify(val)}`);
     }
 }
-
-
