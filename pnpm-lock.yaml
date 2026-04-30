@@ -34,8 +34,8 @@ catalogs:
       specifier: 0.0.6-2ee1b7e28
       version: 0.0.6-2ee1b7e28
     '@fern-api/generator-cli':
-      specifier: 0.9.18
-      version: 0.9.18
+      specifier: 0.9.21
+      version: 0.9.21
     '@fern-api/venus-api-sdk':
       specifier: 0.22.34
       version: 0.22.34
@@ -628,7 +628,7 @@ importers:
         version: link:packages/configs
       '@fern-api/generator-cli':
         specifier: 'catalog:'
-        version: 0.9.18
+        version: 0.9.21
       '@rolldown/binding-darwin-arm64':
         specifier: 'catalog:'
         version: 1.0.0-rc.5
@@ -697,7 +697,7 @@ importers:
         version: link:../../packages/commons/fs-utils
       '@fern-api/generator-cli':
         specifier: 'catalog:'
-        version: 0.9.18
+        version: 0.9.21
       '@fern-api/ir-sdk':
         specifier: workspace:*
         version: link:../../packages/ir-sdk
@@ -2437,7 +2437,7 @@ importers:
         version: link:../../../packages/commons/fs-utils
       '@fern-api/generator-cli':
         specifier: 'catalog:'
-        version: 0.9.18
+        version: 0.9.21
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../../../packages/cli/logger
@@ -9402,13 +9402,8 @@ packages:
   '@fern-api/fdr-sdk@1.1.23-d25ead8e05':
     resolution: {integrity: sha512-fkcBIQSCI8Pj8k+sLf7p/rfwVCIdNjB3Na5XpsAc/af30JTgVlCmcAip7TgxxFeGjfpBprD7k6XDN162E0ppXQ==}
 
-  '@fern-api/generator-cli@0.9.18':
-    resolution: {integrity: sha512-LLz3E7MXFugvdti40N1uKCNaBdk/Lex3iCv9DIBax5UTX8rfEg/T4VvNWi2BPvpAxgoGd6lBkNObJdv9fnzCkQ==}
-    hasBin: true
-
-  '@fern-api/replay@0.12.0':
-    resolution: {integrity: sha512-vz9YbR+lSmR+lv0lX0A3Bk2CWwn+aEWfVwZUIgvmfXJ5PQ5K3U9SWnnSKlJnfChBKd/YBavroDmCmA7jxXne9Q==}
-    engines: {node: '>=18'}
+  '@fern-api/generator-cli@0.9.21':
+    resolution: {integrity: sha512-odMzzteZGjRzwI9Sx4STSbTKSvsSQ1dFNq3JaOLBuowUobyZiFuPoSHgrwhecPV72c61fJ/GHvu44cejEYukCg==}
     hasBin: true
 
   '@fern-api/replay@0.14.0':
@@ -16437,23 +16432,14 @@ snapshots:
       - encoding
       - typescript
 
-  '@fern-api/generator-cli@0.9.18':
+  '@fern-api/generator-cli@0.9.21':
     dependencies:
       '@boundaryml/baml': 0.219.0
-      '@fern-api/replay': 0.12.0
+      '@fern-api/replay': 0.14.0
       '@octokit/rest': 22.0.1
       es-toolkit: 1.45.1
       semver: 7.7.4
       tmp-promise: 3.0.3
-    transitivePeerDependencies:
-      - supports-color
-
-  '@fern-api/replay@0.12.0':
-    dependencies:
-      minimatch: 10.2.5
-      node-diff3: 3.2.0
-      simple-git: 3.35.2
-      yaml: 2.8.3
     transitivePeerDependencies:
       - supports-color
 
