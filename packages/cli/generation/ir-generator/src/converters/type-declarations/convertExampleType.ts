@@ -23,6 +23,7 @@ import {
     PrimitiveTypeV1
 } from "@fern-api/ir-sdk";
 import { getWireValue, IdGenerator } from "@fern-api/ir-utils";
+import { CliError } from "@fern-api/task-context";
 import { validateTypeReferenceExample } from "../../examples/validateTypeReferenceExample.js";
 import { FernFileContext } from "../../FernFileContext.js";
 import { ExampleResolver } from "../../resolvers/ExampleResolver.js";
@@ -95,19 +96,28 @@ export function convertTypeExample({
         discriminatedUnion: (rawUnion) => {
             const discriminant = getUnionDiscriminant(rawUnion);
             if (!isPlainObject(example)) {
-                throw new Error("Example is not an object");
+                throw new CliError({ message: "Example is not an object", code: CliError.Code.ValidationError });
             }
             const discriminantValueForExample = example[discriminant];
             if (discriminantValueForExample == null) {
-                throw new Error("Example is missing discriminant: " + discriminant);
+                throw new CliError({
+                    message: "Example is missing discriminant: " + discriminant,
+                    code: CliError.Code.ValidationError
+                });
             }
             if (typeof discriminantValueForExample !== "string") {
-                throw new Error("Discriminant value is not a string");
+                throw new CliError({
+                    message: "Discriminant value is not a string",
+                    code: CliError.Code.ValidationError
+                });
             }
 
             const rawSingleUnionType = rawUnion.union[discriminantValueForExample];
             if (rawSingleUnionType == null) {
-                throw new Error(`${discriminantValueForExample} is not one of the specified discriminant values.`);
+                throw new CliError({
+                    message: `${discriminantValueForExample} is not one of the specified discriminant values.`,
+                    code: CliError.Code.ValidationError
+                });
             }
 
             const rawValueType =
@@ -157,7 +167,10 @@ export function convertTypeExample({
                     resolvedExtendedType._type !== "named" ||
                     !isRawObjectDefinition(resolvedExtendedType.declaration)
                 ) {
-                    throw new Error("Extended type is not a named object");
+                    throw new CliError({
+                        message: "Extended type is not a named object",
+                        code: CliError.Code.InternalError
+                    });
                 }
                 const extendedObject = resolvedExtendedType.declaration;
                 const propertiesFromExtension: ExampleObjectProperty[] = Object.entries(extendedObject.properties ?? {})
@@ -216,7 +229,10 @@ export function convertTypeExample({
                     .map((enumEntry) => (typeof enumEntry === "string" ? enumEntry : enumEntry.value))
                     .join(", ");
 
-                throw new Error(`Expected one of ${validValues}. Received ${example}`);
+                throw new CliError({
+                    message: `Expected one of ${validValues}. Received ${example}`,
+                    code: CliError.Code.ValidationError
+                });
             }
             return ExampleTypeShape.enum({
                 value: fileContainingExample.casingsGenerator.generateNameAndWireValue({
@@ -257,7 +273,10 @@ export function convertTypeExample({
                 return typeof variant === "string" ? variant : variant.type;
             });
             const validValues = variantOptions.join(", ");
-            throw new Error(`Expected one of ${validValues}. Received ${example}`);
+            throw new CliError({
+                message: `Expected one of ${validValues}. Received ${example}`,
+                code: CliError.Code.ValidationError
+            });
         }
     });
 }
@@ -305,7 +324,7 @@ export function convertTypeReferenceExample({
             },
             map: ({ keyType, valueType }) => {
                 if (!isPlainObject(resolvedExample)) {
-                    throw new Error("Example is not an object");
+                    throw new CliError({ message: "Example is not an object", code: CliError.Code.ValidationError });
                 }
                 const nextContext: RecursionContext = { depth: ctx.depth + 1, seenTypeIds: ctx.seenTypeIds };
                 return ExampleTypeReferenceShape.container(
@@ -339,7 +358,7 @@ export function convertTypeReferenceExample({
             },
             list: (itemType) => {
                 if (!Array.isArray(resolvedExample)) {
-                    throw new Error("Example is not a list");
+                    throw new CliError({ message: "Example is not a list", code: CliError.Code.ValidationError });
                 }
                 const nextContext: RecursionContext = { depth: ctx.depth + 1, seenTypeIds: ctx.seenTypeIds };
                 return ExampleTypeReferenceShape.container(
@@ -362,7 +381,7 @@ export function convertTypeReferenceExample({
             },
             set: (itemType) => {
                 if (!Array.isArray(resolvedExample)) {
-                    throw new Error("Example is not a list");
+                    throw new CliError({ message: "Example is not a list", code: CliError.Code.ValidationError });
                 }
                 const nextContext: RecursionContext = { depth: ctx.depth + 1, seenTypeIds: ctx.seenTypeIds };
                 return ExampleTypeReferenceShape.container(
@@ -450,7 +469,10 @@ export function convertTypeReferenceExample({
                 });
                 const parsedReferenceToNamedType = fileContainingRawTypeReference.parseTypeReference(named);
                 if (parsedReferenceToNamedType.type !== "named") {
-                    throw new Error("Type reference is not to a named type.");
+                    throw new CliError({
+                        message: "Type reference is not to a named type.",
+                        code: CliError.Code.InternalError
+                    });
                 }
                 const typeName: DeclaredTypeName = {
                     typeId: parsedReferenceToNamedType.typeId,
@@ -650,7 +672,10 @@ function convertPrimitiveExample({
             );
         },
         _other: () => {
-            throw new Error("Unknown primitive type: " + typeBeingExemplified);
+            throw new CliError({
+                message: "Unknown primitive type: " + typeBeingExemplified,
+                code: CliError.Code.InternalError
+            });
         }
     });
 }
@@ -685,7 +710,10 @@ function convertObject({
     recursionContext?: RecursionContext;
 }): ExampleTypeShape.Object_ {
     if (!isPlainObject(example)) {
-        throw new Error(`Example is not an object. Got: ${JSON.stringify(example)}`);
+        throw new CliError({
+            message: `Example is not an object. Got: ${JSON.stringify(example)}`,
+            code: CliError.Code.ValidationError
+        });
     }
 
     const properties: [WireKey, PropertyExample, OriginalTypeDeclaration | undefined][] = Object.entries(example).map(
@@ -804,7 +832,10 @@ export function getOriginalTypeDeclarationForPropertyFromExtensions({
                 file
             });
             if (resolvedType._type !== "named" || !isRawObjectDefinition(resolvedType.declaration)) {
-                throw new Error("Extension is not of a named object");
+                throw new CliError({
+                    message: "Extension is not of a named object",
+                    code: CliError.Code.InternalError
+                });
             }
             const originalTypeDeclaration = getOriginalTypeDeclarationForProperty({
                 wirePropertyKey,
@@ -867,7 +898,7 @@ function convertSingleUnionType({
     switch (parsedSingleUnionTypeProperties.propertiesType) {
         case "singleProperty": {
             if (!isPlainObject(example)) {
-                throw new Error("Example is not an object");
+                throw new CliError({ message: "Example is not an object", code: CliError.Code.ValidationError });
             }
             return {
                 wireDiscriminantValue,
@@ -887,7 +918,7 @@ function convertSingleUnionType({
         }
         case "samePropertiesAsObject": {
             if (!isPlainObject(example)) {
-                throw new Error("Example is not an object");
+                throw new CliError({ message: "Example is not an object", code: CliError.Code.ValidationError });
             }
             let rawDeclaration = typeResolver.getDeclarationOfNamedTypeOrThrow({
                 referenceToNamedType: rawValueType,
@@ -903,7 +934,10 @@ function convertSingleUnionType({
                 });
             }
             if (!isRawObjectDefinition(rawDeclaration.declaration)) {
-                throw new Error(`${rawValueType} is not an object`);
+                throw new CliError({
+                    message: `${rawValueType} is not an object`,
+                    code: CliError.Code.ValidationError
+                });
             }
             const typeName: DeclaredTypeName = {
                 typeId: parsedSingleUnionTypeProperties.typeId,

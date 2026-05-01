@@ -1,6 +1,7 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { dynamic } from "@fern-api/ir-sdk";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
+
 import { DynamicSnippetsGenerator } from "@fern-api/typescript-dynamic-snippets";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { mkdir, writeFile } from "fs/promises";
@@ -77,11 +78,17 @@ export class DynamicSnippetsTypeScriptTestGenerator {
     private buildGeneratorConfig(config: FernGeneratorExec.GeneratorConfig): FernGeneratorExec.GeneratorConfig {
         const outputMode = config.output.mode;
         if (outputMode.type !== "github") {
-            throw new Error("GitHub output mode is required for TypeScript dynamic snippet tests");
+            throw new CliError({
+                message: "GitHub output mode is required for TypeScript dynamic snippet tests",
+                code: CliError.Code.ConfigError
+            });
         }
         const publishInfo = outputMode.publishInfo;
         if (!publishInfo || publishInfo.type !== "npm") {
-            throw new Error("NPM publish info is required for TypeScript dynamic snippet tests");
+            throw new CliError({
+                message: "NPM publish info is required for TypeScript dynamic snippet tests",
+                code: CliError.Code.ConfigError
+            });
         }
         return {
             ...config,

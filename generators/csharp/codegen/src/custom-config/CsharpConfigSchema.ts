@@ -88,6 +88,7 @@ export const CsharpConfigSchema = z.object({
     // General options.
     "root-client-class-access": z.enum(["public", "internal"]).optional(),
     "custom-pager-name": z.string().optional(),
+    "offset-semantics": z.enum(["item-index", "page-index"]).optional(),
     "enable-forward-compatible-enums": z.boolean().optional(),
     "generate-error-types": z.boolean().optional(),
     "package-id": z.string().optional(),
@@ -115,7 +116,8 @@ export const CsharpConfigSchema = z.object({
     // .NET tooling or CI systems that do not yet support .slnx.
     // "slnx" (default) generates only the modern .slnx format.
     "sln-format": z.enum(["sln", "slnx"]).optional(),
-    maxRetries: z.number().int().min(0).optional()
+    maxRetries: z.number().int().min(0).optional(),
+    retryStatusCodes: z.optional(z.enum(["legacy", "recommended"]))
 });
 
 export type CsharpConfigSchema = z.infer<typeof CsharpConfigSchema>;

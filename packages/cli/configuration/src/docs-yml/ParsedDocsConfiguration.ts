@@ -9,11 +9,11 @@ import {
     Availability,
     DocsInstance,
     ExperimentalConfig,
-    Language,
     LibraryLanguage,
     PlaygroundSettings,
     Target,
     ThemeConfig,
+    TranslationConfig,
     VersionAvailability
 } from "./schemas/index.js";
 
@@ -34,9 +34,17 @@ export interface ParsedPageActionsConfig {
         openAi: boolean;
         claude: boolean;
         cursor: boolean;
+        claudeCode: boolean;
         vscode: boolean;
         custom: ParsedCustomPageAction[];
     };
+}
+
+// TODO(kafkas): Remove this when we upgrade the fdr-sdk to latest
+interface ParsedDocsSettingsConfig extends Omit<CjsFdrSdk.docs.v1.commons.DocsSettingsConfig, "language"> {
+    language: string | undefined;
+    disableEnvironmentEditing: boolean | undefined;
+    websocketOneofDisplay: "flat" | "grouped" | undefined;
 }
 
 export interface ParsedDocsConfiguration {
@@ -45,6 +53,12 @@ export interface ParsedDocsConfiguration {
 
     /* filepath of page to contents */
     pages: Record<RelativeFilePath, string>;
+
+    /* per-locale translated page content: locale → { relativeFilePath → markdown } */
+    translationPages: Record<string, Record<RelativeFilePath, string>> | undefined;
+
+    /* per-locale translated navigation overlays: locale → NavigationOverlay */
+    translationNavigationOverlays: Record<string, TranslationNavigationOverlay> | undefined;
 
     /* RBAC declaration */
     roles: string[] | undefined;
@@ -69,15 +83,17 @@ export interface ParsedDocsConfiguration {
     colors: CjsFdrSdk.docs.v1.write.ColorsConfigV3 | undefined;
     typography: TypographyConfig | undefined;
     layout: CjsFdrSdk.docs.v1.commons.DocsLayoutConfig | undefined;
-    settings: CjsFdrSdk.docs.v1.commons.DocsSettingsConfig | undefined;
+    settings: ParsedDocsSettingsConfig | undefined;
     context7File: AbsoluteFilePath | undefined;
     llmsTxtFile: AbsoluteFilePath | undefined;
     llmsFullTxtFile: AbsoluteFilePath | undefined;
-    languages: Language[] | undefined;
+    languages: string[] | undefined;
+    translations: TranslationConfig[] | undefined;
     defaultLanguage: CjsFdrSdk.docs.v1.commons.ProgrammingLanguage | undefined;
     analyticsConfig: CjsFdrSdk.docs.v1.commons.AnalyticsConfig | undefined;
     announcement: AnnouncementConfig | undefined;
     theme: ThemeConfig | undefined;
+    globalTheme: string | undefined;
 
     /* integrations */
     integrations: CjsFdrSdk.docs.v1.commons.IntegrationsConfig | undefined;
@@ -117,13 +133,21 @@ export interface DocsColorsConfiguration {
 export interface ParsedMetadataConfig
     extends Omit<
         CjsFdrSdk.docs.v1.commons.MetadataConfig,
-        "og:image" | "og:logo" | "twitter:image" | "og:background-image"
+        "og:image" | "og:logo" | "twitter:image" | "og:dynamic:background-image"
     > {
     "og:image": FilepathOrUrl | undefined;
     "og:logo": FilepathOrUrl | undefined;
     "twitter:image": FilepathOrUrl | undefined;
     "og:dynamic": boolean | undefined;
-    "og:background-image": FilepathOrUrl | undefined;
+    "og:dynamic:background-image": FilepathOrUrl | undefined;
+    "og:dynamic:text-color": string | undefined;
+    "og:dynamic:background-color": string | undefined;
+    "og:dynamic:logo-color": "dark" | "light" | undefined;
+    "og:dynamic:show-logo": boolean | undefined;
+    "og:dynamic:show-section": boolean | undefined;
+    "og:dynamic:show-description": boolean | undefined;
+    "og:dynamic:show-url": boolean | undefined;
+    "og:dynamic:show-gradient": boolean | undefined;
 }
 
 export type ColorConfiguration =
@@ -511,4 +535,95 @@ export interface ParsedLibraryConfiguration {
     };
     /** The programming language of the library source code */
     lang: LibraryLanguage;
+}
+
+/**
+ * Represents a navigation overlay for a single locale, extracted from
+ * `translations/<lang>/docs.yml` (or, for backwards compatibility,
+ * `translations/<lang>/fern/docs.yml`) and any referenced product/version YAML files.
+ *
+ * These overlays contain only the translatable fields (display-name, title, subtitle,
+ * announcement message) keyed by the identifiers used in the source YAML (tab IDs,
+ * product slugs/display-names, etc.). They are applied to the resolved nav tree before
+ * the translated DocsDefinition is sent to FDR.
+ */
+export interface TranslationNavigationOverlay {
+    /** Translated tab display names, keyed by tab ID */
+    tabs: Record<string, TabOverlay> | undefined;
+    /** Translated product entries, matched by slug or display-name */
+    products: ProductOverlay[] | undefined;
+    /** Translated version entries, matched by slug or display-name */
+    versions: VersionOverlay[] | undefined;
+    /** Translated announcement message */
+    announcement: AnnouncementOverlay | undefined;
+    /** Translated navigation items (sections, pages), from the navigation YAML */
+    navigation: NavigationItemOverlay[] | undefined;
+    /**
+     * Translated navbar links (CTAs). When present, these replace the docs-level
+     * navbar links in the FDR upload for this locale.
+     */
+    navbarLinks: CjsFdrSdk.docs.v1.commons.NavbarLink[] | undefined;
+}
+
+export interface TabOverlay {
+    displayName: string | undefined;
+    slug: string | undefined;
+}
+
+export interface ProductOverlay {
+    slug: string | undefined;
+    displayName: string | undefined;
+    subtitle: string | undefined;
+    announcement: AnnouncementOverlay | undefined;
+    /** Per-product tab overlays from the referenced nav file */
+    tabs: Record<string, TabOverlay> | undefined;
+    /** Per-product navigation overlays from the referenced nav file */
+    navigation: NavigationItemOverlay[] | undefined;
+}
+
+export interface VersionOverlay {
+    slug: string | undefined;
+    displayName: string | undefined;
+}
+
+export interface AnnouncementOverlay {
+    message: string | undefined;
+}
+
+export type NavigationItemOverlay =
+    | NavigationItemOverlay.Page
+    | NavigationItemOverlay.Section
+    | NavigationItemOverlay.Tab
+    | NavigationItemOverlay.Variant;
+
+export declare namespace NavigationItemOverlay {
+    export interface Page {
+        type: "page";
+        title: string | undefined;
+        slug: string | undefined;
+    }
+    export interface Section {
+        type: "section";
+        title: string | undefined;
+        slug: string | undefined;
+        contents: NavigationItemOverlay[] | undefined;
+    }
+    export interface Tab {
+        type: "tab";
+        tabId: string;
+        layout: NavigationItemOverlay[] | undefined;
+        variants: VariantOverlay[] | undefined;
+    }
+    export interface Variant {
+        type: "variant";
+        title: string | undefined;
+        subtitle: string | undefined;
+        slug: string | undefined;
+    }
+}
+
+export interface VariantOverlay {
+    title: string | undefined;
+    subtitle: string | undefined;
+    slug: string | undefined;
 }

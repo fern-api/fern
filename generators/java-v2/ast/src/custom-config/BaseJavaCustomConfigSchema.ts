@@ -27,6 +27,7 @@ export const BaseJavaCustomConfigSchema = z.object({
     "collapse-optional-nullable": z.boolean().optional(),
     "custom-readme-sections": z.array(CustomReadmeSectionSchema).optional(),
     "custom-pager-name": z.string().optional(),
+    "offset-semantics": z.enum(["item-index", "page-index"]).optional(),
     "default-timeout-in-seconds": z.number().optional(),
     "gradle-distribution-url": z.string().optional(),
     "gradle-plugin-management": z.string().optional(),
@@ -34,6 +35,7 @@ export const BaseJavaCustomConfigSchema = z.object({
     "output-directory": z.enum(["source-root", "project-root"]).optional(),
     "custom-interceptors": z.boolean().optional(),
     "omit-fern-headers": z.boolean().optional(),
+    "retry-status-codes": z.optional(z.enum(["legacy", "recommended"])),
 
     // Hidden options (for debugging).
     "enable-gradle-profiling": z.boolean().optional(),

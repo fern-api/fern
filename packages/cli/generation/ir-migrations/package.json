@@ -57,6 +57,7 @@
     "@fern-fern/ir-v62-sdk": "catalog:",
     "@fern-fern/ir-v63-sdk": "catalog:",
     "@fern-fern/ir-v65-sdk": "catalog:",
+    "@fern-fern/ir-v66-sdk": "catalog:",
     "lodash-es": "catalog:"
   },
   "devDependencies": {

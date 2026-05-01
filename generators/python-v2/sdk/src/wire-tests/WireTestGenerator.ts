@@ -1,4 +1,4 @@
-import { getOriginalName, getWireValue } from "@fern-api/base-generator";
+import { GeneratorError, getOriginalName, getWireValue } from "@fern-api/base-generator";
 import { FernGeneratorExec } from "@fern-api/browser-compatible-base-generator";
 import { FernIr as DynamicFernIr } from "@fern-api/dynamic-ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
@@ -37,7 +37,7 @@ export class WireTestGenerator {
         this.context = context;
         const dynamicIr = ir.dynamic;
         if (!dynamicIr) {
-            throw new Error("Cannot generate wire tests without dynamic IR");
+            throw GeneratorError.internalError("Cannot generate wire tests without dynamic IR");
         }
         this.dynamicIr = dynamicIr;
         this.wireMockConfigContent = this.getWireMockConfigContent();
@@ -48,7 +48,10 @@ export class WireTestGenerator {
             config: {
                 organization: context.config.organization,
                 workspaceName: context.config.workspaceName,
-                customConfig: context.customConfig
+                // Pass the raw customConfig (not the parsed SdkCustomConfigSchema) so that
+                // fields consumed by the dynamic snippets generator (e.g. pydantic_config)
+                // are preserved. SdkCustomConfigSchema.parse() strips unknown keys.
+                customConfig: context.config.customConfig
             } as FernGeneratorExec.GeneratorConfig
         });
     }
@@ -689,9 +692,15 @@ export class WireTestGenerator {
 
         for (const [key, value] of Object.entries(queryParams)) {
             if (value != null) {
-                const isDatetimeTyped = this.isDatetimeTypedQueryParam(endpoint, key);
-                const normalized = this.normalizeDatetimeQueryParamValue(String(value), isDatetimeTyped);
-                entries.push(`"${this.escapeStringForPython(key)}": "${this.escapeStringForPython(normalized)}"`);
+                if (Array.isArray(value) && value.length > 1) {
+                    // Multi-value: emit as Python list
+                    const items = value.map((v: unknown) => `"${this.escapeStringForPython(String(v))}"`);
+                    entries.push(`"${this.escapeStringForPython(key)}": [${items.join(", ")}]`);
+                } else {
+                    const isDatetimeTyped = this.isDatetimeTypedQueryParam(endpoint, key);
+                    const normalized = this.normalizeDatetimeQueryParamValue(String(value), isDatetimeTyped);
+                    entries.push(`"${this.escapeStringForPython(key)}": "${this.escapeStringForPython(normalized)}"`);
+                }
             }
         }
 

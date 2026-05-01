@@ -1,0 +1,74 @@
+openapi: 3.1.0
+info:
+  title: No Content Response Status Code Preservation
+  version: 1.0.0
+  description: >
+    Regression fixture for a bug where an OpenAPI endpoint declaring only a
+    2xx no-content response (e.g. 204) caused the status code to be dropped
+    during OpenAPI -> IR conversion, so downstream consumers defaulted to 200.
+
+paths:
+  # Endpoint with ONLY a 204 response and no response body. The resulting IR
+  # must carry statusCode = 204 on the endpoint response.
+  /plants/{plantId}:
+    delete:
+      summary: Delete a plant
+      operationId: deletePlant
+      parameters:
+        - name: plantId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Plant successfully deleted
+
+  # Endpoint with BOTH a 200 response (with body) and a 204 no-content
+  # response. The body-bearing 200 must remain the primary response; the 204
+  # must not override it.
+  /plants/{plantId}/rename:
+    post:
+      summary: Rename a plant (returns the renamed plant or 204 if unchanged)
+      operationId: renamePlant
+      parameters:
+        - name: plantId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RenamePlantRequest"
+      responses:
+        "200":
+          description: Plant renamed successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Plant"
+        "204":
+          description: No change — new name matched existing name
+
+components:
+  schemas:
+    RenamePlantRequest:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+    Plant:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+        name:
+          type: string

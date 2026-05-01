@@ -187,7 +187,8 @@ export class LegacyLocalGenerationRunner {
             inspect: false,
             ai: undefined,
             skipFernignore: args.skipFernignore,
-            requireEnvVars: args.requireEnvVars
+            requireEnvVars: args.requireEnvVars,
+            disableTelemetry: !this.context.telemetry.isTelemetryEnabled()
         });
 
         if (taskContext.getResult() === TaskResult.Failure) {
@@ -228,7 +229,8 @@ export class LegacyLocalGenerationRunner {
         const executionEnvironment = new ContainerExecutionEnvironment({
             containerImage,
             keepContainer: args.keepContainer ?? false,
-            runner: args.containerEngine
+            runner: args.containerEngine,
+            disableTelemetry: !this.context.telemetry.isTelemetryEnabled()
         });
 
         const runner = new GenerationRunner(executionEnvironment);

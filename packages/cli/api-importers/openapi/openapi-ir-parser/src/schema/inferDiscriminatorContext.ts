@@ -1,5 +1,7 @@
 import { OpenAPIV3 } from "openapi-types";
 
+import { getExtension } from "../getExtension.js";
+import { FernOpenAPIExtension } from "../openapi/v3/extensions/fernExtensions.js";
 import { SchemaParserContext } from "./SchemaParserContext.js";
 import { isReferenceObject } from "./utils/isReferenceObject.js";
 
@@ -88,6 +90,23 @@ function variantMatchesSseSpec(schema: OpenAPIV3.SchemaObject, context: SchemaPa
     }
 
     return hasEvent;
+}
+
+/**
+ * Resolves the discriminator context from an explicit extension value, falling
+ * back to inference from variant shapes when no extension is set.
+ */
+export function resolveDiscriminatorContext({
+    discriminator,
+    context
+}: {
+    discriminator: OpenAPIV3.DiscriminatorObject;
+    context: SchemaParserContext;
+}): "data" | "protocol" {
+    return (
+        getExtension<"data" | "protocol">(discriminator, FernOpenAPIExtension.DISCRIMINATOR_CONTEXT) ??
+        inferDiscriminatorContext({ discriminator, context })
+    );
 }
 
 /**

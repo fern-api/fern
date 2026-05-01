@@ -1,0 +1,7 @@
+- summary: |
+    Respect the version that the CLI provides via the IR's publish config when
+    generating for `output.location: local-file-system`. Previously the Go
+    generator only read the SDK version from its output mode, which is empty
+    for local-file-system generation — so `fern generate --version X.Y.Z
+    --local` did not stamp the generated Go SDK with the requested version.
+  type: fix

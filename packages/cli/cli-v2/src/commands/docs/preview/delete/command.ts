@@ -34,11 +34,14 @@ export class DeleteCommand {
 
         context.stderr.debug(`Deleting preview site: ${resolvedUrl}`);
 
-        const deleteResponse = await fdr.docs.v2.write.deleteDocsSite({
-            url: resolvedUrl as Parameters<typeof fdr.docs.v2.write.deleteDocsSite>[0]["url"]
-        });
-        if (!deleteResponse.ok) {
-            switch (deleteResponse.error.error) {
+        try {
+            await fdr.docs.v2.write.deleteDocsSite({
+                url: resolvedUrl as Parameters<typeof fdr.docs.v2.write.deleteDocsSite>[0]["url"]
+            });
+        } catch (error) {
+            const errorObj = error as Record<string, unknown>;
+            const errorType = errorObj?.error as string | undefined;
+            switch (errorType) {
                 case "UnauthorizedError":
                     throw CliError.unauthorized(
                         "You do not have permissions to delete this preview site. Reach out to support@buildwithfern.com"

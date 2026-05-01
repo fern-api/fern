@@ -1,5 +1,5 @@
 import { DEFAULT_GROUP_GENERATORS_CONFIG_KEY, generatorsYml } from "@fern-api/configuration";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
 import semver from "semver";
 
 import { GENERATOR_INVOCATIONS } from "./generatorInvocations.js";
@@ -45,7 +45,9 @@ export async function addGenerator({
                         ) === normalizedGeneratorName
                 )
             ) {
-                context.failAndThrow(`${generatorName} is already installed in group ${groupName}.`);
+                context.failAndThrow(`${generatorName} is already installed in group ${groupName}.`, undefined, {
+                    code: CliError.Code.ConfigError
+                });
             }
             const latestVersion = await getLatestGeneratorVersion({
                 cliVersion,

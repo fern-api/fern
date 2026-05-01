@@ -1,4 +1,4 @@
-import { AbstractFormatter } from "@fern-api/base-generator";
+import { AbstractFormatter } from "@fern-api/browser-compatible-base-generator";
 import { findDotnetToolPath } from "@fern-api/csharp-base";
 import { ChildProcessWithoutNullStreams, spawn } from "child_process";
 import execa from "execa";

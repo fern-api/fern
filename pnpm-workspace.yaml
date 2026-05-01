@@ -42,6 +42,7 @@ trustPolicyIgnoreAfter: 1440
 # without npm provenance attestation.
 trustPolicyExclude:
   - "@fern-api/replay"
+  - "@fern-api/fdr-sdk"
 
 # Block transitive dependencies from using exotic sources (git repos, tarball URLs).
 # Only direct dependencies may use non-registry sources.
@@ -57,15 +58,14 @@ catalog:
   "@boundaryml/baml": ^0.219.0
   "@bufbuild/protobuf": ^2.2.5
   "@bufbuild/protoplugin": 2.2.5
-  "@fern-api/docs-parsers": 0.0.65
   "@fern-api/fai-sdk": 0.0.6-2ee1b7e28
-  "@fern-api/fdr-sdk": 1.1.13-c1ad12a2b8
-  "@fern-api/generator-cli": 0.9.4
+  "@fern-api/fdr-sdk": 1.2.0-1d73d2e141
+  "@fern-api/generator-cli": 0.9.22
   "@fern-api/ui-core-utils": 0.129.4-b6c699ad2
   "@fern-api/venus-api-sdk": 0.22.34
   "@fern-fern/docs-config": 0.0.80
   "@fern-fern/fdr-test-sdk": ^0.0.5297
-  "@fern-fern/fiddle-sdk": 0.0.64
+  "@fern-fern/fiddle-sdk": 0.0.85
   "@fern-fern/generator-exec-sdk": ^0.0.1167
   "@fern-fern/generators-sdk": 0.114.0-5745f9e74
   "@fern-fern/ir-v53-sdk": 1.0.1
@@ -80,6 +80,7 @@ catalog:
   "@fern-fern/ir-v62-sdk": 1.0.1
   "@fern-fern/ir-v63-sdk": 1.0.2
   "@fern-fern/ir-v65-sdk": 0.0.5
+  "@fern-fern/ir-v66-sdk": 0.0.1
   "@fern-fern/legacy-docs-config": 0.0.58
   "@fern-fern/postman-sdk": 0.1.1
   "@inquirer/prompts": ^7.1.0
@@ -87,6 +88,7 @@ catalog:
   "@open-rpc/meta-schema": ^1.14.9
   "@redocly/openapi-core": ^1.4.1
   "@rolldown/binding-darwin-arm64": 1.0.0-rc.5
+  "@sentry/cli": ^2.42.2
   "@types/cli-progress": ^3.11.6
   "@types/cors": ^2.8.13
   "@types/decompress": ^4.2.7
@@ -240,10 +242,10 @@ catalog:
   unified: ^11.0.5
   unist-util-visit: ^5.0.0
   url-join: ^4.0.1
-  uuid: ^9.0.1
+  uuid: ^14.0.0
   validate-npm-package-name: ^5.0.1
-  "@vitest/coverage-v8": 4.1.0
-  vitest: 4.1.0
+  "@vitest/coverage-v8": 4.1.4
+  vitest: 4.1.4
   watcher: ^2.3.1
   whatwg-mimetype: ^4.0.0
   ws: ^8.20.0

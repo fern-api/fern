@@ -1,6 +1,9 @@
 irVersion: v66
 displayName: Pydantic Model
 image: fernapi/fern-pydantic-model
+# This generator is no longer actively supported. The workspace is retained for
+# historical reference but seed tests, publishing, and builds are skipped.
+disabled: true
 changelogLocation: ../../generators/python/pydantic/versions.yml
 
 buildScripts:

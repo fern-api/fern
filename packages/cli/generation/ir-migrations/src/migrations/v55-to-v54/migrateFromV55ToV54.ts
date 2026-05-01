@@ -1,7 +1,8 @@
 import { GeneratorName } from "@fern-api/configuration-loader";
 import { assertNever } from "@fern-api/core-utils";
-import { mapValues } from "lodash-es";
+import { CliError } from "@fern-api/task-context";
 
+import { mapValues } from "lodash-es";
 import { IrSerialization } from "../../ir-serialization/index.js";
 import { IrVersions } from "../../ir-versions/index.js";
 import {
@@ -122,7 +123,7 @@ function convertTypes(
                     );
                 },
                 _other: () => {
-                    throw new Error("Encountered unknown shape");
+                    throw new CliError({ message: "Encountered unknown shape", code: CliError.Code.InternalError });
                 }
             })
         };
@@ -333,7 +334,10 @@ function convertTypeReference(typeReference: IrVersions.V55.types.TypeReference)
         named: IrVersions.V54.types.TypeReference.named,
         unknown: IrVersions.V54.types.TypeReference.unknown,
         _other: () => {
-            throw new Error("Unknown type reference: " + typeReference.type);
+            throw new CliError({
+                message: "Unknown type reference: " + typeReference.type,
+                code: CliError.Code.InternalError
+            });
         }
     });
 }
@@ -370,7 +374,10 @@ function convertContainerType(container: IrVersions.V55.types.ContainerType): Ir
             }),
         literal: IrVersions.V54.types.ContainerType.literal,
         _other: () => {
-            throw new Error("Unknown ContainerType: " + container.type);
+            throw new CliError({
+                message: "Unknown ContainerType: " + container.type,
+                code: CliError.Code.InternalError
+            });
         }
     });
 }
@@ -399,7 +406,10 @@ function convertSingleUnionTypeProperties(
                 }),
             noProperties: IrVersions.V54.types.SingleUnionTypeProperties.noProperties,
             _other: () => {
-                throw new Error(`Unknown SingleUnionTypeProperties: ${JSON.stringify(properties)}`);
+                throw new CliError({
+                    message: `Unknown SingleUnionTypeProperties: ${JSON.stringify(properties)}`,
+                    code: CliError.Code.InternalError
+                });
             }
         }
     );
@@ -415,7 +425,10 @@ function convertResolvedType(
             IrVersions.V54.types.ResolvedTypeReference.primitive(convertPrimitiveType(primitiveType)),
         unknown: IrVersions.V54.types.ResolvedTypeReference.unknown,
         _other: () => {
-            throw new Error("Unknown ResolvedTypeReference: " + resolvedType.type);
+            throw new CliError({
+                message: "Unknown ResolvedTypeReference: " + resolvedType.type,
+                code: CliError.Code.InternalError
+            });
         }
     });
 }
@@ -664,7 +677,10 @@ function convertSdkRequestShape(shape: IrVersions.V55.http.SdkRequestShape): IrV
             IrVersions.V54.http.SdkRequestShape.justRequestBody(convertSdkRequestBodyType(reference)),
         wrapper: IrVersions.V54.http.SdkRequestShape.wrapper,
         _other: () => {
-            throw new Error("Unknown SdkRequestShape: " + shape.type);
+            throw new CliError({
+                message: "Unknown SdkRequestShape: " + shape.type,
+                code: CliError.Code.InternalError
+            });
         }
     });
 }
@@ -723,7 +739,10 @@ function convertRequestBody(requestBody: IrVersions.V55.http.HttpRequestBody): I
             return IrVersions.V54.http.HttpRequestBody.bytes(bytes);
         },
         _other: () => {
-            throw new Error("Unknown HttpRequestBody: " + requestBody.type);
+            throw new CliError({
+                message: "Unknown HttpRequestBody: " + requestBody.type,
+                code: CliError.Code.InternalError
+            });
         }
     });
 }

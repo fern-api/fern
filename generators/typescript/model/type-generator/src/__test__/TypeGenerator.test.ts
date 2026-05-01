@@ -105,6 +105,7 @@ describe("TypeGenerator", () => {
                 extends: [],
                 types: [],
                 baseProperties: [],
+                default: undefined,
                 discriminatorContext: undefined
             });
             const result = generator.generateType(createBaseArgs(shape));
@@ -119,7 +120,8 @@ describe("TypeGenerator", () => {
                         type: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
                         docs: undefined
                     }
-                ]
+                ],
+                baseProperties: undefined
             });
             const result = generator.generateType(createBaseArgs(shape));
             expect(result.type).toBe("undiscriminatedUnion");

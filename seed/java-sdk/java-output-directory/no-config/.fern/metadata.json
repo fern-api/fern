@@ -5,5 +5,8 @@
   "generatorConfig": {
     "package-prefix": "com.test.sdk"
   },
-  "originGitCommit": "DUMMY"
+  "originGitCommit": "DUMMY",
+  "invokedBy": "ci",
+  "requestedVersion": "0.0.1",
+  "ciProvider": "github"
 }

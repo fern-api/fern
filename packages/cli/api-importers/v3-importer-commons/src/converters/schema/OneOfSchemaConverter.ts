@@ -10,6 +10,7 @@ import {
 } from "@fern-api/ir-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 import { FernDiscriminatedExtension } from "../../extensions/x-fern-discriminated.js";
+import { FernDiscriminatorContextExtension } from "../../extensions/x-fern-discriminator-context.js";
 import { FernEnumExtension } from "../../extensions/x-fern-enum.js";
 import { AbstractConverter, AbstractConverterContext } from "../../index.js";
 import { convertProperties } from "../../utils/ConvertProperties.js";
@@ -238,6 +239,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
 
                 // Extract schema title once for reuse
                 const schemaTitle = resolvedSchema.resolved ? resolvedSchema.value.title : undefined;
+                const schemaDescription = resolvedSchema.resolved ? resolvedSchema.value.description : undefined;
 
                 // Determine variant display name with fallback priority:
                 // 1. Schema's title field (explicit user intention)
@@ -252,7 +254,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
                 }
 
                 unionTypes.push({
-                    docs: undefined,
+                    docs: schemaDescription,
                     discriminantValue: nameAndWireValue,
                     availability: convertedSchema.availability,
                     displayName: variantDisplayName,
@@ -315,6 +317,12 @@ export class OneOfSchemaConverter extends AbstractConverter<
             referencedTypes.add(typeId);
         }
 
+        const discriminatorContextExtension = new FernDiscriminatorContextExtension({
+            context: this.context,
+            breadcrumbs: [...this.breadcrumbs, "discriminator"],
+            node: this.schema.discriminator
+        });
+
         return {
             type: Type.union({
                 baseProperties,
@@ -325,7 +333,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
                 extends: extends_,
                 types: unionTypes,
                 default: undefined,
-                discriminatorContext: undefined
+                discriminatorContext: discriminatorContextExtension.convert()
             }),
             referencedTypes,
             inlinedTypes: {
@@ -379,9 +387,16 @@ export class OneOfSchemaConverter extends AbstractConverter<
                 }
 
                 if (maybeTypeReference.ok) {
+                    // Resolve the reference to get the actual schema's description
+                    const resolvedSchema = this.context.resolveReference<OpenAPIV3_1.SchemaObject>({
+                        reference: subSchema,
+                        breadcrumbs: this.breadcrumbs
+                    });
+                    const schemaDescription = resolvedSchema.resolved ? resolvedSchema.value.description : undefined;
+
                     unionTypes.push({
                         type: maybeTypeReference.reference,
-                        docs: subSchema.description
+                        docs: schemaDescription
                     });
                 }
                 const typeId = this.context.getTypeIdFromSchemaReference(subSchema);
@@ -391,7 +406,8 @@ export class OneOfSchemaConverter extends AbstractConverter<
                 continue;
             }
 
-            const extendedSubSchema = this.extendSubSchema(subSchema);
+            const hasSiblingProperties = Object.keys(this.schema.properties ?? {}).length > 0;
+            const extendedSubSchema = hasSiblingProperties ? undefined : this.extendSubSchema(subSchema);
 
             const schemaId = this.context.convertBreadcrumbsToName([`${this.id}_${index}`]);
             const displayName = subSchema.title;
@@ -442,12 +458,35 @@ export class OneOfSchemaConverter extends AbstractConverter<
             }
         }
 
+        const {
+            convertedProperties: siblingProperties,
+            referencedTypes: siblingReferencedTypes,
+            inlinedTypesFromProperties: siblingInlinedTypes
+        } = convertProperties({
+            properties: this.schema.properties ?? {},
+            required: this.schema.required ?? [],
+            breadcrumbs: this.breadcrumbs,
+            context: this.context,
+            errorCollector: this.context.errorCollector
+        });
+
+        for (const typeId of Object.keys(siblingInlinedTypes)) {
+            referencedTypes.add(typeId);
+        }
+        for (const ref of siblingReferencedTypes) {
+            referencedTypes.add(ref);
+        }
+
         return {
             type: Type.undiscriminatedUnion({
-                members: unionTypes
+                members: unionTypes,
+                baseProperties: siblingProperties.length > 0 ? siblingProperties : undefined
             }),
             referencedTypes,
-            inlinedTypes
+            inlinedTypes: {
+                ...inlinedTypes,
+                ...siblingInlinedTypes
+            }
         };
     }
 
@@ -474,7 +513,15 @@ export class OneOfSchemaConverter extends AbstractConverter<
             return undefined;
         }
 
-        const withoutNull = schemaArray.filter((subSchema) => !("type" in subSchema && subSchema.type === "null"));
+        const withoutNull = schemaArray.filter(
+            (subSchema) =>
+                !(
+                    typeof subSchema === "object" &&
+                    subSchema !== null &&
+                    "type" in subSchema &&
+                    subSchema.type === "null"
+                )
+        );
 
         if (withoutNull.length === 0) {
             this.context.errorCollector.collect({

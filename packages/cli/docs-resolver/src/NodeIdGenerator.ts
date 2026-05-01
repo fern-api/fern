@@ -1,4 +1,5 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
+import { CliError } from "@fern-api/task-context";
 import crypto from "crypto";
 
 function hash(id: string): string {
@@ -28,7 +29,10 @@ export class NodeIdGenerator {
             hashedId = this.#getHashedId(id);
             loop++;
             if (loop > 100) {
-                throw new Error(`Infinite loop detected for id: ${id}`);
+                throw new CliError({
+                    message: `Infinite loop detected for id: ${id}`,
+                    code: CliError.Code.ReferenceError
+                });
             }
         }
         return hashedId;

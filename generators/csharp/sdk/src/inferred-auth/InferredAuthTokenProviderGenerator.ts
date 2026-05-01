@@ -1,3 +1,4 @@
+import { GeneratorError } from "@fern-api/base-generator";
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast, is } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
@@ -215,7 +216,7 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
             this.bufferInMinutesField == null ||
             this.expiryProperty == null
         ) {
-            throw new Error("Caching fields should be defined when expiryProperty is not null");
+            throw GeneratorError.internalError("Caching fields should be defined when expiryProperty is not null");
         }
 
         const cachedHeadersField = this.cachedHeadersField;
@@ -350,14 +351,14 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
             if (is.ClassReference(typeRef)) {
                 return typeRef;
             }
-            throw new Error(
+            throw GeneratorError.internalError(
                 `Failed to get request class reference for inferred auth token endpoint. ` +
                     `Expected ClassReference but got ${typeRef.constructor.name}. ` +
                     `Service ID: ${this.tokenEndpointReference.serviceId}, ` +
                     `Endpoint ID: ${this.tokenEndpointReference.endpointId}`
             );
         }
-        throw new Error(
+        throw GeneratorError.internalError(
             `Failed to get request type reference for inferred auth token endpoint. ` +
                 `Service ID: ${this.tokenEndpointReference.serviceId}, ` +
                 `Endpoint ID: ${this.tokenEndpointReference.endpointId}. ` +

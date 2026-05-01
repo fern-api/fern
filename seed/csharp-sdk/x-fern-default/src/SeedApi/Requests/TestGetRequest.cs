@@ -7,10 +7,10 @@ namespace SeedApi;
 public record TestGetRequest
 {
     [JsonIgnore]
-    public required string Region { get; set; }
+    public string Region { get; set; } = "us-east-1";
 
     [JsonIgnore]
-    public string? Limit { get; set; }
+    public string? Limit { get; set; } = "100";
 
     /// <inheritdoc />
     public override string ToString()

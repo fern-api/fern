@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Present an interactive TUI dropdown when the user omits `--api`,
+    `--instance`, or `--group` flags and multiple options exist.
+    In TTY environments the CLI now prompts for selection instead of
+    failing hard. Non-TTY environments retain the previous error behavior.
+  type: feat

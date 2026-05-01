@@ -7,7 +7,7 @@ import {
 import { CasingsGenerator } from "@fern-api/casings-generator";
 import { HttpEndpointReferenceParser } from "@fern-api/fern-definition-schema";
 import { HttpMethod } from "@fern-api/ir-sdk";
-
+import { CliError } from "@fern-api/task-context";
 import { constructFernFileContext, FernFileContext } from "../FernFileContext.js";
 import { parseReferenceToEndpointName } from "../utils/parseReferenceToEndpointName.js";
 import { ResolvedEndpoint } from "./ResolvedEndpoint.js";
@@ -29,7 +29,10 @@ export class EndpointResolverImpl implements EndpointResolver {
     public resolveEndpointOrThrow({ endpoint, file }: { endpoint: string; file: FernFileContext }): ResolvedEndpoint {
         const resolvedEndpoint = this.resolveEndpoint({ endpoint, file });
         if (resolvedEndpoint == null) {
-            throw new Error("Cannot resolve endpoint: " + endpoint + " in file " + file.relativeFilepath);
+            throw new CliError({
+                message: "Cannot resolve endpoint: " + endpoint + " in file " + file.relativeFilepath,
+                code: CliError.Code.ResolutionError
+            });
         }
         return resolvedEndpoint;
     }

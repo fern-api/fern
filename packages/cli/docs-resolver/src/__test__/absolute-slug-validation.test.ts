@@ -72,7 +72,7 @@ describe("absolute slug validation", () => {
             throw new Error("Failed to resolve docs root");
         }
 
-        const pageNodes = findPageNodesInTree(resolvedDocs.config.root);
+        const pageNodes = findPageNodesInTree(resolvedDocs.config.root as FernNavigation.V1.NavigationNode);
 
         const pageWithAbsoluteSlug = pageNodes.find((node) => node.pageId.includes("page-with-absolute-slug.mdx"));
         expect(pageWithAbsoluteSlug).toBeDefined();
@@ -116,7 +116,7 @@ describe("absolute slug validation", () => {
             throw new Error("Failed to resolve docs root");
         }
 
-        const pageNodes = findPageNodesInTree(resolvedDocs.config.root);
+        const pageNodes = findPageNodesInTree(resolvedDocs.config.root as FernNavigation.V1.NavigationNode);
 
         for (const pageNode of pageNodes) {
             expect(pageNode.slug).not.toMatch(/^\/\/[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/);

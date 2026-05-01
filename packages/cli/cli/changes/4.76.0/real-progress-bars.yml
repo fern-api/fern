@@ -1,0 +1,4 @@
+- summary: |
+    Replace fake time-based extraction progress bar with real file-count
+    tracking, and add a new progress bar for Windows symlink patching.
+  type: feat

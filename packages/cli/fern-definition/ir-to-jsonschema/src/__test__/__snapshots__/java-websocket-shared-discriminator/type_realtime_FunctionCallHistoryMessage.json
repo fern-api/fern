@@ -1,0 +1,41 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "const": "History"
+    },
+    "function_calls": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/realtime.FunctionCall"
+      }
+    }
+  },
+  "required": [
+    "type",
+    "function_calls"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "realtime.FunctionCall": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "arguments": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "arguments"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

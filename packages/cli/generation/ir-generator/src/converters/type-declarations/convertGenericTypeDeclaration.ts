@@ -1,6 +1,6 @@
 import { isRawObjectDefinition, parseGeneric, RawSchemas } from "@fern-api/fern-definition-schema";
 import { Type } from "@fern-api/ir-sdk";
-
+import { CliError } from "@fern-api/task-context";
 import { FernFileContext } from "../../FernFileContext.js";
 import { TypeResolver } from "../../resolvers/TypeResolver.js";
 import { parseTypeName } from "../../utils/parseTypeName.js";
@@ -20,7 +20,10 @@ export function convertGenericTypeDeclaration({
 
     const maybeGeneric = parseGeneric(genericInstantiation);
     if (maybeGeneric == null) {
-        throw new Error(`Invalid generic type definition: ${genericInstantiation}`);
+        throw new CliError({
+            message: `Invalid generic type definition: ${genericInstantiation}`,
+            code: CliError.Code.ValidationError
+        });
     }
 
     const resolvedBaseGeneric = typeResolver.getDeclarationOfNamedTypeOrThrow({
@@ -57,5 +60,8 @@ export function convertGenericTypeDeclaration({
         });
     }
 
-    throw new Error(`Generic type definition not supported: ${genericInstantiation}`);
+    throw new CliError({
+        message: `Generic type definition not supported: ${genericInstantiation}`,
+        code: CliError.Code.ValidationError
+    });
 }

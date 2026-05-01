@@ -21,7 +21,7 @@ func VerifyRequestCount(
 	testId string,
 	method string,
 	urlPath string,
-	queryParams map[string]string,
+	queryParams map[string]any,
 	expected int,
 ) {
 	wiremockURL := os.Getenv("WIREMOCK_URL")
@@ -46,9 +46,23 @@ func VerifyRequestCount(
 			}
 			reqBody.WriteString(`"`)
 			reqBody.WriteString(key)
-			reqBody.WriteString(`":{"equalTo":"`)
-			reqBody.WriteString(value)
-			reqBody.WriteString(`"}`)
+			switch v := value.(type) {
+			case string:
+				reqBody.WriteString(`":{"equalTo":"`)
+				reqBody.WriteString(v)
+				reqBody.WriteString(`"}`)
+			case []string:
+				reqBody.WriteString(`":{"hasExactly":[`)
+				for i, item := range v {
+					if i > 0 {
+						reqBody.WriteString(",")
+					}
+					reqBody.WriteString(`{"equalTo":"`)
+					reqBody.WriteString(item)
+					reqBody.WriteString(`"}`)
+				}
+				reqBody.WriteString(`]}`)
+			}
 			first = false
 		}
 		reqBody.WriteString("}")
@@ -116,7 +130,7 @@ func TestEndpointsDuplicateNamesBGetWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestEndpointsDuplicateNamesBGetWithWireMock", "GET", "/duplicate-names-b/id", map[string]string{"expand": "true"}, 1)
+	VerifyRequestCount(t, "TestEndpointsDuplicateNamesBGetWithWireMock", "GET", "/duplicate-names-b/id", map[string]interface{}{"expand": "true"}, 1)
 }
 
 func TestEndpointsDuplicateNamesBListWithWireMock(
@@ -147,5 +161,5 @@ func TestEndpointsDuplicateNamesBListWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestEndpointsDuplicateNamesBListWithWireMock", "GET", "/duplicate-names-b", map[string]string{"cursor": "cursor", "size": "1"}, 1)
+	VerifyRequestCount(t, "TestEndpointsDuplicateNamesBListWithWireMock", "GET", "/duplicate-names-b", map[string]interface{}{"cursor": "cursor", "size": "1"}, 1)
 }

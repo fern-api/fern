@@ -8,5 +8,8 @@
     "clientConstructorName": "New"
   },
   "originGitCommit": "DUMMY",
+  "invokedBy": "ci",
+  "requestedVersion": "0.0.1",
+  "ciProvider": "github",
   "sdkVersion": "v0.0.1"
 }

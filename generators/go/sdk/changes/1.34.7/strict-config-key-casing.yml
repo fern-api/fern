@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Enforce strict config key casing in the Go SDK generator. Config keys in
+    `generators.yml` must now use exact camelCase (e.g., `importPath`, not
+    `importpath`). Previously, miscased keys were silently accepted by the v1
+    generator but ignored by the v2 generator, causing confusing `go mod tidy`
+    failures.
+  type: fix

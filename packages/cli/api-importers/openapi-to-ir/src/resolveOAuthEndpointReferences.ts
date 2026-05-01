@@ -122,7 +122,14 @@ function resolveOAuthScheme({
                     clientId: clientIdProp,
                     clientSecret: clientSecretProp,
                     scopes: undefined,
-                    customProperties: undefined
+                    customProperties: findCustomRequestProperties({
+                        ir,
+                        endpoint,
+                        excludeWireValues: [
+                            extractWireName(reqProps?.["client-id"], "client_id"),
+                            extractWireName(reqProps?.["client-secret"], "client_secret")
+                        ]
+                    })
                 },
                 responseProperties: {
                     accessToken: accessTokenProp,
@@ -293,6 +300,41 @@ function findRequestBodyProperty({
         propertyPath: undefined,
         property: RequestPropertyValue.body({ ...prop })
     };
+}
+
+function findCustomRequestProperties({
+    ir,
+    endpoint,
+    excludeWireValues
+}: {
+    ir: IntermediateRepresentation;
+    endpoint: FernIr.HttpEndpoint;
+    excludeWireValues: string[];
+}): FernIr.RequestProperty[] | undefined {
+    if (endpoint.requestBody == null) {
+        return undefined;
+    }
+
+    let properties: FernIr.ObjectProperty[] | undefined;
+    if (endpoint.requestBody.type === "inlinedRequestBody") {
+        properties = endpoint.requestBody.properties;
+    } else if (endpoint.requestBody.type === "reference" && endpoint.requestBody.requestBodyType.type === "named") {
+        properties = getObjectPropertiesForNamedType(ir, endpoint.requestBody.requestBodyType.typeId);
+    }
+
+    if (properties == null) {
+        return undefined;
+    }
+
+    const excludeSet = new Set(excludeWireValues);
+    const customProps = properties
+        .filter((prop) => !excludeSet.has(getWireValue(prop.name)))
+        .map((prop) => ({
+            propertyPath: undefined,
+            property: RequestPropertyValue.body({ ...prop })
+        }));
+
+    return customProps.length > 0 ? customProps : undefined;
 }
 
 function findResponseProperty({

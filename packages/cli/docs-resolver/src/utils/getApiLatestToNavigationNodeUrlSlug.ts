@@ -1,7 +1,7 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { kebabCase } from "lodash-es";
 
-export function getApiLatestToNavigationNodeUrlSlug<T extends { id: string; operationId?: string }>({
+export function getApiLatestToNavigationNodeUrlSlug<T extends { id: string; operationId?: string | null }>({
     item,
     parentSlug
 }: {

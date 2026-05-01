@@ -106,7 +106,8 @@
               "inline": false,
               "displayName": "Schema1",
               "type": "named"
-            }
+            },
+            "docs": "Schema 1 description"
           }
         ],
         "type": "undiscriminatedUnion"

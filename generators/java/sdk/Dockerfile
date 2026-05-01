@@ -40,6 +40,22 @@ RUN rm -f /opt/gradle/lib/jackson-core-*.jar && \
       -o /opt/gradle/lib/jackson-core-2.18.6.jar && \
     echo "e7e1bfa50f0a79db37e6aa37db111cf03aebf4a484b359d21127ab43ab2398c6  /opt/gradle/lib/jackson-core-2.18.6.jar" | sha256sum -c -
 
+# Replace vulnerable Bouncy Castle jars in Gradle distribution to fix CVE-2026-3505
+# (bcpg unbounded PGP AEAD chunk size leads to pre-auth resource exhaustion; fixed in 1.84).
+# bcprov and bcutil are upgraded in lockstep since bcpg 1.78+ requires a matching bcutil.
+RUN rm -f /opt/gradle/lib/plugins/bcpg-jdk18on-*.jar \
+          /opt/gradle/lib/plugins/bcprov-jdk18on-*.jar \
+          /opt/gradle/lib/plugins/bcutil-jdk18on-*.jar && \
+    curl -sL https://repo1.maven.org/maven2/org/bouncycastle/bcpg-jdk18on/1.84/bcpg-jdk18on-1.84.jar \
+      -o /opt/gradle/lib/plugins/bcpg-jdk18on-1.84.jar && \
+    echo "c0e6303a0d7589040f400950ecee87a14b81312e84ed15e5390ebb0c4566ddab  /opt/gradle/lib/plugins/bcpg-jdk18on-1.84.jar" | sha256sum -c - && \
+    curl -sL https://repo1.maven.org/maven2/org/bouncycastle/bcprov-jdk18on/1.84/bcprov-jdk18on-1.84.jar \
+      -o /opt/gradle/lib/plugins/bcprov-jdk18on-1.84.jar && \
+    echo "64d6c5a6121fcd927152dd182cbed39afe0fda641a970d9bcc0c9cb1858b2731  /opt/gradle/lib/plugins/bcprov-jdk18on-1.84.jar" | sha256sum -c - && \
+    curl -sL https://repo1.maven.org/maven2/org/bouncycastle/bcutil-jdk18on/1.84/bcutil-jdk18on-1.84.jar \
+      -o /opt/gradle/lib/plugins/bcutil-jdk18on-1.84.jar && \
+    echo "b374e16963421fb9cfb01cc20d7ad8fd2f8b8188e3eef0ec0a8965e245f7619a  /opt/gradle/lib/plugins/bcutil-jdk18on-1.84.jar" | sha256sum -c -
+
 # Update packages to get latest security fixes and remove unnecessary packages
 # Amazon Linux 2023 uses dnf instead of apt-get
 # Note: Amazon Linux 2023 has fewer pre-installed packages than Ubuntu, so we only

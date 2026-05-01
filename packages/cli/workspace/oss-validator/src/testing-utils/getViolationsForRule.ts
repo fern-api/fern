@@ -1,6 +1,7 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
-import { createMockTaskContext } from "@fern-api/task-context";
+import { CliError, createMockTaskContext } from "@fern-api/task-context";
+
 import { loadAPIWorkspace } from "@fern-api/workspace-loader";
 import stripAnsi from "strip-ansi";
 
@@ -30,11 +31,14 @@ export async function getViolationsForRule({
     });
 
     if (!result.didSucceed) {
-        throw new Error("API workspace failed to load");
+        throw new CliError({ message: "API workspace failed to load", code: CliError.Code.InternalError });
     }
 
     if (!(result.workspace instanceof OSSWorkspace)) {
-        throw new Error("Expected an OSS workspace but got a different type");
+        throw new CliError({
+            message: "Expected an OSS workspace but got a different type",
+            code: CliError.Code.InternalError
+        });
     }
 
     const violations = await runRulesOnOSSWorkspace({

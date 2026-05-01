@@ -27,6 +27,24 @@ types:
       error: ErrorEvent
       event: EventEvent
 
+  GroupCreatedEvent:
+    properties:
+      offset: string
+      group_id: string
+
+  GroupDeletedEvent:
+    properties:
+      offset: string
+      group_id: string
+
+  StreamEventDiscriminantInData:
+    discriminant:
+      value: type
+      context: protocol
+    union:
+      "group.created": GroupCreatedEvent
+      "group.deleted": GroupDeletedEvent
+
   StreamEvent:
     discriminant:
       value: event
@@ -112,6 +130,38 @@ service:
           response:
             error: BadRequestError
             body: "bad request"
+
+    streamEventsDiscriminantInData:
+      method: POST
+      path: /stream-events-discriminant-in-data
+      request:
+        name: StreamEventsDiscriminantInDataRequest
+        body:
+          properties:
+            query: string
+      response-stream:
+        type: StreamEventDiscriminantInData
+        format: sse
+      errors:
+        - BadRequestError
+      examples:
+        - name: "Stream events where discriminant is embedded in data and SSE event line is empty"
+          request:
+            query: "query"
+          response:
+            stream:
+              # The customer-facing SSE wire pattern: server sends an empty `event:`
+              # line and the union discriminant travels inside the data payload.
+              - event: ""
+                data:
+                  type: "group.created"
+                  offset: "offset-1"
+                  group_id: "g1"
+              - event: ""
+                data:
+                  type: "group.deleted"
+                  offset: "offset-2"
+                  group_id: "g2"
 
     streamEventsContextProtocol:
       method: POST

@@ -97,6 +97,9 @@ public final class SearchRequestNeighbor {
         @java.lang.Override
         public SearchRequestNeighbor deserialize(JsonParser p, DeserializationContext context) throws IOException {
             Object value = p.readValueAs(Object.class);
+            if (value instanceof Integer) {
+                return of((Integer) value);
+            }
             try {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(value, User.class));
             } catch (RuntimeException e) {
@@ -108,9 +111,6 @@ public final class SearchRequestNeighbor {
             try {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(value, String.class));
             } catch (RuntimeException e) {
-            }
-            if (value instanceof Integer) {
-                return of((Integer) value);
             }
             throw new JsonParseException(p, "Failed to deserialize");
         }

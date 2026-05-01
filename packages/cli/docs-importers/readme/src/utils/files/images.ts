@@ -1,6 +1,6 @@
 import { existsSync, mkdirSync } from "node:fs";
 import { dirname, join } from "node:path";
-
+import { CliError } from "@fern-api/task-context";
 import type { Result } from "../../types/result.js";
 import { fetchImage } from "../network.js";
 import { write } from "./file.js";
@@ -42,7 +42,10 @@ async function writeImageToFile(src: string, rootPath: string): Promise<string> 
     const imagePath = join(rootPath, filename);
 
     if (!isValidImageSrc(filename)) {
-        throw new Error(`${filename} - file extension not supported`);
+        throw new CliError({
+            message: `${filename} - file extension not supported`,
+            code: CliError.Code.InternalError
+        });
     }
     if (existsSync(imagePath)) {
         return imagePath;
@@ -51,7 +54,7 @@ async function writeImageToFile(src: string, rootPath: string): Promise<string> 
     try {
         mkdirSync(dirname(imagePath), { recursive: true });
     } catch (error) {
-        throw new Error(`${imagePath} - failed to create directory`);
+        throw new CliError({ message: `${imagePath} - failed to create directory`, code: CliError.Code.InternalError });
     }
 
     try {
@@ -59,7 +62,10 @@ async function writeImageToFile(src: string, rootPath: string): Promise<string> 
         write(imagePath, imageData);
         return imagePath;
     } catch (error) {
-        throw new Error(`${imagePath}: failed to download file from source`);
+        throw new CliError({
+            message: `${imagePath}: failed to download file from source`,
+            code: CliError.Code.NetworkError
+        });
     }
 }
 

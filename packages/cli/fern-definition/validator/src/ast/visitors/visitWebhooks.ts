@@ -86,6 +86,7 @@ export function visitWebhooks({
                                 audiences: noop,
                                 encoding: noop,
                                 default: noop,
+                                "client-default": noop,
                                 validation: noop,
                                 access: noop
                             });
@@ -144,6 +145,7 @@ function visitHeaders({
                 encoding: noop,
                 env: noop,
                 default: noop,
+                "client-default": noop,
                 validation: noop
             });
         }

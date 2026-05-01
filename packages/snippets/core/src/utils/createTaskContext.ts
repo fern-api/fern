@@ -23,6 +23,7 @@ export function createTaskContext(): TaskContext {
             // no-op
         },
         getResult: () => TaskResult.Success,
+        getLastFailureMessage: () => undefined,
         addInteractiveTask: () => {
             throw new Error("unimplemented");
         },

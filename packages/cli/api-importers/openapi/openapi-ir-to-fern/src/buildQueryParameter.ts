@@ -43,8 +43,9 @@ export function buildQueryParameter({
     };
 
     if (queryParameter.clientDefault != null) {
-        queryParameterSchema.default = queryParameter.clientDefault;
-    } else if (queryParameterDefault != null) {
+        queryParameterSchema["client-default"] = queryParameter.clientDefault;
+    }
+    if (queryParameterDefault != null) {
         queryParameterSchema.default = queryParameterDefault;
     }
 
@@ -76,6 +77,7 @@ export function buildQueryParameter({
 
     if (
         queryParameterSchema.default == null &&
+        queryParameterSchema["client-default"] == null &&
         queryParameterSchema["allow-multiple"] == null &&
         queryParameterSchema.docs == null &&
         queryParameterSchema.name == null &&

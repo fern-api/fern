@@ -232,14 +232,19 @@ export class ContainerScriptRunner extends ScriptRunner {
 
     public async stop(): Promise<void> {
         const logger = this.shouldStreamOutput() ? this.context.logger : undefined;
-        const killPromises = this.allSlots.flatMap((slot) =>
+        // Use `rm -f` to both stop and remove the container in one step. `kill`
+        // alone leaves stopped containers behind, which accumulate in `docker ps -a`
+        // across repeated seed runs.
+        const removePromises = this.allSlots.flatMap((slot) =>
             slot.scripts.map((script) =>
-                loggingExeca(logger, this.runner, ["kill", script.containerId], {
+                loggingExeca(logger, this.runner, ["rm", "-f", script.containerId], {
                     doNotPipeOutput: !this.shouldStreamOutput()
                 })
             )
         );
-        await Promise.all(killPromises);
+        await Promise.all(removePromises);
+        this.allSlots = [];
+        this.availableSlots = [];
     }
 
     protected async initialize(): Promise<void> {
@@ -398,11 +403,11 @@ export class ContainerScriptRunner extends ScriptRunner {
             for (const result of settledPromises) {
                 if (result.status === "fulfilled") {
                     for (const script of result.value.scripts) {
-                        await loggingExeca(logger, this.runner, ["kill", script.containerId], {
+                        await loggingExeca(logger, this.runner, ["rm", "-f", script.containerId], {
                             doNotPipeOutput: true
-                        }).catch((killError: unknown) => {
+                        }).catch((removeError: unknown) => {
                             CONSOLE_LOGGER.warn(
-                                `Best-effort cleanup: failed to kill container ${script.containerId}: ${killError}`
+                                `Best-effort cleanup: failed to remove container ${script.containerId}: ${removeError}`
                             );
                         });
                     }
@@ -448,11 +453,11 @@ export class ContainerScriptRunner extends ScriptRunner {
         } catch (error) {
             // Clean up any containers that started before the failure in this slot
             for (const script of scripts) {
-                await loggingExeca(logger, this.runner, ["kill", script.containerId], {
+                await loggingExeca(logger, this.runner, ["rm", "-f", script.containerId], {
                     doNotPipeOutput: true
-                }).catch((killError: unknown) => {
+                }).catch((removeError: unknown) => {
                     CONSOLE_LOGGER.warn(
-                        `Failed to kill container ${script.containerId} during slot cleanup: ${killError}`
+                        `Failed to remove container ${script.containerId} during slot cleanup: ${removeError}`
                     );
                 });
             }

@@ -29,9 +29,15 @@ export declare namespace CompileCommand {
 export class CompileCommand {
     public async handle(context: Context, args: CompileCommand.Args): Promise<void> {
         const workspace = await context.loadWorkspaceOrThrow();
-        const { apiName, definition } = this.resolveApi(args, workspace);
+        const entries = this.resolveApiEntries(args, workspace);
 
-        await this.checkOrThrow({ context, workspace, apiName });
+        // --output writes to a single file path; it cannot target multiple APIs at once.
+        if (args.output != null && entries.length > 1) {
+            throw new CliError({
+                message: `--output requires --api when multiple APIs are configured`,
+                code: CliError.Code.ConfigError
+            });
+        }
 
         const compiler = new IrCompiler({
             context,
@@ -50,53 +56,45 @@ export class CompileCommand {
             irVersion: args["ir-version"]
         };
 
-        const result = args.dynamic
-            ? await compiler.compileDynamic({ apiName, definition, options })
-            : await compiler.compile({ apiName, definition, options });
+        for (const { apiName, definition } of entries) {
+            await this.checkOrThrow({ context, workspace, apiName });
 
-        await this.writeOutput(context, args, result.object);
+            const result = args.dynamic
+                ? await compiler.compileDynamic({ apiName, definition, options })
+                : await compiler.compile({ apiName, definition, options });
+
+            await this.writeOutput(context, args, result.object);
+        }
     }
 
-    private resolveApi(
+    /**
+     * Resolves the set of APIs to compile.
+     *
+     * - If `--api` is provided, returns only that API (throws if not found).
+     * - Otherwise returns all APIs in the workspace, matching the behavior of
+     *   `check`, `merge`, and `split` which also run on all APIs by default.
+     */
+    private resolveApiEntries(
         args: CompileCommand.Args,
         workspace: Workspace
-    ): { apiName: string; definition: ApiDefinition } {
-        const apiNames = Object.keys(workspace.apis);
+    ): Array<{ apiName: string; definition: ApiDefinition }> {
+        const allApiNames = Object.keys(workspace.apis);
 
         if (args.api != null) {
             const definition = workspace.apis[args.api];
             if (definition == null) {
-                const available = apiNames.join(", ");
+                const available = allApiNames.join(", ");
                 throw new CliError({
                     message: `API '${args.api}' not found. Available APIs: ${available}`,
                     code: CliError.Code.ConfigError
                 });
             }
-            return { apiName: args.api, definition };
+            return [{ apiName: args.api, definition }];
         }
 
-        if (apiNames.length === 1) {
-            const apiName = apiNames[0];
-            if (apiName == null) {
-                throw new CliError({
-                    message: "Internal error; no APIs found in workspace",
-                    code: CliError.Code.InternalError
-                });
-            }
+        return allApiNames.flatMap((apiName) => {
             const definition = workspace.apis[apiName];
-            if (definition == null) {
-                throw new CliError({
-                    message: `Internal error; API '${apiName}' not found in workspace`,
-                    code: CliError.Code.InternalError
-                });
-            }
-            return { apiName, definition };
-        }
-
-        const available = apiNames.join(", ");
-        throw new CliError({
-            message: `Multiple APIs found: ${available}. Use --api to select one.`,
-            code: CliError.Code.ConfigError
+            return definition != null ? [{ apiName, definition }] : [];
         });
     }
 

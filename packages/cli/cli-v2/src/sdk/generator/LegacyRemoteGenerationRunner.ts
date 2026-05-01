@@ -129,6 +129,7 @@ export class LegacyRemoteGenerationRunner {
                 token: args.token,
                 mode: this.mapMode(args.target),
                 fernignorePath: args.fernignorePath,
+                loginCommand: "fern auth login",
                 skipFernignore: args.skipFernignore,
                 absolutePathToPreview,
                 whitelabel: undefined,

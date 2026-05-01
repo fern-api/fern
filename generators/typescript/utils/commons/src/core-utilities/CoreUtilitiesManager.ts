@@ -244,7 +244,7 @@ export class CoreUtilitiesManager {
         );
 
         // Handle maxRetries override in requestWithRetries.ts
-        if (this.maxRetries != null && this.referencedCoreUtilities["fetcher"] != null) {
+        if (this.referencedCoreUtilities["fetcher"] != null && this.maxRetries != null) {
             const requestWithRetriesPath = path.join(
                 pathToRoot,
                 this.relativePackagePath,

@@ -143,6 +143,7 @@ function visitEndpoint({
                                 audiences: noop,
                                 encoding: noop,
                                 default: noop,
+                                "client-default": noop,
                                 validation: noop
                             });
                         }
@@ -211,6 +212,7 @@ function visitEndpoint({
                                             audiences: noop,
                                             encoding: noop,
                                             default: noop,
+                                            "client-default": noop,
                                             validation: noop
                                         });
                                     }
@@ -522,6 +524,7 @@ export function visitPathParameters({
                     availability: noop,
                     encoding: noop,
                     default: noop,
+                    "client-default": noop,
                     validation: noop,
                     name: noop,
                     audiences: noop
@@ -568,6 +571,7 @@ function visitHeaders({
                 encoding: noop,
                 env: noop,
                 default: noop,
+                "client-default": noop,
                 validation: noop
             });
         }

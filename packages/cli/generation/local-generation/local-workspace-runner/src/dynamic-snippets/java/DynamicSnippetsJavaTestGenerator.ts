@@ -3,7 +3,7 @@ import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-a
 import { dynamic } from "@fern-api/ir-sdk";
 import { Config, DynamicSnippetsGenerator } from "@fern-api/java-dynamic-snippets";
 import { loggingExeca } from "@fern-api/logging-execa";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { cp, mkdir, writeFile } from "fs/promises";
 import path from "path";
@@ -101,7 +101,7 @@ export class DynamicSnippetsJavaTestGenerator {
                     }
                 }
             } catch (e) {
-                this.context.failAndThrow("Failed to run spotlessApply", e);
+                this.context.failAndThrow("Failed to run spotlessApply", e, { code: CliError.Code.InternalError });
             }
         }
         this.context.logger.debug("Done generating dynamic snippet tests");

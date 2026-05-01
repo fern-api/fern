@@ -12,6 +12,7 @@ import type {
     CppTypeRef
 } from "../../../src/types/CppLibraryDocsIr.js";
 import { buildLinkPath, getShortName, lookupMemberPath } from "../context.js";
+import { escapeMdxText, protectSafeTags, restoreSafeTags } from "./shared.js";
 
 // ---------------------------------------------------------------------------
 // Module-level context for current page path
@@ -328,29 +329,16 @@ function escapeRemainingMdxSpecials(text: string): string {
             // Even-indexed parts are outside backticks -- escape MDX specials.
             // Preserve known safe HTML tags (sub, sup, br, em, strong, code, etc.)
             // by temporarily replacing them, escaping everything else, then restoring.
-            const safeTags: Array<{ placeholder: string; original: string }> = [];
-            let escaped = part;
-
-            // Protect safe HTML tags from escaping
-            escaped = escaped.replace(/<(\/?)(?:sub|sup|br|em|strong|code)(\s[^>]*)?\/?>/gi, (match) => {
-                const placeholder = `\x00SAFE${safeTags.length}\x00`;
-                safeTags.push({ placeholder, original: match });
-                return placeholder;
-            });
+            const protected_ = protectSafeTags(part);
 
             // Escape remaining angle brackets and curly braces
-            escaped = escaped
+            const escaped = protected_.text
                 .replace(/</g, "&lt;")
                 .replace(/>/g, "&gt;")
                 .replace(/\{/g, "&#123;")
                 .replace(/\}/g, "&#125;");
 
-            // Restore safe tags
-            for (const { placeholder, original } of safeTags) {
-                escaped = escaped.replace(placeholder, original);
-            }
-
-            return escaped;
+            return restoreSafeTags(escaped, protected_.tags);
         })
         .join("");
 }
@@ -511,9 +499,9 @@ function renderBlock(block: CppDocBlock, options?: RenderBlockOptions): string {
             if (block.title) {
                 if (options?.titledSectionHeadingLevel) {
                     const hashes = "#".repeat(options.titledSectionHeadingLevel);
-                    lines.push(`${hashes} ${block.title}`);
+                    lines.push(`${hashes} ${escapeMdxText(block.title)}`);
                 } else {
-                    lines.push(`**${block.title}**`);
+                    lines.push(`**${escapeMdxText(block.title)}**`);
                 }
                 lines.push("");
             }

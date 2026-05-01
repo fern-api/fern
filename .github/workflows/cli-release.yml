@@ -69,7 +69,7 @@ jobs:
 
       - name: Create Release
         id: create_release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         if: steps.get_version.outputs.HAS_NEW_VERSION == 'true'
         with:
           token: ${{ secrets.GITHUB_TOKEN }}

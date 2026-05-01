@@ -716,6 +716,62 @@ func (r *RawClient) WithJSONProperty(
 	}, nil
 }
 
+func (r *RawClient) WithRefBody(
+	ctx context.Context,
+	imageFile io.Reader,
+	request *fern.WithRefBodyRequest,
+	opts ...option.RequestOption,
+) (*core.Response[string], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		r.baseURL,
+		"",
+	)
+	endpointURL := baseURL + "/with-ref-body"
+	headers := internal.MergeHeaders(
+		r.options.ToHeader(),
+		options.ToHeader(),
+	)
+	writer := internal.NewMultipartWriter()
+	if imageFile != nil {
+		if err := writer.WriteFile("image_file", imageFile, internal.WithDefaultContentType("image/jpeg")); err != nil {
+			return nil, err
+		}
+	}
+	if err := writer.WriteJSON("request", request.Request, internal.WithDefaultContentType("application/json; charset=utf-8")); err != nil {
+		return nil, err
+	}
+	if err := writer.Close(); err != nil {
+		return nil, err
+	}
+	headers.Set("Content-Type", writer.ContentType())
+
+	var response string
+	raw, err := r.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         writer.Buffer(),
+			Response:        &response,
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &core.Response[string]{
+		StatusCode: raw.StatusCode,
+		Header:     raw.Header,
+		Body:       response,
+	}, nil
+}
+
 func (r *RawClient) Simple(
 	ctx context.Context,
 	opts ...option.RequestOption,

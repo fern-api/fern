@@ -27,7 +27,8 @@
               "inline": false,
               "displayName": "StatusEnum",
               "type": "named"
-            }
+            },
+            "docs": "Status of the resource"
           },
           {
             "type": {
@@ -40,7 +41,8 @@
               "inline": false,
               "displayName": "PriorityEnum",
               "type": "named"
-            }
+            },
+            "docs": "Priority level (1=Low, 2=Medium, 3=High)"
           },
           {
             "type": {
@@ -53,7 +55,8 @@
               "inline": false,
               "displayName": "ErrorCodeEnum",
               "type": "named"
-            }
+            },
+            "docs": "Error codes"
           }
         ],
         "type": "undiscriminatedUnion"

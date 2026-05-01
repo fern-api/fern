@@ -50,9 +50,18 @@ export async function loadGeneratorWorkspaces(): Promise<GeneratorWorkspace[]> {
             continue;
         }
         const seedConfig = await readFile(seedConfigPath);
+        const workspaceConfig = yaml.load(
+            seedConfig.toString()
+        ) as unknown as FernSeedConfig.SeedWorkspaceConfiguration;
+        if (workspaceConfig.disabled === true) {
+            // Use warn (stderr) so that commands emitting machine-readable output
+            // on stdout (e.g. `seed affected --json`) remain parseable.
+            CONSOLE_LOGGER.warn(`Skipping ${workspace}: disabled in ${SEED_CONFIG_FILENAME}`);
+            continue;
+        }
         workspaces.push({
             absolutePathToWorkspace,
-            workspaceConfig: yaml.load(seedConfig.toString()) as unknown as FernSeedConfig.SeedWorkspaceConfiguration,
+            workspaceConfig,
             workspaceName: workspace
         });
     }

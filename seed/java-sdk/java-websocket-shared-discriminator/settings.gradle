@@ -1,0 +1,3 @@
+rootProject.name = 'java-websocket-shared-discriminator'
+
+include 'sample-app'

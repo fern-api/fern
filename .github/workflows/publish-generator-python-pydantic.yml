@@ -23,6 +23,7 @@ env:
 
 jobs:
   publish:
+    if: false # generator not actively supported
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo at current ref

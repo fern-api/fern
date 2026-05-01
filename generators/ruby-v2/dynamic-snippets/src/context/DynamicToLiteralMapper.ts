@@ -435,21 +435,189 @@ export class DynamicTypeLiteralMapper {
             return ruby.TypeLiteral.nop();
         }
 
-        return ruby.TypeLiteral.hash(
-            Object.entries(value as Record<string, unknown>).map(([key, val]) => {
-                this.context.errors.scope(key);
-                const property = object.properties.find((p) => p.name.wireValue === key);
-                const typeReference = property?.typeReference ?? { type: "unknown" };
-                // Use snake_case property name for Ruby, falling back to wire value if not found
-                const propertyName = property?.name.name.snakeCase.safeName ?? key;
-                const astNode = {
+        const entries = this.convertObjectEntries({ object, value });
+        return ruby.TypeLiteral.hash(entries);
+    }
+
+    private convertObjectEntries({
+        object,
+        value
+    }: {
+        object: FernIr.dynamic.ObjectType;
+        value: unknown;
+    }): ruby.HashEntry[] {
+        const record = (typeof value === "object" && value != null ? value : {}) as Record<string, unknown>;
+        const providedWireValues = new Set<string>(Object.keys(record));
+
+        const entries: ruby.HashEntry[] = [];
+
+        // Convert provided values
+        for (const [key, val] of Object.entries(record)) {
+            this.context.errors.scope(key);
+            const property = object.properties.find((p) => p.name.wireValue === key);
+            const typeReference = property?.typeReference ?? { type: "unknown" as const };
+            const propertyName = property?.name.name.snakeCase.safeName ?? key;
+            const converted = this.convert({ typeReference, value: val });
+            if (!ruby.TypeLiteral.isNop(converted)) {
+                entries.push({
                     key: ruby.TypeLiteral.string(propertyName),
-                    value: this.convert({ typeReference, value: val })
-                };
-                this.context.errors.unscope();
-                return astNode;
-            })
-        );
+                    value: converted
+                });
+            }
+            this.context.errors.unscope();
+        }
+
+        // Synthesize default values for required properties missing from the example
+        for (const property of object.properties) {
+            if (providedWireValues.has(property.name.wireValue)) {
+                continue;
+            }
+            if (this.context.isOptional(property.typeReference) || this.context.isNullable(property.typeReference)) {
+                continue;
+            }
+            const defaultValue = this.synthesizeDefaultValue(property.typeReference);
+            if (!ruby.TypeLiteral.isNop(defaultValue)) {
+                entries.push({
+                    key: ruby.TypeLiteral.string(property.name.name.snakeCase.safeName),
+                    value: defaultValue
+                });
+            }
+        }
+
+        return entries.filter((entry) => !ruby.TypeLiteral.isNop(entry.value));
+    }
+
+    // =============================================================================
+    // DEFAULT VALUE SYNTHESIS
+    // =============================================================================
+
+    /**
+     * Synthesizes a reasonable default value for a given type reference.
+     * Used to populate required fields that are missing from examples,
+     * preventing invalid code generation (e.g. empty hashes for types
+     * with required fields).
+     */
+    public synthesizeDefaultValue(
+        typeReference: FernIr.dynamic.TypeReference,
+        seen: Set<string> = new Set()
+    ): ruby.AstNode {
+        switch (typeReference.type) {
+            case "optional":
+            case "nullable":
+                return ruby.TypeLiteral.nop();
+            case "primitive":
+                return this.synthesizeDefaultPrimitive(typeReference.value);
+            case "literal":
+                return this.synthesizeDefaultLiteral(typeReference.value);
+            case "list":
+                return ruby.TypeLiteral.list([]);
+            case "set":
+                return ruby.TypeLiteral.list([]);
+            case "map":
+                return ruby.TypeLiteral.hash([]);
+            case "named": {
+                if (seen.has(typeReference.value)) {
+                    return ruby.TypeLiteral.nop();
+                }
+                const named = this.context.resolveNamedType({ typeId: typeReference.value });
+                if (named == null) {
+                    return ruby.TypeLiteral.nop();
+                }
+                return this.synthesizeDefaultNamed({ named, typeId: typeReference.value, seen });
+            }
+            case "unknown":
+                return ruby.TypeLiteral.nop();
+            default:
+                assertNever(typeReference);
+        }
+    }
+
+    private synthesizeDefaultPrimitive(primitive: FernIr.dynamic.PrimitiveTypeV1): ruby.AstNode {
+        switch (primitive) {
+            case "STRING":
+            case "BASE_64":
+            case "BIG_INTEGER":
+                return ruby.TypeLiteral.string("string");
+            case "INTEGER":
+            case "LONG":
+            case "UINT":
+            case "UINT_64":
+                return ruby.TypeLiteral.integer(1);
+            case "FLOAT":
+            case "DOUBLE":
+                return ruby.TypeLiteral.float(1.1);
+            case "BOOLEAN":
+                return ruby.TypeLiteral.boolean(true);
+            case "DATE":
+                return ruby.TypeLiteral.string("2024-01-15");
+            case "DATE_TIME":
+            case "DATE_TIME_RFC_2822":
+                return ruby.TypeLiteral.string("2024-01-15T09:30:00Z");
+            case "UUID":
+                return ruby.TypeLiteral.string("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32");
+            default:
+                assertNever(primitive);
+        }
+    }
+
+    private synthesizeDefaultLiteral(literalType: FernIr.dynamic.LiteralType): ruby.AstNode {
+        switch (literalType.type) {
+            case "boolean":
+                return ruby.TypeLiteral.boolean(literalType.value);
+            case "string":
+                return ruby.TypeLiteral.string(literalType.value);
+            default:
+                assertNever(literalType);
+        }
+    }
+
+    private synthesizeDefaultNamed({
+        named,
+        typeId,
+        seen
+    }: {
+        named: FernIr.dynamic.NamedType;
+        typeId: string;
+        seen: Set<string>;
+    }): ruby.AstNode {
+        const newSeen = new Set(seen);
+        newSeen.add(typeId);
+
+        switch (named.type) {
+            case "alias":
+                return this.synthesizeDefaultValue(named.typeReference, newSeen);
+            case "enum": {
+                const firstValue = named.values[0];
+                if (firstValue == null) {
+                    return ruby.TypeLiteral.nop();
+                }
+                return ruby.TypeLiteral.string(firstValue.wireValue);
+            }
+            case "object": {
+                const entries: ruby.HashEntry[] = [];
+                for (const property of named.properties) {
+                    if (
+                        this.context.isOptional(property.typeReference) ||
+                        this.context.isNullable(property.typeReference)
+                    ) {
+                        continue;
+                    }
+                    const defaultValue = this.synthesizeDefaultValue(property.typeReference, newSeen);
+                    if (!ruby.TypeLiteral.isNop(defaultValue)) {
+                        entries.push({
+                            key: ruby.TypeLiteral.string(property.name.name.snakeCase.safeName),
+                            value: defaultValue
+                        });
+                    }
+                }
+                return ruby.TypeLiteral.hash(entries);
+            }
+            case "discriminatedUnion":
+            case "undiscriminatedUnion":
+                return ruby.TypeLiteral.nop();
+            default:
+                assertNever(named);
+        }
     }
 
     private getValueAsNumber({

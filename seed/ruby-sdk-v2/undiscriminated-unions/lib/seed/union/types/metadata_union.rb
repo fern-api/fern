@@ -7,6 +7,7 @@ module Seed
         extend Seed::Internal::Types::Union
 
         member -> { Internal::Types::Hash[String, Object] }
+
         member -> { Seed::Union::Types::NamedMetadata }
       end
     end

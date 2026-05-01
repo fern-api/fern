@@ -24,9 +24,9 @@ class RawSeedValidation:
     def create(
         self,
         *,
-        decimal: float,
-        even: int,
-        name: str,
+        decimal: float = 1.1,
+        even: int = 42,
+        name: str = "fern",
         shape: Shape,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Type]:
@@ -139,9 +139,9 @@ class AsyncRawSeedValidation:
     async def create(
         self,
         *,
-        decimal: float,
-        even: int,
-        name: str,
+        decimal: float = 1.1,
+        even: int = 42,
+        name: str = "fern",
         shape: Shape,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Type]:

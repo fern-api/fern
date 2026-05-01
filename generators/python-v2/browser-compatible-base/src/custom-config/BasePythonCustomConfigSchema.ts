@@ -27,6 +27,7 @@ export const BasePythonCustomConfigSchema = z.object({
     should_generate_websocket_clients: z.boolean().optional(),
     skip_formatting: z.boolean().optional(),
     timeout_in_seconds: z.union([z.literal("infinity"), z.number()]).optional(),
+    use_request_defaults: z.enum(["none", "parameters", "all"]).optional(),
 
     // Deprecated.
     client_class_name: z.string().optional(),

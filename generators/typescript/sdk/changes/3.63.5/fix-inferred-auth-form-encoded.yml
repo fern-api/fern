@@ -1,0 +1,5 @@
+- summary: |
+    Support inferred OAuth auth with form-encoded (application/x-www-form-urlencoded) token endpoints.
+    Previously, the generator crashed with "Cannot get exported name for request wrapper" when the
+    token endpoint used a justRequestBody shape instead of a wrapper shape.
+  type: fix

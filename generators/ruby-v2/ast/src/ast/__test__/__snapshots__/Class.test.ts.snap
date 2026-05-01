@@ -32,7 +32,6 @@ exports[`Class > writes class with a body 1`] = `
 
   # @return [String]
   def call; end
-
 end
 "
 `;

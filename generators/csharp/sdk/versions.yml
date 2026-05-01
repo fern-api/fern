@@ -1,4 +1,132 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.64.1
+  changelogEntry:
+    - summary: |
+        Fix namespace collision when referencing nested discriminated union variant
+        types in generated test code. When the enclosing type name matches a segment
+        of the test file's namespace, the C# compiler resolves it as the namespace
+        instead of the SDK type (CS0234). Now emits fully qualified type references
+        in this case.
+      type: fix
+    - summary: |
+        Fix OneOfSerializer to prefer strongly-typed deserialization over catch-all
+        matches. When a discriminated union type inside a OneOf uses a catch-all for
+        unknown discriminators, the serializer now tries all types and selects the
+        best match instead of returning the first success.
+      type: fix
+    - summary: |
+        Fix serialization round-trip tests to account for WhenWritingNull normalization.
+        The Roundtrips test now verifies idempotency of the serialized form rather than
+        comparing against the raw input JSON, which may include null optional properties
+        that are intentionally omitted by the serializer.
+      type: fix
+  createdAt: "2026-04-30"
+  irVersion: 66
+- version: 2.64.0
+  changelogEntry:
+    - summary: |
+        Add `retryStatusCodes` config with `"legacy"` and `"recommended"` modes. Legacy (default)
+        preserves current behavior (408, 429, >= 500). Recommended retries only transient
+        codes (408, 429, 502, 503, 504), avoiding idempotency issues with 500. A 3.0.0
+        migration auto-pins legacy for upgrading users.
+      type: feat
+  createdAt: "2026-04-30"
+  irVersion: 66
+- version: 2.63.3
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippets emitting wrong property name when PascalCase(property)
+        collides with class name (e.g. CatalogV1Id.catalog_v1_id). The snippet
+        generator now uses the same rename logic as the SDK (appending "_") so that
+        generated examples compile without CS0542 / CS0117 errors.
+      type: fix
+  createdAt: "2026-04-30"
+  irVersion: 66
+- version: 2.63.2
+  changelogEntry:
+    - summary: |
+        Fix multi-value query parameter snippets when the example value is already
+        a list, which previously produced uncompilable list-of-list initializers
+        like `[new List<T>() { value }]` in mock server tests, reference docs, and
+        snippets.
+      type: fix
+  createdAt: "2026-04-29"
+  irVersion: 66
+- version: 2.63.1
+  changelogEntry:
+    - summary: |
+        Fix WireMock test generation to use percent-encoded query parameter keys,
+        matching what spec-compliant HTTP clients send. Also split comma-delimited
+        query parameter examples into multiple values in a single `WithParam()` call,
+        since WireMock.Net parses comma-separated values into arrays.
+      type: fix
+  createdAt: "2026-04-29"
+  irVersion: 66
+- version: 2.63.0
+  changelogEntry:
+    - summary: |
+        Support `x-fern-default` as fallback value for parameters in generated C# SDKs.
+        When a header, query parameter, or path parameter has a `clientDefault` value in the IR,
+        the generated C# SDK makes that parameter optional with the default value automatically applied.
+      type: feat
+  createdAt: "2026-04-27"
+  irVersion: 66
+- version: 2.62.0
+  changelogEntry:
+    - summary: |
+        Use auth scheme placeholder values in snippets when configured via
+        `placeholder` field on auth schemes.
+      type: feat
+  createdAt: "2026-04-25"
+  irVersion: 66
+- version: 2.61.2
+  changelogEntry:
+    - summary: |
+        Bump @fern-api/generator-cli to 0.9.11. The GitHub pipeline step now creates
+        signed commits via the GitHub REST API (matching fiddle's legacy InMemoryGitRepo
+        push path), restoring verified fern-api[bot] commits on replay-enabled orgs.
+      type: chore
+  createdAt: "2026-04-22"
+  irVersion: 66
+- version: 2.61.1
+  changelogEntry:
+    - summary: |
+        Emit a `Body` property of type `System.IO.Stream` on wrapped request records
+        for endpoints whose request body is `bytes`. Previously the endpoint client
+        method emitted `Body = request.Body` but the generated request record did
+        not declare a `Body` property, producing a CS1061 compile error on any
+        endpoint that combined a binary body with other wrapped parameters
+        (e.g. query parameters, headers, or path parameters).
+      type: fix
+  createdAt: "2026-04-22"
+  irVersion: 66
+- version: 2.61.0
+  changelogEntry:
+    - summary: |
+        Add `offset-semantics` config option. When set to `"page-index"`, offset pagination increments by 1 each page instead of by the number of items returned (`"item-index"`, the default).
+      type: feat
+  createdAt: "2026-04-22"
+  irVersion: 66
+- version: 2.60.2
+  changelogEntry:
+    - summary: |
+        Add crash reporting via Sentry to the generator runtime, and classify
+        thrown errors using the new shared `GeneratorError` taxonomy so user-facing
+        failures (config, validation, auth, network, environment) are kept distinct
+        from internal Fern bugs — only the latter are forwarded to Sentry. No
+        change to generated output.
+      type: chore
+  createdAt: "2026-04-22"
+  irVersion: 66
+- version: 2.60.1
+  changelogEntry:
+    - summary: |
+        Bump @fern-api/generator-cli to 0.9.8. Changelog URLs in generated PRs
+        now use the commit SHA instead of the PR branch name, keeping the link
+        valid after the branch is deleted or squash-merged.
+      type: chore
+  createdAt: "2026-04-16"
+  irVersion: 66
 - version: 2.60.0
   changelogEntry:
     - summary: |

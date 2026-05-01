@@ -22,7 +22,7 @@ class SdkDeclarationReferencer(AbstractDeclarationReferencer[T], Generic[T]):
         if self.skip_resources_module:
             return (
                 Filepath.DirectoryFilepathPart(
-                    module_name=resolve_name(fern_filepath_part).snake_case.unsafe_name,
+                    module_name=resolve_name(fern_filepath_part).snake_case.safe_name,
                     export_strategy=export_strategy,
                 ),
             )
@@ -32,7 +32,7 @@ class SdkDeclarationReferencer(AbstractDeclarationReferencer[T], Generic[T]):
                 export_strategy=ExportStrategy(export_all=True),
             ),
             Filepath.DirectoryFilepathPart(
-                module_name=resolve_name(fern_filepath_part).snake_case.unsafe_name,
+                module_name=resolve_name(fern_filepath_part).snake_case.safe_name,
                 export_strategy=export_strategy,
             ),
         )

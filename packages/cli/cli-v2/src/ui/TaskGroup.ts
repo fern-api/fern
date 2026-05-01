@@ -1,4 +1,4 @@
-import { assertNever } from "@fern-api/core-utils";
+import { addPrefixToString, assertNever } from "@fern-api/core-utils";
 import chalk from "chalk";
 import { Context } from "../context/Context.js";
 import { formatMultilineText } from "./format.js";
@@ -6,6 +6,7 @@ import type { Task } from "./Task.js";
 import type { TaskLog } from "./TaskLog.js";
 import type { TaskStage, TaskStageDefinition } from "./TaskStage.js";
 import type { TaskStatus } from "./TaskStatus.js";
+import type { Paintable } from "./TtyAwareLogger.js";
 
 export declare namespace TaskGroup {
     export interface Config {
@@ -27,7 +28,7 @@ export declare namespace TaskGroup {
  *
  * Uses TtyAwareLogger for all TTY coordination (clear/repaint/cursor).
  */
-export class TaskGroup {
+export class TaskGroup implements Paintable {
     private static readonly MAX_DISPLAYED_LOGS_TTY = 10;
     private static readonly URL_PATTERN = /https?:\/\/[^\s]+/;
 
@@ -178,8 +179,12 @@ export class TaskGroup {
     /**
      * Called by TtyAwareLogger to get the current display.
      * This is the integration point with TtyAwareLogger.
+     *
+     * Renders the task list wrapped in a bordered frame so multiple concurrent
+     * TaskGroups (e.g. one per API in a fan-out) read as separate boxes rather
+     * than a single megaframe.
      */
-    public printInteractiveTasks({ spinner }: { spinner: string }): string {
+    public paint(spinnerFrame: string): string {
         const lines: string[] = [];
 
         for (const id of this.taskOrder) {
@@ -188,7 +193,7 @@ export class TaskGroup {
                 continue;
             }
 
-            const line = this.formatTaskLine(task, spinner);
+            const line = this.formatTaskLine(task, spinnerFrame);
             if (line != null) {
                 lines.push(line);
             }
@@ -198,8 +203,10 @@ export class TaskGroup {
             return "";
         }
 
-        // Return just the task lines - TtyAwareLogger adds the box frame.
-        return lines.join("\n");
+        const body = lines.join("\n");
+        return ["┌─", addPrefixToString({ content: body, prefix: "│ ", includePrefixOnAllLines: true }), "└─"].join(
+            "\n"
+        );
     }
 
     /**
@@ -314,7 +321,7 @@ export class TaskGroup {
 
         const lines: string[] = [];
         for (const stage of stages) {
-            const icon = this.getStageIcon(stage.status, spinnerFrame);
+            const icon = this.getStageIcon(stage.status);
             let line = `\n    ${icon} ${this.getStageLabel(stage)}`;
 
             if (stage.detail != null) {
@@ -349,7 +356,7 @@ export class TaskGroup {
      * Uses a static arrow (▸) for running stages to avoid visual noise
      * from having multiple spinners (the parent task already has a spinner).
      */
-    private getStageIcon(status: TaskStage["status"], _spinnerFrame: string): string {
+    private getStageIcon(status: TaskStage["status"]): string {
         switch (status) {
             case "pending":
                 return chalk.dim("○");
@@ -503,6 +510,6 @@ export class TaskGroup {
             return;
         }
         this.isRegistered = true;
-        this.context.ttyAwareLogger.registerTask(this);
+        this.context.ttyAwareLogger.register(this);
     }
 }

@@ -2,9 +2,9 @@
 
 module Seed
   class Client
+    # @param token [String]
     # @param base_url [String, nil]
     # @param environment [Hash[Symbol, String], nil]
-    # @param token [String]
     #
     # @return [void]
     def initialize(token:, base_url: nil, environment: nil)

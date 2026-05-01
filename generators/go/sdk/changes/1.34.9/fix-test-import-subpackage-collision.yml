@@ -1,0 +1,3 @@
+- summary: |
+    Fix generated test files importing from the wrong package when identically-named subpackages exist under different parents (e.g., enumerate/ldap vs pentest/ldap).
+  type: fix

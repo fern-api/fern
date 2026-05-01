@@ -31,6 +31,9 @@
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
     "test:update": "vitest --passWithNoTests --run -u"
   },
+  "dependencies": {
+    "@fern-api/task-context": "workspace:*"
+  },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
     "@fern-api/core-utils": "workspace:*",

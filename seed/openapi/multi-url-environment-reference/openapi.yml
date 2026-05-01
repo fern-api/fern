@@ -1,0 +1,126 @@
+openapi: 3.1.0
+info:
+  title: multi-url-environment-reference
+  version: 0.0.0
+paths:
+  /items:
+    get:
+      operationId: items_listItems
+      tags:
+        - Items
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: string
+              examples:
+                Example1:
+                  value: string
+      servers:
+        - url: https://api.example.com/2.0
+      security:
+        - BearerAuth: []
+  /oauth/token:
+    post:
+      operationId: auth_gettoken
+      tags:
+        - Auth
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthGetTokenResponse'
+              examples:
+                Example1:
+                  value:
+                    access_token: access_token
+      servers:
+        - url: https://auth.example.com/oauth2
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client_id:
+                  type: string
+                  examples:
+                    - client_id
+                client_secret:
+                  type: string
+                  examples:
+                    - client_secret
+              required:
+                - client_id
+                - client_secret
+            examples:
+              Example1:
+                value:
+                  client_id: client_id
+                  client_secret: client_secret
+  /files/content:
+    post:
+      operationId: files_upload
+      tags:
+        - Files
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: string
+              examples:
+                Example1:
+                  value: string
+      servers:
+        - url: https://upload.example.com/2.0
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  examples:
+                    - name
+                parent_id:
+                  type: string
+                  examples:
+                    - parent_id
+              required:
+                - name
+                - parent_id
+            examples:
+              Example1:
+                value:
+                  name: name
+                  parent_id: parent_id
+components:
+  schemas:
+    AuthGetTokenResponse:
+      title: AuthGetTokenResponse
+      type: object
+      properties:
+        access_token:
+          type: string
+          examples:
+            - access_token
+      required:
+        - access_token
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

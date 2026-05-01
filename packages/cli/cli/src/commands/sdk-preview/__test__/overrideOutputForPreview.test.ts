@@ -5,6 +5,7 @@ import { describe, expect, it } from "vitest";
 import {
     getGithubOwnerRepo,
     isNpmGenerator,
+    overrideGroupOutputForDiffBranch,
     overrideGroupOutputForDownload,
     overrideGroupOutputForPreview
 } from "../overrideOutputForPreview.js";
@@ -217,7 +218,7 @@ describe("overrideGroupOutputForPreview", () => {
         registryUrl: "https://npm.buildwithfern.com"
     };
 
-    it("uses publishV2(npmOverride) by default (no pushDiff)", () => {
+    it("always uses publishV2(npmOverride) for github output modes", () => {
         const generator = makeGenerator(FernFiddle.OutputMode.github({ owner: "o", repo: "r" }));
         const group = makeGroup([generator]);
 
@@ -229,7 +230,7 @@ describe("overrideGroupOutputForPreview", () => {
         expect(result.generators[0]?.absolutePathToLocalOutput).toBeUndefined();
     });
 
-    it("uses publishV2(npmOverride) when pushDiff is false", () => {
+    it("uses publishV2(npmOverride) for githubV2 output modes", () => {
         const generator = makeGenerator(
             FernFiddle.OutputMode.githubV2(
                 FernFiddle.GithubOutputModeV2.push({
@@ -243,33 +244,12 @@ describe("overrideGroupOutputForPreview", () => {
         );
         const group = makeGroup([generator]);
 
-        const result = overrideGroupOutputForPreview({ group, ...previewParams, pushDiff: false });
+        const result = overrideGroupOutputForPreview({ group, ...previewParams });
 
         expect(result.generators[0]?.outputMode.type).toBe("publishV2");
     });
 
-    it("uses githubV2(push) with publishInfo when pushDiff is true and generator has github config", () => {
-        const generator = makeGenerator(
-            FernFiddle.OutputMode.githubV2(
-                FernFiddle.GithubOutputModeV2.push({
-                    owner: "fern-demo",
-                    repo: "sdk-preview-test-sdk",
-                    branch: undefined,
-                    license: undefined,
-                    downloadSnippets: false
-                })
-            )
-        );
-        const group = makeGroup([generator]);
-
-        const result = overrideGroupOutputForPreview({ group, ...previewParams, pushDiff: true });
-
-        expect(result.generators).toHaveLength(1);
-        const outputMode = result.generators[0]?.outputMode;
-        expect(outputMode?.type).toBe("githubV2");
-    });
-
-    it("falls back to publishV2(npmOverride) when pushDiff is true but generator has no github config", () => {
+    it("uses publishV2(npmOverride) for existing publishV2 output modes", () => {
         const generator = makeGenerator(
             FernFiddle.OutputMode.publishV2(
                 FernFiddle.remoteGen.PublishOutputModeV2.npmOverride({
@@ -282,27 +262,18 @@ describe("overrideGroupOutputForPreview", () => {
         );
         const group = makeGroup([generator]);
 
-        const result = overrideGroupOutputForPreview({ group, ...previewParams, pushDiff: true });
+        const result = overrideGroupOutputForPreview({ group, ...previewParams });
 
         expect(result.generators[0]?.outputMode.type).toBe("publishV2");
     });
 
-    it("falls back to publishV2(npmOverride) when pushDiff is true but generator uses downloadFiles", () => {
+    it("uses publishV2(npmOverride) for downloadFiles output modes", () => {
         const generator = makeGenerator(FernFiddle.remoteGen.OutputMode.downloadFiles({}));
         const group = makeGroup([generator]);
 
-        const result = overrideGroupOutputForPreview({ group, ...previewParams, pushDiff: true });
+        const result = overrideGroupOutputForPreview({ group, ...previewParams });
 
         expect(result.generators[0]?.outputMode.type).toBe("publishV2");
-    });
-
-    it("extracts owner/repo from github v1 when pushDiff is true", () => {
-        const generator = makeGenerator(FernFiddle.OutputMode.github({ owner: "legacy-org", repo: "legacy-sdk" }));
-        const group = makeGroup([generator]);
-
-        const result = overrideGroupOutputForPreview({ group, ...previewParams, pushDiff: true });
-
-        expect(result.generators[0]?.outputMode.type).toBe("githubV2");
     });
 
     it("clears absolutePathToLocalOutput", () => {
@@ -324,5 +295,207 @@ describe("overrideGroupOutputForPreview", () => {
         const result = overrideGroupOutputForPreview({ group, ...previewParams });
 
         expect(result.groupName).toBe("my-preview-group");
+    });
+});
+
+describe("overrideGroupOutputForDiffBranch", () => {
+    it("produces githubV2(push) for generators with github config", () => {
+        const generator = makeGenerator(
+            FernFiddle.OutputMode.githubV2(
+                FernFiddle.GithubOutputModeV2.push({
+                    owner: "fern-demo",
+                    repo: "sdk-preview-test-sdk",
+                    branch: undefined,
+                    license: undefined,
+                    downloadSnippets: false
+                })
+            )
+        );
+        const group = makeGroup([generator]);
+
+        const result = overrideGroupOutputForDiffBranch({ group });
+
+        expect(result.generators).toHaveLength(1);
+        const outputMode = result.generators[0]?.outputMode;
+        expect(outputMode?.type).toBe("githubV2");
+        expect(result.generators[0]?.absolutePathToLocalOutput).toBeUndefined();
+    });
+
+    it("preserves publishInfo package name but strips token from the original output mode", () => {
+        const npmPublishInfo = FernFiddle.GithubPublishInfo.npm({
+            registryUrl: "https://registry.npmjs.org",
+            packageName: "@fern-demo/sdk-preview-test",
+            token: "npm-token-123"
+        });
+        const generator = makeGenerator(
+            FernFiddle.OutputMode.githubV2(
+                FernFiddle.GithubOutputModeV2.push({
+                    owner: "fern-demo",
+                    repo: "sdk-preview-test-sdk",
+                    branch: undefined,
+                    license: undefined,
+                    publishInfo: npmPublishInfo,
+                    downloadSnippets: false
+                })
+            )
+        );
+        const group = makeGroup([generator]);
+
+        const result = overrideGroupOutputForDiffBranch({ group });
+
+        expect(result.generators).toHaveLength(1);
+        const outputMode = result.generators[0]?.outputMode;
+        expect(outputMode?.type).toBe("githubV2");
+
+        // Extract the publishInfo from the nested githubV2 > push structure.
+        // The publishInfo should preserve the package name for code generation
+        // but strip the auth token to prevent accidental publishing.
+        let extractedPublishInfo: FernFiddle.GithubPublishInfo | undefined;
+        outputMode?._visit({
+            githubV2: (v) => {
+                v._visit({
+                    push: (p) => {
+                        extractedPublishInfo = p.publishInfo;
+                    },
+                    commitAndRelease: () => undefined,
+                    pullRequest: () => undefined,
+                    _other: () => undefined
+                });
+            },
+            downloadFiles: () => undefined,
+            github: () => undefined,
+            publish: () => undefined,
+            publishV2: () => undefined,
+            _other: () => undefined
+        });
+
+        expect(extractedPublishInfo).toBeDefined();
+        expect(extractedPublishInfo?.type).toBe("npm");
+
+        let npmPackageName: string | undefined;
+        let npmRegistryUrl: string | undefined;
+        let npmToken: string | undefined;
+        extractedPublishInfo?._visit({
+            npm: (npm) => {
+                npmPackageName = npm.packageName;
+                npmRegistryUrl = npm.registryUrl;
+                npmToken = npm.token;
+            },
+            maven: () => undefined,
+            postman: () => undefined,
+            pypi: () => undefined,
+            nuget: () => undefined,
+            rubygems: () => undefined,
+            crates: () => undefined,
+            _other: () => undefined
+        });
+
+        expect(npmPackageName).toBe("@fern-demo/sdk-preview-test");
+        expect(npmRegistryUrl).toBe("https://registry.npmjs.org");
+        expect(npmToken).toBeUndefined();
+    });
+
+    it("extracts owner/repo from github v1 output mode", () => {
+        const generator = makeGenerator(FernFiddle.OutputMode.github({ owner: "legacy-org", repo: "legacy-sdk" }));
+        const group = makeGroup([generator]);
+
+        const result = overrideGroupOutputForDiffBranch({ group });
+
+        expect(result.generators).toHaveLength(1);
+        expect(result.generators[0]?.outputMode.type).toBe("githubV2");
+    });
+
+    it("extracts owner/repo from githubV2 commitAndRelease", () => {
+        const generator = makeGenerator(
+            FernFiddle.OutputMode.githubV2(
+                FernFiddle.GithubOutputModeV2.commitAndRelease({
+                    owner: "my-org",
+                    repo: "my-sdk"
+                })
+            )
+        );
+        const group = makeGroup([generator]);
+
+        const result = overrideGroupOutputForDiffBranch({ group });
+
+        expect(result.generators).toHaveLength(1);
+        expect(result.generators[0]?.outputMode.type).toBe("githubV2");
+    });
+
+    it("excludes generators without github config (publishV2)", () => {
+        const generator = makeGenerator(
+            FernFiddle.OutputMode.publishV2(
+                FernFiddle.remoteGen.PublishOutputModeV2.npmOverride({
+                    registryUrl: "https://registry.npmjs.org",
+                    packageName: "@acme/sdk",
+                    token: "token",
+                    downloadSnippets: false
+                })
+            )
+        );
+        const group = makeGroup([generator]);
+
+        const result = overrideGroupOutputForDiffBranch({ group });
+
+        expect(result.generators).toHaveLength(0);
+    });
+
+    it("excludes generators without github config (downloadFiles)", () => {
+        const generator = makeGenerator(FernFiddle.remoteGen.OutputMode.downloadFiles({}));
+        const group = makeGroup([generator]);
+
+        const result = overrideGroupOutputForDiffBranch({ group });
+
+        expect(result.generators).toHaveLength(0);
+    });
+
+    it("keeps only generators with github config in mixed groups", () => {
+        const githubGen = makeGenerator(
+            FernFiddle.OutputMode.githubV2(
+                FernFiddle.GithubOutputModeV2.push({
+                    owner: "fern-demo",
+                    repo: "sdk-repo",
+                    branch: undefined,
+                    license: undefined,
+                    downloadSnippets: false
+                })
+            )
+        );
+        const registryGen = makeGenerator(
+            FernFiddle.OutputMode.publishV2(
+                FernFiddle.remoteGen.PublishOutputModeV2.npmOverride({
+                    registryUrl: "https://npm.buildwithfern.com",
+                    packageName: "@acme/sdk",
+                    token: "t",
+                    downloadSnippets: false
+                })
+            )
+        );
+        const group = makeGroup([githubGen, registryGen]);
+
+        const result = overrideGroupOutputForDiffBranch({ group });
+
+        expect(result.generators).toHaveLength(1);
+        expect(result.generators[0]?.outputMode.type).toBe("githubV2");
+    });
+
+    it("preserves group-level fields", () => {
+        const generator = makeGenerator(
+            FernFiddle.OutputMode.githubV2(
+                FernFiddle.GithubOutputModeV2.push({
+                    owner: "o",
+                    repo: "r",
+                    branch: undefined,
+                    license: undefined,
+                    downloadSnippets: false
+                })
+            )
+        );
+        const group = makeGroup([generator]);
+        group.groupName = "my-diff-group";
+
+        const result = overrideGroupOutputForDiffBranch({ group });
+
+        expect(result.groupName).toBe("my-diff-group");
     });
 });

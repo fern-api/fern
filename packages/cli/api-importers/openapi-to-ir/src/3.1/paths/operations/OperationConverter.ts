@@ -13,7 +13,7 @@ import {
 } from "@fern-api/ir-sdk";
 import { constructHttpPath, getWireValue } from "@fern-api/ir-utils";
 import { FernOpenAPIExtension } from "@fern-api/openapi-ir-parser";
-import { AbstractConverter, Extensions, ServersConverter } from "@fern-api/v3-importer-commons";
+import { AbstractConverter, Extensions, ServersConverter, sanitizeSecurityScopes } from "@fern-api/v3-importer-commons";
 import { camelCase } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
 import { RedoclyCodeSamplesExtension } from "../../../extensions/x-code-samples.js";
@@ -373,6 +373,21 @@ export class OperationConverter extends AbstractOperationConverter {
                 if (converted == null) {
                     // A 2xx response with no body (e.g., 204 No Content with content: {})
                     hasNoContentResponse = true;
+                    // Preserve the user-defined status code on the response so downstream
+                    // consumers (docs, FDR, generators) display e.g. 204 instead of falling
+                    // back to a default 200. We only write this if no response has been
+                    // recorded yet, and we intentionally do NOT set hasSuccessfulResponse —
+                    // that way a later 2xx iteration that does have a body still takes over
+                    // via the (!hasSuccessfulResponse) branch below and becomes the primary
+                    // response for this endpoint.
+                    if (convertedResponseBody.response == null) {
+                        convertedResponseBody.response = {
+                            statusCode: statusCodeNum,
+                            isWildcardStatusCode: isWildcardStatusCode ? true : undefined,
+                            body: undefined,
+                            docs: resolvedResponse.description
+                        };
+                    }
                     continue;
                 }
                 if (converted != null) {
@@ -546,7 +561,7 @@ export class OperationConverter extends AbstractOperationConverter {
         }
 
         // Fall back to OpenAPI security
-        return this.operation.security ?? this.context.spec.security;
+        return sanitizeSecurityScopes(this.operation.security ?? this.context.spec.security);
     }
 
     /**

@@ -293,13 +293,13 @@ module Seed
         if params[:foo]
           body.add(
             name: "foo",
-            value:
+            value: params[:foo]
           )
         end
         if params[:bar]
           body.add(
             name: "bar",
-            value:
+            value: params[:bar]
           )
         end
 
@@ -338,13 +338,13 @@ module Seed
         if params[:maybe_string]
           body.add(
             name: "maybe_string",
-            value:
+            value: params[:maybe_string]
           )
         end
         if params[:integer]
           body.add(
             name: "integer",
-            value:
+            value: params[:integer]
           )
         end
         body.add_part(params[:file].to_form_data_part(name: "file")) if params[:file]
@@ -354,61 +354,61 @@ module Seed
         if params[:maybe_integer]
           body.add(
             name: "maybe_integer",
-            value:
+            value: params[:maybe_integer]
           )
         end
         if params[:optional_list_of_strings]
           body.add(
             name: "optional_list_of_strings",
-            value:
+            value: params[:optional_list_of_strings]
           )
         end
         if params[:list_of_objects]
           body.add(
             name: "list_of_objects",
-            value:
+            value: params[:list_of_objects]
           )
         end
         if params[:optional_metadata]
           body.add(
             name: "optional_metadata",
-            value:
+            value: params[:optional_metadata]
           )
         end
         if params[:optional_object_type]
           body.add(
             name: "optional_object_type",
-            value:
+            value: params[:optional_object_type]
           )
         end
         if params[:optional_id]
           body.add(
             name: "optional_id",
-            value:
+            value: params[:optional_id]
           )
         end
         if params[:list_of_objects_with_optionals]
           body.add(
             name: "list_of_objects_with_optionals",
-            value:
+            value: params[:list_of_objects_with_optionals]
           )
         end
         if params[:alias_object]
           body.add(
             name: "alias_object",
-            value:
+            value: params[:alias_object]
           )
         end
         if params[:list_of_alias_object]
           body.add(
             name: "list_of_alias_object",
-            value:
+            value: params[:list_of_alias_object]
           )
         end
         if params[:alias_list_of_object]
           body.add(
             name: "alias_list_of_object",
-            value:
+            value: params[:alias_list_of_object]
           )
         end
 
@@ -553,7 +553,48 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param params [Hash]
+      # @param params [void]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @return [String]
+      def with_ref_body(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        body = Internal::Multipart::FormData.new
+
+        body.add_part(params[:image_file].to_form_data_part(name: "image_file")) if params[:image_file]
+        if params[:request]
+          body.add(
+            name: "request",
+            value: JSON.generate(Seed::Service::Types::MyObject.new(params[:request]).to_h),
+            content_type: "application/json; charset=utf-8"
+          )
+        end
+
+        request = Seed::Internal::Multipart::Request.new(
+          base_url: request_options[:base_url],
+          method: "POST",
+          path: "/with-ref-body",
+          body: body,
+          request_options: request_options
+        )
+        begin
+          response = @client.send(request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
+        end
+        code = response.code.to_i
+        return if code.between?(200, 299)
+
+        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        raise error_class.new(response.body, code: code)
+      end
+
+      # @param request_options [Hash]
+      # @param _params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -561,8 +602,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [untyped]
-      def simple(request_options: {}, **params)
-        Seed::Internal::Types::Utils.normalize_keys(params)
+      def simple(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",

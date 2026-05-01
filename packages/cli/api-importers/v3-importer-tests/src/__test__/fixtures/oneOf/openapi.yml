@@ -84,6 +84,44 @@ components:
               title: Phone Number
             - type: "null"
               title: "Null"
+        one-of-with-sibling-properties:
+          description: A oneOf with sibling properties that become baseProperties on the undiscriminated union.
+          $ref: "#/components/schemas/ContactMethod"
+        one-of-with-sibling-properties-inline:
+          description: A oneOf with sibling properties and inline sub-schemas. Sibling properties should only appear in baseProperties, not duplicated into inline variants.
+          properties:
+            tag:
+              type: string
+              description: A tag for the notification.
+          required:
+            - tag
+          oneOf:
+            - type: object
+              properties:
+                sms_number:
+                  type: string
+              required:
+                - sms_number
+            - type: object
+              properties:
+                push_token:
+                  type: string
+              required:
+                - push_token
+    ContactMethod:
+      title: ContactMethod
+      properties:
+        category:
+          type: string
+          description: The category of the contact method.
+        id:
+          type: string
+          description: A unique identifier for the contact method.
+      required:
+        - category
+      oneOf:
+        - $ref: "#/components/schemas/EmailObject"
+        - $ref: "#/components/schemas/PhoneNumberObject"
     SquareObject:
       title: Square
       type: object

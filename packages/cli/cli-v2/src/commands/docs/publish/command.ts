@@ -1,7 +1,7 @@
 import type { FernToken } from "@fern-api/auth";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { filterOssWorkspaces } from "@fern-api/docs-resolver";
-import { CliError } from "@fern-api/task-context";
+import { CliError, TaskAbortSignal } from "@fern-api/task-context";
 
 import chalk from "chalk";
 import inquirer from "inquirer";
@@ -15,6 +15,7 @@ import { LegacyDocsPublisher } from "../../../docs/publisher/LegacyDocsPublisher
 import type { DocsStageOverrides } from "../../../docs/task/DocsTaskGroup.js";
 import { DocsTaskGroup } from "../../../docs/task/DocsTaskGroup.js";
 import { ValidationError } from "../../../errors/ValidationError.js";
+import { promptSelect } from "../../../ui/promptSelect.js";
 import { command } from "../../_internal/command.js";
 export declare namespace PublishCommand {
     export interface Args extends GlobalArgs {
@@ -64,7 +65,8 @@ export class PublishCommand {
             });
         }
 
-        const instanceUrl = this.resolveInstanceUrl({
+        const instanceUrl = await this.resolveInstanceUrl({
+            context,
             instances: workspace.docs.raw.instances,
             instance: args.instance
         });
@@ -80,7 +82,7 @@ export class PublishCommand {
         }
 
         const adapter = new LegacyProjectAdapter({ context });
-        const project = adapter.adapt(workspace);
+        const project = await adapter.adapt(workspace);
 
         const docsWorkspace = project.docsWorkspaces;
         if (docsWorkspace == null) {
@@ -161,17 +163,23 @@ export class PublishCommand {
         });
 
         if (summary.failedCount > 0) {
-            throw new CliError({ code: CliError.Code.ContainerError });
+            // Individual task failures have already been reported with their
+            // correct error codes via TaskContextAdapter.failWithoutThrowing.
+            // Throw TaskAbortSignal so withContext exits non-zero without
+            // emitting a duplicate (and mis-classified) error event.
+            throw new TaskAbortSignal();
         }
     }
 
-    private resolveInstanceUrl({
+    private async resolveInstanceUrl({
+        context,
         instances,
         instance
     }: {
+        context: Context;
         instances: Array<{ url: string }>;
         instance: string | undefined;
-    }): string {
+    }): Promise<string> {
         if (instances.length === 0) {
             throw new CliError({
                 message: "No docs instances configured.\n\n  Add an instance to the 'docs:' section of your fern.yml.",
@@ -196,12 +204,15 @@ export class PublishCommand {
 
         if (instances.length > 1) {
             const available = instances.map((i) => `  - ${i.url}`).join("\n");
-            throw new CliError({
-                message:
+            return await promptSelect<string>({
+                isTTY: context.isTTY,
+                message: "Multiple docs instances configured. Select one:",
+                choices: instances.map((i) => ({ name: i.url, value: i.url })),
+                nonInteractiveError:
                     `Multiple docs instances configured. Please specify which instance to publish.\n\n` +
                     `Available instances:\n${available}\n\n` +
                     `  Use --instance <url> to select one.`,
-                code: CliError.Code.ConfigError
+                flagHint: (value) => `--instance ${value}`
             });
         }
 

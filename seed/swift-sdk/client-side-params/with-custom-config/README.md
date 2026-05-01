@@ -78,7 +78,7 @@ The SDK throws a single error enum for all failures. Client-side issues encoding
 ```swift
 import MyCustomModule
 
-let client = MyCustomClient(...)
+let client = MyCustomClient(token: "YOUR_API_KEY")
 
 do {
     let response = try await client.service.searchResources(...)
@@ -158,7 +158,7 @@ import Foundation
 import MyCustomModule
 
 let client = MyCustomClient(
-    ...,
+    token: "YOUR_API_KEY",
     urlSession: // Provide your implementation here
 )
 ```

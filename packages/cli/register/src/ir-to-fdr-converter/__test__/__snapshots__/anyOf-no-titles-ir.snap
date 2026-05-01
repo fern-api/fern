@@ -552,9 +552,10 @@
       },
       "shape": {
         "_visit": [Function],
+        "baseProperties": undefined,
         "members": [
           {
-            "docs": undefined,
+            "docs": "AnyOf error variant A",
             "type": {
               "_visit": [Function],
               "default": undefined,
@@ -571,7 +572,7 @@
             },
           },
           {
-            "docs": undefined,
+            "docs": "AnyOf error variant B",
             "type": {
               "_visit": [Function],
               "default": undefined,
@@ -751,9 +752,10 @@
       },
       "shape": {
         "_visit": [Function],
+        "baseProperties": undefined,
         "members": [
           {
-            "docs": undefined,
+            "docs": "First variant for anyOf without title",
             "type": {
               "_visit": [Function],
               "default": undefined,
@@ -770,7 +772,7 @@
             },
           },
           {
-            "docs": undefined,
+            "docs": "Second variant for anyOf without title",
             "type": {
               "_visit": [Function],
               "default": undefined,

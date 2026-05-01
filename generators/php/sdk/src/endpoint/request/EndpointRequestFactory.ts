@@ -1,3 +1,4 @@
+import { GeneratorError } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { EndpointRequest } from "./EndpointRequest.js";
@@ -40,7 +41,7 @@ export function createEndpointRequest({
             return new ReferencedEndpointRequest(context, sdkRequest, service, endpoint, value.requestBodyType);
         },
         _other: () => {
-            throw new Error("Internal error; received unexpected request shape");
+            throw GeneratorError.internalError("Internal error; received unexpected request shape");
         }
     });
 }

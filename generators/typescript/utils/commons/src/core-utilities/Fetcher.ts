@@ -15,7 +15,7 @@ export interface Fetcher {
                 method: "method";
                 headers: "headers";
                 contentType: "contentType";
-                queryParameters: "queryParameters";
+                queryString: "queryString";
                 body: "body";
                 abortSignal: "abortSignal";
                 withCredentials: "withCredentials";
@@ -152,7 +152,6 @@ export declare namespace Fetcher {
         method: ts.Expression;
         headers: ts.Expression;
         contentType?: string | ts.Expression;
-        queryParameters: ts.Expression | undefined;
         body: ts.Expression | undefined;
         abortSignal: ts.Expression | undefined;
         withCredentials: boolean;
@@ -164,6 +163,7 @@ export declare namespace Fetcher {
         endpointMetadata?: ts.Expression;
         fetchFn?: ts.Expression;
         logging?: ts.Expression;
+        queryString?: ts.Expression;
     }
 }
 
@@ -224,7 +224,7 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                 method: "method",
                 headers: "headers",
                 contentType: "contentType",
-                queryParameters: "queryParameters",
+                queryString: "queryString",
                 maxRetries: "maxRetries",
                 body: "body",
                 timeoutMs: "timeoutMs",
@@ -295,12 +295,9 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                     )
                 );
             }
-            if (args.queryParameters != null) {
+            if (args.queryString != null) {
                 properties.push(
-                    ts.factory.createPropertyAssignment(
-                        this.Fetcher.Args.properties.queryParameters,
-                        args.queryParameters
-                    )
+                    ts.factory.createPropertyAssignment(this.Fetcher.Args.properties.queryString, args.queryString)
                 );
             }
             if (args.requestType != null && args.responseType !== "json") {

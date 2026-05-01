@@ -567,19 +567,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 RootClientConstructorParameter(
                     constructor_parameter_name=param.constructor_parameter_name,
                     type_hint=parm_type_hint,
-                    initializer=(
-                        AST.Expression(
-                            AST.FunctionInvocation(
-                                function_definition=AST.Reference(
-                                    import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
-                                    qualified_name_excluding_import=("getenv",),
-                                ),
-                                args=[AST.Expression(f'"{param.environment_variable}"')],
-                            )
-                        )
-                        if param.environment_variable is not None
-                        else None
-                    ),
+                    initializer=self._get_root_client_param_initializer(param),
                     docs=param.docs,
                     validation_check=(
                         AST.Expression(
@@ -797,6 +785,26 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         parameters.extend(self._get_literal_header_parameters())
 
         return parameters
+
+    def _get_root_client_param_initializer(self, param: ConstructorParameter) -> Optional[AST.Expression]:
+        if param.environment_variable is not None:
+            getenv_args = [AST.Expression(f'"{param.environment_variable}"')]
+            # Only use client_default as os.getenv fallback, NOT the generic initializer
+            # (which may be a snippet placeholder like token="YOUR_TOKEN")
+            if param.client_default is not None:
+                getenv_args.append(param.client_default)
+            return AST.Expression(
+                AST.FunctionInvocation(
+                    function_definition=AST.Reference(
+                        import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
+                        qualified_name_excluding_import=("getenv",),
+                    ),
+                    args=getenv_args,
+                )
+            )
+        if param.client_default is not None:
+            return param.client_default
+        return None
 
     def _get_parameter_validation_writer(self, *, param_name: str, environment_variable: str) -> CodeWriterFunction:
         def _write_parameter_validation(writer: AST.NodeWriter) -> None:
@@ -1298,20 +1306,41 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             )
             writer.write_newline_if_last_line_not()
 
-        # else: raise error
+        # else: fall back to header-auth-only or raise error
+        has_header_auth_schemes = len(client_wrapper_generator._get_header_auth_schemes()) > 0
         writer.write_line("else:")
         with writer.indent():
-            writer.write("raise ")
-            writer.write_node(
-                self._context.core_utilities.instantiate_api_error(
-                    headers=None,
-                    status_code=None,
-                    body=AST.Expression(
-                        "\"The client must be instantiated with either 'token' or both 'client_id' and 'client_secret'\""
-                    ),
+            if has_header_auth_schemes:
+                # When header auth schemes exist (e.g. api_key via auth: any), allow constructing
+                # the client without a bearer token — the header auth alone is sufficient.
+                header_only_kwargs = self._get_client_wrapper_kwargs(
+                    client_wrapper_generator=client_wrapper_generator,
+                    environments_config=self._environments_config,
+                    timeout_local_variable=timeout_local_variable,
+                    is_async=is_async,
+                    exclude_auth=True,
+                    transport_variable_name=transport_variable_name,
                 )
-            )
-            writer.write_newline_if_last_line_not()
+                writer.write(f"self.{self._get_client_wrapper_member_name()} = ")
+                writer.write_node(
+                    AST.ClassInstantiation(
+                        self._context.core_utilities.get_reference_to_client_wrapper(is_async=is_async),
+                        kwargs=header_only_kwargs,
+                    )
+                )
+                writer.write_newline_if_last_line_not()
+            else:
+                writer.write("raise ")
+                writer.write_node(
+                    self._context.core_utilities.instantiate_api_error(
+                        headers=None,
+                        status_code=None,
+                        body=AST.Expression(
+                            "\"The client must be instantiated with either 'token' or both 'client_id' and 'client_secret'\""
+                        ),
+                    )
+                )
+                writer.write_newline_if_last_line_not()
 
     def _get_client_wrapper_kwargs(
         self,
@@ -1668,11 +1697,11 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             self._async_init_parameters: Optional[List[ConstructorParameter]] = (
                 list(async_init_parameters) if async_init_parameters is not None else None
             )
+            self._sync_constructor_overloads = sync_constructor_overloads
+            self._async_constructor_overloads = async_constructor_overloads
             self._oauth_token_override = oauth_token_override
             self._use_kwargs_snippets = use_kwargs_snippets
             self._base_url_example_value = base_url_example_value
-            self._sync_constructor_overloads = sync_constructor_overloads
-            self._async_constructor_overloads = async_constructor_overloads
 
         def build(self) -> GeneratedRootClient:
             def create_class_reference(class_name: str) -> AST.ClassReference:

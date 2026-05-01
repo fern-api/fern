@@ -8,9 +8,14 @@
 
 import type { MigrationModule } from "@fern-api/migrations-base";
 import csharpSdkMigrations from "./generators/csharp/migrations/index.js";
+import goSdkMigrations from "./generators/go/migrations/index.js";
 import javaSdkMigrations from "./generators/java/migrations/index.js";
 import javaModelMigrations from "./generators/java-model/migrations/index.js";
+import phpSdkMigrations from "./generators/php/migrations/index.js";
 import pythonSdkMigrations from "./generators/python/migrations/index.js";
+import rubySdkMigrations from "./generators/ruby/migrations/index.js";
+import rustSdkMigrations from "./generators/rust/migrations/index.js";
+import swiftSdkMigrations from "./generators/swift/migrations/index.js";
 import typescriptSdkMigrations from "./generators/typescript/migrations/index.js";
 
 /**
@@ -25,6 +30,10 @@ export const migrations: Record<string, MigrationModule> = {
     // C# SDK
     "fernapi/fern-csharp-sdk": csharpSdkMigrations,
 
+    // Go SDK
+    "fernapi/fern-go-sdk": goSdkMigrations,
+    "fernapi/fern-go-model": goSdkMigrations,
+
     // Java Model - both model and spring generators share the same migrations
     "fernapi/fern-java-model": javaModelMigrations,
     "fernapi/fern-java-spring": javaModelMigrations,
@@ -36,6 +45,18 @@ export const migrations: Record<string, MigrationModule> = {
     "fernapi/fern-python-sdk": pythonSdkMigrations,
     "fernapi/fern-fastapi-server": pythonSdkMigrations,
     "fernapi/fern-pydantic-model": pythonSdkMigrations,
+
+    // PHP SDK
+    "fernapi/fern-php-sdk": phpSdkMigrations,
+
+    // Ruby SDK
+    "fernapi/fern-ruby-sdk": rubySdkMigrations,
+
+    // Rust SDK
+    "fernapi/fern-rust-sdk": rustSdkMigrations,
+
+    // Swift SDK
+    "fernapi/fern-swift-sdk": swiftSdkMigrations,
 
     // TypeScript SDK - all variants share the same migrations
     "fernapi/fern-typescript": typescriptSdkMigrations,

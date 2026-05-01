@@ -398,7 +398,7 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
         context: FileContext;
         requestWrapper: GeneratedRequestWrapper | undefined;
     }): MethodDeclarationStructure {
-        const requestProperties = requestWrapper?.getRequestProperties(context) ?? [];
+        const requestProperties = this.getRequestProperties({ context, requestWrapper });
 
         // Generate variable declarations and validation checks for each parameter
         const parameterStatements: (string | WriterFunction | StatementStructures)[] = [];
@@ -551,7 +551,7 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
         context: FileContext;
         requestWrapper: GeneratedRequestWrapper | undefined;
     }): ts.Expression[] {
-        const requestProperties = requestWrapper?.getRequestProperties(context) ?? [];
+        const requestProperties = this.getRequestProperties({ context, requestWrapper });
 
         // Build the request object
         const propertyAssignments = requestProperties.map((p) => {
@@ -596,6 +596,34 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
         }
 
         return `return ${checks};`;
+    }
+
+    /**
+     * Gets request properties from the wrapper if available, otherwise falls back
+     * to extracting properties from the endpoint's request body (for justRequestBody endpoints).
+     */
+    private getRequestProperties({
+        context,
+        requestWrapper
+    }: {
+        context: FileContext;
+        requestWrapper: GeneratedRequestWrapper | undefined;
+    }): GeneratedRequestWrapper.Property[] {
+        if (requestWrapper != null) {
+            return requestWrapper.getRequestProperties(context);
+        }
+        // For justRequestBody endpoints (e.g. form-encoded token endpoints),
+        // extract properties from AuthProviderContext which handles both cases.
+        const authTokenParams = context.authProvider.getPropertiesForAuthTokenParams(
+            FernIr.AuthScheme.inferred(this.authScheme)
+        );
+        return authTokenParams.map((param) => ({
+            name: param.name,
+            safeName: param.name,
+            type: param.type,
+            isOptional: param.isOptional,
+            docs: param.docs
+        }));
     }
 
     private getAuthClientTypeNode(context: FileContext): ts.TypeNode {

@@ -1,4 +1,97 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.8.0
+  changelogEntry:
+    - summary: |
+        Add `retryStatusCodes` configuration option (`legacy` | `recommended`). The default
+        `legacy` mode preserves existing behavior (retries 408, 429, and all >= 500). The
+        `recommended` mode only retries 408, 429, 502, 503, 504 (excludes 500 Internal
+        Server Error to avoid retrying non-idempotent failures).
+      type: feat
+  createdAt: "2026-04-29"
+  irVersion: 66
+- version: 2.7.0
+  changelogEntry:
+    - summary: |
+        Support `x-fern-default` as fallback value for parameters in generated PHP SDKs.
+        When a header, query parameter, or path parameter has a `clientDefault` value in the IR,
+        the generated PHP SDK makes that parameter optional with the default value automatically applied.
+      type: feat
+  createdAt: "2026-04-27"
+  irVersion: 66
+- version: 2.6.0
+  changelogEntry:
+    - summary: |
+        Use auth scheme placeholder values in README snippets when configured via
+        `placeholder` field on auth schemes.
+      type: feat
+  createdAt: "2026-04-27"
+  irVersion: 66
+- version: 2.5.2
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippet generator to emit placeholder auth values when snippet
+        requests omit auth for endpoints that require bearer, OAuth, basic, or header
+        authentication. Previously the generated constructor call was missing the
+        required auth parameter, causing phpstan failures.
+      type: fix
+  createdAt: "2026-04-25"
+  irVersion: 66
+- version: 2.5.1
+  changelogEntry:
+    - summary: |
+        Bump @fern-api/generator-cli to 0.9.11. The GitHub pipeline step now creates
+        signed commits via the GitHub REST API (matching fiddle's legacy InMemoryGitRepo
+        push path), restoring verified fern-api[bot] commits on replay-enabled orgs.
+      type: chore
+  createdAt: "2026-04-22"
+  irVersion: 66
+- version: 2.5.0
+  changelogEntry:
+    - summary: |
+        Add `offsetSemantics` config option. When set to `"page-index"`, offset pagination increments by 1 each page instead of by the number of items returned (`"item-index"`, the default).
+      type: feat
+  createdAt: "2026-04-22"
+  irVersion: 66
+- version: 2.4.4
+  changelogEntry:
+    - summary: |
+        Fix wire test verification for endpoints with multi-value array query parameters.
+      type: fix
+  createdAt: "2026-04-22"
+  irVersion: 66
+- version: 2.4.3
+  changelogEntry:
+    - summary: |
+        Add crash reporting via Sentry to the generator runtime, and classify
+        thrown errors using the new shared `GeneratorError` taxonomy so user-facing
+        failures (config, validation, auth, network, environment) are kept distinct
+        from internal Fern bugs — only the latter are forwarded to Sentry. No
+        change to generated output.
+      type: chore
+  createdAt: "2026-04-22"
+  irVersion: 66
+- version: 2.4.2
+  changelogEntry:
+    - summary: |
+        Bump phpunit/phpunit dev dependency from 9.0 to 12.5.22 to address
+        GHSA-qrr6-mg7r-m243 (argument injection via newline in PHP INI values
+        forwarded to child processes). Also bumps the PHP version used by the
+        generated `ci.yml` workflow from 8.1 to 8.3, which is the minimum
+        supported by PHPUnit 12. The `php` constraint in generated
+        `composer.json` files is unchanged at 8.1, so production installs
+        (`composer install --no-dev`) are unaffected.
+      type: chore
+  createdAt: "2026-04-20"
+  irVersion: 66
+- version: 2.4.1
+  changelogEntry:
+    - summary: |
+        Bump @fern-api/generator-cli to 0.9.8. Changelog URLs in generated PRs
+        now use the commit SHA instead of the PR branch name, keeping the link
+        valid after the branch is deleted or squash-merged.
+      type: chore
+  createdAt: "2026-04-16"
+  irVersion: 66
 - version: 2.4.0
   changelogEntry:
     - summary: |

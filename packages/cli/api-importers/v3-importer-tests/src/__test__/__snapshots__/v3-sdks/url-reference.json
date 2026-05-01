@@ -48,7 +48,8 @@
               "inline": false,
               "displayName": "a Pet",
               "type": "named"
-            }
+            },
+            "docs": "A pet for sale in the pet store"
           },
           {
             "type": {
@@ -61,7 +62,8 @@
               "inline": false,
               "displayName": "a User",
               "type": "named"
-            }
+            },
+            "docs": "A User who is purchasing from the pet store"
           }
         ],
         "type": "undiscriminatedUnion"

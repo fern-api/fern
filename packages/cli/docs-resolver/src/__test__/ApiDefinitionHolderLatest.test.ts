@@ -7,13 +7,13 @@ it.skip("finds subpackage by exact match", () => {
         id: FdrAPI.ApiDefinitionId("test"),
         apiName: undefined,
         subpackages: {
-            [FdrAPI.api.v1.SubpackageId("test")]: {
-                id: FdrAPI.api.v1.SubpackageId("test"),
+            [FdrAPI.SubpackageId("test")]: {
+                id: FdrAPI.SubpackageId("test"),
                 name: "test",
                 displayName: "test"
             },
-            [FdrAPI.api.v1.SubpackageId("nested.package")]: {
-                id: FdrAPI.api.v1.SubpackageId("nested.package"),
+            [FdrAPI.SubpackageId("nested.package")]: {
+                id: FdrAPI.SubpackageId("nested.package"),
                 name: "nested",
                 displayName: "nested"
             }
@@ -28,7 +28,7 @@ it.skip("finds subpackage by exact match", () => {
         graphqlOperations: {}
     });
     expect(apiDefinitionHolder.getSubpackageByLocator("test")).toEqual({
-        id: FdrAPI.api.v1.SubpackageId("test"),
+        id: FdrAPI.SubpackageId("test"),
         name: "test",
         displayName: "test"
     });
@@ -39,8 +39,8 @@ it.skip("finds subpackage from yaml/yml files", () => {
         id: FdrAPI.ApiDefinitionId("test"),
         apiName: undefined,
         subpackages: {
-            [FdrAPI.api.v1.SubpackageId("test")]: {
-                id: FdrAPI.api.v1.SubpackageId("test"),
+            [FdrAPI.SubpackageId("test")]: {
+                id: FdrAPI.SubpackageId("test"),
                 name: "test",
                 displayName: "test"
             }
@@ -56,12 +56,12 @@ it.skip("finds subpackage from yaml/yml files", () => {
     });
 
     expect(apiDefinitionHolder.getSubpackageByLocator("test.yaml")).toEqual({
-        id: FdrAPI.api.v1.SubpackageId("test"),
+        id: FdrAPI.SubpackageId("test"),
         name: "test",
         displayName: "test"
     });
     expect(apiDefinitionHolder.getSubpackageByLocator("test.yml")).toEqual({
-        id: FdrAPI.api.v1.SubpackageId("test"),
+        id: FdrAPI.SubpackageId("test"),
         name: "test",
         displayName: "test"
     });

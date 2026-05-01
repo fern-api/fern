@@ -1,5 +1,6 @@
 import { FernYmlSchema } from "@fern-api/config";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { CliError } from "@fern-api/task-context";
 import { ValidationIssue, YamlConfigLoader } from "@fern-api/yaml-loader";
 import { SourcedValidationError } from "../../errors/SourcedValidationError.js";
 import { FileFinder } from "../FileFinder.js";
@@ -47,7 +48,10 @@ export class FernYmlSchemaLoader {
     public async loadOrThrow(): Promise<FernYmlSchemaLoader.Success> {
         const loadResult = await this.load();
         if (loadResult.type === "notFound") {
-            throw new Error(`${FILENAME} file not found in any parent directory; did you forget to run \`fern init\`?`);
+            throw new CliError({
+                message: `${FILENAME} file not found in any parent directory; did you forget to run \`fern init\`?`,
+                code: CliError.Code.InternalError
+            });
         }
         if (loadResult.type === "failure") {
             throw new SourcedValidationError(loadResult.issues);

@@ -14,18 +14,20 @@ import fs from "fs/promises";
 import { CliContext } from "../../cli-context/CliContext.js";
 import { loadProjectAndRegisterWorkspacesWithContext } from "../../cliCommons.js";
 import { GROUP_CLI_OPTION } from "../../constants.js";
+import { isTelemetryDisabled } from "../../telemetry/isTelemetryDisabled.js";
 import { computePreviewVersion } from "./computePreviewVersion.js";
 import { getPreviewId } from "./getPreviewId.js";
 import {
     getGithubOwnerRepo,
     isNpmGenerator,
+    overrideGroupOutputForDiffBranch,
     overrideGroupOutputForDownload,
     overrideGroupOutputForPreview,
     PREVIEW_REGISTRY_URL
 } from "./overrideOutputForPreview.js";
 import { toPreviewPackageName } from "./toPreviewPackageName.js";
 
-interface SdkPreviewSuccess {
+export interface SdkPreviewSuccess {
     status: "success";
     org: string;
     previews: Array<{
@@ -39,12 +41,13 @@ interface SdkPreviewSuccess {
     }>;
 }
 
-interface SdkPreviewError {
+export interface SdkPreviewError {
     status: "error";
     message: string;
+    code?: CliError.Code;
 }
 
-type SdkPreviewResult = SdkPreviewSuccess | SdkPreviewError;
+export type SdkPreviewResult = SdkPreviewSuccess | SdkPreviewError;
 
 /**
  * Returns true if the value looks like a registry URL rather than a filesystem path.
@@ -60,7 +63,6 @@ export async function sdkPreview({
     groupName,
     generatorFilter,
     apiName,
-    json,
     output,
     local,
     pushDiff
@@ -69,11 +71,10 @@ export async function sdkPreview({
     groupName: string | undefined;
     generatorFilter: string | undefined;
     apiName: string | undefined;
-    json: boolean;
     output: string[] | undefined;
     local: boolean;
     pushDiff: boolean;
-}): Promise<void> {
+}): Promise<SdkPreviewResult> {
     const previews: SdkPreviewSuccess["previews"] = [];
     let organization: string | undefined;
     let registryUrl: string | undefined;
@@ -83,9 +84,10 @@ export async function sdkPreview({
         // Validate flag combinations early.
         // --push-diff requires remote generation and cannot be combined with --local.
         if (pushDiff && local) {
-            return cliContext.failAndThrow(
-                "--push-diff requires remote generation and cannot be combined with --local."
-            );
+            return {
+                status: "error",
+                message: "--push-diff requires remote generation and cannot be combined with --local."
+            };
         }
 
         // 1. Auth
@@ -93,9 +95,11 @@ export async function sdkPreview({
             return askToLogin(context);
         });
         if (token == null) {
-            return cliContext.failAndThrow("Authentication required. Run 'fern login' or set FERN_TOKEN.", undefined, {
+            return {
+                status: "error",
+                message: "Authentication required. Run 'fern login' or set FERN_TOKEN.",
                 code: CliError.Code.AuthError
-            });
+            };
         }
 
         // 2. Load project
@@ -176,20 +180,20 @@ export async function sdkPreview({
             // Resolve group
             const groupNameOrDefault = groupName ?? workspace.generatorsConfiguration.defaultGroup;
             if (groupNameOrDefault == null) {
-                return cliContext.failAndThrow(
-                    `No group specified. Use the --${GROUP_CLI_OPTION} option, or set "${DEFAULT_GROUP_GENERATORS_CONFIG_KEY}" in ${GENERATORS_CONFIGURATION_FILENAME}`,
-                    undefined,
-                    { code: CliError.Code.ConfigError }
-                );
+                return {
+                    status: "error",
+                    message: `No group specified. Use the --${GROUP_CLI_OPTION} option, or set "${DEFAULT_GROUP_GENERATORS_CONFIG_KEY}" in ${GENERATORS_CONFIGURATION_FILENAME}`,
+                    code: CliError.Code.ConfigError
+                };
             }
 
             const group = workspace.generatorsConfiguration.groups.find((g) => g.groupName === groupNameOrDefault);
             if (group == null) {
-                return cliContext.failAndThrow(
-                    `Group '${groupNameOrDefault}' does not exist in ${GENERATORS_CONFIGURATION_FILENAME}`,
-                    undefined,
-                    { code: CliError.Code.ConfigError }
-                );
+                return {
+                    status: "error",
+                    message: `Group '${groupNameOrDefault}' does not exist in ${GENERATORS_CONFIGURATION_FILENAME}`,
+                    code: CliError.Code.ConfigError
+                };
             }
 
             // Filter to a specific generator if --generator is provided
@@ -197,11 +201,11 @@ export async function sdkPreview({
                 generatorFilter != null ? group.generators.filter((g) => g.name === generatorFilter) : group.generators;
 
             if (generatorFilter != null && generators.length === 0) {
-                return cliContext.failAndThrow(
-                    `Generator '${generatorFilter}' not found in group '${groupNameOrDefault}' in ${GENERATORS_CONFIGURATION_FILENAME}`,
-                    undefined,
-                    { code: CliError.Code.ConfigError }
-                );
+                return {
+                    status: "error",
+                    message: `Generator '${generatorFilter}' not found in group '${groupNameOrDefault}' in ${GENERATORS_CONFIGURATION_FILENAME}`,
+                    code: CliError.Code.ConfigError
+                };
             }
 
             // Filter to npm-only generators (SDK preview v1 limitation)
@@ -214,23 +218,25 @@ export async function sdkPreview({
                 );
             }
             if (npmGenerators.length === 0) {
-                return cliContext.failAndThrow(
-                    `No supported generators found in group '${groupNameOrDefault}'. ` +
+                return {
+                    status: "error",
+                    message:
+                        `No supported generators found in group '${groupNameOrDefault}'. ` +
                         `SDK preview currently only supports TypeScript/npm generators.`,
-                    undefined,
-                    { code: CliError.Code.ConfigError }
-                );
+                    code: CliError.Code.ConfigError
+                };
             }
 
             for (const generator of npmGenerators) {
                 const originalPackageName = getPackageNameFromGeneratorConfig(generator);
                 if (originalPackageName == null) {
-                    return cliContext.failAndThrow(
-                        `Could not determine package name for generator '${generator.name}'. ` +
+                    return {
+                        status: "error",
+                        message:
+                            `Could not determine package name for generator '${generator.name}'. ` +
                             `Ensure 'output.package-name' is set in ${GENERATORS_CONFIGURATION_FILENAME}.`,
-                        undefined,
-                        { code: CliError.Code.ConfigError }
-                    );
+                        code: CliError.Code.ConfigError
+                    };
                 }
 
                 const previewPackageName = toPreviewPackageName(originalPackageName, project.config.organization);
@@ -241,66 +247,95 @@ export async function sdkPreview({
                 // token.value is the Fern org token (FERN_TOKEN) — the registry
                 // must accept this token for publish authentication.
                 const singleGeneratorGroup = { ...group, generators: [generator] };
+                const githubInfo = getGithubOwnerRepo(generator.outputMode);
+
                 // Warn if --push-diff was requested but the generator has no github config
-                if (pushDiff && useRemoteGeneration && getGithubOwnerRepo(generator.outputMode) == null) {
+                if (pushDiff && useRemoteGeneration && githubInfo == null) {
                     cliContext.logger.warn(
                         `Generator '${generator.name}' has no github output configuration. ` +
                             `--push-diff will be ignored; falling back to registry-only publish.`
                     );
                 }
 
-                let modifiedGroup: generatorsYml.GeneratorGroup;
+                // When --push-diff is active and the generator has GitHub config, we run
+                // two separate generation jobs:
+                //   Job 1 (publish): publishV2 mode with preview package name → npm publish
+                //   Job 2 (diff):    githubV2(push) with original package name → clean diff branch
+                // This ensures the diff branch shows real API changes without preview artifacts
+                // (e.g. no @org-preview/ package rename).
+                const shouldRunTwoJobs =
+                    pushDiff && useRemoteGeneration && publishToRegistry && registryUrl != null && githubInfo != null;
+
+                let publishGroup: generatorsYml.GeneratorGroup;
                 if (publishToRegistry && registryUrl != null) {
-                    modifiedGroup = overrideGroupOutputForPreview({
+                    publishGroup = overrideGroupOutputForPreview({
                         group: singleGeneratorGroup,
                         packageName: previewPackageName,
                         token: token.value,
-                        registryUrl,
-                        pushDiff: useRemoteGeneration ? pushDiff : undefined
+                        registryUrl
                     });
                 } else if (useRemoteGeneration) {
                     // Remote generation, disk-only (--output with no registry URL):
                     // override to downloadFiles so the generator doesn't try to publish
                     // using its original output mode.
-                    modifiedGroup = overrideGroupOutputForDownload({ group: singleGeneratorGroup });
+                    publishGroup = overrideGroupOutputForDownload({ group: singleGeneratorGroup });
                 } else {
-                    modifiedGroup = singleGeneratorGroup;
+                    publishGroup = singleGeneratorGroup;
                 }
 
                 if (useRemoteGeneration) {
-                    // Remote generation through Fiddle — matches the `fern generate` pattern.
-                    // Fiddle handles publishing to the preview registry server-side.
-                    // When absolutePathToOutput is set (--output), Fiddle uploads to S3 and
-                    // the CLI downloads the result to the specified path.
+                    const commonRemoteArgs = {
+                        projectConfig: project.config,
+                        organization: project.config.organization,
+                        workspace,
+                        shouldLogS3Url: false,
+                        token,
+                        whitelabel: workspace.generatorsConfiguration?.whitelabel,
+                        mode: undefined as "pull-request" | undefined,
+                        fernignorePath: undefined as string | undefined,
+                        skipFernignore: false,
+                        dynamicIrOnly: false,
+                        validateWorkspace: true,
+                        retryRateLimited: false,
+                        requireEnvVars: false
+                    };
+
+                    // Job 1: Publish preview package to registry.
                     await cliContext.runTaskForWorkspace(workspace, async (context) => {
                         await runRemoteGenerationForAPIWorkspace({
-                            projectConfig: project.config,
-                            organization: project.config.organization,
-                            workspace,
+                            ...commonRemoteArgs,
                             context,
-                            generatorGroup: modifiedGroup,
+                            generatorGroup: publishGroup,
                             version: previewVersion,
-                            shouldLogS3Url: false,
-                            token,
-                            whitelabel: workspace.generatorsConfiguration?.whitelabel,
                             absolutePathToPreview: absolutePathToOutput,
-                            // isPreview controls CLI-side behavior: lenient env var substitution,
-                            // skip version availability check, skip dynamic IR upload.
                             isPreview: true,
-                            // fiddlePreview controls what's sent to Fiddle as the `preview` flag.
-                            // We explicitly send false so Fiddle doesn't set dryRun=true (which
-                            // would cause `npm publish --dry-run` instead of actually publishing).
                             fiddlePreview: false,
-                            pushPreviewBranch: pushDiff,
-                            mode: undefined,
-                            fernignorePath: undefined,
-                            skipFernignore: false,
-                            dynamicIrOnly: false,
-                            validateWorkspace: true,
-                            retryRateLimited: false,
-                            requireEnvVars: false
+                            pushPreviewBranch: false
                         });
                     });
+
+                    // Job 2: Push clean diff branch with original package metadata.
+                    // Uses fiddlePreview=true so Fiddle sets dryRun=true, which prevents
+                    // the publish override from firing (see GeneratorExecConfigFactory).
+                    // The generator stays in github mode and produces clean output with
+                    // the original package name; Fiddle pushes it to the diff branch.
+                    if (shouldRunTwoJobs) {
+                        const diffGroup = overrideGroupOutputForDiffBranch({ group: singleGeneratorGroup });
+                        if (diffGroup.generators.length > 0) {
+                            await cliContext.runTaskForWorkspace(workspace, async (context) => {
+                                await runRemoteGenerationForAPIWorkspace({
+                                    ...commonRemoteArgs,
+                                    context,
+                                    generatorGroup: diffGroup,
+                                    version: previewVersion,
+                                    absolutePathToPreview: undefined,
+                                    isPreview: true,
+                                    fiddlePreview: true,
+                                    pushPreviewBranch: true
+                                });
+                            });
+                        }
+                    }
                 } else {
                     // Local generation via Docker — used when --local flag is provided.
                     // Docker must be installed. When absolutePathToOutput is set, generated
@@ -310,7 +345,7 @@ export async function sdkPreview({
                             token,
                             projectConfig: project.config,
                             workspace,
-                            generatorGroup: modifiedGroup,
+                            generatorGroup: publishGroup,
                             version: previewVersion,
                             keepDocker: false,
                             context,
@@ -322,7 +357,8 @@ export async function sdkPreview({
                             noReplay: true,
                             validateWorkspace: true,
                             publishToRegistry,
-                            isPreview: true
+                            isPreview: true,
+                            disableTelemetry: isTelemetryDisabled()
                         });
                     });
                 }
@@ -338,7 +374,6 @@ export async function sdkPreview({
                         : undefined;
 
                 // Build the diff URL when --push-diff was used and the generator has GitHub config.
-                const githubInfo = getGithubOwnerRepo(generator.outputMode);
                 const previewBranch = `fern-preview-${previewVersion}`;
                 const diffUrl =
                     pushDiff && githubInfo != null
@@ -370,51 +405,11 @@ export async function sdkPreview({
             }
         }
     } catch (error) {
-        if (json) {
-            const result: SdkPreviewResult = {
-                status: "error",
-                message: error instanceof Error ? error.message : String(error)
-            };
-            process.stdout.write(JSON.stringify(result, null, 2) + "\n");
-            process.exitCode = 1;
-            return;
-        }
-        throw error;
+        return {
+            status: "error",
+            message: error instanceof Error ? error.message : String(error)
+        };
     }
 
-    // 6. Output result
-    if (json) {
-        const result: SdkPreviewResult = {
-            status: "success",
-            org: organization ?? "",
-            previews
-        };
-        process.stdout.write(JSON.stringify(result, null, 2) + "\n");
-    } else if (previews.length > 0) {
-        cliContext.logger.info("");
-        if (publishToRegistry) {
-            cliContext.logger.info(`Published ${previews.length} preview package${previews.length > 1 ? "s" : ""}:`);
-            for (const preview of previews) {
-                cliContext.logger.info("");
-                cliContext.logger.info(`  ${preview.package_name}@${preview.version}`);
-                cliContext.logger.info(`  Install: ${preview.install}`);
-                if (preview.diff_url) {
-                    cliContext.logger.info(`  Diff: ${preview.diff_url}`);
-                }
-                if (preview.output_path) {
-                    cliContext.logger.info(`  Output: ${preview.output_path}`);
-                }
-            }
-        } else {
-            cliContext.logger.info(`Generated ${previews.length} preview SDK${previews.length > 1 ? "s" : ""}:`);
-            for (const preview of previews) {
-                cliContext.logger.info("");
-                cliContext.logger.info(`  ${preview.package_name}@${preview.version}`);
-                if (preview.diff_url) {
-                    cliContext.logger.info(`  Diff: ${preview.diff_url}`);
-                }
-                cliContext.logger.info(`  Output: ${preview.output_path}`);
-            }
-        }
-    }
+    return { status: "success", org: organization ?? "", previews };
 }

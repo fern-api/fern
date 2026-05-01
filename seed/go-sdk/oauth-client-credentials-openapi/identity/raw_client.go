@@ -47,7 +47,7 @@ func (r *RawClient) GetToken(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	headers.Add("Content-Type", "application/json")
+	headers.Add("Content-Type", "application/x-www-form-urlencoded")
 	var response *fern.TokenResponse
 	raw, err := r.caller.Call(
 		ctx,

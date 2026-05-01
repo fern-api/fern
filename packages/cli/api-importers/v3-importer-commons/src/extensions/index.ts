@@ -1,5 +1,6 @@
 export { AudienceExtension } from "./x-fern-audiences.js";
 export { FernAvailabilityExtension } from "./x-fern-availability.js";
+export { FernDiscriminatorContextExtension } from "./x-fern-discriminator-context.js";
 export { FernEnumExtension } from "./x-fern-enum.js";
 export { FernIgnoreExtension } from "./x-fern-ignore.js";
 export { FernOptionalExtension } from "./x-fern-optional.js";

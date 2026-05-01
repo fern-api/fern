@@ -37,12 +37,6 @@
       "changelogFolder": "generators/python/sdk/changes",
       "softwareDirectory": "generators/python"
     },
-    "ruby": {
-      "name": "Ruby SDK Generator",
-      "versionsFile": "generators/ruby/sdk/versions.yml",
-      "changelogFolder": "generators/ruby/sdk/changes",
-      "softwareDirectory": "generators/ruby"
-    },
     "ruby-v2": {
       "name": "Ruby v2 SDK Generator",
       "versionsFile": "generators/ruby-v2/sdk/versions.yml",

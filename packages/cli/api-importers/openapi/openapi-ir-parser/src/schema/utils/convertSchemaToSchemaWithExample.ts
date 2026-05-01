@@ -265,6 +265,12 @@ function convertToOneOf(oneOfSchema: OneOfSchema): OneOfSchemaWithExample {
                 generatedName: oneOfSchema.generatedName,
                 nameOverride: oneOfSchema.nameOverride,
                 title: oneOfSchema.title,
+                commonProperties: oneOfSchema.commonProperties?.map((commonProperty) => {
+                    return {
+                        key: commonProperty.key,
+                        schema: convertSchemaToSchemaWithExample(commonProperty.schema)
+                    };
+                }),
                 schemas: oneOfSchema.schemas.map((oneOfSchema) => convertSchemaToSchemaWithExample(oneOfSchema)),
                 namespace: oneOfSchema.namespace,
                 groupName: oneOfSchema.groupName,

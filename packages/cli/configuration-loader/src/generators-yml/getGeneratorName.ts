@@ -1,4 +1,4 @@
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
 
 import { GeneratorName } from "./GeneratorName.js";
 
@@ -79,7 +79,9 @@ export function removeDefaultDockerOrgIfPresent(generatorName: string): string {
 export function getGeneratorNameOrThrow(generatorName: string, context: TaskContext): GeneratorName {
     const normalizedGeneratorName = normalizeGeneratorName(generatorName);
     if (normalizedGeneratorName == null) {
-        return context.failAndThrow("Unrecognized generator: " + generatorName);
+        return context.failAndThrow("Unrecognized generator: " + generatorName, undefined, {
+            code: CliError.Code.ConfigError
+        });
     }
 
     return normalizedGeneratorName;

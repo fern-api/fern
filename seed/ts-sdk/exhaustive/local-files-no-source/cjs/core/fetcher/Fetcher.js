@@ -75,16 +75,11 @@ const SENSITIVE_QUERY_PARAMS = new Set([
 ]);
 function redactQueryParameters(queryParameters) {
     if (queryParameters == null) {
-        return queryParameters;
+        return undefined;
     }
     const redacted = {};
     for (const [key, value] of Object.entries(queryParameters)) {
-        if (SENSITIVE_QUERY_PARAMS.has(key.toLowerCase())) {
-            redacted[key] = "[REDACTED]";
-        }
-        else {
-            redacted[key] = value;
-        }
+        redacted[key] = SENSITIVE_QUERY_PARAMS.has(key.toLowerCase()) ? "[REDACTED]" : value;
     }
     return redacted;
 }
@@ -186,7 +181,13 @@ function getHeaders(args) {
 function fetcherImpl(args) {
     return __awaiter(this, void 0, void 0, function* () {
         var _a, _b, _c;
-        const url = (0, createRequestUrl_js_1.createRequestUrl)(args.url, args.queryParameters);
+        let url = args.url;
+        if (args.queryString != null && args.queryString.length > 0) {
+            url = `${url}?${args.queryString}`;
+        }
+        else {
+            url = (0, createRequestUrl_js_1.createRequestUrl)(args.url, args.queryParameters);
+        }
         const requestBody = yield (0, getRequestBody_js_1.getRequestBody)({
             body: args.body,
             type: (_a = args.requestType) !== null && _a !== void 0 ? _a : "other",

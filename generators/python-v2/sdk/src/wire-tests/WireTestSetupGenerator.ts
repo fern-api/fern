@@ -1,7 +1,7 @@
 import { File, getNameFromWireValue, getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { WireMock, WireMockStubMapping } from "@fern-api/mock-utils";
+import { isEqualToMatcher, WireMock, WireMockStubMapping } from "@fern-api/mock-utils";
 import { PYTHON_CASE_CONVERTER as caseConverter } from "@fern-api/python-base";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
@@ -32,7 +32,9 @@ export class WireTestSetupGenerator {
     }
 
     public static getWiremockConfigContent(ir: FernIr.IntermediateRepresentation) {
-        return new WireMock().convertToWireMock(ir);
+        // ir-sdk versions may differ between python-sdk and mock-utils;
+        // 66.3.0 is a strict superset (adds optional fields only), so this is safe.
+        return new WireMock().convertToWireMock(ir as Parameters<WireMock["convertToWireMock"]>[0]);
     }
 
     /**
@@ -54,12 +56,11 @@ export class WireTestSetupGenerator {
             // Strip from query parameters
             if (mapping.request.queryParameters) {
                 for (const [, value] of Object.entries(mapping.request.queryParameters)) {
-                    const paramValue = value as { equalTo: string };
-                    if (
-                        paramValue.equalTo != null &&
-                        WireTestSetupGenerator.DATETIME_WITH_ZERO_MILLIS_REGEX.test(paramValue.equalTo)
-                    ) {
-                        paramValue.equalTo = paramValue.equalTo.replace(".000", "");
+                    if (!isEqualToMatcher(value)) {
+                        continue;
+                    }
+                    if (WireTestSetupGenerator.DATETIME_WITH_ZERO_MILLIS_REGEX.test(value.equalTo)) {
+                        value.equalTo = value.equalTo.replace(".000", "");
                     }
                 }
             }
@@ -117,12 +118,14 @@ export class WireTestSetupGenerator {
                 if (datetimeParams.has(paramName)) {
                     continue;
                 }
-                const paramValue = value as { equalTo: string };
+                if (!("equalTo" in value)) {
+                    continue;
+                }
                 if (
-                    paramValue.equalTo != null &&
-                    WireTestSetupGenerator.DATETIME_WITH_ZERO_MILLIS_REGEX.test(paramValue.equalTo)
+                    value.equalTo != null &&
+                    WireTestSetupGenerator.DATETIME_WITH_ZERO_MILLIS_REGEX.test(value.equalTo)
                 ) {
-                    paramValue.equalTo = paramValue.equalTo.replace(".000", "");
+                    value.equalTo = value.equalTo.replace(".000", "");
                 }
             }
         }
@@ -305,7 +308,7 @@ def verify_request_count(
     test_id: str,
     method: str,
     url_path: str,
-    query_params: Optional[Dict[str, str]],
+    query_params: Optional[Dict[str, Any]],
     expected: int,
 ) -> None:
     """Verifies the number of requests made to WireMock filtered by test ID for concurrency safety."""
@@ -316,7 +319,12 @@ def verify_request_count(
         "headers": {"X-Test-Id": {"equalTo": test_id}},
     }
     if query_params:
-        query_parameters = {k: {"equalTo": v} for k, v in query_params.items()}
+        query_parameters = {}
+        for k, v in query_params.items():
+            if isinstance(v, list):
+                query_parameters[k] = {"hasExactly": [{"equalTo": item} for item in v]}
+            else:
+                query_parameters[k] = {"equalTo": v}
         request_body["queryParameters"] = query_parameters
     response = httpx.post(f"{wiremock_admin_url}/requests/find", json=request_body)
     assert response.status_code == 200, "Failed to query WireMock requests"
@@ -651,9 +659,14 @@ def pytest_unconfigure(config: pytest.Config) -> None:
                 break;
 
             case "basic":
-                // Basic auth uses username and password parameters
-                params.push(`        ${caseConverter.snakeSafe(scheme.username)}="test_username",`);
-                params.push(`        ${caseConverter.snakeSafe(scheme.password)}="test_password",`);
+                // Basic auth uses username and password parameters (skip omitted fields).
+                // Values must use hyphens ("test-username") to match mock-utils WireMock stubs.
+                if (!scheme.usernameOmit) {
+                    params.push(`        ${caseConverter.snakeSafe(scheme.username)}="test-username",`);
+                }
+                if (!scheme.passwordOmit) {
+                    params.push(`        ${caseConverter.snakeSafe(scheme.password)}="test-password",`);
+                }
                 break;
 
             case "header":

@@ -5,6 +5,7 @@ import { DocsWorkspace } from "@fern-api/workspace-loader";
 import { kebabCase } from "lodash-es";
 
 import { NodeIdGenerator } from "../NodeIdGenerator.js";
+import { convertDocsAvailability } from "./convertDocsAvailability.js";
 import { toRelativeFilepath } from "./toRelativeFilepath.js";
 
 export function toPageNode({
@@ -36,6 +37,7 @@ export function toPageNode({
     return {
         id: idgen.get(pageId),
         type: "page",
+        collapsed: undefined,
         pageId,
         title: page.title,
         slug: pageSlug.get(),
@@ -46,6 +48,6 @@ export function toPageNode({
         viewers: page.viewers,
         orphaned: page.orphaned,
         featureFlags: page.featureFlags,
-        availability: page.availability
+        availability: convertDocsAvailability(page.availability)
     };
 }

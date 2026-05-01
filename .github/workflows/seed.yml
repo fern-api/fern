@@ -14,9 +14,9 @@ on:
   workflow_call:
   workflow_dispatch:
 
-# Cancel previous workflows on previous push
-# On main: runs queue (no cancellation) so every merge gets tested
-# On PRs: previous runs are cancelled when new commits are pushed
+# On PRs: previous runs are cancelled when new commits are pushed.
+# On main: the running job is protected, but a pending run can still be
+# cancelled if a third push arrives (GitHub allows only 1 pending per group).
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
@@ -203,8 +203,11 @@ jobs:
         id: create-dynamic-matrix
         shell: bash
         run: |
-          # List of all generators
-          GENERATORS="ruby-sdk-v2 pydantic python-sdk openapi java-sdk java-model ts-sdk go-model go-sdk csharp-model csharp-sdk php-model php-sdk swift-sdk rust-model rust-sdk"
+          # List of active (non-disabled) generators, sourced from the seed CLI so
+          # that this list cannot drift when a workspace is disabled via its
+          # `seed.yml` (`disabled: true`).
+          GENERATORS=$(node --enable-source-maps packages/seed/dist/cli.cjs list-generators)
+          echo "Active generators: $GENERATORS"
 
           # Read affected detection result
           AFFECTED_JSON=$(cat /tmp/affected.json)
@@ -324,7 +327,7 @@ jobs:
           fi
 
   ruby-sdk-v2:
-    runs-on: ubuntu-latest
+    runs-on: Seed
     timeout-minutes: 20
     needs: [setup, get-all-test-matrices]
     if: >-
@@ -357,14 +360,15 @@ jobs:
           dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   pydantic:
-    runs-on: ubuntu-latest
+    runs-on: Seed
     timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.get-all-test-matrices.outputs.pydantic != ''
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.get-all-test-matrices.outputs.pydantic != ''
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    if: false # generator not actively supported
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 15 # Limit the number of runners for this job
@@ -389,7 +393,7 @@ jobs:
           dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   python-sdk:
-    runs-on: ubuntu-latest
+    runs-on: Seed
     timeout-minutes: 30
     needs: [setup, get-all-test-matrices]
     if: >-
@@ -454,7 +458,7 @@ jobs:
           dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   java-sdk:
-    runs-on: ubuntu-latest
+    runs-on: Seed
     timeout-minutes: 30
     needs: [setup, get-all-test-matrices]
     if: >-
@@ -486,14 +490,15 @@ jobs:
           dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   java-model:
-    runs-on: ubuntu-latest
+    runs-on: Seed
     timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.get-all-test-matrices.outputs.java-model != ''
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.get-all-test-matrices.outputs.java-model != ''
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    if: false # generator not actively supported
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 15 # Limit the number of runners for this job
@@ -518,7 +523,7 @@ jobs:
           dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   ts-sdk:
-    runs-on: ubuntu-latest
+    runs-on: Seed
     timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
     if: >-
@@ -551,14 +556,15 @@ jobs:
           dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   go-model:
-    runs-on: ubuntu-latest
+    runs-on: Seed
     timeout-minutes: 20
     needs: [setup, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.get-all-test-matrices.outputs.go-model != ''
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.get-all-test-matrices.outputs.go-model != ''
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    if: false # generator not actively supported
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 15 # Limit the number of runners for this job
@@ -583,7 +589,7 @@ jobs:
           dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   go-sdk:
-    runs-on: ubuntu-latest
+    runs-on: Seed
     timeout-minutes: 20
     needs: [setup, get-all-test-matrices]
     if: >-
@@ -615,14 +621,15 @@ jobs:
           dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   csharp-model:
-    runs-on: ubuntu-latest
+    runs-on: Seed
     timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.get-all-test-matrices.outputs.csharp-model != ''
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.get-all-test-matrices.outputs.csharp-model != ''
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    if: false # generator not actively supported
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 15 # Limit the number of runners for this job
@@ -647,7 +654,7 @@ jobs:
           dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   csharp-sdk:
-    runs-on: ubuntu-latest
+    runs-on: Seed
     timeout-minutes: 20
     needs: [setup, get-all-test-matrices]
     if: >-
@@ -679,14 +686,15 @@ jobs:
           dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   php-model:
-    runs-on: ubuntu-latest
+    runs-on: Seed
     timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.get-all-test-matrices.outputs.php-model != ''
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.get-all-test-matrices.outputs.php-model != ''
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    if: false # generator not actively supported
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 15 # Limit the number of runners for this job
@@ -711,7 +719,7 @@ jobs:
           dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   php-sdk:
-    runs-on: ubuntu-latest
+    runs-on: Seed
     timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
     if: >-
@@ -743,7 +751,7 @@ jobs:
           dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   swift-sdk:
-    runs-on: ubuntu-latest
+    runs-on: Seed
     timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
     if: >-
@@ -775,14 +783,15 @@ jobs:
           dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   rust-model:
-    runs-on: ubuntu-latest
+    runs-on: Seed
     timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.get-all-test-matrices.outputs.rust-model != ''
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.get-all-test-matrices.outputs.rust-model != ''
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    if: false # generator not actively supported
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 15 # Limit the number of runners for this job
@@ -807,7 +816,7 @@ jobs:
           dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   rust-sdk:
-    runs-on: ubuntu-latest
+    runs-on: Seed
     timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
     if: >-
@@ -866,14 +875,14 @@ jobs:
         uses: ./.github/actions/fetch-benchmark-specs
 
       - name: Upload specs as shared artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: benchmark-specs
           path: benchmarks/fern/apis/*/openapi.json
           retention-days: 1
 
   benchmark:
-    runs-on: ubuntu-latest
+    runs-on: Seed
     timeout-minutes: 60
     needs: [get-all-test-matrices, benchmark-setup]
     if: >-
@@ -895,7 +904,7 @@ jobs:
 
       - name: Log in to Docker Hub
         if: ${{ env.DOCKERHUB_USERNAME != '' }}
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         env:
           DOCKERHUB_USERNAME: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
         with:
@@ -907,7 +916,7 @@ jobs:
 
       - name: Cache Docker images
         id: docker-cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: /tmp/docker-cache
           key: ${{ runner.os }}-docker-${{ matrix.generator }}-${{ hashFiles('**/Dockerfile*') }}
@@ -924,7 +933,7 @@ jobs:
         run: docker images -q | sort -u > /tmp/docker-images-before.txt
 
       - name: Download shared specs
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           name: benchmark-specs
           path: benchmarks/fern/apis
@@ -951,7 +960,8 @@ jobs:
           done
 
       - name: Upload PR results
-        uses: actions/upload-artifact@v4
+        if: always()
+        uses: actions/upload-artifact@v6
         with:
           name: benchmark-pr-${{ matrix.generator }}
           path: benchmark-results/
@@ -977,62 +987,81 @@ jobs:
           sparse-checkout: .github/scripts
 
       - name: Download all PR benchmark artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           pattern: benchmark-pr-*
           path: benchmark-pr-results
           merge-multiple: true
 
-      - name: Download baseline from latest nightly artifacts
+      - name: Download baseline from recent nightly artifacts
         env:
           GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
-          mkdir -p benchmark-baseline-results
+          mkdir -p benchmark-baseline-results/history
 
-          # Find the latest successful run of benchmark-baseline.yml on main
-          LATEST_RUN=$(gh api "repos/${{ github.repository }}/actions/workflows/benchmark-baseline.yml/runs?status=success&per_page=1&branch=main" \
-            --jq '.workflow_runs[0]' 2>/dev/null || true)
+          BASELINE_RUNS_TO_FETCH=5
 
-          if [ -z "$LATEST_RUN" ] || [ "$LATEST_RUN" = "null" ]; then
-            echo "::warning::No successful nightly baseline run found. Report will show N/A for main timings."
+          # Fetch the last N successful runs of benchmark-baseline.yml on main
+          RUNS=$(gh api "repos/${{ github.repository }}/actions/workflows/benchmark-baseline.yml/runs?status=success&per_page=${BASELINE_RUNS_TO_FETCH}&branch=main" \
+            --jq '.workflow_runs' 2>/dev/null || echo "[]")
+
+          RUN_COUNT=$(echo "$RUNS" | jq 'length')
+          if [ "$RUN_COUNT" -eq 0 ]; then
+            echo "::warning::No successful nightly baseline runs found. Report will show N/A for main timings."
             echo "Trigger the benchmark-baseline workflow manually to generate initial baselines."
             exit 0
           fi
 
-          RUN_ID=$(echo "$LATEST_RUN" | jq -r '.id')
-          RUN_DATE=$(echo "$LATEST_RUN" | jq -r '.created_at')
-          RUN_SHA=$(echo "$LATEST_RUN" | jq -r '.head_sha')
-          echo "Using baseline from nightly run ${RUN_ID} (${RUN_DATE}, sha: ${RUN_SHA})"
+          echo "Found ${RUN_COUNT} successful nightly baseline run(s)"
 
-          # Save metadata for the report footer
-          echo "{\"latest_timestamp\":\"${RUN_DATE}\",\"sha\":\"${RUN_SHA}\",\"run_id\":\"${RUN_ID}\"}" \
+          # Save metadata from the latest run for the report footer
+          LATEST_DATE=$(echo "$RUNS" | jq -r '.[0].created_at')
+          LATEST_SHA=$(echo "$RUNS" | jq -r '.[0].head_sha')
+          LATEST_RUN_ID=$(echo "$RUNS" | jq -r '.[0].id')
+          echo "{\"latest_timestamp\":\"${LATEST_DATE}\",\"sha\":\"${LATEST_SHA}\",\"run_id\":\"${LATEST_RUN_ID}\"}" \
             > benchmark-baseline-results/_metadata.json
 
-          # Download generator-only baseline artifacts
-          echo "Downloading generator-only baseline artifacts..."
-          gh run download "$RUN_ID" --repo "${{ github.repository }}" --pattern "benchmark-baseline-*" --dir /tmp/baseline-gen/ 2>/dev/null || true
-          for f in /tmp/baseline-gen/*/*.jsonl; do
-            [ -f "$f" ] && cp "$f" benchmark-baseline-results/
-          done
+          # Download artifacts from each run into history/<run-id>/
+          for i in $(seq 0 $(( RUN_COUNT - 1 ))); do
+            RUN_ID=$(echo "$RUNS" | jq -r ".[$i].id")
+            RUN_DATE=$(echo "$RUNS" | jq -r ".[$i].created_at")
+            RUN_DIR="benchmark-baseline-results/history/${RUN_ID}"
+            mkdir -p "${RUN_DIR}/e2e"
 
-          # Download E2E baseline artifacts
-          echo "Downloading E2E baseline artifacts..."
-          mkdir -p benchmark-baseline-results/e2e
-          gh run download "$RUN_ID" --repo "${{ github.repository }}" --pattern "benchmark-e2e-*" --dir /tmp/baseline-e2e/ 2>/dev/null || true
-          for f in /tmp/baseline-e2e/*/*.jsonl; do
-            [ -f "$f" ] && cp "$f" benchmark-baseline-results/e2e/
+            echo "Downloading baseline from run ${RUN_ID} (${RUN_DATE})..."
+
+            # Download generator-only baseline artifacts
+            gh run download "$RUN_ID" --repo "${{ github.repository }}" --pattern "benchmark-baseline-*" --dir "/tmp/baseline-gen-${RUN_ID}/" 2>/dev/null || true
+            for f in /tmp/baseline-gen-${RUN_ID}/*/*.jsonl; do
+              [ -f "$f" ] && cp "$f" "${RUN_DIR}/"
+            done
+
+            # Download E2E baseline artifacts
+            gh run download "$RUN_ID" --repo "${{ github.repository }}" --pattern "benchmark-e2e-*" --dir "/tmp/baseline-e2e-${RUN_ID}/" 2>/dev/null || true
+            for f in /tmp/baseline-e2e-${RUN_ID}/*/*.jsonl; do
+              [ -f "$f" ] && cp "$f" "${RUN_DIR}/e2e/"
+            done
+
+            # Remove empty run directories (check both generator and E2E artifacts)
+            if ! ls "${RUN_DIR}"/*.jsonl 1>/dev/null 2>&1 && ! ls "${RUN_DIR}"/e2e/*.jsonl 1>/dev/null 2>&1; then
+              echo "::warning::No artifacts found for run ${RUN_ID}, skipping"
+              rm -rf "${RUN_DIR}"
+            fi
           done
 
           # Check if we got any results
-          if ! ls benchmark-baseline-results/*.jsonl 1>/dev/null 2>&1; then
-            echo "::warning::No baseline artifacts found in run ${RUN_ID}. Artifacts may have expired."
+          HISTORY_COUNT=$(ls -d benchmark-baseline-results/history/*/ 2>/dev/null | wc -l)
+          if [ "$HISTORY_COUNT" -eq 0 ]; then
+            echo "::warning::No baseline artifacts found across ${RUN_COUNT} runs. Artifacts may have expired."
             echo "Trigger the benchmark-baseline workflow to generate fresh baselines."
             rm -f benchmark-baseline-results/_metadata.json
+            rm -rf benchmark-baseline-results/history
           else
-            echo "Baseline artifacts downloaded successfully:"
-            ls -la benchmark-baseline-results/
-            ls -la benchmark-baseline-results/e2e/ 2>/dev/null || echo "(no E2E results)"
+            echo "Baseline artifacts downloaded from ${HISTORY_COUNT} nightly run(s):"
+            for d in benchmark-baseline-results/history/*/; do
+              echo "  $(basename "$d"): $(ls "$d"/*.jsonl 2>/dev/null | wc -l) generator(s), $(ls "$d"/e2e/*.jsonl 2>/dev/null | wc -l) E2E"
+            done
           fi
 
       - name: Generate benchmark report
@@ -1159,7 +1188,7 @@ jobs:
   # Runs the real `fern generate --docs --preview` command against the benchmark
   # fixture and measures wall-clock time, same philosophy as SDK benchmarks.
   docs-benchmark:
-    runs-on: ubuntu-latest
+    runs-on: Seed
     timeout-minutes: 45
     needs: [get-all-test-matrices, benchmark-setup]
     if: >-
@@ -1176,7 +1205,7 @@ jobs:
         uses: ./.github/actions/install
 
       - name: Download shared specs
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           name: benchmark-specs
           path: benchmarks/fern/apis
@@ -1187,9 +1216,12 @@ jobs:
           fern-token: ${{ secrets.FERN_FERN_TOKEN }}
 
       - name: Upload PR docs benchmark results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
-          name: benchmark-pr-docs
+          # Must not match the `benchmark-pr-*` pattern used by the SDK
+          # benchmark report download, or docs jsonl rows (which have no
+          # .generator field) leak into the SDK benchmark table.
+          name: benchmark-docs-pr
           path: benchmark-results/
           retention-days: 5
 
@@ -1213,46 +1245,68 @@ jobs:
           sparse-checkout: .github/scripts
 
       - name: Download PR docs benchmark artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
-          pattern: benchmark-pr-docs
+          pattern: benchmark-docs-pr
           path: docs-pr-results
           merge-multiple: true
 
-      - name: Download docs baseline from latest nightly artifacts
+      - name: Download docs baseline from recent nightly artifacts
         env:
           GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
-          mkdir -p docs-baseline-results
+          mkdir -p docs-baseline-results/history
 
-          # Find the latest successful run of benchmark-baseline.yml on main
-          LATEST_RUN=$(gh api "repos/${{ github.repository }}/actions/workflows/benchmark-baseline.yml/runs?status=success&per_page=1&branch=main" \
-            --jq '.workflow_runs[0]' 2>/dev/null || true)
+          BASELINE_RUNS_TO_FETCH=5
 
-          if [ -z "$LATEST_RUN" ] || [ "$LATEST_RUN" = "null" ]; then
-            echo "::warning::No successful nightly baseline run found. Report will show N/A for main timings."
+          # Fetch the last N successful runs of benchmark-baseline.yml on main
+          RUNS=$(gh api "repos/${{ github.repository }}/actions/workflows/benchmark-baseline.yml/runs?status=success&per_page=${BASELINE_RUNS_TO_FETCH}&branch=main" \
+            --jq '.workflow_runs' 2>/dev/null || echo "[]")
+
+          RUN_COUNT=$(echo "$RUNS" | jq 'length')
+          if [ "$RUN_COUNT" -eq 0 ]; then
+            echo "::warning::No successful nightly baseline runs found. Report will show N/A for main timings."
             exit 0
           fi
 
-          RUN_ID=$(echo "$LATEST_RUN" | jq -r '.id')
-          RUN_DATE=$(echo "$LATEST_RUN" | jq -r '.created_at')
-          echo "Using baseline from nightly run ${RUN_ID} (${RUN_DATE})"
+          echo "Found ${RUN_COUNT} successful nightly baseline run(s)"
 
-          echo "{\"latest_timestamp\":\"${RUN_DATE}\",\"run_id\":\"${RUN_ID}\"}" \
+          # Save metadata from the latest run for the report footer
+          LATEST_DATE=$(echo "$RUNS" | jq -r '.[0].created_at')
+          LATEST_RUN_ID=$(echo "$RUNS" | jq -r '.[0].id')
+          echo "{\"latest_timestamp\":\"${LATEST_DATE}\",\"run_id\":\"${LATEST_RUN_ID}\"}" \
             > docs-baseline-results/_metadata.json
 
-          # Download docs baseline artifact
-          gh run download "$RUN_ID" --repo "${{ github.repository }}" --pattern "benchmark-docs-baseline" --dir /tmp/docs-baseline/ 2>/dev/null || true
-          for f in /tmp/docs-baseline/*/*.jsonl /tmp/docs-baseline/*.jsonl; do
-            [ -f "$f" ] && cp "$f" docs-baseline-results/
+          # Download docs baseline artifacts from each run into history/<run-id>/
+          for i in $(seq 0 $(( RUN_COUNT - 1 ))); do
+            RUN_ID=$(echo "$RUNS" | jq -r ".[$i].id")
+            RUN_DATE=$(echo "$RUNS" | jq -r ".[$i].created_at")
+            RUN_DIR="docs-baseline-results/history/${RUN_ID}"
+            mkdir -p "${RUN_DIR}"
+
+            echo "Downloading docs baseline from run ${RUN_ID} (${RUN_DATE})..."
+
+            gh run download "$RUN_ID" --repo "${{ github.repository }}" --pattern "benchmark-docs-baseline" --dir "/tmp/docs-baseline-${RUN_ID}/" 2>/dev/null || true
+            for f in /tmp/docs-baseline-${RUN_ID}/*/*.jsonl /tmp/docs-baseline-${RUN_ID}/*.jsonl; do
+              [ -f "$f" ] && cp "$f" "${RUN_DIR}/"
+            done
+
+            # Remove empty run directories
+            if ! ls "${RUN_DIR}"/*.jsonl 1>/dev/null 2>&1; then
+              echo "::warning::No docs artifacts found for run ${RUN_ID}, skipping"
+              rm -rf "${RUN_DIR}"
+            fi
           done
 
-          if ! ls docs-baseline-results/*.jsonl 1>/dev/null 2>&1; then
-            echo "::warning::No docs baseline artifacts found in run ${RUN_ID}."
+          # Check if we got any results
+          HISTORY_COUNT=$(ls -d docs-baseline-results/history/*/ 2>/dev/null | wc -l)
+          if [ "$HISTORY_COUNT" -eq 0 ]; then
+            echo "::warning::No docs baseline artifacts found across ${RUN_COUNT} runs."
             rm -f docs-baseline-results/_metadata.json
+            rm -rf docs-baseline-results/history
           else
-            echo "Docs baseline artifacts downloaded successfully"
+            echo "Docs baseline artifacts downloaded from ${HISTORY_COUNT} nightly run(s)"
           fi
 
       - name: Generate docs benchmark report
@@ -1327,6 +1381,7 @@ jobs:
                 --arg event "benchmark-pr-result" \
                 --arg distinct_id "fern-ci-benchmark" \
                 --arg timestamp "$TIMESTAMP" \
+                --arg generator "docs" \
                 --arg spec "$spec" \
                 --argjson duration_seconds "$dur" \
                 --argjson exit_code "$ec" \
@@ -1343,6 +1398,7 @@ jobs:
                   distinct_id: $distinct_id,
                   timestamp: $timestamp,
                   properties: {
+                    generator: $generator,
                     spec: $spec,
                     duration_seconds: $duration_seconds,
                     exit_code: $exit_code,

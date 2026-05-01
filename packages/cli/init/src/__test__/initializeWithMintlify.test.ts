@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { AbsoluteFilePath, cwd, resolve } from "@fern-api/fs-utils";
 import { runMintlifyMigration } from "@fern-api/mintlify-importer";
+import { CliError } from "@fern-api/task-context";
 import { vi } from "vitest";
 
 import { initializeWithMintlify } from "../initializeWithMintlify.js";
@@ -29,7 +30,9 @@ describe("initializeWithMintlify", () => {
         ).rejects.toThrow();
 
         expect(taskContext.failAndThrow).toHaveBeenCalledWith(
-            "Clone the repo locally and run this command again by referencing the path to the local mint.json file"
+            "Clone the repo locally and run this command again by referencing the path to the local mint.json file",
+            undefined,
+            { code: CliError.Code.ConfigError }
         );
     });
 
@@ -50,7 +53,9 @@ describe("initializeWithMintlify", () => {
             })
         ).rejects.toThrow();
 
-        expect(taskContext.failAndThrow).toHaveBeenCalledWith("Provide a path to a mint.json file");
+        expect(taskContext.failAndThrow).toHaveBeenCalledWith("Provide a path to a mint.json file", undefined, {
+            code: CliError.Code.ConfigError
+        });
     });
 
     it("Throws an error if the mint.json file does not exist", async () => {
@@ -72,7 +77,9 @@ describe("initializeWithMintlify", () => {
 
         const absolutePathToMintJson = resolve(cwd(), "./mint.json");
 
-        expect(taskContext.failAndThrow).toHaveBeenCalledWith(`${absolutePathToMintJson} does not exist`);
+        expect(taskContext.failAndThrow).toHaveBeenCalledWith(`${absolutePathToMintJson} does not exist`, undefined, {
+            code: CliError.Code.ConfigError
+        });
     });
 
     it("Successfully runs the mintlify migration if a proper mint.json file is provided", async () => {

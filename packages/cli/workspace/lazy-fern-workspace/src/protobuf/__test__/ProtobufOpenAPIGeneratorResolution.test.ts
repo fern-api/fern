@@ -63,6 +63,7 @@ function createMockTaskContext(): TaskContext {
         failWithoutThrowing: vi.fn(),
         captureException: vi.fn(),
         getResult: () => TaskResult.Success,
+        getLastFailureMessage: () => undefined,
         addInteractiveTask: () => {
             throw new Error("Not implemented in mock");
         },

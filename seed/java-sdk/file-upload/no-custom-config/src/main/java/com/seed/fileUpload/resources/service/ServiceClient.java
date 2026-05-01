@@ -16,6 +16,7 @@ import com.seed.fileUpload.resources.service.requests.OptionalArgsRequest;
 import com.seed.fileUpload.resources.service.requests.WithContentTypeRequest;
 import com.seed.fileUpload.resources.service.requests.WithFormEncodingRequest;
 import com.seed.fileUpload.resources.service.requests.WithJsonPropertyRequest;
+import com.seed.fileUpload.resources.service.requests.WithRefBodyRequest;
 import java.io.File;
 import java.io.InputStream;
 import java.util.Optional;
@@ -267,6 +268,42 @@ public class ServiceClient {
             InputStream stream, String filename, MediaType mediaType, RequestOptions requestOptions) {
         return this.rawClient
                 .withJsonProperty(stream, filename, mediaType, requestOptions)
+                .body();
+    }
+
+    public String withRefBody(Optional<File> imageFile, WithRefBodyRequest request) {
+        return this.rawClient.withRefBody(imageFile, request).body();
+    }
+
+    public String withRefBody(Optional<File> imageFile, WithRefBodyRequest request, RequestOptions requestOptions) {
+        return this.rawClient.withRefBody(imageFile, request, requestOptions).body();
+    }
+
+    public String withRefBody(Optional<File> imageFile, InputStream stream, String filename) {
+        return this.rawClient.withRefBody(imageFile, stream, filename).body();
+    }
+
+    public String withRefBody(Optional<File> imageFile, InputStream stream, String filename, MediaType mediaType) {
+        return this.rawClient
+                .withRefBody(imageFile, stream, filename, mediaType)
+                .body();
+    }
+
+    public String withRefBody(
+            Optional<File> imageFile, InputStream stream, String filename, RequestOptions requestOptions) {
+        return this.rawClient
+                .withRefBody(imageFile, stream, filename, requestOptions)
+                .body();
+    }
+
+    public String withRefBody(
+            Optional<File> imageFile,
+            InputStream stream,
+            String filename,
+            MediaType mediaType,
+            RequestOptions requestOptions) {
+        return this.rawClient
+                .withRefBody(imageFile, stream, filename, mediaType, requestOptions)
                 .body();
     }
 

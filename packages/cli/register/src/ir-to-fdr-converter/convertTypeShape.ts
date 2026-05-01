@@ -1,6 +1,6 @@
 import { FdrAPI as FdrCjsSdk } from "@fern-api/fdr-sdk";
 import { FernIr as Ir, TypeReference } from "@fern-api/ir-sdk";
-
+import { CliError } from "@fern-api/task-context";
 import { convertIrAvailability } from "./convertPackage.js";
 import { getOriginalName, getWireValue } from "./nameUtils.js";
 
@@ -95,9 +95,11 @@ export function convertTypeShape(irType: Ir.types.Type): FdrCjsSdk.api.v1.regist
                                         extraProperties: undefined
                                     }),
                                     _other: () => {
-                                        throw new Error(
-                                            "Unknown SingleUnionTypeProperties: " + variant.shape.propertiesType
-                                        );
+                                        throw new CliError({
+                                            message:
+                                                "Unknown SingleUnionTypeProperties: " + variant.shape.propertiesType,
+                                            code: CliError.Code.InternalError
+                                        });
                                     }
                                 }
                             )
@@ -123,7 +125,7 @@ export function convertTypeShape(irType: Ir.types.Type): FdrCjsSdk.api.v1.regist
             };
         },
         _other: () => {
-            throw new Error("Unknown Type shape: " + irType.type);
+            throw new CliError({ message: "Unknown Type shape: " + irType.type, code: CliError.Code.InternalError });
         }
     });
 }
@@ -191,12 +193,18 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
                             };
                         },
                         _other: () => {
-                            throw new Error("Unknown literal type: " + literal.type);
+                            throw new CliError({
+                                message: "Unknown literal type: " + literal.type,
+                                code: CliError.Code.InternalError
+                            });
                         }
                     });
                 },
                 _other: () => {
-                    throw new Error("Unknown container reference: " + container.type);
+                    throw new CliError({
+                        message: "Unknown container reference: " + container.type,
+                        code: CliError.Code.InternalError
+                    });
                 }
             });
         },
@@ -278,7 +286,10 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
                         };
                     },
                     _other: () => {
-                        throw new Error("Unknown primitive: " + primitive.v1);
+                        throw new CliError({
+                            message: "Unknown primitive: " + primitive.v1,
+                            code: CliError.Code.InternalError
+                        });
                     }
                 })
             };
@@ -289,7 +300,10 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
             };
         },
         _other: () => {
-            throw new Error("Unknown Type reference: " + irTypeReference.type);
+            throw new CliError({
+                message: "Unknown Type reference: " + irTypeReference.type,
+                code: CliError.Code.InternalError
+            });
         }
     });
 }

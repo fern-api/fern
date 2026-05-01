@@ -323,7 +323,9 @@ client.create_user(
   password: "password",
   profile: {
     name: "name",
-    verification: {},
+    verification: {
+      verified: "string"
+    },
     ssn: "ssn"
   }
 )
@@ -340,7 +342,9 @@ client.create_user(
   password: "password",
   profile: {
     name: "name",
-    verification: {},
+    verification: {
+      verified: "string"
+    },
     ssn: "ssn"
   }
 )

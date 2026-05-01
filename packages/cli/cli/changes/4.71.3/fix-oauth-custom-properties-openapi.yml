@@ -1,0 +1,6 @@
+- summary: |
+    Fix OpenAPI-to-IR conversion to resolve custom properties (e.g., grant_type)
+    in OAuth token endpoint requests. Previously, customProperties was always set
+    to undefined for OpenAPI specs, causing generated SDKs to omit required
+    literal properties from the token request.
+  type: fix

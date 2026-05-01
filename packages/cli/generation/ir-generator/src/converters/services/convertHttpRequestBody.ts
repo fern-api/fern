@@ -13,7 +13,7 @@ import {
     HttpRequestBodyReference,
     InlinedRequestBodyProperty
 } from "@fern-api/ir-sdk";
-
+import { CliError } from "@fern-api/task-context";
 import { FernFileContext } from "../../FernFileContext.js";
 import { parseTypeName } from "../../utils/parseTypeName.js";
 import { convertAvailability } from "../convertDeclaration.js";
@@ -102,7 +102,7 @@ export function convertHttpRequestBody({
 
     if (isInlineRequestBody(request.body)) {
         if (request.name == null) {
-            throw new Error("Name is missing for inlined request");
+            throw new CliError({ message: "Name is missing for inlined request", code: CliError.Code.InternalError });
         }
 
         return HttpRequestBody.inlinedRequestBody({

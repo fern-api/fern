@@ -14,6 +14,7 @@ import {
     WebSocketChannelId
 } from "@fern-api/ir-sdk";
 import { FilteredIr, getOriginalName, IdGenerator } from "@fern-api/ir-utils";
+import { CliError } from "@fern-api/task-context";
 import { mapValues } from "lodash-es";
 
 type UnprocessedPackage = Omit<Package, "hasEndpointsInTree">;
@@ -40,7 +41,10 @@ export class PackageTreeGenerator {
     public addPackageRedirection({ from, to }: { from: FernFilepath; to: FernFilepath }): void {
         const package_ = this.getPackageForFernFilepath(from);
         if (package_.navigationConfig != null) {
-            throw new Error("Found duplicate navigationConfig for package");
+            throw new CliError({
+                message: "Found duplicate navigationConfig for package",
+                code: CliError.Code.InternalError
+            });
         }
         package_.navigationConfig = {
             pointsTo: IdGenerator.generateSubpackageId(to)
@@ -50,7 +54,7 @@ export class PackageTreeGenerator {
     public addDocs(fernFilepath: FernFilepath, docs: string): void {
         const package_ = this.getPackageForFernFilepath(fernFilepath);
         if (package_.docs != null) {
-            throw new Error("Found duplicate docs for package");
+            throw new CliError({ message: "Found duplicate docs for package", code: CliError.Code.InternalError });
         }
         package_.docs = docs;
     }
@@ -70,7 +74,10 @@ export class PackageTreeGenerator {
     public addService(serviceId: ServiceId, service: HttpService): void {
         const package_ = this.getPackageForFernFilepath(service.name.fernFilepath);
         if (package_.service != null) {
-            throw new Error("Found duplicate service for " + serviceId);
+            throw new CliError({
+                message: "Found duplicate service for " + serviceId,
+                code: CliError.Code.InternalError
+            });
         }
         package_.service = serviceId;
     }
@@ -78,7 +85,10 @@ export class PackageTreeGenerator {
     public addWebhookGroup(webhookGroupId: WebhookGroupId, fernFilepath: FernFilepath): void {
         const package_ = this.getPackageForFernFilepath(fernFilepath);
         if (package_.webhooks != null) {
-            throw new Error("Found duplicate webhook group for " + webhookGroupId);
+            throw new CliError({
+                message: "Found duplicate webhook group for " + webhookGroupId,
+                code: CliError.Code.InternalError
+            });
         }
         package_.webhooks = webhookGroupId;
     }
@@ -86,7 +96,10 @@ export class PackageTreeGenerator {
     public addWebSocketChannel(websocketChannelId: WebSocketChannelId, fernFilepath: FernFilepath): void {
         const package_ = this.getPackageForFernFilepath(fernFilepath);
         if (package_.webhooks != null) {
-            throw new Error("Found duplicate webhook group for " + websocketChannelId);
+            throw new CliError({
+                message: "Found duplicate webhook group for " + websocketChannelId,
+                code: CliError.Code.InternalError
+            });
         }
         package_.websocket = websocketChannelId;
     }
@@ -152,7 +165,10 @@ export class PackageTreeGenerator {
 
     public sortRootPackage(subpackagesInOrder: SubpackageId[]): void {
         if (!isEqualIgnoreOrder(this.rootPackage.subpackages, subpackagesInOrder)) {
-            throw new Error("Sorted subpackages differ from unsorted packages in root");
+            throw new CliError({
+                message: "Sorted subpackages differ from unsorted packages in root",
+                code: CliError.Code.InternalError
+            });
         }
         this.rootPackage.subpackages = subpackagesInOrder;
     }
@@ -160,10 +176,16 @@ export class PackageTreeGenerator {
     public sortSubpackage(subpackageId: SubpackageId, subpackagesInOrder: SubpackageId[]): void {
         const subpackage = this.subpackages[subpackageId];
         if (subpackage == null) {
-            throw new Error("Subpackage does not exist: " + subpackageId);
+            throw new CliError({
+                message: "Subpackage does not exist: " + subpackageId,
+                code: CliError.Code.ResolutionError
+            });
         }
         if (!isEqualIgnoreOrder(subpackage.subpackages, subpackagesInOrder)) {
-            throw new Error("Sorted subpackages differ from unsorted packages");
+            throw new CliError({
+                message: "Sorted subpackages differ from unsorted packages",
+                code: CliError.Code.InternalError
+            });
         }
         subpackage.subpackages = subpackagesInOrder;
     }
@@ -171,7 +193,7 @@ export class PackageTreeGenerator {
     private getAllSubpackagesWithEndpoints(root: SubpackageId): SubpackageId[] {
         const subpackage = this.subpackages[root];
         if (subpackage == null) {
-            throw new Error("Subpackage does not exist: " + root);
+            throw new CliError({ message: "Subpackage does not exist: " + root, code: CliError.Code.ResolutionError });
         }
 
         const subpackagesWithEndpoints = this.getAllChildrenWithEndpoints(subpackage);
@@ -200,7 +222,10 @@ export class PackageTreeGenerator {
         const subpackagesInParent = parent.subpackages.map((subpackageId) => {
             const subpackage = this.subpackages[subpackageId];
             if (subpackage == null) {
-                throw new Error("Subpackage ID is invalid: " + subpackageId);
+                throw new CliError({
+                    message: "Subpackage ID is invalid: " + subpackageId,
+                    code: CliError.Code.InternalError
+                });
             }
             return subpackage;
         });

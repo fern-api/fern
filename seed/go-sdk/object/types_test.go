@@ -4,6 +4,7 @@ package object
 
 import (
 	json "encoding/json"
+	uuid "github.com/google/uuid"
 	assert "github.com/stretchr/testify/assert"
 	require "github.com/stretchr/testify/require"
 	testing "testing"
@@ -200,6 +201,14 @@ func TestSettersType(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetEight", func(t *testing.T) {
+		obj := &Type{}
+		var fernTestValueEight uuid.UUID
+		obj.SetEight(fernTestValueEight)
+		assert.Equal(t, fernTestValueEight, obj.Eight)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetNine", func(t *testing.T) {
 		obj := &Type{}
 		var fernTestValueNine []byte
@@ -261,6 +270,14 @@ func TestSettersType(t *testing.T) {
 		var fernTestValueSixteen []map[string]int
 		obj.SetSixteen(fernTestValueSixteen)
 		assert.Equal(t, fernTestValueSixteen, obj.Sixteen)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetSeventeen", func(t *testing.T) {
+		obj := &Type{}
+		var fernTestValueSeventeen []*uuid.UUID
+		obj.SetSeventeen(fernTestValueSeventeen)
+		assert.Equal(t, fernTestValueSeventeen, obj.Seventeen)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -482,6 +499,29 @@ func TestGettersType(t *testing.T) {
 			}
 		}()
 		_ = obj.GetSeven() // Should return zero value
+	})
+
+	t.Run("GetEight", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Type{}
+		var expected uuid.UUID
+		obj.Eight = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetEight(), "getter should return the property value")
+	})
+
+	t.Run("GetEight_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *Type
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetEight() // Should return zero value
 	})
 
 	t.Run("GetNine", func(t *testing.T) {
@@ -736,6 +776,39 @@ func TestGettersType(t *testing.T) {
 			}
 		}()
 		_ = obj.GetSixteen() // Should return zero value
+	})
+
+	t.Run("GetSeventeen", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Type{}
+		var expected []*uuid.UUID
+		obj.Seventeen = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetSeventeen(), "getter should return the property value")
+	})
+
+	t.Run("GetSeventeen_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Type{}
+		obj.Seventeen = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetSeventeen(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetSeventeen_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *Type
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetSeventeen() // Should return zero value
 	})
 
 	t.Run("GetNineteen", func(t *testing.T) {
@@ -1149,6 +1222,37 @@ func TestSettersMarkExplicitType(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetEight_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Type{}
+		var fernTestValueEight uuid.UUID
+
+		// Act
+		obj.SetEight(fernTestValueEight)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 	t.Run("SetNine_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -1374,6 +1478,37 @@ func TestSettersMarkExplicitType(t *testing.T) {
 
 		// Act
 		obj.SetSixteen(fernTestValueSixteen)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetSeventeen_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Type{}
+		var fernTestValueSeventeen []*uuid.UUID
+
+		// Act
+		obj.SetSeventeen(fernTestValueSeventeen)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)

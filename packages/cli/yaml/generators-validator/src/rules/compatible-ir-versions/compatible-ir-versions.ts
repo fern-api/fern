@@ -1,6 +1,7 @@
 import { addDefaultDockerOrgIfNotPresent } from "@fern-api/configuration-loader";
 import { createFdrGeneratorsSdkService, getIrVersionForGenerator } from "@fern-api/core";
 import { isVersionAhead } from "@fern-api/semver-utils";
+import { CliError } from "@fern-api/task-context";
 
 import { Rule, RuleViolation } from "../../Rule.js";
 
@@ -9,7 +10,16 @@ function getMaybeBadVersionMessage(
     minCliVersion: string,
     cliVersion: string
 ): RuleViolation[] | undefined {
-    if (!isVersionAhead(cliVersion, minCliVersion)) {
+    let isAhead: boolean;
+    try {
+        isAhead = isVersionAhead(cliVersion, minCliVersion);
+    } catch (error) {
+        throw new CliError({
+            message: `Failed to compare versions: ${error instanceof Error ? error.message : String(error)}`,
+            code: CliError.Code.VersionError
+        });
+    }
+    if (!isAhead) {
         return [
             {
                 severity: "fatal",

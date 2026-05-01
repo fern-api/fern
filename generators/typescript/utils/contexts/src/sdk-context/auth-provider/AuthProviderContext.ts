@@ -98,31 +98,72 @@ export class AuthProviderContext {
         }
 
         const endpoint = this.getInferredAuthTokenEndpoint(authScheme);
-        const generatedRequestWrapper = this.context.requestWrapper.getGeneratedRequestWrapper(
-            authScheme.tokenEndpoint.endpoint.subpackageId
-                ? {
-                      isRoot: false,
-                      subpackageId: authScheme.tokenEndpoint.endpoint.subpackageId
-                  }
-                : {
-                      isRoot: true
-                  },
-            endpoint.name
-        );
-        const requestProperties = generatedRequestWrapper.getRequestProperties(this.context);
+        const hasWrappedRequest = endpoint.sdkRequest != null && endpoint.sdkRequest.shape.type === "wrapper";
+
+        if (hasWrappedRequest) {
+            const generatedRequestWrapper = this.context.requestWrapper.getGeneratedRequestWrapper(
+                authScheme.tokenEndpoint.endpoint.subpackageId
+                    ? {
+                          isRoot: false,
+                          subpackageId: authScheme.tokenEndpoint.endpoint.subpackageId
+                      }
+                    : {
+                          isRoot: true
+                      },
+                endpoint.name
+            );
+            const requestProperties = generatedRequestWrapper.getRequestProperties(this.context);
+            return requestProperties.map((property) => ({
+                name: property.safeName,
+                type: property.type,
+                isOptional: property.isOptional,
+                docs: property.docs
+            }));
+        }
+
+        // For justRequestBody endpoints (e.g. form-encoded token endpoints),
+        // extract properties directly from the request body type.
+        return this.getPropertiesFromRequestBody(endpoint);
+    }
+
+    private getPropertiesFromRequestBody(
+        endpoint: FernIr.HttpEndpoint
+    ): Array<{ name: string; type: ts.TypeNode; isOptional: boolean; docs: string[] | undefined }> {
+        const requestBody = endpoint.requestBody;
+        if (requestBody == null) {
+            return [];
+        }
+
         const properties: Array<{
             name: string;
             type: ts.TypeNode;
             isOptional: boolean;
             docs: string[] | undefined;
         }> = [];
-        for (const property of requestProperties) {
-            properties.push({
-                name: property.safeName,
-                type: property.type,
-                isOptional: property.isOptional,
-                docs: property.docs
-            });
+
+        if (requestBody.type === "inlinedRequestBody") {
+            for (const prop of requestBody.properties) {
+                const typeRef = this.context.type.getReferenceToType(prop.valueType);
+                properties.push({
+                    name: this.context.case.camelSafe(prop.name),
+                    type: typeRef.typeNodeWithoutUndefined,
+                    isOptional: typeRef.isOptional,
+                    docs: prop.docs ? [prop.docs] : undefined
+                });
+            }
+        } else if (requestBody.type === "reference" && requestBody.requestBodyType.type === "named") {
+            const typeDeclaration = this.context.type.getTypeDeclaration(requestBody.requestBodyType);
+            if (typeDeclaration.shape.type === "object") {
+                for (const prop of typeDeclaration.shape.properties) {
+                    const typeRef = this.context.type.getReferenceToType(prop.valueType);
+                    properties.push({
+                        name: this.context.case.camelSafe(prop.name),
+                        type: typeRef.typeNodeWithoutUndefined,
+                        isOptional: typeRef.isOptional,
+                        docs: prop.docs ? [prop.docs] : undefined
+                    });
+                }
+            }
         }
 
         return properties;

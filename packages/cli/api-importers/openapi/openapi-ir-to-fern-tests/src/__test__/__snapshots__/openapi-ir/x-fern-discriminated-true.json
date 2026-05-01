@@ -1,0 +1,204 @@
+{
+  "title": "Test x-fern-discriminated override with unions v1",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "Shape": {
+        "value": {
+          "commonProperties": [],
+          "discriminantProperty": "type",
+          "discriminatorContext": "data",
+          "generatedName": "Shape",
+          "schemas": {
+            "triangle": {
+              "generatedName": "ComponentsSchemasTriangle",
+              "schema": "Triangle",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            "square": {
+              "generatedName": "ComponentsSchemasSquare",
+              "schema": "Square",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            }
+          },
+          "groupName": [],
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "discriminated"
+        },
+        "type": "oneOf"
+      },
+      "UndiscriminatedShape": {
+        "value": {
+          "generatedName": "UndiscriminatedShape",
+          "schemas": [
+            {
+              "generatedName": "UndiscriminatedShapeZero",
+              "schema": "Triangle",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            {
+              "generatedName": "UndiscriminatedShapeOne",
+              "schema": "Square",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            }
+          ],
+          "groupName": [],
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "undiscriminated"
+        },
+        "type": "oneOf"
+      },
+      "Triangle": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "triangleType",
+            "key": "type",
+            "schema": {
+              "generatedName": "TriangleType",
+              "values": [
+                {
+                  "generatedName": "triangle",
+                  "value": "triangle",
+                  "casing": {}
+                }
+              ],
+              "groupName": [],
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "enum"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "triangleBase",
+            "key": "base",
+            "schema": {
+              "schema": {
+                "type": "double"
+              },
+              "generatedName": "TriangleBase",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "triangleHeight",
+            "key": "height",
+            "schema": {
+              "schema": {
+                "type": "double"
+              },
+              "generatedName": "TriangleHeight",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Triangle",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Square": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "squareType",
+            "key": "type",
+            "schema": {
+              "generatedName": "SquareType",
+              "values": [
+                {
+                  "generatedName": "square",
+                  "value": "square",
+                  "casing": {}
+                }
+              ],
+              "groupName": [],
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "enum"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "squareSideLength",
+            "key": "sideLength",
+            "schema": {
+              "schema": {
+                "type": "double"
+              },
+              "generatedName": "SquareSideLength",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Square",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

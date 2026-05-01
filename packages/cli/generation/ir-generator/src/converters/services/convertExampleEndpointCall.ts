@@ -9,6 +9,7 @@ import {
     visitExampleResponseSchema
 } from "@fern-api/fern-definition-schema";
 import {
+    ExampleContainer,
     ExampleEndpointCall,
     ExampleEndpointSuccessResponse,
     ExampleHeader,
@@ -18,11 +19,13 @@ import {
     ExampleQueryParameterShape,
     ExampleRequestBody,
     ExampleResponse,
+    ExampleTypeReference,
+    ExampleTypeReferenceShape,
     NameOrString
 } from "@fern-api/ir-sdk";
 import { getOriginalName, hashJSON } from "@fern-api/ir-utils";
+import { CliError } from "@fern-api/task-context";
 import urlJoin from "url-join";
-
 import { FernFileContext } from "../../FernFileContext.js";
 import { ErrorResolver } from "../../resolvers/ErrorResolver.js";
 import { ExampleResolver } from "../../resolvers/ExampleResolver.js";
@@ -86,8 +89,55 @@ export function convertExampleEndpointCall({
                               ? endpoint.request?.["query-parameters"]?.[wireKey]
                               : undefined;
                       if (queryParameterDeclaration == null) {
-                          throw new Error(`Query parameter ${wireKey} does not exist`);
+                          throw new CliError({
+                              message: `Query parameter ${wireKey} does not exist`,
+                              code: CliError.Code.ReferenceError
+                          });
                       }
+                      const isAllowMultiple =
+                          typeof queryParameterDeclaration !== "string" &&
+                          queryParameterDeclaration["allow-multiple"] === true;
+                      const rawType =
+                          typeof queryParameterDeclaration === "string"
+                              ? queryParameterDeclaration
+                              : queryParameterDeclaration.type;
+
+                      // For allow-multiple params with array examples, convert each element
+                      // individually and wrap in a list container.
+                      let convertedValue: ExampleTypeReference;
+                      if (isAllowMultiple && Array.isArray(value)) {
+                          const items = value.map((item) =>
+                              convertTypeReferenceExample({
+                                  example: item,
+                                  rawTypeBeingExemplified: rawType,
+                                  typeResolver,
+                                  exampleResolver,
+                                  fileContainingRawTypeReference: file,
+                                  fileContainingExample: file,
+                                  workspace
+                              })
+                          );
+                          convertedValue = {
+                              jsonExample: value,
+                              shape: ExampleTypeReferenceShape.container(
+                                  ExampleContainer.list({
+                                      list: items,
+                                      itemType: file.parseTypeReference(rawType)
+                                  })
+                              )
+                          };
+                      } else {
+                          convertedValue = convertTypeReferenceExample({
+                              example: value,
+                              rawTypeBeingExemplified: rawType,
+                              typeResolver,
+                              exampleResolver,
+                              fileContainingRawTypeReference: file,
+                              fileContainingExample: file,
+                              workspace
+                          });
+                      }
+
                       return {
                           name: file.casingsGenerator.generateNameAndWireValue({
                               name: getQueryParameterName({
@@ -96,18 +146,7 @@ export function convertExampleEndpointCall({
                               }).name,
                               wireValue: wireKey
                           }),
-                          value: convertTypeReferenceExample({
-                              example: value,
-                              rawTypeBeingExemplified:
-                                  typeof queryParameterDeclaration === "string"
-                                      ? queryParameterDeclaration
-                                      : queryParameterDeclaration.type,
-                              typeResolver,
-                              exampleResolver,
-                              fileContainingRawTypeReference: file,
-                              fileContainingExample: file,
-                              workspace
-                          }),
+                          value: convertedValue,
                           shape: getQueryParamaterDeclationShape({ queryParameter: queryParameterDeclaration })
                       };
                   })
@@ -216,7 +255,10 @@ function convertPathParameters({
                     })
                 );
             } else {
-                throw new Error(`Path parameter ${key} does not exist`);
+                throw new CliError({
+                    message: `Path parameter ${key} does not exist`,
+                    code: CliError.Code.ReferenceError
+                });
             }
         }
     }
@@ -369,7 +411,10 @@ function convertExampleRequestBody({
     }
 
     if (!isPlainObject(example.request)) {
-        throw new Error(`Example is not an object. Got: ${JSON.stringify(example.request)}`);
+        throw new CliError({
+            message: `Example is not an object. Got: ${JSON.stringify(example.request)}`,
+            code: CliError.Code.ValidationError
+        });
     }
 
     const exampleProperties: ExampleInlinedRequestBodyProperty[] = [];
@@ -427,7 +472,10 @@ function convertExampleRequestBody({
                     });
                     continue;
                 }
-                throw new Error("Could not find original type declaration for property: " + wireKey);
+                throw new CliError({
+                    message: "Could not find original type declaration for property: " + wireKey,
+                    code: CliError.Code.ResolutionError
+                });
             }
             exampleProperties.push({
                 name: file.casingsGenerator.generateNameAndWireValue({

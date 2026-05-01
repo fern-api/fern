@@ -25,3 +25,21 @@ export function getLiteralValueForHeader(
         return undefined;
     }
 }
+
+/**
+ * Extracts the client default value from a Literal union (string | boolean).
+ * Used for headers, query parameters, and path parameters with `clientDefault`.
+ */
+export function getClientDefaultValue(clientDefault: FernIr.Literal | undefined): string | boolean | undefined {
+    if (clientDefault == null) {
+        return undefined;
+    }
+    switch (clientDefault.type) {
+        case "boolean":
+            return clientDefault.boolean;
+        case "string":
+            return clientDefault.string;
+        default:
+            assertNever(clientDefault);
+    }
+}

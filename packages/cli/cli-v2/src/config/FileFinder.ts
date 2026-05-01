@@ -1,4 +1,5 @@
 import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
+import { CliError } from "@fern-api/task-context";
 import { findUp } from "find-up";
 
 export namespace FileFinder {
@@ -36,7 +37,10 @@ export class FileFinder {
     }): Promise<AbsoluteFilePath> {
         const filepath = await this.find({ filename });
         if (filepath == null) {
-            throw new Error(`${filename} file not found in any parent directory from ${this.from}`);
+            throw new CliError({
+                message: `${filename} file not found in any parent directory from ${this.from}`,
+                code: CliError.Code.InternalError
+            });
         }
         return filepath;
     }

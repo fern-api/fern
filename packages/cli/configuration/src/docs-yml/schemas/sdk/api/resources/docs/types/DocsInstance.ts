@@ -14,4 +14,6 @@ export interface DocsInstance {
      * You can use audiences to control which versions and products appear in each documentation instance, enabling you to create separate sites for different user groups. Content is included when its audience tag matches the instance audience. Content without an audience tag is included by default.
      */
     audiences?: FernDocsConfig.Audience;
+    /** When enabled, docs registration uses a basepath-aware S3 key format, allowing multiple independent doc sites to be hosted under the same custom domain with different basepaths. If true, the url and custom-domain must share the same basepath. */
+    multiSource?: boolean;
 }

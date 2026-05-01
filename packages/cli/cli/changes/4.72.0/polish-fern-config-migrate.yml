@@ -1,0 +1,7 @@
+- summary: |
+    Polish `fern config migrate` command: point the `docs` key at the
+    existing `docs.yml` file via `$ref` syntax instead of inlining, drop
+    legacy `defaultGroup` and `group` fields from SDK target output, and
+    automatically update GitHub Actions workflow files to use the v2 CLI
+    syntax (`fern sdk generate`, `--target` instead of `--group`).
+  type: feat

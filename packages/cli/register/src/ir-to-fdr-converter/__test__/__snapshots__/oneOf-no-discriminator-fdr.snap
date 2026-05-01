@@ -317,7 +317,7 @@
         "variants": [
           {
             "availability": undefined,
-            "description": undefined,
+            "description": "Error variant A without discriminator",
             "displayName": "ErrorVariantA",
             "type": {
               "default": undefined,
@@ -328,7 +328,7 @@
           },
           {
             "availability": undefined,
-            "description": undefined,
+            "description": "Error variant B without discriminator",
             "displayName": "ErrorVariantB",
             "type": {
               "default": undefined,
@@ -411,7 +411,7 @@
         "variants": [
           {
             "availability": undefined,
-            "description": undefined,
+            "description": "First variant for oneOf without discriminator",
             "displayName": "OneOfVariantA",
             "type": {
               "default": undefined,
@@ -422,7 +422,7 @@
           },
           {
             "availability": undefined,
-            "description": undefined,
+            "description": "Second variant for oneOf without discriminator",
             "displayName": "OneOfVariantB",
             "type": {
               "default": undefined,

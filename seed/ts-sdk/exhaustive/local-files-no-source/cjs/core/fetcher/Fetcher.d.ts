@@ -8,7 +8,13 @@ export declare namespace Fetcher {
         method: string;
         contentType?: string;
         headers?: Record<string, unknown>;
+        /**
+         * @deprecated Prefer `queryString` (produced by `core.url.queryBuilder()`).
+         * Retained for backwards compatibility with custom fetchers and callers that
+         * still construct request args with a query-parameter object.
+         */
         queryParameters?: Record<string, unknown>;
+        queryString?: string;
         body?: unknown;
         timeoutMs?: number;
         maxRetries?: number;

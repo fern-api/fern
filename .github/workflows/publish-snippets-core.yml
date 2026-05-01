@@ -31,7 +31,7 @@ jobs:
         uses: ./.github/actions/install
 
       - name: Cache Fern bin dependencies
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/.fern/bin
           key: ${{ runner.os }}-fern-bin-${{ hashFiles('packages/cli/workspace/lazy-fern-workspace/src/protobuf/BufDownloader.ts', 'packages/cli/workspace/lazy-fern-workspace/src/protobuf/ProtocGenOpenAPIDownloader.ts') }}

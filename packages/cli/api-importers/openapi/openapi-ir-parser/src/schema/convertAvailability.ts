@@ -21,6 +21,12 @@ export function convertAvailability(
             return Availability.Beta;
         case "generally-available":
             return Availability.GenerallyAvailable;
+        case "alpha":
+            return Availability.Alpha;
+        case "preview":
+            return Availability.Preview;
+        case "legacy":
+            return Availability.Legacy;
         default:
             break;
     }

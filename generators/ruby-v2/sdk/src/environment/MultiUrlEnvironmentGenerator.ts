@@ -45,18 +45,12 @@ export class MultiUrlEnvironmentGenerator extends FileGenerator<RubyFile, SdkCus
                 );
             }
         }
-        class_.addStatement(
-            ruby.codeblock((writer) => {
-                writer.newLine();
-            })
-        );
-
         const rootModule = this.context.getRootModule();
         rootModule.addStatement(class_);
 
         return new RubyFile({
             node: ruby.codeblock((writer) => {
-                ruby.comment({ docs: "frozen_string_literal: true" });
+                ruby.comment({ docs: "frozen_string_literal: true" }).write(writer);
                 writer.newLine();
                 rootModule.write(writer);
             }),

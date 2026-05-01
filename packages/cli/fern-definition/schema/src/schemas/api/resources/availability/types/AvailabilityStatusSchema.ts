@@ -5,5 +5,9 @@ export const AvailabilityStatusSchema = {
     PreRelease: "pre-release",
     Deprecated: "deprecated",
     GenerallyAvailable: "generally-available",
+    Alpha: "alpha",
+    Beta: "beta",
+    Preview: "preview",
+    Legacy: "legacy",
 } as const;
 export type AvailabilityStatusSchema = (typeof AvailabilityStatusSchema)[keyof typeof AvailabilityStatusSchema];

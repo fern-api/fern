@@ -1,0 +1,4 @@
+- summary: |
+    Support `x-fern-discriminator-context` extension on OpenAPI discriminator objects and auto-infer
+    `protocol` context for SSE-shaped discriminated unions.
+  type: fix

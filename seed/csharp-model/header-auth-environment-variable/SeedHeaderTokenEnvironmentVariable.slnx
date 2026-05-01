@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="src/SeedHeaderTokenEnvironmentVariable.Test/SeedHeaderTokenEnvironmentVariable.Test.csproj" />
-  <Project Path="src/SeedHeaderTokenEnvironmentVariable/SeedHeaderTokenEnvironmentVariable.csproj" />
-</Solution>
