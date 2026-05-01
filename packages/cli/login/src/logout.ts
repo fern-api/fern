@@ -4,28 +4,7 @@ import chalk from "chalk";
 import open from "open";
 import { createServer } from "./auth0-login/createServer.js";
 import { AUTH0_CLIENT_ID, AUTH0_DOMAIN } from "./constants.js";
-
-const LOGOUT_SUCCESS_PAGE = `
-<!DOCTYPE html>
-<html id="web" lang="en">
-  <head>
-  <title>Fern</title>
-  <link data-rh="true" rel="icon" href="https://www.buildwithfern.com/img/favicon.ico">
-  </head>
-
-  <body style="height: 100vh; width: 100vw; margin: 0; display: flex;">
-    <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; margin-bottom: 20px;">
-      <div style="font-family: sans-serif; font-size: 36px; font-weight: 600;">
-        You're signed out!
-      </div>
-      <div style="font-family: sans-serif; font-size: 20px; color: gray; margin-top: 15px;">
-        You can close this browser window.
-      </div>
-    </div>
-  </body>
-
-</html>
-`;
+import { LOGOUT_SUCCESS_PAGE } from "./pages/logout-success-page.js";
 
 const LOGOUT_TIMEOUT_MS = 15_000;
 
@@ -41,10 +20,8 @@ export async function logout(context: TaskContext): Promise<void> {
         return;
     }
 
-    // Remove the local token first
     await removeToken();
 
-    // Start a local server to handle the Auth0 logout redirect
     const { server, origin } = await createServer();
 
     const redirectReceived = new Promise<void>((resolve) => {
