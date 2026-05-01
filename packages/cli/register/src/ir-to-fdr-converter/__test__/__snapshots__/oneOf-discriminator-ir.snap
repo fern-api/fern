@@ -430,6 +430,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "message",
             "propertyAccess": undefined,
@@ -460,6 +461,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "expectedType",
             "propertyAccess": undefined,
@@ -528,6 +530,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "variantAField",
             "propertyAccess": undefined,
@@ -595,6 +598,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "variantBField",
             "propertyAccess": undefined,
@@ -743,6 +747,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "message",
             "propertyAccess": undefined,
@@ -773,6 +778,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "field",
             "propertyAccess": undefined,
@@ -920,6 +926,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "success",
             "propertyAccess": undefined,

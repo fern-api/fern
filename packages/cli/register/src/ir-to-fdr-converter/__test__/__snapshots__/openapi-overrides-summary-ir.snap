@@ -896,6 +896,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "token",
             "propertyAccess": undefined,
@@ -969,6 +970,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "id",
             "propertyAccess": undefined,
@@ -1007,6 +1009,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "name",
             "propertyAccess": undefined,
@@ -1080,6 +1083,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "id",
             "propertyAccess": undefined,
@@ -1118,6 +1122,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "amount",
             "propertyAccess": undefined,
@@ -1192,6 +1197,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "amount",
             "propertyAccess": undefined,

@@ -265,6 +265,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "orderId",
             "propertyAccess": undefined,
@@ -304,6 +305,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "status",
             "propertyAccess": undefined,
@@ -338,6 +340,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "timestamp",
             "propertyAccess": undefined,
@@ -406,6 +409,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "encoding",
             "propertyAccess": undefined,
@@ -440,6 +444,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "data",
             "propertyAccess": undefined,
