@@ -7,7 +7,7 @@ import Examples
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "id": "movie-c06a4ad7",
                   "prequel": "movie-cv9b914f",
@@ -30,7 +30,7 @@ import Examples
                   },
                   "revenue": 1000000
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ExamplesClient(
@@ -73,7 +73,7 @@ import Examples
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "id": "id",
                   "prequel": "prequel",
@@ -90,7 +90,7 @@ import Examples
                   },
                   "revenue": 1000000
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ExamplesClient(
@@ -127,9 +127,9 @@ import Examples
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 movie-c06a4ad7
-                """.utf8
+                """#.utf8
             )
         )
         let client = ExamplesClient(
@@ -170,9 +170,9 @@ import Examples
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 string
-                """.utf8
+                """#.utf8
             )
         )
         let client = ExamplesClient(
@@ -207,7 +207,7 @@ import Examples
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "type": "html",
                   "extra": {
@@ -220,7 +220,7 @@ import Examples
                   ],
                   "value": "<head>...</head>"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ExamplesClient(
@@ -240,7 +240,7 @@ import Examples
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "type": "html",
                   "value": "string",
@@ -251,7 +251,7 @@ import Examples
                     "tags"
                   ]
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ExamplesClient(
@@ -271,7 +271,7 @@ import Examples
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "response": {
                     "key": "value"
@@ -289,7 +289,7 @@ import Examples
                     }
                   ]
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ExamplesClient(

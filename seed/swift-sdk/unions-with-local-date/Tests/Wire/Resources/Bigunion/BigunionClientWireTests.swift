@@ -7,7 +7,7 @@ import Unions
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "type": "normalSweet",
                   "value": "value",
@@ -15,7 +15,7 @@ import Unions
                   "created-at": "2024-01-15T09:30:00Z",
                   "archived-at": "2024-01-15T09:30:00Z"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = UnionsClient(
@@ -44,9 +44,9 @@ import Unions
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 true
-                """.utf8
+                """#.utf8
             )
         )
         let client = UnionsClient(
@@ -69,11 +69,11 @@ import Unions
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "string": true
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = UnionsClient(

@@ -7,9 +7,9 @@ import BasicAuthEnvironmentVariables
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 true
-                """.utf8
+                """#.utf8
             )
         )
         let client = BasicAuthEnvironmentVariablesClient(
@@ -27,9 +27,9 @@ import BasicAuthEnvironmentVariables
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 true
-                """.utf8
+                """#.utf8
             )
         )
         let client = BasicAuthEnvironmentVariablesClient(

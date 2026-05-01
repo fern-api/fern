@@ -7,7 +7,7 @@ import ClientSideParams
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 [
                   {
                     "id": "id",
@@ -34,7 +34,7 @@ import ClientSideParams
                     }
                   }
                 ]
-                """.utf8
+                """#.utf8
             )
         )
         let client = ClientSideParamsClient(
@@ -89,7 +89,7 @@ import ClientSideParams
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "id": "id",
                   "name": "name",
@@ -102,7 +102,7 @@ import ClientSideParams
                     }
                   }
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ClientSideParamsClient(
@@ -137,7 +137,7 @@ import ClientSideParams
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "results": [
                     {
@@ -168,7 +168,7 @@ import ClientSideParams
                   "total": 1,
                   "next_offset": 1
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ClientSideParamsClient(
@@ -230,7 +230,7 @@ import ClientSideParams
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "users": [
                     {
@@ -341,7 +341,7 @@ import ClientSideParams
                   "length": 1,
                   "total": 1
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ClientSideParamsClient(
@@ -485,7 +485,7 @@ import ClientSideParams
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "user_id": "user_id",
                   "email": "email",
@@ -537,7 +537,7 @@ import ClientSideParams
                   "given_name": "given_name",
                   "family_name": "family_name"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ClientSideParamsClient(
@@ -613,7 +613,7 @@ import ClientSideParams
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "user_id": "user_id",
                   "email": "email",
@@ -665,7 +665,7 @@ import ClientSideParams
                   "given_name": "given_name",
                   "family_name": "family_name"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ClientSideParamsClient(
@@ -757,7 +757,7 @@ import ClientSideParams
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "user_id": "user_id",
                   "email": "email",
@@ -809,7 +809,7 @@ import ClientSideParams
                   "given_name": "given_name",
                   "family_name": "family_name"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ClientSideParamsClient(
@@ -902,7 +902,7 @@ import ClientSideParams
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 [
                   {
                     "id": "id",
@@ -955,7 +955,7 @@ import ClientSideParams
                     }
                   }
                 ]
-                """.utf8
+                """#.utf8
             )
         )
         let client = ClientSideParamsClient(
@@ -1036,7 +1036,7 @@ import ClientSideParams
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "id": "id",
                   "name": "name",
@@ -1062,7 +1062,7 @@ import ClientSideParams
                     }
                   }
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ClientSideParamsClient(
@@ -1111,7 +1111,7 @@ import ClientSideParams
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "start": 1,
                   "limit": 1,
@@ -1270,7 +1270,7 @@ import ClientSideParams
                     }
                   ]
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ClientSideParamsClient(
@@ -1485,7 +1485,7 @@ import ClientSideParams
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "client_id": "client_id",
                   "tenant": "tenant",
@@ -1561,7 +1561,7 @@ import ClientSideParams
                     }
                   }
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ClientSideParamsClient(

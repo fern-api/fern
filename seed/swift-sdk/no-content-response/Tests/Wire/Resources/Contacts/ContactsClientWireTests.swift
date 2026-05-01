@@ -7,13 +7,13 @@ import Api
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "id": "id",
                   "name": "name",
                   "email": "email"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ApiClient(
@@ -36,13 +36,13 @@ import Api
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "id": "id",
                   "name": "name",
                   "email": "email"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ApiClient(
@@ -68,13 +68,13 @@ import Api
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "id": "id",
                   "name": "name",
                   "email": "email"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ApiClient(
@@ -97,13 +97,13 @@ import Api
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "id": "id",
                   "name": "name",
                   "email": "email"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ApiClient(

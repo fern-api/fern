@@ -7,7 +7,7 @@ import UnknownAsAny
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 [
                   {
                     "key": "value"
@@ -16,7 +16,7 @@ import UnknownAsAny
                     "key": "value"
                   }
                 ]
-                """.utf8
+                """#.utf8
             )
         )
         let client = UnknownAsAnyClient(
@@ -48,7 +48,7 @@ import UnknownAsAny
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 [
                   {
                     "key": "value"
@@ -57,7 +57,7 @@ import UnknownAsAny
                     "key": "value"
                   }
                 ]
-                """.utf8
+                """#.utf8
             )
         )
         let client = UnknownAsAnyClient(

@@ -7,7 +7,7 @@ import Audiences
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "foo": {
                     "foo": {
@@ -15,7 +15,7 @@ import Audiences
                     }
                   }
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = AudiencesClient(

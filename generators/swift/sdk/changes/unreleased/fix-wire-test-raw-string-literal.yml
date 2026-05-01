@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Use raw multi-line string literals (`#"""..."""#`) for wire-test response body stubs so that
+    escape sequences like `\n` in example values (e.g. iCalendar payloads) survive as literal
+    characters and produce valid JSON at runtime.
+  type: fix

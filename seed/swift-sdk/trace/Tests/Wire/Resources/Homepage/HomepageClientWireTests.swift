@@ -7,12 +7,12 @@ import Trace
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 [
                   "string",
                   "string"
                 ]
-                """.utf8
+                """#.utf8
             )
         )
         let client = TraceClient(

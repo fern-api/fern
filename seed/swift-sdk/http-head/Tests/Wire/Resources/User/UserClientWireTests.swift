@@ -7,7 +7,7 @@ import HttpHead
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 [
                   {
                     "name": "name",
@@ -24,7 +24,7 @@ import HttpHead
                     ]
                   }
                 ]
-                """.utf8
+                """#.utf8
             )
         )
         let client = HttpHeadClient(
