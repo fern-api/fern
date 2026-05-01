@@ -2,7 +2,6 @@ import { AbsoluteFilePath } from "../AbsoluteFilePath.js";
 import { convertToFernHostAbsoluteFilePath } from "../osPathConverter.js";
 
 describe("convertToFernHostAbsoluteFilePath", () => {
-
     it("should strip Windows drive letter with backslash", () => {
         // Simulating a Windows path that uses backslashes (e.g., C:\Users\...)
         // After convertToOsPath normalization, this becomes C:/Users/...
@@ -10,7 +9,6 @@ describe("convertToFernHostAbsoluteFilePath", () => {
         const result = convertToFernHostAbsoluteFilePath(windowsPath);
         expect(result).toBe("/Users/fchu/docs/images/logo.png");
     });
-
 
     it("should strip Windows drive letter with forward slash", () => {
         // After resolve() normalization, Windows paths use forward slashes: C:/Users/...
