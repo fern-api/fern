@@ -424,12 +424,9 @@ export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions = BaseCl
         const noOpAuthProviderRef = getTextOfTsNode(context.coreUtilities.auth.NoOpAuthProvider._getReferenceTo());
         const isAuthProviderRef = getTextOfTsNode(context.coreUtilities.auth.isAuthProvider._getReferenceTo());
 
-        const functionCode = `
-export function normalizeClientOptionsWithAuth<T extends BaseClientOptions = BaseClientOptions>(
-    ${OPTIONS_PARAMETER_NAME}: T
-): NormalizedClientOptionsWithAuth<T> {
-    const normalized = normalizeClientOptions(${OPTIONS_PARAMETER_NAME}) as NormalizedClientOptionsWithAuth<T>;
-
+        const hasAuthOptions = this.getAuthOptionsTypes(context).length > 0;
+        const authBlock = hasAuthOptions
+            ? `
     if (${OPTIONS_PARAMETER_NAME}.auth != null) {
         if (typeof ${OPTIONS_PARAMETER_NAME}.auth === "function") {
             normalized.authProvider = { getAuthRequest: ${OPTIONS_PARAMETER_NAME}.auth };
@@ -441,7 +438,15 @@ export function normalizeClientOptionsWithAuth<T extends BaseClientOptions = Bas
         }
         Object.assign(normalized, ${OPTIONS_PARAMETER_NAME}.auth);
     }
+`
+            : "";
 
+        const functionCode = `
+export function normalizeClientOptionsWithAuth<T extends BaseClientOptions = BaseClientOptions>(
+    ${OPTIONS_PARAMETER_NAME}: T
+): NormalizedClientOptionsWithAuth<T> {
+    const normalized = normalizeClientOptions(${OPTIONS_PARAMETER_NAME}) as NormalizedClientOptionsWithAuth<T>;
+${authBlock}
     const normalizedWithNoOpAuthProvider = withNoOpAuthProvider(normalized);
     normalized.authProvider ??= ${authProviderCreation};
     return normalized;
