@@ -50,6 +50,17 @@ function normalizeClientOptions(options) {
 function normalizeClientOptionsWithAuth(options) {
     var _a;
     const normalized = normalizeClientOptions(options);
+    if (options.auth != null) {
+        if (typeof options.auth === "function") {
+            normalized.authProvider = { getAuthRequest: options.auth };
+            return normalized;
+        }
+        if (core.isAuthProvider(options.auth)) {
+            normalized.authProvider = options.auth;
+            return normalized;
+        }
+        Object.assign(normalized, options.auth);
+    }
     const normalizedWithNoOpAuthProvider = withNoOpAuthProvider(normalized);
     (_a = normalized.authProvider) !== null && _a !== void 0 ? _a : (normalized.authProvider = new BearerAuthProvider_js_1.BearerAuthProvider(normalizedWithNoOpAuthProvider));
     return normalized;

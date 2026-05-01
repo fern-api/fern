@@ -4,6 +4,11 @@ import { BearerAuthProvider } from "./auth/BearerAuthProvider.js";
 import { mergeHeaders } from "./core/headers.js";
 import * as core from "./core/index.js";
 
+export type AuthOption =
+    | ((arg?: { endpointMetadata?: core.EndpointMetadata }) => Promise<core.AuthRequest>)
+    | core.AuthProvider
+    | BearerAuthProvider.AuthOptions;
+
 export type BaseClientOptions = {
     environment: core.Supplier<string>;
     /** Specify a custom URL to connect the client to. */
@@ -18,6 +23,8 @@ export type BaseClientOptions = {
     fetch?: typeof fetch;
     /** Configure logging for the client. */
     logging?: core.logging.LogConfig | core.logging.Logger;
+    /** Override auth. Accepts auth options, an AuthProvider, or a function returning auth headers. */
+    auth?: AuthOption;
 } & BearerAuthProvider.AuthOptions;
 
 export interface BaseRequestOptions {
@@ -69,6 +76,19 @@ export function normalizeClientOptionsWithAuth<T extends BaseClientOptions = Bas
     options: T,
 ): NormalizedClientOptionsWithAuth<T> {
     const normalized = normalizeClientOptions(options) as NormalizedClientOptionsWithAuth<T>;
+
+    if (options.auth != null) {
+        if (typeof options.auth === "function") {
+            normalized.authProvider = { getAuthRequest: options.auth };
+            return normalized;
+        }
+        if (core.isAuthProvider(options.auth)) {
+            normalized.authProvider = options.auth;
+            return normalized;
+        }
+        Object.assign(normalized, options.auth);
+    }
+
     const normalizedWithNoOpAuthProvider = withNoOpAuthProvider(normalized);
     normalized.authProvider ??= new BearerAuthProvider(normalizedWithNoOpAuthProvider);
     return normalized;
