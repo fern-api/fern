@@ -8,6 +8,7 @@ import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
 import * as FernGeneratorExecSerializers from "@fern-fern/generator-exec-sdk/serialization";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { writeFile } from "fs/promises";
+import { ContributingGenerator } from "./contributing/ContributingGenerator.js";
 import { buildReference } from "./reference/buildReference.js";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig.js";
 import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
@@ -113,6 +114,14 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
         const wireTestGenerator = new SdkWireTestGenerator(context);
         await wireTestGenerator.generate();
 
+        if (!context.config.whitelabel) {
+            try {
+                this.generateContributing({ context });
+            } catch (e) {
+                throw GeneratorError.internalError(`Failed to generate CONTRIBUTING.md: ${extractErrorMessage(e)}`);
+            }
+        }
+
         await context.project.persist();
     }
 
@@ -208,6 +217,12 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
             snippetFilepath,
             JSON.stringify(await FernGeneratorExecSerializers.Snippets.jsonOrThrow(snippets), undefined, 4)
         );
+    }
+
+    private generateContributing({ context }: { context: SdkGeneratorContext }): void {
+        const contributingGenerator = new ContributingGenerator();
+        const content = contributingGenerator.generate();
+        context.project.addRawFiles(new File("CONTRIBUTING.md", RelativeFilePath.of("."), content));
     }
 
     private async generateGitHub({ context }: { context: SdkGeneratorContext }): Promise<void> {
