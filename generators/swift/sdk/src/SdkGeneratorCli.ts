@@ -16,6 +16,7 @@ import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { template as templateFn } from "lodash-es";
 
+import { ContributingGenerator } from "./contributing/ContributingGenerator.js";
 import {
     PackageSwiftGenerator,
     RootClientGenerator,
@@ -69,6 +70,9 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
     protected async generate(context: SdkGeneratorContext): Promise<void> {
         await this.generateSourceFiles(context);
         await Promise.all([this.generateRootFiles(context), this.generateTestFiles(context)]);
+        if (!context.config.whitelabel) {
+            this.generateContributing(context);
+        }
         await context.project.persist();
     }
 
@@ -132,6 +136,12 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
         } catch (e) {
             throw GeneratorError.internalError(`Failed to generate reference.md: ${extractErrorMessage(e)}`);
         }
+    }
+
+    private generateContributing(context: SdkGeneratorContext): void {
+        const contributingGenerator = new ContributingGenerator();
+        const content = contributingGenerator.generate();
+        context.project.addRootFiles(new File("CONTRIBUTING.md", RelativeFilePath.of(""), content));
     }
 
     private generateSnippets(
