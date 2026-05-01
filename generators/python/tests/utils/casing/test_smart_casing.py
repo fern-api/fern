@@ -7,6 +7,8 @@ boundary, matching plain lodash `snakeCase` (`base64` -> `base_64`,
 `setFcmv1Provider` -> `set_fcmv_1_provider`).
 """
 
+from typing import Iterator
+
 import pytest
 
 from fern_python.utils import configure_smart_casing
@@ -14,7 +16,7 @@ from fern_python.utils.name_resolver import _resolve_string_name, _smart_snake
 
 
 @pytest.fixture(autouse=True)
-def reset_smart_casing():
+def reset_smart_casing() -> Iterator[None]:
     """Restore the default (smartCasing=True) between tests so module state
     doesn't leak across test order."""
     configure_smart_casing(True)
