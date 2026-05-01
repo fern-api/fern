@@ -4,7 +4,7 @@ import { FernIr as DynamicFernIr } from "@fern-api/dynamic-ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { WireMockMapping } from "@fern-api/mock-utils";
 import { python } from "@fern-api/python-ast";
-import { PYTHON_CASE_CONVERTER as caseConverter, WriteablePythonFile } from "@fern-api/python-base";
+import { WriteablePythonFile } from "@fern-api/python-base";
 import { DynamicSnippetsGenerator } from "@fern-api/python-dynamic-snippets";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
@@ -351,12 +351,14 @@ export class WireTestGenerator {
 
             // Exclusions use definition-level identifiers in the form "<service_path>.<endpoint_name>"
             // or "<service_path>.*" to exclude an entire service.
-            const servicePathParts = service.name.fernFilepath.allParts.map((part) => caseConverter.snakeSafe(part));
+            const servicePathParts = service.name.fernFilepath.allParts.map((part) =>
+                this.context.caseConverter.snakeSafe(part)
+            );
             const servicePath = servicePathParts.join(".");
             const selector =
                 servicePath.length > 0
-                    ? `${servicePath}.${caseConverter.snakeSafe(endpoint.name)}`
-                    : caseConverter.snakeSafe(endpoint.name);
+                    ? `${servicePath}.${this.context.caseConverter.snakeSafe(endpoint.name)}`
+                    : this.context.caseConverter.snakeSafe(endpoint.name);
             const excluded = this.context.customConfig.wire_tests?.exclusions ?? [];
             if (
                 excluded.includes(selector) ||
@@ -514,8 +516,10 @@ export class WireTestGenerator {
         endpoint: FernIr.HttpEndpoint,
         exampleIndex: number
     ): string {
-        const servicePathParts = service.name.fernFilepath.allParts.map((part) => caseConverter.snakeSafe(part));
-        const endpointName = caseConverter.snakeSafe(endpoint.name);
+        const servicePathParts = service.name.fernFilepath.allParts.map((part) =>
+            this.context.caseConverter.snakeSafe(part)
+        );
+        const endpointName = this.context.caseConverter.snakeSafe(endpoint.name);
 
         const segments: string[] = [];
         if (servicePathParts.length > 0) {
@@ -716,7 +720,7 @@ export class WireTestGenerator {
     // =============================================================================
 
     private getTestFunctionName(serviceName: string, endpoint: FernIr.HttpEndpoint): string {
-        const endpointName = caseConverter.snakeSafe(endpoint.name);
+        const endpointName = this.context.caseConverter.snakeSafe(endpoint.name);
         return `test_${serviceName}_${endpointName}`;
     }
 
@@ -825,6 +829,6 @@ export class WireTestGenerator {
     }
 
     private getFormattedServiceName(service: FernIr.HttpService): string {
-        return service.name.fernFilepath.allParts.map((part) => caseConverter.camelUnsafe(part)).join("_");
+        return service.name.fernFilepath.allParts.map((part) => this.context.caseConverter.camelUnsafe(part)).join("_");
     }
 }
