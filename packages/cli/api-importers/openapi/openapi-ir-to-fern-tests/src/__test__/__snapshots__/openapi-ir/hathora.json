@@ -7241,6 +7241,11 @@
               },
               "generatedName": "GetMetricsRequestMetrics",
               "groupName": [],
+              "default": [
+                "cpu",
+                "memory",
+                "rate_egress"
+              ],
               "type": "array"
             },
             "groupName": [],
