@@ -46,6 +46,7 @@ import { addGeneratorCommands, addGetOrganizationCommand } from "./cliV2.js";
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces.js";
 import { executeAutomationsGenerate } from "./commands/automations/generate/executeAutomationsGenerate.js";
 import { listPreviewGroups } from "./commands/automations/listPreviewGroups.js";
+import { executeAutomationsUpgrade } from "./commands/automations/upgrade/executeAutomationsUpgrade.js";
 import { diff } from "./commands/diff/diff.js";
 import { previewDocsWorkspace } from "./commands/docs-dev/devDocsWorkspace.js";
 import { docsDiff } from "./commands/docs-diff/docsDiff.js";
@@ -2334,6 +2335,7 @@ function addAutomationsCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
     cli.command("automations", false, (yargs) => {
         addAutomationsGenerateCommand(yargs, cliContext);
         addAutomationsPreviewCommand(yargs, cliContext);
+        addAutomationsUpgradeCommand(yargs, cliContext);
         return yargs.demandCommand();
     });
 }
@@ -2603,6 +2605,104 @@ function addAutomationsGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: 
                     jsonOutputPath: argv["json-file-output"]
                 }
             });
+        }
+    );
+}
+
+/**
+ * `fern automations upgrade`
+ *
+ * Wraps `fern upgrade` (CLI version) and `fern generator upgrade` (generator
+ * versions) into a single command that outputs structured JSON to stdout.
+ *
+ * Designed for consumption by the fern-upgrade GitHub Action, replacing the
+ * previous snapshot.js / diff.js approach with a single CLI invocation.
+ *
+ * Flags:
+ *   --include-major   Include major version bumps for generators (default: false).
+ *   --json            Output structured JSON to stdout (for machine consumption).
+ *
+ * JSON output format (--json):
+ *   {
+ *     "cli": { "from": "4.66.0", "to": "4.96.0", "upgraded": true },
+ *     "generators": [
+ *       {
+ *         "name": "fernapi/fern-typescript-sdk",
+ *         "group": "ts-sdk",
+ *         "api": "api",
+ *         "from": "3.63.4",
+ *         "to": "3.65.5",
+ *         "changelog": "https://buildwithfern.com/learn/sdks/generators/typescript/changelog",
+ *         "migrationsApplied": 1
+ *       }
+ *     ],
+ *     "skippedMajor": [{ "name": "...", "current": "0.28.0", "latest": "1.37.0" }],
+ *     "alreadyUpToDate": [{ "name": "...", "version": "3.65.5" }]
+ *   }
+ *
+ * Example GitHub Actions usage:
+ *   - run: |
+ *       UPGRADE_JSON=$(fern automations upgrade --json --include-major)
+ *       echo "upgrade-json=$UPGRADE_JSON" >> "$GITHUB_OUTPUT"
+ *     env:
+ *       FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+ */
+function addAutomationsUpgradeCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "upgrade",
+        false, // hidden
+        (yargs) =>
+            yargs
+                .option("include-major", {
+                    boolean: true,
+                    default: true,
+                    description:
+                        "Whether to include major version upgrades for generators. " +
+                        "When true (default), all upgrades including major versions are applied."
+                })
+                .option("json", {
+                    boolean: true,
+                    default: false,
+                    description: "Output results as JSON to stdout (for machine consumption)."
+                }),
+        async (argv) => {
+            cliContext.instrumentPostHogEvent({
+                command: "fern automations upgrade"
+            });
+
+            const result = await executeAutomationsUpgrade({
+                cliContext,
+                options: {
+                    includeMajor: argv["include-major"]
+                }
+            });
+
+            if (argv.json) {
+                cliContext.writeJsonToStdout(result);
+            } else {
+                // Human-readable summary
+                const { cli: cliResult, generators, skippedMajor, alreadyUpToDate } = result;
+                if (cliResult.upgraded) {
+                    cliContext.logger.info(`CLI: ${cliResult.from} -> ${cliResult.to}`);
+                } else {
+                    cliContext.logger.info(`CLI: ${cliResult.from} (already up to date)`);
+                }
+                if (generators.length > 0) {
+                    cliContext.logger.info(`Generators upgraded: ${generators.length}`);
+                    for (const gen of generators) {
+                        cliContext.logger.info(`  ${gen.name}: ${gen.from} -> ${gen.to}`);
+                    }
+                }
+                if (alreadyUpToDate.length > 0) {
+                    cliContext.logger.info(`Generators already up to date: ${alreadyUpToDate.length}`);
+                }
+                if (skippedMajor.length > 0) {
+                    cliContext.logger.info(`Major upgrades available (skipped): ${skippedMajor.length}`);
+                    for (const skip of skippedMajor) {
+                        cliContext.logger.info(`  ${skip.name}: ${skip.current} -> ${skip.latest}`);
+                    }
+                }
+            }
         }
     );
 }
