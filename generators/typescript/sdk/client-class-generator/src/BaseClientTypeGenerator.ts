@@ -57,6 +57,8 @@ export class BaseClientTypeGenerator {
             return;
         }
 
+        const authProviderType = getTextOfTsNode(context.coreUtilities.auth.AuthProvider._getReferenceToType());
+
         const basePropertiesStr = baseInterface.properties
             .map((prop) => {
                 const docs = prop.docs ? `/** ${prop.docs.join(" ")} */\n    ` : "";
@@ -67,8 +69,16 @@ export class BaseClientTypeGenerator {
 
         const authOptionsIntersection = authOptionsTypes.join(" & ");
         const typeCode = `
+export type AuthOption =
+    | false
+    | ${authProviderType}["getAuthRequest"]
+    | ${authProviderType}
+    | (${authOptionsIntersection});
+
 export type BaseClientOptions = {
     ${basePropertiesStr}
+    /** Override auth. Pass false to disable, a function returning auth headers, an AuthProvider, or auth options. */
+    auth?: AuthOption;
 } & ${authOptionsIntersection};`;
 
         context.sourceFile.addStatements(typeCode);
@@ -412,11 +422,36 @@ export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions = BaseCl
             return;
         }
 
+        const noOpAuthProviderRef = getTextOfTsNode(context.coreUtilities.auth.NoOpAuthProvider._getReferenceTo());
+        const isAuthProviderRef = getTextOfTsNode(context.coreUtilities.auth.isAuthProvider._getReferenceTo());
+
+        const hasAuthOptions = this.getAuthOptionsTypes(context).length > 0;
+        const authBlock = hasAuthOptions
+            ? `
+    if (${OPTIONS_PARAMETER_NAME}.auth === false) {
+        normalized.authProvider = new ${noOpAuthProviderRef}();
+        return normalized;
+    }
+    if (${OPTIONS_PARAMETER_NAME}.auth != null) {
+        if (typeof ${OPTIONS_PARAMETER_NAME}.auth === "function") {
+            normalized.authProvider = { getAuthRequest: ${OPTIONS_PARAMETER_NAME}.auth };
+            return normalized;
+        }
+        if (${isAuthProviderRef}(${OPTIONS_PARAMETER_NAME}.auth)) {
+            normalized.authProvider = ${OPTIONS_PARAMETER_NAME}.auth;
+            return normalized;
+        }
+        Object.assign(normalized, ${OPTIONS_PARAMETER_NAME}.auth);
+    }
+`
+            : "";
+
         const functionCode = `
 export function normalizeClientOptionsWithAuth<T extends BaseClientOptions = BaseClientOptions>(
     ${OPTIONS_PARAMETER_NAME}: T
 ): NormalizedClientOptionsWithAuth<T> {
     const normalized = normalizeClientOptions(${OPTIONS_PARAMETER_NAME}) as NormalizedClientOptionsWithAuth<T>;
+${authBlock}
     const normalizedWithNoOpAuthProvider = withNoOpAuthProvider(normalized);
     normalized.authProvider ??= ${authProviderCreation};
     return normalized;
@@ -427,7 +462,7 @@ function withNoOpAuthProvider<T extends BaseClientOptions = BaseClientOptions>(
 ): NormalizedClientOptionsWithAuth<T> {
     return {
         ...options,
-        authProvider: new ${getTextOfTsNode(context.coreUtilities.auth.NoOpAuthProvider._getReferenceTo())}()
+        authProvider: new ${noOpAuthProviderRef}()
     };
 }`;
 
