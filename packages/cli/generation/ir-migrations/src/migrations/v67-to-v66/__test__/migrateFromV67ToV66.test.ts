@@ -264,6 +264,7 @@ describe("migrateFromV67ToV66", () => {
                             name: buildName("foo"),
                             valueType: IrVersions.V67.TypeReference.primitive({ v1: "STRING", v2: undefined }),
                             propertyAccess: undefined,
+                            defaultValue: undefined,
                             v2Examples: undefined
                         }
                     ]
