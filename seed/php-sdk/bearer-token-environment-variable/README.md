@@ -39,6 +39,7 @@ namespace Example;
 use Seed\SeedClient;
 
 $client = new SeedClient(
+    version: '1.0.0',
     apiKey: 'YOUR_API_KEY',
 );
 $client->service->getWithBearerToken();

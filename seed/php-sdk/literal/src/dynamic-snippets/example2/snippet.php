@@ -8,6 +8,8 @@ use Seed\Inlined\Types\ATopLevelLiteral;
 use Seed\Inlined\Types\ANestedLiteral;
 
 $client = new SeedClient(
+    version: '02-02-2024',
+    auditLogging: true,
     options: [
         'baseUrl' => 'https://api.fern.com',
     ],
