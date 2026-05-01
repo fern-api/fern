@@ -131,28 +131,32 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
             const method = endpoint.location.method;
             const path = FernGeneratorExec.EndpointPath(endpoint.location.path);
 
-            for (const endpointExample of endpoint.examples ?? []) {
-                const generatedSnippet = await dynamicSnippetsGenerator.generate(
-                    convertDynamicEndpointSnippetRequest(endpointExample)
-                );
-
-                const syncClient = generatedSnippet.snippet + "\n";
-                // TODO: Properly generate async client; this is a placeholder for now.
-                const asyncClient = generatedSnippet.snippet + "\n";
-
-                endpointSnippets.push({
-                    exampleIdentifier: endpointExample.id,
-                    id: {
-                        method,
-                        path,
-                        identifierOverride: endpointId
-                    },
-                    snippet: FernGeneratorExec.EndpointSnippet.java({
-                        syncClient,
-                        asyncClient
-                    })
-                });
+            const examples = endpoint.examples ?? [];
+            const endpointExample = examples.find((e) => e.name != null) ?? examples[0];
+            if (endpointExample == null) {
+                continue;
             }
+
+            const generatedSnippet = await dynamicSnippetsGenerator.generate(
+                convertDynamicEndpointSnippetRequest(endpointExample)
+            );
+
+            const syncClient = generatedSnippet.snippet + "\n";
+            // TODO: Properly generate async client; this is a placeholder for now.
+            const asyncClient = generatedSnippet.snippet + "\n";
+
+            endpointSnippets.push({
+                exampleIdentifier: endpointExample.id,
+                id: {
+                    method,
+                    path,
+                    identifierOverride: endpointId
+                },
+                snippet: FernGeneratorExec.EndpointSnippet.java({
+                    syncClient,
+                    asyncClient
+                })
+            });
         }
 
         return endpointSnippets;
