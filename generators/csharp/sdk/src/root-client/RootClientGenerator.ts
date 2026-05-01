@@ -301,7 +301,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         value: this.csharp.codeblock(
                             param.value.type === "string"
                                 ? this.csharp.string_({ string: param.value.string })
-                                : param.value
+                                : param.value.boolean
                                   ? `"${true.toString()}"`
                                   : `"${false.toString()}"`
                         )
