@@ -6,7 +6,7 @@ import { Rules } from "@fern-api/docs-validator";
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { basename } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
-import { validateOSSWorkspace, type ValidationViolation } from "@fern-api/oss-validator";
+import { type ValidationViolation, validateOSSWorkspace } from "@fern-api/oss-validator";
 import { Project } from "@fern-api/project-loader";
 import { runRemoteGenerationForDocsWorkspace } from "@fern-api/remote-workspace-runner";
 import { CliError } from "@fern-api/task-context";
