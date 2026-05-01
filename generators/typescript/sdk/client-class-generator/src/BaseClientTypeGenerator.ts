@@ -58,10 +58,6 @@ export class BaseClientTypeGenerator {
         }
 
         const authProviderType = getTextOfTsNode(context.coreUtilities.auth.AuthProvider._getReferenceToType());
-        const authRequestType = getTextOfTsNode(context.coreUtilities.auth.AuthRequest._getReferenceToType());
-        const endpointMetadataType = getTextOfTsNode(
-            context.coreUtilities.fetcher.EndpointMetadata._getReferenceToType()
-        );
 
         const basePropertiesStr = baseInterface.properties
             .map((prop) => {
@@ -74,7 +70,7 @@ export class BaseClientTypeGenerator {
         const authOptionsIntersection = authOptionsTypes.join(" & ");
         const typeCode = `
 export type AuthOption =
-    | ((arg?: { endpointMetadata?: ${endpointMetadataType} }) => Promise<${authRequestType}>)
+    | ${authProviderType}["getAuthRequest"]
     | ${authProviderType}
     | (${authOptionsIntersection});
 

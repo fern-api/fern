@@ -4,10 +4,7 @@ import { HeaderAuthProvider } from "./auth/HeaderAuthProvider.js";
 import { mergeHeaders } from "./core/headers.js";
 import * as core from "./core/index.js";
 
-export type AuthOption =
-    | ((arg?: { endpointMetadata?: core.EndpointMetadata }) => Promise<core.AuthRequest>)
-    | core.AuthProvider
-    | HeaderAuthProvider.AuthOptions;
+export type AuthOption = core.AuthProvider["getAuthRequest"] | core.AuthProvider | HeaderAuthProvider.AuthOptions;
 
 export type BaseClientOptions = {
     environment: core.Supplier<string>;

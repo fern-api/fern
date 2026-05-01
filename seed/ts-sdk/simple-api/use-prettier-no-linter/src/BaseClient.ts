@@ -6,10 +6,7 @@ import type { AuthProvider } from "./core/auth/index.js";
 import { mergeHeaders } from "./core/headers.js";
 import * as environments from "./environments.js";
 
-export type AuthOption =
-    | ((arg?: { endpointMetadata?: core.EndpointMetadata }) => Promise<core.AuthRequest>)
-    | core.AuthProvider
-    | BearerAuthProvider.AuthOptions;
+export type AuthOption = core.AuthProvider["getAuthRequest"] | core.AuthProvider | BearerAuthProvider.AuthOptions;
 
 export type BaseClientOptions = {
     environment: core.Supplier<environments.SeedSimpleApiEnvironment | string>;

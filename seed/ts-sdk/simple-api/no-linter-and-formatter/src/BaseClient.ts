@@ -7,7 +7,7 @@ import { mergeHeaders } from "./core/headers.js";
 import * as environments from "./environments.js";
 
 export type AuthOption =
-    | ((arg?: { endpointMetadata?: core.EndpointMetadata }) => Promise<core.AuthRequest>)
+    | core.AuthProvider["getAuthRequest"]
     | core.AuthProvider
     | (BearerAuthProvider.AuthOptions);
 

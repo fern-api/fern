@@ -1,8 +1,6 @@
 import { BearerAuthProvider } from "./auth/BearerAuthProvider.mjs";
 import * as core from "./core/index.mjs";
-export type AuthOption = ((arg?: {
-    endpointMetadata?: core.EndpointMetadata;
-}) => Promise<core.AuthRequest>) | core.AuthProvider | BearerAuthProvider.AuthOptions;
+export type AuthOption = core.AuthProvider["getAuthRequest"] | core.AuthProvider | BearerAuthProvider.AuthOptions;
 export type BaseClientOptions = {
     environment: core.Supplier<string>;
     /** Specify a custom URL to connect the client to. */
