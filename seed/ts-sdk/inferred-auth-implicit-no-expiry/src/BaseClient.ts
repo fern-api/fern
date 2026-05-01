@@ -4,7 +4,11 @@ import { InferredAuthProvider } from "./auth/InferredAuthProvider.js";
 import { mergeHeaders } from "./core/headers.js";
 import * as core from "./core/index.js";
 
-export type AuthOption = core.AuthProvider["getAuthRequest"] | core.AuthProvider | InferredAuthProvider.AuthOptions;
+export type AuthOption =
+    | false
+    | core.AuthProvider["getAuthRequest"]
+    | core.AuthProvider
+    | InferredAuthProvider.AuthOptions;
 
 export type BaseClientOptions = {
     environment: core.Supplier<string>;
@@ -20,7 +24,7 @@ export type BaseClientOptions = {
     fetch?: typeof fetch;
     /** Configure logging for the client. */
     logging?: core.logging.LogConfig | core.logging.Logger;
-    /** Override auth. Accepts auth options, an AuthProvider, or a function returning auth headers. */
+    /** Override auth. Pass false to disable, a function returning auth headers, an AuthProvider, or auth options. */
     auth?: AuthOption;
 } & InferredAuthProvider.AuthOptions;
 
@@ -74,6 +78,10 @@ export function normalizeClientOptionsWithAuth<T extends BaseClientOptions = Bas
 ): NormalizedClientOptionsWithAuth<T> {
     const normalized = normalizeClientOptions(options) as NormalizedClientOptionsWithAuth<T>;
 
+    if (options.auth === false) {
+        normalized.authProvider = new core.NoOpAuthProvider();
+        return normalized;
+    }
     if (options.auth != null) {
         if (typeof options.auth === "function") {
             normalized.authProvider = { getAuthRequest: options.auth };

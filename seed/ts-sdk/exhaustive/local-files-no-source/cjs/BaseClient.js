@@ -50,6 +50,10 @@ function normalizeClientOptions(options) {
 function normalizeClientOptionsWithAuth(options) {
     var _a;
     const normalized = normalizeClientOptions(options);
+    if (options.auth === false) {
+        normalized.authProvider = new core.NoOpAuthProvider();
+        return normalized;
+    }
     if (options.auth != null) {
         if (typeof options.auth === "function") {
             normalized.authProvider = { getAuthRequest: options.auth };

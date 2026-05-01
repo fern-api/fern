@@ -70,13 +70,14 @@ export class BaseClientTypeGenerator {
         const authOptionsIntersection = authOptionsTypes.join(" & ");
         const typeCode = `
 export type AuthOption =
+    | false
     | ${authProviderType}["getAuthRequest"]
     | ${authProviderType}
     | (${authOptionsIntersection});
 
 export type BaseClientOptions = {
     ${basePropertiesStr}
-    /** Override auth. Accepts auth options, an AuthProvider, or a function returning auth headers. */
+    /** Override auth. Pass false to disable, a function returning auth headers, an AuthProvider, or auth options. */
     auth?: AuthOption;
 } & ${authOptionsIntersection};`;
 
@@ -427,6 +428,10 @@ export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions = BaseCl
         const hasAuthOptions = this.getAuthOptionsTypes(context).length > 0;
         const authBlock = hasAuthOptions
             ? `
+    if (${OPTIONS_PARAMETER_NAME}.auth === false) {
+        normalized.authProvider = new ${noOpAuthProviderRef}();
+        return normalized;
+    }
     if (${OPTIONS_PARAMETER_NAME}.auth != null) {
         if (typeof ${OPTIONS_PARAMETER_NAME}.auth === "function") {
             normalized.authProvider = { getAuthRequest: ${OPTIONS_PARAMETER_NAME}.auth };
