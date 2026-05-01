@@ -68,6 +68,8 @@ export abstract class AbstractParameterConverter<
             schema: resolvedParameterSchema
         });
 
+        const parameterDefaultValue = resolvedParameterSchema?.default;
+
         switch (this.parameter.in) {
             case "query":
                 return {
@@ -81,6 +83,7 @@ export abstract class AbstractParameterConverter<
                         valueType: typeReference ?? AbstractConverter.OPTIONAL_STRING,
                         allowMultiple: this.parameter.explode ?? false,
                         clientDefault: undefined,
+                        defaultValue: parameterDefaultValue,
                         v2Examples: this.convertParameterExamples({
                             schema: parameterSchemaWithExampleOverride ?? schema
                         }),
@@ -101,6 +104,7 @@ export abstract class AbstractParameterConverter<
                         valueType: typeReference ?? AbstractConverter.OPTIONAL_STRING,
                         env: undefined,
                         clientDefault: undefined,
+                        defaultValue: parameterDefaultValue,
                         v2Examples: this.convertParameterExamples({
                             schema: parameterSchemaWithExampleOverride ?? schema
                         }),
