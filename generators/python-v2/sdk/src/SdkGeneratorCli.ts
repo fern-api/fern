@@ -78,8 +78,8 @@ export class SdkGeneratorCli extends AbstractPythonGeneratorCli<SdkCustomConfigS
         if (!context.config.whitelabel) {
             try {
                 this.generateContributing({ context });
-            } catch (e) {
-                throw GeneratorError.internalError(`Failed to generate CONTRIBUTING.md: ${extractErrorMessage(e)}`);
+            } catch (error) {
+                throw GeneratorError.internalError(`Failed to generate CONTRIBUTING.md: ${extractErrorMessage(error)}`);
             }
         }
 
