@@ -392,13 +392,14 @@ function isTypeOptional(typeReference: FernIr.TypeReference): boolean {
 }
 
 function unwrapOptionalType(context: SdkGeneratorContext, typeReference: FernIr.TypeReference): string {
-    if (typeReference.type === "container") {
-        if (typeReference.container.type === "optional") {
-            return getTypeString(context, typeReference.container.optional);
-        }
-        if (typeReference.container.type === "nullable") {
-            return getTypeString(context, typeReference.container.nullable);
-        }
+    if (typeReference.type !== "container") {
+        return getTypeString(context, typeReference);
+    }
+    if (typeReference.container.type === "optional") {
+        return getTypeString(context, typeReference.container.optional);
+    }
+    if (typeReference.container.type === "nullable") {
+        return getTypeString(context, typeReference.container.nullable);
     }
     return getTypeString(context, typeReference);
 }

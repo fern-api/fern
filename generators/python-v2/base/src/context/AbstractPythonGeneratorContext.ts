@@ -11,17 +11,6 @@ import { BasePythonCustomConfigSchema } from "../custom-config/BasePythonCustomC
 import { PythonProject } from "../project/index.js";
 import { PythonTypeMapper } from "./PythonTypeMapper.js";
 
-/**
- * Default smart-casing case converter. Used as a fallback for callers that don't have access
- * to a generator context (e.g. utilities). Most callers should use `context.caseConverter`,
- * which respects the customer's `smart-casing` config from generators.yml.
- */
-export const PYTHON_CASE_CONVERTER = new CaseConverter({
-    generationLanguage: "python",
-    keywords: undefined,
-    smartCasing: true
-});
-
 export abstract class AbstractPythonGeneratorContext<
     CustomConfig extends BasePythonCustomConfigSchema
 > extends AbstractGeneratorContext {
@@ -30,8 +19,8 @@ export abstract class AbstractPythonGeneratorContext<
     public readonly project: PythonProject;
     /**
      * Case converter configured from the IR's casingsConfig (driven by the customer's
-     * `smart-casing` flag in generators.yml). Use this instead of PYTHON_CASE_CONVERTER
-     * so generated names match the IR's pre-computed snake_case values.
+     * `smart-casing` flag in generators.yml). Generated names must use this so they
+     * match the IR server's pre-computed snake_case values.
      */
     public readonly caseConverter: CaseConverter;
 

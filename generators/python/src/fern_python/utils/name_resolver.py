@@ -29,6 +29,8 @@ def configure_smart_casing(enabled: bool) -> None:
     """Set whether _smart_snake uses smartCasing semantics. Must be called before
     any name resolution (cache is cleared to invalidate any pre-flag results)."""
     global _smart_casing_enabled
+    if _smart_casing_enabled == enabled:
+        return
     _smart_casing_enabled = enabled
     _resolve_string_name.cache_clear()
 
