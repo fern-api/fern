@@ -3,6 +3,18 @@ import { describe, expect, it } from "vitest";
 import { swift } from "../../../index.js";
 
 describe("Expression", () => {
+    describe("rawMultiLineStringLiteral", () => {
+        it("should preserve embedded escape sequences verbatim", () => {
+            const rawMultiLineStringLiteral = swift.Expression.rawMultiLineStringLiteral(
+                '{"calendar":"BEGIN:VEVENT\\nDTSTART:20260101"}'
+            );
+
+            expect(rawMultiLineStringLiteral.toString()).toBe(
+                '#"""\n{"calendar":"BEGIN:VEVENT\\nDTSTART:20260101"}\n"""#'
+            );
+        });
+    });
+
     describe("functionCall multiline vs single-line", () => {
         it("should write single-line function call with multiple arguments", () => {
             const functionCall = swift.Expression.functionCall({
