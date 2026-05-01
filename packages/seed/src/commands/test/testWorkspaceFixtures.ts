@@ -4,6 +4,7 @@ import fs from "fs";
 import { difference } from "lodash-es";
 import path from "path";
 
+import { BaselineConfiguration, FixtureConfigurations } from "../../config/api/index.js";
 import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces.js";
 import { getBaselineDir } from "../../utils/diffStorage.js";
 import { printTestCases } from "./printTestCases.js";
@@ -28,22 +29,35 @@ export async function testGenerator({
     outputFolder?: string;
     inspect: boolean;
 }): Promise<boolean> {
+    // Group inputs by fixture base name so each fixture's baseline runs exactly
+    // once even when the input list contains multiple `name:outputFolder`
+    // variants of the same fixture. Without this, parallel baseline runs race on
+    // `<fixture>/baseline/` (mkdir/rmdir/copyfile) and corrupt each other.
+    //
+    // A null entry in `requestedOutputFolders` means "run the entire fixture"
+    // (no folder filter). A specific string narrows variants to that outputFolder.
+    const groupedFixtures = new Map<string, Array<string | null>>();
+    for (const fixture of fixtures) {
+        let fixtureName = fixture;
+        let fixtureOutputFolder = outputFolder ?? null;
+        if (fixture.includes(":")) {
+            const [name, folder] = fixture.split(":", 2);
+            fixtureName = name ?? fixture;
+            fixtureOutputFolder = folder ?? null;
+        }
+        const existing = groupedFixtures.get(fixtureName);
+        if (existing == null) {
+            groupedFixtures.set(fixtureName, [fixtureOutputFolder]);
+        } else {
+            existing.push(fixtureOutputFolder);
+        }
+    }
+
     // Each fixture runs as a group: baseline first, then custom config variants.
     // Cross-fixture parallelism is preserved.
     const fixturePromises: Promise<TestRunner.TestResult[]>[] = [];
     const allowedFailuresAsSet = new Set(generator.workspaceConfig.allowedFailures);
-    for (const fixture of fixtures) {
-        let fixtureName = fixture;
-        let fixtureOutputFolder = outputFolder;
-
-        // Parse fixture name and outputFolder if format is "name:outputFolder"
-        // Format name:outputFolder will override the passed in outputFolder
-        if (fixture.includes(":")) {
-            const [name, folder] = fixture.split(":", 2);
-            fixtureName = name ?? fixture;
-            fixtureOutputFolder = folder;
-        }
-
+    for (const [fixtureName, requestedOutputFolders] of groupedFixtures) {
         const config = generator.workspaceConfig.fixtures?.[fixtureName];
         const matchingPrefix = LANGUAGE_SPECIFIC_FIXTURE_PREFIXES.filter((prefix) => fixtureName.startsWith(prefix))[0];
 
@@ -54,6 +68,20 @@ export async function testGenerator({
             continue;
         }
 
+        // If any input was unfiltered (null), all variants run; otherwise restrict
+        // to the union of requested outputFolders.
+        const runAllVariants = requestedOutputFolders.includes(null);
+        const requestedVariantSet = new Set(requestedOutputFolders.filter((f): f is string => f != null));
+
+        // BaselineConfiguration carries per-baseline options like
+        // `disableDynamicSnippetTests` that previously rode along on a
+        // `customConfig: null` fixture entry. Adapt it to the FixtureConfigurations
+        // shape the runner expects (outputFolder is filled with a placeholder; the
+        // runner overrides it to "baseline" when isBaseline=true).
+        const baselineConfig = baselineConfigurationToFixtureConfigurations(
+            generator.workspaceConfig.baselineConfigurations?.[fixtureName]
+        );
+
         if (config != null && config.length > 0) {
             // Fixture has custom config entries.
             // Run baseline first, then all custom config variants in parallel.
@@ -63,7 +91,7 @@ export async function testGenerator({
                     // Phase 1: Run the implicit baseline (customConfig=null)
                     const baselineResult = await runner.run({
                         fixture: fixtureName,
-                        configuration: undefined,
+                        configuration: baselineConfig,
                         inspect,
                         isBaseline: true
                     });
@@ -77,7 +105,7 @@ export async function testGenerator({
                     // Phase 2: Run all custom config variants in parallel
                     const variantCases: Promise<TestRunner.TestResult>[] = [];
                     for (const instance of config) {
-                        if (fixtureOutputFolder != null && instance.outputFolder !== fixtureOutputFolder) {
+                        if (!runAllVariants && !requestedVariantSet.has(instance.outputFolder)) {
                             continue;
                         }
                         variantCases.push(
@@ -99,7 +127,7 @@ export async function testGenerator({
                 runner
                     .run({
                         fixture: fixtureName,
-                        configuration: undefined,
+                        configuration: baselineConfig,
                         inspect,
                         isBaseline: true
                     })
@@ -150,7 +178,26 @@ export async function testGenerator({
     return true;
 }
 
+// The runner consumes a single FixtureConfigurations type for both baseline and
+// variant runs. BaselineConfiguration is a strict subset (no outputFolder, no
+// storeFullSnapshot). Fill outputFolder with the constant "baseline" — TestRunner
+// overrides it for baseline runs, so the value is never observed.
+function baselineConfigurationToFixtureConfigurations(
+    spec: BaselineConfiguration | undefined
+): FixtureConfigurations | undefined {
+    if (spec == null) {
+        return undefined;
+    }
+    return {
+        ...spec,
+        outputFolder: "baseline"
+    };
+}
+
 function readDirectories(filepath: string): string[] {
+    if (!fs.existsSync(filepath)) {
+        return [];
+    }
     const files = fs.readdirSync(filepath);
     return files
         .map((file) => path.join(filepath, file))

@@ -43,6 +43,14 @@ types:
           Configuration that will be used for any custom fixture specified by --custom-fixture
       fixtures:
         type: optional<map<string, list<FixtureConfigurations>>>
+      baselineConfigurations:
+        type: optional<map<string, BaselineConfiguration>>
+        docs: |
+          Per-fixture options applied when the implicit baseline (customConfig=null)
+          variant is generated. Use this to attach options like
+          `disableDynamicSnippetTests: true` to the baseline run when those options
+          previously rode along on a `customConfig: null` fixture entry that has
+          since been collapsed into the implicit baseline.
       scripts: optional<ScriptsConfiguration>
       allowedFailures:
         type: optional<list<string>>
@@ -270,6 +278,34 @@ types:
           under `custom-configs/`. Use this for variants whose diff against baseline
           is impractically large because the variant changes file layout (e.g.
           `outputMode: local_files`).
+
+  BaselineConfiguration:
+    docs: |
+      Options that apply to a fixture's implicit baseline (customConfig=null) run.
+      Mirrors a subset of FixtureConfigurations — only the fields that make sense
+      for a baseline (e.g. no outputFolder, no storeFullSnapshot).
+    properties:
+      customConfig: unknown
+      audiences: optional<list<string>>
+      outputVersion: optional<string>
+      disableDynamicSnippetTests:
+        type: optional<boolean>
+        docs: |
+          If true, dynamic snippet tests are not generated for the baseline run.
+          Use when the baseline cannot exercise dynamic snippets (e.g. grpc/proto
+          fixtures whose snippets reference types only emitted by variants).
+      outputMode:
+        type: optional<OutputMode>
+        docs: Overrides the default output mode for the baseline.
+      license: optional<unknown>
+      skipScripts:
+        docs: |
+          Either a boolean to skip all scripts, or a list of script names to skip.
+          When true, build and test scripts are skipped for the baseline.
+        type: optional<SkipScripts>
+      readmeConfig: optional<ReadmeConfig>
+      publishConfig: unknown
+      publishMetadata: unknown
 
   SkipScripts:
     discriminated: false

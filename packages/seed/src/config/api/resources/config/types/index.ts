@@ -1,3 +1,4 @@
+export * from "./BaselineConfiguration.js";
 export * from "./BuildScripts.js";
 export * from "./CliSeedWorkspaceConfiguration.js";
 export * from "./ContainerScriptConfig.js";

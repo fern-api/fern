@@ -25,6 +25,14 @@ export interface SeedWorkspaceConfiguration {
     /** Configuration that will be used for any custom fixture specified by --custom-fixture */
     customFixtureConfig?: FernSeedConfig.FixtureConfigurations | undefined;
     fixtures?: Record<string, FernSeedConfig.FixtureConfigurations[]> | undefined;
+    /**
+     * Per-fixture options applied when the implicit baseline (customConfig=null)
+     * variant is generated. Use this to attach options like
+     * `disableDynamicSnippetTests: true` to the baseline run when those options
+     * previously rode along on a `customConfig: null` fixture entry that has
+     * since been collapsed into the implicit baseline.
+     */
+    baselineConfigurations?: Record<string, FernSeedConfig.BaselineConfiguration> | undefined;
     scripts?: FernSeedConfig.ScriptsConfiguration | undefined;
     /**
      * List any fixtures that are okay to fail. For normal fixtures

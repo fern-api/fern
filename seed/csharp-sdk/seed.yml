@@ -363,6 +363,16 @@ fixtures:
   - customConfig:
       redact-response-body-on-error: true
     outputFolder: redact-response-body-on-error
+baselineConfigurations:
+  # Dynamic snippet generation produces uncompilable C# for grpc/proto fixtures
+  # (Dictionary<…> → Metadata coercions, missing GoogleProtobufAny imports). The
+  # main-branch fixtures previously worked around this by disabling dynamic
+  # snippet tests on their `customConfig: null` variant; preserve that behavior
+  # for the implicit baseline.
+  csharp-grpc-proto:
+    disableDynamicSnippetTests: true
+  csharp-grpc-proto-exhaustive:
+    disableDynamicSnippetTests: true
 allowedFailures:
 - allof:baseline
 - allof-inline:baseline
