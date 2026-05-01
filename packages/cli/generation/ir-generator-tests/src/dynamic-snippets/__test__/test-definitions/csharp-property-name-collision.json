@@ -1,0 +1,382 @@
+{
+    "version": "1.0.0",
+    "types": {
+        "type_:CatalogV1Id": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "CatalogV1Id",
+                    "camelCase": {
+                        "unsafeName": "catalogV1ID",
+                        "safeName": "catalogV1ID"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "catalog_v1id",
+                        "safeName": "catalog_v1id"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CATALOG_V1ID",
+                        "safeName": "CATALOG_V1ID"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "CatalogV1ID",
+                        "safeName": "CatalogV1ID"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "catalog_v1_id",
+                        "name": {
+                            "originalName": "catalog_v1_id",
+                            "camelCase": {
+                                "unsafeName": "catalogV1ID",
+                                "safeName": "catalogV1ID"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "catalog_v1id",
+                                "safeName": "catalog_v1id"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "CATALOG_V1ID",
+                                "safeName": "CATALOG_V1ID"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "CatalogV1ID",
+                                "safeName": "CatalogV1ID"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "location_id",
+                        "name": {
+                            "originalName": "location_id",
+                            "camelCase": {
+                                "unsafeName": "locationID",
+                                "safeName": "locationID"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "location_id",
+                                "safeName": "location_id"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "LOCATION_ID",
+                                "safeName": "LOCATION_ID"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "LocationID",
+                                "safeName": "LocationID"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        },
+        "type_:Activity": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "Activity",
+                    "camelCase": {
+                        "unsafeName": "activity",
+                        "safeName": "activity"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "activity",
+                        "safeName": "activity"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "ACTIVITY",
+                        "safeName": "ACTIVITY"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Activity",
+                        "safeName": "Activity"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "activity",
+                        "name": {
+                            "originalName": "activity",
+                            "camelCase": {
+                                "unsafeName": "activity",
+                                "safeName": "activity"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "activity",
+                                "safeName": "activity"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ACTIVITY",
+                                "safeName": "ACTIVITY"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Activity",
+                                "safeName": "Activity"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "timestamp",
+                        "name": {
+                            "originalName": "timestamp",
+                            "camelCase": {
+                                "unsafeName": "timestamp",
+                                "safeName": "timestamp"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "timestamp",
+                                "safeName": "timestamp"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TIMESTAMP",
+                                "safeName": "TIMESTAMP"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Timestamp",
+                                "safeName": "Timestamp"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        }
+    },
+    "headers": [],
+    "endpoints": {
+        "endpoint_.createCatalog": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "createCatalog",
+                    "camelCase": {
+                        "unsafeName": "createCatalog",
+                        "safeName": "createCatalog"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "create_catalog",
+                        "safeName": "create_catalog"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CREATE_CATALOG",
+                        "safeName": "CREATE_CATALOG"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "CreateCatalog",
+                        "safeName": "CreateCatalog"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "",
+                            "camelCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "snakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "pascalCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "",
+                        "camelCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                        },
+                        "snakeCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                        },
+                        "pascalCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/catalog"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": {
+                    "type": "typeReference",
+                    "value": {
+                        "type": "named",
+                        "value": "type_:CatalogV1Id"
+                    }
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_.createActivity": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "createActivity",
+                    "camelCase": {
+                        "unsafeName": "createActivity",
+                        "safeName": "createActivity"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "create_activity",
+                        "safeName": "create_activity"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CREATE_ACTIVITY",
+                        "safeName": "CREATE_ACTIVITY"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "CreateActivity",
+                        "safeName": "CreateActivity"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "",
+                            "camelCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "snakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "pascalCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "",
+                        "camelCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                        },
+                        "snakeCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                        },
+                        "pascalCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/activity"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": {
+                    "type": "typeReference",
+                    "value": {
+                        "type": "named",
+                        "value": "type_:Activity"
+                    }
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        }
+    },
+    "pathParameters": [],
+    "environments": null,
+    "variables": null,
+    "generatorConfig": null
+}
