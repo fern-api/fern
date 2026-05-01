@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.68.1
+  changelogEntry:
+    - summary: |
+        Fix serialization schema for map types with nullable values. Previously, the
+        schema generator stripped nullable wrappers from map value types, causing a
+        type mismatch between the API types (which correctly included `| null`) and
+        the serialization layer (which omitted `.nullable()` on the value schema).
+      type: fix
+  createdAt: "2026-05-01"
+  irVersion: 66
 - version: 3.68.0
   changelogEntry:
     - summary: |
