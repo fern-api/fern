@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.7.3
+  changelogEntry:
+    - summary: |
+        Fix image path resolution on Windows for `fern docs dev` and `fern generate docs`.
+        Path utilities (`resolve`, `dirname`, `join`) now normalize output to forward slashes,
+        preventing file ID lookup mismatches caused by mixed path separators on Windows.
+      type: fix
+  createdAt: "2026-05-01"
+  irVersion: 66
 - version: 5.7.2
   changelogEntry:
     - summary: |
