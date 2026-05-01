@@ -154,8 +154,16 @@ function createMockContext(opts?: {
                 AuthProvider: {
                     _getReferenceToType: () => ts.factory.createTypeReferenceNode("core.AuthProvider")
                 },
+                AuthRequest: {
+                    _getReferenceToType: () => ts.factory.createTypeReferenceNode("core.AuthRequest")
+                },
                 NoOpAuthProvider: {
                     _getReferenceTo: () => ts.factory.createIdentifier("core.NoOpAuthProvider")
+                }
+            },
+            fetcher: {
+                EndpointMetadata: {
+                    _getReferenceToType: () => ts.factory.createTypeReferenceNode("core.EndpointMetadata")
                 }
             }
         },

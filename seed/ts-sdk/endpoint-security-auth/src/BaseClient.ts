@@ -9,6 +9,19 @@ import { RoutingAuthProvider } from "./auth/RoutingAuthProvider.js";
 import { mergeHeaders } from "./core/headers.js";
 import * as core from "./core/index.js";
 
+export type AuthOption =
+    | ((arg?: { endpointMetadata?: core.EndpointMetadata }) => Promise<core.AuthRequest>)
+    | core.AuthProvider
+    | RoutingAuthProvider.AuthOptions<
+          [
+              BearerAuthProvider.AuthOptions,
+              HeaderAuthProvider.AuthOptions,
+              OAuthAuthProvider.AuthOptions,
+              BasicAuthProvider.AuthOptions,
+              InferredAuthProvider.AuthOptions,
+          ]
+      >;
+
 export type BaseClientOptions = {
     environment: core.Supplier<string>;
     /** Specify a custom URL to connect the client to. */
@@ -23,6 +36,8 @@ export type BaseClientOptions = {
     fetch?: typeof fetch;
     /** Configure logging for the client. */
     logging?: core.logging.LogConfig | core.logging.Logger;
+    /** Override auth. Accepts auth options, an AuthProvider, or a function returning auth headers. */
+    auth?: AuthOption;
 } & RoutingAuthProvider.AuthOptions<
     [
         BearerAuthProvider.AuthOptions,
@@ -78,10 +93,32 @@ export function normalizeClientOptions<T extends BaseClientOptions = BaseClientO
     } as NormalizedClientOptions<T>;
 }
 
+function isAuthProvider(auth: AuthOption): auth is core.AuthProvider {
+    return (
+        typeof auth === "object" &&
+        auth !== null &&
+        "getAuthRequest" in auth &&
+        typeof auth.getAuthRequest === "function"
+    );
+}
+
 export function normalizeClientOptionsWithAuth<T extends BaseClientOptions = BaseClientOptions>(
     options: T,
 ): NormalizedClientOptionsWithAuth<T> {
     const normalized = normalizeClientOptions(options) as NormalizedClientOptionsWithAuth<T>;
+
+    if (options.auth != null) {
+        if (typeof options.auth === "function") {
+            normalized.authProvider = { getAuthRequest: options.auth };
+            return normalized;
+        }
+        if (isAuthProvider(options.auth)) {
+            normalized.authProvider = options.auth;
+            return normalized;
+        }
+        Object.assign(normalized, options.auth);
+    }
+
     const normalizedWithNoOpAuthProvider = withNoOpAuthProvider(normalized);
     normalized.authProvider ??= RoutingAuthProvider.createInstance(normalizedWithNoOpAuthProvider, [
         BearerAuthProvider,

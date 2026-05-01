@@ -1,0 +1,7 @@
+- summary: |
+    Add `auth` option to `BaseClientOptions` for custom auth handling. Accepts an
+    undiscriminated union of a function returning auth headers, an `AuthProvider`
+    implementation, or the existing auth credential options. This allows users with
+    `alwaysSendAuth: true` to handle auth via custom fetchers without the built-in
+    auth provider throwing on missing credentials.
+  type: feat
