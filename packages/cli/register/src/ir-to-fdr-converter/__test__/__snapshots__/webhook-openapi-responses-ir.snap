@@ -159,6 +159,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Unique event identifier",
             "name": "eventId",
             "propertyAccess": undefined,
@@ -189,6 +190,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Type of the event",
             "name": "eventType",
             "propertyAccess": undefined,
@@ -215,6 +217,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Unique document identifier",
             "name": "documentId",
             "propertyAccess": undefined,
@@ -245,6 +248,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Name of the uploaded file",
             "name": "fileName",
             "propertyAccess": undefined,
@@ -275,6 +279,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "MIME type of the uploaded file",
             "name": "mimeType",
             "propertyAccess": undefined,
@@ -305,6 +310,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "When the document was uploaded",
             "name": "uploadedAt",
             "propertyAccess": undefined,
@@ -412,6 +418,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Unique payment session identifier",
             "name": "id",
             "propertyAccess": undefined,
@@ -442,6 +449,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Current status of the payment session",
             "name": "status",
             "propertyAccess": undefined,
@@ -468,6 +476,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Payment amount",
             "name": "amount",
             "propertyAccess": undefined,
@@ -499,6 +508,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Currency code",
             "name": "currency",
             "propertyAccess": undefined,
@@ -529,6 +539,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Customer identifier",
             "name": "customerId",
             "propertyAccess": undefined,
@@ -567,6 +578,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "When the session was created",
             "name": "createdAt",
             "propertyAccess": undefined,
@@ -633,6 +645,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Unique event identifier",
             "name": "eventId",
             "propertyAccess": undefined,
@@ -663,6 +676,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Type of the event",
             "name": "eventType",
             "propertyAccess": undefined,
@@ -689,6 +703,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "paymentSession",
             "propertyAccess": undefined,
@@ -722,6 +737,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "When the event occurred",
             "name": "timestamp",
             "propertyAccess": undefined,
@@ -925,6 +941,7 @@
               "_visit": [Function],
               "availability": undefined,
               "contentType": "multipart/form-data",
+              "defaultValue": undefined,
               "docs": "Unique event identifier",
               "name": "eventId",
               "propertyAccess": undefined,
@@ -959,6 +976,7 @@
               "_visit": [Function],
               "availability": undefined,
               "contentType": "multipart/form-data",
+              "defaultValue": undefined,
               "docs": "Type of the event",
               "name": "eventType",
               "propertyAccess": undefined,
@@ -989,6 +1007,7 @@
               "_visit": [Function],
               "availability": undefined,
               "contentType": "multipart/form-data",
+              "defaultValue": undefined,
               "docs": "Unique document identifier",
               "name": "documentId",
               "propertyAccess": undefined,
@@ -1023,6 +1042,7 @@
               "_visit": [Function],
               "availability": undefined,
               "contentType": "multipart/form-data",
+              "defaultValue": undefined,
               "docs": "Name of the uploaded file",
               "name": "fileName",
               "propertyAccess": undefined,
@@ -1057,6 +1077,7 @@
               "_visit": [Function],
               "availability": undefined,
               "contentType": "multipart/form-data",
+              "defaultValue": undefined,
               "docs": "MIME type of the uploaded file",
               "name": "mimeType",
               "propertyAccess": undefined,
@@ -1091,6 +1112,7 @@
               "_visit": [Function],
               "availability": undefined,
               "contentType": "multipart/form-data",
+              "defaultValue": undefined,
               "docs": "When the document was uploaded",
               "name": "uploadedAt",
               "propertyAccess": undefined,

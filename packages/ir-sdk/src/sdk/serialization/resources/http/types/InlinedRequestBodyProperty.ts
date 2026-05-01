@@ -15,6 +15,7 @@ export const InlinedRequestBodyProperty: core.serialization.ObjectSchema<
     .objectWithoutOptionalProperties({
         name: NameAndWireValueOrString,
         valueType: core.serialization.lazy(() => serializers.TypeReference),
+        defaultValue: core.serialization.unknown().optional(),
         v2Examples: V2SchemaExamples.optional(),
         propertyAccess: ObjectPropertyAccess.optional(),
     })
@@ -24,6 +25,7 @@ export declare namespace InlinedRequestBodyProperty {
     export interface Raw extends WithDocsAndAvailability.Raw {
         name: NameAndWireValueOrString.Raw;
         valueType: serializers.TypeReference.Raw;
+        defaultValue?: unknown | null;
         v2Examples?: V2SchemaExamples.Raw | null;
         propertyAccess?: ObjectPropertyAccess.Raw | null;
     }

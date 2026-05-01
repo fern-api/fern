@@ -628,7 +628,8 @@ export class OperationConverter extends AbstractOperationConverter {
                 docs: undefined,
                 env: undefined,
                 v2Examples: undefined,
-                clientDefault: undefined
+                clientDefault: undefined,
+                defaultValue: undefined
             };
 
             switch (authScheme.type) {

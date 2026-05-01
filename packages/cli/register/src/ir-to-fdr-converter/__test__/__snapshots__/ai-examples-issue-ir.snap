@@ -1439,6 +1439,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "name",
             "propertyAccess": undefined,
@@ -1469,6 +1470,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "category",
             "propertyAccess": undefined,
@@ -1507,6 +1509,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "tags",
             "propertyAccess": undefined,
@@ -1556,6 +1559,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "status",
             "propertyAccess": undefined,
@@ -1582,6 +1586,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "price",
             "propertyAccess": undefined,
@@ -1621,6 +1626,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "description",
             "propertyAccess": undefined,
@@ -1708,6 +1714,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "responseType",
             "propertyAccess": undefined,
@@ -1742,6 +1749,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "id",
             "propertyAccess": undefined,
@@ -1780,6 +1788,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "name",
             "propertyAccess": undefined,
@@ -1818,6 +1827,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "status",
             "propertyAccess": undefined,
@@ -1852,6 +1862,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "tags",
             "propertyAccess": undefined,
@@ -1900,6 +1911,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "category",
             "propertyAccess": undefined,
@@ -1946,6 +1958,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "price",
             "propertyAccess": undefined,
@@ -1993,6 +2006,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "inventory",
             "propertyAccess": undefined,
@@ -2040,6 +2054,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "description",
             "propertyAccess": undefined,

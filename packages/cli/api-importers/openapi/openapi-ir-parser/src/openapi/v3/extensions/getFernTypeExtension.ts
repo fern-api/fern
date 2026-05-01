@@ -299,7 +299,8 @@ export function getSchemaFromFernType({
                           example: undefined,
                           inline: undefined,
                           minItems: undefined,
-                          maxItems: undefined
+                          maxItems: undefined,
+                          default: undefined
                       })
                     : undefined,
             optional: (itemType) =>
@@ -344,7 +345,8 @@ export function getSchemaFromFernType({
                           example: undefined,
                           inline: undefined,
                           minItems: undefined,
-                          maxItems: undefined
+                          maxItems: undefined,
+                          default: undefined
                       })
                     : undefined,
             literal: (literal) =>

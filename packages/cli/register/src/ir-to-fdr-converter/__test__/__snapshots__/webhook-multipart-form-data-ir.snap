@@ -136,6 +136,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Unique event identifier",
             "name": "eventId",
             "propertyAccess": undefined,
@@ -166,6 +167,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Type of the event",
             "name": "eventType",
             "propertyAccess": undefined,
@@ -192,6 +194,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "The uploaded document file",
             "name": "document",
             "propertyAccess": undefined,
@@ -222,6 +225,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Optional thumbnail image of the document",
             "name": "thumbnail",
             "propertyAccess": undefined,
@@ -260,6 +264,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "JSON-encoded metadata about the document",
             "name": "metadata",
             "propertyAccess": undefined,
@@ -298,6 +303,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "User ID who uploaded the document",
             "name": "uploadedBy",
             "propertyAccess": undefined,
@@ -328,6 +334,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Tags associated with the document",
             "name": "tags",
             "propertyAccess": undefined,
@@ -378,6 +385,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "When the upload occurred",
             "name": "timestamp",
             "propertyAccess": undefined,
@@ -401,6 +409,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": false,
             "docs": "Whether the document is private",
             "name": "isPrivate",
             "propertyAccess": undefined,
@@ -547,6 +556,7 @@
               "_visit": [Function],
               "availability": undefined,
               "contentType": "multipart/form-data",
+              "defaultValue": undefined,
               "docs": "Unique event identifier",
               "name": "eventId",
               "propertyAccess": undefined,
@@ -581,6 +591,7 @@
               "_visit": [Function],
               "availability": undefined,
               "contentType": "multipart/form-data",
+              "defaultValue": undefined,
               "docs": "Type of the event",
               "name": "eventType",
               "propertyAccess": undefined,
@@ -635,6 +646,7 @@
               "_visit": [Function],
               "availability": undefined,
               "contentType": "multipart/form-data",
+              "defaultValue": undefined,
               "docs": "JSON-encoded metadata about the document",
               "name": "metadata",
               "propertyAccess": undefined,
@@ -677,6 +689,7 @@
               "_visit": [Function],
               "availability": undefined,
               "contentType": "multipart/form-data",
+              "defaultValue": undefined,
               "docs": "User ID who uploaded the document",
               "name": "uploadedBy",
               "propertyAccess": undefined,
@@ -711,6 +724,7 @@
               "_visit": [Function],
               "availability": undefined,
               "contentType": "multipart/form-data",
+              "defaultValue": undefined,
               "docs": "Tags associated with the document",
               "name": "tags",
               "propertyAccess": undefined,
@@ -765,6 +779,7 @@
               "_visit": [Function],
               "availability": undefined,
               "contentType": "multipart/form-data",
+              "defaultValue": undefined,
               "docs": "When the upload occurred",
               "name": "timestamp",
               "propertyAccess": undefined,
@@ -792,6 +807,7 @@
               "_visit": [Function],
               "availability": undefined,
               "contentType": "multipart/form-data",
+              "defaultValue": false,
               "docs": "Whether the document is private",
               "name": "isPrivate",
               "propertyAccess": undefined,

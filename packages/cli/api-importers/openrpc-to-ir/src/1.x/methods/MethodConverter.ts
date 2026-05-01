@@ -110,6 +110,10 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
                         wireValue: resolvedParam.name
                     }),
                     valueType: schema.type,
+                    defaultValue:
+                        resolvedParam.schema != null && typeof resolvedParam.schema === "object"
+                            ? resolvedParam.schema.default
+                            : undefined,
                     v2Examples: schema.schema?.typeDeclaration.v2Examples,
                     propertyAccess: undefined
                 });

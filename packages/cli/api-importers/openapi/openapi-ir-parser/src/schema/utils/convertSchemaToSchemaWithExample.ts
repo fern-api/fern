@@ -45,7 +45,8 @@ export function convertSchemaToSchemaWithExample(schema: Schema): SchemaWithExam
                 example: undefined,
                 inline: undefined,
                 minItems: schema.minItems,
-                maxItems: schema.maxItems
+                maxItems: schema.maxItems,
+                default: schema.default
             });
         case "enum":
             return SchemaWithExample.enum({

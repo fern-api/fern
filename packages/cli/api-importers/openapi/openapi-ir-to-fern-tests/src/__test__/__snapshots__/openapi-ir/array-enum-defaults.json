@@ -1,0 +1,306 @@
+{
+  "title": "Array enum defaults",
+  "description": "Regression fixture for FER-9790. Verifies that OpenAPI `default` values on\narrays (including arrays of enums) are surfaced through the\nOpenAPI-IR -> Fern Definition pipeline so that docs can render\n`Defaults to [...]` metadata. Covers query parameters with\n`allow-multiple: true` plus inlined body properties.\n",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "search",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [
+        {
+          "description": "Output formats to include",
+          "name": "formats",
+          "schema": {
+            "generatedName": "SearchRequestFormats",
+            "value": {
+              "value": {
+                "generatedName": "SearchRequestFormatsItem",
+                "values": [
+                  {
+                    "generatedName": "html",
+                    "value": "html",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "json",
+                    "value": "json",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "markdown",
+                    "value": "markdown",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "csv",
+                    "value": "csv",
+                    "casing": {}
+                  }
+                ],
+                "groupName": [],
+                "source": {
+                  "file": "../openapi.yaml",
+                  "type": "openapi"
+                },
+                "type": "enum"
+              },
+              "generatedName": "SearchRequestFormats",
+              "groupName": [],
+              "default": [
+                "html"
+              ],
+              "type": "array"
+            },
+            "groupName": [],
+            "type": "optional"
+          },
+          "source": {
+            "file": "../openapi.yaml",
+            "type": "openapi"
+          }
+        },
+        {
+          "description": "Tags to filter by",
+          "name": "tags",
+          "schema": {
+            "generatedName": "SearchRequestTags",
+            "value": {
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "SearchRequestTagsItem",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "generatedName": "SearchRequestTags",
+              "groupName": [],
+              "default": [
+                "green",
+                "leafy"
+              ],
+              "type": "array"
+            },
+            "groupName": [],
+            "type": "optional"
+          },
+          "source": {
+            "file": "../openapi.yaml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "headers": [],
+      "generatedRequestName": "SearchRequest",
+      "response": {
+        "description": "ok",
+        "schema": {
+          "value": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "SearchResponseItem",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "generatedName": "SearchResponse",
+          "groupName": [],
+          "type": "array"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yaml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "GET",
+      "path": "/search",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": [
+                {
+                  "value": {
+                    "value": "string",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              ],
+              "type": "array"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yaml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "createWidget",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "CreateWidgetRequest",
+      "request": {
+        "schema": {
+          "generatedName": "CreateWidgetRequest",
+          "schema": "Widget",
+          "source": {
+            "file": "../openapi.yaml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yaml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/widgets",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "name": {
+                "value": {
+                  "value": "name",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yaml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "Widget": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "widgetName",
+            "key": "name",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "WidgetName",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "widgetCareTags",
+            "key": "careTags",
+            "schema": {
+              "generatedName": "WidgetCareTags",
+              "description": "Care tags for the widget",
+              "value": {
+                "description": "Care tags for the widget",
+                "value": {
+                  "generatedName": "WidgetCareTagsItem",
+                  "values": [
+                    {
+                      "generatedName": "BeginnerFriendly",
+                      "value": "beginner-friendly",
+                      "casing": {}
+                    },
+                    {
+                      "generatedName": "AdvancedCare",
+                      "value": "advanced-care",
+                      "casing": {}
+                    },
+                    {
+                      "generatedName": "PetSafe",
+                      "value": "pet-safe",
+                      "casing": {}
+                    }
+                  ],
+                  "groupName": [],
+                  "source": {
+                    "file": "../openapi.yaml",
+                    "type": "openapi"
+                  },
+                  "type": "enum"
+                },
+                "generatedName": "WidgetCareTags",
+                "groupName": [],
+                "default": [
+                  "beginner-friendly"
+                ],
+                "type": "array"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Widget",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yaml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

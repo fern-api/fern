@@ -474,6 +474,7 @@ Examples should use the first available auth scheme (admin).
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Resource type",
             "name": "type",
             "propertyAccess": undefined,
@@ -500,6 +501,7 @@ Examples should use the first available auth scheme (admin).
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "amount",
             "propertyAccess": undefined,
@@ -528,6 +530,7 @@ Examples should use the first available auth scheme (admin).
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Target identifier",
             "name": "target",
             "propertyAccess": undefined,
@@ -599,6 +602,7 @@ Examples should use the first available auth scheme (admin).
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Amount value",
             "name": "value",
             "propertyAccess": undefined,
@@ -713,6 +717,7 @@ Examples should use the first available auth scheme (admin).
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Resource identifier",
             "name": "id",
             "propertyAccess": undefined,

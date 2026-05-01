@@ -1156,6 +1156,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "code",
             "propertyAccess": undefined,
@@ -1186,6 +1187,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "message",
             "propertyAccess": undefined,
@@ -1254,6 +1256,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Merchant identifier",
             "name": "merchantId",
             "propertyAccess": undefined,
@@ -1284,6 +1287,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Merchant name",
             "name": "name",
             "propertyAccess": undefined,
@@ -1352,6 +1356,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Transaction amount",
             "name": "amount",
             "propertyAccess": undefined,
@@ -1383,6 +1388,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Currency code",
             "name": "currency",
             "propertyAccess": undefined,
@@ -1451,6 +1457,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Transaction identifier",
             "name": "id",
             "propertyAccess": undefined,
@@ -1481,6 +1488,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Transaction status",
             "name": "status",
             "propertyAccess": undefined,
@@ -1549,6 +1557,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "User identifier",
             "name": "id",
             "propertyAccess": undefined,
@@ -1579,6 +1588,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "User email",
             "name": "email",
             "propertyAccess": undefined,

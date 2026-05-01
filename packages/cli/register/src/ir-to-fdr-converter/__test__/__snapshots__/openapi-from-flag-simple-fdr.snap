@@ -277,7 +277,7 @@
             "explode": undefined,
             "key": "includeMetadata",
             "type": {
-              "defaultValue": undefined,
+              "defaultValue": false,
               "itemType": {
                 "type": "primitive",
                 "value": {

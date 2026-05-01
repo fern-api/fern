@@ -15,6 +15,7 @@ export const HttpHeader: core.serialization.ObjectSchema<serializers.HttpHeader.
             valueType: core.serialization.lazy(() => serializers.TypeReference),
             env: core.serialization.string().optional(),
             clientDefault: Literal.optional(),
+            defaultValue: core.serialization.unknown().optional(),
             v2Examples: V2SchemaExamples.optional(),
         })
         .extend(Declaration);
@@ -25,6 +26,7 @@ export declare namespace HttpHeader {
         valueType: serializers.TypeReference.Raw;
         env?: string | null;
         clientDefault?: Literal.Raw | null;
+        defaultValue?: unknown | null;
         v2Examples?: V2SchemaExamples.Raw | null;
     }
 }

@@ -43,7 +43,8 @@ export function convertGlobalHeaderOverrides({
                 },
                 availability: undefined,
                 docs: undefined,
-                clientDefault: undefined
+                clientDefault: undefined,
+                defaultValue: undefined
             });
         } else {
             const name = headerSchema.name ?? headerKey;
@@ -60,7 +61,8 @@ export function convertGlobalHeaderOverrides({
                 },
                 availability: undefined,
                 docs: headerSchema.docs,
-                clientDefault: convertDefaultToLiteral(headerSchema.default)
+                clientDefault: convertDefaultToLiteral(headerSchema.default),
+                defaultValue: headerSchema.default
             });
         }
     }

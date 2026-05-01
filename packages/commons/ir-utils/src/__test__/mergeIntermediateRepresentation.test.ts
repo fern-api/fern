@@ -22,6 +22,7 @@ function makeHeader(wireValue: string): FernIr.HttpHeader {
         availability: undefined,
         docs: undefined,
         clientDefault: undefined,
+        defaultValue: undefined,
         v2Examples: undefined
     };
 }
