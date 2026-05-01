@@ -3,6 +3,7 @@ import { CliError } from "@fern-api/task-context";
 import { mkdtemp, readFile, writeFile } from "fs/promises";
 import { tmpdir } from "os";
 import path from "path";
+import { Readable } from "stream";
 import { FETCH_API_SPEC_REQUEST_TIMEOUT_MS } from "../../constants.js";
 import type { Context } from "../../context/Context.js";
 import { isStdioMarker, readInput, STDIO_MARKER } from "../../io/stdio.js";
@@ -13,7 +14,7 @@ export namespace ApiSpecResolver {
     export interface Args {
         reference: string;
         /** Optional stdin stream (defaults to process.stdin). Used for testing. */
-        stdin?: NodeJS.ReadableStream;
+        stdin?: Readable;
     }
 
     export interface Result {
@@ -41,7 +42,7 @@ export class ApiSpecResolver {
      */
     public async resolve(args: ApiSpecResolver.Args): Promise<ApiSpecResolver.Result> {
         if (isStdioMarker(args.reference)) {
-            return this.resolveStdin(args);
+            return this.resolveStdin({ stdin: args.stdin });
         }
         if (this.isUrl(args.reference)) {
             return this.resolveUrl(args);
@@ -49,13 +50,7 @@ export class ApiSpecResolver {
         return this.resolveLocal(args);
     }
 
-    private async resolveStdin({
-        reference,
-        stdin
-    }: {
-        reference: string;
-        stdin?: NodeJS.ReadableStream;
-    }): Promise<ApiSpecResolver.Result> {
+    private async resolveStdin({ stdin }: { stdin?: Readable }): Promise<ApiSpecResolver.Result> {
         const content = await readInput(STDIO_MARKER, { stdin });
         if (content.trim().length === 0) {
             throw new CliError({
@@ -71,7 +66,7 @@ export class ApiSpecResolver {
         const specType = await this.detector.detect({ absoluteFilePath, content, reference: "stdin" });
         return {
             absoluteFilePath,
-            reference,
+            reference: "stdin",
             spec: this.buildApiSpec({ absoluteFilePath, specType, origin: "stdin" })
         };
     }

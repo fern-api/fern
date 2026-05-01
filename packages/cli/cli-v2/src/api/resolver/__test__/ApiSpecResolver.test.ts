@@ -6,8 +6,8 @@ import { describe, expect, it } from "vitest";
 import { createTestContext } from "../../../__test__/utils/createTestContext.js";
 import { ApiSpecResolver } from "../ApiSpecResolver.js";
 
-function stringReadable(value: string): NodeJS.ReadableStream {
-    return Readable.from([Buffer.from(value, "utf-8")]) as unknown as NodeJS.ReadableStream;
+function stringReadable(value: string): Readable {
+    return Readable.from([Buffer.from(value, "utf-8")]);
 }
 
 describe("ApiSpecResolver", () => {
@@ -19,7 +19,7 @@ describe("ApiSpecResolver", () => {
             const json = JSON.stringify({ openapi: "3.0.0", info: { title: "t", version: "1.0.0" }, paths: {} });
             const result = await resolver.resolve({ reference: "-", stdin: stringReadable(json) });
 
-            expect(result.reference).toBe("-");
+            expect(result.reference).toBe("stdin");
             expect(result.absoluteFilePath.endsWith("spec.json")).toBe(true);
             expect("openapi" in result.spec).toBe(true);
             const written = await readFile(result.absoluteFilePath, "utf-8");

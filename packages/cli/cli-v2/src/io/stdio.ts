@@ -3,6 +3,7 @@ import { CliError } from "@fern-api/task-context";
 
 import { readFile, writeFile } from "fs/promises";
 import { JsonStreamStringify } from "json-stream-stringify";
+import { Readable, Writable } from "stream";
 import { pipeline } from "stream/promises";
 
 /**
@@ -25,7 +26,7 @@ export function isStdioMarker(value: string | undefined | null): value is "-" {
  */
 export async function readInput(
     pathOrDash: string,
-    { stdin = process.stdin }: { stdin?: NodeJS.ReadableStream } = {}
+    { stdin = process.stdin }: { stdin?: Readable } = {}
 ): Promise<string> {
     if (isStdioMarker(pathOrDash)) {
         return readStreamToString(stdin);
@@ -48,7 +49,7 @@ export async function readJsonOrPath(
         stdin = process.stdin,
         flagName
     }: {
-        stdin?: NodeJS.ReadableStream;
+        stdin?: Readable;
         /** Optional flag name used to produce clearer error messages. */
         flagName?: string;
     } = {}
@@ -92,7 +93,7 @@ export async function readJsonOrPath(
 export async function writeOutputJson(
     pathOrDash: AbsoluteFilePath | "-",
     object: unknown,
-    { pretty = true, stdout = process.stdout }: { pretty?: boolean; stdout?: NodeJS.WritableStream } = {}
+    { pretty = true, stdout = process.stdout }: { pretty?: boolean; stdout?: Writable } = {}
 ): Promise<void> {
     if (isStdioMarker(pathOrDash)) {
         // JsonStreamStringify implements the Readable interface but the library
@@ -107,22 +108,17 @@ export async function writeOutputJson(
 
 /**
  * Write a string or Buffer to a file path, or to stdout when the value is `-`.
+ *
+ * When writing to a file, `pathOrDash` must be an absolute path.
  */
 export async function writeOutputString(
-    pathOrDash: string,
+    pathOrDash: AbsoluteFilePath | "-",
     data: string | Buffer,
-    { stdout = process.stdout }: { stdout?: NodeJS.WritableStream } = {}
+    { stdout = process.stdout }: { stdout?: Writable } = {}
 ): Promise<void> {
     if (isStdioMarker(pathOrDash)) {
-        return new Promise<void>((resolve, reject) => {
-            stdout.write(data, (err) => {
-                if (err != null) {
-                    reject(err);
-                } else {
-                    resolve();
-                }
-            });
-        });
+        await pipeline(Readable.from([data]), stdout, { end: false });
+        return;
     }
     await writeFile(pathOrDash, data);
 }
@@ -158,7 +154,7 @@ export class StdioMarkerGuard {
     }
 }
 
-async function readStreamToString(stream: NodeJS.ReadableStream): Promise<string> {
+async function readStreamToString(stream: Readable): Promise<string> {
     stream.setEncoding("utf-8");
     let result = "";
     for await (const chunk of stream) {

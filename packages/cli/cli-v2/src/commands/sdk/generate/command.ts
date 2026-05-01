@@ -17,6 +17,7 @@ import { GENERATE_COMMAND_TIMEOUT_MS } from "../../../constants.js";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
 import { SourcedValidationError } from "../../../errors/SourcedValidationError.js";
+import { isStdioMarker, StdioMarkerGuard } from "../../../io/stdio.js";
 import { SdkChecker } from "../../../sdk/checker/SdkChecker.js";
 import { LANGUAGES, type Language } from "../../../sdk/config/Language.js";
 import type { Target } from "../../../sdk/config/Target.js";
@@ -83,6 +84,11 @@ export declare namespace GenerateCommand {
 
 export class GenerateCommand {
     public async handle(context: Context, args: GenerateCommand.Args): Promise<void> {
+        const stdio = new StdioMarkerGuard();
+        if (isStdioMarker(args.api)) {
+            stdio.claimStdin("api");
+        }
+
         const result = await context.loadWorkspace();
         if (result == null) {
             return this.handleWithFlags(context, args);

@@ -15,21 +15,21 @@ import {
     writeOutputString
 } from "../stdio.js";
 
-function stringReadable(value: string): NodeJS.ReadableStream {
-    return Readable.from([Buffer.from(value, "utf-8")]) as unknown as NodeJS.ReadableStream;
+function stringReadable(value: string): Readable {
+    return Readable.from([Buffer.from(value, "utf-8")]);
 }
 
-function capturingWritable(): { stream: NodeJS.WritableStream; getOutput: () => string } {
+function capturingWritable(): { stream: Writable; getOutput: () => string } {
     const chunks: Buffer[] = [];
     const stream = new Writable({
         write(chunk, _encoding, callback) {
             chunks.push(Buffer.from(chunk));
             callback();
         }
-    }) as unknown as NodeJS.WritableStream;
+    });
     return {
         stream,
-        getOutput: () => Buffer.concat(chunks as Uint8Array[]).toString("utf-8")
+        getOutput: () => Buffer.concat(chunks).toString("utf-8")
     };
 }
 
@@ -173,7 +173,7 @@ describe("writeOutputString", () => {
     });
 
     it("writes to a file when path is a real path", async () => {
-        const filePath = join(tmpDir, "out.txt");
+        const filePath = AbsoluteFilePath.of(join(tmpDir, "out.txt"));
         await writeOutputString(filePath, "hello file");
         expect(await readFile(filePath, "utf-8")).toBe("hello file");
     });
