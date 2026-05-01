@@ -23,6 +23,7 @@ import { RawClient } from "../endpoint/http/RawClient.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { collectInferredAuthCredentials } from "../utils/inferredAuthUtils.js";
 import { WebSocketClientGenerator } from "../websocket/WebsocketClientGenerator.js";
+import { dedupAuthHeaderEntries } from "./dedupAuthHeaderEntries.js";
 
 const GetFromEnvironmentOrThrow = "GetFromEnvironmentOrThrow";
 
@@ -260,39 +261,58 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
             return param.name;
         };
 
-        // Separate auth headers from platform headers
-        const authHeaderEntries: ast.Dictionary.MapEntry[] = [];
+        // Separate auth headers from platform headers.
+        //
+        // Multiple auth schemes can resolve to the same HTTP header name (e.g.
+        // an oauth2 bearer scheme + an apiKey-in-header scheme both named
+        // `Authorization`). The generated `Dictionary<string, string>`
+        // collection initializer throws `System.ArgumentException` at runtime
+        // when the same key is added twice, so we dedup here. Earlier entries
+        // win; we preserve the IR-established ordering of required > optional
+        // > literal so the most specific / required scheme takes precedence.
+        const authHeaderCandidates: { headerName: string; entry: ast.Dictionary.MapEntry }[] = [];
+
         for (const param of [...requiredParameters, ...optionalParameters]) {
             if (param.header != null) {
                 const access = paramAccess(param);
                 const fallback = this.getHeaderFallback(param);
-                authHeaderEntries.push({
-                    key: this.csharp.codeblock(this.csharp.string_({ string: param.header.name })),
-                    value: this.csharp.codeblock(
-                        param.header.prefix != null
-                            ? `$"${param.header.prefix} {${param.isOptional ? `${access} ?? ${fallback}` : access}}"`
-                            : param.isOptional || param.type.isOptional
-                              ? `${access} ?? ${fallback}`
-                              : access
-                    )
+                authHeaderCandidates.push({
+                    headerName: param.header.name,
+                    entry: {
+                        key: this.csharp.codeblock(this.csharp.string_({ string: param.header.name })),
+                        value: this.csharp.codeblock(
+                            param.header.prefix != null
+                                ? `$"${param.header.prefix} {${param.isOptional ? `${access} ?? ${fallback}` : access}}"`
+                                : param.isOptional || param.type.isOptional
+                                  ? `${access} ?? ${fallback}`
+                                  : access
+                        )
+                    }
                 });
             }
         }
 
         for (const param of literalParameters) {
             if (param.header != null) {
-                authHeaderEntries.push({
-                    key: this.csharp.codeblock(this.csharp.string_({ string: param.header.name })),
-                    value: this.csharp.codeblock(
-                        param.value.type === "string"
-                            ? this.csharp.string_({ string: param.value.string })
-                            : param.value
-                              ? `"${true.toString()}"`
-                              : `"${false.toString()}"`
-                    )
+                authHeaderCandidates.push({
+                    headerName: param.header.name,
+                    entry: {
+                        key: this.csharp.codeblock(this.csharp.string_({ string: param.header.name })),
+                        value: this.csharp.codeblock(
+                            param.value.type === "string"
+                                ? this.csharp.string_({ string: param.value.string })
+                                : param.value.boolean
+                                  ? `"${true.toString()}"`
+                                  : `"${false.toString()}"`
+                        )
+                    }
                 });
             }
         }
+
+        const authHeaderEntries = dedupAuthHeaderEntries(authHeaderCandidates, (item) => item.headerName).map(
+            (item) => item.entry
+        );
 
         // Platform headers (no auth)
         const platformHeaderEntries: ast.Dictionary.MapEntry[] = [];
