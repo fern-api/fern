@@ -21,7 +21,7 @@
 
 </div>
 
-# 🌿 What is Fern?
+# 🌿 What is Fern? 
 
 Fern is a platform that transforms your API definitions into production-ready SDKs and beautiful documentation in minutes. 
 
