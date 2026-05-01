@@ -882,7 +882,8 @@ export function convertSchemaObject(
                 example: getExampleAsArray({ schema, logger: context.logger, fallback }),
                 source,
                 minItems: schema.minItems,
-                maxItems: schema.maxItems
+                maxItems: schema.maxItems,
+                default: schema.default
             });
         }
 
