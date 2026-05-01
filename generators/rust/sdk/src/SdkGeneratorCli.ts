@@ -1,4 +1,4 @@
-import { GeneratorNotificationService, GeneratorError } from "@fern-api/base-generator";
+import { File, GeneratorNotificationService, GeneratorError } from "@fern-api/base-generator";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import {
@@ -19,6 +19,7 @@ import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { exec } from "child_process";
 import { promisify } from "util";
+import { ContributingGenerator } from "./contributing/ContributingGenerator.js";
 import { EnvironmentGenerator } from "./environment/EnvironmentGenerator.js";
 import { ErrorGenerator } from "./error/ErrorGenerator.js";
 import { ApiClientBuilderGenerator } from "./generators/ApiClientBuilderGenerator.js";
@@ -211,6 +212,10 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         context.logger.debug("Generating reference.md documentation...");
         // Generate reference.md if configured
         await this.generateReference(context);
+
+        if (!context.config.whitelabel) {
+            this.generateContributing(context);
+        }
 
         // Generate wire tests if enabled
         await this.generateWireTestFiles(context);
@@ -835,6 +840,12 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         } catch (error) {
             throw GeneratorError.internalError(`Failed to generate README.md: ${extractErrorMessage(error)}`);
         }
+    }
+
+    private generateContributing(context: SdkGeneratorContext): void {
+        const contributingGenerator = new ContributingGenerator();
+        const content = contributingGenerator.generate();
+        context.project.addRawFiles(new File("CONTRIBUTING.md", RelativeFilePath.of(""), content));
     }
 
     private generateSnippets(context: SdkGeneratorContext) {
