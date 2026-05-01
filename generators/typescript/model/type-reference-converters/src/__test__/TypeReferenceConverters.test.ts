@@ -415,9 +415,7 @@ describe("TypeReferenceToSchemaConverter", () => {
             const result = converter.convert({
                 typeReference: mapRef(primitiveRef("STRING"), nullableRef(primitiveRef("INTEGER")))
             });
-            expect(getTextOfTsNode(result.toExpression())).toBe(
-                "zurg.record(zurg.string(), zurg.number().nullable())"
-            );
+            expect(getTextOfTsNode(result.toExpression())).toBe("zurg.record(zurg.string(), zurg.number().nullable())");
         });
 
         it("converts map with optional(nullable) values strips optional, preserves nullable", () => {
@@ -428,9 +426,7 @@ describe("TypeReferenceToSchemaConverter", () => {
             const result = converter.convert({
                 typeReference: mapRef(primitiveRef("STRING"), optionalRef(nullableRef(primitiveRef("INTEGER"))))
             });
-            expect(getTextOfTsNode(result.toExpression())).toBe(
-                "zurg.record(zurg.string(), zurg.number().nullable())"
-            );
+            expect(getTextOfTsNode(result.toExpression())).toBe("zurg.record(zurg.string(), zurg.number().nullable())");
         });
 
         it("converts map with enum keys to zurg.partialRecord()", () => {
