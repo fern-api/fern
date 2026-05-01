@@ -18,6 +18,20 @@ import fern.ir.resources as ir_types
 
 _DIGIT_SPLIT = re.compile(r"(\d+)")
 
+# Mirrors @fern-api/casings-generator's `smartCasing` config from the customer's
+# generators.yml (`smart-casing: true|false`). The IR pre-computes Name.snake_case
+# using this flag; recomputed names from compressed v66 strings must use the same
+# semantics or v1's output diverges from the IR's pre-computed values (and from v2).
+_smart_casing_enabled = True
+
+
+def configure_smart_casing(enabled: bool) -> None:
+    """Set whether _smart_snake uses smartCasing semantics. Must be called before
+    any name resolution (cache is cleared to invalidate any pre-flag results)."""
+    global _smart_casing_enabled
+    _smart_casing_enabled = enabled
+    _resolve_string_name.cache_clear()
+
 
 def _to_camel(s: str) -> str:
     snake = to_snake(s)
@@ -28,13 +42,19 @@ def _to_camel(s: str) -> str:
 
 
 def _smart_snake(s: str) -> str:
-    """Smart-casing snake_case matching @fern-api/casings-generator.
+    """Snake_case matching @fern-api/casings-generator's snakeCase output.
 
-    Treats digits adjacent to letters as part of the same word so
-    ``3d`` stays ``3d`` instead of becoming ``3_d``. Mirrors:
+    When smartCasing is enabled (the default), digits adjacent to letters stay
+    attached so ``3d`` -> ``3d`` and ``base64`` -> ``base64``. Mirrors:
 
         n.split(" ").map(part => part.split(/(\\d+)/).map(snakeCase).join("")).join("_")
+
+    When smartCasing is disabled (``smart-casing: false`` in generators.yml), every
+    digit run is treated as a separate word, matching plain lodash ``snakeCase``:
+    ``setFcmv1Provider`` -> ``set_fcmv_1_provider``, ``auth0_mapping`` -> ``auth_0_mapping``.
     """
+    if not _smart_casing_enabled:
+        return "_".join(to_snake(part) for part in s.split(" "))
     return "_".join("".join(to_snake(sub) for sub in _DIGIT_SPLIT.split(part)) for part in s.split(" "))
 
 

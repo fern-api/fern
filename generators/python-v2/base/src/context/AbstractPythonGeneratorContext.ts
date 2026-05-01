@@ -11,6 +11,11 @@ import { BasePythonCustomConfigSchema } from "../custom-config/BasePythonCustomC
 import { PythonProject } from "../project/index.js";
 import { PythonTypeMapper } from "./PythonTypeMapper.js";
 
+/**
+ * Default smart-casing case converter. Used as a fallback for callers that don't have access
+ * to a generator context (e.g. utilities). Most callers should use `context.caseConverter`,
+ * which respects the customer's `smart-casing` config from generators.yml.
+ */
 export const PYTHON_CASE_CONVERTER = new CaseConverter({
     generationLanguage: "python",
     keywords: undefined,
@@ -23,6 +28,12 @@ export abstract class AbstractPythonGeneratorContext<
     private packageName: string;
     public readonly pythonTypeMapper: PythonTypeMapper;
     public readonly project: PythonProject;
+    /**
+     * Case converter configured from the IR's casingsConfig (driven by the customer's
+     * `smart-casing` flag in generators.yml). Use this instead of PYTHON_CASE_CONVERTER
+     * so generated names match the IR's pre-computed snake_case values.
+     */
+    public readonly caseConverter: CaseConverter;
 
     public constructor(
         public readonly ir: FernIr.IntermediateRepresentation,
@@ -31,9 +42,12 @@ export abstract class AbstractPythonGeneratorContext<
         public readonly generatorNotificationService: GeneratorNotificationService
     ) {
         super(config, generatorNotificationService);
-        this.packageName = snakeCase(
-            `${this.config.organization}_${PYTHON_CASE_CONVERTER.snakeUnsafe(this.ir.apiName)}`
-        );
+        this.caseConverter = new CaseConverter({
+            generationLanguage: "python",
+            keywords: undefined,
+            smartCasing: this.ir.casingsConfig?.smartCasing ?? true
+        });
+        this.packageName = snakeCase(`${this.config.organization}_${this.caseConverter.snakeUnsafe(this.ir.apiName)}`);
         this.pythonTypeMapper = new PythonTypeMapper(this);
         this.project = new PythonProject({ context: this });
     }
@@ -60,15 +74,15 @@ export abstract class AbstractPythonGeneratorContext<
     }
 
     public getClassName(name: FernIr.NameOrString): string {
-        return PYTHON_CASE_CONVERTER.pascalSafe(name);
+        return this.caseConverter.pascalSafe(name);
     }
 
     public getPascalCaseSafeName(name: FernIr.NameOrString): string {
-        return PYTHON_CASE_CONVERTER.pascalSafe(name);
+        return this.caseConverter.pascalSafe(name);
     }
 
     public getSnakeCaseSafeName(name: FernIr.NameOrString): string {
-        return PYTHON_CASE_CONVERTER.snakeSafe(name);
+        return this.caseConverter.snakeSafe(name);
     }
 
     public getModulePathForId(typeId: string): string[] {

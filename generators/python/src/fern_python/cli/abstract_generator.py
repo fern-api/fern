@@ -10,6 +10,7 @@ from .publisher import Publisher
 from fern_python.codegen.project import Project, ProjectConfig
 from fern_python.external_dependencies.ruff import RUFF_DEPENDENCY
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
+from fern_python.utils import configure_smart_casing
 from fern_python.version import GithubCIPythonVersionResolver, PythonVersion, get_minimum_compatible_version
 
 import fern.ir.resources as ir_types
@@ -35,6 +36,12 @@ class AbstractGenerator(ABC):
         ir: ir_types.IntermediateRepresentation,
         generator_config: GeneratorConfig,
     ) -> None:
+        # Configure smart-casing from the IR's casingsConfig (driven by the customer's
+        # `smart-casing` flag in generators.yml). Must run before any name resolution
+        # so _smart_snake matches the IR server's pre-computed snake_case values.
+        smart_casing = ir.casings_config.smart_casing if ir.casings_config is not None else True
+        configure_smart_casing(smart_casing)
+
         project_config = generator_config.output.mode.visit(
             download_files=lambda: None,
             publish=lambda publish: ProjectConfig(
