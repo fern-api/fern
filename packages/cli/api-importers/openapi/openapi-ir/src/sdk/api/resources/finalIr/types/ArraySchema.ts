@@ -13,4 +13,11 @@ export interface ArraySchema
     value: FernOpenapiIr.Schema;
     minItems: number | undefined;
     maxItems: number | undefined;
+    /**
+     * The OpenAPI `default` value for this array. Threaded through to the
+     * Fern Definition raw schema so that docs can render "Defaults to ..."
+     * metadata (e.g. `Defaults to ["html"]`). Unlike primitive defaults,
+     * this can hold arbitrary JSON values such as arrays of strings.
+     */
+    default: unknown | undefined;
 }
