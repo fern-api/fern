@@ -4275,24 +4275,7 @@
       ]
     },
     "docs.Language": {
-      "type": "string",
-      "enum": [
-        "en",
-        "es",
-        "fr",
-        "de",
-        "it",
-        "pt",
-        "ja",
-        "zh",
-        "ko",
-        "el",
-        "no",
-        "pl",
-        "ru",
-        "sv",
-        "tr"
-      ]
+      "type": "string"
     },
     "docs.TranslationConfigObject": {
       "type": "object",
