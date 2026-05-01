@@ -407,6 +407,32 @@ describe("TypeReferenceToSchemaConverter", () => {
             expect(getTextOfTsNode(result.toExpression())).toBe("zurg.record(zurg.string(), zurg.number())");
         });
 
+        it("converts map with nullable values to zurg.record() with .nullable() on value schema", () => {
+            const converter = createConverter({
+                resolveTypeReference: () =>
+                    FernIr.ResolvedTypeReference.primitive({ v1: FernIr.PrimitiveTypeV1.String, v2: undefined })
+            });
+            const result = converter.convert({
+                typeReference: mapRef(primitiveRef("STRING"), nullableRef(primitiveRef("INTEGER")))
+            });
+            expect(getTextOfTsNode(result.toExpression())).toBe(
+                "zurg.record(zurg.string(), zurg.number().nullable())"
+            );
+        });
+
+        it("converts map with optional(nullable) values strips optional, preserves nullable", () => {
+            const converter = createConverter({
+                resolveTypeReference: () =>
+                    FernIr.ResolvedTypeReference.primitive({ v1: FernIr.PrimitiveTypeV1.String, v2: undefined })
+            });
+            const result = converter.convert({
+                typeReference: mapRef(primitiveRef("STRING"), optionalRef(nullableRef(primitiveRef("INTEGER"))))
+            });
+            expect(getTextOfTsNode(result.toExpression())).toBe(
+                "zurg.record(zurg.string(), zurg.number().nullable())"
+            );
+        });
+
         it("converts map with enum keys to zurg.partialRecord()", () => {
             const converter = createConverter({
                 resolveTypeReference: (ref) => {
