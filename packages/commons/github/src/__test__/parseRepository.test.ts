@@ -27,6 +27,10 @@ describe("parseRepository", () => {
         expect(ref.getAuthedCloneUrl("ghs_install_token_value")).toBe(
             "https://x-access-token:ghs_install_token_value@github.com/fern-api/fern.git"
         );
+        // User-to-server tokens issued by GitHub Apps also authenticate as `x-access-token`.
+        expect(ref.getAuthedCloneUrl("ghu_user_to_server_value")).toBe(
+            "https://x-access-token:ghu_user_to_server_value@github.com/fern-api/fern.git"
+        );
         // OAuth user tokens (gho_*) authenticate as the token itself — using
         // `x-access-token:` as the username returns "Invalid username or token".
         expect(ref.getAuthedCloneUrl("gho_oauth_token_value")).toBe(
@@ -36,6 +40,10 @@ describe("parseRepository", () => {
         expect(ref.getAuthedCloneUrl("ghp_pat_value")).toBe("https://ghp_pat_value@github.com/fern-api/fern.git");
         expect(ref.getAuthedCloneUrl("github_pat_finegrained_value")).toBe(
             "https://github_pat_finegrained_value@github.com/fern-api/fern.git"
+        );
+        // Legacy 40-char hex PATs (pre-2021) follow the OAuth style — no prefix.
+        expect(ref.getAuthedCloneUrl("0123456789abcdef0123456789abcdef01234567")).toBe(
+            "https://0123456789abcdef0123456789abcdef01234567@github.com/fern-api/fern.git"
         );
     });
     it("invalid structure", async () => {

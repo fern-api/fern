@@ -31,12 +31,15 @@ export class ReplayStep extends BaseStep {
         const generationCommit = context.previousStepResults.generationCommit;
         const prepared = generationCommit?.preparedReplay;
 
-        if (generationCommit != null && generationCommit.success === false) {
-            // Prepare crashed in the prior step — surface as failure, never mislabel
-            // a crash as first-generation. Generation continues regardless.
+        if (generationCommit != null && generationCommit.errorMessage != null && prepared == null) {
+            // Prepare crashed in the prior step (errorMessage is set; prepared is
+            // null). Surface as a replay failure but keep step.success === true so
+            // the orchestrator does NOT propagate to pipelineResult.success = false
+            // (which would abort generation). Telemetry and logs read replayCrashed.
             return {
                 executed: true,
-                success: false,
+                success: true,
+                replayCrashed: true,
                 errorMessage: generationCommit.errorMessage,
                 flow: "normal-regeneration",
                 patchesDetected: 0,
@@ -75,11 +78,13 @@ export class ReplayStep extends BaseStep {
                   });
 
         if (result.failureReason != null) {
-            // Prepare or apply crashed at runtime — surface as failure with the
-            // recorded reason so telemetry/logs reflect reality.
+            // Prepare or apply crashed at runtime — surface via replayCrashed so
+            // telemetry/logs reflect reality, but keep step.success === true so
+            // the orchestrator does NOT abort generation on replay errors.
             return {
                 executed: true,
-                success: false,
+                success: true,
+                replayCrashed: true,
                 errorMessage: result.failureReason,
                 previousGenerationSha: result.previousGenerationSha ?? undefined,
                 currentGenerationSha: result.currentGenerationSha ?? undefined,

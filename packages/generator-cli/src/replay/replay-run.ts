@@ -144,12 +144,22 @@ export async function replayPrepare(params: ReplayRunParams): Promise<PreparedRe
                         `The tag likely points at an unmerged generation (PR closed without merge).`
                 );
             } else {
-                const syncService = new ReplayService(outputDir, { enabled: true });
-                await syncService.syncFromDivergentMerge(tagSha, {
-                    cliVersion,
-                    generatorVersions,
-                    baseBranchHead: baseBranchHead ?? undefined
-                });
+                try {
+                    const syncService = new ReplayService(outputDir, { enabled: true });
+                    await syncService.syncFromDivergentMerge(tagSha, {
+                        cliVersion,
+                        generatorVersions,
+                        baseBranchHead: baseBranchHead ?? undefined
+                    });
+                } catch (error) {
+                    // syncFromDivergentMerge can throw on git rewrite failures.
+                    // Wrap as ReplayPrepareError so callers (replayRun,
+                    // GenerationCommitStep) catch a single typed error and don't
+                    // forward raw String(error) (which can carry paths/SHAs) into
+                    // telemetry/logs.
+                    logger?.warn("Replay divergent-merge sync failed, continuing without sync: " + String(error));
+                    throw new ReplayPrepareError(String(error), error);
+                }
 
                 try {
                     const freshLockManager = new LockfileManager(outputDir);
@@ -291,13 +301,12 @@ export async function replayRun(params: ReplayRunParams): Promise<ReplayRunResul
  */
 export class ReplayPrepareError extends Error {
     public readonly reason: string;
-    public readonly cause: unknown;
 
     constructor(reason: string, cause: unknown) {
-        super(`Replay prepare failed: ${reason}`);
+        // ES2022 Error.cause — Sentry's linkedErrorsIntegration chains automatically.
+        super(`Replay prepare failed: ${reason}`, { cause });
         this.name = "ReplayPrepareError";
         this.reason = reason;
-        this.cause = cause;
     }
 }
 

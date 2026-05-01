@@ -443,7 +443,13 @@ export async function runLocalGenerationForWorkspace({
                     if (pipelineResult.steps.replay != null) {
                         logReplaySummary(pipelineResult.steps.replay, {
                             debug: (msg) => interactiveTaskContext.logger.debug(msg),
-                            info: (msg) => interactiveTaskContext.logger.info(chalk.cyan(msg)),
+                            info: (msg) => {
+                                // Don't ANSI-color structured machine-parseable lines
+                                // ("[replay] ..." emitted by replay-summary). Customer-friendly
+                                // status messages stay cyan for terminal readability.
+                                const isStructured = msg.startsWith("[replay] ") || msg.startsWith("[telemetry] ");
+                                interactiveTaskContext.logger.info(isStructured ? msg : chalk.cyan(msg));
+                            },
                             warn: (msg) => interactiveTaskContext.logger.warn(chalk.yellow(msg)),
                             error: (msg) => interactiveTaskContext.logger.error(chalk.red(msg))
                         });

@@ -44,6 +44,9 @@ export function logReplaySummary(result: ReplayStepResult, logger: PipelineLogge
 
     // Operator-friendly structured INFO line. Grep-keyed on "[replay]" so customers
     // and on-call can pull metrics out of pipeline logs without a parser.
+    // `success=` reflects whether the replay logic itself succeeded (NOT step.success,
+    // which stays true on replay crashes so the orchestrator doesn't abort generation).
+    const replayLogicSucceeded = result.replayCrashed !== true;
     logger.info(
         `[replay] flow=${result.flow ?? "unknown"} detected=${result.patchesDetected ?? 0} ` +
             `applied=${applied} conflicts=${result.patchesWithConflicts ?? 0} ` +
@@ -51,7 +54,7 @@ export function logReplaySummary(result: ReplayStepResult, logger: PipelineLogge
             `content_rebased=${result.patchesContentRebased ?? 0} ` +
             `kept_as_user_owned=${result.patchesKeptAsUserOwned ?? 0} ` +
             `unresolved=${unresolvedCount} unresolved_files=${unresolvedFiles} ` +
-            `warnings=${result.warnings?.length ?? 0} success=${result.success}`
+            `warnings=${result.warnings?.length ?? 0} success=${replayLogicSucceeded}`
     );
 
     if (preserved > 0) {
@@ -103,8 +106,9 @@ export function logReplaySummary(result: ReplayStepResult, logger: PipelineLogge
         }
     }
 
-    if (result.success === false && result.errorMessage != null) {
-        // Replay crashed — surface the reason so debug logs explain what `success=false` means.
+    if (result.replayCrashed === true && result.errorMessage != null) {
+        // Replay crashed — surface the reason so debug logs explain what
+        // `success=false` in the structured line means.
         logger.warn(`Replay: ${result.errorMessage}`);
     }
 

@@ -146,7 +146,13 @@ export class TaskContextAdapter implements TaskContext {
         // since Tags requires string|number|boolean|null. Defensive try/catch —
         // telemetry must never fail the calling operation.
         try {
-            const eventName = event.command ?? "cli";
+            // Refuse nameless events. Falling back to "cli" would collide with
+            // TelemetryClient.sendLifecycleEvent's `event: "cli"`, polluting the
+            // lifecycle event's property bag with arbitrary caller properties.
+            if (event.command == null || event.command.length === 0) {
+                return;
+            }
+            const eventName = event.command;
             const tags: Record<string, string | number | boolean | null> = {};
             if (event.orgId != null) {
                 tags.org = event.orgId;
@@ -160,8 +166,9 @@ export class TaskContextAdapter implements TaskContext {
                 ) {
                     tags[String(key)] = value;
                 }
-                // Non-primitives (objects, arrays) are silently dropped — Tags
-                // schema rejects nested values to control PostHog cardinality.
+                // Non-primitives (objects, arrays, Date, BigInt, Symbol, undefined)
+                // are silently dropped — Tags schema rejects nested values to
+                // control PostHog cardinality.
             }
             this.context.telemetry.sendEvent(eventName, tags);
         } catch {

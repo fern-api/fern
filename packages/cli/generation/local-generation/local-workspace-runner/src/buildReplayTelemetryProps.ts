@@ -98,11 +98,18 @@ export function buildReplayTelemetryProps(input: {
         }
     }
 
+    // For telemetry, "success" means the replay logic itself succeeded — NOT the
+    // step.success field (which is true even on replay crashes, by design, so the
+    // pipeline doesn't abort generation). Replay crashes are surfaced via
+    // `replayCrashed` on the step result; map that to a falsy `success` here.
+    const replayLogicSucceeded = replay != null && replay.executed && replay.replayCrashed !== true;
+
     return {
         action: "pipeline_run",
-        success: replay?.success ?? false,
+        success: replayLogicSucceeded,
         executed: replay?.executed ?? false,
         flow: replay?.flow ?? null,
+        replay_crashed: replay?.replayCrashed === true,
         pipeline_success: pipelineResult.success,
         pipeline_warnings_count: pipelineResult.warnings?.length ?? 0,
         replay_warnings_count: replay?.warnings?.length ?? 0,
@@ -110,7 +117,7 @@ export function buildReplayTelemetryProps(input: {
         generator_version: generatorVersion,
         cli_version: cliVersion ?? null,
         repo_uri_hash: hashRepoUri(repoUri),
-        run_id: runId != null ? runId.slice(0, 32) : null,
+        run_id: runId ?? null,
         automation_mode: automationMode,
         auto_merge_requested: autoMerge,
         auto_merge_enabled: github?.autoMergeEnabled === true,

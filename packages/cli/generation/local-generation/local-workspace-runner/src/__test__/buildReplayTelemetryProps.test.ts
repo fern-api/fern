@@ -174,9 +174,13 @@ describe("buildReplayTelemetryProps", () => {
         expect(props.conflicts_same_line_edit).toBe(0);
     });
 
-    it("reports a replay crash as success: false (FER-9956 invariant)", () => {
+    it("reports a replay crash as success: false via replayCrashed (FER-9956 invariant)", () => {
+        // step.success stays true so the orchestrator does NOT abort generation
+        // on replay errors. The crash is signaled via the new replayCrashed field
+        // on ReplayStepResult; the helper translates it to a falsy `success`.
         const replay = makeReplayResult({
-            success: false,
+            success: true,
+            replayCrashed: true,
             errorMessage: "git command failed: HEAD detached",
             flow: "normal-regeneration",
             patchesDetected: 0,
@@ -184,17 +188,59 @@ describe("buildReplayTelemetryProps", () => {
         });
         const props = buildReplayTelemetryProps({
             ...BASE_INPUT,
-            pipelineResult: makePipelineResult(replay, { success: false })
+            pipelineResult: makePipelineResult(replay, { success: true })
         });
 
         expect(props.success).toBe(false);
+        expect(props.replay_crashed).toBe(true);
         expect(props.flow).toBe("normal-regeneration");
-        expect(props.pipeline_success).toBe(false);
 
         // errorMessage MUST NOT propagate verbatim — may carry path / SHA fragments
         const serialized = JSON.stringify(props);
         expect(serialized).not.toContain("HEAD detached");
         expect(serialized).not.toContain("git command failed");
+    });
+
+    it("reports replay logic succeeded when step ran without crashing", () => {
+        const props = buildReplayTelemetryProps({
+            ...BASE_INPUT,
+            pipelineResult: makePipelineResult(makeReplayResult())
+        });
+        expect(props.success).toBe(true);
+        expect(props.replay_crashed).toBe(false);
+    });
+
+    it("buckets empty-string and null conflict reasons under 'other'", () => {
+        const replay = makeReplayResult({
+            patchesWithConflicts: 1,
+            unresolvedPatches: [
+                {
+                    patchId: "p",
+                    patchMessage: "p",
+                    files: ["a.ts", "b.ts"],
+                    conflictDetails: [
+                        { file: "a.ts", conflictReason: "" },
+                        { file: "b.ts", conflictReason: undefined }
+                    ]
+                }
+            ]
+        });
+        const props = buildReplayTelemetryProps({
+            ...BASE_INPUT,
+            pipelineResult: makePipelineResult(replay)
+        });
+        expect(props.conflicts_other).toBe(2);
+        expect(props.conflicts_same_line_edit).toBe(0);
+    });
+
+    it("preserves runId verbatim (UUIDs are bounded-shape, no truncation)", () => {
+        const fullUuid = "22d932de-baeb-41cd-b530-fe5a402a1234";
+        const props = buildReplayTelemetryProps({
+            ...BASE_INPUT,
+            runId: fullUuid,
+            pipelineResult: makePipelineResult(makeReplayResult())
+        });
+        expect(props.run_id).toBe(fullUuid);
     });
 
     it("treats first-generation as success without conflict noise", () => {
