@@ -1,7 +1,13 @@
 import { type docsYml } from "@fern-api/configuration";
 
 // Re-export markdown utilities needed for translation processing
-export { replaceImagePathsAndUrls, stripMdxComments } from "@fern-api/docs-markdown-utils";
+export {
+    replaceImagePathsAndUrls,
+    replaceReferencedCode,
+    replaceReferencedMarkdown,
+    stripMdxComments,
+    transformAtPrefixImports
+} from "@fern-api/docs-markdown-utils";
 export { applyTranslatedFrontmatterToNavTree } from "./applyTranslatedFrontmatterToNavTree.js";
 export {
     applyTranslatedNavigationOverlays,

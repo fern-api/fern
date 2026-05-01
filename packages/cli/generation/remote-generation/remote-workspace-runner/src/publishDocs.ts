@@ -9,7 +9,10 @@ import {
     DocsDefinitionResolver,
     getTranslatedAnnouncement,
     replaceImagePathsAndUrls,
+    replaceReferencedCode,
+    replaceReferencedMarkdown,
     stripMdxComments,
+    transformAtPrefixImports,
     UploadedFile,
     wrapWithHttps
 } from "@fern-api/docs-resolver";
@@ -21,7 +24,14 @@ type SnippetsConfig = APIV1Write.SnippetsConfig;
 type DocsDefinition = DocsV1Write.DocsDefinition;
 
 import { stitchGlobalTheme } from "@fern-api/docs-resolver";
-import { AbsoluteFilePath, convertToFernHostRelativeFilePath, RelativeFilePath, resolve } from "@fern-api/fs-utils";
+import {
+    AbsoluteFilePath,
+    convertToFernHostRelativeFilePath,
+    doesPathExist,
+    RelativeFilePath,
+    relative,
+    resolve
+} from "@fern-api/fs-utils";
 import { convertIrToDynamicSnippetsIr, generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { getOriginalName } from "@fern-api/ir-utils";
 import { detectAirGappedMode, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
@@ -652,70 +662,123 @@ export async function publishDocs({
                         // any sidebar-title / slug frontmatter in the translated pages.
                         //
                         // For each translated page, we apply the same transformations as default locale pages:
-                        // 1. Strip MDX comments to prevent leakage
-                        // 2. Replace relative image paths with file IDs (using base page path for resolution)
-                        // 3. Preserve editThisPageUrl/editThisPageLaunch from the base page
-                        //
-                        // TODO(translations-alpha): Translated pages still need:
-                        // - replaceReferencedMarkdown/Code for <Markdown src="..."/> and <CodeBlock src="..."/>
-                        // - transformAtPrefixImports for @/... and @components/... imports
+                        // 1. Resolve <Markdown src="..."/> and <Code src="..."/> snippet references
+                        // 2. Transform @/ prefix imports to relative paths
+                        // 3. Strip MDX comments to prevent leakage
+                        // 4. Replace relative image paths with file IDs (using base page path for resolution)
+                        // 5. Preserve editThisPageUrl/editThisPageLaunch from the base page
                         const collectedFileIds = resolver.getCollectedFileIds();
                         const docsWorkspacePath = resolver.getDocsWorkspacePath();
+
+                        // Create a locale-aware file loader that prefers translated snippets
+                        // (e.g., translations/zh/snippets/foo.mdx) over base snippets.
+                        const resolveLocalePath = async (filepath: AbsoluteFilePath): Promise<AbsoluteFilePath> => {
+                            const relPath = relative(docsWorkspacePath, filepath);
+                            const translatedPath = resolve(
+                                docsWorkspacePath,
+                                RelativeFilePath.of(`translations/${locale}/${relPath}`)
+                            );
+                            return (await doesPathExist(translatedPath)) ? translatedPath : filepath;
+                        };
+
+                        const localeAwareMarkdownLoader = async (filepath: AbsoluteFilePath): Promise<string> => {
+                            const pathToRead = await resolveLocalePath(filepath);
+                            const raw = await readFile(pathToRead, "utf-8");
+                            // Strip frontmatter (---\n...\n---) from snippet files
+                            const fmMatch = raw.match(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/);
+                            return fmMatch != null ? raw.slice(fmMatch[0].length) : raw;
+                        };
+
+                        const localeAwareFileLoader = async (filepath: AbsoluteFilePath): Promise<string> => {
+                            const pathToRead = await resolveLocalePath(filepath);
+                            return readFile(pathToRead, "utf-8");
+                        };
+
+                        const translatedPageEntries = await Promise.all(
+                            Object.entries(localePages).map(async ([path, rawMarkdown]) => {
+                                try {
+                                    const basePage = docsDefinition.pages[path as DocsV1Write.PageId];
+                                    const absolutePathToMarkdownFile = resolve(
+                                        docsWorkspacePath,
+                                        RelativeFilePath.of(path)
+                                    );
+
+                                    // Resolve <Markdown src="..."/> snippets (must happen before image processing).
+                                    // Uses locale-aware loader to prefer translated snippets when available.
+                                    const { markdown: markdownResolved } = await replaceReferencedMarkdown({
+                                        markdown: rawMarkdown,
+                                        absolutePathToFernFolder: docsWorkspacePath,
+                                        absolutePathToMarkdownFile,
+                                        context,
+                                        markdownLoader: localeAwareMarkdownLoader
+                                    });
+
+                                    // Resolve <Code src="..."/> references (also locale-aware)
+                                    const codeResolved = await replaceReferencedCode({
+                                        markdown: markdownResolved,
+                                        absolutePathToFernFolder: docsWorkspacePath,
+                                        absolutePathToMarkdownFile,
+                                        context,
+                                        fileLoader: localeAwareFileLoader
+                                    });
+
+                                    // Transform @/ prefix imports to relative paths
+                                    const importsResolved = transformAtPrefixImports({
+                                        markdown: codeResolved,
+                                        absolutePathToFernFolder: docsWorkspacePath,
+                                        absolutePathToMarkdownFile
+                                    });
+
+                                    // Strip MDX comments
+                                    let processedMarkdown = stripMdxComments(importsResolved);
+
+                                    // Replace image paths using the base page's location for resolution
+                                    // (translated pages reference the same images as the default locale)
+                                    processedMarkdown = replaceImagePathsAndUrls(
+                                        processedMarkdown,
+                                        collectedFileIds,
+                                        {}, // markdownFilesToPathName not needed for translations
+                                        {
+                                            absolutePathToMarkdownFile,
+                                            absolutePathToFernFolder: docsWorkspacePath
+                                        },
+                                        context
+                                    );
+
+                                    // Rewrite editThisPageUrl to point to the translated file
+                                    let editThisPageUrl = basePage?.editThisPageUrl;
+                                    if (editThisPageUrl != null) {
+                                        const fernPathPattern = `/fern/${path}`;
+                                        const translatedPath = `/fern/translations/${locale}/${path}`;
+                                        editThisPageUrl = editThisPageUrl.replace(
+                                            fernPathPattern,
+                                            translatedPath
+                                        ) as typeof editThisPageUrl;
+                                    }
+                                    return [
+                                        path,
+                                        {
+                                            markdown: processedMarkdown,
+                                            rawMarkdown: processedMarkdown,
+                                            editThisPageUrl,
+                                            editThisPageLaunch: basePage?.editThisPageLaunch
+                                        }
+                                    ];
+                                } catch (pageError) {
+                                    context.logger.warn(
+                                        `Failed to process translated page "${path}" for locale "${locale}": ${String(pageError)}. Falling back to base page.`
+                                    );
+                                    return undefined;
+                                }
+                            })
+                        );
 
                         const translatedPages = {
                             ...docsDefinition.pages,
                             ...Object.fromEntries(
-                                Object.entries(localePages)
-                                    .map(([path, rawMarkdown]) => {
-                                        try {
-                                            const basePage = docsDefinition.pages[path as DocsV1Write.PageId];
-                                            // Strip MDX comments first
-                                            let processedMarkdown = stripMdxComments(rawMarkdown);
-                                            // Replace image paths using the base page's location for resolution
-                                            // (translated pages reference the same images as the default locale)
-                                            const absolutePathToMarkdownFile = resolve(
-                                                docsWorkspacePath,
-                                                RelativeFilePath.of(path)
-                                            );
-                                            processedMarkdown = replaceImagePathsAndUrls(
-                                                processedMarkdown,
-                                                collectedFileIds,
-                                                {}, // markdownFilesToPathName not needed for translations
-                                                {
-                                                    absolutePathToMarkdownFile,
-                                                    absolutePathToFernFolder: docsWorkspacePath
-                                                },
-                                                context
-                                            );
-                                            // Rewrite editThisPageUrl to point to the translated file
-                                            // URL format: .../fern/${path}?plain=1 -> .../fern/translations/${locale}/${path}?plain=1
-                                            let editThisPageUrl = basePage?.editThisPageUrl;
-                                            if (editThisPageUrl != null) {
-                                                // Replace /fern/${path} with /fern/translations/${locale}/${path}
-                                                const fernPathPattern = `/fern/${path}`;
-                                                const translatedPath = `/fern/translations/${locale}/${path}`;
-                                                editThisPageUrl = editThisPageUrl.replace(
-                                                    fernPathPattern,
-                                                    translatedPath
-                                                ) as typeof editThisPageUrl;
-                                            }
-                                            return [
-                                                path,
-                                                {
-                                                    markdown: processedMarkdown,
-                                                    rawMarkdown: processedMarkdown,
-                                                    editThisPageUrl,
-                                                    editThisPageLaunch: basePage?.editThisPageLaunch
-                                                }
-                                            ];
-                                        } catch (pageError) {
-                                            context.logger.warn(
-                                                `Failed to process translated page "${path}" for locale "${locale}": ${String(pageError)}. Falling back to base page.`
-                                            );
-                                            return undefined;
-                                        }
-                                    })
-                                    .filter((entry): entry is NonNullable<typeof entry> => entry != null)
+                                translatedPageEntries.filter(
+                                    (entry): entry is NonNullable<typeof entry> => entry != null
+                                )
                             )
                         };
                         let updatedRoot = applyTranslatedFrontmatterToNavTree(

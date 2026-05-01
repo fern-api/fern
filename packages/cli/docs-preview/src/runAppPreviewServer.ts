@@ -4,11 +4,22 @@ import {
     applyTranslatedNavigationOverlays,
     getTranslatedAnnouncement,
     replaceImagePathsAndUrls,
+    replaceReferencedCode,
+    replaceReferencedMarkdown,
     stripMdxComments,
+    transformAtPrefixImports,
     wrapWithHttps
 } from "@fern-api/docs-resolver";
 import { DocsV1Read, DocsV2Read, FernNavigation } from "@fern-api/fdr-sdk";
-import { AbsoluteFilePath, dirname, doesPathExist, listFiles, RelativeFilePath, resolve } from "@fern-api/fs-utils";
+import {
+    AbsoluteFilePath,
+    dirname,
+    doesPathExist,
+    listFiles,
+    RelativeFilePath,
+    relative,
+    resolve
+} from "@fern-api/fs-utils";
 import { runExeca } from "@fern-api/logging-execa";
 import { Project } from "@fern-api/project-loader";
 import { CliError, TaskContext } from "@fern-api/task-context";
@@ -711,7 +722,9 @@ export async function runAppPreviewServer({
      * Computes translated definitions for each locale.
      * Similar to what publishDocs.ts does for production, but for local preview.
      */
-    function computeTranslatedDefinitions(result: PreviewDocsResult): Map<string, DocsV1Read.DocsDefinition> {
+    async function computeTranslatedDefinitions(
+        result: PreviewDocsResult
+    ): Promise<Map<string, DocsV1Read.DocsDefinition>> {
         const translations = new Map<string, DocsV1Read.DocsDefinition>();
         const { docsDefinition, translationPages, translationNavigationOverlays, collectedFileIds, docsWorkspacePath } =
             result;
@@ -729,6 +742,28 @@ export async function runAppPreviewServer({
             }
 
             try {
+                // Locale-aware file loaders that prefer translated snippets when available
+                const resolveLocalePath = async (filepath: AbsoluteFilePath): Promise<AbsoluteFilePath> => {
+                    const relPath = relative(docsWorkspacePath, filepath);
+                    const translatedPath = resolve(
+                        docsWorkspacePath,
+                        RelativeFilePath.of(`translations/${locale}/${relPath}`)
+                    );
+                    return (await doesPathExist(translatedPath)) ? translatedPath : filepath;
+                };
+
+                const localeAwareMarkdownLoader = async (filepath: AbsoluteFilePath): Promise<string> => {
+                    const pathToRead = await resolveLocalePath(filepath);
+                    const raw = await readFile(pathToRead, "utf-8");
+                    const fmMatch = raw.match(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/);
+                    return fmMatch != null ? raw.slice(fmMatch[0].length) : raw;
+                };
+
+                const localeAwareFileLoader = async (filepath: AbsoluteFilePath): Promise<string> => {
+                    const pathToRead = await resolveLocalePath(filepath);
+                    return readFile(pathToRead, "utf-8");
+                };
+
                 // Build translated pages by merging base pages with locale-specific pages
                 // Start by copying all defined pages from the base definition
                 const translatedPages: Record<string, DocsV1Read.PageContent> = {};
@@ -741,10 +776,37 @@ export async function runAppPreviewServer({
                 for (const [pagePath, rawMarkdown] of Object.entries(localePages)) {
                     try {
                         const basePage = translatedPages[pagePath];
-                        // Strip MDX comments first
-                        let processedMarkdown = stripMdxComments(rawMarkdown);
-                        // Replace image paths using collected file IDs
                         const absolutePathToMarkdownFile = resolve(docsWorkspacePath, RelativeFilePath.of(pagePath));
+
+                        // Resolve <Markdown src="..."/> snippets (locale-aware)
+                        const { markdown: markdownResolved } = await replaceReferencedMarkdown({
+                            markdown: rawMarkdown,
+                            absolutePathToFernFolder: docsWorkspacePath,
+                            absolutePathToMarkdownFile,
+                            context,
+                            markdownLoader: localeAwareMarkdownLoader
+                        });
+
+                        // Resolve <Code src="..."/> references (locale-aware)
+                        const codeResolved = await replaceReferencedCode({
+                            markdown: markdownResolved,
+                            absolutePathToFernFolder: docsWorkspacePath,
+                            absolutePathToMarkdownFile,
+                            context,
+                            fileLoader: localeAwareFileLoader
+                        });
+
+                        // Transform @/ prefix imports to relative paths
+                        const importsResolved = transformAtPrefixImports({
+                            markdown: codeResolved,
+                            absolutePathToFernFolder: docsWorkspacePath,
+                            absolutePathToMarkdownFile
+                        });
+
+                        // Strip MDX comments
+                        let processedMarkdown = stripMdxComments(importsResolved);
+
+                        // Replace image paths using collected file IDs
                         processedMarkdown = replaceImagePathsAndUrls(
                             processedMarkdown,
                             collectedFileIds,
@@ -890,7 +952,7 @@ export async function runAppPreviewServer({
 
     // Compute translated definitions after loading
     if (previewResult != null) {
-        translatedDefinitions = computeTranslatedDefinitions(previewResult);
+        translatedDefinitions = await computeTranslatedDefinitions(previewResult);
         if (translatedDefinitions.size > 0) {
             context.logger.info(`Computed translations for ${translatedDefinitions.size} locale(s)`);
         }
@@ -1156,7 +1218,7 @@ export async function runAppPreviewServer({
                     previewResult = reloadedPreviewResult;
 
                     // Recompute translated definitions
-                    translatedDefinitions = computeTranslatedDefinitions(reloadedPreviewResult);
+                    translatedDefinitions = await computeTranslatedDefinitions(reloadedPreviewResult);
                     if (translatedDefinitions.size > 0) {
                         context.logger.debug(`Recomputed translations for ${translatedDefinitions.size} locale(s)`);
                     }
