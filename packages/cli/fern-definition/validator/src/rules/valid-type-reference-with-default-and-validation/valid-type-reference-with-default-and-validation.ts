@@ -87,6 +87,29 @@ function validateResolvedType({
         });
     }
 
+    // Allow defaults on lists/sets so that docs can render
+    // "Defaults to ["..."]" metadata. Defaults are documentation-only and
+    // do not affect SDK generation here. Validation rules still aren't
+    // supported for containers.
+    if (
+        resolvedType._type === "container" &&
+        (resolvedType.container._type === "list" || resolvedType.container._type === "set")
+    ) {
+        if (_default != null && !Array.isArray(_default)) {
+            violations.push({
+                message: `Default value for ${resolvedType.container._type} type must be an array`,
+                severity: "fatal"
+            });
+        }
+        if (validation != null) {
+            violations.push({
+                message: `Validation rules are not supported for the ${resolvedType.container._type} type`,
+                severity: "fatal"
+            });
+        }
+        return violations;
+    }
+
     let typeName: string = resolvedType._type;
     if (resolvedType._type === "primitive") {
         switch (resolvedType.primitive.v1) {
