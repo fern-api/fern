@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.7.2
+  changelogEntry:
+    - summary: |
+        Allow BCP 47 locale tags (e.g. `ja-JP`, `pt-BR`, `zh-Hans-CN`) in the `translations` and `languages` fields of `docs.yml`. Previously these were rejected by the JSON-schema validator with `must be one of [en, es, fr, ...]`.
+      type: fix
+  createdAt: "2026-05-01"
+  irVersion: 66
 - version: 5.7.1
   changelogEntry:
     - summary: |
