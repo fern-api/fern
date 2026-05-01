@@ -1,5 +1,11 @@
 import { FdrAPI as CjsFdrSdk, DocsV1Write } from "@fern-api/fdr-sdk";
-import { AbsoluteFilePath, dirname, RelativeFilePath, resolve } from "@fern-api/fs-utils";
+import {
+    AbsoluteFilePath,
+    convertToFernHostAbsoluteFilePath,
+    dirname,
+    RelativeFilePath,
+    resolve
+} from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import type { Node as EstreeNode } from "estree";
 import grayMatter from "gray-matter";
@@ -546,7 +552,9 @@ function resolvePath(
         RelativeFilePath.of(pathToImage.replace(/^\//, ""))
     );
 
-    return filepath;
+    // Strip Windows drive letter (e.g., C:/) to produce platform-agnostic paths
+    // that work consistently in markdown content and URL maps
+    return convertToFernHostAbsoluteFilePath(filepath);
 }
 
 function isExternalUrl(url: string): boolean {
@@ -644,16 +652,15 @@ export function replaceImagePathsAndUrls(
             return undefined;
         }
 
-        if (isAbsolute(image)) {
-            const absolutePath = AbsoluteFilePath.of(image);
+        if (isAbsolute(image) || isWindowsAbsolutePath(image)) {
+            // Normalize to strip Windows drive letters (e.g., C:/) for consistent lookup
+            const absolutePath = convertToFernHostAbsoluteFilePath(AbsoluteFilePath.of(image));
             const fileId = fileIdsMap.get(absolutePath);
             if (fileId) {
                 return `file:${fileId}`;
             }
 
-            // Only try resolvePath fallback for Unix absolute paths (starting with /)
-            // Skip for Windows absolute paths (e.g., C:\...) since they are already absolute
-            // and resolvePath would throw an error trying to create a RelativeFilePath from them
+            // Fallback: try resolving as a root-relative path
             if (!isWindowsAbsolutePath(image)) {
                 const resolvedFromRoot = resolvePath(image, metadata);
                 if (resolvedFromRoot) {
