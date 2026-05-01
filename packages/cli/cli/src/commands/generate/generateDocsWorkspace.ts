@@ -192,12 +192,9 @@ export async function generateDocsWorkspace({
                 const errors = violations.filter((v) => v.severity === "fatal" || v.severity === "error");
                 if (errors.length > 0) {
                     const reasons = summarizeValidationErrors(errors);
-                    for (const reason of reasons) {
-                        context.logger.error(`${apiName}: ${reason}`);
-                    }
+                    const reasonList = reasons.map((r) => `  - ${r}`).join("\n");
                     context.logger.error(
-                        `Skipping API ${apiName} due to ${errors.length} validation error${errors.length !== 1 ? "s" : ""}. ` +
-                            "Run fern check for details."
+                        `Skipping API ${apiName} due to ${errors.length} validation error${errors.length !== 1 ? "s" : ""}:\n${reasonList}`
                     );
                     skippedWorkspacePaths.add(ossWorkspace.absoluteFilePath);
                 }
