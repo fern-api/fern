@@ -141,6 +141,13 @@ types:
           is optional in the generated SDK and this literal value is sent when
           the caller does not provide one. Populated from the `x-fern-default`
           OpenAPI extension.
+      defaultValue:
+        type: optional<unknown>
+        docs: |
+          The documentation default value for this header. Populated from the
+          OpenAPI `default` field. Used by docs to render "Defaults to ..."
+          metadata. Unlike `clientDefault`, this supports arbitrary JSON values
+          (e.g. arrays) and does not affect SDK behavior.
       v2Examples: optional<examples.V2SchemaExamples>
 
   PathParameter:
@@ -179,6 +186,13 @@ types:
           the parameter is optional in the generated SDK and this literal value
           is sent when the caller does not provide one. Populated from the
           `x-fern-default` OpenAPI extension.
+      defaultValue:
+        type: optional<unknown>
+        docs: |
+          The documentation default value for this query parameter. Populated
+          from the OpenAPI `default` field. Used by docs to render "Defaults
+          to ..." metadata. Unlike `clientDefault`, this supports arbitrary
+          JSON values (e.g. arrays) and does not affect SDK behavior.
       v2Examples: optional<examples.V2SchemaExamples>
       explode: optional<boolean>
 
@@ -214,6 +228,15 @@ types:
     properties:
       name: commons.NameAndWireValueOrString
       valueType: types.TypeReference
+      defaultValue:
+        type: optional<unknown>
+        docs: |
+          The documentation default value for this property. Populated from the
+          OpenAPI `default` field on the property's schema (or from the Fern
+          Definition `default` on the property). Used by docs to render
+          "Defaults to ..." metadata. Supports arbitrary JSON values (e.g.
+          arrays) since the existing primitive `default` lives on the
+          `PrimitiveType` and cannot represent container defaults.
       v2Examples: optional<examples.V2SchemaExamples>
       propertyAccess: optional<types.ObjectPropertyAccess>
 
