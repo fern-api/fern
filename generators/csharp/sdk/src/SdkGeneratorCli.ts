@@ -29,6 +29,7 @@ import { IdempotentRequestOptionsGenerator } from "./options/IdempotentRequestOp
 import { IdempotentRequestOptionsInterfaceGenerator } from "./options/IdempotentRequestOptionsInterfaceGenerator.js";
 import { RequestOptionsGenerator } from "./options/RequestOptionsGenerator.js";
 import { RequestOptionsInterfaceGenerator } from "./options/RequestOptionsInterfaceGenerator.js";
+import { ContributingGenerator } from "./contributing/ContributingGenerator.js";
 import { buildReference } from "./reference/buildReference.js";
 import { RootClientGenerator } from "./root-client/RootClientGenerator.js";
 import { RootClientInterfaceGenerator } from "./root-client/RootClientInterfaceGenerator.js";
@@ -303,6 +304,14 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
                 throw GeneratorError.internalError(`Failed to generate reference.md: ${extractErrorMessage(e)}`);
             }
         }
+
+        if (!context.config.whitelabel) {
+            try {
+                this.generateContributing({ context });
+            } catch (e) {
+                throw GeneratorError.internalError(`Failed to generate CONTRIBUTING.md: ${extractErrorMessage(e)}`);
+            }
+        }
         context.logger.debug(`[TIMING] code generation took ${Date.now() - generateStartTime}ms`);
         await context.project.persist();
         context.formatter.dispose();
@@ -340,6 +349,13 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
         context.project.addRawFiles(
             new File(context.generatorAgent.REFERENCE_FILENAME, RelativeFilePath.of(otherPath), content)
         );
+    }
+
+    private generateContributing({ context }: { context: SdkGeneratorContext }): void {
+        const contributingGenerator = new ContributingGenerator();
+        const content = contributingGenerator.generate();
+        const otherPath = context.settings.outputPath.other;
+        context.project.addRawFiles(new File("CONTRIBUTING.md", RelativeFilePath.of(otherPath), content));
     }
 
     private async generateGitHub({ context }: { context: SdkGeneratorContext }): Promise<void> {

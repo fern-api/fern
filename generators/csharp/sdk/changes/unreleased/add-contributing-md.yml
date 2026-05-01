@@ -1,0 +1,4 @@
+- summary: |
+    Generate CONTRIBUTING.md for C# SDKs, matching the pattern used by the TypeScript generator.
+    The file is skipped for whitelabel SDKs.
+  type: feat
