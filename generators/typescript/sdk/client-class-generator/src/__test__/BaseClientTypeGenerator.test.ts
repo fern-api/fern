@@ -159,6 +159,9 @@ function createMockContext(opts?: {
                 },
                 NoOpAuthProvider: {
                     _getReferenceTo: () => ts.factory.createIdentifier("core.NoOpAuthProvider")
+                },
+                isAuthProvider: {
+                    _getReferenceTo: () => ts.factory.createIdentifier("core.isAuthProvider")
                 }
             },
             fetcher: {

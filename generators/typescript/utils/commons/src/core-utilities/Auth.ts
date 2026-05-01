@@ -31,6 +31,10 @@ export interface Auth {
         };
     };
 
+    isAuthProvider: {
+        _getReferenceTo: () => ts.Expression;
+    };
+
     NoOpAuthProvider: {
         _getReferenceTo: () => ts.Expression;
     };
@@ -162,6 +166,13 @@ export class AuthImpl extends CoreUtility implements Auth {
                     this.AuthRequest._getReferenceToType()
                 ])
         }
+    };
+
+    public readonly isAuthProvider = {
+        _getReferenceTo: this.withExportedName(
+            "isAuthProvider",
+            (isAuthProviderFn) => () => isAuthProviderFn.getExpression()
+        )
     };
 
     public readonly NoOpAuthProvider = {

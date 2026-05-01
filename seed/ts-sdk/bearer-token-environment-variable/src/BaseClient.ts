@@ -77,15 +77,6 @@ export function normalizeClientOptions<T extends BaseClientOptions = BaseClientO
     } as NormalizedClientOptions<T>;
 }
 
-function isAuthProvider(auth: AuthOption): auth is core.AuthProvider {
-    return (
-        typeof auth === "object" &&
-        auth !== null &&
-        "getAuthRequest" in auth &&
-        typeof auth.getAuthRequest === "function"
-    );
-}
-
 export function normalizeClientOptionsWithAuth<T extends BaseClientOptions = BaseClientOptions>(
     options: T,
 ): NormalizedClientOptionsWithAuth<T> {
@@ -96,7 +87,7 @@ export function normalizeClientOptionsWithAuth<T extends BaseClientOptions = Bas
             normalized.authProvider = { getAuthRequest: options.auth };
             return normalized;
         }
-        if (isAuthProvider(options.auth)) {
+        if (core.isAuthProvider(options.auth)) {
             normalized.authProvider = options.auth;
             return normalized;
         }
