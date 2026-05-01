@@ -982,6 +982,120 @@ describe("streaming parser for large files", () => {
     });
 });
 
+describe("paths with spaces in directory names", () => {
+    const SPACE_DOCS_PATH = AbsoluteFilePath.of("/Users/user/Documents/Chainalysis Docs/developer-docs/fern");
+    const SPACE_MDX_PATH = AbsoluteFilePath.of(
+        "/Users/user/Documents/Chainalysis Docs/developer-docs/fern/pages/file.mdx"
+    );
+    const SPACE_PATHS = {
+        absolutePathToFernFolder: SPACE_DOCS_PATH,
+        absolutePathToMarkdownFile: SPACE_MDX_PATH
+    };
+
+    it("should percent-encode spaces in resolved markdown image paths", () => {
+        const page = "![overview](/assets/images/overview.png)";
+        const result = parseImagePaths(page, SPACE_PATHS);
+        expect(result.filepaths).toEqual([
+            "/Users/user/Documents/Chainalysis Docs/developer-docs/fern/assets/images/overview.png"
+        ]);
+        expect(result.markdown.trim()).toContain(
+            "![overview](/Users/user/Documents/Chainalysis%20Docs/developer-docs/fern/assets/images/overview.png)"
+        );
+    });
+
+    it("should percent-encode spaces in relative image paths", () => {
+        const page = "![img](../assets/image.png)";
+        const result = parseImagePaths(page, SPACE_PATHS);
+        expect(result.filepaths).toEqual([
+            "/Users/user/Documents/Chainalysis Docs/developer-docs/fern/assets/image.png"
+        ]);
+        expect(result.markdown.trim()).toContain(
+            "![img](/Users/user/Documents/Chainalysis%20Docs/developer-docs/fern/assets/image.png)"
+        );
+    });
+
+    it("should percent-encode spaces in HTML img src paths", () => {
+        const page = "<img src='/assets/images/overview.png' />";
+        const result = parseImagePaths(page, SPACE_PATHS);
+        expect(result.filepaths).toEqual([
+            "/Users/user/Documents/Chainalysis Docs/developer-docs/fern/assets/images/overview.png"
+        ]);
+        expect(result.markdown.trim()).toContain(
+            "/Users/user/Documents/Chainalysis%20Docs/developer-docs/fern/assets/images/overview.png"
+        );
+    });
+
+    it("should round-trip through parseImagePaths and replaceImagePathsAndUrls with spaces", () => {
+        const page = "![overview](/assets/images/overview.png)";
+        const parseResult = parseImagePaths(page, SPACE_PATHS, CONTEXT);
+        const fileIdsMap = new Map([
+            [
+                AbsoluteFilePath.of(
+                    "/Users/user/Documents/Chainalysis Docs/developer-docs/fern/assets/images/overview.png"
+                ),
+                "test-file-id"
+            ]
+        ]);
+        const replaced = replaceImagePathsAndUrls(parseResult.markdown, fileIdsMap, {}, SPACE_PATHS, CONTEXT);
+        expect(replaced).toContain("![overview](file:test-file-id)");
+    });
+
+    it("should round-trip HTML img through both functions with spaces", () => {
+        const page = "<img src='/assets/images/overview.png' />";
+        const parseResult = parseImagePaths(page, SPACE_PATHS, CONTEXT);
+        const fileIdsMap = new Map([
+            [
+                AbsoluteFilePath.of(
+                    "/Users/user/Documents/Chainalysis Docs/developer-docs/fern/assets/images/overview.png"
+                ),
+                "html-file-id"
+            ]
+        ]);
+        const replaced = replaceImagePathsAndUrls(parseResult.markdown, fileIdsMap, {}, SPACE_PATHS, CONTEXT);
+        expect(replaced).toContain("html-file-id");
+    });
+
+    it("should produce same results for AST and streaming parsers with spaces", () => {
+        const originalEnv = process.env.FERN_DOCS_LARGE_FILE_BYTES;
+        try {
+            const page =
+                "![overview](/assets/images/overview.png) and more content to pad past the byte threshold for streaming";
+
+            process.env.FERN_DOCS_LARGE_FILE_BYTES = "10000000";
+            const astResult = parseImagePaths(page, SPACE_PATHS, CONTEXT);
+
+            process.env.FERN_DOCS_LARGE_FILE_BYTES = "10";
+            const streamingResult = parseImagePaths(page, SPACE_PATHS, CONTEXT);
+
+            expect(streamingResult.filepaths.sort()).toEqual(astResult.filepaths.sort());
+            expect(streamingResult.markdown.trim()).toEqual(astResult.markdown.trim());
+        } finally {
+            if (originalEnv !== undefined) {
+                process.env.FERN_DOCS_LARGE_FILE_BYTES = originalEnv;
+            } else {
+                delete process.env.FERN_DOCS_LARGE_FILE_BYTES;
+            }
+        }
+    });
+
+    it("should handle paths with parentheses in directory names", () => {
+        const PAREN_DOCS_PATH = AbsoluteFilePath.of("/Users/user/Projects (old)/fern");
+        const PAREN_MDX_PATH = AbsoluteFilePath.of("/Users/user/Projects (old)/fern/pages/file.mdx");
+        const parenPaths = {
+            absolutePathToFernFolder: PAREN_DOCS_PATH,
+            absolutePathToMarkdownFile: PAREN_MDX_PATH
+        };
+        const page = "![img](/assets/image.png)";
+        const parseResult = parseImagePaths(page, parenPaths, CONTEXT);
+        expect(parseResult.filepaths).toEqual(["/Users/user/Projects (old)/fern/assets/image.png"]);
+        const fileIdsMap = new Map([
+            [AbsoluteFilePath.of("/Users/user/Projects (old)/fern/assets/image.png"), "paren-file-id"]
+        ]);
+        const replaced = replaceImagePathsAndUrls(parseResult.markdown, fileIdsMap, {}, parenPaths, CONTEXT);
+        expect(replaced).toContain("![img](file:paren-file-id)");
+    });
+});
+
 describe("replaceImagePathsAndUrls with streaming parser for large files", () => {
     const originalEnv = process.env.FERN_DOCS_LARGE_FILE_BYTES;
 

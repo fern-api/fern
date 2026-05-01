@@ -1,0 +1,5 @@
+- summary: |
+    Fix image paths not resolving when project directory contains spaces (e.g. "Chainalysis Docs").
+    Absolute paths injected during markdown processing are now percent-encoded so they survive
+    the CommonMark parser round-trip in `replaceImagePathsAndUrls`.
+  type: fix

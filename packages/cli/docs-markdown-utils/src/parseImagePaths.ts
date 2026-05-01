@@ -21,6 +21,23 @@ function getLargeFileBytes(): number {
     return parseInt(process.env.FERN_DOCS_LARGE_FILE_BYTES ?? "5000000", 10);
 }
 
+/**
+ * Percent-encode characters in a filesystem path that are invalid in
+ * CommonMark bare link destinations (spaces, unbalanced parentheses).
+ * Literal `%` signs are encoded first to avoid ambiguity.
+ */
+function encodePathForMarkdown(filepath: string): string {
+    return filepath.replaceAll("%", "%25").replaceAll(" ", "%20").replaceAll("(", "%28").replaceAll(")", "%29");
+}
+
+/**
+ * Decode percent-encoded characters produced by {@link encodePathForMarkdown}.
+ * Decoding order is the reverse of encoding order.
+ */
+function decodeMarkdownPath(encoded: string): string {
+    return encoded.replaceAll("%29", ")").replaceAll("%28", "(").replaceAll("%20", " ").replaceAll("%25", "%");
+}
+
 interface Edit {
     start: number;
     end: number;
@@ -150,7 +167,7 @@ function parseMarkdownImage(
     const resolvedPath = resolvePath(src, metadata);
 
     if (rawSrc && src && resolvedPath) {
-        const replacement = url.replace(rawSrc, resolvedPath);
+        const replacement = url.replace(rawSrc, encodePathForMarkdown(resolvedPath));
         return {
             filepath: resolvedPath,
             edit: { start: urlStart, end: urlEnd, replacement },
@@ -255,7 +272,11 @@ function parseJsxTag(
                     const resolvedPath = resolvePath(src, metadata);
                     if (src && resolvedPath) {
                         filepaths.add(resolvedPath);
-                        edits.push({ start: valueStart, end: valueStart + value.length, replacement: resolvedPath });
+                        edits.push({
+                            start: valueStart,
+                            end: valueStart + value.length,
+                            replacement: encodePathForMarkdown(resolvedPath)
+                        });
                     }
                 }
             } else if (content[i] === "{") {
@@ -282,7 +303,7 @@ function parseJsxTag(
                             edits.push({
                                 start: exprStart + 1,
                                 end: exprStart + 1 + value.length,
-                                replacement: resolvedPath
+                                replacement: encodePathForMarkdown(resolvedPath)
                             });
                         }
                     }
@@ -296,7 +317,7 @@ function parseJsxTag(
                             edits.push({
                                 start: exprStart + 1,
                                 end: exprStart + 1 + value.length,
-                                replacement: resolvedPath
+                                replacement: encodePathForMarkdown(resolvedPath)
                             });
                         }
                     }
@@ -447,7 +468,7 @@ export function parseImagePaths(
                 const resolvedPath = resolvePath(src, metadata);
                 if (src != null && resolvedPath != null) {
                     filepaths.add(resolvedPath);
-                    replaced = replaced.replaceAll(src, resolvedPath);
+                    replaced = replaced.replaceAll(src, encodePathForMarkdown(resolvedPath));
                 }
             }
 
@@ -458,7 +479,7 @@ export function parseImagePaths(
                         const resolvedPath = resolvePath(src, metadata);
                         if (src && resolvedPath) {
                             filepaths.add(resolvedPath);
-                            replaced = replaced.replaceAll(src, resolvedPath);
+                            replaced = replaced.replaceAll(src, encodePathForMarkdown(resolvedPath));
                         }
                         return;
                     },
@@ -468,7 +489,7 @@ export function parseImagePaths(
                             const resolvedPath = resolvePath(icon, metadata);
                             if (icon && resolvedPath) {
                                 filepaths.add(resolvedPath);
-                                replaced = replaced.replaceAll(icon, resolvedPath);
+                                replaced = replaced.replaceAll(icon, encodePathForMarkdown(resolvedPath));
                             }
                         }
                         return;
@@ -484,7 +505,7 @@ export function parseImagePaths(
                     const resolvedPath = resolvePath(src, metadata);
                     if (resolvedPath != null) {
                         filepaths.add(resolvedPath);
-                        replaced = replaced.replaceAll(src, resolvedPath);
+                        replaced = replaced.replaceAll(src, encodePathForMarkdown(resolvedPath));
                     }
                 }
 
@@ -495,7 +516,7 @@ export function parseImagePaths(
                     const resolvedPath = resolvePath(icon, metadata);
                     if (resolvedPath != null) {
                         filepaths.add(resolvedPath);
-                        replaced = replaced.replaceAll(icon, resolvedPath);
+                        replaced = replaced.replaceAll(icon, encodePathForMarkdown(resolvedPath));
                     }
                 }
 
@@ -652,17 +673,21 @@ export function replaceImagePathsAndUrls(
             return undefined;
         }
 
-        if (isAbsolute(image) || isWindowsAbsolutePath(image)) {
+        // Decode percent-encoded characters that were added by parseImagePaths
+        // to make paths with spaces (and parens) valid in CommonMark link destinations.
+        const decoded = decodeMarkdownPath(image);
+
+        if (isAbsolute(decoded) || isWindowsAbsolutePath(decoded)) {
             // Normalize to strip Windows drive letters (e.g., C:/) for consistent lookup
-            const absolutePath = convertToFernHostAbsoluteFilePath(AbsoluteFilePath.of(image));
+            const absolutePath = convertToFernHostAbsoluteFilePath(AbsoluteFilePath.of(decoded));
             const fileId = fileIdsMap.get(absolutePath);
             if (fileId) {
                 return `file:${fileId}`;
             }
 
             // Fallback: try resolving as a root-relative path
-            if (!isWindowsAbsolutePath(image)) {
-                const resolvedFromRoot = resolvePath(image, metadata);
+            if (!isWindowsAbsolutePath(decoded)) {
+                const resolvedFromRoot = resolvePath(decoded, metadata);
                 if (resolvedFromRoot) {
                     const fallbackFileId = fileIdsMap.get(resolvedFromRoot);
                     if (fallbackFileId) {
@@ -673,7 +698,7 @@ export function replaceImagePathsAndUrls(
             return undefined;
         }
 
-        const resolvedPath = resolvePath(image, metadata);
+        const resolvedPath = resolvePath(decoded, metadata);
         if (resolvedPath) {
             const fileId = fileIdsMap.get(resolvedPath);
             return fileId ? `file:${fileId}` : undefined;
