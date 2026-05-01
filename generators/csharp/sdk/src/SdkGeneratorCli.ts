@@ -13,6 +13,7 @@ import * as FernGeneratorExecSerializers from "@fern-fern/generator-exec-sdk/ser
 import { FernIr } from "@fern-fern/ir-sdk";
 import { fail } from "assert";
 import { writeFile } from "fs/promises";
+import { ContributingGenerator } from "./contributing/ContributingGenerator.js";
 import { SnippetJsonGenerator } from "./endpoint/snippets/SnippetJsonGenerator.js";
 import { MultiUrlEnvironmentGenerator } from "./environment/MultiUrlEnvironmentGenerator.js";
 import { SingleUrlEnvironmentGenerator } from "./environment/SingleUrlEnvironmentGenerator.js";
@@ -29,7 +30,6 @@ import { IdempotentRequestOptionsGenerator } from "./options/IdempotentRequestOp
 import { IdempotentRequestOptionsInterfaceGenerator } from "./options/IdempotentRequestOptionsInterfaceGenerator.js";
 import { RequestOptionsGenerator } from "./options/RequestOptionsGenerator.js";
 import { RequestOptionsInterfaceGenerator } from "./options/RequestOptionsInterfaceGenerator.js";
-import { ContributingGenerator } from "./contributing/ContributingGenerator.js";
 import { buildReference } from "./reference/buildReference.js";
 import { RootClientGenerator } from "./root-client/RootClientGenerator.js";
 import { RootClientInterfaceGenerator } from "./root-client/RootClientInterfaceGenerator.js";
