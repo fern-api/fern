@@ -1,0 +1,4 @@
+- summary: |
+    Bump @fern-api/generator-cli to 0.9.22. Picks up replay 0.14.1 fix for
+    consolidating duplicate-content patches to prevent next-regen corruption.
+  type: fix
