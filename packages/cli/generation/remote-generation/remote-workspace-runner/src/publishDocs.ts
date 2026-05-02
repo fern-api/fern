@@ -826,6 +826,11 @@ export async function publishDocs({
                             },
                             body: JSON.stringify({
                                 domain: translationDomain,
+                                // Send customDomains in production so FDR fans the translation
+                                // S3 write out across every URL the docs are published to.
+                                // Skipped in preview because preview deploys to a single
+                                // ephemeral URL with no custom-domain mirrors.
+                                customDomains: preview ? [] : customDomains,
                                 orgId: organization,
                                 locale,
                                 docsDefinition: translatedDefinition
