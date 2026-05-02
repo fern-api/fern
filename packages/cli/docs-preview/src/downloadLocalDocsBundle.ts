@@ -6,7 +6,7 @@ import chalk from "chalk";
 import { execSync } from "child_process";
 import cliProgress from "cli-progress";
 import decompress from "decompress";
-import { cpSync, existsSync, lstatSync, mkdirSync, symlinkSync } from "fs";
+import { cpSync, existsSync, lstatSync, mkdirSync, readdirSync, symlinkSync } from "fs";
 import { mkdir, readFile, rename, rm, writeFile } from "fs/promises";
 import { homedir } from "os";
 import path from "path";
@@ -150,6 +150,7 @@ function resolveWindowsSymlinks(
         }
 
         if (!existsSync(sourcePath)) {
+            logger.debug(`Symlink target not found: ${symlinkPath} -> ${linkname} (resolved: ${sourcePath})`);
             failed++;
             continue;
         }
@@ -180,12 +181,58 @@ function resolveWindowsSymlinks(
             `out of ${symlinks.length}`
     );
 
-    // Verify critical top-level packages
+    // Verify critical top-level packages and attempt recovery for any that are missing.
+    // On Windows the .pnpm directory names can be extremely long (peer-dep hashes) which
+    // may cause extraction or junction creation to fail silently. When a critical package
+    // is missing, scan the .pnpm store for a matching directory and copy it directly.
     const standaloneNM = path.join(outputDir, "standalone", "node_modules");
-    for (const dep of ["next", "react", "react-dom", "styled-jsx"]) {
-        if (!existsSync(path.join(standaloneNM, dep))) {
-            logger.warn(`${dep} is MISSING from standalone/node_modules/`);
+    const criticalDeps = ["next", "react", "react-dom", "styled-jsx"];
+    for (const dep of criticalDeps) {
+        const depPath = path.join(standaloneNM, dep);
+        if (existsSync(depPath)) {
+            continue;
         }
+
+        logger.warn(`${dep} is MISSING from standalone/node_modules/ — attempting recovery`);
+
+        // Search .pnpm store for the real package directory.
+        // Structure: .pnpm/<dep>@<version>[_peer-hash]/node_modules/<dep>/
+        if (existsSync(rootPnpmStore)) {
+            try {
+                const pnpmDirs = readdirSync(rootPnpmStore);
+                // Match directories that start with "<dep>@" (e.g., "next@15.3.2_...")
+                const matchingDir = pnpmDirs.find((d) => d === dep || d.startsWith(`${dep}@`));
+                if (matchingDir != null) {
+                    const realPkgPath = path.join(rootPnpmStore, matchingDir, "node_modules", dep);
+                    if (existsSync(realPkgPath)) {
+                        logger.debug(`Found ${dep} in .pnpm store at ${realPkgPath}, copying...`);
+                        mkdirSync(path.dirname(depPath), { recursive: true });
+                        cpSync(realPkgPath, depPath, { recursive: true });
+                        if (existsSync(depPath)) {
+                            logger.info(`Recovered ${dep} via direct copy from .pnpm store`);
+                            continue;
+                        }
+                    }
+                }
+            } catch (recoverError) {
+                logger.debug(`Recovery scan for ${dep} failed: ${recoverError}`);
+            }
+        }
+
+        // If we still don't have it, search through symlink entries for the original
+        // linkname and try to resolve from any matching .pnpm directory
+        const symlinkEntry = symlinks.find(
+            (s) =>
+                s.path === path.join("standalone", "node_modules", dep).replace(/\\/g, "/") ||
+                s.path.endsWith(`/node_modules/${dep}`)
+        );
+        if (symlinkEntry != null) {
+            logger.debug(
+                `${dep} was a symlink: ${symlinkEntry.path} -> ${symlinkEntry.linkname} but resolution failed`
+            );
+        }
+
+        logger.error(`${dep} could not be recovered and will be unavailable at runtime`);
     }
 }
 
