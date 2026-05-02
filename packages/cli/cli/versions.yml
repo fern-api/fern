@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.7.4
+  changelogEntry:
+    - summary: |
+        Strip Windows drive letter prefixes from resolved image paths in docs preview
+        to prevent raw filesystem paths from leaking into rendered HTML on Windows.
+      type: fix
+  createdAt: "2026-05-02"
+  irVersion: 66
 - version: 5.7.3
   changelogEntry:
     - summary: |
