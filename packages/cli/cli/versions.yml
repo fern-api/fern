@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.7.5
+  changelogEntry:
+    - summary: |
+        Send `customDomains` when publishing docs translations so FDR mirrors the translated blob to every URL the docs are published to. Previously translations were only written under the canonical fern URL, so docs sites served from a custom domain with a basepath (e.g. `buildwithfern.com/learn`) 404'd on every localized page.
+      type: fix
+  createdAt: "2026-05-02"
+  irVersion: 66
 - version: 5.7.4
   changelogEntry:
     - summary: |
