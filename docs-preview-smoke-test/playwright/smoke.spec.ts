@@ -42,8 +42,8 @@ test.describe("Smoke test: all pages load", () => {
     }
 });
 
-test.describe("Image path validation: no broken file paths", () => {
-    test("GET /welcome should render images without broken file:/// paths", async ({ page }) => {
+test.describe("Image rendering validation", () => {
+    test("GET /welcome should render images that actually load", async ({ page }) => {
         const response = await page.goto("/welcome", {
             waitUntil: "domcontentloaded",
             timeout: 30_000
@@ -51,29 +51,45 @@ test.describe("Image path validation: no broken file paths", () => {
 
         expect(response?.status()).toBe(200);
 
-        // Wait for page to fully render
-        await page.waitForTimeout(2000);
+        // Wait for page to fully render and images to load
+        await page.waitForTimeout(3000);
 
-        // Collect all image src attributes from the page
-        const imgSrcs = await page.evaluate(() => {
+        // Collect image loading status from the DOM
+        const imageResults = await page.evaluate(() => {
             const images = document.querySelectorAll("img");
-            return Array.from(images).map((img) => img.getAttribute("src") ?? img.src);
+            return Array.from(images).map((img) => ({
+                src: img.getAttribute("src") ?? img.src,
+                complete: img.complete,
+                naturalWidth: img.naturalWidth,
+                naturalHeight: img.naturalHeight
+            }));
         });
 
-        expect(imgSrcs.length, "Expected at least one image on /welcome").toBeGreaterThan(0);
+        expect(imageResults.length, "Expected at least one image on /welcome").toBeGreaterThan(0);
 
-        for (const src of imgSrcs) {
+        for (const img of imageResults) {
+            // Image must have finished loading
+            expect(img.complete, `Image did not finish loading: ${img.src}`).toBe(true);
+
+            // Image must have rendered with non-zero dimensions (broken/missing images have naturalWidth 0)
+            expect(
+                img.naturalWidth,
+                `Image failed to load (naturalWidth is 0), likely a broken path: ${img.src}`
+            ).toBeGreaterThan(0);
+
             // Must not contain file:/// protocol (broken local path leak)
-            expect(src, `Image src should not use file:/// protocol: ${src}`).not.toMatch(/^file:\/\/\//);
+            expect(img.src, `Image src should not use file:/// protocol: ${img.src}`).not.toMatch(/^file:\/\/\//);
 
             // Must not contain Windows drive letters (e.g., C:/ or C:\)
-            expect(src, `Image src should not contain Windows drive letter: ${src}`).not.toMatch(/^[a-zA-Z]:[/\\]/);
+            expect(img.src, `Image src should not contain Windows drive letter: ${img.src}`).not.toMatch(
+                /^[a-zA-Z]:[/\\]/
+            );
 
             // Must not contain URL-encoded backslashes (%5C)
-            expect(src, `Image src should not contain encoded backslashes: ${src}`).not.toContain("%5C");
+            expect(img.src, `Image src should not contain encoded backslashes: ${img.src}`).not.toContain("%5C");
 
             // Must not contain raw backslashes
-            expect(src, `Image src should not contain backslashes: ${src}`).not.toContain("\\");
+            expect(img.src, `Image src should not contain backslashes: ${img.src}`).not.toContain("\\");
         }
     });
 });
