@@ -4,3 +4,9 @@
     Also adds the standalone node_modules to NODE_PATH to improve module
     resolution on newer Node.js versions.
   type: fix
+- summary: |
+    On Windows, recover critical standalone node_modules packages (next,
+    react-dom, styled-jsx) when symlink resolution fails due to long .pnpm
+    directory names. The CLI now scans the .pnpm store and copies packages
+    directly as a fallback.
+  type: fix
