@@ -1,8 +1,6 @@
 - summary: |
     Fix docs preview server showing "ready" message when the server process
     crashes on startup. The CLI now exits with a clear error message instead.
-    Also adds the standalone node_modules to NODE_PATH to improve module
-    resolution on newer Node.js versions.
   type: fix
 - summary: |
     On Windows, recover critical standalone node_modules packages (next,

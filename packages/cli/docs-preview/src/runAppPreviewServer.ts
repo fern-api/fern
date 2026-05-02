@@ -1097,7 +1097,7 @@ export async function runAppPreviewServer({
         NEXT_PUBLIC_IS_LOCAL: "1",
         NEXT_DISABLE_CACHE: "1",
         NODE_ENV: "production",
-        NODE_PATH: [bundleRoot, path.join(bundleRoot, "standalone", "node_modules")].join(path.delimiter),
+        NODE_PATH: bundleRoot,
         NODE_OPTIONS: `--max-old-space-size=8096 --enable-source-maps --require ${polyfillPath}`
     };
 
