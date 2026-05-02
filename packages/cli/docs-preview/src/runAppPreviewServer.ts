@@ -1097,7 +1097,7 @@ export async function runAppPreviewServer({
         NEXT_PUBLIC_IS_LOCAL: "1",
         NEXT_DISABLE_CACHE: "1",
         NODE_ENV: "production",
-        NODE_PATH: bundleRoot,
+        NODE_PATH: [bundleRoot, path.join(bundleRoot, "standalone", "node_modules")].join(path.delimiter),
         NODE_OPTIONS: `--max-old-space-size=8096 --enable-source-maps --require ${polyfillPath}`
     };
 
@@ -1107,7 +1107,10 @@ export async function runAppPreviewServer({
 
     // Function to start the Next.js server
     const startNextJsServer = (): Promise<void> => {
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
+            let settled = false;
+            let fallbackTimer: ReturnType<typeof setTimeout> | undefined;
+
             serverProcess = runExeca(context.logger, "node", [serverPath], {
                 env,
                 doNotPipeOutput: true
@@ -1122,7 +1125,11 @@ export async function runAppPreviewServer({
                     actualPort = Number(portMatch[1]);
                 }
 
-                if (output.includes("Ready in") || output.includes("✓ Ready")) {
+                if (!settled && (output.includes("Ready in") || output.includes("✓ Ready"))) {
+                    settled = true;
+                    if (fallbackTimer != null) {
+                        clearTimeout(fallbackTimer);
+                    }
                     resolve();
                 }
             };
@@ -1137,13 +1144,31 @@ export async function runAppPreviewServer({
 
             // eslint-disable-next-line @typescript-eslint/no-floating-promises
             serverProcess.on("error", (err) => {
-                context.logger.debug(`Server process error: ${err.message}`);
+                context.logger.error(`Server process error: ${err.message}`);
+                if (!settled) {
+                    settled = true;
+                    if (fallbackTimer != null) {
+                        clearTimeout(fallbackTimer);
+                    }
+                    reject(new Error(`Server process failed to start: ${err.message}`));
+                }
             });
 
             // eslint-disable-next-line @typescript-eslint/no-floating-promises
             serverProcess.on("exit", (code, signal) => {
-                if (code) {
-                    context.logger.debug(`Server process exited with code: ${code}`);
+                if (code != null && code !== 0) {
+                    context.logger.error(`Server process exited with code: ${code}`);
+                    if (!settled) {
+                        settled = true;
+                        if (fallbackTimer != null) {
+                            clearTimeout(fallbackTimer);
+                        }
+                        reject(
+                            new Error(
+                                `Server process exited with code ${code}. Check the debug logs above for details.`
+                            )
+                        );
+                    }
                 } else if (signal) {
                     context.logger.debug(`Server process killed with signal: ${signal}`);
                 } else {
@@ -1152,14 +1177,26 @@ export async function runAppPreviewServer({
             });
 
             // Fallback timeout in case we miss the ready message
-            setTimeout(() => {
-                resolve();
+            fallbackTimer = setTimeout(() => {
+                if (!settled) {
+                    settled = true;
+                    resolve();
+                }
             }, 10000);
         });
     };
 
     // Start the initial server
-    await startNextJsServer();
+    try {
+        await startNextJsServer();
+    } catch (err) {
+        context.failAndThrow(
+            `Docs preview server failed to start: ${extractErrorMessage(err)}. ` +
+                `Run with --log-level debug for more details.`,
+            undefined,
+            { code: CliError.Code.InternalError }
+        );
+    }
 
     // Attach the watcher event handler
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
@@ -1320,7 +1357,7 @@ export async function runAppPreviewServer({
     process.on("beforeExit", cleanup);
 
     // Server is ready after startNextJsServer completes
-    context.logger.info(`Docs preview server ready on http://localhost:${port}`);
+    context.logger.info(`Docs preview server ready on http://localhost:${actualPort}`);
 
     // await infinitely
     // eslint-disable-next-line @typescript-eslint/no-empty-function
