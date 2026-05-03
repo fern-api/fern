@@ -43,7 +43,7 @@ describe("ContributingGenerator", () => {
     it("references Go generator path", () => {
         const generator = new ContributingGenerator();
         const result = generator.generate();
-        expect(result).toContain("generators/go/");
+        expect(result).toContain("generators/go-v2/");
     });
 
     it("includes Go prerequisites", () => {
