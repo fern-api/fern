@@ -3,44 +3,11 @@ import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { describe, expect, it } from "vitest";
 import {
     getGithubOwnerRepo,
-    isNpmGenerator,
     overrideGroupOutputForDiffBranch,
     overrideGroupOutputForDownload,
     overrideGroupOutputForPreview
 } from "../overrideOutputForPreview.js";
-import { makeGroup, makeNpmGenerator } from "./test-utils.js";
-
-describe("isNpmGenerator", () => {
-    it("recognizes known TypeScript SDK generators", () => {
-        expect(isNpmGenerator("fernapi/fern-typescript-node-sdk")).toBe(true);
-        expect(isNpmGenerator("fernapi/fern-typescript-browser-sdk")).toBe(true);
-        expect(isNpmGenerator("fernapi/fern-typescript-sdk")).toBe(true);
-    });
-
-    it("rejects unknown typescript generators not in the set", () => {
-        expect(isNpmGenerator("custom/my-typescript-generator")).toBe(false);
-    });
-
-    it("rejects Python generators", () => {
-        expect(isNpmGenerator("fernapi/fern-python-sdk")).toBe(false);
-    });
-
-    it("rejects Java generators", () => {
-        expect(isNpmGenerator("fernapi/fern-java-sdk")).toBe(false);
-    });
-
-    it("rejects Go generators", () => {
-        expect(isNpmGenerator("fernapi/fern-go-sdk")).toBe(false);
-    });
-
-    it("rejects Ruby generators", () => {
-        expect(isNpmGenerator("fernapi/fern-ruby-sdk")).toBe(false);
-    });
-
-    it("rejects C# generators", () => {
-        expect(isNpmGenerator("fernapi/fern-csharp-sdk")).toBe(false);
-    });
-});
+import { makeGroup, makeNpmGenerator, makePypiGenerator } from "./test-utils.js";
 
 describe("getGithubOwnerRepo", () => {
     it("returns undefined for downloadFiles", () => {
@@ -174,6 +141,7 @@ describe("overrideGroupOutputForDownload", () => {
 
 describe("overrideGroupOutputForPreview", () => {
     const previewParams = {
+        language: "npm" as const,
         packageName: "@fern-preview/acme-sdk",
         token: "fern-token-123",
         registryUrl: "https://npm.buildwithfern.com"
@@ -458,5 +426,46 @@ describe("overrideGroupOutputForDiffBranch", () => {
         const result = overrideGroupOutputForDiffBranch({ group });
 
         expect(result.groupName).toBe("my-diff-group");
+    });
+});
+
+describe("overrideGroupOutputForPreview - pypi", () => {
+    it("uses publishV2(pypiOverride) when language is pypi", () => {
+        const generator = makePypiGenerator(FernFiddle.remoteGen.OutputMode.downloadFiles({}));
+        const group = makeGroup([generator]);
+        const result = overrideGroupOutputForPreview({
+            group,
+            language: "pypi",
+            packageName: "acme-preview-acme-sdk",
+            token: "pypi-pw",
+            registryUrl: "https://pypi.example.com/legacy/"
+        });
+
+        const outputMode = result.generators[0]?.outputMode;
+        expect(outputMode?.type).toBe("publishV2");
+        outputMode?._visit({
+            publishV2: (v) =>
+                v._visit({
+                    pypiOverride: (p) => {
+                        expect(p).toBeDefined();
+                        expect(p?.coordinate).toBe("acme-preview-acme-sdk");
+                        expect(p?.username).toBe("__token__");
+                        expect(p?.password).toBe("pypi-pw");
+                        expect(p?.registryUrl).toBe("https://pypi.example.com/legacy/");
+                    },
+                    npmOverride: () => expect.fail("expected pypiOverride"),
+                    mavenOverride: () => expect.fail("expected pypiOverride"),
+                    nugetOverride: () => expect.fail("expected pypiOverride"),
+                    rubyGemsOverride: () => expect.fail("expected pypiOverride"),
+                    cratesOverride: () => expect.fail("expected pypiOverride"),
+                    postman: () => expect.fail("expected pypiOverride"),
+                    _other: () => expect.fail("expected pypiOverride")
+                }),
+            downloadFiles: () => expect.fail("expected publishV2"),
+            github: () => expect.fail("expected publishV2"),
+            githubV2: () => expect.fail("expected publishV2"),
+            publish: () => expect.fail("expected publishV2"),
+            _other: () => expect.fail("expected publishV2")
+        });
     });
 });

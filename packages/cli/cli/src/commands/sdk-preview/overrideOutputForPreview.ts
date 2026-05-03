@@ -1,26 +1,16 @@
 import { generatorsYml } from "@fern-api/configuration-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
+import { getPreviewLanguage, getStrategy, type PreviewLanguage } from "./previewStrategies.js";
 
 export const PREVIEW_REGISTRY_URL = process.env.FERN_PREVIEW_REGISTRY_URL ?? "https://npm.buildwithfern.com";
 
-const SUPPORTED_TYPESCRIPT_GENERATORS = new Set([
-    "fernapi/fern-typescript-node-sdk",
-    "fernapi/fern-typescript-browser-sdk",
-    "fernapi/fern-typescript-sdk"
-]);
-
 /**
- * Returns true if the generator is a TypeScript/npm generator.
- * SDK preview v1 only supports npm publishing.
+ * Optional PyPI registry URL for SDK preview. NO default - the user must
+ * either set this env var or pass `--output <pypi-url>`. Test PyPI is
+ * intentionally not the default (rate limits + global namespace).
  */
-export function isNpmGenerator(generatorName: string): boolean {
-    return SUPPORTED_TYPESCRIPT_GENERATORS.has(generatorName);
-}
+export const PREVIEW_PYPI_REGISTRY_URL: string | undefined = process.env.FERN_PREVIEW_PYPI_REGISTRY_URL;
 
-/**
- * Extracts the GitHub owner and repo from a generator's existing output mode.
- * Returns undefined if the generator doesn't have a githubV2 or github output mode.
- */
 export function getGithubOwnerRepo(
     outputMode: FernFiddle.remoteGen.OutputMode
 ): { owner: string; repo: string } | undefined {
@@ -35,91 +25,67 @@ export function getGithubOwnerRepo(
                 _other: () => undefined
             }),
         publish: () => undefined,
-        // publishV2 is registry-only (npmOverride, mavenOverride, pypiOverride, etc.)
-        // and does not carry github owner/repo info. GitHub publish info is only
-        // available on githubV2 variants via the publishInfo field.
         publishV2: () => undefined,
         _other: () => undefined
     });
 }
 
 /**
- * Creates a publishV2(npmOverride) output mode for preview registry publishing.
+ * Internal helper shared by every override function that re-maps every
+ * generator in a group while clearing `absolutePathToLocalOutput`.
  */
-function createNpmOverrideOutputMode({
-    registryUrl,
-    packageName,
-    token
-}: {
-    registryUrl: string;
-    packageName: string;
-    token: string;
-}): FernFiddle.OutputMode {
-    return FernFiddle.OutputMode.publishV2(
-        FernFiddle.remoteGen.PublishOutputModeV2.npmOverride({
-            registryUrl,
-            packageName,
-            token,
-            downloadSnippets: false
-        })
-    );
+function mapGenerators(
+    group: generatorsYml.GeneratorGroup,
+    fn: (generator: generatorsYml.GeneratorInvocation) => generatorsYml.GeneratorInvocation | undefined
+): generatorsYml.GeneratorGroup {
+    const modifiedGenerators = group.generators
+        .map(fn)
+        .filter((g): g is generatorsYml.GeneratorInvocation => g != null);
+    return { ...group, generators: modifiedGenerators };
 }
 
-/**
- * Overrides a generator group's output mode to downloadFiles (disk-only, no publish).
- * Used for remote generation with --output when no registry URL is provided.
- */
 export function overrideGroupOutputForDownload({
     group
 }: {
     group: generatorsYml.GeneratorGroup;
 }): generatorsYml.GeneratorGroup {
-    const modifiedGenerators = group.generators.map((generator) => ({
+    return mapGenerators(group, (generator) => ({
         ...generator,
         outputMode: FernFiddle.remoteGen.OutputMode.downloadFiles({}),
         absolutePathToLocalOutput: undefined
     }));
-    return {
-        ...group,
-        generators: modifiedGenerators
-    };
 }
 
 /**
- * Overrides a generator group's output mode to publish to the preview registry.
- * Always uses publishV2(npmOverride) for registry-only publishing.
+ * Overrides a generator group's output mode to publish to the preview
+ * registry for the supplied language. Routes through the strategy registry
+ * so each language picks its own publishV2 variant.
  *
- * @param token - The Fern org token (FERN_TOKEN). Used for registry auth.
+ * @param language - "npm" or "pypi" - determines the publishV2 variant.
+ * @param token - For npm: the registry token. For pypi: the password used
+ *                with username "__token__".
  */
 export function overrideGroupOutputForPreview({
     group,
+    language,
     packageName,
     token,
     registryUrl
 }: {
     group: generatorsYml.GeneratorGroup;
+    language: PreviewLanguage;
     packageName: string;
     token: string;
     registryUrl: string;
 }): generatorsYml.GeneratorGroup {
-    const modifiedGenerators = group.generators.map((generator) => ({
+    const strategy = getStrategy(language);
+    return mapGenerators(group, (generator) => ({
         ...generator,
-        outputMode: createNpmOverrideOutputMode({ registryUrl, packageName, token }),
+        outputMode: strategy.buildOutputMode({ registryUrl, packageName, token }),
         absolutePathToLocalOutput: undefined
     }));
-
-    return {
-        ...group,
-        generators: modifiedGenerators
-    };
 }
 
-/**
- * Extracts the publishInfo from a githubV2 output mode, stripping all
- * auth tokens/credentials. Only the package name and registry URL are
- * needed for code generation (e.g. package.json name field).
- * Returns undefined for non-github modes.
- */
 function getGithubPublishInfoWithoutToken(
     outputMode: FernFiddle.remoteGen.OutputMode
 ): FernFiddle.GithubPublishInfo | undefined {
@@ -137,19 +103,12 @@ function getGithubPublishInfoWithoutToken(
         publishV2: () => undefined,
         _other: () => undefined
     });
-
     if (publishInfo == null) {
         return undefined;
     }
-
     return stripPublishInfoCredentials(publishInfo);
 }
 
-/**
- * Returns a copy of GithubPublishInfo with all auth credentials removed.
- * Preserves package name, registry URL, and other non-sensitive metadata.
- * Returns undefined for unknown variants to fail safe rather than leak credentials.
- */
 function stripPublishInfoCredentials(
     publishInfo: FernFiddle.GithubPublishInfo
 ): FernFiddle.GithubPublishInfo | undefined {
@@ -197,45 +156,34 @@ function stripPublishInfoCredentials(
     });
 }
 
-/**
- * Overrides a generator group's output mode to githubV2(push) for pushing a
- * clean diff branch. Preserves the original publishInfo so the generator
- * produces code with the correct package name (e.g. in package.json).
- * Fiddle's dryRun=true prevents actual publishing.
- *
- * Only includes generators that have GitHub configuration (owner/repo).
- * Generators without GitHub config are excluded (they can't push a diff branch).
- */
 export function overrideGroupOutputForDiffBranch({
     group
 }: {
     group: generatorsYml.GeneratorGroup;
 }): generatorsYml.GeneratorGroup {
-    const modifiedGenerators = group.generators
-        .map((generator) => {
-            const githubInfo = getGithubOwnerRepo(generator.outputMode);
-            if (githubInfo == null) {
-                return undefined;
-            }
-            return {
-                ...generator,
-                outputMode: FernFiddle.OutputMode.githubV2(
-                    FernFiddle.GithubOutputModeV2.push({
-                        owner: githubInfo.owner,
-                        repo: githubInfo.repo,
-                        branch: undefined,
-                        license: undefined,
-                        publishInfo: getGithubPublishInfoWithoutToken(generator.outputMode),
-                        downloadSnippets: false
-                    })
-                ),
-                absolutePathToLocalOutput: undefined
-            };
-        })
-        .filter((g): g is NonNullable<typeof g> => g != null);
-
-    return {
-        ...group,
-        generators: modifiedGenerators
-    };
+    return mapGenerators(group, (generator) => {
+        const githubInfo = getGithubOwnerRepo(generator.outputMode);
+        if (githubInfo == null) {
+            return undefined;
+        }
+        return {
+            ...generator,
+            outputMode: FernFiddle.OutputMode.githubV2(
+                FernFiddle.GithubOutputModeV2.push({
+                    owner: githubInfo.owner,
+                    repo: githubInfo.repo,
+                    branch: undefined,
+                    license: undefined,
+                    publishInfo: getGithubPublishInfoWithoutToken(generator.outputMode),
+                    downloadSnippets: false
+                })
+            ),
+            absolutePathToLocalOutput: undefined
+        };
+    });
 }
+
+// `isNpmGenerator` is intentionally removed. Use `getPreviewLanguage(name)`
+// from `./previewStrategies.js` instead. Re-export here purely so external
+// consumers  get a clear deprecation.
+export { getPreviewLanguage };
