@@ -74,7 +74,7 @@ For more information, see the [Fern documentation on custom code](https://buildw
 If you want to change how code is generated for all users of this SDK:
 
 1. The Java SDK generator lives in the [Fern repository](https://github.com/fern-api/fern)
-2. Generator code is located at \`generators/java/\`
+2. Generator code is located at \`generators/java-v2/\`
 3. Follow the [Fern contributing guidelines](https://github.com/fern-api/fern/blob/main/CONTRIBUTING.md)
 4. Submit a pull request with your changes to the generator
 
