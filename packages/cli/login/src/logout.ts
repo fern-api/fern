@@ -32,6 +32,7 @@ export async function logout(context: TaskContext): Promise<void> {
 
         server.addListener("request", (_request, response) => {
             clearTimeout(timeout);
+            response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
             response.end(LOGOUT_SUCCESS_PAGE);
             server.close();
             resolve();
