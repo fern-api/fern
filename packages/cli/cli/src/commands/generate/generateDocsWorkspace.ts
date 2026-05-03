@@ -4,8 +4,9 @@ import { extractErrorMessage } from "@fern-api/core-utils";
 import { filterOssWorkspaces } from "@fern-api/docs-resolver";
 import { Rules } from "@fern-api/docs-validator";
 import { FdrAPI } from "@fern-api/fdr-sdk";
+import { basename } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
-import { validateOSSWorkspace } from "@fern-api/oss-validator";
+import { type ValidationViolation, validateOSSWorkspace } from "@fern-api/oss-validator";
 import { Project } from "@fern-api/project-loader";
 import { runRemoteGenerationForDocsWorkspace } from "@fern-api/remote-workspace-runner";
 import { CliError } from "@fern-api/task-context";
@@ -179,29 +180,26 @@ export async function generateDocsWorkspace({
             excludeRules: getExcludeRules(brokenLinks, strictBrokenLinks)
         });
 
-        // Validate OpenAPI specs — log warnings for issues but never block docs generation.
+        // Validate OpenAPI specs — log errors for skipped APIs but never block docs generation.
         // Workspaces that fail validation or throw during loading are excluded from the
         // generation step so the rest of the docs can still be published.
         const skippedWorkspacePaths = new Set<string>();
         const ossWorkspacesForValidation = await filterOssWorkspaces(project);
         for (const ossWorkspace of ossWorkspacesForValidation) {
+            const apiName = ossWorkspace.workspaceName ?? basename(ossWorkspace.absoluteFilePath);
             try {
                 const violations = await validateOSSWorkspace(ossWorkspace, context);
                 const errors = violations.filter((v) => v.severity === "fatal" || v.severity === "error");
                 if (errors.length > 0) {
-                    for (const error of errors) {
-                        context.logger.warn(`${error.relativeFilepath}: ${error.message}`);
-                    }
-                    context.logger.warn(
-                        `Skipping API workspace at ${ossWorkspace.absoluteFilePath} due to ${errors.length} validation error${errors.length !== 1 ? "s" : ""}. ` +
-                            "Run fern check for details."
+                    const reasons = summarizeValidationErrors(errors);
+                    const reasonList = reasons.map((r) => `  - ${r}`).join("\n");
+                    context.logger.error(
+                        `Skipping API ${apiName} due to ${errors.length} validation error${errors.length !== 1 ? "s" : ""}:\n${reasonList}`
                     );
                     skippedWorkspacePaths.add(ossWorkspace.absoluteFilePath);
                 }
             } catch (error) {
-                context.logger.warn(
-                    `Skipping API workspace at ${ossWorkspace.absoluteFilePath}: ${extractErrorMessage(error)}`
-                );
+                context.logger.error(`Skipping API ${apiName}: ${extractErrorMessage(error)}`);
                 skippedWorkspacePaths.add(ossWorkspace.absoluteFilePath);
             }
         }
@@ -244,4 +242,46 @@ function getExcludeRules(brokenLinks: boolean, strictBrokenLinks: boolean): stri
         excludeRules.push(Rules.ValidMarkdownLinks.name);
     }
     return excludeRules;
+}
+
+/**
+ * Aggregates validation errors into concise summary lines.
+ * Groups repetitive violations (e.g., per-endpoint frontmatter warnings)
+ * into single messages instead of one per endpoint.
+ */
+function summarizeValidationErrors(errors: ValidationViolation[]): string[] {
+    const summaries: string[] = [];
+    const frontmatterEndpoints: string[] = [];
+    const nonAsciiTags: string[] = [];
+    const otherErrors: ValidationViolation[] = [];
+
+    for (const error of errors) {
+        if (error.message.includes("---") && error.message.includes("frontmatter")) {
+            const methodPathMatch = error.message.match(/for ((?:GET|POST|PUT|DELETE|PATCH|OPTIONS|HEAD|TRACE) \S+)/);
+            frontmatterEndpoints.push(methodPathMatch?.[1] ?? error.nodePath.join("."));
+        } else if (error.message.includes("non-ASCII")) {
+            const tagMatch = error.message.match(/Tag name "([^"]+)"/);
+            nonAsciiTags.push(tagMatch?.[1] ?? "unknown");
+        } else {
+            otherErrors.push(error);
+        }
+    }
+
+    if (frontmatterEndpoints.length > 0) {
+        summaries.push(
+            `${frontmatterEndpoints.length} endpoint${frontmatterEndpoints.length !== 1 ? "s" : ""} contain "---" frontmatter delimiters that will cause 500 errors on the docs site`
+        );
+    }
+
+    if (nonAsciiTags.length > 0) {
+        summaries.push(
+            `${nonAsciiTags.length} tag${nonAsciiTags.length !== 1 ? "s" : ""} contain non-ASCII characters: ${nonAsciiTags.join(", ")}`
+        );
+    }
+
+    for (const error of otherErrors) {
+        summaries.push(`${error.relativeFilepath}: ${error.message}`);
+    }
+
+    return summaries;
 }
