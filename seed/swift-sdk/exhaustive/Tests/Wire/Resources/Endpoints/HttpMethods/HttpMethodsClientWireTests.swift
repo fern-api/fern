@@ -7,9 +7,9 @@ import Exhaustive
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 string
-                """.utf8
+                """#.utf8
             )
         )
         let client = ExhaustiveClient(
@@ -29,7 +29,7 @@ import Exhaustive
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "string": "string",
                   "integer": 1,
@@ -52,7 +52,7 @@ import Exhaustive
                   },
                   "bigint": "1000000"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ExhaustiveClient(
@@ -93,7 +93,7 @@ import Exhaustive
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "string": "string",
                   "integer": 1,
@@ -116,7 +116,7 @@ import Exhaustive
                   },
                   "bigint": "1000000"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ExhaustiveClient(
@@ -158,7 +158,7 @@ import Exhaustive
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "string": "string",
                   "integer": 1,
@@ -181,7 +181,7 @@ import Exhaustive
                   },
                   "bigint": "1000000"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ExhaustiveClient(
@@ -238,9 +238,9 @@ import Exhaustive
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 true
-                """.utf8
+                """#.utf8
             )
         )
         let client = ExhaustiveClient(

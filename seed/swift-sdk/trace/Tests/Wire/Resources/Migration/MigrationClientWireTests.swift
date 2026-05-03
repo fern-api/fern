@@ -7,7 +7,7 @@ import Trace
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 [
                   {
                     "name": "name",
@@ -18,7 +18,7 @@ import Trace
                     "status": "RUNNING"
                   }
                 ]
-                """.utf8
+                """#.utf8
             )
         )
         let client = TraceClient(

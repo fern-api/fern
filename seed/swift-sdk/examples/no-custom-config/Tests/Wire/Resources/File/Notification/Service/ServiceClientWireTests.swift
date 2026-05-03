@@ -7,14 +7,14 @@ import Examples
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "type": "generic",
                   "exceptionType": "Unavailable",
                   "exceptionMessage": "This component is unavailable!",
                   "exceptionStacktrace": "<logs>"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ExamplesClient(
@@ -43,14 +43,14 @@ import Examples
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "type": "generic",
                   "exceptionType": "exceptionType",
                   "exceptionMessage": "exceptionMessage",
                   "exceptionStacktrace": "exceptionStacktrace"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ExamplesClient(

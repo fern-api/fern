@@ -7,12 +7,12 @@ import InferredAuthImplicitNoExpiry
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "access_token": "access_token",
                   "refresh_token": "refresh_token"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = InferredAuthImplicitNoExpiryClient(
@@ -40,12 +40,12 @@ import InferredAuthImplicitNoExpiry
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "access_token": "access_token",
                   "refresh_token": "refresh_token"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = InferredAuthImplicitNoExpiryClient(

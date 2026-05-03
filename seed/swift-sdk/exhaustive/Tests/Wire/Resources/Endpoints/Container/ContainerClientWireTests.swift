@@ -7,12 +7,12 @@ import Exhaustive
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 [
                   "string",
                   "string"
                 ]
-                """.utf8
+                """#.utf8
             )
         )
         let client = ExhaustiveClient(
@@ -38,7 +38,7 @@ import Exhaustive
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 [
                   {
                     "string": "string"
@@ -47,7 +47,7 @@ import Exhaustive
                     "string": "string"
                   }
                 ]
-                """.utf8
+                """#.utf8
             )
         )
         let client = ExhaustiveClient(
@@ -81,11 +81,11 @@ import Exhaustive
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 [
                   "string"
                 ]
-                """.utf8
+                """#.utf8
             )
         )
         let client = ExhaustiveClient(
@@ -102,13 +102,13 @@ import Exhaustive
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 [
                   {
                     "string": "string"
                   }
                 ]
-                """.utf8
+                """#.utf8
             )
         )
         let client = ExhaustiveClient(
@@ -125,11 +125,11 @@ import Exhaustive
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "string": "string"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ExhaustiveClient(
@@ -153,13 +153,13 @@ import Exhaustive
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "string": {
                     "string": "string"
                   }
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ExhaustiveClient(
@@ -187,11 +187,11 @@ import Exhaustive
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "string": 1.1
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ExhaustiveClient(
@@ -219,11 +219,11 @@ import Exhaustive
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "string": "string"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ExhaustiveClient(

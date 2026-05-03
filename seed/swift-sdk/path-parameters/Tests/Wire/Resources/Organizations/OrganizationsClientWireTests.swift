@@ -7,7 +7,7 @@ import PathParameters
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "name": "name",
                   "tags": [
@@ -15,7 +15,7 @@ import PathParameters
                     "tags"
                   ]
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = PathParametersClient(
@@ -41,7 +41,7 @@ import PathParameters
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "name": "name",
                   "tags": [
@@ -49,7 +49,7 @@ import PathParameters
                     "tags"
                   ]
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = PathParametersClient(
@@ -75,7 +75,7 @@ import PathParameters
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 [
                   {
                     "name": "name",
@@ -92,7 +92,7 @@ import PathParameters
                     ]
                   }
                 ]
-                """.utf8
+                """#.utf8
             )
         )
         let client = PathParametersClient(

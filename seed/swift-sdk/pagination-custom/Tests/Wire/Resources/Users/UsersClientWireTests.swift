@@ -7,7 +7,7 @@ import Pagination
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "limit": 1,
                   "count": 1,
@@ -29,7 +29,7 @@ import Pagination
                     "data"
                   ]
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = PaginationClient(

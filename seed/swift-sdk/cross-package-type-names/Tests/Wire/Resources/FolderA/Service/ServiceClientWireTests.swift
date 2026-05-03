@@ -7,7 +7,7 @@ import CrossPackageTypeNames
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "foo": {
                     "foo": {
@@ -15,7 +15,7 @@ import CrossPackageTypeNames
                     }
                   }
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = CrossPackageTypeNamesClient(

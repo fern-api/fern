@@ -7,12 +7,12 @@ import Streaming
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "id": "id",
                   "name": "name"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = StreamingClient(
@@ -37,12 +37,12 @@ import Streaming
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "id": "id",
                   "name": "name"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = StreamingClient(

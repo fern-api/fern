@@ -7,7 +7,7 @@ import EndpointSecurityAuth
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 [
                   {
                     "id": "id",
@@ -18,7 +18,7 @@ import EndpointSecurityAuth
                     "name": "name"
                   }
                 ]
-                """.utf8
+                """#.utf8
             )
         )
         let client = EndpointSecurityAuthClient(
@@ -44,7 +44,7 @@ import EndpointSecurityAuth
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 [
                   {
                     "id": "id",
@@ -55,7 +55,7 @@ import EndpointSecurityAuth
                     "name": "name"
                   }
                 ]
-                """.utf8
+                """#.utf8
             )
         )
         let client = EndpointSecurityAuthClient(
@@ -81,7 +81,7 @@ import EndpointSecurityAuth
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 [
                   {
                     "id": "id",
@@ -92,7 +92,7 @@ import EndpointSecurityAuth
                     "name": "name"
                   }
                 ]
-                """.utf8
+                """#.utf8
             )
         )
         let client = EndpointSecurityAuthClient(
@@ -118,7 +118,7 @@ import EndpointSecurityAuth
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 [
                   {
                     "id": "id",
@@ -129,7 +129,7 @@ import EndpointSecurityAuth
                     "name": "name"
                   }
                 ]
-                """.utf8
+                """#.utf8
             )
         )
         let client = EndpointSecurityAuthClient(
@@ -155,7 +155,7 @@ import EndpointSecurityAuth
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 [
                   {
                     "id": "id",
@@ -166,7 +166,7 @@ import EndpointSecurityAuth
                     "name": "name"
                   }
                 ]
-                """.utf8
+                """#.utf8
             )
         )
         let client = EndpointSecurityAuthClient(
@@ -192,7 +192,7 @@ import EndpointSecurityAuth
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 [
                   {
                     "id": "id",
@@ -203,7 +203,7 @@ import EndpointSecurityAuth
                     "name": "name"
                   }
                 ]
-                """.utf8
+                """#.utf8
             )
         )
         let client = EndpointSecurityAuthClient(
@@ -229,7 +229,7 @@ import EndpointSecurityAuth
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 [
                   {
                     "id": "id",
@@ -240,7 +240,7 @@ import EndpointSecurityAuth
                     "name": "name"
                   }
                 ]
-                """.utf8
+                """#.utf8
             )
         )
         let client = EndpointSecurityAuthClient(

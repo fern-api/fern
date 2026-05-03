@@ -7,7 +7,7 @@ import Exhaustive
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "string": "string",
                   "integer": 1,
@@ -30,7 +30,7 @@ import Exhaustive
                   },
                   "bigint": "1000000"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ExhaustiveClient(
@@ -86,11 +86,11 @@ import Exhaustive
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "string": "string"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ExhaustiveClient(
@@ -114,7 +114,7 @@ import Exhaustive
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "map": {
                     "map": {
@@ -122,7 +122,7 @@ import Exhaustive
                     }
                   }
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ExhaustiveClient(
@@ -154,7 +154,7 @@ import Exhaustive
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "string": "string",
                   "NestedObject": {
@@ -180,7 +180,7 @@ import Exhaustive
                     "bigint": "1000000"
                   }
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ExhaustiveClient(
@@ -242,7 +242,7 @@ import Exhaustive
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "string": "string",
                   "NestedObject": {
@@ -268,7 +268,7 @@ import Exhaustive
                     "bigint": "1000000"
                   }
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ExhaustiveClient(
@@ -331,7 +331,7 @@ import Exhaustive
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "string": "string",
                   "NestedObject": {
@@ -357,7 +357,7 @@ import Exhaustive
                     "bigint": "1000000"
                   }
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ExhaustiveClient(
@@ -442,13 +442,13 @@ import Exhaustive
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "unknown": {
                     "$ref": "https://example.com/schema"
                   }
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ExhaustiveClient(
@@ -478,13 +478,13 @@ import Exhaustive
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "unknown": {
                     "key": "value"
                   }
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ExhaustiveClient(
@@ -514,13 +514,13 @@ import Exhaustive
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "documentedUnknownType": {
                     "key": "value"
                   }
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ExhaustiveClient(
@@ -550,13 +550,13 @@ import Exhaustive
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "string": {
                     "key": "value"
                   }
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ExhaustiveClient(
@@ -586,14 +586,14 @@ import Exhaustive
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "requiredString": "hello",
                   "requiredInteger": 0,
                   "optionalString": "world",
                   "requiredLong": 0
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ExhaustiveClient(
@@ -623,14 +623,14 @@ import Exhaustive
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "requiredString": "requiredString",
                   "requiredInteger": 1,
                   "optionalString": "optionalString",
                   "requiredLong": 1000000
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ExhaustiveClient(
@@ -660,7 +660,7 @@ import Exhaustive
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "requiredString": "hello",
                   "requiredObject": {
@@ -668,7 +668,7 @@ import Exhaustive
                     "NestedObject": {}
                   }
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ExhaustiveClient(
@@ -704,7 +704,7 @@ import Exhaustive
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "requiredString": "requiredString",
                   "requiredObject": {
@@ -733,7 +733,7 @@ import Exhaustive
                     }
                   }
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ExhaustiveClient(
@@ -801,12 +801,12 @@ import Exhaustive
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "datetimeLikeString": "2023-08-31T14:15:22Z",
                   "actualDatetime": "2023-08-31T14:15:22Z"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ExhaustiveClient(
@@ -832,12 +832,12 @@ import Exhaustive
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "datetimeLikeString": "datetimeLikeString",
                   "actualDatetime": "2024-01-15T09:30:00Z"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ExhaustiveClient(

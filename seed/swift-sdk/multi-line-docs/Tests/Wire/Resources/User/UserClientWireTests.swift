@@ -7,13 +7,13 @@ import MultiLineDocs
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "id": "id",
                   "name": "name",
                   "age": 1
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = MultiLineDocsClient(
