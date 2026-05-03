@@ -39,7 +39,7 @@ describe("ContributingGenerator", () => {
     it("references Java generator path", () => {
         const generator = new ContributingGenerator();
         const result = generator.generate();
-        expect(result).toContain("generators/java/");
+        expect(result).toContain("generators/java-v2/");
     });
 
     it("includes Java prerequisites", () => {
