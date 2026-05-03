@@ -17,3 +17,22 @@ export function toPreviewPackageName(packageName: string, org: string): string {
     }
     return `@${org}-preview/${packageName}`;
 }
+
+/**
+ * Transforms a PyPI package name into a preview-scoped equivalent.
+ * Per PEP 503, names are normalized: lowercase, with sequences of `_`,
+ * `-`, or `.` collapsed to a single `-`.
+ *
+ * Examples (org = "acme"):
+ *   acme-sdk      -> acme-preview-acme-sdk
+ *   Acme_SDK      -> acme-preview-acme-sdk
+ *   acme.sdk      -> acme-preview-acme-sdk
+ */
+export function toPypiPreviewPackageName(packageName: string, org: string): string {
+    const normalized = packageName
+        .toLowerCase()
+        .replace(/[-_.]+/g, "-")
+        .replace(/^-+|-+$/g, "");
+    const orgNormalized = org.toLowerCase().replace(/[-_.]+/g, "-");
+    return `${orgNormalized}-preview-${normalized}`;
+}
