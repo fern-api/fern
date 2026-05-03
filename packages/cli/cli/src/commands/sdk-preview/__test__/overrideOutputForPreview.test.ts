@@ -1,4 +1,3 @@
-import type { generatorsYml } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { describe, expect, it } from "vitest";
@@ -9,45 +8,7 @@ import {
     overrideGroupOutputForDownload,
     overrideGroupOutputForPreview
 } from "../overrideOutputForPreview.js";
-
-/**
- * Creates a minimal GeneratorInvocation for testing.
- * Only the fields relevant to output mode override logic are set;
- * everything else uses safe defaults.
- */
-function makeGenerator(
-    outputMode: FernFiddle.remoteGen.OutputMode,
-    overrides?: Partial<generatorsYml.GeneratorInvocation>
-): generatorsYml.GeneratorInvocation {
-    return {
-        name: "fernapi/fern-typescript-node-sdk",
-        version: "0.57.10",
-        config: {},
-        outputMode,
-        automation: { generate: false, upgrade: false, preview: false, verify: false },
-        containerImage: undefined,
-        irVersionOverride: undefined,
-        absolutePathToLocalOutput: AbsoluteFilePath.of("/tmp/test-output"),
-        absolutePathToLocalSnippets: undefined,
-        keywords: undefined,
-        smartCasing: false,
-        disableExamples: false,
-        language: undefined,
-        publishMetadata: undefined,
-        readme: undefined,
-        settings: undefined,
-        ...overrides
-    };
-}
-
-function makeGroup(generators: generatorsYml.GeneratorInvocation[]): generatorsYml.GeneratorGroup {
-    return {
-        groupName: "test-group",
-        audiences: { type: "all" },
-        generators,
-        reviewers: undefined
-    };
-}
+import { makeGroup, makeNpmGenerator } from "./test-utils.js";
 
 describe("isNpmGenerator", () => {
     it("recognizes known TypeScript SDK generators", () => {
@@ -156,7 +117,7 @@ describe("getGithubOwnerRepo", () => {
 
 describe("overrideGroupOutputForDownload", () => {
     it("overrides output mode to downloadFiles", () => {
-        const generator = makeGenerator(
+        const generator = makeNpmGenerator(
             FernFiddle.OutputMode.publishV2(
                 FernFiddle.remoteGen.PublishOutputModeV2.npmOverride({
                     registryUrl: "https://registry.npmjs.org",
@@ -176,7 +137,7 @@ describe("overrideGroupOutputForDownload", () => {
     });
 
     it("preserves other generator fields", () => {
-        const generator = makeGenerator(FernFiddle.OutputMode.github({ owner: "o", repo: "r" }), {
+        const generator = makeNpmGenerator(FernFiddle.OutputMode.github({ owner: "o", repo: "r" }), {
             name: "fernapi/fern-typescript-sdk",
             version: "1.0.0"
         });
@@ -189,8 +150,8 @@ describe("overrideGroupOutputForDownload", () => {
     });
 
     it("overrides all generators in the group", () => {
-        const gen1 = makeGenerator(FernFiddle.OutputMode.github({ owner: "o", repo: "r" }));
-        const gen2 = makeGenerator(
+        const gen1 = makeNpmGenerator(FernFiddle.OutputMode.github({ owner: "o", repo: "r" }));
+        const gen2 = makeNpmGenerator(
             FernFiddle.OutputMode.publishV2(
                 FernFiddle.remoteGen.PublishOutputModeV2.npmOverride({
                     registryUrl: "https://npm.buildwithfern.com",
@@ -219,7 +180,7 @@ describe("overrideGroupOutputForPreview", () => {
     };
 
     it("always uses publishV2(npmOverride) for github output modes", () => {
-        const generator = makeGenerator(FernFiddle.OutputMode.github({ owner: "o", repo: "r" }));
+        const generator = makeNpmGenerator(FernFiddle.OutputMode.github({ owner: "o", repo: "r" }));
         const group = makeGroup([generator]);
 
         const result = overrideGroupOutputForPreview({ group, ...previewParams });
@@ -231,7 +192,7 @@ describe("overrideGroupOutputForPreview", () => {
     });
 
     it("uses publishV2(npmOverride) for githubV2 output modes", () => {
-        const generator = makeGenerator(
+        const generator = makeNpmGenerator(
             FernFiddle.OutputMode.githubV2(
                 FernFiddle.GithubOutputModeV2.push({
                     owner: "fern-demo",
@@ -250,7 +211,7 @@ describe("overrideGroupOutputForPreview", () => {
     });
 
     it("uses publishV2(npmOverride) for existing publishV2 output modes", () => {
-        const generator = makeGenerator(
+        const generator = makeNpmGenerator(
             FernFiddle.OutputMode.publishV2(
                 FernFiddle.remoteGen.PublishOutputModeV2.npmOverride({
                     registryUrl: "https://registry.npmjs.org",
@@ -268,7 +229,7 @@ describe("overrideGroupOutputForPreview", () => {
     });
 
     it("uses publishV2(npmOverride) for downloadFiles output modes", () => {
-        const generator = makeGenerator(FernFiddle.remoteGen.OutputMode.downloadFiles({}));
+        const generator = makeNpmGenerator(FernFiddle.remoteGen.OutputMode.downloadFiles({}));
         const group = makeGroup([generator]);
 
         const result = overrideGroupOutputForPreview({ group, ...previewParams });
@@ -277,7 +238,7 @@ describe("overrideGroupOutputForPreview", () => {
     });
 
     it("clears absolutePathToLocalOutput", () => {
-        const generator = makeGenerator(FernFiddle.OutputMode.github({ owner: "o", repo: "r" }), {
+        const generator = makeNpmGenerator(FernFiddle.OutputMode.github({ owner: "o", repo: "r" }), {
             absolutePathToLocalOutput: AbsoluteFilePath.of("/tmp/original-output")
         });
         const group = makeGroup([generator]);
@@ -288,7 +249,7 @@ describe("overrideGroupOutputForPreview", () => {
     });
 
     it("preserves group-level fields", () => {
-        const generator = makeGenerator(FernFiddle.remoteGen.OutputMode.downloadFiles({}));
+        const generator = makeNpmGenerator(FernFiddle.remoteGen.OutputMode.downloadFiles({}));
         const group = makeGroup([generator]);
         group.groupName = "my-preview-group";
 
@@ -300,7 +261,7 @@ describe("overrideGroupOutputForPreview", () => {
 
 describe("overrideGroupOutputForDiffBranch", () => {
     it("produces githubV2(push) for generators with github config", () => {
-        const generator = makeGenerator(
+        const generator = makeNpmGenerator(
             FernFiddle.OutputMode.githubV2(
                 FernFiddle.GithubOutputModeV2.push({
                     owner: "fern-demo",
@@ -327,7 +288,7 @@ describe("overrideGroupOutputForDiffBranch", () => {
             packageName: "@fern-demo/sdk-preview-test",
             token: "npm-token-123"
         });
-        const generator = makeGenerator(
+        const generator = makeNpmGenerator(
             FernFiddle.OutputMode.githubV2(
                 FernFiddle.GithubOutputModeV2.push({
                     owner: "fern-demo",
@@ -396,7 +357,7 @@ describe("overrideGroupOutputForDiffBranch", () => {
     });
 
     it("extracts owner/repo from github v1 output mode", () => {
-        const generator = makeGenerator(FernFiddle.OutputMode.github({ owner: "legacy-org", repo: "legacy-sdk" }));
+        const generator = makeNpmGenerator(FernFiddle.OutputMode.github({ owner: "legacy-org", repo: "legacy-sdk" }));
         const group = makeGroup([generator]);
 
         const result = overrideGroupOutputForDiffBranch({ group });
@@ -406,7 +367,7 @@ describe("overrideGroupOutputForDiffBranch", () => {
     });
 
     it("extracts owner/repo from githubV2 commitAndRelease", () => {
-        const generator = makeGenerator(
+        const generator = makeNpmGenerator(
             FernFiddle.OutputMode.githubV2(
                 FernFiddle.GithubOutputModeV2.commitAndRelease({
                     owner: "my-org",
@@ -423,7 +384,7 @@ describe("overrideGroupOutputForDiffBranch", () => {
     });
 
     it("excludes generators without github config (publishV2)", () => {
-        const generator = makeGenerator(
+        const generator = makeNpmGenerator(
             FernFiddle.OutputMode.publishV2(
                 FernFiddle.remoteGen.PublishOutputModeV2.npmOverride({
                     registryUrl: "https://registry.npmjs.org",
@@ -441,7 +402,7 @@ describe("overrideGroupOutputForDiffBranch", () => {
     });
 
     it("excludes generators without github config (downloadFiles)", () => {
-        const generator = makeGenerator(FernFiddle.remoteGen.OutputMode.downloadFiles({}));
+        const generator = makeNpmGenerator(FernFiddle.remoteGen.OutputMode.downloadFiles({}));
         const group = makeGroup([generator]);
 
         const result = overrideGroupOutputForDiffBranch({ group });
@@ -450,7 +411,7 @@ describe("overrideGroupOutputForDiffBranch", () => {
     });
 
     it("keeps only generators with github config in mixed groups", () => {
-        const githubGen = makeGenerator(
+        const githubGen = makeNpmGenerator(
             FernFiddle.OutputMode.githubV2(
                 FernFiddle.GithubOutputModeV2.push({
                     owner: "fern-demo",
@@ -461,7 +422,7 @@ describe("overrideGroupOutputForDiffBranch", () => {
                 })
             )
         );
-        const registryGen = makeGenerator(
+        const registryGen = makeNpmGenerator(
             FernFiddle.OutputMode.publishV2(
                 FernFiddle.remoteGen.PublishOutputModeV2.npmOverride({
                     registryUrl: "https://npm.buildwithfern.com",
@@ -480,7 +441,7 @@ describe("overrideGroupOutputForDiffBranch", () => {
     });
 
     it("preserves group-level fields", () => {
-        const generator = makeGenerator(
+        const generator = makeNpmGenerator(
             FernFiddle.OutputMode.githubV2(
                 FernFiddle.GithubOutputModeV2.push({
                     owner: "o",
