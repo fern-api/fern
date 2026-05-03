@@ -210,6 +210,17 @@ async function createJob({
         if (rawError?.content?.reason === "status-code" && rawError.content.statusCode === 429) {
             throw new TooManyRequestsError();
         }
+
+        // GithubAppNotInstalled is not in the SDK's error union for createJobV3, so
+        // handle it before the visitor. Fiddle returns this when the Fern GitHub App
+        // is not installed on the target repository.
+        const githubAppNotInstalledMessage = extractGithubAppNotInstalledMessage(rawError);
+        if (githubAppNotInstalledMessage != null) {
+            return context.failAndThrow(githubAppNotInstalledMessage, undefined, {
+                code: CliError.Code.ConfigError
+            });
+        }
+
         return convertCreateJobError(rawError)._visit({
             illegalApiNameError: () => {
                 return context.failAndThrow(
@@ -432,6 +443,29 @@ export function extractErrorMessage(error: any): string | undefined {
         return body.message;
     }
     return undefined;
+}
+
+/**
+ * Checks whether a raw SDK error is a GithubAppNotInstalled response from Fiddle.
+ * The error body shape is: { error: "GithubAppNotInstalled", content: { message, repositoryName } }.
+ * Returns a user-friendly message if matched, undefined otherwise.
+ */
+// biome-ignore lint/suspicious/noExplicitAny: the error shape from the SDK is not well-typed
+function extractGithubAppNotInstalledMessage(error: any): string | undefined {
+    // biome-ignore lint/suspicious/noExplicitAny: intentional dynamic navigation
+    const body: any = error?.content?.reason === "status-code" ? error.content.body : undefined;
+    if (body?.error !== "GithubAppNotInstalled") {
+        return undefined;
+    }
+    if (typeof body?.content?.message === "string") {
+        return body.content.message;
+    }
+    const repo =
+        typeof body?.content?.repositoryName === "string" ? body.content.repositoryName : "the target repository";
+    return (
+        `The Fern GitHub App is not installed on ${repo}. ` +
+        "Please install it (https://github.com/apps/fern-api) and try again."
+    );
 }
 
 // Fiddle's ErrorBody serializes as { error: "<ErrorType>", content: <TypedBody> }.
