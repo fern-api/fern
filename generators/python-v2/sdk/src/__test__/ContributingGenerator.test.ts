@@ -43,7 +43,7 @@ describe("ContributingGenerator", () => {
     it("references Python generator path", () => {
         const generator = new ContributingGenerator();
         const result = generator.generate();
-        expect(result).toContain("generators/python/");
+        expect(result).toContain("generators/python-v2/");
     });
 
     it("includes Python prerequisites", () => {
