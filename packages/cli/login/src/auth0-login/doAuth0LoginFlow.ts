@@ -64,8 +64,9 @@ function getCode({
                 request.socket.end();
             } else {
                 response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
-                response.end(LOGIN_SUCCESS_PAGE);
-                resolve({ code });
+                response.end(LOGIN_SUCCESS_PAGE, () => {
+                    resolve({ code });
+                });
             }
         });
 
