@@ -1,6 +1,4 @@
-export class ContributingGenerator {
-    public generate(): string {
-        return `# Contributing
+# Contributing
 
 Thanks for your interest in contributing to this SDK! This document provides guidelines for contributing to the project.
 
@@ -15,47 +13,47 @@ Thanks for your interest in contributing to this SDK! This document provides gui
 
 Install the project dependencies:
 
-\`\`\`bash
+```bash
 swift package resolve
-\`\`\`
+```
 
 ### Building
 
 Build the project:
 
-\`\`\`bash
+```bash
 swift build
-\`\`\`
+```
 
 ### Testing
 
 Run the test suite:
 
-\`\`\`bash
+```bash
 swift test
-\`\`\`
+```
 
 ### Formatting
 
 Format the code:
 
-\`\`\`bash
+```bash
 swift format .
-\`\`\`
+```
 
 Or using SwiftFormat:
 
-\`\`\`bash
+```bash
 swiftformat .
-\`\`\`
+```
 
 ### Linting
 
 Lint the code:
 
-\`\`\`bash
+```bash
 swiftlint
-\`\`\`
+```
 
 ## About Generated Code
 
@@ -64,22 +62,22 @@ swiftlint
 ### Generated Files
 
 The following directories contain generated code:
-- \`Sources/\` - API client classes and types
+- `Sources/` - API client classes and types
 - Most Swift files in the project
 
 ### How to Customize
 
 If you need to customize the SDK, you have two options:
 
-#### Option 1: Use \`.fernignore\`
+#### Option 1: Use `.fernignore`
 
 For custom code that should persist across SDK regenerations:
 
-1. Create a \`.fernignore\` file in the project root
-2. Add file patterns for files you want to preserve (similar to \`.gitignore\` syntax)
+1. Create a `.fernignore` file in the project root
+2. Add file patterns for files you want to preserve (similar to `.gitignore` syntax)
 3. Add your custom code to those files
 
-Files listed in \`.fernignore\` will not be overwritten when the SDK is regenerated.
+Files listed in `.fernignore` will not be overwritten when the SDK is regenerated.
 
 For more information, see the [Fern documentation on custom code](https://buildwithfern.com/learn/sdks/overview/custom-code).
 
@@ -88,7 +86,7 @@ For more information, see the [Fern documentation on custom code](https://buildw
 If you want to change how code is generated for all users of this SDK:
 
 1. The Swift SDK generator lives in the [Fern repository](https://github.com/fern-api/fern)
-2. Generator code is located at \`generators/swift/\`
+2. Generator code is located at `generators/swift/`
 3. Follow the [Fern contributing guidelines](https://github.com/fern-api/fern/blob/main/CONTRIBUTING.md)
 4. Submit a pull request with your changes to the generator
 
@@ -103,10 +101,10 @@ This approach is best for:
 
 1. Create a new branch for your changes
 2. Make your modifications
-3. Run tests to ensure nothing breaks: \`swift test\`
-4. Run formatting: \`swift format .\` or \`swiftformat .\`
-5. Run linting: \`swiftlint\`
-6. Build the project: \`swift build\`
+3. Run tests to ensure nothing breaks: `swift test`
+4. Run formatting: `swift format .` or `swiftformat .`
+5. Run linting: `swiftlint`
+6. Build the project: `swift build`
 7. Commit your changes with a clear commit message
 8. Push your branch and create a pull request
 
@@ -116,7 +114,7 @@ Write clear, descriptive commit messages that explain what changed and why.
 
 ### Code Style
 
-This project uses automated code formatting and linting. Run \`swift format .\` or \`swiftformat .\` before committing to ensure your code meets the project's style guidelines.
+This project uses automated code formatting and linting. Run `swift format .` or `swiftformat .` before committing to ensure your code meets the project's style guidelines.
 
 ## Questions or Issues?
 
@@ -129,6 +127,3 @@ If you have questions or run into issues:
 ## License
 
 By contributing to this project, you agree that your contributions will be licensed under the same license as the project.
-`;
-    }
-}

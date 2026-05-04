@@ -1,11 +1,9 @@
+import { RootAsIsFiles } from "@fern-api/swift-base";
 import { describe, expect, it } from "vitest";
 
-import { ContributingGenerator } from "../contributing/ContributingGenerator.js";
-
-describe("ContributingGenerator", () => {
-    it("generates CONTRIBUTING.md with Swift commands", () => {
-        const generator = new ContributingGenerator();
-        const result = generator.generate();
+describe("CONTRIBUTING.md root AsIs file", () => {
+    it("contains Swift commands", async () => {
+        const result = await RootAsIsFiles.Contributing.loadContents();
         expect(result).toContain("swift build");
         expect(result).toContain("swift test");
         expect(result).toContain("swift format");
@@ -13,9 +11,8 @@ describe("ContributingGenerator", () => {
         expect(result).toContain("swiftlint");
     });
 
-    it("includes all expected sections", () => {
-        const generator = new ContributingGenerator();
-        const result = generator.generate();
+    it("includes all expected sections", async () => {
+        const result = await RootAsIsFiles.Contributing.loadContents();
         expect(result).toContain("# Contributing");
         expect(result).toContain("## Getting Started");
         expect(result).toContain("### Prerequisites");
@@ -30,31 +27,31 @@ describe("ContributingGenerator", () => {
         expect(result).toContain("## License");
     });
 
-    it("includes Fern-specific information", () => {
-        const generator = new ContributingGenerator();
-        const result = generator.generate();
+    it("includes Fern-specific information", async () => {
+        const result = await RootAsIsFiles.Contributing.loadContents();
         expect(result).toContain("Fern");
         expect(result).toContain(".fernignore");
         expect(result).toContain("buildwithfern.com");
         expect(result).toContain("github.com/fern-api/fern");
     });
 
-    it("references Swift generator path", () => {
-        const generator = new ContributingGenerator();
-        const result = generator.generate();
+    it("references Swift generator path", async () => {
+        const result = await RootAsIsFiles.Contributing.loadContents();
         expect(result).toContain("generators/swift/");
     });
 
-    it("includes Swift prerequisites", () => {
-        const generator = new ContributingGenerator();
-        const result = generator.generate();
+    it("includes Swift prerequisites", async () => {
+        const result = await RootAsIsFiles.Contributing.loadContents();
         expect(result).toContain("Swift 5.9+");
         expect(result).toContain("Swift Package Manager");
     });
 
-    it("generates full content snapshot", () => {
-        const generator = new ContributingGenerator();
-        const result = generator.generate();
+    it("has correct filename", () => {
+        expect(RootAsIsFiles.Contributing.filename).toBe("CONTRIBUTING.md");
+    });
+
+    it("generates full content snapshot", async () => {
+        const result = await RootAsIsFiles.Contributing.loadContents();
         expect(result).toMatchSnapshot();
     });
 });

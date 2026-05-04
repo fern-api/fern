@@ -1,7 +1,7 @@
 import { File, GeneratorError, GeneratorNotificationService, getWireValue } from "@fern-api/base-generator";
 import { assertNever, entries, extractErrorMessage, noop } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { AbstractSwiftGeneratorCli, SourceTemplateFiles, TestTemplateFiles } from "@fern-api/swift-base";
+import { AbstractSwiftGeneratorCli, RootAsIsFiles, SourceTemplateFiles, TestTemplateFiles } from "@fern-api/swift-base";
 import { sanitizeSelf, swift } from "@fern-api/swift-codegen";
 import { DynamicSnippetsGenerator } from "@fern-api/swift-dynamic-snippets";
 import {
@@ -16,7 +16,6 @@ import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { template as templateFn } from "lodash-es";
 
-import { ContributingGenerator } from "./contributing/ContributingGenerator.js";
 import {
     PackageSwiftGenerator,
     RootClientGenerator,
@@ -70,9 +69,6 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
     protected async generate(context: SdkGeneratorContext): Promise<void> {
         await this.generateSourceFiles(context);
         await Promise.all([this.generateRootFiles(context), this.generateTestFiles(context)]);
-        if (!context.config.whitelabel) {
-            this.generateContributing(context);
-        }
         await context.project.persist();
     }
 
@@ -92,7 +88,8 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
 
         await Promise.all([
             this.generateReadme(context, dynamicIr, sharedSnippetsGenerator),
-            this.generateReference(context, sharedSnippetsGenerator)
+            this.generateReference(context, sharedSnippetsGenerator),
+            this.generateRootAsIsFiles(context)
         ]);
     }
 
@@ -138,10 +135,13 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
         }
     }
 
-    private generateContributing(context: SdkGeneratorContext): void {
-        const contributingGenerator = new ContributingGenerator();
-        const content = contributingGenerator.generate();
-        context.project.addRootFiles(new File("CONTRIBUTING.md", RelativeFilePath.of(""), content));
+    private async generateRootAsIsFiles(context: SdkGeneratorContext): Promise<void> {
+        if (!context.config.whitelabel) {
+            const content = await RootAsIsFiles.Contributing.loadContents();
+            context.project.addRootFiles(
+                new File(RootAsIsFiles.Contributing.filename, RelativeFilePath.of(""), content)
+            );
+        }
     }
 
     private generateSnippets(
