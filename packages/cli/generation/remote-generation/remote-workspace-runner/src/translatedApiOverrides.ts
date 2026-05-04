@@ -23,6 +23,7 @@ export type RegisterApiDefinitionOptions = {
     workspace?: FernWorkspace;
     graphqlOperations?: Record<APIV1Write.GraphQlOperationId, APIV1Write.GraphQlOperation>;
     graphqlTypes?: Record<APIV1Write.TypeId, APIV1Write.TypeDefinition>;
+    precomputedApiDefinition?: ReturnType<typeof convertIrToFdrApi>;
     trackAsBaseApi?: boolean;
 };
 
@@ -92,7 +93,7 @@ export async function registerTranslatedApiOverrides({
                 locale,
                 context
             });
-            addTranslatedApiNavigationTitleOverrides({
+            const precomputedApiDefinition = addTranslatedApiNavigationTitleOverrides({
                 translatedApiNavigationTitleOverridesByLocale,
                 locale,
                 baseApiDefinitionId,
@@ -108,6 +109,7 @@ export async function registerTranslatedApiOverrides({
                 playgroundConfig: baseConfig?.playgroundConfig,
                 graphqlOperations: baseConfig?.graphqlOperations,
                 graphqlTypes: baseConfig?.graphqlTypes,
+                precomputedApiDefinition,
                 workspace,
                 trackAsBaseApi: false
             });
@@ -378,9 +380,9 @@ function addTranslatedApiNavigationTitleOverrides({
     apiName: string;
     baseConfig: RegisteredApiConfig | undefined;
     context: TaskContext;
-}): void {
+}): ReturnType<typeof convertIrToFdrApi> | undefined {
     if (translatedApiNavigationTitleOverridesByLocale == null) {
-        return;
+        return undefined;
     }
     const apiDefinition = convertIrToFdrApi({
         ir,
@@ -393,11 +395,12 @@ function addTranslatedApiNavigationTitleOverrides({
     });
     const titleOverrides = getApiNavigationTitleOverrides(apiDefinition);
     if (titleOverrides.endpointTitlesById.size === 0) {
-        return;
+        return apiDefinition;
     }
     const localeOverrides = translatedApiNavigationTitleOverridesByLocale.get(locale) ?? new Map();
     localeOverrides.set(baseApiDefinitionId, titleOverrides);
     translatedApiNavigationTitleOverridesByLocale.set(locale, localeOverrides);
+    return apiDefinition;
 }
 
 function getApiNavigationTitleOverrides(

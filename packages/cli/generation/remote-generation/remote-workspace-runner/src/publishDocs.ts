@@ -278,26 +278,29 @@ export async function publishDocs({
             workspace,
             graphqlOperations,
             graphqlTypes,
+            precomputedApiDefinition,
             trackAsBaseApi = true
         }: RegisterApiDefinitionOptions): Promise<string> => {
             const apiId = apiName ?? getOriginalName(ir.apiName);
             // Use apiName from docs.yml (folder name) as the API identifier for FDR.
             // This ensures users can reference APIs by their folder name in docs components.
-            let apiDefinition = convertIrToFdrApi({
-                ir,
-                snippetsConfig,
-                playgroundConfig,
-                graphqlOperations,
-                graphqlTypes,
-                context,
-                apiNameOverride: apiName
-            });
+            let apiDefinition =
+                precomputedApiDefinition ??
+                convertIrToFdrApi({
+                    ir,
+                    snippetsConfig,
+                    playgroundConfig,
+                    graphqlOperations,
+                    graphqlTypes,
+                    context,
+                    apiNameOverride: apiName
+                });
 
             const aiEnhancerConfig = getAIEnhancerConfig(
                 withAiExamples,
                 docsWorkspace.config.aiExamples?.style ?? docsWorkspace.config.experimental?.aiExampleStyleInstructions
             );
-            if (aiEnhancerConfig) {
+            if (trackAsBaseApi && aiEnhancerConfig) {
                 const sources = workspace?.getSources();
                 const openApiSources = sources
                     ?.filter((source) => source.type === "openapi")
@@ -322,7 +325,9 @@ export async function publishDocs({
 
             let dynamicIRsByLanguage: Record<string, DynamicIr> | undefined;
             let languagesWithExistingSdkDynamicIr: Set<string> = new Set();
-            if (Object.keys(snippetsConfig).length === 0) {
+            if (!trackAsBaseApi) {
+                context.logger.debug(`Skipping snippet generation for translated API "${apiId}"...`);
+            } else if (Object.keys(snippetsConfig).length === 0) {
                 context.logger.debug(`No snippets configuration defined, skipping snippet generation...`);
             } else if (!disableDynamicSnippets) {
                 const existingSdkDynamicIrs = await checkAndDownloadExistingSdkDynamicIRs({
@@ -829,11 +834,7 @@ export async function publishDocs({
                             updatedRoot = applyTranslatedNavigationOverlays(updatedRoot, localeNavOverlay);
                             translatedAnnouncement =
                                 getTranslatedAnnouncement(localeNavOverlay) ?? translatedAnnouncement;
-                            const localeNavbarLinks = (
-                                localeNavOverlay as typeof localeNavOverlay & {
-                                    navbarLinks?: typeof translatedNavbarLinks;
-                                }
-                            ).navbarLinks;
+                            const localeNavbarLinks = localeNavOverlay.navbarLinks;
                             if (localeNavbarLinks != null) {
                                 translatedNavbarLinks = localeNavbarLinks;
                             }

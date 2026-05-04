@@ -104,7 +104,7 @@ export async function runRemoteGenerationForDocsWorkspace({
         });
         return;
     }
-    const multiSource = (maybeInstance as typeof maybeInstance & { multiSource?: boolean }).multiSource ?? false;
+    const multiSource = maybeInstance.multiSource ?? false;
 
     // TODO: validate custom domains
     const customDomains: string[] = [];
