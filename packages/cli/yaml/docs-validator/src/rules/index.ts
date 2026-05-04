@@ -6,6 +6,7 @@ export * from "./no-circular-redirects/index.js";
 export * from "./only-versioned-navigation/index.js";
 export * from "./tab-with-href/index.js";
 export * from "./translation-directories-exist/index.js";
+export * from "./valid-changelog-slug/index.js";
 export * from "./valid-docs-endpoints/index.js";
 export * from "./valid-file-types/index.js";
 export * from "./valid-frontmatter/index.js";
