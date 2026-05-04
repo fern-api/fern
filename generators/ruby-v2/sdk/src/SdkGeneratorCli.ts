@@ -62,6 +62,9 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
             context.project.addRawFiles(file);
         }
 
+        const rootClient = new RootClientGenerator(context);
+        context.project.addRawFiles(rootClient.generate());
+
         Object.entries(context.ir.subpackages).forEach(([subpackageId, subpackage]) => {
             const service = subpackage.service != null ? context.getHttpServiceOrThrow(subpackage.service) : undefined;
             // skip subpackages that have no endpoints (recursively)
@@ -80,10 +83,6 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
                 this.generateRequests(context, service, subpackage.service);
             }
         });
-
-        // Generate root client (always, regardless of subpackages)
-        const rootClient = new RootClientGenerator(context);
-        context.project.addRawFiles(rootClient.generate());
 
         // Generate requests for root service
         if (context.ir.rootPackage.service != null) {
