@@ -64,7 +64,8 @@ describe("applyTranslatedNavigationOverlays", () => {
                     subtitle: "ようこそ",
                     announcement: undefined,
                     tabs: undefined,
-                    navigation: undefined
+                    navigation: undefined,
+                    versions: undefined
                 }
             ]
         };
@@ -114,8 +115,8 @@ describe("applyTranslatedNavigationOverlays", () => {
         const overlay: docsYml.TranslationNavigationOverlay = {
             ...emptyOverlay(),
             versions: [
-                { slug: "v2", displayName: "v2 (最新)" },
-                { slug: "v1", displayName: "v1 (旧)" }
+                { slug: "v2", displayName: "v2 (最新)", tabs: undefined, navigation: undefined },
+                { slug: "v1", displayName: "v1 (旧)", tabs: undefined, navigation: undefined }
             ]
         };
 
@@ -126,6 +127,104 @@ describe("applyTranslatedNavigationOverlays", () => {
         const versions = versioned.children as Array<Record<string, unknown>>;
         expect(versions[0]?.title).toBe("v2 (最新)");
         expect(versions[1]?.title).toBe("v1 (旧)");
+    });
+
+    it("applies version-scoped tab and section overrides nested inside a product", () => {
+        const root = {
+            type: "root",
+            child: {
+                type: "productgroup",
+                children: [
+                    {
+                        type: "product",
+                        productId: "Platform",
+                        title: "Platform",
+                        subtitle: "",
+                        slug: "platform",
+                        child: {
+                            type: "versioned",
+                            children: [
+                                {
+                                    type: "version",
+                                    versionId: "v4",
+                                    title: "V4",
+                                    slug: "platform/v4",
+                                    child: {
+                                        type: "tabbed",
+                                        children: [
+                                            {
+                                                type: "tab",
+                                                title: "Docs",
+                                                slug: "platform/v4/docs",
+                                                child: {
+                                                    type: "sidebarRoot",
+                                                    children: [
+                                                        {
+                                                            type: "section",
+                                                            title: "Introduction",
+                                                            slug: "platform/v4/docs/introduction",
+                                                            children: []
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        };
+        const overlay: docsYml.TranslationNavigationOverlay = {
+            ...emptyOverlay(),
+            products: [
+                {
+                    slug: undefined,
+                    displayName: "プラットフォーム",
+                    subtitle: undefined,
+                    announcement: undefined,
+                    tabs: undefined,
+                    navigation: undefined,
+                    versions: [
+                        {
+                            slug: "v4",
+                            displayName: "V4",
+                            tabs: { docs: { displayName: "ドキュメント", slug: undefined } },
+                            navigation: [
+                                {
+                                    type: "tab",
+                                    tabId: "docs",
+                                    layout: [
+                                        {
+                                            type: "section",
+                                            title: "はじめに",
+                                            slug: undefined,
+                                            contents: undefined
+                                        }
+                                    ],
+                                    variants: undefined
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        };
+
+        const result = applyTranslatedNavigationOverlays(asRoot(root), overlay);
+        const productGroup = (result as unknown as Record<string, unknown>).child as Record<string, unknown>;
+        const products = productGroup.children as Array<Record<string, unknown>>;
+        expect(products[0]?.title).toBe("プラットフォーム");
+        const versioned = products[0]?.child as Record<string, unknown>;
+        const versions = versioned.children as Array<Record<string, unknown>>;
+        const tabbed = versions[0]?.child as Record<string, unknown>;
+        const tabs = tabbed.children as Array<Record<string, unknown>>;
+        expect(tabs[0]?.title).toBe("ドキュメント");
+        const sidebarRoot = tabs[0]?.child as Record<string, unknown>;
+        const sections = sidebarRoot.children as Array<Record<string, unknown>>;
+        expect(sections[0]?.title).toBe("はじめに");
     });
 
     it("applies tab display-name override", () => {
@@ -332,7 +431,8 @@ describe("applyTranslatedNavigationOverlays", () => {
                     subtitle: undefined,
                     announcement: { message: "v2がリリースされました！" },
                     tabs: undefined,
-                    navigation: undefined
+                    navigation: undefined,
+                    versions: undefined
                 }
             ]
         };

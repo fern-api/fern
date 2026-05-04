@@ -75,11 +75,11 @@ function applyChildOverlays(
             }
             const productOverlay = findProductOverlay(childObj, overlay.products ?? [], index);
             if (productOverlay != null) {
-                // Create a scoped overlay with product-specific tabs/navigation
+                // Create a scoped overlay with product-specific tabs/navigation/versions
                 const scopedOverlay: docsYml.TranslationNavigationOverlay = {
                     tabs: productOverlay.tabs ?? overlay.tabs,
                     products: undefined,
-                    versions: overlay.versions,
+                    versions: productOverlay.versions ?? overlay.versions,
                     announcement: productOverlay.announcement ?? overlay.announcement,
                     navigation: productOverlay.navigation ?? overlay.navigation,
                     navbarLinks: overlay.navbarLinks
@@ -99,11 +99,20 @@ function applyChildOverlays(
                 return walkAndApply(child, overlay);
             }
             const versionOverlay = findVersionOverlay(childObj, overlay.versions ?? [], index);
-            const walked = walkAndApply(child, overlay) as Record<string, unknown>;
             if (versionOverlay != null) {
+                // Create a scoped overlay with version-specific tabs/navigation
+                const scopedOverlay: docsYml.TranslationNavigationOverlay = {
+                    tabs: versionOverlay.tabs ?? overlay.tabs,
+                    products: undefined,
+                    versions: undefined,
+                    announcement: overlay.announcement,
+                    navigation: versionOverlay.navigation ?? overlay.navigation,
+                    navbarLinks: overlay.navbarLinks
+                };
+                const walked = walkAndApply(child, scopedOverlay) as Record<string, unknown>;
                 return applyVersionOverlayToNode(walked, versionOverlay);
             }
-            return walked;
+            return walkAndApply(child, overlay);
         });
     }
 
