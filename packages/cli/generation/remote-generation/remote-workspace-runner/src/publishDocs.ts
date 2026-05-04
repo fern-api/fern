@@ -4,6 +4,13 @@ import { docsYml, generatorsYml } from "@fern-api/configuration";
 import { createFdrService } from "@fern-api/core";
 import { MediaType, replaceEnvVariables } from "@fern-api/core-utils";
 import {
+    replaceImagePathsAndUrls,
+    replaceReferencedCode,
+    replaceReferencedMarkdown,
+    stripMdxComments,
+    transformAtPrefixImports
+} from "@fern-api/docs-markdown-utils";
+import {
     applyTranslatedFrontmatterToNavTree,
     applyTranslatedNavigationOverlays,
     DocsDefinitionResolver,
@@ -11,13 +18,6 @@ import {
     UploadedFile,
     wrapWithHttps
 } from "@fern-api/docs-resolver";
-import {
-    replaceImagePathsAndUrls,
-    replaceReferencedCode,
-    replaceReferencedMarkdown,
-    stripMdxComments,
-    transformAtPrefixImports
-} from "@fern-api/docs-markdown-utils";
 import { APIV1Write, FdrAPI as CjsFdrSdk, DocsV1Write, DocsV2Write, FdrClient } from "@fern-api/fdr-sdk";
 
 type DynamicIr = APIV1Write.DynamicIr;
@@ -52,11 +52,11 @@ import { measureImageSizes } from "./measureImageSizes.js";
 import {
     applyTranslatedApiNavigationTitlesInObject,
     getHttpEndpointKeys,
-    type RegisteredApiConfig,
     type RegisterApiDefinitionOptions,
-    type TranslatedApiNavigationTitleOverridesByLocale,
+    type RegisteredApiConfig,
     registerTranslatedApiOverrides,
-    replaceApiDefinitionIdsInObject
+    replaceApiDefinitionIdsInObject,
+    type TranslatedApiNavigationTitleOverridesByLocale
 } from "./translatedApiOverrides.js";
 import { asyncPool } from "./utils/asyncPool.js";
 
