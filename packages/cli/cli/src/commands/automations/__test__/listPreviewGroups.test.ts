@@ -72,15 +72,17 @@ describe("listPreviewGroups", () => {
         });
     });
 
-    describe("non-TypeScript generators", () => {
-        it("excludes Python SDK generators", () => {
+    describe("generators not supported for SDK preview", () => {
+        it("includes Python SDK generators", () => {
             const workspace = makeWorkspace(undefined, [
                 makeGroup("python", [makeGenerator("fernapi/fern-python-sdk")])
             ]);
 
             const result = listPreviewGroups({ workspaces: [workspace], groupFilter: undefined });
 
-            expect(result).toEqual([]);
+            expect(result).toEqual([
+                { groupName: "python", apiName: null, generator: "fernapi/fern-python-sdk" }
+            ]);
         });
 
         it("excludes Java SDK generators", () => {

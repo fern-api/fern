@@ -1,3 +1,5 @@
+import path from "node:path";
+
 export function isAbsolute(value: string): boolean {
-    return value.startsWith("/");
+    return path.isAbsolute(value);
 }

@@ -1,5 +1,5 @@
 import type { AbstractAPIWorkspace } from "@fern-api/api-workspace-commons";
-import { isNpmGenerator } from "../sdk-preview/overrideOutputForPreview.js";
+import { getPreviewLanguage } from "../sdk-preview/overrideOutputForPreview.js";
 
 export interface PreviewGroup {
     groupName: string;
@@ -12,7 +12,7 @@ export interface PreviewGroup {
  *
  * A generator is considered previewable when:
  * - `automation.preview` is not false in generators.yml
- * - It is a supported TypeScript/npm generator (fern-typescript-sdk, node-sdk, browser-sdk)
+ * - It is a supported SDK preview generator (TypeScript/npm or Python/pypi)
  *
  * Returns one entry per unique (groupName, apiName) pair. When a group
  * contains multiple matching generators, the first match is used for the
@@ -43,7 +43,7 @@ export function listPreviewGroups({
             // generators in the group, so we only need to know *that*
             // the group is previewable, not list every generator.
             const firstPreviewable = group.generators.find(
-                (generator) => generator.automation.preview && isNpmGenerator(generator.name)
+                (generator) => generator.automation.preview && getPreviewLanguage(generator.name) != null
             );
             if (firstPreviewable != null) {
                 results.push({

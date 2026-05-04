@@ -15,17 +15,17 @@ import { CliContext } from "../../cli-context/CliContext.js";
 import { loadProjectAndRegisterWorkspacesWithContext } from "../../cliCommons.js";
 import { GROUP_CLI_OPTION } from "../../constants.js";
 import { isTelemetryDisabled } from "../../telemetry/isTelemetryDisabled.js";
-import { computePreviewVersion } from "./computePreviewVersion.js";
+import { computePreviewVersion, computePypiPreviewVersion } from "./computePreviewVersion.js";
 import { getPreviewId } from "./getPreviewId.js";
 import {
     getGithubOwnerRepo,
-    isNpmGenerator,
     overrideGroupOutputForDiffBranch,
     overrideGroupOutputForDownload,
     overrideGroupOutputForPreview,
     PREVIEW_REGISTRY_URL
 } from "./overrideOutputForPreview.js";
-import { toPreviewPackageName } from "./toPreviewPackageName.js";
+import { getPreviewLanguage, type PreviewLanguage } from "./previewStrategies.js";
+import { toPreviewPackageName, toPypiPreviewPackageName } from "./toPreviewPackageName.js";
 
 export interface SdkPreviewSuccess {
     status: "success";
@@ -208,200 +208,289 @@ export async function sdkPreview({
                 };
             }
 
-            // Filter to npm-only generators (SDK preview v1 limitation)
-            const npmGenerators = generators.filter((g) => isNpmGenerator(g.name));
-            const skippedGenerators = generators.filter((g) => !isNpmGenerator(g.name));
-            for (const skipped of skippedGenerators) {
-                cliContext.logger.warn(
-                    `Skipping '${skipped.name}' — SDK preview currently only supports TypeScript/npm generators. ` +
-                        `Use --generator to target a specific generator.`
-                );
+            const partitioned: { generator: (typeof generators)[number]; language: PreviewLanguage }[] = [];
+            for (const g of generators) {
+                const language = getPreviewLanguage(g.name);
+                if (language == null) {
+                    cliContext.logger.warn(
+                        `Skipping '${g.name}' - SDK preview currently supports TypeScript/npm and Python/pypi generators only.`
+                    );
+                    continue;
+                }
+                partitioned.push({ generator: g, language });
             }
-            if (npmGenerators.length === 0) {
+            if (partitioned.length === 0) {
                 return {
                     status: "error",
                     message:
                         `No supported generators found in group '${groupNameOrDefault}'. ` +
-                        `SDK preview currently only supports TypeScript/npm generators.`,
+                        `SDK preview currently supports TypeScript/npm and Python/pypi generators.`,
                     code: CliError.Code.ConfigError
                 };
             }
 
-            for (const generator of npmGenerators) {
-                const originalPackageName = getPackageNameFromGeneratorConfig(generator);
-                if (originalPackageName == null) {
+            const hasPypi = partitioned.some((p) => p.language === "pypi");
+            const hasNpm = partitioned.some((p) => p.language === "npm");
+
+            // --push-diff rejection: v1 only supports it for npm.
+            if (pushDiff && hasPypi) {
+                return {
+                    status: "error",
+                    message:
+                        "--push-diff is not supported for Python generators in v1. " +
+                        "Track <link to follow-up issue> for v2.",
+                    code: CliError.Code.UserError
+                };
+            }
+
+            // PyPI registry preflight: explicit, no fallback.
+            let pypiRegistryUrl: string | undefined;
+            if (hasPypi && publishToRegistry) {
+                pypiRegistryUrl =
+                    urlOutputs.find((u) => u !== registryUrl) ??
+                    (registryUrl !== PREVIEW_REGISTRY_URL
+                        ? registryUrl
+                        : process.env.FERN_PREVIEW_PYPI_REGISTRY_URL);
+                if (pypiRegistryUrl == null) {
                     return {
                         status: "error",
                         message:
-                            `Could not determine package name for generator '${generator.name}'. ` +
-                            `Ensure 'output.package-name' is set in ${GENERATORS_CONFIGURATION_FILENAME}.`,
+                            "No PyPI registry URL configured. Set FERN_PREVIEW_PYPI_REGISTRY_URL " +
+                            "or pass --output <pypi-url>.",
                         code: CliError.Code.ConfigError
                     };
                 }
+            }
 
-                const previewPackageName = toPreviewPackageName(originalPackageName, project.config.organization);
-                const previewVersion = computePreviewVersion({ previewId });
-                cliContext.logger.info(`Preview version: ${previewVersion}`);
+            // PyPI token preflight: token.value must be a non-empty string.
+            if (hasPypi && publishToRegistry && (token.value == null || token.value.length === 0)) {
+                return {
+                    status: "error",
+                    message: "No PyPI token resolvable. Set FERN_TOKEN or run `fern login`.",
+                    code: CliError.Code.AuthError
+                };
+            }
 
-                // Override group output to publish to the target registry.
-                // token.value is the Fern org token (FERN_TOKEN) — the registry
-                // must accept this token for publish authentication.
-                const singleGeneratorGroup = { ...group, generators: [generator] };
-                const githubInfo = getGithubOwnerRepo(generator.outputMode);
+            const settled = await Promise.allSettled(
+                partitioned.map(async ({ generator, language }) => {
+                    const originalPackageName = getPackageNameFromGeneratorConfig(generator);
+                    if (originalPackageName == null) {
+                        throw new Error(
+                            `Could not determine package name for generator '${generator.name}'. ` +
+                                `Ensure 'output.package-name' is set in ${GENERATORS_CONFIGURATION_FILENAME}.`
+                        );
+                    }
 
-                // Warn if --push-diff was requested but the generator has no github config
-                if (pushDiff && useRemoteGeneration && githubInfo == null) {
-                    cliContext.logger.warn(
-                        `Generator '${generator.name}' has no github output configuration. ` +
-                            `--push-diff will be ignored; falling back to registry-only publish.`
-                    );
-                }
+                    const previewPackageName =
+                        language === "npm"
+                            ? toPreviewPackageName(originalPackageName, project.config.organization)
+                            : toPypiPreviewPackageName(originalPackageName, project.config.organization);
 
-                // When --push-diff is active and the generator has GitHub config, we run
-                // two separate generation jobs:
-                //   Job 1 (publish): publishV2 mode with preview package name → npm publish
-                //   Job 2 (diff):    githubV2(push) with original package name → clean diff branch
-                // This ensures the diff branch shows real API changes without preview artifacts
-                // (e.g. no @org-preview/ package rename).
-                const shouldRunTwoJobs =
-                    pushDiff && useRemoteGeneration && publishToRegistry && registryUrl != null && githubInfo != null;
+                    const previewVersion =
+                        language === "npm"
+                            ? computePreviewVersion({ previewId })
+                            : computePypiPreviewVersion({ previewId });
 
-                let publishGroup: generatorsYml.GeneratorGroup;
-                if (publishToRegistry && registryUrl != null) {
-                    publishGroup = overrideGroupOutputForPreview({
-                        group: singleGeneratorGroup,
-                        packageName: previewPackageName,
-                        token: token.value,
-                        registryUrl
-                    });
-                } else if (useRemoteGeneration) {
-                    // Remote generation, disk-only (--output with no registry URL):
-                    // override to downloadFiles so the generator doesn't try to publish
-                    // using its original output mode.
-                    publishGroup = overrideGroupOutputForDownload({ group: singleGeneratorGroup });
-                } else {
-                    publishGroup = singleGeneratorGroup;
-                }
+                    cliContext.logger.info(`Preview version: ${previewVersion}`);
 
-                if (useRemoteGeneration) {
-                    const commonRemoteArgs = {
-                        projectConfig: project.config,
-                        organization: project.config.organization,
-                        workspace,
-                        shouldLogS3Url: false,
-                        token,
-                        whitelabel: workspace.generatorsConfiguration?.whitelabel,
-                        mode: undefined as "pull-request" | undefined,
-                        fernignorePath: undefined as string | undefined,
-                        skipFernignore: false,
-                        dynamicIrOnly: false,
-                        validateWorkspace: true,
-                        retryRateLimited: false,
-                        requireEnvVars: false
-                    };
+                    // Override group output to publish to the target registry.
+                    // token.value is the Fern org token (FERN_TOKEN) — the registry
+                    // must accept this token for publish authentication.
+                    const singleGeneratorGroup = { ...group, generators: [generator] };
+                    const githubInfo = getGithubOwnerRepo(generator.outputMode);
 
-                    // Job 1: Publish preview package to registry.
-                    await cliContext.runTaskForWorkspace(workspace, async (context) => {
-                        await runRemoteGenerationForAPIWorkspace({
-                            ...commonRemoteArgs,
-                            context,
-                            generatorGroup: publishGroup,
-                            version: previewVersion,
-                            absolutePathToPreview: absolutePathToOutput,
-                            isPreview: true,
-                            fiddlePreview: false,
-                            pushPreviewBranch: false
+                    // Warn if --push-diff was requested but the generator has no github config
+                    if (pushDiff && useRemoteGeneration && githubInfo == null) {
+                        cliContext.logger.warn(
+                            `Generator '${generator.name}' has no github output configuration. ` +
+                                `--push-diff will be ignored; falling back to registry-only publish.`
+                        );
+                    }
+
+                    // When --push-diff is active and the generator has GitHub config, we run
+                    // two separate generation jobs:
+                    //   Job 1 (publish): publishV2 mode with preview package name → npm publish
+                    //   Job 2 (diff):    githubV2(push) with original package name → clean diff branch
+                    // This ensures the diff branch shows real API changes without preview artifacts
+                    // (e.g. no @org-preview/ package rename).
+                    const shouldRunTwoJobs =
+                        pushDiff &&
+                        useRemoteGeneration &&
+                        publishToRegistry &&
+                        registryUrl != null &&
+                        githubInfo != null;
+
+                    const effectiveRegistryUrl = language === "pypi" ? (pypiRegistryUrl ?? registryUrl) : registryUrl;
+
+                    let publishGroup: generatorsYml.GeneratorGroup;
+                    if (publishToRegistry && effectiveRegistryUrl != null) {
+                        publishGroup = overrideGroupOutputForPreview({
+                            group: singleGeneratorGroup,
+                            language,
+                            packageName: previewPackageName,
+                            token: token.value,
+                            registryUrl: effectiveRegistryUrl
                         });
-                    });
+                    } else if (useRemoteGeneration) {
+                        // Remote generation, disk-only (--output with no registry URL):
+                        // override to downloadFiles so the generator doesn't try to publish
+                        // using its original output mode.
+                        publishGroup = overrideGroupOutputForDownload({ group: singleGeneratorGroup });
+                    } else {
+                        publishGroup = singleGeneratorGroup;
+                    }
 
-                    // Job 2: Push clean diff branch with original package metadata.
-                    // Uses fiddlePreview=true so Fiddle sets dryRun=true, which prevents
-                    // the publish override from firing (see GeneratorExecConfigFactory).
-                    // The generator stays in github mode and produces clean output with
-                    // the original package name; Fiddle pushes it to the diff branch.
-                    if (shouldRunTwoJobs) {
-                        const diffGroup = overrideGroupOutputForDiffBranch({ group: singleGeneratorGroup });
-                        if (diffGroup.generators.length > 0) {
+                    if (useRemoteGeneration) {
+                        const commonRemoteArgs = {
+                            projectConfig: project.config,
+                            organization: project.config.organization,
+                            workspace,
+                            shouldLogS3Url: false,
+                            token,
+                            whitelabel: workspace.generatorsConfiguration?.whitelabel,
+                            mode: undefined as "pull-request" | undefined,
+                            fernignorePath: undefined as string | undefined,
+                            skipFernignore: false,
+                            dynamicIrOnly: false,
+                            validateWorkspace: true,
+                            retryRateLimited: false,
+                            requireEnvVars: false
+                        };
+
+                        // Job 1: Publish preview package to registry.
+                        try {
                             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                                 await runRemoteGenerationForAPIWorkspace({
                                     ...commonRemoteArgs,
                                     context,
-                                    generatorGroup: diffGroup,
+                                    generatorGroup: publishGroup,
                                     version: previewVersion,
-                                    absolutePathToPreview: undefined,
+                                    absolutePathToPreview: absolutePathToOutput,
                                     isPreview: true,
-                                    fiddlePreview: true,
-                                    pushPreviewBranch: true
+                                    fiddlePreview: false,
+                                    pushPreviewBranch: false
                                 });
                             });
+                        } catch (err) {
+                            const msg = err instanceof Error ? err.message : String(err);
+                            if (
+                                language === "pypi" &&
+                                /already exists|already uploaded|409|file already exists/i.test(msg)
+                            ) {
+                                throw new Error(
+                                    `Preview version ${previewVersion} already exists in the PyPI registry. ` +
+                                        `Bump previewId (re-run from a different branch name) or wait for the previous run to expire.`
+                                );
+                            }
+                            throw err;
                         }
-                    }
-                } else {
-                    // Local generation via Docker — used when --local flag is provided.
-                    // Docker must be installed. When absolutePathToOutput is set, generated
-                    // files are also written to disk.
-                    await cliContext.runTaskForWorkspace(workspace, async (context) => {
-                        await runLocalGenerationForWorkspace({
-                            token,
-                            projectConfig: project.config,
-                            workspace,
-                            generatorGroup: publishGroup,
-                            version: previewVersion,
-                            keepDocker: false,
-                            context,
-                            absolutePathToPreview: absolutePathToOutput,
-                            runner: undefined,
-                            inspect: false,
-                            ai: workspace.generatorsConfiguration?.ai,
-                            replay: undefined,
-                            noReplay: true,
-                            validateWorkspace: true,
-                            publishToRegistry,
-                            isPreview: true,
-                            disableTelemetry: isTelemetryDisabled()
+
+                        // Job 2: Push clean diff branch with original package metadata.
+                        // Uses fiddlePreview=true so Fiddle sets dryRun=true, which prevents
+                        // the publish override from firing (see GeneratorExecConfigFactory).
+                        // The generator stays in github mode and produces clean output with
+                        // the original package name; Fiddle pushes it to the diff branch.
+                        if (shouldRunTwoJobs) {
+                            const diffGroup = overrideGroupOutputForDiffBranch({ group: singleGeneratorGroup });
+                            if (diffGroup.generators.length > 0) {
+                                await cliContext.runTaskForWorkspace(workspace, async (context) => {
+                                    await runRemoteGenerationForAPIWorkspace({
+                                        ...commonRemoteArgs,
+                                        context,
+                                        generatorGroup: diffGroup,
+                                        version: previewVersion,
+                                        absolutePathToPreview: undefined,
+                                        isPreview: true,
+                                        fiddlePreview: true,
+                                        pushPreviewBranch: true
+                                    });
+                                });
+                            }
+                        }
+                    } else {
+                        // Local generation via Docker — used when --local flag is provided.
+                        // Docker must be installed. When absolutePathToOutput is set, generated
+                        // files are also written to disk.
+                        await cliContext.runTaskForWorkspace(workspace, async (context) => {
+                            await runLocalGenerationForWorkspace({
+                                token,
+                                projectConfig: project.config,
+                                workspace,
+                                generatorGroup: publishGroup,
+                                version: previewVersion,
+                                keepDocker: false,
+                                context,
+                                absolutePathToPreview: absolutePathToOutput,
+                                runner: undefined,
+                                inspect: false,
+                                ai: workspace.generatorsConfiguration?.ai,
+                                replay: undefined,
+                                noReplay: true,
+                                validateWorkspace: true,
+                                publishToRegistry,
+                                isPreview: true,
+                                disableTelemetry: isTelemetryDisabled()
+                            });
                         });
-                    });
-                }
+                    }
 
-                // The generator writes to <output>/<subfolder>/ (e.g. fern-typescript-sdk/).
-                // NOTE: this duplicates the subfolder logic in resolveAbsolutePathToLocalPreview
-                // inside runLocalGenerationForWorkspace. Both call getGeneratorOutputSubfolder so
-                // they stay in sync, but if the runner ever changes its path convention this will
-                // need to be updated too.
-                const actualOutputPath =
-                    absolutePathToOutput != null
-                        ? join(absolutePathToOutput, RelativeFilePath.of(getGeneratorOutputSubfolder(generator.name)))
-                        : undefined;
+                    // The generator writes to <output>/<subfolder>/ (e.g. fern-typescript-sdk/).
+                    // NOTE: this duplicates the subfolder logic in resolveAbsolutePathToLocalPreview
+                    // inside runLocalGenerationForWorkspace. Both call getGeneratorOutputSubfolder so
+                    // they stay in sync, but if the runner ever changes its path convention this will
+                    // need to be updated too.
+                    const actualOutputPath =
+                        absolutePathToOutput != null
+                            ? join(
+                                  absolutePathToOutput,
+                                  RelativeFilePath.of(getGeneratorOutputSubfolder(generator.name))
+                              )
+                            : undefined;
 
-                // Build the diff URL when --push-diff was used and the generator has GitHub config.
-                const previewBranch = `fern-preview-${previewVersion}`;
-                const diffUrl =
-                    pushDiff && githubInfo != null
-                        ? `https://github.com/${githubInfo.owner}/${githubInfo.repo}/compare/${previewBranch}`
-                        : undefined;
+                    // Build the diff URL when --push-diff was used and the generator has GitHub config.
+                    const previewBranch = `fern-preview-${previewVersion}`;
+                    const diffUrl =
+                        pushDiff && githubInfo != null
+                            ? `https://github.com/${githubInfo.owner}/${githubInfo.repo}/compare/${previewBranch}`
+                            : undefined;
 
-                if (publishToRegistry && registryUrl != null) {
-                    const installCommand = `npm install ${originalPackageName}@npm:${previewPackageName}@${previewVersion} --registry ${registryUrl}`;
-                    previews.push({
+                    const installCommand =
+                        !publishToRegistry || effectiveRegistryUrl == null
+                            ? ""
+                            : language === "npm"
+                              ? `npm install ${originalPackageName}@npm:${previewPackageName}@${previewVersion} ` +
+                                `--registry ${effectiveRegistryUrl}`
+                              : `pip install ${previewPackageName}==${previewVersion} ` +
+                                `--index-url ${effectiveRegistryUrl}`;
+
+                    return {
                         preview_id: previewId,
                         install: installCommand,
                         version: previewVersion,
                         package_name: previewPackageName,
-                        registry_url: registryUrl,
+                        registry_url: effectiveRegistryUrl ?? "",
                         output_path: actualOutputPath,
                         diff_url: diffUrl
-                    });
-                } else {
-                    previews.push({
-                        preview_id: previewId,
-                        install: "",
-                        version: previewVersion,
-                        package_name: previewPackageName,
-                        registry_url: "",
-                        output_path: actualOutputPath,
-                        diff_url: diffUrl
-                    });
-                }
+                    };
+                })
+            );
+
+            const successes = settled.flatMap((r) => (r.status === "fulfilled" ? [r.value] : []));
+            const failures = settled.flatMap((r) => (r.status === "rejected" ? [r.reason] : []));
+            previews.push(...successes);
+
+            if (failures.length > 0 && successes.length > 0) {
+                cliContext.logger.warn(
+                    `Successfully published ${successes.length} of ${settled.length} SDK previews. ` +
+                        `Failures: ${failures.map((e) => (e instanceof Error ? e.message : String(e))).join("; ")}`
+                );
+            } else if (failures.length > 0) {
+                const first = failures[0];
+                const rest = failures.slice(1);
+                const restMsg = rest.length
+                    ? ` (and ${rest.length} more: ${rest.map((e) => (e instanceof Error ? e.message : String(e))).join("; ")})`
+                    : "";
+                throw first instanceof Error ? new Error(first.message + restMsg) : new Error(String(first) + restMsg);
             }
         }
     } catch (error) {

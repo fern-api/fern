@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Expand `fern sdk preview` to support Python generators publishing to a PyPI
+    registry. Supports remote and local generation paths and emits a `pip install`
+    command for sharing in PR reviews. Requires `FERN_PREVIEW_PYPI_REGISTRY_URL`
+    or `--output <url>`. `--push-diff` for Python is deferred to a future release.
+  type: feat

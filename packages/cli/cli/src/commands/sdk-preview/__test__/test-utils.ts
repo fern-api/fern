@@ -12,11 +12,17 @@ export function makeGenerator(
     outputMode: FernFiddle.remoteGen.OutputMode,
     overrides?: Partial<generatorsYml.GeneratorInvocation>
 ): generatorsYml.GeneratorInvocation {
+    // Test stubs may pass plain objects (e.g. `{ type: "downloadFiles" } as never`).
+    // Normalize to a proper FernFiddle instance so _visit() is always available.
+    const safeOutputMode =
+        typeof (outputMode as unknown as Record<string, unknown>)?._visit === "function"
+            ? outputMode
+            : FernFiddle.remoteGen.OutputMode.downloadFiles({});
     return {
         name,
         version: "0.0.1",
         config: {},
-        outputMode,
+        outputMode: safeOutputMode,
         automation: { generate: false, upgrade: false, preview: false, verify: false },
         containerImage: undefined,
         irVersionOverride: undefined,
@@ -39,6 +45,7 @@ export function makeNpmGenerator(
 ): generatorsYml.GeneratorInvocation {
     return makeGenerator("fernapi/fern-typescript-node-sdk", outputMode, {
         version: "0.57.10",
+        raw: { output: { location: "npm", "package-name": "@acme/sdk" } } as never,
         ...overrides
     });
 }
@@ -49,13 +56,14 @@ export function makePypiGenerator(
 ): generatorsYml.GeneratorInvocation {
     return makeGenerator("fernapi/fern-python-sdk", outputMode, {
         version: "4.3.8",
+        raw: { output: { location: "pypi", "package-name": "acme-sdk" } } as never,
         ...overrides
     });
 }
 
 export function makeGroup(generators: generatorsYml.GeneratorInvocation[]): generatorsYml.GeneratorGroup {
     return {
-        groupName: "test-group",
+        groupName: "preview",
         audiences: { type: "all" },
         generators,
         reviewers: undefined
