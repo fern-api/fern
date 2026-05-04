@@ -593,6 +593,7 @@ export interface AnnouncementOverlay {
 export type NavigationItemOverlay =
     | NavigationItemOverlay.Page
     | NavigationItemOverlay.Section
+    | NavigationItemOverlay.Api
     | NavigationItemOverlay.Tab
     | NavigationItemOverlay.Variant;
 
@@ -607,6 +608,12 @@ export declare namespace NavigationItemOverlay {
         title: string | undefined;
         slug: string | undefined;
         contents: NavigationItemOverlay[] | undefined;
+    }
+    export interface Api {
+        type: "api";
+        title: string | undefined;
+        slug: string | undefined;
+        layout: NavigationItemOverlay[] | undefined;
     }
     export interface Tab {
         type: "tab";

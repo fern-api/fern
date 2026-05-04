@@ -248,7 +248,10 @@ function applyTabOverlayToNode(node: Record<string, unknown>, overlay: docsYml.T
         for (const [tabId, tabOverlay] of Object.entries(overlay.tabs)) {
             // Match by tab ID (YAML key) against nav tree slug segment, or
             // by the overlay's explicit slug field against the slug segment
-            const isMatch = tabId === tabSlug || (tabOverlay.slug != null && tabOverlay.slug === tabSlug);
+            const isMatch =
+                tabId === tabSlug ||
+                slugifyNavigationKey(tabId) === tabSlug ||
+                (tabOverlay.slug != null && tabOverlay.slug === tabSlug);
             if (isMatch && tabOverlay.displayName != null) {
                 node["title"] = tabOverlay.displayName;
                 break;
@@ -309,7 +312,7 @@ function findTabNavOverlay(
             continue;
         }
         // Match by tab ID against slug
-        if (tabSlug != null && navItem.tabId === tabSlug) {
+        if (tabSlug != null && (navItem.tabId === tabSlug || slugifyNavigationKey(navItem.tabId) === tabSlug)) {
             return navItem;
         }
         // Match by overlay tab's explicit slug field against the nav tree slug
@@ -345,6 +348,7 @@ function applySidebarChildOverlays(
     navOverlays: docsYml.NavigationItemOverlay[],
     overlay: docsYml.TranslationNavigationOverlay
 ): unknown[] {
+    let apiIdx = 0;
     let sectionIdx = 0;
     let pageIdx = 0;
 
@@ -355,6 +359,29 @@ function applySidebarChildOverlays(
         }
 
         const childType = childObj["type"] as string | undefined;
+
+        if (childType === "apiReference") {
+            const apiOverlays = navOverlays.filter(
+                (item): item is docsYml.NavigationItemOverlay.Api => item.type === "api"
+            );
+            const matched = matchApiOverlay(childObj, apiOverlays, apiIdx);
+            apiIdx++;
+
+            if (matched != null) {
+                const walked = walkAndApply(child, overlay) as Record<string, unknown>;
+                if (matched.title != null) {
+                    walked["title"] = matched.title;
+                }
+                if (matched.layout != null) {
+                    const childArray = walked["children"] as unknown[] | undefined;
+                    if (childArray != null) {
+                        walked["children"] = applySidebarChildOverlays(childArray, matched.layout, overlay);
+                    }
+                }
+                return walked;
+            }
+            return walkAndApply(child, overlay);
+        }
 
         if (childType === "section") {
             const sectionOverlays = navOverlays.filter(
@@ -370,6 +397,29 @@ function applySidebarChildOverlays(
                 }
                 if (matched.contents != null) {
                     // Re-apply section content overlays recursively
+                    const childArray = walked["children"] as unknown[] | undefined;
+                    if (childArray != null) {
+                        walked["children"] = applySidebarChildOverlays(childArray, matched.contents, overlay);
+                    }
+                }
+                return walked;
+            }
+            return walkAndApply(child, overlay);
+        }
+
+        if (childType === "apiPackage") {
+            const sectionOverlays = navOverlays.filter(
+                (item): item is docsYml.NavigationItemOverlay.Section => item.type === "section"
+            );
+            const matched = matchSectionOverlay(childObj, sectionOverlays, sectionIdx);
+            sectionIdx++;
+
+            if (matched != null) {
+                const walked = walkAndApply(child, overlay) as Record<string, unknown>;
+                if (matched.title != null) {
+                    walked["title"] = matched.title;
+                }
+                if (matched.contents != null) {
                     const childArray = walked["children"] as unknown[] | undefined;
                     if (childArray != null) {
                         walked["children"] = applySidebarChildOverlays(childArray, matched.contents, overlay);
@@ -397,6 +447,26 @@ function applySidebarChildOverlays(
 
         return walkAndApply(child, overlay);
     });
+}
+
+function matchApiOverlay(
+    apiReference: Record<string, unknown>,
+    overlays: docsYml.NavigationItemOverlay.Api[],
+    positionIndex: number
+): docsYml.NavigationItemOverlay.Api | undefined {
+    const apiSlug = extractLastSlugSegment(apiReference["slug"] as string | undefined);
+
+    for (const o of overlays) {
+        if (o.slug != null && o.slug === apiSlug) {
+            return o;
+        }
+    }
+
+    const noSlugOverlays = overlays.filter((o) => o.slug == null);
+    if (positionIndex < noSlugOverlays.length) {
+        return noSlugOverlays[positionIndex];
+    }
+    return undefined;
 }
 
 function matchSectionOverlay(
@@ -451,6 +521,14 @@ function extractLastSlugSegment(slug: string | undefined): string | undefined {
     }
     const parts = slug.split("/");
     return parts[parts.length - 1];
+}
+
+function slugifyNavigationKey(value: string): string {
+    return value
+        .trim()
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "");
 }
 
 /**

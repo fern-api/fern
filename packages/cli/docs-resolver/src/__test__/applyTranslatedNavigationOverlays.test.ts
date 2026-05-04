@@ -250,6 +250,83 @@ describe("applyTranslatedNavigationOverlays", () => {
         expect(sectionChildren[0]?.title).toBe("概要");
     });
 
+    it("applies api reference and api package title overrides from navigation overlay", () => {
+        const root = {
+            type: "root",
+            child: {
+                type: "unversioned",
+                child: {
+                    type: "tabbed",
+                    children: [
+                        {
+                            type: "tab",
+                            title: "API Reference",
+                            slug: "docs/api-reference",
+                            child: {
+                                type: "sidebarRoot",
+                                children: [
+                                    {
+                                        type: "apiReference",
+                                        title: "Plant Store API",
+                                        slug: "docs/api-reference/plant-store-api",
+                                        children: [
+                                            {
+                                                type: "apiPackage",
+                                                title: "Plants",
+                                                slug: "docs/api-reference/plant-store-api/plants",
+                                                children: [
+                                                    {
+                                                        type: "endpoint",
+                                                        title: "Create plant",
+                                                        slug: "docs/api-reference/plant-store-api/plants/create-plant"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            }
+        };
+        const overlay: docsYml.TranslationNavigationOverlay = {
+            ...emptyOverlay(),
+            tabs: {
+                "api-reference": { displayName: "API 参考", slug: undefined }
+            },
+            navigation: [
+                {
+                    type: "tab",
+                    tabId: "API Reference",
+                    layout: [
+                        {
+                            type: "api",
+                            title: "植物商店 API",
+                            slug: "plant-store-api",
+                            layout: [{ type: "section", title: "植物", slug: "plants", contents: undefined }]
+                        }
+                    ],
+                    variants: undefined
+                }
+            ]
+        };
+
+        const result = applyTranslatedNavigationOverlays(asRoot(root), overlay);
+        const unversioned = (result as unknown as Record<string, unknown>).child as Record<string, unknown>;
+        const tabbed = unversioned.child as Record<string, unknown>;
+        const tab = (tabbed.children as Array<Record<string, unknown>>)[0] as Record<string, unknown>;
+        expect(tab.title).toBe("API 参考");
+
+        const sidebarRoot = tab.child as Record<string, unknown>;
+        const apiReference = (sidebarRoot.children as Array<Record<string, unknown>>)[0] as Record<string, unknown>;
+        expect(apiReference.title).toBe("植物商店 API");
+
+        const apiPackage = (apiReference.children as Array<Record<string, unknown>>)[0] as Record<string, unknown>;
+        expect(apiPackage.title).toBe("植物");
+    });
+
     it("matches tabs by overlay slug when tab ID differs from nav slug", () => {
         const root = {
             type: "root",

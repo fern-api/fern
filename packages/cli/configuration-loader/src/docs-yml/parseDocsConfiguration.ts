@@ -2381,6 +2381,18 @@ function parseNavigationItemOverlays(items: unknown[]): docsYml.NavigationItemOv
             continue;
         }
 
+        // An API reference item: { api: "Title", layout: [...] }
+        if (typeof obj.api === "string") {
+            const apiOverlay: docsYml.NavigationItemOverlay.Api = {
+                type: "api",
+                title: obj.api,
+                slug: typeof obj.slug === "string" ? obj.slug : undefined,
+                layout: Array.isArray(obj.layout) ? parseNavigationItemOverlays(obj.layout) : undefined
+            };
+            result.push(apiOverlay);
+            continue;
+        }
+
         // A page item: { page: "Title", path: "..." }
         if (typeof obj.page === "string") {
             const pageOverlay: docsYml.NavigationItemOverlay.Page = {
