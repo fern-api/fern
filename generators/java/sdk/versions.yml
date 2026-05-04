@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.8.0
+  changelogEntry:
+    - summary: |
+        Generate CONTRIBUTING.md for Java SDKs.
+      type: feat
+  createdAt: "2026-05-04"
+  irVersion: 66
 - version: 4.7.1
   changelogEntry:
     - summary: |
