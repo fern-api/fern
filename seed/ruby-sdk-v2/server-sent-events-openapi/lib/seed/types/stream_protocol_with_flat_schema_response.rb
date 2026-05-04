@@ -8,6 +8,7 @@ module Seed
       discriminant :event
 
       member -> { Seed::Types::DataContextHeartbeat }, key: "HEARTBEAT"
+
       member -> { Seed::Types::DataContextEntityEvent }, key: "ENTITY"
     end
   end

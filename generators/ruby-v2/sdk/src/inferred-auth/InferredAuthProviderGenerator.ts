@@ -173,18 +173,26 @@ export class InferredAuthProviderGenerator extends FileGenerator<RubyFile, SdkCu
         method.addStatement(
             ruby.codeblock((writer) => {
                 // Build the request hash
-                writer.writeLine("request_params = {");
-                writer.indent();
-                for (const prop of requestProperties) {
-                    if (prop.literal != null) {
-                        // Emit the literal value directly
-                        writer.writeLine(`${prop.snakeName}: ${this.getLiteralAsRubyString(prop.literal)},`);
-                    } else {
-                        writer.writeLine(`${prop.snakeName}: @options[:${prop.snakeName}],`);
+                if (requestProperties.length === 0) {
+                    writer.writeLine("request_params = {}");
+                } else {
+                    writer.writeLine("request_params = {");
+                    writer.indent();
+                    for (let i = 0; i < requestProperties.length; i++) {
+                        const prop = requestProperties[i];
+                        if (prop == null) {
+                            continue;
+                        }
+                        const comma = i < requestProperties.length - 1 ? "," : "";
+                        if (prop.literal != null) {
+                            writer.writeLine(`${prop.snakeName}: ${this.getLiteralAsRubyString(prop.literal)}${comma}`);
+                        } else {
+                            writer.writeLine(`${prop.snakeName}: @options[:${prop.snakeName}]${comma}`);
+                        }
                     }
+                    writer.dedent();
+                    writer.writeLine("}");
                 }
-                writer.dedent();
-                writer.writeLine("}");
                 writer.newLine();
 
                 // Call the token endpoint
@@ -285,25 +293,37 @@ export class InferredAuthProviderGenerator extends FileGenerator<RubyFile, SdkCu
             returnType: ruby.Type.hash(ruby.Type.string(), ruby.Type.string())
         });
 
+        const hashEntries: { key: ruby.AstNode; value: ruby.AstNode }[] = [];
+        for (const header of authenticatedRequestHeaders) {
+            if (header == null) {
+                continue;
+            }
+            const headerName = header.headerName;
+            const valuePrefix = header.valuePrefix;
+
+            let valueNode: ruby.AstNode;
+            if (valuePrefix != null) {
+                // valuePrefix is API-spec-controlled; sanitize Ruby interpolation
+                // sigils so a spec cannot inject executable code (e.g.
+                // "Bearer #{Kernel.system(...)} ") into the generated
+                // auth_headers method. Matches RootClientGenerator.getRawClientHeaders.
+                const safePrefix = valuePrefix.replace(/#(?=[{$@])/g, "\\#");
+                valueNode = ruby.TypeLiteral.interpolatedString(`${safePrefix}#{access_token}`);
+            } else {
+                valueNode = ruby.codeblock("access_token");
+            }
+
+            hashEntries.push({
+                key: ruby.TypeLiteral.string(headerName),
+                value: valueNode
+            });
+        }
+
         method.addStatement(
             ruby.codeblock((writer) => {
                 writer.writeLine("access_token = token");
-                writer.writeLine("{");
-                writer.indent();
-
-                for (const header of authenticatedRequestHeaders) {
-                    const headerName = header.headerName;
-                    const valuePrefix = header.valuePrefix;
-
-                    if (valuePrefix != null) {
-                        writer.writeLine(`"${headerName}" => "${valuePrefix}#{access_token}",`);
-                    } else {
-                        writer.writeLine(`"${headerName}" => access_token,`);
-                    }
-                }
-
-                writer.dedent();
-                writer.writeLine("}");
+                writer.writeNode(ruby.TypeLiteral.hash(hashEntries));
+                writer.writeNewLineIfLastLineNot();
             })
         );
 

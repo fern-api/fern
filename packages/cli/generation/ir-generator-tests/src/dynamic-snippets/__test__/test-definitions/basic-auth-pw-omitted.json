@@ -127,6 +127,7 @@
                         "safeName": "Username"
                     }
                 },
+                "usernameOmit": null,
                 "password": {
                     "originalName": "password",
                     "camelCase": {
@@ -145,7 +146,8 @@
                         "unsafeName": "Password",
                         "safeName": "Password"
                     }
-                }
+                },
+                "passwordOmit": true
             },
             "declaration": {
                 "name": {
@@ -247,6 +249,7 @@
                         "safeName": "Username"
                     }
                 },
+                "usernameOmit": null,
                 "password": {
                     "originalName": "password",
                     "camelCase": {
@@ -265,7 +268,8 @@
                         "unsafeName": "Password",
                         "safeName": "Password"
                     }
-                }
+                },
+                "passwordOmit": true
             },
             "declaration": {
                 "name": {

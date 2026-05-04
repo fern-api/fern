@@ -82,6 +82,7 @@ export declare namespace GeneratedSdkClientClassImpl {
         generateEndpointMetadata: boolean;
         parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
         offsetSemantics: "item-index" | "page-index";
+        alwaysSendAuth: boolean;
     }
 }
 
@@ -126,6 +127,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private readonly anyEndpointWithAuth: boolean;
     private readonly generateEndpointMetadata: boolean;
     private readonly offsetSemantics: "item-index" | "page-index";
+    private readonly alwaysSendAuth: boolean;
 
     constructor({
         caseConverter,
@@ -153,7 +155,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         formDataSupport,
         generateEndpointMetadata,
         parameterNaming,
-        offsetSemantics
+        offsetSemantics,
+        alwaysSendAuth
     }: GeneratedSdkClientClassImpl.Init) {
         this.case = caseConverter;
         this.isRoot = isRoot;
@@ -174,6 +177,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.generateEndpointMetadata = generateEndpointMetadata;
         this.parameterNaming = parameterNaming;
         this.offsetSemantics = offsetSemantics;
+        this.alwaysSendAuth = alwaysSendAuth;
 
         const package_ = packageResolver.resolvePackage(packageId);
         this.package_ = package_;
@@ -371,7 +375,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 retainOriginalCasing: this.retainOriginalCasing,
                 omitUndefined: this.omitUndefined,
                 parameterNaming,
-                caseConverter: this.case
+                caseConverter: this.case,
+                alwaysSendAuth: this.alwaysSendAuth
             });
         } else {
             this.generatedWebsocketImplementation = undefined;
@@ -404,6 +409,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                         name: header.name,
                         prefix: undefined,
                         headerEnvVar: header.env,
+                        headerPlaceholder: undefined,
                         valueType: header.valueType,
                         docs: header.docs
                     })
@@ -571,6 +577,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         return this.generateEndpointMetadata;
     }
 
+    public getAlwaysSendAuth(): boolean {
+        return this.alwaysSendAuth;
+    }
+
     public accessFromRootClient(args: { referenceToRootClient: ts.Expression }): ts.Expression {
         return [...this.package_.fernFilepath.allParts].reduce<ts.Expression>(
             (acc, part) => ts.factory.createPropertyAccessExpression(acc, this.case.camelUnsafe(part)),
@@ -635,7 +645,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
         // Determine the type for _options based on whether auth is required
         const optionsType =
-            this.authProvider && this.anyEndpointWithAuth
+            this.authProvider && (this.anyEndpointWithAuth || this.alwaysSendAuth)
                 ? (() => {
                       // Import NormalizedClientOptionsWithAuth and normalizeClientOptionsWithAuth from BaseClient
                       context.importsManager.addImportFromRoot("BaseClient", {
@@ -682,7 +692,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             isReadonly: true
         });
 
-        if (this.authProvider && this.anyEndpointWithAuth) {
+        if (this.authProvider && (this.anyEndpointWithAuth || this.alwaysSendAuth)) {
             const parameters = [
                 {
                     name: GeneratedSdkClientClassImpl.OPTIONS_PARAMETER_NAME,
@@ -877,7 +887,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         context: FileContext;
     }): void {
         // Build the auth headers getter expression
-        const hasAuth = this.authProvider && this.anyEndpointWithAuth;
+        const hasAuth = this.authProvider && (this.anyEndpointWithAuth || this.alwaysSendAuth);
         let getAuthHeadersCode: string;
         if (hasAuth) {
             getAuthHeadersCode =

@@ -11,6 +11,7 @@ module Seed
             discriminant :type
 
             member -> { Seed::V2::V3::Problem::Types::DeepEqualityCorrectnessCheck }, key: "DEEP_EQUALITY"
+
             member -> { Seed::V2::V3::Problem::Types::VoidFunctionDefinitionThatTakesActualResult }, key: "CUSTOM"
           end
         end

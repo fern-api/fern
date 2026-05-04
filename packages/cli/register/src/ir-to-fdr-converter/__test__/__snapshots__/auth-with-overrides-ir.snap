@@ -15,6 +15,7 @@
         "key": "customAuth",
         "token": "token",
         "tokenEnvVar": "CUSTOM_AUTH_TOKEN",
+        "tokenPlaceholder": undefined,
         "type": "bearer",
       },
     ],
@@ -639,6 +640,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "id",
             "propertyAccess": undefined,
@@ -677,6 +679,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "name",
             "propertyAccess": undefined,
@@ -715,6 +718,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "email",
             "propertyAccess": undefined,

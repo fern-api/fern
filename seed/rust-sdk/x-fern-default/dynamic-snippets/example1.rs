@@ -11,7 +11,7 @@ async fn main() {
         .test_get(
             &"region".to_string(),
             &TestGetQueryRequest {
-                limit: Some("100".to_string()),
+                limit: Some("limit".to_string()),
                 ..Default::default()
             },
             None,

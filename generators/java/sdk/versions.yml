@@ -1,4 +1,99 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.7.1
+  changelogEntry:
+    - summary: |
+        Upgrade glibc/glibc-common/glibc-minimal-langpack in the Java SDK generator
+        container to address CVE-2026-4046 (iconv() assertion failure when converting
+        IBM1390/IBM1399 inputs; fixed in glibc 2.34-231.amzn2023.0.4).
+      type: chore
+  createdAt: "2026-05-04"
+  irVersion: 66
+- version: 4.7.0
+  changelogEntry:
+    - summary: |
+        Add `retry-status-codes` config with `"legacy"` and `"recommended"` modes. Legacy (default)
+        preserves current behavior (408, 429, >= 500). Recommended retries only transient
+        codes (408, 429, 502, 503, 504), avoiding idempotency issues with 500. A 4.0.0
+        migration auto-pins legacy for upgrading users.
+      type: feat
+  createdAt: "2026-04-30"
+  irVersion: 66
+- version: 4.6.4
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippet generation for multipart/form-data endpoints with file parameters.
+        Previously, when a file value was not provided in the example, the file argument was
+        omitted from the snippet, causing subsequent arguments to shift and produce compile errors
+        (e.g. `incompatible types: <Op>Request cannot be converted to Optional<java.io.File>`).
+        Now emits `null` for missing file arguments to keep positional args aligned.
+      type: fix
+  createdAt: "2026-04-30"
+  irVersion: 66
+- version: 4.6.3
+  changelogEntry:
+    - summary: |
+        Fix Java SDK snippet and wire test generation for `allow-multiple` query
+        parameters when `coerce-optional-schemas-to-nullable: true` is set.
+        Previously, list items wrapped in `optional<...>` and/or `nullable<...>`
+        produced calls like `.strategy(Arrays.asList(Optional.of(...)))`, which
+        failed to compile because the generated builders only expose `List<T>`
+        overloads (no `List<Optional<T>>` or `List<Nullable<T>>`). The snippet
+        generator now strips both `optional` and `nullable` wrappers from list
+        items, so the emitted code matches an existing builder signature.
+      type: fix
+  createdAt: "2026-04-29"
+  irVersion: 66
+- version: 4.6.2
+  changelogEntry:
+    - summary: |
+        Fix Java SDK generation crash when an OpenAPI property name is a Java keyword
+        or literal (e.g. `true`, `false`, `null`, `if`, `new`). `KeyWordUtils` only
+        sanitized 12 of Java's reserved words, so JavaPoet rejected the rest with
+        `IllegalArgumentException: not a valid name`. The reserved-word set now covers
+        the full Java keyword list plus `true`/`false`/`null` literals, so these
+        properties generate as `_<name>` fields with `@JsonProperty("<name>")`
+        preserving the wire format.
+      type: fix
+  createdAt: "2026-04-28"
+  irVersion: 66
+- version: 4.6.1
+  changelogEntry:
+    - summary: |
+        Fix undiscriminated union deserializer misclassifying payloads. The generated
+        deserializer now checks that all required wire keys are present in the JSON
+        object before attempting to convert to each variant, preventing the first
+        variant from always winning when Jackson's builder silently accepts missing
+        required fields.
+      type: fix
+    - summary: |
+        Replace switch-on-type WebSocket message dispatch with shape-based trial
+        deserialization. Messages are now matched by checking required-field presence
+        and literal values before attempting Jackson conversion. This correctly handles
+        AsyncAPI channels where multiple message schemas share the same discriminator
+        value (e.g., two "History" variants with disjoint required fields).
+      type: fix
+  createdAt: "2026-04-27"
+  irVersion: 66
+- version: 4.6.0
+  changelogEntry:
+    - summary: |
+        Use auth scheme placeholder values in README snippets when configured via
+        `placeholder` field on auth schemes.
+      type: feat
+  createdAt: "2026-04-25"
+  irVersion: 66
+- version: 4.5.0
+  changelogEntry:
+    - summary: |
+        Support omitting username or password from basic auth when configured via
+        `usernameOmit`/`passwordOmit` in the IR. When a field is omitted, it is
+        removed from the SDK's public API (`credentials()` takes fewer arguments)
+        and an empty string is used internally for the auth header encoding. When
+        both fields are omitted, the `credentials()` call and Authorization header
+        are skipped entirely.
+      type: feat
+  createdAt: "2026-04-24"
+  irVersion: 66
 - version: 4.4.1
   changelogEntry:
     - summary: |
@@ -83,7 +178,6 @@
       type: fix
   createdAt: "2026-04-14"
   irVersion: 66
-
 - version: 4.2.0
   changelogEntry:
     - summary: |
@@ -107,7 +201,6 @@
       type: feat
   createdAt: "2026-04-10"
   irVersion: 66
-
 - version: 4.2.0-rc.0
   changelogEntry:
     - summary: |
@@ -137,7 +230,6 @@
       type: fix
   createdAt: "2026-04-09"
   irVersion: 65
-
 - version: 4.1.2
   changelogEntry:
     - summary: |
@@ -148,7 +240,6 @@
       type: fix
   createdAt: "2026-04-08"
   irVersion: 65
-
 - version: 4.1.1
   changelogEntry:
     - summary: |

@@ -7,12 +7,12 @@ import Unions
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "type": "date",
                   "value": "1994-01-01"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = UnionsClient(
@@ -31,12 +31,12 @@ import Unions
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "type": "datetime",
                   "value": "1994-01-01T01:01:01Z"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = UnionsClient(
@@ -55,12 +55,12 @@ import Unions
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "type": "value",
                   "value": 1
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = UnionsClient(
@@ -79,9 +79,9 @@ import Unions
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 true
-                """.utf8
+                """#.utf8
             )
         )
         let client = UnionsClient(
@@ -102,9 +102,9 @@ import Unions
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 true
-                """.utf8
+                """#.utf8
             )
         )
         let client = UnionsClient(
@@ -125,9 +125,9 @@ import Unions
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 true
-                """.utf8
+                """#.utf8
             )
         )
         let client = UnionsClient(

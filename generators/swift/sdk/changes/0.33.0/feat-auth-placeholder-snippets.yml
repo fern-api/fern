@@ -1,0 +1,5 @@
+- summary: |
+    Show explicit auth parameters in README snippets (errors, custom networking,
+    environments sections) instead of eliding with `(...)`. Uses IR `placeholder`
+    fields when configured, with sensible defaults.
+  type: feat

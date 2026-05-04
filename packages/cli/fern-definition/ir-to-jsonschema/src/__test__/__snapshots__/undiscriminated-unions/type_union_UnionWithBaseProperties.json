@@ -1,0 +1,58 @@
+{
+  "anyOf": [
+    {
+      "$ref": "#/definitions/union.NamedMetadata"
+    },
+    {
+      "$ref": "#/definitions/union.OptionalMetadata"
+    }
+  ],
+  "definitions": {
+    "union.NamedMetadata": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "value": {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "object",
+              "array",
+              "null"
+            ]
+          }
+        }
+      },
+      "required": [
+        "name",
+        "value"
+      ],
+      "additionalProperties": false
+    },
+    "union.OptionalMetadata": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "object",
+              "array",
+              "null"
+            ]
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  }
+}

@@ -106,7 +106,7 @@ public class AsyncRawSeedValidationClient {
 
         QueryStringMapper.addQueryParameter(httpUrl, "decimal", request.getDecimal(), false);
         QueryStringMapper.addQueryParameter(httpUrl, "even", request.getEven(), false);
-        QueryStringMapper.addQueryParameter(httpUrl, "name", request.getName().orElse("fern"), false);
+        QueryStringMapper.addQueryParameter(httpUrl, "name", request.getName(), false);
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);

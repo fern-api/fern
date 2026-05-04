@@ -125,6 +125,15 @@ types:
       name: commons.NameAndWireValueOrString
       valueType: TypeReference
       propertyAccess: optional<ObjectPropertyAccess>
+      defaultValue:
+        type: optional<unknown>
+        docs: |
+          The documentation default value for this property. Populated from
+          the OpenAPI `default` field on the property's schema (or from the
+          Fern Definition `default` on the property). Used by docs to render
+          "Defaults to ..." metadata. Supports arbitrary JSON values (e.g.
+          arrays) since the existing primitive `default` lives on the
+          `PrimitiveType` and cannot represent container defaults.
       v2Examples: optional<examples.V2SchemaExamples>
 
   ObjectPropertyAccess:
@@ -186,6 +195,7 @@ types:
   UndiscriminatedUnionTypeDeclaration:
     properties:
       members: list<UndiscriminatedUnionMember>
+      baseProperties: optional<list<ObjectProperty>>
 
   UndiscriminatedUnionMember:
     extends: commons.WithDocs

@@ -2984,6 +2984,10 @@ describe("getLatestVersionFromGitTags", () => {
         // Configure git user for commits
         await runCommand(["git", "config", "user.email", "test@test.com"], cloneDir);
         await runCommand(["git", "config", "user.name", "Test"], cloneDir);
+        // Prevent GPG/SSH commit signing from hijacking the terminal for a password / Touch ID
+        // prompt when the developer running tests has a signing key configured globally.
+        await runCommand(["git", "config", "commit.gpgsign", "false"], cloneDir);
+        await runCommand(["git", "config", "tag.gpgsign", "false"], cloneDir);
 
         // Create an initial commit so we have something to tag
         const filePath = path.join(cloneDir, "README.md");

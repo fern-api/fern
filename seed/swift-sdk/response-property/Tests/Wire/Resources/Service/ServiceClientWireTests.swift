@@ -7,7 +7,7 @@ import ResponseProperty
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "data": {
                     "id": "id",
@@ -18,7 +18,7 @@ import ResponseProperty
                   },
                   "docs": "docs"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ResponsePropertyClient(
@@ -46,7 +46,7 @@ import ResponseProperty
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "data": {
                     "id": "id",
@@ -57,7 +57,7 @@ import ResponseProperty
                   },
                   "docs": "docs"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ResponsePropertyClient(
@@ -85,11 +85,11 @@ import ResponseProperty
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "data": "data"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ResponsePropertyClient(
@@ -110,7 +110,7 @@ import ResponseProperty
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "data": {
                     "id": "id",
@@ -121,7 +121,7 @@ import ResponseProperty
                   },
                   "docs": "docs"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ResponsePropertyClient(
@@ -149,7 +149,7 @@ import ResponseProperty
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "data": {
                     "id": "id",
@@ -160,7 +160,7 @@ import ResponseProperty
                   },
                   "docs": "docs"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ResponsePropertyClient(
@@ -188,11 +188,11 @@ import ResponseProperty
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "docs": "docs"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ResponsePropertyClient(
@@ -213,11 +213,11 @@ import ResponseProperty
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "data": "data"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ResponsePropertyClient(

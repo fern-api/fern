@@ -7,7 +7,7 @@ import Exhaustive
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "items": [
                     {
@@ -19,7 +19,7 @@ import Exhaustive
                   ],
                   "next": "next"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ExhaustiveClient(

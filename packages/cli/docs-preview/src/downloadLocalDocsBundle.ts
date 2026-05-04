@@ -6,7 +6,7 @@ import chalk from "chalk";
 import { execSync } from "child_process";
 import cliProgress from "cli-progress";
 import decompress from "decompress";
-import { cpSync, existsSync, lstatSync, mkdirSync, symlinkSync } from "fs";
+import { cpSync, existsSync, lstatSync, mkdirSync, readdirSync, symlinkSync } from "fs";
 import { mkdir, readFile, rename, rm, writeFile } from "fs/promises";
 import { homedir } from "os";
 import path from "path";
@@ -37,11 +37,11 @@ interface SymlinkEntry {
 }
 
 /**
- * Checks the Windows registry for LongPathsEnabled and prints a prominent
- * warning if long paths are not enabled. Long paths are required because
+ * Checks the Windows registry for LongPathsEnabled and throws a hard
+ * error if long paths are not enabled. Long paths are required because
  * .pnpm directory names inside the bundle can exceed the 260-char MAX_PATH.
  */
-function warnIfLongPathsDisabled(logger: Logger): void {
+function assertLongPathsEnabled(logger: Logger): void {
     try {
         const output = execSync(
             'reg query "HKLM\\SYSTEM\\CurrentControlSet\\Control\\FileSystem" /v LongPathsEnabled',
@@ -57,30 +57,17 @@ function warnIfLongPathsDisabled(logger: Logger): void {
         logger.debug(`Registry query for LongPathsEnabled failed: ${error}`);
     }
 
-    logger.warn(
-        chalk.yellow.bold(
-            "\n" +
-                "╔══════════════════════════════════════════════════════════════════════════╗\n" +
-                "║  WARNING: Windows long path support is NOT enabled.                     ║\n" +
-                "║                                                                         ║\n" +
-                "║  The docs bundle contains deeply nested .pnpm paths that may exceed     ║\n" +
-                "║  the 260-character MAX_PATH limit. Extraction may silently truncate     ║\n" +
-                "║  paths and produce a broken bundle.                                     ║\n" +
-                "║                                                                         ║\n" +
-                "║  To fix, run this in an elevated PowerShell:                             ║\n" +
-                "║                                                                         ║\n" +
-                "║    New-ItemProperty -Path                                                ║\n" +
-                "║      'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\FileSystem'           ║\n" +
-                "║      -Name 'LongPathsEnabled' -Value 1 -PropertyType DWORD -Force       ║\n" +
-                "║                                                                         ║\n" +
-                "║  Then restart your terminal.                                             ║\n" +
-                "║                                                                         ║\n" +
-                "║  For more details, see:                                                  ║\n" +
-                "║  https://learn.microsoft.com/en-us/windows/win32/fileio/                 ║\n" +
-                "║  maximum-file-path-limitation                                            ║\n" +
-                "╚══════════════════════════════════════════════════════════════════════════╝\n"
-        )
-    );
+    throw new CliError({
+        message:
+            "Windows long path support is not enabled. " +
+            "The docs bundle contains deeply nested .pnpm paths that exceed the 260-character MAX_PATH limit.\n\n" +
+            "To fix, run this in an elevated PowerShell:\n\n" +
+            "  New-ItemProperty -Path 'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\FileSystem' " +
+            "-Name 'LongPathsEnabled' -Value 1 -PropertyType DWORD -Force\n\n" +
+            "Then restart your terminal.",
+        code: CliError.Code.EnvironmentError,
+        docsLink: "https://learn.microsoft.com/en-us/windows/win32/fileio/maximum-file-path-limitation"
+    });
 }
 
 function isWithinOutputDir(resolvedPath: string, outputDir: string): boolean {
@@ -163,6 +150,7 @@ function resolveWindowsSymlinks(
         }
 
         if (!existsSync(sourcePath)) {
+            logger.debug(`Symlink target not found: ${symlinkPath} -> ${linkname} (resolved: ${sourcePath})`);
             failed++;
             continue;
         }
@@ -193,12 +181,58 @@ function resolveWindowsSymlinks(
             `out of ${symlinks.length}`
     );
 
-    // Verify critical top-level packages
+    // Verify critical top-level packages and attempt recovery for any that are missing.
+    // On Windows the .pnpm directory names can be extremely long (peer-dep hashes) which
+    // may cause extraction or junction creation to fail silently. When a critical package
+    // is missing, scan the .pnpm store for a matching directory and copy it directly.
     const standaloneNM = path.join(outputDir, "standalone", "node_modules");
-    for (const dep of ["next", "react", "react-dom", "styled-jsx"]) {
-        if (!existsSync(path.join(standaloneNM, dep))) {
-            logger.warn(`${dep} is MISSING from standalone/node_modules/`);
+    const criticalDeps = ["next", "react", "react-dom", "styled-jsx"];
+    for (const dep of criticalDeps) {
+        const depPath = path.join(standaloneNM, dep);
+        if (existsSync(depPath)) {
+            continue;
         }
+
+        logger.warn(`${dep} is MISSING from standalone/node_modules/ — attempting recovery`);
+
+        // Search .pnpm store for the real package directory.
+        // Structure: .pnpm/<dep>@<version>[_peer-hash]/node_modules/<dep>/
+        if (existsSync(rootPnpmStore)) {
+            try {
+                const pnpmDirs = readdirSync(rootPnpmStore);
+                // Match directories that start with "<dep>@" (e.g., "next@15.3.2_...")
+                const matchingDir = pnpmDirs.find((d) => d === dep || d.startsWith(`${dep}@`));
+                if (matchingDir != null) {
+                    const realPkgPath = path.join(rootPnpmStore, matchingDir, "node_modules", dep);
+                    if (existsSync(realPkgPath)) {
+                        logger.debug(`Found ${dep} in .pnpm store at ${realPkgPath}, copying...`);
+                        mkdirSync(path.dirname(depPath), { recursive: true });
+                        cpSync(realPkgPath, depPath, { recursive: true });
+                        if (existsSync(depPath)) {
+                            logger.info(`Recovered ${dep} via direct copy from .pnpm store`);
+                            continue;
+                        }
+                    }
+                }
+            } catch (recoverError) {
+                logger.debug(`Recovery scan for ${dep} failed: ${recoverError}`);
+            }
+        }
+
+        // If we still don't have it, search through symlink entries for the original
+        // linkname and try to resolve from any matching .pnpm directory
+        const symlinkEntry = symlinks.find(
+            (s) =>
+                s.path === path.join("standalone", "node_modules", dep).replace(/\\/g, "/") ||
+                s.path.endsWith(`/node_modules/${dep}`)
+        );
+        if (symlinkEntry != null) {
+            logger.debug(
+                `${dep} was a symlink: ${symlinkEntry.path} -> ${symlinkEntry.linkname} but resolution failed`
+            );
+        }
+
+        logger.error(`${dep} could not be recovered and will be unavailable at runtime`);
     }
 }
 
@@ -406,7 +440,7 @@ export async function downloadBundle({
         }
 
         if (PLATFORM_IS_WINDOWS) {
-            warnIfLongPathsDisabled(logger);
+            assertLongPathsEnabled(logger);
         }
 
         const collectedSymlinks: SymlinkEntry[] = [];

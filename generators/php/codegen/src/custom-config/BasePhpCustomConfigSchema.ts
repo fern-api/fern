@@ -12,6 +12,7 @@ export const BasePhpCustomConfigSchema = z.object({
     customReadmeSections: z.array(CustomReadmeSectionSchema).optional(),
     offsetSemantics: z.enum(["item-index", "page-index"]).optional(),
     omitFernHeaders: z.boolean().optional(),
+    retryStatusCodes: z.optional(z.enum(["legacy", "recommended"])),
     // Deprecated; use clientName instead.
     "client-class-name": z.string().optional()
 });

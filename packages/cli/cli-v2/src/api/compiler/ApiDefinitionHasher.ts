@@ -7,6 +7,7 @@ import type { ApiSpec } from "../config/ApiSpec.js";
 import { isAsyncApiSpec } from "../config/AsyncApiSpec.js";
 import { isConjureSpec } from "../config/ConjureSpec.js";
 import { isFernSpec } from "../config/FernSpec.js";
+import { isGraphQlSpec } from "../config/GraphQlSpec.js";
 import { isOpenApiSpec } from "../config/OpenApiSpec.js";
 import { isOpenRpcSpec } from "../config/OpenRpcSpec.js";
 import { isProtobufSpec } from "../config/ProtobufSpec.js";
@@ -94,6 +95,11 @@ export class ApiDefinitionHasher {
         }
         if (isOpenRpcSpec(spec)) {
             paths.push(spec.openrpc);
+            this.pushOverrides(spec.overrides, paths);
+            return;
+        }
+        if (isGraphQlSpec(spec)) {
+            paths.push(spec.graphql);
             this.pushOverrides(spec.overrides, paths);
             return;
         }

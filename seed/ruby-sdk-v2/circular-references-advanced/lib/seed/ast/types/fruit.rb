@@ -7,6 +7,7 @@ module Seed
         extend Seed::Internal::Types::Union
 
         member -> { Seed::Ast::Types::Acai }
+
         member -> { Seed::Ast::Types::Fig }
       end
     end

@@ -756,9 +756,6 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         if (requestArgs.headers != null) {
             fetcherArgs.headers = requestArgs.headers;
         }
-        if (requestArgs.queryParameters != null) {
-            fetcherArgs.queryParameters = requestArgs.queryParameters;
-        }
         if (requestArgs.body != null) {
             fetcherArgs.body = requestArgs.body;
         }
@@ -909,7 +906,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             // When headersOnly is true (URI/path pagination), exclude query params and body
             // since the next URL already contains all necessary parameters.
             ...(options?.headersOnly
-                ? { queryParameters: undefined, body: undefined, contentType: undefined, requestType: undefined }
+                ? { queryString: undefined, body: undefined, contentType: undefined, requestType: undefined }
                 : {}),
             url: urlOverride ?? this.getReferenceToBaseUrl(context),
             method: ts.factory.createStringLiteral(this.endpoint.method),

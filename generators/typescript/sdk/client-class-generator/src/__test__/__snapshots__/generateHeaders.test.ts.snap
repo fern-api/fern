@@ -61,3 +61,12 @@ exports[`generateHeaders > generates root-level header with non-literal non-bool
 exports[`generateHeaders > generates root-level overridable header with boolean literal value 1`] = `"let _headers: Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "X-Feature-Flag": (requestOptions?.xFeatureFlag ?? true).toString() }), requestOptions?.headers);"`;
 
 exports[`generateHeaders > generates version header when version context has generated version 1`] = `"let _headers: Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "X-API-Version": requestOptions?.xApiVersion }), requestOptions?.headers);"`;
+
+exports[`generateHeaders > includes auth headers when alwaysSendAuth is true even if endpoint.auth is false 1`] = `
+"const _authRequest: AuthRequest = getAuthRequest(this._authProvider);
+let _headers: Fetcher.Args["headers"] = mergeHeaders(_authRequest.headers, this._options?.headers, requestOptions?.headers);"
+`;
+
+exports[`generateHeaders > skips auth headers on auth endpoints even when alwaysSendAuth is true (prevents auth loop) 1`] = `"let _headers: Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);"`;
+
+exports[`generateHeaders > skips auth headers when alwaysSendAuth is false and endpoint.auth is false 1`] = `"let _headers: Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);"`;

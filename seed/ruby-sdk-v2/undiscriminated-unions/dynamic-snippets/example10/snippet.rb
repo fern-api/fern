@@ -2,7 +2,7 @@ require "seed"
 
 client = Seed::Client.new(base_url: "https://api.fern.com")
 
-client.union.test_camel_case_properties(payment_method: {
-  method_: "method",
-  card_number: "cardNumber"
+client.union.aliased_object_union(request: {
+  only_in_a: "onlyInA",
+  shared_number: 1
 })

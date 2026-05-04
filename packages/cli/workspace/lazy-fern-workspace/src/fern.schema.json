@@ -206,7 +206,11 @@
         "in-development",
         "pre-release",
         "deprecated",
-        "generally-available"
+        "generally-available",
+        "alpha",
+        "beta",
+        "preview",
+        "legacy"
       ]
     },
     "availability.AvailabilitySchema": {
@@ -1437,6 +1441,19 @@
         },
         "discriminated": {
           "const": false
+        },
+        "base-properties": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/types.TypeReferenceSchema"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "union": {
           "type": "array",
@@ -3158,7 +3175,14 @@
           ]
         },
         "auth": {
-          "type": "boolean"
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "url": {
           "oneOf": [
@@ -3237,7 +3261,6 @@
         }
       },
       "required": [
-        "auth",
         "base-path",
         "endpoints"
       ],

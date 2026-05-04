@@ -427,6 +427,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "fieldIssue",
             "propertyAccess": undefined,
@@ -494,6 +495,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "formatIssue",
             "propertyAccess": undefined,
@@ -552,6 +554,7 @@
       },
       "shape": {
         "_visit": [Function],
+        "baseProperties": undefined,
         "members": [
           {
             "docs": "AnyOf error variant A with title",
@@ -626,6 +629,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "optionA",
             "propertyAccess": undefined,
@@ -693,6 +697,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "optionB",
             "propertyAccess": undefined,
@@ -751,6 +756,7 @@
       },
       "shape": {
         "_visit": [Function],
+        "baseProperties": undefined,
         "members": [
           {
             "docs": "First variant for anyOf with title",
@@ -825,6 +831,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "success",
             "propertyAccess": undefined,

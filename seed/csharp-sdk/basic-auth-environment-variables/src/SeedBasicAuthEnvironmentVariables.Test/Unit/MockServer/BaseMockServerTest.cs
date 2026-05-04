@@ -24,8 +24,8 @@ public class BaseMockServerTest
 
         // Initialize the Client
         Client = new SeedBasicAuthEnvironmentVariablesClient(
-            "USERNAME",
-            "ACCESS_TOKEN",
+            "YOUR_USERNAME",
+            "YOUR_PASSWORD",
             clientOptions: new ClientOptions { BaseUrl = Server.Urls[0], MaxRetries = 0 }
         );
     }

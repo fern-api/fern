@@ -7,11 +7,11 @@ import Errors
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "bar": "bar"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ErrorsClient(
@@ -34,11 +34,11 @@ import Errors
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "bar": "bar"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ErrorsClient(
@@ -61,11 +61,11 @@ import Errors
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "bar": "hello"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ErrorsClient(
@@ -88,11 +88,11 @@ import Errors
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "bar": "bar"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ErrorsClient(

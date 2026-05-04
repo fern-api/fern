@@ -110,6 +110,25 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/NestedUnionRoot"
+  /with-base-properties:
+    post:
+      operationId: union_getWithBaseProperties
+      tags:
+        - Union
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnionWithBaseProperties"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UnionWithBaseProperties"
   /camel-case:
     post:
       operationId: union_testCamelCaseProperties
@@ -257,6 +276,22 @@ components:
       enum:
         - name
         - value
+    UnionWithBaseProperties:
+      title: UnionWithBaseProperties
+      type: object
+      properties:
+        id:
+          type: string
+        category:
+          type: string
+      required:
+        - id
+      oneOf:
+        - $ref: "#/components/schemas/OptionalMetadata"
+        - $ref: "#/components/schemas/NamedMetadata"
+      description: |-
+        Tests that base-properties on an undiscriminated union are correctly
+        represented in the IR and generated code.
     UnionWithIdenticalStrings:
       title: UnionWithIdenticalStrings
       oneOf:

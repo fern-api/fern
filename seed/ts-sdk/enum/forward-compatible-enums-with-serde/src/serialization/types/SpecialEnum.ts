@@ -5,7 +5,7 @@ import * as core from "../../core/index.js";
 import type * as serializers from "../index.js";
 
 export const SpecialEnum: core.serialization.Schema<serializers.SpecialEnum.Raw, SeedEnum.SpecialEnum> =
-    core.serialization.enum_([
+    core.serialization.forwardCompatibleEnum_([
         "",
         'Hello \\"World\\"',
         "Hello 'World'",

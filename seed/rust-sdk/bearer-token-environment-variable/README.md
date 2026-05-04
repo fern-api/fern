@@ -47,7 +47,7 @@ use seed_bearer_token_environment_variable::prelude::*;
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
-        token: Some("<token>".to_string()),
+        token: Some("YOUR_API_KEY".to_string()),
         ..Default::default()
     };
     let client = BearerTokenEnvironmentVariableClient::new(config).expect("Failed to build client");
@@ -85,7 +85,12 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 
 - [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
 - [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
-- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
+- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#server_error_responses) (Internal Server Error)
+
+The `retryStatusCodes` configuration controls which [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#server_error_responses) status codes are retried:
+
+- `legacy` (default): Retries `408`, `429`, and all `>= 500`
+- `recommended`: Retries `408`, `429`, `502`, `503`, `504` only (excludes `500 Internal Server Error` to avoid retrying non-idempotent failures)
 
 Use the `max_retries` method to configure this behavior.
 

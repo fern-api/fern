@@ -224,6 +224,24 @@ func (c *Client) WithJSONProperty(
 	return response.Body, nil
 }
 
+func (c *Client) WithRefBody(
+	ctx context.Context,
+	imageFile io.Reader,
+	request *fern.WithRefBodyRequest,
+	opts ...option.RequestOption,
+) (string, error) {
+	response, err := c.WithRawResponse.WithRefBody(
+		ctx,
+		imageFile,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return "", err
+	}
+	return response.Body, nil
+}
+
 func (c *Client) Simple(
 	ctx context.Context,
 	opts ...option.RequestOption,

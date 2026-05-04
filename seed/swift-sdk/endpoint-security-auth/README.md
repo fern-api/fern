@@ -72,7 +72,7 @@ The SDK throws a single error enum for all failures. Client-side issues encoding
 ```swift
 import EndpointSecurityAuth
 
-let client = EndpointSecurityAuthClient(...)
+let client = EndpointSecurityAuthClient(apiKey: "YOUR_API_KEY", token: "YOUR_API_KEY", username: "YOUR_USERNAME", password: "YOUR_PASSWORD")
 
 do {
     let response = try await client.auth.getToken(...)
@@ -152,7 +152,10 @@ import Foundation
 import EndpointSecurityAuth
 
 let client = EndpointSecurityAuthClient(
-    ...,
+    apiKey: "YOUR_API_KEY",
+    token: "YOUR_API_KEY",
+    username: "YOUR_USERNAME",
+    password: "YOUR_PASSWORD",
     urlSession: // Provide your implementation here
 )
 ```

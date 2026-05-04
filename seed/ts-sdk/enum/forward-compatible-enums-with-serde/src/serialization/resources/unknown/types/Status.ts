@@ -4,10 +4,8 @@ import type * as SeedEnum from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
-export const Status: core.serialization.Schema<serializers.Status.Raw, SeedEnum.Status> = core.serialization.enum_([
-    "Known",
-    "Unknown",
-]);
+export const Status: core.serialization.Schema<serializers.Status.Raw, SeedEnum.Status> =
+    core.serialization.forwardCompatibleEnum_(["Known", "Unknown"]);
 
 export declare namespace Status {
     export type Raw = "Known" | "Unknown";

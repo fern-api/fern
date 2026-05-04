@@ -4,7 +4,7 @@ import BearerTokenEnvironmentVariable
 private func main() async throws {
     let client = BearerTokenEnvironmentVariableClient(
         baseURL: "https://api.fern.com",
-        apiKey: "<token>"
+        apiKey: "YOUR_API_KEY"
     )
 
     _ = try await client.service.getWithBearerToken()

@@ -11,18 +11,18 @@ import { BasePythonCustomConfigSchema } from "../custom-config/BasePythonCustomC
 import { PythonProject } from "../project/index.js";
 import { PythonTypeMapper } from "./PythonTypeMapper.js";
 
-export const PYTHON_CASE_CONVERTER = new CaseConverter({
-    generationLanguage: "python",
-    keywords: undefined,
-    smartCasing: true
-});
-
 export abstract class AbstractPythonGeneratorContext<
     CustomConfig extends BasePythonCustomConfigSchema
 > extends AbstractGeneratorContext {
     private packageName: string;
     public readonly pythonTypeMapper: PythonTypeMapper;
     public readonly project: PythonProject;
+    /**
+     * Case converter configured from the IR's casingsConfig (driven by the customer's
+     * `smart-casing` flag in generators.yml). Generated names must use this so they
+     * match the IR server's pre-computed snake_case values.
+     */
+    public readonly caseConverter: CaseConverter;
 
     public constructor(
         public readonly ir: FernIr.IntermediateRepresentation,
@@ -31,9 +31,12 @@ export abstract class AbstractPythonGeneratorContext<
         public readonly generatorNotificationService: GeneratorNotificationService
     ) {
         super(config, generatorNotificationService);
-        this.packageName = snakeCase(
-            `${this.config.organization}_${PYTHON_CASE_CONVERTER.snakeUnsafe(this.ir.apiName)}`
-        );
+        this.caseConverter = new CaseConverter({
+            generationLanguage: "python",
+            keywords: undefined,
+            smartCasing: this.ir.casingsConfig?.smartCasing ?? true
+        });
+        this.packageName = snakeCase(`${this.config.organization}_${this.caseConverter.snakeUnsafe(this.ir.apiName)}`);
         this.pythonTypeMapper = new PythonTypeMapper(this);
         this.project = new PythonProject({ context: this });
     }
@@ -60,15 +63,15 @@ export abstract class AbstractPythonGeneratorContext<
     }
 
     public getClassName(name: FernIr.NameOrString): string {
-        return PYTHON_CASE_CONVERTER.pascalSafe(name);
+        return this.caseConverter.pascalSafe(name);
     }
 
     public getPascalCaseSafeName(name: FernIr.NameOrString): string {
-        return PYTHON_CASE_CONVERTER.pascalSafe(name);
+        return this.caseConverter.pascalSafe(name);
     }
 
     public getSnakeCaseSafeName(name: FernIr.NameOrString): string {
-        return PYTHON_CASE_CONVERTER.snakeSafe(name);
+        return this.caseConverter.snakeSafe(name);
     }
 
     public getModulePathForId(typeId: string): string[] {

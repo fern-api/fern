@@ -181,7 +181,15 @@ function hasNumericStatus(err: unknown): err is { status: number } {
 }
 
 function isNotFoundError(err: unknown): boolean {
-    return hasNumericStatus(err) && err.status === 404;
+    if (hasNumericStatus(err) && err.status === 404) {
+        return true;
+    }
+    // GitHub's updateRef returns 422 (not 404) when the branch doesn't exist yet.
+    if (hasNumericStatus(err) && err.status === 422) {
+        const message = extractErrorMessage(err).toLowerCase();
+        return message.includes("reference does not exist");
+    }
+    return false;
 }
 
 export function isNonFastForwardError(err: unknown): boolean {

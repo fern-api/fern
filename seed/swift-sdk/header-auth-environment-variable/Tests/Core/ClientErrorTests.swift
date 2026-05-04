@@ -15,7 +15,7 @@ import Testing
 
         let client = HeaderTokenEnvironmentVariableClient(
             baseURL: "https://api.fern.com",
-            headerTokenAuth: "<value>",
+            headerTokenAuth: "YOUR_HEADER_VALUE",
             urlSession: stub.urlSession
         )
 
@@ -46,7 +46,7 @@ import Testing
 
         let client = HeaderTokenEnvironmentVariableClient(
             baseURL: "https://api.fern.com",
-            headerTokenAuth: "<value>",
+            headerTokenAuth: "YOUR_HEADER_VALUE",
             urlSession: stub.urlSession
         )
 
@@ -77,7 +77,7 @@ import Testing
 
         let client = HeaderTokenEnvironmentVariableClient(
             baseURL: "https://api.fern.com",
-            headerTokenAuth: "<value>",
+            headerTokenAuth: "YOUR_HEADER_VALUE",
             urlSession: stub.urlSession
         )
 
@@ -110,7 +110,7 @@ import Testing
 
         let client = HeaderTokenEnvironmentVariableClient(
             baseURL: "https://api.fern.com",
-            headerTokenAuth: "<value>",
+            headerTokenAuth: "YOUR_HEADER_VALUE",
             urlSession: stub.urlSession
         )
 
@@ -141,7 +141,7 @@ import Testing
 
         let client = HeaderTokenEnvironmentVariableClient(
             baseURL: "https://api.fern.com",
-            headerTokenAuth: "<value>",
+            headerTokenAuth: "YOUR_HEADER_VALUE",
             urlSession: stub.urlSession
         )
 
@@ -174,7 +174,7 @@ import Testing
 
         let client = HeaderTokenEnvironmentVariableClient(
             baseURL: "https://api.fern.com",
-            headerTokenAuth: "<value>",
+            headerTokenAuth: "YOUR_HEADER_VALUE",
             urlSession: stub.urlSession
         )
 
@@ -205,7 +205,7 @@ import Testing
 
         let client = HeaderTokenEnvironmentVariableClient(
             baseURL: "https://api.fern.com",
-            headerTokenAuth: "<value>",
+            headerTokenAuth: "YOUR_HEADER_VALUE",
             urlSession: stub.urlSession
         )
 

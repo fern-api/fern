@@ -427,6 +427,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "errorA",
             "propertyAccess": undefined,
@@ -494,6 +495,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "errorB",
             "propertyAccess": undefined,
@@ -559,6 +561,7 @@
       },
       "shape": {
         "_visit": [Function],
+        "baseProperties": undefined,
         "members": [
           {
             "docs": "Error variant A with title",
@@ -633,6 +636,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "titledFieldA",
             "propertyAccess": undefined,
@@ -700,6 +704,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "titledFieldB",
             "propertyAccess": undefined,
@@ -765,6 +770,7 @@
       },
       "shape": {
         "_visit": [Function],
+        "baseProperties": undefined,
         "members": [
           {
             "docs": "First variant for oneOf with title",
@@ -839,6 +845,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "success",
             "propertyAccess": undefined,

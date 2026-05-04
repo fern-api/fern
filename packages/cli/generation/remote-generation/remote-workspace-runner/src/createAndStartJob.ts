@@ -41,7 +41,8 @@ export async function createAndStartJob({
     retryRateLimited,
     automationMode,
     autoMerge,
-    skipIfNoDiff
+    skipIfNoDiff,
+    loginCommand = "fern login"
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     workspace: FernWorkspace;
@@ -65,6 +66,11 @@ export async function createAndStartJob({
     automationMode?: boolean;
     autoMerge?: boolean;
     skipIfNoDiff?: boolean;
+    /**
+     * CLI command to reference in auth-failure hints (e.g. 'fern login' for v1,
+     * 'fern auth login' for CLI v2). Defaults to 'fern login'.
+     */
+    loginCommand?: string;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
     // Determine fernignore contents:
     // - If --skip-fernignore is set, upload an empty .fernignore so nothing is ignored
@@ -101,7 +107,8 @@ export async function createAndStartJob({
                 fernignoreContents,
                 automationMode,
                 autoMerge,
-                skipIfNoDiff
+                skipIfNoDiff,
+                loginCommand
             }),
         retryRateLimited,
         logger: context.logger,
@@ -130,7 +137,8 @@ async function createJob({
     fiddlePreview,
     pushPreviewBranch,
     fernignoreContents,
-    skipIfNoDiff
+    skipIfNoDiff,
+    loginCommand
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     workspace: FernWorkspace;
@@ -150,6 +158,7 @@ async function createJob({
     automationMode?: boolean;
     autoMerge?: boolean;
     skipIfNoDiff?: boolean;
+    loginCommand: string;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
     const remoteGenerationService = createFiddleService({ token: token.value });
 
@@ -201,6 +210,17 @@ async function createJob({
         if (rawError?.content?.reason === "status-code" && rawError.content.statusCode === 429) {
             throw new TooManyRequestsError();
         }
+
+        // GithubAppNotInstalled is not in the SDK's error union for createJobV3, so
+        // handle it before the visitor. Fiddle returns this when the Fern GitHub App
+        // is not installed on the target repository.
+        const githubAppNotInstalledMessage = extractGithubAppNotInstalledMessage(rawError);
+        if (githubAppNotInstalledMessage != null) {
+            return context.failAndThrow(githubAppNotInstalledMessage, undefined, {
+                code: CliError.Code.ConfigError
+            });
+        }
+
         return convertCreateJobError(rawError)._visit({
             illegalApiNameError: () => {
                 return context.failAndThrow(
@@ -247,7 +267,7 @@ async function createJob({
             },
             insufficientPermissions: () => {
                 return context.failAndThrow(
-                    `You do not have permission to run this generator for organization '${organization}'. Please run 'fern login' to ensure you are logged in with the correct account.\n\n` +
+                    `You do not have permission to run this generator for organization '${organization}'. Please run '${loginCommand}' to ensure you are logged in with the correct account.\n\n` +
                         "Please ensure you have membership at https://dashboard.buildwithfern.com, and ask a team member for an invite if not.",
                     undefined,
                     { code: CliError.Code.AuthError }
@@ -423,6 +443,29 @@ export function extractErrorMessage(error: any): string | undefined {
         return body.message;
     }
     return undefined;
+}
+
+/**
+ * Checks whether a raw SDK error is a GithubAppNotInstalled response from Fiddle.
+ * The error body shape is: { error: "GithubAppNotInstalled", content: { message, repositoryName } }.
+ * Returns a user-friendly message if matched, undefined otherwise.
+ */
+// biome-ignore lint/suspicious/noExplicitAny: the error shape from the SDK is not well-typed
+function extractGithubAppNotInstalledMessage(error: any): string | undefined {
+    // biome-ignore lint/suspicious/noExplicitAny: intentional dynamic navigation
+    const body: any = error?.content?.reason === "status-code" ? error.content.body : undefined;
+    if (body?.error !== "GithubAppNotInstalled") {
+        return undefined;
+    }
+    if (typeof body?.content?.message === "string") {
+        return body.content.message;
+    }
+    const repo =
+        typeof body?.content?.repositoryName === "string" ? body.content.repositoryName : "the target repository";
+    return (
+        `The Fern GitHub App is not installed on ${repo}. ` +
+        "Please install it (https://github.com/apps/fern-api) and try again."
+    );
 }
 
 // Fiddle's ErrorBody serializes as { error: "<ErrorType>", content: <TypedBody> }.

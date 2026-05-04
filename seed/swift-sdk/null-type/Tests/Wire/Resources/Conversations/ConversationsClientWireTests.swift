@@ -7,14 +7,14 @@ import Api
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "conversation_id": {
                     "key": "value"
                   },
                   "dry_run": true
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ApiClient(
@@ -40,14 +40,14 @@ import Api
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "conversation_id": {
                     "key": "value"
                   },
                   "dry_run": true
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ApiClient(

@@ -1,0 +1,26 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    cli-v2: introduce a shared stdin/stdout abstraction so commands uniformly honor
+    the Unix `-` marker on I/O flags (stdin for inputs, stdout for outputs), with a
+    "`-` used at most once per command" guard and a JSON-or-path input helper that
+    parses inline JSON first and falls back to a file read.
+  type: internal
+
+- summary: |
+    cli-v2: `fern api compile --output -` now uses the shared stdio helper (behavior
+    unchanged — still streams IR JSON to stdout).
+  type: internal
+
+- summary: |
+    cli-v2: `fern sdk generate --api -` and `fern sdk preview --api -` now read the
+    OpenAPI/AsyncAPI spec from stdin (e.g. `cat openapi.json | fern sdk generate
+    --api - --org acme --target typescript --output ./sdk`).
+  type: feat
+
+- summary: |
+    cli-v2: `fern api split --output -` prints the generated overlay/overrides for
+    the matching spec to stdout as a preview, without modifying the workspace
+    (no git-HEAD restore, no fern.yml updates). Requires `--api` to select a single
+    spec.
+  type: feat

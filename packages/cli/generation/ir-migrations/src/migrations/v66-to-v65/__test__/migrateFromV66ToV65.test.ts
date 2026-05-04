@@ -547,6 +547,7 @@ describe("migrateFromV66ToV65", () => {
                 docs: undefined,
                 token: "apiToken",
                 tokenEnvVar: undefined,
+                tokenPlaceholder: undefined,
                 key: "bearer"
             });
 
@@ -574,9 +575,11 @@ describe("migrateFromV66ToV65", () => {
                 username: "user",
                 usernameEnvVar: undefined,
                 usernameOmit: undefined,
+                usernamePlaceholder: undefined,
                 password: "pass",
                 passwordEnvVar: undefined,
                 passwordOmit: undefined,
+                passwordPlaceholder: undefined,
                 key: "basic"
             });
 
@@ -604,6 +607,7 @@ describe("migrateFromV66ToV65", () => {
                 valueType: IrVersions.V66.TypeReference.primitive({ v1: "STRING", v2: undefined }),
                 prefix: undefined,
                 headerEnvVar: undefined,
+                headerPlaceholder: undefined,
                 key: "header"
             });
 

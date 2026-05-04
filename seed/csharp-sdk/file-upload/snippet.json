@@ -28,6 +28,18 @@
         {
             "example_identifier": null,
             "id": {
+                "path": "/with-ref-body",
+                "method": "POST",
+                "identifier_override": "endpoint_service.withRefBody"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedFileUpload;\n\nvar client = new SeedFileUploadClient();\nawait client.Service.WithRefBodyAsync(\n    new WithRefBodyRequest { Request = new MyObject { Foo = \"bar\" } }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
                 "path": "/snippet",
                 "method": "POST",
                 "identifier_override": "endpoint_service.simple"

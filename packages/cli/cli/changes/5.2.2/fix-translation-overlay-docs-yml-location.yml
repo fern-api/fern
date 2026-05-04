@@ -1,0 +1,5 @@
+- summary: |
+    Translated `docs.yml` overlays are now read directly from `translations/<locale>/docs.yml`,
+    so an extra nested `fern/` folder is no longer required. The legacy
+    `translations/<locale>/fern/docs.yml` location continues to work as a fallback.
+  type: fix

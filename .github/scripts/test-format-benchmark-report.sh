@@ -555,6 +555,26 @@ test_sentinel_marker() {
 
 test_sentinel_marker
 
+# Test: Docs benchmark jsonl (no .generator field) is ignored, not rendered
+# as a "null | combined | ..." row. This guards against a regression where
+# the `benchmark-pr-*` artifact pattern used to match `benchmark-pr-docs`
+# and fed docs rows into the SDK benchmark table.
+test_skips_docs_benchmark_entries() {
+  echo "Test: Docs jsonl entries without .generator field are skipped"
+  setup_dirs
+  echo '{"generator":"ts-sdk","spec":"square","duration_seconds":200,"exit_code":0}' > "$PR_DIR/ts-sdk.jsonl"
+  # Simulate a docs benchmark artifact accidentally landing in PR_DIR.
+  echo '{"type":"docs","spec":"combined","versions_count":30,"duration_seconds":311.4,"exit_code":0}' > "$PR_DIR/docs.jsonl"
+
+  OUTPUT=$(bash "$REPORT_SCRIPT" "$PR_DIR" "$MAIN_DIR")
+
+  assert_contains "$OUTPUT" "| ts-sdk | square |" "Renders SDK generator row"
+  assert_not_contains "$OUTPUT" "| null |" "Does not render a null generator row"
+  assert_not_contains "$OUTPUT" "combined" "Does not render the docs 'combined' spec row"
+}
+
+test_skips_docs_benchmark_entries
+
 # Test 24: Report includes "Last updated" timestamp
 test_last_updated_timestamp() {
   echo "Test: Report includes last updated timestamp"

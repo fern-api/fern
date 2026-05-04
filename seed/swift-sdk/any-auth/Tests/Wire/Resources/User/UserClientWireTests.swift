@@ -7,7 +7,7 @@ import AnyAuth
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 [
                   {
                     "id": "id",
@@ -18,7 +18,7 @@ import AnyAuth
                     "name": "name"
                   }
                 ]
-                """.utf8
+                """#.utf8
             )
         )
         let client = AnyAuthClient(
@@ -44,7 +44,7 @@ import AnyAuth
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 [
                   {
                     "id": "id",
@@ -55,7 +55,7 @@ import AnyAuth
                     "name": "name"
                   }
                 ]
-                """.utf8
+                """#.utf8
             )
         )
         let client = AnyAuthClient(

@@ -7,14 +7,14 @@ import InferredAuthImplicitApiKey
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "access_token": "access_token",
                   "token_type": "token_type",
                   "expires_in": 1,
                   "scope": "scope"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = InferredAuthImplicitApiKeyClient(

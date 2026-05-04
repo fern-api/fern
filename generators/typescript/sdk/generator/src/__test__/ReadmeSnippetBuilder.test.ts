@@ -1099,6 +1099,7 @@ describe("ReadmeSnippetBuilder", () => {
                             screamingSnakeCase: { unsafeName: "TOKEN", safeName: "TOKEN" }
                         },
                         tokenEnvVar: undefined,
+                        tokenPlaceholder: undefined,
                         docs: undefined
                     })
                 ]

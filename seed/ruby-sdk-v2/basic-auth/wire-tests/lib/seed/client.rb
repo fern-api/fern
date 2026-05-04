@@ -2,9 +2,9 @@
 
 module Seed
   class Client
-    # @param base_url [String, nil]
     # @param username [String]
     # @param password [String]
+    # @param base_url [String, nil]
     #
     # @return [void]
     def initialize(username:, password:, base_url: nil)

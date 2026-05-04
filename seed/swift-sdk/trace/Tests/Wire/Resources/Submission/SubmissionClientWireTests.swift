@@ -7,14 +7,14 @@ import Trace
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "sessionId": "sessionId",
                   "executionSessionUrl": "executionSessionUrl",
                   "language": "JAVA",
                   "status": "CREATING_CONTAINER"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = TraceClient(
@@ -39,14 +39,14 @@ import Trace
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "sessionId": "sessionId",
                   "executionSessionUrl": "executionSessionUrl",
                   "language": "JAVA",
                   "status": "CREATING_CONTAINER"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = TraceClient(
@@ -71,7 +71,7 @@ import Trace
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "states": {
                     "states": {
@@ -89,7 +89,7 @@ import Trace
                     "warmingSessionIds"
                   ]
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = TraceClient(

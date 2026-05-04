@@ -7,9 +7,9 @@ import ObjectsWithImports
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 string
-                """.utf8
+                """#.utf8
             )
         )
         let client = ObjectsWithImportsClient(
@@ -32,9 +32,9 @@ import ObjectsWithImports
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 string
-                """.utf8
+                """#.utf8
             )
         )
         let client = ObjectsWithImportsClient(
@@ -55,11 +55,11 @@ import ObjectsWithImports
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "success": true
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ObjectsWithImportsClient(

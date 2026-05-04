@@ -185,6 +185,22 @@ impl ServiceClient {
             .await
     }
 
+    pub async fn with_ref_body(
+        &self,
+        request: &WithRefBodyRequest,
+        options: Option<RequestOptions>,
+    ) -> Result<String, ApiError> {
+        self.http_client
+            .execute_multipart_request(
+                Method::POST,
+                "/with-ref-body",
+                request.clone().to_multipart(),
+                None,
+                options,
+            )
+            .await
+    }
+
     pub async fn simple(&self, options: Option<RequestOptions>) -> Result<(), ApiError> {
         self.http_client
             .execute_request(Method::POST, "/snippet", None, None, options)

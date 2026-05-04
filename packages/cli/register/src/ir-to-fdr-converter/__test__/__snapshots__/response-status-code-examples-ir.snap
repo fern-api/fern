@@ -584,6 +584,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "The amount in cents",
             "name": "amount",
             "propertyAccess": undefined,
@@ -652,6 +653,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "The unique ID for this session",
             "name": "id",
             "propertyAccess": undefined,
@@ -682,6 +684,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "The URL to redirect the user to",
             "name": "redirect_url",
             "propertyAccess": undefined,
@@ -750,6 +753,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "The error code",
             "name": "error",
             "propertyAccess": undefined,
@@ -780,6 +784,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "The error message",
             "name": "message",
             "propertyAccess": undefined,

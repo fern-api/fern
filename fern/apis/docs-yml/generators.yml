@@ -4,7 +4,7 @@ groups:
   local:
     generators:
       - name: fernapi/fern-typescript-sdk
-        version: 3.49.0
+        version: 3.66.1
         output:
           location: local-file-system
           path: ../../../packages/cli/configuration/src/docs-yml/schemas/sdk

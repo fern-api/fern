@@ -2,7 +2,6 @@ import { File, getNameFromWireValue, getWireValue } from "@fern-api/base-generat
 import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { isEqualToMatcher, WireMock, WireMockStubMapping } from "@fern-api/mock-utils";
-import { PYTHON_CASE_CONVERTER as caseConverter } from "@fern-api/python-base";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
@@ -32,7 +31,9 @@ export class WireTestSetupGenerator {
     }
 
     public static getWiremockConfigContent(ir: FernIr.IntermediateRepresentation) {
-        return new WireMock().convertToWireMock(ir);
+        // ir-sdk versions may differ between python-sdk and mock-utils;
+        // 66.3.0 is a strict superset (adds optional fields only), so this is safe.
+        return new WireMock().convertToWireMock(ir as Parameters<WireMock["convertToWireMock"]>[0]);
     }
 
     /**
@@ -596,7 +597,7 @@ def pytest_unconfigure(config: pytest.Config) -> None:
 
             // Build kwargs for all base URLs using dynamic base_url variable
             const baseUrlKwargsDynamic = envConfig.baseUrls
-                .map((baseUrl) => `${caseConverter.snakeSafe(baseUrl.name)}=base_url`)
+                .map((baseUrl) => `${this.context.caseConverter.snakeSafe(baseUrl.name)}=base_url`)
                 .join(", ");
 
             return {
@@ -633,7 +634,7 @@ def pytest_unconfigure(config: pytest.Config) -> None:
         // Process global headers that might require values
         if (this.ir.headers) {
             for (const header of this.ir.headers) {
-                const paramName = caseConverter.snakeSafe(getNameFromWireValue(header.name));
+                const paramName = this.context.caseConverter.snakeSafe(getNameFromWireValue(header.name));
                 // Only add if not already added by auth schemes
                 if (!params.some((p) => p.startsWith(`        ${paramName}=`))) {
                     params.push(`        ${paramName}="test_${paramName}",`);
@@ -653,19 +654,24 @@ def pytest_unconfigure(config: pytest.Config) -> None:
         switch (scheme.type) {
             case "bearer":
                 // Bearer auth uses a token parameter
-                params.push(`        ${caseConverter.snakeSafe(scheme.token)}="test_token",`);
+                params.push(`        ${this.context.caseConverter.snakeSafe(scheme.token)}="test_token",`);
                 break;
 
             case "basic":
-                // Basic auth uses username and password parameters
-                params.push(`        ${caseConverter.snakeSafe(scheme.username)}="test_username",`);
-                params.push(`        ${caseConverter.snakeSafe(scheme.password)}="test_password",`);
+                // Basic auth uses username and password parameters (skip omitted fields).
+                // Values must use hyphens ("test-username") to match mock-utils WireMock stubs.
+                if (!scheme.usernameOmit) {
+                    params.push(`        ${this.context.caseConverter.snakeSafe(scheme.username)}="test-username",`);
+                }
+                if (!scheme.passwordOmit) {
+                    params.push(`        ${this.context.caseConverter.snakeSafe(scheme.password)}="test-password",`);
+                }
                 break;
 
             case "header":
                 // Header auth uses a custom header parameter
                 params.push(
-                    `        ${caseConverter.snakeSafe(getNameFromWireValue(scheme.name))}="test_${caseConverter.snakeSafe(getNameFromWireValue(scheme.name))}",`
+                    `        ${this.context.caseConverter.snakeSafe(getNameFromWireValue(scheme.name))}="test_${this.context.caseConverter.snakeSafe(getNameFromWireValue(scheme.name))}",`
                 );
                 break;
 

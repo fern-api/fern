@@ -671,6 +671,63 @@ class RawServiceClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def with_ref_body(
+        self,
+        *,
+        request: MyObjectParams,
+        image_file: typing.Optional[core.File] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[str]:
+        """
+        Parameters
+        ----------
+        request : MyObjectParams
+
+        image_file : typing.Optional[core.File]
+            See core.File for more documentation
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[str]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "with-ref-body",
+            method="POST",
+            data={},
+            files={
+                **(
+                    {"image_file": core.with_content_type(file=image_file, default_content_type="image/jpeg")}
+                    if image_file is not None
+                    else {}
+                ),
+                "request": (None, json.dumps(jsonable_encoder(request)), "application/json; charset=utf-8"),
+            },
+            request_options=request_options,
+            omit=OMIT,
+            force_multipart=True,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    str,
+                    parse_obj_as(
+                        type_=str,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     def simple(self, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[None]:
         """
         Parameters
@@ -1381,6 +1438,63 @@ class AsyncRawServiceClient:
             },
             files={
                 "file": file,
+            },
+            request_options=request_options,
+            omit=OMIT,
+            force_multipart=True,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    str,
+                    parse_obj_as(
+                        type_=str,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def with_ref_body(
+        self,
+        *,
+        request: MyObjectParams,
+        image_file: typing.Optional[core.File] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[str]:
+        """
+        Parameters
+        ----------
+        request : MyObjectParams
+
+        image_file : typing.Optional[core.File]
+            See core.File for more documentation
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[str]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "with-ref-body",
+            method="POST",
+            data={},
+            files={
+                **(
+                    {"image_file": core.with_content_type(file=image_file, default_content_type="image/jpeg")}
+                    if image_file is not None
+                    else {}
+                ),
+                "request": (None, json.dumps(jsonable_encoder(request)), "application/json; charset=utf-8"),
             },
             request_options=request_options,
             omit=OMIT,

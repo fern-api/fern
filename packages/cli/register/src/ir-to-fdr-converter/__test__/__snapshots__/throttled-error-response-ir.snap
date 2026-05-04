@@ -34,6 +34,7 @@
         {
           "availability": undefined,
           "clientDefault": undefined,
+          "defaultValue": undefined,
           "docs": "Number of seconds to wait before the next request.",
           "env": undefined,
           "name": "Retry-After",
@@ -351,6 +352,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "detail",
             "propertyAccess": undefined,
@@ -424,6 +426,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "id",
             "propertyAccess": undefined,
@@ -454,6 +457,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "name",
             "propertyAccess": undefined,

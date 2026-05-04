@@ -1,5 +1,4 @@
 import { AbstractReadmeSnippetBuilder, GeneratorError, getNameFromWireValue } from "@fern-api/base-generator";
-import { PYTHON_CASE_CONVERTER as caseConverter } from "@fern-api/python-base";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -293,22 +292,22 @@ asyncio.run(main())`
             switch (scheme.type) {
                 case "bearer":
                     args.push(
-                        `    ${caseConverter.snakeUnsafe(scheme.token)}="YOUR_${caseConverter.screamingSnakeUnsafe(scheme.token)}",`
+                        `    ${this.context.caseConverter.snakeUnsafe(scheme.token)}="${scheme.tokenPlaceholder ?? `YOUR_${this.context.caseConverter.screamingSnakeUnsafe(scheme.token)}`}",`
                     );
                     break;
                 case "basic":
                     args.push(
-                        `    ${caseConverter.snakeUnsafe(scheme.username)}="YOUR_${caseConverter.screamingSnakeUnsafe(scheme.username)}",`
+                        `    ${this.context.caseConverter.snakeUnsafe(scheme.username)}="${scheme.usernamePlaceholder ?? `YOUR_${this.context.caseConverter.screamingSnakeUnsafe(scheme.username)}`}",`
                     );
                     args.push(
-                        `    ${caseConverter.snakeUnsafe(scheme.password)}="YOUR_${caseConverter.screamingSnakeUnsafe(scheme.password)}",`
+                        `    ${this.context.caseConverter.snakeUnsafe(scheme.password)}="${scheme.passwordPlaceholder ?? `YOUR_${this.context.caseConverter.screamingSnakeUnsafe(scheme.password)}`}",`
                     );
                     break;
                 case "header": {
                     const schemeName = getNameFromWireValue(scheme.name);
-                    const headerName = caseConverter.snakeUnsafe(schemeName);
-                    const headerScreaming = caseConverter.screamingSnakeUnsafe(schemeName);
-                    args.push(`    ${headerName}="YOUR_${headerScreaming}",`);
+                    const headerName = this.context.caseConverter.snakeUnsafe(schemeName);
+                    const headerScreaming = this.context.caseConverter.screamingSnakeUnsafe(schemeName);
+                    args.push(`    ${headerName}="${scheme.headerPlaceholder ?? `YOUR_${headerScreaming}`}",`);
                     break;
                 }
                 case "oauth":
@@ -491,7 +490,7 @@ print(response.data)  # access the underlying object`
         }
 
         const { subpackage, channel } = websocketInfo;
-        const subpackageName = caseConverter.snakeSafe(subpackage.name);
+        const subpackageName = this.context.caseConverter.snakeSafe(subpackage.name);
         // connectMethodName may not exist on older IR SDK versions
         const connectMethodName = (channel as unknown as { connectMethodName?: string }).connectMethodName;
         const connectMethodNameSnakeCase = this.toSnakeCase(connectMethodName ?? "connect");
@@ -675,7 +674,7 @@ ${constructorArg}
         const envClassName = `${this.clientClassName}Environment`;
         const importLine = `from ${this.packageName}.environment import ${envClassName}`;
 
-        const firstEnvName = resolveDefaultEnvironmentName(envConfig);
+        const firstEnvName = resolveDefaultEnvironmentName(this.context, envConfig);
 
         if (firstEnvName == null) {
             return undefined;
@@ -708,14 +707,18 @@ ${constructorArg}
     }
 
     private getEndpointAccessPath(endpoint: EndpointWithFilepath): string {
-        const clientAccessParts = endpoint.fernFilepath.allParts.map((part) => caseConverter.snakeSafe(part));
-        const methodName = caseConverter.snakeUnsafe(endpoint.endpoint.name);
+        const clientAccessParts = endpoint.fernFilepath.allParts.map((part) =>
+            this.context.caseConverter.snakeSafe(part)
+        );
+        const methodName = this.context.caseConverter.snakeUnsafe(endpoint.endpoint.name);
         return clientAccessParts.length > 0 ? `${clientAccessParts.join(".")}.${methodName}` : methodName;
     }
 
     private getRawResponseMethodCall(endpoint: EndpointWithFilepath): string {
-        const clientAccessParts = endpoint.fernFilepath.allParts.map((part) => caseConverter.snakeSafe(part));
-        const methodName = caseConverter.snakeUnsafe(endpoint.endpoint.name);
+        const clientAccessParts = endpoint.fernFilepath.allParts.map((part) =>
+            this.context.caseConverter.snakeSafe(part)
+        );
+        const methodName = this.context.caseConverter.snakeUnsafe(endpoint.endpoint.name);
         if (clientAccessParts.length > 0) {
             return `client.${clientAccessParts.join(".")}.with_raw_response.${methodName}`;
         }

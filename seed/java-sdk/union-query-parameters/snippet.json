@@ -1,0 +1,18 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "a068a41a",
+            "id": {
+                "method": "GET",
+                "path": "/events",
+                "identifier_override": "endpoint_events.subscribe"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.unionQueryParameters.SeedUnionQueryParametersClient;\nimport com.seed.unionQueryParameters.resources.events.requests.SubscribeEventsRequest;\nimport com.seed.unionQueryParameters.resources.events.types.EventTypeEnum;\nimport com.seed.unionQueryParameters.resources.events.types.EventTypeParam;\nimport com.seed.unionQueryParameters.resources.events.types.StringOrListParam;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedUnionQueryParametersClient client = SeedUnionQueryParametersClient\n            .builder()\n            .build();\n\n        client.events().subscribe(\n            SubscribeEventsRequest\n                .builder()\n                .eventType(\n                    EventTypeParam.of(EventTypeEnum.GROUP_CREATED)\n                )\n                .tags(\n                    StringOrListParam.of(\"tags\")\n                )\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.unionQueryParameters.SeedUnionQueryParametersClient;\nimport com.seed.unionQueryParameters.resources.events.requests.SubscribeEventsRequest;\nimport com.seed.unionQueryParameters.resources.events.types.EventTypeEnum;\nimport com.seed.unionQueryParameters.resources.events.types.EventTypeParam;\nimport com.seed.unionQueryParameters.resources.events.types.StringOrListParam;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedUnionQueryParametersClient client = SeedUnionQueryParametersClient\n            .builder()\n            .build();\n\n        client.events().subscribe(\n            SubscribeEventsRequest\n                .builder()\n                .eventType(\n                    EventTypeParam.of(EventTypeEnum.GROUP_CREATED)\n                )\n                .tags(\n                    StringOrListParam.of(\"tags\")\n                )\n                .build()\n        );\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

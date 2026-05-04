@@ -8,6 +8,6 @@ public class Example0 {
         SeedFileUploadClient client =
                 SeedFileUploadClient.builder().url("https://api.fern.com").build();
 
-        client.service().justFile(JustFileRequest.builder().build());
+        client.service().justFile(null, JustFileRequest.builder().build());
     }
 }

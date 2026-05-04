@@ -179,7 +179,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         return this.writeCode(dedent`
             // Specify default options applied on every request.
             ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} := ${this.rootPackageClientName}.NewClient(
-                option.WithToken("<YOUR_API_KEY>"),
+                option.${this.getBearerTokenOptionName()}("${this.getTokenPlaceholder()}"),
                 option.WithHTTPClient(
                     &http.Client{
                         Timeout: 5 * time.Second,
@@ -190,7 +190,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             // Specify options for an individual request.
             response, err := ${this.getMethodCall(endpoint)}(
                 ...,
-                option.WithToken("<YOUR_API_KEY>"),
+                option.${this.getBearerTokenOptionName()}("${this.getTokenPlaceholder()}"),
             )
         `);
     }
@@ -303,6 +303,28 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         `);
     }
 
+    private getTokenPlaceholder({ defaultValue = "<YOUR_API_KEY>" }: { defaultValue?: string } = {}): string {
+        if (this.context.ir.auth != null) {
+            for (const scheme of this.context.ir.auth.schemes) {
+                if (scheme.type === "bearer" && scheme.tokenPlaceholder != null) {
+                    return scheme.tokenPlaceholder;
+                }
+                if (scheme.type === "header" && scheme.headerPlaceholder != null) {
+                    return scheme.headerPlaceholder;
+                }
+            }
+        }
+        return defaultValue;
+    }
+
+    private getOAuthClientIdPlaceholder(): string {
+        return "<YOUR_CLIENT_ID>";
+    }
+
+    private getOAuthClientSecretPlaceholder(): string {
+        return "<YOUR_CLIENT_SECRET>";
+    }
+
     private hasOAuthScheme(): boolean {
         if (this.context.ir.auth == null) {
             return false;
@@ -310,19 +332,32 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         return this.context.ir.auth.schemes.some((scheme) => scheme.type === "oauth");
     }
 
+    private getBearerTokenOptionName(): string {
+        const bearerScheme = this.context.ir.auth?.schemes.find((scheme) => scheme.type === "bearer");
+        if (bearerScheme?.type === "bearer") {
+            const token = bearerScheme.token;
+            const name =
+                typeof token === "string"
+                    ? token.charAt(0).toUpperCase() + token.slice(1)
+                    : token.pascalCase.unsafeName;
+            return `With${name}`;
+        }
+        return "WithToken";
+    }
+
     private renderOAuthSnippet(endpoint: EndpointWithFilepath): string {
         return this.writeCode(dedent`
             // Option 1: Use client credentials (SDK will handle token fetching and refresh)
             ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} := ${this.rootPackageClientName}.NewClient(
                 option.WithClientCredentials(
-                    "<YOUR_CLIENT_ID>",
-                    "<YOUR_CLIENT_SECRET>",
+                    "${this.getOAuthClientIdPlaceholder()}",
+                    "${this.getOAuthClientSecretPlaceholder()}",
                 ),
             )
 
             // Option 2: Use a pre-fetched token directly
             ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} := ${this.rootPackageClientName}.NewClient(
-                option.WithToken("<YOUR_ACCESS_TOKEN>"),
+                option.${this.getBearerTokenOptionName()}("${this.getTokenPlaceholder({ defaultValue: "<YOUR_ACCESS_TOKEN>" })}"),
             )
         `);
     }

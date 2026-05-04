@@ -7,13 +7,13 @@ import ExtraProperties
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "name": "Alice",
                   "age": 30,
                   "location": "Wonderland"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ExtraPropertiesClient(
@@ -38,11 +38,11 @@ import ExtraProperties
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "name": "name"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ExtraPropertiesClient(

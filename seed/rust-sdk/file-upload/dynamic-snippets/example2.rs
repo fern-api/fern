@@ -7,5 +7,17 @@ async fn main() {
         ..Default::default()
     };
     let client = FileUploadClient::new(config).expect("Failed to build client");
-    client.service.simple(None).await;
+    client
+        .service
+        .with_ref_body(
+            &WithRefBodyRequest {
+                image_file: b"test file content".to_vec(),
+                request: MyObject {
+                    foo: "bar".to_string(),
+                    ..Default::default()
+                },
+            },
+            None,
+        )
+        .await;
 }

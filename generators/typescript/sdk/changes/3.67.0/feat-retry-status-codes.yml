@@ -1,0 +1,6 @@
+- summary: |
+    Add `retryStatusCodes` generator config option with `legacy` and `recommended` modes.
+    `legacy` (default) preserves current behavior (retries 408, 429, and all 5xx).
+    `recommended` retries only 408, 429, 502, 503, and 504, avoiding idempotency
+    issues with non-transient server errors like 500.
+  type: feat

@@ -7,15 +7,15 @@ import BasicAuthEnvironmentVariables
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 true
-                """.utf8
+                """#.utf8
             )
         )
         let client = BasicAuthEnvironmentVariablesClient(
             baseURL: "https://api.fern.com",
-            username: "<username>",
-            accessToken: "<password>",
+            username: "YOUR_USERNAME",
+            accessToken: "YOUR_PASSWORD",
             urlSession: stub.urlSession
         )
         let expectedResponse = true
@@ -27,15 +27,15 @@ import BasicAuthEnvironmentVariables
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 true
-                """.utf8
+                """#.utf8
             )
         )
         let client = BasicAuthEnvironmentVariablesClient(
             baseURL: "https://api.fern.com",
-            username: "<username>",
-            accessToken: "<password>",
+            username: "YOUR_USERNAME",
+            accessToken: "YOUR_PASSWORD",
             urlSession: stub.urlSession
         )
         let expectedResponse = true

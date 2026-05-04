@@ -23,6 +23,7 @@ import { RawClient } from "../endpoint/http/RawClient.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { collectInferredAuthCredentials } from "../utils/inferredAuthUtils.js";
 import { WebSocketClientGenerator } from "../websocket/WebsocketClientGenerator.js";
+import { dedupAuthHeaderEntries } from "./dedupAuthHeaderEntries.js";
 
 const GetFromEnvironmentOrThrow = "GetFromEnvironmentOrThrow";
 
@@ -42,6 +43,11 @@ interface ConstructorParameter {
      * Falls back to parameter name if not provided
      */
     exampleValue?: string;
+    /**
+     * The client default value from x-fern-default.
+     * When present, the parameter is optional and uses this value as fallback.
+     */
+    clientDefault?: Literal;
 }
 
 interface LiteralParameter {
@@ -255,38 +261,58 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
             return param.name;
         };
 
-        // Separate auth headers from platform headers
-        const authHeaderEntries: ast.Dictionary.MapEntry[] = [];
+        // Separate auth headers from platform headers.
+        //
+        // Multiple auth schemes can resolve to the same HTTP header name (e.g.
+        // an oauth2 bearer scheme + an apiKey-in-header scheme both named
+        // `Authorization`). The generated `Dictionary<string, string>`
+        // collection initializer throws `System.ArgumentException` at runtime
+        // when the same key is added twice, so we dedup here. Earlier entries
+        // win; we preserve the IR-established ordering of required > optional
+        // > literal so the most specific / required scheme takes precedence.
+        const authHeaderCandidates: { headerName: string; entry: ast.Dictionary.MapEntry }[] = [];
+
         for (const param of [...requiredParameters, ...optionalParameters]) {
             if (param.header != null) {
                 const access = paramAccess(param);
-                authHeaderEntries.push({
-                    key: this.csharp.codeblock(this.csharp.string_({ string: param.header.name })),
-                    value: this.csharp.codeblock(
-                        param.header.prefix != null
-                            ? `$"${param.header.prefix} {${param.isOptional ? `${access} ?? ""` : access}}"`
-                            : param.isOptional || param.type.isOptional
-                              ? `${access} ?? ""`
-                              : access
-                    )
+                const fallback = this.getHeaderFallback(param);
+                authHeaderCandidates.push({
+                    headerName: param.header.name,
+                    entry: {
+                        key: this.csharp.codeblock(this.csharp.string_({ string: param.header.name })),
+                        value: this.csharp.codeblock(
+                            param.header.prefix != null
+                                ? `$"${param.header.prefix} {${param.isOptional ? `${access} ?? ${fallback}` : access}}"`
+                                : param.isOptional || param.type.isOptional
+                                  ? `${access} ?? ${fallback}`
+                                  : access
+                        )
+                    }
                 });
             }
         }
 
         for (const param of literalParameters) {
             if (param.header != null) {
-                authHeaderEntries.push({
-                    key: this.csharp.codeblock(this.csharp.string_({ string: param.header.name })),
-                    value: this.csharp.codeblock(
-                        param.value.type === "string"
-                            ? this.csharp.string_({ string: param.value.string })
-                            : param.value
-                              ? `"${true.toString()}"`
-                              : `"${false.toString()}"`
-                    )
+                authHeaderCandidates.push({
+                    headerName: param.header.name,
+                    entry: {
+                        key: this.csharp.codeblock(this.csharp.string_({ string: param.header.name })),
+                        value: this.csharp.codeblock(
+                            param.value.type === "string"
+                                ? this.csharp.string_({ string: param.value.string })
+                                : param.value.boolean
+                                  ? `"${true.toString()}"`
+                                  : `"${false.toString()}"`
+                        )
+                    }
                 });
             }
         }
+
+        const authHeaderEntries = dedupAuthHeaderEntries(authHeaderCandidates, (item) => item.headerName).map(
+            (item) => item.entry
+        );
 
         // Platform headers (no auth)
         const platformHeaderEntries: ast.Dictionary.MapEntry[] = [];
@@ -785,7 +811,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                             reference: scheme.valueType
                         }),
                         environmentVariable: scheme.headerEnvVar,
-                        exampleValue: this.case.screamingSnakeSafe(scheme.name)
+                        exampleValue: scheme.headerPlaceholder ?? this.case.screamingSnakeSafe(scheme.name)
                     }
                 ];
             }
@@ -810,7 +836,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         }),
                         type: this.Primitive.string,
                         environmentVariable: scheme.tokenEnvVar,
-                        exampleValue: this.case.screamingSnakeSafe(scheme.token)
+                        exampleValue: scheme.tokenPlaceholder ?? this.case.screamingSnakeSafe(scheme.token)
                     }
                 ];
             }
@@ -836,7 +862,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         }),
                         type: this.Primitive.string,
                         environmentVariable: scheme.usernameEnvVar,
-                        exampleValue: this.case.screamingSnakeSafe(scheme.username)
+                        exampleValue: scheme.usernamePlaceholder ?? this.case.screamingSnakeSafe(scheme.username)
                     });
                 }
                 if (!passwordOmitted) {
@@ -853,7 +879,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         }),
                         type: this.Primitive.string,
                         environmentVariable: scheme.passwordEnvVar,
-                        exampleValue: this.case.screamingSnakeSafe(scheme.password)
+                        exampleValue: scheme.passwordPlaceholder ?? this.case.screamingSnakeSafe(scheme.password)
                     });
                 }
                 return params;
@@ -945,6 +971,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
     }
 
     private getParameterForHeader(header: HttpHeader): ConstructorParameter {
+        const hasClientDefault = header.clientDefault != null;
         return {
             name:
                 header.valueType.type === "container" && header.valueType.container.type === "literal"
@@ -954,13 +981,30 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                 name: getWireValue(header.name)
             },
             docs: header.docs,
-            isOptional: header.valueType.type === "container" && header.valueType.container.type === "optional",
+            isOptional:
+                hasClientDefault ||
+                (header.valueType.type === "container" && header.valueType.container.type === "optional"),
             typeReference: header.valueType,
             type: this.context.csharpTypeMapper.convert({
                 reference: header.valueType
             }),
-            exampleValue: this.case.screamingSnakeSafe(header.name)
+            exampleValue: this.case.screamingSnakeSafe(header.name),
+            clientDefault: header.clientDefault
         };
+    }
+
+    private getHeaderFallback(param: ConstructorParameter): string {
+        if (param.clientDefault != null) {
+            switch (param.clientDefault.type) {
+                case "string":
+                    return `"${escapeForCSharpString(param.clientDefault.string)}"`;
+                case "boolean":
+                    return param.clientDefault.boolean ? `"${true.toString()}"` : `"${false.toString()}"`;
+                default:
+                    assertNever(param.clientDefault);
+            }
+        }
+        return `""`;
     }
 
     private getFromEnvironmentOrThrowMethod(cls: ast.Class) {

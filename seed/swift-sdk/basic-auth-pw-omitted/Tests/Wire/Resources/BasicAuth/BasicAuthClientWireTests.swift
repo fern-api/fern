@@ -7,15 +7,15 @@ import BasicAuthPwOmitted
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 true
-                """.utf8
+                """#.utf8
             )
         )
         let client = BasicAuthPwOmittedClient(
             baseURL: "https://api.fern.com",
             username: "<username>",
-            password: "<password>",
+            password: "",
             urlSession: stub.urlSession
         )
         let expectedResponse = true
@@ -27,15 +27,15 @@ import BasicAuthPwOmitted
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 true
-                """.utf8
+                """#.utf8
             )
         )
         let client = BasicAuthPwOmittedClient(
             baseURL: "https://api.fern.com",
             username: "<username>",
-            password: "<password>",
+            password: "",
             urlSession: stub.urlSession
         )
         let expectedResponse = true
@@ -47,15 +47,15 @@ import BasicAuthPwOmitted
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 true
-                """.utf8
+                """#.utf8
             )
         )
         let client = BasicAuthPwOmittedClient(
             baseURL: "https://api.fern.com",
             username: "<username>",
-            password: "<password>",
+            password: "",
             urlSession: stub.urlSession
         )
         let expectedResponse = true
@@ -72,15 +72,15 @@ import BasicAuthPwOmitted
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 true
-                """.utf8
+                """#.utf8
             )
         )
         let client = BasicAuthPwOmittedClient(
             baseURL: "https://api.fern.com",
             username: "<username>",
-            password: "<password>",
+            password: "",
             urlSession: stub.urlSession
         )
         let expectedResponse = true

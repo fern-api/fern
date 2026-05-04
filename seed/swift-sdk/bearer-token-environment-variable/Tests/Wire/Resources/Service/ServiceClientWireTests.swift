@@ -7,14 +7,14 @@ import BearerTokenEnvironmentVariable
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 string
-                """.utf8
+                """#.utf8
             )
         )
         let client = BearerTokenEnvironmentVariableClient(
             baseURL: "https://api.fern.com",
-            apiKey: "<token>",
+            apiKey: "YOUR_API_KEY",
             urlSession: stub.urlSession
         )
         let expectedResponse = "string"

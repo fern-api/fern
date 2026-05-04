@@ -80,6 +80,48 @@ await client.Service.OptionalArgsAsync(new OptionalArgsRequest());
 </dl>
 </details>
 
+<details><summary><code>client.Service.<a href="/src/SeedFileUpload/Service/ServiceClient.cs">WithRefBodyAsync</a>(WithRefBodyRequest { ... }) -> WithRawResponseTask&lt;string&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Service.WithRefBodyAsync(
+    new WithRefBodyRequest { Request = new MyObject { Foo = "bar" } }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `WithRefBodyRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.Service.<a href="/src/SeedFileUpload/Service/ServiceClient.cs">SimpleAsync</a>()</code></summary>
 <dl>
 <dd>

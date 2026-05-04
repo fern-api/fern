@@ -87,6 +87,24 @@ describe("convertApiSpecs", () => {
         expect(spec.overrides).toBe("./overrides.yml");
     });
 
+    it("converts V2 schema with graphql spec", () => {
+        const result = convertApiSpecs({
+            specs: [
+                {
+                    graphql: "./schema.graphql",
+                    name: "Plants",
+                    origin: "https://api.example.com/plants/graphql",
+                    overrides: "./overrides.yml"
+                }
+            ]
+        });
+        const spec = result.specs[0] as { graphql: string; name: string; origin: string; overrides: string };
+        expect(spec.graphql).toBe("./schema.graphql");
+        expect(spec.name).toBe("Plants");
+        expect(spec.origin).toBe("https://api.example.com/plants/graphql");
+        expect(spec.overrides).toBe("./overrides.yml");
+    });
+
     it("warns on unknown spec type in V2 schema", () => {
         const result = convertApiSpecs({
             specs: [{ unknownKey: "./something.yml" } as never]

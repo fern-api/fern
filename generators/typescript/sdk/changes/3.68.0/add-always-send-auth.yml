@@ -1,0 +1,6 @@
+- summary: |
+    Add `alwaysSendAuth` config option that forces the generated SDK to include
+    auth headers on all endpoints, even those marked with `auth: false` in the
+    API definition. This is useful when using the same API definition for both
+    server (where auth is handled by a gateway) and client SDK generation.
+  type: feat

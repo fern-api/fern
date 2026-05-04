@@ -24,6 +24,17 @@
         },
         {
             "id": {
+                "path": "/with-ref-body",
+                "method": "POST",
+                "identifier_override": "endpoint_service.withRefBody"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { createReadStream } from \"fs\";\nimport { SeedFileUploadClient } from \"@fern/file-upload\";\n\nconst client = new SeedFileUploadClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.withRefBody({\n    request: {\n        foo: \"bar\"\n    }\n});\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/snippet",
                 "method": "POST",
                 "identifier_override": "endpoint_service.simple"

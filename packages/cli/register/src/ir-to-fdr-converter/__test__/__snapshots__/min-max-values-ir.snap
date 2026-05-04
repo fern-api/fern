@@ -735,6 +735,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Product name with length constraints",
             "name": "name",
             "propertyAccess": undefined,
@@ -765,6 +766,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Product description with length constraints",
             "name": "description",
             "propertyAccess": undefined,
@@ -803,6 +805,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Product price with minimum value (inclusive)",
             "name": "price",
             "propertyAccess": undefined,
@@ -834,6 +837,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Discounted price with exclusive minimum (must be greater than 0)",
             "name": "discountedPrice",
             "propertyAccess": undefined,
@@ -873,6 +877,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Available quantity with min/max range",
             "name": "quantity",
             "propertyAccess": undefined,
@@ -904,6 +909,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Product rating between 0 and 5 (exclusive max)",
             "name": "rating",
             "propertyAccess": undefined,
@@ -943,6 +949,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Product weight with exclusive bounds",
             "name": "weight",
             "propertyAccess": undefined,
@@ -982,6 +989,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Product tags with array size constraints",
             "name": "tags",
             "propertyAccess": undefined,
@@ -1030,6 +1038,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Product categories (at least 1, at most 5)",
             "name": "categories",
             "propertyAccess": undefined,
@@ -1078,6 +1087,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Additional metadata with property count constraints",
             "name": "metadata",
             "propertyAccess": undefined,
@@ -1137,6 +1147,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Product attributes with min properties only",
             "name": "attributes",
             "propertyAccess": undefined,
@@ -1235,6 +1246,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "code",
             "propertyAccess": undefined,
@@ -1265,6 +1277,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "message",
             "propertyAccess": undefined,
@@ -1295,6 +1308,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "details",
             "propertyAccess": undefined,
@@ -1381,6 +1395,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Unique product identifier",
             "name": "id",
             "propertyAccess": undefined,
@@ -1411,6 +1426,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "name",
             "propertyAccess": undefined,
@@ -1441,6 +1457,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "description",
             "propertyAccess": undefined,
@@ -1479,6 +1496,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "price",
             "propertyAccess": undefined,
@@ -1510,6 +1528,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "discountedPrice",
             "propertyAccess": undefined,
@@ -1549,6 +1568,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "quantity",
             "propertyAccess": undefined,
@@ -1580,6 +1600,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "rating",
             "propertyAccess": undefined,
@@ -1619,6 +1640,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "weight",
             "propertyAccess": undefined,
@@ -1658,6 +1680,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "tags",
             "propertyAccess": undefined,
@@ -1706,6 +1729,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "categories",
             "propertyAccess": undefined,
@@ -1754,6 +1778,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "metadata",
             "propertyAccess": undefined,
@@ -1813,6 +1838,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "attributes",
             "propertyAccess": undefined,
@@ -1872,6 +1898,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "createdAt",
             "propertyAccess": undefined,

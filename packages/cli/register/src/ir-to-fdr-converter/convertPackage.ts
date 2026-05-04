@@ -81,7 +81,7 @@ function convertWebhookGroup(webhookGroup: Ir.webhooks.WebhookGroup): FdrCjsSdk.
                 (header): FdrCjsSdk.api.v1.register.Header => ({
                     description: header.docs ?? undefined,
                     key: getWireValue(header.name),
-                    type: convertTypeReference(header.valueType),
+                    type: convertTypeReference(header.valueType, header.defaultValue),
                     availability: convertIrAvailability(header.availability)
                 })
             ),
@@ -247,7 +247,7 @@ function convertService(
                 (queryParameter): FdrCjsSdk.api.v1.register.QueryParameter => ({
                     description: queryParameter.docs ?? undefined,
                     key: getWireValue(queryParameter.name),
-                    type: convertTypeReference(queryParameter.valueType),
+                    type: convertTypeReference(queryParameter.valueType, queryParameter.defaultValue),
                     availability: convertIrAvailability(queryParameter.availability),
                     explode: queryParameter.explode
                 })
@@ -256,7 +256,7 @@ function convertService(
                 (header): FdrCjsSdk.api.v1.register.Header => ({
                     description: header.docs ?? undefined,
                     key: getWireValue(header.name),
-                    type: convertTypeReference(header.valueType),
+                    type: convertTypeReference(header.valueType, header.defaultValue),
                     availability: convertIrAvailability(header.availability)
                 })
             ),
@@ -264,7 +264,7 @@ function convertService(
                 (header): FdrCjsSdk.api.v1.register.Header => ({
                     description: header.docs ?? undefined,
                     key: getWireValue(header.name),
-                    type: convertTypeReference(header.valueType),
+                    type: convertTypeReference(header.valueType, header.defaultValue),
                     availability: convertIrAvailability(header.availability)
                 })
             ),
@@ -392,7 +392,7 @@ function convertWebSocketChannel(
         headers: channel.headers.map(
             (header): FdrCjsSdk.api.v1.register.Header => ({
                 key: getWireValue(header.name),
-                type: convertTypeReference(header.valueType),
+                type: convertTypeReference(header.valueType, header.defaultValue),
                 description: header.docs,
                 availability: convertIrAvailability(header.availability)
             })
@@ -401,7 +401,7 @@ function convertWebSocketChannel(
             (queryParameter): FdrCjsSdk.api.v1.register.QueryParameter => ({
                 description: queryParameter.docs ?? undefined,
                 key: getWireValue(queryParameter.name),
-                type: convertTypeReference(queryParameter.valueType),
+                type: convertTypeReference(queryParameter.valueType, queryParameter.defaultValue),
                 availability: convertIrAvailability(queryParameter.availability),
                 explode: queryParameter.explode
             })
@@ -465,12 +465,19 @@ export function convertIrAvailability(availability: Ir.Availability | undefined)
     switch (availability.status) {
         case "DEPRECATED":
             return FdrCjsSdk.Availability.Deprecated;
+        case "LEGACY":
+            return FdrCjsSdk.Availability.Legacy;
         case "PRE_RELEASE":
+        case "BETA":
             return FdrCjsSdk.Availability.Beta;
         case "GENERAL_AVAILABILITY":
             return FdrCjsSdk.Availability.GenerallyAvailable;
         case "IN_DEVELOPMENT":
             return FdrCjsSdk.Availability.Beta;
+        case "ALPHA":
+            return FdrCjsSdk.Availability.Alpha;
+        case "PREVIEW":
+            return FdrCjsSdk.Availability.Preview;
         default:
             assertNever(availability.status);
     }
@@ -640,7 +647,7 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): FdrCjsSdk.api.v
                             (property): FdrCjsSdk.api.v1.register.ObjectProperty => ({
                                 description: property.docs ?? undefined,
                                 key: FdrCjsSdk.PropertyKey(getWireValue(property.name)),
-                                valueType: convertTypeReference(property.valueType),
+                                valueType: convertTypeReference(property.valueType, property.defaultValue),
                                 availability: convertIrAvailability(property.availability),
                                 propertyAccess: property.propertyAccess
                             })
@@ -703,7 +710,7 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): FdrCjsSdk.api.v
                                 bodyProperty: (bodyProperty) => ({
                                     type: "bodyProperty",
                                     key: FdrCjsSdk.PropertyKey(getWireValue(bodyProperty.name)),
-                                    valueType: convertTypeReference(bodyProperty.valueType),
+                                    valueType: convertTypeReference(bodyProperty.valueType, bodyProperty.defaultValue),
                                     contentType: bodyProperty.contentType,
                                     description: bodyProperty.docs ?? undefined,
                                     availability: convertIrAvailability(bodyProperty.availability),
@@ -846,7 +853,7 @@ function convertResponseErrorsV2(
                                   (header): FdrCjsSdk.api.v1.register.Header => ({
                                       description: header.docs ?? undefined,
                                       key: getWireValue(header.name),
-                                      type: convertTypeReference(header.valueType),
+                                      type: convertTypeReference(header.valueType, header.defaultValue),
                                       availability: convertIrAvailability(header.availability)
                                   })
                               )
@@ -912,7 +919,7 @@ function convertResponseErrorsV2(
                                   (header): FdrCjsSdk.api.v1.register.Header => ({
                                       description: header.docs ?? undefined,
                                       key: getWireValue(header.name),
-                                      type: convertTypeReference(header.valueType),
+                                      type: convertTypeReference(header.valueType, header.defaultValue),
                                       availability: convertIrAvailability(header.availability)
                                   })
                               )
@@ -1413,7 +1420,7 @@ function convertWebhookPayloadWithFileUpload(
                             bodyProperty: (bodyProperty) => ({
                                 type: "bodyProperty",
                                 key: FdrCjsSdk.PropertyKey(getWireValue(bodyProperty.name)),
-                                valueType: convertTypeReference(bodyProperty.valueType),
+                                valueType: convertTypeReference(bodyProperty.valueType, bodyProperty.defaultValue),
                                 contentType: bodyProperty.contentType,
                                 description: bodyProperty.docs ?? undefined,
                                 availability: convertIrAvailability(bodyProperty.availability),

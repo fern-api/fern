@@ -431,6 +431,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "code",
             "propertyAccess": undefined,
@@ -461,6 +462,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "message",
             "propertyAccess": undefined,
@@ -532,6 +534,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "type",
             "propertyAccess": undefined,
@@ -558,6 +561,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Unique code identifying the error type",
             "name": "errorCode",
             "propertyAccess": undefined,
@@ -588,6 +592,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Human-readable error message",
             "name": "message",
             "propertyAccess": undefined,
@@ -618,6 +623,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Severity level of the error",
             "name": "severity",
             "propertyAccess": undefined,
@@ -949,6 +955,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Unique identifier for the created event",
             "name": "id",
             "propertyAccess": undefined,
@@ -979,6 +986,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Status of the event processing",
             "name": "status",
             "propertyAccess": undefined,
@@ -1005,6 +1013,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "event",
             "propertyAccess": undefined,
@@ -1133,6 +1142,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "type",
             "propertyAccess": undefined,
@@ -1159,6 +1169,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Name of the service that generated the event",
             "name": "service",
             "propertyAccess": undefined,
@@ -1189,6 +1200,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "The system operation performed",
             "name": "operation",
             "propertyAccess": undefined,
@@ -1219,6 +1231,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Additional system metadata",
             "name": "metadata",
             "propertyAccess": undefined,
@@ -1359,6 +1372,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "type",
             "propertyAccess": undefined,
@@ -1385,6 +1399,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "ID of the user who triggered the event",
             "name": "userId",
             "propertyAccess": undefined,
@@ -1415,6 +1430,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "The action performed by the user",
             "name": "action",
             "propertyAccess": undefined,
@@ -1445,6 +1461,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "When the event occurred",
             "name": "timestamp",
             "propertyAccess": undefined,

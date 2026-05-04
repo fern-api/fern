@@ -1,0 +1,4 @@
+- summary: |
+    Use auth scheme placeholder values in README snippets when configured via
+    `placeholder` field on auth schemes.
+  type: feat

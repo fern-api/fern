@@ -14,6 +14,12 @@ public partial interface ICompletionsClient
         CancellationToken cancellationToken = default
     );
 
+    IAsyncEnumerable<StreamEventDiscriminantInData> StreamEventsDiscriminantInDataAsync(
+        StreamEventsDiscriminantInDataRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
     IAsyncEnumerable<StreamEventContextProtocol> StreamEventsContextProtocolAsync(
         StreamEventsContextProtocolRequest request,
         RequestOptions? options = null,

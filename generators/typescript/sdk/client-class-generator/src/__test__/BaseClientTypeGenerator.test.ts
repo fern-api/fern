@@ -154,8 +154,19 @@ function createMockContext(opts?: {
                 AuthProvider: {
                     _getReferenceToType: () => ts.factory.createTypeReferenceNode("core.AuthProvider")
                 },
+                AuthRequest: {
+                    _getReferenceToType: () => ts.factory.createTypeReferenceNode("core.AuthRequest")
+                },
                 NoOpAuthProvider: {
                     _getReferenceTo: () => ts.factory.createIdentifier("core.NoOpAuthProvider")
+                },
+                isAuthProvider: {
+                    _getReferenceTo: () => ts.factory.createIdentifier("core.isAuthProvider")
+                }
+            },
+            fetcher: {
+                EndpointMetadata: {
+                    _getReferenceToType: () => ts.factory.createTypeReferenceNode("core.EndpointMetadata")
                 }
             }
         },
@@ -238,6 +249,7 @@ describe("BaseClientTypeGenerator", () => {
                         key: "bearer",
                         token: casingsGenerator.generateName("token"),
                         tokenEnvVar: undefined,
+                        tokenPlaceholder: undefined,
                         docs: undefined
                     })
                 ]
@@ -260,6 +272,7 @@ describe("BaseClientTypeGenerator", () => {
                         key: "bearer",
                         token: casingsGenerator.generateName("token"),
                         tokenEnvVar: undefined,
+                        tokenPlaceholder: undefined,
                         docs: undefined
                     })
                 ]
@@ -284,9 +297,11 @@ describe("BaseClientTypeGenerator", () => {
                         username: casingsGenerator.generateName("username"),
                         usernameEnvVar: undefined,
                         usernameOmit: undefined,
+                        usernamePlaceholder: undefined,
                         password: casingsGenerator.generateName("password"),
                         passwordEnvVar: undefined,
                         passwordOmit: undefined,
+                        passwordPlaceholder: undefined,
                         docs: undefined
                     })
                 ]
@@ -309,6 +324,7 @@ describe("BaseClientTypeGenerator", () => {
                         name: createNameAndWireValue("X-API-Key"),
                         prefix: undefined,
                         headerEnvVar: undefined,
+                        headerPlaceholder: undefined,
                         valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
                         docs: undefined
                     })
@@ -509,6 +525,7 @@ describe("BaseClientTypeGenerator", () => {
                         key: "bearer",
                         token: casingsGenerator.generateName("token"),
                         tokenEnvVar: undefined,
+                        tokenPlaceholder: undefined,
                         docs: undefined
                     }),
                     FernIr.AuthScheme.header({
@@ -516,6 +533,7 @@ describe("BaseClientTypeGenerator", () => {
                         name: createNameAndWireValue("X-API-Key"),
                         prefix: undefined,
                         headerEnvVar: undefined,
+                        headerPlaceholder: undefined,
                         valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
                         docs: undefined
                     })
@@ -541,6 +559,7 @@ describe("BaseClientTypeGenerator", () => {
                         key: "bearer",
                         token: casingsGenerator.generateName("token"),
                         tokenEnvVar: undefined,
+                        tokenPlaceholder: undefined,
                         docs: undefined
                     }),
                     FernIr.AuthScheme.basic({
@@ -548,9 +567,11 @@ describe("BaseClientTypeGenerator", () => {
                         username: casingsGenerator.generateName("username"),
                         usernameEnvVar: undefined,
                         usernameOmit: undefined,
+                        usernamePlaceholder: undefined,
                         password: casingsGenerator.generateName("password"),
                         passwordEnvVar: undefined,
                         passwordOmit: undefined,
+                        passwordPlaceholder: undefined,
                         docs: undefined
                     })
                 ],
@@ -679,6 +700,7 @@ describe("BaseClientTypeGenerator", () => {
                         key: "bearer",
                         token: casingsGenerator.generateName("token"),
                         tokenEnvVar: undefined,
+                        tokenPlaceholder: undefined,
                         docs: undefined
                     })
                 ],
@@ -708,9 +730,11 @@ describe("BaseClientTypeGenerator", () => {
                         username: casingsGenerator.generateName("username"),
                         usernameEnvVar: undefined,
                         usernameOmit: undefined,
+                        usernamePlaceholder: undefined,
                         password: casingsGenerator.generateName("password"),
                         passwordEnvVar: undefined,
                         passwordOmit: undefined,
+                        passwordPlaceholder: undefined,
                         docs: undefined
                     })
                 ],
@@ -734,6 +758,7 @@ describe("BaseClientTypeGenerator", () => {
                         name: createNameAndWireValue("X-API-Key"),
                         prefix: undefined,
                         headerEnvVar: undefined,
+                        headerPlaceholder: undefined,
                         valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
                         docs: undefined
                     })
@@ -862,6 +887,7 @@ describe("BaseClientTypeGenerator", () => {
                         key: "bearer",
                         token: casingsGenerator.generateName("token"),
                         tokenEnvVar: undefined,
+                        tokenPlaceholder: undefined,
                         docs: undefined
                     }),
                     FernIr.AuthScheme.header({
@@ -869,6 +895,7 @@ describe("BaseClientTypeGenerator", () => {
                         name: createNameAndWireValue("X-API-Key"),
                         prefix: undefined,
                         headerEnvVar: undefined,
+                        headerPlaceholder: undefined,
                         valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
                         docs: undefined
                     })
@@ -899,6 +926,7 @@ describe("BaseClientTypeGenerator", () => {
                         key: "bearer",
                         token: casingsGenerator.generateName("token"),
                         tokenEnvVar: undefined,
+                        tokenPlaceholder: undefined,
                         docs: undefined
                     }),
                     FernIr.AuthScheme.basic({
@@ -906,9 +934,11 @@ describe("BaseClientTypeGenerator", () => {
                         username: casingsGenerator.generateName("username"),
                         usernameEnvVar: undefined,
                         usernameOmit: undefined,
+                        usernamePlaceholder: undefined,
                         password: casingsGenerator.generateName("password"),
                         passwordEnvVar: undefined,
                         passwordOmit: undefined,
+                        passwordPlaceholder: undefined,
                         docs: undefined
                     })
                 ],
@@ -964,6 +994,7 @@ describe("BaseClientTypeGenerator", () => {
                         key: "bearer",
                         token: casingsGenerator.generateName("token"),
                         tokenEnvVar: undefined,
+                        tokenPlaceholder: undefined,
                         docs: undefined
                     })
                 ]
@@ -1109,6 +1140,7 @@ describe("BaseClientTypeGenerator", () => {
                         key: "bearer",
                         token: casingsGenerator.generateName("token"),
                         tokenEnvVar: undefined,
+                        tokenPlaceholder: undefined,
                         docs: undefined
                     }),
                     FernIr.AuthScheme.basic({
@@ -1116,9 +1148,11 @@ describe("BaseClientTypeGenerator", () => {
                         username: casingsGenerator.generateName("username"),
                         usernameEnvVar: undefined,
                         usernameOmit: undefined,
+                        usernamePlaceholder: undefined,
                         password: casingsGenerator.generateName("password"),
                         passwordEnvVar: undefined,
                         passwordOmit: undefined,
+                        passwordPlaceholder: undefined,
                         docs: undefined
                     }),
                     FernIr.AuthScheme.header({
@@ -1126,6 +1160,7 @@ describe("BaseClientTypeGenerator", () => {
                         name: createNameAndWireValue("X-API-Key"),
                         prefix: undefined,
                         headerEnvVar: undefined,
+                        headerPlaceholder: undefined,
                         valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
                         docs: undefined
                     }),
@@ -1169,6 +1204,7 @@ describe("BaseClientTypeGenerator", () => {
                         key: "bearer",
                         token: casingsGenerator.generateName("token"),
                         tokenEnvVar: undefined,
+                        tokenPlaceholder: undefined,
                         docs: undefined
                     }),
                     FernIr.AuthScheme.header({
@@ -1176,6 +1212,7 @@ describe("BaseClientTypeGenerator", () => {
                         name: createNameAndWireValue("X-API-Key"),
                         prefix: undefined,
                         headerEnvVar: undefined,
+                        headerPlaceholder: undefined,
                         valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
                         docs: undefined
                     }),

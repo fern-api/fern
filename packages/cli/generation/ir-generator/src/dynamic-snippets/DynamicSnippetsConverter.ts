@@ -736,20 +736,12 @@ export class DynamicSnippetsConverter {
         const scheme = auth.schemes[0];
         switch (scheme.type) {
             case "basic": {
-                const basicAuth: DynamicSnippets.BasicAuth & {
-                    usernameOmit?: boolean;
-                    passwordOmit?: boolean;
-                } = {
+                return DynamicSnippets.Auth.basic({
                     username: this.inflateName(scheme.username),
-                    password: this.inflateName(scheme.password)
-                };
-                if (scheme.usernameOmit) {
-                    basicAuth.usernameOmit = scheme.usernameOmit;
-                }
-                if (scheme.passwordOmit) {
-                    basicAuth.passwordOmit = scheme.passwordOmit;
-                }
-                return DynamicSnippets.Auth.basic(basicAuth);
+                    usernameOmit: scheme.usernameOmit,
+                    password: this.inflateName(scheme.password),
+                    passwordOmit: scheme.passwordOmit
+                });
             }
             case "bearer":
                 return DynamicSnippets.Auth.bearer({
@@ -786,16 +778,16 @@ export class DynamicSnippetsConverter {
         switch (scheme.type) {
             case "bearer":
                 return DynamicSnippets.AuthValues.bearer({
-                    token: "<token>"
+                    token: scheme.tokenPlaceholder ?? "<token>"
                 });
             case "basic":
                 return DynamicSnippets.AuthValues.basic({
-                    username: "<username>",
-                    password: "<password>"
+                    username: scheme.usernameOmit ? "" : (scheme.usernamePlaceholder ?? "<username>"),
+                    password: scheme.passwordOmit ? "" : (scheme.passwordPlaceholder ?? "<password>")
                 });
             case "header":
                 return DynamicSnippets.AuthValues.header({
-                    value: "<value>"
+                    value: scheme.headerPlaceholder ?? "<value>"
                 });
             case "oauth":
                 return DynamicSnippets.AuthValues.oauth({

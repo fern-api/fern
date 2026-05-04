@@ -7,7 +7,7 @@ import Trace
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "playlist_id": "playlist_id",
                   "owner-id": "owner-id",
@@ -17,7 +17,7 @@ import Trace
                     "problems"
                   ]
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = TraceClient(
@@ -38,13 +38,13 @@ import Trace
             serviceParam: 1,
             datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
             optionalDatetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            request: .init(body: PlaylistCreateRequest(
+            request: PlaylistCreateRequest(
                 name: "name",
                 problems: [
                     "problems",
                     "problems"
                 ]
-            )),
+            ),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
@@ -54,7 +54,7 @@ import Trace
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 [
                   {
                     "playlist_id": "playlist_id",
@@ -75,7 +75,7 @@ import Trace
                     ]
                   }
                 ]
-                """.utf8
+                """#.utf8
             )
         )
         let client = TraceClient(
@@ -117,7 +117,7 @@ import Trace
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "playlist_id": "playlist_id",
                   "owner-id": "owner-id",
@@ -127,7 +127,7 @@ import Trace
                     "problems"
                   ]
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = TraceClient(
@@ -156,7 +156,7 @@ import Trace
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "playlist_id": "playlist_id",
                   "owner-id": "owner-id",
@@ -166,7 +166,7 @@ import Trace
                     "problems"
                   ]
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = TraceClient(

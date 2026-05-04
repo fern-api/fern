@@ -35,7 +35,6 @@ Instantiate and use the client with the following:
 
 ```python
 from seed import SeedNullable
-from seed.nullable import Metadata, Status_Active
 import datetime
 
 client = SeedNullable(
@@ -48,16 +47,18 @@ client.nullable.create_user(
         "tags",
         "tags"
     ],
-    metadata=Metadata(
-        created_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-        updated_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-        avatar="avatar",
-        activated=True,
-        status=Status_Active(),
-        values={
-            "values": "values"
+    metadata={
+        "created_at": datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+        "updated_at": datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+        "avatar": "avatar",
+        "activated": True,
+        "status": {
+            "type": "active"
         },
-    ),
+        "values": {
+            "values": "values"
+        }
+    },
     avatar="avatar",
 )
 ```
@@ -68,7 +69,6 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 
 ```python
 import asyncio
-from seed.nullable import Metadata, Status_Active
 import datetime
 
 from seed import AsyncSeedNullable
@@ -85,16 +85,18 @@ async def main() -> None:
             "tags",
             "tags"
         ],
-        metadata=Metadata(
-            created_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-            updated_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-            avatar="avatar",
-            activated=True,
-            status=Status_Active(),
-            values={
-                "values": "values"
+        metadata={
+            "created_at": datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+            "updated_at": datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+            "avatar": "avatar",
+            "activated": True,
+            "status": {
+                "type": "active"
             },
-        ),
+            "values": {
+                "values": "values"
+            }
+        },
         avatar="avatar",
     )
 
@@ -140,11 +142,21 @@ The SDK is instrumented with automatic retries with exponential backoff. A reque
 as the request is deemed retryable and the number of retry attempts has not grown larger than the configured
 retry limit (default: 2).
 
-A request is deemed retryable when any of the following HTTP status codes is returned:
+Which status codes are retried depends on the `retryStatusCodes` generator configuration:
 
+**`legacy`** (current default): retries on
 - [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+- [409](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/409) (Conflict)
 - [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
-- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
+- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#server_error_responses) (All server errors, including 500)
+
+**`recommended`**: retries on
+- [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+- [409](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/409) (Conflict)
+- [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
+- [502](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/502) (Bad Gateway)
+- [503](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/503) (Service Unavailable)
+- [504](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504) (Gateway Timeout)
 
 Use the `max_retries` request option to configure this behavior.
 

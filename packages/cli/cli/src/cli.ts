@@ -46,12 +46,16 @@ import { addGeneratorCommands, addGetOrganizationCommand } from "./cliV2.js";
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces.js";
 import { executeAutomationsGenerate } from "./commands/automations/generate/executeAutomationsGenerate.js";
 import { listPreviewGroups } from "./commands/automations/listPreviewGroups.js";
+import { executeAutomationsUpgrade } from "./commands/automations/upgrade/executeAutomationsUpgrade.js";
 import { diff } from "./commands/diff/diff.js";
 import { previewDocsWorkspace } from "./commands/docs-dev/devDocsWorkspace.js";
 import { docsDiff } from "./commands/docs-diff/docsDiff.js";
 import { generateLibraryDocs } from "./commands/docs-md-generate/generateLibraryDocs.js";
 import { deleteDocsPreview } from "./commands/docs-preview/deleteDocsPreview.js";
 import { listDocsPreview } from "./commands/docs-preview/listDocsPreview.js";
+import { exportDocsTheme } from "./commands/docs-theme/exportDocsTheme.js";
+import { listDocsThemes } from "./commands/docs-theme/listDocsThemes.js";
+import { uploadDocsTheme } from "./commands/docs-theme/uploadDocsTheme.js";
 import { downgrade } from "./commands/downgrade/downgrade.js";
 import { generateOpenAPIForWorkspaces } from "./commands/export/generateOpenAPIForWorkspaces.js";
 import { formatWorkspaces } from "./commands/format/formatWorkspaces.js";
@@ -1148,35 +1152,19 @@ function addFdrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     default: [] as string[],
                     description: "Filter the FDR API definition for certain audiences"
                 })
-                .option("v2", {
-                    boolean: true,
-                    description: "Use v2 format"
-                })
                 .option("from-openapi", {
                     boolean: true,
                     description: "Whether to use the new parser and go directly from OpenAPI to IR",
                     default: false
                 }),
         async (argv) => {
-            if (argv.v2) {
+            if (argv.fromOpenapi) {
                 await generateOpenApiToFdrApiDefinitionForWorkspaces({
                     project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                         commandLineApiWorkspace: argv.api,
                         defaultToAllApiWorkspaces: false
                     }),
                     outputFilepath: resolve(cwd(), argv.pathToOutput),
-                    directFromOpenapi: false,
-                    cliContext,
-                    audiences: argv.audience.length > 0 ? { type: "select", audiences: argv.audience } : { type: "all" }
-                });
-            } else if (argv.fromOpenapi) {
-                await generateOpenApiToFdrApiDefinitionForWorkspaces({
-                    project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                        commandLineApiWorkspace: argv.api,
-                        defaultToAllApiWorkspaces: false
-                    }),
-                    outputFilepath: resolve(cwd(), argv.pathToOutput),
-                    directFromOpenapi: true,
                     cliContext,
                     audiences: argv.audience.length > 0 ? { type: "select", audiences: argv.audience } : { type: "all" }
                 });
@@ -1756,8 +1744,86 @@ function addDocsCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
         addDocsPreviewCommand(yargs, cliContext);
         addDocsDiffCommand(yargs, cliContext);
         addDocsMdCommand(yargs, cliContext);
+        addDocsThemeCommand(yargs, cliContext);
         return yargs;
     });
+}
+
+function addDocsThemeCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command("theme", "Manage org-level themes for your documentation", (yargs) => {
+        addDocsThemeExportCommand(yargs, cliContext);
+        addDocsThemeListCommand(yargs, cliContext);
+        addDocsThemeUploadCommand(yargs, cliContext);
+        return yargs;
+    });
+}
+
+function addDocsThemeExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "export",
+        "Export theme-eligible fields from docs.yml into a standalone theme directory",
+        (yargs) =>
+            yargs
+                .option("output", {
+                    alias: "o",
+                    type: "string",
+                    description: "Directory to export the theme into (default: ./fern/theme)"
+                })
+                .example("$0 docs theme export", "Export theme from docs.yml to ./fern/theme")
+                .example("$0 docs theme export --output ./my-theme", "Export to a custom directory"),
+        async (argv) => {
+            cliContext.instrumentPostHogEvent({ command: "fern docs theme export" });
+            await exportDocsTheme({ cliContext, output: argv.output });
+        }
+    );
+}
+
+function addDocsThemeListCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "list",
+        "List all themes for an org",
+        (yargs) =>
+            yargs
+                .option("org", {
+                    type: "string",
+                    description: "Override the org ID from fern.config.json"
+                })
+                .option("json", {
+                    type: "boolean",
+                    description: "Output themes as a JSON array (includes updatedAt)"
+                })
+                .example("$0 docs theme list", "List all themes for the current org")
+                .example("$0 docs theme list --json", "Output themes as JSON"),
+        async (argv) => {
+            cliContext.instrumentPostHogEvent({ command: "fern docs theme list" });
+            await listDocsThemes({ cliContext, org: argv.org, json: argv.json });
+        }
+    );
+}
+
+function addDocsThemeUploadCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "upload",
+        "Upload a theme to Fern's cloud (creates or updates)",
+        (yargs) =>
+            yargs
+                .option("name", {
+                    alias: "n",
+                    type: "string",
+                    description: 'Theme name (default: "default")',
+                    default: "default"
+                })
+                .option("org", {
+                    type: "string",
+                    description: "Override the org ID from fern.config.json"
+                })
+                .example("$0 docs theme upload", 'Upload theme from ./fern/theme as "default"')
+                .example("$0 docs theme upload --name dark", "Upload a named theme variant"),
+        async (argv) => {
+            cliContext.instrumentPostHogEvent({ command: "fern docs theme upload" });
+            await uploadDocsTheme({ cliContext, name: argv.name, org: argv.org });
+        }
+    );
 }
 
 function addDocsMdCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
@@ -2269,6 +2335,7 @@ function addAutomationsCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
     cli.command("automations", false, (yargs) => {
         addAutomationsGenerateCommand(yargs, cliContext);
         addAutomationsPreviewCommand(yargs, cliContext);
+        addAutomationsUpgradeCommand(yargs, cliContext);
         return yargs.demandCommand();
     });
 }
@@ -2538,6 +2605,104 @@ function addAutomationsGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: 
                     jsonOutputPath: argv["json-file-output"]
                 }
             });
+        }
+    );
+}
+
+/**
+ * `fern automations upgrade`
+ *
+ * Wraps `fern upgrade` (CLI version) and `fern generator upgrade` (generator
+ * versions) into a single command that outputs structured JSON to stdout.
+ *
+ * Designed for consumption by the fern-upgrade GitHub Action, replacing the
+ * previous snapshot.js / diff.js approach with a single CLI invocation.
+ *
+ * Flags:
+ *   --include-major   Include major version bumps for generators (default: false).
+ *   --json            Output structured JSON to stdout (for machine consumption).
+ *
+ * JSON output format (--json):
+ *   {
+ *     "cli": { "from": "4.66.0", "to": "4.96.0", "upgraded": true },
+ *     "generators": [
+ *       {
+ *         "name": "fernapi/fern-typescript-sdk",
+ *         "group": "ts-sdk",
+ *         "api": "api",
+ *         "from": "3.63.4",
+ *         "to": "3.65.5",
+ *         "changelog": "https://buildwithfern.com/learn/sdks/generators/typescript/changelog",
+ *         "migrationsApplied": 1
+ *       }
+ *     ],
+ *     "skippedMajor": [{ "name": "...", "current": "0.28.0", "latest": "1.37.0" }],
+ *     "alreadyUpToDate": [{ "name": "...", "version": "3.65.5" }]
+ *   }
+ *
+ * Example GitHub Actions usage:
+ *   - run: |
+ *       UPGRADE_JSON=$(fern automations upgrade --json --include-major)
+ *       echo "upgrade-json=$UPGRADE_JSON" >> "$GITHUB_OUTPUT"
+ *     env:
+ *       FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+ */
+function addAutomationsUpgradeCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "upgrade",
+        false, // hidden
+        (yargs) =>
+            yargs
+                .option("include-major", {
+                    boolean: true,
+                    default: true,
+                    description:
+                        "Whether to include major version upgrades for generators. " +
+                        "When true (default), all upgrades including major versions are applied."
+                })
+                .option("json", {
+                    boolean: true,
+                    default: false,
+                    description: "Output results as JSON to stdout (for machine consumption)."
+                }),
+        async (argv) => {
+            cliContext.instrumentPostHogEvent({
+                command: "fern automations upgrade"
+            });
+
+            const result = await executeAutomationsUpgrade({
+                cliContext,
+                options: {
+                    includeMajor: argv["include-major"]
+                }
+            });
+
+            if (argv.json) {
+                cliContext.writeJsonToStdout(result);
+            } else {
+                // Human-readable summary
+                const { cli: cliResult, generators, skippedMajor, alreadyUpToDate } = result;
+                if (cliResult.upgraded) {
+                    cliContext.logger.info(`CLI: ${cliResult.from} -> ${cliResult.to}`);
+                } else {
+                    cliContext.logger.info(`CLI: ${cliResult.from} (already up to date)`);
+                }
+                if (generators.length > 0) {
+                    cliContext.logger.info(`Generators upgraded: ${generators.length}`);
+                    for (const gen of generators) {
+                        cliContext.logger.info(`  ${gen.name}: ${gen.from} -> ${gen.to}`);
+                    }
+                }
+                if (alreadyUpToDate.length > 0) {
+                    cliContext.logger.info(`Generators already up to date: ${alreadyUpToDate.length}`);
+                }
+                if (skippedMajor.length > 0) {
+                    cliContext.logger.info(`Major upgrades available (skipped): ${skippedMajor.length}`);
+                    for (const skip of skippedMajor) {
+                        cliContext.logger.info(`  ${skip.name}: ${skip.current} -> ${skip.latest}`);
+                    }
+                }
+            }
         }
     );
 }
@@ -2900,6 +3065,7 @@ function addReplayInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                         repo,
                         lockfileContents: result.lockfileContent,
                         fernignoreEntries: result.fernignoreEntries,
+                        gitattributesEntries: result.gitattributesEntries,
                         prBody: result.prBody
                     })
                 });

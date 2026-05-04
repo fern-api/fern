@@ -16,10 +16,12 @@
         "password": "api_token",
         "passwordEnvVar": "PLANT_STORE_API_TOKEN",
         "passwordOmit": false,
+        "passwordPlaceholder": undefined,
         "type": "basic",
         "username": "project_id",
         "usernameEnvVar": "PLANT_STORE_PROJECT_ID",
         "usernameOmit": false,
+        "usernamePlaceholder": undefined,
       },
     ],
   },
@@ -681,6 +683,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "code",
             "propertyAccess": undefined,
@@ -711,6 +714,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "message",
             "propertyAccess": undefined,
@@ -779,6 +783,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Plant identifier",
             "name": "id",
             "propertyAccess": undefined,
@@ -809,6 +814,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Plant name",
             "name": "name",
             "propertyAccess": undefined,
@@ -839,6 +845,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Plant species",
             "name": "species",
             "propertyAccess": undefined,

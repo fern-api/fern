@@ -565,12 +565,17 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
     }
 
     public getRawAsIsFiles(): string[] {
+        const files: string[] = [];
+        if (!this.config.whitelabel) {
+            files.push(AsIsFiles.ContributingMd);
+        }
+        files.push(AsIsFiles.GitIgnore, AsIsFiles.PhpStanNeon);
         // When wire tests are enabled, we generate a custom phpunit.xml with the wire test bootstrap
         // so we exclude the default phpunit.xml here
-        if (this.customConfig.enableWireTests) {
-            return [AsIsFiles.GitIgnore, AsIsFiles.PhpStanNeon];
+        if (!this.customConfig.enableWireTests) {
+            files.push(AsIsFiles.PhpUnitXml);
         }
-        return [AsIsFiles.GitIgnore, AsIsFiles.PhpStanNeon, AsIsFiles.PhpUnitXml];
+        return files;
     }
 
     public getCoreAsIsFiles(): string[] {

@@ -617,24 +617,22 @@ dotnet_diagnostic.IDE0005.severity = error
 
     private async createAsIsTestFile({ filename, namespace }: { filename: string; namespace: string }): Promise<File> {
         const contents = (await readFile(getAsIsFilepath(filename))).toString();
-        return new File(
-            filename.replace("test/", "").replace(".Template", ""),
-            RelativeFilePath.of(""),
-            replaceTemplate({
-                contents,
-                variables: {
-                    grpc: this.context.hasGrpcEndpoints(),
-                    idempotencyHeaders: this.context.hasIdempotencyHeaders(),
-                    hasBaseUrl: this.context.hasBaseUrl(),
-                    namespace,
-                    testNamespace: this.namespaces.test,
-                    additionalProperties: true,
-                    context: this.context,
-                    namespaces: this.namespaces,
-                    clientOptionsRequiredDefaults: this.getClientOptionsRequiredDefaults()
-                }
-            })
-        );
+        const rendered = replaceTemplate({
+            contents,
+            variables: {
+                grpc: this.context.hasGrpcEndpoints(),
+                idempotencyHeaders: this.context.hasIdempotencyHeaders(),
+                hasBaseUrl: this.context.hasBaseUrl(),
+                namespace,
+                testNamespace: this.namespaces.test,
+                additionalProperties: true,
+                context: this.context,
+                namespaces: this.namespaces,
+                clientOptionsRequiredDefaults: this.getClientOptionsRequiredDefaults(),
+                retryStatusCodes: this.context.settings.retryStatusCodes ?? "legacy"
+            }
+        });
+        return new File(filename.replace("test/", "").replace(".Template", ""), RelativeFilePath.of(""), rendered);
     }
 
     private cachedClientOptionsRequiredDefaults: string | undefined;
@@ -689,22 +687,20 @@ dotnet_diagnostic.IDE0005.severity = error
 
     private async createAsIsFile({ filename, namespace }: { filename: string; namespace: string }): Promise<File> {
         const contents = (await readFile(getAsIsFilepath(filename))).toString();
-        return new File(
-            filename.replace(".Template", ""),
-            RelativeFilePath.of(""),
-            replaceTemplate({
-                contents,
-                variables: {
-                    grpc: this.context.hasGrpcEndpoints(),
-                    idempotencyHeaders: this.context.hasIdempotencyHeaders(),
-                    hasBaseUrl: this.context.hasBaseUrl(),
-                    namespace,
-                    additionalProperties: true,
-                    context: this.context,
-                    namespaces: this.namespaces
-                }
-            })
-        );
+        const rendered = replaceTemplate({
+            contents,
+            variables: {
+                grpc: this.context.hasGrpcEndpoints(),
+                idempotencyHeaders: this.context.hasIdempotencyHeaders(),
+                hasBaseUrl: this.context.hasBaseUrl(),
+                namespace,
+                additionalProperties: true,
+                context: this.context,
+                namespaces: this.namespaces,
+                retryStatusCodes: this.context.settings.retryStatusCodes ?? "legacy"
+            }
+        });
+        return new File(filename.replace(".Template", ""), RelativeFilePath.of(""), rendered);
     }
 
     private async createCustomPagerAsIsFiles(): Promise<File[]> {

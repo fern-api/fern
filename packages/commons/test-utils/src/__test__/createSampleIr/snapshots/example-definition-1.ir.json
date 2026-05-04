@@ -751,6 +751,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "id",
             "propertyAccess": undefined,
@@ -774,6 +775,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "userId",
             "propertyAccess": undefined,
@@ -797,6 +799,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "items",
             "propertyAccess": undefined,
@@ -831,6 +834,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "total",
             "propertyAccess": undefined,
@@ -854,6 +858,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "createdAt",
             "propertyAccess": undefined,
@@ -877,6 +882,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "status",
             "propertyAccess": undefined,
@@ -938,6 +944,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "productId",
             "propertyAccess": undefined,
@@ -961,6 +968,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "quantity",
             "propertyAccess": undefined,
@@ -984,6 +992,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "unitPrice",
             "propertyAccess": undefined,

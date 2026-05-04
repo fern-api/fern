@@ -3,6 +3,7 @@ import { extractErrorMessage } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import {
     AbstractRustGeneratorCli,
+    AsIsFiles,
     formatRustCode,
     formatRustSnippet,
     RustDependencyType,
@@ -211,6 +212,14 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         context.logger.debug("Generating reference.md documentation...");
         // Generate reference.md if configured
         await this.generateReference(context);
+
+        if (!context.config.whitelabel) {
+            try {
+                await this.generateContributing(context);
+            } catch (error) {
+                throw GeneratorError.internalError(`Failed to generate CONTRIBUTING.md: ${extractErrorMessage(error)}`);
+            }
+        }
 
         // Generate wire tests if enabled
         await this.generateWireTestFiles(context);
@@ -835,6 +844,17 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         } catch (error) {
             throw GeneratorError.internalError(`Failed to generate README.md: ${extractErrorMessage(error)}`);
         }
+    }
+
+    private async generateContributing(context: SdkGeneratorContext): Promise<void> {
+        const contributingFile = AsIsFiles.ContributingMd;
+        const content = await contributingFile.loadContents();
+        const file = new RustFile({
+            filename: contributingFile.filename,
+            directory: contributingFile.directory,
+            fileContents: content
+        });
+        context.project.addSourceFiles(file);
     }
 
     private generateSnippets(context: SdkGeneratorContext) {

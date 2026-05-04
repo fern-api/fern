@@ -11,5 +11,5 @@
 export interface GetRequest {
     decimal: number;
     even: number;
-    name?: string;
+    name: string;
 }

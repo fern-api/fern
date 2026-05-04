@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.seed.undiscriminatedUnions.core.ObjectMappers;
 import java.io.IOException;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonDeserialize(using = PaymentMethodUnion.Deserializer.class)
@@ -81,13 +82,21 @@ public final class PaymentMethodUnion {
         @java.lang.Override
         public PaymentMethodUnion deserialize(JsonParser p, DeserializationContext context) throws IOException {
             Object value = p.readValueAs(Object.class);
-            try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, TokenizeCard.class));
-            } catch (RuntimeException e) {
+            if (value instanceof Map<?, ?>
+                    && ((Map<?, ?>) value).containsKey("method")
+                    && ((Map<?, ?>) value).containsKey("cardNumber")) {
+                try {
+                    return of(ObjectMappers.JSON_MAPPER.convertValue(value, TokenizeCard.class));
+                } catch (RuntimeException e) {
+                }
             }
-            try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, ConvertToken.class));
-            } catch (RuntimeException e) {
+            if (value instanceof Map<?, ?>
+                    && ((Map<?, ?>) value).containsKey("method")
+                    && ((Map<?, ?>) value).containsKey("tokenId")) {
+                try {
+                    return of(ObjectMappers.JSON_MAPPER.convertValue(value, ConvertToken.class));
+                } catch (RuntimeException e) {
+                }
             }
             throw new JsonParseException(p, "Failed to deserialize");
         }

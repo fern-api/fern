@@ -857,6 +857,16 @@
               "type": "null"
             }
           ]
+        },
+        "placeholder": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -891,6 +901,16 @@
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "placeholder": {
+          "oneOf": [
+            {
+              "type": "string"
             },
             {
               "type": "null"
@@ -1301,7 +1321,11 @@
         "in-development",
         "pre-release",
         "deprecated",
-        "generally-available"
+        "generally-available",
+        "alpha",
+        "beta",
+        "preview",
+        "legacy"
       ]
     },
     "availability.AvailabilitySchema": {

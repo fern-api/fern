@@ -7,13 +7,13 @@ import InferredAuthImplicit
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "access_token": "access_token",
                   "expires_in": 1,
                   "refresh_token": "refresh_token"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = InferredAuthImplicitClient(
@@ -42,13 +42,13 @@ import InferredAuthImplicit
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "access_token": "access_token",
                   "expires_in": 1,
                   "refresh_token": "refresh_token"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = InferredAuthImplicitClient(

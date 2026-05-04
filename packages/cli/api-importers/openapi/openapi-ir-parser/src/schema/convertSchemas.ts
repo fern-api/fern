@@ -882,7 +882,8 @@ export function convertSchemaObject(
                 example: getExampleAsArray({ schema, logger: context.logger, fallback }),
                 source,
                 minItems: schema.minItems,
-                maxItems: schema.maxItems
+                maxItems: schema.maxItems,
+                default: schema.default
             });
         }
 
@@ -1167,7 +1168,9 @@ export function convertSchemaObject(
                     encoding,
                     namespace,
                     groupName,
-                    source
+                    source,
+                    properties: schema.properties,
+                    required: schema.required
                 });
             }
         }
@@ -1264,7 +1267,9 @@ export function convertSchemaObject(
                 encoding,
                 namespace,
                 groupName,
-                source
+                source,
+                properties: schema.properties,
+                required: schema.required
             });
         }
 

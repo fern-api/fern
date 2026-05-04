@@ -1,5 +1,6 @@
 export enum AsIsFiles {
     // Top-level files.
+    ContributingMd = "CONTRIBUTING.md",
     GithubCiYml = "github-ci.yml",
     GitIgnore = ".gitignore",
     PhpStanNeon = "phpstan.neon",

@@ -21,9 +21,9 @@ import Testing
         do {
             _ = try await client.testGroup.testMethodName(
                 pathParam: "path_param",
-                request: .init(body: .value(PlainObject(
+                request: .value(PlainObject(
 
-                ))),
+                )),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -57,9 +57,9 @@ import Testing
         do {
             _ = try await client.testGroup.testMethodName(
                 pathParam: "path_param",
-                request: .init(body: .value(PlainObject(
+                request: .value(PlainObject(
 
-                ))),
+                )),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -93,9 +93,9 @@ import Testing
         do {
             _ = try await client.testGroup.testMethodName(
                 pathParam: "path_param",
-                request: .init(body: .value(PlainObject(
+                request: .value(PlainObject(
 
-                ))),
+                )),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -131,9 +131,9 @@ import Testing
         do {
             _ = try await client.testGroup.testMethodName(
                 pathParam: "path_param",
-                request: .init(body: .value(PlainObject(
+                request: .value(PlainObject(
 
-                ))),
+                )),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -167,9 +167,9 @@ import Testing
         do {
             _ = try await client.testGroup.testMethodName(
                 pathParam: "path_param",
-                request: .init(body: .value(PlainObject(
+                request: .value(PlainObject(
 
-                ))),
+                )),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -205,9 +205,9 @@ import Testing
         do {
             _ = try await client.testGroup.testMethodName(
                 pathParam: "path_param",
-                request: .init(body: .value(PlainObject(
+                request: .value(PlainObject(
 
-                ))),
+                )),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -241,9 +241,9 @@ import Testing
         do {
             _ = try await client.testGroup.testMethodName(
                 pathParam: "path_param",
-                request: .init(body: .value(PlainObject(
+                request: .value(PlainObject(
 
-                ))),
+                )),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 

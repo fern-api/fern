@@ -1,4 +1,130 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.10.0
+  changelogEntry:
+    - summary: |
+        Generate CONTRIBUTING.md for Python SDKs.
+      type: feat
+  createdAt: "2026-05-04"
+  irVersion: 66
+- version: 5.9.2
+  changelogEntry:
+    - summary: |
+        Widen the generated `pydantic-core` constraint from `>=2.18.2,<2.44.0` to
+        `>=2.18.2,<3.0.0`, unblocking customers who need newer pydantic-core (e.g.
+        2.46.x, required by pydantic 2.13). The previous cap targeted 2.44.0's
+        missing wheels; that release is yanked on PyPI, so the explicit cap is no
+        longer needed.
+      type: fix
+  createdAt: "2026-05-04"
+  irVersion: 66
+- version: 5.9.1
+  changelogEntry:
+    - summary: |
+        Respect the customer's `smart-casing` flag from `generators.yml` when computing
+        Python identifiers from compressed v66 IR strings. Previously the v1 Python
+        generator's `_smart_snake` and v2's `PYTHON_CASE_CONVERTER` were both hardcoded
+        with `smartCasing: true`, causing names produced by the generator to diverge
+        from the IR's pre-computed `snake_case` values when the customer set
+        `smart-casing: false`. This manifested as wire-test method calls and Pydantic
+        field aliases that did not exist on the generated client (e.g. test calling
+        `set_fcmv_1_provider()` while the client method was named `set_fcmv1provider`).
+
+        `_smart_snake` and the v2 `caseConverter` now read `casingsConfig.smartCasing`
+        from the IR and switch between smart-casing semantics (default) and plain
+        lodash semantics (`smart-casing: false`). No effect for customers who use
+        the default; fixes generation for customers like auth0 that opt out.
+      type: fix
+  createdAt: "2026-05-01"
+  irVersion: 66
+- version: 5.9.0
+  changelogEntry:
+    - summary: |
+        Add `retryStatusCodes` config with `"legacy"` and `"recommended"` modes. Legacy (default)
+        preserves current behavior (408, 409, 429, >= 500). Recommended retries only transient
+        codes (408, 409, 429, 502, 503, 504), avoiding idempotency issues with 500. A 6.0.0
+        migration auto-pins legacy for upgrading users.
+      type: feat
+  createdAt: "2026-04-30"
+  irVersion: 66
+- version: 5.8.4
+  changelogEntry:
+    - summary: |
+        Bump @fern-api/generator-cli to 0.9.21, which includes @fern-api/replay
+        0.14.0 with fixes for silent customization loss across apply and resolve
+        paths, per-patch-region diff, and clean follow-up patch preservation.
+      type: chore
+  createdAt: "2026-04-30"
+  irVersion: 66
+- version: 5.8.3
+  changelogEntry:
+    - summary: |
+        Fix async SSE parsing to only split on SSE-spec line terminators (\n, \r, \r\n).
+        Previously, aiter_sse() used httpx's aiter_lines() which splits on \u2028 and
+        \u2029 via Python's str.splitlines(), corrupting data fields containing those
+        characters (common in LLM JSON output).
+      type: fix
+  createdAt: "2026-04-28"
+  irVersion: 66
+- version: 5.8.2
+  changelogEntry:
+    - summary: |
+        Bump @fern-api/generator-cli to 0.9.16, which bundles the autoversion
+        pipeline's private workspace deps (@fern-api/logging-execa,
+        @fern-api/task-context, @fern-api/cli-ai) into the published dist/api.js
+        so consumers no longer hit ERR_MODULE_NOT_FOUND on
+        logging-execa/src/createLoggingExecutable.js under Vite/Vitest.
+      type: chore
+  createdAt: "2026-04-28"
+  irVersion: 66
+- version: 5.8.1
+  changelogEntry:
+    - summary: |
+        Tighten the generated `urllib3` dev-dependency pin to `>=2.6.3,<3.0.0`
+        (Python >= 3.9) to address CVE-2026-21441 and several additional
+        HIGH-severity urllib3 advisories. Projects still supporting Python 3.8
+        fall back to the tightest safe constraint available for the 1.x line.
+      type: chore
+  createdAt: "2026-04-27"
+  irVersion: 66
+- version: 5.8.0
+  changelogEntry:
+    - summary: |
+        Support omitting username or password from basic auth when configured via
+        `usernameOmit` or `passwordOmit` in the IR. Omitted fields are removed from
+        the SDK's public API and treated as empty strings internally (e.g., omitting
+        password encodes `username:`, omitting username encodes `:password`). When
+        both are omitted, the Authorization header is skipped entirely.
+      type: feat
+  createdAt: "2026-04-27"
+  irVersion: 66
+- version: 5.7.0
+  changelogEntry:
+    - summary: |
+        Use auth scheme placeholder values in README snippets when configured via
+        `placeholder` field on auth schemes.
+      type: feat
+  createdAt: "2026-04-25"
+  irVersion: 66
+- version: 5.6.1
+  changelogEntry:
+    - summary: |
+        Fix `@fern-api/python-dynamic-snippets` to respect the `use_typeddict_requests`
+        configuration option. When enabled, dynamic snippets now generate dict literals
+        instead of Pydantic model constructors for object and discriminated union types.
+      type: fix
+  createdAt: "2026-04-24"
+  irVersion: 66
+- version: 5.6.0
+  changelogEntry:
+    - summary: |
+        Support `x-fern-default` as fallback value for parameters in generated Python SDKs.
+        When a header, query parameter, or path parameter has a `clientDefault` value in the IR,
+        the generated Python function signature makes that parameter optional with the default
+        value automatically applied. This enables patterns like optional API version headers
+        that fall back to a pinned version.
+      type: feat
+  createdAt: "2026-04-24"
+  irVersion: 66
 - version: 5.5.11
   changelogEntry:
     - summary: |

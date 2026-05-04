@@ -28,7 +28,7 @@ public partial class SeedApiClient : ISeedApiClient
         }
         var clientOptionsWithAuth = clientOptions.Clone();
         var authHeaders = new Headers(
-            new Dictionary<string, string>() { { "X-API-Version", apiVersion ?? "" } }
+            new Dictionary<string, string>() { { "X-API-Version", apiVersion ?? "2024-02-08" } }
         );
         foreach (var header in authHeaders)
         {

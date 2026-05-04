@@ -660,6 +660,7 @@ Can be any value between 0.0 and 1.0 inclusive.
             },
           },
           "LemurBaseParametersContext": {
+            "base-properties": undefined,
             "discriminated": false,
             "docs": "Context to provide the model. This can be a string or a free-form JSON value.",
             "encoding": undefined,
@@ -758,6 +759,7 @@ Can be any value between 0.0 and 1.0 inclusive.
             },
           },
           "LemurQuestionContext": {
+            "base-properties": undefined,
             "discriminated": false,
             "docs": "Any context about the transcripts you wish to provide. This can be a string, or free-form JSON.",
             "encoding": undefined,
@@ -996,6 +998,7 @@ Can be any value between 0.0 and 1.0 inclusive.
             },
           },
           "RealtimeMessage": {
+            "base-properties": undefined,
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
@@ -1025,6 +1028,7 @@ Can be any value between 0.0 and 1.0 inclusive.
             },
           },
           "RealtimeTranscript": {
+            "base-properties": undefined,
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
@@ -6194,6 +6198,7 @@ The parameter should map to a JSON encoded list of strings.
         },
         "types": {
           "receiveMessage": {
+            "base-properties": undefined,
             "discriminated": false,
             "docs": "Receive messages from the WebSocket",
             "encoding": undefined,
@@ -6210,6 +6215,7 @@ The parameter should map to a JSON encoded list of strings.
             ],
           },
           "sendMessage": {
+            "base-properties": undefined,
             "discriminated": false,
             "docs": "Send messages to the WebSocket",
             "encoding": undefined,

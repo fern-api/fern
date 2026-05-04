@@ -1,0 +1,11 @@
+- summary: |
+    Reduce verbose logging during OpenAPI parsing by moving individual example
+    validation warnings to debug level. The per-API example validation summary
+    is still shown at warn level.
+  type: chore
+- summary: |
+    Improve logging when APIs are skipped during docs generation. Skipped APIs
+    now log at error level (instead of warn) with the API name and a clear
+    reason. Repetitive per-endpoint frontmatter warnings are aggregated into
+    a single summary line per API.
+  type: fix

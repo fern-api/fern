@@ -1,4 +1,5 @@
 using SeedFileUpload;
+using System.Text;
 
 public partial class Examples
 {
@@ -9,7 +10,16 @@ public partial class Examples
             }
         );
 
-        await client.Service.SimpleAsync();
+        await client.Service.WithRefBodyAsync(
+            new WithRefBodyRequest {
+                ImageFile = new FileParameter(){
+                    Stream = new MemoryStream(Encoding.UTF8.GetBytes("[bytes]"))
+                },
+                Request = new MyObject {
+                    Foo = "bar"
+                }
+            }
+        );
     }
 
 }

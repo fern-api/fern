@@ -15,6 +15,7 @@
         "key": "bearerAuth",
         "token": "apiKey",
         "tokenEnvVar": "YOUR_TOKEN_NAME",
+        "tokenPlaceholder": undefined,
         "type": "bearer",
       },
     ],
@@ -737,6 +738,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "code",
             "propertyAccess": undefined,
@@ -767,6 +769,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "message",
             "propertyAccess": undefined,
@@ -835,6 +838,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Resource identifier",
             "name": "id",
             "propertyAccess": undefined,
@@ -865,6 +869,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Protected data",
             "name": "data",
             "propertyAccess": undefined,
@@ -895,6 +900,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Authentication method used",
             "name": "accessedWith",
             "propertyAccess": undefined,

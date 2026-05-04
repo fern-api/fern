@@ -124,6 +124,7 @@ function createClientClass(opts?: {
     generateEndpointMetadata?: boolean;
     parameterNaming?: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     offsetSemantics?: "item-index" | "page-index";
+    alwaysSendAuth?: boolean;
 }): GeneratedSdkClientClassImpl {
     const ir = opts?.ir ?? createIR();
     return new GeneratedSdkClientClassImpl({
@@ -154,7 +155,8 @@ function createClientClass(opts?: {
         useDefaultRequestParameterValues: opts?.useDefaultRequestParameterValues ?? false,
         generateEndpointMetadata: opts?.generateEndpointMetadata ?? false,
         parameterNaming: opts?.parameterNaming ?? "default",
-        offsetSemantics: opts?.offsetSemantics ?? "item-index"
+        offsetSemantics: opts?.offsetSemantics ?? "item-index",
+        alwaysSendAuth: opts?.alwaysSendAuth ?? false
     });
 }
 
@@ -291,6 +293,7 @@ describe("GeneratedSdkClientClassImpl", () => {
                         key: "bearer",
                         token: casingsGenerator.generateName("token"),
                         tokenEnvVar: undefined,
+                        tokenPlaceholder: undefined,
                         docs: undefined
                     })
                 ],
@@ -327,9 +330,11 @@ describe("GeneratedSdkClientClassImpl", () => {
                         username: casingsGenerator.generateName("username"),
                         usernameEnvVar: undefined,
                         usernameOmit: undefined,
+                        usernamePlaceholder: undefined,
                         password: casingsGenerator.generateName("password"),
                         passwordEnvVar: undefined,
                         passwordOmit: undefined,
+                        passwordPlaceholder: undefined,
                         docs: undefined
                     })
                 ],
@@ -358,6 +363,7 @@ describe("GeneratedSdkClientClassImpl", () => {
                         key: "bearer",
                         token: casingsGenerator.generateName("token"),
                         tokenEnvVar: undefined,
+                        tokenPlaceholder: undefined,
                         docs: undefined
                     }),
                     FernIr.AuthScheme.header({
@@ -365,6 +371,7 @@ describe("GeneratedSdkClientClassImpl", () => {
                         name: createNameAndWireValue("X-API-Key"),
                         prefix: undefined,
                         headerEnvVar: undefined,
+                        headerPlaceholder: undefined,
                         valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
                         docs: undefined
                     })
@@ -467,6 +474,7 @@ describe("GeneratedSdkClientClassImpl", () => {
                         key: "bearer",
                         token: casingsGenerator.generateName("token"),
                         tokenEnvVar: undefined,
+                        tokenPlaceholder: undefined,
                         docs: undefined
                     })
                 ],
@@ -504,6 +512,7 @@ describe("GeneratedSdkClientClassImpl", () => {
                         key: "bearer",
                         token: casingsGenerator.generateName("token"),
                         tokenEnvVar: undefined,
+                        tokenPlaceholder: undefined,
                         docs: undefined
                     })
                 ],
@@ -540,6 +549,7 @@ describe("GeneratedSdkClientClassImpl", () => {
                         key: "bearer",
                         token: casingsGenerator.generateName("token"),
                         tokenEnvVar: undefined,
+                        tokenPlaceholder: undefined,
                         docs: undefined
                     })
                 ],
@@ -759,6 +769,7 @@ describe("GeneratedSdkClientClassImpl", () => {
                         key: "bearer",
                         token: casingsGenerator.generateName("token"),
                         tokenEnvVar: undefined,
+                        tokenPlaceholder: undefined,
                         docs: undefined
                     }),
                     FernIr.AuthScheme.header({
@@ -766,6 +777,7 @@ describe("GeneratedSdkClientClassImpl", () => {
                         name: createNameAndWireValue("X-API-Key"),
                         prefix: undefined,
                         headerEnvVar: undefined,
+                        headerPlaceholder: undefined,
                         valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
                         docs: undefined
                     })
@@ -832,6 +844,7 @@ describe("GeneratedSdkClientClassImpl", () => {
                         name: createNameAndWireValue("X-API-Key"),
                         prefix: undefined,
                         headerEnvVar: undefined,
+                        headerPlaceholder: undefined,
                         valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
                         docs: undefined
                     })
@@ -1021,6 +1034,7 @@ describe("GeneratedSdkClientClassImpl", () => {
                         key: "bearer",
                         token: casingsGenerator.generateName("token"),
                         tokenEnvVar: undefined,
+                        tokenPlaceholder: undefined,
                         docs: undefined
                     })
                 ],

@@ -172,6 +172,7 @@ export declare namespace SdkGenerator {
         customPagerName: string;
         resolveQueryParameterNameConflicts: boolean;
         maxRetries: number | undefined;
+        alwaysSendAuth: boolean;
     }
 }
 
@@ -481,6 +482,7 @@ export class SdkGenerator {
         this.typeSchemaGenerator = new TypeSchemaGenerator({
             includeUtilsOnUnionMembers: config.includeUtilsOnUnionMembers,
             noOptionalProperties: config.noOptionalProperties,
+            enableForwardCompatibleEnums: config.enableForwardCompatibleEnums,
             caseConverter
         });
         this.typeReferenceExampleGenerator = new TypeReferenceExampleGenerator({
@@ -541,7 +543,8 @@ export class SdkGenerator {
             useDefaultRequestParameterValues: config.useDefaultRequestParameterValues,
             generateEndpointMetadata: config.generateEndpointMetadata,
             parameterNaming: config.parameterNaming,
-            offsetSemantics: config.offsetSemantics
+            offsetSemantics: config.offsetSemantics,
+            alwaysSendAuth: config.alwaysSendAuth
         });
         this.baseClientTypeGenerator = new BaseClientTypeGenerator({
             ir: intermediateRepresentation,

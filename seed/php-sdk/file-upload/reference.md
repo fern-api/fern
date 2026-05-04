@@ -328,6 +328,38 @@ $client->service->withJsonProperty($request): ?string;
 </dl>
 </details>
 
+<details><summary><code>$client-&gt;service-&gt;withRefBody($request) -> ?string</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->service->withRefBody(
+    new WithRefBodyRequest([
+        'imageFile' => File::createFromString("example_image_file", "example_image_file"),
+        'request' => new MyObject([
+            'foo' => 'bar',
+        ]),
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>$client-&gt;service-&gt;simple()</code></summary>
 <dl>
 <dd>

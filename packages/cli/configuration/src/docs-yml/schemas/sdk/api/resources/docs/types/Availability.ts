@@ -7,5 +7,8 @@ export const Availability = {
     PreRelease: "pre-release",
     Deprecated: "deprecated",
     Beta: "beta",
+    Alpha: "alpha",
+    Preview: "preview",
+    Legacy: "legacy",
 } as const;
 export type Availability = (typeof Availability)[keyof typeof Availability];

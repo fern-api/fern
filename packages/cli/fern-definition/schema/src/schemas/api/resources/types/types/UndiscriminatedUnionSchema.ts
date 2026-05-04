@@ -4,5 +4,6 @@ import type * as FernDefinition from "../../../index.js";
 
 export interface UndiscriminatedUnionSchema extends FernDefinition.BaseTypeDeclarationSchema {
     discriminated: false;
+    "base-properties"?: Record<string, FernDefinition.TypeReferenceSchema>;
     union: FernDefinition.SingleUndiscriminatedUnionTypeSchema[];
 }

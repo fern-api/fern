@@ -7,7 +7,7 @@ import PaginationUriPath
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "data": [
                     {
@@ -21,7 +21,7 @@ import PaginationUriPath
                   ],
                   "next": "next"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = PaginationUriPathClient(
@@ -50,7 +50,7 @@ import PaginationUriPath
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "data": [
                     {
@@ -64,7 +64,7 @@ import PaginationUriPath
                   ],
                   "next": "next"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = PaginationUriPathClient(

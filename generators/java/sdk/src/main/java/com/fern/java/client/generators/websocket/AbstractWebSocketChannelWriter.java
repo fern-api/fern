@@ -21,6 +21,7 @@ import com.fern.ir.model.http.HttpPathPart;
 import com.fern.ir.model.http.PathParameter;
 import com.fern.ir.model.ir.Subpackage;
 import com.fern.ir.model.types.ContainerType;
+import com.fern.ir.model.types.DeclaredTypeName;
 import com.fern.ir.model.types.EnumValue;
 import com.fern.ir.model.types.Literal;
 import com.fern.ir.model.types.ObjectProperty;
@@ -51,7 +52,12 @@ import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -102,6 +108,11 @@ public abstract class AbstractWebSocketChannelWriter {
     private static final Set<String> RESERVED_CONSUMER_METHOD_NAMES = Set.of("onError", "onDisconnected");
 
     private static final String DISCRIMINANT_FIELD = "type";
+
+    // Wire discriminant values shared by more than one server message.
+    // When a collision exists, handler/method names fall back to the message type ID
+    // instead of the wire discriminant value to avoid duplicate field declarations.
+    private final Set<String> collidingDiscriminantValues;
 
     // Connect options class name (present when channel has query parameters)
     protected final Optional<ClassName> connectOptionsClassName;
@@ -193,6 +204,21 @@ public abstract class AbstractWebSocketChannelWriter {
         this.reconnectOptionsField = FieldSpec.builder(
                         reconnectOptionsClassName, "reconnectOptions", Modifier.PRIVATE, Modifier.VOLATILE)
                 .build();
+
+        // Detect wire discriminant value collisions among server messages
+        Map<String, Integer> discriminantCounts = new HashMap<>();
+        for (WebSocketMessage message : websocketChannel.getMessages()) {
+            if (message.getOrigin() == WebSocketMessageOrigin.SERVER) {
+                String wireValue = getWireDiscriminantValue(message);
+                discriminantCounts.merge(wireValue, 1, Integer::sum);
+            }
+        }
+        this.collidingDiscriminantValues = new HashSet<>();
+        for (Map.Entry<String, Integer> entry : discriminantCounts.entrySet()) {
+            if (entry.getValue() > 1) {
+                this.collidingDiscriminantValues.add(entry.getKey());
+            }
+        }
     }
 
     public GeneratedJavaFile generateFile() {
@@ -420,12 +446,18 @@ public abstract class AbstractWebSocketChannelWriter {
         return result;
     }
 
+    /**
+     * Generates the handleIncomingMessage method that dispatches incoming WebSocket frames using shape-based trial
+     * deserialization. Instead of switching on a single "type" field, each message schema's required keys and literal
+     * values are checked against the JSON payload. Messages are tried in order of specificity (most constraints first)
+     * so that more specific schemas match before less specific ones.
+     */
     protected MethodSpec generateHandleIncomingMessageHelper() {
         MethodSpec.Builder builder = MethodSpec.methodBuilder("handleIncomingMessage")
                 .addModifiers(Modifier.PRIVATE)
                 .addParameter(String.class, "json")
                 .beginControlFlow("try")
-                // Fire generic onMessage handler before type dispatch
+                // Fire generic onMessage handler before dispatch
                 .beginControlFlow("if ($N != null)", onMessageHandlerField)
                 .addStatement("$N.accept(json)", onMessageHandlerField)
                 .endControlFlow()
@@ -436,65 +468,287 @@ public abstract class AbstractWebSocketChannelWriter {
                 .beginControlFlow("if (node == null || node.isNull())")
                 .addStatement(
                         "throw new $T($S)", IllegalArgumentException.class, "Received null or invalid JSON message")
-                .endControlFlow()
-                .addStatement(
-                        "$T typeNode = node.get($S)",
-                        ClassName.get("com.fasterxml.jackson.databind", "JsonNode"),
-                        "type")
-                .beginControlFlow("if (typeNode == null || typeNode.isNull())")
-                .addStatement("throw new $T($S)", IllegalArgumentException.class, "Message missing 'type' field")
-                .endControlFlow()
-                .addStatement("String type = typeNode.asText()");
+                .endControlFlow();
 
-        // Switch on wire discriminant values extracted from each message body's literal/enum
-        // "type" property, rather than the Fern-internal message ID.
-        builder.beginControlFlow("switch (type)");
-
+        // Collect server text messages with precomputed shape info
+        List<WebSocketMessage> serverTextMessages = new ArrayList<>();
+        Map<String, List<String>> requiredKeysById = new HashMap<>();
+        Map<String, Map<String, String>> literalValuesById = new HashMap<>();
         for (WebSocketMessage message : websocketChannel.getMessages()) {
             if (message.getOrigin() == WebSocketMessageOrigin.SERVER && !isMessageBodyBinary(message)) {
-                TypeName messageType = getMessageBodyType(message);
-                String handlerFieldName = getHandlerFieldName(message);
-                String wireDiscriminantValue = getWireDiscriminantValue(message);
-
-                builder.addCode("case $S:\n", wireDiscriminantValue)
-                        .beginControlFlow("if ($L != null)", handlerFieldName)
-                        .addStatement(
-                                "$T event = $N.treeToValue(node, $T.class)",
-                                messageType,
-                                objectMapperField,
-                                messageType)
-                        .beginControlFlow("if (event != null)")
-                        .addStatement("$L.accept(event)", handlerFieldName)
-                        .endControlFlow()
-                        .endControlFlow()
-                        .addStatement("break");
+                serverTextMessages.add(message);
+                String id = message.getType().get();
+                requiredKeysById.put(id, getMessageRequiredWireKeys(message));
+                literalValuesById.put(id, getMessageLiteralValues(message));
             }
         }
 
-        builder.addCode("default:\n");
-        addUnknownTypeErrorHandler(builder);
-        builder.addStatement("break");
+        // Sort by specificity (most constraints first) for correct dispatch ordering
+        serverTextMessages.sort((a, b) -> {
+            String idA = a.getType().get();
+            String idB = b.getType().get();
+            int specA = requiredKeysById.get(idA).size()
+                    + literalValuesById.get(idA).size();
+            int specB = requiredKeysById.get(idB).size()
+                    + literalValuesById.get(idB).size();
+            return Integer.compare(specB, specA);
+        });
 
-        builder.endControlFlow() // end switch
-                .endControlFlow() // end try
+        // Emit shape-based trial deserialization for each server message
+        for (WebSocketMessage message : serverTextMessages) {
+            TypeName messageType = getMessageBodyType(message);
+            String handlerFieldName = getHandlerFieldName(message);
+            String id = message.getType().get();
+            List<String> requiredKeys = requiredKeysById.get(id);
+            Map<String, String> literals = literalValuesById.get(id);
+            boolean hasGuards = !requiredKeys.isEmpty() || !literals.isEmpty();
+
+            if (hasGuards) {
+                CodeBlock condition = buildShapeCondition(requiredKeys, literals);
+                builder.beginControlFlow("if ($L)", condition);
+            }
+
+            // Declare event variable outside try-catch so handler invocation is not
+            // wrapped in the deserialization catch block (user handler exceptions must propagate).
+            builder.addStatement("$T $L = null", messageType, handlerFieldName + "Event");
+            builder.beginControlFlow("try")
+                    .addStatement(
+                            "$L = $N.treeToValue(node, $T.class)",
+                            handlerFieldName + "Event",
+                            objectMapperField,
+                            messageType)
+                    .nextControlFlow("catch ($T e)", Exception.class)
+                    .endControlFlow(); // end try-catch
+            builder.beginControlFlow("if ($L != null)", handlerFieldName + "Event")
+                    .beginControlFlow("if ($L != null)", handlerFieldName)
+                    .addStatement("$L.accept($L)", handlerFieldName, handlerFieldName + "Event")
+                    .endControlFlow()
+                    .addStatement("return")
+                    .endControlFlow();
+
+            if (hasGuards) {
+                builder.endControlFlow(); // end if guard
+            }
+        }
+
+        // Fallback: no message type matched
+        addUnrecognizedMessageErrorHandler(builder);
+
+        builder.endControlFlow() // end outer try
                 .beginControlFlow("catch ($T e)", Exception.class)
                 .beginControlFlow("if ($N != null)", onErrorHandlerField)
                 .addStatement("$N.accept(e)", onErrorHandlerField)
                 .endControlFlow()
-                .endControlFlow(); // end catch
+                .endControlFlow(); // end outer catch
 
         return builder.build();
     }
 
-    private void addUnknownTypeErrorHandler(MethodSpec.Builder builder) {
+    private CodeBlock buildShapeCondition(List<String> requiredKeys, Map<String, String> literalValues) {
+        CodeBlock.Builder condition = CodeBlock.builder();
+        boolean first = true;
+        for (String key : requiredKeys) {
+            if (!first) {
+                condition.add("\n&& ");
+            }
+            condition.add("node.has($S)", key);
+            first = false;
+        }
+        for (Map.Entry<String, String> entry : literalValues.entrySet()) {
+            if (!first) {
+                condition.add("\n&& ");
+            }
+            condition.add("$S.equals(node.path($S).asText())", entry.getValue(), entry.getKey());
+            first = false;
+        }
+        return condition.build();
+    }
+
+    private void addUnrecognizedMessageErrorHandler(MethodSpec.Builder builder) {
         builder.beginControlFlow("if ($N != null)", onErrorHandlerField)
                 .addStatement(
-                        "$N.accept(new $T($S + type + $S))",
+                        "$N.accept(new $T($S + json.substring(0, $T.min(200, json.length())) + $S))",
                         onErrorHandlerField,
                         RuntimeException.class,
-                        "Unknown WebSocket message type: '",
-                        "'. Update your SDK version to support new message types.")
+                        "Unrecognized WebSocket message: ",
+                        Math.class,
+                        "... Update your SDK version to support new message types.")
                 .endControlFlow();
+    }
+
+    /**
+     * Returns the non-literal required wire keys for a WebSocket message body. These are properties that must be
+     * present in the JSON for the message to match.
+     */
+    private List<String> getMessageRequiredWireKeys(WebSocketMessage message) {
+        return message.getBody().visit(new WebSocketMessageBody.Visitor<List<String>>() {
+            @Override
+            public List<String> visitInlinedBody(InlinedWebSocketMessageBody body) {
+                List<String> keys = new ArrayList<>();
+                for (InlinedWebSocketMessageBodyProperty prop : body.getProperties()) {
+                    if (isTypeRequired(prop.getValueType()) && !isLiteralType(prop.getValueType())) {
+                        keys.add(NameUtils.getWireValue(prop.getName()));
+                    }
+                }
+                for (DeclaredTypeName extendedType : body.getExtends()) {
+                    collectRequiredWireKeysFromExtended(extendedType, keys);
+                }
+                return keys;
+            }
+
+            @Override
+            public List<String> visitReference(WebSocketMessageBodyReference reference) {
+                return getRequiredWireKeysFromType(reference.getBodyType());
+            }
+
+            @Override
+            public List<String> _visitUnknown(Object unknown) {
+                return Collections.emptyList();
+            }
+        });
+    }
+
+    /**
+     * Returns literal property values for a WebSocket message body. Maps wire key to expected string value (e.g.,
+     * "type" -> "transcript").
+     */
+    private Map<String, String> getMessageLiteralValues(WebSocketMessage message) {
+        return message.getBody().visit(new WebSocketMessageBody.Visitor<Map<String, String>>() {
+            @Override
+            public Map<String, String> visitInlinedBody(InlinedWebSocketMessageBody body) {
+                Map<String, String> literals = new LinkedHashMap<>();
+                for (InlinedWebSocketMessageBodyProperty prop : body.getProperties()) {
+                    getLiteralStringValue(prop.getValueType())
+                            .ifPresent(value -> literals.put(NameUtils.getWireValue(prop.getName()), value));
+                }
+                for (DeclaredTypeName extendedType : body.getExtends()) {
+                    collectLiteralValuesFromExtended(extendedType, literals);
+                }
+                return literals;
+            }
+
+            @Override
+            public Map<String, String> visitReference(WebSocketMessageBodyReference reference) {
+                return getLiteralValuesFromType(reference.getBodyType());
+            }
+
+            @Override
+            public Map<String, String> _visitUnknown(Object unknown) {
+                return Collections.emptyMap();
+            }
+        });
+    }
+
+    private List<String> getRequiredWireKeysFromType(TypeReference bodyType) {
+        if (!bodyType.isNamed()) {
+            return Collections.emptyList();
+        }
+        try {
+            TypeDeclaration typeDeclaration = clientGeneratorContext.getTypeDeclaration(
+                    bodyType.getNamed().get().getTypeId());
+            if (!typeDeclaration.getShape().isObject()) {
+                return Collections.emptyList();
+            }
+            ObjectTypeDeclaration objectType =
+                    typeDeclaration.getShape().getObject().get();
+            List<String> keys = new ArrayList<>();
+            collectRequiredWireKeys(objectType, keys);
+            return keys;
+        } catch (IllegalArgumentException e) {
+            return Collections.emptyList();
+        }
+    }
+
+    private void collectRequiredWireKeys(ObjectTypeDeclaration objectType, List<String> keys) {
+        for (ObjectProperty property : objectType.getProperties()) {
+            if (isTypeRequired(property.getValueType()) && !isLiteralType(property.getValueType())) {
+                keys.add(NameUtils.getWireValue(property.getName()));
+            }
+        }
+        for (DeclaredTypeName extendedType : objectType.getExtends()) {
+            collectRequiredWireKeysFromExtended(extendedType, keys);
+        }
+    }
+
+    private void collectRequiredWireKeysFromExtended(DeclaredTypeName extendedType, List<String> keys) {
+        try {
+            TypeDeclaration extDeclaration = clientGeneratorContext.getTypeDeclaration(extendedType.getTypeId());
+            if (extDeclaration != null && extDeclaration.getShape().isObject()) {
+                collectRequiredWireKeys(extDeclaration.getShape().getObject().get(), keys);
+            }
+        } catch (IllegalArgumentException e) {
+            // Type not found in IR declarations
+        }
+    }
+
+    private Map<String, String> getLiteralValuesFromType(TypeReference bodyType) {
+        if (!bodyType.isNamed()) {
+            return Collections.emptyMap();
+        }
+        try {
+            TypeDeclaration typeDeclaration = clientGeneratorContext.getTypeDeclaration(
+                    bodyType.getNamed().get().getTypeId());
+            if (!typeDeclaration.getShape().isObject()) {
+                return Collections.emptyMap();
+            }
+            ObjectTypeDeclaration objectType =
+                    typeDeclaration.getShape().getObject().get();
+            Map<String, String> literals = new LinkedHashMap<>();
+            collectLiteralValues(objectType, literals);
+            return literals;
+        } catch (IllegalArgumentException e) {
+            return Collections.emptyMap();
+        }
+    }
+
+    private void collectLiteralValues(ObjectTypeDeclaration objectType, Map<String, String> literals) {
+        for (ObjectProperty property : objectType.getProperties()) {
+            getLiteralStringValue(property.getValueType())
+                    .ifPresent(value -> literals.put(NameUtils.getWireValue(property.getName()), value));
+        }
+        for (DeclaredTypeName extendedType : objectType.getExtends()) {
+            collectLiteralValuesFromExtended(extendedType, literals);
+        }
+    }
+
+    private void collectLiteralValuesFromExtended(DeclaredTypeName extendedType, Map<String, String> literals) {
+        try {
+            TypeDeclaration extDeclaration = clientGeneratorContext.getTypeDeclaration(extendedType.getTypeId());
+            if (extDeclaration != null && extDeclaration.getShape().isObject()) {
+                collectLiteralValues(extDeclaration.getShape().getObject().get(), literals);
+            }
+        } catch (IllegalArgumentException e) {
+            // Type not found in IR declarations
+        }
+    }
+
+    private boolean isTypeRequired(TypeReference typeRef) {
+        if (typeRef.isContainer()) {
+            ContainerType container = typeRef.getContainer().get();
+            return !(container.isOptional() || container.isNullable());
+        }
+        return true;
+    }
+
+    private boolean isLiteralType(TypeReference typeRef) {
+        return typeRef.isContainer()
+                && typeRef.getContainer().flatMap(ContainerType::getLiteral).isPresent();
+    }
+
+    private Optional<String> getLiteralStringValue(TypeReference typeRef) {
+        if (!typeRef.isContainer()) {
+            return Optional.empty();
+        }
+        return typeRef.getContainer().flatMap(ContainerType::getLiteral).flatMap(literal -> {
+            // Handle string literals directly
+            Optional<String> str = literal.getString();
+            if (str.isPresent()) {
+                return str;
+            }
+            // Handle boolean literals by converting to their string representation
+            // so they can be checked via node.path("key").asText()
+            return literal.getBoolean().map(b -> b.toString());
+        });
     }
 
     /**
@@ -797,12 +1051,15 @@ public abstract class AbstractWebSocketChannelWriter {
         // Use custom methodName if available, otherwise fall back to wire discriminant value
         String baseName;
         if (message.getMethodName().isPresent()) {
-            // methodName is already the desired name (e.g., "sendSettings", "onFunctionCallResponse")
             baseName = toCamelCase(message.getMethodName().get());
         } else {
-            // Use the wire discriminant value (e.g., "Welcome" → "welcome", not "AgentV1Welcome")
             String wireValue = getWireDiscriminantValue(message);
-            baseName = decapitalize(toCamelCase(wireValue));
+            if (collidingDiscriminantValues.contains(wireValue)) {
+                // Multiple messages share this wire value — use message type ID to disambiguate
+                baseName = decapitalize(toCamelCase(message.getType().get()));
+            } else {
+                baseName = decapitalize(toCamelCase(wireValue));
+            }
         }
         return baseName + "Handler";
     }
@@ -894,8 +1151,13 @@ public abstract class AbstractWebSocketChannelWriter {
         if (message.getMethodName().isPresent()) {
             baseName = toCamelCase(message.getMethodName().get());
         } else {
-            // Use the wire discriminant value (e.g., "Welcome" instead of "AgentV1Welcome")
-            baseName = "on" + toPascalCase(getWireDiscriminantValue(message));
+            String wireValue = getWireDiscriminantValue(message);
+            if (collidingDiscriminantValues.contains(wireValue)) {
+                // Multiple messages share this wire value — use message type ID to disambiguate
+                baseName = "on" + toPascalCase(message.getType().get());
+            } else {
+                baseName = "on" + toPascalCase(wireValue);
+            }
         }
         if (RESERVED_CONSUMER_METHOD_NAMES.contains(baseName)) {
             return baseName + "Message";

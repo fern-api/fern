@@ -54,9 +54,21 @@ interface LibraryNavNode {
     children?: LibraryNavNode[];
 }
 
+interface DocsTranslationsConfig {
+    defaultLocale: string;
+    translations: string[] | undefined;
+}
+
+// TODO: Remove this shim once the published @fern-api/fdr-sdk type for
+// DocsV1Write.DocsConfig includes the translations field.
+interface DocsConfigWithTranslations extends DocsV1Write.DocsConfig {
+    translations: DocsTranslationsConfig | undefined;
+}
+
 import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter.js";
 import { ChangelogNodeConverter } from "./ChangelogNodeConverter.js";
 import { NodeIdGenerator } from "./NodeIdGenerator.js";
+import { convertDocsAvailability } from "./utils/convertDocsAvailability.js";
 import { convertDocsSnippetsConfigToFdr } from "./utils/convertDocsSnippetsConfigToFdr.js";
 import { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition.js";
 import { collectFilesFromDocsConfig } from "./utils/getImageFilepathsToUpload.js";
@@ -251,6 +263,61 @@ export class DocsDefinitionResolver {
         }
         return this._parsedDocsConfig;
     }
+
+    /**
+     * Returns per-locale translated page content loaded from `translations/<lang>/` directories.
+     * Must be called after `resolve()`.
+     */
+    public getTranslationPages(): Record<string, Record<RelativeFilePath, string>> | undefined {
+        return this._parsedDocsConfig?.translationPages;
+    }
+
+    /**
+     * Returns per-locale translated navigation overlays loaded from
+     * `translations/<lang>/docs.yml` (or `translations/<lang>/fern/docs.yml` for
+     * backwards compatibility) and referenced nav YAML files.
+     * Must be called after `resolve()`.
+     */
+    public getTranslationNavigationOverlays():
+        | Record<string, import("@fern-api/configuration").docsYml.TranslationNavigationOverlay>
+        | undefined {
+        return this._parsedDocsConfig?.translationNavigationOverlays;
+    }
+
+    /**
+     * Returns the map of absolute file paths to uploaded file IDs.
+     * Used by translation processing to rewrite image paths in translated pages.
+     * Must be called after `resolve()`.
+     */
+    public getCollectedFileIds(): ReadonlyMap<AbsoluteFilePath, string> {
+        return this.collectedFileIds;
+    }
+
+    /**
+     * Returns the absolute path to the docs workspace (fern folder).
+     */
+    public getDocsWorkspacePath(): AbsoluteFilePath {
+        return this.docsWorkspace.absoluteFilePath;
+    }
+
+    private getDocsTranslationsConfig(): DocsConfigWithTranslations["translations"] {
+        const translations = this.parsedDocsConfig.translations;
+        if (translations == null || translations.length === 0) {
+            return undefined;
+        }
+
+        const normalizedTranslations = translations.map((t) => docsYml.DocsYmlSchemas.normalizeTranslationConfig(t));
+        const defaultTranslation =
+            normalizedTranslations.find((translation) => translation.default === true) ?? normalizedTranslations[0];
+        if (defaultTranslation == null) {
+            return undefined;
+        }
+
+        return {
+            defaultLocale: defaultTranslation.lang,
+            translations: normalizedTranslations.map((translation) => translation.lang)
+        };
+    }
     private collectedFileIds = new Map<AbsoluteFilePath, string>();
     private markdownFilesToFullSlugs: Map<AbsoluteFilePath, string> = new Map();
     private markdownFilesToSidebarTitle: Map<AbsoluteFilePath, string> = new Map();
@@ -417,7 +484,10 @@ export class DocsDefinitionResolver {
                 }
             } catch (error) {
                 this.taskContext.logger.error(`Failed to parse ${relativePath}: ${extractErrorMessage(error)}`);
-                throw error;
+                throw new CliError({
+                    message: `Failed to parse markdown file ${relativePath}: ${extractErrorMessage(error)}`,
+                    code: CliError.Code.ParseError
+                });
             }
         }
         const imageParseTime = performance.now() - imageParseStart;
@@ -439,6 +509,10 @@ export class DocsDefinitionResolver {
         uploadedFiles.forEach((uploadedFile) => {
             this.collectedFileIds.set(uploadedFile.absoluteFilePath, uploadedFile.fileId);
         });
+
+        // Resolve any AbsoluteFilePath icons on translation overlay navbar-links to their
+        // uploaded file IDs so the per-locale navbarLinks land in FDR with valid icon refs.
+        this.resolveTranslationOverlayNavbarLinkIcons();
 
         // store root here so we only process once
         this.taskContext.logger.debug("Building navigation tree...");
@@ -752,18 +826,21 @@ export class DocsDefinitionResolver {
                       context7: this.getFileId(this.parsedDocsConfig.context7File)
                   } as DocsV1Write.DocsConfig["integrations"])
                 : undefined;
-        const config: DocsV1Write.DocsConfig = {
+        const config: DocsConfigWithTranslations = {
             aiChatConfig:
                 this.parsedDocsConfig.aiChatConfig != null
-                    ? {
+                    ? ({
                           model: this.parsedDocsConfig.aiChatConfig.model,
                           systemPrompt: this.parsedDocsConfig.aiChatConfig.systemPrompt,
-                          location: this.parsedDocsConfig.aiChatConfig.location,
+                          // Filter out 'discord' which is no longer supported by fdr-sdk
+                          location: this.parsedDocsConfig.aiChatConfig.location?.filter(
+                              (loc): loc is "slack" | "docs" => loc === "slack" || loc === "docs"
+                          ),
                           datasources: this.parsedDocsConfig.aiChatConfig.datasources?.map((ds) => ({
                               url: ds.url,
                               title: ds.title
                           }))
-                      }
+                      } as DocsV1Write.DocsConfig["aiChatConfig"])
                     : undefined,
             hideNavLinks: undefined,
             title: this.parsedDocsConfig.title,
@@ -808,16 +885,17 @@ export class DocsDefinitionResolver {
             settings: this.parsedDocsConfig.settings,
             css: this.parsedDocsConfig.css,
             js: this.convertJavascriptConfiguration(),
-            // @ts-expect-error - Remove this when the fdr-sdk upgraded to the latest version
             agents:
                 this.parsedDocsConfig.agents != null ||
                 this.parsedDocsConfig.llmsTxtFile != null ||
-                this.parsedDocsConfig.llmsFullTxtFile != null
-                    ? {
+                this.parsedDocsConfig.llmsFullTxtFile != null ||
+                this.parsedDocsConfig.robotsTxtFile != null
+                    ? ({
                           ...this.parsedDocsConfig.agents,
                           llmsTxt: this.getFileId(this.parsedDocsConfig.llmsTxtFile),
-                          llmsFullTxt: this.getFileId(this.parsedDocsConfig.llmsFullTxtFile)
-                      }
+                          llmsFullTxt: this.getFileId(this.parsedDocsConfig.llmsFullTxtFile),
+                          robotsTxt: this.getFileId(this.parsedDocsConfig.robotsTxtFile)
+                      } as DocsV1Write.DocsConfig["agents"])
                     : undefined,
             metadata: this.convertMetadata(),
             redirects: this.parsedDocsConfig.redirects,
@@ -827,7 +905,8 @@ export class DocsDefinitionResolver {
                 value: DocsV1Write.Url(footerLink.value)
             })),
             defaultLanguage: this.parsedDocsConfig.defaultLanguage,
-            languages: this.parsedDocsConfig.languages,
+            languages: this.parsedDocsConfig.languages as DocsV1Write.DocsConfig["languages"],
+            translations: this.getDocsTranslationsConfig(),
             analyticsConfig: {
                 ...this.parsedDocsConfig.analyticsConfig,
                 segment: this.parsedDocsConfig.analyticsConfig?.segment,
@@ -1885,7 +1964,7 @@ export class DocsDefinitionResolver {
             authed: undefined,
             noindex: item.noindex || this.markdownFilesToNoIndex.get(item.absolutePath),
             featureFlags: item.featureFlags,
-            availability: frontmatterAvailability ?? item.availability ?? parentAvailability
+            availability: convertDocsAvailability(frontmatterAvailability ?? item.availability ?? parentAvailability)
         };
     }
 
@@ -1905,13 +1984,31 @@ export class DocsDefinitionResolver {
         const relativeFilePath = this.toRelativeFilepath(item.overviewAbsolutePath);
         let pageId = relativeFilePath ? FernNavigation.PageId(relativeFilePath) : undefined;
         const id = this.#idgen.get(pageId ?? `${prefix}/section`);
-        const slug = parentSlug.apply({
-            urlSlug: item.slug ?? kebabCase(item.title),
-            fullSlug: item.overviewAbsolutePath
-                ? this.markdownFilesToFullSlugs.get(item.overviewAbsolutePath)?.split("/")
-                : undefined,
-            skipUrlSlug: item.skipUrlSlug
-        });
+        const fullSlugParts = item.overviewAbsolutePath
+            ? this.markdownFilesToFullSlugs.get(item.overviewAbsolutePath)?.split("/")
+            : undefined;
+
+        const urlSlug = item.slug ?? kebabCase(item.title);
+
+        // When skip-slug is true AND the overview page declares a frontmatter slug,
+        // the section needs two distinct slugs:
+        //   - sectionSlug: where the overview page renders (from frontmatter)
+        //   - childrenParentSlug: the base for child URLs (transparent, inherits from parent)
+        // Without this separation, one of the two behaviors breaks:
+        //   - If skipUrlSlug wins: frontmatter slug is discarded → overview page 404s
+        //   - If fullSlug wins: children nest under the overview slug → wrong child URLs
+        let sectionSlug: FernNavigation.V1.SlugGenerator;
+        let childrenParentSlug: FernNavigation.V1.SlugGenerator;
+
+        if (item.skipUrlSlug && fullSlugParts != null) {
+            sectionSlug = parentSlug.apply({ urlSlug, fullSlug: fullSlugParts });
+            childrenParentSlug = parentSlug.apply({ urlSlug, skipUrlSlug: true });
+        } else {
+            const slug = parentSlug.apply({ urlSlug, fullSlug: fullSlugParts, skipUrlSlug: item.skipUrlSlug });
+            sectionSlug = slug;
+            childrenParentSlug = slug;
+        }
+
         const noindex =
             item.overviewAbsolutePath != null ? this.markdownFilesToNoIndex.get(item.overviewAbsolutePath) : undefined;
         const frontmatterAvailability =
@@ -1924,7 +2021,7 @@ export class DocsDefinitionResolver {
                 this.toNavigationChild({
                     prefix: id,
                     item: child,
-                    parentSlug: slug,
+                    parentSlug: childrenParentSlug,
                     hideChildren: hiddenSection,
                     parentAvailability: item.availability ?? parentAvailability
                 })
@@ -1952,7 +2049,7 @@ export class DocsDefinitionResolver {
             id,
             type: "section",
             overviewPageId: pageId,
-            slug: slug.get(),
+            slug: sectionSlug.get(),
             title:
                 item.overviewAbsolutePath != null
                     ? (this.markdownFilesToSidebarTitle.get(item.overviewAbsolutePath) ?? item.title)
@@ -1969,7 +2066,7 @@ export class DocsDefinitionResolver {
             pointsTo: undefined,
             noindex,
             featureFlags: item.featureFlags,
-            availability: frontmatterAvailability ?? item.availability ?? parentAvailability
+            availability: convertDocsAvailability(frontmatterAvailability ?? item.availability ?? parentAvailability)
         };
     }
 
@@ -2124,6 +2221,46 @@ export class DocsDefinitionResolver {
         return iconPath as string;
     }
 
+    /**
+     * Walks each translation overlay's navbar-links and rewrites any
+     * AbsoluteFilePath icons to `file:<fileId>` references using the icons
+     * we just uploaded. Mirrors the per-link transform applied to the
+     * docs-level navbar-links in `toDocsConfig`.
+     */
+    private resolveTranslationOverlayNavbarLinkIcons(): void {
+        const overlays = this.parsedDocsConfig.translationNavigationOverlays;
+        if (overlays == null) {
+            return;
+        }
+        for (const overlay of Object.values(overlays)) {
+            if (overlay.navbarLinks == null) {
+                continue;
+            }
+            overlay.navbarLinks = overlay.navbarLinks.map((navbarLink) => {
+                if (navbarLink.type === "github") {
+                    return navbarLink;
+                }
+                if (navbarLink.type === "dropdown") {
+                    return {
+                        ...navbarLink,
+                        icon: this.resolveIconFileId(navbarLink.icon),
+                        rightIcon: this.resolveIconFileId(navbarLink.rightIcon),
+                        links: navbarLink.links.map((link) => ({
+                            ...link,
+                            icon: this.resolveIconFileId(link.icon),
+                            rightIcon: this.resolveIconFileId(link.rightIcon)
+                        }))
+                    };
+                }
+                return {
+                    ...navbarLink,
+                    icon: this.resolveIconFileId(navbarLink.icon),
+                    rightIcon: this.resolveIconFileId(navbarLink.rightIcon)
+                };
+            });
+        }
+    }
+
     private convertPageActions(): DocsV1Write.PageActionsConfig | undefined {
         if (this.parsedDocsConfig.pageActions == null) {
             return undefined;
@@ -2138,6 +2275,7 @@ export class DocsDefinitionResolver {
                 openAi: this.parsedDocsConfig.pageActions.options.openAi,
                 claude: this.parsedDocsConfig.pageActions.options.claude,
                 cursor: this.parsedDocsConfig.pageActions.options.cursor,
+                claudeCode: this.parsedDocsConfig.pageActions.options.claudeCode,
                 vscode: this.parsedDocsConfig.pageActions.options.vscode,
                 custom: this.parsedDocsConfig.pageActions.options.custom.map((customAction) => ({
                     title: customAction.title,
@@ -2266,17 +2404,17 @@ export class DocsDefinitionResolver {
             "og:image": ogImage,
             "og:logo": ogLogo,
             "twitter:image": twitterImage,
-            "og:background-image": ogBackgroundImage,
+            "og:dynamic:background-image": ogDynamicBackgroundImage,
             ...rest
         } = this.parsedDocsConfig.metadata;
-        // Type assertion needed: og:dynamic and og:background-image are not yet in the
-        // published FDR SDK MetadataConfig type, but FDR accepts them at runtime.
+        // Type assertion needed: og:dynamic and og:dynamic:background-image are not yet
+        // in the published FDR SDK MetadataConfig type, but FDR accepts them at runtime.
         return {
             ...rest,
             "og:image": this.convertFileIdOrUrl(ogImage),
             "og:logo": this.convertFileIdOrUrl(ogLogo),
             "twitter:image": this.convertFileIdOrUrl(twitterImage),
-            "og:background-image": this.convertFileIdOrUrl(ogBackgroundImage)
+            "og:dynamic:background-image": this.convertFileIdOrUrl(ogDynamicBackgroundImage)
         } as DocsV1Write.MetadataConfig;
     }
 
@@ -2343,6 +2481,12 @@ function convertAvailability(
             return FernNavigation.V1.NavigationV1Availability.GenerallyAvailable;
         case "stable":
             return FernNavigation.V1.NavigationV1Availability.Stable;
+        case "alpha":
+            return FernNavigation.V1.NavigationV1Availability.Alpha;
+        case "preview":
+            return FernNavigation.V1.NavigationV1Availability.Preview;
+        case "legacy":
+            return FernNavigation.V1.NavigationV1Availability.Legacy;
         default:
             assertNever(availability);
     }

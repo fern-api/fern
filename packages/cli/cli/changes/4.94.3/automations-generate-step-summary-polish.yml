@@ -1,0 +1,20 @@
+- summary: |
+    Polish the `fern automations generate` step-summary heading and the
+    `generators.yml` deep-link lookup.
+
+    - The failure heading now excludes skipped generators from the
+      denominator. A run of 4 succeeded, 2 failed, 4 skipped previously read
+      `❌ SDK generation failed (4/10 succeeded)` — implying 6 failures. It
+      now reads `❌ SDK generation failed (4/6 succeeded, 4 skipped)`.
+    - Added a distinct `⏭️ SDK generation skipped` heading for runs where
+      every generator was skipped. Previously these printed the cheerful
+      `✅ SDK generation succeeded` heading despite nothing having run.
+    - Tightened the `generators.yml` line-number regex to only match
+      `- name: <slug>` list-item entries. Nested `name:` keys (e.g. inside
+      `publishInfo`) and free-form values (e.g. a reviewer's full name) no
+      longer collide with generator lookups. Trailing YAML comments on the
+      `name:` line are tolerated.
+    - Added an `assertNever` exhaustiveness check on the generator-status
+      switch so a future status variant fails at compile time instead of
+      silently miscounting.
+  type: chore

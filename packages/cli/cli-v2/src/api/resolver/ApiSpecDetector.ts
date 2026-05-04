@@ -4,9 +4,14 @@ import yaml from "js-yaml";
 import type { ApiSpecType } from "../config/ApiSpec.js";
 
 /**
- * Supported spec types that can be auto-detected from a file.
+ * Supported spec types that can be auto-detected from YAML/JSON content.
  */
 const DETECTABLE_SPEC_TYPES: readonly ApiSpecType[] = ["openapi", "asyncapi"];
+
+/**
+ * File extensions that unambiguously identify a GraphQL schema.
+ */
+const GRAPHQL_EXTENSIONS: readonly string[] = [".graphql", ".graphqls", ".gql"];
 
 export namespace ApiSpecDetector {
     export interface Args {
@@ -24,6 +29,10 @@ export namespace ApiSpecDetector {
  */
 export class ApiSpecDetector {
     public async detect({ absoluteFilePath, reference, content }: ApiSpecDetector.Args): Promise<ApiSpecType> {
+        if (this.hasGraphQlExtension(absoluteFilePath) || this.hasGraphQlExtension(reference)) {
+            return "graphql";
+        }
+
         const parsed = this.parseOrThrow({ content, reference });
         if (typeof parsed !== "object" || parsed == null) {
             throw new CliError({
@@ -44,6 +53,11 @@ export class ApiSpecDetector {
                 `File must contain a top-level "openapi" or "asyncapi" key.`,
             code: CliError.Code.InternalError
         });
+    }
+
+    private hasGraphQlExtension(path: string): boolean {
+        const lower = path.toLowerCase();
+        return GRAPHQL_EXTENSIONS.some((ext) => lower.endsWith(ext));
     }
 
     private parseOrThrow({ content, reference }: { content: string; reference: string }): unknown {
