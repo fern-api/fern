@@ -888,12 +888,14 @@ export class DocsDefinitionResolver {
             agents:
                 this.parsedDocsConfig.agents != null ||
                 this.parsedDocsConfig.llmsTxtFile != null ||
-                this.parsedDocsConfig.llmsFullTxtFile != null
-                    ? {
+                this.parsedDocsConfig.llmsFullTxtFile != null ||
+                this.parsedDocsConfig.robotsTxtFile != null
+                    ? ({
                           ...this.parsedDocsConfig.agents,
                           llmsTxt: this.getFileId(this.parsedDocsConfig.llmsTxtFile),
-                          llmsFullTxt: this.getFileId(this.parsedDocsConfig.llmsFullTxtFile)
-                      }
+                          llmsFullTxt: this.getFileId(this.parsedDocsConfig.llmsFullTxtFile),
+                          robotsTxt: this.getFileId(this.parsedDocsConfig.robotsTxtFile)
+                      } as DocsV1Write.DocsConfig["agents"])
                     : undefined,
             metadata: this.convertMetadata(),
             redirects: this.parsedDocsConfig.redirects,

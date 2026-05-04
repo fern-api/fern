@@ -4481,6 +4481,16 @@
               "type": "null"
             }
           ]
+        },
+        "robots-txt": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false

@@ -147,6 +147,11 @@ export async function parseDocsConfiguration({
         absoluteFilepathToDocsConfig
     });
 
+    const robotsTxtFilePromise = parseTextFile({
+        rawPath: agents?.robotsTxt,
+        absoluteFilepathToDocsConfig
+    });
+
     const defaultLocale =
         rawDocsConfiguration.translations
             ?.map((t) => docsYml.DocsYmlSchemas.normalizeTranslationConfig(t))
@@ -181,6 +186,7 @@ export async function parseDocsConfiguration({
         context7File,
         llmsTxtFile,
         llmsFullTxtFile,
+        robotsTxtFile,
         translationPages,
         translationNavigationOverlays
     ] = await Promise.all([
@@ -193,6 +199,7 @@ export async function parseDocsConfiguration({
         context7FilePromise,
         llmsTxtFilePromise,
         llmsFullTxtFilePromise,
+        robotsTxtFilePromise,
         translationPagesPromise,
         translationNavigationOverlaysPromise
     ]);
@@ -255,6 +262,7 @@ export async function parseDocsConfiguration({
         context7File,
         llmsTxtFile,
         llmsFullTxtFile,
+        robotsTxtFile,
         theme: resolvedTheme,
         globalTheme: rawDocsConfiguration.globalTheme,
         analyticsConfig: {

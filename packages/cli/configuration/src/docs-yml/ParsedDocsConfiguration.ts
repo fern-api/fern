@@ -87,6 +87,7 @@ export interface ParsedDocsConfiguration {
     context7File: AbsoluteFilePath | undefined;
     llmsTxtFile: AbsoluteFilePath | undefined;
     llmsFullTxtFile: AbsoluteFilePath | undefined;
+    robotsTxtFile: AbsoluteFilePath | undefined;
     languages: string[] | undefined;
     translations: TranslationConfig[] | undefined;
     defaultLanguage: CjsFdrSdk.docs.v1.commons.ProgrammingLanguage | undefined;
