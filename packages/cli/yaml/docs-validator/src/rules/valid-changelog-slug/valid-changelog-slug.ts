@@ -137,7 +137,7 @@ function violationsForLocations(locations: ChangelogLocation[]): RuleViolation[]
         const sourceField =
             loc.slug != null ? `slug: "${loc.slug}"` : `title: "${loc.title ?? DEFAULT_CHANGELOG_TITLE}"`;
         violations.push({
-            severity: "warning",
+            severity: "error",
             message: `Changelog at ${loc.where} resolves to URL segment "${lastSegment}" (from ${sourceField}). The docs server only serves changelog feeds (.rss, .atom, .json) when the final URL segment is one of: ${allowed}. Rename the changelog's title or set an explicit slug to one of these values, otherwise subscribers will get a 404 when they request the feed.`
         });
     }

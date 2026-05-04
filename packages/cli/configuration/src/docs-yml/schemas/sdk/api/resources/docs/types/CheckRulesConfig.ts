@@ -17,6 +17,6 @@ export interface CheckRulesConfig {
     validDocsEndpoints?: FernDocsConfig.CheckRuleSeverity;
     /** Severity for detecting previously published URLs that disappeared without an explicit redirect. Default is warn. */
     missingRedirects?: FernDocsConfig.CheckRuleSeverity;
-    /** Severity for validating that each changelog's effective URL slug is one of the allowlisted values served as an RSS/Atom/JSON feed. Default is warn. */
+    /** Severity for validating that each changelog's effective URL slug is one of the allowlisted values served as an RSS/Atom/JSON feed. Default is error. */
     validChangelogSlug?: FernDocsConfig.CheckRuleSeverity;
 }
