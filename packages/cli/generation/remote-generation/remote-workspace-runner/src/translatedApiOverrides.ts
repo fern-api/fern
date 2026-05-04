@@ -6,6 +6,7 @@ import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-a
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import type { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
+import { convertIrToFdrApi } from "@fern-api/register";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import {
     DocsWorkspace,
@@ -32,13 +33,20 @@ export type RegisteredApiConfig = Pick<
     endpointKeys?: string[];
 };
 
+export type ApiNavigationTitleOverrides = {
+    endpointTitlesById: Map<string, string>;
+};
+
+export type TranslatedApiNavigationTitleOverridesByLocale = Map<string, Map<string, ApiNavigationTitleOverrides>>;
+
 export async function registerTranslatedApiOverrides({
     docsWorkspace,
     cliVersion,
     context,
     registeredApiIdsByName,
     registeredApiConfigsByName,
-    registerApiDefinition
+    registerApiDefinition,
+    translatedApiNavigationTitleOverridesByLocale
 }: {
     docsWorkspace: DocsWorkspace;
     cliVersion: string | undefined;
@@ -46,6 +54,7 @@ export async function registerTranslatedApiOverrides({
     registeredApiIdsByName: Map<string, string>;
     registeredApiConfigsByName: Map<string, RegisteredApiConfig>;
     registerApiDefinition: (opts: RegisterApiDefinitionOptions) => Promise<string>;
+    translatedApiNavigationTitleOverridesByLocale?: TranslatedApiNavigationTitleOverridesByLocale;
 }): Promise<Map<string, Map<string, string>>> {
     const locales = getNonDefaultTranslationLocales(docsWorkspace.config.translations);
     const translatedApiDefinitionIdsByLocale = new Map<string, Map<string, string>>();
@@ -81,6 +90,15 @@ export async function registerTranslatedApiOverrides({
                 translatedEndpointKeys: getHttpEndpointKeys(ir),
                 apiName,
                 locale,
+                context
+            });
+            addTranslatedApiNavigationTitleOverrides({
+                translatedApiNavigationTitleOverridesByLocale,
+                locale,
+                baseApiDefinitionId,
+                ir,
+                apiName,
+                baseConfig,
                 context
             });
             const translatedApiDefinitionId = await registerApiDefinition({
@@ -181,11 +199,9 @@ async function loadTranslatedApiWorkspace({
 
     if (!loadedWorkspace.didSucceed) {
         handleFailedWorkspaceParserResult(loadedWorkspace, context.logger);
-        return context.failAndThrow(
-            `Failed to load translated API "${apiName}" for locale "${locale}".`,
-            undefined,
-            { code: CliError.Code.ConfigError }
-        );
+        return context.failAndThrow(`Failed to load translated API "${apiName}" for locale "${locale}".`, undefined, {
+            code: CliError.Code.ConfigError
+        });
     }
 
     if (loadedWorkspace.workspace instanceof OSSWorkspace) {
@@ -292,6 +308,39 @@ export function replaceApiDefinitionIdsInObject<T>(value: T, replacements: Map<s
     return value;
 }
 
+export function applyTranslatedApiNavigationTitlesInObject<T>(
+    value: T,
+    replacements: Map<string, ApiNavigationTitleOverrides>
+): T {
+    if (Array.isArray(value)) {
+        return value.map((item) => applyTranslatedApiNavigationTitlesInObject(item, replacements)) as T;
+    }
+    if (value != null && typeof value === "object") {
+        const record = value as Record<string, unknown>;
+        const translatedRecord = Object.fromEntries(
+            Object.entries(record).map(([key, child]) => [
+                key,
+                applyTranslatedApiNavigationTitlesInObject(child, replacements)
+            ])
+        );
+        if (record.type === "endpoint") {
+            const apiDefinitionId = record.apiDefinitionId;
+            const endpointId = record.endpointId;
+            if (typeof apiDefinitionId === "string" && typeof endpointId === "string") {
+                const translatedTitle = replacements.get(apiDefinitionId)?.endpointTitlesById.get(endpointId);
+                if (translatedTitle != null) {
+                    return {
+                        ...translatedRecord,
+                        title: translatedTitle
+                    } as T;
+                }
+            }
+        }
+        return translatedRecord as T;
+    }
+    return value;
+}
+
 export function getHttpEndpointKeys(ir: IntermediateRepresentation): string[] {
     const endpointKeys = new Set<string>();
     for (const service of Object.values(ir.services)) {
@@ -311,6 +360,74 @@ export function getMissingEndpointKeys({
 }): string[] {
     const translatedEndpointKeySet = new Set(translatedEndpointKeys);
     return baseEndpointKeys.filter((endpointKey) => !translatedEndpointKeySet.has(endpointKey));
+}
+
+function addTranslatedApiNavigationTitleOverrides({
+    translatedApiNavigationTitleOverridesByLocale,
+    locale,
+    baseApiDefinitionId,
+    ir,
+    apiName,
+    baseConfig,
+    context
+}: {
+    translatedApiNavigationTitleOverridesByLocale: TranslatedApiNavigationTitleOverridesByLocale | undefined;
+    locale: string;
+    baseApiDefinitionId: string;
+    ir: IntermediateRepresentation;
+    apiName: string;
+    baseConfig: RegisteredApiConfig | undefined;
+    context: TaskContext;
+}): void {
+    if (translatedApiNavigationTitleOverridesByLocale == null) {
+        return;
+    }
+    const apiDefinition = convertIrToFdrApi({
+        ir,
+        snippetsConfig: baseConfig?.snippetsConfig ?? {},
+        playgroundConfig: baseConfig?.playgroundConfig,
+        graphqlOperations: baseConfig?.graphqlOperations,
+        graphqlTypes: baseConfig?.graphqlTypes,
+        context,
+        apiNameOverride: apiName
+    });
+    const titleOverrides = getApiNavigationTitleOverrides(apiDefinition);
+    if (titleOverrides.endpointTitlesById.size === 0) {
+        return;
+    }
+    const localeOverrides = translatedApiNavigationTitleOverridesByLocale.get(locale) ?? new Map();
+    localeOverrides.set(baseApiDefinitionId, titleOverrides);
+    translatedApiNavigationTitleOverridesByLocale.set(locale, localeOverrides);
+}
+
+function getApiNavigationTitleOverrides(
+    apiDefinition: ReturnType<typeof convertIrToFdrApi>
+): ApiNavigationTitleOverrides {
+    const endpointTitlesById = new Map<string, string>();
+    addEndpointNavigationTitleOverrides(endpointTitlesById, apiDefinition.rootPackage, ROOT_PACKAGE_ID);
+    for (const [subpackageId, subpackage] of Object.entries(apiDefinition.subpackages)) {
+        addEndpointNavigationTitleOverrides(endpointTitlesById, subpackage, subpackageId);
+    }
+    return { endpointTitlesById };
+}
+
+function addEndpointNavigationTitleOverrides(
+    endpointTitlesById: Map<string, string>,
+    pkg: ReturnType<typeof convertIrToFdrApi>["rootPackage"],
+    subpackageId: string
+): void {
+    for (const endpoint of pkg.endpoints) {
+        if (endpoint.name != null) {
+            endpointTitlesById.set(getEndpointNavigationId(endpoint, subpackageId), endpoint.name);
+        }
+    }
+}
+
+function getEndpointNavigationId(
+    endpoint: ReturnType<typeof convertIrToFdrApi>["rootPackage"]["endpoints"][number],
+    subpackageId: string
+): string {
+    return endpoint.originalEndpointId ?? `${subpackageId}.${endpoint.id}`;
 }
 
 function warnIfTranslatedApiIsMissingEndpoints({
@@ -345,3 +462,5 @@ function stringifyHttpPath(path: IntermediateRepresentation["basePath"]): string
     }
     return `${path.head}${path.parts.map((part) => `{${part.pathParameter}}${part.tail}`).join("")}`;
 }
+
+const ROOT_PACKAGE_ID = "__package__";

@@ -6,9 +6,11 @@ import { tmpdir } from "os";
 import { join } from "path";
 import { afterEach, describe, expect, it } from "vitest";
 import {
+    applyTranslatedApiNavigationTitlesInObject,
     registerTranslatedApiOverrides,
     replaceApiDefinitionIdsInObject,
-    type RegisterApiDefinitionOptions
+    type RegisterApiDefinitionOptions,
+    type TranslatedApiNavigationTitleOverridesByLocale
 } from "../translatedApiOverrides.js";
 
 type RegisteredApi = {
@@ -31,13 +33,7 @@ describe("translated OpenAPI publish path e2e", () => {
 
         const context = createMockTaskContext();
         const fakeFdr = createFakeFdr(context);
-        const baseRoot = {
-            type: "root",
-            child: {
-                type: "apiReference",
-                apiDefinitionId: "api-definition-base"
-            }
-        };
+        const translatedApiNavigationTitleOverridesByLocale: TranslatedApiNavigationTitleOverridesByLocale = new Map();
 
         const translatedApiIdsByLocale = await registerTranslatedApiOverrides({
             docsWorkspace: {
@@ -55,14 +51,40 @@ describe("translated OpenAPI publish path e2e", () => {
             context,
             registeredApiIdsByName: new Map([["Plant Store API", "api-definition-base"]]),
             registeredApiConfigsByName: new Map([["Plant Store API", { snippetsConfig: {} }]]),
-            registerApiDefinition: fakeFdr.registerApiDefinition
+            registerApiDefinition: fakeFdr.registerApiDefinition,
+            translatedApiNavigationTitleOverridesByLocale
         });
 
         const zhApiId = translatedApiIdsByLocale.get("zh")?.get("api-definition-base");
         expect(zhApiId).toBe("api-definition-translated-zh");
+        const zhTitleOverrides = translatedApiNavigationTitleOverridesByLocale.get("zh");
+        const translatedEndpointId = Array.from(
+            zhTitleOverrides?.get("api-definition-base")?.endpointTitlesById.keys() ?? []
+        )[0];
+        expect(translatedEndpointId).toBeDefined();
 
-        const translatedRoot = replaceApiDefinitionIdsInObject(
+        const baseRoot = {
+            type: "root",
+            child: {
+                type: "apiReference",
+                apiDefinitionId: "api-definition-base",
+                children: [
+                    {
+                        type: "endpoint",
+                        apiDefinitionId: "api-definition-base",
+                        endpointId: translatedEndpointId,
+                        title: "List plants"
+                    }
+                ]
+            }
+        };
+
+        const translatedRootWithTitles = applyTranslatedApiNavigationTitlesInObject(
             baseRoot,
+            translatedApiNavigationTitleOverridesByLocale.get("zh") ?? new Map()
+        );
+        const translatedRoot = replaceApiDefinitionIdsInObject(
+            translatedRootWithTitles,
             translatedApiIdsByLocale.get("zh") ?? new Map()
         );
         const fdrZhJson = fakeFdr.writeTranslation({
@@ -80,6 +102,8 @@ describe("translated OpenAPI publish path e2e", () => {
         expect(JSON.stringify(fakeFdr.registeredApis[0]?.definition)).toContain("列出植物");
         expect(JSON.stringify(fakeFdr.registeredApis[0]?.definition)).toContain("返回本地化的植物列表");
         expect(JSON.stringify(fdrZhJson.config.root)).toContain("api-definition-translated-zh");
+        expect(JSON.stringify(fdrZhJson.config.root)).toContain("列出植物");
+        expect(JSON.stringify(fdrZhJson.config.root)).not.toContain("List plants");
         expect(fdrZhJson.apis["api-definition-translated-zh"]).toBeDefined();
         expect(JSON.stringify(fdrZhJson.apis["api-definition-translated-zh"])).toContain("返回本地化的植物列表");
         expect(fdrZhJson.apiNameToId["Plant Store API"]).toBe("api-definition-translated-zh");

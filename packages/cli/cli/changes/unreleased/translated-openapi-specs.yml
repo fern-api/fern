@@ -1,3 +1,3 @@
 - summary: |
-    Support translated API specs in docs publishes by registering locale-specific API definitions and wiring translated docs payloads to those API IDs.
+    Support translated API specs in docs publishes by registering locale-specific API definitions and wiring translated docs payloads and endpoint navigation titles to those API IDs.
   type: feat

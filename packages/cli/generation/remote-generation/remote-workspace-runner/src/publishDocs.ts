@@ -50,9 +50,11 @@ import terminalLink from "terminal-link";
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig.js";
 import { measureImageSizes } from "./measureImageSizes.js";
 import {
+    applyTranslatedApiNavigationTitlesInObject,
     getHttpEndpointKeys,
     type RegisteredApiConfig,
     type RegisterApiDefinitionOptions,
+    type TranslatedApiNavigationTitleOverridesByLocale,
     registerTranslatedApiOverrides,
     replaceApiDefinitionIdsInObject
 } from "./translatedApiOverrides.js";
@@ -673,13 +675,15 @@ export async function publishDocs({
         const translationPages = resolver.getTranslationPages();
         const translationNavigationOverlays = resolver.getTranslationNavigationOverlays();
         const translationDomain = preview ? urlToOutput : domain;
+        const translatedApiNavigationTitleOverridesByLocale: TranslatedApiNavigationTitleOverridesByLocale = new Map();
         const translatedApiDefinitionIdsByLocale = await registerTranslatedApiOverrides({
             docsWorkspace: effectiveWorkspace,
             cliVersion,
             context,
             registeredApiIdsByName,
             registeredApiConfigsByName,
-            registerApiDefinition
+            registerApiDefinition,
+            translatedApiNavigationTitleOverridesByLocale
         });
         if (translationPages != null && Object.keys(translationPages).length > 0) {
             context.logger.info(`Registering translations for ${Object.keys(translationPages).length} locale(s)...`);
@@ -833,6 +837,17 @@ export async function publishDocs({
                             if (localeNavbarLinks != null) {
                                 translatedNavbarLinks = localeNavbarLinks;
                             }
+                        }
+                        const translatedApiNavigationTitleOverrides =
+                            translatedApiNavigationTitleOverridesByLocale.get(locale);
+                        if (
+                            translatedApiNavigationTitleOverrides != null &&
+                            translatedApiNavigationTitleOverrides.size > 0
+                        ) {
+                            updatedRoot = applyTranslatedApiNavigationTitlesInObject(
+                                updatedRoot,
+                                translatedApiNavigationTitleOverrides
+                            );
                         }
                         const translatedApiDefinitionIds = translatedApiDefinitionIdsByLocale.get(locale);
                         if (translatedApiDefinitionIds != null && translatedApiDefinitionIds.size > 0) {

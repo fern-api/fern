@@ -5,6 +5,7 @@ import { tmpdir } from "os";
 import { join } from "path";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
+    applyTranslatedApiNavigationTitlesInObject,
     getMissingEndpointKeys,
     getNonDefaultTranslationLocales,
     getTranslatedApiWorkspacePath,
@@ -23,11 +24,7 @@ describe("translated API overrides", () => {
     it("returns non-default translation locales", () => {
         expect(getNonDefaultTranslationLocales(["en", "zh", "ja"])).toEqual(["zh", "ja"]);
         expect(
-            getNonDefaultTranslationLocales([
-                { lang: "zh", default: true },
-                { lang: "en" },
-                { lang: "ja" }
-            ])
+            getNonDefaultTranslationLocales([{ lang: "zh", default: true }, { lang: "en" }, { lang: "ja" }])
         ).toEqual(["en", "ja"]);
     });
 
@@ -92,10 +89,7 @@ describe("translated API overrides", () => {
                 type: "root",
                 child: {
                     apiDefinitionId: "base-api-definition-id",
-                    nested: [
-                        { apiDefinitionId: "other-api-definition-id" },
-                        { endpointId: "base-api-definition-id" }
-                    ]
+                    nested: [{ apiDefinitionId: "other-api-definition-id" }, { endpointId: "base-api-definition-id" }]
                 }
             },
             new Map([["base-api-definition-id", "translated-api-definition-id"]])
@@ -107,6 +101,54 @@ describe("translated API overrides", () => {
                 apiDefinitionId: "translated-api-definition-id",
                 nested: [{ apiDefinitionId: "other-api-definition-id" }, { endpointId: "base-api-definition-id" }]
             }
+        });
+    });
+
+    it("recursively applies translated endpoint navigation titles", () => {
+        const translatedRoot = applyTranslatedApiNavigationTitlesInObject(
+            {
+                type: "root",
+                children: [
+                    {
+                        type: "endpoint",
+                        apiDefinitionId: "base-api-definition-id",
+                        endpointId: "endpoint_addPlant",
+                        title: "Add a new plant to the store"
+                    },
+                    {
+                        type: "endpoint",
+                        apiDefinitionId: "other-api-definition-id",
+                        endpointId: "endpoint_addPlant",
+                        title: "Add a new plant to the store"
+                    }
+                ]
+            },
+            new Map([
+                [
+                    "base-api-definition-id",
+                    {
+                        endpointTitlesById: new Map([["endpoint_addPlant", "添加一株新的植物"]])
+                    }
+                ]
+            ])
+        );
+
+        expect(translatedRoot).toEqual({
+            type: "root",
+            children: [
+                {
+                    type: "endpoint",
+                    apiDefinitionId: "base-api-definition-id",
+                    endpointId: "endpoint_addPlant",
+                    title: "添加一株新的植物"
+                },
+                {
+                    type: "endpoint",
+                    apiDefinitionId: "other-api-definition-id",
+                    endpointId: "endpoint_addPlant",
+                    title: "Add a new plant to the store"
+                }
+            ]
         });
     });
 
@@ -125,10 +167,7 @@ describe("translated API overrides", () => {
 
         const translatedApi = join(root, "translations", "zh", "apis", "Plant Store API");
         await mkdir(translatedApi, { recursive: true });
-        await writeFile(
-            join(translatedApi, "generators.yml"),
-            "api:\n  specs:\n    - openapi: openapi.yaml\n"
-        );
+        await writeFile(join(translatedApi, "generators.yml"), "api:\n  specs:\n    - openapi: openapi.yaml\n");
         await writeFile(
             join(translatedApi, "openapi.yaml"),
             [
@@ -184,10 +223,7 @@ describe("translated API overrides", () => {
 
         const translatedApi = join(root, "translations", "zh", "apis", "Plant Store API");
         await mkdir(translatedApi, { recursive: true });
-        await writeFile(
-            join(translatedApi, "generators.yml"),
-            "api:\n  specs:\n    - openapi: openapi.yaml\n"
-        );
+        await writeFile(join(translatedApi, "generators.yml"), "api:\n  specs:\n    - openapi: openapi.yaml\n");
         await writeFile(
             join(translatedApi, "openapi.yaml"),
             [
