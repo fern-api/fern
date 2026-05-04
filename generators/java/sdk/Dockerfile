@@ -73,6 +73,9 @@ RUN rm -f /opt/gradle/lib/plugins/bcpg-jdk18on-*.jar \
 # CVE-2025-11468, CVE-2025-15282, CVE-2026-0672, CVE-2026-0865, CVE-2026-1299,
 # CVE-2026-2297, CVE-2026-4224, CVE-2026-4519),
 # libnghttp2 (ALAS2023-2026-1542, CVE-2026-27135)
+# Security update 2026-05-04: add glibc/glibc-common/glibc-minimal-langpack
+# (CVE-2026-4046, iconv() assertion failure when converting IBM1390/IBM1399
+# inputs; fixed in glibc 2.34-231.amzn2023.0.4)
 RUN dnf --releasever=latest update -y \
     openssl-fips-provider-latest \
     openssl-libs \
@@ -92,7 +95,10 @@ RUN dnf --releasever=latest update -y \
     freetype \
     python3 \
     python3-libs \
-    libnghttp2 && \
+    libnghttp2 \
+    glibc \
+    glibc-common \
+    glibc-minimal-langpack && \
     dnf remove -y git-lfs wget || true && \
     dnf clean all && \
     rm -rf /var/cache/dnf

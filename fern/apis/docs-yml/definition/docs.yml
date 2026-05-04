@@ -25,22 +25,12 @@ types:
       - js
 
   Language:
-    enum:
-      - en
-      - es
-      - fr
-      - de
-      - it
-      - pt
-      - ja
-      - zh
-      - ko
-      - el
-      - no
-      - pl
-      - ru
-      - sv
-      - tr
+    docs: |
+      A BCP 47 language tag identifying a docs locale. Common shorthand codes
+      like "en", "es", "ja" are accepted, as well as regional variants such as
+      "ja-JP", "pt-BR", "zh-Hans", and "zh-Hans-CN". See RFC 5646 for the full
+      grammar.
+    type: string
 
   TranslationConfigObject:
     properties:
@@ -660,13 +650,22 @@ types:
         value: deprecated
       - name: Beta
         value: beta
+      - name: Alpha
+        value: alpha
+      - name: Preview
+        value: preview
+      - name: Legacy
+        value: legacy
 
   VersionAvailability:
     enum:
-      - deprecated # TODO: should we support `legacy`?
+      - deprecated
+      - legacy
       - ga
       - stable
       - beta
+      - alpha
+      - preview
 
   VersionFileConfig:
     properties:

@@ -535,12 +535,13 @@ export function buildArrayTypeReference({
         variant
     });
     const type = `list<${getTypeFromTypeReference(item)}>`;
-    if (schema.description == null && schema.title == null) {
+    if (schema.description == null && schema.title == null && schema.default == null) {
         return type;
     }
     return {
         ...(schema.description != null ? { docs: schema.description } : {}),
         ...(schema.availability != null ? { availability: convertAvailability(schema.availability) } : {}),
+        ...(schema.default != null ? { default: schema.default } : {}),
         type
     };
 }

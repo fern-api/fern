@@ -157,6 +157,7 @@ export class MessageConverter extends AbstractConverter<ProtofileConverterContex
                         docs: undefined,
                         availability: convertedOneOfField.availability,
                         propertyAccess: undefined,
+                        defaultValue: undefined,
                         v2Examples: undefined
                     });
 

@@ -36,7 +36,7 @@ export function convertIrToFdrApi({
                 availability: convertIrAvailability(header.availability),
                 description: header.docs ?? undefined,
                 key: getWireValue(header.name),
-                type: convertTypeReference(header.valueType)
+                type: convertTypeReference(header.valueType, header.defaultValue)
             })
         ),
         navigation: undefined

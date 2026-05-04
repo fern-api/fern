@@ -1058,9 +1058,12 @@
       "type": "string",
       "enum": [
         "deprecated",
+        "legacy",
         "ga",
         "stable",
-        "beta"
+        "beta",
+        "alpha",
+        "preview"
       ]
     },
     "docs.VersionConfig": {
@@ -1405,7 +1408,10 @@
         "in-development",
         "pre-release",
         "deprecated",
-        "beta"
+        "beta",
+        "alpha",
+        "preview",
+        "legacy"
       ]
     },
     "docs.PageConfiguration": {
@@ -4269,24 +4275,7 @@
       ]
     },
     "docs.Language": {
-      "type": "string",
-      "enum": [
-        "en",
-        "es",
-        "fr",
-        "de",
-        "it",
-        "pt",
-        "ja",
-        "zh",
-        "ko",
-        "el",
-        "no",
-        "pl",
-        "ru",
-        "sv",
-        "tr"
-      ]
+      "type": "string"
     },
     "docs.TranslationConfigObject": {
       "type": "object",

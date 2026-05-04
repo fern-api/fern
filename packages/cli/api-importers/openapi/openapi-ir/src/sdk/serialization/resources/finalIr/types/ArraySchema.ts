@@ -17,6 +17,7 @@ export const ArraySchema: core.serialization.ObjectSchema<serializers.ArraySchem
             value: core.serialization.lazy(() => serializers.Schema),
             minItems: core.serialization.number().optional(),
             maxItems: core.serialization.number().optional(),
+            default: core.serialization.unknown().optional(),
         })
         .extend(WithSdkGroupName)
         .extend(WithNamespace)
@@ -38,5 +39,6 @@ export declare namespace ArraySchema {
         value: serializers.Schema.Raw;
         minItems?: number | null;
         maxItems?: number | null;
+        default?: unknown | null;
     }
 }

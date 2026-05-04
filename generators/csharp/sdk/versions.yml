@@ -1,4 +1,33 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.65.0
+  changelogEntry:
+    - summary: |
+        Generate CONTRIBUTING.md for C# SDKs, matching the pattern used by the TypeScript generator.
+        The file is skipped for whitelabel SDKs.
+      type: feat
+  createdAt: "2026-05-01"
+  irVersion: 66
+- version: 2.64.2
+  changelogEntry:
+    - summary: |
+        Dedup auth-derived headers in the generated client constructor when
+        multiple auth schemes resolve to the same HTTP header name (for
+        example, an oauth2 bearer scheme plus an apiKey-in-header scheme
+        both named `Authorization`). Previously the constructor's
+        `Dictionary<string, string>` collection initializer added the same
+        key twice and threw `System.ArgumentException: An item with the
+        same key has already been added` at runtime. Earlier auth schemes
+        win, preserving the ordering established by the IR.
+      type: fix
+    - summary: |
+        Fix literal boolean auth-header values being emitted as `"True"` regardless
+        of the configured value. The generated client constructor's auth-header
+        dictionary tested the truthiness of the `Literal` discriminated-union
+        object instead of reading its `boolean` field, so a literal `false` header
+        incorrectly produced `"True"`.
+      type: fix
+  createdAt: "2026-05-01"
+  irVersion: 66
 - version: 2.64.1
   changelogEntry:
     - summary: |

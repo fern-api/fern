@@ -1,6 +1,15 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Bump `@fern-api/replay` from 0.14.0 to 0.14.1. Picks up fix for
+        consolidating duplicate-content patches to prevent next-regen
+        corruption.
+      type: fix
+  createdAt: "2026-04-30"
+  version: 0.9.22
+
+- changelogEntry:
+    - summary: |
         Bump `@fern-api/replay` from 0.13.0 to 0.14.0. Picks up fixes for
         silent customization loss across apply and resolve paths (FER-9983),
         per-patch-region diff to prevent silent customization loss, and

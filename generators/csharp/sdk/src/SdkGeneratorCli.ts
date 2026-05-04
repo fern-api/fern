@@ -13,6 +13,7 @@ import * as FernGeneratorExecSerializers from "@fern-fern/generator-exec-sdk/ser
 import { FernIr } from "@fern-fern/ir-sdk";
 import { fail } from "assert";
 import { writeFile } from "fs/promises";
+import { ContributingGenerator } from "./contributing/ContributingGenerator.js";
 import { SnippetJsonGenerator } from "./endpoint/snippets/SnippetJsonGenerator.js";
 import { MultiUrlEnvironmentGenerator } from "./environment/MultiUrlEnvironmentGenerator.js";
 import { SingleUrlEnvironmentGenerator } from "./environment/SingleUrlEnvironmentGenerator.js";
@@ -303,6 +304,14 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
                 throw GeneratorError.internalError(`Failed to generate reference.md: ${extractErrorMessage(e)}`);
             }
         }
+
+        if (!context.config.whitelabel) {
+            try {
+                this.generateContributing({ context });
+            } catch (e) {
+                throw GeneratorError.internalError(`Failed to generate CONTRIBUTING.md: ${extractErrorMessage(e)}`);
+            }
+        }
         context.logger.debug(`[TIMING] code generation took ${Date.now() - generateStartTime}ms`);
         await context.project.persist();
         context.formatter.dispose();
@@ -340,6 +349,13 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
         context.project.addRawFiles(
             new File(context.generatorAgent.REFERENCE_FILENAME, RelativeFilePath.of(otherPath), content)
         );
+    }
+
+    private generateContributing({ context }: { context: SdkGeneratorContext }): void {
+        const contributingGenerator = new ContributingGenerator();
+        const content = contributingGenerator.generate();
+        const otherPath = context.settings.outputPath.other;
+        context.project.addRawFiles(new File("CONTRIBUTING.md", RelativeFilePath.of(otherPath), content));
     }
 
     private async generateGitHub({ context }: { context: SdkGeneratorContext }): Promise<void> {

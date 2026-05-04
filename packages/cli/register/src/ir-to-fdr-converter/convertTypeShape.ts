@@ -33,7 +33,7 @@ export function convertTypeShape(irType: Ir.types.Type): FdrCjsSdk.api.v1.regist
                     (property): FdrCjsSdk.api.v1.register.ObjectProperty => ({
                         description: property.docs ?? undefined,
                         key: FdrCjsSdk.PropertyKey(getWireValue(property.name)),
-                        valueType: convertTypeReference(property.valueType),
+                        valueType: convertTypeReference(property.valueType, property.defaultValue),
                         availability: convertIrAvailability(property.availability),
                         propertyAccess: property.propertyAccess
                     })
@@ -46,7 +46,7 @@ export function convertTypeShape(irType: Ir.types.Type): FdrCjsSdk.api.v1.regist
                 (baseProperty): FdrCjsSdk.api.v1.register.ObjectProperty => {
                     return {
                         key: FdrCjsSdk.PropertyKey(getWireValue(baseProperty.name)),
-                        valueType: convertTypeReference(baseProperty.valueType),
+                        valueType: convertTypeReference(baseProperty.valueType, baseProperty.defaultValue),
                         availability: convertIrAvailability(baseProperty.availability),
                         description: baseProperty.docs,
                         propertyAccess: baseProperty.propertyAccess
@@ -130,7 +130,17 @@ export function convertTypeShape(irType: Ir.types.Type): FdrCjsSdk.api.v1.regist
     });
 }
 
-export function convertTypeReference(irTypeReference: Ir.types.TypeReference): FdrCjsSdk.api.v1.register.TypeReference {
+/**
+ * @param irTypeReference - The IR type reference to convert.
+ * @param documentationDefault - Documentation default value to attach to the outermost `optional` wrapper, if any.
+ * Used to propagate property/parameter/header `defaultValue` (e.g. for arrays where
+ * the value can't be represented in `clientDefault: Literal`) down to the FDR
+ * `optional.defaultValue` field that the docs UI reads via `unwrapReference`.
+ */
+export function convertTypeReference(
+    irTypeReference: Ir.types.TypeReference,
+    documentationDefault?: unknown
+): FdrCjsSdk.api.v1.register.TypeReference {
     return irTypeReference._visit<FdrCjsSdk.api.v1.register.TypeReference>({
         container: (container) => {
             return Ir.types.ContainerType._visit<FdrCjsSdk.api.v1.register.TypeReference>(container, {
@@ -155,7 +165,7 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
                     return {
                         type: "optional",
                         itemType: convertTypeReference(itemType),
-                        defaultValue: undefined
+                        defaultValue: documentationDefault
                     };
                 },
                 nullable: (itemType) => {

@@ -7,9 +7,9 @@ import UnionQueryParameters
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 string
-                """.utf8
+                """#.utf8
             )
         )
         let client = UnionQueryParametersClient(

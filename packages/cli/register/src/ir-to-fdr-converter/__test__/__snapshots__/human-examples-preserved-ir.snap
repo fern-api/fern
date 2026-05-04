@@ -1464,6 +1464,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Optional client-provided ID",
             "name": "id",
             "propertyAccess": undefined,
@@ -1502,6 +1503,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Product title",
             "name": "title",
             "propertyAccess": undefined,
@@ -1532,6 +1534,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Product price",
             "name": "price",
             "propertyAccess": undefined,
@@ -1563,6 +1566,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Whether the product is in stock",
             "name": "inStock",
             "propertyAccess": undefined,
@@ -1633,6 +1637,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "id",
             "propertyAccess": undefined,
@@ -1663,6 +1668,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "title",
             "propertyAccess": undefined,
@@ -1693,6 +1699,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "price",
             "propertyAccess": undefined,
@@ -1724,6 +1731,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "inStock",
             "propertyAccess": undefined,
@@ -1756,6 +1764,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "createdAt",
             "propertyAccess": undefined,
@@ -1787,6 +1796,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "description",
             "propertyAccess": undefined,

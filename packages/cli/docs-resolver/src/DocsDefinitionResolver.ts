@@ -68,6 +68,7 @@ interface DocsConfigWithTranslations extends DocsV1Write.DocsConfig {
 import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter.js";
 import { ChangelogNodeConverter } from "./ChangelogNodeConverter.js";
 import { NodeIdGenerator } from "./NodeIdGenerator.js";
+import { convertDocsAvailability } from "./utils/convertDocsAvailability.js";
 import { convertDocsSnippetsConfigToFdr } from "./utils/convertDocsSnippetsConfigToFdr.js";
 import { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition.js";
 import { collectFilesFromDocsConfig } from "./utils/getImageFilepathsToUpload.js";
@@ -881,7 +882,6 @@ export class DocsDefinitionResolver {
             }),
             typographyV2: this.convertDocsTypographyConfiguration(),
             layout: this.parsedDocsConfig.layout,
-            // @ts-expect-error -- BCP 47: Language type widened to string, @fern-api/fdr-sdk not yet updated
             settings: this.parsedDocsConfig.settings,
             css: this.parsedDocsConfig.css,
             js: this.convertJavascriptConfiguration(),
@@ -1962,7 +1962,7 @@ export class DocsDefinitionResolver {
             authed: undefined,
             noindex: item.noindex || this.markdownFilesToNoIndex.get(item.absolutePath),
             featureFlags: item.featureFlags,
-            availability: frontmatterAvailability ?? item.availability ?? parentAvailability
+            availability: convertDocsAvailability(frontmatterAvailability ?? item.availability ?? parentAvailability)
         };
     }
 
@@ -1982,13 +1982,31 @@ export class DocsDefinitionResolver {
         const relativeFilePath = this.toRelativeFilepath(item.overviewAbsolutePath);
         let pageId = relativeFilePath ? FernNavigation.PageId(relativeFilePath) : undefined;
         const id = this.#idgen.get(pageId ?? `${prefix}/section`);
-        const slug = parentSlug.apply({
-            urlSlug: item.slug ?? kebabCase(item.title),
-            fullSlug: item.overviewAbsolutePath
-                ? this.markdownFilesToFullSlugs.get(item.overviewAbsolutePath)?.split("/")
-                : undefined,
-            skipUrlSlug: item.skipUrlSlug
-        });
+        const fullSlugParts = item.overviewAbsolutePath
+            ? this.markdownFilesToFullSlugs.get(item.overviewAbsolutePath)?.split("/")
+            : undefined;
+
+        const urlSlug = item.slug ?? kebabCase(item.title);
+
+        // When skip-slug is true AND the overview page declares a frontmatter slug,
+        // the section needs two distinct slugs:
+        //   - sectionSlug: where the overview page renders (from frontmatter)
+        //   - childrenParentSlug: the base for child URLs (transparent, inherits from parent)
+        // Without this separation, one of the two behaviors breaks:
+        //   - If skipUrlSlug wins: frontmatter slug is discarded → overview page 404s
+        //   - If fullSlug wins: children nest under the overview slug → wrong child URLs
+        let sectionSlug: FernNavigation.V1.SlugGenerator;
+        let childrenParentSlug: FernNavigation.V1.SlugGenerator;
+
+        if (item.skipUrlSlug && fullSlugParts != null) {
+            sectionSlug = parentSlug.apply({ urlSlug, fullSlug: fullSlugParts });
+            childrenParentSlug = parentSlug.apply({ urlSlug, skipUrlSlug: true });
+        } else {
+            const slug = parentSlug.apply({ urlSlug, fullSlug: fullSlugParts, skipUrlSlug: item.skipUrlSlug });
+            sectionSlug = slug;
+            childrenParentSlug = slug;
+        }
+
         const noindex =
             item.overviewAbsolutePath != null ? this.markdownFilesToNoIndex.get(item.overviewAbsolutePath) : undefined;
         const frontmatterAvailability =
@@ -2001,7 +2019,7 @@ export class DocsDefinitionResolver {
                 this.toNavigationChild({
                     prefix: id,
                     item: child,
-                    parentSlug: slug,
+                    parentSlug: childrenParentSlug,
                     hideChildren: hiddenSection,
                     parentAvailability: item.availability ?? parentAvailability
                 })
@@ -2029,7 +2047,7 @@ export class DocsDefinitionResolver {
             id,
             type: "section",
             overviewPageId: pageId,
-            slug: slug.get(),
+            slug: sectionSlug.get(),
             title:
                 item.overviewAbsolutePath != null
                     ? (this.markdownFilesToSidebarTitle.get(item.overviewAbsolutePath) ?? item.title)
@@ -2046,7 +2064,7 @@ export class DocsDefinitionResolver {
             pointsTo: undefined,
             noindex,
             featureFlags: item.featureFlags,
-            availability: frontmatterAvailability ?? item.availability ?? parentAvailability
+            availability: convertDocsAvailability(frontmatterAvailability ?? item.availability ?? parentAvailability)
         };
     }
 
@@ -2461,6 +2479,12 @@ function convertAvailability(
             return FernNavigation.V1.NavigationV1Availability.GenerallyAvailable;
         case "stable":
             return FernNavigation.V1.NavigationV1Availability.Stable;
+        case "alpha":
+            return FernNavigation.V1.NavigationV1Availability.Alpha;
+        case "preview":
+            return FernNavigation.V1.NavigationV1Availability.Preview;
+        case "legacy":
+            return FernNavigation.V1.NavigationV1Availability.Legacy;
         default:
             assertNever(availability);
     }

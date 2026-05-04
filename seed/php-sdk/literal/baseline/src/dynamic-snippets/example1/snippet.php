@@ -6,6 +6,8 @@ use Seed\SeedClient;
 use Seed\Headers\Requests\SendLiteralsInHeadersRequest;
 
 $client = new SeedClient(
+    version: '02-02-2024',
+    auditLogging: true,
     options: [
         'baseUrl' => 'https://api.fern.com',
     ],

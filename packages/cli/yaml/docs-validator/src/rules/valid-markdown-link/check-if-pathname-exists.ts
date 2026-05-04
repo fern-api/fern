@@ -3,6 +3,7 @@ import { AbsoluteFilePath, dirname, doesPathExist, join, RelativeFilePath } from
 
 import { getRedirectForPath } from "./redirect-for-path.js";
 import { addLeadingSlash, removeLeadingSlash, removeTrailingSlash } from "./url-utils.js";
+import { withBasePathPrepended } from "./with-base-path-prepended.js";
 
 /**
  * Checks if the given path exists in the docs.
@@ -75,6 +76,17 @@ export async function checkIfPathnameExists({
 
         if (markdown && pageSlugs.has(removeLeadingSlash(redirectedPath))) {
             return true;
+        }
+
+        // Page slugs always include the site's basePath (e.g. `docs/about`), but authors
+        // commonly write absolute links as site-relative paths without the basePath
+        // (e.g. `/about` or `/v2/guide`). Try matching with the basePath prepended so
+        // both forms resolve.
+        if (markdown) {
+            const basePathPrefixed = withBasePathPrepended(redirectedPath, baseUrl.basePath);
+            if (basePathPrefixed != null && pageSlugs.has(basePathPrefixed)) {
+                return true;
+            }
         }
 
         // For versioned/product pages, absolute links like `/about` resolve within the current context.

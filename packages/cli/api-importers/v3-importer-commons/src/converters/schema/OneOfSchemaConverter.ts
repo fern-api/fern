@@ -513,7 +513,15 @@ export class OneOfSchemaConverter extends AbstractConverter<
             return undefined;
         }
 
-        const withoutNull = schemaArray.filter((subSchema) => !("type" in subSchema && subSchema.type === "null"));
+        const withoutNull = schemaArray.filter(
+            (subSchema) =>
+                !(
+                    typeof subSchema === "object" &&
+                    subSchema !== null &&
+                    "type" in subSchema &&
+                    subSchema.type === "null"
+                )
+        );
 
         if (withoutNull.length === 0) {
             this.context.errorCollector.collect({

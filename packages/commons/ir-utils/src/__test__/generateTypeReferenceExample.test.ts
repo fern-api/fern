@@ -35,6 +35,7 @@ function makeObjectTypeDeclaration(
                 name: { wireValue: name, name: makeName(name) },
                 valueType: propertyTypeRefs[i] ?? stringRef(),
                 propertyAccess: undefined,
+                defaultValue: undefined,
                 v2Examples: undefined
             })),
             extendedProperties: undefined,

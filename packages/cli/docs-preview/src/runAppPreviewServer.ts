@@ -4,11 +4,22 @@ import {
     applyTranslatedNavigationOverlays,
     getTranslatedAnnouncement,
     replaceImagePathsAndUrls,
+    replaceReferencedCode,
+    replaceReferencedMarkdown,
     stripMdxComments,
+    transformAtPrefixImports,
     wrapWithHttps
 } from "@fern-api/docs-resolver";
 import { DocsV1Read, DocsV2Read, FernNavigation } from "@fern-api/fdr-sdk";
-import { AbsoluteFilePath, dirname, doesPathExist, listFiles, RelativeFilePath, resolve } from "@fern-api/fs-utils";
+import {
+    AbsoluteFilePath,
+    dirname,
+    doesPathExist,
+    listFiles,
+    RelativeFilePath,
+    relative,
+    resolve
+} from "@fern-api/fs-utils";
 import { runExeca } from "@fern-api/logging-execa";
 import { Project } from "@fern-api/project-loader";
 import { CliError, TaskContext } from "@fern-api/task-context";
@@ -711,7 +722,9 @@ export async function runAppPreviewServer({
      * Computes translated definitions for each locale.
      * Similar to what publishDocs.ts does for production, but for local preview.
      */
-    function computeTranslatedDefinitions(result: PreviewDocsResult): Map<string, DocsV1Read.DocsDefinition> {
+    async function computeTranslatedDefinitions(
+        result: PreviewDocsResult
+    ): Promise<Map<string, DocsV1Read.DocsDefinition>> {
         const translations = new Map<string, DocsV1Read.DocsDefinition>();
         const { docsDefinition, translationPages, translationNavigationOverlays, collectedFileIds, docsWorkspacePath } =
             result;
@@ -729,6 +742,28 @@ export async function runAppPreviewServer({
             }
 
             try {
+                // Locale-aware file loaders that prefer translated snippets when available
+                const resolveLocalePath = async (filepath: AbsoluteFilePath): Promise<AbsoluteFilePath> => {
+                    const relPath = relative(docsWorkspacePath, filepath);
+                    const translatedPath = resolve(
+                        docsWorkspacePath,
+                        RelativeFilePath.of(`translations/${locale}/${relPath}`)
+                    );
+                    return (await doesPathExist(translatedPath)) ? translatedPath : filepath;
+                };
+
+                const localeAwareMarkdownLoader = async (filepath: AbsoluteFilePath): Promise<string> => {
+                    const pathToRead = await resolveLocalePath(filepath);
+                    const raw = await readFile(pathToRead, "utf-8");
+                    const fmMatch = raw.match(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/);
+                    return fmMatch != null ? raw.slice(fmMatch[0].length) : raw;
+                };
+
+                const localeAwareFileLoader = async (filepath: AbsoluteFilePath): Promise<string> => {
+                    const pathToRead = await resolveLocalePath(filepath);
+                    return readFile(pathToRead, "utf-8");
+                };
+
                 // Build translated pages by merging base pages with locale-specific pages
                 // Start by copying all defined pages from the base definition
                 const translatedPages: Record<string, DocsV1Read.PageContent> = {};
@@ -741,10 +776,37 @@ export async function runAppPreviewServer({
                 for (const [pagePath, rawMarkdown] of Object.entries(localePages)) {
                     try {
                         const basePage = translatedPages[pagePath];
-                        // Strip MDX comments first
-                        let processedMarkdown = stripMdxComments(rawMarkdown);
-                        // Replace image paths using collected file IDs
                         const absolutePathToMarkdownFile = resolve(docsWorkspacePath, RelativeFilePath.of(pagePath));
+
+                        // Resolve <Markdown src="..."/> snippets (locale-aware)
+                        const { markdown: markdownResolved } = await replaceReferencedMarkdown({
+                            markdown: rawMarkdown,
+                            absolutePathToFernFolder: docsWorkspacePath,
+                            absolutePathToMarkdownFile,
+                            context,
+                            markdownLoader: localeAwareMarkdownLoader
+                        });
+
+                        // Resolve <Code src="..."/> references (locale-aware)
+                        const codeResolved = await replaceReferencedCode({
+                            markdown: markdownResolved,
+                            absolutePathToFernFolder: docsWorkspacePath,
+                            absolutePathToMarkdownFile,
+                            context,
+                            fileLoader: localeAwareFileLoader
+                        });
+
+                        // Transform @/ prefix imports to relative paths
+                        const importsResolved = transformAtPrefixImports({
+                            markdown: codeResolved,
+                            absolutePathToFernFolder: docsWorkspacePath,
+                            absolutePathToMarkdownFile
+                        });
+
+                        // Strip MDX comments
+                        let processedMarkdown = stripMdxComments(importsResolved);
+
+                        // Replace image paths using collected file IDs
                         processedMarkdown = replaceImagePathsAndUrls(
                             processedMarkdown,
                             collectedFileIds,
@@ -890,7 +952,7 @@ export async function runAppPreviewServer({
 
     // Compute translated definitions after loading
     if (previewResult != null) {
-        translatedDefinitions = computeTranslatedDefinitions(previewResult);
+        translatedDefinitions = await computeTranslatedDefinitions(previewResult);
         if (translatedDefinitions.size > 0) {
             context.logger.info(`Computed translations for ${translatedDefinitions.size} locale(s)`);
         }
@@ -1045,7 +1107,10 @@ export async function runAppPreviewServer({
 
     // Function to start the Next.js server
     const startNextJsServer = (): Promise<void> => {
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
+            let settled = false;
+            let fallbackTimer: ReturnType<typeof setTimeout> | undefined;
+
             serverProcess = runExeca(context.logger, "node", [serverPath], {
                 env,
                 doNotPipeOutput: true
@@ -1060,7 +1125,11 @@ export async function runAppPreviewServer({
                     actualPort = Number(portMatch[1]);
                 }
 
-                if (output.includes("Ready in") || output.includes("✓ Ready")) {
+                if (!settled && (output.includes("Ready in") || output.includes("✓ Ready"))) {
+                    settled = true;
+                    if (fallbackTimer != null) {
+                        clearTimeout(fallbackTimer);
+                    }
                     resolve();
                 }
             };
@@ -1075,13 +1144,31 @@ export async function runAppPreviewServer({
 
             // eslint-disable-next-line @typescript-eslint/no-floating-promises
             serverProcess.on("error", (err) => {
-                context.logger.debug(`Server process error: ${err.message}`);
+                context.logger.error(`Server process error: ${err.message}`);
+                if (!settled) {
+                    settled = true;
+                    if (fallbackTimer != null) {
+                        clearTimeout(fallbackTimer);
+                    }
+                    reject(new Error(`Server process failed to start: ${err.message}`));
+                }
             });
 
             // eslint-disable-next-line @typescript-eslint/no-floating-promises
             serverProcess.on("exit", (code, signal) => {
-                if (code) {
-                    context.logger.debug(`Server process exited with code: ${code}`);
+                if (code != null && code !== 0) {
+                    context.logger.error(`Server process exited with code: ${code}`);
+                    if (!settled) {
+                        settled = true;
+                        if (fallbackTimer != null) {
+                            clearTimeout(fallbackTimer);
+                        }
+                        reject(
+                            new Error(
+                                `Server process exited with code ${code}. Check the debug logs above for details.`
+                            )
+                        );
+                    }
                 } else if (signal) {
                     context.logger.debug(`Server process killed with signal: ${signal}`);
                 } else {
@@ -1090,14 +1177,26 @@ export async function runAppPreviewServer({
             });
 
             // Fallback timeout in case we miss the ready message
-            setTimeout(() => {
-                resolve();
+            fallbackTimer = setTimeout(() => {
+                if (!settled) {
+                    settled = true;
+                    resolve();
+                }
             }, 10000);
         });
     };
 
     // Start the initial server
-    await startNextJsServer();
+    try {
+        await startNextJsServer();
+    } catch (err) {
+        context.failAndThrow(
+            `Docs preview server failed to start: ${extractErrorMessage(err)}. ` +
+                `Run with --log-level debug for more details.`,
+            undefined,
+            { code: CliError.Code.InternalError }
+        );
+    }
 
     // Attach the watcher event handler
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
@@ -1156,7 +1255,7 @@ export async function runAppPreviewServer({
                     previewResult = reloadedPreviewResult;
 
                     // Recompute translated definitions
-                    translatedDefinitions = computeTranslatedDefinitions(reloadedPreviewResult);
+                    translatedDefinitions = await computeTranslatedDefinitions(reloadedPreviewResult);
                     if (translatedDefinitions.size > 0) {
                         context.logger.debug(`Recomputed translations for ${translatedDefinitions.size} locale(s)`);
                     }
@@ -1258,7 +1357,7 @@ export async function runAppPreviewServer({
     process.on("beforeExit", cleanup);
 
     // Server is ready after startNextJsServer completes
-    context.logger.info(`Docs preview server ready on http://localhost:${port}`);
+    context.logger.info(`Docs preview server ready on http://localhost:${actualPort}`);
 
     // await infinitely
     // eslint-disable-next-line @typescript-eslint/no-empty-function

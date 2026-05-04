@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix dynamic snippet generator to emit required global headers as named
+    constructor arguments instead of inside the options array.
+  type: fix

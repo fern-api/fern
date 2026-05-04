@@ -635,10 +635,8 @@ namespace Example;
 use Acme\\AcmeClient;
 
 $client = new AcmeClient(
+    tenantId: 'my-tenant-id',
     token: '<YOUR_API_KEY>',
-    options: [
-        'tenantId' => 'my-tenant-id',
-    ],
 );
 $client->plantstore->list();
 "
@@ -653,10 +651,8 @@ use Acme\\AcmeClient;
 use Acme\\Plantstore\\Types\\CreatePlantRequest;
 
 $client = new AcmeClient(
+    tenantId: 'my-tenant-id',
     token: '<YOUR_API_KEY>',
-    options: [
-        'tenantId' => 'my-tenant-id',
-    ],
 );
 $client->plantstore->create(
     new CreatePlantRequest([

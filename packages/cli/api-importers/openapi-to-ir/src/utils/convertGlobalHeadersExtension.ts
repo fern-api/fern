@@ -35,7 +35,8 @@ export function convertGlobalHeadersExtension({
         v2Examples: header.optional ? undefined : constructGlobalHeaderExample({ header, context }),
         availability: undefined,
         docs: undefined,
-        clientDefault: convertDefaultToLiteral(header["x-fern-default"])
+        clientDefault: convertDefaultToLiteral(header["x-fern-default"]),
+        defaultValue: undefined
     }));
 }
 

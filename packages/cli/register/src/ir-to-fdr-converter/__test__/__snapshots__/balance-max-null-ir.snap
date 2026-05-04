@@ -347,6 +347,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "List of rate tiers",
             "name": "tiers",
             "propertyAccess": undefined,
@@ -430,6 +431,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "The type of rate structure",
             "name": "rate_type",
             "propertyAccess": undefined,
@@ -456,6 +458,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "fixed_rate",
             "propertyAccess": undefined,
@@ -581,6 +584,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Minimum balance for this tier",
             "name": "balance_min",
             "propertyAccess": undefined,
@@ -611,6 +615,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Maximum balance for this tier (null means no upper limit)",
             "name": "balance_max",
             "propertyAccess": undefined,
@@ -657,6 +662,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Rate in basis points",
             "name": "rate_bps",
             "propertyAccess": undefined,

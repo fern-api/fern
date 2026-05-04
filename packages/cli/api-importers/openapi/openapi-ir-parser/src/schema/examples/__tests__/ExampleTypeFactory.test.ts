@@ -117,9 +117,9 @@ describe("ExampleTypeFactory", () => {
                 options: { ...DEFAULT_OPTIONS, name: "myField" }
             });
 
-            expect(mockLogger.warn).toHaveBeenCalledOnce();
-            expect(mockLogger.warn).toHaveBeenCalledWith(expect.stringContaining("Invalid example for 'myField'"));
-            expect(mockLogger.warn).toHaveBeenCalledWith(expect.stringContaining("expected string but got number"));
+            expect(mockLogger.debug).toHaveBeenCalledOnce();
+            expect(mockLogger.debug).toHaveBeenCalledWith(expect.stringContaining("Invalid example for 'myField'"));
+            expect(mockLogger.debug).toHaveBeenCalledWith(expect.stringContaining("expected string but got number"));
             // Should still return a fallback value
             expect(result).toBeDefined();
         });
@@ -139,8 +139,8 @@ describe("ExampleTypeFactory", () => {
                 options: DEFAULT_OPTIONS
             });
 
-            expect(mockLogger.warn).toHaveBeenCalledOnce();
-            expect(mockLogger.warn).toHaveBeenCalledWith(expect.stringContaining("expected boolean but got string"));
+            expect(mockLogger.debug).toHaveBeenCalledOnce();
+            expect(mockLogger.debug).toHaveBeenCalledWith(expect.stringContaining("expected boolean but got string"));
             expect(result).toBeDefined();
         });
 
@@ -164,8 +164,8 @@ describe("ExampleTypeFactory", () => {
                 options: DEFAULT_OPTIONS
             });
 
-            expect(mockLogger.warn).toHaveBeenCalledOnce();
-            expect(mockLogger.warn).toHaveBeenCalledWith(
+            expect(mockLogger.debug).toHaveBeenCalledOnce();
+            expect(mockLogger.debug).toHaveBeenCalledWith(
                 expect.stringContaining("expected number (int) but got string")
             );
             expect(result).toBeDefined();
@@ -190,7 +190,7 @@ describe("ExampleTypeFactory", () => {
                 options: DEFAULT_OPTIONS
             });
 
-            expect(mockLogger.warn).not.toHaveBeenCalled();
+            expect(mockLogger.debug).not.toHaveBeenCalled();
             expect(result).toBeDefined();
             expect(result?.type).toBe("primitive");
         });
@@ -215,7 +215,7 @@ describe("ExampleTypeFactory", () => {
                 options: DEFAULT_OPTIONS
             });
 
-            expect(mockLogger.warn).not.toHaveBeenCalled();
+            expect(mockLogger.debug).not.toHaveBeenCalled();
             expect(result).toBeDefined();
         });
 
@@ -238,7 +238,7 @@ describe("ExampleTypeFactory", () => {
                 options: DEFAULT_OPTIONS
             });
 
-            expect(mockLogger.warn).not.toHaveBeenCalled();
+            expect(mockLogger.debug).not.toHaveBeenCalled();
             expect(result).toBeDefined();
         });
 
@@ -261,7 +261,7 @@ describe("ExampleTypeFactory", () => {
                 options: DEFAULT_OPTIONS
             });
 
-            expect(mockLogger.warn).not.toHaveBeenCalled();
+            expect(mockLogger.debug).not.toHaveBeenCalled();
             expect(result).toBeDefined();
         });
 
@@ -280,7 +280,7 @@ describe("ExampleTypeFactory", () => {
                 options: DEFAULT_OPTIONS
             });
 
-            expect(mockLogger.warn).toHaveBeenCalledOnce();
+            expect(mockLogger.debug).toHaveBeenCalledOnce();
             expect(result).toBeDefined();
             // The ?? operator should preserve `false` (not fall through to Examples.BOOLEAN)
             if (result?.type === "primitive" && result.value.type === "boolean") {
@@ -308,7 +308,7 @@ describe("ExampleTypeFactory", () => {
                 options: DEFAULT_OPTIONS
             });
 
-            expect(mockLogger.warn).toHaveBeenCalledOnce();
+            expect(mockLogger.debug).toHaveBeenCalledOnce();
             expect(result).toBeDefined();
             // The ?? operator should preserve `0` (not fall through to Examples.INT)
             if (result?.type === "primitive" && result.value.type === "int") {
@@ -335,7 +335,7 @@ describe("ExampleTypeFactory", () => {
                 options: DEFAULT_OPTIONS
             });
 
-            expect(mockLogger.warn).toHaveBeenCalledOnce();
+            expect(mockLogger.debug).toHaveBeenCalledOnce();
             expect(result).toBeDefined();
             if (result?.type === "primitive" && result.value.type === "string") {
                 expect(result.value.value).toBe("schema-level-example");
@@ -354,9 +354,9 @@ describe("ExampleTypeFactory", () => {
                 options: { ...DEFAULT_OPTIONS, name: "status" }
             });
 
-            expect(mockLogger.warn).toHaveBeenCalledOnce();
-            expect(mockLogger.warn).toHaveBeenCalledWith(expect.stringContaining("not a valid enum value"));
-            expect(mockLogger.warn).toHaveBeenCalledWith(expect.stringContaining("active, inactive, pending"));
+            expect(mockLogger.debug).toHaveBeenCalledOnce();
+            expect(mockLogger.debug).toHaveBeenCalledWith(expect.stringContaining("not a valid enum value"));
+            expect(mockLogger.debug).toHaveBeenCalledWith(expect.stringContaining("active, inactive, pending"));
             expect(result).toBeDefined();
         });
 
@@ -370,7 +370,7 @@ describe("ExampleTypeFactory", () => {
                 options: DEFAULT_OPTIONS
             });
 
-            expect(mockLogger.warn).not.toHaveBeenCalled();
+            expect(mockLogger.debug).not.toHaveBeenCalled();
             expect(result).toBeDefined();
             expect(result?.type).toBe("enum");
             if (result?.type === "enum") {
@@ -388,7 +388,7 @@ describe("ExampleTypeFactory", () => {
                 options: DEFAULT_OPTIONS
             });
 
-            expect(mockLogger.warn).toHaveBeenCalledOnce();
+            expect(mockLogger.debug).toHaveBeenCalledOnce();
             expect(result).toBeDefined();
         });
     });
@@ -428,8 +428,8 @@ describe("ExampleTypeFactory", () => {
                 options: DEFAULT_OPTIONS
             });
 
-            expect(mockLogger.warn).toHaveBeenCalledOnce();
-            const warnMsg = (mockLogger.warn as ReturnType<typeof vi.fn>).mock.calls[0]?.[0] as string;
+            expect(mockLogger.debug).toHaveBeenCalledOnce();
+            const warnMsg = (mockLogger.debug as ReturnType<typeof vi.fn>).mock.calls[0]?.[0] as string;
             // The JSON.stringify of largeExample is > 100 chars, so it should be truncated
             expect(warnMsg).toContain("...");
         });
@@ -449,8 +449,8 @@ describe("ExampleTypeFactory", () => {
                 options: DEFAULT_OPTIONS
             });
 
-            expect(mockLogger.warn).toHaveBeenCalledOnce();
-            const warnMsg = (mockLogger.warn as ReturnType<typeof vi.fn>).mock.calls[0]?.[0] as string;
+            expect(mockLogger.debug).toHaveBeenCalledOnce();
+            const warnMsg = (mockLogger.debug as ReturnType<typeof vi.fn>).mock.calls[0]?.[0] as string;
             expect(warnMsg).toContain('"short"');
             expect(warnMsg).not.toContain("...");
         });

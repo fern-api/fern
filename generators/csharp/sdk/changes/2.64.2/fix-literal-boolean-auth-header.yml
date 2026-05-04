@@ -1,0 +1,7 @@
+- summary: |
+    Fix literal boolean auth-header values being emitted as `"True"` regardless
+    of the configured value. The generated client constructor's auth-header
+    dictionary tested the truthiness of the `Literal` discriminated-union
+    object instead of reading its `boolean` field, so a literal `false` header
+    incorrectly produced `"True"`.
+  type: fix

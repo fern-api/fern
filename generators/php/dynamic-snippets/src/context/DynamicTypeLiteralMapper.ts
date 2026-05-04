@@ -386,6 +386,14 @@ export class DynamicTypeLiteralMapper {
         return this.context.isOptional(typeReference) || this.context.isNullable(typeReference);
     }
 
+    public generatePlaceholderValueForRequiredHeader({
+        typeReference
+    }: {
+        typeReference: FernIr.dynamic.TypeReference;
+    }): php.TypeLiteral {
+        return this.generatePlaceholderValue(typeReference);
+    }
+
     private generatePlaceholderValue(typeReference: FernIr.dynamic.TypeReference): php.TypeLiteral {
         switch (typeReference.type) {
             case "primitive":

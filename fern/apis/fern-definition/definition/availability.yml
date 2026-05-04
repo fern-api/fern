@@ -19,3 +19,7 @@ types:
       - deprecated
       - value: generally-available
         name: GenerallyAvailable
+      - alpha
+      - beta
+      - preview
+      - legacy

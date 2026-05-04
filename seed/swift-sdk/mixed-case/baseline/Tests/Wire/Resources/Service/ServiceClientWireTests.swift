@@ -7,7 +7,7 @@ import MixedCase
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "status": "ACTIVE",
                   "resource_type": "user",
@@ -21,7 +21,7 @@ import MixedCase
                     "baz": "qux"
                   }
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = MixedCaseClient(
@@ -56,7 +56,7 @@ import MixedCase
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "resource_type": "user",
                   "userName": "userName",
@@ -69,7 +69,7 @@ import MixedCase
                   },
                   "status": "ACTIVE"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = MixedCaseClient(
@@ -103,7 +103,7 @@ import MixedCase
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 [
                   {
                     "resource_type": "user",
@@ -119,7 +119,7 @@ import MixedCase
                     }
                   }
                 ]
-                """.utf8
+                """#.utf8
             )
         )
         let client = MixedCaseClient(
@@ -157,7 +157,7 @@ import MixedCase
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 [
                   {
                     "resource_type": "user",
@@ -184,7 +184,7 @@ import MixedCase
                     "status": "ACTIVE"
                   }
                 ]
-                """.utf8
+                """#.utf8
             )
         )
         let client = MixedCaseClient(

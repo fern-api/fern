@@ -1,4 +1,35 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.69.0
+  changelogEntry:
+    - summary: |
+        Add `auth` option to `BaseClientOptions` for custom auth handling. Accepts an
+        undiscriminated union of a function returning auth headers, an `AuthProvider`
+        implementation, or the existing auth credential options. This allows users with
+        `alwaysSendAuth: true` to handle auth via custom fetchers without the built-in
+        auth provider throwing on missing credentials.
+      type: feat
+  createdAt: "2026-05-01"
+  irVersion: 66
+- version: 3.68.1
+  changelogEntry:
+    - summary: |
+        Fix serialization schema for map types with nullable values. Previously, the
+        schema generator stripped nullable wrappers from map value types, causing a
+        type mismatch between the API types (which correctly included `| null`) and
+        the serialization layer (which omitted `.nullable()` on the value schema).
+      type: fix
+  createdAt: "2026-05-01"
+  irVersion: 66
+- version: 3.68.0
+  changelogEntry:
+    - summary: |
+        Add `alwaysSendAuth` config option that forces the generated SDK to include
+        auth headers on all endpoints, even those marked with `auth: false` in the
+        API definition. This is useful when using the same API definition for both
+        server (where auth is handled by a gateway) and client SDK generation.
+      type: feat
+  createdAt: "2026-04-30"
+  irVersion: 66
 - version: 3.67.0
   changelogEntry:
     - summary: |

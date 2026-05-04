@@ -1,0 +1,227 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "createWidget": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {
+                    "name": "name",
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/widgets",
+              "request": {
+                "body": {
+                  "properties": {
+                    "careTags": {
+                      "default": [
+                        "beginner-friendly",
+                      ],
+                      "docs": "Care tags for the widget",
+                      "type": "optional<list<WidgetCareTagsItem>>",
+                    },
+                    "name": "string",
+                  },
+                },
+                "content-type": "application/json",
+                "headers": undefined,
+                "name": "Widget",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+              },
+              "source": {
+                "openapi": "../openapi.yaml",
+              },
+            },
+            "search": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "response": {
+                    "body": [
+                      "string",
+                    ],
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/search",
+              "request": {
+                "name": "SearchRequest",
+                "query-parameters": {
+                  "formats": {
+                    "allow-multiple": true,
+                    "default": [
+                      "html",
+                    ],
+                    "docs": "Output formats to include",
+                    "type": "optional<SearchRequestFormatsItem>",
+                  },
+                  "tags": {
+                    "allow-multiple": true,
+                    "default": [
+                      "green",
+                      "leafy",
+                    ],
+                    "docs": "Tags to filter by",
+                    "type": "optional<string>",
+                  },
+                },
+              },
+              "response": {
+                "docs": "ok",
+                "status-code": 200,
+                "type": "list<string>",
+              },
+              "source": {
+                "openapi": "../openapi.yaml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yaml",
+          },
+        },
+        "types": {
+          "SearchRequestFormatsItem": {
+            "enum": [
+              "html",
+              "json",
+              "markdown",
+              "csv",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yaml",
+            },
+          },
+          "WidgetCareTagsItem": {
+            "enum": [
+              {
+                "name": "BeginnerFriendly",
+                "value": "beginner-friendly",
+              },
+              {
+                "name": "AdvancedCare",
+                "value": "advanced-care",
+              },
+              {
+                "name": "PetSafe",
+                "value": "pet-safe",
+              },
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yaml",
+            },
+          },
+        },
+      },
+      "rawContents": "types:
+  SearchRequestFormatsItem:
+    enum:
+      - html
+      - json
+      - markdown
+      - csv
+    source:
+      openapi: ../openapi.yaml
+  WidgetCareTagsItem:
+    enum:
+      - value: beginner-friendly
+        name: BeginnerFriendly
+      - value: advanced-care
+        name: AdvancedCare
+      - value: pet-safe
+        name: PetSafe
+    inline: true
+    source:
+      openapi: ../openapi.yaml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    search:
+      path: /search
+      method: GET
+      source:
+        openapi: ../openapi.yaml
+      request:
+        name: SearchRequest
+        query-parameters:
+          formats:
+            type: optional<SearchRequestFormatsItem>
+            default:
+              - html
+            allow-multiple: true
+            docs: Output formats to include
+          tags:
+            type: optional<string>
+            default:
+              - green
+              - leafy
+            allow-multiple: true
+            docs: Tags to filter by
+      response:
+        docs: ok
+        type: list<string>
+        status-code: 200
+      examples:
+        - response:
+            body:
+              - string
+    createWidget:
+      path: /widgets
+      method: POST
+      source:
+        openapi: ../openapi.yaml
+      request:
+        name: Widget
+        body:
+          properties:
+            name: string
+            careTags:
+              type: optional<list<WidgetCareTagsItem>>
+              docs: Care tags for the widget
+              default:
+                - beginner-friendly
+        content-type: application/json
+      examples:
+        - request:
+            name: name
+  source:
+    openapi: ../openapi.yaml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Array enum defaults",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Array enum defaults
+",
+  },
+}

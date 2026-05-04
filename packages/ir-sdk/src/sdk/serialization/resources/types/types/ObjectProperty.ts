@@ -14,6 +14,7 @@ export const ObjectProperty: core.serialization.ObjectSchema<serializers.ObjectP
             name: NameAndWireValueOrString,
             valueType: core.serialization.lazy(() => serializers.TypeReference),
             propertyAccess: ObjectPropertyAccess.optional(),
+            defaultValue: core.serialization.unknown().optional(),
             v2Examples: V2SchemaExamples.optional(),
         })
         .extend(Declaration);
@@ -23,6 +24,7 @@ export declare namespace ObjectProperty {
         name: NameAndWireValueOrString.Raw;
         valueType: serializers.TypeReference.Raw;
         propertyAccess?: ObjectPropertyAccess.Raw | null;
+        defaultValue?: unknown | null;
         v2Examples?: V2SchemaExamples.Raw | null;
     }
 }

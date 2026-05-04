@@ -1,4 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.34.2
+  changelogEntry:
+    - summary: |
+        Emit wire-test response bodies as Swift raw multi-line string literals
+        (`#"""..."""#`) so that JSON escape sequences such as `\n` survive
+        verbatim into the runtime `String` and reach `JSONDecoder` as valid
+        JSON. The previous regular triple-quoted literal caused Swift to
+        unescape `\n` into real newline characters at runtime, which
+        produced invalid JSON (RFC 8259 disallows raw control characters
+        inside JSON string values) and made `JSONDecoder` reject the body
+        with `dataCorrupted("The given data was not valid JSON.")`.
+      type: fix
+  createdAt: "2026-05-03"
+  irVersion: 66
 - version: 0.34.1
   changelogEntry:
     - summary: |

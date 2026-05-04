@@ -95,8 +95,10 @@ export class WireTestFunctionGenerator {
                                         arguments_: [
                                             swift.functionArgument({
                                                 value: swift.Expression.memberAccess({
-                                                    target: swift.Expression.stringLiteral(
-                                                        `""\n${typeof exampleTypeRef.jsonExample === "string" ? exampleTypeRef.jsonExample : JSON.stringify(exampleTypeRef.jsonExample, null, 2)}\n""`
+                                                    target: swift.Expression.rawMultiLineStringLiteral(
+                                                        typeof exampleTypeRef.jsonExample === "string"
+                                                            ? exampleTypeRef.jsonExample
+                                                            : JSON.stringify(exampleTypeRef.jsonExample, null, 2)
                                                     ),
                                                     memberName: "utf8"
                                                 })

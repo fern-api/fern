@@ -508,6 +508,7 @@
               "allowMultiple": false,
               "availability": undefined,
               "clientDefault": undefined,
+              "defaultValue": false,
               "docs": "Whether to include user metadata",
               "explode": undefined,
               "name": "includeMetadata",
@@ -963,6 +964,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "User's email address",
             "name": "email",
             "propertyAccess": undefined,
@@ -993,6 +995,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "User's first name",
             "name": "firstName",
             "propertyAccess": undefined,
@@ -1031,6 +1034,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "User's last name",
             "name": "lastName",
             "propertyAccess": undefined,
@@ -1069,6 +1073,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Additional user metadata",
             "name": "metadata",
             "propertyAccess": undefined,
@@ -1151,6 +1156,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Error code",
             "name": "code",
             "propertyAccess": undefined,
@@ -1181,6 +1187,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Human-readable error message",
             "name": "message",
             "propertyAccess": undefined,
@@ -1211,6 +1218,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Additional error details",
             "name": "details",
             "propertyAccess": undefined,
@@ -1296,6 +1304,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "The current health status",
             "name": "status",
             "propertyAccess": undefined,
@@ -1322,6 +1331,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "When the health check was performed",
             "name": "timestamp",
             "propertyAccess": undefined,
@@ -1345,6 +1355,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Service version",
             "name": "version",
             "propertyAccess": undefined,
@@ -1467,6 +1478,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Unique user identifier",
             "name": "id",
             "propertyAccess": undefined,
@@ -1497,6 +1509,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "User's email address",
             "name": "email",
             "propertyAccess": undefined,
@@ -1527,6 +1540,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "User's first name",
             "name": "firstName",
             "propertyAccess": undefined,
@@ -1565,6 +1579,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "User's last name",
             "name": "lastName",
             "propertyAccess": undefined,
@@ -1603,6 +1618,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "When the user was created",
             "name": "createdAt",
             "propertyAccess": undefined,
@@ -1626,6 +1642,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": "Additional user metadata",
             "name": "metadata",
             "propertyAccess": undefined,

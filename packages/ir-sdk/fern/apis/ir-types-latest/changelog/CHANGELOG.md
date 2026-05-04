@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v67.1.0] - 2026-05-01
+
+- Feature: Add optional `defaultValue` field to `HttpHeader`, `QueryParameter`,
+  `ObjectProperty`, and `InlinedRequestBodyProperty`. Populated from the OpenAPI
+  `default` field (or the Fern Definition `default` on a property), and used by
+  docs to render "Defaults to ..." metadata. Unlike `clientDefault`, this supports
+  arbitrary JSON values (e.g. arrays) and does not affect SDK generation.
+
+## [v67.0.0] - 2026-04-27
+
+TDB
+
 ## [v66.3.0] - 2026-04-25
 - Feature: Add optional `baseProperties` field to `UndiscriminatedUnionTypeDeclaration`. When present, contains
   a list of `ObjectProperty` representing sibling properties defined alongside `oneOf`/`anyOf` in OpenAPI specs.

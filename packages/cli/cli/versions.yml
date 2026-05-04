@@ -1,4 +1,204 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.7.9
+  changelogEntry:
+    - summary: |
+        `fern docs dev` now fails with a clear error when no `docs.yml` is present, instead of exiting silently.
+      type: fix
+    - summary: |
+        Fix section landing pages with `skip-slug: true` ignoring frontmatter `slug` declarations.
+        Sections now compute separate slugs for the overview page (honors frontmatter) and for
+        children (respects skip-slug), so both features work correctly together.
+      type: fix
+  createdAt: "2026-05-04"
+  irVersion: 66
+- version: 5.7.8
+  changelogEntry:
+    - summary: |
+        Fix `fern logout` showing a "localhost refused to connect" error page by
+        starting a local server to serve a branded confirmation page, matching the login flow.
+        Also update both login and logout confirmation pages with new branded designs.
+      type: fix
+  createdAt: "2026-05-04"
+  irVersion: 66
+- version: 5.7.7
+  changelogEntry:
+    - summary: |
+        Reduce verbose logging during OpenAPI parsing by moving individual example
+        validation warnings to debug level. The per-API example validation summary
+        is still shown at warn level.
+      type: chore
+    - summary: |
+        Improve logging when APIs are skipped during docs generation. Skipped APIs
+        now log at error level (instead of warn) with the API name and a clear
+        reason. Repetitive per-endpoint frontmatter warnings are aggregated into
+        a single summary line per API.
+      type: fix
+  createdAt: "2026-05-03"
+  irVersion: 66
+- version: 5.7.6
+  changelogEntry:
+    - summary: |
+        Fix docs preview server showing "ready" message when the server process
+        crashes on startup. The CLI now exits with a clear error message instead.
+      type: fix
+    - summary: |
+        On Windows, recover critical standalone node_modules packages (next,
+        react-dom, styled-jsx) when symlink resolution fails due to long .pnpm
+        directory names. The CLI now scans the .pnpm store and copies packages
+        directly as a fallback.
+      type: fix
+  createdAt: "2026-05-02"
+  irVersion: 66
+- version: 5.7.5
+  changelogEntry:
+    - summary: |
+        Send `customDomains` when publishing docs translations so FDR mirrors the translated blob to every URL the docs are published to. Previously translations were only written under the canonical fern URL, so docs sites served from a custom domain with a basepath (e.g. `buildwithfern.com/learn`) 404'd on every localized page.
+      type: fix
+  createdAt: "2026-05-02"
+  irVersion: 66
+- version: 5.7.4
+  changelogEntry:
+    - summary: |
+        Strip Windows drive letter prefixes from resolved image paths in docs preview
+        to prevent raw filesystem paths from leaking into rendered HTML on Windows.
+      type: fix
+  createdAt: "2026-05-02"
+  irVersion: 66
+- version: 5.7.3
+  changelogEntry:
+    - summary: |
+        Fix image path resolution on Windows for `fern docs dev` and `fern generate docs`.
+        Path utilities (`resolve`, `dirname`, `join`) now normalize output to forward slashes,
+        preventing file ID lookup mismatches caused by mixed path separators on Windows.
+      type: fix
+  createdAt: "2026-05-01"
+  irVersion: 66
+- version: 5.7.2
+  changelogEntry:
+    - summary: |
+        Allow BCP 47 locale tags (e.g. `ja-JP`, `pt-BR`, `zh-Hans-CN`) in the `translations` and `languages` fields of `docs.yml`. Previously these were rejected by the JSON-schema validator with `must be one of [en, es, fr, ...]`.
+      type: fix
+  createdAt: "2026-05-01"
+  irVersion: 66
+- version: 5.7.1
+  changelogEntry:
+    - summary: |
+        Preserve OpenAPI `default` values for array schemas across query parameters,
+        headers, request bodies, and response body properties so docs can render
+        "Defaults to ..." metadata for arrays.
+      type: fix
+  createdAt: "2026-05-01"
+  irVersion: 66
+- version: 5.7.0
+  changelogEntry:
+    - summary: |
+        cli-v2: introduce a shared stdin/stdout abstraction so commands uniformly honor
+        the Unix `-` marker on I/O flags (stdin for inputs, stdout for outputs), with a
+        "`-` used at most once per command" guard and a JSON-or-path input helper that
+        parses inline JSON first and falls back to a file read.
+      type: internal
+    - summary: |
+        cli-v2: `fern api compile --output -` now uses the shared stdio helper (behavior
+        unchanged — still streams IR JSON to stdout).
+      type: internal
+    - summary: |
+        cli-v2: `fern sdk generate --api -` and `fern sdk preview --api -` now read the
+        OpenAPI/AsyncAPI spec from stdin (e.g. `cat openapi.json | fern sdk generate
+        --api - --org acme --target typescript --output ./sdk`).
+      type: feat
+    - summary: |
+        cli-v2: `fern api split --output -` prints the generated overlay/overrides for
+        the matching spec to stdout as a preview, without modifying the workspace
+        (no git-HEAD restore, no fern.yml updates). Requires `--api` to select a single
+        spec.
+      type: feat
+  createdAt: "2026-05-01"
+  irVersion: 66
+- version: 5.6.1
+  changelogEntry:
+    - summary: |
+        Fix translated docs pages failing to resolve shared snippets (`<Markdown src="..."/>` and `<Code src="..."/>`).
+        Snippet references are now resolved before registering translations, with locale-aware loading that prefers
+        translated snippets (e.g., `translations/zh/snippets/foo.mdx`) when available.
+      type: fix
+  createdAt: "2026-05-01"
+  irVersion: 66
+- version: 5.6.0
+  changelogEntry:
+    - summary: |
+        Add `fern automations upgrade` command that wraps `fern upgrade` and
+        `fern generator upgrade` into a single invocation with structured JSON
+        output (`--json`). Designed for consumption by the fern-upgrade GitHub
+        Action.
+      type: feat
+    - summary: |
+        Replace brittle hardcoded changelog URL map in `upgradeGenerator.ts` with
+        a regex-based derivation that supports all current and future generators.
+      type: fix
+  createdAt: "2026-05-01"
+  irVersion: 66
+- version: 5.5.1
+  changelogEntry:
+    - summary: |
+        Bump `@fern-api/fdr-sdk` to `1.2.0-1d73d2e141` to pick up the first-class
+        `Alpha`, `Preview`, and `Legacy` availability values published from the
+        `fdr@1.2.0` tag.
+      type: chore
+  createdAt: "2026-04-30"
+  irVersion: 66
+- version: 5.5.0
+  changelogEntry:
+    - summary: |
+        Add `alpha`, `beta`, `preview`, and `legacy` as supported values for the
+        `x-fern-availability` OpenAPI extension and the `availability` field
+        in Fern Definitions. These flow through the IR to generators and docs.
+      type: feat
+    - summary: |
+        Use first-class FDR Availability values (Alpha, Preview, Legacy) when
+        converting IR to FDR, replacing the previous fallback mappings to Beta /
+        Deprecated. Bumps @fern-api/fdr-sdk to a release that includes the new
+        enum values.
+      type: feat
+  createdAt: "2026-04-30"
+  irVersion: 66
+- version: 5.4.3
+  changelogEntry:
+    - summary: |
+        Fix OpenAPI endpoints that declare only a `204 No Content` success response
+        being dropped during OpenAPI -> IR conversion. The user-defined `204` status
+        code is now preserved on the endpoint response so docs display it correctly
+        instead of falling back to a default `200`.
+      type: fix
+  createdAt: "2026-04-30"
+  irVersion: 66
+- version: 5.4.2
+  changelogEntry:
+    - summary: |
+        Fix `broken-links` false positives for absolute links on sites that configure a
+        `basePath` (e.g. `https://docs.example.com/product`). Page slugs are stored with
+        the basePath prepended (`product/about`), but authors commonly write site-relative
+        absolute links without it (`/about`, `/v2/guide`). The link validator now also
+        checks the basePath-prefixed form so both conventions resolve.
+      type: fix
+  createdAt: "2026-04-30"
+  irVersion: 66
+- version: 5.4.1
+  changelogEntry:
+    - summary: |
+        Fix OpenAPI parsing crash when specs contain non-standard `additionalProperties: "true"` (string instead of boolean).
+        The parser was attempting to use the `in` operator on a string value, causing a `Cannot use 'in' operator to search for 'type' in true` error.
+      type: fix
+    - summary: |
+        Surface rule initialization errors in `fern check` instead of exiting silently.
+        Previously, when a validation rule (e.g. `valid-markdown-links`) failed to
+        initialize because its docs configuration could not be resolved — for
+        example, a navigation `folder:` entry pointing at a path that does not
+        exist — `fern check` would exit with code 1 and no visible error message.
+        Now the underlying failure (e.g. `Folder not found: …`) is reported as a
+        fatal violation on `docs.yml`.
+      type: fix
+  createdAt: "2026-04-30"
+  irVersion: 66
 - version: 5.4.0
   changelogEntry:
     - summary: |
