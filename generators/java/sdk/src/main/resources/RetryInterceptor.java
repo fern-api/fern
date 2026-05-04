@@ -150,7 +150,7 @@ public class RetryInterceptor implements Interceptor {
     }
 
     private static boolean shouldRetry(int statusCode) {
-        return statusCode == 408 || statusCode == 429 || statusCode >= 500;
+        return {{RETRY_STATUS_CHECK}};
     }
 
     private final class ExponentialBackoff {

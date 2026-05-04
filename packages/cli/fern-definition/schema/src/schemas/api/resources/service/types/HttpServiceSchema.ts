@@ -3,7 +3,7 @@
 import type * as FernDefinition from "../../../index.js";
 
 export interface HttpServiceSchema extends FernDefinition.DeclarationWithoutDocsSchema, FernDefinition.WithDisplayName {
-    auth: boolean;
+    auth?: boolean;
     url?: string;
     "base-path": string;
     "path-parameters"?: Record<string, FernDefinition.TypeReferenceSchema>;

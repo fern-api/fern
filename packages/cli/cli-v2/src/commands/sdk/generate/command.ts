@@ -3,7 +3,7 @@ import type { Audiences } from "@fern-api/configuration";
 import type { ContainerRunner } from "@fern-api/core-utils";
 import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist, resolve } from "@fern-api/fs-utils";
-import { CliError } from "@fern-api/task-context";
+import { CliError, TaskAbortSignal } from "@fern-api/task-context";
 import { ValidationIssue } from "@fern-api/yaml-loader";
 import chalk from "chalk";
 import { readdir } from "fs/promises";
@@ -17,6 +17,7 @@ import { GENERATE_COMMAND_TIMEOUT_MS } from "../../../constants.js";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
 import { SourcedValidationError } from "../../../errors/SourcedValidationError.js";
+import { isStdioMarker, StdioMarkerGuard } from "../../../io/stdio.js";
 import { SdkChecker } from "../../../sdk/checker/SdkChecker.js";
 import { LANGUAGES, type Language } from "../../../sdk/config/Language.js";
 import type { Target } from "../../../sdk/config/Target.js";
@@ -83,6 +84,11 @@ export declare namespace GenerateCommand {
 
 export class GenerateCommand {
     public async handle(context: Context, args: GenerateCommand.Args): Promise<void> {
+        const stdio = new StdioMarkerGuard();
+        if (isStdioMarker(args.api)) {
+            stdio.claimStdin("api");
+        }
+
         const result = await context.loadWorkspace();
         if (result == null) {
             return this.handleWithFlags(context, args);
@@ -362,7 +368,11 @@ export class GenerateCommand {
         });
 
         if (summary.failedCount > 0) {
-            throw new CliError({ code: CliError.Code.ContainerError });
+            // Individual task failures have already been reported with their
+            // correct error codes via TaskContextAdapter.failWithoutThrowing.
+            // Throw TaskAbortSignal so withContext exits non-zero without
+            // emitting a duplicate (and mis-classified) error event.
+            throw new TaskAbortSignal();
         }
     }
 
@@ -725,7 +735,7 @@ export function addGenerateCommand(cli: Argv<GlobalArgs>): void {
             yargs
                 .option("api", {
                     type: "string",
-                    description: "Path or URL to an API spec file (enables no-config mode)"
+                    description: 'Path or URL to an API spec file, or "-" to read from stdin (enables no-config mode)'
                 })
                 .option("audience", {
                     type: "array",

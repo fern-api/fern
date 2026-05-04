@@ -50,6 +50,18 @@
             }
         },
         {
+            "example_identifier": "Stream events where discriminant is embedded in data and SSE event line is empty",
+            "id": {
+                "path": "/stream-events-discriminant-in-data",
+                "method": "POST",
+                "identifier_override": "endpoint_completions.streamEventsDiscriminantInData"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedServerSentEvents;\n\nvar client = new SeedServerSentEventsClient();\nvar items = client.Completions.StreamEventsDiscriminantInDataAsync(\n    new StreamEventsDiscriminantInDataRequest { Query = \"query\" }\n);\n\nawait foreach (var item in items)\n{\n    // do something with item\n}\n"
+            }
+        },
+        {
             "example_identifier": "Stream events context protocol",
             "id": {
                 "path": "/stream-events-context-protocol",

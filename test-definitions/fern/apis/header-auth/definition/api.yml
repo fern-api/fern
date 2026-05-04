@@ -6,3 +6,4 @@ auth-schemes:
     header: x-api-key
     type: string
     prefix: test_prefix
+    placeholder: YOUR_API_KEY

@@ -53,6 +53,11 @@ export function convertProperties({
         });
         const convertedProperty = propertySchemaConverter.convert();
         if (convertedProperty != null) {
+            const resolvedPropertySchema = context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                schemaOrReference: propertySchema,
+                breadcrumbs: propertyBreadcrumbs,
+                skipErrorCollector: true
+            });
             convertedProperties.push({
                 name: context.casingsGenerator.generateNameAndWireValue({
                     name: propertyName,
@@ -62,6 +67,7 @@ export function convertProperties({
                 docs: propertySchema.description,
                 availability: convertedProperty.availability,
                 propertyAccess: context.getPropertyAccess(propertySchema),
+                defaultValue: resolvedPropertySchema?.default,
                 v2Examples:
                     convertedProperty.schema?.typeDeclaration?.v2Examples ??
                     generatePropertyV2Examples({

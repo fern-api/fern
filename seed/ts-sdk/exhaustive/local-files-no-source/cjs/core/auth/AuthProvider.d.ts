@@ -5,3 +5,4 @@ export interface AuthProvider {
         endpointMetadata?: EndpointMetadata;
     }): Promise<AuthRequest>;
 }
+export declare function isAuthProvider(value: unknown): value is AuthProvider;

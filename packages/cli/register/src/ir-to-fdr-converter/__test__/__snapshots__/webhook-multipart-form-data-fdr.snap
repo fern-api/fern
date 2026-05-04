@@ -221,7 +221,7 @@
                   "propertyAccess": undefined,
                   "type": "bodyProperty",
                   "valueType": {
-                    "defaultValue": undefined,
+                    "defaultValue": false,
                     "itemType": {
                       "type": "primitive",
                       "value": {
@@ -435,7 +435,7 @@
             "key": "isPrivate",
             "propertyAccess": undefined,
             "valueType": {
-              "defaultValue": undefined,
+              "defaultValue": false,
               "itemType": {
                 "type": "primitive",
                 "value": {

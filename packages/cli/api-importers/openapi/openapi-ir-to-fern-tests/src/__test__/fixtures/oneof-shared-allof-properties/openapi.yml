@@ -1,0 +1,106 @@
+openapi: 3.0.0
+info:
+  title: Lift shared allOf properties from oneOf variants
+  version: 1.0.0
+
+paths:
+  /connections/{id}:
+    get:
+      operationId: getConnection
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ConnectionResponse"
+
+components:
+  schemas:
+    ConnectionCommon:
+      description: Fields shared by every connection strategy.
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          description: The connection's identifier.
+          type: string
+        name:
+          description: The connection's display name.
+          type: string
+        display_name:
+          description: Connection name shown in the login screen.
+          type: string
+
+    ConnectionResponse:
+      description: Discriminated union of connection strategies.
+      type: object
+      discriminator:
+        propertyName: strategy
+        mapping:
+          auth0: "#/components/schemas/ConnectionResponseAuth0"
+          samlp: "#/components/schemas/ConnectionResponseSamlp"
+          email: "#/components/schemas/ConnectionResponseEmail"
+      oneOf:
+        - $ref: "#/components/schemas/ConnectionResponseAuth0"
+        - $ref: "#/components/schemas/ConnectionResponseSamlp"
+        - $ref: "#/components/schemas/ConnectionResponseEmail"
+
+    ConnectionResponseAuth0:
+      description: Auth0 strategy connection.
+      allOf:
+        - type: object
+          required:
+            - strategy
+          properties:
+            strategy:
+              type: string
+              const: auth0
+            options_auth0:
+              type: object
+              properties:
+                tenant:
+                  type: string
+        - $ref: "#/components/schemas/ConnectionCommon"
+
+    ConnectionResponseSamlp:
+      description: SAML strategy connection.
+      allOf:
+        - type: object
+          required:
+            - strategy
+          properties:
+            strategy:
+              type: string
+              const: samlp
+            options_samlp:
+              type: object
+              properties:
+                metadata_url:
+                  type: string
+        - $ref: "#/components/schemas/ConnectionCommon"
+
+    ConnectionResponseEmail:
+      description: Email strategy connection.
+      allOf:
+        - type: object
+          required:
+            - strategy
+          properties:
+            strategy:
+              type: string
+              const: email
+            options_email:
+              type: object
+              properties:
+                from:
+                  type: string
+        - $ref: "#/components/schemas/ConnectionCommon"

@@ -127,6 +127,31 @@ func TestCompletionsStreamEventsWithWireMock(
 	VerifyRequestCount(t, "TestCompletionsStreamEventsWithWireMock", "POST", "/stream-events", nil, 1)
 }
 
+func TestCompletionsStreamEventsDiscriminantInDataWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewClient(
+		option.WithBaseURL(WireMockBaseURL),
+	)
+	request := &sse.StreamEventsDiscriminantInDataRequest{
+		Query: "query",
+	}
+	_, invocationErr := client.Completions.StreamEventsDiscriminantInData(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestCompletionsStreamEventsDiscriminantInDataWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestCompletionsStreamEventsDiscriminantInDataWithWireMock", "POST", "/stream-events-discriminant-in-data", nil, 1)
+}
+
 func TestCompletionsStreamEventsContextProtocolWithWireMock(
 	t *testing.T,
 ) {

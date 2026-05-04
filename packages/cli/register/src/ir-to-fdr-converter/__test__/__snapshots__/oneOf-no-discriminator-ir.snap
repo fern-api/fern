@@ -427,6 +427,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "errorCodeA",
             "propertyAccess": undefined,
@@ -457,6 +458,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "details",
             "propertyAccess": undefined,
@@ -532,6 +534,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "errorCodeB",
             "propertyAccess": undefined,
@@ -563,6 +566,7 @@
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "reason",
             "propertyAccess": undefined,
@@ -710,6 +714,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "variantAField",
             "propertyAccess": undefined,
@@ -777,6 +782,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "variantBField",
             "propertyAccess": undefined,
@@ -917,6 +923,7 @@
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "success",
             "propertyAccess": undefined,

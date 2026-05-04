@@ -8,7 +8,7 @@ describe("SeedApiClient", () => {
         const server = mockServerPool.createServer();
         const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = {};
-        const rawResponseBody = "event: \ndata: {}\n\n";
+        const rawResponseBody = "event: heartbeat\ndata: {}\n\n";
 
         server
             .mockEndpoint()
@@ -26,10 +26,7 @@ describe("SeedApiClient", () => {
         }
         expect(events).toEqual([
             {
-                event: "",
-                ...{
-                    event: "heartbeat",
-                },
+                event: "heartbeat",
             },
         ]);
     });
@@ -38,7 +35,7 @@ describe("SeedApiClient", () => {
         const server = mockServerPool.createServer();
         const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = {};
-        const rawResponseBody = "event: \ndata: {}\n\n";
+        const rawResponseBody = "event: heartbeat\ndata: {}\n\n";
 
         server
             .mockEndpoint()
@@ -56,10 +53,7 @@ describe("SeedApiClient", () => {
         }
         expect(events).toEqual([
             {
-                event: "",
-                ...{
-                    event: "heartbeat",
-                },
+                event: "heartbeat",
             },
         ]);
     });
@@ -124,7 +118,7 @@ describe("SeedApiClient", () => {
         const server = mockServerPool.createServer();
         const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = {};
-        const rawResponseBody = 'event: \ndata: {"timestamp":"2024-01-15T09:30:00Z"}\n\n';
+        const rawResponseBody = 'event: heartbeat\ndata: {"timestamp":"2024-01-15T09:30:00Z"}\n\n';
 
         server
             .mockEndpoint()
@@ -142,11 +136,8 @@ describe("SeedApiClient", () => {
         }
         expect(events).toEqual([
             {
-                event: "",
-                ...{
-                    event: "heartbeat",
-                    timestamp: "2024-01-15T09:30:00Z",
-                },
+                event: "heartbeat",
+                timestamp: "2024-01-15T09:30:00Z",
             },
         ]);
     });

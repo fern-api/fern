@@ -246,7 +246,10 @@
         "in-development",
         "pre-release",
         "deprecated",
-        "beta"
+        "beta",
+        "alpha",
+        "preview",
+        "legacy"
       ]
     },
     "docs.PageConfiguration": {

@@ -96,7 +96,13 @@ export class MockEndpointGenerator extends WithGeneration {
                 for (const parameter of example.queryParameters) {
                     const maybeParameterValue = this.exampleToQueryOrHeaderValue(parameter);
                     if (maybeParameterValue != null) {
-                        writer.write(`.WithParam("${getWireValue(parameter.name)}", "${maybeParameterValue}")`);
+                        const encodedKey = percentEncodeQueryKey(getWireValue(parameter.name));
+                        // WireMock.Net splits comma-delimited query values into separate array
+                        // entries, so pass all values in a single WithParam call.
+                        const paramValues = maybeParameterValue
+                            .split(",")
+                            .map((v) => `"${v.replace(/\\/g, "\\\\").replace(/"/g, '\\"')}"`);
+                        writer.write(`.WithParam("${encodedKey}", ${paramValues.join(", ")})`);
                     }
                 }
                 for (const header of [...example.serviceHeaders, ...example.endpointHeaders]) {
@@ -972,4 +978,28 @@ export class MockEndpointGenerator extends WithGeneration {
         }
         return pairs.join(", ");
     }
+}
+
+// Characters the C# SDK's QueryStringBuilder treats as safe for query keys.
+// Mirrors: unreserved + (sub-delims \ {& = +}) + : @ / ?
+// See QueryStringBuilder.Template.cs SafeQueryKeyChars.
+const SAFE_QUERY_KEY_CHARS = new Set("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.~!$'()*,;:@/?");
+
+/**
+ * Percent-encodes a query parameter key to match the C# SDK's QueryStringBuilder.
+ * Characters not in SafeQueryKeyChars are percent-encoded with uppercase hex digits.
+ */
+function percentEncodeQueryKey(key: string): string {
+    const encoder = new TextEncoder();
+    let encoded = "";
+    for (const char of key) {
+        if (SAFE_QUERY_KEY_CHARS.has(char)) {
+            encoded += char;
+        } else {
+            for (const byte of encoder.encode(char)) {
+                encoded += `%${byte.toString(16).toUpperCase().padStart(2, "0")}`;
+            }
+        }
+    }
+    return encoded;
 }

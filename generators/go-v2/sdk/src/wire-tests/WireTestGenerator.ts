@@ -663,7 +663,7 @@ export class WireTestGenerator {
                             arguments_.push(
                                 go.invokeFunc({
                                     func: go.typeReference({
-                                        name: "WithToken",
+                                        name: `With${typeof scheme.token === "string" ? this.context.caseConverter.pascalUnsafe(scheme.token) : scheme.token.pascalCase.unsafeName}`,
                                         importPath: this.context.getOptionImportPath()
                                     }),
                                     arguments_: [go.codeblock('"test-token"')],

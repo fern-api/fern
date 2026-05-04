@@ -9,3 +9,4 @@ export type { OptionalArgsRequest } from "./OptionalArgsRequest.js";
 export type { WithContentTypeRequest } from "./WithContentTypeRequest.js";
 export type { WithFormEncodingRequest } from "./WithFormEncodingRequest.js";
 export type { WithJsonPropertyRequest } from "./WithJsonPropertyRequest.js";
+export type { WithRefBodyRequest } from "./WithRefBodyRequest.js";

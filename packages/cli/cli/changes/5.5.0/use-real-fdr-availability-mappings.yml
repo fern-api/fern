@@ -1,0 +1,6 @@
+- summary: |
+    Use first-class FDR Availability values (Alpha, Preview, Legacy) when
+    converting IR to FDR, replacing the previous fallback mappings to Beta /
+    Deprecated. Bumps @fern-api/fdr-sdk to a release that includes the new
+    enum values.
+  type: feat

@@ -140,7 +140,7 @@ export class ThemeConfigProcessor {
 
         if (raw.metadata != null && typeof raw.metadata === "object") {
             const meta = raw.metadata as Record<string, unknown>;
-            for (const imgKey of ["og:image", "twitter:image", "og:background-image", "og:logo"]) {
+            for (const imgKey of ["og:image", "twitter:image", "og:dynamic:background-image", "og:logo"]) {
                 if (typeof meta[imgKey] === "string") {
                     collect(meta[imgKey] as string);
                 }
@@ -239,7 +239,7 @@ export class ThemeConfigProcessor {
 
         if (cfg.metadata != null && typeof cfg.metadata === "object") {
             const meta = { ...(cfg.metadata as Record<string, unknown>) };
-            for (const imgKey of ["og:image", "twitter:image", "og:background-image", "og:logo"]) {
+            for (const imgKey of ["og:image", "twitter:image", "og:dynamic:background-image", "og:logo"]) {
                 if (typeof meta[imgKey] === "string") {
                     meta[imgKey] = await field(meta[imgKey] as string);
                 }

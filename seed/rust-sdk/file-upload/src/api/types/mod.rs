@@ -18,6 +18,7 @@ pub mod with_form_encoding_request;
 pub mod with_inline_type_request;
 pub mod with_json_property_request;
 pub mod with_literal_and_enum_types_request;
+pub mod with_ref_body_request;
 
 pub use just_file_request::JustFileRequest;
 pub use just_file_with_optional_query_params_request::JustFileWithOptionalQueryParamsRequest;
@@ -39,3 +40,4 @@ pub use with_form_encoding_request::WithFormEncodingRequest;
 pub use with_inline_type_request::WithInlineTypeRequest;
 pub use with_json_property_request::WithJsonPropertyRequest;
 pub use with_literal_and_enum_types_request::WithLiteralAndEnumTypesRequest;
+pub use with_ref_body_request::WithRefBodyRequest;

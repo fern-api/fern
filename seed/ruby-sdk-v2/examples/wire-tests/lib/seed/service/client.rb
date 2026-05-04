@@ -88,11 +88,9 @@ module Seed
       # @return [Seed::Types::Types::Metadata]
       def get_metadata(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        query_param_names = %i[shallow tag]
         query_params = {}
         query_params["shallow"] = params[:shallow] if params.key?(:shallow)
         query_params["tag"] = params[:tag] if params.key?(:tag)
-        params = params.except(*query_param_names)
 
         headers = {}
         headers["X-API-Version"] = params[:x_api_version] if params[:x_api_version]

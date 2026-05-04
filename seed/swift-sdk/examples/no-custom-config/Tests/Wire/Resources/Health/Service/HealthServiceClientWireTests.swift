@@ -7,9 +7,9 @@ import Examples
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 true
-                """.utf8
+                """#.utf8
             )
         )
         let client = ExamplesClient(
@@ -26,9 +26,9 @@ import Examples
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 true
-                """.utf8
+                """#.utf8
             )
         )
         let client = ExamplesClient(

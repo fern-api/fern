@@ -27,7 +27,7 @@
                 },
                 "prefix": "test_prefix",
                 "headerEnvVar": null,
-                "headerPlaceholder": null,
+                "headerPlaceholder": "YOUR_API_KEY",
                 "key": "Header",
                 "docs": null
             }

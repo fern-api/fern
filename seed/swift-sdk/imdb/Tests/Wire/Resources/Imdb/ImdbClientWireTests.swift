@@ -7,9 +7,9 @@ import Api
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 string
-                """.utf8
+                """#.utf8
             )
         )
         let client = ApiClient(
@@ -32,13 +32,13 @@ import Api
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "id": "id",
                   "title": "title",
                   "rating": 1.1
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ApiClient(

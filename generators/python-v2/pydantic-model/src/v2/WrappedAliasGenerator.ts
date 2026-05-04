@@ -1,7 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { python } from "@fern-api/python-ast";
-import { PYTHON_CASE_CONVERTER as caseConverter, core, dt, pydantic, WriteablePythonFile } from "@fern-api/python-base";
+import { core, dt, pydantic, WriteablePythonFile } from "@fern-api/python-base";
 import { FernIr } from "@fern-fern/ir-sdk";
 
 import { PydanticModelGeneratorContext } from "../ModelGeneratorContext.js";
@@ -110,7 +110,7 @@ export class WrappedAliasGenerator {
                     literal: () => "get_as_string",
                     _other: () => "get_value"
                 }),
-            named: (typeName) => "get_as_" + caseConverter.snakeUnsafe(typeName.name),
+            named: (typeName) => "get_as_" + this.context.caseConverter.snakeUnsafe(typeName.name),
             primitive: (primitive) => {
                 if (primitive.v2 != null) {
                     return primitive.v2?._visit({
@@ -205,7 +205,7 @@ export class WrappedAliasGenerator {
                     literal: () => "from_string",
                     _other: () => "from_value"
                 }),
-            named: (typeName) => "from_" + caseConverter.snakeUnsafe(typeName.name),
+            named: (typeName) => "from_" + this.context.caseConverter.snakeUnsafe(typeName.name),
             primitive: (primitive) => {
                 if (primitive.v2 != null) {
                     return primitive.v2?._visit({

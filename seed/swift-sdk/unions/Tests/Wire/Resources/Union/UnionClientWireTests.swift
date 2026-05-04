@@ -7,13 +7,13 @@ import Unions
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "type": "circle",
                   "radius": 1.1,
                   "id": "id"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = UnionsClient(
@@ -40,9 +40,9 @@ import Unions
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 true
-                """.utf8
+                """#.utf8
             )
         )
         let client = UnionsClient(

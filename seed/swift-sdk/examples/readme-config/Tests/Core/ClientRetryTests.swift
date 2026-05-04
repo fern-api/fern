@@ -22,7 +22,7 @@ import Testing
 
         do {
             _ = try await client.echo(
-                request: "Hello world!\n\nwith\n\tnewlines",
+                request: "Hello world!\\n\\nwith\\n\\tnewlines",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -50,7 +50,7 @@ import Testing
 
         do {
             _ = try await client.echo(
-                request: "Hello world!\n\nwith\n\tnewlines",
+                request: "Hello world!\\n\\nwith\\n\\tnewlines",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -78,7 +78,7 @@ import Testing
 
         do {
             _ = try await client.echo(
-                request: "Hello world!\n\nwith\n\tnewlines",
+                request: "Hello world!\\n\\nwith\\n\\tnewlines",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -105,7 +105,7 @@ import Testing
 
         do {
             _ = try await client.echo(
-                request: "Hello world!\n\nwith\n\tnewlines",
+                request: "Hello world!\\n\\nwith\\n\\tnewlines",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -131,7 +131,7 @@ import Testing
 
         do {
             _ = try await client.echo(
-                request: "Hello world!\n\nwith\n\tnewlines",
+                request: "Hello world!\\n\\nwith\\n\\tnewlines",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -158,7 +158,7 @@ import Testing
 
         do {
             _ = try await client.echo(
-                request: "Hello world!\n\nwith\n\tnewlines",
+                request: "Hello world!\\n\\nwith\\n\\tnewlines",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -185,7 +185,7 @@ import Testing
 
         do {
             _ = try await client.echo(
-                request: "Hello world!\n\nwith\n\tnewlines",
+                request: "Hello world!\\n\\nwith\\n\\tnewlines",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -217,7 +217,7 @@ import Testing
         let startTime = Date()
         do {
             _ = try await client.echo(
-                request: "Hello world!\n\nwith\n\tnewlines",
+                request: "Hello world!\\n\\nwith\\n\\tnewlines",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -259,7 +259,7 @@ import Testing
         let startTime = Date()
         do {
             _ = try await client.echo(
-                request: "Hello world!\n\nwith\n\tnewlines",
+                request: "Hello world!\\n\\nwith\\n\\tnewlines",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -297,7 +297,7 @@ import Testing
         let startTime = Date()
         do {
             _ = try await client.echo(
-                request: "Hello world!\n\nwith\n\tnewlines",
+                request: "Hello world!\\n\\nwith\\n\\tnewlines",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -346,7 +346,7 @@ import Testing
 
         do {
             _ = try await client.echo(
-                request: "Hello world!\n\nwith\n\tnewlines",
+                request: "Hello world!\\n\\nwith\\n\\tnewlines",
                 requestOptions: RequestOptions(maxRetries: 5, additionalHeaders: stub.headers)
             )
 
@@ -369,7 +369,7 @@ import Testing
 
         do {
             _ = try await client.echo(
-                request: "Hello world!\n\nwith\n\tnewlines",
+                request: "Hello world!\\n\\nwith\\n\\tnewlines",
                 requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
             )
 
@@ -396,7 +396,7 @@ import Testing
 
         do {
             _ = try await client.echo(
-                request: "Hello world!\n\nwith\n\tnewlines",
+                request: "Hello world!\\n\\nwith\\n\\tnewlines",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 

@@ -188,7 +188,7 @@ async function resolveThemeFileUrls(
     // metadata image fields
     if (cfg.metadata != null && typeof cfg.metadata === "object") {
         const meta = cfg.metadata as Record<string, unknown>;
-        for (const imgKey of ["og:image", "twitter:image", "og:background-image", "og:logo"]) {
+        for (const imgKey of ["og:image", "twitter:image", "og:dynamic:background-image", "og:logo"]) {
             meta[imgKey] = await maybeDownload(meta[imgKey]);
         }
     }

@@ -189,12 +189,18 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
 
     private async generateSourceTemplateFiles(context: SdkGeneratorContext) {
         const templateDataGenerator = new TemplateDataGenerator({ context });
+        const retryStatusCheck =
+            context.customConfig.retryStatusCodes === "recommended"
+                ? "statusCode == 408 || statusCode == 429 || statusCode == 502 || statusCode == 503 || statusCode == 504"
+                : "statusCode == 408 || statusCode == 429 || statusCode >= 500";
         await Promise.all(
             entries(SourceTemplateFiles).map(async ([templateId, template]) => {
                 const rawContents = await template.loadContents();
                 const templateData = templateDataGenerator.generateSourceTemplateData(templateId);
                 if (templateData) {
-                    const contents = this.renderTemplate(rawContents, templateData);
+                    let contents = this.renderTemplate(rawContents, templateData);
+                    contents = contents.replace(/\{\{RETRY_STATUS_CHECK\}\}/g, retryStatusCheck);
+
                     context.project.addSourceAsIsFile({
                         nameCandidateWithoutExtension: template.filenameWithoutExtension(templateData),
                         directory: template.directory,

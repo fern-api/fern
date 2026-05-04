@@ -90,7 +90,7 @@ export class ExampleTypeFactory {
                 if (example != null) {
                     const allowed = schema.values.map((v) => v.value);
                     const exampleStr = ExampleTypeFactory.truncateExample(example);
-                    this.context.logger.warn(
+                    this.context.logger.debug(
                         `Example value ${exampleStr} is not a valid enum value${options.name != null ? ` for '${options.name}'` : ""}. ` +
                             `Allowed values: [${allowed.join(", ")}]. Using fallback value instead.`
                     );
@@ -1054,7 +1054,7 @@ export class ExampleTypeFactory {
         const fieldDesc = options.name != null ? ` for '${options.name}'` : "";
         const actualType = typeof example;
         const exampleStr = ExampleTypeFactory.truncateExample(example);
-        this.context.logger.warn(
+        this.context.logger.debug(
             `Invalid example${fieldDesc}: expected ${expected} but got ${actualType} (${exampleStr}). ` +
                 `The provided example does not match the '${schemaType}' schema and will be replaced with a generated value.`
         );

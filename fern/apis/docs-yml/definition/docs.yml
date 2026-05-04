@@ -25,29 +25,28 @@ types:
       - js
 
   Language:
-    enum:
-      - en
-      - es
-      - fr
-      - de
-      - it
-      - pt
-      - ja
-      - zh
-      - ko
-      - el
-      - no
-      - pl
-      - ru
-      - sv
-      - tr
+    docs: |
+      A BCP 47 language tag identifying a docs locale. Common shorthand codes
+      like "en", "es", "ja" are accepted, as well as regional variants such as
+      "ja-JP", "pt-BR", "zh-Hans", and "zh-Hans-CN". See RFC 5646 for the full
+      grammar.
+    type: string
 
-  TranslationConfig:
+  TranslationConfigObject:
     properties:
       lang: Language
       default:
         type: optional<boolean>
         docs: Whether this language is the default. At most one entry should be marked as default.
+
+  TranslationConfig:
+    discriminated: false
+    docs: |
+      Translation configuration can be either a language code string or an object with additional options.
+      When using a string, it's equivalent to `{ lang: <string> }`.
+    union:
+      - Language
+      - TranslationConfigObject
 
   AnalyticsConfig:
     properties:
@@ -278,7 +277,7 @@ types:
           Sets the default language displayed by code snippets in the API Reference.
           Options include: typescript, python, java, go, ruby, csharp, php, swift, curl
 
-      languages: optional<list<Language>>
+      languages: optional<list<string>>
 
       translations:
         type: optional<list<TranslationConfig>>
@@ -287,13 +286,30 @@ types:
           that the documentation supports. Use the `translations/` directory alongside
           `docs.yml` to provide per-language content.
 
-          Example:
+          Example (object syntax):
           ```yaml
           translations:
             - lang: en
               default: true
             - lang: ja
             - lang: fr
+          ```
+
+          Example (simplified syntax):
+          ```yaml
+          translations:
+            - en
+            - ja
+            - fr
+          ```
+
+          You can mix both syntaxes:
+          ```yaml
+          translations:
+            - lang: en
+              default: true
+            - ja
+            - fr
           ```
 
       # Deprecated
@@ -558,6 +574,10 @@ types:
         docs: |
           Specify which audiences this instance serves (e.g., internal developers, beta testers, public customers).
           You can use audiences to control which versions and products appear in each documentation instance, enabling you to create separate sites for different user groups. Content is included when its audience tag matches the instance audience. Content without an audience tag is included by default.
+      "multi-source":
+        type: optional<boolean>
+        docs: |
+          When enabled, docs registration uses a basepath-aware S3 key format, allowing multiple independent doc sites to be hosted under the same custom domain with different basepaths. If true, the url and custom-domain must share the same basepath.
 
   CustomDomain:
     discriminated: false
@@ -630,13 +650,22 @@ types:
         value: deprecated
       - name: Beta
         value: beta
+      - name: Alpha
+        value: alpha
+      - name: Preview
+        value: preview
+      - name: Legacy
+        value: legacy
 
   VersionAvailability:
     enum:
-      - deprecated # TODO: should we support `legacy`?
+      - deprecated
+      - legacy
       - ga
       - stable
       - beta
+      - alpha
+      - preview
 
   VersionFileConfig:
     properties:
@@ -954,6 +983,14 @@ types:
           Use \$\{VAR\} to escape and output literal ${VAR} without substitution.
 
           @default: false
+      websocket-oneof-display:
+        type: optional<WebSocketOneofDisplay>
+        docs: |
+          Controls how WebSocket messages with oneOf bodies are displayed in the API Reference.
+          - `flat` (default): Each variant in the oneOf is shown as a separate top-level entry.
+          - `grouped`: Messages are shown as a single parent entry with nested variants.
+
+          @default: flat
 
   ThemeConfig:
     properties:
@@ -1295,6 +1332,11 @@ types:
     enum:
       - frontmatter
       - filename
+
+  WebSocketOneofDisplay:
+    enum:
+      - flat
+      - grouped
 
   CollapsedValue:
     discriminated: false
@@ -1997,7 +2039,7 @@ types:
       "og:dynamic":
         type: optional<boolean>
         docs: When true, enables dynamic OG image generation for pages that don't have a custom og:image set.
-      "og:background-image":
+      "og:dynamic:background-image":
         type: optional<string>
         docs: A custom background image for dynamically generated OG images. Can be a URL or a file path.
       "og:dynamic:text-color":
@@ -2131,7 +2173,7 @@ types:
       basepath-aware:
         type: optional<boolean>
         docs: |
-          When enabled, docs registration uses a basepath-aware S3 key format, allowing multiple independent doc sites to be hosted under the same custom domain with different basepaths.
+          Deprecated: Use `multi-source: true` on the instance instead. When enabled, docs registration uses a basepath-aware S3 key format, allowing multiple independent doc sites to be hosted under the same custom domain with different basepaths.
 
   PlaygroundSettings:
     properties:

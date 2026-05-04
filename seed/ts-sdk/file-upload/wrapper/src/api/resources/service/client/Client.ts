@@ -790,6 +790,74 @@ export class ServiceClient {
     }
 
     /**
+     * @param {SeedFileUpload.WithRefBodyRequest} request
+     * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     import { createReadStream } from "fs";
+     *     await client.service.withRefBody({
+     *         request: {
+     *             foo: "bar"
+     *         }
+     *     })
+     */
+    public withRefBody(
+        request: SeedFileUpload.WithRefBodyRequest,
+        requestOptions?: ServiceClient.RequestOptions,
+    ): core.HttpResponsePromise<string> {
+        return core.HttpResponsePromise.fromPromise(this.__withRefBody(request, requestOptions));
+    }
+
+    private async __withRefBody(
+        request: SeedFileUpload.WithRefBodyRequest,
+        requestOptions?: ServiceClient.RequestOptions,
+    ): Promise<core.WithRawResponse<string>> {
+        const _body = await core.newFormData();
+        if (request.image_file != null) {
+            await _body.appendFile("image_file", request.image_file);
+        }
+
+        _body.append("request", toJson(request.request));
+        const _maybeEncodedRequest = await _body.getRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers }),
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/with-ref-body",
+            ),
+            method: "POST",
+            headers: _headers,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            requestType: "file",
+            duplex: _maybeEncodedRequest.duplex,
+            body: _maybeEncodedRequest.body,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as string, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedFileUploadError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/with-ref-body");
+    }
+
+    /**
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example

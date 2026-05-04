@@ -161,6 +161,9 @@ fixtures:
     - outputFolder: skip-response-validation
       customConfig:
         skipResponseValidation: true
+  union-query-parameters:
+    - outputFolder: no-custom-config
+      customConfig: null
   file-download:
     - outputFolder: no-custom-config
       customConfig: null
@@ -230,6 +233,9 @@ fixtures:
     - outputFolder: flatten-request-parameters
       customConfig:
         flattenRequestParameters: true
+  openapi-request-body-ref:
+    - outputFolder: no-custom-config
+      customConfig: null
   trace:
     - outputFolder: no-custom-config
       customConfig: null
@@ -372,6 +378,9 @@ fixtures:
     - outputFolder: generate-endpoint-metadata
       customConfig:
         generateEndpointMetadata: true
+    - outputFolder: always-send-auth
+      customConfig:
+        alwaysSendAuth: true
   simple-api:
     - outputFolder: use-yarn
       customConfig:
@@ -557,7 +566,6 @@ scripts:
           fi
 allowedFailures:
   - cross-package-type-names:serde-layer
-  - enum:forward-compatible-enums-with-serde
   - exhaustive:never-throw-errors
   - exhaustive:multiple-exports
   - oauth-client-credentials-custom

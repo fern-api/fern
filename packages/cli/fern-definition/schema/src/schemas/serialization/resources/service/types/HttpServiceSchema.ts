@@ -15,7 +15,7 @@ export const HttpServiceSchema: core.serialization.ObjectSchema<
     FernDefinition.HttpServiceSchema
 > = core.serialization
     .object({
-        auth: core.serialization.boolean(),
+        auth: core.serialization.boolean().optional(),
         url: core.serialization.string().optional(),
         "base-path": core.serialization.string(),
         "path-parameters": core.serialization.record(core.serialization.string(), TypeReferenceSchema).optional(),
@@ -30,7 +30,7 @@ export const HttpServiceSchema: core.serialization.ObjectSchema<
 
 export declare namespace HttpServiceSchema {
     export interface Raw extends DeclarationWithoutDocsSchema.Raw, WithDisplayName.Raw {
-        auth: boolean;
+        auth?: boolean | null;
         url?: string | null;
         "base-path": string;
         "path-parameters"?: Record<string, TypeReferenceSchema.Raw> | null;

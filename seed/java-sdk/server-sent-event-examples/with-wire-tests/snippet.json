@@ -105,6 +105,45 @@
             }
         },
         {
+            "example_identifier": "Stream events where discriminant is embedded in data and SSE event line is empty",
+            "id": {
+                "method": "POST",
+                "path": "/stream-events-discriminant-in-data",
+                "identifier_override": "endpoint_completions.streamEventsDiscriminantInData"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.serverSentEvents.SeedServerSentEventsClient;\nimport com.seed.serverSentEvents.resources.completions.requests.StreamEventsDiscriminantInDataRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedServerSentEventsClient client = SeedServerSentEventsClient\n            .builder()\n            .build();\n\n        client.completions().streamEventsDiscriminantInData(\n            StreamEventsDiscriminantInDataRequest\n                .builder()\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.serverSentEvents.SeedServerSentEventsClient;\nimport com.seed.serverSentEvents.resources.completions.requests.StreamEventsDiscriminantInDataRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedServerSentEventsClient client = SeedServerSentEventsClient\n            .builder()\n            .build();\n\n        client.completions().streamEventsDiscriminantInData(\n            StreamEventsDiscriminantInDataRequest\n                .builder()\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "43ddff75",
+            "id": {
+                "method": "POST",
+                "path": "/stream-events-discriminant-in-data",
+                "identifier_override": "endpoint_completions.streamEventsDiscriminantInData"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.serverSentEvents.SeedServerSentEventsClient;\nimport com.seed.serverSentEvents.resources.completions.requests.StreamEventsDiscriminantInDataRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedServerSentEventsClient client = SeedServerSentEventsClient\n            .builder()\n            .build();\n\n        client.completions().streamEventsDiscriminantInData(\n            StreamEventsDiscriminantInDataRequest\n                .builder()\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.serverSentEvents.SeedServerSentEventsClient;\nimport com.seed.serverSentEvents.resources.completions.requests.StreamEventsDiscriminantInDataRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedServerSentEventsClient client = SeedServerSentEventsClient\n            .builder()\n            .build();\n\n        client.completions().streamEventsDiscriminantInData(\n            StreamEventsDiscriminantInDataRequest\n                .builder()\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "95b7c867",
+            "id": {
+                "method": "POST",
+                "path": "/stream-events-discriminant-in-data",
+                "identifier_override": "endpoint_completions.streamEventsDiscriminantInData"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.serverSentEvents.SeedServerSentEventsClient;\nimport com.seed.serverSentEvents.resources.completions.requests.StreamEventsDiscriminantInDataRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedServerSentEventsClient client = SeedServerSentEventsClient\n            .builder()\n            .build();\n\n        client.completions().streamEventsDiscriminantInData(\n            StreamEventsDiscriminantInDataRequest\n                .builder()\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.serverSentEvents.SeedServerSentEventsClient;\nimport com.seed.serverSentEvents.resources.completions.requests.StreamEventsDiscriminantInDataRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedServerSentEventsClient client = SeedServerSentEventsClient\n            .builder()\n            .build();\n\n        client.completions().streamEventsDiscriminantInData(\n            StreamEventsDiscriminantInDataRequest\n                .builder()\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
             "example_identifier": "Stream events context protocol",
             "id": {
                 "method": "POST",

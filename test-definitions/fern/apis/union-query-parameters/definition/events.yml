@@ -1,0 +1,46 @@
+types:
+  EventTypeEnum:
+    enum:
+      - name: GroupCreated
+        value: group.created
+      - name: UserUpdated
+        value: user.updated
+
+  # Either a single enum value or a list of enum values.
+  # Mirrors style: form, explode: true semantics from OpenAPI specs that
+  # use a oneOf schema for a query parameter.
+  EventTypeParam:
+    docs: Either a single event type or a list of event types.
+    discriminated: false
+    union:
+      - EventTypeEnum
+      - list<EventTypeEnum>
+
+  # Primitive variant: string or list of strings.
+  StringOrListParam:
+    docs: Either a single string or a list of strings.
+    discriminated: false
+    union:
+      - string
+      - list<string>
+
+service:
+  base-path: /events
+  auth: false
+  endpoints:
+    subscribe:
+      docs: |
+        Subscribe to events with a oneOf-style query parameter that may be a
+        scalar enum value or a list of enum values.
+      path: ""
+      method: GET
+      request:
+        name: SubscribeEventsRequest
+        query-parameters:
+          event_type:
+            type: optional<EventTypeParam>
+            allow-multiple: false
+          tags:
+            type: optional<StringOrListParam>
+            allow-multiple: false
+      response: string

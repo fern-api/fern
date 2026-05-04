@@ -13,6 +13,13 @@ export interface QueryParameter extends FernIr.Declaration {
      * `x-fern-default` OpenAPI extension.
      */
     clientDefault: FernIr.Literal | undefined;
+    /**
+     * The documentation default value for this query parameter. Populated
+     * from the OpenAPI `default` field. Used by docs to render "Defaults
+     * to ..." metadata. Unlike `clientDefault`, this supports arbitrary
+     * JSON values (e.g. arrays) and does not affect SDK behavior.
+     */
+    defaultValue: unknown | undefined;
     v2Examples: FernIr.V2SchemaExamples | undefined;
     explode: boolean | undefined;
 }

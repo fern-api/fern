@@ -7,11 +7,11 @@ import Api
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "access_token": "access_token"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ApiClient(
@@ -35,11 +35,11 @@ import Api
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "access_token": "access_token"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ApiClient(

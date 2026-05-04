@@ -121,6 +121,17 @@ public final class ServiceClient: Sendable {
         )
     }
 
+    public func withRefBody(request: Requests.WithRefBodyRequest, requestOptions: RequestOptions? = nil) async throws -> String {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/with-ref-body",
+            contentType: .multipartFormData,
+            body: request.asMultipartFormData(),
+            requestOptions: requestOptions,
+            responseType: String.self
+        )
+    }
+
     public func simple(requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,

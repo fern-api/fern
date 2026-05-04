@@ -7,7 +7,7 @@ import Nullable
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 [
                   {
                     "name": "name",
@@ -72,7 +72,7 @@ import Nullable
                     }
                   }
                 ]
-                """.utf8
+                """#.utf8
             )
         )
         let client = NullableClient(
@@ -159,7 +159,7 @@ import Nullable
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "name": "name",
                   "id": "id",
@@ -191,7 +191,7 @@ import Nullable
                     }
                   }
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = NullableClient(
@@ -259,9 +259,9 @@ import Nullable
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 true
-                """.utf8
+                """#.utf8
             )
         )
         let client = NullableClient(

@@ -6,6 +6,12 @@ import type { AuthProvider } from "./core/auth/index.js";
 import { mergeHeaders } from "./core/headers.js";
 import * as environments from "./environments.js";
 
+export type AuthOption =
+    | false
+    | core.AuthProvider["getAuthRequest"]
+    | core.AuthProvider
+    | BearerAuthProvider.AuthOptions;
+
 export type BaseClientOptions = {
     environment: core.Supplier<environments.SeedSimpleApiEnvironment | string>;
     /** Specify a custom URL to connect the client to. */
@@ -20,6 +26,8 @@ export type BaseClientOptions = {
     fetch?: typeof fetch;
     /** Configure logging for the client. */
     logging?: core.logging.LogConfig | core.logging.Logger;
+    /** Override auth. Pass false to disable, a function returning auth headers, an AuthProvider, or auth options. */
+    auth?: AuthOption;
 } & BearerAuthProvider.AuthOptions;
 
 export interface BaseRequestOptions {
@@ -71,6 +79,23 @@ export function normalizeClientOptionsWithAuth<T extends BaseClientOptions = Bas
     options: T,
 ): NormalizedClientOptionsWithAuth<T> {
     const normalized = normalizeClientOptions(options) as NormalizedClientOptionsWithAuth<T>;
+
+    if (options.auth === false) {
+        normalized.authProvider = new core.NoOpAuthProvider();
+        return normalized;
+    }
+    if (options.auth != null) {
+        if (typeof options.auth === "function") {
+            normalized.authProvider = { getAuthRequest: options.auth };
+            return normalized;
+        }
+        if (core.isAuthProvider(options.auth)) {
+            normalized.authProvider = options.auth;
+            return normalized;
+        }
+        Object.assign(normalized, options.auth);
+    }
+
     const normalizedWithNoOpAuthProvider = withNoOpAuthProvider(normalized);
     normalized.authProvider ??= new BearerAuthProvider(normalizedWithNoOpAuthProvider);
     return normalized;

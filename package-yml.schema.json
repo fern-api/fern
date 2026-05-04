@@ -226,7 +226,11 @@
         "in-development",
         "pre-release",
         "deprecated",
-        "generally-available"
+        "generally-available",
+        "alpha",
+        "beta",
+        "preview",
+        "legacy"
       ]
     },
     "availability.AvailabilitySchema": {
@@ -3191,7 +3195,14 @@
           ]
         },
         "auth": {
-          "type": "boolean"
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "url": {
           "oneOf": [
@@ -3270,7 +3281,6 @@
         }
       },
       "required": [
-        "auth",
         "base-path",
         "endpoints"
       ],

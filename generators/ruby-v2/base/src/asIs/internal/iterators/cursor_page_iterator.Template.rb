@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module <%= gem_namespace %>
   module Internal
     class CursorPageIterator
@@ -27,7 +29,7 @@ module <%= gem_namespace %>
       # @param block [Proc] The block which each retrieved page is yielded to.
       # @return [NilClass]
       def each(&block)
-        while page = next_page do
+        while (page = next_page)
           block.call(page)
         end
       end
@@ -44,6 +46,7 @@ module <%= gem_namespace %>
       # @return [Object, nil]
       def next_page
         return if !@need_initial_load && @cursor.nil?
+
         @need_initial_load = false
         result = @get_next_page.call(@cursor)
         if result.is_a?(Array)

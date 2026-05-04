@@ -1,0 +1,502 @@
+{
+    "version": "1.0.0",
+    "types": {
+        "type_events:EventTypeEnum": {
+            "type": "enum",
+            "declaration": {
+                "name": {
+                    "originalName": "EventTypeEnum",
+                    "camelCase": {
+                        "unsafeName": "eventTypeEnum",
+                        "safeName": "eventTypeEnum"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "event_type_enum",
+                        "safeName": "event_type_enum"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "EVENT_TYPE_ENUM",
+                        "safeName": "EVENT_TYPE_ENUM"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "EventTypeEnum",
+                        "safeName": "EventTypeEnum"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "events",
+                            "camelCase": {
+                                "unsafeName": "events",
+                                "safeName": "events"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "events",
+                                "safeName": "events"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "EVENTS",
+                                "safeName": "EVENTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Events",
+                                "safeName": "Events"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "events",
+                        "camelCase": {
+                            "unsafeName": "events",
+                            "safeName": "events"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "events",
+                            "safeName": "events"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "EVENTS",
+                            "safeName": "EVENTS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Events",
+                            "safeName": "Events"
+                        }
+                    }
+                }
+            },
+            "values": [
+                {
+                    "wireValue": "group.created",
+                    "name": {
+                        "originalName": "GroupCreated",
+                        "camelCase": {
+                            "unsafeName": "groupCreated",
+                            "safeName": "groupCreated"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "group_created",
+                            "safeName": "group_created"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "GROUP_CREATED",
+                            "safeName": "GROUP_CREATED"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "GroupCreated",
+                            "safeName": "GroupCreated"
+                        }
+                    }
+                },
+                {
+                    "wireValue": "user.updated",
+                    "name": {
+                        "originalName": "UserUpdated",
+                        "camelCase": {
+                            "unsafeName": "userUpdated",
+                            "safeName": "userUpdated"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "user_updated",
+                            "safeName": "user_updated"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "USER_UPDATED",
+                            "safeName": "USER_UPDATED"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "UserUpdated",
+                            "safeName": "UserUpdated"
+                        }
+                    }
+                }
+            ]
+        },
+        "type_events:EventTypeParam": {
+            "type": "undiscriminatedUnion",
+            "declaration": {
+                "name": {
+                    "originalName": "EventTypeParam",
+                    "camelCase": {
+                        "unsafeName": "eventTypeParam",
+                        "safeName": "eventTypeParam"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "event_type_param",
+                        "safeName": "event_type_param"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "EVENT_TYPE_PARAM",
+                        "safeName": "EVENT_TYPE_PARAM"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "EventTypeParam",
+                        "safeName": "EventTypeParam"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "events",
+                            "camelCase": {
+                                "unsafeName": "events",
+                                "safeName": "events"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "events",
+                                "safeName": "events"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "EVENTS",
+                                "safeName": "EVENTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Events",
+                                "safeName": "Events"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "events",
+                        "camelCase": {
+                            "unsafeName": "events",
+                            "safeName": "events"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "events",
+                            "safeName": "events"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "EVENTS",
+                            "safeName": "EVENTS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Events",
+                            "safeName": "Events"
+                        }
+                    }
+                }
+            },
+            "types": [
+                {
+                    "type": "named",
+                    "value": "type_events:EventTypeEnum"
+                },
+                {
+                    "type": "list",
+                    "value": {
+                        "type": "named",
+                        "value": "type_events:EventTypeEnum"
+                    }
+                }
+            ]
+        },
+        "type_events:StringOrListParam": {
+            "type": "undiscriminatedUnion",
+            "declaration": {
+                "name": {
+                    "originalName": "StringOrListParam",
+                    "camelCase": {
+                        "unsafeName": "stringOrListParam",
+                        "safeName": "stringOrListParam"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "string_or_list_param",
+                        "safeName": "string_or_list_param"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "STRING_OR_LIST_PARAM",
+                        "safeName": "STRING_OR_LIST_PARAM"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "StringOrListParam",
+                        "safeName": "StringOrListParam"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "events",
+                            "camelCase": {
+                                "unsafeName": "events",
+                                "safeName": "events"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "events",
+                                "safeName": "events"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "EVENTS",
+                                "safeName": "EVENTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Events",
+                                "safeName": "Events"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "events",
+                        "camelCase": {
+                            "unsafeName": "events",
+                            "safeName": "events"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "events",
+                            "safeName": "events"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "EVENTS",
+                            "safeName": "EVENTS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Events",
+                            "safeName": "Events"
+                        }
+                    }
+                }
+            },
+            "types": [
+                {
+                    "type": "primitive",
+                    "value": "STRING"
+                },
+                {
+                    "type": "list",
+                    "value": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    }
+                }
+            ]
+        }
+    },
+    "headers": [],
+    "endpoints": {
+        "endpoint_events.subscribe": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "subscribe",
+                    "camelCase": {
+                        "unsafeName": "subscribe",
+                        "safeName": "subscribe"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "subscribe",
+                        "safeName": "subscribe"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "SUBSCRIBE",
+                        "safeName": "SUBSCRIBE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Subscribe",
+                        "safeName": "Subscribe"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "events",
+                            "camelCase": {
+                                "unsafeName": "events",
+                                "safeName": "events"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "events",
+                                "safeName": "events"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "EVENTS",
+                                "safeName": "EVENTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Events",
+                                "safeName": "Events"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "events",
+                        "camelCase": {
+                            "unsafeName": "events",
+                            "safeName": "events"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "events",
+                            "safeName": "events"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "EVENTS",
+                            "safeName": "EVENTS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Events",
+                            "safeName": "Events"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/events"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "SubscribeEventsRequest",
+                        "camelCase": {
+                            "unsafeName": "subscribeEventsRequest",
+                            "safeName": "subscribeEventsRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "subscribe_events_request",
+                            "safeName": "subscribe_events_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SUBSCRIBE_EVENTS_REQUEST",
+                            "safeName": "SUBSCRIBE_EVENTS_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "SubscribeEventsRequest",
+                            "safeName": "SubscribeEventsRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "events",
+                                "camelCase": {
+                                    "unsafeName": "events",
+                                    "safeName": "events"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "events",
+                                    "safeName": "events"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "EVENTS",
+                                    "safeName": "EVENTS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Events",
+                                    "safeName": "Events"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "events",
+                            "camelCase": {
+                                "unsafeName": "events",
+                                "safeName": "events"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "events",
+                                "safeName": "events"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "EVENTS",
+                                "safeName": "EVENTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Events",
+                                "safeName": "Events"
+                            }
+                        }
+                    }
+                },
+                "pathParameters": [],
+                "queryParameters": [
+                    {
+                        "name": {
+                            "wireValue": "event_type",
+                            "name": {
+                                "originalName": "event_type",
+                                "camelCase": {
+                                    "unsafeName": "eventType",
+                                    "safeName": "eventType"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "event_type",
+                                    "safeName": "event_type"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "EVENT_TYPE",
+                                    "safeName": "EVENT_TYPE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "EventType",
+                                    "safeName": "EventType"
+                                }
+                            }
+                        },
+                        "typeReference": {
+                            "type": "optional",
+                            "value": {
+                                "type": "named",
+                                "value": "type_events:EventTypeParam"
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "wireValue": "tags",
+                            "name": {
+                                "originalName": "tags",
+                                "camelCase": {
+                                    "unsafeName": "tags",
+                                    "safeName": "tags"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "tags",
+                                    "safeName": "tags"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "TAGS",
+                                    "safeName": "TAGS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Tags",
+                                    "safeName": "Tags"
+                                }
+                            }
+                        },
+                        "typeReference": {
+                            "type": "optional",
+                            "value": {
+                                "type": "named",
+                                "value": "type_events:StringOrListParam"
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "headers": [],
+                "body": null,
+                "metadata": {
+                    "includePathParameters": false,
+                    "onlyPathParameters": false
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        }
+    },
+    "pathParameters": [],
+    "environments": null,
+    "variables": null,
+    "generatorConfig": null
+}

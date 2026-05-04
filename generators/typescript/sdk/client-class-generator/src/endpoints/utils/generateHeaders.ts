@@ -38,7 +38,7 @@ export function generateHeaders({
     let authProviderHeaders: ts.Expression | undefined;
     if (
         generatedSdkClientClass.hasAuthProvider() &&
-        endpoint.auth &&
+        (endpoint.auth || generatedSdkClientClass.getAlwaysSendAuth()) &&
         context.authProvider.isAuthEndpoint(endpoint) === false
     ) {
         const metadataArg = generatedSdkClientClass.getGenerateEndpointMetadata()

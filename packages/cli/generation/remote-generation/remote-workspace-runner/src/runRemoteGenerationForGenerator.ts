@@ -339,12 +339,23 @@ export async function runRemoteGenerationForGenerator({
         absolutePathToPreview
     });
 
-    const result = await pollJobAndReportStatus({
+    let result = await pollJobAndReportStatus({
         job,
         taskHandler,
         taskId,
         context: interactiveTaskContext
     });
+
+    // Fall back to the locally-resolved version when Fiddle doesn't echo it back
+    // (e.g. GitHub push modes where no registry publish or release tag occurs).
+    // Skip the fallback when the version is AUTO — Fiddle determines the real version
+    // via AI-based semantic analysis, and resolvedVersion would be the literal "AUTO" string.
+    if (result != null && result.actualVersion == null) {
+        const fallback = resolveVersionFallback(resolvedVersion);
+        if (fallback != null) {
+            result = { ...result, actualVersion: fallback };
+        }
+    }
 
     // use the actual version from the generation result, fallback to pre-computed version
     const actualVersionForUpload = result?.actualVersion ?? resolvedVersion;
@@ -509,4 +520,19 @@ async function uploadDynamicIRForSdkGeneration({
     } else {
         context.logger.warn(`Failed to upload dynamic IR for ${language}: ${uploadResponse.status}`);
     }
+}
+
+/**
+ * Returns `resolvedVersion` when it is a concrete version string that should be
+ * used as fallback. Returns `undefined` when the version is AUTO (Fiddle owns
+ * the final version) or when no version was provided at all.
+ */
+export function resolveVersionFallback(resolvedVersion: string | undefined): string | undefined {
+    if (resolvedVersion == null) {
+        return undefined;
+    }
+    if (resolvedVersion.toUpperCase() === "AUTO") {
+        return undefined;
+    }
+    return resolvedVersion;
 }

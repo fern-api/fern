@@ -71,7 +71,7 @@ The SDK throws a single error enum for all failures. Client-side issues encoding
 ```swift
 import BasicAuthPwOmitted
 
-let client = BasicAuthPwOmittedClient(...)
+let client = BasicAuthPwOmittedClient(username: "YOUR_USERNAME")
 
 do {
     let response = try await client.basicAuth.postWithBasicAuth(...)
@@ -139,7 +139,7 @@ import Foundation
 import BasicAuthPwOmitted
 
 let client = BasicAuthPwOmittedClient(
-    ...,
+    username: "YOUR_USERNAME",
     urlSession: // Provide your implementation here
 )
 ```

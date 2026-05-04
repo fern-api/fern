@@ -11,7 +11,7 @@
     "schemes": [
       {
         "_visit": [Function],
-        "docs": undefined,
+        "docs": "OpenAPI version of bearerAuth (should be different from generators.yml version)",
         "key": "bearerAuth",
         "token": "customToken",
         "tokenEnvVar": "CUSTOM_TOKEN_ENV",

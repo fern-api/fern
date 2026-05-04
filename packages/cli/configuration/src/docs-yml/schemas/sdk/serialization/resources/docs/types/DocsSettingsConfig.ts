@@ -6,6 +6,7 @@ import type * as serializers from "../../../index.js";
 import { HttpSnippetsConfig } from "./HttpSnippetsConfig.js";
 import { Language } from "./Language.js";
 import { TitleSource } from "./TitleSource.js";
+import { WebSocketOneofDisplay } from "./WebSocketOneofDisplay.js";
 
 export const DocsSettingsConfig: core.serialization.ObjectSchema<
     serializers.DocsSettingsConfig.Raw,
@@ -36,6 +37,7 @@ export const DocsSettingsConfig: core.serialization.ObjectSchema<
     language: Language.optional(),
     folderTitleSource: core.serialization.property("folder-title-source", TitleSource.optional()),
     substituteEnvVars: core.serialization.property("substitute-env-vars", core.serialization.boolean().optional()),
+    websocketOneofDisplay: core.serialization.property("websocket-oneof-display", WebSocketOneofDisplay.optional()),
 });
 
 export declare namespace DocsSettingsConfig {
@@ -53,5 +55,6 @@ export declare namespace DocsSettingsConfig {
         language?: Language.Raw | null;
         "folder-title-source"?: TitleSource.Raw | null;
         "substitute-env-vars"?: boolean | null;
+        "websocket-oneof-display"?: WebSocketOneofDisplay.Raw | null;
     }
 }

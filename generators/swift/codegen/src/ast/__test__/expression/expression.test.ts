@@ -140,4 +140,20 @@ describe("Expression", () => {
             `);
         });
     });
+
+    describe("rawMultiLineStringLiteral", () => {
+        it('should wrap value in #"""..."""# and preserve embedded escape sequences verbatim', () => {
+            const expr = swift.Expression.rawMultiLineStringLiteral(
+                '{\n  "key": "BEGIN:VEVENT\\nDTSTART:20220816T160000\\nEND:VEVENT"\n}'
+            );
+
+            expect(expr.toString()).toMatchInlineSnapshot(`
+              "#"""
+              {
+                "key": "BEGIN:VEVENT\\nDTSTART:20220816T160000\\nEND:VEVENT"
+              }
+              """#"
+            `);
+        });
+    });
 });

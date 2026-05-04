@@ -3842,6 +3842,11 @@ service:
                   "end": "optional<integer>",
                   "metrics": {
                     "allow-multiple": true,
+                    "default": [
+                      "cpu",
+                      "memory",
+                      "rate_egress",
+                    ],
                     "type": "optional<root.MetricName>",
                   },
                   "start": "optional<integer>",
@@ -3887,6 +3892,10 @@ service:
         query-parameters:
           metrics:
             type: optional<root.MetricName>
+            default:
+              - cpu
+              - memory
+              - rate_egress
             allow-multiple: true
           end: optional<integer>
           start: optional<integer>

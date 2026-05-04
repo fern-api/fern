@@ -66,7 +66,7 @@ The SDK throws a single error enum for all failures. Client-side issues encoding
 ```swift
 import NoEnvironment
 
-let client = NoEnvironmentClient(...)
+let client = NoEnvironmentClient(token: "YOUR_API_KEY")
 
 do {
     let response = try await client.dummy.getDummy(...)
@@ -134,7 +134,7 @@ import Foundation
 import NoEnvironment
 
 let client = NoEnvironmentClient(
-    ...,
+    token: "YOUR_API_KEY",
     urlSession: // Provide your implementation here
 )
 ```

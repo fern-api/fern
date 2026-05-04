@@ -190,7 +190,7 @@
         {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/docs.Language"
+            "type": "string"
           }
         },
         {
@@ -548,6 +548,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/docs.Audience"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "multi-source": {
+          "oneOf": [
+            {
+              "type": "boolean"
             },
             {
               "type": "null"
@@ -1048,9 +1058,12 @@
       "type": "string",
       "enum": [
         "deprecated",
+        "legacy",
         "ga",
         "stable",
-        "beta"
+        "beta",
+        "alpha",
+        "preview"
       ]
     },
     "docs.VersionConfig": {
@@ -1395,7 +1408,10 @@
         "in-development",
         "pre-release",
         "deprecated",
-        "beta"
+        "beta",
+        "alpha",
+        "preview",
+        "legacy"
       ]
     },
     "docs.PageConfiguration": {
@@ -4259,26 +4275,9 @@
       ]
     },
     "docs.Language": {
-      "type": "string",
-      "enum": [
-        "en",
-        "es",
-        "fr",
-        "de",
-        "it",
-        "pt",
-        "ja",
-        "zh",
-        "ko",
-        "el",
-        "no",
-        "pl",
-        "ru",
-        "sv",
-        "tr"
-      ]
+      "type": "string"
     },
-    "docs.TranslationConfig": {
+    "docs.TranslationConfigObject": {
       "type": "object",
       "properties": {
         "lang": {
@@ -4299,6 +4298,16 @@
         "lang"
       ],
       "additionalProperties": false
+    },
+    "docs.TranslationConfig": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/docs.Language"
+        },
+        {
+          "$ref": "#/definitions/docs.TranslationConfigObject"
+        }
+      ]
     },
     "docs.AIChatModel": {
       "type": "string",
@@ -4665,7 +4674,7 @@
             }
           ]
         },
-        "og:background-image": {
+        "og:dynamic:background-image": {
           "oneOf": [
             {
               "type": "string"
@@ -5614,6 +5623,13 @@
         }
       ]
     },
+    "docs.WebSocketOneofDisplay": {
+      "type": "string",
+      "enum": [
+        "flat",
+        "grouped"
+      ]
+    },
     "docs.DocsSettingsConfig": {
       "type": "object",
       "properties": {
@@ -5741,6 +5757,16 @@
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "websocket-oneof-display": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.WebSocketOneofDisplay"
             },
             {
               "type": "null"

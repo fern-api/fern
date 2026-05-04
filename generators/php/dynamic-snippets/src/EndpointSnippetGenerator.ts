@@ -234,14 +234,20 @@ export class EndpointSnippetGenerator {
         }
 
         this.context.errors.scope(Scope.Headers);
+        const requiredGlobalHeaderArgs: NamedArgument[] = [];
+        if (this.context.ir.headers != null) {
+            requiredGlobalHeaderArgs.push(
+                ...this.getRequiredGlobalHeaderArgs({ headers: this.context.ir.headers, values: snippet.headers })
+            );
+        }
         if (this.context.ir.headers != null && snippet.headers != null) {
             optionArgs.push(
-                ...this.getConstructorHeaderArgs({ headers: this.context.ir.headers, values: snippet.headers })
+                ...this.getOptionalGlobalHeaderArgs({ headers: this.context.ir.headers, values: snippet.headers })
             );
         }
         this.context.errors.unscope();
 
-        const args: NamedArgument[] = [...authArgs];
+        const args: NamedArgument[] = [...requiredGlobalHeaderArgs, ...authArgs];
 
         if (environmentArg != null) {
             args.push(environmentArg);
@@ -678,7 +684,71 @@ export class EndpointSnippetGenerator {
         return [];
     }
 
-    private getConstructorHeaderArgs({
+    // NOTE: We intentionally avoid this.context.isOptional here because it treats
+    // named aliases to nullable types as optional, which would misclassify required
+    // headers with nullable alias types (they're still required constructor params).
+    private isHeaderTypeOptional(typeReference: FernIr.dynamic.TypeReference): boolean {
+        switch (typeReference.type) {
+            case "optional":
+                return true;
+            case "nullable":
+                return this.isHeaderTypeOptional(typeReference.value);
+            default:
+                return false;
+        }
+    }
+
+    private getRequiredGlobalHeaderArgs({
+        headers,
+        values
+    }: {
+        headers: FernIr.dynamic.NamedParameter[];
+        values: FernIr.dynamic.Values | undefined;
+    }): NamedArgument[] {
+        const args: NamedArgument[] = [];
+        for (const header of headers) {
+            if (this.isHeaderTypeOptional(header.typeReference)) {
+                continue;
+            }
+            const value = values?.[header.name.wireValue];
+            const arg = this.getRequiredGlobalHeaderValue({ header, value });
+            if (arg != null) {
+                args.push({
+                    name: this.context.getPropertyName(header.name.name),
+                    assignment: arg
+                });
+            }
+        }
+        return args;
+    }
+
+    private getRequiredGlobalHeaderValue({
+        header,
+        value
+    }: {
+        header: FernIr.dynamic.NamedParameter;
+        value: unknown;
+    }): php.TypeLiteral | undefined {
+        if (value !== undefined) {
+            const typeLiteral = this.context.dynamicTypeLiteralMapper.convert({
+                typeReference: header.typeReference,
+                value
+            });
+            if (php.TypeLiteral.isNop(typeLiteral)) {
+                return undefined;
+            }
+            return typeLiteral;
+        }
+        const placeholder = this.context.dynamicTypeLiteralMapper.generatePlaceholderValueForRequiredHeader({
+            typeReference: header.typeReference
+        });
+        if (php.TypeLiteral.isNop(placeholder)) {
+            return undefined;
+        }
+        return placeholder;
+    }
+
+    private getOptionalGlobalHeaderArgs({
         headers,
         values
     }: {
@@ -687,6 +757,9 @@ export class EndpointSnippetGenerator {
     }): php.ConstructorField[] {
         const args: php.ConstructorField[] = [];
         for (const header of headers) {
+            if (!this.isHeaderTypeOptional(header.typeReference)) {
+                continue;
+            }
             const value = values[header.name.wireValue];
             const arg = this.getConstructorHeaderArg({ header, value });
             if (arg != null) {

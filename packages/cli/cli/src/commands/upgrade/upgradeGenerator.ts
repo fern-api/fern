@@ -45,20 +45,19 @@ interface SkippedAutoreleaseDisabled {
     version: string;
 }
 
-function getChangelogUrl(generatorName: string): string | undefined {
-    const changelogMap: Record<string, string> = {
-        "fernapi/fern-typescript-sdk": "https://buildwithfern.com/learn/sdks/generators/typescript/changelog",
-        "fernapi/fern-typescript-node-sdk": "https://buildwithfern.com/learn/sdks/generators/typescript/changelog",
-        "fernapi/fern-python-sdk": "https://buildwithfern.com/learn/sdks/generators/python/changelog",
-        "fernapi/fern-go-sdk": "https://buildwithfern.com/learn/sdks/generators/go/changelog",
-        "fernapi/fern-java-sdk": "https://buildwithfern.com/learn/sdks/generators/java/changelog",
-        "fernapi/fern-csharp-sdk": "https://buildwithfern.com/learn/sdks/generators/csharp/changelog",
-        "fernapi/fern-php-sdk": "https://buildwithfern.com/learn/sdks/generators/php/changelog",
-        "fernapi/fern-ruby-sdk": "https://buildwithfern.com/learn/sdks/generators/ruby/changelog",
-        "fernapi/fern-swift-sdk": "https://buildwithfern.com/learn/sdks/generators/swift/changelog"
-    };
+const CHANGELOG_BASE = "https://buildwithfern.com/learn/sdks/generators";
 
-    return changelogMap[generatorName];
+/**
+ * Derives the changelog URL from a generator name.
+ * Generator names follow the pattern "fernapi/fern-<language>-sdk[-variant]",
+ * and changelog pages live at buildwithfern.com/learn/sdks/generators/<language>/changelog.
+ */
+function getChangelogUrl(generatorName: string): string | undefined {
+    const match = generatorName.match(/^fernapi\/fern-([a-z]+)/);
+    if (!match?.[1]) {
+        return undefined;
+    }
+    return `${CHANGELOG_BASE}/${match[1]}/changelog`;
 }
 
 export async function loadAndUpdateGenerators({

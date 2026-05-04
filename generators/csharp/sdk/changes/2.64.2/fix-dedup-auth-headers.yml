@@ -1,0 +1,10 @@
+- summary: |
+    Dedup auth-derived headers in the generated client constructor when
+    multiple auth schemes resolve to the same HTTP header name (for
+    example, an oauth2 bearer scheme plus an apiKey-in-header scheme
+    both named `Authorization`). Previously the constructor's
+    `Dictionary<string, string>` collection initializer added the same
+    key twice and threw `System.ArgumentException: An item with the
+    same key has already been added` at runtime. Earlier auth schemes
+    win, preserving the ordering established by the IR.
+  type: fix

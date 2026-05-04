@@ -75,6 +75,7 @@ function makeInitResult(overrides: Partial<ReplayInitResult> = {}): ReplayInitRe
         bootstrap: makeBootstrap(null),
         lockfileContent: undefined,
         fernignoreEntries: [],
+        gitattributesEntries: [".fern/replay.lock linguist-generated=true"],
         prBody: "",
         ...overrides
     };
@@ -133,10 +134,11 @@ describe("InitCommand", () => {
             })
         );
 
-        global.fetch = vi.fn().mockResolvedValue({
+        const fetchMock = vi.fn().mockResolvedValue({
             ok: true,
             json: vi.fn().mockResolvedValue({ prUrl: "https://github.com/owner/repo/pull/1" })
-        }) as unknown as typeof fetch;
+        });
+        global.fetch = fetchMock as unknown as typeof fetch;
 
         const context = createMockContext();
         await cmd.handle(context, baseArgs());
@@ -144,6 +146,11 @@ describe("InitCommand", () => {
         expect(context.stderr.info).toHaveBeenCalledWith(
             expect.stringContaining("https://github.com/owner/repo/pull/1")
         );
+
+        expect(fetchMock).toHaveBeenCalledTimes(1);
+        const [, init] = fetchMock.mock.calls[0] as [string, RequestInit];
+        const body = JSON.parse(init.body as string) as Record<string, unknown>;
+        expect(body.gitattributesEntries).toEqual([".fern/replay.lock linguist-generated=true"]);
     });
 
     it("throws CliError when response is missing prUrl", async () => {

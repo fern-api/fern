@@ -446,6 +446,44 @@ class ServiceClient:
         _response = self._raw_client.with_json_property(file=file, json=json, request_options=request_options)
         return _response.data
 
+    def with_ref_body(
+        self,
+        *,
+        request: MyObjectParams,
+        image_file: typing.Optional[core.File] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> str:
+        """
+        Parameters
+        ----------
+        request : MyObjectParams
+
+        image_file : typing.Optional[core.File]
+            See core.File for more documentation
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+
+        Examples
+        --------
+        from seed import SeedFileUpload
+
+        client = SeedFileUpload(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.service.with_ref_body(
+            request={"foo": "bar"},
+        )
+        """
+        _response = self._raw_client.with_ref_body(
+            request=request, image_file=image_file, request_options=request_options
+        )
+        return _response.data
+
     def simple(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters
@@ -949,6 +987,52 @@ class AsyncServiceClient:
         str
         """
         _response = await self._raw_client.with_json_property(file=file, json=json, request_options=request_options)
+        return _response.data
+
+    async def with_ref_body(
+        self,
+        *,
+        request: MyObjectParams,
+        image_file: typing.Optional[core.File] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> str:
+        """
+        Parameters
+        ----------
+        request : MyObjectParams
+
+        image_file : typing.Optional[core.File]
+            See core.File for more documentation
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedFileUpload
+
+        client = AsyncSeedFileUpload(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.service.with_ref_body(
+                request={"foo": "bar"},
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.with_ref_body(
+            request=request, image_file=image_file, request_options=request_options
+        )
         return _response.data
 
     async def simple(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:

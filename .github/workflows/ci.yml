@@ -13,10 +13,13 @@ on:
         default: false
         type: boolean
 
-# Cancel previous workflows on previous push
+# Cancel previous workflows on previous push.
+# On PRs: group by PR number so new commits cancel stale runs.
+# On main: group by ref so rapid pushes share one slot instead of each
+#   getting a parallel CI run (avoids runner starvation from seed waves).
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
-  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 env:
   DO_NOT_TRACK: "1"
@@ -26,7 +29,36 @@ env:
   TURBO_DAEMON: "false"
 
 jobs:
+  # Detect whether this push only touched seed snapshot files.
+  # If so, skip all CI jobs — seed changes cannot break the build.
+  changes-filter:
+    runs-on: ubuntu-latest
+    outputs:
+      should-skip-ci: ${{ steps.check.outputs.should-skip }}
+    steps:
+      - name: Check if push only touches seed files
+        id: check
+        env:
+          COMMIT_MSG: ${{ github.event.head_commit.message }}
+        run: |
+          # Only consider skipping for pushes to main. PRs and dispatches always run CI.
+          if [[ "${{ github.event_name }}" != "push" || "${{ github.ref }}" != "refs/heads/main" ]]; then
+            echo "should-skip=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          # Fast path: if the commit message matches the seed update pattern, skip CI.
+          # Seed snapshot changes cannot break the build, so full CI is unnecessary.
+          FIRST_LINE=$(echo "$COMMIT_MSG" | head -1)
+          if echo "$FIRST_LINE" | grep -qP '^chore\(.+\): update .+-sdk seed|^chore\(.+\): update .+-model seed|^chore\(openapi\): update openapi seed|^chore\(seed\): update'; then
+            echo "should-skip=true" >> $GITHUB_OUTPUT
+            echo "Seed-only commit detected — skipping CI."
+          else
+            echo "should-skip=false" >> $GITHUB_OUTPUT
+          fi
+
   compile:
+    needs: [changes-filter]
+    if: needs.changes-filter.outputs.should-skip-ci != 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -39,6 +71,8 @@ jobs:
         run: pnpm compile
 
   boundaries:
+    needs: [changes-filter]
+    if: needs.changes-filter.outputs.should-skip-ci != 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -51,6 +85,8 @@ jobs:
         run: pnpm boundaries
 
   depcheck:
+    needs: [changes-filter]
+    if: needs.changes-filter.outputs.should-skip-ci != 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -63,6 +99,8 @@ jobs:
         run: pnpm depcheck
 
   validate-cli-dependencies:
+    needs: [changes-filter]
+    if: needs.changes-filter.outputs.should-skip-ci != 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -75,6 +113,8 @@ jobs:
         run: node scripts/validate-cli-dependencies.js
 
   lint:
+    needs: [changes-filter]
+    if: needs.changes-filter.outputs.should-skip-ci != 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -101,6 +141,8 @@ jobs:
         run: git --no-pager diff --exit-code
 
   biome:
+    needs: [changes-filter]
+    if: needs.changes-filter.outputs.should-skip-ci != 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -113,7 +155,8 @@ jobs:
         run: pnpm check:biome
 
   test:
-    if: github.repository == 'fern-api/fern'
+    needs: [changes-filter]
+    if: github.repository == 'fern-api/fern' && needs.changes-filter.outputs.should-skip-ci != 'true'
     runs-on: Test
     timeout-minutes: 25
     steps:
@@ -172,7 +215,8 @@ jobs:
         run: git --no-pager diff --exit-code
 
   test-ete:
-    if: github.repository == 'fern-api/fern'
+    needs: [changes-filter]
+    if: github.repository == 'fern-api/fern' && needs.changes-filter.outputs.should-skip-ci != 'true'
     runs-on: Test
     timeout-minutes: 25
     steps:
@@ -288,8 +332,9 @@ jobs:
         run: git --no-pager diff --exit-code
 
   live-test-dev:
+    needs: [changes-filter]
     environment: Fern Dev
-    if: ${{ github.ref == 'refs/heads/main' && github.repository == 'fern-api/fern' }}
+    if: github.ref == 'refs/heads/main' && github.repository == 'fern-api/fern' && needs.changes-filter.outputs.should-skip-ci != 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -310,8 +355,9 @@ jobs:
           ./scripts/live-test.sh "$cli_path" "$FERN_ORG_TOKEN_DEV"
 
   generate-docs-test-windows:
+    needs: [changes-filter]
     environment: Fern Dev
-    if: ${{ github.ref == 'refs/heads/main' && github.repository == 'fern-api/fern' }}
+    if: github.ref == 'refs/heads/main' && github.repository == 'fern-api/fern' && needs.changes-filter.outputs.should-skip-ci != 'true'
     runs-on: windows-latest
     steps:
       - name: Checkout repo
@@ -346,8 +392,9 @@ jobs:
           }
 
   live-test-dev-windows:
+    needs: [changes-filter]
     environment: Fern Dev
-    if: ${{ github.ref == 'refs/heads/main' && github.repository == 'fern-api/fern' }}
+    if: github.ref == 'refs/heads/main' && github.repository == 'fern-api/fern' && needs.changes-filter.outputs.should-skip-ci != 'true'
     runs-on: windows-latest
     steps:
       - name: Checkout repo

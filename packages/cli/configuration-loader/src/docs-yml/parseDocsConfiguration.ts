@@ -148,8 +148,12 @@ export async function parseDocsConfiguration({
     });
 
     const defaultLocale =
-        rawDocsConfiguration.translations?.find((t) => t.default === true)?.lang ??
-        rawDocsConfiguration.translations?.[0]?.lang;
+        rawDocsConfiguration.translations
+            ?.map((t) => docsYml.DocsYmlSchemas.normalizeTranslationConfig(t))
+            .find((t) => t.default === true)?.lang ??
+        (rawDocsConfiguration.translations?.[0] != null
+            ? docsYml.DocsYmlSchemas.normalizeTranslationConfig(rawDocsConfiguration.translations[0]).lang
+            : undefined);
     const translationPagesPromise = pagesPromise.then((resolvedPages) =>
         loadTranslationPages({
             translations: rawDocsConfiguration.translations,
@@ -159,6 +163,13 @@ export async function parseDocsConfiguration({
             context
         })
     );
+
+    const translationNavigationOverlaysPromise = loadTranslationNavigationOverlays({
+        translations: rawDocsConfiguration.translations,
+        defaultLocale,
+        absolutePathToFernFolder,
+        context
+    });
 
     const [
         navigation,
@@ -170,7 +181,8 @@ export async function parseDocsConfiguration({
         context7File,
         llmsTxtFile,
         llmsFullTxtFile,
-        translationPages
+        translationPages,
+        translationNavigationOverlays
     ] = await Promise.all([
         convertedNavigationPromise,
         pagesPromise,
@@ -181,7 +193,8 @@ export async function parseDocsConfiguration({
         context7FilePromise,
         llmsTxtFilePromise,
         llmsFullTxtFilePromise,
-        translationPagesPromise
+        translationPagesPromise,
+        translationNavigationOverlaysPromise
     ]);
 
     // Validate incompatible tabs configuration: sidebar placement + center alignment
@@ -210,6 +223,9 @@ export async function parseDocsConfiguration({
 
         /* per-locale translated page content */
         translationPages,
+
+        /* per-locale translated navigation overlays */
+        translationNavigationOverlays,
 
         /* navigation */
         landingPage,
@@ -274,12 +290,7 @@ export async function parseDocsConfiguration({
         },
 
         /* integrations */
-        integrations: {
-            ...integrations,
-            // context7 is handled separately via context7File (resolved to AbsoluteFilePath)
-            context7: undefined,
-            intercom: integrations?.intercom ? integrations.intercom : undefined
-        },
+        integrations: integrations != null ? { intercom: integrations.intercom ?? undefined } : undefined,
 
         /* scripts */
         css,
@@ -510,7 +521,8 @@ function convertSettingsConfig(
         useJavascriptAsTypescript: settings.useJavascriptAsTypescript ?? false,
         disableExplorerProxy: settings.disableExplorerProxy ?? false,
         disableEnvironmentEditing: settings.disableEnvironmentEditing ?? false,
-        disableAnalytics: settings.disableAnalytics ?? false
+        disableAnalytics: settings.disableAnalytics ?? false,
+        websocketOneofDisplay: settings.websocketOneofDisplay ?? undefined
     };
 }
 
@@ -1773,7 +1785,10 @@ async function convertMetadata(
         "twitter:url": metadata.twitterUrl,
         "twitter:card": metadata.twitterCard,
         "og:dynamic": metadata.ogDynamic,
-        "og:background-image": await convertFilepathOrUrl(metadata.ogBackgroundImage, absoluteFilepathToDocsConfig),
+        "og:dynamic:background-image": await convertFilepathOrUrl(
+            metadata.ogDynamicBackgroundImage,
+            absoluteFilepathToDocsConfig
+        ),
         "og:dynamic:text-color": metadata.ogDynamicTextColor,
         "og:dynamic:background-color": metadata.ogDynamicBackgroundColor,
         "og:dynamic:logo-color": metadata.ogDynamicLogoColor,
@@ -1800,7 +1815,7 @@ function warnOnMetadataConflicts(metadata: docsYml.RawSchemas.MetadataConfig, co
     const dynamicEnabled = metadata.ogDynamic === true;
 
     const dynamicSettings: Array<[string, unknown]> = [
-        ["og:background-image", metadata.ogBackgroundImage],
+        ["og:dynamic:background-image", metadata.ogDynamicBackgroundImage],
         ["og:dynamic:text-color", metadata.ogDynamicTextColor],
         ["og:dynamic:background-color", metadata.ogDynamicBackgroundColor],
         ["og:dynamic:logo-color", metadata.ogDynamicLogoColor],
@@ -1977,8 +1992,10 @@ async function loadTranslationPages({
 
     const result: Record<string, Record<RelativeFilePath, string>> = {};
 
+    const normalizedTranslations = translations.map((t) => docsYml.DocsYmlSchemas.normalizeTranslationConfig(t));
+
     await Promise.all(
-        translations.map(async ({ lang }) => {
+        normalizedTranslations.map(async ({ lang }) => {
             // The default locale's pages live in the top-level `pages/` directory,
             // not in `translations/<lang>/`. Always skip it, even if the directory exists.
             if (lang === defaultLocale) {
@@ -2025,5 +2042,371 @@ async function loadTranslationPages({
         })
     );
 
+    return result;
+}
+
+/**
+ * Loads translated navigation overlay YAML files from `translations/<lang>/` directories.
+ *
+ * For each locale declared in `translations`, this function:
+ * 1. Checks for `translations/<lang>/docs.yml` (the top-level overlay). For backwards
+ *    compatibility, falls back to `translations/<lang>/fern/docs.yml` if not present.
+ * 2. If found, parses it and extracts translatable fields (title, products, versions,
+ *    announcement, tabs).
+ * 3. For products with a `path:` field, also loads the referenced nav YAML file
+ *    from the same directory as the overlay `docs.yml` to extract tab and navigation
+ *    overrides.
+ * 4. Returns a map of locale → TranslationNavigationOverlay.
+ */
+async function loadTranslationNavigationOverlays({
+    translations,
+    defaultLocale,
+    absolutePathToFernFolder,
+    context
+}: {
+    translations: docsYml.RawSchemas.TranslationConfig[] | undefined;
+    defaultLocale: string | undefined;
+    absolutePathToFernFolder: AbsoluteFilePath;
+    context: TaskContext;
+}): Promise<Record<string, docsYml.TranslationNavigationOverlay> | undefined> {
+    if (translations == null || translations.length === 0) {
+        return undefined;
+    }
+
+    const translationsRootDir = path.join(absolutePathToFernFolder, "translations") as AbsoluteFilePath;
+    const result: Record<string, docsYml.TranslationNavigationOverlay> = {};
+
+    const normalizedTranslations = translations.map((t) => docsYml.DocsYmlSchemas.normalizeTranslationConfig(t));
+
+    await Promise.all(
+        normalizedTranslations.map(async ({ lang }) => {
+            if (lang === defaultLocale) {
+                return;
+            }
+
+            const overlayLookup = await resolveTranslationOverlayDocsYml({
+                translationsRootDir,
+                lang
+            });
+            if (overlayLookup == null) {
+                return;
+            }
+
+            const { overlayDocsYmlPath, overlayDir } = overlayLookup;
+
+            try {
+                const overlayContent = yaml.load(await readFile(overlayDocsYmlPath, "utf-8"));
+                if (!isPlainObject(overlayContent)) {
+                    context.logger.warn(
+                        `Translation overlay at "${overlayDocsYmlPath}" is not a valid YAML object. Skipping.`
+                    );
+                    return;
+                }
+
+                const overlay = await parseNavigationOverlayFromDocsYml({
+                    docsYmlContent: overlayContent as Record<string, unknown>,
+                    langFernDir: overlayDir,
+                    overlayDocsYmlPath,
+                    context
+                });
+
+                result[lang] = overlay;
+            } catch (error) {
+                context.logger.warn(
+                    `Failed to load translation overlay for locale "${lang}": ${String(error)}. Navigation labels will not be translated for this locale.`
+                );
+            }
+        })
+    );
+
+    if (Object.keys(result).length === 0) {
+        return undefined;
+    }
+
+    return result;
+}
+
+/**
+ * Resolves the translation overlay `docs.yml` for a locale.
+ *
+ * Prefers `translations/<lang>/docs.yml` (the canonical location) and falls
+ * back to `translations/<lang>/fern/docs.yml` for backwards compatibility with
+ * translation directories produced by older versions of `fern write-translation`.
+ *
+ * Returns `undefined` if neither path exists.
+ */
+async function resolveTranslationOverlayDocsYml({
+    translationsRootDir,
+    lang
+}: {
+    translationsRootDir: AbsoluteFilePath;
+    lang: string;
+}): Promise<{ overlayDocsYmlPath: AbsoluteFilePath; overlayDir: AbsoluteFilePath } | undefined> {
+    const langDir = path.join(translationsRootDir, lang) as AbsoluteFilePath;
+    const directDocsYmlPath = path.join(langDir, "docs.yml") as AbsoluteFilePath;
+    if (await doesPathExist(directDocsYmlPath)) {
+        return { overlayDocsYmlPath: directDocsYmlPath, overlayDir: langDir };
+    }
+
+    const legacyFernDir = path.join(langDir, "fern") as AbsoluteFilePath;
+    const legacyDocsYmlPath = path.join(legacyFernDir, "docs.yml") as AbsoluteFilePath;
+    if (await doesPathExist(legacyDocsYmlPath)) {
+        return { overlayDocsYmlPath: legacyDocsYmlPath, overlayDir: legacyFernDir };
+    }
+
+    return undefined;
+}
+
+function extractString(obj: unknown, key: string): string | undefined {
+    if (isPlainObject(obj)) {
+        const value = (obj as Record<string, unknown>)[key];
+        if (typeof value === "string") {
+            return value;
+        }
+    }
+    return undefined;
+}
+
+/**
+ * Validates each entry of a translation overlay's `navbar-links` array against the
+ * docs.yml NavbarLink schema. Invalid entries are dropped with a warning so a single
+ * malformed link does not discard the whole list. The presence of the field — even
+ * when it parses to an empty list — is preserved so the caller can distinguish an
+ * intentional override (including the empty `navbar-links: []` opt-out) from an
+ * absent field.
+ */
+async function validateOverlayNavbarLinks({
+    rawNavbarLinks,
+    overlayDocsYmlPath,
+    context
+}: {
+    rawNavbarLinks: unknown[];
+    overlayDocsYmlPath: AbsoluteFilePath;
+    context: TaskContext;
+}): Promise<docsYml.RawSchemas.NavbarLink[]> {
+    const result: docsYml.RawSchemas.NavbarLink[] = [];
+    for (const [index, raw] of rawNavbarLinks.entries()) {
+        try {
+            const parsed = await docsYml.RawSchemas.Serializer.NavbarLink.parseOrThrow(raw);
+            result.push(parsed);
+        } catch (error) {
+            context.logger.warn(
+                `Invalid navbar-link at index ${index} in "${overlayDocsYmlPath}": ${String(error)}. Skipping this entry.`
+            );
+        }
+    }
+    return result;
+}
+
+/**
+ * Parses a translated `docs.yml` overlay and any referenced nav YAML files
+ * to produce a `TranslationNavigationOverlay`.
+ */
+async function parseNavigationOverlayFromDocsYml({
+    docsYmlContent,
+    langFernDir: overlayDir,
+    overlayDocsYmlPath,
+    context
+}: {
+    docsYmlContent: Record<string, unknown>;
+    langFernDir: AbsoluteFilePath;
+    overlayDocsYmlPath: AbsoluteFilePath;
+    context: TaskContext;
+}): Promise<docsYml.TranslationNavigationOverlay> {
+    const overlay: docsYml.TranslationNavigationOverlay = {
+        tabs: undefined,
+        products: undefined,
+        versions: undefined,
+        announcement: undefined,
+        navigation: undefined,
+        navbarLinks: undefined
+    };
+
+    // Parse announcement
+    if (isPlainObject(docsYmlContent.announcement)) {
+        const message = extractString(docsYmlContent.announcement, "message");
+        if (message != null) {
+            overlay.announcement = { message };
+        }
+    }
+
+    // Parse navbar-links (CTAs). When present, these replace the docs-level
+    // navbar-links in the FDR upload for this locale — including the empty
+    // case (`navbar-links: []`), which is a per-locale opt-out of CTAs.
+    const rawNavbarLinks = docsYmlContent["navbar-links"];
+    if (Array.isArray(rawNavbarLinks)) {
+        const validatedNavbarLinks = await validateOverlayNavbarLinks({
+            rawNavbarLinks,
+            overlayDocsYmlPath,
+            context
+        });
+        overlay.navbarLinks = convertNavbarLinks(validatedNavbarLinks, overlayDocsYmlPath) ?? [];
+    }
+    // If `navbar-links` is absent, leave `overlay.navbarLinks` undefined so the
+    // docs-level CTAs are inherited.
+
+    // Parse top-level tabs
+    if (isPlainObject(docsYmlContent.tabs)) {
+        overlay.tabs = parseTabOverlays(docsYmlContent.tabs as Record<string, unknown>);
+    }
+
+    // Parse products
+    if (Array.isArray(docsYmlContent.products)) {
+        overlay.products = [];
+        for (const product of docsYmlContent.products) {
+            if (!isPlainObject(product)) {
+                continue;
+            }
+            const productObj = product as Record<string, unknown>;
+            const productOverlay: docsYml.ProductOverlay = {
+                slug: typeof productObj.slug === "string" ? productObj.slug : undefined,
+                displayName: typeof productObj["display-name"] === "string" ? productObj["display-name"] : undefined,
+                subtitle: typeof productObj.subtitle === "string" ? productObj.subtitle : undefined,
+                announcement: undefined,
+                tabs: undefined,
+                navigation: undefined
+            };
+
+            if (isPlainObject(productObj.announcement)) {
+                const message = extractString(productObj.announcement, "message");
+                if (message != null) {
+                    productOverlay.announcement = { message };
+                }
+            }
+
+            // If this product references a nav file, load its tab/navigation overrides
+            // These are stored per-product to avoid collision when multiple products share tab IDs
+            if (typeof productObj.path === "string") {
+                // Validate path to prevent path traversal attacks
+                const resolvedNavFilePath = path.resolve(overlayDir, productObj.path) as AbsoluteFilePath;
+                if (!resolvedNavFilePath.startsWith(overlayDir)) {
+                    context.logger.warn(
+                        `Invalid path in product overlay: "${productObj.path}" escapes the translations directory. Skipping.`
+                    );
+                    overlay.products.push(productOverlay);
+                    continue;
+                }
+                const navFilePath = resolvedNavFilePath;
+                if (await doesPathExist(navFilePath)) {
+                    try {
+                        const navContent = yaml.load(await readFile(navFilePath, "utf-8"));
+                        if (isPlainObject(navContent)) {
+                            const navObj = navContent as Record<string, unknown>;
+                            // Tabs defined in the nav file - stored per-product
+                            if (isPlainObject(navObj.tabs)) {
+                                productOverlay.tabs = parseTabOverlays(navObj.tabs as Record<string, unknown>);
+                            }
+                            // Navigation items defined in the nav file - stored per-product
+                            if (Array.isArray(navObj.navigation)) {
+                                productOverlay.navigation = parseNavigationItemOverlays(navObj.navigation);
+                            }
+                        }
+                    } catch (error) {
+                        context.logger.warn(`Failed to load translation nav file "${navFilePath}": ${String(error)}`);
+                    }
+                }
+            }
+
+            overlay.products.push(productOverlay);
+        }
+    }
+
+    // Parse versions
+    if (Array.isArray(docsYmlContent.versions)) {
+        overlay.versions = [];
+        for (const version of docsYmlContent.versions) {
+            if (!isPlainObject(version)) {
+                continue;
+            }
+            const versionObj = version as Record<string, unknown>;
+            overlay.versions.push({
+                slug: typeof versionObj.slug === "string" ? versionObj.slug : undefined,
+                displayName: typeof versionObj["display-name"] === "string" ? versionObj["display-name"] : undefined
+            });
+        }
+    }
+
+    // Parse top-level navigation (for non-product configs that have navigation directly in docs.yml)
+    if (Array.isArray(docsYmlContent.navigation)) {
+        overlay.navigation = [...(overlay.navigation ?? []), ...parseNavigationItemOverlays(docsYmlContent.navigation)];
+    }
+
+    return overlay;
+}
+
+function parseTabOverlays(tabsObj: Record<string, unknown>): Record<string, docsYml.TabOverlay> {
+    const result: Record<string, docsYml.TabOverlay> = {};
+    for (const [tabId, tabConfig] of Object.entries(tabsObj)) {
+        if (isPlainObject(tabConfig)) {
+            const tabConfigObj = tabConfig as Record<string, unknown>;
+            result[tabId] = {
+                displayName:
+                    typeof tabConfigObj["display-name"] === "string" ? tabConfigObj["display-name"] : undefined,
+                slug: typeof tabConfigObj.slug === "string" ? tabConfigObj.slug : undefined
+            };
+        }
+    }
+    return result;
+}
+
+function parseNavigationItemOverlays(items: unknown[]): docsYml.NavigationItemOverlay[] {
+    const result: docsYml.NavigationItemOverlay[] = [];
+    for (const item of items) {
+        if (!isPlainObject(item)) {
+            continue;
+        }
+        const obj = item as Record<string, unknown>;
+
+        // A tabbed navigation item: { tab: <tabId>, layout: [...] }
+        if (typeof obj.tab === "string") {
+            const tabOverlay: docsYml.NavigationItemOverlay.Tab = {
+                type: "tab",
+                tabId: obj.tab,
+                layout: Array.isArray(obj.layout) ? parseNavigationItemOverlays(obj.layout) : undefined,
+                variants: Array.isArray(obj.variants) ? parseVariantOverlays(obj.variants) : undefined
+            };
+            result.push(tabOverlay);
+            continue;
+        }
+
+        // A section item: { section: "Title", contents: [...] }
+        if (typeof obj.section === "string") {
+            const sectionOverlay: docsYml.NavigationItemOverlay.Section = {
+                type: "section",
+                title: obj.section,
+                slug: typeof obj.slug === "string" ? obj.slug : undefined,
+                contents: Array.isArray(obj.contents) ? parseNavigationItemOverlays(obj.contents) : undefined
+            };
+            result.push(sectionOverlay);
+            continue;
+        }
+
+        // A page item: { page: "Title", path: "..." }
+        if (typeof obj.page === "string") {
+            const pageOverlay: docsYml.NavigationItemOverlay.Page = {
+                type: "page",
+                title: obj.page,
+                slug: typeof obj.slug === "string" ? obj.slug : undefined
+            };
+            result.push(pageOverlay);
+            continue;
+        }
+    }
+    return result;
+}
+
+function parseVariantOverlays(variants: unknown[]): docsYml.VariantOverlay[] {
+    const result: docsYml.VariantOverlay[] = [];
+    for (const variant of variants) {
+        if (!isPlainObject(variant)) {
+            continue;
+        }
+        const obj = variant as Record<string, unknown>;
+        result.push({
+            title: typeof obj.title === "string" ? obj.title : undefined,
+            subtitle: typeof obj.subtitle === "string" ? obj.subtitle : undefined,
+            slug: typeof obj.slug === "string" ? obj.slug : undefined
+        });
+    }
     return result;
 }

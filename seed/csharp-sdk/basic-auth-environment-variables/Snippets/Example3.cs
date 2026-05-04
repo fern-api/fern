@@ -4,8 +4,8 @@ public partial class Examples
 {
     public async Task Example3() {
         var client = new SeedBasicAuthEnvironmentVariablesClient(
-            username: "<username>",
-            accessToken: "<password>",
+            username: "YOUR_USERNAME",
+            accessToken: "YOUR_PASSWORD",
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }

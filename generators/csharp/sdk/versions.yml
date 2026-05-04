@@ -1,4 +1,105 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.65.0
+  changelogEntry:
+    - summary: |
+        Generate CONTRIBUTING.md for C# SDKs, matching the pattern used by the TypeScript generator.
+        The file is skipped for whitelabel SDKs.
+      type: feat
+  createdAt: "2026-05-01"
+  irVersion: 66
+- version: 2.64.2
+  changelogEntry:
+    - summary: |
+        Dedup auth-derived headers in the generated client constructor when
+        multiple auth schemes resolve to the same HTTP header name (for
+        example, an oauth2 bearer scheme plus an apiKey-in-header scheme
+        both named `Authorization`). Previously the constructor's
+        `Dictionary<string, string>` collection initializer added the same
+        key twice and threw `System.ArgumentException: An item with the
+        same key has already been added` at runtime. Earlier auth schemes
+        win, preserving the ordering established by the IR.
+      type: fix
+    - summary: |
+        Fix literal boolean auth-header values being emitted as `"True"` regardless
+        of the configured value. The generated client constructor's auth-header
+        dictionary tested the truthiness of the `Literal` discriminated-union
+        object instead of reading its `boolean` field, so a literal `false` header
+        incorrectly produced `"True"`.
+      type: fix
+  createdAt: "2026-05-01"
+  irVersion: 66
+- version: 2.64.1
+  changelogEntry:
+    - summary: |
+        Fix namespace collision when referencing nested discriminated union variant
+        types in generated test code. When the enclosing type name matches a segment
+        of the test file's namespace, the C# compiler resolves it as the namespace
+        instead of the SDK type (CS0234). Now emits fully qualified type references
+        in this case.
+      type: fix
+    - summary: |
+        Fix OneOfSerializer to prefer strongly-typed deserialization over catch-all
+        matches. When a discriminated union type inside a OneOf uses a catch-all for
+        unknown discriminators, the serializer now tries all types and selects the
+        best match instead of returning the first success.
+      type: fix
+    - summary: |
+        Fix serialization round-trip tests to account for WhenWritingNull normalization.
+        The Roundtrips test now verifies idempotency of the serialized form rather than
+        comparing against the raw input JSON, which may include null optional properties
+        that are intentionally omitted by the serializer.
+      type: fix
+  createdAt: "2026-04-30"
+  irVersion: 66
+- version: 2.64.0
+  changelogEntry:
+    - summary: |
+        Add `retryStatusCodes` config with `"legacy"` and `"recommended"` modes. Legacy (default)
+        preserves current behavior (408, 429, >= 500). Recommended retries only transient
+        codes (408, 429, 502, 503, 504), avoiding idempotency issues with 500. A 3.0.0
+        migration auto-pins legacy for upgrading users.
+      type: feat
+  createdAt: "2026-04-30"
+  irVersion: 66
+- version: 2.63.3
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippets emitting wrong property name when PascalCase(property)
+        collides with class name (e.g. CatalogV1Id.catalog_v1_id). The snippet
+        generator now uses the same rename logic as the SDK (appending "_") so that
+        generated examples compile without CS0542 / CS0117 errors.
+      type: fix
+  createdAt: "2026-04-30"
+  irVersion: 66
+- version: 2.63.2
+  changelogEntry:
+    - summary: |
+        Fix multi-value query parameter snippets when the example value is already
+        a list, which previously produced uncompilable list-of-list initializers
+        like `[new List<T>() { value }]` in mock server tests, reference docs, and
+        snippets.
+      type: fix
+  createdAt: "2026-04-29"
+  irVersion: 66
+- version: 2.63.1
+  changelogEntry:
+    - summary: |
+        Fix WireMock test generation to use percent-encoded query parameter keys,
+        matching what spec-compliant HTTP clients send. Also split comma-delimited
+        query parameter examples into multiple values in a single `WithParam()` call,
+        since WireMock.Net parses comma-separated values into arrays.
+      type: fix
+  createdAt: "2026-04-29"
+  irVersion: 66
+- version: 2.63.0
+  changelogEntry:
+    - summary: |
+        Support `x-fern-default` as fallback value for parameters in generated C# SDKs.
+        When a header, query parameter, or path parameter has a `clientDefault` value in the IR,
+        the generated C# SDK makes that parameter optional with the default value automatically applied.
+      type: feat
+  createdAt: "2026-04-27"
+  irVersion: 66
 - version: 2.62.0
   changelogEntry:
     - summary: |

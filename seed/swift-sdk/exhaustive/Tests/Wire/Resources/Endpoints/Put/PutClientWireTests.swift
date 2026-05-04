@@ -7,7 +7,7 @@ import Exhaustive
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "errors": [
                     {
@@ -24,7 +24,7 @@ import Exhaustive
                     }
                   ]
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ExhaustiveClient(

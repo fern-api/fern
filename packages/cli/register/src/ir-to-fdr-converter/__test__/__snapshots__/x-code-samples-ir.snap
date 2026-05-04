@@ -396,6 +396,7 @@ func main() {
         "properties": [
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "id",
             "propertyAccess": undefined,
@@ -434,6 +435,7 @@ func main() {
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "name",
             "propertyAccess": undefined,
@@ -472,6 +474,7 @@ func main() {
           },
           {
             "availability": undefined,
+            "defaultValue": undefined,
             "docs": undefined,
             "name": "email",
             "propertyAccess": undefined,

@@ -5,9 +5,14 @@ import { createFdrService } from "@fern-api/core";
 import { MediaType, replaceEnvVariables } from "@fern-api/core-utils";
 import {
     applyTranslatedFrontmatterToNavTree,
+    applyTranslatedNavigationOverlays,
     DocsDefinitionResolver,
+    getTranslatedAnnouncement,
     replaceImagePathsAndUrls,
+    replaceReferencedCode,
+    replaceReferencedMarkdown,
     stripMdxComments,
+    transformAtPrefixImports,
     UploadedFile,
     wrapWithHttps
 } from "@fern-api/docs-resolver";
@@ -19,7 +24,14 @@ type SnippetsConfig = APIV1Write.SnippetsConfig;
 type DocsDefinition = DocsV1Write.DocsDefinition;
 
 import { stitchGlobalTheme } from "@fern-api/docs-resolver";
-import { AbsoluteFilePath, convertToFernHostRelativeFilePath, RelativeFilePath, resolve } from "@fern-api/fs-utils";
+import {
+    AbsoluteFilePath,
+    convertToFernHostRelativeFilePath,
+    doesPathExist,
+    RelativeFilePath,
+    relative,
+    resolve
+} from "@fern-api/fs-utils";
 import { convertIrToDynamicSnippetsIr, generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { getOriginalName } from "@fern-api/ir-utils";
 import { detectAirGappedMode, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
@@ -139,7 +151,8 @@ export async function publishDocs({
     cliVersion,
     ciSource,
     deployerAuthor,
-    loginCommand = "fern login"
+    loginCommand = "fern login",
+    multiSource = false
 }: {
     token: FernToken;
     organization: string;
@@ -166,6 +179,7 @@ export async function publishDocs({
      * 'fern auth login' for CLI v2). Defaults to 'fern login'.
      */
     loginCommand?: string;
+    multiSource?: boolean;
 }): Promise<string> {
     const fdrOrigin = process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com";
     const isAirGapped = await detectAirGappedMode(`${fdrOrigin}/health`, context.logger);
@@ -204,10 +218,15 @@ export async function publishDocs({
     const basePath = parseBasePath(domain);
     const disableDynamicSnippets =
         docsWorkspace.config.experimental && docsWorkspace.config.experimental.dynamicSnippets === false;
-    const isBasepathAware = docsWorkspace.config.experimental?.basepathAware === true;
+    if (docsWorkspace.config.experimental?.basepathAware === true) {
+        context.logger.warn(
+            "experimental.basepath-aware is deprecated. Use 'multi-source: true' on the instance instead."
+        );
+    }
+    const isBasepathAware = multiSource || docsWorkspace.config.experimental?.basepathAware === true;
 
     if (isBasepathAware) {
-        context.logger.debug("Experimental flag 'basepath-aware' is enabled - using basepath-aware S3 key format");
+        context.logger.debug("Basepath-aware mode is enabled - using basepath-aware S3 key format");
     }
 
     let deployLocked = false;
@@ -628,9 +647,12 @@ export async function publishDocs({
         context.logger.debug(`Docs published to FDR in ${publishTime.toFixed(0)}ms`);
 
         // Register translated page content for each configured locale.
-        // Skip translation registration in preview mode to avoid overwriting production translations.
+        // In preview mode, register translations against the preview URL (not the production domain)
+        // so that translated docs are visible in preview without overwriting production translations.
         const translationPages = resolver.getTranslationPages();
-        if (!preview && translationPages != null && Object.keys(translationPages).length > 0) {
+        const translationNavigationOverlays = resolver.getTranslationNavigationOverlays();
+        const translationDomain = preview ? urlToOutput : domain;
+        if (translationPages != null && Object.keys(translationPages).length > 0) {
             context.logger.info(`Registering translations for ${Object.keys(translationPages).length} locale(s)...`);
             await Promise.all(
                 Object.entries(translationPages).map(async ([locale, localePages]) => {
@@ -640,29 +662,78 @@ export async function publishDocs({
                         // any sidebar-title / slug frontmatter in the translated pages.
                         //
                         // For each translated page, we apply the same transformations as default locale pages:
-                        // 1. Strip MDX comments to prevent leakage
-                        // 2. Replace relative image paths with file IDs (using base page path for resolution)
-                        // 3. Preserve editThisPageUrl/editThisPageLaunch from the base page
-                        //
-                        // TODO(translations-alpha): Translated pages still need:
-                        // - replaceReferencedMarkdown/Code for <Markdown src="..."/> and <CodeBlock src="..."/>
-                        // - transformAtPrefixImports for @/... and @components/... imports
+                        // 1. Resolve <Markdown src="..."/> and <Code src="..."/> snippet references
+                        // 2. Transform @/ prefix imports to relative paths
+                        // 3. Strip MDX comments to prevent leakage
+                        // 4. Replace relative image paths with file IDs (using base page path for resolution)
+                        // 5. Preserve editThisPageUrl/editThisPageLaunch from the base page
                         const collectedFileIds = resolver.getCollectedFileIds();
                         const docsWorkspacePath = resolver.getDocsWorkspacePath();
 
-                        const translatedPages = {
-                            ...docsDefinition.pages,
-                            ...Object.fromEntries(
-                                Object.entries(localePages).map(([path, rawMarkdown]) => {
+                        // Create a locale-aware file loader that prefers translated snippets
+                        // (e.g., translations/zh/snippets/foo.mdx) over base snippets.
+                        const resolveLocalePath = async (filepath: AbsoluteFilePath): Promise<AbsoluteFilePath> => {
+                            const relPath = relative(docsWorkspacePath, filepath);
+                            const translatedPath = resolve(
+                                docsWorkspacePath,
+                                RelativeFilePath.of(`translations/${locale}/${relPath}`)
+                            );
+                            return (await doesPathExist(translatedPath)) ? translatedPath : filepath;
+                        };
+
+                        const localeAwareMarkdownLoader = async (filepath: AbsoluteFilePath): Promise<string> => {
+                            const pathToRead = await resolveLocalePath(filepath);
+                            const raw = await readFile(pathToRead, "utf-8");
+                            // Strip frontmatter (---\n...\n---) from snippet files
+                            const fmMatch = raw.match(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/);
+                            return fmMatch != null ? raw.slice(fmMatch[0].length) : raw;
+                        };
+
+                        const localeAwareFileLoader = async (filepath: AbsoluteFilePath): Promise<string> => {
+                            const pathToRead = await resolveLocalePath(filepath);
+                            return readFile(pathToRead, "utf-8");
+                        };
+
+                        const translatedPageEntries = await Promise.all(
+                            Object.entries(localePages).map(async ([path, rawMarkdown]) => {
+                                try {
                                     const basePage = docsDefinition.pages[path as DocsV1Write.PageId];
-                                    // Strip MDX comments first
-                                    let processedMarkdown = stripMdxComments(rawMarkdown);
-                                    // Replace image paths using the base page's location for resolution
-                                    // (translated pages reference the same images as the default locale)
                                     const absolutePathToMarkdownFile = resolve(
                                         docsWorkspacePath,
                                         RelativeFilePath.of(path)
                                     );
+
+                                    // Resolve <Markdown src="..."/> snippets (must happen before image processing).
+                                    // Uses locale-aware loader to prefer translated snippets when available.
+                                    const { markdown: markdownResolved } = await replaceReferencedMarkdown({
+                                        markdown: rawMarkdown,
+                                        absolutePathToFernFolder: docsWorkspacePath,
+                                        absolutePathToMarkdownFile,
+                                        context,
+                                        markdownLoader: localeAwareMarkdownLoader
+                                    });
+
+                                    // Resolve <Code src="..."/> references (also locale-aware)
+                                    const codeResolved = await replaceReferencedCode({
+                                        markdown: markdownResolved,
+                                        absolutePathToFernFolder: docsWorkspacePath,
+                                        absolutePathToMarkdownFile,
+                                        context,
+                                        fileLoader: localeAwareFileLoader
+                                    });
+
+                                    // Transform @/ prefix imports to relative paths
+                                    const importsResolved = transformAtPrefixImports({
+                                        markdown: codeResolved,
+                                        absolutePathToFernFolder: docsWorkspacePath,
+                                        absolutePathToMarkdownFile
+                                    });
+
+                                    // Strip MDX comments
+                                    let processedMarkdown = stripMdxComments(importsResolved);
+
+                                    // Replace image paths using the base page's location for resolution
+                                    // (translated pages reference the same images as the default locale)
                                     processedMarkdown = replaceImagePathsAndUrls(
                                         processedMarkdown,
                                         collectedFileIds,
@@ -673,11 +744,10 @@ export async function publishDocs({
                                         },
                                         context
                                     );
+
                                     // Rewrite editThisPageUrl to point to the translated file
-                                    // URL format: .../fern/${path}?plain=1 -> .../fern/translations/${locale}/${path}?plain=1
                                     let editThisPageUrl = basePage?.editThisPageUrl;
                                     if (editThisPageUrl != null) {
-                                        // Replace /fern/${path} with /fern/translations/${locale}/${path}
                                         const fernPathPattern = `/fern/${path}`;
                                         const translatedPath = `/fern/translations/${locale}/${path}`;
                                         editThisPageUrl = editThisPageUrl.replace(
@@ -694,25 +764,56 @@ export async function publishDocs({
                                             editThisPageLaunch: basePage?.editThisPageLaunch
                                         }
                                     ];
-                                })
+                                } catch (pageError) {
+                                    context.logger.warn(
+                                        `Failed to process translated page "${path}" for locale "${locale}": ${String(pageError)}. Falling back to base page.`
+                                    );
+                                    return undefined;
+                                }
+                            })
+                        );
+
+                        const translatedPages = {
+                            ...docsDefinition.pages,
+                            ...Object.fromEntries(
+                                translatedPageEntries.filter(
+                                    (entry): entry is NonNullable<typeof entry> => entry != null
+                                )
                             )
                         };
-                        const updatedRoot = applyTranslatedFrontmatterToNavTree(
+                        let updatedRoot = applyTranslatedFrontmatterToNavTree(
                             docsDefinition.config.root,
                             // localePages is Record<RelativeFilePath, string> (path -> raw markdown)
                             localePages as Record<string, string>,
                             context
                         );
+
+                        // Apply navigation overlay (translated display-names, titles, etc.)
+                        const localeNavOverlay = translationNavigationOverlays?.[locale];
+                        let translatedAnnouncement = docsDefinition.config.announcement;
+                        let translatedNavbarLinks = docsDefinition.config.navbarLinks;
+                        if (localeNavOverlay != null) {
+                            updatedRoot = applyTranslatedNavigationOverlays(updatedRoot, localeNavOverlay);
+                            translatedAnnouncement =
+                                getTranslatedAnnouncement(localeNavOverlay) ?? translatedAnnouncement;
+                            if (localeNavOverlay.navbarLinks != null) {
+                                translatedNavbarLinks = localeNavOverlay.navbarLinks;
+                            }
+                        }
+
                         const translatedDefinition: DocsDefinition = {
                             ...docsDefinition,
                             pages: translatedPages,
                             config: {
                                 ...docsDefinition.config,
-                                root: updatedRoot
+                                root: updatedRoot,
+                                announcement: translatedAnnouncement,
+                                navbarLinks: translatedNavbarLinks
                             }
                         };
-                        context.logger.info(
-                            `Sending translation for locale "${locale}": pages=${JSON.stringify(Object.keys(localePages))}`
+                        const pageCount = Object.keys(localePages).length;
+                        context.logger.debug(
+                            `Sending translation for locale "${locale}" (${pageCount} page${pageCount === 1 ? "" : "s"})`
                         );
                         // Use a raw fetch instead of the oRPC client to send `docsDefinition`
                         // (the live server expects that field; the published fdr-sdk still uses `content`).
@@ -724,7 +825,12 @@ export async function publishDocs({
                                 ...headers // Include telemetry headers (X-CLI-Version, X-CI-Source, etc.)
                             },
                             body: JSON.stringify({
-                                domain,
+                                domain: translationDomain,
+                                // Send customDomains in production so FDR fans the translation
+                                // S3 write out across every URL the docs are published to.
+                                // Skipped in preview because preview deploys to a single
+                                // ephemeral URL with no custom-domain mirrors.
+                                customDomains: preview ? [] : customDomains,
                                 orgId: organization,
                                 locale,
                                 docsDefinition: translatedDefinition

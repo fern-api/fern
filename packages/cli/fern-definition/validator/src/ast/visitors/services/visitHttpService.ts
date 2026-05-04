@@ -134,7 +134,9 @@ function visitEndpoint({
                                 availability: noop,
                                 type: (type) => {
                                     visitTypeReference(type, [...nodePathForQueryParameter, "type"], {
-                                        _default: queryParameter.default,
+                                        _default: shouldSkipDefaultValidation(queryParameter)
+                                            ? undefined
+                                            : queryParameter.default,
                                         validation: queryParameter.validation
                                     });
                                 },
@@ -576,4 +578,13 @@ function visitHeaders({
             });
         }
     }
+}
+
+/**
+ * For `allow-multiple: true` query parameters the wire `type` is the item type (e.g. `optional<string>`) but the
+ * documentation `default` may be an array (e.g. `["html"]`). Skip type-checking the default in that case so docs can
+ * surface array defaults via `defaultValue`. Validation rules still apply to the item type.
+ */
+function shouldSkipDefaultValidation(queryParameter: RawSchemas.QueryParameterTypeReferenceDetailed) {
+    return queryParameter["allow-multiple"] === true && Array.isArray(queryParameter.default);
 }

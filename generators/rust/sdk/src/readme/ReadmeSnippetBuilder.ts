@@ -364,11 +364,12 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
         // Always add api_key for consistency across all README sections
         // This provides a simple, consistent example regardless of actual auth type
+        const apiKeyPlaceholder = this.context.getHeaderAuthPlaceholder() ?? "your-api-key";
         fields.push({
             name: "api_key",
             value: Expression.functionCall("Some", [
                 Expression.methodCall({
-                    target: Expression.stringLiteral("your-api-key"),
+                    target: Expression.stringLiteral(apiKeyPlaceholder),
                     method: "to_string",
                     args: []
                 })
@@ -651,10 +652,11 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
         // Create client using ClientConfig with token auth (matching the standard SDK pattern)
         const rootClientName = this.context.getClientName();
+        const tokenPlaceholder = this.context.getBearerTokenPlaceholder() ?? this.context.getHeaderAuthPlaceholder() ?? "your-api-key";
         writer.write(`let client = ${rootClientName}::new(ClientConfig {`);
         writer.newLine();
         writer.indent();
-        writer.write(`token: Some("your-api-key".to_string()),`);
+        writer.write(`token: Some(${JSON.stringify(tokenPlaceholder)}.to_string()),`);
         writer.newLine();
         writer.write(`..Default::default()`);
         writer.dedent();

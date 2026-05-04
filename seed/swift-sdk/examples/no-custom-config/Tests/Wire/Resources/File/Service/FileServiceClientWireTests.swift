@@ -7,12 +7,12 @@ import Examples
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "name": "name",
                   "contents": "contents"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ExamplesClient(

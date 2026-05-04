@@ -53,19 +53,36 @@ export interface DocsConfiguration {
      * Options include: typescript, python, java, go, ruby, csharp, php, swift, curl
      */
     defaultLanguage?: FernDocsConfig.ProgrammingLanguage;
-    languages?: FernDocsConfig.Language[];
+    languages?: string[];
     /**
      * Configuration for multi-language documentation. Each entry defines a locale
      * that the documentation supports. Use the `translations/` directory alongside
      * `docs.yml` to provide per-language content.
      *
-     * Example:
+     * Example (object syntax):
      * ```yaml
      * translations:
      *   - lang: en
      *     default: true
      *   - lang: ja
      *   - lang: fr
+     * ```
+     *
+     * Example (simplified syntax):
+     * ```yaml
+     * translations:
+     *   - en
+     *   - ja
+     *   - fr
+     * ```
+     *
+     * You can mix both syntaxes:
+     * ```yaml
+     * translations:
+     *   - lang: en
+     *     default: true
+     *   - ja
+     *   - fr
      * ```
      */
     translations?: FernDocsConfig.TranslationConfig[];

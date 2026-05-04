@@ -1,4 +1,3 @@
-import { docsYml } from "@fern-api/configuration";
 import { DOCS_CONFIGURATION_FILENAME } from "@fern-api/configuration-loader";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
@@ -22,7 +21,7 @@ import {
 } from "./hash-utils.js";
 import { ContentTransformation, ProcessingStats } from "./types.js";
 
-type Language = docsYml.RawSchemas.Language;
+type Language = string;
 
 export async function writeTranslationForProject({
     project,

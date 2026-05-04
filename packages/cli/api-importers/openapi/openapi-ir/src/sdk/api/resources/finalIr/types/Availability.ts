@@ -4,6 +4,9 @@ const AvailabilityValues = {
     GenerallyAvailable: "GenerallyAvailable",
     Beta: "Beta",
     Deprecated: "Deprecated",
+    Alpha: "Alpha",
+    Preview: "Preview",
+    Legacy: "Legacy",
 } as const;
 export type Availability = (typeof AvailabilityValues)[keyof typeof AvailabilityValues];
 export const Availability: typeof AvailabilityValues & {
@@ -18,6 +21,12 @@ export const Availability: typeof AvailabilityValues & {
                 return visitor.beta();
             case Availability.Deprecated:
                 return visitor.deprecated();
+            case Availability.Alpha:
+                return visitor.alpha();
+            case Availability.Preview:
+                return visitor.preview();
+            case Availability.Legacy:
+                return visitor.legacy();
             default:
                 return visitor._other();
         }
@@ -29,6 +38,9 @@ export namespace Availability {
         generallyAvailable: () => R;
         beta: () => R;
         deprecated: () => R;
+        alpha: () => R;
+        preview: () => R;
+        legacy: () => R;
         _other: () => R;
     }
 }

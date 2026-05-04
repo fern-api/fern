@@ -142,24 +142,29 @@ export class WireTestGenerator {
 
         // Test class inherits from WireMockTestCase which provides helper methods
         lines.push(`class ${this.toPascalCase(serviceName)}WireTest < WireMockTestCase`);
-        lines.push("");
 
         // Setup method that creates the client once (base class handles skip logic)
         lines.push(...this.generateSetupMethod());
-        lines.push("");
 
         // Test methods
+        const testMethods: string[][] = [];
         for (const { snippetAst, endpoint, testId } of endpointTestCases.values()) {
             const testMethod = await this.generateEndpointTestMethod(endpoint, snippetAst, serviceName, testId);
             if (testMethod) {
-                lines.push(...testMethod);
-                lines.push("");
+                testMethods.push(testMethod);
+            }
+        }
+        for (let i = 0; i < testMethods.length; i++) {
+            lines.push("");
+            const method = testMethods[i];
+            if (method != null) {
+                lines.push(...method);
             }
         }
 
         lines.push("end");
 
-        return lines.join("\n");
+        return lines.join("\n") + "\n";
     }
 
     /**
@@ -325,14 +330,21 @@ export class WireTestGenerator {
             if (isLazyPagination) {
                 // For lazy paginated endpoints, we need to trigger the first HTTP request
                 // by calling .pages.next_page on the returned iterator
-                lines.push(`    result = begin`);
                 const snippetLines = snippetCode.split("\n");
-                for (const line of snippetLines) {
+                for (let i = 0; i < snippetLines.length; i++) {
+                    const line = snippetLines[i] ?? "";
                     if (line.trim()) {
-                        lines.push(`      ${line}`);
+                        // Continuation lines keep the snippet's own 2-space indent and get
+                        // the same 4-space test-method prefix as the `result =` line, so
+                        // multi-line method calls indent one step past the method start
+                        // (matching rubocop's Layout/FirstArgumentIndentation).
+                        if (i === 0) {
+                            lines.push(`    result = ${line}`);
+                        } else {
+                            lines.push(`    ${line}`);
+                        }
                     }
                 }
-                lines.push(`    end`);
                 lines.push(`    result.pages.next_page`);
             } else {
                 const snippetLines = snippetCode.split("\n");

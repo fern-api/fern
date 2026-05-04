@@ -69,7 +69,7 @@ The SDK throws a single error enum for all failures. Client-side issues encoding
 ```swift
 import Pagination
 
-let client = PaginationClient(...)
+let client = PaginationClient(token: "YOUR_API_KEY")
 
 do {
     let response = try await client.users.listWithCustomPager(...)
@@ -137,7 +137,7 @@ import Foundation
 import Pagination
 
 let client = PaginationClient(
-    ...,
+    token: "YOUR_API_KEY",
     urlSession: // Provide your implementation here
 )
 ```

@@ -331,7 +331,7 @@ final class HTTPClient: Swift.Sendable {
     }
 
     private func shouldRetry(statusCode: Swift.Int) -> Swift.Bool {
-        return statusCode == 408 || statusCode == 429 || statusCode >= 500
+        return {{RETRY_STATUS_CHECK}}
     }
 
     private func getRetryDelay(response: Networking.HTTPURLResponse, retryAttempt: Swift.Int)

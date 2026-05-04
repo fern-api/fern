@@ -229,6 +229,10 @@ export function isAdditionalPropertiesAny(
     if (typeof additionalProperties === "boolean") {
         return additionalProperties;
     }
+    if (typeof additionalProperties !== "object" || additionalProperties === null) {
+        // Non-object, non-boolean values (e.g., string "true") are treated as allowing any
+        return true;
+    }
     if (isReferenceObject(additionalProperties)) {
         return false;
     }

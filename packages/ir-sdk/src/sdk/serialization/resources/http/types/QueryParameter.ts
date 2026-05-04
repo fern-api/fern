@@ -15,6 +15,7 @@ export const QueryParameter: core.serialization.ObjectSchema<serializers.QueryPa
             valueType: core.serialization.lazy(() => serializers.TypeReference),
             allowMultiple: core.serialization.boolean(),
             clientDefault: Literal.optional(),
+            defaultValue: core.serialization.unknown().optional(),
             v2Examples: V2SchemaExamples.optional(),
             explode: core.serialization.boolean().optional(),
         })
@@ -26,6 +27,7 @@ export declare namespace QueryParameter {
         valueType: serializers.TypeReference.Raw;
         allowMultiple: boolean;
         clientDefault?: Literal.Raw | null;
+        defaultValue?: unknown | null;
         v2Examples?: V2SchemaExamples.Raw | null;
         explode?: boolean | null;
     }

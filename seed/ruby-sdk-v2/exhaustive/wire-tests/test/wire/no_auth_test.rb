@@ -16,10 +16,10 @@ class NoAuthWireTest < WireMockTestCase
     test_id = "no_auth.post_with_no_auth.0"
 
     @client.no_auth.post_with_no_auth(request_options: {
-                                        additional_headers: {
-                                          "X-Test-Id" => "no_auth.post_with_no_auth.0"
-                                        }
-                                      })
+      additional_headers: {
+        "X-Test-Id" => "no_auth.post_with_no_auth.0"
+      }
+    })
 
     verify_request_count(
       test_id: test_id,
