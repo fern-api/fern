@@ -68,6 +68,8 @@ jobs:
             /*
             !seed
             !seed-remote-local
+            packages/seed/**
+            docker/seed/**
           sparse-checkout-cone-mode: false
 
       - name: Install
@@ -88,6 +90,8 @@ jobs:
             /*
             !seed
             !seed-remote-local
+            packages/seed/**
+            docker/seed/**
           sparse-checkout-cone-mode: false
 
       - name: Install
@@ -108,6 +112,8 @@ jobs:
             /*
             !seed
             !seed-remote-local
+            packages/seed/**
+            docker/seed/**
           sparse-checkout-cone-mode: false
 
       - name: Install
@@ -128,6 +134,8 @@ jobs:
             /*
             !seed
             !seed-remote-local
+            packages/seed/**
+            docker/seed/**
           sparse-checkout-cone-mode: false
 
       - name: Install
@@ -148,6 +156,8 @@ jobs:
             /*
             !seed
             !seed-remote-local
+            packages/seed/**
+            docker/seed/**
           sparse-checkout-cone-mode: false
 
       - name: Install
@@ -182,6 +192,8 @@ jobs:
             /*
             !seed
             !seed-remote-local
+            packages/seed/**
+            docker/seed/**
           sparse-checkout-cone-mode: false
 
       - name: Install
