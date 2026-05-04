@@ -580,11 +580,17 @@ export interface ProductOverlay {
     tabs: Record<string, TabOverlay> | undefined;
     /** Per-product navigation overlays from the referenced nav file */
     navigation: NavigationItemOverlay[] | undefined;
+    /** Per-product version overlays for products with multiple versions */
+    versions: VersionOverlay[] | undefined;
 }
 
 export interface VersionOverlay {
     slug: string | undefined;
     displayName: string | undefined;
+    /** Per-version tab overlays from the referenced nav file */
+    tabs: Record<string, TabOverlay> | undefined;
+    /** Per-version navigation overlays from the referenced nav file */
+    navigation: NavigationItemOverlay[] | undefined;
 }
 
 export interface AnnouncementOverlay {

@@ -300,6 +300,125 @@ describe("parseDocsConfiguration — translation navigation overlay docs.yml loc
         expect(productOverlay?.displayName).toBe("Produit");
         expect(productOverlay?.tabs?.["guides"]?.displayName).toBe("Guides");
     });
+
+    it("should load tabs and navigation from a top-level version's referenced nav file", async () => {
+        const fernDir = tmpDir as AbsoluteFilePath;
+        const configPath = path.join(tmpDir, "docs.yml") as AbsoluteFilePath;
+        await writeFile(configPath, "");
+
+        const frDir = path.join(tmpDir, "translations", "fr");
+        const versionsDir = path.join(frDir, "versions");
+        await mkdir(versionsDir, { recursive: true });
+        await writeFile(
+            path.join(frDir, "docs.yml"),
+            ["versions:", "  - display-name: V1", "    slug: v1", "    path: ./versions/v1.yml"].join("\n") + "\n"
+        );
+        await writeFile(
+            path.join(versionsDir, "v1.yml"),
+            [
+                "tabs:",
+                "  api:",
+                "    display-name: Référence API",
+                "navigation:",
+                "  - tab: api",
+                "    layout:",
+                "      - section: Aperçu"
+            ].join("\n") + "\n"
+        );
+
+        const config = makeMinimalRawConfig({
+            translations: [{ lang: "en", default: true }, { lang: "fr" }]
+        });
+
+        const parsed = await parseDocsConfiguration({
+            rawDocsConfiguration: config,
+            absolutePathToFernFolder: fernDir,
+            absoluteFilepathToDocsConfig: configPath,
+            context: createMockTaskContext()
+        });
+
+        const versionOverlay = parsed.translationNavigationOverlays?.["fr"]?.versions?.[0];
+        expect(versionOverlay?.displayName).toBe("V1");
+        expect(versionOverlay?.slug).toBe("v1");
+        expect(versionOverlay?.tabs?.["api"]?.displayName).toBe("Référence API");
+        expect(versionOverlay?.navigation).toBeDefined();
+    });
+
+    it("should parse versions nested inside a product and load their nav files", async () => {
+        const fernDir = tmpDir as AbsoluteFilePath;
+        const configPath = path.join(tmpDir, "docs.yml") as AbsoluteFilePath;
+        await writeFile(configPath, "");
+
+        const frDir = path.join(tmpDir, "translations", "fr");
+        const versionsDir = path.join(frDir, "versions");
+        await mkdir(versionsDir, { recursive: true });
+        await writeFile(
+            path.join(frDir, "docs.yml"),
+            [
+                "products:",
+                "  - display-name: Plateforme",
+                "    versions:",
+                "      - display-name: V4",
+                "        slug: v4",
+                "        path: ./versions/v4.yml",
+                "      - display-name: Hérité",
+                "        slug: v2"
+            ].join("\n") + "\n"
+        );
+        await writeFile(
+            path.join(versionsDir, "v4.yml"),
+            ["tabs:", "  docs:", "    display-name: Documentation"].join("\n") + "\n"
+        );
+
+        const config = makeMinimalRawConfig({
+            translations: [{ lang: "en", default: true }, { lang: "fr" }]
+        });
+
+        const parsed = await parseDocsConfiguration({
+            rawDocsConfiguration: config,
+            absolutePathToFernFolder: fernDir,
+            absoluteFilepathToDocsConfig: configPath,
+            context: createMockTaskContext()
+        });
+
+        const productOverlay = parsed.translationNavigationOverlays?.["fr"]?.products?.[0];
+        expect(productOverlay?.displayName).toBe("Plateforme");
+        expect(productOverlay?.versions).toHaveLength(2);
+        expect(productOverlay?.versions?.[0]?.displayName).toBe("V4");
+        expect(productOverlay?.versions?.[0]?.tabs?.["docs"]?.displayName).toBe("Documentation");
+        // Second version has no `path:` and should still parse with display-name only
+        expect(productOverlay?.versions?.[1]?.displayName).toBe("Hérité");
+        expect(productOverlay?.versions?.[1]?.tabs).toBeUndefined();
+    });
+
+    it("should warn and skip when a version's path escapes the translations directory", async () => {
+        const fernDir = tmpDir as AbsoluteFilePath;
+        const configPath = path.join(tmpDir, "docs.yml") as AbsoluteFilePath;
+        await writeFile(configPath, "");
+
+        const frDir = path.join(tmpDir, "translations", "fr");
+        await mkdir(frDir, { recursive: true });
+        await writeFile(
+            path.join(frDir, "docs.yml"),
+            ["versions:", "  - display-name: V1", "    path: ../../../etc/passwd"].join("\n") + "\n"
+        );
+
+        const config = makeMinimalRawConfig({
+            translations: [{ lang: "en", default: true }, { lang: "fr" }]
+        });
+
+        const parsed = await parseDocsConfiguration({
+            rawDocsConfiguration: config,
+            absolutePathToFernFolder: fernDir,
+            absoluteFilepathToDocsConfig: configPath,
+            context: createMockTaskContext()
+        });
+
+        const versionOverlay = parsed.translationNavigationOverlays?.["fr"]?.versions?.[0];
+        expect(versionOverlay?.displayName).toBe("V1");
+        expect(versionOverlay?.tabs).toBeUndefined();
+        expect(versionOverlay?.navigation).toBeUndefined();
+    });
 });
 
 describe("parseDocsConfiguration — translation navbar-links overrides", () => {
