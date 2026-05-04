@@ -33,6 +33,7 @@ export async function previewDocsWorkspace({
             undefined,
             { code: CliError.Code.ConfigError }
         );
+        return;
     }
 
     if (legacyPreview) {
