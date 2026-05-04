@@ -373,7 +373,10 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
             const methods = ["get", "post", "put", "patch", "delete", "options", "head", "trace"] as const;
             for (const method of methods) {
                 const operation = pathItem[method];
-                if (operation?.security) {
+                // Preserve `security: []` (explicit opt-out of auth). An empty array is a
+                // deliberate signal that the endpoint requires no auth, distinct from the
+                // absence of `security`. Only remove non-empty endpoint-level overrides.
+                if (operation?.security != null && operation.security.length > 0) {
                     delete operation.security;
                 }
             }
