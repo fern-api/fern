@@ -6,6 +6,9 @@ import yaml from "js-yaml";
 
 import { ChangelogEntry, validateAngleBracketEscaping } from "./angleBracketValidator.js";
 
+const UNRELEASED_DIR_NAME = "unreleased";
+const FORBIDDEN_UNRELEASED_TYPES = new Set(["break"]);
+
 export async function validateStagedChanges({
     absolutePathToChangelog,
     context,
@@ -55,8 +58,37 @@ export async function validateStagedChanges({
                     context.logger.error(chalk.red(`${relPath}: ${error}`));
                 }
             }
+
+            if (versionName === UNRELEASED_DIR_NAME) {
+                const forbiddenTypeErrors = findForbiddenUnreleasedTypes(items);
+                if (forbiddenTypeErrors.length > 0) {
+                    hasErrors = true;
+                    for (const error of forbiddenTypeErrors) {
+                        context.logger.error(chalk.red(`${relPath}: ${error}`));
+                    }
+                }
+            }
         }
     }
 
     return hasErrors;
+}
+
+function findForbiddenUnreleasedTypes(items: unknown[]): string[] {
+    const errors: string[] = [];
+    for (let i = 0; i < items.length; i++) {
+        const item = items[i];
+        if (typeof item !== "object" || item === null) {
+            continue;
+        }
+        const type = (item as { type?: unknown }).type;
+        if (typeof type === "string" && FORBIDDEN_UNRELEASED_TYPES.has(type)) {
+            errors.push(
+                `Entry ${i + 1} uses forbidden type "${type}". ` +
+                    "Major version bumps are not produced by the automated release flow; " +
+                    "to ship a breaking change, edit the relevant versions.yml directly so the major bump is explicitly acknowledged in review."
+            );
+        }
+    }
+    return errors;
 }

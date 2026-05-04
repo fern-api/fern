@@ -17,7 +17,7 @@
                 },
                 "type": {
                     "$ref": "#/definitions/ChangelogType",
-                    "description": "Type of change determines version bump: fix/chore (patch), feat/internal (minor), break (major)"
+                    "description": "Type of change determines version bump: fix/chore (patch), feat/internal (minor). Major version bumps are not produced by the automated release flow; edit versions.yml directly to ship a major release."
                 },
                 "pre-release": {
                     "$ref": "#/definitions/PreReleaseTag",
@@ -36,11 +36,10 @@
                 "fix",
                 "chore",
                 "feat",
-                "internal",
-                "break"
+                "internal"
             ],
             "title": "Changelog Type",
-            "description": "The type of change: fix/chore → patch, feat/internal → minor, break → major"
+            "description": "The type of change: fix/chore → patch, feat/internal → minor. Major version bumps are not produced by the automated release flow and must be made by editing versions.yml directly."
         },
         "PreReleaseTag": {
             "type": "string",

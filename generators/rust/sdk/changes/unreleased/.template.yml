@@ -5,5 +5,5 @@
 - summary: |
     Brief description of your change.
     You can use multiple lines for longer descriptions.
-  type: feat  # Options: fix/chore (patch), feat/internal (minor), break (major)
+  type: feat  # Options: fix/chore (patch), feat/internal (minor). Major bumps are not produced by the auto-release flow; edit versions.yml directly to ship a major release.
   # pre-release: rc  # Optional: alpha, beta, or rc (e.g., produces 1.2.0-rc.0)

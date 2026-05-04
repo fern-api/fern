@@ -16,14 +16,16 @@ import { setupSoftware } from "./release-setup.js";
 
 interface ChangelogEntry {
     summary: string;
-    type: "fix" | "chore" | "feat" | "internal" | "break";
+    type: "fix" | "chore" | "feat" | "internal";
     "pre-release"?: string;
 }
 
-const VALID_CHANGELOG_TYPES = new Set(["fix", "chore", "feat", "internal", "break"]);
+const VALID_CHANGELOG_TYPES = new Set(["fix", "chore", "feat", "internal"]);
 const VALID_PRE_RELEASE_TAGS = new Set(["alpha", "beta", "rc"]);
 
-type Severity = "major" | "minor" | "patch";
+// Major version bumps are intentionally not produced by the automated release flow.
+// To ship a major release, a human edits versions.yml directly.
+type Severity = "minor" | "patch";
 
 function getSeverityFromType(type: ChangelogEntry["type"]): Severity {
     switch (type) {
@@ -33,8 +35,6 @@ function getSeverityFromType(type: ChangelogEntry["type"]): Severity {
         case "feat":
         case "internal":
             return "minor";
-        case "break":
-            return "major";
         default: {
             const _exhaustive: never = type;
             throw new Error(`Unknown changelog type: ${_exhaustive}`);
@@ -177,9 +177,7 @@ function determineNextVersion(currentVersion: string, changes: UnreleasedChange[
     for (const change of changes) {
         for (const entry of change.entries) {
             const severity = getSeverityFromType(entry.type);
-            if (severity === "major") {
-                highestSeverity = "major";
-            } else if (severity === "minor" && highestSeverity !== "major") {
+            if (severity === "minor") {
                 highestSeverity = "minor";
             }
         }
@@ -204,18 +202,20 @@ function determineNextVersion(currentVersion: string, changes: UnreleasedChange[
         process.exit(1);
     }
 
-    // Compute the base next version from severity
+    // Compute the base next version from severity. Major bumps are deliberately
+    // unreachable here — they require a human edit to versions.yml.
     let nextBase: string;
     switch (highestSeverity) {
-        case "major":
-            nextBase = `${major + 1}.0.0`;
-            break;
         case "minor":
             nextBase = `${major}.${minor + 1}.0`;
             break;
         case "patch":
             nextBase = isCurrentPreRelease ? `${major}.${minor}.${patch}` : `${major}.${minor}.${patch + 1}`;
             break;
+        default: {
+            const _exhaustive: never = highestSeverity;
+            throw new Error(`Unknown severity: ${_exhaustive}`);
+        }
     }
 
     // If no pre-release tag requested, return the stable version
