@@ -44,7 +44,17 @@ export async function logout(context: TaskContext): Promise<void> {
 
     context.logger.info(chalk.blue("Opening browser to complete logout..."));
 
-    void open(logoutUrl);
+    try {
+        await open(logoutUrl);
+    } catch {
+        server.close();
+        context.logger.warn(
+            chalk.yellow(
+                "Could not open browser automatically. Please visit this URL to complete logout:\n" + logoutUrl
+            )
+        );
+        return;
+    }
 
     await redirectReceived;
 
