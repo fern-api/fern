@@ -15,6 +15,7 @@ import { Rule } from "./Rule.js";
 import { MissingRedirectsRule } from "./rules/missing-redirects/index.js";
 import { NoCircularRedirectsRule } from "./rules/no-circular-redirects/index.js";
 import { NoNonComponentRefsRule } from "./rules/no-non-component-refs/index.js";
+import { ValidChangelogSlugRule } from "./rules/valid-changelog-slug/index.js";
 import { ValidDocsEndpoints } from "./rules/valid-docs-endpoints/index.js";
 import { ValidLocalReferencesRule } from "./rules/valid-local-references/index.js";
 import { ValidMarkdownLinks } from "./rules/valid-markdown-link/index.js";
@@ -39,7 +40,8 @@ const CHECK_RULE_CONFIG_TO_RULE_NAME = {
     validLocalReferences: ValidLocalReferencesRule.name,
     noCircularRedirects: NoCircularRedirectsRule.name,
     validDocsEndpoints: ValidDocsEndpoints.name,
-    missingRedirects: MissingRedirectsRule.name
+    missingRedirects: MissingRedirectsRule.name,
+    validChangelogSlug: ValidChangelogSlugRule.name
 } satisfies Record<keyof docsYml.RawSchemas.CheckRulesConfig, string>;
 
 function buildSeverityOverrides(

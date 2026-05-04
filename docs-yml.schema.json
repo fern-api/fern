@@ -4882,6 +4882,16 @@
               "type": "null"
             }
           ]
+        },
+        "valid-changelog-slug": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.CheckRuleSeverity"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false

@@ -208,6 +208,9 @@ types:
       missing-redirects:
         type: optional<CheckRuleSeverity>
         docs: Severity for detecting previously published URLs that disappeared without an explicit redirect. Default is warn.
+      valid-changelog-slug:
+        type: optional<CheckRuleSeverity>
+        docs: Severity for validating that each changelog's effective URL slug is one of the allowlisted values served as an RSS/Atom/JSON feed. Default is warn.
 
   CheckConfig:
     docs: |
