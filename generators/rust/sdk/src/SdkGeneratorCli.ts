@@ -214,7 +214,11 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         await this.generateReference(context);
 
         if (!context.config.whitelabel) {
-            await this.generateContributing(context);
+            try {
+                await this.generateContributing(context);
+            } catch (error) {
+                throw GeneratorError.internalError(`Failed to generate CONTRIBUTING.md: ${extractErrorMessage(error)}`);
+            }
         }
 
         // Generate wire tests if enabled
