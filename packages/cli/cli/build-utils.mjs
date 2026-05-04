@@ -1,5 +1,5 @@
 import { exec } from "child_process";
-import { copyFileSync, existsSync } from "fs";
+import { existsSync } from "fs";
 import { readdir, readFile, writeFile } from "fs/promises";
 import path from "path";
 import tsup from "tsup";
@@ -130,20 +130,6 @@ export async function buildCli(config) {
 
     const outDirAbs = path.join(__dirname, outDir);
 
-    // Copy login/logout HTML pages alongside the bundle so they can be
-    // loaded at runtime via fs.readFileSync(path.join(__dirname, '...')).
-    // These are kept as separate .html files (rather than inlined into the
-    // bundle) because esbuild's minifier converts large string literals to
-    // template literals, which corrupts the embedded JSON manifest inside
-    // the pages.
-    const pagesDir = path.join(REPO_ROOT, "packages/cli/login/src/pages");
-    for (const htmlFile of ["login-success.html", "logout-success.html"]) {
-        const src = path.join(pagesDir, htmlFile);
-        if (existsSync(src)) {
-            copyFileSync(src, path.join(outDirAbs, htmlFile));
-        }
-    }
-
     // Rewrite source map `sources` to repo-root-relative paths so Sentry
     // displays clean filenames (e.g. "packages/cli/cli/src/cli.ts") and a
     // single repo-root-based code mapping resolves every frame.
@@ -171,7 +157,7 @@ export async function buildCli(config) {
     const outputPackageJson = {
         version,
         repository: packageJson.repository,
-        files: ["cli.cjs", "login-success.html", "logout-success.html"],
+        files: ["cli.cjs"],
         dependencies,
         ...packageJsonOverrides
     };
