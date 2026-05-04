@@ -1,0 +1,12 @@
+- summary: |
+    Fix Swift wire-test runtime equality failures when a response body contains
+    a map (`Dictionary<String, T>`) whose value is an explicit-null nullable.
+    Previously the generator embedded the IR's `jsonExample` for the response
+    body, which silently dropped map entries whose value resolved to JS
+    `undefined` (e.g. an unresolved `nullable<string>`). The expected struct
+    built from the typed example shape retained the entries as
+    `Nullable<T>.null`, so the decoded body and the expected struct disagreed
+    at runtime equality. The wire-test JSON body is now built by walking the
+    typed example shape directly, so it stays in sync with the expected struct
+    by construction.
+  type: fix

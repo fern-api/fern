@@ -5,6 +5,7 @@ import { EndpointSnippetGenerator } from "@fern-api/swift-dynamic-snippets";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { convertDynamicEndpointSnippetRequest } from "../../utils/convertEndpointSnippetRequest.js";
+import { buildJsonFromExampleTypeReference } from "./buildJsonFromExampleTypeReference.js";
 
 export declare namespace WireTestFunctionGenerator {
     interface Args {
@@ -96,9 +97,7 @@ export class WireTestFunctionGenerator {
                                             swift.functionArgument({
                                                 value: swift.Expression.memberAccess({
                                                     target: swift.Expression.rawMultiLineStringLiteral(
-                                                        typeof exampleTypeRef.jsonExample === "string"
-                                                            ? exampleTypeRef.jsonExample
-                                                            : JSON.stringify(exampleTypeRef.jsonExample, null, 2)
+                                                        renderWireTestResponseBody(exampleTypeRef)
                                                     ),
                                                     memberName: "utf8"
                                                 })
@@ -627,4 +626,15 @@ export class WireTestFunctionGenerator {
         }
         throw GeneratorError.internalError(`Unknown value: ${JSON.stringify(val)}`);
     }
+}
+
+function renderWireTestResponseBody(exampleTypeRef: FernIr.ExampleTypeReference): string {
+    if (typeof exampleTypeRef.jsonExample === "string") {
+        return exampleTypeRef.jsonExample;
+    }
+    const value = buildJsonFromExampleTypeReference(exampleTypeRef);
+    if (typeof value === "string") {
+        return value;
+    }
+    return JSON.stringify(value, null, 2);
 }
