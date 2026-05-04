@@ -1,3 +1,4 @@
+import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import path from "path";
@@ -64,6 +65,8 @@ export async function publishCli({
             context.logger.info(`Publishing CLI@${publishVersion} as a production release...`);
             publishConfig = cliWorkspace.workspaceConfig.publishGa;
             break;
+        default:
+            assertNever(publishType);
     }
 
     // Instance of PublishCommand configuration, leverage these commands outright
