@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.7.9
+  changelogEntry:
+    - summary: |
+        `fern docs dev` now fails with a clear error when no `docs.yml` is present, instead of exiting silently.
+      type: fix
+    - summary: |
+        Fix section landing pages with `skip-slug: true` ignoring frontmatter `slug` declarations.
+        Sections now compute separate slugs for the overview page (honors frontmatter) and for
+        children (respects skip-slug), so both features work correctly together.
+      type: fix
+  createdAt: "2026-05-04"
+  irVersion: 66
 - version: 5.7.8
   changelogEntry:
     - summary: |
