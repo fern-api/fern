@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ContributingGenerator > generates full content snapshot 1`] = `
+exports[`CONTRIBUTING.md (AsIs) > loads content matching snapshot 1`] = `
 "# Contributing
 
 Thanks for your interest in contributing to this SDK! This document provides guidelines for contributing to the project.

@@ -1,8 +1,9 @@
-import { File, GeneratorNotificationService, GeneratorError } from "@fern-api/base-generator";
+import { GeneratorNotificationService, GeneratorError } from "@fern-api/base-generator";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import {
     AbstractRustGeneratorCli,
+    AsIsFiles,
     formatRustCode,
     formatRustSnippet,
     RustDependencyType,
@@ -19,7 +20,6 @@ import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { exec } from "child_process";
 import { promisify } from "util";
-import { ContributingGenerator } from "./contributing/ContributingGenerator.js";
 import { EnvironmentGenerator } from "./environment/EnvironmentGenerator.js";
 import { ErrorGenerator } from "./error/ErrorGenerator.js";
 import { ApiClientBuilderGenerator } from "./generators/ApiClientBuilderGenerator.js";
@@ -214,7 +214,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         await this.generateReference(context);
 
         if (!context.config.whitelabel) {
-            this.generateContributing(context);
+            await this.generateContributing(context);
         }
 
         // Generate wire tests if enabled
@@ -842,10 +842,15 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         }
     }
 
-    private generateContributing(context: SdkGeneratorContext): void {
-        const contributingGenerator = new ContributingGenerator();
-        const content = contributingGenerator.generate();
-        context.project.addRawFiles(new File("CONTRIBUTING.md", RelativeFilePath.of(""), content));
+    private async generateContributing(context: SdkGeneratorContext): Promise<void> {
+        const contributingFile = AsIsFiles.ContributingMd;
+        const content = await contributingFile.loadContents();
+        const file = new RustFile({
+            filename: contributingFile.filename,
+            directory: contributingFile.directory,
+            fileContents: content
+        });
+        context.project.addSourceFiles(file);
     }
 
     private generateSnippets(context: SdkGeneratorContext) {

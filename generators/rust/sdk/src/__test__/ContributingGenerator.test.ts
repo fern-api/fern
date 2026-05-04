@@ -1,20 +1,17 @@
+import { AsIsFiles } from "@fern-api/rust-base";
 import { describe, expect, it } from "vitest";
 
-import { ContributingGenerator } from "../contributing/ContributingGenerator.js";
-
-describe("ContributingGenerator", () => {
-    it("generates CONTRIBUTING.md with Rust commands", () => {
-        const generator = new ContributingGenerator();
-        const result = generator.generate();
+describe("CONTRIBUTING.md (AsIs)", () => {
+    it("contains Rust commands", async () => {
+        const result = await AsIsFiles.ContributingMd.loadContents();
         expect(result).toContain("cargo build");
         expect(result).toContain("cargo test");
         expect(result).toContain("cargo clippy");
         expect(result).toContain("cargo fmt");
     });
 
-    it("includes all expected sections", () => {
-        const generator = new ContributingGenerator();
-        const result = generator.generate();
+    it("includes all expected sections", async () => {
+        const result = await AsIsFiles.ContributingMd.loadContents();
         expect(result).toContain("# Contributing");
         expect(result).toContain("## Getting Started");
         expect(result).toContain("### Prerequisites");
@@ -29,31 +26,27 @@ describe("ContributingGenerator", () => {
         expect(result).toContain("## License");
     });
 
-    it("includes Fern-specific information", () => {
-        const generator = new ContributingGenerator();
-        const result = generator.generate();
+    it("includes Fern-specific information", async () => {
+        const result = await AsIsFiles.ContributingMd.loadContents();
         expect(result).toContain("Fern");
         expect(result).toContain(".fernignore");
         expect(result).toContain("buildwithfern.com");
         expect(result).toContain("github.com/fern-api/fern");
     });
 
-    it("references Rust generator path", () => {
-        const generator = new ContributingGenerator();
-        const result = generator.generate();
+    it("references Rust generator path", async () => {
+        const result = await AsIsFiles.ContributingMd.loadContents();
         expect(result).toContain("generators/rust/");
     });
 
-    it("includes Rust prerequisites", () => {
-        const generator = new ContributingGenerator();
-        const result = generator.generate();
+    it("includes Rust prerequisites", async () => {
+        const result = await AsIsFiles.ContributingMd.loadContents();
         expect(result).toContain("Rust (latest stable)");
         expect(result).toContain("Cargo");
     });
 
-    it("generates full content snapshot", () => {
-        const generator = new ContributingGenerator();
-        const result = generator.generate();
+    it("loads content matching snapshot", async () => {
+        const result = await AsIsFiles.ContributingMd.loadContents();
         expect(result).toMatchSnapshot();
     });
 });
