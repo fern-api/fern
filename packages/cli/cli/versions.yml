@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.7.8
+  changelogEntry:
+    - summary: |
+        Fix `fern logout` showing a "localhost refused to connect" error page by
+        starting a local server to serve a branded confirmation page, matching the login flow.
+        Also update both login and logout confirmation pages with new branded designs.
+      type: fix
+  createdAt: "2026-05-04"
+  irVersion: 66
 - version: 5.7.7
   changelogEntry:
     - summary: |
