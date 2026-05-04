@@ -42,54 +42,96 @@ test.describe("Smoke test: all pages load", () => {
     }
 });
 
+/**
+ * Detect whether an image src looks like a leaked filesystem path rather than
+ * a proper server URL. Filesystem paths contain OS-specific patterns that
+ * should never appear in a rendered <img> src attribute.
+ */
+function looksLikeFilesystemPath(src: string): string | undefined {
+    // file:/// protocol
+    if (/^file:\/\/\//i.test(src)) {
+        return "uses file:/// protocol";
+    }
+
+    // Windows drive letter (e.g., C:/ or C:\)
+    if (/^[a-zA-Z]:[/\\]/.test(src)) {
+        return "contains Windows drive letter";
+    }
+
+    // URL-encoded backslashes (%5C)
+    if (src.includes("%5C")) {
+        return "contains URL-encoded backslashes (%5C)";
+    }
+
+    // Raw backslashes (Windows path separators)
+    if (src.includes("\\")) {
+        return "contains backslashes";
+    }
+
+    // Unresolved file:<uuid> reference (frontend failed to map to a URL)
+    if (/^file:[0-9a-f-]+$/i.test(src)) {
+        return "contains unresolved file:<uuid> reference";
+    }
+
+    return undefined;
+}
+
 test.describe("Image rendering validation", () => {
-    test("GET /welcome should render images that actually load", async ({ page }) => {
+    test("GET /welcome should render images without 404s or filepath leaks", async ({ page }) => {
+        // Track all failed image network requests (4xx/5xx or network errors)
+        const failedImageRequests: { url: string; status: number }[] = [];
+        page.on("response", (response) => {
+            const url = response.url();
+            const contentType = response.headers()["content-type"] ?? "";
+            const isImageRequest =
+                contentType.includes("image") ||
+                /\.(png|jpe?g|gif|svg|webp|ico|bmp|avif)(\?|$)/i.test(url);
+            if (isImageRequest && response.status() >= 400) {
+                failedImageRequests.push({ url, status: response.status() });
+            }
+        });
+
+        // Also track requests that fail at the network level (no response at all)
+        const networkFailedImages: string[] = [];
+        page.on("requestfailed", (request) => {
+            const url = request.url();
+            if (/\.(png|jpe?g|gif|svg|webp|ico|bmp|avif)(\?|$)/i.test(url)) {
+                networkFailedImages.push(`${url} (${request.failure()?.errorText ?? "unknown error"})`);
+            }
+        });
+
         const response = await page.goto("/welcome", {
-            waitUntil: "domcontentloaded",
+            waitUntil: "load",
             timeout: 30_000
         });
 
         expect(response?.status()).toBe(200);
 
-        // Wait for page to fully render and images to load
+        // Wait for any lazy-loaded images to finish
         await page.waitForTimeout(3000);
 
-        // Collect image loading status from the DOM
-        const imageResults = await page.evaluate(() => {
+        // --- Network-level check: no image requests should have failed ---
+        expect(
+            failedImageRequests,
+            `Image requests returned errors:\n${failedImageRequests.map((r) => `  ${r.status} ${r.url}`).join("\n")}`
+        ).toHaveLength(0);
+
+        expect(
+            networkFailedImages,
+            `Image requests failed at network level:\n${networkFailedImages.join("\n")}`
+        ).toHaveLength(0);
+
+        // --- DOM-level check: image src attributes should not contain filesystem paths ---
+        const imageSrcs = await page.evaluate(() => {
             const images = document.querySelectorAll("img");
-            return Array.from(images).map((img) => ({
-                src: img.getAttribute("src") ?? img.src,
-                complete: img.complete,
-                naturalWidth: img.naturalWidth,
-                naturalHeight: img.naturalHeight
-            }));
+            return Array.from(images).map((img) => img.getAttribute("src") ?? img.src);
         });
 
-        expect(imageResults.length, "Expected at least one image on /welcome").toBeGreaterThan(0);
+        expect(imageSrcs.length, "Expected at least one image on /welcome").toBeGreaterThan(0);
 
-        for (const img of imageResults) {
-            // Image must have finished loading
-            expect(img.complete, `Image did not finish loading: ${img.src}`).toBe(true);
-
-            // Image must have rendered with non-zero dimensions (broken/missing images have naturalWidth 0)
-            expect(
-                img.naturalWidth,
-                `Image failed to load (naturalWidth is 0), likely a broken path: ${img.src}`
-            ).toBeGreaterThan(0);
-
-            // Must not contain file:/// protocol (broken local path leak)
-            expect(img.src, `Image src should not use file:/// protocol: ${img.src}`).not.toMatch(/^file:\/\/\//);
-
-            // Must not contain Windows drive letters (e.g., C:/ or C:\)
-            expect(img.src, `Image src should not contain Windows drive letter: ${img.src}`).not.toMatch(
-                /^[a-zA-Z]:[/\\]/
-            );
-
-            // Must not contain URL-encoded backslashes (%5C)
-            expect(img.src, `Image src should not contain encoded backslashes: ${img.src}`).not.toContain("%5C");
-
-            // Must not contain raw backslashes
-            expect(img.src, `Image src should not contain backslashes: ${img.src}`).not.toContain("\\");
+        for (const src of imageSrcs) {
+            const pathIssue = looksLikeFilesystemPath(src);
+            expect(pathIssue, `Image src "${src}" ${pathIssue}`).toBeUndefined();
         }
     });
 });
