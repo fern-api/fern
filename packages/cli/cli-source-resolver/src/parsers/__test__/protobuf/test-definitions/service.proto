@@ -1,8 +1,0 @@
-syntax = "proto3";
-
-import "google/protobuf/empty.proto";
-
-// Includes an arbitrary amount of whitespace.
-service  User {
-    rpc Do(google.protobuf.Empty) returns (google.protobuf.Empty) {}
-}

@@ -1,47 +1,27 @@
-<br/>
-<div align="center">
-  <a href="https://www.buildwithfern.com/?utm_source=github&utm_medium=readme&utm_campaign=fern&utm_content=logo">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="/fern/images/logo-white.svg">
-      <source media="(prefers-color-scheme: light)" srcset="/fern/images/logo-primary.svg">
-      <img alt="logo" src="/fern/images/logo-primary.svg" height="80" align="center">
-    </picture>
-  </a>
-<br/>
+# SmokeTest TypeScript Library
 
-<br/>
+[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=https%3A%2F%2Fgithub.com%2Ffern-api%2Ffern)
+[![npm shield](https://img.shields.io/npm/v/)](https://www.npmjs.com/package/)
 
-[![npm version](https://img.shields.io/npm/v/fern-api)](https://www.npmjs.com/package/fern-api)
-[![2023 Y Combinator Startup](https://img.shields.io/badge/Y%20Combinator-2023-orange)](https://www.ycombinator.com/companies/fern)
-![License](https://img.shields.io/badge/license-Apache%202.0-blue)
+The SmokeTest TypeScript library provides convenient access to the SmokeTest APIs from TypeScript.
 
-[![Documentation](https://img.shields.io/badge/Read%20our%20Docs-black?logo=book)](https://buildwithfern.com/learn/home?utm_source=fern-api/fern/readme-read-our-documentation)
-[![Book a demo](https://img.shields.io/badge/Book%20a%20demo-fcfcfd)](https://buildwithfern.com/book-demo?utm_source=fern-github-readme)
-[![Start for free](https://img.shields.io/badge/Start%20for%20free-008700)](https://dashboard.buildwithfern.com/sign-up?redirect_on_login=%2Fget-started&utm_source=fern-github-readme)
+## Table of Contents
 
-</div>
-
-# 🌿 What is Fern?
-
-Fern is a platform that transforms your API definitions into production-ready SDKs and beautiful documentation in minutes. 
-
-With Fern, you can offer your users:
-
-- 🧩 **Type-safe SDKs** in multiple languages, including TypeScript, Python, Java, Go, Ruby, PHP, and C#
-- 📘 **Developer documentation** featuring an interactive UI and auto-generated API + SDK references
-- ✨ **AI Search** powered by an assistant trained on your docs, APIs, and SDKs that can instantly answer a developer's questions
-
-Fern supports leading API specifications including OpenAPI (REST, Webhooks), AsyncAPI (WebSockets), Protobuf (gRPC), and OpenRPC.
-
-<div align="center">
-    <a href="/fern/images/overview-dark.png" target="_blank">
-        <picture>
-            <source srcset="/fern/images/overview-dark.png" media="(prefers-color-scheme: dark)">
-            <source srcset="/fern/images/overview-light.png" media="(prefers-color-scheme: light)">
-            <img src="/fern/images/overview-light.png" width="700" alt="Overview Diagram">
-        </picture>
-    </a>
-</div>
+-   [🌿 Sdks](#-sdks)
+-   [🌿 Api Documentation](#-api-documentation)
+-   [🌿 Generators](#-generators)
+-   [🌿 Cli Commands](#-cli-commands)
+-   [Inspiration](#inspiration)
+-   [Community](#community)
+-   [Installation](#installation)
+-   [Usage](#usage)
+-   [Exception Handling](#exception-handling)
+-   [Advanced](#advanced)
+    -   [Retries](#retries)
+    -   [Timeouts](#timeouts)
+    -   [Aborting Requests](#aborting-requests)
+    -   [Runtime Compatibility](#runtime-compatibility)
+-   [Contributing](#contributing)
 
 ## 🌿 SDKs
 
@@ -79,14 +59,14 @@ fern generate
 
 ## 🌿 API Documentation
 
-Fern can also build and host a documentation website with an auto-generated API reference. Write additional pages in markdown and have them versioned with git. 
+Fern can also build and host a documentation website with an auto-generated API reference. Write additional pages in markdown and have them versioned with git.
 Search, SEO, dark mode, and popular components are provided out-of-the-box. Plus, you can customize the colors, font, logo, and domain name.
 
 Check out docs built with Fern:
 
-- [elevenlabs.io/docs](https://elevenlabs.io/docs)
-- [launchdarkly.com/docs](https://launchdarkly.com/docs/home)
-- [docs.hume.ai](https://docs.hume.ai/)
+-   [elevenlabs.io/docs](https://elevenlabs.io/docs)
+-   [launchdarkly.com/docs](https://launchdarkly.com/docs/home)
+-   [docs.hume.ai](https://docs.hume.ai/)
 
 Get started [here](https://github.com/fern-api/docs-starter).
 
@@ -96,17 +76,17 @@ Generators are processes that take your API Definition as input and output artif
 
 ### SDK Generators
 
-| Generator ID                       | Latest Version                                                                                    | Changelog                                                                                                      |
-| ---------------------------------- | ------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| `fernapi/fern-typescript-sdk`      | ![Typescript Generator Version](https://img.shields.io/docker/v/fernapi/fern-typescript-sdk)      | [Changelog](https://buildwithfern.com/learn/sdks/generators/typescript/changelog)                               |
-| `fernapi/fern-python-sdk`          | ![Python Generator Version](https://img.shields.io/docker/v/fernapi/fern-python-sdk)              | [Changelog](https://buildwithfern.com/learn/sdks/generators/python/changelog)                                   |
-| `fernapi/fern-java-sdk`            | ![Java Generator Version](https://img.shields.io/docker/v/fernapi/fern-java-sdk)                  | [Changelog](https://buildwithfern.com/learn/sdks/generators/java/changelog)                                     |
-| `fernapi/fern-ruby-sdk`            | ![Ruby Generator Version](https://img.shields.io/docker/v/fernapi/fern-ruby-sdk)                  | [Changelog](https://buildwithfern.com/learn/sdks/generators/ruby/changelog)                                     |
-| `fernapi/fern-go-sdk`              | ![Go Generator Version](https://img.shields.io/docker/v/fernapi/fern-go-sdk)                      | [Changelog](https://buildwithfern.com/learn/sdks/generators/go/changelog)                                       |
-| `fernapi/fern-csharp-sdk`          | ![C# Generator Version](https://img.shields.io/docker/v/fernapi/fern-csharp-sdk)                  | [Changelog](https://buildwithfern.com/learn/sdks/generators/csharp/changelog)                                   |
-| `fernapi/fern-php-sdk`             | ![PHP Generator Version](https://img.shields.io/docker/v/fernapi/fern-php-sdk)                    | [Changelog](https://buildwithfern.com/learn/sdks/generators/php/changelog)                                      |
-| `fernapi/fern-swift-sdk`           | ![Swift Generator Version](https://img.shields.io/docker/v/fernapi/fern-swift-sdk)                | [Changelog](https://buildwithfern.com/learn/sdks/generators/swift/changelog)                                    |
-| `fernapi/fern-rust-sdk`            | ![Rust Generator Version](https://img.shields.io/docker/v/fernapi/fern-rust-sdk)                  | [Changelog](https://buildwithfern.com/learn/sdks/generators/rust/changelog)                                     |
+| Generator ID                  | Latest Version                                                                               | Changelog                                                                         |
+| ----------------------------- | -------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| `fernapi/fern-typescript-sdk` | ![Typescript Generator Version](https://img.shields.io/docker/v/fernapi/fern-typescript-sdk) | [Changelog](https://buildwithfern.com/learn/sdks/generators/typescript/changelog) |
+| `fernapi/fern-python-sdk`     | ![Python Generator Version](https://img.shields.io/docker/v/fernapi/fern-python-sdk)         | [Changelog](https://buildwithfern.com/learn/sdks/generators/python/changelog)     |
+| `fernapi/fern-java-sdk`       | ![Java Generator Version](https://img.shields.io/docker/v/fernapi/fern-java-sdk)             | [Changelog](https://buildwithfern.com/learn/sdks/generators/java/changelog)       |
+| `fernapi/fern-ruby-sdk`       | ![Ruby Generator Version](https://img.shields.io/docker/v/fernapi/fern-ruby-sdk)             | [Changelog](https://buildwithfern.com/learn/sdks/generators/ruby/changelog)       |
+| `fernapi/fern-go-sdk`         | ![Go Generator Version](https://img.shields.io/docker/v/fernapi/fern-go-sdk)                 | [Changelog](https://buildwithfern.com/learn/sdks/generators/go/changelog)         |
+| `fernapi/fern-csharp-sdk`     | ![C# Generator Version](https://img.shields.io/docker/v/fernapi/fern-csharp-sdk)             | [Changelog](https://buildwithfern.com/learn/sdks/generators/csharp/changelog)     |
+| `fernapi/fern-php-sdk`        | ![PHP Generator Version](https://img.shields.io/docker/v/fernapi/fern-php-sdk)               | [Changelog](https://buildwithfern.com/learn/sdks/generators/php/changelog)        |
+| `fernapi/fern-swift-sdk`      | ![Swift Generator Version](https://img.shields.io/docker/v/fernapi/fern-swift-sdk)           | [Changelog](https://buildwithfern.com/learn/sdks/generators/swift/changelog)      |
+| `fernapi/fern-rust-sdk`       | ![Rust Generator Version](https://img.shields.io/docker/v/fernapi/fern-rust-sdk)             | [Changelog](https://buildwithfern.com/learn/sdks/generators/rust/changelog)       |
 
 ### Spec Generators
 
@@ -114,9 +94,9 @@ Fern's spec generators can output an OpenAPI spec.
 
 > **Note**: The OpenAPI spec generator is primarily intended for Fern Definition users. This prevents lock-in so that one can always export to OpenAPI.
 
-| Generator ID           | Latest Version                                                                     | Changelog                                              |
-| ---------------------- | ---------------------------------------------------------------------------------- | ------------------------------------------------------ |
-| `fernapi/fern-openapi` | ![OpenAPI Generator Version](https://img.shields.io/docker/v/fernapi/fern-openapi) | [versions.yml](./generators/openapi/versions.yml)      |
+| Generator ID           | Latest Version                                                                     | Changelog                                         |
+| ---------------------- | ---------------------------------------------------------------------------------- | ------------------------------------------------- |
+| `fernapi/fern-openapi` | ![OpenAPI Generator Version](https://img.shields.io/docker/v/fernapi/fern-openapi) | [versions.yml](./generators/openapi/versions.yml) |
 
 ## 🌿 CLI Commands
 
@@ -140,24 +120,118 @@ Fern is inspired by internal tooling built to enhance the developer experience. 
 
 [Join our Slack!](https://buildwithfern.com/slack) We are here to answer questions and help you get the most out of Fern.
 
-## Contributing
+## Installation
 
-We welcome community contributions. For guidelines, refer to our [CONTRIBUTING.md](/CONTRIBUTING.md). To contribute to our documentation, refer to our [docs](https://github.com/fern-api/docs) repo.
-
-### Development Environment
-
-This repository uses [DevBox](https://www.jetify.com/devbox) for reproducible development environments. DevBox provides cross-platform support (Mac, Linux, Windows via WSL) with exact version pinning based on Nix.
-
-To get started:
-
-```bash
-# Install DevBox (https://www.jetify.com/devbox/docs/installing_devbox/)
-curl -fsSL https://get.jetify.com/devbox | bash
-
-# Enter the development environment
-devbox shell
+```sh
+npm i -s
 ```
 
-DevBox automatically installs all required dependencies including Node.js, pnpm, Go, Python, Poetry, JDK, and buf with pinned versions matching CI.
+## Usage
 
-![Fern Contributors](https://contrib.rocks/image?repo=fern-api/fern)
+Instantiate and use the client with the following:
+
+```typescript
+import { SmokeTestTestApiClient } from "";
+
+const client = new SmokeTestTestApiClient({ environment: "YOUR_BASE_URL" });
+await client.hello.sayHello();
+```
+
+## Exception Handling
+
+When the API returns a non-success status code (4xx or 5xx response), a subclass of the following error
+will be thrown.
+
+```typescript
+import { SmokeTestTestApiError } from "SmokeTestTestApi";
+
+try {
+    await client.hello.sayHello(...);
+} catch (err) {
+    if (err instanceof SmokeTestTestApiError) {
+        console.log(err.statusCode);
+        console.log(err.message);
+        console.log(err.body);
+    }
+}
+```
+
+## Advanced
+
+### Retries
+
+The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
+as the request is deemed retriable and the number of retry attempts has not grown larger than the configured
+retry limit (default: 2).
+
+A request is deemed retriable when any of the following HTTP status codes is returned:
+
+-   [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+-   [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
+-   [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
+
+Use the `maxRetries` request option to configure this behavior.
+
+```typescript
+const response = await client.hello.sayHello(..., {
+    maxRetries: 0 // override maxRetries at the request level
+});
+```
+
+### Timeouts
+
+The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
+
+```typescript
+const response = await client.hello.sayHello(..., {
+    timeoutInSeconds: 30 // override timeout to 30s
+});
+```
+
+### Aborting Requests
+
+The SDK allows users to abort requests at any point by passing in an abort signal.
+
+```typescript
+const controller = new AbortController();
+const response = await client.hello.sayHello(..., {
+    abortSignal: controller.signal
+});
+controller.abort(); // aborts the request
+```
+
+### Runtime Compatibility
+
+The SDK defaults to `node-fetch` but will use the global fetch client if present. The SDK works in the following
+runtimes:
+
+-   Node.js 18+
+-   Vercel
+-   Cloudflare Workers
+-   Deno v1.25+
+-   Bun 1.0+
+-   React Native
+
+### Customizing Fetch Client
+
+The SDK provides a way for your to customize the underlying HTTP client / Fetch function. If you're running in an
+unsupported environment, this provides a way for you to break glass and ensure the SDK works.
+
+```typescript
+import { SmokeTestTestApiClient } from "SmokeTestTestApi";
+
+const client = new SmokeTestTestApiClient({
+    ...
+    fetcher: // provide your implementation here
+});
+```
+
+## Contributing
+
+While we value open-source contributions to this SDK, this library is generated programmatically.
+Additions made directly to this library would have to be moved over to our generation code,
+otherwise they would be overwritten upon the next generated release. Feel free to open a PR as
+a proof of concept, but know that we will not be able to merge it as-is. We suggest opening
+an issue first to discuss with us!
+
+On the other hand, contributions to the README are always very welcome!

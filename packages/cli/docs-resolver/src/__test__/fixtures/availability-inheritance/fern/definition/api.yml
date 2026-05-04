@@ -1,3 +1,0 @@
-name: availability-inheritance-api
-error-discrimination:
-  strategy: status-code

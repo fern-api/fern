@@ -1,9 +1,0 @@
-{
-  "type": "string",
-  "enum": [
-    "checking",
-    "savings",
-    "credit"
-  ],
-  "definitions": {}
-}

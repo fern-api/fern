@@ -1,1 +1,0 @@
-export { ValidPaginationRule } from "./valid-pagination.js";

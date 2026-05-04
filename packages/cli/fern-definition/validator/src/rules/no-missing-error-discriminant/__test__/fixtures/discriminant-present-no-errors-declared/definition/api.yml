@@ -1,5 +1,0 @@
-name: simple-api
-
-error-discrimination:
-  strategy: property
-  property-name: hello

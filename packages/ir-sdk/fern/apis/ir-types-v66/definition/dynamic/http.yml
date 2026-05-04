@@ -1,9 +1,0 @@
-types:
-  HttpMethod:
-    enum:
-      - GET
-      - POST
-      - PUT
-      - PATCH
-      - DELETE
-      - HEAD

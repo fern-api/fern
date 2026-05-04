@@ -1,3 +1,0 @@
-rootProject.name = 'idempotency-headers'
-
-include 'sample-app'

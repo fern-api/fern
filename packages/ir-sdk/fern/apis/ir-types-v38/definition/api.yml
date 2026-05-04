@@ -1,3 +1,0 @@
-name: ir-v38
-docs: |
-  Add support for server-sent-events (SSE) with arbitrary terminators.

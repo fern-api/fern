@@ -1,4 +1,0 @@
-fixtures:
-  imdb:
-    - outputFolder: no-custom-config
-      customConfig: null

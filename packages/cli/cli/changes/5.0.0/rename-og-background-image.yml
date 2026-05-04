@@ -1,4 +1,0 @@
-- summary: |
-    Remove `og:background-image` metadata key. Use `og:dynamic:background-image` instead,
-    which is consistent with other `og:dynamic:*` settings.
-  type: break

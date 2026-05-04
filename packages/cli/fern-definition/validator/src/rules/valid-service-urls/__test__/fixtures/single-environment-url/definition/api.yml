@@ -1,5 +1,0 @@
-name: simple-api
-
-environments:
-  Staging: staging.com
-  Production: production.com

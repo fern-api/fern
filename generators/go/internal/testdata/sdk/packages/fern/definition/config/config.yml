@@ -1,4 +1,0 @@
-types:
-  Config:
-    properties:
-      id: string

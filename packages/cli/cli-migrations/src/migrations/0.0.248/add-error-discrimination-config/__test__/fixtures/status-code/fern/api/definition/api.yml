@@ -1,4 +1,0 @@
-name: api
-auth: bearer
-audiences:
-  - external

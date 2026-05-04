@@ -1,5 +1,0 @@
-service:
-  url: InvalidUrl
-  base-path: /
-  auth: false
-  endpoints: {}

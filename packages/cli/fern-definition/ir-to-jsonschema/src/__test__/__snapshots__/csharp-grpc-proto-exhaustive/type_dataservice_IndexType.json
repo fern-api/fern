@@ -1,9 +1,0 @@
-{
-  "type": "string",
-  "enum": [
-    "INDEX_TYPE_INVALID",
-    "INDEX_TYPE_DEFAULT",
-    "INDEX_TYPE_STRICT"
-  ],
-  "definitions": {}
-}

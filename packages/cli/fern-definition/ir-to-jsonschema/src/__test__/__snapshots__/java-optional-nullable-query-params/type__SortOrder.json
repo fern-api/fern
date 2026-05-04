@@ -1,8 +1,0 @@
-{
-  "type": "string",
-  "enum": [
-    "ASC",
-    "DESC"
-  ],
-  "definitions": {}
-}

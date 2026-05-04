@@ -1,5 +1,0 @@
-types:
-  User:
-    properties:
-      name: string
-      age: optional<integer>

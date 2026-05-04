@@ -1,9 +1,0 @@
-navigation:
-  - page: Overview
-    path: ../../pages/overview.mdx
-  - section: Guides
-    contents:
-      - page: Getting Started
-        path: ../../pages/guides/getting-started.mdx
-      - page: Advanced
-        path: ../../pages/guides/advanced.mdx

@@ -1,5 +1,0 @@
-types:
-  Metadata:
-    properties:
-      name: string
-      value: optional<string>

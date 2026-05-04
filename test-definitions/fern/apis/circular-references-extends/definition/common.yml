@@ -1,9 +1,0 @@
-types:
-  BaseType:
-    properties:
-      child_ref: optional<ChildType>
-
-  ChildType:
-    extends: BaseType
-    properties:
-      child_name: string

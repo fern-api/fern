@@ -1,5 +1,0 @@
-export * from "./sdk/index.js";
-export * from "./sdk/api/index.js";
-export * as serialization from "./sdk/serialization/index.js";
-export * from "./utils/index.js";
-export type { PathParameter } from "./sdk/api/resources/finalIr/types/PathParameter.js";

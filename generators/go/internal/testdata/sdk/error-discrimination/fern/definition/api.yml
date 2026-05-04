@@ -1,9 +1,0 @@
-name: api
-imports:
-  user: user.yml
-error-discrimination:
-  strategy: property
-  property-name: errorName
-errors:
-  - user.NotFoundError
-  - user.UntypedNotFoundError
