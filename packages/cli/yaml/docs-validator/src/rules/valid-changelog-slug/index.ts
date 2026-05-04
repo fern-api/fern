@@ -1,6 +1,6 @@
 export {
     CHANGELOG_FEED_ALLOWED_SLUGS,
-    ValidChangelogSlugRule,
     getEffectiveChangelogSlugLastSegment,
-    isAllowedChangelogSlug
+    isAllowedChangelogSlug,
+    ValidChangelogSlugRule
 } from "./valid-changelog-slug.js";
