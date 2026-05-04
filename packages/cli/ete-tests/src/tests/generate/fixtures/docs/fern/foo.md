@@ -1,3 +1,0 @@
-# hi
-
-![fern](fern.png)

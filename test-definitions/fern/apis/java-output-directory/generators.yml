@@ -1,9 +1,0 @@
-default-group: local
-groups:
-  local:
-    generators:
-      - name: fernapi/fern-java-sdk
-        version: latest
-        output:
-          location: local-file-system
-          path: ../generated/java

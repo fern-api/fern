@@ -1,4 +1,0 @@
-types:
-  User:
-    properties:
-      name: string

@@ -1,9 +1,0 @@
-name: simple
-auth: bearer
-default-environment: Production
-environments:
-  Production: https://buildwithfern.com
-  Staging: https://staging.buildwithfern.com
-base-path: /test/{rootPathParam}
-path-parameters:
-  rootPathParam: string

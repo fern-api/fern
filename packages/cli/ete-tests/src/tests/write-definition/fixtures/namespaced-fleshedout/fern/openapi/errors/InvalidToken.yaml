@@ -1,9 +1,0 @@
-description: |
-  This error is returned when a request or response contains a deny-listed token.
-content:
-  application/json:
-    schema:
-      type: object
-      properties:
-        data:
-          type: string

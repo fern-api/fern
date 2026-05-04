@@ -1,9 +1,0 @@
-name: api
-error-discrimination:
-  strategy: status-code
-auth: ApiKeyAuth
-auth-schemes:
-  ApiKeyAuth:
-    header: X-Api-Key
-    name: apiKey
-    type: string

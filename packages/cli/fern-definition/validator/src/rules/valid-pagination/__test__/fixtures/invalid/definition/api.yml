@@ -1,4 +1,0 @@
-name: invalid
-pagination:
-  offset: $request.offset
-  results: $response.results

@@ -1,7 +1,0 @@
-{
-  "type": "object",
-  "additionalProperties": {
-    "type": "string"
-  },
-  "definitions": {}
-}

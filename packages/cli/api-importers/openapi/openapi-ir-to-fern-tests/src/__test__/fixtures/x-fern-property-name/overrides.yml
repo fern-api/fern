@@ -1,5 +1,0 @@
-components:
-  schemas:
-    TestIdentity:
-      discriminator:
-        x-fern-property-name: type

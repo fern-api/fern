@@ -1,3 +1,0 @@
-- summary: |
-    Fix global headers from `generators.yml` not appearing in documentation endpoints. The new OpenAPI v3 parser (`openapi-to-ir`) had a TODO placeholder but never converted `globalHeaderOverrides` into IR headers.
-  type: fix

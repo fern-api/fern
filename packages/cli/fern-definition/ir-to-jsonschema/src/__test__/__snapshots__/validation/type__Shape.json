@@ -1,9 +1,0 @@
-{
-  "type": "string",
-  "enum": [
-    "SQUARE",
-    "CIRCLE",
-    "TRIANGLE"
-  ],
-  "definitions": {}
-}

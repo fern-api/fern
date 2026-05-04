@@ -1,6 +1,0 @@
-types:
-  ReplayConfigSchema:
-    properties:
-      enabled:
-        type: boolean
-        docs: Whether to enable replay for this SDK

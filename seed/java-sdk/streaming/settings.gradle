@@ -1,3 +1,0 @@
-rootProject.name = 'streaming'
-
-include 'sample-app'

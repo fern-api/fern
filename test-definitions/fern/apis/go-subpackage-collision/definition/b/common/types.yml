@@ -1,5 +1,0 @@
-types:
-  Metadata:
-    properties:
-      key: string
-      count: optional<integer>

@@ -1,8 +1,0 @@
-SpeakV1Encoding:
-  type: object
-  properties:
-    encoding:
-      type: string
-      enum: [utf-8, utf-16, ascii]
-    data:
-      type: string

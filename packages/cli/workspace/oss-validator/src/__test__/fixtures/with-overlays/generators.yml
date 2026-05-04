@@ -1,4 +1,0 @@
-api:
-  specs:
-    - openapi: ./openapi/openapi.yml
-      overlays: ./openapi/overlay.yml

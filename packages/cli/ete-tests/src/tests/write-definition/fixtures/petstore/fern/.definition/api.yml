@@ -1,7 +1,0 @@
-default-environment: Default
-display-name: Swagger Petstore
-environments:
-  Default: http://petstore.swagger.io/v1
-error-discrimination:
-  strategy: status-code
-name: api

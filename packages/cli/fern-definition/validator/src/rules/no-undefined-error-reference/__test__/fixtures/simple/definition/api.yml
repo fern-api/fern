@@ -1,8 +1,0 @@
-name: simple-api
-
-imports:
-  other: other.yml
-
-errors:
-  - other.OtherError
-  - MadeUpError

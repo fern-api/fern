@@ -1,3 +1,0 @@
-- summary: |
-    Fix `x-fern-discriminated: true` to correctly keep specific schemas as discriminated unions when `prefer-undiscriminated-unions-with-literals` is enabled.
-  type: fix

@@ -1,3 +1,0 @@
-name: fern-definition
-error-discrimination:
-  strategy: status-code

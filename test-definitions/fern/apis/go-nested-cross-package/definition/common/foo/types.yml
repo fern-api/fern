@@ -1,5 +1,0 @@
-types:
-  BaseType:
-    properties:
-      name: string
-      value: optional<integer>

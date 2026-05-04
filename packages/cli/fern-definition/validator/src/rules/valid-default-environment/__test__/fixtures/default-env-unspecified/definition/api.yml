@@ -1,5 +1,0 @@
-name: simple-api
-
-environments:
-  staging: staging.fern.com
-  prod: prod.fern.com

@@ -1,7 +1,0 @@
-name: inferred-auth-implicit
-
-auth: InferredAuthScheme
-auth-schemes:
-  InferredAuthScheme:
-    scheme: bearer
-    get-token: POST /token
