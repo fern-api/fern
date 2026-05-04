@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.7.10
+  changelogEntry:
+    - summary: |
+        Fix the OpenAPI 3.1 -> IR converter to respect endpoint-level `security: []` opt-outs when `auth` is configured in `generators.yml`. Previously, declaring an `auth` scheme at the workspace level would silently override every endpoint-level `security` field — including explicit empty-array opt-outs — so endpoints that intentionally opted out of auth (e.g. an OAuth token endpoint, or a public endpoint) ended up rendered in docs and SDKs as if they required the global auth scheme.
+      type: fix
+  createdAt: "2026-05-04"
+  irVersion: 66
 - version: 5.7.9
   changelogEntry:
     - summary: |
