@@ -29,6 +29,15 @@ export interface GeneratorRunResult {
      * Null when any part is unresolvable (non-GH-Actions env, detached HEAD, etc.).
      */
     generatorsYmlUrl: string | null;
+    /**
+     * Path of `generators.yml` relative to `GITHUB_WORKSPACE` (the runner's checkout root). Null
+     * outside GitHub Actions or when the file lives outside the workspace. Consumed by GHA
+     * annotation rendering, which needs a repo-relative path to anchor inline annotations on
+     * the right file in the PR diff.
+     */
+    generatorsYmlWorkspaceRelativePath: string | null;
+    /** Mirror of the recorder's line number — preserved on the result so annotations don't have to re-derive it. */
+    generatorsYmlLineNumber: number | null;
 }
 
 export interface GeneratorRunCounts {
@@ -61,29 +70,47 @@ export function countResults(results: readonly GeneratorRunResult[]): GeneratorR
 }
 
 /**
+ * Resolves an absolute path on the GitHub Actions runner to a path relative to `GITHUB_WORKSPACE`
+ * (the checkout root). Returns `null` when:
+ *  - `GITHUB_WORKSPACE` is unset (not running in GHA, or local invocation)
+ *  - `absolutePath` is outside the workspace checkout — guarding against a naïve `startsWith`
+ *    that would match `/runner/work/foo` against `/runner/work/foo2`.
+ *
+ * Exported only for testing.
+ */
+export function resolveGithubWorkspaceRelativePath(absolutePath: string | undefined): string | null {
+    if (absolutePath == null) {
+        return null;
+    }
+    const workspace = process.env.GITHUB_WORKSPACE;
+    if (workspace == null) {
+        return null;
+    }
+    const workspaceWithSlash = workspace.endsWith("/") ? workspace : `${workspace}/`;
+    if (!absolutePath.startsWith(workspaceWithSlash)) {
+        return null;
+    }
+    return absolutePath.slice(workspaceWithSlash.length);
+}
+
+/**
  * Composes the blob URL for a `generators.yml` line using GitHub Actions env vars. Returns null
  * when any required variable is missing or when the absolute path falls outside the workspace
- * checkout (the subtraction below would produce an absolute-looking relative path).
+ * checkout.
  *
  * Exported only for testing — callers inside this module use it implicitly via the record methods.
  */
 export function buildGeneratorsYmlUrl(absolutePath: string | undefined, lineNumber: number | undefined): string | null {
-    if (absolutePath == null) {
+    const relativePath = resolveGithubWorkspaceRelativePath(absolutePath);
+    if (relativePath == null) {
         return null;
     }
     const serverUrl = process.env.GITHUB_SERVER_URL;
     const repository = process.env.GITHUB_REPOSITORY;
     const refName = process.env.GITHUB_REF_NAME;
-    const workspace = process.env.GITHUB_WORKSPACE;
-    if (serverUrl == null || repository == null || refName == null || workspace == null) {
+    if (serverUrl == null || repository == null || refName == null) {
         return null;
     }
-    // GITHUB_WORKSPACE is the checkout root. `absolutePath` is guaranteed absolute.
-    const workspaceWithSlash = workspace.endsWith("/") ? workspace : `${workspace}/`;
-    if (!absolutePath.startsWith(workspaceWithSlash)) {
-        return null;
-    }
-    const relativePath = absolutePath.slice(workspaceWithSlash.length);
     const anchor = lineNumber != null ? `#L${lineNumber}` : "";
     return `${serverUrl}/${repository}/blob/${refName}/${relativePath}${anchor}`;
 }
@@ -105,7 +132,9 @@ export class GeneratorRunCollector implements RemoteGeneratorRunRecorder {
             errorMessage: null,
             durationMs: args.durationMs,
             sdkRepoUrl: args.outputRepoUrl ?? null,
-            generatorsYmlUrl: buildGeneratorsYmlUrl(args.generatorsYmlAbsolutePath, args.generatorsYmlLineNumber)
+            generatorsYmlUrl: buildGeneratorsYmlUrl(args.generatorsYmlAbsolutePath, args.generatorsYmlLineNumber),
+            generatorsYmlWorkspaceRelativePath: resolveGithubWorkspaceRelativePath(args.generatorsYmlAbsolutePath),
+            generatorsYmlLineNumber: args.generatorsYmlLineNumber ?? null
         });
     }
 
@@ -123,7 +152,9 @@ export class GeneratorRunCollector implements RemoteGeneratorRunRecorder {
             errorMessage: args.errorMessage,
             durationMs: args.durationMs,
             sdkRepoUrl: args.outputRepoUrl ?? null,
-            generatorsYmlUrl: buildGeneratorsYmlUrl(args.generatorsYmlAbsolutePath, args.generatorsYmlLineNumber)
+            generatorsYmlUrl: buildGeneratorsYmlUrl(args.generatorsYmlAbsolutePath, args.generatorsYmlLineNumber),
+            generatorsYmlWorkspaceRelativePath: resolveGithubWorkspaceRelativePath(args.generatorsYmlAbsolutePath),
+            generatorsYmlLineNumber: args.generatorsYmlLineNumber ?? null
         });
     }
 
@@ -141,7 +172,9 @@ export class GeneratorRunCollector implements RemoteGeneratorRunRecorder {
             errorMessage: null,
             durationMs: 0,
             sdkRepoUrl: args.outputRepoUrl ?? null,
-            generatorsYmlUrl: buildGeneratorsYmlUrl(args.generatorsYmlAbsolutePath, args.generatorsYmlLineNumber)
+            generatorsYmlUrl: buildGeneratorsYmlUrl(args.generatorsYmlAbsolutePath, args.generatorsYmlLineNumber),
+            generatorsYmlWorkspaceRelativePath: resolveGithubWorkspaceRelativePath(args.generatorsYmlAbsolutePath),
+            generatorsYmlLineNumber: args.generatorsYmlLineNumber ?? null
         });
     }
 

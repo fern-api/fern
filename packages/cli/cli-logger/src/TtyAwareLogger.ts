@@ -5,6 +5,11 @@ import chalk from "chalk";
 import IS_CI from "is-ci";
 import ora, { Ora } from "ora";
 
+import {
+    areLoggerAnnotationsSuppressed,
+    renderGithubAnnotationFromLog,
+    shouldEmitGithubAnnotations
+} from "./githubAnnotations.js";
 import { Log } from "./Log.js";
 
 interface Task {
@@ -114,6 +119,9 @@ export class TtyAwareLogger {
                 this.writeStdout(content);
             }
         };
+        // Cache the env-var check + the suppression flag once per call. Both are stable for the
+        // duration of this batch; checking each iteration would just be noise.
+        const emitAnnotations = shouldEmitGithubAnnotations() && !areLoggerAnnotationsSuppressed();
         for (const log of logs) {
             const content = formatLog(log, { includeDebugInfo });
             const omitOnTTY = log.omitOnTTY ?? false;
@@ -121,6 +129,19 @@ export class TtyAwareLogger {
                 write(content);
             } else if (!omitOnTTY) {
                 write(this.clear() + content + this.lastPaint);
+            }
+            // Emit a GitHub Actions workflow command alongside the normal log when the runner is
+            // GitHub Actions. The runner parses these from the step's stdout and renders them as
+            // inline annotations on the run/PR — surfacing errors and warnings the user would
+            // otherwise have to scroll the raw log to find. Gated purely on `GITHUB_ACTIONS=true`
+            // (not on `isTTY`) so it also works if someone forces the env var locally for testing.
+            // Commands that emit their own structured annotations (e.g. `fern automations
+            // generate`) suppress this hook to avoid duplicates — see `setLoggerAnnotationsSuppressed`.
+            if (emitAnnotations) {
+                const annotation = renderGithubAnnotationFromLog(log);
+                if (annotation != null) {
+                    this.stdout.write(annotation);
+                }
             }
         }
     }
